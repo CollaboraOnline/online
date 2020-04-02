@@ -16,6 +16,7 @@
 #include "Log.hpp"
 
 #include "net/WebSocketHandler.hpp"
+#include "LOOLWSD.hpp"
 
 class Admin;
 
@@ -91,7 +92,6 @@ public:
     void rmDoc(const std::string& docKey);
 
     void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; _model.setForKitPid(forKitPid);}
-    void setForKitWritePipe(const int forKitWritePipe) { _forKitWritePipe = forKitWritePipe; }
 
     /// Callers must ensure that modelMutex is acquired
     AdminModel& getModel();
@@ -156,7 +156,6 @@ private:
     /// the Admin Poll thread.
     AdminModel _model;
     int _forKitPid;
-    int _forKitWritePipe;
     size_t _lastTotalMemory;
     size_t _lastJiffies;
     uint64_t _lastSentCount;

@@ -543,6 +543,11 @@ public:
         }
     }
 
+    const std::thread::id &getThreadOwner()
+    {
+        return _owner;
+    }
+
     /// Are we running in either shutdown, or the polling thread.
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread() const

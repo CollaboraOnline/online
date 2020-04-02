@@ -58,9 +58,11 @@ public:
     }
 };
 
+#include "LOOLWSD.hpp"
+
 /// Represents a new LOK child that is read
 /// to host a document.
-class ChildProcess
+class ChildProcess : public WSProcess
 {
 public:
     /// @param pid is the process ID of the child.
@@ -70,12 +72,9 @@ public:
                  const std::shared_ptr<StreamSocket>& socket,
                  const Poco::Net::HTTPRequest &request) :
 
-        _pid(pid),
-        _jailId(jailId),
-        _ws(std::make_shared<WebSocketHandler>(socket, request)),
-        _socket(socket)
+        WSProcess("ChildProcess", pid, socket, std::make_shared<WebSocketHandler>(socket, request)),
+        _jailId(jailId)
     {
-        LOG_INF("ChildProcess ctor [" << _pid << "].");
     }
 
 
@@ -83,125 +82,12 @@ public:
 
     const ChildProcess& operator=(ChildProcess&& other) = delete;
 
-    ~ChildProcess()
-    {
-        LOG_DBG("~ChildProcess dtor [" << _pid << "].");
-
-        if (_pid <= 0)
-            return;
-
-        terminate();
-
-        // No need for the socket anymore.
-        _ws.reset();
-        _socket.reset();
-    }
-
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker);
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
-
-    /// Let the child close a nice way.
-    void close()
-    {
-        if (_pid < 0)
-            return;
-
-        try
-        {
-            LOG_DBG("Closing ChildProcess [" << _pid << "].");
-
-            // Request the child to exit
-            if (isAlive())
-            {
-                LOG_DBG("Stopping ChildProcess [" << _pid << "] by sending 'exit' command.");
-                sendTextFrame("exit");
-            }
-
-            // Shutdown the socket.
-            if (_ws)
-                _ws->shutdown();
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Error while closing child process: " << ex.what());
-        }
-
-        _pid = -1; // Detach from child.
-    }
-
-    /// Kill or abandon the child.
-    void terminate()
-    {
-        if (_pid < 0)
-            return;
-
-#if !MOBILEAPP
-        if (::kill(_pid, 0) == 0)
-        {
-            LOG_INF("Killing child [" << _pid << "].");
-            if (!SigUtil::killChild(_pid))
-            {
-                LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
-            }
-        }
-#else
-        // What to do? Throw some unique exception that the outermost call in the thread catches and
-        // exits from the thread?
-#endif
-        _pid = -1;
-    }
-
-    Poco::Process::PID getPid() const { return _pid; }
     const std::string& getJailId() const { return _jailId; }
 
-    /// Send a text payload to the child-process WS.
-    bool sendTextFrame(const std::string& data)
-    {
-        try
-        {
-            if (_ws)
-            {
-                LOG_TRC("Send DocBroker to Child message: [" << LOOLProtocol::getAbbreviatedMessage(data) << "].");
-                _ws->sendMessage(data);
-                return true;
-            }
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_ERR("Failed to send child [" << _pid << "] data [" <<
-                    LOOLProtocol::getAbbreviatedMessage(data) << "] due to: " << exc.what());
-            throw;
-        }
-
-        LOG_WRN("No socket between DocBroker and child to send [" << LOOLProtocol::getAbbreviatedMessage(data) << "]");
-        return false;
-    }
-
-    /// Check whether this child is alive and socket not in error.
-    /// Note: zombies will show as alive, and sockets have waiting
-    /// time after the other end-point closes. So this isn't accurate.
-    bool isAlive() const
-    {
-#if !MOBILEAPP
-        try
-        {
-            return _pid > 1 && _ws && ::kill(_pid, 0) == 0;
-        }
-        catch (const std::exception&)
-        {
-        }
-
-        return false;
-#else
-        return _pid > 1;
-#endif
-    }
-
 private:
-    Poco::Process::PID _pid;
     const std::string _jailId;
-    std::shared_ptr<WebSocketHandler> _ws;
-    std::shared_ptr<Socket> _socket;
     std::weak_ptr<DocumentBroker> _docBroker;
 };
 

@@ -35,6 +35,7 @@
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
+#include <WebSocketHandler.hpp>
 
 #include <common/FileUtil.hpp>
 #include <common/Seccomp.hpp>
@@ -64,75 +65,88 @@ int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 std::string MasterLocation;
 #endif
 
-/// Dispatcher class to demultiplex requests from
-/// WSD and handles them.
-class CommandDispatcher : public IoUtil::PipeReader
+class ServerWSHandler;
+
+// We have a single thread and a single connection so we won't bother with
+// access synchronization
+std::shared_ptr<ServerWSHandler> WSHandler;
+
+class ServerWSHandler final : public WebSocketHandler
 {
+    std::string _socketName;
+
 public:
-    CommandDispatcher(const int pipe) :
-        PipeReader("wsd_pipe_rd", pipe)
+    ServerWSHandler(const std::string& socketName) :
+        WebSocketHandler(/* isClient = */ true, /* isMasking */ false),
+        _socketName(socketName)
     {
     }
 
-    /// Polls WSD commands and handles them.
-    bool pollAndDispatch()
+protected:
+    void handleMessage(const std::vector<char>& data) override
     {
-        std::string message;
-        const int ready = readLine(message, [](){ return SigUtil::getTerminationFlag(); });
-        if (ready <= 0)
-        {
-            // Termination is done via SIGTERM, which breaks the wait.
-            if (ready < 0)
-            {
-                if (SigUtil::getTerminationFlag())
-                {
-                    LOG_INF("Poll interrupted in " << getName() << " and TerminationFlag is set.");
-                }
+        std::string message(data.data(), data.size());
 
-                // Break.
-                return false;
+#if !MOBILEAPP
+        if (UnitKit::get().filterKitMessage(this, message))
+            return;
+#endif
+        StringVector tokens = LOOLProtocol::tokenize(message);
+        Log::StreamLogger logger = Log::debug();
+        if (logger.enabled())
+        {
+            logger << _socketName << ": recv [";
+            for (const auto& token : tokens)
+            {
+                logger << tokens.getParam(token) << ' ';
             }
 
-            // Timeout.
-            return true;
+            LOG_END(logger, true);
         }
 
-        LOG_INF("ForKit command: [" << message << "].");
-        try
+        // Note: Syntax or parsing errors here are unexpected and fatal.
+        if (SigUtil::getTerminationFlag())
         {
-            StringVector tokens = LOOLProtocol::tokenize(message);
-            if (tokens.size() == 2 && tokens.equals(0, "spawn"))
+            LOG_DBG("Termination flag set: skip message processing");
+        }
+        else if (tokens.size() == 2 && tokens.equals(0, "spawn"))
+        {
+            const int count = std::stoi(tokens[1]);
+            if (count > 0)
             {
-                const int count = std::stoi(tokens[1]);
-                if (count > 0)
-                {
-                    LOG_INF("Setting to spawn " << tokens[1] << " child" << (count == 1 ? "" : "ren") << " per request.");
-                    ForkCounter = count;
-                }
-                else
-                {
-                    LOG_WRN("Cannot spawn " << tokens[1] << " children as requested.");
-                }
-            }
-            else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
-            {
-                // Currently only rlimit entries are supported.
-                if (!Rlimit::handleSetrlimitCommand(tokens))
-                {
-                    LOG_ERR("Unknown setconfig command: " << message);
-                }
+                LOG_INF("Setting to spawn " << tokens[1] << " child" << (count == 1 ? "" : "ren") << " per request.");
+                ForkCounter = count;
             }
             else
             {
-                LOG_ERR("Unknown command: " << message);
+                LOG_WRN("Cannot spawn " << tokens[1] << " children as requested.");
             }
         }
-        catch (const std::exception& exc)
+        else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
         {
-            LOG_ERR("Error while processing forkit request [" << message << "]: " << exc.what());
+            // Currently only rlimit entries are supported.
+            if (!Rlimit::handleSetrlimitCommand(tokens))
+            {
+                LOG_ERR("Unknown setconfig command: " << message);
+            }
         }
+        else if (tokens.equals(0, "exit"))
+        {
+            LOG_INF("Setting TerminationFlag due to 'exit' command from parent.");
+            SigUtil::setTerminationFlag();
+        }
+        else
+        {
+            LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
+        }
+    }
 
-        return true;
+    void onDisconnect() override
+    {
+#if !MOBILEAPP
+        LOG_WRN("ForKit connection lost without exit arriving from wsd. Setting TerminationFlag");
+        SigUtil::setTerminationFlag();
+#endif
     }
 };
 
@@ -234,7 +248,7 @@ static void cleanupChildren()
             LOG_ERR("Unknown child " << exitedChildPid << " has exited");
         }
     }
-
+    
     // Now delete the jails.
     for (const auto& path : jails)
     {
@@ -545,18 +559,22 @@ int main(int argc, char** argv)
         Log::logger().setLevel(LogLevel);
     }
 
-    CommandDispatcher commandDispatcher(0);
+    SocketPoll mainPoll(Util::getThreadName());
+    mainPoll.runOnClientThread(); // We will do the polling on this thread.
+
+    WSHandler = std::make_shared<ServerWSHandler>("forkit_ws");
+
+#if !MOBILEAPP
+    mainPoll.insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler);
+#endif
+
     LOG_INF("ForKit process is ready.");
 
     while (!SigUtil::getTerminationFlag())
     {
         UnitKit::get().invokeForKitTest();
 
-        if (!commandDispatcher.pollAndDispatch())
-        {
-            LOG_INF("Child dispatcher flagged for termination.");
-            break;
-        }
+        mainPoll.poll(POLL_TIMEOUT_MS);
 
 #if ENABLE_DEBUG
         if (!SingleKit)

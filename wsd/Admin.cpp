@@ -24,7 +24,6 @@
 #include <Common.hpp>
 #include "FileServer.hpp"
 #include <IoUtil.hpp>
-#include "LOOLWSD.hpp"
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include "Storage.hpp"
@@ -352,7 +351,6 @@ Admin::Admin() :
     SocketPoll("admin"),
     _model(AdminModel()),
     _forKitPid(-1),
-    _forKitWritePipe(-1),
     _lastTotalMemory(0),
     _lastJiffies(0),
     _lastSentCount(0),
@@ -594,10 +592,7 @@ void Admin::notifyForkit()
         << "setconfig limit_file_size_mb " << _defDocProcSettings.getLimitFileSizeMb() << '\n'
         << "setconfig limit_num_open_files " << _defDocProcSettings.getLimitNumberOpenFiles() << '\n';
 
-    if (_forKitWritePipe != -1)
-        IoUtil::writeToPipe(_forKitWritePipe, oss.str());
-    else
-        LOG_INF("Forkit write pipe not set (yet).");
+    LOOLWSD::sendMessageToForKit(oss.str());
 }
 
 void Admin::triggerMemoryCleanup(const size_t totalMem)

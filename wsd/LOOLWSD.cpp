@@ -91,7 +91,6 @@ using Poco::Net::PartHandler;
 #include <Poco/Net/DNS.h>
 #include <Poco/Net/HostEntry.h>
 #include <Poco/Path.h>
-#include <Poco/Pipe.h>
 #include <Poco/Process.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
@@ -387,16 +386,11 @@ static int forkChildren(const int number)
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + "\n";
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
-        if (write(LOOLWSD::ForKitWritePipe, aMessage.c_str(), aMessage.length()) > 0)
+        LOOLWSD::sendMessageToForKit(aMessage);
 #endif
-        {
-            OutstandingForks += number;
-            LastForkRequestTime = std::chrono::steady_clock::now();
-            return number;
-        }
-
-        LOG_ERR("No forkit pipe while rebalancing children.");
-        return -1; // Fail.
+        OutstandingForks += number;
+        LastForkRequestTime = std::chrono::steady_clock::now();
+        return number;
     }
 
     return 0;
@@ -704,8 +698,8 @@ inline std::string getServiceURI(const std::string &sub, bool asAdmin = false)
 std::atomic<uint64_t> LOOLWSD::NextConnectionId(1);
 
 #ifndef KIT_IN_PROCESS
-std::atomic<int> LOOLWSD::ForKitWritePipe(-1);
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
+std::shared_ptr<ForKitProcess> LOOLWSD::ForKitProc;
 #endif
 #if !MOBILEAPP
 bool LOOLWSD::NoCapsForKit = false;
@@ -780,6 +774,42 @@ public:
 
     /// Check prisoners are still alive and balanced.
     void wakeupHook() override;
+
+    // Resets the forkit porcess object
+    void setForKitProcess(const std::weak_ptr<ForKitProcess>& forKitProc)
+    {
+        assertCorrectThread();
+        _forKitProc = forKitProc;
+    }
+
+    void sendMessageToForKit(const std::string& msg)
+    {
+        if (std::this_thread::get_id() == getThreadOwner())
+        {
+            // Speed up sending the message if the request comes from owner thread
+            std::shared_ptr<ForKitProcess> forKitProc = _forKitProc.lock();
+            if (forKitProc)
+            {
+                forKitProc->sendTextFrame(msg);
+            }
+        }
+        else
+        {
+            // Put the message in the owner's thread queue to be send later
+            // because WebSocketHandler is not thread safe and otherwise we
+            // should synchronize inside WebSocketHandler.
+            addCallback([=]{
+                std::shared_ptr<ForKitProcess> forKitProc = _forKitProc.lock();
+                if (forKitProc)
+                {
+                    forKitProc->sendTextFrame(msg);
+                }
+            });
+        }
+    }
+
+private:
+    std::weak_ptr<ForKitProcess> _forKitProc;
 };
 
 /// This thread listens for and accepts prisoner kit processes.
@@ -798,6 +828,17 @@ public:
         }
     }
 };
+
+void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
+{
+    LOG_TRC("ForKitProcWSHandler: handling incoming [" << LOOLProtocol::getAbbreviatedMessage(&data[0], data.size()) << "].");
+    const std::string firstLine = LOOLProtocol::getFirstLine(&data[0], data.size());
+    const StringVector tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
+
+    // Just add here the processing of specific received messages 
+
+    LOG_ERR("ForKitProcWSHandler: unknown command: " << tokens[0]);
+}
 
 LOOLWSD::LOOLWSD()
 {
@@ -1708,13 +1749,10 @@ bool LOOLWSD::createForKit()
         Admin::instance().setForKitPid(ForKitProcId);
     }
 
-    if (ForKitWritePipe != -1)
-    {
-        close(ForKitWritePipe);
-        ForKitWritePipe = -1;
-        Admin::instance().setForKitWritePipe(ForKitWritePipe);
-    }
-
+    // Below line will be executed by PrisonerPoll thread.
+    ForKitProc = nullptr;
+    PrisonerPoll.setForKitProcess(ForKitProc);
+    
     // ForKit always spawns one.
     ++OutstandingForks;
 
@@ -1722,17 +1760,13 @@ bool LOOLWSD::createForKit()
             args.cat(std::string(" "), 0));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
-    int childStdin = -1;
-    int child = Util::spawnProcess(forKitPath, args, nullptr, &childStdin);
-
-    ForKitWritePipe = childStdin;
+    int child = Util::spawnProcess(forKitPath, args);
     ForKitProcId = child;
 
     LOG_INF("Forkit process launched: " << ForKitProcId);
 
     // Init the Admin manager
     Admin::instance().setForKitPid(ForKitProcId);
-    Admin::instance().setForKitWritePipe(ForKitWritePipe);
 
     const int balance = LOOLWSD::NumPreSpawnedChildren - OutstandingForks;
     if (balance > 0)
@@ -1740,6 +1774,11 @@ bool LOOLWSD::createForKit()
 
     return ForKitProcId != -1;
 #endif
+}
+
+void LOOLWSD::sendMessageToForKit(const std::string& message)
+{
+    PrisonerPoll.sendMessageToForKit(message);
 }
 
 #endif // !MOBILEAPP
@@ -1903,6 +1942,20 @@ private:
 
             LOG_TRC("Child connection with URI [" << LOOLWSD::anonymizeUrl(request.getURI()) << "].");
             Poco::URI requestURI(request.getURI());
+#ifndef KIT_IN_PROCESS
+            if (requestURI.getPath() == FORKIT_URI)
+            {
+                if (socket->getPid() != LOOLWSD::ForKitProcId)
+                {
+                    LOG_WRN("Connection request received on " << FORKIT_URI << " endpoint from unexpected ForKit process. Skipped.");
+                    return;
+                }
+                LOOLWSD::ForKitProc = std::make_shared<ForKitProcess>(LOOLWSD::ForKitProcId, socket, request);
+                socket->getInBuffer().clear();
+                PrisonerPoll.setForKitProcess(LOOLWSD::ForKitProc);
+                return;
+            }
+#endif
             if (requestURI.getPath() != NEW_CHILD_URI)
             {
                 LOG_ERR("Invalid incoming URI.");
@@ -3621,7 +3674,8 @@ int LOOLWSD::innerMain()
     LOG_INF("Waiting for forkit process to exit");
     int status = 0;
     waitpid(ForKitProcId, &status, WUNTRACED);
-    close(ForKitWritePipe);
+    ForKitProcId = -1;
+    ForKitProc.reset();
 #endif
 
     // In case forkit didn't cleanup properly, don't leave jails behind.

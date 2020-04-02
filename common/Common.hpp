@@ -36,6 +36,7 @@ constexpr const char JAILED_DOCUMENT_ROOT[] = "/user/docs/";
 constexpr const char CHILD_URI[] = "/loolws/child?";
 constexpr const char NEW_CHILD_URI[] = "/loolws/newchild";
 constexpr const char LO_JAIL_SUBPATH[] = "lo";
+constexpr const char FORKIT_URI[] = "/loolws/forkit";
 
 constexpr const char CAPABILITIES_END_POINT[] = "/hosting/capabilities";
 

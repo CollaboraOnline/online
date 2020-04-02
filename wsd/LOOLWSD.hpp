@@ -17,6 +17,8 @@
 #include <set>
 #include <string>
 
+#include <signal.h>
+
 #include <Poco/Path.h>
 #include <Poco/Process.h>
 #include <Poco/Util/AbstractConfiguration.h>
@@ -25,6 +27,7 @@
 
 #include "Util.hpp"
 #include "FileUtil.hpp"
+#include "WebSocketHandler.hpp"
 
 class ChildProcess;
 class TraceFileWriter;
@@ -36,6 +39,170 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
                                                  const std::string& uri
 #endif
                                                  );
+// This is common code used to setup as socket to both
+// forkit and child document processes via a websocket.
+// In general, a WSProcess instance represents a child
+// process with which we can communicate through websocket.
+class WSProcess
+{
+public:
+    /// @param pid is the process ID.
+    /// @param socket is the underlying Sockeet to the process.
+    WSProcess(const std::string& name, 
+              const Poco::Process::PID pid,
+              const std::shared_ptr<StreamSocket>& socket,
+              std::shared_ptr<WebSocketHandler> handler) :
+
+        _name(name),
+        _pid(pid),
+        _ws(handler),
+        _socket(socket)
+    {
+        LOG_INF(_name << " ctor [" << _pid << "].");
+    }
+
+
+    WSProcess(WSProcess&& other) = delete;
+
+    const WSProcess& operator=(WSProcess&& other) = delete;
+
+    virtual ~WSProcess()
+    {
+        LOG_DBG("~" << _name << " dtor [" << _pid << "].");
+
+        if (_pid <= 0)
+            return;
+
+        terminate();
+
+        // No need for the socket anymore.
+        _ws.reset();
+        _socket.reset();
+    }
+
+    /// Let the child close a nice way.
+    void close()
+    {
+        if (_pid < 0)
+            return;
+
+        try
+        {
+            LOG_DBG("Closing ChildProcess [" << _pid << "].");
+
+            // Request the child to exit
+            if (isAlive())
+            {
+                LOG_DBG("Stopping ChildProcess [" << _pid << "] by sending 'exit' command.");
+                sendTextFrame("exit");
+            }
+
+            // Shutdown the socket.
+            if (_ws)
+                _ws->shutdown();
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Error while closing child process: " << ex.what());
+        }
+
+        _pid = -1; // Detach from child.
+    }
+
+    /// Kill or abandon the child.
+    void terminate()
+    {
+        if (_pid < 0)
+            return;
+
+#if !MOBILEAPP
+        if (::kill(_pid, 0) == 0)
+        {
+            LOG_INF("Killing child [" << _pid << "].");
+            if (!SigUtil::killChild(_pid))
+            {
+                LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
+            }
+        }
+#else
+        // What to do? Throw some unique exception that the outermost call in the thread catches and
+        // exits from the thread?
+#endif
+        _pid = -1;
+    }
+
+    Poco::Process::PID getPid() const { return _pid; }
+
+    /// Send a text payload to the child-process WS.
+    virtual bool sendTextFrame(const std::string& data)
+    {
+        try
+        {
+            if (_ws)
+            {
+                LOG_TRC("Send to " << _name << " message: [" << LOOLProtocol::getAbbreviatedMessage(data) << "].");
+                _ws->sendMessage(data);
+                return true;
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Failed to send " << _name << " [" << _pid << "] data [" <<
+                    LOOLProtocol::getAbbreviatedMessage(data) << "] due to: " << exc.what());
+            throw;
+        }
+
+        LOG_WRN("No socket to " << _name << " to send [" << LOOLProtocol::getAbbreviatedMessage(data) << "]");
+        return false;
+    }
+
+    /// Check whether this child is alive and socket not in error.
+    /// Note: zombies will show as alive, and sockets have waiting
+    /// time after the other end-point closes. So this isn't accurate.
+    virtual bool isAlive() const
+    {
+#if !MOBILEAPP
+        try
+        {
+            return _pid > 1 && _ws && ::kill(_pid, 0) == 0;
+        }
+        catch (const std::exception&)
+        {
+        }
+
+        return false;
+#else
+        return _pid > 1;
+#endif
+    }
+
+    std::string _name;
+    Poco::Process::PID _pid;
+    std::shared_ptr<WebSocketHandler> _ws;
+    std::shared_ptr<Socket> _socket;
+};
+
+class ForKitProcWSHandler: public WebSocketHandler, public std::enable_shared_from_this<ForKitProcWSHandler>
+{
+public:
+
+    ForKitProcWSHandler(const std::weak_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest& request)
+    : WebSocketHandler(socket, request)
+    {
+    }
+
+    virtual void handleMessage(const std::vector<char> &data) override;
+};
+
+class ForKitProcess : public WSProcess
+{
+public:
+    ForKitProcess(int pid, std::shared_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest &request)
+        : WSProcess("ForKit", pid, socket, std::make_shared<ForKitProcWSHandler>(socket, request))
+    {
+        socket->setHandler(_ws);
+    }
+};
 
 /// The Server class which is responsible for all
 /// external interactions.
@@ -57,7 +224,7 @@ public:
     static bool SingleKit;
 #endif
 #endif
-    static std::atomic<int> ForKitWritePipe;
+    static std::shared_ptr<ForKitProcess> ForKitProc;
     static std::atomic<int> ForKitProcId;
     static bool DummyLOK;
     static std::string FuzzFileName;
@@ -187,6 +354,9 @@ public:
     /// Creates a new instance of Forkit.
     /// Return true when successfull.
     static bool createForKit();
+
+    /// Sends a message to ForKit through PrisonerPoll.
+    static void sendMessageToForKit(const std::string& message);
 
     /// Checks forkit (and respawns), rebalances
     /// child kit processes and cleans up DocBrokers.
