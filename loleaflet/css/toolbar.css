@@ -1,9 +1,4 @@
-@media (max-width: 407px), (max-device-height: 407px) {
-	#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough{
-		padding: 18px 28px 18px 28px !important;
-	}
-}
-	#toolbar-up.w2ui-toolbar {
+#toolbar-up.w2ui-toolbar {
 		left: 0;
 		right: 0;
 		padding-left: 9px;
