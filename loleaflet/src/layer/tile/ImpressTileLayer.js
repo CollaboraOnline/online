@@ -100,6 +100,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 		var presentationControlWrapperElem = L.DomUtil.get('presentation-controls-wrapper');
 		var documentContainer = L.DomUtil.get('document-container');
+		var slideSorter = L.DomUtil.get('slide-sorter');
 
 		// update portrait / landscape
 		var remove = 'portrait';
@@ -111,12 +112,14 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 		L.DomUtil.removeClass(presentationControlWrapperElem, remove);
 		L.DomUtil.removeClass(documentContainer, remove);
+		L.DomUtil.removeClass(slideSorter, remove);
 		L.DomUtil.addClass(presentationControlWrapperElem, add);
 		L.DomUtil.addClass(documentContainer, add);
+		L.DomUtil.addClass(slideSorter, add);
 
 		// update parts
 		var visible = L.DomUtil.getStyle(presentationControlWrapperElem, 'display');
-		if (!this._isSlidePaneVisible && visible !== 'none') {
+		if (visible !== 'none') {
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
 				selectedParts: this._selectedParts,
@@ -125,7 +128,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				partNames: this._partHashes
 			});
 		}
-		this._isSlidePaneVisible = !(visible === 'none');
 	},
 
 	onMobileInit: function (map) {

@@ -33,44 +33,6 @@
 	margin-left: 20px;
 	}
 
-@media (max-width: 767px) and (orientation: portrait), (max-device-width: 767px) and (orientation: portrait) {
-	#slide-sorter {
-		max-height: 60px;
-	}
-
-	.preview-img {
-		min-width: 37px;
-		max-width: 60px;
-		max-height: 45px;
-		margin: 0px;
-	}
-
-	.preview-frame {
-		max-height: 60px;
-		max-width: initial;
-		display: table-cell;
-		padding-right: 1em;
-	}
-}
-
-@media (max-height: 767px) and (orientation: landscape), (max-device-height: 767px) and (orientation: landscape) {
-	#slide-sorter {
-		max-width: 120px;
-	}
-
-	.preview-img {
-		min-width: 40px;
-		max-width: 40px;
-		margin-left: 8px;
-	}
-
-	.preview-frame {
-		max-height: initial;
-		max-width: 66px;
-		display: block;
-	}
-}
-
 /* The current part the user is on. */
 .preview-img-currentpart {
     border-color: #000000;

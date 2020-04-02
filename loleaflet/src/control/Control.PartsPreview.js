@@ -150,6 +150,27 @@ L.Control.PartsPreview = L.Control.extend({
 						L.DomUtil.addClass(this._previewTiles[j], 'preview-img-selectedpart');
 				}
 			}
+
+			// update portrait / landscape
+			var removePreviewImg = 'preview-img-portrait';
+			var addPreviewImg = 'preview-img-landscape';
+			var removePreviewFrame = 'preview-frame-portrait';
+			var addPreviewFrame = 'preview-frame-landscape';
+			if (L.DomUtil.isPortrait()) {
+				removePreviewImg = 'preview-img-landscape';
+				addPreviewImg = 'preview-img-portrait';
+				removePreviewFrame = 'preview-frame-landscape';
+				addPreviewFrame = 'preview-frame-portrait';
+			}
+
+			for (i = 0; i < parts; i++) {
+				L.DomUtil.removeClass(this._previewTiles[i], removePreviewImg);
+				L.DomUtil.addClass(this._previewTiles[i], addPreviewImg);
+			}
+
+			var previewFrame = $(this._partsPreviewCont).find('.preview-frame');
+			previewFrame.removeClass(removePreviewFrame);
+			previewFrame.addClass(addPreviewFrame);
 		}
 	},
 

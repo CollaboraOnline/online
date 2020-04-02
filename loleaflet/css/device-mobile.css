@@ -624,6 +624,24 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 	bottom: 33px;
 }
 
+#slide-sorter.portrait {
+	max-height: 60px;
+}
+
+.preview-img-portrait {
+	min-width: 37px;
+	max-width: 60px;
+	max-height: 45px;
+	margin: 0px;
+}
+
+.preview-frame-portrait {
+	max-height: 60px;
+	max-width: initial;
+	display: table-cell;
+	padding-right: 1em;
+}
+
 /* Slidesorter in landscape mode */
 #presentation-controls-wrapper.landscape {
 	top: 41px;
@@ -649,4 +667,20 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 
 #document-container.landscape.parts-preview-document.keyboard {
 	left: 0px !important;
+}
+
+#slide-sorter.landscape {
+	max-width: 120px;
+}
+
+.preview-img-landscape {
+	min-width: 40px;
+	max-width: 40px;
+	margin-left: 8px;
+}
+
+.preview-frame-landscape {
+	max-height: initial;
+	max-width: 66px;
+	display: block;
 }
