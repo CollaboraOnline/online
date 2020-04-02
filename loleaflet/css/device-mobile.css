@@ -689,3 +689,25 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 .preview-img-dropsite {
     border-bottom: 3px solid #b6b6b6;
 }
+
+/* Related to mobilewizard.cxx */
+#mobile-wizard-header.landscape {
+	display: none;
+}
+#mobile-wizard-content.with-slide-sorter-above.landscape {
+	top: 48px !important;
+}
+#mobile-wizard-header.portrait {
+	display: block;
+}
+#mobile-wizard-content.with-slide-sorter-above.portrait {
+	top: 111px !important;
+}
+
+/* Related to mobile-wizard based menubar */
+#mobile-wizard.menuwizard.landscape #mobile-wizard-content.with-slide-sorter-above.landscape {
+	overflow-y: auto !important;
+}
+#mobile-wizard.menuwizard.portrait #mobile-wizard-content.with-slide-sorter-above.portrait {
+	overflow-y: hidden !important;
+}

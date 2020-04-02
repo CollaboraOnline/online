@@ -1,7 +1,0 @@
-@media (max-device-width: 767px) {
-	@media (orientation: landscape) {
-		#mobile-wizard.menuwizard #mobile-wizard-content.with-slide-sorter-above {
-			overflow-y: auto !important;
-		}
-	}
-}

@@ -116,7 +116,6 @@ LOLEAFLET_CSS =\
 	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
 	$(srcdir)/css/menubar.css \
-	$(srcdir)/css/menubar-mobile.css \
 	$(srcdir)/css/mobilewizard.css \
 	$(srcdir)/css/vex.css \
 	$(builddir)/node_modules/jquery-ui/themes/ui-lightness/jquery-ui.css

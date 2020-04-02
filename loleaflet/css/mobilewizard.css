@@ -245,15 +245,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	float: left;
 	margin-bottom: 4%;
 }
-@media (orientation: landscape) {
-	#mobile-wizard-header{display: none;}
-	#mobile-wizard-content.with-slide-sorter-above {
-		top: 48px !important;
-	}
-}
-@media (orientation: portrait) {
-	#mobile-wizard-header{display: block;}
-}
 .menuwizard #mobile-wizard-back {
 	background-position-x: 22px;
 	width: 52px;

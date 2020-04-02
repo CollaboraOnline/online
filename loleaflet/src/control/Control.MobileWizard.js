@@ -29,6 +29,7 @@ L.Control.MobileWizard = L.Control.extend({
 		map.on('closemobilewizard', this._hideWizard, this);
 		map.on('showwizardsidebar', this._showWizardSidebar, this);
 		map.on('mobilewizardback', this.goLevelUp, this);
+		map.on('resize', this._onResize, this);
 
 		this._setupBackButton();
 	},
@@ -222,6 +223,10 @@ L.Control.MobileWizard = L.Control.extend({
 				}
 			}
 		}
+	},
+
+	_onResize: function() {
+		L.DomUtil.updateElementsOrientation(['mobile-wizard', 'mobile-wizard-content']);
 	},
 
 	_setTitle: function(title) {

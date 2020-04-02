@@ -98,27 +98,10 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._map.setView(this._map.getCenter(), this._map.getZoom(), {reset: true});
 		}
 
-		var presentationControlWrapperElem = L.DomUtil.get('presentation-controls-wrapper');
-		var documentContainer = L.DomUtil.get('document-container');
-		var slideSorter = L.DomUtil.get('slide-sorter');
-
-		// update portrait / landscape
-		var remove = 'portrait';
-		var add = 'landscape';
-		if (L.DomUtil.isPortrait()) {
-			remove = 'landscape';
-			add = 'portrait';
-		}
-
-		L.DomUtil.removeClass(presentationControlWrapperElem, remove);
-		L.DomUtil.removeClass(documentContainer, remove);
-		L.DomUtil.removeClass(slideSorter, remove);
-		L.DomUtil.addClass(presentationControlWrapperElem, add);
-		L.DomUtil.addClass(documentContainer, add);
-		L.DomUtil.addClass(slideSorter, add);
+		L.DomUtil.updateElementsOrientation(['presentation-controls-wrapper', 'document-container', 'slide-sorter', 'mobile-wizard-header', 'mobile-wizard-content']);
 
 		// update parts
-		var visible = L.DomUtil.getStyle(presentationControlWrapperElem, 'display');
+		var visible = L.DomUtil.getStyle(L.DomUtil.get('presentation-controls-wrapper'), 'display');
 		if (visible !== 'none') {
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
