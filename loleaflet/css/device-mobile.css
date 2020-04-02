@@ -362,6 +362,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 #toolbar-up.w2ui-toolbar{
 	padding-top: 0px;
 	padding-bottom: 0px;
+	background: transparent;
 }
 #formulabar {
 	padding: 0px !important;
