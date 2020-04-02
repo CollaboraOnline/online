@@ -2207,7 +2207,8 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		} else {
 			this._map._textInput.hideCursor();
-			if (this._map.editorHasFocus()) // Allow input if a dialog has the focus.
+			// Maintain input if a dialog or search-box has the focus.
+			if (this._map.editorHasFocus() && !this._map.isSearching())
 				this._map.focus(false);
 		}
 	},
