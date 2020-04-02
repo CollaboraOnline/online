@@ -536,6 +536,21 @@ L.Control.LokDialog = L.Control.extend({
 		var handles = this._calcInputBar.textSelection.handles;
 		var startHandle = handles.children[0];
 		var endHandle = handles.children[1];
+		var dragEnd = e.type === 'mouseup' || e.type === 'mouseout' || e.type === 'panend';
+
+		if ((!startHandle || !startHandle.isDragged) && (!endHandle || !endHandle.isDragged) && dragEnd) {
+			var code = 0;
+			if (e.deltaX > 30 || e.deltaY > 20)
+				code = 1025; // ArrowUp
+			else if (e.deltaX < -30 || e.deltaY < -20)
+				code = 1024; // ArrowDown
+			if (code) {
+				this._map._docLayer.postKeyboardEvent('input', 0, code);
+				this._map._textInput._emptyArea();
+				this._map._docLayer.postKeyboardEvent('up', 0, code);
+			}
+		}
+
 		if (!endHandle || !startHandle)
 			return;
 
@@ -547,7 +562,6 @@ L.Control.LokDialog = L.Control.extend({
 		if (!draggedHandle)
 			return;
 
-		var dragEnd = e.type === 'mouseup' || e.type === 'mouseout' || e.type === 'panend';
 		if (dragEnd)
 			draggedHandle.isDragged = false;
 		var mousePos = L.DomEvent.getMousePosition(e.pointers ? e.srcEvent : e, handles);
