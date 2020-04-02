@@ -832,20 +832,6 @@ input.clipboard {
 	margin: 0px;
 	}
 
-/* The 20px above is 5% of the 400px below. */
-@media screen and (max-height: 400px) {
-	.loleaflet-ruler {
-		height: 0px;
-		display: none;
-	}
-}
-@media (max-width: 767px), (max-device-height: 767px) {
-	.loleaflet-ruler {
-		height: 0px;
-		display: none;
-	}
-}
-
 .loleaflet-ruler-breakcontainer {
 	height: 100%;
 	position: absolute;

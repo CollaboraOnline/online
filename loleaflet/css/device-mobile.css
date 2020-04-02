@@ -55,6 +55,12 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	display: none !important;
 }
 
+/* No ruler on mobile phones. */
+.loleaflet-ruler {
+	height: 0px;
+	display: none;
+}
+
 /* Related to menubar.css */
 .document-logo {
     width: 35px;
