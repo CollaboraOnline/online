@@ -148,7 +148,8 @@ bool JWTAuth::verify(const std::string& accessToken)
         Poco::JSON::Parser parser;
         Poco::Dynamic::Var result = parser.parse(decodedPayload);
         Poco::JSON::Object::Ptr object = result.extract<Poco::JSON::Object::Ptr>();
-        std::time_t decodedExptime = object->get("exp").convert<std::time_t>();
+        std::time_t decodedExptime = 0;
+        object->get("exp").convert(decodedExptime);
 
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t curtime = std::chrono::system_clock::to_time_t(now);
