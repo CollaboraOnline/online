@@ -22,7 +22,7 @@
 
 #import "ios.h"
 #import "AppDelegate.h"
-#import "Document.h"
+#import "CODocument.h"
 #import "DocumentViewController.h"
 
 #import "ClientSession.hpp"
@@ -34,7 +34,7 @@
 #import "LOOLWSD.hpp"
 #import "Protocol.hpp"
 
-@implementation Document
+@implementation CODocument
 
 - (id)contentsForType:(NSString*)typeName error:(NSError **)errorPtr {
     // Somehow this doesn't feel right, creating an NSFileWrapper around the file that was given to
@@ -49,7 +49,7 @@
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
 
-    // If this method is called a second time on the same Document object, just ignore it. This
+    // If this method is called a second time on the same CODocument object, just ignore it. This
     // seems to happen occastionally when the device is awakened after sleep. See tdf#122543.
     if (fakeClientFd >= 0)
         return YES;

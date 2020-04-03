@@ -9,8 +9,8 @@
 #import "config.h"
 
 #import "AppDelegate.h"
+#import "CODocument.h"
 #import "DocumentBrowserViewController.h"
-#import "Document.h"
 #import "DocumentViewController.h"
 #import "TemplateCollectionViewController.h"
 
@@ -67,7 +67,7 @@
 - (void)presentDocumentAtURL:(NSURL *)documentURL {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DocumentViewController *documentViewController = [storyBoard instantiateViewControllerWithIdentifier:@"DocumentViewController"];
-    documentViewController.document = [[Document alloc] initWithFileURL:documentURL];
+    documentViewController.document = [[CODocument alloc] initWithFileURL:documentURL];
     documentViewController.document->fakeClientFd = -1;
     documentViewController.document.viewController = documentViewController;
     [self presentViewController:documentViewController animated:YES completion:nil];

@@ -21,8 +21,8 @@
 #import "ios.h"
 #import "AppDelegate.h"
 #import "DocumentBrowserViewController.h"
+#import "CODocument.h"
 #import "DocumentViewController.h"
-#import "Document.h"
 
 #import "FakeSocket.hpp"
 #import "Kit.hpp"

@@ -15,7 +15,7 @@
 
 @class DocumentViewController;
 
-@interface Document : UIDocument {
+@interface CODocument : UIDocument {
 @public
     int fakeClientFd;
 }
