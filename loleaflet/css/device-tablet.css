@@ -4,3 +4,29 @@
 .w2ui-tag .w2ui-tag-top {
 	display:none !important;
 }
+
+/* Make the upper toolbar scrollable using swipe as on phones. */
+#toolbar-up > .w2ui-scroll-wrapper {
+	overflow-x: scroll !important;
+	scrollbar-width: none; /*css draft (firefox only)*/
+	-ms-scrollbar: none; /*ie*/
+}
+#toolbar-up > .w2ui-scroll-wrapper::-webkit-scrollbar { /*webkit only*/
+	display: none;
+}
+#toolbar-up .w2ui-scroll-left, #toolbar-up .w2ui-scroll-right{
+	background: none;
+	height: 100%;
+	width: 0px;
+	top: 0%;
+	box-shadow: 8px 0 13px 2px #0b87e7, -6px 0px 6px 6px #007cdc;
+	border-radius: 0px;
+}
+#toolbar-up .w2ui-scroll-right{
+	right: 0;
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
