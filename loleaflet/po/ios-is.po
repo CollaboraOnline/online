@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,13 +16,17 @@ msgstr ""
 "X-Pootle-Path: /is/libo_online/ios-is.po\n"
 "X-Pootle-Revision: 3937882\n"
 
-#: App+info
-msgid "App info"
-msgstr "Upplýsingar um forrit"
+#: Version+information
+msgid "Version information"
+msgstr ""
 
-#: Version
-msgid "Version"
-msgstr "Útgáfa"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr ""
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr ""
 
 #: Settings
 msgid "Settings"
@@ -31,3 +35,9 @@ msgstr "Stillingar"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "Slóð á lista yfir sniðmát"
+
+#~ msgid "App info"
+#~ msgstr "Upplýsingar um forrit"
+
+#~ msgid "Version"
+#~ msgstr "Útgáfa"

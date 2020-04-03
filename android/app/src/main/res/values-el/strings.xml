@@ -92,11 +92,14 @@
     <string name="file_exists_warning">Ένα αρχείο με αυτό το όνομα υπάρχει ήδη και θα αντικατασταθεί.</string>
     <string name="temp_file_saving_disabled">Αυτό το αρχείο είναι μόνο για ανάγνωση, η αποθήκευση είναι απενεργοποιημένη.</string>
     <string name="no_items">Χωρίς στοιχεία</string>
-    <string name="no_recent_items">Χωρίς πρόσφατα στοιχεία</string>
+    <string name="no_recent_items">Ανοίξτε ένα αρχείο χρησιμοποιώντας το εικονίδιο φακέλου στη γραμμή εργαλείων.</string>
     <string name="app_vendor">Αυτή η έκδοση παρέχεται από τον $VENDOR.</string>
     <string name="app_description">"Το $APP_NAME είναι μια σύγχρονη, εύχρηστη,  σειρά προγραμμάτων για επεξεργασία κειμένου, υπολογιστικά φύλλα, παρουσιάσεις και άλλα."</string>
     <string name="app_version">"Έκδοση: %1$s,  Αναγνωριστικό δόμησης: %2$s"</string>
     <string name="app_name_settings">Ρυθμίσεις</string>
     <string name="pref_enable_chrome_debugger_info">Ενεργοποίηση της χρήσης του εργαλείου αποσφαλμάτωσης Chrome στο έγγραφο.</string>
     <string name="pref_enable_chrome_debugger">Αποσφαλμάτωση Chrome</string>
+    <string name="remove_from_list">Αφαίρεση από τον κατάλογο</string>
+    <string name="file_actions_icon_desc">Ενέργειες αρχείου</string>
+    <string name="pref_category_editor">Ρυθμίσεις επεξεργαστή</string>
 </resources>

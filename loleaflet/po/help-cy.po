@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-01-07 10:58+0000\n"
+"PO-Revision-Date: 2020-04-01 10:44+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@yahoo.com>\n"
 "Language-Team: Welsh <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cy/>\n"
 "Language: cy\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : (n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /cy/libo_online/loleaflet-help-cy.po\n"
 "X-Pootle-Revision: 3737521\n"
 
@@ -1043,7 +1043,7 @@ msgstr "Mae <span class=\"productname\">%productName</span> yn eich hysbysu gyda
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
-msgstr ""
+msgstr "Mae <span class=\"productname\">%productName</span> yn defnyddio adnoddau porwyr modern i addasu'r rhyngwyneb defnyddiwr i faint yr ardal sy'n y golwg, gan gynnwys sgrinau bychain dyfeisiau symudol. Mae'r rhyngwyneb yn cynnwys:"
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."

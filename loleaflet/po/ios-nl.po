@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
 "PO-Revision-Date: 2020-01-20 10:55+0000\n"
 "Last-Translator: vpanter <Leo.Moons@proximus.be>\n"
 "Language-Team: Dutch <https://weblate.documentfoundation.org/projects/libo_online/ios/nl/>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "X-Pootle-Path: /nl/libo_online/ios-nl.po\n"
 "X-Pootle-Revision: 3938032\n"
 
-#: App+info
-msgid "App info"
-msgstr "App informatie"
+#: Version+information
+msgid "Version information"
+msgstr ""
 
-#: Version
-msgid "Version"
-msgstr "Versie"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr ""
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr ""
 
 #: Settings
 msgid "Settings"
@@ -32,3 +36,9 @@ msgstr "Instellingen"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "URL sjabloonlijst"
+
+#~ msgid "App info"
+#~ msgstr "App informatie"
+
+#~ msgid "Version"
+#~ msgstr "Versie"

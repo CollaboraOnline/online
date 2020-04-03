@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
 "PO-Revision-Date: 2020-03-13 09:52+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://weblate.documentfoundation.org/projects/libo_online/ios/hr/>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "X-Pootle-Path: /hr/libo_online/ios-hr.po\n"
 "X-Pootle-Revision: 3937856\n"
 
-#: App+info
-msgid "App info"
-msgstr "Informacije"
+#: Version+information
+msgid "Version information"
+msgstr ""
 
-#: Version
-msgid "Version"
-msgstr "Verzija"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr ""
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr ""
 
 #: Settings
 msgid "Settings"
@@ -32,3 +36,9 @@ msgstr "Postavke"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "URL popisa predložaka"
+
+#~ msgid "App info"
+#~ msgstr "Informacije"
+
+#~ msgid "Version"
+#~ msgstr "Verzija"

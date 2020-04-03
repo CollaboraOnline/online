@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,16 @@ msgstr ""
 "X-Pootle-Path: /pa_IN/libo_online/ios-pa_IN.po\n"
 "X-Pootle-Revision: 3938077\n"
 
-#: App+info
-msgid "App info"
+#: Version+information
+msgid "Version information"
 msgstr ""
 
-#: Version
-msgid "Version"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr ""
+
+#: Core+git+hash
+msgid "Core git hash"
 msgstr ""
 
 #: Settings

@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: 2020-02-17 21:29+0000\n"
-"Last-Translator: naniud <kitynska@gmail.com>\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"PO-Revision-Date: 2020-04-01 10:44+0000\n"
+"Last-Translator: Adam Rak <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://weblate.documentfoundation.org/projects/libo_online/ios/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -17,13 +17,17 @@ msgstr ""
 "X-Pootle-Path: /pl/libo_online/ios-pl.po\n"
 "X-Pootle-Revision: 3938082\n"
 
-#: App+info
-msgid "App info"
-msgstr "Informacje o aplikacji"
+#: Version+information
+msgid "Version information"
+msgstr "Informacje o wersji"
 
-#: Version
-msgid "Version"
-msgstr "Wersja"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr "Hash online git"
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr "Hash rdzenia git"
 
 #: Settings
 msgid "Settings"
@@ -32,3 +36,9 @@ msgstr "Ustawienia"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "Adres URL listy szablonów"
+
+#~ msgid "App info"
+#~ msgstr "Informacje o aplikacji"
+
+#~ msgid "Version"
+#~ msgstr "Wersja"

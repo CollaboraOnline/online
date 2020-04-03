@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
 "PO-Revision-Date: 2020-02-25 10:42+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/ios/sk/>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "X-Pootle-Path: /sk/libo_online/ios-sk.po\n"
 "X-Pootle-Revision: 3938142\n"
 
-#: App+info
-msgid "App info"
-msgstr "Informácie o aplikácii"
+#: Version+information
+msgid "Version information"
+msgstr ""
 
-#: Version
-msgid "Version"
-msgstr "Verzia"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr ""
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr ""
 
 #: Settings
 msgid "Settings"
@@ -32,3 +36,9 @@ msgstr "Nastavenia"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "Adresa zoznamu šablón"
+
+#~ msgid "App info"
+#~ msgstr "Informácie o aplikácii"
+
+#~ msgid "Version"
+#~ msgstr "Verzia"

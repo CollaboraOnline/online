@@ -4,25 +4,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"PO-Revision-Date: 2020-04-01 10:44+0000\n"
+"Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
+"Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/ios/eu/>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /eu/libo_online/ios-eu.po\n"
 "X-Pootle-Revision: 3937785\n"
 
-#: App+info
-msgid "App info"
-msgstr "Aplikazioaren informazioa"
+#: Version+information
+msgid "Version information"
+msgstr "Bertsioaren informazioa"
 
-#: Version
-msgid "Version"
-msgstr "Bertsioa"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr "Lineako git hash-a"
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr "Nukleoaren git hash-a"
 
 #: Settings
 msgid "Settings"
@@ -31,3 +36,9 @@ msgstr "Ezarpenak"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "Txantiloi-zerrendaren URLa"
+
+#~ msgid "App info"
+#~ msgstr "Aplikazioaren informazioa"
+
+#~ msgid "Version"
+#~ msgstr "Bertsioa"

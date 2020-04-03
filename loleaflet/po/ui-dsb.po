@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-15 16:08+0100\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
 "PO-Revision-Date: 2020-03-17 08:29+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Lower Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/dsb/>\n"
@@ -121,7 +121,7 @@ msgid "Network Graph"
 msgstr "Seśowa grafika"
 
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:252
-#: src/layer/tile/TileLayer.js:395
+#: src/layer/tile/TileLayer.js:396
 msgid "Save"
 msgstr "Składowaś"
 
@@ -190,17 +190,17 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Cośo toś to pósejźenje napšawdu skóńcyś?"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1156 src/control/Control.Tabs.js:195
-#: src/control/Control.Tabs.js:212 src/control/Control.Toolbar.js:246
-#: src/control/Toolbar.js:455
+#: src/control/Control.Menubar.js:1163 src/control/Control.Tabs.js:201
+#: src/control/Control.Tabs.js:218 src/control/Control.Toolbar.js:219
+#: src/control/Toolbar.js:457
 msgid "OK"
 msgstr "W pórěźe"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1157
-#: src/control/Control.Tabs.js:196 src/control/Control.Tabs.js:213
-#: src/control/Control.Toolbar.js:247 src/control/Toolbar.js:456
-#: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:396
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1164
+#: src/control/Control.Tabs.js:202 src/control/Control.Tabs.js:219
+#: src/control/Control.Toolbar.js:220 src/control/Toolbar.js:458
+#: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:397
 msgid "Cancel"
 msgstr "Pśetergnuś"
 
@@ -256,11 +256,11 @@ msgstr "Wobźěłaś"
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Serwer jo pśi wuwjeźenju pśikaza %1 na zmólku %0 starcył."
 
-#: src/control/Control.ContextMenu.js:171
+#: src/control/Control.ContextMenu.js:188
 msgid "Delete"
 msgstr "Lašowaś"
 
-#: src/control/Control.ContextMenu.js:255
+#: src/control/Control.ContextMenu.js:272
 msgid "Paste Special"
 msgstr "Wopśimjeśe zasajźiś"
 
@@ -276,7 +276,7 @@ msgstr "Typ"
 msgid "Index"
 msgstr "Indeks"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:275
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:276
 msgid "Comment"
 msgstr "Komentar"
 
@@ -292,7 +292,7 @@ msgstr "Casowy kołk"
 msgid "Jump to state"
 msgstr "K statusoju pśejś"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2549
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.Toolbar.js:2524
 msgid "You"
 msgstr "Wy"
 
@@ -316,92 +316,103 @@ msgstr "Kopěrowanje/Zasajźenje prěki zachopiś"
 msgid "No color"
 msgstr "Žedna barwa"
 
-#: src/control/Control.JSDialogBuilder.js:151
-msgid "Linear"
-msgstr "Linearny"
-
-#: src/control/Control.JSDialogBuilder.js:154
-msgid "Axial"
-msgstr "Aksialny"
-
-#: src/control/Control.JSDialogBuilder.js:157
-msgid "Radial"
-msgstr "Radialny"
-
-#: src/control/Control.JSDialogBuilder.js:160
-msgid "Ellipsoid"
-msgstr "Elipsoid"
-
-#: src/control/Control.JSDialogBuilder.js:164
-msgid "Quadratic"
-msgstr "Kwadratiski"
-
-#: src/control/Control.JSDialogBuilder.js:167
-msgid "Square"
-msgstr "Kwadrat"
-
-#: src/control/Control.JSDialogBuilder.js:170
-msgid "Fixed size"
-msgstr "Kšuta wjelikosć"
-
-#: src/control/Control.JSDialogBuilder.js:768
-#: src/control/Control.Toolbar.js:1651
+#: src/control/Control.JSDialogBuilder.js:153
+#: src/control/Control.JSDialogBuilder.js:804
+#: src/control/Control.Toolbar.js:1600
 msgid "None"
 msgstr "Žeden"
 
-#: src/control/Control.JSDialogBuilder.js:771
+#: src/control/Control.JSDialogBuilder.js:156
+msgid "Solid"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:159
+msgid "Linear"
+msgstr "Linearny"
+
+#: src/control/Control.JSDialogBuilder.js:162
+msgid "Axial"
+msgstr "Aksialny"
+
+#: src/control/Control.JSDialogBuilder.js:165
+msgid "Radial"
+msgstr "Radialny"
+
+#: src/control/Control.JSDialogBuilder.js:168
+msgid "Ellipsoid"
+msgstr "Elipsoid"
+
+#: src/control/Control.JSDialogBuilder.js:172
+msgid "Quadratic"
+msgstr "Kwadratiski"
+
+#: src/control/Control.JSDialogBuilder.js:175
+msgid "Square"
+msgstr "Kwadrat"
+
+#: src/control/Control.JSDialogBuilder.js:178
+msgid "Fixed size"
+msgstr "Kšuta wjelikosć"
+
+#: src/control/Control.JSDialogBuilder.js:807
 msgid "Color"
 msgstr "Barwa"
 
-#: src/control/Control.JSDialogBuilder.js:774
+#: src/control/Control.JSDialogBuilder.js:810
 msgid "Gradient"
 msgstr "Pśeběg"
 
-#: src/control/Control.JSDialogBuilder.js:777
+#: src/control/Control.JSDialogBuilder.js:813
 msgid "Hatching"
 msgstr "Šrafura"
 
-#: src/control/Control.JSDialogBuilder.js:781
+#: src/control/Control.JSDialogBuilder.js:817
 msgid "Pattern"
 msgstr "Muster"
 
-#: src/control/Control.JSDialogBuilder.js:914
+#: src/control/Control.JSDialogBuilder.js:950
 msgid "From"
 msgstr "Wót"
 
-#: src/control/Control.JSDialogBuilder.js:917
+#: src/control/Control.JSDialogBuilder.js:953
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1052
+#: src/control/Control.JSDialogBuilder.js:1088
 msgid "Font Name"
 msgstr "Mě pisma"
 
-#: src/control/Control.JSDialogBuilder.js:1054
+#: src/control/Control.JSDialogBuilder.js:1090
 msgid "Font Size"
 msgstr "Wjelikosć pisma"
 
-#: src/control/Control.JSDialogBuilder.js:1535
+#: src/control/Control.JSDialogBuilder.js:1441
+#, fuzzy
+#| msgid "Borders"
+msgid "Cell borders"
+msgstr "Ramiki"
+
+#: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"
 msgstr "Smužki"
 
-#: src/control/Control.JSDialogBuilder.js:1536
+#: src/control/Control.JSDialogBuilder.js:1631
 msgid "Columns"
 msgstr "Słupy"
 
-#: src/control/Control.JSDialogBuilder.js:1556
-#: src/control/Control.Toolbar.js:975
+#: src/control/Control.JSDialogBuilder.js:1651
+#: src/control/Control.Toolbar.js:956
 msgid "Insert table"
 msgstr "Tabelu zasajźiś"
 
-#: src/control/Control.JSDialogBuilder.js:1585
+#: src/control/Control.JSDialogBuilder.js:1680
 msgid "Line style:"
 msgstr "Linijowy stil:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:228
 #: src/control/Control.Menubar.js:230 src/control/Control.Menubar.js:232
 #: src/control/Control.Menubar.js:338 src/control/Control.Menubar.js:453
-#: src/control/Control.Toolbar.js:2062
+#: src/control/Control.Toolbar.js:2028
 msgid "None (Do not check spelling)"
 msgstr "Žedna (pšawopis njekontrolěrowaś)"
 
@@ -466,7 +477,7 @@ msgid "Repair"
 msgstr "Pórěźiś"
 
 #: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:280
-#: src/control/Control.Toolbar.js:1176
+#: src/control/Control.Toolbar.js:1136
 msgid "Reset zoom"
 msgstr "Skalěrowanje slědk stajiś"
 
@@ -511,7 +522,7 @@ msgid "About"
 msgstr "Wó"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:346
-#: src/control/Control.Menubar.js:462 src/map/Map.js:392
+#: src/control/Control.Menubar.js:462 src/map/Map.js:420
 msgid "Last modification"
 msgstr "Slědna změna"
 
@@ -528,7 +539,7 @@ msgid "PowerPoint Presentation (.pptx)"
 msgstr "Prezentacija Powerpoint (.pptx)"
 
 #: src/control/Control.Menubar.js:332 src/control/Control.Menubar.js:555
-#: src/control/Control.Toolbar.js:1129
+#: src/control/Control.Toolbar.js:1089
 msgid "Fullscreen presentation"
 msgstr "Prezentacija połneje wobrazowki"
 
@@ -561,21 +572,17 @@ msgstr "Wusoki format"
 msgid "Landscape"
 msgstr "Prěcny format"
 
-#: src/control/Control.Menubar.js:759 src/control/Control.Toolbar.js:2061
+#: src/control/Control.Menubar.js:759 src/control/Control.Toolbar.js:2027
 msgid "Reset to Default Language"
 msgstr "Na standardnu rěc slědk stajiś"
 
-#: src/control/Control.Menubar.js:1071
+#: src/control/Control.Menubar.js:1079
 msgid "Insert Shape"
 msgstr "Formu zasajźiś"
 
-#: src/control/Control.Menubar.js:1154
+#: src/control/Control.Menubar.js:1161
 msgid "Are you sure you want to delete this slide?"
 msgstr "Cośo toś tu foliju napšawdu lašowaś?"
-
-#: src/control/Control.Menubar.js:1192 src/map/Clipboard.js:778
-msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr "<p>Waš wobglědowak ma wjelgin wobgranicowany pśistup k mjazywótkładoju, wužywajśo togodla toś te tastowe skrotconki:<ul><li><b>Strg+C</b>: Za kopěrowanje.</li><li><b>Strg+X</b>: Za wurězanje.</li><li><b>Strg+V</b>: Za zasajźenje.</li></ul></p>"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -593,181 +600,181 @@ msgstr "Tabelu pśed tym zasajźiś"
 msgid "Insert sheet after this"
 msgstr "Tabelu za tym zasajźiś"
 
-#: src/control/Control.Tabs.js:193
+#: src/control/Control.Tabs.js:199
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "Cośo tabelu %sheet% napšawdu lašowaś?"
 
-#: src/control/Control.Tabs.js:210
+#: src/control/Control.Tabs.js:216
 msgid "Enter new sheet name"
 msgstr "Nowe tabelowe mě zapódaś"
 
-#: src/control/Control.Toolbar.js:244
+#: src/control/Control.Toolbar.js:217
 msgid "Are you sure you want to delete this page?"
 msgstr "Cośo toś ten bok napšawdu lašowaś?"
 
-#: src/control/Control.Toolbar.js:862
+#: src/control/Control.Toolbar.js:843
 msgid "Default Style"
 msgstr "Standardna pśedłoga"
 
-#: src/control/Control.Toolbar.js:919
+#: src/control/Control.Toolbar.js:900
 msgid "Borders"
 msgstr "Ramiki"
 
-#: src/control/Control.Toolbar.js:927
+#: src/control/Control.Toolbar.js:908
 msgid "More..."
 msgstr "Wěcej..."
 
-#: src/control/Control.Toolbar.js:980
+#: src/control/Control.Toolbar.js:961
 msgid "Insert Local Image"
 msgstr "Lokalny wobraz zasajźiś"
 
-#: src/control/Control.Toolbar.js:984
+#: src/control/Control.Toolbar.js:965
 msgid "Insert shapes"
 msgstr "Formy zasajźiś"
 
-#: src/control/Control.Toolbar.js:1063
+#: src/control/Control.Toolbar.js:1023
 msgid "Function Wizard"
 msgstr "Funkciski asistent"
 
-#: src/control/Control.Toolbar.js:1107
+#: src/control/Control.Toolbar.js:1067
 msgid "First sheet"
 msgstr "Prědna tabela"
 
-#: src/control/Control.Toolbar.js:1108
+#: src/control/Control.Toolbar.js:1068
 msgid "Previous sheet"
 msgstr "Pjerwjejšna tabela"
 
-#: src/control/Control.Toolbar.js:1109
+#: src/control/Control.Toolbar.js:1069
 msgid "Next sheet"
 msgstr "Pśiduca tabela"
 
-#: src/control/Control.Toolbar.js:1110
+#: src/control/Control.Toolbar.js:1070
 msgid "Last sheet"
 msgstr "Slědna tabela"
 
-#: src/control/Control.Toolbar.js:1111 src/layer/tile/CalcTileLayer.js:179
+#: src/control/Control.Toolbar.js:1071 src/layer/tile/CalcTileLayer.js:176
 msgid "Insert sheet"
 msgstr "Tabelu zasajźiś"
 
-#: src/control/Control.Toolbar.js:1153
+#: src/control/Control.Toolbar.js:1113
 msgid "Search"
 msgstr "Pytaś"
 
-#: src/control/Control.Toolbar.js:1159
+#: src/control/Control.Toolbar.js:1119
 msgid "Cancel the search"
 msgstr "Pytanje pśetergnuś"
 
-#: src/control/Control.Toolbar.js:1166 src/layer/tile/CalcTileLayer.js:120
+#: src/control/Control.Toolbar.js:1126 src/layer/tile/CalcTileLayer.js:120
 #: src/layer/tile/ImpressTileLayer.js:155 src/layer/tile/WriterTileLayer.js:100
 msgid "Always follow the editor"
 msgstr "Pśeco wobźěłarjeju slědowaś"
 
-#: src/control/Control.Toolbar.js:1169 src/layer/tile/CalcTileLayer.js:123
+#: src/control/Control.Toolbar.js:1129 src/layer/tile/CalcTileLayer.js:123
 #: src/layer/tile/ImpressTileLayer.js:158 src/layer/tile/WriterTileLayer.js:103
 msgid "Current"
 msgstr "Aktualny"
 
-#: src/control/Control.Toolbar.js:1252
+#: src/control/Control.Toolbar.js:1200
 msgid "%user has joined"
 msgstr "%user jo pśistupjony"
 
-#: src/control/Control.Toolbar.js:1253
+#: src/control/Control.Toolbar.js:1201
 msgid "%user has left"
 msgstr "%user jo spušćił"
 
-#: src/control/Control.Toolbar.js:1616
+#: src/control/Control.Toolbar.js:1565
 msgid "Number of Sheets"
 msgstr "Licba tabelow"
 
-#: src/control/Control.Toolbar.js:1621
+#: src/control/Control.Toolbar.js:1570
 msgid "Selected range of cells"
 msgstr "Wubrany celowy wobcerk"
 
-#: src/control/Control.Toolbar.js:1626 src/control/Control.Toolbar.js:1683
+#: src/control/Control.Toolbar.js:1575 src/control/Control.Toolbar.js:1632
 msgid "Entering text mode"
 msgstr "Tekstowy modus zmóžniś"
 
-#: src/control/Control.Toolbar.js:1635 src/control/Control.Toolbar.js:1688
+#: src/control/Control.Toolbar.js:1584 src/control/Control.Toolbar.js:1637
 msgid "Selection Mode"
 msgstr "Wuběrański modus"
 
-#: src/control/Control.Toolbar.js:1640
+#: src/control/Control.Toolbar.js:1589
 msgid "Choice of functions"
 msgstr "Wuběrk funkcijow"
 
-#: src/control/Control.Toolbar.js:1644
+#: src/control/Control.Toolbar.js:1593
 msgid "Average"
 msgstr "Pśerězk"
 
-#: src/control/Control.Toolbar.js:1645
+#: src/control/Control.Toolbar.js:1594
 msgid "CountA"
 msgstr "Licba2"
 
-#: src/control/Control.Toolbar.js:1646
+#: src/control/Control.Toolbar.js:1595
 msgid "Count"
 msgstr "Licba"
 
-#: src/control/Control.Toolbar.js:1647
+#: src/control/Control.Toolbar.js:1596
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: src/control/Control.Toolbar.js:1648
+#: src/control/Control.Toolbar.js:1597
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.Toolbar.js:1649
+#: src/control/Control.Toolbar.js:1598
 msgid "Sum"
 msgstr "Suma"
 
-#: src/control/Control.Toolbar.js:1650
+#: src/control/Control.Toolbar.js:1599
 msgid "Selection count"
 msgstr "Licba wuběrka"
 
-#: src/control/Control.Toolbar.js:1673
+#: src/control/Control.Toolbar.js:1622
 msgid "Number of Pages"
 msgstr "Licba bokow"
 
-#: src/control/Control.Toolbar.js:1678
+#: src/control/Control.Toolbar.js:1627
 msgid "Word Counter"
 msgstr "Licba słowow"
 
-#: src/control/Control.Toolbar.js:1713
+#: src/control/Control.Toolbar.js:1679
 msgid "Number of Slides"
 msgstr "Licba folijow"
 
-#: src/control/Control.Toolbar.js:1753
+#: src/control/Control.Toolbar.js:1719
 msgid "%n users"
 msgstr "%n wužywarjow"
 
-#: src/control/Control.Toolbar.js:1754
+#: src/control/Control.Toolbar.js:1720
 msgid "1 user"
 msgstr "1 wužywaŕ"
 
-#: src/control/Control.Toolbar.js:1755
+#: src/control/Control.Toolbar.js:1721
 msgid "0 users"
 msgstr "0 wužywarjow"
 
-#: src/control/Control.Toolbar.js:2157
+#: src/control/Control.Toolbar.js:2124
 msgid "Style"
 msgstr "Stil"
 
-#: src/control/Control.Toolbar.js:2180
+#: src/control/Control.Toolbar.js:2147
 msgid "Font"
 msgstr "Pismo"
 
-#: src/control/Control.Toolbar.js:2206
+#: src/control/Control.Toolbar.js:2172
 msgid "Previous slide"
 msgstr "Pjerwjejšna folija"
 
-#: src/control/Control.Toolbar.js:2207
+#: src/control/Control.Toolbar.js:2173
 msgid "Next slide"
 msgstr "Pśiduca folija"
 
-#: src/control/Control.Toolbar.js:2265
+#: src/control/Control.Toolbar.js:2231
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Konflikt pśi anulěrowanju/wóspjetowanju z někotarymi wužywarjami. Pšosym wužywajśo dokumentowe pórěźenje za rozwězanje"
 
-#: src/control/Control.Toolbar.js:2555
+#: src/control/Control.Toolbar.js:2530
 msgid "Readonly"
 msgstr "Pśeśiwo pisanjeju šćitany"
 
@@ -907,7 +914,7 @@ msgstr "Signěrowany, ale nic wšykne dataje su signěrowane"
 msgid "Downloading..."
 msgstr "Ześěgujo se..."
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1427
+#: src/control/Toolbar.js:104 src/map/Map.js:1470
 msgid "Saving..."
 msgstr "Składujo se..."
 
@@ -919,15 +926,15 @@ msgstr "Pśemjenjujo se..."
 msgid "This version of %productName is powered by"
 msgstr "Toś ta wersija %productName spěchujo se wót"
 
-#: src/control/Toolbar.js:449
+#: src/control/Toolbar.js:451
 msgid "Insert hyperlink"
 msgstr "Hyperwótkaz zasajźiś"
 
-#: src/control/Toolbar.js:451
+#: src/control/Toolbar.js:453
 msgid "Text"
 msgstr "Tekst"
 
-#: src/control/Toolbar.js:452
+#: src/control/Toolbar.js:454
 msgid "Link"
 msgstr "Hyperwótkaz"
 
@@ -939,83 +946,83 @@ msgstr "IE11 jo swóju maksimalnu licbu zwiskow dostał. Pšosym cytajśo toś t
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
 msgstr "Hopla, jo problem pśi zwězowanju z Libre Office Online nastał: "
 
-#: src/core/Socket.js:289
+#: src/core/Socket.js:288
 msgid "Served by:"
 msgstr "K dispoziciji stajony wót:"
 
-#: src/core/Socket.js:294
+#: src/core/Socket.js:293
 msgid "Unsupported server version."
 msgstr "Serwerowa wersija se njepódpěra."
 
-#: src/core/Socket.js:362
+#: src/core/Socket.js:361
 msgid "Session terminated by document owner"
 msgstr "Pósejźenje jo se wót dokumentowego swójstwownika skóńcyło"
 
-#: src/core/Socket.js:366
+#: src/core/Socket.js:365
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Inaktiwny dokument - pšosym klikniśo, aby znowego zacytał a z wobźěłowanim pókšacował"
 
-#: src/core/Socket.js:373
+#: src/core/Socket.js:372
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Serwer se za wótwardowanje wótšaltujo (awtomatiske zwěsćenje)"
 
-#: src/core/Socket.js:377
+#: src/core/Socket.js:376
 msgid "Oops, there is a problem connecting the document"
 msgstr "Hopla, jo problem pśi zwězowanju z dokumentom"
 
-#: src/core/Socket.js:381
+#: src/core/Socket.js:380
 msgid "Server is recycling and will be available shortly"
 msgstr "Serwer se znowego startujo a buźo skóro k dispoziciji"
 
-#: src/core/Socket.js:409
+#: src/core/Socket.js:408
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
 msgstr "Dokument jo se w składowaku změnił. Nowy dokument se zacytajo. Waša wersija jo ako pśeźěłana wersija k dispoziciji."
 
-#: src/core/Socket.js:415
+#: src/core/Socket.js:414
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
 msgstr "Starša wersija se wótnowijo. Njeskłaźone změny se we wersijowej historiji wobchowaju"
 
-#: src/core/Socket.js:518
+#: src/core/Socket.js:517
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
 msgstr "Dokument jo se změnił w składowaku. Co cośo ze swójimi njeskłaźonymi změnami cyniś?"
 
-#: src/core/Socket.js:522
+#: src/core/Socket.js:521
 msgid "Discard"
 msgstr "Zachyśiś"
 
-#: src/core/Socket.js:527
+#: src/core/Socket.js:526
 msgid "Overwrite"
 msgstr "Pśepisaś"
 
-#: src/core/Socket.js:532
+#: src/core/Socket.js:531
 msgid "Save to new file"
 msgstr "Do noweje dataje składowaś"
 
-#: src/core/Socket.js:605
+#: src/core/Socket.js:604
 msgid "Document requires password to view."
 msgstr "Dokument se gronidło pomina, aby se pokazał."
 
-#: src/core/Socket.js:608
+#: src/core/Socket.js:607
 msgid "Document requires password to modify."
 msgstr "Dokument se gronidło pomina, aby se změnił."
 
-#: src/core/Socket.js:610
+#: src/core/Socket.js:609
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klikniśo na Pśetergnuś, aby dokument we woglědańskem modusu wócynił."
 
-#: src/core/Socket.js:614
+#: src/core/Socket.js:613
 msgid "Wrong password provided. Please try again."
 msgstr "Wopacne gronidło pódane. Pšosym wopytajśo hyšći raz."
 
-#: src/core/Socket.js:746 src/map/Map.js:1430
+#: src/core/Socket.js:745 src/map/Map.js:1473
 msgid "Loading..."
 msgstr "Cyta se..."
 
-#: src/core/Socket.js:746
+#: src/core/Socket.js:745
 msgid "Connecting..."
 msgstr "Zwězujo se..."
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1022
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "Bóžko njamóžomy z wašym dokumentom zwězaś. Pšosym wopytajśo hyšći raz."
 
@@ -1133,7 +1140,7 @@ msgstr "Změnu wotpokazaś"
 msgid "Open menu"
 msgstr "Meni wócyniś"
 
-#: src/layer/marker/Annotation.js:255 src/layer/tile/TileLayer.js:242
+#: src/layer/marker/Annotation.js:255 src/layer/tile/TileLayer.js:243
 msgid "Reply"
 msgstr "Wótegroniś"
 
@@ -1142,25 +1149,25 @@ msgstr "Wótegroniś"
 msgid "Show the search bar"
 msgstr "Pytańsku rědku pokazaś"
 
-#: src/layer/tile/CalcTileLayer.js:231 src/layer/tile/ImpressTileLayer.js:226
-#: src/layer/tile/WriterTileLayer.js:163
+#: src/layer/tile/CalcTileLayer.js:228 src/layer/tile/ImpressTileLayer.js:223
+#: src/layer/tile/WriterTileLayer.js:160
 msgid "Clear the search field"
 msgstr "Pytańske pólo wuprozniś"
 
-#: src/layer/tile/CalcTileLayer.js:233 src/layer/tile/ImpressTileLayer.js:228
-#: src/layer/tile/WriterTileLayer.js:165
+#: src/layer/tile/CalcTileLayer.js:230 src/layer/tile/ImpressTileLayer.js:225
+#: src/layer/tile/WriterTileLayer.js:162
 msgid "Hide the search bar"
 msgstr "Pytańsku rědku schowaś"
 
-#: src/layer/tile/TileLayer.js:236
+#: src/layer/tile/TileLayer.js:237
 msgid "Modify"
 msgstr "Změniś"
 
-#: src/layer/tile/TileLayer.js:248
+#: src/layer/tile/TileLayer.js:249
 msgid "Remove"
 msgstr "Wótwónoźeś"
 
-#: src/layer/tile/TileLayer.js:254
+#: src/layer/tile/TileLayer.js:255
 msgid "Resolve"
 msgstr "Rozwězaś"
 
@@ -1176,29 +1183,33 @@ msgstr "Wopśimjeśe mjazywótkłada njedajo se zasajźiś, pšosym kopěrujśo 
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Pšosym wužywajśo tłocaška kopěrowaś/zasajźiś na wašej tastaturje wobrazowki.</p>"
 
-#: src/map/Clipboard.js:801
+#: src/map/Clipboard.js:778
+msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
+msgstr "<p>Waš wobglědowak ma wjelgin wobgranicowany pśistup k mjazywótkładoju, wužywajśo togodla toś te tastowe skrotconki:<ul><li><b>Strg+C</b>: Za kopěrowanje.</li><li><b>Strg+X</b>: Za wurězanje.</li><li><b>Strg+V</b>: Za zasajźenje.</li></ul></p>"
+
+#: src/map/Clipboard.js:811
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr "<p>Jolic cośo wětše elementy swójogo dokumenta z drugimi nałoženjami źěliś, jo nutno, je nejpjerwjej do wašogo rěda ześěgnuś. Aby to cynił, klikniśo na tłocašk „Ześěgnjenje zachopiś“ dołojce a klikniśo, gaž ześěgnjenje jo dokóńcpne, na „Kopěrowanje do mjazywótkłada wobkšuśiś“.</p><p>Jolic mjazy dokumentami w %productName kopěrujośo, njetrjebaśo ześěgnuś.</p>"
 
-#: src/map/Clipboard.js:817
+#: src/map/Clipboard.js:827
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
 msgstr "<p>Ześěgnjenje dłujkeje kopěrowańskeje operacije dla jo se južo zachopiło. Pčodxm cakajśo na aktualne ześěgnjenje abo pśetergniśo jo, nježli až nowe zachopijośo.</p>"
 
-#: src/map/Map.js:244
+#: src/map/Map.js:252
 msgid "Initializing..."
 msgstr "Inicializěrujo se..."
 
-#: src/map/Map.js:427
+#: src/map/Map.js:455
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "pśed %d sekundami"
 
-#: src/map/Map.js:430
+#: src/map/Map.js:458
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "pśed %d minutami"
 
-#: src/map/Map.js:1286
+#: src/map/Map.js:1326
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktiwny dokument - pšosym klikniśo, aby z wobźěłowanim pókšacował"
 

@@ -4,26 +4,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: 2019-12-13 11:40+0000\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"PO-Revision-Date: 2020-04-01 10:44+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Spanish <https://vm137.documentfoundation.org/projects/libo_online/ios/es/>\n"
+"Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/ios/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /es/libo_online/ios-es.po\n"
 "X-Pootle-Revision: 3937775\n"
 
-#: App+info
-msgid "App info"
-msgstr "Información sobre la aplicación"
+#: Version+information
+msgid "Version information"
+msgstr "Información de versión"
 
-#: Version
-msgid "Version"
-msgstr "Versión"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr "Revisión del repositorio Git «online»"
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr "Revisión del repositorio Git «core»"
 
 #: Settings
 msgid "Settings"
@@ -32,3 +36,9 @@ msgstr "Configuración"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "URL de lista de plantillas"
+
+#~ msgid "App info"
+#~ msgstr "Información sobre la aplicación"
+
+#~ msgid "Version"
+#~ msgstr "Versión"

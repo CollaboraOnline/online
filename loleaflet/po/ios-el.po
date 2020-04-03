@@ -4,25 +4,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"PO-Revision-Date: 2020-04-03 07:18+0000\n"
+"Last-Translator: Dimitris Spingos <dmtrs32@gmail.com>\n"
+"Language-Team: Greek <https://weblate.documentfoundation.org/projects/libo_online/ios/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /el/libo_online/ios-el.po\n"
 "X-Pootle-Revision: 3937750\n"
 
-#: App+info
-msgid "App info"
-msgstr "Πληροφορίες εφαρμογής"
+#: Version+information
+msgid "Version information"
+msgstr "Πληροφορίες έκδοσης"
 
-#: Version
-msgid "Version"
-msgstr "Έκδοση"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr "Διαδικτυακό git hash"
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr "Πυρήνας git hash"
 
 #: Settings
 msgid "Settings"
@@ -31,3 +36,9 @@ msgstr "Ρυθμίσεις"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "URL καταλόγου προτύπων"
+
+#~ msgid "App info"
+#~ msgstr "Πληροφορίες εφαρμογής"
+
+#~ msgid "Version"
+#~ msgstr "Έκδοση"

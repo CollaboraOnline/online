@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2019-12-31 09:37+0000\n"
+"PO-Revision-Date: 2020-04-03 07:18+0000\n"
 "Last-Translator: Dimitris Spingos <dmtrs32@gmail.com>\n"
 "Language-Team: Greek <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/el/>\n"
 "Language: el\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-help-el.po\n"
 "X-Pootle-Revision: 830229\n"
 
@@ -1094,10 +1094,8 @@ msgid "Using the browser zoom affects the document and user interface areas."
 msgstr "Η χρήση της εστίασης του πλοηγητή επηρεάζει το έγγραφο και τις περιοχές διεπαφής χρήστη."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
-#, fuzzy
-#| msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
-msgstr "<span class=\"def\">Η γραμμή πληροφοριών:</span> Δεξιά της γραμμής αναζήτησης, εμφανίζεται ένα σύνολο πληροφοριών στο έγγραφο. Η ενεργή πληροφορία εξαρτάται από τη φύση του εγγράφου."
+msgstr "<span class=\"def\">Η γραμμή πληροφοριών:</span> Δεξιά της γραμμής αναζήτησης, εμφανίζεται ένα σύνολο πληροφοριών στο έγγραφο. Οι ενεργές πληροφορίες εξαρτώνται από τη φύση του εγγράφου."
 
 #: html/loleaflet-help.html%2Bdiv.p:279-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
@@ -1172,10 +1170,8 @@ msgid "Pasting"
 msgstr "Επικόλληση"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
-#, fuzzy
-#| msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
-msgstr "Όταν επικολλάτε αντιγραμμένο περιεχόμενο από το ίδιο έγγραφο, η μορφή και τα στοιχεία διατηρούνται. Εάν αντιγράφετε από ένα άλλο έγγραφο, σε μια άλλη καρτέλα ή παράθυρο πλοηγητή, ή έξω από τον πλοηγητή, το επικολλημένο περιεχόμενο θα διατηρήσει το εμπλουτισμένο κείμενο."
+msgstr "Όταν επικολλάτε αντιγραμμένο περιεχόμενο από το ίδιο έγγραφο, η μορφή και τα στοιχεία διατηρούνται. Εάν αντιγράφετε από ένα άλλο έγγραφο, σε μια άλλη καρτέλα ή παράθυρο περιηγητή, ή έξω από τον πλοηγητή, το επικολλημένο περιεχόμενο θα διατηρήσει το εμπλουτισμένο κείμενο."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
@@ -1190,10 +1186,8 @@ msgid "When you paste text from outside of the document (another browser window 
 msgstr "Όταν επικολλάτε κείμενο έξω από το έγγραφο (ένα άλλο παράθυρο πλοηγητή ή εφαρμογή επιφάνειας εργασίας), θα επικολληθεί ως εμπλουτισμένο κείμενο."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
-#, fuzzy
-#| msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr "Όταν έχετε εσωτερική αποκοπή ή αντιγραφή περιεχομένου, μπορείτε να επικολλήσετε αυτό το περιεχόμενο με το μενού του δεξιού πλήκτρου του ποντικιού."
+msgstr "Όταν έχετε εσωτερική αποκοπή ή αντιγραφή περιεχομένου, μπορείτε να επικολλήσετε αυτό το περιεχόμενο με το μενού περιβάλλοντος."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
@@ -1368,10 +1362,8 @@ msgid "<span class=\"def\">Direct formatting:</span> You can format text documen
 msgstr "<span class=\"def\">Άμεση μορφοποίηση:</span> Μπορείτε να μορφοποιήσετε αντικείμενα κειμενικού εγγράφου μορφοποιώντας απευθείας από τα μενού, τη γραμμή εργαλείων ή τα μενού περιβάλλοντος. Η άμεση μορφοποίηση εφαρμόζεται μόνο στο τρέχον επιλεγμένο αντικείμενο."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
-#, fuzzy
-#| msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
-msgstr "<span class=\"def\">Μορφοποίηση τεχνοτροπίας:</span> Το <span class=\"productname\">%productName</span> υποστηρίζει τεχνοτροπίες παραγράφου. Μπορείτε τεχνοτροπία υφιστάμενης παραγράφου σε παράγραφο. Επιλέξτε το μενού <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Επεξεργασία τεχνοτροπιών</span> για να αλλάξετε τεχνοτροπία."
+msgstr "<span class=\"def\">Μορφοποίηση τεχνοτροπίας:</span> Το <span class=\"productname\">%productName</span> υποστηρίζει τεχνοτροπίες παραγράφου. Μπορείτε να εφαρμόσετε τεχνοτροπία υφιστάμενης παραγράφου σε παράγραφο. Επιλέξτε το μενού <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Επεξεργασία τεχνοτροπιών</span> για να αλλάξετε τεχνοτροπία."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:401-5
 msgid "Handling Tables"
@@ -1422,10 +1414,8 @@ msgid "<span class=\"def\">Page header and footer:</span> Headers and footers ar
 msgstr "<span class=\"def\">Κεφαλίδα και υποσέλιδο σελίδας:</span> Οι κεφαλίδες και τα υποσέλιδα είναι διαθέσιμα για την υφιστάμενη τεχνοτροπία σελίδας που εφαρμόζεται στο έγγραφο στη θέση του δρομέα."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
-#, fuzzy
-#| msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported, being rendered as they are shown."
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
-msgstr "<span class=\"def\">Υποσημειώσεις και σημειώσεις τέλους:</span> Υποστηρίζονται οι υποσημειώσεις και οι σημειώσεις τέλους που αποδίδονται όπως εμφανίζονται."
+msgstr "<span class=\"def\">Υποσημειώσεις και σημειώσεις τέλους:</span> Υποστηρίζονται οι υποσημειώσεις και οι σημειώσεις τέλους."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
 msgid "<span class=\"productname\">%productName</span> Impress edits presentations in a way that should be familiar to people. Operations like typing text, cut, copy and pasting contents, selecting text , inserting, resizing, anchoring images, adding and handling tables, are similar to a desktop presentation application. Use the keyboard, menus and toolbars to perform actions in your document."
@@ -1544,8 +1534,6 @@ msgid "What is the blue wavy underline in some words in the text?"
 msgstr "Τι είναι η γαλάζια κυματιστή υπογράμμιση σε κάποιες λέξεις στο κείμενο;"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
-#, fuzzy
-#| msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
 msgstr "Τα γραμματικά σφάλματα στο κείμενο σημειώνονται με γαλάζια κυματιστή υπογράμμιση. Πατήστε στο υπογραμμισμένο κείμενο με το δεξιό πλήκτρο του ποντικιού για να ανοίξετε μενού με προτάσεις διόρθωσης του γραμματικού σφάλματος και της παραβίασης γραμματικών κανόνων. Επιλέξτε τη σωστή πρόταση αλλαγής του κειμένου."
 
@@ -1610,10 +1598,8 @@ msgid "You have the Track Changes feature enabled for the document. Track Change
 msgstr "Έχετε ενεργό το γνώρισμα παρακολούθησης αλλαγών για το έγγραφο. Η παρακολούθηση αλλαγών καταγράφει όλες τις αλλαγές στο κείμενο και εμφανίζει τις επεξεργασίες για μεταγενέστερη αναθεώρηση. Χρήσιμο για σημείωση αλλαγών στο κείμενο και σε υπολογιστικά φύλλα. Η παρακολούθηση αλλαγών ενεργοποιείται επιλέγοντας <span class=\"ui\">Επεξεργασία</span> → <span class=\"ui\">Παρακολούθηση αλλαγών</span> → <span class=\"ui\">Καταγραφή</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
-#, fuzzy
-#| msgid "With track changes enabled your document show the following settings:"
 msgid "With track changes enabled your document is shown the following manner:"
-msgstr "Με ενεργοποιημένη την παρακολούθηση αλλαγών το έγγραφό σας εμφανίζει τις παρακάτω ρυθμίσεις:"
+msgstr "Με ενεργοποιημένη την παρακολούθηση αλλαγών το έγγραφό σας εμφανίζεται με τον παρακάτω τρόπο:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."

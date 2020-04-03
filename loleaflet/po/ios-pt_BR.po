@@ -4,25 +4,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"PO-Revision-Date: 2020-04-03 11:59+0000\n"
+"Last-Translator: Olivier Hallot <olivier.hallot@libreoffice.org>\n"
+"Language-Team: Portuguese (Brazil) <https://weblate.documentfoundation.org/projects/libo_online/ios/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /pt_BR/libo_online/ios-pt_BR.po\n"
 "X-Pootle-Revision: 3938092\n"
 
-#: App+info
-msgid "App info"
-msgstr "Info do App"
+#: Version+information
+msgid "Version information"
+msgstr "Informação da versão"
 
-#: Version
-msgid "Version"
-msgstr "Versão"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr "Identificador da revisão da parte \"online\""
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr "Identificador da revisão da parte \"core\""
 
 #: Settings
 msgid "Settings"
@@ -31,3 +36,9 @@ msgstr "Configurações"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "URL da lista de modelos"
+
+#~ msgid "App info"
+#~ msgstr "Info do App"
+
+#~ msgid "Version"
+#~ msgstr "Versão"

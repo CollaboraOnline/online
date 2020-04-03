@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
 "PO-Revision-Date: 2020-02-05 12:45+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/ios/eo/>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "X-Pootle-Path: /eo/libo_online/ios-eo.po\n"
 "X-Pootle-Revision: 3937770\n"
 
-#: App+info
-msgid "App info"
-msgstr "Informoj pri la aplikaĵo"
+#: Version+information
+msgid "Version information"
+msgstr ""
 
-#: Version
-msgid "Version"
-msgstr "Versio"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr ""
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr ""
 
 #: Settings
 msgid "Settings"
@@ -32,3 +36,9 @@ msgstr "Agordaro"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "URL de la ŝablonlisto"
+
+#~ msgid "App info"
+#~ msgstr "Informoj pri la aplikaĵo"
+
+#~ msgid "Version"
+#~ msgstr "Versio"

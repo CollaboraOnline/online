@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:32+0200\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
 "PO-Revision-Date: 2019-12-23 05:31+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/ios/ast/>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "X-Pootle-Path: /ast/libo_online/ios-ast.po\n"
 "X-Pootle-Revision: 3937640\n"
 
-#: App+info
-msgid "App info"
-msgstr "Información de l'aplicación"
+#: Version+information
+msgid "Version information"
+msgstr ""
 
-#: Version
-msgid "Version"
-msgstr "Versión"
+#: Online+git+hash
+msgid "Online git hash"
+msgstr ""
+
+#: Core+git+hash
+msgid "Core git hash"
+msgstr ""
 
 #: Settings
 msgid "Settings"
@@ -32,3 +36,9 @@ msgstr "Axustes"
 #: Template+list+URL
 msgid "Template list URL"
 msgstr "URL de la llista de plantíes"
+
+#~ msgid "App info"
+#~ msgstr "Información de l'aplicación"
+
+#~ msgid "Version"
+#~ msgstr "Versión"
