@@ -30,3 +30,8 @@
 	-o-transform: rotate(180deg);
 	transform: rotate(180deg);
 }
+
+/* Additions for the main menu. */
+.main-nav {
+    margin: 0;
+}
