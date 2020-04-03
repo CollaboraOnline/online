@@ -1742,22 +1742,6 @@ function onDocLayerInit() {
 					     );
 	}
 
-	if (!window.ThisIsTheiOSApp && window.mode.isTablet()) {
-		// Fold menubar by default
-		// FIXME: reuse toogleMenubar / use css
-		$('.main-nav').css({'display': 'none'});
-		$('#closebuttonwrapper').css({'display': 'none'});
-		var obj = $('.fold');
-		obj.removeClass('w2ui-icon fold');
-		obj.addClass('w2ui-icon unfold');
-		$(map.options.documentContainer).addClass('tablet');
-		$('#spreadsheet-row-column-frame').addClass('tablet');
-		$('#presentation-controls-wrapper').css({'top': '36px'});
-
-		$('#tb_editbar_item_fonts').css({'display': 'none'});
-		$('#tb_editbar_item_fontsizes').css({'display': 'none'});
-	}
-
 	if (docType == 'spreadsheet') {
 		var el = w2ui['spreadsheet-toolbar'];
 		if (el)
