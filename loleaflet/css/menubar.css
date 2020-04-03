@@ -256,18 +256,6 @@
 	background-position: bottom;
 }
 
-/* FIXME remove this @media; but for the moment doing so breaks the cypress
- * tests.
- */
-@media (max-width: 767px), (max-device-height: 767px) {
-    .main-nav {
-        position: absolute;
-        height: 0;
-        width: 100%;
-        top: 37px; /*set equal to toolbar up's height*/
-    }
-}
-
 #menu-last-mod a {
     color: grey;
     text-decoration: underline;
