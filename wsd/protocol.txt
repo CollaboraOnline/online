@@ -21,6 +21,14 @@ spontaneously. For 'tile' messages, the client may send a bunch of
 tile requests without waiting for return messages. The server may send
 tiles proactively (guessing what the client might need). Etc.
 
+The original intent was that the parameters of the messages can be in
+any order, as they are in a name=value form anyway and the name
+indicates which parameter is which. Sadly, this was not explicitly
+mentioned in this document, or tested by unit tests. So now we have
+code here and there that assumes that parameters are in a specific
+order anyway, thus losing the benefits of the named parameters. Oh
+well.
+
 client -> server
 ================
 
