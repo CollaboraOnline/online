@@ -45,7 +45,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	it.skip('Focus on second tap.', function() {
+	it('Focus on second tap.', function() {
 		// Click on edit button
 		helper.enableEditingMobile();
 
@@ -64,7 +64,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// Second tap on the same cell
-		calcHelper.clickOnFirstCell();
+		calcHelper.clickOnFirstCell(false);
 
 		// Document has the focus
 		cy.document().its('activeElement.className')
