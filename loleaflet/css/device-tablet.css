@@ -1,2 +1,6 @@
 /* CSS specific for tablets. */
 
+/* Disable tooltips when on touch devices */
+.w2ui-tag .w2ui-tag-top {
+	display:none !important;
+}

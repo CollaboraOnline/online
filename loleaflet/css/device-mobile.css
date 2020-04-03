@@ -711,3 +711,8 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 #mobile-wizard.menuwizard.portrait #mobile-wizard-content.with-slide-sorter-above.portrait {
 	overflow-y: hidden !important;
 }
+
+/* Disable tooltips when on touch devices */
+.w2ui-tag .w2ui-tag-top {
+	display:none !important;
+}

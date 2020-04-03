@@ -216,10 +216,6 @@ body {
 		display: none;
 	}
 }
-/* any-hover: none is a "clever" trick to detect touch-only devices */
-@media (any-hover: none) {
-	.w2ui-tag .w2ui-tag-top{display:none !important;}
-}
 
 .loleaflet-font {
 	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
