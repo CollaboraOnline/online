@@ -211,11 +211,6 @@ body {
 	transform: rotate(45deg);
 	transition: transform 0.5s;
 }
-@media (max-width: 900px) {
-	#menu-last-mod {
-		display: none;
-	}
-}
 
 .loleaflet-font {
 	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
