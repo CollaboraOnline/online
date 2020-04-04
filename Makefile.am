@@ -106,6 +106,8 @@ if ENABLE_SSL
 shared_sources += net/Ssl.cpp
 endif
 
+shared_json = $(patsubst %.cpp,%.cmd,$(shared_sources))
+
 loolwsd_sources = common/Crypto.cpp \
                   wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
@@ -117,6 +119,8 @@ loolwsd_sources = common/Crypto.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \
                   wsd/ProofKey.cpp
+
+loolwsd_json = $(patsubst %.cpp,%.cmd,$(loolwsd_sources))
 
 loolwsd_SOURCES = $(loolwsd_sources) \
                   $(shared_sources)
@@ -152,6 +156,8 @@ lokitclient_SOURCES = common/Log.cpp \
 loolforkit_sources = kit/ChildSession.cpp \
                      kit/ForKit.cpp \
                      kit/Kit.cpp
+
+loolforkit_json = $(patsubst %.cpp,%.cmd,$(loolforkit_sources))
 
 loolforkit_SOURCES = $(loolforkit_sources) \
                      $(shared_sources)
@@ -325,6 +331,7 @@ $(SYSTEM_STAMP) : ${top_srcdir}/loolwsd-systemplate-setup
 clean-local:
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
+	rm -f $(abs_srcdir)/compile_commands.json
 
 run: all @JAILS_PATH@
 	@echo "Launching loolwsd"
@@ -457,3 +464,38 @@ endif
 build-nocheck: all-am
 
 endif
+
+define file_target
+$(1): $(2)
+
+endef
+
+define file_targets
+$(foreach file,$(1),$(call file_target,$(file),$(patsubst %.cmd,%.cpp,$(file))))
+endef
+
+CLANGXX_COMPILE_FLAGS=clang++ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+
+JSON_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_COMPILE_FLAGS)))
+
+JSON_COMPILE_SRC = $(loolwsd_json) $(loolforkit_json) $(shared_json)
+
+$(eval $(call file_targets,$(JSON_COMPILE_SRC)))
+
+.cpp.cmd:
+	@echo -n "{\"directory\":\"$(abs_builddir)\",\"command\":\"" > $@
+	@echo -n $(JSON_COMPILE_FLAGS) >> $@
+	@echo -n "\",\"file\":\"$<\"}" >> $@
+
+$(abs_srcdir)/compile_commands.json: $(JSON_COMPILE_SRC)
+	@echo -n "[" > $@
+	@for file in $(JSON_COMPILE_SRC) ; \
+	do \
+		cat $$file; \
+		echo ","; \
+		rm -f $$file; \
+	done >> $@
+	@echo -n "]" >> $@
+
+compile_commands: $(abs_srcdir)/compile_commands.json
