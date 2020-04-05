@@ -584,6 +584,22 @@ clean-local:
 	rm -rf node_modules
 	rm -rf $(builddir)/dist
 	rm -rf $(builddir)/build/dist
+	@rm -f $(abs_srcdir)/jsconfig.json
+	@rm -f $(abs_srcdir)/admin/jsconfig.json
 
 ctags:
 	@$(CTAGS) --language-force=JavaScript $(LOLEAFLET_JS_SRC) $(srcdir)/js/global.js
+
+$(abs_srcdir)/jsconfig.json:
+	@printf "{\n \
+	\"compilerOptions\" : {},\n \
+	\"include\" : [\"src/**/*\", \"js/**/*\"],\n \
+	\"exclude\" : [\"node_modules\", \"admin/**/*\"]\n}" > $@
+
+$(abs_srcdir)/admin/jsconfig.json:
+	@printf "{\n \
+	\"compilerOptions\" : {},\n \
+	\"include\" : [\"./**/*\"],\n \
+	\"exclude\" : [\"node_modules\"]\n}" > $@
+
+jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json

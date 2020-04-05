@@ -58,6 +58,8 @@ loolwsd.log
 loleaflet/build/dist
 loleaflet/dist
 loleaflet/npm-shrinkwrap.json
+loleaflet/jsconfig.json
+loleaflet/admin/jsconfig.json
 
 connect
 lokitclient
