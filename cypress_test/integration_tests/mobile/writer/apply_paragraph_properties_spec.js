@@ -265,20 +265,20 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'value', '0.0');
 
 		// Change spacing
-		cy.get('#aboveparaspacing .sinfieldcontrols .plus')
+		cy.get('#aboveparaspacing .spinfieldcontrols .plus')
 			.click();
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
-		cy.get('#aboveparaspacing .sinfieldcontrols .plus')
+		cy.get('#aboveparaspacing .spinfieldcontrols .plus')
 			.click();
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.04');
-		cy.get('#aboveparaspacing .sinfieldcontrols .plus')
+		cy.get('#aboveparaspacing .spinfieldcontrols .plus')
 			.click();
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.06');
 
-		cy.get('#belowparaspacing .sinfieldcontrols .plus')
+		cy.get('#belowparaspacing .spinfieldcontrols .plus')
 			.click();
 		cy.get('#belowparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
@@ -346,11 +346,11 @@ describe('Apply paragraph properties.', function() {
 
 	it('Apply before text indent.', function() {
 		// Change indent
-		cy.get('#beforetextindent .sinfieldcontrols .plus')
+		cy.get('#beforetextindent .spinfieldcontrols .plus')
 			.click();
 		cy.get('#beforetextindent .spinfield')
 			.should('have.attr', 'value', '0.02');
-		cy.get('#beforetextindent .sinfieldcontrols .plus')
+		cy.get('#beforetextindent .spinfieldcontrols .plus')
 			.click();
 		cy.get('#beforetextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
@@ -370,11 +370,11 @@ describe('Apply paragraph properties.', function() {
 
 	it('Apply after text indent.', function() {
 		// Change indent
-		cy.get('#aftertextindent .sinfieldcontrols .plus')
+		cy.get('#aftertextindent .spinfieldcontrols .plus')
 			.click();
 		cy.get('#aftertextindent .spinfield')
 			.should('have.attr', 'value', '0.02');
-		cy.get('#aftertextindent .sinfieldcontrols .plus')
+		cy.get('#aftertextindent .spinfieldcontrols .plus')
 			.click();
 		cy.get('#aftertextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
@@ -394,11 +394,11 @@ describe('Apply paragraph properties.', function() {
 
 	it('Apply first line indent.', function() {
 		// Increase firstline indent
-		cy.get('#firstlineindent .sinfieldcontrols .plus')
+		cy.get('#firstlineindent .spinfieldcontrols .plus')
 			.click();
 		cy.get('#firstlineindent .spinfield')
 			.should('have.attr', 'value', '0.02');
-		cy.get('#firstlineindent .sinfieldcontrols .plus')
+		cy.get('#firstlineindent .spinfieldcontrols .plus')
 			.click();
 		cy.get('#firstlineindent .spinfield')
 			.should('have.attr', 'value', '0.04');

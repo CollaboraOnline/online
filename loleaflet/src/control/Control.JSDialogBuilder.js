@@ -953,7 +953,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			unit.innerHTML = builder._unitToVisibleString(data.unit);
 		}
 
-		var controlsContainer = L.DomUtil.create('div', 'sinfieldcontrols', div);
+		var controlsContainer = L.DomUtil.create('div', 'spinfieldcontrols', div);
 		var minus = L.DomUtil.create('div', 'minus', controlsContainer);
 		minus.innerHTML = '-';
 		var plus = L.DomUtil.create('div', 'plus', controlsContainer);

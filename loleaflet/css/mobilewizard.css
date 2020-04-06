@@ -477,7 +477,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	overflow: hidden;
 }
 
-.sinfieldcontrols {
+.spinfieldcontrols {
 	background-color: #eee;
 	text-align: center;
 	display: inline-block;
@@ -522,7 +522,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	padding-left: 8px;
 }
 
-.spinfieldcontainer .sinfieldcontrols {
+.spinfieldcontainer .spinfieldcontrols {
 	height: 49px;
 	float: right;
 }
@@ -554,7 +554,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	margin-left: 10% !important;
 	text-align: center;
 }
-.inserttablecontrols .sinfieldcontrols{
+.inserttablecontrols .spinfieldcontrols{
 	border: none;
 	background: none;
 }

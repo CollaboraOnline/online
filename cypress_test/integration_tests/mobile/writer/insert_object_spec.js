@@ -113,9 +113,9 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Change rows and columns
-		cy.get('.inserttablecontrols #rows .sinfieldcontrols .plus')
+		cy.get('.inserttablecontrols #rows .spinfieldcontrols .plus')
 			.click();
-		cy.get('.inserttablecontrols #cols .sinfieldcontrols .plus')
+		cy.get('.inserttablecontrols #cols .spinfieldcontrols .plus')
 			.click();
 
 		// Push insert table button
