@@ -469,6 +469,8 @@ static IMP standardImpOfInputAccessoryView = nil;
     // Close one end of the socket pair, that will wake up the forwarding thread above
     fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
+    // I suspect that what this will do (in -[CODocument contentsForType:error:]) is to read the
+    // contents of the file that LO core already saved, and overwrite it with the same contents.
     [self.document saveToURL:[self.document fileURL]
             forSaveOperation:UIDocumentSaveForOverwriting
            completionHandler:^(BOOL success) {
