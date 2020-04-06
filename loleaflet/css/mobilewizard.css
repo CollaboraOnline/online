@@ -39,7 +39,7 @@ span#main-menu-btn-icon {
 	filter: none !important;
 }
 
-#leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage{
+#denominatorplaces .spinfieldimage, #leadingzeroes .spinfieldimage, #decimalplaces .spinfieldimage{
 	display: none;
 }
 
