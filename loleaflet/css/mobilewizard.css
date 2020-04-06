@@ -706,7 +706,7 @@ div#mobile-wizard-content .spinfield:active .spinfieldimage, div#mobile-wizard-c
 }
 #buttonbefore{background: url(images/sc_wrapleft.svg) no-repeat center;}
 #buttonafter{background: url(images/sc_wrapright.svg) no-repeat center;}
-#buttonoptimal{background: url(images/sc_wrapleft.svg) no-repeat center;}
+#buttonoptimal{background: url(images/sc_wrapideal.svg) no-repeat center;}
 #buttonparallel{background: url(images/sc_wrapmenu.svg) no-repeat center;}
 #buttonnone{background: url(images/sc_wrapoff.svg) no-repeat center;}
 #buttonthrough{background: url(images/sc_wrapthrough.svg) no-repeat center;}
