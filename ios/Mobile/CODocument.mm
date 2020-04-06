@@ -41,9 +41,9 @@
     // us for loadFromContents. I get the vague feeling that the file is perhaps just a temporary
     // data container created by the system for us to be used while loading the document data, and
     // not the actual permanent document, especially in the case of things like NextCloud. Or is it?
-    // Is savng back to it (which we have already done by the time we get here, in the LO core code)
-    // correct? This does seem to work, though. Anyway, clearly I need to read more documentation
-    // for UIDocument etc.
+    // Is saving back to the file (which we have already saved to in the core code by the time we
+    // get here) correct? This does seem to work, though. Sadly the Apple documentation is a bit
+    // lacking about how these things *really* work.
     return [[NSFileWrapper alloc] initWithURL:[self fileURL] options:0 error:errorPtr];
 }
 
