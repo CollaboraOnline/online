@@ -39,6 +39,10 @@
 #include <common/Unit.hpp>
 #include <common/FileUtil.hpp>
 
+#ifdef IOS
+#import "DocumentViewController.h"
+#endif
+
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -1284,6 +1288,17 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         const auto command = "uno .uno:Save " + saveArgs;
         forwardToChild(sessionId, command);
         _lastSaveRequestTime = std::chrono::steady_clock::now();
+#ifdef IOS
+        // We need to do this so that file provider extensions notice. Just like in
+        // -[DocumentViewController bye] I suspect that will read the file and then overwrite it
+        // with the same contents, but oh well.
+        CODocument *document = [[DocumentViewController singleton] document];
+        [document saveToURL:[[[DocumentViewController singleton] document] fileURL]
+           forSaveOperation:UIDocumentSaveForOverwriting
+          completionHandler:^(BOOL success) {
+                LOG_TRC("save completion handler gets " << (success?"YES":"NO"));
+            }];
+#endif
         return true;
     }
 
