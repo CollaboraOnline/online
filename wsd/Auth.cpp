@@ -134,7 +134,10 @@ bool JWTAuth::verify(const std::string& accessToken)
         if (encodedSig != tokens[2])
         {
             LOG_INF("JWTAuth: verification failed; Expected: " << encodedSig << ", Received: " << tokens[2]);
-            return false;
+            if (!Util::isFuzzing())
+            {
+                return false;
+            }
         }
 
         std::istringstream istr(tokens[1]);
@@ -153,10 +156,13 @@ bool JWTAuth::verify(const std::string& accessToken)
 
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t curtime = std::chrono::system_clock::to_time_t(now);
-        if (!Util::isFuzzing() && curtime > decodedExptime)
+        if (curtime > decodedExptime)
         {
             LOG_INF("JWTAuth:verify: JWT expired; curtime:" << curtime << ", exp:" << decodedExptime);
-            return false;
+            if (!Util::isFuzzing())
+            {
+                return false;
+            }
         }
     }
     catch(Poco::Exception& exc)

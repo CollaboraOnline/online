@@ -359,7 +359,9 @@ namespace SigUtil
     bool killChild(const int pid)
     {
         LOG_DBG("Killing PID: " << pid);
-        if (kill(pid, SIGKILL) == 0 || errno == ESRCH)
+        // Don't kill anything in the fuzzer case: pid == 0 would kill the fuzzer itself, and
+        // killing random other processes is not a great idea, either.
+        if (Util::isFuzzing() || kill(pid, SIGKILL) == 0 || errno == ESRCH)
         {
             // Killed or doesn't exist.
             return true;
