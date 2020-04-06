@@ -290,7 +290,7 @@ L.Control.Ruler = L.Control.extend({
 
 		// Are there any tab stops?
 		// e.currentTarget == this._rTSContainer, so yeah, we could use that, too.
-		if (e.currentTarget.tabStops.length === 0)
+		if (!e.currentTarget || e.currentTarget.tabStops.length === 0)
 			return;
 
 		// Check if "close enough" to one unambiguous tab stop
@@ -348,6 +348,9 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_moveTabstop: function(e) {
+		if (!e.currentTarget)
+			return;
+
 		var pixelDiff = e.layerX - e.currentTarget.tabStopPrevPos;
 		var diff = this._map._docLayer._pixelsToTwips({x: pixelDiff, y:0}).x;
 		if (diff === 0)
@@ -398,6 +401,9 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_endTabstopDrag: function(e) {
+		if (!e.currentTarget)
+			return;
+
 		// console.log('===> _endTabstopDrag ' + e.type);
 		if (window.ThisIsTheiOSApp) {
 			L.DomEvent.off(e.currentTarget, 'touchmove', this._moveTabstop, this);
