@@ -1,16 +1,17 @@
 /* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
 	var defaultGeometry = 'M 1965,4863 L 7957,10855 1965,10855 1965,4863 1965,4863 Z';
 
 	beforeEach(function() {
-		helper.beforeAllMobile('shape_properties.odt', 'writer');
+		mobileHelper.beforeAllMobile('shape_properties.odt', 'writer');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		writerHelper.selectAllMobile();
 

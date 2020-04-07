@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Calc insertion wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('insertion_wizard.ods', 'calc');
+		mobileHelper.beforeAllMobile('insertion_wizard.ods', 'calc');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		calcHelper.clickOnFirstCell();
 

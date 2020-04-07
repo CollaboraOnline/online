@@ -1,10 +1,11 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 
 describe('Focus tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('focus.odt', 'writer');
+		mobileHelper.beforeAllMobile('focus.odt', 'writer');
 	});
 
 	afterEach(function() {
@@ -13,7 +14,7 @@ describe('Focus tests', function() {
 
 	it('Basic document focus.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')
@@ -30,7 +31,7 @@ describe('Focus tests', function() {
 
 	it('Focus with a vex dialog.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Open comment insertion dialog
 		cy.get('#tb_actionbar_item_insertcomment')
@@ -54,7 +55,7 @@ describe('Focus tests', function() {
 
 	it('Focus with opened mobile wizard.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Click in the document
 		cy.get('#document-container')
@@ -87,7 +88,7 @@ describe('Focus tests', function() {
 
 	it('Focus inside mobile wizard.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Open mobile wizard
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -119,7 +120,7 @@ describe('Focus tests', function() {
 
 	it('Focus after insertion.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Open insertion mobile wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
@@ -147,7 +148,7 @@ describe('Focus tests', function() {
 
 	it('Shape related focus.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Open insertion mobile wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
@@ -207,7 +208,7 @@ describe('Focus tests', function() {
 
 	it('Focus with hamburger menu.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Click in the document
 		cy.get('#document-container')
@@ -218,14 +219,14 @@ describe('Focus tests', function() {
 			.should('be.eq', 'clipboard');
 
 		// Open hamburger menu
-		helper.pushHamburgerMenuIconMobile();
+		mobileHelper.pushHamburgerMenuIconMobile();
 
 		// No focus
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
 		// Close hamburger menu
-		helper.pushHamburgerMenuIconMobile();
+		mobileHelper.pushHamburgerMenuIconMobile();
 
 		// No focus
 		cy.document().its('activeElement.tagName')
@@ -234,7 +235,7 @@ describe('Focus tests', function() {
 
 	it('Focus after applying font change.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Click in the document
 		cy.get('#document-container')
@@ -280,7 +281,7 @@ describe('Focus tests', function() {
 
 	it('Apply bold, check keyboard.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Grab focus to the document
 		cy.get('#document-container')
@@ -309,7 +310,7 @@ describe('Focus tests', function() {
 
 	it('Apply italic, check keyboard.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Grab focus to the document
 		cy.get('#document-container')
@@ -338,7 +339,7 @@ describe('Focus tests', function() {
 
 	it('Apply underline, check keyboard.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Grab focus to the document
 		cy.get('#document-container')

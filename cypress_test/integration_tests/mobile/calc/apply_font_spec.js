@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Apply font changes.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('apply_font.ods', 'calc');
+		mobileHelper.beforeAllMobile('apply_font.ods', 'calc');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		calcHelper.clickOnFirstCell();
 

@@ -1,6 +1,6 @@
 /* global cy expect require*/
 
-var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 
 function copyTextToClipboard() {
 	// Do a new selection
@@ -12,7 +12,7 @@ function copyTextToClipboard() {
 			expect(marker).to.have.lengthOf(2);
 			var XPos = (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;
 			var YPos = marker[0].getBoundingClientRect().top - 5;
-			helper.longPressOnDocument(XPos, YPos);
+			mobileHelper.longPressOnDocument(XPos, YPos);
 		});
 
 	cy.get('#mobile-wizard')
@@ -50,7 +50,7 @@ function copyTableToClipboard() {
 
 			var XPos = startPos.right + 10;
 			var YPos = (startPos.top + endPos.top) / 2;
-			helper.longPressOnDocument(XPos, YPos);
+			mobileHelper.longPressOnDocument(XPos, YPos);
 		});
 
 	cy.get('#mobile-wizard')
@@ -80,7 +80,7 @@ function selectAllMobile() {
 		.should('not.exist');
 
 	// Open hamburger menu
-	helper.pushHamburgerMenuIconMobile();
+	mobileHelper.pushHamburgerMenuIconMobile();
 	cy.get('#mobile-wizard')
 		.should('be.visible', {timeout : 10000});
 

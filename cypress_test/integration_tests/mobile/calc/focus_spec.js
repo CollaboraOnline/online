@@ -1,11 +1,12 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Calc focus tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('focus.ods', 'calc');
+		mobileHelper.beforeAllMobile('focus.ods', 'calc');
 	});
 
 	afterEach(function() {
@@ -14,7 +15,7 @@ describe('Calc focus tests', function() {
 
 	it('Basic document focus.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')
@@ -47,7 +48,7 @@ describe('Calc focus tests', function() {
 
 	it('Focus on second tap.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')
@@ -73,7 +74,7 @@ describe('Calc focus tests', function() {
 
 	it('Formula-bar focus', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')

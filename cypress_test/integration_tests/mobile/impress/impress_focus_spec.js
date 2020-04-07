@@ -1,11 +1,12 @@
 /* global describe it cy beforeEach require afterEach expect */
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var impress = require('../../common/impress');
 
 describe('Impress focus tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('focus.odp', 'impress');
+		mobileHelper.beforeAllMobile('focus.odp', 'impress');
 	});
 
 	afterEach(function() {
@@ -14,7 +15,7 @@ describe('Impress focus tests', function() {
 
 	it('Select text box, no editing', function() {
 
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		impress.assertNotInTextEditMode();
 
@@ -54,7 +55,7 @@ describe('Impress focus tests', function() {
 
 	it('Double-click to edit', function() {
 
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		impress.assertNotInTextEditMode();
 
@@ -82,7 +83,7 @@ describe('Impress focus tests', function() {
 
 	it('Single-click to edit', function() {
 
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		impress.assertNotInTextEditMode();
 

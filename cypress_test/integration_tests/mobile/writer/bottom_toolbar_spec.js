@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Pushing bottom toolbar items.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('bottom_toolbar.odt', 'writer');
+		mobileHelper.beforeAllMobile('bottom_toolbar.odt', 'writer');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Do a new selection
 		writerHelper.selectAllMobile();

@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require expect afterEach Cypress*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Insert objects via insertion wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('insert_object.odt', 'writer');
+		mobileHelper.beforeAllMobile('insert_object.odt', 'writer');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {

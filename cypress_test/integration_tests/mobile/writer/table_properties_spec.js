@@ -1,11 +1,12 @@
 /* global describe it cy require afterEach expect Cypress beforeEach*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('table_properties.odt', 'writer');
+		mobileHelper.beforeAllMobile('table_properties.odt', 'writer');
 	});
 
 	afterEach(function() {
@@ -16,7 +17,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		helper.loadTestDoc(testFile, 'writer', true);
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 	}
 
 	function openTablePanel() {

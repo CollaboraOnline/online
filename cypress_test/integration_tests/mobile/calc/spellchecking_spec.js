@@ -1,11 +1,12 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Calc spell checking menu.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('spellchecking.ods', 'calc');
+		mobileHelper.beforeAllMobile('spellchecking.ods', 'calc');
 
 		// Click on edit button
 		cy.get('#mobile-edit-button')
@@ -42,7 +43,7 @@ describe('Calc spell checking menu.', function() {
 				// Step into edit mode again
 				calcHelper.dblClickOnFirstCell();
 
-				helper.longPressOnDocument(XPos, YPos);
+				mobileHelper.longPressOnDocument(XPos, YPos);
 			});
 
 		cy.get('#mobile-wizard-content')

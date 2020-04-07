@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Apply number formatting.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('number_format.ods', 'calc');
+		mobileHelper.beforeAllMobile('number_format.ods', 'calc');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		calcHelper.clickOnFirstCell();
 

@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Apply font changes.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('apply_font.odt', 'writer');
+		mobileHelper.beforeAllMobile('apply_font.odt', 'writer');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Do a new selection
 		writerHelper.selectAllMobile();

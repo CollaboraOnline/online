@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Spell checking menu.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('spellchecking.odt', 'writer');
+		mobileHelper.beforeAllMobile('spellchecking.odt', 'writer');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
@@ -39,7 +40,7 @@ describe('Spell checking menu.', function() {
 
 				var XPos = startPos.right + 10;
 				var YPos = endPos.top - 10;
-				helper.longPressOnDocument(XPos, YPos);
+				mobileHelper.longPressOnDocument(XPos, YPos);
 			});
 
 		cy.get('#mobile-wizard-content')

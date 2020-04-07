@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
-var impress = require('../../common/impress');
+var mobileHelper = require('../../common/mobile_helper');
+var impressHelper = require('./impress_helper');
 
 describe('Spell checking menu.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('spellchecking.odp', 'impress');
+		mobileHelper.beforeAllMobile('spellchecking.odp', 'impress');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
@@ -52,7 +53,7 @@ describe('Spell checking menu.', function() {
 				cy.get('.leaflet-marker-icon')
 					.should('not.exist');
 
-				helper.longPressOnDocument(XPos, YPos);
+				mobileHelper.longPressOnDocument(XPos, YPos);
 			});
 
 		cy.get('#mobile-wizard-content')
@@ -66,7 +67,7 @@ describe('Spell checking menu.', function() {
 			.contains('hello')
 			.click();
 
-		impress.copyShapeContentToClipboard();
+		impressHelper.copyShapeContentToClipboard();
 
 		cy.get('#copy-paste-container pre')
 			.then(function(item) {

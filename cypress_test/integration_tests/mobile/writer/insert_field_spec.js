@@ -1,14 +1,15 @@
 /* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Insert fields via insertion wizard.', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('insert_field.odt', 'writer');
+		mobileHelper.beforeAllMobile('insert_field.odt', 'writer');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Open insertion wizard
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')

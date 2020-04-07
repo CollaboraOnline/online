@@ -1,10 +1,11 @@
 /* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
+var mobileHelper = require('../../common/mobile_helper');
 
 describe('Toolbar tests', function() {
 	beforeEach(function() {
-		helper.beforeAllMobile('toolbar.odt', 'writer');
+		mobileHelper.beforeAllMobile('toolbar.odt', 'writer');
 	});
 
 	afterEach(function() {
@@ -17,7 +18,7 @@ describe('Toolbar tests', function() {
 			.should('have.class', 'disabled');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Button should be enabled now
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -30,7 +31,7 @@ describe('Toolbar tests', function() {
 			.should('have.class', 'disabled');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Button should be enabled now
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
@@ -43,7 +44,7 @@ describe('Toolbar tests', function() {
 			.should('have.class', 'disabled');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Button should be enabled now
 		cy.get('#tb_actionbar_item_insertcomment')
@@ -56,7 +57,7 @@ describe('Toolbar tests', function() {
 			.should('have.class', 'disabled');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Button should be still disabled
 		cy.get('#tb_actionbar_item_undo')
@@ -76,7 +77,7 @@ describe('Toolbar tests', function() {
 			.should('have.class', 'disabled');
 
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Button should be still disabled
 		cy.get('#tb_actionbar_item_redo')
@@ -101,7 +102,7 @@ describe('Toolbar tests', function() {
 
 	it('Open and close mobile wizard by toolbar item.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Click on mobile wizard toolbar item
 		cy.get('#tb_actionbar_item_mobile_wizard')
@@ -128,7 +129,7 @@ describe('Toolbar tests', function() {
 
 	it('Open and close insertion mobile wizard by toolbar item.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Click on toolbar item
 		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
@@ -164,7 +165,7 @@ describe('Toolbar tests', function() {
 
 	it('Open insert comment dialog by toolbar item.', function() {
 		// Click on edit button
-		helper.enableEditingMobile();
+		mobileHelper.enableEditingMobile();
 
 		// Click on toolbar item
 		cy.get('#tb_actionbar_item_insertcomment')
