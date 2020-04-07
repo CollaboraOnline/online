@@ -1,6 +1,9 @@
 #!/bin/perl -w
 
 use strict;
+use File::Basename;
+
+my $path = dirname(dirname($0)) . "/";
 
 sub readwhole($) {
     my ($file) = @_;
@@ -11,11 +14,11 @@ sub readwhole($) {
 
 sub insert($) {
     my ($locale) = @_;
-    my $ui = readwhole("po/ui-$locale.po.json");
+    my $ui = readwhole($path . "po/ui-$locale.po.json");
     # Different convention: Change underscore to hyphen.
     $locale =~ s/_/-/;
-    my $uno = readwhole("l10n/uno/$locale.json");
-    my $locore = readwhole("l10n/locore/$locale.json");
+    my $uno = readwhole($path . "l10n/uno/$locale.json");
+    my $locore = readwhole($path . "l10n/locore/$locale.json");
     # Merge the fields of all three objects into one. The result of
     # po2json.py starts with "{" not followed by a newline and ends
     # with a "}" without any final newline. The json files that are in
