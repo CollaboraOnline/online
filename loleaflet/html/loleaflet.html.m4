@@ -108,6 +108,8 @@ m4_ifelse(IOSAPP,[true],
   [<link rel="stylesheet" href="Branding/branding.css">])
 m4_ifelse(ANDROIDAPP,[true],
   [<link rel="stylesheet" href="branding.css">])
+
+m4_dnl Handle localization
 m4_ifelse(MOBILEAPP,[true],
   [
    m4_ifelse(IOSAPP,[true],
@@ -252,17 +254,25 @@ m4_ifelse(MOBILEAPP,[true],
       window.tileSize = 256;])
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl
 
-<!-- Dynamically load the appropriate device-mobile.css, device-tablet.css or device-desktop.css -->
+<!-- Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css -->
 var link = document.createElement('link');
 link.setAttribute("rel", "stylesheet");
 link.setAttribute("type", "text/css");
-if (window.mode.isMobile())
+var brandingLink = document.createElement('link');
+brandingLink.setAttribute("rel", "stylesheet");
+brandingLink.setAttribute("type", "text/css");
+if (window.mode.isMobile()) {
     [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-mobile.css');]
-else if (window.mode.isTablet())
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[branding-mobile.css');]
+} else if (window.mode.isTablet()) {
     [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-tablet.css');]
-else
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[branding-tablet.css');]
+} else {
     [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-desktop.css');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[branding-desktop.css');]
+}
 document.getElementsByTagName("head")[[0]].appendChild(link);
+document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
 </script>
 
 m4_ifelse(MOBILEAPP,[true],
