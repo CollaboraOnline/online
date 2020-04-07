@@ -561,6 +561,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_checkboxControl: function(parentContainer, data, builder) {
 		var div = L.DomUtil.createWithId('div', data.id, parentContainer);
+		L.DomUtil.addClass(div, 'checkbutton');
 
 		var checkboxLabel = L.DomUtil.create('label', '', div);
 		checkboxLabel.innerHTML = builder._cleanText(data.text);

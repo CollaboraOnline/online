@@ -713,7 +713,7 @@ div#mobile-wizard-content .spinfield:active .spinfieldimage, div#mobile-wizard-c
 #top{background: url(images/sc_aligntop.svg) no-repeat center;}
 #bottom{background: url(images/sc_alignbottom.svg) no-repeat center;}
 #standard{background: url(images/sc_alignverticalcenter.svg) no-repeat center;}
-div[id^=checkbutton]{
+.checkbutton{
 	clear: both;
 }
 #mobile-wizard input[type=checkbox]:disabled{
