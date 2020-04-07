@@ -29,10 +29,13 @@ describe('Calc spell checking menu.', function() {
 		cy.get('.leaflet-marker-icon')
 			.then(function(markers) {
 				expect(markers.length).to.have.greaterThan(1);
+				cy.log('Markers length: ' + markers.length);
 				for (var i = 0; i < markers.length; i++) {
 					if (markers[i].classList.contains('leaflet-selection-marker-start')) {
+						cy.log('Found start marker at pos: ' + markers[i].getBoundingClientRect().right);
 						var XPos = markers[i].getBoundingClientRect().right + 10;
 					} else if (markers[i].classList.contains('leaflet-selection-marker-end')) {
+						cy.log('Found end marker at pos: ' + markers[i].getBoundingClientRect().top);
 						var YPos = markers[i].getBoundingClientRect().top - 10;
 					}
 				}

@@ -72,7 +72,7 @@ function copyContentToClipboard() {
 }
 
 function removeTextSelection() {
-	cy.log('Removing all text - start.');
+	cy.log('Removing text selection - start.');
 
 	// TODO: select all does not work with core/master
 	// if we have a column selected
@@ -90,7 +90,7 @@ function removeTextSelection() {
 			.should('exist');
 	}
 
-	cy.log('Removing all text - end.');
+	cy.log('Removing text selection - end.');
 }
 
 function selectAllMobile() {

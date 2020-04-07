@@ -67,7 +67,7 @@ function detectLOCoreVersion() {
 function longPressOnDocument(posX, posY) {
 	cy.log('Emulating a long press - start.');
 	cy.log('Param - posX: ' + posX);
-	cy.log('Param - posX: ' + posY);
+	cy.log('Param - posY: ' + posY);
 
 	cy.get('.leaflet-pane.leaflet-map-pane')
 		.then(function(items) {
