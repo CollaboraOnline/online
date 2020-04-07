@@ -86,7 +86,43 @@ function pushHamburgerMenuIconMobile() {
 		.click({force: true});
 }
 
+function openMobileWizard() {
+	cy.log('Opening mobile wizard - start.');
+
+	// Open mobile wizard
+	cy.get('#tb_actionbar_item_mobile_wizard')
+		.should('not.have.class', 'disabled')
+		.click();
+
+	// Mobile wizard is opened and it has content
+	cy.get('#mobile-wizard-content')
+		.should('not.be.empty');
+	cy.get('#tb_actionbar_item_mobile_wizard table')
+		.should('have.class', 'checked');
+
+	cy.log('Opening mobile wizard - end.');
+}
+
+function closeMobileWizard() {
+	cy.log('Closing mobile wizard - start.');
+
+	cy.get('#tb_actionbar_item_mobile_wizard table')
+		.should('have.class', 'checked');
+
+	cy.get('#tb_actionbar_item_mobile_wizard')
+		.click();
+
+	cy.get('#mobile-wizard')
+		.should('not.be.visible');
+	cy.get('#tb_actionbar_item_mobile_wizard table')
+		.should('not.have.class', 'checked');
+
+	cy.log('Closing mobile wizard - end.');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.beforeAllMobile = beforeAllMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.pushHamburgerMenuIconMobile = pushHamburgerMenuIconMobile;
+module.exports.openMobileWizard = openMobileWizard;
+module.exports.closeMobileWizard = closeMobileWizard;

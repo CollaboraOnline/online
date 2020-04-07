@@ -19,9 +19,6 @@ describe('Impress focus tests', function() {
 
 		impress.assertNotInTextEditMode();
 
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled');
-
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');

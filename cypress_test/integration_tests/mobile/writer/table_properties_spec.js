@@ -21,9 +21,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	}
 
 	function openTablePanel() {
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.openMobileWizard();
 
 		// Open table panel
 		cy.get('#TableEditPanel')
@@ -62,9 +60,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -95,9 +91,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -128,9 +122,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -161,9 +153,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -194,9 +184,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -227,9 +215,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -261,9 +247,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		// Do a new selection
 		writerHelper.selectAllMobile();
@@ -295,9 +279,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#MergeCells')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -329,9 +311,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#rowheight .spinfield')
 			.should('have.attr', 'value', '1.4');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -361,9 +341,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#columnwidth .spinfield')
 			.should('have.attr', 'value', '5.6');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -390,9 +368,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetMinimalRowHeight')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -418,9 +394,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetOptimalRowHeight')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -456,9 +430,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#DistributeRows')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -494,9 +466,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetMinimalColumnWidth')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -527,9 +497,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetOptimalColumnWidth')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 
@@ -563,9 +531,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#DistributeColumns')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTableToClipboard();
 

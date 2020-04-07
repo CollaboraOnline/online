@@ -14,10 +14,7 @@ describe('Apply paragraph properties.', function() {
 		// Do a selection
 		writerHelper.selectAllMobile();
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
+		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
 		cy.get('#Paragraph')
@@ -45,9 +42,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#LeftParaimg')
 			.should('have.class', 'selected');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -60,9 +55,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#CenterPara')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -75,9 +68,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#RightPara')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -90,9 +81,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#JustifyPara')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -105,9 +94,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaRightToLeft')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -117,9 +104,7 @@ describe('Apply paragraph properties.', function() {
 		// Select text
 		writerHelper.selectAllMobile();
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
 		cy.get('#Paragraph')
@@ -129,9 +114,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaLeftToRight')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -148,9 +131,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#DefaultBullet')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -167,9 +148,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#DefaultNumbering')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -196,9 +175,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -216,9 +193,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaspaceIncrease')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -232,9 +207,7 @@ describe('Apply paragraph properties.', function() {
 		// Select text
 		writerHelper.selectAllMobile();
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
 		cy.get('#Paragraph')
@@ -244,9 +217,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaspaceDecrease')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -284,9 +255,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#belowparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -305,9 +274,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#IncrementIndent')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -320,9 +287,7 @@ describe('Apply paragraph properties.', function() {
 		// Select text
 		writerHelper.selectAllMobile();
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
 		cy.get('#Paragraph')
@@ -332,9 +297,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#DecrementIndent')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -356,9 +319,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#beforetextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -380,9 +341,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#aftertextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -404,9 +363,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#firstlineindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 

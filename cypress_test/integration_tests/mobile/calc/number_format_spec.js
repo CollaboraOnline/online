@@ -16,11 +16,7 @@ describe('Apply number formatting.', function() {
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openMobileWizard();
 
 		// Open character properties
 		cy.get('#ScNumberFormatPropertyPanel')
@@ -64,9 +60,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -101,9 +95,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -130,9 +122,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -167,9 +157,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -200,9 +188,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -214,11 +200,7 @@ describe('Apply number formatting.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openMobileWizard();
 
 		// Open character properties
 		cy.get('#ScNumberFormatPropertyPanel')
@@ -239,9 +221,7 @@ describe('Apply number formatting.', function() {
 		//cy.get('#category .ui-header-left')
 		//	.should('have.text', 'Number');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -269,9 +249,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -295,9 +273,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -321,9 +297,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -344,9 +318,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -367,10 +339,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
+		mobileHelper.closeMobileWizard();
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -390,9 +359,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 

@@ -16,54 +16,20 @@ describe('Mobile wizard state tests', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Click on mobile wizard toolbar item
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.openMobileWizard();
 
-		// Mobile wizard is opened and it has any content
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('have.class', 'checked');
-
-		// Toolbar button is checked
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('have.class', 'checked');
-
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Mobile wizard is closed
-		cy.get('#mobile-wizard')
-			.should('not.be.visible');
-
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('not.have.class', 'checked');
+		// Close mobile wizard
+		mobileHelper.closeMobileWizard();
 
 		// Open mobile wizard again
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Mobile wizard is opened and it has any content
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('have.class', 'checked');
+		mobileHelper.openMobileWizard();
 	});
 
 	it('Close mobile wizard by hamburger menu.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Click on mobile wizard toolbar item
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Mobile wizard is opened and it has any content
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('have.class', 'checked');
+		mobileHelper.openMobileWizard();
 
 		// Open hamburger menu
 		mobileHelper.pushHamburgerMenuIconMobile();
@@ -77,27 +43,14 @@ describe('Mobile wizard state tests', function() {
 			.should('not.be.visible');
 
 		// Open mobile wizard again
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('have.class', 'checked');
+		mobileHelper.openMobileWizard();
 	});
 
 	it('Close mobile wizard by context wizard.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Click on mobile wizard toolbar item
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		// Mobile wizard is opened and it has any content
-		cy.get('#Character');
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('have.class', 'checked');
+		mobileHelper.openMobileWizard();
 
 		// Open context wizard by right click on document
 		mobileHelper.longPressOnDocument(40, 40);

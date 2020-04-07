@@ -65,21 +65,13 @@ describe('Focus tests', function() {
 		cy.document().its('activeElement.className')
 			.should('be.eq', 'clipboard');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
-
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openMobileWizard();
 
 		// Body should have the focus (no focus on document)
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		// No focus
 		cy.document().its('activeElement.tagName')
@@ -90,12 +82,7 @@ describe('Focus tests', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
 		cy.get('#Paragraph')
@@ -109,9 +96,7 @@ describe('Focus tests', function() {
 		cy.document().its('activeElement.className')
 			.should('be.eq', 'spinfield');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		// No focus
 		cy.document().its('activeElement.tagName')
@@ -245,12 +230,7 @@ describe('Focus tests', function() {
 		cy.document().its('activeElement.className')
 			.should('be.eq', 'clipboard');
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openMobileWizard();
 
 		// No focus
 		cy.document().its('activeElement.tagName')
@@ -267,12 +247,7 @@ describe('Focus tests', function() {
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		cy.get('#tb_actionbar_item_mobile_wizard table')
-			.should('not.have.class', 'checked');
+		mobileHelper.closeMobileWizard();
 
 		// No focus
 		cy.document().its('activeElement.tagName')

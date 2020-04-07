@@ -45,10 +45,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	function triggerNewSVG() {
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		// Change width
 		openPosSizePanel();
@@ -57,16 +54,11 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('be.visible')
 			.click();
 
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 	}
 
 	function openPosSizePanel() {
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.openMobileWizard();
 
 		cy.get('#PosSizePropertyPanel')
 			.click();
@@ -77,12 +69,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	}
 
 	function openLinePropertyPanel() {
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openMobileWizard();
 
 		cy.get('#LinePropertyPanel')
 			.click();

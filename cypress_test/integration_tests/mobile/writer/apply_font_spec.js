@@ -14,10 +14,7 @@ describe('Apply font changes.', function() {
 		// Do a new selection
 		writerHelper.selectAllMobile();
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
+		mobileHelper.openMobileWizard();
 	});
 
 	afterEach(function() {
@@ -28,10 +25,7 @@ describe('Apply font changes.', function() {
 		// Do a new selection
 		writerHelper.selectAllMobile();
 
-		// Open mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
+		mobileHelper.openMobileWizard();
 
 		// Change font name
 		cy.get('#applystyle')
@@ -50,9 +44,7 @@ describe('Apply font changes.', function() {
 				.contains(styleName);
 		}
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 	}
 
 	it('Apply font name.', function() {
@@ -74,9 +66,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontnamecombobox .ui-header-right')
 			.contains('Linux Libertine G');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -107,9 +97,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontsizecombobox .ui-header-right')
 			.contains('36');
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -122,9 +110,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Bold')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -137,9 +123,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Italic')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -152,11 +136,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Underlineimg')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -169,11 +149,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Strikeoutimg')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -186,11 +162,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Shadowedimg')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -202,11 +174,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Growimg')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -219,11 +187,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Shrinkimg')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -245,11 +209,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -271,11 +231,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -288,11 +244,7 @@ describe('Apply font changes.', function() {
 		cy.get('#SuperScriptimg')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -305,11 +257,7 @@ describe('Apply font changes.', function() {
 		cy.get('#SubScriptimg')
 			.click();
 
-		// Close mobile wizard
-		cy.get('#tb_actionbar_item_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.visible');
+		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
