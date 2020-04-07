@@ -14,9 +14,7 @@
 
 #include <algorithm>
 #include <cassert>
-#include <chrono>
 #include <cstdlib>
-#include <memory>
 #include <vector>
 
 #include <Poco/Base64Decoder.h>
@@ -95,31 +93,7 @@ std::string BytesToBase64(const std::vector<unsigned char>& bytes)
     return oss.str();
 }
 
-class Proof {
-public:
-    Proof();
-    VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri) const;
-    const VecOfStringPairs& GetProofKeyAttributes() const { return m_aAttribs; }
-private:
-    static std::string ProofKeyPath();
-
-    // modulus and exponent are big-endian vectors
-    static std::vector<unsigned char> RSA2CapiBlob(const std::vector<unsigned char>& modulus,
-                                                   const std::vector<unsigned char>& exponent);
-
-    // Returns .Net tick (=100ns) count since 0001-01-01 00:00:00 Z
-    // See https://docs.microsoft.com/en-us/dotnet/api/system.datetime.ticks
-    static int64_t DotNetTicks(const std::chrono::system_clock::time_point& utc);
-    // Returns bytes to sign and base64-encode
-    // See http://www.wictorwilen.se/sharepoint-2013-building-your-own-wopi-client-part-2
-    static std::vector<unsigned char> GetProof(const std::string& access_token,
-                                               const std::string& uri, int64_t ticks);
-    // Signs bytes and returns base64-encoded string
-    std::string SignProof(const std::vector<unsigned char>& proof) const;
-
-    const std::unique_ptr<const Poco::Crypto::RSAKey> m_pKey;
-    VecOfStringPairs m_aAttribs;
-};
+}
 
 Proof::Proof()
     : m_pKey([]() -> Poco::Crypto::RSAKey* {
@@ -260,8 +234,6 @@ const Proof& GetProof()
 {
     static const Proof proof;
     return proof;
-}
-
 }
 
 VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri)
