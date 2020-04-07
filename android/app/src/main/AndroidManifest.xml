@@ -51,7 +51,6 @@
         <activity
             android:name="org.libreoffice.androidlib.LOActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:screenOrientation="sensorPortrait"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
