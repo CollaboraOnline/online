@@ -36,6 +36,9 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <WebSocketHandler.hpp>
+#if !MOBILEAPP
+#include <Admin.hpp>
+#endif
 
 #include <common/FileUtil.hpp>
 #include <common/Seccomp.hpp>
@@ -226,7 +229,7 @@ static void cleanupChildren()
 {
     std::vector<std::string> jails;
     Process::PID exitedChildPid;
-    int status;
+    int status, segFaultCount = 0;
 
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
     while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
@@ -242,13 +245,42 @@ static void cleanupChildren()
                 // We ran out of kits and we aren't terminating.
                 LOG_WRN("No live Kits exist, and we are not terminating yet.");
             }
+
+            if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS))
+            {
+                segFaultCount ++;
+            }
         }
         else
         {
             LOG_ERR("Unknown child " << exitedChildPid << " has exited");
         }
     }
-    
+
+    if (segFaultCount)
+    {
+#ifdef KIT_IN_PROCESS
+#if !MOBILEAPP
+        Admin::instance().addSegFaultCount(segFaultCount);
+#endif
+#else
+        if (WSHandler)
+        {
+            std::stringstream stream;
+            stream << "segfaultcount " << segFaultCount << "\n";
+            int ret = WSHandler->sendMessage(stream.str());
+            if (ret == -1)
+            {
+                LOG_WRN("Could not send 'segfaultcount' message through websocket");
+            }
+            else
+            {
+                LOG_WRN("Successfully sent 'segfaultcount' message " << stream.str());
+            }
+        }
+#endif
+    }
+
     // Now delete the jails.
     for (const auto& path : jails)
     {

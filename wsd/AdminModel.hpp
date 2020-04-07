@@ -249,6 +249,7 @@ class AdminModel
 public:
 
     AdminModel() :
+        _segFaultCount(0),
         _owner(std::this_thread::get_id())
     {
         LOG_INF("AdminModel ctor.");
@@ -316,6 +317,7 @@ public:
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
     void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration);
+    void addSegFaultCount(unsigned segFaultCount);
     void setForKitPid(pid_t pid) { _forKitPid = pid; }
 
     void getMetrics(std::ostringstream &oss);
@@ -359,6 +361,8 @@ private:
 
     uint64_t _sentBytesTotal;
     uint64_t _recvBytesTotal;
+
+    uint64_t _segFaultCount;
 
     pid_t _forKitPid;
 

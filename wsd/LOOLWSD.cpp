@@ -835,9 +835,25 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
     const std::string firstLine = LOOLProtocol::getFirstLine(&data[0], data.size());
     const StringVector tokens = LOOLProtocol::tokenize(firstLine.data(), firstLine.size());
 
-    // Just add here the processing of specific received messages 
-
-    LOG_ERR("ForKitProcWSHandler: unknown command: " << tokens[0]);
+    if (tokens.equals(0, "segfaultcount"))
+    {
+        int count = std::stoi(tokens[1]);
+        if (count >= 0)
+        {
+#if !MOBILEAPP
+            Admin::instance().addSegFaultCount(count);
+#endif
+            LOG_INF(count << " loolkit processes crashed with segmentation fault.");
+        }
+        else
+        {
+            LOG_WRN("Invalid 'segfaultcount' message received.");
+        }
+    }
+    else
+    {
+        LOG_ERR("ForKitProcWSHandler: unknown command: " << tokens[0]);
+    }
 }
 
 LOOLWSD::LOOLWSD()

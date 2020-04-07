@@ -771,6 +771,11 @@ void AdminModel::setDocWopiUploadDuration(const std::string& docKey, const std::
         it->second.setWopiUploadDuration(wopiUploadDuration);
 }
 
+void AdminModel::addSegFaultCount(unsigned segFaultCount)
+{
+    _segFaultCount += segFaultCount;
+}
+
 int filterNumberName(const struct dirent *dir)
 {
     return !fnmatch("[0-9]*", dir->d_name, 0);
@@ -993,6 +998,7 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     oss << "kit_count " << kitStats.unassignedCount + kitStats.assignedCount << std::endl;
     oss << "kit_unassigned_count " << kitStats.unassignedCount << std::endl;
     oss << "kit_assigned_count " << kitStats.assignedCount << std::endl;
+    oss << "kit_segfault_count " << _segFaultCount << std::endl;
     PrintKitAggregateMetrics(oss, "thread_count", "", kitStats._threadCount);
     PrintKitAggregateMetrics(oss, "memory_used", "bytes", docStats._kitUsedMemory._all);
     PrintKitAggregateMetrics(oss, "cpu_time", "seconds", kitStats._cpuTime);

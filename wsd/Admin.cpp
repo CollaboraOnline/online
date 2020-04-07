@@ -593,6 +593,11 @@ void Admin::setDocWopiUploadDuration(const std::string& docKey, const std::chron
     addCallback([=]{ _model.setDocWopiUploadDuration(docKey, uploadDuration); });
 }
 
+void Admin::addSegFaultCount(unsigned segFaultCount)
+{
+    addCallback([=]{ _model.addSegFaultCount(segFaultCount); });
+}
+
 void Admin::notifyForkit()
 {
     std::ostringstream oss;
