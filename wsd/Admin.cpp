@@ -170,7 +170,11 @@ void AdminSocketHandler::handleMessage(bool /* fin */, WSOpCode /* code */,
         }
         catch (std::invalid_argument& exc)
         {
-            LOG_WRN("Invalid PID to kill: " << tokens[1]);
+            LOG_WRN("Invalid PID to kill (invalid argument): " << tokens[1]);
+        }
+        catch (std::out_of_range& exc)
+        {
+            LOG_WRN("Invalid PID to kill (out of range): " << tokens[1]);
         }
     }
     else if (tokens[0] == "settings")
