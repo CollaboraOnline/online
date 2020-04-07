@@ -1277,14 +1277,14 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         forwardToChild(sessionId, command);
         _lastSaveRequestTime = std::chrono::steady_clock::now();
 #ifdef IOS
-        // We need to do this so that file provider extensions notice. Just like in
-        // -[DocumentViewController bye] I suspect that will read the file and then overwrite it
-        // with the same contents, but oh well.
+        // We need to do this here, also for auto-save, so that file provider extensions notice.
+
         CODocument *document = [[DocumentViewController singleton] document];
+
         [document saveToURL:[[[DocumentViewController singleton] document] fileURL]
            forSaveOperation:UIDocumentSaveForOverwriting
           completionHandler:^(BOOL success) {
-                LOG_TRC("save completion handler gets " << (success?"YES":"NO"));
+                LOG_TRC("DocumentBroker::sendUnoSave() save completion handler gets " << (success?"YES":"NO"));
             }];
 #endif
         return true;

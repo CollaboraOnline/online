@@ -37,14 +37,7 @@
 @implementation CODocument
 
 - (id)contentsForType:(NSString*)typeName error:(NSError **)errorPtr {
-    // Somehow this doesn't feel right, creating an NSFileWrapper around the file that was given to
-    // us for loadFromContents. I get the vague feeling that the file is perhaps just a temporary
-    // data container created by the system for us to be used while loading the document data, and
-    // not the actual permanent document, especially in the case of things like NextCloud. Or is it?
-    // Is saving back to the file (which we have already saved to in the core code by the time we
-    // get here) correct? This does seem to work, though. Sadly the Apple documentation is a bit
-    // lacking about how these things *really* work.
-    return [[NSFileWrapper alloc] initWithURL:[self fileURL] options:0 error:errorPtr];
+    return [NSData dataWithContentsOfFile:[copyFileURL path] options:0 error:errorPtr];
 }
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
@@ -55,11 +48,18 @@
         return YES;
 
     fakeClientFd = fakeSocketSocket();
-    NSString *uri = [[self fileURL] absoluteString];
+
+    copyFileURL = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:[[[self fileURL] path] lastPathComponent]];
+
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtURL:copyFileURL error:nil];
+    [[NSFileManager defaultManager] copyItemAtURL:[self fileURL] toURL:copyFileURL error:&error];
+    if (error != nil)
+        return NO;
 
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-    components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:uri],
+    components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[copyFileURL absoluteString]],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
                                [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
                                [NSURLQueryItem queryItemWithName:@"lang" value:app_locale]

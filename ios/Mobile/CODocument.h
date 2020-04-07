@@ -18,6 +18,7 @@
 @interface CODocument : UIDocument {
 @public
     int fakeClientFd;
+    NSURL *copyFileURL;
 }
 
 @property (weak) DocumentViewController *viewController;

@@ -348,7 +348,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
             // First we simply send it the URL. This corresponds to the GET request with Upgrade to
             // WebSocket.
-            std::string url([[[self.document fileURL] absoluteString] UTF8String]);
+            std::string url([[self.document->copyFileURL absoluteString] UTF8String]);
             p.fd = self.document->fakeClientFd;
             p.events = POLLOUT;
             fakeSocketPoll(&p, 1, -1);
@@ -469,21 +469,25 @@ static IMP standardImpOfInputAccessoryView = nil;
     // Close one end of the socket pair, that will wake up the forwarding thread above
     fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
-    // I suspect that what this will do (in -[CODocument contentsForType:error:]) is to read the
-    // contents of the file that LO core already saved, and overwrite it with the same contents.
-    [self.document saveToURL:[self.document fileURL]
-            forSaveOperation:UIDocumentSaveForOverwriting
-           completionHandler:^(BOOL success) {
-              LOG_TRC("save completion handler gets " << (success?"YES":"NO"));
-           }];
+    // We can't wait for the LOOLWSD::lokit_main_mutex directly here because this is called on the
+    // main queue and the main queue must be ready to execute code dispatched by the system APIs
+    // used to do document saving.
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+                   ^{
+                       // Wait for lokit_main thread to exit
+                       std::lock_guard<std::mutex> lock(LOOLWSD::lokit_main_mutex);
 
-    // Wait for lokit_main thread to exit
-    std::lock_guard<std::mutex> lock(LOOLWSD::lokit_main_mutex);
+                       theSingleton = nil;
 
-    theSingleton = nil;
+                       [[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil];
 
-    // And only then let the document browsing view show up again
-    [self dismissDocumentViewController];
+                       // And only then let the document browsing view show up again. The
+                       // dismissViewControllerAnimated must be done on the main queue.
+                       dispatch_async(dispatch_get_main_queue(),
+                                      ^{
+                                          [self dismissDocumentViewController];
+                                      });
+                   });
 }
 
 + (DocumentViewController*)singleton {
