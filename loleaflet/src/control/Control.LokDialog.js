@@ -254,7 +254,12 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogMsg: function(e) {
 		console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
-		if (e.winType != undefined && e.winType !== 'dialog' && e.winType !== 'calc-input-win' && e.winType !== 'child' && e.winType !== 'deck') {
+		if (e.winType != undefined &&
+		    e.winType !== 'dialog' &&
+		    e.winType !== 'calc-input-win' &&
+		    e.winType !== 'child' &&
+		    e.winType !== 'deck' &&
+		    e.winType !== 'tooltip') {
 			return;
 		}
 
@@ -292,9 +297,16 @@ L.Control.LokDialog = L.Control.extend({
 					// In mobile we get jsdialog messages.
 					window.sidebarId = e.id;
 				}
-			} else if (e.winType === 'child') {
+			} else if (e.winType === 'child' || e.winType === 'tooltip') {
 				var parentId = parseInt(e.parentId);
 				if (!this._isOpen(parentId))
+					return;
+
+				// In case of tooltips, do not remove the previous popup
+				// only if that's also a tooltip.
+				if (e.winType === 'tooltip' &&
+				    this._dialogs[parentId].childid !== undefined &&
+				    this._dialogs[parentId].childistooltip !== true)
 					return;
 
 				if (!left)
@@ -302,11 +314,16 @@ L.Control.LokDialog = L.Control.extend({
 				if (!top)
 					top = 0;
 				this._removeDialogChild(parentId);
+
 				this._dialogs[parentId].childid = e.id;
 				this._dialogs[parentId].childwidth = width;
 				this._dialogs[parentId].childheight = height;
 				this._dialogs[parentId].childx = left;
 				this._dialogs[parentId].childy = top;
+				if (e.winType === 'tooltip')
+					this._dialogs[parentId].childistooltip = true;
+				else
+					this._dialogs[parentId].childistooltip = false;
 				this._createDialogChild(e.id, parentId, top, left);
 				this._sendPaintWindow(e.id, this._createRectStr(null, 0, 0, width, height));
 			}
@@ -1451,10 +1468,12 @@ L.Control.LokDialog = L.Control.extend({
 			var canvasHeight = canvas.height;
 			$('#' + dialogId).height(canvasHeight + 'px');
 		}
+		this._dialogs[dialogId].childid = undefined;
 	},
 
 	_removeDialogChild: function(id) {
 		$('#' + this._toStrId(id) + '-floating').remove();
+		this._dialogs[id].childid = undefined;
 	},
 
 	_createDialogChild: function(childId, parentId, top, left) {
