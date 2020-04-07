@@ -263,10 +263,10 @@ brandingLink.setAttribute("rel", "stylesheet");
 brandingLink.setAttribute("type", "text/css");
 if (window.mode.isMobile()) {
     [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-mobile.css');]
-    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[branding-mobile.css');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])m4_ifelse(IOSAPP,[true],[Branding/])[branding-mobile.css');]
 } else if (window.mode.isTablet()) {
     [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-tablet.css');]
-    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[branding-tablet.css');]
+    [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])m4_ifelse(IOSAPP,[true],[Branding/])[branding-tablet.css');]
 } else {
     [link.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[device-desktop.css');]
     [brandingLink.setAttribute("href", ']m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])[branding-desktop.css');]
