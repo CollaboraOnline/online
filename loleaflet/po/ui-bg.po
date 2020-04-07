@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-02-23 18:15+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
+"PO-Revision-Date: 2020-04-06 08:35+0000\n"
+"Last-Translator: Mihail Balabanov <m.balabanov@gmail.com>\n"
 "Language-Team: Bulgarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -387,10 +387,8 @@ msgid "Font Size"
 msgstr "Размер на шрифта"
 
 #: src/control/Control.JSDialogBuilder.js:1441
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Кантове"
+msgstr "Кантове на клетки"
 
 #: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"
@@ -458,7 +456,7 @@ msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:480
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:472
 #: src/control/Signing.js:601
@@ -577,10 +575,8 @@ msgid "Reset to Default Language"
 msgstr "Връщане на подразбирания език"
 
 #: src/control/Control.Menubar.js:1079
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "Вмъкване на фигури"
+msgstr "Вмъкване на фигура"
 
 #: src/control/Control.Menubar.js:1161
 msgid "Are you sure you want to delete this slide?"

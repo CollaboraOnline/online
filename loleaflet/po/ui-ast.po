@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-03-17 11:27+0000\n"
+"PO-Revision-Date: 2020-04-07 08:12+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -324,7 +324,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Sólidu"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"

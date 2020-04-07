@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-29 05:16+0000\n"
+"PO-Revision-Date: 2020-04-04 10:24+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -1267,7 +1267,7 @@ msgstr "Systematickou kontrolu pravopisu celého dokumentu zahájíte volbou <sp
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr "Sešit uložený online upravujete stejně jako sešit v desktopové aplikaci. Stejné zůstávají operace jako zadávání dat či výběr oblastí, sloupců, řádků nebo listů. Příkazy v sešitu spustíte pomocí klávesnice, nabídek nebo nástrojové lišty. Podporováno je také přetahování obsahu buněk, které vyplní do buněk data. Příkazy vyjmout, kopírovat a vložit jsou k dispozici v místní nabídce. Stisknete-li po zadání dat <span class=\"kbd\">Tab</span>, kurzor se přesune do buňky následující vpravo, po stisknutí klávesy <span class=\"kbd\">Enter</span> se přesune do buňky níže; tím snáze zadáte další záznam."
+msgstr "Sešit uložený online upravujete stejně jako sešit v desktopové aplikaci. Stejné zůstávají operace jako zadávání dat či výběr oblastí, sloupců, řádků nebo listů. Příkazy v sešitu spustíte pomocí klávesnice, nabídek nebo nástrojové lišty. Podporováno je také přetahování obsahu buněk, pomocí kterého buňky naplníte daty. Příkazy vyjmout, kopírovat a vložit jsou k dispozici v místní nabídce. Stisknete-li po zadání dat <span class=\"kbd\">Tab</span>, kurzor se přesune do buňky následující vpravo, po stisknutí klávesy <span class=\"kbd\">Enter</span> se přesune do buňky níže; tím snáze zadáte další záznam."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
@@ -1275,7 +1275,7 @@ msgstr "Vzorce se zapisují do lišty vzorce. Zadejte „=“ a následně vzore
 
 #: html/loleaflet-help.html%2Bdiv.div.p:344-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr "Ve vzorcích jsou k dispozici všechny funkce sešitu a uplatňují se matematická pravidla."
+msgstr "Ve vzorcích jsou k dispozici všechny funkce sešitu a uplatňují se u nich matematická pravidla."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
@@ -1299,7 +1299,7 @@ msgstr "Funkce <span class=\"ui\">Automatický filtr</span> umožňuje rychle om
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:360-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
-msgstr "V dialogovém okně <span class=\"ui\">Standardní filtr</span> můžete také stanovit rozmezí, v němž se mají hodnoty určitého datového pole nacházet. V tomto filtru můžete spojovat podmínky logickými operátory A nebo NEBO."
+msgstr "V dialogovém okně <span class=\"ui\">Standardní filtr</span> můžete stanovit rozmezí, v němž se mají hodnoty určitého datového pole nacházet. V tomto filtru lze spojovat podmínky logickými operátory A nebo NEBO."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:361-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
@@ -1307,7 +1307,7 @@ msgstr "<span class=\"ui\">Rozšířený filtr</span> umožňuje použít až os
 
 #: html/loleaflet-help.html%2Bdiv.div.p:363-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
-msgstr "<span class=\"def\">Souhrny:</span> hierarchická data můžete zobrazit pomocí souhrnu: seskupíte řádky a sloupce a poté můžete tyto skupiny rozbalovat a sbalovat jediným klepnutím."
+msgstr "<span class=\"def\">Souhrny:</span> hierarchická data zobrazíte pomocí souhrnu: seskupíte řádky a sloupce a poté můžete tyto skupiny rozbalovat a sbalovat jediným klepnutím."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:365-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"

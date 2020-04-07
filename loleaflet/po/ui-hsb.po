@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-03-17 08:29+0000\n"
+"PO-Revision-Date: 2020-04-06 14:11+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hsb/>\n"
 "Language: hsb\n"
@@ -324,7 +324,7 @@ msgstr "Žadyn"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Połny"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -387,10 +387,8 @@ msgid "Font Size"
 msgstr "Wulkosć pisma"
 
 #: src/control/Control.JSDialogBuilder.js:1441
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Kromy"
+msgstr "Kromy cele"
 
 #: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"

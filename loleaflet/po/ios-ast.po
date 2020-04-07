@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2019-12-23 05:31+0000\n"
+"PO-Revision-Date: 2020-04-07 07:41+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/ios/ast/>\n"
 "Language: ast\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /ast/libo_online/ios-ast.po\n"
 "X-Pootle-Revision: 3937640\n"
 
@@ -23,11 +23,11 @@ msgstr ""
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Revisión del depósitu Git «online»"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Revisión del depósitu Git «core»"
 
 #: Settings
 msgid "Settings"

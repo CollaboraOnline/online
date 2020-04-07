@@ -5,28 +5,29 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-04-06 14:11+0000\n"
+"Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
+"Language-Team: Lower Sorbian <https://weblate.documentfoundation.org/projects/libo_online/ios/dsb/>\n"
 "Language: dsb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /dsb/libo_online/ios-dsb.po\n"
 "X-Pootle-Revision: 3937740\n"
 
 #: Version+information
 msgid "Version information"
-msgstr ""
+msgstr "Wersijowe informacije"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Online git hash"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Core git hash"
 
 #: Settings
 msgid "Settings"

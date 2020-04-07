@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-02-26 23:15+0000\n"
+"PO-Revision-Date: 2020-04-04 15:13+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/sk/>\n"
 "Language: sk\n"
@@ -1190,10 +1190,8 @@ msgid "When you paste text from outside of the document (another browser window 
 msgstr "Ak vložíte text, ktorý z tohto dokumentu nepochádza (tj. z iného okna prehliadača alebo z inej aplikácie), vloží sa ako formátovaný text."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
-#, fuzzy
-#| msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr "Ak ste obsah vybrali alebo skopírovali interne, môžete ho vložiť pomocou ponuky vyvolanej pravým tlačidlom myši."
+msgstr "Ak ste obsah vybrali alebo skopírovali interne, môžete ho vložiť pomocou kontextového menu."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"

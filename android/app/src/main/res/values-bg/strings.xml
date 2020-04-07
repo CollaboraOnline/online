@@ -100,4 +100,6 @@
     <string name="pref_enable_chrome_debugger_info">Включва използването на дебъгера на Chrome в документа.</string>
     <string name="pref_enable_chrome_debugger">Дебъгер на Chrome</string>
     <string name="pref_category_editor">Настройки на редактора</string>
+    <string name="remove_from_list">Премахване от списъка</string>
+    <string name="file_actions_icon_desc">Действия с файлове</string>
 </resources>

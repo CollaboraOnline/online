@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-03-15 21:23+0000\n"
+"PO-Revision-Date: 2020-04-03 21:24+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
@@ -320,11 +320,11 @@ msgstr "Automatická"
 #: src/control/Control.JSDialogBuilder.js:804
 #: src/control/Control.Toolbar.js:1600
 msgid "None"
-msgstr "Žádná"
+msgstr "Žádný"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Plný"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -387,10 +387,8 @@ msgid "Font Size"
 msgstr "Velikost písma"
 
 #: src/control/Control.JSDialogBuilder.js:1441
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Ohraničení"
+msgstr "Ohraničení buněk"
 
 #: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"

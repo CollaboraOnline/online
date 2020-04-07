@@ -8,4 +8,9 @@
     <string name="storage_permission_required">Je potrebné povolenie prístupu k úložisku</string>
     <string name="temp_file_saving_disabled">Súbor je len na čítanie, ukladanie je zakázané.</string>
     <string name="preparing_for_the_first_start_after_an_update">Pripravuje sa prvé spustenie po aktualizácii.</string>
+    <string name="exiting">Ukončovanie...</string>
+    <string name="rate_our_app_text">Ak sa vám táto aplikácia páči, dajte jej v Google Play 5 hviezdičiek. Priaznivé recenzie sú pre nás tou najlepšou motiváciou.</string>
+    <string name="rate_our_app_title">Ďakujeme, že používate %1$s!</string>
+    <string name="later">Neskôr</string>
+    <string name="rate_now">Ohodnotiť teraz</string>
 </resources>

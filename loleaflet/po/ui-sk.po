@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-02-25 10:42+0000\n"
+"PO-Revision-Date: 2020-04-04 15:13+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sk/>\n"
 "Language: sk\n"
@@ -324,7 +324,7 @@ msgstr "Žiadne"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Jednofarebná"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -387,10 +387,8 @@ msgid "Font Size"
 msgstr "Veľkosť písma"
 
 #: src/control/Control.JSDialogBuilder.js:1441
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Orámovanie"
+msgstr "Orámovanie buniek"
 
 #: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"
@@ -458,7 +456,7 @@ msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:480
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:472
 #: src/control/Signing.js:601
@@ -577,10 +575,8 @@ msgid "Reset to Default Language"
 msgstr "Nastaviť na predvolený jazyk"
 
 #: src/control/Control.Menubar.js:1079
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "Vložiť útvary"
+msgstr "Vložiť útvar"
 
 #: src/control/Control.Menubar.js:1161
 msgid "Are you sure you want to delete this slide?"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-10 09:39+0000\n"
+"PO-Revision-Date: 2020-04-06 08:35+0000\n"
 "Last-Translator: Mihail Balabanov <m.balabanov@gmail.com>\n"
 "Language-Team: Bulgarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/bg/>\n"
 "Language: bg\n"
@@ -1094,8 +1094,6 @@ msgid "Using the browser zoom affects the document and user interface areas."
 msgstr "Командите за мащабиране на браузъра влияят както върху документа, така и върху областите с потребителски интерфейс."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
-#, fuzzy
-#| msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
 msgstr "<span class=\"def\">Информационната лента:</span> вдясно от лентата за търсене се показва информация за документа. Видът ѝ зависи от естеството на документа."
 
@@ -1172,8 +1170,6 @@ msgid "Pasting"
 msgstr "Поставяне"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
-#, fuzzy
-#| msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
 msgstr "Когато поставяте съдържание от същия документ, форматът и елементите се запазват. Ако копирате от друг документ, в друг раздел или прозорец на браузъра, или от място извън браузъра, поставянето ще запази атрибутите, поддържани от формата Rich Text."
 
@@ -1190,10 +1186,8 @@ msgid "When you paste text from outside of the document (another browser window 
 msgstr "Когато поставяте текст от място извън документа (друг прозорец на браузъра или настолно приложение), той ще бъде поставен във формат Rich Text."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
-#, fuzzy
-#| msgid "When you have internal cut or copied content, you can paste this content with the right mouse button menu."
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr "Когато имате вътрешно изрязано или копирано съдържание, можете да го поставите с менюто на десния бутон на мишката."
+msgstr "Когато имате вътрешно изрязано или копирано съдържание, можете да го поставите  чрез контекстното меню."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
@@ -1368,8 +1362,6 @@ msgid "<span class=\"def\">Direct formatting:</span> You can format text documen
 msgstr "<span class=\"def\">Пряко форматиране:</span> можете да форматирате обекти в текстов документ директно чрез менютата, лентите с инструменти или контекстните менюта. Прякото форматиране се отнася само за текущо избрания обект."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
-#, fuzzy
-#| msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgstr "<span class=\"def\">Форматиране чрез стилове:</span> <span class=\"productname\">%productName</span> поддържа стилове на абзаци. Можете да приложите съществуващ стил върху абзац. Изберете <span class=\"def\">Редактиране</span> → <span class=\"ui\">Редактиране на стилове</span>, за да промените стил."
 
@@ -1422,10 +1414,8 @@ msgid "<span class=\"def\">Page header and footer:</span> Headers and footers ar
 msgstr "<span class=\"def\">Колонтитули:</span> достъпни са горен и долен колонтитул за съществуващия стил за страници, приложен в позицията на курсора в документа."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
-#, fuzzy
-#| msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported, being rendered as they are shown."
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
-msgstr "<span class=\"def\">Бележки под линия и в края:</span> поддържат се бележки под линия и в края, които се рендират, когато са показани."
+msgstr "<span class=\"def\">Бележки под линия и в края:</span> поддържат се бележки под линия и в края."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
 msgid "<span class=\"productname\">%productName</span> Impress edits presentations in a way that should be familiar to people. Operations like typing text, cut, copy and pasting contents, selecting text , inserting, resizing, anchoring images, adding and handling tables, are similar to a desktop presentation application. Use the keyboard, menus and toolbars to perform actions in your document."
@@ -1544,8 +1534,6 @@ msgid "What is the blue wavy underline in some words in the text?"
 msgstr "Какво означава синьото вълнообразно подчертаване на някои думи в текста?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
-#, fuzzy
-#| msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
 msgstr "Граматичните грешки в текста се отбелязват със синя вълнообразна линия. Щракнете с десния бутон на мишката върху подчертания текст, за да отворите меню с предложения за корекция на граматичната грешка и информация за нарушените граматични правила. Изберете правилното предложение, за да промените текста."
 
@@ -1610,8 +1598,6 @@ msgid "You have the Track Changes feature enabled for the document. Track Change
 msgstr "Включено е следенето на промени в документа. То регистрира всички промени в текста и ги показва за по-нататъшно преглеждане. Това е полезно за отбелязване на редакциите в текстове и електронни таблици. Следенето на промените се включва с <span class=\"ui\">Редактиране</span> → <span class=\"ui\">Следене на промените</span> → <span class=\"ui\">Регистриране</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
-#, fuzzy
-#| msgid "With track changes enabled your document show the following settings:"
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr "При включено следене на промените документът се показва по следния начин:"
 

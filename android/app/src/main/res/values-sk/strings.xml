@@ -99,4 +99,7 @@
     <string name="ext_document_provider_error">Neplatný koreňový súbor. Skontrolujte nastavenie SD karty.</string>
     <string name="owncloud_unspecified_error">Nešpecifikovaná chyba pri pripájaní ku cloudovému serveru. Skontrolujte konfiguráciu alebo to skúste neskôr.</string>
     <string name="owncloud_unauthorized">Nedá sa prihlásiť ku cloudovému servera. Skontrolujte konfiguráciu.</string>
+    <string name="remove_from_list">Odstrániť zo zoznamu</string>
+    <string name="file_actions_icon_desc">Operácie so súbormi</string>
+    <string name="pref_category_editor">Nastavenia editora</string>
 </resources>
