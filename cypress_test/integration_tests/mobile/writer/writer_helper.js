@@ -80,7 +80,7 @@ function selectAllMobile() {
 		.should('not.exist');
 
 	// Open hamburger menu
-	mobileHelper.pushHamburgerMenuIconMobile();
+	mobileHelper.openHamburgerMenu();
 	cy.get('#mobile-wizard')
 		.should('be.visible', {timeout : 10000});
 

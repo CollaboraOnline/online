@@ -32,15 +32,13 @@ describe('Mobile wizard state tests', function() {
 		mobileHelper.openMobileWizard();
 
 		// Open hamburger menu
-		mobileHelper.pushHamburgerMenuIconMobile();
+		mobileHelper.openHamburgerMenu();
+
 		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon')
 			.contains('About');
 
 		// Close hamburger menu
-		mobileHelper.pushHamburgerMenuIconMobile();
-		// Mobile wizard is closed
-		cy.get('#mobile-wizard')
-			.should('not.be.visible');
+		mobileHelper.closeHamburgerMenu();
 
 		// Open mobile wizard again
 		mobileHelper.openMobileWizard();
@@ -54,6 +52,7 @@ describe('Mobile wizard state tests', function() {
 
 		// Open context wizard by right click on document
 		mobileHelper.longPressOnDocument(40, 40);
+
 		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon')
 			.contains('Paste');
 
