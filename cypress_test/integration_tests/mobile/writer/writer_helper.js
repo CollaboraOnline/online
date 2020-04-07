@@ -3,6 +3,8 @@
 var mobileHelper = require('../../common/mobile_helper');
 
 function copyTextToClipboard() {
+	cy.log('Copying text to clipboard - start.');
+
 	// Do a new selection
 	selectAllMobile();
 
@@ -30,9 +32,13 @@ function copyTextToClipboard() {
 	// Wait until it's closed
 	cy.get('.vex-overlay')
 		.should('not.exist');
+
+	cy.log('Copying text to clipboard - end.');
 }
 
 function copyTableToClipboard() {
+	cy.log('Copying table to clipboard - start.');
+
 	// Do a new selection
 	selectAllMobile();
 
@@ -68,6 +74,8 @@ function copyTableToClipboard() {
 	// Wait until it's closed
 	cy.get('.vex-overlay')
 		.should('not.exist');
+
+	cy.log('Copying table to clipboard - end.');
 }
 
 function selectAllMobile() {

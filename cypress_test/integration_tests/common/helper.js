@@ -1,6 +1,11 @@
 /* global cy Cypress expect*/
 
 function loadTestDoc(fileName, subFolder, mobile) {
+	cy.log('Loading test document - start.');
+	cy.log('Param - fileName: ' + fileName);
+	cy.log('Param - subFolder: ' + subFolder);
+	cy.log('Param - mobile: ' + mobile);
+
 	// Get a clean test document
 	if (subFolder === undefined) {
 		cy.task('copyFile', {
@@ -44,7 +49,10 @@ function loadTestDoc(fileName, subFolder, mobile) {
 		}});
 	// Wait for the document to fully load
 	cy.get('.leaflet-tile-loaded', {timeout : 10000});
+
+	cy.log('Loading test document - end.');
 }
+
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
 function assertNoKeyboardInput() {
 	cy.window().then(win => {
@@ -129,6 +137,9 @@ function expectTextForClipboard(expectedPlainText) {
 }
 
 function afterAll(fileName) {
+	cy.log('Waiting for closing the document - start.');
+	cy.log('Param - fileName: ' + fileName);
+
 	// Make sure that the document is closed
 	cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +
@@ -139,6 +150,8 @@ function afterAll(fileName) {
 
 	cy.get('#doclist td:nth-child(2)')
 		.should('not.contain.text', fileName);
+
+	cy.log('Waiting for closing the document - end.');
 }
 
 module.exports.loadTestDoc = loadTestDoc;

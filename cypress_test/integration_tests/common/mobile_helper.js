@@ -4,6 +4,8 @@ var helper = require('./helper');
 
 // Enable editing if we are in read-only mode.
 function enableEditingMobile() {
+	cy.log('Enabling editing mode - start.');
+
 	cy.get('#mobile-edit-button')
 		.then(function(button) {
 			if (button.css('display') !== 'none') {
@@ -14,6 +16,8 @@ function enableEditingMobile() {
 
 	cy.get('#tb_actionbar_item_mobile_wizard')
 		.should('not.have.class', 'disabled');
+
+	cy.log('Enabling editing mode - end.');
 }
 
 function beforeAllMobile(fileName, subFolder) {
@@ -23,6 +27,8 @@ function beforeAllMobile(fileName, subFolder) {
 }
 
 function detectLOCoreVersion() {
+	cy.log('Detecting core version - start.');
+
 	if (Cypress.env('LO_CORE_VERSION') === undefined) {
 		// Open hamburger menu
 		openHamburgerMenu();
@@ -54,9 +60,15 @@ function detectLOCoreVersion() {
 		cy.get('.vex-content')
 			.should('not.exist');
 	}
+
+	cy.log('Detecting core version - end.');
 }
 
 function longPressOnDocument(posX, posY) {
+	cy.log('Emulating a long press - start.');
+	cy.log('Param - posX: ' + posX);
+	cy.log('Param - posX: ' + posY);
+
 	cy.get('.leaflet-pane.leaflet-map-pane')
 		.then(function(items) {
 			expect(items).have.length(1);
@@ -79,6 +91,8 @@ function longPressOnDocument(posX, posY) {
 			cy.get('.leaflet-pane.leaflet-map-pane')
 				.trigger('pointerup', eventOptions);
 		});
+
+	cy.log('Emulating a long press - end.');
 }
 
 function openHamburgerMenu() {

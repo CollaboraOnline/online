@@ -3,6 +3,10 @@
 var mobileHelper = require('../../common/mobile_helper');
 
 function clickOnFirstCell(firstClick = true, dblClick = false) {
+	cy.log('Clicking on first cell - start.');
+	cy.log('Param - firstClick: ' + firstClick);
+	cy.log('Param - dblClick: ' + dblClick);
+
 	// Enable editing if it's in read-only mode
 	mobileHelper.enableEditingMobile();
 
@@ -27,6 +31,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 	else
 		cy.get('.leaflet-cursor.blinking-cursor')
 			.should('exist');
+
+	cy.log('Clicking on first cell - end.');
 }
 
 function dblClickOnFirstCell() {
@@ -34,6 +40,8 @@ function dblClickOnFirstCell() {
 }
 
 function copyContentToClipboard() {
+	cy.log('Copying content to clipboard - start.');
+
 	selectAllMobile();
 
 	cy.get('.leaflet-tile-container')
@@ -59,9 +67,13 @@ function copyContentToClipboard() {
 	// Wait until it's closed
 	cy.get('.vex-overlay')
 		.should('not.exist');
+
+	cy.log('Copying content to clipboard - end.');
 }
 
 function removeTextSelection() {
+	cy.log('Removing all text - start.');
+
 	// TODO: select all does not work with core/master
 	// if we have a column selected
 	if (Cypress.env('LO_CORE_VERSION') === 'master') {
@@ -77,9 +89,13 @@ function removeTextSelection() {
 		cy.get('.spreadsheet-cell-resize-marker')
 			.should('exist');
 	}
+
+	cy.log('Removing all text - end.');
 }
 
 function selectAllMobile() {
+	cy.log('Selecting all text - start.');
+
 	removeTextSelection();
 
 
@@ -88,6 +104,8 @@ function selectAllMobile() {
 
 	cy.get('.leaflet-marker-icon')
 		.should('exist');
+
+	cy.log('Selecting all text - end.');
 }
 
 module.exports.copyContentToClipboard = copyContentToClipboard;

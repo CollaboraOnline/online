@@ -4,6 +4,8 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 function copyShapeContentToClipboard() {
+	cy.log('Copying shape content to clipboard - start.');
+
 	// TODO: this fails on assertHaveKeyboardInput()
 	// assertInTextEditMode();
 
@@ -33,6 +35,8 @@ function copyShapeContentToClipboard() {
 	// Wait until it's closed
 	cy.get('.vex-overlay')
 		.should('not.exist');
+
+	cy.log('Copying shape content to clipboard - end.');
 }
 
 
