@@ -5,6 +5,9 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Uses known-good sample data from:
+ *   https://github.com/microsoft/Office-Online-Test-Tools-and-Documentation
  */
 
 #include <config.h>
@@ -12,7 +15,14 @@
 #include <test/lokassert.hpp>
 
 #include <ProofKey.hpp>
+#include <Poco/Crypto/RSAKey.h>
+#include <Poco/Crypto/DigestEngine.h>
 #include <Util.hpp>
+
+#include <openssl/bn.h>
+#include <openssl/pem.h>
+#include <openssl/buffer.h>
+
 
 /// Delta unit-tests.
 class WopiProofTests : public CPPUNIT_NS::TestFixture
@@ -20,19 +30,22 @@ class WopiProofTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(WopiProofTests);
 
     CPPUNIT_TEST(testCapiBlob);
-    CPPUNIT_TEST(testProof);
+    CPPUNIT_TEST(testExistingProof);
 
     CPPUNIT_TEST_SUITE_END();
 
     void testCapiBlob();
+    void testExistingProof();
 
-    void testProof();
+    BIGNUM *Base64ToNum(const std::string &str)
+    {
+        std::vector<unsigned char> vec = Proof::Base64ToBytes(str);
+        return BN_bin2bn(&vec[0], vec.size(), nullptr);
+    }
 };
-
 
 void WopiProofTests::testCapiBlob()
 {
-    // Known-good sample strings from https://github.com/microsoft/Office-Online-Test-Tools-and-Documentation
     std::vector<unsigned char> modulus = Proof::Base64ToBytes("0HOWUPFFgmSYHbLZZzdWO/HUOr8YNfx5NAl7GUytooHZ7B9QxQKTJpj0NIJ4XEskQW8e4dLzRrPbNOOJ+KpWHttXz8HoQXkkZV/gYNxaNHJ8/pRXGMZzfVM5vchhx/2C7ULPTrpBsSpmfWQ6ShaVoQzfThFUd0MsBvIN7HVtqzPx9jbSV04wAqyNjcro7F3iu9w7AEsMejHbFlWoN+J05dP5ixryF7+2U5RVmjMt7/dYUdCoiXvCMt2CaVr0XEG6udHU4iDKVKZjmUBc7cTWRzhqEL7lZ1yQfylp38Nd2xxVJ0sSU7OkC1bBDlePcYGaF3JjJgsmp/H5BNnlW9gSxQ==");
     std::vector<unsigned char> exponent = Proof::Base64ToBytes("AQAB");
 
@@ -42,9 +55,32 @@ void WopiProofTests::testCapiBlob()
     LOK_ASSERT_EQUAL(capiEncoded, std::string("BgIAAACkAABSU0ExAAgAAAEAAQDFEthb5dkE+fGnJgsmY3IXmoFxj1cOwVYLpLNTEksnVRzbXcPfaSl/kFxn5b4QajhH1sTtXECZY6ZUyiDi1NG5ukFc9Fppgt0ywnuJqNBRWPfvLTOaVZRTtr8X8hqL+dPldOI3qFUW2zF6DEsAO9y74l3s6MqNjawCME5X0jb28TOrbXXsDfIGLEN3VBFO3wyhlRZKOmR9ZiqxQbpOz0Ltgv3HYci9OVN9c8YYV5T+fHI0Wtxg4F9lJHlB6MHPV9seVqr4ieM027NG89LhHm9BJEtceII09JgmkwLFUB/s2YGirUwZewk0efw1GL861PE7Vjdn2bIdmGSCRfFQlnPQ"));
 }
 
-void WopiProofTests::testProof()
+void WopiProofTests::testExistingProof()
 {
-    LOK_ASSERT(1 > 0);
+    std::vector<unsigned char> proof = Proof::GetProof(
+        "yZhdN1qgywcOQWhyEMVpB6NE3pvBksvcLXsrFKXNtBeDTPW%2fu62g2t%2fOCWSlb3jUGaz1zc%2fzOzbNgAredLdhQI1Q7sPPqUv2owO78olmN74DV%2fv52OZIkBG%2b8jqjwmUobcjXVIC1BG9g%2fynMN0itZklL2x27Z2imCF6xELcQUuGdkoXBj%2bI%2bTlKM", // access token
+        "https://contoso.com/wopi/files/vHxYyRGM8VfmSGwGYDBMIQPzuE+sSC6kw+zWZw2Nyg?access_token=yZhdN1qgywcOQWhyEMVpB6NE3pvBksvcLXsrFKXNtBeDTPW%2fu62g2t%2fOCWSlb3jUGaz1zc%2fzOzbNgAredLdhQI1Q7sPPqUv2owO78olmN74DV%2fv52OZIkBG%2b8jqjwmUobcjXVIC1BG9g%2fynMN0itZklL2x27Z2imCF6xELcQUuGdkoXBj%2bI%2bTlKM", // uri
+        UINT64_C(635655897610773532)); // ticks
+
+    BIGNUM *modulus = Base64ToNum("0HOWUPFFgmSYHbLZZzdWO/HUOr8YNfx5NAl7GUytooHZ7B9QxQKTJpj0NIJ4XEskQW8e4dLzRrPbNOOJ+KpWHttXz8HoQXkkZV/gYNxaNHJ8/pRXGMZzfVM5vchhx/2C7ULPTrpBsSpmfWQ6ShaVoQzfThFUd0MsBvIN7HVtqzPx9jbSV04wAqyNjcro7F3iu9w7AEsMejHbFlWoN+J05dP5ixryF7+2U5RVmjMt7/dYUdCoiXvCMt2CaVr0XEG6udHU4iDKVKZjmUBc7cTWRzhqEL7lZ1yQfylp38Nd2xxVJ0sSU7OkC1bBDlePcYGaF3JjJgsmp/H5BNnlW9gSxQ==");
+    BIGNUM *exponent = Base64ToNum("AQAB");
+
+    RSA *rsa = RSA_new();
+    LOK_ASSERT(rsa != nullptr);
+    LOK_ASSERT_EQUAL(1, RSA_set0_key(rsa, modulus, exponent, nullptr));
+
+    std::vector<unsigned char> msgProof = Proof::Base64ToBytes("IflL8OWCOCmws5qnDD5kYMraMGI3o+T+hojoDREbjZSkxbbx7XIS1Av85lohPKjyksocpeVwqEYm9nVWfnq05uhDNGp2MsNyhPO9unZ6w25Rjs1hDFM0dmvYx8wlQBNZ/CFPaz3inCMaaP4PtU85YepaDccAjNc1gikdy3kSMeG1XZuaDixHvMKzF/60DMfLMBIu5xP4Nt8i8Gi2oZs4REuxi6yxOv2vQJQ5+8Wu2Olm8qZvT4FEIQT9oZAXebn/CxyvyQv+RVpoU2gb4BreXAdfKthWF67GpJyhr+ibEVDoIIolUvviycyEtjsaEBpOf6Ne/OLRNu98un7WNDzMTQ==");
+
+    Poco::Crypto::DigestEngine digestEngine("SHA256");
+    digestEngine.update(proof.data(), proof.size());
+    std::vector<unsigned char> digest = digestEngine.digest();
+
+	LOK_ASSERT_EQUAL(1, RSA_verify(digestEngine.nid(),
+                                   &digest[0], digest.size(),
+                                   &msgProof[0], msgProof.size(),
+                                   rsa));
+
+    RSA_free(rsa);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WopiProofTests);
