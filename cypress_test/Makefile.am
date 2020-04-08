@@ -113,6 +113,7 @@ check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
+	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
 	@echo "Open cypress with desktop tests..."
@@ -123,6 +124,7 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 run-mobile: @JAILS_PATH@ $(NODE_BINS)
+	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
 	@echo "Open cypress with mobile tests..."
