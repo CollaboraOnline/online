@@ -165,6 +165,32 @@ function closeMobileWizard() {
 	cy.log('Closing mobile wizard - end.');
 }
 
+function executeCopyFromContextMenu(XPos, YPos) {
+	cy.log('Executing copy from context menu - start.');
+	cy.log('Param - XPos: ' + XPos);
+	cy.log('Param - YPos: ' + YPos);
+
+	longPressOnDocument(XPos, YPos);
+
+	cy.get('.menu-entry-with-icon')
+		.should('contain.text', 'Copy');
+
+	// Execute copy
+	cy.get('.menu-entry-with-icon')
+		.contains('Copy')
+		.click();
+
+	// Close warning about clipboard operations
+	cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+		.click();
+
+	// Wait until it's closed
+	cy.get('.vex-overlay')
+		.should('not.exist');
+
+	cy.log('Executing copy from context menu - end.');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.beforeAllMobile = beforeAllMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
@@ -172,3 +198,4 @@ module.exports.openHamburgerMenu = openHamburgerMenu;
 module.exports.closeHamburgerMenu = closeHamburgerMenu;
 module.exports.openMobileWizard = openMobileWizard;
 module.exports.closeMobileWizard = closeMobileWizard;
+module.exports.executeCopyFromContextMenu = executeCopyFromContextMenu;

@@ -35,8 +35,6 @@ describe('Apply font changes.', function() {
 		cy.get('#Bold')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td b')
@@ -47,7 +45,6 @@ describe('Apply font changes.', function() {
 		cy.get('#Italic')
 			.click();
 
-		mobileHelper.closeMobileWizard();
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td i')
@@ -57,8 +54,6 @@ describe('Apply font changes.', function() {
 	it('Apply underline.', function() {
 		cy.get('#Underline')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -71,8 +66,6 @@ describe('Apply font changes.', function() {
 		cy.get('#Strikeout')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td s')
@@ -83,8 +76,6 @@ describe('Apply font changes.', function() {
 		// Apply bold
 		cy.get('#Shadowed')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -109,8 +100,6 @@ describe('Apply font changes.', function() {
 		// Combobox entry contains the selected font name
 		cy.get('#fontnamecombobox .ui-header-right')
 			.contains('Linux Libertine G');
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -141,8 +130,6 @@ describe('Apply font changes.', function() {
 		cy.get('#fontsizecombobox .ui-header-right')
 			.contains('14');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td font')
@@ -154,8 +141,6 @@ describe('Apply font changes.', function() {
 		cy.get('#Grow')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td font')
@@ -166,8 +151,6 @@ describe('Apply font changes.', function() {
 		// Push shrink
 		cy.get('#Shrink')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -185,8 +168,6 @@ describe('Apply font changes.', function() {
 
 		cy.get('#mobile-wizard-back')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 

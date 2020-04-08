@@ -49,24 +49,8 @@ function copyContentToClipboard() {
 			expect(items).to.have.lengthOf(1);
 			var XPos = items[0].getBoundingClientRect().right + 10;
 			var YPos = items[0].getBoundingClientRect().top + 10;
-			mobileHelper.longPressOnDocument(XPos, YPos);
+			mobileHelper.executeCopyFromContextMenu(XPos, YPos);
 		});
-
-	cy.get('#mobile-wizard')
-		.should('be.visible');
-
-	// Execute copy
-	cy.get('.menu-entry-with-icon', {timeout : 10000})
-		.contains('Copy')
-		.click();
-
-	// Close warning about clipboard operations
-	cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
-		.click();
-
-	// Wait until it's closed
-	cy.get('.vex-overlay')
-		.should('not.exist');
 
 	cy.log('Copying content to clipboard - end.');
 }

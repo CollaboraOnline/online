@@ -42,8 +42,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#LeftParaimg')
 			.should('have.class', 'selected');
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
@@ -54,8 +52,6 @@ describe('Apply paragraph properties.', function() {
 		// Change alignment
 		cy.get('#CenterPara')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -68,8 +64,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#RightPara')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
@@ -81,8 +75,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#JustifyPara')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
@@ -93,8 +85,6 @@ describe('Apply paragraph properties.', function() {
 		// Change writing mode
 		cy.get('#ParaRightToLeft')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -114,8 +104,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaLeftToRight')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
@@ -131,8 +119,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#DefaultBullet')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container ul li p')
@@ -147,8 +133,6 @@ describe('Apply paragraph properties.', function() {
 
 		cy.get('#DefaultNumbering')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -175,8 +159,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
@@ -192,8 +174,6 @@ describe('Apply paragraph properties.', function() {
 			.click();
 		cy.get('#ParaspaceIncrease')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -216,8 +196,6 @@ describe('Apply paragraph properties.', function() {
 		// Decrease para spacing
 		cy.get('#ParaspaceDecrease')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -255,8 +233,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#belowparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
@@ -273,8 +249,6 @@ describe('Apply paragraph properties.', function() {
 			.click();
 		cy.get('#IncrementIndent')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -297,8 +271,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#DecrementIndent')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
@@ -318,8 +290,6 @@ describe('Apply paragraph properties.', function() {
 			.click();
 		cy.get('#beforetextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -341,8 +311,6 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#aftertextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
@@ -362,8 +330,6 @@ describe('Apply paragraph properties.', function() {
 			.click();
 		cy.get('#firstlineindent .spinfield')
 			.should('have.attr', 'value', '0.04');
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 

@@ -31,8 +31,6 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignRight')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -49,8 +47,6 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignLeft')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -62,8 +58,6 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignHorizontalCenter')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -74,8 +68,6 @@ describe('Change alignment settings.', function() {
 		// Set right aligment first
 		cy.get('#AlignBlock')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -104,8 +96,6 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignTop')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -122,8 +112,6 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignBottom')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -134,8 +122,6 @@ describe('Change alignment settings.', function() {
 		// Set right aligment first
 		cy.get('#AlignVCenter')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 

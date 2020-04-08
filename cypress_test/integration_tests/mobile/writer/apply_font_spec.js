@@ -66,8 +66,6 @@ describe('Apply font changes.', function() {
 		cy.get('#fontnamecombobox .ui-header-right')
 			.contains('Linux Libertine G');
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
@@ -97,8 +95,6 @@ describe('Apply font changes.', function() {
 		cy.get('#fontsizecombobox .ui-header-right')
 			.contains('36');
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
@@ -109,8 +105,6 @@ describe('Apply font changes.', function() {
 		// Apply bold
 		cy.get('#Bold')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -123,8 +117,6 @@ describe('Apply font changes.', function() {
 		cy.get('#Italic')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p i')
@@ -135,8 +127,6 @@ describe('Apply font changes.', function() {
 		// Change underline
 		cy.get('#Underlineimg')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -149,8 +139,6 @@ describe('Apply font changes.', function() {
 		cy.get('#Strikeoutimg')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p strike')
@@ -162,8 +150,6 @@ describe('Apply font changes.', function() {
 		cy.get('#Shadowedimg')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		// TODO: Shadowed is not in the clipboard content.
@@ -173,8 +159,6 @@ describe('Apply font changes.', function() {
 		// Push grow
 		cy.get('#Growimg')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -186,8 +170,6 @@ describe('Apply font changes.', function() {
 		// Push shrink
 		cy.get('#Shrinkimg')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 
@@ -209,8 +191,6 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font')
@@ -231,8 +211,6 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p font span')
@@ -244,8 +222,6 @@ describe('Apply font changes.', function() {
 		cy.get('#SuperScriptimg')
 			.click();
 
-		mobileHelper.closeMobileWizard();
-
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p sup')
@@ -256,8 +232,6 @@ describe('Apply font changes.', function() {
 		// Apply superscript
 		cy.get('#SubScriptimg')
 			.click();
-
-		mobileHelper.closeMobileWizard();
 
 		writerHelper.copyTextToClipboard();
 

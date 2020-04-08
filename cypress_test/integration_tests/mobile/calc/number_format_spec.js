@@ -60,8 +60,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -95,8 +93,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -121,8 +117,6 @@ describe('Apply number formatting.', function() {
 
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -157,8 +151,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -187,8 +179,6 @@ describe('Apply number formatting.', function() {
 
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -221,8 +211,6 @@ describe('Apply number formatting.', function() {
 		//cy.get('#category .ui-header-left')
 		//	.should('have.text', 'Number');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -249,8 +237,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -272,8 +258,6 @@ describe('Apply number formatting.', function() {
 
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -297,8 +281,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -317,8 +299,6 @@ describe('Apply number formatting.', function() {
 
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -339,7 +319,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		mobileHelper.closeMobileWizard();
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -358,8 +337,6 @@ describe('Apply number formatting.', function() {
 
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
@@ -383,8 +360,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#decimalplaces input')
 			.should('have.attr', 'value', '2');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -407,8 +382,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '6');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -430,8 +403,6 @@ describe('Apply number formatting.', function() {
 		cy.get('#negativenumbersred input')
 			.should('have.attr', 'checked', 'checked');
 
-		mobileHelper.closeMobileWizard();
-
 		calcHelper.copyContentToClipboard();
 
 		cy.get('#copy-paste-container table td')
@@ -452,8 +423,6 @@ describe('Apply number formatting.', function() {
 
 		cy.get('#thousandseparator input')
 			.should('have.attr', 'checked', 'checked');
-
-		mobileHelper.closeMobileWizard();
 
 		calcHelper.copyContentToClipboard();
 
