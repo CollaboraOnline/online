@@ -328,9 +328,6 @@ private:
     /// Starts the Kit <-> DocumentBroker shutdown handshake
     void disconnectSessionInternal(const std::string& id);
 
-    /// Are any of our sessions still dis-connecting ?
-    bool hasDisconnectingSessions() const;
-
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);
 

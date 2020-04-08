@@ -162,9 +162,6 @@ public:
                             std::chrono::steady_clock::time_point now,
                             int events) = 0;
 
-    /// Is all data sent, so tha we can shutdown ?
-    virtual bool hasPendingWork() const { return false; }
-
     /// manage latency issues around packet aggregation
     void setNoDelay()
     {
@@ -293,7 +290,7 @@ public:
     }
 
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread() const
+    void assertCorrectThread()
     {
         if (InhibitThreadChecks)
             return;
@@ -394,9 +391,6 @@ public:
     {
         _msgHandler = msgHandler;
     }
-
-    /// Do we have something to send ?
-    virtual bool hasPendingWork() const;
 
     /// Clear all external references
     virtual void dispose() { _msgHandler.reset(); }
@@ -779,21 +773,6 @@ public:
         return _pollSockets.size();
     }
 
-    bool hasPendingWork() const
-    {
-        assertCorrectThread();
-
-        if (_newCallbacks.size() > 0 ||
-            _newSockets.size() > 0)
-            return true;
-
-        for (auto &i : _pollSockets)
-            if (i->hasPendingWork())
-                return true;
-
-        return false;
-    }
-
     const std::string& name() const { return _name; }
 
     /// Start the polling thread (if desired)
@@ -950,14 +929,6 @@ public:
         if (!_outBuffer.empty() || _shutdownSignalled)
             events |= POLLOUT;
         return events;
-    }
-
-    bool hasPendingWork() const override
-    {
-        assertCorrectThread();
-        if (!_outBuffer.empty() || !_inBuffer.empty())
-            return true;
-        return _socketHandler && _socketHandler->hasPendingWork();
     }
 
     /// Send data to the socket peer.
