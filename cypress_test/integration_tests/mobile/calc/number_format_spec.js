@@ -369,4 +369,98 @@ describe('Apply number formatting.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1000');
 	});
+
+	it('Change decimal places.', function() {
+		// Check default value
+		cy.get('#decimalplaces input')
+			.should('have.attr', 'value', '0');
+
+		// Type in a new value
+		cy.get('#decimalplaces input')
+			.clear()
+			.type('2{enter}');
+
+		cy.get('#decimalplaces input')
+			.should('have.attr', 'value', '2');
+
+		mobileHelper.closeMobileWizard();
+
+		calcHelper.copyContentToClipboard();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;0.00');
+
+		cy.get('#copy-paste-container table td')
+			.should('have.text', '1000.00');
+	});
+
+	it('Change leading zeros.', function() {
+		// Check default value
+		cy.get('#leadingzeroes input')
+			.should('have.attr', 'value', '1');
+
+		// Type in a new value
+		cy.get('#leadingzeroes input')
+			.clear()
+			.type('6{enter}');
+
+		cy.get('#leadingzeroes input')
+			.should('have.attr', 'value', '6');
+
+		mobileHelper.closeMobileWizard();
+
+		calcHelper.copyContentToClipboard();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;000000');
+
+		cy.get('#copy-paste-container table td')
+			.should('have.text', '001000');
+	});
+
+	it('Apply red color for negative numbers.', function() {
+		// Check default value
+		cy.get('#negativenumbersred input')
+			.should('not.have.attr', 'checked', 'checked');
+
+		// Change the option
+		cy.get('#negativenumbersred input')
+			.click();
+
+		cy.get('#negativenumbersred input')
+			.should('have.attr', 'checked', 'checked');
+
+		mobileHelper.closeMobileWizard();
+
+		calcHelper.copyContentToClipboard();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;0;[RED]-0');
+
+		cy.get('#copy-paste-container table td')
+			.should('have.text', '1000');
+	});
+
+	it('Add thousands separator.', function() {
+		// Check default value
+		cy.get('#thousandseparator input')
+			.should('not.have.attr', 'checked', 'checked');
+
+		// Change the option
+		cy.get('#thousandseparator input')
+			.click();
+
+		cy.get('#thousandseparator input')
+			.should('have.attr', 'checked', 'checked');
+
+		mobileHelper.closeMobileWizard();
+
+		calcHelper.copyContentToClipboard();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;#,##0');
+
+		cy.get('#copy-paste-container table td')
+			.should('have.text', '1,000');
+	});
 });
