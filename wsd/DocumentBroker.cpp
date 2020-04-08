@@ -452,14 +452,14 @@ void DocumentBroker::pollThread()
             << ", TerminationFlag: " << SigUtil::getTerminationFlag()
             << ". Terminating child with reason: [" << _closeReason << "].");
     const auto flushStartTime = std::chrono::steady_clock::now();
-    while (_poll->hasPendingWork() || hasDisconnectingSessions())
+    while (_poll->getSocketCount())
     {
         const auto now = std::chrono::steady_clock::now();
         const int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - flushStartTime).count();
         if (elapsedMs > flushTimeoutMs)
             break;
 
-        _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 10));
+        _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
     }
 
     LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
@@ -482,18 +482,6 @@ void DocumentBroker::pollThread()
         _tileCache->clear();
 
     LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
-}
-
-bool DocumentBroker::hasDisconnectingSessions() const
-{
-    for (const auto& pair : _sessions)
-    {
-        const std::shared_ptr<ClientSession> &session = pair.second;
-        // need to wait around to fetch clipboards from disconnecting sessions.
-        if (session->inWaitDisconnected())
-            return true;
-    }
-    return false;
 }
 
 bool DocumentBroker::isAlive() const
