@@ -320,6 +320,8 @@ public:
 
     void getMetrics(std::ostringstream &oss);
 
+    std::set<pid_t> getDocumentPids() const;
+
     static int getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids);
 
 private:

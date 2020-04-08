@@ -157,7 +157,16 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         {
             const int pid = std::stoi(tokens[1]);
             LOG_INF("Admin request to kill PID: " << pid);
-            SigUtil::killChild(pid);
+
+            std::set<pid_t> pids = model.getDocumentPids();
+            if (pids.find(pid) != pids.end())
+            {
+                SigUtil::killChild(pid);
+            }
+            else
+            {
+                LOG_WRN("Invalid PID to kill (not a document pid)");
+            }
         }
         catch (std::invalid_argument& exc)
         {

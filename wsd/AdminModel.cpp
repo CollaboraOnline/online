@@ -1016,4 +1016,17 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     PrintDocActExpMetrics(oss, "view_load_duration", "milliseconds", docStats._viewLoadDuration);
 }
 
+std::set<pid_t> AdminModel::getDocumentPids() const
+{
+    std::set<pid_t> pids;
+
+    for (const auto& it : _documents)
+    {
+        const Document& document = it.second;
+        pids.insert(document.getPid());
+    }
+
+    return pids;
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
