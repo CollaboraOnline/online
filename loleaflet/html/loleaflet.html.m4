@@ -222,7 +222,7 @@ m4_ifelse(MOBILEAPP,[true],
       <div id="loolwsd-id"></div>
       <h3>LOKit</h3>
       <div id="lokit-version"></div>
-      <div id="os-name" style="text-align:center"><label>%OS_INFO%</label></div>
+      m4_ifelse(MOBILEAPP,[],[<div id="os-name" style="text-align:center"><label>%OS_INFO%</label></div>])
       <p>Copyright © _YEAR_, VENDOR.</p>
     </div>
 
