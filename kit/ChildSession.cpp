@@ -32,6 +32,10 @@
 #include <Poco/Net/AcceptCertificateHandler.h>
 #endif
 
+#ifdef IOS
+#import "DocumentViewController.h"
+#endif
+
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Authorization.hpp>
@@ -2475,6 +2479,31 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_UNO_COMMAND_RESULT:
         sendTextFrame("unocommandresult: " + payload);
+#ifdef IOS
+        {
+            // After the document has been saved (into the temporary copy that we set up in
+            // -[CODocument loadFromContents:ofType:error:]), save it also using the system API so
+            // that file provider extensions notice.
+
+            Parser parser;
+            Poco::Dynamic::Var var = parser.parse(payload);
+            Object::Ptr object = var.extract<Object::Ptr>();
+
+            auto commandName = object->get("commandName");
+            auto success = object->get("success");
+
+            if (!commandName.isEmpty() && commandName.toString() == ".uno:Save" && !success.isEmpty() && success.toString() == "true")
+            {
+                CODocument *document = [[DocumentViewController singleton] document];
+
+                [document saveToURL:[document fileURL]
+                 forSaveOperation:UIDocumentSaveForOverwriting
+                 completionHandler:^(BOOL success) {
+                        LOG_TRC("ChildSession::loKitCallback() save completion handler gets " << (success?"YES":"NO"));
+                    }];
+            }
+        }
+#endif
         break;
     case LOK_CALLBACK_ERROR:
         {
