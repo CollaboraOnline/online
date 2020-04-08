@@ -54,7 +54,6 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Align to center horizontally.', function() {
-		// Set right aligment first
 		cy.get('#AlignHorizontalCenter')
 			.click();
 
@@ -76,7 +75,6 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Right-to-left and left-to-right writing mode.', function() {
-		// Set right aligment first
 		cy.get('#ParaRightToLeft')
 			.click();
 
@@ -92,7 +90,6 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Align to the top and to bottom.', function() {
-		// Set right aligment first
 		cy.get('#AlignTop')
 			.click();
 
@@ -119,7 +116,6 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Align to center vertically.', function() {
-		// Set right aligment first
 		cy.get('#AlignVCenter')
 			.click();
 
