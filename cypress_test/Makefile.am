@@ -206,7 +206,7 @@ endef
 define execute_run_parallel
 	@mkdir -p $(dir $(2)) && touch $(2) && \
 	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
-	if [ -z `grep -o -m 1 "CypressError\|AssertionError\|Uncaught TypeError\|Error: " $(2)` ];\
+	if [ -z `grep -o -m 1 "Error:" $(2)` ];\
 		then cat $(2);\
 		else cat $(2) >> $(ERROR_LOG);\
 	fi;
