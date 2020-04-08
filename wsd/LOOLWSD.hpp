@@ -182,7 +182,7 @@ public:
     std::shared_ptr<Socket> _socket;
 };
 
-class ForKitProcWSHandler: public WebSocketHandler, public std::enable_shared_from_this<ForKitProcWSHandler>
+class ForKitProcWSHandler: public WebSocketHandler
 {
 public:
 
