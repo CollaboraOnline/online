@@ -410,7 +410,7 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateScaling: function (scaleFactor, initialLayoutData) {
-		if (!L.Browser.mobile)
+		if (window.mode.isDesktop())
 			return;
 
 		var wrapperWidth = Math.round(initialLayoutData.wrapperWidth * scaleFactor);

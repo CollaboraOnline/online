@@ -67,7 +67,7 @@ L.Map = L.Evented.extend({
 		this._onResize = L.bind(this._onResize, this);
 
 		// Start with readonly toolbars on desktop
-		if (!L.Browser.mobile) {
+		if (window.mode.isDesktop()) {
 			L.DomUtil.addClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
 		}
 
@@ -130,7 +130,7 @@ L.Map = L.Evented.extend({
 
 		this.addHandler('keyboard', L.Map.Keyboard);
 		this.addHandler('dragging', L.Map.Drag);
-		if ((L.Browser.touch && !L.Browser.pointer) || (L.Browser.cypressTest && L.Browser.mobile)) {
+		if ((L.Browser.touch && !L.Browser.pointer) || (L.Browser.cypressTest && (window.mode.isMobile() || window.mode.isTablet()))) {
 			this.dragging.disable();
 			this.dragging._draggable._manualDrag = true;
 			this._mainEvents('off');
@@ -149,7 +149,7 @@ L.Map = L.Evented.extend({
 		this._socket = L.socket(this);
 
 		var center = this.getCenter();
-		if (L.Browser.mobile) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			var doubledProgressHeight = 200;
 			var size = new L.point(screen.width, screen.height - doubledProgressHeight);
 			center = this.layerPointToLatLng(size._divideBy(2));
@@ -182,7 +182,7 @@ L.Map = L.Evented.extend({
 
 			if (e.perm === 'readonly') {
 				L.DomUtil.addClass(this._container.parentElement, 'readonly');
-				if (!L.Browser.mobile) {
+				if (window.mode.isDesktop()) {
 					L.DomUtil.addClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
 				}
 				L.DomUtil.addClass(L.DomUtil.get('main-menu'), 'readonly');
@@ -190,7 +190,7 @@ L.Map = L.Evented.extend({
 				L.DomUtil.addClass(L.DomUtil.get('spreadsheet-row-column-frame'), 'readonly');
 			} else {
 				L.DomUtil.removeClass(this._container.parentElement, 'readonly');
-				if (!L.Browser.mobile) {
+				if (window.mode.isDesktop()) {
 					L.DomUtil.removeClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
 				}
 				L.DomUtil.removeClass(L.DomUtil.get('main-menu'), 'readonly');
@@ -202,7 +202,7 @@ L.Map = L.Evented.extend({
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');
 			}
-			if (((window.ThisIsTheiOSApp && window.mode.isTablet()) || !L.Browser.mobile) && this._docLayer._docType == 'text') {
+			if (((window.ThisIsTheiOSApp && window.mode.isTablet()) || window.mode.isDesktop()) && this._docLayer._docType == 'text') {
 				var interactiveRuler = this._permission === 'edit' ? true : false;
 				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
 			}
@@ -301,7 +301,7 @@ L.Map = L.Evented.extend({
 				var map = this;
 				setTimeout(function () {
 					// Show the sidebar by default, but not on mobile.
-					if (!window.mode.isMobile() && !window.mode.isTablet() && !window.ThisIsAMobileApp) {
+					if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
 						map._socket.sendMessage('uno .uno:SidebarShow');
 					}
 				}, 200);
@@ -1014,7 +1014,7 @@ L.Map = L.Evented.extend({
 			throw new Error('Map container is already initialized.');
 		}
 
-		if (!L.Browser.mobile) {
+		if (window.mode.isDesktop()) {
 			this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
 			this._resizeDetector.contentWindow.addEventListener('touchstart', L.DomEvent.preventDefault, {passive: false});
 			L.DomEvent.on(this._resizeDetector.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
@@ -1243,7 +1243,7 @@ L.Map = L.Evented.extend({
 					}
 
 					this._startInactiveTimer();
-					if (!L.Browser.mobile) {
+					if (window.mode.isDesktop()) {
 						this.focus();
 					}
 					return vex.closeAll();
@@ -1254,7 +1254,7 @@ L.Map = L.Evented.extend({
 		}
 
 		this._startInactiveTimer();
-		if (!L.Browser.mobile && !isAnyVexDialogActive()) {
+		if (window.mode.isDesktop() && !isAnyVexDialogActive()) {
 			this.focus();
 		}
 		return false;

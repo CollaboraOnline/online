@@ -6,7 +6,7 @@
 L.Map.include({
 	setPermission: function (perm) {
 		if (perm === 'edit') {
-			if (L.Browser.mobile) {
+			if (window.mode.isMobile() || window.mode.isTablet()) {
 				var button = $('#mobile-edit-button');
 				button.show();
 				button.off('click');
@@ -30,7 +30,7 @@ L.Map.include({
 			}
 		}
 		else if (perm === 'view' || perm === 'readonly') {
-			if (L.Browser.mobile) {
+			if (window.mode.isMobile() || window.mode.isTablet()) {
 				$('#mobile-edit-button').hide();
 			}
 
@@ -39,7 +39,7 @@ L.Map.include({
 	},
 
 	_enterEditMode: function (perm) {
-		if (this._permission == 'readonly' && L.Browser.mobile) {
+		if (this._permission == 'readonly' && (window.mode.isMobile() || window.mode.isTablet())) {
 			this.sendInitUNOCommands();
 		}
 		this._permission = perm;

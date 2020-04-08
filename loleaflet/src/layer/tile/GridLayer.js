@@ -11,7 +11,7 @@ L.GridLayer = L.Layer.extend({
 		tileSize: window.tileSize,
 		opacity: 1,
 
-		updateWhenIdle: L.Browser.mobile,
+		updateWhenIdle: (window.mode.isMobile() || window.mode.isTablet()),
 		updateInterval: 200,
 
 		attribution: null,

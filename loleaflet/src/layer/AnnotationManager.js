@@ -924,7 +924,7 @@ L.AnnotationManager = L.Class.extend({
 	},
 
 	_updateScaling: function () {
-		if (!L.Browser.mobile || this._items.length === 0)
+		if (window.mode.isDesktop() || this._items.length === 0)
 			return;
 		var contentWrapperClassName, menuClassName;
 		if (this._items[0]._data.trackchange) {
