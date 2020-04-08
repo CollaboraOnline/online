@@ -26,10 +26,9 @@ describe('Calc spell checking menu.', function() {
 			.type('{ctrl}a', {force: true});
 
 		// Open context menu
-		cy.get('.leaflet-marker-icon')
+		cy.get('.leaflet-selection-marker-start,.leaflet-selection-marker-end')
 			.then(function(markers) {
-				expect(markers.length).to.have.greaterThan(1);
-				cy.log('Markers length: ' + markers.length);
+				expect(markers.length).to.be.equal(2);
 				for (var i = 0; i < markers.length; i++) {
 					if (markers[i].classList.contains('leaflet-selection-marker-start')) {
 						cy.log('Found start marker at pos: ' + markers[i].getBoundingClientRect().right);
