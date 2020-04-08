@@ -29,6 +29,9 @@ class WopiProofTests;
 
 class Proof {
     friend class WopiProofTests;
+    void initialize();
+    enum Type { CreateKey };
+    Proof(Type);
 public:
     Proof();
     VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri) const;

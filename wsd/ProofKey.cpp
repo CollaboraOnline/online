@@ -108,6 +108,29 @@ std::vector<unsigned char> Proof::Base64ToBytes(const std::string &str)
     return vec;
 }
 
+void Proof::initialize()
+{
+    if (m_pKey)
+    {
+        const auto m = m_pKey->modulus();
+        const auto e = m_pKey->encryptionExponent();
+        const auto capiBlob = RSA2CapiBlob(m, e);
+
+        m_aAttribs.emplace_back("value", BytesToBase64(capiBlob));
+        m_aAttribs.emplace_back("modulus", BytesToBase64(m));
+        m_aAttribs.emplace_back("exponent", BytesToBase64(e));
+    }
+
+}
+
+Proof::Proof(Type)
+    : m_pKey(new Poco::Crypto::RSAKey(
+                 Poco::Crypto::RSAKey::KeyLength::KL_2048,
+                 Poco::Crypto::RSAKey::Exponent::EXP_LARGE))
+{
+    initialize();
+}
+
 Proof::Proof()
     : m_pKey([]() -> Poco::Crypto::RSAKey* {
         const auto keyPath = ProofKeyPath();
@@ -138,16 +161,7 @@ Proof::Proof()
         return nullptr;
     }())
 {
-    if (m_pKey)
-    {
-        const auto m = m_pKey->modulus();
-        const auto e = m_pKey->encryptionExponent();
-        const auto capiBlob = RSA2CapiBlob(m, e);
-
-        m_aAttribs.emplace_back("value", BytesToBase64(capiBlob));
-        m_aAttribs.emplace_back("modulus", BytesToBase64(m));
-        m_aAttribs.emplace_back("exponent", BytesToBase64(e));
-    }
+    initialize();
 }
 
 std::string Proof::ProofKeyPath()
