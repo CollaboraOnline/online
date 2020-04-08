@@ -65,7 +65,8 @@ wsd_sources = \
             ../common/Authorization.cpp \
             ../kit/Kit.cpp \
             ../kit/TestStubs.cpp \
-            ../wsd/TileCache.cpp
+            ../wsd/TileCache.cpp \
+            ../wsd/ProofKey.cpp
 
 test_base_source = \
 	TileQueueTests.cpp \

@@ -81,7 +81,9 @@ std::vector<unsigned char> ToNetworkOrderBytes(const T& x)
     return getBytesBE(reinterpret_cast<const unsigned char*>(&x), sizeof(x));
 }
 
-std::string BytesToBase64(const std::vector<unsigned char>& bytes)
+} // namespace
+
+std::string Proof::BytesToBase64(const std::vector<unsigned char>& bytes)
 {
     std::ostringstream oss;
     // The signature generated contains CRLF line endings.
@@ -93,6 +95,17 @@ std::string BytesToBase64(const std::vector<unsigned char>& bytes)
     return oss.str();
 }
 
+std::vector<unsigned char> Proof::Base64ToBytes(const std::string &str)
+{
+    std::istringstream oss(str);
+    Poco::Base64Decoder decoder(oss);
+
+    char c = 0;
+    std::vector<unsigned char> vec;
+    while (decoder.get(c))
+        vec.push_back(c);
+
+    return vec;
 }
 
 Proof::Proof()

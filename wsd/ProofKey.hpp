@@ -25,13 +25,19 @@ namespace Poco {
     }
 }
 
+class WopiProofTests;
+
 class Proof {
+    friend class WopiProofTests;
 public:
     Proof();
     VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri) const;
     const VecOfStringPairs& GetProofKeyAttributes() const { return m_aAttribs; }
 private:
     static std::string ProofKeyPath();
+
+    static std::string BytesToBase64(const std::vector<unsigned char>& bytes);
+    static std::vector<unsigned char> Base64ToBytes(const std::string &str);
 
     // modulus and exponent are big-endian vectors
     static std::vector<unsigned char> RSA2CapiBlob(const std::vector<unsigned char>& modulus,
