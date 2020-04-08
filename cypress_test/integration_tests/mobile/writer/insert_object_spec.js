@@ -1,5 +1,7 @@
 /* global describe it cy beforeEach require expect afterEach Cypress*/
 
+import 'cypress-wait-until';
+
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
