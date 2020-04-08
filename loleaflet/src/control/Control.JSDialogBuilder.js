@@ -1394,6 +1394,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			gradientItem.endcolor = color;
 			builder.map.sendUnoCommand('.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem));
 			return;
+		} else if (data.id === 'fillattr') {
+			builder.map.sendUnoCommand('.uno:FillPageColor?Color:string=' + color);
+			return;
 		}
 
 		var command = data.command + '?Color:string=' + color;
