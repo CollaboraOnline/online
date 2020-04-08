@@ -35,6 +35,7 @@ WSD_VERSION_HASH := "11111111"
 
 if HAVE_LO_PATH
 MOBILE_TEST_FILES= \
+	calc/alignment_options_spec.js \
 	calc/apply_font_spec.js \
 	calc/focus_spec.js \
 	calc/insertion_wizard_spec.js \
