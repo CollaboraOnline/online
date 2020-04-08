@@ -841,7 +841,7 @@ L.Control.Menubar = L.Control.extend({
 			var pageStyles = e.commandValues['HeaderFooter'];
 			for (var iterator in pageStyles) {
 				style = pageStyles[iterator];
-				if (!L.Browser.mobile) {
+				if (!window.mode.isMobile()) {
 					$menuHeader.append(this._createUnoMenuItem(_(style), constHeader + encodeURIComponent(style) + constArg, style));
 					$menuFooter.append(this._createUnoMenuItem(_(style), constFooter + encodeURIComponent(style) + constArg, style));
 				} else {
@@ -897,12 +897,12 @@ L.Control.Menubar = L.Control.extend({
 					var $nav = $menu.parent();
 					if (this.checked) {
 						self._map.fire('closesidebar');
-						if (!L.Browser.mobile) {
+						if (!window.mode.isMobile()) {
 							// Surely this code, if it really is related only to the hamburger menu,
 							// will never be invoked on non-mobile browsers? I might be wrong though.
 							// If you notice this logging, please modify this comment to indicate what is
 							// going on.
-							console.log('======> Assertion failed!? Not L.Browser.mobile? Control.Menubar.js #1');
+							console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #1');
 							$nav.css({height: 'initial', bottom: '38px'});
 							$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
 							$('#mobile-wizard-header').show();
@@ -913,9 +913,9 @@ L.Control.Menubar = L.Control.extend({
 							$('#toolbar-hamburger').removeClass('menuwizard-closed').addClass('menuwizard-opened');
 							$('#mobile-wizard-header').hide();
 						}
-					} else if (!L.Browser.mobile) {
+					} else if (!window.mode.isMobile()) {
 						// Ditto.
-						console.log('======> Assertion failed!? Not L.Browser.mobile? Control.Menubar.js #2');
+						console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #2');
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
 						$nav.css({height:'', bottom: ''});
 					} else {
@@ -1233,7 +1233,7 @@ L.Control.Menubar = L.Control.extend({
 			self._executeAction(item);
 		}
 
-		if (!L.Browser.mobile && $(item).data('id') !== 'insertcomment')
+		if (!window.mode.isMobile() && $(item).data('id') !== 'insertcomment')
 			self._map.focus();
 	},
 

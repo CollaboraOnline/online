@@ -39,7 +39,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
-		if (L.Browser.mobile) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this.onMobileInit(map);
 		}
 	},

@@ -1711,7 +1711,7 @@ function onDocLayerInit() {
 
 	_updateToolbarsVisibility();
 
-	if (L.Browser.mobile) {
+	if (window.mode.isMobile() || window.mode.isTablet()) {
 		nUsers = '%n';
 		oneUser = '1';
 		noUser = '0';
@@ -2676,7 +2676,7 @@ function setupToolbar(e) {
 
 	if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
-	} else if (L.Params.closeButtonEnabled && !L.Browser.mobile) {
+	} else if (L.Params.closeButtonEnabled && !window.mode.isMobile()) {
 		$('#closebuttonwrapper').show();
 		$('.closebuttonimage').show();
 	}

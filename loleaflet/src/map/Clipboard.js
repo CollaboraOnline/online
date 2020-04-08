@@ -776,7 +776,7 @@ L.Clipboard = L.Class.extend({
 	_warnCopyPaste: function() {
 		var self = this;
 		var msg;
-		if (L.Browser.mobile) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			msg = _('<p>Please use the copy/paste buttons on your on-screen keyboard.</p>');
 		} else {
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>');

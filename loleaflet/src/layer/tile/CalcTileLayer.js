@@ -50,7 +50,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		map.on('AnnotationReply', this._onAnnotationReply, this);
 		map.on('AnnotationSave', this._onAnnotationSave, this);
-		if (L.Browser.mobile) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this.onMobileInit(map);
 		}
 	},

@@ -94,7 +94,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	onResize: function () {
-		if (!L.Browser.mobile) {
+		if (window.mode.isDesktop()) {
 			this._map.setView(this._map.getCenter(), this._map.getZoom(), {reset: true});
 		}
 

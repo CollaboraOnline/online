@@ -8,8 +8,8 @@ L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
 		autoUpdate: true,
-		maxWidth: L.Browser.mobile ? 60 : 180,
-		maxHeight: L.Browser.mobile ? 60 : 180
+		maxWidth: (window.mode.isMobile() || window.mode.isTablet()) ? 60 : 180,
+		maxHeight: (window.mode.isMobile() || window.mode.isTablet()) ? 60 : 180
 	},
 	partsFocused: false,
 
@@ -184,7 +184,7 @@ L.Control.PartsPreview = L.Control.extend({
 		img.hash = hashCode;
 		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
 		img.fetched = false;
-		if (L.Browser.mobile) {
+		if (window.mode.isMobile() || window.mode.isTablet()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
 			.on('press', L.bind(function () {
 				if (this._map._permission === 'edit') {
