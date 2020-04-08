@@ -50,8 +50,7 @@ describe('Spell checking menu.', function() {
 	it('Apply suggestion.', function() {
 		openContextMenu();
 
-		cy.get('.context-menu-link')
-			.contains('hello')
+		helper.selectItemByContent('.context-menu-link', 'hello')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -66,88 +65,79 @@ describe('Spell checking menu.', function() {
 	it('Ignore one.', function() {
 		openContextMenu();
 
-		cy.get('.context-menu-link')
-			.contains('Ignore')
+		helper.selectItemByContent('.context-menu-link', 'Ignore')
 			.click();
 
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.get('.context-menu-link')
-			.contains('Paste');
+		helper.selectItemByContent('.context-menu-link', 'Paste');
 	});
 
 	it('Ignore all.', function() {
 		openContextMenu();
 
-		cy.get('.context-menu-link')
-			.contains('Ignore All')
+		helper.selectItemByContent('.context-menu-link', 'Ignore\u00a0All')
 			.click();
 
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.get('.context-menu-link')
-			.contains('Paste');
+		helper.selectItemByContent('.context-menu-link', 'Paste')
+			.should('be.visible');
 	});
 
 	it('Check language status for selection.', function() {
 		openContextMenu();
 
-		cy.get('.menu-entry-with-icon')
-			.contains('Set Language for Selection')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Set Language for Selection')
 			.click();
 
 		// English is selected
-		cy.get('.menu-entry-checked')
-			.contains('English (USA)');
+		helper.selectItemByContent('.ui-content[title="Set Language for Selection"] .menu-entry-checked', 'English\u00a0(USA)')
+			.should('be.visible');
 	});
 
 	it('Set None Language for selection.', function() {
 		openContextMenu();
 
-		cy.get('.menu-entry-with-icon')
-			.contains('Set Language for Selection')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Set Language for Selection')
 			.click();
 
-		// English is selected
-		cy.get('.menu-entry-checked')
-			.contains('English (USA)');
+		helper.selectItemByContent('.ui-content[title="Set Language for Selection"] .menu-entry-with-icon', 'None\u00a0(Do not check spelling)')
+			.click();
 
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.get('.context-menu-link')
-			.contains('None (Do not check spelling)');
+		helper.selectItemByContent('.context-menu-link', 'Paste')
+			.should('be.visible');
 	});
 
 	it('Check language status for paragraph.', function() {
 		openContextMenu();
 
-		cy.get('.menu-entry-with-icon')
-			.contains('Set Language for Paragraph')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Set Language for Paragraph')
 			.click();
 
 		// English is selected
-		cy.get('.menu-entry-checked')
-			.contains('English (USA)');
+		helper.selectItemByContent('.ui-content[title="Set Language for Paragraph"] .menu-entry-checked', 'English\u00a0(USA)')
+			.should('be.visible');
 	});
 
 	it('Set None Language for paragraph.', function() {
 		openContextMenu();
 
-		cy.get('.menu-entry-with-icon')
-			.contains('Set Language for Paragraph')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Set Language for Paragraph')
 			.click();
 
-		// English is selected
-		cy.get('.menu-entry-checked')
-			.contains('English (USA)');
+		helper.selectItemByContent('.ui-content[title="Set Language for Paragraph"] .menu-entry-with-icon', 'None\u00a0(Do not check spelling)')
+			.click();
 
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.get('.context-menu-link')
-			.contains('None (Do not check spelling)');
+		helper.selectItemByContent('.context-menu-link', 'Paste')
+			.should('be.visible');
 	});
 });

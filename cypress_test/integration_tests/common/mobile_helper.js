@@ -34,8 +34,7 @@ function detectLOCoreVersion() {
 		openHamburgerMenu();
 
 		// Open about dialog
-		cy.get('.ui-header.level-0 .menu-entry-with-icon')
-			.contains('About')
+		helper.selectItemByContent('.ui-header.level-0 .menu-entry-with-icon', 'About')
 			.click();
 
 		cy.get('.vex-content')
@@ -172,12 +171,8 @@ function executeCopyFromContextMenu(XPos, YPos) {
 
 	longPressOnDocument(XPos, YPos);
 
-	cy.get('.menu-entry-with-icon')
-		.should('contain.text', 'Copy');
-
 	// Execute copy
-	cy.get('.menu-entry-with-icon')
-		.contains('Copy')
+	helper.selectItemByContent('.menu-entry-with-icon', 'Copy')
 		.click();
 
 	// Close warning about clipboard operations

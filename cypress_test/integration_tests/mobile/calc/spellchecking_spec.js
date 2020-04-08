@@ -55,8 +55,7 @@ describe('Calc spell checking menu.', function() {
 	it('Apply suggestion.', function() {
 		openContextMenu();
 
-		cy.get('.context-menu-link')
-			.contains('hello')
+		helper.selectItemByContent('.context-menu-link', 'hello')
 			.click();
 
 		// Click outside of the cell
@@ -81,8 +80,7 @@ describe('Calc spell checking menu.', function() {
 	it('Ignore all.', function() {
 		openContextMenu();
 
-		cy.get('.context-menu-link')
-			.contains('Ignore All')
+		helper.selectItemByContent('.context-menu-link', 'Ignore\u00a0All')
 			.click();
 
 		// Click outside of the cell
@@ -98,15 +96,14 @@ describe('Calc spell checking menu.', function() {
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.get('.context-menu-link')
-			.contains('Paste');
+		helper.selectItemByContent('.context-menu-link', 'Paste')
+			.should('be.visible');
 	});
 
 	it('Apply language for word.', function() {
 		openContextMenu();
 
-		cy.get('.context-menu-link')
-			.contains('Word is Finnish')
+		helper.selectItemByContent('.context-menu-link', 'Word\u00a0is Finnish')
 			.click();
 
 		// Click outside of the cell
@@ -122,15 +119,14 @@ describe('Calc spell checking menu.', function() {
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.get('.context-menu-link')
-			.contains('Paste');
+		helper.selectItemByContent('.context-menu-link', 'Paste')
+			.should('be.visible');
 	});
 
 	it('Apply language for paragraph.', function() {
 		openContextMenu();
 
-		cy.get('.context-menu-link')
-			.contains('Paragraph is Finnish')
+		helper.selectItemByContent('.context-menu-link', 'Paragraph\u00a0is Finnish')
 			.click();
 
 		// Click outside of the cell
@@ -146,7 +142,7 @@ describe('Calc spell checking menu.', function() {
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.get('.context-menu-link')
-			.contains('Paste');
+		helper.selectItemByContent('.context-menu-link', 'Paste')
+			.should('be.visible');
 	});
 });

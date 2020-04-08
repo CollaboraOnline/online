@@ -154,6 +154,27 @@ function afterAll(fileName) {
 	cy.log('Waiting for closing the document - end.');
 }
 
+// There is no css selector for filtering based on
+// the content of an item. cypress has Contains()
+// method for that, but it sometimes behaves unexpectedly
+// because it selects the elements first and waits until
+// the existing items gets the specified text, instead of
+// waiting for an item with the right content.
+function selectItemByContent(selector, content) {
+	cy.log('Selecting item by content - start.');
+	cy.log('Param - selector: ' + selector);
+	cy.log('Param - content: ' + content);
+
+	// Wait for the content to appear
+	cy.get(selector)
+		.should('contain.text', content);
+
+	cy.log('Selecting item by content - end.');
+
+	// Select the right item (selector can point to more items)
+	return cy.get(selector).contains(content.replace('\u00a0', ' '));
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -163,3 +184,4 @@ module.exports.clearAllText = clearAllText;
 module.exports.getTextForClipboard = getTextForClipboard;
 module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.afterAll = afterAll;
+module.exports.selectItemByContent = selectItemByContent;

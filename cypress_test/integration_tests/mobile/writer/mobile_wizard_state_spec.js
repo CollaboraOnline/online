@@ -34,8 +34,8 @@ describe('Mobile wizard state tests', function() {
 		// Open hamburger menu
 		mobileHelper.openHamburgerMenu();
 
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon')
-			.contains('About');
+		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'About')
+			.should('be.visible');
 
 		// Close hamburger menu
 		mobileHelper.closeHamburgerMenu();
@@ -53,8 +53,8 @@ describe('Mobile wizard state tests', function() {
 		// Open context wizard by right click on document
 		mobileHelper.longPressOnDocument(40, 40);
 
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon')
-			.contains('Paste');
+		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'Paste')
+			.should('be.visible');
 
 		// TODO: fix this bug
 		//cy.get('#tb_actionbar_item_mobile_wizard table')

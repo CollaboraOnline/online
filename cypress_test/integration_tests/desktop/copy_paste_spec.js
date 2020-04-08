@@ -26,14 +26,12 @@ describe('Clipboard operations.', function() {
 				cy.get('body').rightclick(XPos, YPos);
 			});
 
-		cy.get('.context-menu-list').should('be.visible')
-			.get('.context-menu-item .context-menu-link')
-			.contains('Copy')
+		helper.selectItemByContent('.context-menu-link', 'Copy')
 			.click();
 
 		// Loleaflet code can not execute document.execCommand() when executed by cypress
 		// https://github.com/cypress-io/cypress/issues/2851
 		cy.get('.vex-dialog-message p')
-			.contains('Your browser has very limited access to the clipboard, so use these keyboard shortcuts:');
+			.should('have.text', 'Your browser has very limited access to the clipboard, so use these keyboard shortcuts:');
 	});
 });

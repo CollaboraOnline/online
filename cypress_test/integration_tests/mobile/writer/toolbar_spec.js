@@ -177,7 +177,7 @@ describe('Toolbar tests', function() {
 			.should('be.visible');
 
 		// Close the dialog
-		cy.contains('Cancel')
+		cy.get('.vex-dialog-button-secondary')
 			.click();
 
 		cy.get('.loleaflet-annotation-table')

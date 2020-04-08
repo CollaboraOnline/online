@@ -28,16 +28,15 @@ describe('Calc insertion wizard.', function() {
 	});
 
 	it('Check existance of image insertion items.', function() {
-		cy.get('.menu-entry-with-icon')
-			.contains('Local Image...');
+		helper.selectItemByContent('.menu-entry-with-icon', 'Local Image...')
+			.should('be.visible');
 
-		cy.get('.menu-entry-with-icon')
-			.contains('Image...');
+		helper.selectItemByContent('.menu-entry-with-icon', 'Image...')
+			.should('be.visible');
 	});
 
 	it('Insert chart.', function() {
-		cy.get('.menu-entry-with-icon')
-			.contains('Chart...')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Chart...')
 			.click();
 
 		cy.get('.leaflet-drag-transform-marker')
@@ -45,8 +44,7 @@ describe('Calc insertion wizard.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
-		cy.get('.menu-entry-with-icon')
-			.contains('Hyperlink...')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Hyperlink...')
 			.click();
 
 		// Dialog is opened
@@ -78,8 +76,7 @@ describe('Calc insertion wizard.', function() {
 
 	it('Insert shape.', function() {
 		// Do insertion
-		cy.get('.menu-entry-with-icon')
-			.contains('Shape')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Shape')
 			.click();
 
 		cy.get('.basicshapes_ellipse').
@@ -98,8 +95,7 @@ describe('Calc insertion wizard.', function() {
 
 	it('Insert date.', function() {
 		// Do insertion
-		cy.get('.menu-entry-with-icon')
-			.contains('Date')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Date')
 			.click();
 
 		calcHelper.copyContentToClipboard();
@@ -110,8 +106,7 @@ describe('Calc insertion wizard.', function() {
 
 	it('Insert time.', function() {
 		// Do insertion
-		cy.get('.menu-entry-with-icon')
-			.contains('Time')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Time')
 			.click();
 
 		calcHelper.copyContentToClipboard();

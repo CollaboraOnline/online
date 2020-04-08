@@ -28,8 +28,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('be.visible');
 
 		// Do insertion
-		cy.get('.menu-entry-with-icon')
-			.contains('Shape')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Shape')
 			.click();
 
 		cy.get('.basicshapes_right-triangle').
@@ -230,8 +229,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#linestyle')
 			.click();
 
-		cy.get('.ui-combobox-text')
-			.contains('Dashed')
+		helper.selectItemByContent('.ui-combobox-text', 'Dashed')
 			.click();
 
 		triggerNewSVG();

@@ -18,8 +18,7 @@ describe('Insert fields via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Open fields submenu
-		cy.get('.menu-entry-with-icon.flex-fullwidth')
-			.contains('More Fields...')
+		helper.selectItemByContent('.menu-entry-with-icon.flex-fullwidth', 'More Fields...')
 			.click();
 
 		cy.get('.ui-content.level-0.mobile-wizard')
@@ -32,34 +31,31 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert page number field.', function() {
 		// Insert field
-		cy.get('.menu-entry-with-icon')
-			.contains('Page Number')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Page Number')
 			.click();
 
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'PAGE')
-			.contains('1');
+			.should('have.text', '1');
 	});
 
 	it('Insert page count field.', function() {
 		// Insert field
-		cy.get('.menu-entry-with-icon')
-			.contains('Page Count')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Page Count')
 			.click();
 
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCSTAT')
-			.contains('1');
+			.should('have.text', '1');
 	});
 
 	it('Insert date field.', function() {
 		// Insert field
-		cy.get('.menu-entry-with-icon')
-			.contains('Date')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Date')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -71,8 +67,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert time field.', function() {
 		// Insert field
-		cy.get('.menu-entry-with-icon')
-			.contains('Time')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Time')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -84,8 +79,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert title field.', function() {
 		// Insert field
-		cy.get('.menu-entry-with-icon')
-			.contains('Title')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Title')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -97,8 +91,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert author field.', function() {
 		// Insert field
-		cy.get('.menu-entry-with-icon')
-			.contains('First Author')
+		helper.selectItemByContent('.menu-entry-with-icon', 'First Author')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -111,8 +104,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert subject field.', function() {
 		// Insert field
-		cy.get('.menu-entry-with-icon')
-			.contains('Subject')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Subject')
 			.click();
 
 		writerHelper.copyTextToClipboard();

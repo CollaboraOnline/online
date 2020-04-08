@@ -34,14 +34,13 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-back')
 			.should('be.visible');
 
-		cy.get('.mobile-wizard.ui-combobox-text')
-			.contains(styleName)
+		helper.selectItemByContent('.mobile-wizard.ui-combobox-text', styleName)
 			.click();
 
 		// Combobox entry contains the selected font name
 		if (styleName !== 'Clear formatting') {
 			cy.get('#applystyle .ui-header-right .entry-value')
-				.contains(styleName);
+				.should('have.text', styleName);
 		}
 
 		mobileHelper.closeMobileWizard();
@@ -52,8 +51,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontnamecombobox')
 			.click();
 
-		cy.get('.mobile-wizard.ui-combobox-text')
-			.contains('Linux Libertine G')
+		helper.selectItemByContent('.mobile-wizard.ui-combobox-text', 'Linux Libertine G')
 			.click();
 
 		cy.get('.level-1[title="Font Name"] .mobile-wizard.ui-combobox-text.selected')
@@ -63,8 +61,8 @@ describe('Apply font changes.', function() {
 			.click();
 
 		// Combobox entry contains the selected font name
-		cy.get('#fontnamecombobox .ui-header-right')
-			.contains('Linux Libertine G');
+		cy.get('#fontnamecombobox .ui-header-right .entry-value')
+			.should('have.text', 'Linux Libertine G');
 
 		writerHelper.copyTextToClipboard();
 
@@ -77,8 +75,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontsizecombobox')
 			.click();
 
-		cy.get('.mobile-wizard.ui-combobox-text')
-			.contains('36')
+		helper.selectItemByContent('.mobile-wizard.ui-combobox-text', '36')
 			.click();
 
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
@@ -92,8 +89,8 @@ describe('Apply font changes.', function() {
 			.click();
 
 		// Combobox entry contains the selected font name
-		cy.get('#fontsizecombobox .ui-header-right')
-			.contains('36');
+		cy.get('#fontsizecombobox .ui-header-right .entry-value')
+			.should('have.text', '36');
 
 		writerHelper.copyTextToClipboard();
 

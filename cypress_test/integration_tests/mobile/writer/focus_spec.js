@@ -45,7 +45,8 @@ describe('Focus tests', function() {
 			.should('be.eq', 'loleaflet-annotation-textarea');
 
 		// Close the dialog
-		cy.contains('Cancel').click();
+		cy.get('.vex-dialog-button-secondary')
+			.click();
 		cy.get('.loleaflet-annotation-table').should('be.not.visible');
 
 		// Body should have the focus again (no focus on document)
@@ -115,13 +116,12 @@ describe('Focus tests', function() {
 			.should('not.be.empty');
 
 		// Select More Fields
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget')
-			.contains('More Fields...')
-			.parent().click();
+		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget', 'More Fields...')
+			.click();
 
 		// Insert a field
-		cy.get('.ui-header.level-1.mobile-wizard.ui-widget .menu-entry-with-icon')
-			.contains('Page Number').click();
+		helper.selectItemByContent('.menu-entry-with-icon', 'Page Number')
+			.click();
 
 		cy.get('#mobile-wizard')
 			.should('not.be.visible');
@@ -143,8 +143,7 @@ describe('Focus tests', function() {
 			.should('not.be.empty');
 
 		// Do insertion
-		cy.get('.menu-entry-with-icon')
-			.contains('Shape')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Shape')
 			.click();
 
 		cy.get('.col.w2ui-icon.basicshapes_rectangle').

@@ -26,8 +26,8 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// We check whether the entry is there
-		cy.get('.menu-entry-with-icon')
-			.contains('Local Image...');
+		helper.selectItemByContent('.menu-entry-with-icon', 'Local Image...')
+			.should('be.visible');
 		// We not not test the insertion, it might depend on the system.
 	});
 
@@ -38,8 +38,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#mobile-wizard')
 			.should('be.visible');
 
-		cy.get('.menu-entry-with-icon')
-			.contains('Comment')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Comment')
 			.click();
 
 		// Comment insertion dialog is opened
@@ -72,9 +71,9 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Open Table submenu
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget')
-			.contains('Table')
+		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget', 'Table')
 			.click();
+
 		cy.get('.mobile-wizard.ui-text')
 			.should('be.visible');
 
@@ -109,8 +108,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Open Table submenu
-		cy.get('.ui-header.level-0.mobile-wizard.ui-widget')
-			.contains('Table')
+		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget', 'Table')
 			.click();
 		cy.get('.mobile-wizard.ui-text')
 			.should('be.visible');
@@ -158,20 +156,17 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Open header/footer submenu
-		cy.get('.menu-entry-with-icon')
-			.contains('Header and Footer')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Header and Footer')
 			.click();
 		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
 			.should('be.visible');
 
 		// Open header submenu
-		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
-			.contains('Header')
+		helper.selectItemByContent('.ui-header.level-1.mobile-wizard.ui-widget', 'Header')
 			.click();
 
 		// Insert header for All
-		cy.get('.menu-entry-no-icon')
-			.contains('All')
+		helper.selectItemByContent('.menu-entry-no-icon', 'All')
 			.click();
 
 		// Check that the cursor was moved
@@ -201,20 +196,17 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Open header/footer submenu
-		cy.get('.menu-entry-with-icon')
-			.contains('Header and Footer')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Header and Footer')
 			.click();
 		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
 			.should('be.visible');
 
 		// Open footer submenu
-		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
-			.contains('Footer')
+		helper.selectItemByContent('.ui-header.level-1.mobile-wizard.ui-widget', 'Footer')
 			.click();
 
 		// Insert footer for All
-		cy.get('.ui-content.level-1.mobile-wizard[title~="Footer"] .ui-header.level-2.mobile-wizard.ui-widget .menu-entry-no-icon')
-			.contains('All')
+		helper.selectItemByContent('.ui-content.level-1.mobile-wizard[title~="Footer"] .ui-header.level-2.mobile-wizard.ui-widget .menu-entry-no-icon', 'All')
 			.click();
 
 		// Check that the cursor was moved
@@ -244,8 +236,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Insert footnote
-		cy.get('.menu-entry-with-icon')
-			.contains('Footnote')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Footnote')
 			.click();
 
 		// Check that the cursor was moved
@@ -275,8 +266,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Insert endnote
-		cy.get('.menu-entry-with-icon')
-			.contains('Endnote')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Endnote')
 			.click();
 
 		// Check that the cursor was moved
@@ -305,9 +295,8 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#mobile-wizard')
 			.should('be.visible');
 
-		// Insert endnote
-		cy.get('.menu-entry-with-icon')
-			.contains('Page Break')
+		// Insert page break
+		helper.selectItemByContent('.menu-entry-with-icon', 'Page Break')
 			.click();
 
 		// Check that the cursor was moved
@@ -337,8 +326,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Do insertion
-		cy.get('.menu-entry-with-icon')
-			.contains('Column Break')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Column Break')
 			.click();
 
 		// Check that the cursor was moved
@@ -359,8 +347,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Open hyperlink dialog
-		cy.get('.menu-entry-with-icon')
-			.contains('Hyperlink...')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Hyperlink...')
 			.click();
 
 		// Dialog is opened
@@ -380,7 +367,7 @@ describe('Insert objects via insertion wizard.', function() {
 		writerHelper.copyTextToClipboard();
 
 		cy.get('#copy-paste-container p')
-			.contains('some text');
+			.should('have.text', '\nsome text');
 
 		cy.get('#copy-paste-container p a')
 			.should('have.attr', 'href', 'http://www.something.com/');
@@ -394,8 +381,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		// Do insertion
-		cy.get('.menu-entry-with-icon')
-			.contains('Shape')
+		helper.selectItemByContent('.menu-entry-with-icon', 'Shape')
 			.click();
 
 		cy.get('.col.w2ui-icon.basicshapes_rectangle').
