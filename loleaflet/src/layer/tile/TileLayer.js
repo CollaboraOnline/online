@@ -2144,15 +2144,15 @@ L.TileLayer = L.GridLayer.extend({
 		&& scroll !== false
 		&& !this._map.getBounds().contains(this._visibleCursor)
 		&& this._map._isCursorVisible
-		&& this._map._clip._selectionType !== 'complex') {
+		&& (!this._map._clip || this._map._clip._selectionType !== 'complex')) {
 
 			var center = this._map.project(cursorPos);
 			center = center.subtract(this._map.getSize().divideBy(2));
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
 			if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
-			    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
-			    !(docLayer._followEditor || docLayer._followUser)) {
+				!(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
+				!(docLayer._followEditor || docLayer._followUser)) {
 				this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
 			}
 		}
