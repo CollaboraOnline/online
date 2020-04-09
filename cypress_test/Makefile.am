@@ -209,6 +209,13 @@ define execute_run_parallel
 	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
 	if [ -z `grep -o -m 1 "Error:" $(2)` ];\
 		then cat $(2);\
+		elif [ -z $(CYPRESS_NO_SECOND_CHANCE) ]; \
+		then echo "Second chance!" > $(2) && \
+		     echo "`echo $(1) && $(1)`" >> $(2) 2>&1 && \
+		     if [ -z `grep -o -m 1 "Error:" $(2)` ];\
+			then cat $(2);\
+			else cat $(2) >> $(ERROR_LOG); \
+		     fi;\
 		else cat $(2) >> $(ERROR_LOG);\
 	fi;
 endef
