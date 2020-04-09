@@ -89,18 +89,20 @@ unittest_SOURCES = \
     ../wsd/TestStubs.cpp \
     test.cpp
 
+unittest_LDADD = $(CPPUNIT_LIBS)
+unit_base_la_LIBADD = $(CPPUNIT_LIBS)
 if ENABLE_SSL
 unittest_SOURCES += ../net/Ssl.cpp
+else
+unittest_LDADD += -lssl -lcrypto
+unit_base_la_LIBADD += -lssl -lcrypto
 endif
-
-unittest_LDADD = $(CPPUNIT_LIBS)
 
 fakesockettest_SOURCES = fakesockettest.cpp ../net/FakeSocket.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
 unit_base_la_SOURCES = UnitClient.cpp ${test_base_source}
-unit_base_la_LIBADD = $(CPPUNIT_LIBS)
 unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp
 unit_tiletest_la_LIBADD = $(CPPUNIT_LIBS)
 unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp
