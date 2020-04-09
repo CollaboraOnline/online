@@ -154,8 +154,8 @@ public:
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
     /// for timeouts, based on current time @now.
     /// @returns POLLIN and POLLOUT if output is expected.
-    virtual int getPollEvents(std::chrono::steady_clock::time_point now,
-                              int &timeoutMaxMs) = 0;
+    virtual int pgetPollEvents(std::chrono::steady_clock::time_point now,
+                              int64_t &timeoutMaxMicroS) = 0;
 
     /// Handle results of events returned from poll
     virtual void handlePoll(SocketDisposition &disposition,
@@ -370,8 +370,8 @@ public:
     /// Prepare our poll record; adjust @timeoutMaxMs downwards
     /// for timeouts, based on current time @now.
     /// @returns POLLIN and POLLOUT if output is expected.
-    virtual int getPollEvents(std::chrono::steady_clock::time_point now,
-                              int &timeoutMaxMs) = 0;
+    virtual int pgetPollEvents(std::chrono::steady_clock::time_point now,
+                               int64_t &timeoutMaxMicroS) = 0;
 
     /// Do we need to handle a timeout ?
     virtual void checkTimeout(std::chrono::steady_clock::time_point /* now */) {}
@@ -476,7 +476,7 @@ public:
     ~SocketPoll();
 
     /// Default poll time - useful to increase for debugging.
-    static int DefaultPollTimeoutMs;
+    static int DefaultPollTimeoutMicroS;
     static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.
@@ -533,7 +533,7 @@ public:
     {
         while (continuePolling())
         {
-            poll(DefaultPollTimeoutMs);
+            ppoll(DefaultPollTimeoutMicroS);
         }
     }
 
@@ -576,123 +576,7 @@ public:
     /// Poll the sockets for available data to read or buffer to write.
     /// Returns the return-value of poll(2): 0 on timeout,
     /// -1 for error, and otherwise the number of events signalled.
-    int poll(int timeoutMaxMs)
-    {
-        if (_runOnClientThread)
-            checkAndReThread();
-        else
-            assertCorrectThread();
-
-        std::chrono::steady_clock::time_point now =
-            std::chrono::steady_clock::now();
-
-        // The events to poll on change each spin of the loop.
-        setupPollFds(now, timeoutMaxMs);
-        const size_t size = _pollSockets.size();
-
-        int rc;
-        do
-        {
-#if !MOBILEAPP
-            LOG_TRC("Poll start, timeoutMs: " << timeoutMaxMs);
-            rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
-#else
-            LOG_TRC("SocketPoll Poll");
-            rc = fakeSocketPoll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
-#endif
-        }
-        while (rc < 0 && errno == EINTR);
-        LOG_TRC("Poll completed with " << rc << " live polls max (" <<
-                timeoutMaxMs << "ms)" << ((rc==0) ? "(timedout)" : ""));
-
-        // First process the wakeup pipe (always the last entry).
-        if (_pollFds[size].revents)
-        {
-            std::vector<CallbackFn> invoke;
-            {
-                std::lock_guard<std::mutex> lock(_mutex);
-
-                // Clear the data.
-#if !MOBILEAPP
-                int dump = ::read(_wakeup[0], &dump, sizeof(dump));
-#else
-                LOG_TRC("Wakeup pipe read");
-                int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
-#endif
-                // Copy the new sockets over and clear.
-                _pollSockets.insert(_pollSockets.end(),
-                                    _newSockets.begin(), _newSockets.end());
-
-                // Update thread ownership.
-                for (auto &i : _newSockets)
-                    i->setThreadOwner(std::this_thread::get_id());
-
-                _newSockets.clear();
-
-                // Extract list of callbacks to process
-                std::swap(_newCallbacks, invoke);
-            }
-
-            for (const auto& callback : invoke)
-            {
-                try
-                {
-                    callback();
-                }
-                catch (const std::exception& exc)
-                {
-                    LOG_ERR("Exception while invoking poll [" << _name <<
-                            "] callback: " << exc.what());
-                }
-            }
-
-            try
-            {
-                wakeupHook();
-            }
-            catch (const std::exception& exc)
-            {
-                LOG_ERR("Exception while invoking poll [" << _name <<
-                        "] wakeup hook: " << exc.what());
-            }
-        }
-
-        // This should only happen when we're stopping.
-        if (_pollSockets.size() != size)
-            return rc;
-
-        // Fire the poll callbacks and remove dead fds.
-        std::chrono::steady_clock::time_point newNow =
-            std::chrono::steady_clock::now();
-
-        for (int i = static_cast<int>(size) - 1; i >= 0; --i)
-        {
-            SocketDisposition disposition(_pollSockets[i]);
-            try
-            {
-                _pollSockets[i]->handlePoll(disposition, newNow,
-                                            _pollFds[i].revents);
-            }
-            catch (const std::exception& exc)
-            {
-                LOG_ERR("Error while handling poll for socket #" <<
-                        _pollFds[i].fd << " in " << _name << ": " << exc.what());
-                disposition.setClosed();
-                rc = -1;
-            }
-
-            if (disposition.isMove() || disposition.isClosed())
-            {
-                LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
-                        _pollSockets.size() << ") from " << _name);
-                _pollSockets.erase(_pollSockets.begin() + i);
-            }
-
-            disposition.execute();
-        }
-
-        return rc;
-    }
+    int ppoll(int64_t timeoutMaxMicroS);
 
     /// Write to a wakeup descriptor
     static void wakeup (int fd)
@@ -811,8 +695,8 @@ private:
                                        const std::string &pathAndQuery);
 
     /// Initialize the poll fds array with the right events
-    void setupPollFds(std::chrono::steady_clock::time_point now,
-                      int &timeoutMaxMs)
+    void psetupPollFds(std::chrono::steady_clock::time_point now,
+                      int64_t &timeoutMaxMicroS)
     {
         const size_t size = _pollSockets.size();
 
@@ -820,7 +704,7 @@ private:
 
         for (size_t i = 0; i < size; ++i)
         {
-            int events = _pollSockets[i]->getPollEvents(now, timeoutMaxMs);
+            int events = _pollSockets[i]->pgetPollEvents(now, timeoutMaxMicroS);
             assert(events >= 0); // Or > 0 even?
             _pollFds[i].fd = _pollSockets[i]->getFD();
             _pollFds[i].events = events;
@@ -920,12 +804,12 @@ public:
         Socket::shutdown();
     }
 
-    int getPollEvents(std::chrono::steady_clock::time_point now,
-                      int &timeoutMaxMs) override
+    int pgetPollEvents(std::chrono::steady_clock::time_point now,
+                      int64_t &timeoutMaxMicroS) override
     {
         // cf. SslSocket::getPollEvents
         assertCorrectThread();
-        int events = _socketHandler->getPollEvents(now, timeoutMaxMs);
+        int events = _socketHandler->pgetPollEvents(now, timeoutMaxMicroS);
         if (!_outBuffer.empty() || _shutdownSignalled)
             events |= POLLOUT;
         return events;

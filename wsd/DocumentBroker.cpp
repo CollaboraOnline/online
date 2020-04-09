@@ -298,7 +298,7 @@ void DocumentBroker::pollThread()
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
     {
-        _poll->poll(SocketPoll::DefaultPollTimeoutMs);
+        _poll->ppoll(SocketPoll::DefaultPollTimeoutMicroS);
 
         const auto now = std::chrono::steady_clock::now();
 
@@ -440,9 +440,9 @@ void DocumentBroker::pollThread()
     }
 
     // Flush socket data first.
-    constexpr int flushTimeoutMs = POLL_TIMEOUT_MS * 2; // ~1000ms
+    constexpr int64_t flushTimeoutMicroS = POLL_TIMEOUT_MICRO_S * 2; // ~1000ms
     LOG_INF("Flushing socket for doc ["
-            << _docKey << "] for " << flushTimeoutMs << " ms. stop: " << _stop
+            << _docKey << "] for " << flushTimeoutMicroS << " us. stop: " << _stop
             << ", continuePolling: " << _poll->continuePolling()
             << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag()
             << ", TerminationFlag: " << SigUtil::getTerminationFlag()
@@ -451,11 +451,11 @@ void DocumentBroker::pollThread()
     while (_poll->getSocketCount())
     {
         const auto now = std::chrono::steady_clock::now();
-        const int elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - flushStartTime).count();
-        if (elapsedMs > flushTimeoutMs)
+        const int64_t elapsedMicroS = std::chrono::duration_cast<std::chrono::microseconds>(now - flushStartTime).count();
+        if (elapsedMicroS > flushTimeoutMicroS)
             break;
 
-        _poll->poll(std::min(flushTimeoutMs - elapsedMs, POLL_TIMEOUT_MS / 5));
+        _poll->ppoll(std::min(flushTimeoutMicroS - elapsedMicroS, (int64_t)POLL_TIMEOUT_MICRO_S / 5));
     }
 
     LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<

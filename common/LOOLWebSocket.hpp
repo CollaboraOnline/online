@@ -53,7 +53,7 @@ public:
     int receiveFrame(char* buffer, const int length, int& flags)
     {
         // Timeout is in microseconds. We don't need this, except to yield the cpu.
-        static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000 / 10);
+        static const Poco::Timespan waitTime(POLL_TIMEOUT_MICRO_S / 10);
         static const Poco::Timespan waitZero(0);
 
         while (poll(waitTime, Poco::Net::Socket::SELECT_READ))

@@ -1031,6 +1031,8 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       ])
 AC_SUBST(IOSAPP_FONTS)
 
+AC_CHECK_FUNCS(ppoll)
+
 ENABLE_CYPRESS=false
 if test "$enable_cypress" = "yes"; then
    cypress_msg="cypress is enabled"

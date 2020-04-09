@@ -275,7 +275,7 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& tes
     {
         bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags);
         TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer.begin(), bytes, flags));
-        std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
+        std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
     }
     while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
@@ -463,7 +463,7 @@ connectLOKit(const Poco::URI& uri,
             TST_LOG("Connection problem: " << ex.what());
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
+        std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
     }
     while (retries--);
 

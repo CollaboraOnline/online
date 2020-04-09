@@ -2061,8 +2061,8 @@ private:
                     " has no DocumentBroker to handle message: [" << abbr << "].");
     }
 
-    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
-                      int & /* timeoutMaxMs */) override
+    int pgetPollEvents(std::chrono::steady_clock::time_point /* now */,
+                       int64_t & /* timeoutMaxMs */) override
     {
         return POLLIN;
     }
@@ -2393,8 +2393,8 @@ private:
 #endif
     }
 
-    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
-                      int & /* timeoutMaxMs */) override
+    int pgetPollEvents(std::chrono::steady_clock::time_point /* now */,
+                       int64_t & /* timeoutMaxMs */) override
     {
         return POLLIN;
     }
@@ -3577,10 +3577,10 @@ int LOOLWSD::innerMain()
         UnitWSD::get().invokeTest();
 
         // This timeout affects the recovery time of prespawned children.
-        const int msWait = UnitWSD::isUnitTesting() ?
-                           UnitWSD::get().getTimeoutMilliSeconds() / 4 :
-                           SocketPoll::DefaultPollTimeoutMs * 4;
-        mainWait.poll(msWait);
+        const int waitMicroS = UnitWSD::isUnitTesting() ?
+            UnitWSD::get().getTimeoutMilliSeconds() * 1000 / 4 :
+            SocketPoll::DefaultPollTimeoutMicroS * 4;
+        mainWait.ppoll(waitMicroS);
 
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();

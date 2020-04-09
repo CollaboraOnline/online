@@ -98,7 +98,7 @@ public:
 
 		// ModifiedStatus=true is a bit slow; let's sleep and hope that
 		// it is received before we wake up
-		std::this_thread::sleep_for(std::chrono::milliseconds(POLL_TIMEOUT_MS));
+		std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
 
 		// change the document underneath, in storage
 		setFileContent("Modified content in storage");

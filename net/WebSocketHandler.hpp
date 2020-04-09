@@ -48,8 +48,8 @@ protected:
         static const unsigned char Mask = 0x80;
     };
 
-    static const int InitialPingDelayMs;
-    static const int PingFrequencyMs;
+    static const int InitialPingDelayMicroS;
+    static const int PingFrequencyMicroS;
 
 public:
     /// Perform upgrade ourselves, or select a client web socket.
@@ -81,8 +81,8 @@ public:
                      const Poco::Net::HTTPRequest& request)
         : _socket(socket)
         , _lastPingSentTime(std::chrono::steady_clock::now() -
-                            std::chrono::milliseconds(PingFrequencyMs) -
-                            std::chrono::milliseconds(InitialPingDelayMs))
+                            std::chrono::microseconds(PingFrequencyMicroS) -
+                            std::chrono::microseconds(InitialPingDelayMicroS))
         , _pingTimeUs(0)
         , _shuttingDown(false)
         , _isClient(false)
@@ -430,14 +430,14 @@ public:
         }
     }
 
-    int getPollEvents(std::chrono::steady_clock::time_point now,
-                      int & timeoutMaxMs) override
+    int pgetPollEvents(std::chrono::steady_clock::time_point now,
+                      int64_t & timeoutMaxMicroS) override
     {
         if (!_isClient)
         {
-            const int timeSincePingMs =
-                std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastPingSentTime).count();
-            timeoutMaxMs = std::min(timeoutMaxMs, PingFrequencyMs - timeSincePingMs);
+            const int64_t timeSincePingMicroS =
+                std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime).count();
+            timeoutMaxMicroS = std::min(timeoutMaxMicroS, PingFrequencyMicroS - timeSincePingMicroS);
         }
         int events = POLLIN;
         if (_msgHandler && _msgHandler->hasQueuedMessages())
@@ -493,9 +493,9 @@ private:
         if (_isClient)
             return;
 
-        const int timeSincePingMs =
-            std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastPingSentTime).count();
-        if (timeSincePingMs >= PingFrequencyMs)
+        const int64_t timeSincePingMicroS =
+            std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime).count();
+        if (timeSincePingMicroS >= PingFrequencyMicroS)
         {
             const std::shared_ptr<StreamSocket> socket = _socket.lock();
             if (socket)

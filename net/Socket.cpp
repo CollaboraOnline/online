@@ -35,7 +35,7 @@
 #endif
 #include "WebSocketHandler.hpp"
 
-int SocketPoll::DefaultPollTimeoutMs = 5000;
+int SocketPoll::DefaultPollTimeoutMicroS = 5000 * 1000;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
@@ -192,6 +192,136 @@ void SocketPoll::pollingThreadEntry()
 
     _threadFinished = true;
     LOG_INF("Finished polling thread [" << _name << "].");
+}
+
+int SocketPoll::ppoll(int64_t timeoutMaxMicroS)
+{
+    if (_runOnClientThread)
+        checkAndReThread();
+    else
+        assertCorrectThread();
+
+    std::chrono::steady_clock::time_point now =
+        std::chrono::steady_clock::now();
+
+    // The events to poll on change each spin of the loop.
+    psetupPollFds(now, timeoutMaxMicroS);
+    const size_t size = _pollSockets.size();
+
+    int rc;
+    do
+    {
+#if !MOBILEAPP
+#  if HAVE_PPOLL
+        LOG_TRC("ppoll start, timeoutMicroS: " << timeoutMaxMicroS << " size " << size);
+        timeoutMaxMicroS = std::max(timeoutMaxMicroS, (int64_t)0);
+        struct timespec timeout;
+        timeout.tv_sec = timeoutMaxMicroS / (1000 * 1000);
+        timeout.tv_nsec = (timeoutMaxMicroS % (1000 * 1000)) * 1000;
+        rc = ::ppoll(&_pollFds[0], size + 1, &timeout, nullptr);
+        LOG_TRC("ppoll result " << rc << " errno " << strerror(errno));
+#  else
+        int timeoutMaxMs = (timeoutMaxMicroS + 9999) / 1000;
+        LOG_TRC("Legacy Poll start, timeoutMs: " << timeoutMaxMs);
+        rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
+#  endif
+#else
+        LOG_TRC("SocketPoll Poll");
+        int timeoutMaxMs = (timeoutMaxMicroS + 9999) / 1000;
+        rc = fakeSocketPoll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
+#endif
+    }
+    while (rc < 0 && errno == EINTR);
+    LOG_TRC("Poll completed with " << rc << " live polls max (" <<
+            timeoutMaxMicroS << "us)" << ((rc==0) ? "(timedout)" : ""));
+
+    // First process the wakeup pipe (always the last entry).
+    if (_pollFds[size].revents)
+    {
+        std::vector<CallbackFn> invoke;
+        {
+            std::lock_guard<std::mutex> lock(_mutex);
+
+            // Clear the data.
+#if !MOBILEAPP
+            int dump = ::read(_wakeup[0], &dump, sizeof(dump));
+#else
+            LOG_TRC("Wakeup pipe read");
+            int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
+#endif
+            // Copy the new sockets over and clear.
+            _pollSockets.insert(_pollSockets.end(),
+                                _newSockets.begin(), _newSockets.end());
+
+            // Update thread ownership.
+            for (auto &i : _newSockets)
+                i->setThreadOwner(std::this_thread::get_id());
+
+            _newSockets.clear();
+
+            // Extract list of callbacks to process
+            std::swap(_newCallbacks, invoke);
+        }
+
+        for (const auto& callback : invoke)
+        {
+            try
+            {
+                callback();
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Exception while invoking poll [" << _name <<
+                        "] callback: " << exc.what());
+            }
+        }
+
+        try
+        {
+            wakeupHook();
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Exception while invoking poll [" << _name <<
+                    "] wakeup hook: " << exc.what());
+        }
+    }
+
+    // This should only happen when we're stopping.
+    if (_pollSockets.size() != size)
+        return rc;
+
+    // Fire the poll callbacks and remove dead fds.
+    std::chrono::steady_clock::time_point newNow =
+        std::chrono::steady_clock::now();
+
+    for (int i = static_cast<int>(size) - 1; i >= 0; --i)
+    {
+        SocketDisposition disposition(_pollSockets[i]);
+        try
+        {
+            _pollSockets[i]->handlePoll(disposition, newNow,
+                                        _pollFds[i].revents);
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Error while handling poll for socket #" <<
+                    _pollFds[i].fd << " in " << _name << ": " << exc.what());
+            disposition.setClosed();
+            rc = -1;
+        }
+
+        if (disposition.isMove() || disposition.isClosed())
+        {
+            LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
+                    _pollSockets.size() << ") from " << _name);
+            _pollSockets.erase(_pollSockets.begin() + i);
+        }
+
+        disposition.execute();
+    }
+
+    return rc;
 }
 
 void SocketPoll::wakeupWorld()
@@ -384,8 +514,8 @@ void SocketDisposition::execute()
     _socketMove = nullptr;
 }
 
-const int WebSocketHandler::InitialPingDelayMs = 25;
-const int WebSocketHandler::PingFrequencyMs = 18 * 1000;
+const int WebSocketHandler::InitialPingDelayMicroS = 25 * 1000;
+const int WebSocketHandler::PingFrequencyMicroS = 18 * 1000 * 1000;
 
 void WebSocketHandler::dumpState(std::ostream& os)
 {
@@ -398,8 +528,8 @@ void WebSocketHandler::dumpState(std::ostream& os)
 
 void StreamSocket::dumpState(std::ostream& os)
 {
-    int timeoutMaxMs = SocketPoll::DefaultPollTimeoutMs;
-    int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMs);
+    int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS;
+    int events = pgetPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << "\t" << getFD() << "\t" << events << "\t"
        << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
        << " r: " << _bytesRecvd << "\t w: " << _bytesSent << "\t"

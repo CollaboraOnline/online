@@ -77,17 +77,17 @@ public:
     // FIXME - really need to propagate 'noDelay' etc.
     // have a debug only lookup of delayed sockets for this case ?
 
-    int getPollEvents(std::chrono::steady_clock::time_point now,
-                      int &timeoutMaxMs) override
+    int pgetPollEvents(std::chrono::steady_clock::time_point now,
+                       int64_t &timeoutMaxMicroS) override
     {
         if (_chunks.size() > 0)
         {
-            int remainingMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            int64_t remainingMicroS = std::chrono::duration_cast<std::chrono::microseconds>(
                 (*_chunks.begin())->getSendTime() - now).count();
-            if (remainingMs < timeoutMaxMs)
-                DELAY_LOG("#" << getFD() << " reset timeout max to " << remainingMs
-                          << "ms from " << timeoutMaxMs << "ms\n");
-            timeoutMaxMs = std::min(timeoutMaxMs, remainingMs);
+            if (remainingMicroS < timeoutMaxMicroS)
+                DELAY_LOG("#" << getFD() << " reset timeout max to " << remainingMicroS
+                          << "us from " << timeoutMaxMicroS << "us\n");
+            timeoutMaxMicroS = std::min(timeoutMaxMicroS, remainingMicroS);
         }
 
         if (_chunks.size() > 0 &&

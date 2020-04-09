@@ -2245,7 +2245,7 @@ public:
 
     // a LOK compatible poll function merging the functions.
     // returns the number of events signalled
-    int kitPoll(int timeoutUs)
+    int kitPoll(int timeoutMicroS)
     {
         if (SigUtil::getTerminationFlag())
         {
@@ -2257,30 +2257,29 @@ public:
         int maxExtraEvents = 15;
         int eventsSignalled = 0;
 
-        int timeoutMs = timeoutUs / 1000;
 
-        if (timeoutMs < 0)
+        if (timeoutMicroS < 0)
         {
             // Flush at most 1 + maxExtraEvents, or return when nothing left.
-            while (poll(0) > 0 && maxExtraEvents-- > 0)
+            while (ppoll(0) > 0 && maxExtraEvents-- > 0)
                 ++eventsSignalled;
         }
         else
         {
             // Flush at most maxEvents+1, or return when nothing left.
-            _pollEnd = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutUs);
+            _pollEnd = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutMicroS);
             do
             {
-                if (poll(timeoutMs) <= 0)
+                if (ppoll(timeoutMicroS) <= 0)
                     break;
 
                 const auto now = std::chrono::steady_clock::now();
                 drainQueue(now);
 
-                timeoutMs = std::chrono::duration_cast<std::chrono::milliseconds>(_pollEnd - now).count();
+                timeoutMicroS = std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - now).count();
                 ++eventsSignalled;
             }
-            while (timeoutMs > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
+            while (timeoutMicroS > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
         }
 
         drainQueue(std::chrono::steady_clock::now());

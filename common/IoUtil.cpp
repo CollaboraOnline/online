@@ -49,7 +49,7 @@ void SocketProcessor(const std::shared_ptr<LOOLWebSocket>& ws,
     LOG_INF("SocketProcessor [" << name << "] starting.");
 
     // Timeout given is in microseconds.
-    static const Poco::Timespan waitTime(POLL_TIMEOUT_MS * 1000);
+    static const Poco::Timespan waitTime(POLL_TIMEOUT_MICRO_S);
     int flags = 0;
     int n = -1;
     bool stop = false;
@@ -244,7 +244,7 @@ int PipeReader::readLine(std::string& line,
 
     // Poll in short intervals to check for stop condition.
     const int pollTimeoutMs = 500;
-    int maxPollCount = std::max<int>(POLL_TIMEOUT_MS / pollTimeoutMs, 1);
+    int maxPollCount = std::max<int>((POLL_TIMEOUT_MICRO_S / 1000) / pollTimeoutMs, 1);
     while (maxPollCount-- > 0)
     {
         if (stopPredicate())
