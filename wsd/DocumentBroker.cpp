@@ -432,7 +432,7 @@ void DocumentBroker::pollThread()
             _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
             ", TerminationFlag: " << SigUtil::getTerminationFlag() << ", closeReason: " << _closeReason << ". Flushing socket.");
 
-    if (_isModified)
+    if (isModified())
     {
         std::stringstream state;
         dumpState(state);
@@ -739,9 +739,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                     ", Actual: " << fileInfo.getModifiedTime());
 
             _documentChangedInStorage = true;
-            std::string message = "close: documentconflict";
-            if (_isModified)
-                message = "error: cmd=storage kind=documentconflict";
+            const std::string message = isModified() ? "error: cmd=storage kind=documentconflict"
+                                                     : "close: documentconflict";
 
             session->sendTextFrame(message);
             broadcastMessage(message);
@@ -1090,9 +1089,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;
-        std::string message = "close: documentconflict";
-        if (_isModified)
-            message = "error: cmd=storage kind=documentconflict";
+        const std::string message
+            = isModified() ? "error: cmd=storage kind=documentconflict" : "close: documentconflict";
 
         broadcastMessage(message);
     }
@@ -1160,7 +1158,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
     LOG_TRC("autoSave(): forceful? " << force);
     if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
-        !_childProcess->isAlive() || (!_isModified && !force))
+        !_childProcess->isAlive() || (!isModified() && !force))
     {
         // Nothing to do.
         LOG_TRC("Nothing to autosave [" << _docKey << "].");
@@ -1186,7 +1184,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
                            dontSaveIfUnmodified, /*isAutosave=*/false,
                            /*isExitSave=*/true);
     }
-    else if (_isModified)
+    else if (isModified())
     {
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         const std::chrono::milliseconds::rep inactivityTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime).count();
@@ -2377,7 +2375,7 @@ void DocumentBroker::dumpState(std::ostream& os)
                 now - _threadStart).count() << "s";
     os << "\n  sent: " << sent;
     os << "\n  recv: " << recv;
-    os << "\n  modified?: " << _isModified;
+    os << "\n  modified?: " << isModified();
     os << "\n  jail id: " << _jailId;
     os << "\n  filename: " << LOOLWSD::anonymizeUrl(_filename);
     os << "\n  public uri: " << _uriPublic.toString();

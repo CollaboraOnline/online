@@ -313,7 +313,7 @@ private:
     /// True if we know the doc is modified or
     /// if there has been activity from a client after we last *requested* saving,
     /// since there are race conditions vis-a-vis user activity while saving.
-    bool isPossiblyModified() const { return _isModified || (_lastSaveRequestTime < _lastActivityTime); }
+    bool isPossiblyModified() const { return isModified() || (_lastSaveRequestTime < _lastActivityTime); }
 
     /// True iff there is at least one non-readonly session other than the given.
     /// Since only editable sessions can save, we need to use the last to
