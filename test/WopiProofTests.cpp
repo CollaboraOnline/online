@@ -47,7 +47,7 @@ class WopiProofTests : public CPPUNIT_NS::TestFixture
 
     void verifySignature(const std::string &access,
                          const std::string &uri,
-                         uint64_t ticks,
+                         int64_t ticks,
                          const std::string &discoveryModulus,
                          const std::string &discoveryExponent,
                          const std::string &msgProof);
@@ -66,7 +66,7 @@ void WopiProofTests::testCapiBlob()
 
 void WopiProofTests::verifySignature(const std::string &access,
                                      const std::string &uri,
-                                     uint64_t ticks,
+                                     int64_t ticks,
                                      const std::string &discoveryModulus,
                                      const std::string &discoveryExponent,
                                      const std::string &msgProofStr)
@@ -87,7 +87,7 @@ void WopiProofTests::verifySignature(const std::string &access,
     digestEngine.update(proof.data(), proof.size());
     std::vector<unsigned char> digest = digestEngine.digest();
 
-	LOK_ASSERT_EQUAL(1, RSA_verify(digestEngine.nid(),
+    LOK_ASSERT_EQUAL(1, RSA_verify(digestEngine.nid(),
                                    &digest[0], digest.size(),
                                    &msgProof[0], msgProof.size(),
                                    rsa));
@@ -106,7 +106,7 @@ void WopiProofTests::testExistingProof()
     verifySignature(
         "yZhdN1qgywcOQWhyEMVpB6NE3pvBksvcLXsrFKXNtBeDTPW%2fu62g2t%2fOCWSlb3jUGaz1zc%2fzOzbNgAredLdhQI1Q7sPPqUv2owO78olmN74DV%2fv52OZIkBG%2b8jqjwmUobcjXVIC1BG9g%2fynMN0itZklL2x27Z2imCF6xELcQUuGdkoXBj%2bI%2bTlKM", // access token
         "https://contoso.com/wopi/files/vHxYyRGM8VfmSGwGYDBMIQPzuE+sSC6kw+zWZw2Nyg?access_token=yZhdN1qgywcOQWhyEMVpB6NE3pvBksvcLXsrFKXNtBeDTPW%2fu62g2t%2fOCWSlb3jUGaz1zc%2fzOzbNgAredLdhQI1Q7sPPqUv2owO78olmN74DV%2fv52OZIkBG%2b8jqjwmUobcjXVIC1BG9g%2fynMN0itZklL2x27Z2imCF6xELcQUuGdkoXBj%2bI%2bTlKM", // uri
-        UINT64_C(635655897610773532), // ticks
+        INT64_C(635655897610773532), // ticks
         "0HOWUPFFgmSYHbLZZzdWO/HUOr8YNfx5NAl7GUytooHZ7B9QxQKTJpj0NIJ4XEskQW8e4dLzRrPbNOOJ+KpWHttXz8HoQXkkZV/gYNxaNHJ8/pRXGMZzfVM5vchhx/2C7ULPTrpBsSpmfWQ6ShaVoQzfThFUd0MsBvIN7HVtqzPx9jbSV04wAqyNjcro7F3iu9w7AEsMejHbFlWoN+J05dP5ixryF7+2U5RVmjMt7/dYUdCoiXvCMt2CaVr0XEG6udHU4iDKVKZjmUBc7cTWRzhqEL7lZ1yQfylp38Nd2xxVJ0sSU7OkC1bBDlePcYGaF3JjJgsmp/H5BNnlW9gSxQ==", // modulus
         "AQAB", // exponent
         "IflL8OWCOCmws5qnDD5kYMraMGI3o+T+hojoDREbjZSkxbbx7XIS1Av85lohPKjyksocpeVwqEYm9nVWfnq05uhDNGp2MsNyhPO9unZ6w25Rjs1hDFM0dmvYx8wlQBNZ/CFPaz3inCMaaP4PtU85YepaDccAjNc1gikdy3kSMeG1XZuaDixHvMKzF/60DMfLMBIu5xP4Nt8i8Gi2oZs4REuxi6yxOv2vQJQ5+8Wu2Olm8qZvT4FEIQT9oZAXebn/CxyvyQv+RVpoU2gb4BreXAdfKthWF67GpJyhr+ibEVDoIIolUvviycyEtjsaEBpOf6Ne/OLRNu98un7WNDzMTQ=="); // message proof
@@ -135,7 +135,7 @@ void WopiProofTests::testOurProof()
     LOK_ASSERT_EQUAL(pairs[1].first, std::string("X-WOPI-Proof"));
     std::string proof = pairs[1].second;
 
-    uint64_t ticks = std::stoull(timestamp.c_str(), nullptr, 10);
+    int64_t ticks = std::stoll(timestamp.c_str(), nullptr, 10);
     verifySignature(access_token, uri, ticks, modulus, exponent, proof);
 }
 
