@@ -108,12 +108,7 @@ describe('Focus tests', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Open insertion mobile wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openInsertionWizard();
 
 		// Select More Fields
 		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget', 'More Fields...')
@@ -135,12 +130,7 @@ describe('Focus tests', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Open insertion mobile wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openInsertionWizard();
 
 		// Do insertion
 		helper.selectItemByContent('.menu-entry-with-icon', 'Shape')

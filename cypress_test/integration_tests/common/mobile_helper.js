@@ -186,6 +186,40 @@ function executeCopyFromContextMenu(XPos, YPos) {
 	cy.log('Executing copy from context menu - end.');
 }
 
+function openInsertionWizard() {
+	cy.log('Opening insertion wizard - start.');
+
+	cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+		.should('not.have.class', 'disabled')
+		.click();
+
+	cy.get('#mobile-wizard-content')
+		.should('not.be.empty');
+
+	cy.get('#tb_actionbar_item_insertion_mobile_wizard table')
+		.should('have.class', 'checked');
+
+	cy.log('Opening insertion wizard - end.');
+}
+
+function closeInsertionWizard() {
+	cy.log('Closing insertion wizard - start.');
+
+	cy.get('#tb_actionbar_item_insertion_mobile_wizard table')
+		.should('have.class', 'checked');
+
+	cy.get('#tb_actionbar_item_insertion_mobile_wizard')
+		.click();
+
+	cy.get('#mobile-wizard')
+		.should('not.be.visible');
+
+	cy.get('#tb_actionbar_item_insertion_mobile_wizard table')
+		.should('not.have.class', 'checked');
+
+	cy.log('Closing insertion wizard - end.');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.beforeAllMobile = beforeAllMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
@@ -194,3 +228,5 @@ module.exports.closeHamburgerMenu = closeHamburgerMenu;
 module.exports.openMobileWizard = openMobileWizard;
 module.exports.closeMobileWizard = closeMobileWizard;
 module.exports.executeCopyFromContextMenu = executeCopyFromContextMenu;
+module.exports.openInsertionWizard = openInsertionWizard;
+module.exports.closeInsertionWizard = closeInsertionWizard;

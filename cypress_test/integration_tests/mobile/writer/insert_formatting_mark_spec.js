@@ -11,11 +11,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Open formatting marks
 		helper.selectItemByContent('.menu-entry-with-icon.flex-fullwidth', 'Formatting Mark')

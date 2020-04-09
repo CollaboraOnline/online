@@ -131,36 +131,11 @@ describe('Toolbar tests', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Click on toolbar item
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.should('not.have.class', 'disabled')
-			.click();
+		mobileHelper.openInsertionWizard();
 
-		// Mobile wizard is opened and it has any content
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.closeInsertionWizard();
 
-		// Toolbar button is checked
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard table')
-			.should('have.class', 'checked');
-
-		// Click on toolbar item again
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-
-		// Mobile wizard is closed
-		cy.get('#mobile-wizard').should('not.be.visible');
-
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard table')
-			.should('not.have.class', 'checked');
-
-		// Open mobile wizard again
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-
-		// Mobile wizard is opened and it has any content
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openInsertionWizard();
 	});
 
 	it('Open insert comment dialog by toolbar item.', function() {

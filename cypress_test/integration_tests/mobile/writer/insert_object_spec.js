@@ -19,11 +19,7 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert local image.', function() {
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// We check whether the entry is there
 		helper.selectItemByContent('.menu-entry-with-icon', 'Local Image...')
@@ -32,11 +28,7 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert comment.', function() {
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		helper.selectItemByContent('.menu-entry-with-icon', 'Comment')
 			.click();
@@ -64,11 +56,7 @@ describe('Insert objects via insertion wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Open Table submenu
 		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget', 'Table')
@@ -101,11 +89,7 @@ describe('Insert objects via insertion wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Open Table submenu
 		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget', 'Table')
@@ -149,11 +133,7 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigLeft = cursor[0].getBoundingClientRect().left;
 			});
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Open header/footer submenu
 		helper.selectItemByContent('.menu-entry-with-icon', 'Header and Footer')
@@ -189,11 +169,7 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Open header/footer submenu
 		helper.selectItemByContent('.menu-entry-with-icon', 'Header and Footer')
@@ -229,11 +205,7 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Insert footnote
 		helper.selectItemByContent('.menu-entry-with-icon', 'Footnote')
@@ -259,11 +231,7 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Insert endnote
 		helper.selectItemByContent('.menu-entry-with-icon', 'Endnote')
@@ -289,11 +257,7 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Insert page break
 		helper.selectItemByContent('.menu-entry-with-icon', 'Page Break')
@@ -319,11 +283,7 @@ describe('Insert objects via insertion wizard.', function() {
 				cursorOrigTop = cursor[0].getBoundingClientRect().top;
 			});
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Do insertion
 		helper.selectItemByContent('.menu-entry-with-icon', 'Column Break')
@@ -340,11 +300,7 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Open hyperlink dialog
 		helper.selectItemByContent('.menu-entry-with-icon', 'Hyperlink...')
@@ -374,11 +330,7 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert shape.', function() {
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Do insertion
 		helper.selectItemByContent('.menu-entry-with-icon', 'Shape')

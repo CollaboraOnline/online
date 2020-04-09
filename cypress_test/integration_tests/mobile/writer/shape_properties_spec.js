@@ -21,11 +21,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('.blinking-cursor')
 			.should('be.visible');
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard')
-			.should('be.visible');
+		mobileHelper.openInsertionWizard();
 
 		// Do insertion
 		helper.selectItemByContent('.menu-entry-with-icon', 'Shape')

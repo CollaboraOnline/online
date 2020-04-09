@@ -16,11 +16,7 @@ describe('Calc insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
 
-		// Open insertion wizard
-		cy.get('#tb_actionbar_item_insertion_mobile_wizard')
-			.click();
-		cy.get('#mobile-wizard-content')
-			.should('not.be.empty');
+		mobileHelper.openInsertionWizard();
 	});
 
 	afterEach(function() {
