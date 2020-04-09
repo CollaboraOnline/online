@@ -28,6 +28,7 @@ KITS
     kit_count – total number of running kit processes.
     kit_unassigned_count – number of running kit processes that are not assigned to documents.
     kit_assigned_count – number of running kit processes that are assigned to documents.
+    kit_segfault_count - number of kit processes terminated with SIGSEGV or SIGBUS signals since the start of application.
     kit_thread_count_total - total number of threads in all running kit processes.
     kit_thread_count_average – average number of threads per running kit process.
     kit_thread_count_min - minimum from the number of threads in each running kit process.
