@@ -4,5 +4,6 @@
     "pluginsFile" : "plugins/index.js",
     "defaultCommandTimeout" : 6000,
     "supportFile" : "support/index.js",
-    "ignoreTestFiles" : "*helper.js"
+    "ignoreTestFiles" : "*helper.js",
+    "modifyObstructiveCode": false
 }
