@@ -11,8 +11,8 @@
 
 #include "FileUtil.hpp"
 
+#include <dirent.h>
 #include <ftw.h>
-#include <sys/stat.h>
 #ifdef __linux
 #include <sys/vfs.h>
 #elif defined IOS
@@ -38,6 +38,9 @@ namespace filesystem = ::std::filesystem;
 #else
 # include <Poco/TemporaryFile.h>
 #endif
+
+#include <Poco/File.h>
+#include <Poco/Path.h>
 
 #include "Log.hpp"
 #include "Util.hpp"
@@ -196,6 +199,8 @@ namespace FileUtil
 
     void removeFile(const std::string& path, const bool recursive)
     {
+        LOG_DBG("Removing [" << path << "] " << (recursive ? "recursively." : "only."));
+
 // Amazingly filesystem::remove_all silently fails to work on some
 // systems. No real need to be using experimental API here either.
 #if 0 // HAVE_STD_FILESYSTEM
@@ -211,10 +216,12 @@ namespace FileUtil
         try
         {
             struct stat sb;
+            errno = 0;
             if (!recursive || stat(path.c_str(), &sb) == -1 || S_ISREG(sb.st_mode))
             {
-                // Non-recursive directories, and files.
-                Poco::File(path).remove(recursive);
+                // Non-recursive directories and files that exist.
+                if (errno != ENOENT)
+                    Poco::File(path).remove(recursive);
             }
             else
             {
@@ -225,11 +232,11 @@ namespace FileUtil
         catch (const std::exception&e)
         {
             // Already removed or we don't care about failures.
-            LOG_DBG("Exception removing " << path << ' ' << recursive << " : " << e.what());
+            LOG_DBG("Failed to remove [" << path << "] " << (recursive ? "recursively: " : "only: ")
+                                         << e.what());
         }
 #endif
     }
-
 
 } // namespace FileUtil
 
@@ -383,6 +390,41 @@ namespace FileUtil
     std::string anonymizeUsername(const std::string& username)
     {
         return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
+    }
+
+    bool isEmptyDirectory(const char* path)
+    {
+        DIR* dir = opendir(path);
+        if (dir == nullptr)
+            return errno != EACCES; // Assume it's not empty when EACCES.
+
+        int count = 0;
+        while (readdir(dir) && ++count < 3)
+            ;
+
+        closedir(dir);
+        return count <= 2; // Discounting . and ..
+    }
+
+    bool linkOrCopyFile(const char* source, const char* target)
+    {
+        if (link(source, target) == -1)
+        {
+            LOG_INF("link(\"" << source << "\", \"" << target << "\") failed: " << strerror(errno)
+                              << ". Will copy.");
+            try
+            {
+                Poco::File(source).copyTo(target);
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Copying of [" << source << "] to [" << target
+                                       << "] failed: " << exc.what());
+                return false;
+            }
+        }
+
+        return true;
     }
 
 } // namespace FileUtil

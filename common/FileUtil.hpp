@@ -9,9 +9,10 @@
 
 #pragma once
 
+#include <cerrno>
 #include <string>
+#include <sys/stat.h>
 
-#include <Poco/File.h>
 #include <Poco/Path.h>
 
 namespace FileUtil
@@ -65,6 +66,10 @@ namespace FileUtil
         removeFile(path.toString(), recursive);
     }
 
+    /// Returns true iff the directory is empty (or doesn't exist).
+    bool isEmptyDirectory(const char* path);
+    inline bool isEmptyDirectory(const std::string& path) { return isEmptyDirectory(path.c_str()); }
+
     /// Copy a file from @fromPath to @toPath, throws on failure.
     void copyFileTo(const std::string &fromPath, const std::string &toPath);
 
@@ -80,6 +85,42 @@ namespace FileUtil
     {
         return getTempFilePath(srcDir, srcFilename, std::string());
     }
+
+    /// Link source to target, and copy if linking fails.
+    bool linkOrCopyFile(const char* source, const char* target);
+
+    /// File/Directory stat helper.
+    class Stat
+    {
+    public:
+        /// Stat the given path. Symbolic links are stats when @link is true.
+        Stat(const std::string& file, bool link = false)
+            : _path(file)
+            , _res(link ? lstat(file.c_str(), &_sb) : stat(file.c_str(), &_sb))
+            , _errno(errno)
+        {
+        }
+
+        bool good() const { return _res == 0; }
+        bool bad() const { return !good(); }
+        bool erno() const { return _errno; }
+        const struct ::stat& sb() const { return _sb; }
+
+        const std::string path() const { return _path; }
+
+        bool isDirectory() const { return S_ISDIR(_sb.st_mode); }
+        bool isFile() const { return S_ISREG(_sb.st_mode); }
+        bool isLink() const { return S_ISLNK(_sb.st_mode); }
+
+        /// Returns true iff the path exists, regarlesss of access permission.
+        bool exists() const { return good() || (_errno != ENOENT && _errno != ENOTDIR); }
+
+    private:
+        const std::string _path;
+        struct ::stat _sb;
+        const int _res;
+        const int _errno;
+    };
 
 } // end namespace FileUtil
 

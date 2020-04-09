@@ -260,8 +260,8 @@ protected:
 
 private:
     const Poco::URI _uri;
-    std::string _localStorePath;
-    std::string _jailPath;
+    const std::string _localStorePath;
+    const std::string _jailPath;
     std::string _jailedFilePath;
     std::string _jailedFilePathAnonym;
     FileInfo _fileInfo;

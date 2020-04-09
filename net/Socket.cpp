@@ -16,6 +16,7 @@
 #include <iomanip>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/un.h>
 #include <zlib.h>

@@ -22,6 +22,7 @@ cd / || exit 1
 
 # First essential files and shared objects
 find etc/hosts etc/nsswitch.conf etc/resolv.conf \
+     etc/passwd etc/group etc/host.conf \
      etc/ld.so.* \
      lib/ld-* lib64/ld-* \
      lib/libnss_* lib64/libnss_* lib/*/libnss_* \
@@ -64,7 +65,9 @@ grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's
 # This will now copy the file a symlink points to, but whatever.
 cpio -p -d -L $CHROOT
 
-mkdir -p $CHROOT/tmp
+mkdir -p $CHROOT/lo
+mkdir -p $CHROOT/dev
+mkdir -p $CHROOT/tmp/dev
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved for fontconfig to trust

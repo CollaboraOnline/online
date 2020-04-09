@@ -12,6 +12,7 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 
+#include <cerrno>
 #include <cstddef>
 #include <functional>
 #include <iostream>

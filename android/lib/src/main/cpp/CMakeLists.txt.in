@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.4.1)
 add_library(androidapp SHARED
             androidapp.cpp
             ../../../../../common/FileUtil.cpp
+            ../../../../../common/JailUtil.cpp
             ../../../../../common/Log.cpp
             ../../../../../common/MessageQueue.cpp
             ../../../../../common/Protocol.cpp

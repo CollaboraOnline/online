@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include <sys/mount.h>
 #include <sys/types.h>
 
 #include <pwd.h>

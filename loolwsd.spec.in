@@ -100,6 +100,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/bin/loolforkit
 /usr/bin/loolconvert
 /usr/bin/loolconfig
+/usr/bin/loolmount
 /usr/share/loolwsd/discovery.xml
 /usr/share/loolwsd/favicon.ico
 /usr/share/loolwsd/loleaflet
@@ -140,6 +141,7 @@ getent passwd lool >/dev/null || useradd -g lool -r lool
 
 %post
 setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
+setcap cap_sys_admin=ep /usr/bin/loolmount
 
 mkdir -p /var/cache/loolwsd && chown lool:lool /var/cache/loolwsd
 rm -rf /var/cache/loolwsd/*

@@ -39,7 +39,6 @@
 #include <stdlib.h>
 #include <sysexits.h>
 
-#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -114,7 +113,8 @@ using Poco::Net::PartHandler;
 #include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
-#include <FileUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
 #if defined KIT_IN_PROCESS || MOBILEAPP
 #  include <Kit.hpp>
 #endif
@@ -866,6 +866,8 @@ void LOOLWSD::initialize(Application& self)
     }
 #endif
 
+    Util::setApplicationPath(Poco::Path(Application::instance().commandPath()).parent().toString());
+
     if (!UnitWSD::init(UnitWSD::UnitType::Wsd, UnitTestLibrary))
     {
         throw std::runtime_error("Failed to load wsd unit test library.");
@@ -908,6 +910,7 @@ void LOOLWSD::initialize(Application& self)
             { "logging.lokit_sal_log", "-INFO-WARN" },
             { "loleaflet_html", "loleaflet.html" },
             { "loleaflet_logging", "false" },
+            { "mount_jail_tree", "true" },
             { "net.listen", "any" },
             { "net.proto", "all" },
             { "net.service_root", "" },
@@ -1053,6 +1056,9 @@ void LOOLWSD::initialize(Application& self)
         LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after WSD initialization.");
     }
 
+    ServerName = config().getString("server_name");
+    LOG_INF("Initializing loolwsd server [" << ServerName << "].");
+
     // Get anonymization settings.
 #if LOOLWSD_ANONYMIZE_USER_DATA
     AnonymizeUserData = true;
@@ -1168,8 +1174,36 @@ void LOOLWSD::initialize(Application& self)
 #endif
 
     SysTemplate = getPathFromConfig("sys_template_path");
+    if (SysTemplate.empty())
+    {
+        LOG_FTL("Missing sys_template_path config entry.");
+        throw MissingOptionException("systemplate");
+    }
+
     ChildRoot = getPathFromConfig("child_root_path");
-    ServerName = config().getString("server_name");
+    if (ChildRoot.empty())
+    {
+        LOG_FTL("Missing child_root_path config entry.");
+        throw MissingOptionException("childroot");
+    }
+    else
+    {
+        if (ChildRoot[ChildRoot.size() - 1] != '/')
+            ChildRoot += '/';
+
+        // Create a custom sub-path for parallelized unit tests.
+        if (UnitBase::isUnitTesting())
+        {
+            ChildRoot += Util::rng::getHardRandomHexString(8) + '/';
+            LOG_INF("Creating sub-childroot: " + ChildRoot);
+        }
+        else
+            LOG_INF("Creating childroot: " + ChildRoot);
+    }
+
+    // Setup the jails.
+    JailUtil::setupJails(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
+                         SysTemplate);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
@@ -1188,6 +1222,8 @@ void LOOLWSD::initialize(Application& self)
     LOG_INF("NumPreSpawnedChildren set to " << NumPreSpawnedChildren << '.');
 
 #if !MOBILEAPP
+    FileUtil::registerFileSystemForDiskSpaceChecks(ChildRoot);
+
     const auto maxConcurrency = getConfigValue<int>(conf, "per_document.max_concurrency", 4);
     if (maxConcurrency > 0)
     {
@@ -3727,40 +3763,14 @@ int LOOLWSD::innerMain()
     // so must check options required in the parent (but not in the
     // child) separately now. Also check for options that are
     // meaningless for the parent.
-    if (SysTemplate.empty())
-    {
-        LOG_FTL("Missing --systemplate option");
-        throw MissingOptionException("systemplate");
-    }
-
     if (LoTemplate.empty())
     {
-        LOG_FTL("Missing --lotemplate option");
+        LOG_FTL("Missing --lo-template-path option");
         throw MissingOptionException("lotemplate");
     }
 
-    if (ChildRoot.empty())
-    {
-        LOG_FTL("Missing --childroot option");
-        throw MissingOptionException("childroot");
-    }
-    else
-    {
-        if (ChildRoot[ChildRoot.size() - 1] != '/')
-            ChildRoot += '/';
-
-        // create a custom sub-path for parallelized unit tests.
-        if (UnitBase::isUnitTesting())
-        {
-            ChildRoot += Util::rng::getHardRandomHexString(8) + "/";
-            LOG_TRC("Creating sub-childroot: of " + ChildRoot);
-        }
-    }
-
-    FileUtil::registerFileSystemForDiskSpaceChecks(ChildRoot);
-
     if (FileServerRoot.empty())
-        FileServerRoot = Poco::Path(Application::instance().commandPath()).parent().toString();
+        FileServerRoot = Util::getApplicationPath();
     FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
     LOG_DBG("FileServerRoot: " << FileServerRoot);
 #endif
@@ -3957,22 +3967,7 @@ int LOOLWSD::innerMain()
     ForKitProc.reset();
 #endif
 
-    // In case forkit didn't cleanup properly, don't leave jails behind.
-    LOG_INF("Cleaning up childroot directory [" << ChildRoot << "].");
-    std::vector<std::string> jails;
-    File(ChildRoot).list(jails);
-    for (auto& jail : jails)
-    {
-        const auto path = ChildRoot + jail;
-        LOG_INF("Removing jail [" << path << "].");
-        FileUtil::removeFile(path, true);
-    }
-
-    if (UnitBase::isUnitTesting())
-    {
-        LOG_TRC("Removing sub-childroot: of " + ChildRoot);
-        FileUtil::removeFile(ChildRoot, true);
-    }
+    JailUtil::cleanupJails(ChildRoot);
 #endif // !MOBILEAPP
 
     return EX_OK;

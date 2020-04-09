@@ -60,8 +60,9 @@ namespace Util
         std::string getFilename(const size_t length);
     }
 
-    /// Create randomized temporary directory
-    std::string createRandomTmpDir();
+    /// Create randomized temporary directory in the root provided.
+    /// If root is empty, the current temp directory is used.
+    std::string createRandomTmpDir(std::string root = std::string());
 
 #if !MOBILEAPP
     /// Get number of threads in this process or -1 on error
@@ -314,6 +315,21 @@ namespace Util
         if (pos != std::string::npos)
         {
             return s.substr(pos);
+        }
+
+        return s;
+    }
+
+    inline std::string& trim(std::string& s, const char ch)
+    {
+        const size_t last = s.find_last_not_of(ch);
+        if (last != std::string::npos)
+        {
+            s = s.substr(0, last + 1);
+        }
+        else
+        {
+            s.clear();
         }
 
         return s;
@@ -1103,6 +1119,9 @@ int main(int argc, char**argv)
         }
         return result;
     }
+
+    void setApplicationPath(const std::string& path);
+    std::string getApplicationPath();
 
     /**
      * Converts vector of strings to map. Strings should have formed like this: key + delimiter + value.
