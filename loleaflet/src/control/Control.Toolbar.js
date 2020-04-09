@@ -832,7 +832,7 @@ function createToolbar() {
 // tablet:true means show it in normal Online from a tablet browser, and in a mobile app on a tablet
 // tablet:false means hide it in normal Online used from a tablet browser, and in a mobile app on a tablet
 
-function initNormalToolbar() {
+function createMainToolbar() {
 	var toolItems = [
 		{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
 		{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
@@ -1014,8 +1014,10 @@ function initNormalToolbar() {
 	toolbar.bind('touchstart', function() {
 		w2ui['editbar'].touchStarted = true;
 	});
+}
 
-	toolbar = $('#formulabar');
+function createFormulaBar() {
+	var toolbar = $('#formulabar');
 	toolbar.w2toolbar({
 		name: 'formulabar',
 		tooltip: 'bottom',
@@ -1043,9 +1045,11 @@ function initNormalToolbar() {
 	w2ui.formulabar.on('resize', function(target, e) {
 		e.isCancelled = true;
 	});
+}
 
+function createSigningBar() {
 	if (L.DomUtil.get('document-signing-bar') !== null) {
-		toolbar = $('#document-signing-bar');
+		var toolbar = $('#document-signing-bar');
 		toolbar.w2toolbar({
 			name: 'document-signing-bar',
 			tooltip: 'bottom',
@@ -1061,8 +1065,10 @@ function initNormalToolbar() {
 			w2ui['document-signing-bar'].touchStarted = true;
 		});
 	}
+}
 
-	toolbar = $('#spreadsheet-toolbar');
+function createSpreadsheetToolbar() {
+	var toolbar = $('#spreadsheet-toolbar');
 	toolbar.w2toolbar({
 		name: 'spreadsheet-toolbar',
 		tooltip: 'bottom',
@@ -1082,8 +1088,10 @@ function initNormalToolbar() {
 	toolbar.bind('touchstart', function() {
 		w2ui['spreadsheet-toolbar'].touchStarted = true;
 	});
+}
 
-	toolbar = $('#presentation-toolbar');
+function createPresentationToolbar() {
+	var toolbar = $('#presentation-toolbar');
 	toolbar.w2toolbar({
 		name: 'presentation-toolbar',
 		tooltip: 'bottom',
@@ -1105,8 +1113,10 @@ function initNormalToolbar() {
 	toolbar.bind('touchstart', function() {
 		w2ui['presentation-toolbar'].touchStarted = true;
 	});
+}
 
-	toolbar = $('#toolbar-down');
+function createStatusBar() {
+	var toolbar = $('#toolbar-down');
 	if (!window.mode.isMobile()) {
 		toolbar.w2toolbar({
 			name: 'actionbar',
@@ -1192,6 +1202,15 @@ function initNormalToolbar() {
 	toolbar.bind('touchstart', function() {
 		w2ui['actionbar'].touchStarted = true;
 	});
+}
+
+function initNormalToolbar() {
+	createMainToolbar();
+	createFormulaBar();
+	createSigningBar();
+	createSpreadsheetToolbar();
+	createPresentationToolbar();
+	createStatusBar();
 }
 
 function setupSearchInput() {
