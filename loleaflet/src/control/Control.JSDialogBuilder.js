@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ _ _UNO */
+/* global $ w2ui _ _UNO */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
@@ -1570,7 +1570,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (builder.wizard) {
 			$(menuEntry).click(function() {
 				if (window.insertionMobileWizard)
-					window.onClick(null, 'insertion_mobile_wizard');
+					w2ui['actionbar'].click('insertion_mobile_wizard');
 				else if (window.mobileMenuWizard)
 					$('#main-menu-state').click();
 				else if (window.contextMenuWizard) {

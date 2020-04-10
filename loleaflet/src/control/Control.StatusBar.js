@@ -26,7 +26,6 @@ L.Control.StatusBar = L.Control.extend({
 		map.on('commandvalues', this.onCommandValues, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		map.on('deselectuser', this.deselectUser, this);
-		map.on('updatepermission', this.onUpdatePermission, this);
 
 	},
 
@@ -694,26 +693,6 @@ L.Control.StatusBar = L.Control.extend({
 	
 		userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).removeClass('selected-user').parent().parent().parent()[0].outerHTML;
 	},
-
-	onUpdatePermission: function(e) {
-		var toolbar;
-		var toolbarDownButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard', 'insertcomment'];
-		if (e.perm === 'edit') {
-			toolbar = w2ui['actionbar'];
-			if (toolbar) {
-				toolbarDownButtons.forEach(function(id) {
-					toolbar.enable(id);
-				});
-			}
-		} else {
-			toolbar = w2ui['actionbar'];
-			if (toolbar) {
-				toolbarDownButtons.forEach(function(id) {
-					toolbar.disable(id);
-				});
-			}
-		}
-	}
 });
 
 L.control.statusBar = function () {

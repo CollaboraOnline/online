@@ -166,9 +166,6 @@ function onClick(e, id, item) {
 	else if (id === 'insertannotation') {
 		map.insertComment();
 	}
-	else if (id === 'insertcomment') {
-		map.insertComment();
-	}
 	else if (id === 'insertpage') {
 		map.insertPage();
 	}
@@ -252,15 +249,6 @@ function onClick(e, id, item) {
 	else if (id === 'fold' || id === 'hamburger-tablet') {
 		map.toggleMenubar();
 	}
-	else if (id === 'fullscreen') {
-		if (item.checked) {
-			toolbar.uncheck(id);
-		}
-		else {
-			toolbar.check(id);
-		}
-		L.toggleFullScreen();
-	}
 	else if (id === 'close' || id === 'closemobile') {
 		if (window.ThisIsAMobileApp) {
 			window.postMobileMessage('BYE');
@@ -270,37 +258,6 @@ function onClick(e, id, item) {
 		}
 		if (!map._disableDefaultAction['UI_Close']) {
 			map.remove();
-		}
-	}
-	else if (id === 'mobile_wizard') {
-		if (window.mobileWizard) {
-			window.mobileWizard = false;
-			map.sendUnoCommand('.uno:SidebarHide');
-			map.fire('closemobilewizard');
-			toolbar.uncheck(id);
-		}
-		else {
-			if (window.insertionMobileWizard)
-				this.onClick(null, 'insertion_mobile_wizard');
-			window.mobileWizard = true;
-			map.sendUnoCommand('.uno:SidebarShow');
-			map.fire('showwizardsidebar');
-			toolbar.check(id);
-		}
-	}
-	else if (id === 'insertion_mobile_wizard') {
-		if (window.insertionMobileWizard) {
-			window.insertionMobileWizard = false;
-			map.fire('closemobilewizard');
-			toolbar.uncheck(id);
-		}
-		else {
-			if (window.mobileWizard)
-				this.onClick(null, 'mobile_wizard');
-			window.insertionMobileWizard = true;
-			var menuData = map.menubar.generateInsertMenuStructure();
-			map.fire('mobilewizard', menuData);
-			toolbar.check(id);
 		}
 	}
 	else if (id === 'link') {
@@ -2136,5 +2093,6 @@ global.insertShapes = insertShapes;
 global.createShapesPanel = createShapesPanel;
 global.onUpdatePermission = onUpdatePermission;
 global.setupSearchInput = setupSearchInput;
+global.getUNOCommand = getUNOCommand;
 
 }(window));

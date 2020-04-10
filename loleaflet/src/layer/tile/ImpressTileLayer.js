@@ -135,44 +135,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), uno: 'DefaultBullet', disabled: true},
 		];
 
-		var toolbar = $('#toolbar-up');
-		toolbar.w2toolbar({
-			name: 'actionbar',
-			tooltip: 'bottom',
-			items: [
-				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
-				{type: 'spacer'},
-				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
-				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
-				{type: 'button',  id: 'fullscreen-presentation', img: 'fullscreen-presentation', hint: _UNO('.uno:FullScreen', 'presentation')},
-				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
-				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
-				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
-					'<hr><table class="loleaflet-font" id="editor-btn">' +
-					'<tr>' +
-					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-					'<td>' + _('Always follow the editor') + '</td>' +
-					'</tr>' +
-					'</table>' +
-					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
-					'</div>'
-				},
-			],
-			onClick: function (e) {
-				window.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
-			}
-		});
-		toolbar.bind('touchstart', function(e) {
-			w2ui['actionbar'].touchStarted = true;
-			var touchEvent = e.originalEvent;
-			if (touchEvent && touchEvent.touches.length > 1) {
-				L.DomEvent.preventDefault(e);
-			}
-		});
+		map.addControl(L.control.mobileTopBar('presentation'));
 
-		toolbar = $('#presentation-toolbar');
+		var toolbar = $('#presentation-toolbar');
 		toolbar.w2toolbar({
 			name: 'presentation-toolbar',
 			tooltip: 'bottom',

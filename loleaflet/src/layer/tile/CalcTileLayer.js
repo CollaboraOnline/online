@@ -100,44 +100,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 			{type: 'break',   id: 'break-number'}, */
 		];
 
-		var toolbar = $('#toolbar-up');
-		toolbar.w2toolbar({
-			name: 'actionbar',
-			tooltip: 'bottom',
-			items: [
-				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
-				{type: 'spacer'},
-				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
-				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
-				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
-				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-//				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
-				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
-				{type: 'drop', id: 'userlist', img: 'users', html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
-					'<hr><table class="loleaflet-font" id="editor-btn">' +
-					'<tr>' +
-					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-					'<td>' + _('Always follow the editor') + '</td>' +
-					'</tr>' +
-					'</table>' +
-					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
-					'</div>'
-				},
-			],
-			onClick: function (e) {
-				window.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
-			}
-		});
-		toolbar.bind('touchstart', function(e) {
-			w2ui['actionbar'].touchStarted = true;
-			var touchEvent = e.originalEvent;
-			if (touchEvent && touchEvent.touches.length > 1) {
-				L.DomEvent.preventDefault(e);
-			}
-		});
+		map.addControl(L.control.mobileTopBar('spreadsheet'));
 
-		toolbar = $('#formulabar');
+		var toolbar = $('#formulabar');
 		toolbar.w2toolbar({
 			name: 'formulabar',
 			tooltip: 'bottom',
