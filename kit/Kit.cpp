@@ -295,7 +295,12 @@ namespace
                 target[written] = '\0';
 
                 File(newPath.parent()).createDirectories();
-                File(target).linkTo(newPath.toString(), Poco::File::LinkType::LINK_SYMBOLIC);
+                if (symlink(target, newPath.toString().c_str()) == -1)
+                {
+                    LOG_SYS("symlink(\"" << target << "\", \"" << newPath.toString()
+                                         << "\") failed");
+                    return 1;
+                }
             }
             break;
         case FTW_DNR:
