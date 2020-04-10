@@ -48,7 +48,7 @@ class WSProcess
 public:
     /// @param pid is the process ID.
     /// @param socket is the underlying Sockeet to the process.
-    WSProcess(const std::string& name, 
+    WSProcess(const std::string& name,
               const Poco::Process::PID pid,
               const std::shared_ptr<StreamSocket>& socket,
               std::shared_ptr<WebSocketHandler> handler) :
@@ -369,7 +369,7 @@ public:
     /// Close document with @docKey and a @message
     static void closeDocument(const std::string& docKey, const std::string& message);
 
-    /// Autosave a given document
+    /// Autosave a given document (currently only called from Admin).
     static void autoSave(const std::string& docKey);
 
     /// Anonymize the basename of filenames, preserving the path and extension.

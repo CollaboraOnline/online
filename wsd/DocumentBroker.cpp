@@ -75,7 +75,7 @@ void sendLastModificationTime(const std::shared_ptr<Session>& session,
 
     std::stringstream stream;
     stream << "lastmodtime: " << documentLastModifiedTime;
-    std::string message = stream.str();
+    const std::string message = stream.str();
     session->sendTextFrame(message);
     if (documentBroker)
         documentBroker->broadcastMessage(message);
@@ -982,7 +982,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime && !isRename)
     {
         // Nothing to do.
-        auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>
+        const auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>
                                             (std::chrono::system_clock::now() - _lastFileModifiedTime);
         LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << _docKey <<
                 "]. File last modified " << timeInSec.count() << " seconds ago.");
@@ -1140,7 +1140,7 @@ void DocumentBroker::refreshLock()
 {
     assertCorrectThread();
 
-    std::string savingSessionId = getWriteableSessionId();
+    const std::string savingSessionId = getWriteableSessionId();
     LOG_TRC("Refresh lock " << _lockCtx->_lockToken << " with session " << savingSessionId);
 
     auto it = _sessions.find(savingSessionId);
@@ -1171,7 +1171,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     LOG_TRC("Checking to autosave [" << _docKey << "].");
 
     // Which session to use when auto saving ?
-    std::string savingSessionId = getWriteableSessionId();
+    const std::string savingSessionId = getWriteableSessionId();
 
     bool sent = false;
     if (force)

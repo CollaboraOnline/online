@@ -1755,7 +1755,7 @@ bool LOOLWSD::createForKit()
     // Below line will be executed by PrisonerPoll thread.
     ForKitProc = nullptr;
     PrisonerPoll.setForKitProcess(ForKitProc);
-    
+
     // ForKit always spawns one.
     ++OutstandingForks;
 
@@ -3691,6 +3691,7 @@ int LOOLWSD::innerMain()
         LOG_INF("Removing jail [" << path << "].");
         FileUtil::removeFile(path, true);
     }
+
     if (UnitBase::isUnitTesting())
     {
         LOG_TRC("Removing sub-childroot: of " + ChildRoot);
