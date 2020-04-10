@@ -25,6 +25,11 @@ L.Control.MobileWizard = L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
+
+		// for the moment, the mobile-wizard is mobile phone only
+		if (!window.mode.isMobile())
+			return;
+
 		map.on('mobilewizard', this._onMobileWizard, this);
 		map.on('closemobilewizard', this._hideWizard, this);
 		map.on('showwizardsidebar', this._showWizardSidebar, this);
