@@ -58,10 +58,8 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#PosSizePropertyPanel')
 			.click();
 
-		// TODO: we have some aditional flickering here
 		cy.get('.ui-content.level-0.mobile-wizard')
-			.should('be.visible')
-			.wait(300);
+			.should('be.visible');
 	}
 
 	function openLinePropertyPanel() {
@@ -275,6 +273,9 @@ describe('Change shape properties via mobile wizard.', function() {
 			.clear()
 			.type('20')
 			.type('{enter}');
+
+		cy.get('#linetransparency .spinfield')
+			.should('have.attr', 'value', '20');
 
 		triggerNewSVG();
 
