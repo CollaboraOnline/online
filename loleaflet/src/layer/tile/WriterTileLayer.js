@@ -3,7 +3,7 @@
  * Writer tile layer is used to display a text document
  */
 
-/* global $ _ w2ui _UNO */
+/* global */
 L.WriterTileLayer = L.TileLayer.extend({
 
 	newAnnotation: function (comment) {
@@ -52,58 +52,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 	},
 
 	onMobileInit: function (map) {
-		var toolItems = [
-			{type: 'button',  id: 'showsearchbar',  img: 'search', hint: _('Show the search bar')},
-			{type: 'break'},
-			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
-			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
-			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
-			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
-			{type: 'break'},
-			{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
-			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
-			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true),
-				uno: {textCommand: 'LeftPara', objectCommand: 'ObjectAlignLeft'},
-				unosheet: 'AlignLeft', disabled: true},
-			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true),
-				uno: {textCommand: 'CenterPara', objectCommand: 'AlignCenter'},
-				unosheet: 'AlignHorizontalCenter', disabled: true},
-			{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _UNO('.uno:RightPara', '', true),
-				uno: {textCommand: 'RightPara', objectCommand: 'ObjectAlignRight'},
-				unosheet: 'AlignRight', disabled: true},
-			{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: 'JustifyPara', unosheet: '', disabled: true},
-			{type: 'break', id: 'breakspacing'},
-			{type: 'button',  id: 'defaultnumbering',  img: 'numbering', hint: _UNO('.uno:DefaultNumbering', '', true),uno: 'DefaultNumbering', disabled: true},
-			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), uno: 'DefaultBullet', disabled: true},
-			{type: 'break', id: 'breakbullet', hidden: true},
-			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _UNO('.uno:IncrementIndent', '', true), uno: 'IncrementIndent', disabled: true},
-			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: 'DecrementIndent', disabled: true},
-		];
-
-		var toolbar = $('#toolbar-down');
-		toolbar.w2toolbar({
-			name: 'editbar',
-			tooltip: 'top',
-			items: toolItems,
-			onClick: function (e) {
-				window.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
-			},
-			onRefresh: function(edata) {
-				if (edata.target === 'inserttable')
-					window.insertTable();
-
-				if (edata.target === 'insertshapes')
-					window.insertShapes();
-			}
-		});
-		toolbar.bind('touchstart', function(e) {
-			w2ui['editbar'].touchStarted = true;
-			var touchEvent = e.originalEvent;
-			if (touchEvent && touchEvent.touches.length > 1) {
-				L.DomEvent.preventDefault(e);
-			}
-		});
+		map.addControl(L.control.mobileBottomBar('text'));
 
 		map.addControl(L.control.mobileTopBar('text'));
 

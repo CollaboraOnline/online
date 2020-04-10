@@ -3,7 +3,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global $ _ w2ui w2utils _UNO L */
+/* global $ w2ui w2utils L */
 
 L.ImpressTileLayer = L.TileLayer.extend({
 	extraSize: L.point(290, 0),
@@ -114,27 +114,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	onMobileInit: function (map) {
-		var toolItems = [
-			{type: 'button',  id: 'showsearchbar',  img: 'search', hint: _('Show the search bar')},
-			{type: 'break'},
-			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
-//			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
-			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
-			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: 'Strikeout'},
-			{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
-			{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
-			{type: 'break'},
-			{type: 'button', id: 'leftpara', img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true),
-				uno: {textCommand: 'LeftPara', objectCommand: 'ObjectAlignLeft'}},
-			{type: 'button', id: 'centerpara', img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true),
-				uno: {textCommand: 'CenterPara', objectCommand: 'AlignCenter'}},
-			{type: 'button', id: 'rightpara', img: 'alignright', hint: _UNO('.uno:RigthPara', '', true),
-				uno: {textCommand: 'RightPara', objectCommand: 'ObjectAlignRight'}},
-			{type: 'button', id: 'justifypara', img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: 'JustifyPara'},
-			{type: 'break'},
-			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), uno: 'DefaultBullet', disabled: true},
-		];
-
 		map.addControl(L.control.mobileTopBar('presentation'));
 
 		var toolbar = $('#presentation-toolbar');
@@ -145,30 +124,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			items: []
 		});
 
-		toolbar = $('#toolbar-down');
-		toolbar.w2toolbar({
-			name: 'editbar',
-			tooltip: 'top',
-			items: toolItems,
-			onClick: function (e) {
-				window.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
-			},
-			onRefresh: function(edata) {
-				if (edata.target === 'inserttable')
-					window.insertTable();
-
-				if (edata.target === 'insertshapes')
-					window.insertShapes();
-			}
-		});
-		toolbar.bind('touchstart', function(e) {
-			w2ui['editbar'].touchStarted = true;
-			var touchEvent = e.originalEvent;
-			if (touchEvent && touchEvent.touches.length > 1) {
-				L.DomEvent.preventDefault(e);
-			}
-		});
+		map.addControl(L.control.mobileBottomBar('presentation'));
 
 		map.addControl(L.control.searchBar());
 
