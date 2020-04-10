@@ -15,8 +15,6 @@ function onDelete(e) {
 	}
 }
 
-var nUsers, oneUser, noUser;
-
 function _updateVisibilityForToolbar(toolbar) {
 	if (!toolbar)
 		return;
@@ -45,7 +43,6 @@ function _updateVisibilityForToolbar(toolbar) {
 
 function _updateToolbarsVisibility() {
 	_updateVisibilityForToolbar(w2ui['editbar']);
-	_updateVisibilityForToolbar(w2ui['actionbar']);
 }
 
 function resizeToolbar() {
@@ -89,7 +86,7 @@ function getUNOCommand(unoData) {
 	return unoData.objectCommand;
 }
 
-function onClick(e, id, item, subItem) {
+function onClick(e, id, item) {
 	if (w2ui['editbar'].get(id) !== null) {
 		var toolbar = w2ui['editbar'];
 		item = toolbar.get(id);
@@ -131,7 +128,6 @@ function onClick(e, id, item, subItem) {
 		return;
 	}
 
-	var docLayer = map._docLayer;
 	if (item.postmessage && item.type === 'button') {
 		map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: item.id} });
 	}
@@ -157,26 +153,6 @@ function onClick(e, id, item, subItem) {
 	}
 	else if (id === 'repair') {
 		map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
-	}
-	else if (id === 'zoomin' && map.getZoom() < map.getMaxZoom()) {
-		map.zoomIn(1);
-	}
-	else if (id === 'zoomout' && map.getZoom() > map.getMinZoom()) {
-		map.zoomOut(1);
-	}
-	else if (item.scale) {
-		map.setZoom(item.scale);
-	}
-	else if (id === 'zoomreset') {
-		map.setZoom(map.options.zoom);
-	}
-	else if (id === 'prev' || id === 'next') {
-		if (docLayer._docType === 'text') {
-			map.goToPage(id);
-		}
-		else {
-			map.setPart(id);
-		}
 	}
 	else if (id === 'showsearchbar') {
 		$('#toolbar-down').hide();
@@ -289,31 +265,6 @@ function onClick(e, id, item, subItem) {
 
 		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
 		w2ui['formulabar'].show('sum', 'function');
-	}
-	else if (id.startsWith('StateTableCellMenu') && subItem) {
-		e.done(function () {
-			var menu = w2ui['actionbar'].get('StateTableCellMenu');
-			if (subItem.id === '1') { // 'None' was clicked, remove all other options
-				menu.selected = ['1'];
-			}
-			else { // Something else was clicked, remove the 'None' option from the array
-				var index = menu.selected.indexOf('1');
-				if (index > -1) {
-					menu.selected.splice(index, 1);
-				}
-			}
-			var value = 0;
-			for (var it = 0; it < menu.selected.length; it++) {
-				value = +value + parseInt(menu.selected[it]);
-			}
-			var command = {
-				'StatusBarFunc': {
-					type: 'unsigned short',
-					value: value
-				}
-			};
-			map.sendUnoCommand('.uno:StatusBarFunc', command);
-		});
 	}
 	else if (id === 'fold' || id === 'hamburger-tablet') {
 		map.toggleMenubar();
@@ -1115,102 +1066,12 @@ function createPresentationToolbar() {
 	});
 }
 
-function createStatusBar() {
-	var toolbar = $('#toolbar-down');
-	if (!window.mode.isMobile()) {
-		toolbar.w2toolbar({
-			name: 'actionbar',
-			tooltip: 'top',
-			items: [
-				{type: 'html',  id: 'search',
-				 html: '<div style="padding: 3px 5px 3px 10px;" class="loleaflet-font">' +
-				 '<input size="15" id="search-input" placeholder="' + _('Search') + '"' +
-				 'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
-				 '</div>'
-				},
-				{type: 'button',  id: 'searchprev', img: 'prev', hint: _UNO('.uno:UpSearch'), disabled: true},
-				{type: 'button',  id: 'searchnext', img: 'next', hint: _UNO('.uno:DownSearch'), disabled: true},
-				{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
-				{type: 'html',  id: 'left'},
-				{type: 'html',  id: 'right'},
-				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
-					'<hr><table class="loleaflet-font" id="editor-btn">' +
-					'<tr>' +
-					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-					'<td>' + _('Always follow the editor') + '</td>' +
-					'</tr>' +
-					'</table>' +
-					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
-					'</div>'
-				},
-				{type: 'break', id: 'userlistbreak', hidden: true, mobile: false },
-				{type: 'button',  id: 'prev', img: 'prev', hint: _UNO('.uno:PageUp', 'text')},
-				{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text')},
-				{type: 'break', id: 'prevnextbreak'},
-				{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
-				{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
-				{type: 'menu-radio', id: 'zoom', text: '100',
-					selected: 'zoom100',
-					mobile: false,
-					items: [
-						{ id: 'zoom50', text: '50', scale: 6},
-						{ id: 'zoom60', text: '60', scale: 7},
-						{ id: 'zoom70', text: '70', scale: 8},
-						{ id: 'zoom85', text: '85', scale: 9},
-						{ id: 'zoom100', text: '100', scale: 10},
-						{ id: 'zoom120', text: '120', scale: 11},
-						{ id: 'zoom150', text: '150', scale: 12},
-						{ id: 'zoom175', text: '175', scale: 13},
-						{ id: 'zoom200', text: '200', scale: 14}
-					]
-				},
-				{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
-			],
-			onClick: function (e) {
-				hideTooltip(this, e.target);
-				if (e.item.id === 'userlist') {
-					setTimeout(function() {
-						var cBox = $('#follow-checkbox')[0];
-						var docLayer = map._docLayer;
-						var editorId = docLayer._editorId;
-
-						if (cBox)
-							cBox.checked = docLayer._followEditor;
-
-						if (docLayer.editorId !== -1 && map._viewInfo[editorId])
-							$('#current-editor').text(map._viewInfo[editorId].username);
-						else
-							$('#currently-msg').hide();
-					}, 100);
-					return;
-				}
-				onClick(e, e.target, e.item, e.subItem);
-			},
-			onRefresh: function() {
-				$('#tb_actionbar_item_userlist .w2ui-tb-caption').addClass('loleaflet-font');
-				setupSearchInput();
-			}
-		});
-	}
-	else {
-		toolbar.w2toolbar({
-			name: 'actionbar',
-			tooltip: 'top',
-			items: []
-		});
-	}
-	toolbar.bind('touchstart', function() {
-		w2ui['actionbar'].touchStarted = true;
-	});
-}
-
 function initNormalToolbar() {
 	createMainToolbar();
 	createFormulaBar();
 	createSigningBar();
 	createSpreadsheetToolbar();
 	createPresentationToolbar();
-	createStatusBar();
 }
 
 function setupSearchInput() {
@@ -1218,39 +1079,6 @@ function setupSearchInput() {
 	$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
 	$('#search-input').off('focus', onSearchFocus).on('focus', onSearchFocus);
 	$('#search-input').off('blur', onSearchBlur).on('blur', onSearchBlur);
-}
-
-var userJoinedPopupMessage = '<div>' + _('%user has joined') + '</div>';
-var userLeftPopupMessage = '<div>' + _('%user has left') + '</div>';
-var userPopupTimeout = null;
-
-function localizeStateTableCell (text) {
-	var stateArray = text.split(';');
-	var stateArrayLength = stateArray.length;
-	var localizedText = '';
-	for (var i = 0; i < stateArrayLength; i++) {
-		var labelValuePair = stateArray[i].split(':');
-		localizedText += _(labelValuePair[0].trim()) + ':' + labelValuePair[1];
-		if (stateArrayLength > 1 && i < stateArrayLength - 1) {
-			localizedText += '; ';
-		}
-	}
-	return localizedText;
-}
-
-function toLocalePattern (pattern, regex, text, sub1, sub2) {
-	var matches = new RegExp(regex, 'g').exec(text);
-	if (matches) {
-		text = pattern.toLocaleString().replace(sub1, parseInt(matches[1].replace(',','')).toLocaleString(String.locale)).replace(sub2, parseInt(matches[2].replace(',','')).toLocaleString(String.locale));
-	}
-	return text;
-}
-
-function updateToolbarItem(toolbar, id, html) {
-	var item = toolbar.get(id);
-	if (item) {
-		item.html = html;
-	}
 }
 
 function unoCmdToToolbarId(commandname)
@@ -1563,7 +1391,6 @@ function onWopiProps(e) {
 
 function onDocLayerInit() {
 	var toolbarUp = w2ui['editbar'];
-	var statusbar = w2ui['actionbar'];
 	var docType = map.getDocType();
 	var data;
 
@@ -1577,55 +1404,7 @@ function onDocLayerInit() {
 			toolbarUp.remove('styles');
 		}
 
-		if (statusbar)
-			statusbar.remove('prev', 'next', 'prevnextbreak');
-
 		if (!window.mode.isMobile()) {
-			statusbar.insert('left', [
-				{type: 'break', id: 'break1'},
-				{
-					type: 'html', id: 'StatusDocPos',
-					html: '<div id="StatusDocPos" class="loleaflet-font" title="' + _('Number of Sheets') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break2'},
-				{
-					type: 'html', id: 'RowColSelCount',
-					html: '<div id="RowColSelCount" class="loleaflet-font" title="' + _('Selected range of cells') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break3', tablet: false},
-				{
-					type: 'html', id: 'InsertMode', mobile: false, tablet: false,
-					html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break4', tablet: false},
-				{type: 'menu-radio', id: 'LanguageStatus',
-					mobile: false
-				},
-				{type: 'break', id: 'break5', tablet: false},
-				{
-					type: 'html', id: 'StatusSelectionMode', mobile: false, tablet: false,
-					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="' + _('Selection Mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break8', mobile: false, tablet: false},
-				{
-					type: 'html', id: 'StateTableCell', mobile: false, tablet: false,
-					html: '<div id="StateTableCell" class="loleaflet-font" title="' + _('Choice of functions') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{
-					type: 'menu-check', id: 'StateTableCellMenu', caption: '', selected: ['2', '512'], items: [
-						{id: '2', text: _('Average')},
-						{id: '8', text: _('CountA')},
-						{id: '4', text: _('Count')},
-						{id: '16', text: _('Maximum')},
-						{id: '32', text: _('Minimum')},
-						{id: '512', text: _('Sum')},
-						{id: '8192', text: _('Selection count')},
-						{id: '1', text: _('None')}
-					], tablet: false
-				},
-				{type: 'break', id: 'break9', mobile: false}
-			]);
-
 			$('#spreadsheet-toolbar').show();
 		}
 		$('#formulabar').show();
@@ -1636,36 +1415,6 @@ function onDocLayerInit() {
 			toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 			'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
-
-		if (!window.mode.isMobile()) {
-			statusbar.insert('left', [
-				{type: 'break', id: 'break1'},
-				{
-					type: 'html', id: 'StatePageNumber',
-					html: '<div id="StatePageNumber" class="loleaflet-font" title="' + _('Number of Pages') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break2'},
-				{
-					type: 'html', id: 'StateWordCount', mobile: false, tablet: false,
-					html: '<div id="StateWordCount" class="loleaflet-font" title="' + _('Word Counter') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break5', mobile: false, tablet: false},
-				{
-					type: 'html', id: 'InsertMode', mobile: false, tablet: false,
-					html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break6', mobile: false, tablet: false},
-				{
-					type: 'html', id: 'StatusSelectionMode', mobile: false, tablet: false,
-					html: '<div id="StatusSelectionMode" class="loleaflet-font" title="' + _('Selection Mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break7', mobile: false, tablet: false},
-				{type: 'menu-radio', id: 'LanguageStatus',
-					mobile: false
-				},
-				{type: 'break', id: 'break8', mobile: false}
-			]);
-		}
 
 		break;
 	case 'presentation':
@@ -1694,20 +1443,6 @@ function onDocLayerInit() {
 		if (!map['wopi'].HideExportOption && presentationToolbar) {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
-		if (!window.mode.isMobile()) {
-			statusbar.insert('left', [
-				{type: 'break', id: 'break1'},
-				{
-					type: 'html', id: 'PageStatus',
-					html: '<div id="PageStatus" class="loleaflet-font" title="' + _('Number of Slides') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
-				},
-				{type: 'break', id: 'break2', mobile: false, tablet: false},
-				{type: 'menu-radio', id: 'LanguageStatus',
-					mobile: false
-				},
-				{type: 'break', id: 'break8', mobile: false}
-			]);
-		}
 
 		// FALLTHROUGH intended
 	case 'drawing':
@@ -1715,8 +1450,6 @@ function onDocLayerInit() {
 			toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
 			'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
-		if (statusbar)
-			statusbar.show('prev', 'next');
 
 		if (!window.mode.isMobile()) {
 			$('#presentation-toolbar').show();
@@ -1731,25 +1464,16 @@ function onDocLayerInit() {
 	_updateToolbarsVisibility();
 
 	if (window.mode.isMobile() || window.mode.isTablet()) {
-		nUsers = '%n';
-		oneUser = '1';
-		noUser = '0';
 		if (!window.ThisIsAMobileApp)
 			$('#document-name-input').hide();
 		else
 			$('#document-name-input').show();
 	} else {
-		nUsers = _('%n users');
-		oneUser = _('1 user');
-		noUser = _('0 users');
 		$('#document-name-input').show();
 	}
 
-	updateUserListCount();
 	if (toolbarUp)
 		toolbarUp.refresh();
-	if (statusbar)
-		statusbar.refresh();
 
 	if (window.ThisIsAMobileApp) {
 		// We can now set the document name in the menu bar
@@ -1916,14 +1640,11 @@ function onCommandStateChanged(e) {
 	}
 	else if (commandName === '.uno:LanguageStatus') {
 		var code = state;
-		var language = _(state);
 		var split = code.split(';');
 		if (split.length > 1) {
-			language = _(split[0]);
 			code = split[1];
 		}
 		w2ui['editbar'].set('languagecode', {text: code});
-		w2ui['actionbar'].set('LanguageStatus', {text: language, selected: language});
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		if (e.state === 'true') {
@@ -1932,58 +1653,6 @@ function onCommandStateChanged(e) {
 		else {
 			w2ui['editbar'].set('save', {img:'save'});
 		}
-	}
-	else if (commandName === '.uno:StatusDocPos') {
-		state = toLocalePattern('Sheet %1 of %2', 'Sheet (\\d+) of (\\d+)', state, '%1', '%2');
-		updateToolbarItem(statusbar, 'StatusDocPos', $('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
-	}
-	else if (commandName === '.uno:RowColSelCount') {
-		state = toLocalePattern('$1 rows, $2 columns selected', '(\\d+) rows, (\\d+) columns selected', state, '$1', '$2');
-		state = toLocalePattern('$1 of $2 records found', '(\\d+) of (\\d+) records found', state, '$1', '$2');
-		updateToolbarItem(statusbar, 'RowColSelCount', $('#RowColSelCount').html(state ? state : '<span class="ToolbarStatusInactive">&nbsp;Select multiple cells&nbsp;</span>').parent().html());
-	}
-	else if (commandName === '.uno:InsertMode') {
-		updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;Insert mode: inactive&nbsp;</span>').parent().html());
-
-		if (!state && map.hyperlinkPopup) {
-			map.hyperlinkUnderCursor = null;
-			map.closePopup(map.hyperlinkPopup);
-			map.hyperlinkPopup = null;
-		}
-	}
-	else if (commandName === '.uno:StatusSelectionMode' ||
-		 commandName === '.uno:SelectionMode') {
-		updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;Selection mode: inactive&nbsp;</span>').parent().html());
-	}
-	else if (commandName == '.uno:StateTableCell') {
-		updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? localizeStateTableCell(state) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
-	}
-	else if (commandName === '.uno:StatusBarFunc') {
-		var item = statusbar.get('StateTableCellMenu');
-		if (item) {
-			item.selected = [];
-			// Check 'None' even when state is 0
-			if (state === '0') {
-				state = 1;
-			}
-			for (var it = 0; it < item.items.length; it++) {
-				if (item.items[it].id & state) {
-					item.selected.push(item.items[it].id);
-				}
-			}
-		}
-	}
-	else if (commandName === '.uno:StatePageNumber') {
-		state = toLocalePattern('Page %1 of %2', 'Page (\\d+) of (\\d+)', state, '%1', '%2');
-		updateToolbarItem(statusbar, 'StatePageNumber', $('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
-	}
-	else if (commandName === '.uno:StateWordCount') {
-		state = toLocalePattern('%1 words, %2 characters', '([\\d,]+) words, ([\\d,]+) characters', state, '%1', '%2');
-		updateToolbarItem(statusbar, 'StateWordCount', $('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
-	}
-	else if (commandName === '.uno:PageStatus') {
-		state = toLocalePattern('Slide %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
-		updateToolbarItem(statusbar, 'PageStatus', $('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 	}
 	else if (commandName === '.uno:DocumentRepair') {
 		if (state === 'true') {
@@ -2026,42 +1695,6 @@ function onCommandStateChanged(e) {
 			toolbarUp.uncheck(id);
 			toolbarUp.disable(id);
 		}
-	}
-}
-
-function onCommandValues(e) {
-	if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
-		var translated, neutral;
-		var constLang = '.uno:LanguageStatus?Language:string=';
-		var constDefault = 'Default_RESET_LANGUAGES';
-		var constNone = 'Default_LANGUAGE_NONE';
-		var resetLang = _('Reset to Default Language');
-		var noneLang = _('None (Do not check spelling)');
-		var languages = [];
-		e.commandValues.forEach(function (language) {
-			languages.push({ translated: _(language), neutral: language });
-		});
-		languages.sort(function (a, b) {
-			return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
-		});
-
-		var toolbaritems = [];
-		toolbaritems.push({ text: noneLang,
-		 id: 'nonelanguage',
-		 uno: constLang + constNone });
-
-
-		for (var lang in languages) {
-			translated = languages[lang].translated;
-			neutral = languages[lang].neutral;
-			var splitTranslated = translated.split(';');
-			var splitNeutral = neutral.split(';');
-			toolbaritems.push({ id: neutral, text: splitTranslated[0], uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
-		}
-
-		toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
-
-		w2ui['actionbar'].set('LanguageStatus', {items: toolbaritems});
 	}
 }
 
@@ -2270,7 +1903,6 @@ function onUpdatePermission(e) {
 	var spreadsheetButtons = ['insertsheet'];
 	var formulaBarButtons = ['functiondialog', 'sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
-	var toolbarDownButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard', 'insertcomment'];
 	if (e.perm === 'edit') {
 		// Enable list boxes
 		$('.styles-select').prop('disabled', false);
@@ -2321,13 +1953,6 @@ function onUpdatePermission(e) {
 			});
 		}
 
-		toolbar = w2ui['actionbar'];
-		if (toolbar) {
-			toolbarDownButtons.forEach(function(id) {
-				toolbar.enable(id);
-			});
-		}
-
 		if (window.mode.isMobile()) {
 			$('#toolbar-down').show();
 		}
@@ -2359,13 +1984,6 @@ function onUpdatePermission(e) {
 		toolbar = w2ui['presentation-toolbar'];
 		if (toolbar) {
 			presentationButtons.forEach(function(id) {
-				toolbar.disable(id);
-			});
-		}
-
-		toolbar = w2ui['actionbar'];
-		if (toolbar) {
-			toolbarDownButtons.forEach(function(id) {
 				toolbar.disable(id);
 			});
 		}
@@ -2440,138 +2058,6 @@ function selectUser(viewId) {
 	$('#tb_actionbar_item_userlist').w2overlay('');
 }
 
-function deselectUser(e) {
-	var userlistItem = w2ui['actionbar'].get('userlist');
-	if (userlistItem === null) {
-		return;
-	}
-
-	userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).removeClass('selected-user').parent().parent().parent()[0].outerHTML;
-}
-
-function getUserItem(viewId, userName, extraInfo, color) {
-	var html = '<tr class="useritem" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
-		     '<td class=usercolor>';
-	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-		html += '<img class="avatar-img" src="' + extraInfo.avatar + '" style="border-color: ' + color  + ';" />';
-	} else {
-		html += '<div class="user-info" style="background-color: ' + color  + ';" />';
-	}
-
-	// TODO: Add mail and other links as sub-menu.
-	html += '</td>' +
-		     '<td class="username loleaflet-font" >' + userName + '</td>' +
-	    '</tr>';
-
-	return html;
-}
-
-function updateUserListCount() {
-	var actionbar = w2ui.actionbar;
-	var userlistItem = actionbar && actionbar.get('userlist');
-	if (userlistItem == null) {
-		return;
-	}
-
-	var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
-	if (count > 1) {
-		userlistItem.text = nUsers.replace('%n', count);
-	} else if (count === 1) {
-		userlistItem.text = oneUser;
-	} else {
-		userlistItem.text = noUser;
-	}
-
-	w2ui['actionbar'].refresh();
-
-	var hideUserList =
-		window.ThisIsAMobileApp ||
-		(map['wopi'].HideUserList !== null && map['wopi'].HideUserList !== undefined &&
-			($.inArray('true', map['wopi'].HideUserList) >= 0) ||
-			(window.mode.isMobile() && $.inArray('mobile', map['wopi'].HideUserList) >= 0) ||
-			(window.mode.isTablet() && $.inArray('tablet', map['wopi'].HideUserList) >= 0) ||
-			(window.mode.isDesktop() && $.inArray('desktop', map['wopi'].HideUserList) >= 0));
-
-	if (!hideUserList && count > 1) {
-		actionbar.show('userlist');
-		actionbar.show('userlistbreak');
-	} else {
-		actionbar.hide('userlist');
-		actionbar.hide('userlistbreak');
-	}
-}
-
-function escapeHtml(input) {
-	return $('<div>').text(input).html();
-}
-
-function onAddView(e) {
-	var userlistItem = w2ui['actionbar'].get('userlist');
-	var username = escapeHtml(e.username);
-	var showPopup = false;
-
-	if (userlistItem !== null)
-		showPopup = $(userlistItem.html).find('#userlist_table tbody tr').length > 0;
-
-	if (showPopup) {
-		$('#tb_actionbar_item_userlist')
-			.w2overlay({
-				class: 'loleaflet-font',
-				html: userJoinedPopupMessage.replace('%user', username),
-				style: 'padding: 5px'
-			});
-		clearTimeout(userPopupTimeout);
-		userPopupTimeout = setTimeout(function() {
-			$('#tb_actionbar_item_userlist').w2overlay('');
-			clearTimeout(userPopupTimeout);
-			userPopupTimeout = null;
-		}, 3000);
-	}
-
-	var color = L.LOUtil.rgbToHex(map.getViewColor(e.viewId));
-	if (e.viewId === map._docLayer._viewId) {
-		username = _('You');
-		color = '#000';
-	}
-
-	// Mention readonly sessions in userlist
-	if (e.readonly) {
-		username += ' (' +  _('Readonly') + ')';
-	}
-
-	if (userlistItem !== null) {
-		var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
-		userlistItem.html = newhtml;
-		updateUserListCount();
-	}
-}
-
-function onRemoveView(e) {
-	$('#tb_actionbar_item_userlist')
-		.w2overlay({
-			class: 'loleaflet-font',
-			html: userLeftPopupMessage.replace('%user', e.username),
-			style: 'padding: 5px'
-		});
-	clearTimeout(userPopupTimeout);
-	userPopupTimeout = setTimeout(function() {
-		$('#tb_actionbar_item_userlist').w2overlay('');
-		clearTimeout(userPopupTimeout);
-		userPopupTimeout = null;
-	}, 3000);
-
-	if (e.viewId === map._docLayer._followThis) {
-		map._docLayer._followThis = -1;
-		map._docLayer._followUser = false;
-	}
-
-	var userlistItem = w2ui['actionbar'].get('userlist');
-	if (userlistItem !== null) {
-		userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
-		updateUserListCount();
-	}
-}
-
 $(window).resize(function() {
 	resizeToolbar();
 });
@@ -2618,27 +2104,6 @@ function setupToolbar(e) {
 		}
 	});
 
-	map.on('zoomend', function () {
-		var zoomPercent = 100;
-		var zoomSelected = null;
-		switch (map.getZoom()) {
-		case 6:  zoomPercent =  50; zoomSelected = 'zoom50'; break;
-		case 7:  zoomPercent =  60; zoomSelected = 'zoom60'; break;
-		case 8:  zoomPercent =  70; zoomSelected = 'zoom70'; break;
-		case 9:  zoomPercent =  85; zoomSelected = 'zoom85'; break;
-		case 10: zoomPercent = 100; zoomSelected = 'zoom100'; break;
-		case 11: zoomPercent = 120; zoomSelected = 'zoom120'; break;
-		case 12: zoomPercent = 150; zoomSelected = 'zoom150'; break;
-		case 13: zoomPercent = 175; zoomSelected = 'zoom175'; break;
-		case 14: zoomPercent = 200; zoomSelected = 'zoom200'; break;
-		default:
-			var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
-			zoomPercent = Math.round(zoomRatio * 100) + '%';
-			break;
-		}
-		w2ui['actionbar'].set('zoom', {text: zoomPercent, selected: zoomSelected});
-	});
-
 	map.on('celladdress', function (e) {
 		if (document.activeElement !== L.DomUtil.get('addressInput')) {
 			// if the user is not editing the address field
@@ -2646,38 +2111,9 @@ function setupToolbar(e) {
 		}
 	});
 
-	map.on('search', function (e) {
-		var searchInput = L.DomUtil.get('search-input');
-		var toolbar = w2ui['actionbar'];
-		if (e.count === 0) {
-			toolbar.disable('searchprev');
-			toolbar.disable('searchnext');
-			toolbar.hide('cancelsearch');
-			L.DomUtil.addClass(searchInput, 'search-not-found');
-			$('#findthis').addClass('search-not-found');
-			map.resetSelection();
-			setTimeout(function () {
-				$('#findthis').removeClass('search-not-found');
-				L.DomUtil.removeClass(searchInput, 'search-not-found');
-			}, 500);
-		}
-	});
-
-
 	if (!window.mode.isMobile()) {
 		map.on('updatetoolbarcommandvalues', function(e) {
 			updateCommandValues(e);
-		});
-
-		map.on('showbusy', function(e) {
-			w2utils.lock(w2ui['actionbar'].box, e.label, true);
-		});
-
-		map.on('hidebusy', function() {
-			// If locked, unlock
-			if (w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
-				w2utils.unlock(w2ui['actionbar'].box);
-			}
 		});
 	}
 
@@ -2687,11 +2123,6 @@ function setupToolbar(e) {
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
 	map.on('commandstatechanged', onCommandStateChanged);
-	map.on('commandvalues', onCommandValues, this);
-
-	map.on('deselectuser', deselectUser);
-	map.on('addview', onAddView);
-	map.on('removeview', onRemoveView);
 
 	if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();

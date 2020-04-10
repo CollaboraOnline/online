@@ -71,6 +71,9 @@ var map = L.map('map', {
 var menubar = L.control.menubar();
 map.menubar = menubar;
 map.addControl(menubar);
+var statusbar = L.control.statusBar();
+map.addControl(statusbar);
+statusbar.create();
 setupToolbar(map);
 map.addControl(L.control.scroll());
 map.addControl(L.control.alertDialog());
