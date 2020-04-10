@@ -23,7 +23,6 @@
 #include "Auth.hpp"
 #include <Common.hpp>
 #include "FileServer.hpp"
-#include <IoUtil.hpp>
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include "Storage.hpp"

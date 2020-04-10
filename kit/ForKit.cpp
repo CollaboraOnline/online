@@ -30,7 +30,6 @@
 #include <Poco/Thread.h>
 
 #include <Common.hpp>
-#include <IoUtil.hpp>
 #include "Kit.hpp"
 #include <Log.hpp>
 #include <Unit.hpp>

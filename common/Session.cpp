@@ -32,7 +32,6 @@
 #include <Poco/URI.h>
 
 #include "Common.hpp"
-#include "IoUtil.hpp"
 #include "Protocol.hpp"
 #include "Log.hpp"
 #include <TileCache.hpp>

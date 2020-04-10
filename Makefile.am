@@ -89,7 +89,6 @@ AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclud
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
 shared_sources = common/FileUtil.cpp \
-                 common/IoUtil.cpp \
                  common/Log.cpp \
                  common/Protocol.cpp \
                  common/StringVector.cpp \
@@ -144,8 +143,7 @@ connect_SOURCES = tools/Connect.cpp \
                   common/StringVector.cpp \
                   common/Util.cpp
 
-lokitclient_SOURCES = common/IoUtil.cpp \
-                      common/Log.cpp \
+lokitclient_SOURCES = common/Log.cpp \
                       tools/KitClient.cpp \
                       common/Protocol.cpp \
                       common/StringVector.cpp \
@@ -231,7 +229,6 @@ shared_headers = common/Common.hpp \
                  common/Clipboard.hpp \
                  common/Crypto.hpp \
                  common/JsonUtil.hpp \
-                 common/IoUtil.hpp \
                  common/FileUtil.hpp \
                  common/Log.hpp \
                  common/LOOLWebSocket.hpp \

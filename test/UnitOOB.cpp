@@ -15,7 +15,6 @@
 #include <config.h>
 
 #include <Common.hpp>
-#include <IoUtil.hpp>
 #include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
 #include <Unit.hpp>

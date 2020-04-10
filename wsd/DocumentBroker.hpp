@@ -24,7 +24,6 @@
 
 #include <Poco/URI.h>
 
-#include "IoUtil.hpp"
 #include "Log.hpp"
 #include "TileDesc.hpp"
 #include "Util.hpp"

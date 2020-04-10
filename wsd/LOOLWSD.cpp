@@ -117,7 +117,6 @@ using Poco::Net::PartHandler;
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
 #include <FileUtil.hpp>
-#include <IoUtil.hpp>
 #if defined KIT_IN_PROCESS || MOBILEAPP
 #  include <Kit.hpp>
 #endif

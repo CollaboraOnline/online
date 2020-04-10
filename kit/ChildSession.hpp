@@ -17,8 +17,6 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-#include <Poco/Net/WebSocket.h>
-
 #include "Common.hpp"
 #include "Kit.hpp"
 #include "Session.hpp"

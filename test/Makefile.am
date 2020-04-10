@@ -58,7 +58,6 @@ AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS -DLOK_ABORT_ON_ASSERTION
 
 wsd_sources = \
             ../common/FileUtil.cpp \
-            ../common/IoUtil.cpp \
             ../common/Protocol.cpp \
             ../common/SpookyV2.cpp \
             ../common/Util.cpp \
