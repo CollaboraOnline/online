@@ -194,7 +194,7 @@ void SocketPoll::pollingThreadEntry()
     LOG_INF("Finished polling thread [" << _name << "].");
 }
 
-int SocketPoll::ppoll(int64_t timeoutMaxMicroS)
+int SocketPoll::poll(int64_t timeoutMaxMicroS)
 {
     if (_runOnClientThread)
         checkAndReThread();
@@ -205,7 +205,7 @@ int SocketPoll::ppoll(int64_t timeoutMaxMicroS)
         std::chrono::steady_clock::now();
 
     // The events to poll on change each spin of the loop.
-    psetupPollFds(now, timeoutMaxMicroS);
+    setupPollFds(now, timeoutMaxMicroS);
     const size_t size = _pollSockets.size();
 
     int rc;
@@ -529,7 +529,7 @@ void WebSocketHandler::dumpState(std::ostream& os)
 void StreamSocket::dumpState(std::ostream& os)
 {
     int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS;
-    int events = pgetPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
+    int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << "\t" << getFD() << "\t" << events << "\t"
        << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
        << " r: " << _bytesRecvd << "\t w: " << _bytesSent << "\t"

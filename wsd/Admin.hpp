@@ -16,6 +16,7 @@
 #include "Log.hpp"
 
 #include "net/WebSocketHandler.hpp"
+#include "LOOLWSD.hpp"
 
 class Admin;
 
@@ -38,12 +39,12 @@ public:
 
     static void subscribeAsync(const std::shared_ptr<AdminSocketHandler>& handler);
 
+    /// Process incoming websocket messages
+    void handleMessage(const std::vector<char> &data) override;
+
 private:
     /// Sends text frames simply to authenticated clients.
     void sendTextFrame(const std::string& message);
-
-    /// Process incoming websocket messages
-    void handleMessage(const std::vector<char> &data) override;
 
 private:
     Admin* _admin;
@@ -91,7 +92,6 @@ public:
     void rmDoc(const std::string& docKey);
 
     void setForKitPid(const int forKitPid) { _forKitPid = forKitPid; _model.setForKitPid(forKitPid);}
-    void setForKitWritePipe(const int forKitWritePipe) { _forKitWritePipe = forKitWritePipe; }
 
     /// Callers must ensure that modelMutex is acquired
     AdminModel& getModel();
@@ -157,7 +157,6 @@ private:
     /// the Admin Poll thread.
     AdminModel _model;
     int _forKitPid;
-    int _forKitWritePipe;
     size_t _lastTotalMemory;
     size_t _lastJiffies;
     uint64_t _lastSentCount;

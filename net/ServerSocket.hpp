@@ -65,8 +65,8 @@ public:
     /// Returns a valid Socket shared_ptr on success only.
     virtual std::shared_ptr<Socket> accept();
 
-    int pgetPollEvents(std::chrono::steady_clock::time_point /* now */,
-                       int64_t & /* timeoutMaxMicroS */) override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int64_t & /* timeoutMaxMicroS */) override
     {
         return POLLIN;
     }

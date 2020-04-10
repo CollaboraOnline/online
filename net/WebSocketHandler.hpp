@@ -430,7 +430,7 @@ public:
         }
     }
 
-    int pgetPollEvents(std::chrono::steady_clock::time_point now,
+    int getPollEvents(std::chrono::steady_clock::time_point now,
                       int64_t & timeoutMaxMicroS) override
     {
         if (!_isClient)

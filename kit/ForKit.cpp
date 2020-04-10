@@ -606,7 +606,7 @@ int main(int argc, char** argv)
     {
         UnitKit::get().invokeForKitTest();
 
-        mainPoll.ppoll(POLL_TIMEOUT_MICRO_S);
+        mainPoll.poll(POLL_TIMEOUT_MICRO_S);
 
 #if ENABLE_DEBUG
         if (!SingleKit)

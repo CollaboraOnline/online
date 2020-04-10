@@ -24,7 +24,6 @@
 #include <Common.hpp>
 #include "FileServer.hpp"
 #include <IoUtil.hpp>
-#include "LOOLWSD.hpp"
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include "Storage.hpp"
@@ -158,11 +157,24 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         {
             const int pid = std::stoi(tokens[1]);
             LOG_INF("Admin request to kill PID: " << pid);
-            SigUtil::killChild(pid);
+
+            std::set<pid_t> pids = model.getDocumentPids();
+            if (pids.find(pid) != pids.end())
+            {
+                SigUtil::killChild(pid);
+            }
+            else
+            {
+                LOG_WRN("Invalid PID to kill (not a document pid)");
+            }
         }
         catch (std::invalid_argument& exc)
         {
-            LOG_WRN("Invalid PID to kill: " << tokens[1]);
+            LOG_WRN("Invalid PID to kill (invalid argument): " << tokens[1]);
+        }
+        catch (std::out_of_range& exc)
+        {
+            LOG_WRN("Invalid PID to kill (out of range): " << tokens[1]);
         }
     }
     else if (tokens.equals(0, "settings"))
@@ -283,7 +295,11 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
 
 void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
-    UnitWSD::get().onAdminQueryMessage(message);
+    if (!Util::isFuzzing())
+    {
+        UnitWSD::get().onAdminQueryMessage(message);
+    }
+
     if (_isAuthenticated)
     {
         LOG_TRC("send admin text frame '" << message << "'");
@@ -344,7 +360,6 @@ Admin::Admin() :
     SocketPoll("admin"),
     _model(AdminModel()),
     _forKitPid(-1),
-    _forKitWritePipe(-1),
     _lastTotalMemory(0),
     _lastJiffies(0),
     _lastSentCount(0),
@@ -455,7 +470,7 @@ void Admin::pollingThread()
         // Handle websockets & other work.
         const int timeout = capAndRoundInterval(std::min(std::min(cpuWait, memWait), netWait));
         LOG_TRC("Admin poll for " << timeout << "ms.");
-        ppoll(timeout * 1000); // continue with ms for admin, settings etc.
+        poll(timeout * 1000); // continue with ms for admin, settings etc.
     }
 }
 
@@ -591,10 +606,7 @@ void Admin::notifyForkit()
         << "setconfig limit_file_size_mb " << _defDocProcSettings.getLimitFileSizeMb() << '\n'
         << "setconfig limit_num_open_files " << _defDocProcSettings.getLimitNumberOpenFiles() << '\n';
 
-    if (_forKitWritePipe != -1)
-        IoUtil::writeToPipe(_forKitWritePipe, oss.str());
-    else
-        LOG_INF("Forkit write pipe not set (yet).");
+    LOOLWSD::sendMessageToForKit(oss.str());
 }
 
 void Admin::triggerMemoryCleanup(const size_t totalMem)
@@ -663,8 +675,8 @@ public:
         _uri(uri)
     {
     }
-    int pgetPollEvents(std::chrono::steady_clock::time_point now,
-                       int64_t &timeoutMaxMicroS) override
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int64_t &timeoutMaxMicroS) override
     {
         if (_connecting)
         {
@@ -672,7 +684,7 @@ public:
             return POLLOUT;
         }
         else
-            return AdminSocketHandler::pgetPollEvents(now, timeoutMaxMicroS);
+            return AdminSocketHandler::getPollEvents(now, timeoutMaxMicroS);
     }
 
     void performWrites() override

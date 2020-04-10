@@ -2061,8 +2061,8 @@ private:
                     " has no DocumentBroker to handle message: [" << abbr << "].");
     }
 
-    int pgetPollEvents(std::chrono::steady_clock::time_point /* now */,
-                       int64_t & /* timeoutMaxMs */) override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int64_t & /* timeoutMaxMs */) override
     {
         return POLLIN;
     }
@@ -2393,8 +2393,8 @@ private:
 #endif
     }
 
-    int pgetPollEvents(std::chrono::steady_clock::time_point /* now */,
-                       int64_t & /* timeoutMaxMs */) override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int64_t & /* timeoutMaxMs */) override
     {
         return POLLIN;
     }
@@ -3580,7 +3580,7 @@ int LOOLWSD::innerMain()
         const int waitMicroS = UnitWSD::isUnitTesting() ?
             UnitWSD::get().getTimeoutMilliSeconds() * 1000 / 4 :
             SocketPoll::DefaultPollTimeoutMicroS * 4;
-        mainWait.ppoll(waitMicroS);
+        mainWait.poll(waitMicroS);
 
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();

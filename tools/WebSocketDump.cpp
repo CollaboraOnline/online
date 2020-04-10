@@ -175,8 +175,8 @@ private:
         in.erase(in.begin(), itBody);
     }
 
-    int pgetPollEvents(std::chrono::steady_clock::time_point /* now */,
-                       int64_t & /* timeoutMaxMicroS */) override
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int64_t & /* timeoutMaxMicroS */) override
     {
         return POLLIN;
     }
@@ -290,7 +290,7 @@ int main (int argc, char **argv)
 
     while (true)
     {
-        DumpSocketPoll.ppoll(100 * 1000 * 1000);
+        DumpSocketPoll.poll(100 * 1000 * 1000);
     }
 }
 

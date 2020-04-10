@@ -126,11 +126,11 @@ public:
         return handleSslState(SSL_write(_ssl, buf, len));
     }
 
-    int pgetPollEvents(std::chrono::steady_clock::time_point now,
-                       int64_t & timeoutMaxMicroS) override
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int64_t & timeoutMaxMicroS) override
     {
         assertCorrectThread();
-        int events = getSocketHandler()->pgetPollEvents(now, timeoutMaxMicroS);
+        int events = getSocketHandler()->getPollEvents(now, timeoutMaxMicroS);
 
         if (_sslWantsTo == SslWantsTo::Read)
         {

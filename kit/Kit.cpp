@@ -2261,7 +2261,7 @@ public:
         if (timeoutMicroS < 0)
         {
             // Flush at most 1 + maxExtraEvents, or return when nothing left.
-            while (ppoll(0) > 0 && maxExtraEvents-- > 0)
+            while (poll(0) > 0 && maxExtraEvents-- > 0)
                 ++eventsSignalled;
         }
         else
@@ -2270,7 +2270,7 @@ public:
             _pollEnd = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutMicroS);
             do
             {
-                if (ppoll(timeoutMicroS) <= 0)
+                if (poll(timeoutMicroS) <= 0)
                     break;
 
                 const auto now = std::chrono::steady_clock::now();
