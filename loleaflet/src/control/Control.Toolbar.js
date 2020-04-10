@@ -160,23 +160,6 @@ function onClick(e, id, item) {
 		$('#toolbar-search').show();
 		L.DomUtil.get('search-input').focus();
 	}
-	else if (id === 'hidesearchbar') {
-		$('#toolbar-search').hide();
-		if (map._permission === 'edit')
-			$('#toolbar-down').show();
-		/** show edit button if only we are able to edit but in readonly mode */
-		if (window.docPermission  === 'edit' && map._permission === 'readonly')
-			$('#mobile-edit-button').show();
-	}
-	else if (id === 'searchprev') {
-		map.search(L.DomUtil.get('search-input').value, true);
-	}
-	else if (id === 'searchnext') {
-		map.search(L.DomUtil.get('search-input').value);
-	}
-	else if (id === 'cancelsearch') {
-		_cancelSearch();
-	}
 	else if ((id === 'presentation' || id === 'fullscreen-presentation') && map.getDocType() === 'presentation') {
 		map.fire('fullscreen');
 	}

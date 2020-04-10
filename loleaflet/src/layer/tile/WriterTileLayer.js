@@ -142,45 +142,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 			}
 		});
 
-		toolbar = $('#toolbar-search');
-		toolbar.w2toolbar({
-			name: 'searchbar',
-			tooltip: 'top',
-			items: [
-				{
-					type: 'html', id: 'search',
-					html: '<div id="search-input-group" style="padding: 3px 10px;" class="loleaflet-font">' +
-						'    <label for="search-input">Search:</label>' +
-						'    <input size="10" id="search-input"' +
-						'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
-						'</div>'
-				},
-				{type: 'button', id: 'searchprev', img: 'prev', hint: _UNO('.uno:UpSearch'), disabled: true},
-				{type: 'button', id: 'searchnext', img: 'next', hint: _UNO('.uno:DownSearch'), disabled: true},
-				{type: 'button', id: 'cancelsearch', img: 'cancel', hint: _('Clear the search field'), hidden: true},
-				{type: 'html', id: 'left'},
-				{type: 'button', id: 'hidesearchbar', img: 'unfold', hint: _('Hide the search bar')}
-			],
-			onClick: function (e) {
-				window.onClick(e, e.target, e.item, e.subItem);
-			},
-			onRefresh: function () {
-				window.setupSearchInput();
-			}
-		});
-
-		toolbar.bind('touchstart', function(e) {
-			w2ui['searchbar'].touchStarted = true;
-			var touchEvent = e.originalEvent;
-			if (touchEvent && touchEvent.touches.length > 1) {
-				L.DomEvent.preventDefault(e);
-			}
-		});
-
-		$(w2ui.searchbar.box).find('.w2ui-scroll-left, .w2ui-scroll-right').hide();
-		w2ui.searchbar.on('resize', function(target, e) {
-			e.isCancelled = true;
-		});
+		map.addControl(L.control.searchBar());
 
 		map.on('updatepermission', window.onUpdatePermission);
 	},

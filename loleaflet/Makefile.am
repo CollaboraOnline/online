@@ -263,6 +263,7 @@ LOLEAFLET_JS =\
 	src/control/Control.MobileSlide.js \
 	src/control/Control.Scale.js \
 	src/control/Control.StatusBar.js \
+	src/control/Control.SearchBar.js \
 	src/control/Control.Layers.js \
 	src/control/Search.js \
 	src/control/Permission.js \
