@@ -2081,7 +2081,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
 
-		if (this._map.calcInputBarHasFocus()) {
+		if (this._map.calcInputBarHasFocus() && type === 'move') {
 			// When the Formula-bar has the focus, sending
 			// mouse move with the document coordinates
 			// hides the cursor (lost focus?). This is clearly
