@@ -953,6 +953,25 @@ namespace Util
 
         return result;
     }
+
+    #if !MOBILEAPP
+        // If OS is not mobile, it must be Linux.
+        std::string getLinuxVersion(){
+            // Read operating system info. We can read "os-release" file, located in /etc.
+            std::ifstream ifs("/etc/os-release");
+            std::string str(std::istreambuf_iterator<char>{ifs}, {});
+            std::vector<std::string> infoList = Util::splitStringToVector(str, '\n');
+            std::map<std::string, std::string> releaseInfo = Util::stringVectorToMap(infoList, '=');
+
+            if (releaseInfo.find("PRETTY_NAME") != releaseInfo.end()) {
+                return releaseInfo["PRETTY_NAME"];
+            }
+            else{
+                return "unknown";
+            }
+        }
+    #endif
+
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

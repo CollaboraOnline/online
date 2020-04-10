@@ -237,7 +237,6 @@ public:
     static std::string FileServerRoot;
     static std::string ServiceRoot; ///< There are installations that need prefixing every page with some path.
     static std::string LOKitVersion;
-    static std::string OSInfo;
     static std::string HostIdentifier; ///< A unique random hash that identifies this server
     static std::string LogLevel;
     static bool AnonymizeUserData;
@@ -389,9 +388,6 @@ public:
     static std::string getServerURL();
 
     static std::string getVersionJSON();
-
-    /// Reads OS information, puts them into LOOLWSD::OSInfo variable
-    static void getOSInfo();
 
     int innerMain();
 

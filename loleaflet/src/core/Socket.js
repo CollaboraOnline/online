@@ -303,6 +303,10 @@ L.Socket = L.Class.extend({
 			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
 			                         ' (git hash: ' + h + ')');
 		}
+		else if (textMsg.startsWith('osinfo ')) {
+			var osInfo = textMsg.replace('osinfo ', '');
+			document.getElementById('os-info').innerText = osInfo;
+		}
 		else if (textMsg.startsWith('clipboardkey: ')) {
 			var key = textMsg.substring('clipboardkey: '.length);
 			if (this._map._clip)

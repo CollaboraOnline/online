@@ -360,6 +360,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         sendTextFrame("loolserver " + LOOLWSD::getVersionJSON());
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
+
+        #if !MOBILEAPP
+            // If it is not mobile, it must be Linux (for now).
+            sendTextFrame(std::string("osinfo ") + Util::getLinuxVersion());
+        #endif
+
         // Send clipboard key
         rotateClipboardKey(true);
 

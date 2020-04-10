@@ -21,6 +21,7 @@
 #include <map>
 #include <list>
 #include <utility>
+#include "Util.hpp"
 
 class DocumentBroker;
 

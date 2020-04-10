@@ -994,9 +994,14 @@ int main(int argc, char**argv)
 
     /**
      * Converts vector of strings to map. Strings should have formed like this: key + delimiter + value.
-     * In case of a misformed string or zero length vector, returns an empty map.
+     * In case of a misformed string or zero length vector, passes that item and warns the developer.
      */
     std::map<std::string, std::string> stringVectorToMap(std::vector<std::string> sVector, const char delimiter);
+
+    #if !MOBILEAPP
+        // If OS is not mobile, it must be Linux.
+        std::string getLinuxVersion();
+    #endif
 
 } // end namespace Util
 
