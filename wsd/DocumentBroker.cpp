@@ -984,7 +984,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         const auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>
                                             (std::chrono::system_clock::now() - _lastFileModifiedTime);
         LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << _docKey <<
-                "]. File last modified " << timeInSec.count() << " seconds ago.");
+                "]. File last modified " << timeInSec.count() << " seconds ago, timestamp unchanged.");
         _poll->wakeup();
         return true;
     }
@@ -1005,7 +1005,6 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         if (!isSaveAs && !isRename)
         {
             // Saved and stored; update flags.
-            setModified(false);
             _lastFileModifiedTime = newFileModifiedTime;
             _lastSaveTime = std::chrono::steady_clock::now();
 
@@ -2013,6 +2012,7 @@ void DocumentBroker::setModified(const bool value)
 #endif
     }
 
+    // Set the X-LOOL-WOPI-IsModifiedByUser header flag sent to storage.
     _storage->setUserModified(value);
 }
 
