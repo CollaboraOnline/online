@@ -129,7 +129,25 @@ namespace
     Path destinationForLinkOrCopy;
     std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
     bool linkOrCopyVerboseLogging = false;
-    unsigned slowLinkOrCopyLimitInSecs = 10; // after this much seconds, start spamming the logs
+    unsigned linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
+    constexpr unsigned SlowLinkOrCopyLimitInSecs = 2; // After this many seconds, start spamming the logs.
+
+    /// Returns the LinkOrCopyType as a human-readable string (for logging).
+    std::string linkOrCopyTypeString(LinkOrCopyType type)
+    {
+        switch (type)
+        {
+        case LinkOrCopyType::NoUsr:
+            return "non-user";
+        case LinkOrCopyType::LO:
+            return "LibreOffice";
+        case LinkOrCopyType::All:
+            return "all";
+        default:
+            assert(!"Unknown LinkOrCopyType.");
+            return "unknown";
+        }
+    }
 
     bool shouldCopyDir(const char *path)
     {
@@ -205,8 +223,10 @@ namespace
 
     void linkOrCopyFile(const char *fpath, const Path& newPath)
     {
+        ++linkOrCopyFileCount;
         if (linkOrCopyVerboseLogging)
             LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << "\"");
+
         if (link(fpath, newPath.toString().c_str()) == -1)
         {
             LOG_INF("link(\"" << fpath << "\", \"" <<
@@ -231,16 +251,20 @@ namespace
                            struct FTW* /*ftwbuf*/)
     {
         if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
-            return 0;
+        {
+            LOG_TRC("nftw: Skipping redundant path: " << fpath);
+            return FTW_CONTINUE;
+        }
 
         if (!linkOrCopyVerboseLogging)
         {
             const auto durationInSecs = std::chrono::duration_cast<std::chrono::seconds>(
                 std::chrono::steady_clock::now() - linkOrCopyStartTime);
-            if (durationInSecs.count() > slowLinkOrCopyLimitInSecs)
+            if (durationInSecs.count() > SlowLinkOrCopyLimitInSecs)
             {
-                LOG_WRN("Linking/copying files from " << sourceForLinkOrCopy << " to " << destinationForLinkOrCopy.toString() <<
-                        " is taking too much time. Enabling verbose link/copy logging at information level.");
+                LOG_WRN("Linking/copying files from "
+                        << sourceForLinkOrCopy << " to " << destinationForLinkOrCopy.toString()
+                        << " is taking too much time. Enabling verbose link/copy logging.");
                 linkOrCopyVerboseLogging = true;
             }
         }
@@ -263,12 +287,12 @@ namespace
                 struct stat st;
                 if (stat(fpath, &st) == -1)
                 {
-                    LOG_SYS("stat(\"" << std::string(fpath) << "\") failed.");
-                    return 1;
+                    LOG_SYS("nftw: stat(\"" << fpath << "\") failed");
+                    return FTW_STOP;
                 }
                 if (!shouldCopyDir(relativeOldPath))
                 {
-                    LOG_TRC("skip redundant paths " << relativeOldPath);
+                    LOG_TRC("nftw: Skipping redundant path: " << relativeOldPath);
                     return FTW_SKIP_SUBTREE;
                 }
                 File(newPath).createDirectories();
@@ -277,18 +301,19 @@ namespace
                 ut.modtime = st.st_mtime;
                 if (utime(newPath.toString().c_str(), &ut) == -1)
                 {
-                    LOG_SYS("utime(\"" << newPath.toString() << "\") failed.");
-                    return 1;
+                    LOG_SYS("nftw: utime(\"" << newPath.toString() << "\") failed");
+                    return FTW_STOP;
                 }
             }
             break;
         case FTW_SL:
             {
-                size_t size = sb->st_size;
+                const size_t size = sb->st_size;
                 char target[size + 1];
-                ssize_t written = readlink(fpath, target, size);
-                if (written <= 0 || static_cast<size_t>(written) > size) {
-                    LOG_FTL("readlink(\"" << std::string(fpath) << "\") failed: " << strerror(errno));
+                const ssize_t written = readlink(fpath, target, size);
+                if (written <= 0 || static_cast<size_t>(written) > size)
+                {
+                    LOG_SYS("nftw: readlink(\"" << fpath << "\") failed");
                     Log::shutdown();
                     std::_Exit(EX_SOFTWARE);
                 }
@@ -297,44 +322,58 @@ namespace
                 File(newPath.parent()).createDirectories();
                 if (symlink(target, newPath.toString().c_str()) == -1)
                 {
-                    LOG_SYS("symlink(\"" << target << "\", \"" << newPath.toString()
-                                         << "\") failed");
-                    return 1;
+                    LOG_SYS("nftw: symlink(\"" << target << "\", \"" << newPath.toString()
+                                               << "\") failed");
+                    return FTW_STOP;
                 }
             }
             break;
-        case FTW_DNR:
-            LOG_ERR("Cannot read directory '" << fpath << "'");
-            return 1;
-        case FTW_NS:
-            LOG_ERR("nftw: stat failed for '" << fpath << "'");
-            return 1;
-        default:
-            LOG_FTL("nftw: unexpected type: '" << typeflag);
-            assert(false);
-            break;
+            case FTW_DNR:
+                LOG_ERR("nftw: Cannot read directory '" << fpath << "'");
+                return FTW_STOP;
+            case FTW_NS:
+                LOG_ERR("nftw: stat failed for '" << fpath << "'");
+                return FTW_STOP;
+            default:
+                LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
+                assert(!"nftw: unexpected typeflag.");
+                break;
         }
-        return 0;
+
+        return FTW_CONTINUE;
     }
 
     void linkOrCopy(const std::string& source,
                     const Path& destination,
                     LinkOrCopyType type)
     {
+        LOG_INF("linkOrCopy " << linkOrCopyTypeString(type) << " from [" << source << "] to ["
+                              << destination.toString() << "].");
+
         linkOrCopyType = type;
         sourceForLinkOrCopy = source;
         if (sourceForLinkOrCopy.back() == '/')
             sourceForLinkOrCopy.pop_back();
         destinationForLinkOrCopy = destination;
+        linkOrCopyFileCount = 0;
         linkOrCopyStartTime = std::chrono::steady_clock::now();
+
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
         {
-            LOG_ERR("linkOrCopy: nftw() failed for '" << source << "'");
+            LOG_SYS("linkOrCopy: nftw() failed for '" << source << "'");
         }
+
         if (linkOrCopyVerboseLogging)
         {
-            LOG_INF("Linking/Copying of files to " << destinationForLinkOrCopy.toString() << " finished.");
             linkOrCopyVerboseLogging = false;
+            const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - linkOrCopyStartTime).count();
+            const double seconds = (ms + 1) / 1000.; // At least 1ms to avoid div-by-zero.
+            const auto rate = linkOrCopyFileCount / seconds;
+            LOG_INF("Linking/Copying of " << linkOrCopyFileCount << " files from " << source
+                                          << " to " << destinationForLinkOrCopy.toString()
+                                          << " finished in " << seconds << " seconds, or " << rate
+                                          << " files / second.");
         }
     }
 
@@ -388,10 +427,11 @@ namespace
             symlinkTarget += "../";
         symlinkTarget += loSubPath;
 
-        LOG_DBG("symlink(\"" << symlinkTarget << "\",\"" << symlinkSource.toString() << "\")");
+        LOG_DBG("symlink(\"" << symlinkTarget << "\", \"" << symlinkSource.toString() << "\")");
         if (symlink(symlinkTarget.c_str(), symlinkSource.toString().c_str()) == -1)
         {
-            LOG_SYS("symlink(\"" << symlinkTarget << "\",\"" << symlinkSource.toString() << "\") failed");
+            LOG_SYS("symlink(\"" << symlinkTarget << "\", \"" << symlinkSource.toString()
+                                 << "\") failed");
             throw Exception("symlink() failed");
         }
     }
@@ -2516,6 +2556,7 @@ void lokit_main(
                 bLoopMounted = !system(mountCommand.c_str());
                 LOG_DBG("Initialized jail bind mount.");
             }
+
             linkOrCopy(sysTemplate, jailPath,
                        bLoopMounted ? LinkOrCopyType::NoUsr : LinkOrCopyType::All);
             linkOrCopy(loTemplate, jailLOInstallation, LinkOrCopyType::LO);
