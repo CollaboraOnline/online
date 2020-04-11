@@ -343,10 +343,19 @@ namespace
         return FTW_CONTINUE;
     }
 
-    void linkOrCopy(const std::string& source,
+    void linkOrCopy(std::string source,
                     const Path& destination,
                     LinkOrCopyType type)
     {
+        char* resolved = realpath(source.c_str(), nullptr);
+        if (resolved && resolved != source)
+        {
+            LOG_DBG("linkOrCopy: Using real path [" << resolved << "] instead of original link ["
+                                                    << source << "].");
+            source = resolved;
+            free(resolved);
+        }
+
         LOG_INF("linkOrCopy " << linkOrCopyTypeString(type) << " from [" << source << "] to ["
                               << destination.toString() << "].");
 
