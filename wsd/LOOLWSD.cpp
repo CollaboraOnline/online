@@ -3426,7 +3426,7 @@ int LOOLWSD::innerMain()
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
-        LOG_INF("Loolwsd version details: " << version << " - " << hash << " - id " << HostIdentifier);
+        LOG_INF("Loolwsd version details: " << version << " - " << hash << " - id " << HostIdentifier << " - on " << Util::getLinuxVersion());
     }
 #endif
 #endif
