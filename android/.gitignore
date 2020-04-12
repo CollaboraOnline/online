@@ -1,7 +1,6 @@
 .gradle
 .idea
 /android.iml
-/gradle
 /local.properties
 /lib/src/main/assets/etc/
 /lib/src/main/assets/example.odt
