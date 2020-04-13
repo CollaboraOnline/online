@@ -941,7 +941,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
     const std::string url = jailDoc + tmpDir + "/" + filenameParam.getFileName();
     const std::string urlAnonym = jailDoc + tmpDir + "/" + Poco::Path(nameAnonym).getFileName();
 
-    LOG_DBG("Calling LOK's downloadAs with: url='" << urlAnonym << "', format='" <<
+    LOG_DBG("Calling LOK's saveAs with: url='" << urlAnonym << "', format='" <<
             (format.empty() ? "(nullptr)" : format.c_str()) << "', ' filterOptions=" <<
             (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << "'.");
 
