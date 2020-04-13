@@ -28,8 +28,9 @@
 
 static DocumentViewController* theSingleton = nil;
 
-@interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate> {
+@interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate, UIDocumentPickerDelegate> {
     int closeNotificationPipeForForwardingThread[2];
+    NSURL *downloadAsTmpURL;
 }
 
 @end
@@ -449,6 +450,46 @@ static IMP standardImpOfInputAccessoryView = nil;
                 [application openURL:url options:@{} completionHandler:nil];
                 return;
             }
+        } else if ([message.body hasPrefix:@"downloadas "]) {
+            NSArray<NSString*> *messageBodyItems = [message.body componentsSeparatedByString:@" "];
+            NSString *format = nil;
+            if ([messageBodyItems count] >= 2) {
+                for (int i = 1; i < [messageBodyItems count]; i++) {
+                    if ([messageBodyItems[i] hasPrefix:@"format="])
+                        format = [messageBodyItems[i] substringFromIndex:[@"format=" length]];
+                }
+
+                if (format == nil)
+                    return;     // Warn?
+
+                // First save it in the requested format to a temporary location. First remove any
+                // leftover identically named temporary file.
+
+                NSString *tmpFileName = [[[self.document->copyFileURL lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:[@"." stringByAppendingString:format]];
+                downloadAsTmpURL = [[NSFileManager.defaultManager temporaryDirectory] URLByAppendingPathComponent:tmpFileName];
+
+                std::remove([[downloadAsTmpURL path] UTF8String]);
+
+                lok_document->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
+
+                // Then verify that it indeed was saved, and then use an
+                // UIDocumentPickerViewController to ask the user where to store the exported
+                // document.
+
+                struct stat statBuf;
+                if (stat([[downloadAsTmpURL path] UTF8String], &statBuf) == -1) {
+                    LOG_ERR("Could apparently not save to '" <<  [[downloadAsTmpURL path] UTF8String] << "'");
+                } else {
+                    UIDocumentPickerViewController *picker =
+                        [[UIDocumentPickerViewController alloc] initWithURL:downloadAsTmpURL
+                                                                     inMode:UIDocumentPickerModeExportToService];
+                    picker.delegate = self;
+                    [self presentViewController:picker
+                                       animated:YES
+                                     completion:nil];
+                }
+                return;
+            }
         }
 
         const char *buf = [message.body UTF8String];
@@ -459,6 +500,14 @@ static IMP standardImpOfInputAccessoryView = nil;
     } else {
         LOG_ERR("Unrecognized kind of message received from WebView: " << [message.name UTF8String] << ":" << [message.body UTF8String]);
     }
+}
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
+    std::remove([[downloadAsTmpURL path] UTF8String]);
+}
+
+- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {
+    std::remove([[downloadAsTmpURL path] UTF8String]);
 }
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {

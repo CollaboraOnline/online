@@ -921,56 +921,8 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
     }
 
 #ifdef IOS
-    NSURL *docURL = [NSURL URLWithString:[NSString stringWithUTF8String:getDocURL().c_str()]];
-
-#if 0
-    // Experimentation
-
-    // Check if we can figure out the name of the file provider service the document is on. (No, the
-    // services dictionary passed to the completion handler is always empty, except for On My iPad
-    // and iCloud Drive.)
-    [NSFileManager.defaultManager
-     getFileProviderServicesForItemAtURL:docURL
-                       completionHandler:^(NSDictionary<NSFileProviderServiceName,NSFileProviderService *> *services,
-                                           NSError *error) {
-            if (services == nil) {
-                std::cerr << "Could not get file provider services for " << [[docURL absoluteString] UTF8String] << "\n";
-            } else if ([services count] == 0) {
-                std::cerr << "No file provider services returned for " << [[docURL absoluteString] UTF8String] << "\n";
-            } else {
-                std::cerr << "File provider services for " << [[docURL absoluteString] UTF8String] << ":\n";
-                for (auto key in [services allKeys]) {
-                    std::cerr << "  " << [(NSString*)key UTF8String] << "\n";
-                }
-            }
-        }];
-
-    // Check if we can figure out the "ubiquitous item container" name, which apparently means the file provider extension name.
-    // Alas, this seems to work only for documents on iCloud Drive.
-    NSError *error;
-    auto resources = [docURL promisedItemResourceValuesForKeys:@[NSURLUbiquitousItemContainerDisplayNameKey] error:&error];
-    if (resources == nil) {
-        std::cerr << "Could not get ubiquitous container names for " << [[docURL absoluteString] UTF8String] << "\n";
-    } else if ([resources count] == 0) {
-        std::cerr << "No ubiquitous container names for " << [[docURL absoluteString] UTF8String] << "\n";
-    } else {
-        std::cerr << "Ubiquitous container names for " << [[docURL absoluteString] UTF8String] << ":\n";
-        for (auto name in [resources allValues]) {
-            std::cerr << "  " << [(NSString*)name UTF8String] << "\n";
-        }
-    }
-#endif
-
-    NSArray<NSString *> *pathComponents = [docURL pathComponents];
-    NSString *baseName = [[pathComponents lastObject] stringByDeletingPathExtension];
-    NSURL *documentDirectory = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
-    NSString *dotFormat = [@"." stringByAppendingString:[NSString stringWithUTF8String:format.c_str()]];
-    NSURL *exportedURL = [documentDirectory URLByAppendingPathComponent:[baseName stringByAppendingString:dotFormat]];
-    LOG_TRC("Exporting as " << [[exportedURL absoluteString] UTF8String]);
-
-    getLOKitDocument()->saveAs([[exportedURL absoluteString] UTF8String],
-                               format.empty() ? nullptr : format.c_str(),
-                               filterOptions.empty() ? nullptr : filterOptions.c_str());
+    NSLog(@"We should never come here, aborting");
+    std::abort();
 #else
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
