@@ -1549,6 +1549,10 @@ L.Control.Menubar = L.Control.extend({
 			if (state && state[style]) {
 				menuStructure['checked'] = true;
 			}
+		} else if (item.uno === '.uno:TrackChanges' || item.uno === '.uno:ShowTrackedChanges') {
+			if (this._map['stateChangeHandler'].getItemValue(item.uno) === 'true') {
+				menuStructure['checked'] = true;
+			}
 		}
 
 		if (item.menu)
