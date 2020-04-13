@@ -1064,21 +1064,28 @@ AM_CONDITIONAL([ENABLE_CYPRESS], [$ENABLE_CYPRESS])
 AC_SUBST(ENABLE_CYPRESS)
 
 AC_CONFIG_FILES([Makefile
-                 android/app/appSettings.gradle
-                 android/lib/libSettings.gradle
-                 android/lib/src/main/cpp/CMakeLists.txt
-                 android/Makefile
                  cypress_test/Makefile
                  gtk/Makefile
-                 ios/config.h
-                 ios/Mobile/Info.plist
-                 ios/Mobile/Resources/Settings.bundle/Root.plist
                  test/Makefile
                  loleaflet/Makefile
                  loleaflet/npm-shrinkwrap.json
                  loolwsd.spec
                  loolwsd.xml
                  debian/loolwsd.postinst])
+
+if test "$enable_iosapp" = "yes"; then
+    AC_CONFIG_FILES([ios/config.h
+                 ios/Mobile/Info.plist
+                 ios/Mobile/Resources/Settings.bundle/Root.plist])
+fi
+
+if test "$enable_androidapp" = "yes"; then
+    AC_CONFIG_FILES([android/Makefile
+                 android/app/appSettings.gradle
+                 android/lib/libSettings.gradle
+                 android/lib/src/main/cpp/CMakeLists.txt])
+fi
+
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
 
 AC_OUTPUT
