@@ -3,7 +3,7 @@
  * L.Control.SearchBar
  */
 
-/* global $ w2ui _ _UNO */
+/* global $ w2ui _UNO */
 L.Control.MobileTopBar = L.Control.extend({
 
 	options: {
@@ -32,16 +32,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
 				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
-				{type: 'drop', id: 'userlist', img: 'users', html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
-					'<hr><table class="loleaflet-font" id="editor-btn">' +
-					'<tr>' +
-					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-					'<td>' + _('Always follow the editor') + '</td>' +
-					'</tr>' +
-					'</table>' +
-					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
-					'</div>'
-				},
+				{type: 'drop', id: 'userlist', img: 'users', html: L.control.createUserListWidget()},
 			];
 		} else if (docType == 'spreadsheet') {
 			return [
@@ -53,16 +44,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
 //				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
 				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
-				{type: 'drop', id: 'userlist', img: 'users', html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
-					'<hr><table class="loleaflet-font" id="editor-btn">' +
-					'<tr>' +
-					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-					'<td>' + _('Always follow the editor') + '</td>' +
-					'</tr>' +
-					'</table>' +
-					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
-					'</div>'
-				},
+				{type: 'drop', id: 'userlist', img: 'users', html: L.control.createUserListWidget()},
 			];
 		} else if (docType == 'presentation') {
 			return [
@@ -74,16 +56,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
-				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
-					'<hr><table class="loleaflet-font" id="editor-btn">' +
-					'<tr>' +
-					'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-					'<td>' + _('Always follow the editor') + '</td>' +
-					'</tr>' +
-					'</table>' +
-					'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
-					'</div>'
-				},
+				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		}
 	},
@@ -187,6 +160,9 @@ L.Control.MobileTopBar = L.Control.extend({
 				this.map.fire('mobilewizard', menuData);
 				toolbar.check(id);
 			}
+		}
+		else if (id === 'userlist') {
+			this.map.fire('openuserlist');
 		}
 	},
 

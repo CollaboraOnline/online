@@ -84,6 +84,7 @@ map.addControl(map.dialog);
 map.addControl(L.control.contextMenu());
 map.addControl(L.control.infobar());
 map.loadDocument(global.socket);
+map.addControl(L.control.userList());
 
 global.socket = map._socket;
 window.addEventListener('beforeunload', function () {

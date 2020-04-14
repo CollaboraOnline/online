@@ -5,14 +5,6 @@
 
 /* global $ w2ui w2utils _ _UNO */
 L.Control.StatusBar = L.Control.extend({
-	options: {
-		userPopupTimeout: null,
-		userJoinedPopupMessage: '<div>' + _('%user has joined') + '</div>',
-		userLeftPopupMessage: '<div>' + _('%user has left') + '</div>',
-		nUsers: undefined,
-		oneUser: undefined,
-		noUser: undefined
-	},
 
 	initialize: function () {
 	},
@@ -21,12 +13,8 @@ L.Control.StatusBar = L.Control.extend({
 		this.map = map;
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
-		map.on('addview', this.onAddView, this);
-		map.on('removeview', this.onRemoveView, this);
 		map.on('commandvalues', this.onCommandValues, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
-		map.on('deselectuser', this.deselectUser, this);
-
 	},
 
 	hideTooltip: function(toolbar, id) {
@@ -67,27 +55,6 @@ L.Control.StatusBar = L.Control.extend({
 		return text;
 	},
 
-	escapeHtml: function(input) {
-		return $('<div>').text(input).html();
-	},
-
-	getUserItem: function(viewId, userName, extraInfo, color) {
-		var html = '<tr class="useritem" id="user-' + viewId + '" onclick="onUseritemClicked(event)">' +
-				 '<td class=usercolor>';
-		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-			html += '<img class="avatar-img" src="' + extraInfo.avatar + '" style="border-color: ' + color  + ';" />';
-		} else {
-			html += '<div class="user-info" style="background-color: ' + color  + ';" />';
-		}
-	
-		// TODO: Add mail and other links as sub-menu.
-		html += '</td>' +
-				 '<td class="username loleaflet-font" >' + userName + '</td>' +
-			'</tr>';
-	
-		return html;
-	},
-
 	_updateVisibilityForToolbar: function(toolbar) {
 		if (!toolbar)
 			return;
@@ -116,41 +83,6 @@ L.Control.StatusBar = L.Control.extend({
 
 	_updateToolbarsVisibility: function() {
 		this._updateVisibilityForToolbar(w2ui['actionbar']);
-	},
-
-	updateUserListCount: function() {
-		var actionbar = w2ui.actionbar;
-		var userlistItem = actionbar && actionbar.get('userlist');
-		if (userlistItem == null) {
-			return;
-		}
-	
-		var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
-		if (count > 1) {
-			userlistItem.text = this.options.nUsers.replace('%n', count);
-		} else if (count === 1) {
-			userlistItem.text = this.options.oneUser;
-		} else {
-			userlistItem.text = this.options.noUser;
-		}
-	
-		w2ui['actionbar'].refresh();
-	
-		var hideUserList =
-			window.ThisIsAMobileApp ||
-			(this.map['wopi'].HideUserList !== null && this.map['wopi'].HideUserList !== undefined &&
-				($.inArray('true', this.map['wopi'].HideUserList) >= 0) ||
-				(window.mode.isMobile() && $.inArray('mobile', this.map['wopi'].HideUserList) >= 0) ||
-				(window.mode.isTablet() && $.inArray('tablet', this.map['wopi'].HideUserList) >= 0) ||
-				(window.mode.isDesktop() && $.inArray('desktop', this.map['wopi'].HideUserList) >= 0));
-	
-		if (!hideUserList && count > 1) {
-			actionbar.show('userlist');
-			actionbar.show('userlistbreak');
-		} else {
-			actionbar.hide('userlist');
-			actionbar.hide('userlistbreak');
-		}
 	},
 
 	onClick: function(e, id, item, subItem) {
@@ -224,6 +156,9 @@ L.Control.StatusBar = L.Control.extend({
 				this.map.sendUnoCommand('.uno:StatusBarFunc', command);
 			});
 		}
+		else if (id === 'userlist') {
+			this.map.fire('openuserlist');
+		}
 	},
 
 	create: function() {
@@ -246,16 +181,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'button',  id: 'cancelsearch', img: 'cancel', hint: _('Cancel the search'), hidden: true},
 					{type: 'html',  id: 'left'},
 					{type: 'html',  id: 'right'},
-					{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: '<div id="userlist_container"><table id="userlist_table"><tbody></tbody></table>' +
-						'<hr><table class="loleaflet-font" id="editor-btn">' +
-						'<tr>' +
-						'<td><input type="checkbox" name="alwaysFollow" id="follow-checkbox" onclick="editorUpdate(event)"></td>' +
-						'<td>' + _('Always follow the editor') + '</td>' +
-						'</tr>' +
-						'</table>' +
-						'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
-						'</div>'
-					},
+					{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 					{type: 'break', id: 'userlistbreak', hidden: true, mobile: false },
 					{type: 'button',  id: 'prev', img: 'prev', hint: _UNO('.uno:PageUp', 'text')},
 					{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text')},
@@ -287,22 +213,6 @@ L.Control.StatusBar = L.Control.extend({
 				],
 				onClick: function (e) {
 					that.hideTooltip(this, e.target);
-					if (e.item.id === 'userlist') {
-						setTimeout(function() {
-							var cBox = $('#follow-checkbox')[0];
-							var docLayer = that.map._docLayer;
-							var editorId = docLayer._editorId;
-
-							if (cBox)
-								cBox.checked = docLayer._followEditor;
-
-							if (docLayer.editorId !== -1 && that.map._viewInfo[editorId])
-								$('#current-editor').text(that.map._viewInfo[editorId].username);
-							else
-								$('#currently-msg').hide();
-						}, 100);
-						return;
-					}
 					that.onClick(e, e.target, e.item, e.subItem);
 				},
 				onRefresh: function() {
@@ -487,90 +397,12 @@ L.Control.StatusBar = L.Control.extend({
 			break;
 		}
 
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			this.options.nUsers = '%n';
-			this.options.oneUser = '1';
-			this.options.noUser = '0';
-		} else {
-			this.options.nUsers = _('%n users');
-			this.options.oneUser = _('1 user');
-			this.options.noUser = _('0 users');
-		}
-
-		this.updateUserListCount();
+		this.map.fire('updateuserlistcount');
 
 		this._updateToolbarsVisibility();
 
 		if (statusbar)
 			statusbar.refresh();
-	},
-
-	onAddView: function(e) {
-		var userlistItem = w2ui['actionbar'].get('userlist');
-		var username = this.escapeHtml(e.username);
-		var showPopup = false;
-	
-		if (userlistItem !== null)
-			showPopup = $(userlistItem.html).find('#userlist_table tbody tr').length > 0;
-	
-		if (showPopup) {
-			$('#tb_actionbar_item_userlist')
-				.w2overlay({
-					class: 'loleaflet-font',
-					html: this.options.userJoinedPopupMessage.replace('%user', username),
-					style: 'padding: 5px'
-				});
-			clearTimeout(this.options.userPopupTimeout);
-			var that = this;
-			this.options.userPopupTimeout = setTimeout(function() {
-				$('#tb_actionbar_item_userlist').w2overlay('');
-				clearTimeout(that.options.userPopupTimeout);
-				that.options.userPopupTimeout = null;
-			}, 3000);
-		}
-	
-		var color = L.LOUtil.rgbToHex(this.map.getViewColor(e.viewId));
-		if (e.viewId === this.map._docLayer._viewId) {
-			username = _('You');
-			color = '#000';
-		}
-	
-		// Mention readonly sessions in userlist
-		if (e.readonly) {
-			username += ' (' +  _('Readonly') + ')';
-		}
-	
-		if (userlistItem !== null) {
-			var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(this.getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
-			userlistItem.html = newhtml;
-			this.updateUserListCount();
-		}
-	},
-
-	onRemoveView: function(e) {
-		$('#tb_actionbar_item_userlist')
-			.w2overlay({
-				class: 'loleaflet-font',
-				html: this.options.userLeftPopupMessage.replace('%user', e.username),
-				style: 'padding: 5px'
-			});
-		clearTimeout(this.options.userPopupTimeout);
-		this.options.userPopupTimeout = setTimeout(function() {
-			$('#tb_actionbar_item_userlist').w2overlay('');
-			clearTimeout(this.options.userPopupTimeout);
-			this.options.userPopupTimeout = null;
-		}, 3000);
-	
-		if (e.viewId === this.map._docLayer._followThis) {
-			this.map._docLayer._followThis = -1;
-			this.map._docLayer._followUser = false;
-		}
-	
-		var userlistItem = w2ui['actionbar'].get('userlist');
-		if (userlistItem !== null) {
-			userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
-			this.updateUserListCount();
-		}
 	},
 
 	_cancelSearch: function() {
@@ -696,15 +528,6 @@ L.Control.StatusBar = L.Control.extend({
 	
 			w2ui['actionbar'].set('LanguageStatus', {items: toolbaritems});
 		}
-	},
-
-	deselectUser: function(e) {
-		var userlistItem = w2ui['actionbar'].get('userlist');
-		if (userlistItem === null) {
-			return;
-		}
-	
-		userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).removeClass('selected-user').parent().parent().parent()[0].outerHTML;
 	},
 });
 

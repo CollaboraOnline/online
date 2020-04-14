@@ -23,6 +23,45 @@ input#follow-checkbox {
 	border: 2px solid #aaa;
 	outline: none;
 	box-shadow: #00000015 0px 0px 2px 1px;
+	margin: 0px !important;
+}
+#follow-container {
+	display: block;
+	position: relative;
+	font-size: 22px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+  }
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+}
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+.checkmark:after {
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+  }
+input#follow-checkbox:checked ~ .checkmark:after {
+	display: block;
+}
+input#follow-checkbox:checked ~ .checkmark {
+	background-color: #0b87e7;
 }
 #userlist_table + hr { display: none;}
 div#w2ui-overlay-actionbar.w2ui-overlay{

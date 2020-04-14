@@ -1937,28 +1937,6 @@ function onUpdatePermission(e) {
 	map.invalidateSize();
 }
 
-function onUseritemClicked(e) { // eslint-disable-line no-unused-vars
-	var docLayer = map._docLayer;
-	var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
-
-	map._goToViewId(viewId);
-
-	if (viewId === map._docLayer._viewId) {
-		$('#tb_actionbar_item_userlist').w2overlay('');
-		return;
-	} else if (docLayer._followThis !== -1) {
-		map._setFollowing(false, null);
-	}
-
-	docLayer._followThis = viewId;
-	docLayer._followUser = true;
-	docLayer._followEditor = false;
-
-	selectUser(viewId);
-}
-
-global.onUseritemClicked = onUseritemClicked;
-
 function editorUpdate(e) { // eslint-disable-line no-unused-vars
 	var docLayer = map._docLayer;
 
@@ -1975,8 +1953,6 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 		var userlistItem = w2ui['actionbar'].get('userlist');
 		if (userlistItem !== null) {
 			$('.selected-user').removeClass('selected-user');
-			if ($(userlistItem.html).find('.selected-user').length !== 0)
-				userlistItem.html = $(userlistItem.html).find('.selected-user').removeClass('selected-user').parent().parent().parent()[0].outerHTML;
 		}
 	}
 	else {
@@ -1987,16 +1963,6 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 }
 
 global.editorUpdate = editorUpdate;
-
-function selectUser(viewId) {
-	var userlistItem = w2ui['actionbar'].get('userlist');
-	if (userlistItem === null) {
-		return;
-	}
-
-	userlistItem.html = $(userlistItem.html).find('#user-' + viewId).addClass('selected-user').parent().parent().parent()[0].outerHTML;
-	$('#tb_actionbar_item_userlist').w2overlay('');
-}
 
 $(window).resize(function() {
 	resizeToolbar();
@@ -2012,11 +1978,6 @@ function setupToolbar(e) {
 	map = e;
 
 	createToolbar();
-
-	map.on('updateEditorName', function(e) {
-		$('#currently-msg').show();
-		$('#current-editor').text(e.username);
-	});
 
 	map.on('focussearch', function () {
 		var entry = L.DomUtil.get('search-input');
