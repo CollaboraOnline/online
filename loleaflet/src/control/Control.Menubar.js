@@ -477,7 +477,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
 				{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
 				{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'},
-				{name: _('EPUB (.epub)'), id: 'downloadas-epub', type: 'action', mobileapp: false}
+				{name: _('EPUB (.epub)'), id: 'downloadas-epub', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
