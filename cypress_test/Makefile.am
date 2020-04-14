@@ -34,32 +34,10 @@ export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY)
 WSD_VERSION_HASH := "11111111"
 
 if HAVE_LO_PATH
-MOBILE_TEST_FILES= \
-	calc/alignment_options_spec.js \
-	calc/apply_font_spec.js \
-	calc/focus_spec.js \
-	calc/insertion_wizard_spec.js \
-	calc/number_format_spec.js \
-	calc/spellchecking_spec.js \
-	impress/impress_focus_spec.js \
-	impress/spellchecking_spec.js \
-	writer/apply_font_spec.js \
-	writer/apply_paragraph_properties_spec.js \
-	writer/bottom_toolbar_spec.js \
-	writer/focus_spec.js \
-	writer/insert_field_spec.js \
-	writer/insert_formatting_mark_spec.js \
-	writer/insert_object_spec.js \
-	writer/mobile_wizard_state_spec.js \
-	writer/shape_properties_spec.js \
-	writer/spellchecking_spec.js \
-	writer/table_properties_spec.js \
-	writer/toolbar_spec.js
 
-DEKSTOP_TEST_FILES= \
-	copy_paste_spec.js \
-	example_desktop_test_spec.js \
-	shape_operations_spec.js
+MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDER)/*_spec.js) $(wildcard $(MOBILE_TEST_FOLDER)/*/*_spec.js))
+
+DEKSTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)

@@ -148,8 +148,14 @@ function afterAll(fileName) {
 	cy.get('#uptime')
 		.should('not.have.text', '0');
 
-	cy.get('#doclist td:nth-child(2)')
-		.should('not.contain.text', fileName);
+	// We have all lines of document infos as one long string.
+	// We have PID number before the file names, with matching
+	// also on the PID number we can make sure to match on the
+	// whole file name, not on a suffix of a file name.
+	var regex = new RegExp('[0-9]' + fileName);
+	cy.get('#docview')
+		.invoke('text')
+		.should('not.match', regex);
 
 	cy.log('Waiting for closing the document - end.');
 }
