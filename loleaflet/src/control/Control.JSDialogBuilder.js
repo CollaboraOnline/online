@@ -242,6 +242,46 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return true;
 	},
 
+	_getListBoxUpdateType: function(id) {
+		if (id) {
+			if (id === 'numberformatcombobox')
+				return 'index';
+			else if (id === 'fontsizecombobox')
+				return 'value';
+		}
+		return false;
+	},
+
+	_updateListBox: function(builder, contentDiv, contentNode, sectionTitle, data, state) {
+		if ($(sectionTitle).find('.entry-value')[0])
+			sectionTitle = $($(sectionTitle).find('.entry-value')).get(0);
+		else
+			sectionTitle = $(sectionTitle).find('.ui-header-left').find('span')[0];
+
+		if (!sectionTitle)
+			return;
+
+		$(contentDiv).find('.selected').removeClass('selected');
+
+		var hasChildren = $(contentDiv).children().length > 0 && contentNode.children && contentNode.children.length > 0;
+		var updateBy = builder._getListBoxUpdateType(data.id);
+		if (updateBy === 'index') {
+			sectionTitle.innerHTML = data.entries[state];
+			data.selectedEntries[0] = state;
+			contentDiv.title = data.entries[state];
+			if (hasChildren) {
+				$($(contentDiv).children().get(state)).addClass('selected');
+			}
+		} else if (updateBy === 'value') {
+			sectionTitle.innerHTML = state;
+			if (hasChildren) {
+				$(contentDiv).find('p').filter(function() {
+					return $(this).text() === state;
+				}).addClass('selected');
+			}
+		}
+	},
+
 	_explorableEntry: function(parentContainer, data, contentNode, builder, valueNode, iconPath, updateCallback) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
@@ -270,28 +310,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
 		arrowSpan.innerHTML = '>';
 
-		var updateFunction = function(titleSpan) {
-			var state = null;
-			if (data.id)
-				state = builder._getUnoStateForItemId(data.id, builder);
-
-			if (state) {
-				titleSpan.innerHTML = state;
-			} else {
-				titleSpan.innerHTML = data.text;
-			}
-		};
-
-		updateCallback ? updateCallback(titleSpan) : updateFunction(titleSpan);
-
-		builder.map.on('commandstatechanged', function(e) {
-			if (e.commandName === data.command || e.commandName === builder._mapWindowIdToUnoCommand(data.id))
-				if (updateCallback)
-					updateCallback(titleSpan);
-				else
-					updateFunction(titleSpan);
-		}, this);
-
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
 		contentDiv.title = data.text;
 
@@ -314,6 +332,33 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		else
 			$(sectionTitle).hide();
+
+		var updateFunction = function(titleSpan) {
+			var state = null;
+			if (data.id)
+				state = builder._getUnoStateForItemId(data.id, builder);
+
+			if (builder._getListBoxUpdateType(data.id)) {
+				builder._updateListBox(builder, contentDiv, contentNode, sectionTitle, data, state);
+			} else if (state) {
+				titleSpan.innerHTML = state;
+			} else {
+				titleSpan.innerHTML = data.text;
+			}
+		};
+
+		updateCallback ? updateCallback(titleSpan) : updateFunction(titleSpan);
+
+		builder.map.on('commandstatechanged', function(e) {
+			if (e.commandName === data.command || e.commandName === builder._mapWindowIdToUnoCommand(data.id))
+			{
+				if (updateCallback)
+					updateCallback(titleSpan);
+				else
+					updateFunction(titleSpan);
+			}
+
+		}, this);
 	},
 
 	_calcFunctionEntry: function(parentContainer, data, contentNode, builder) {
@@ -589,9 +634,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				state = data.checked;
 
 			if (state && state === 'true' || state === 1 || state === '1')
-				$(checkbox).attr('checked', 'checked');
+				$(checkbox).prop('checked', true);
 			else if (state)
-				$(checkbox).removeAttr('checked', 'checked');
+				$(checkbox).prop('checked', false);
 		};
 
 		updateFunction();
@@ -687,6 +732,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'transtype':
 			return '.uno:FillFloatTransparence';
+
+		case 'numberformatcombobox':
+			return '.uno:NumberFormatType';
+
+		case 'fontsizecombobox':
+			return '.uno:FontHeight';
 		}
 
 		return null;
@@ -775,6 +826,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					return state[0];
 			}
 			return;
+
+		case 'numberformatcombobox':
+			state = items.getItemValue('.uno:NumberFormatType');
+			if (state) {
+				return state;
+			}
+			break;
+
+		case 'fontsizecombobox':
+			state = items.getItemValue('.uno:FontHeight');
+			if (state) {
+				return state;
+			}
+			break;
 
 		case 'linetransparency':
 			state = items.getItemValue('.uno:LineTransparence');
