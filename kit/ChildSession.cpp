@@ -2564,6 +2564,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_CALC_FUNCTION_LIST:
         sendTextFrame("calcfunctionlist: " + payload);
         break;
+    case LOK_CALLBACK_TAB_STOP_LIST:
+        sendTextFrame("tabstoplistupdate: " + payload);
+        break;
 
 #if !ENABLE_DEBUG
     // we want a compilation-time failure in the debug builds; but ERR in the
