@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="temp_file_saving_disabled">Afaylu-a i tɣuri kan, asekles yensa.</string>
+    <string name="storage_permission_required">Tasiregt n usekles tlaq</string>
+    <string name="failed_to_load_file">Ur yezmir ara ad d-yaf afayku ara d-yessali</string>
+    <string name="failed_to_insert_image">Ur yezmir ad iger tugna</string>
+    <string name="cannot_open_file_chooser">UR izmir ara ad d-yeldi amsefran n ufaylu</string>
+    <string name="preparing_for_the_first_start_after_an_update">Aheggi i beddu amezwaru n uleqqem.</string>
+    <string name="rate_now">Rnu tazmilt tura</string>
+    <string name="later">Ticki</string>
+    <string name="rate_our_app_title">Tanemmirt imi tseqdaceḍ %1$s!</string>
+    <string name="rate_our_app_text">Ma tebɣiḍ, mudd-d arma d 5 n yitran deg Google Play. Iceggiren-ik yelhan rennun-aɣ-d tabɣest.</string>
+    <string name="loading">Yettali-d</string>
+    <string name="exiting">Tufɣa...</string>
+</resources>

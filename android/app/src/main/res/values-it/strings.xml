@@ -100,4 +100,6 @@
     <string name="pref_enable_chrome_debugger_info">Attiva per utilizzare lo strumento di debug di Chrome nel documento</string>
     <string name="pref_enable_chrome_debugger">Debug di Chrome</string>
     <string name="pref_category_editor">Impostazioni dell\'editor</string>
+    <string name="remove_from_list">Rimuovi dall\'elenco</string>
+    <string name="file_actions_icon_desc">Azioni del file</string>
 </resources>

@@ -3,14 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2016-10-04 12:59+0000\n"
+"PO-Revision-Date: 2020-04-11 11:43+0000\n"
 "Last-Translator: Muḥend Velqasem <belkacem77@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Kabyle <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/kab/>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-POOTLE-MTIME: 1475585999.000000\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:19-5
@@ -55,7 +56,7 @@ msgstr "Ctrl + Alt + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Print (Download as PDF)"
-msgstr ""
+msgstr "Siggez (Sader s PDF)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-68
 msgid "Ctrl + P"
@@ -63,27 +64,26 @@ msgstr "Ctrl + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-18
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Sken tallelt n yinegzumen n unasiw"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-80
 msgid "Ctrl + Shift + ?"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:32-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Text formatting"
-msgstr ""
+msgstr "Amsal n uḍris"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:34-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:131-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:156-18
 msgid "Bold"
-msgstr ""
+msgstr "Zur"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:34-49
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:131-49
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:156-49
-#, fuzzy
 msgid "Ctrl + B"
 msgstr "Ctrl + B"
 
@@ -91,37 +91,34 @@ msgstr "Ctrl + B"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:157-18
 msgid "Italic"
-msgstr ""
+msgstr "Yekna"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:35-51
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-51
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:157-51
-#, fuzzy
 msgid "Ctrl + I"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + I"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-18
 msgid "Underline"
-msgstr ""
+msgstr "Derrer"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-54
-#, fuzzy
 msgid "Ctrl + U"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + U"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-18
 msgid "Double Underline"
-msgstr ""
+msgstr "Sin n yijerriḍen s wadda"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-61
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-54
-#, fuzzy
 msgid "Ctrl + D"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
@@ -133,27 +130,27 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-58
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:159-58
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-18
 msgid "Superscript"
-msgstr ""
+msgstr "Ameskan"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-56
 msgid "Ctrl + Shift + P"
-msgstr ""
+msgstr "Ctrl + Shift + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-18
 msgid "Subscript"
-msgstr ""
+msgstr "Adaskript "
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-54
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Ctrl + Shift + B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
@@ -162,9 +159,8 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-69
-#, fuzzy
 msgid "Ctrl + M"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + M"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:43-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:164-9
@@ -175,108 +171,98 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-18
 msgid "Align Center"
-msgstr ""
+msgstr "Slemmes"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:45-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:166-57
-#, fuzzy
 msgid "Ctrl + E"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-18
 msgid "Align Left"
-msgstr ""
+msgstr "Reyyec s azelmad"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-55
-#, fuzzy
 msgid "Ctrl + L"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-18
 msgid "Align Right"
-msgstr ""
+msgstr "Reyyec s ayeffus"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-56
-#, fuzzy
 msgid "Ctrl + R"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:169-18
 msgid "Justify"
-msgstr ""
+msgstr "Ṣeggem"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:169-52
-#, fuzzy
 msgid "Ctrl + J"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-18
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Semres aɣanib n tṣeddart Amezwer"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-74
-#, fuzzy
 msgid "Ctrl + 0"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 0"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-18
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "Semres aɣanib n tṣeddart Azwel 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-76
-#, fuzzy
 msgid "Ctrl + 1"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "Semres aɣanib n tṣeddart Azwel 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-76
-#, fuzzy
 msgid "Ctrl + 2"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-18
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "Semres aɣanib n tṣeddart Azwel 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-69
-#, fuzzy
 msgid "Ctrl + 3"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-18
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "Semres aɣanib n tṣeddart Azwel 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-76
-#, fuzzy
 msgid "Ctrl + 4"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-18
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "Semres aɣanib n tṣeddart Azwel 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-76
-#, fuzzy
 msgid "Ctrl + 5"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:56-9
 msgid "Text selection and navigation in document"
@@ -287,7 +273,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:175-18
 msgid "Select All"
-msgstr ""
+msgstr "Fren akk"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:58-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-18
@@ -295,9 +281,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:175-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-79
-#, fuzzy
 msgid "Ctrl + A"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-18
@@ -307,7 +292,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-68
 msgid "Arrow Left"
-msgstr ""
+msgstr "Aneccab s azelmaḍ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-18
@@ -317,7 +302,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-83
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-83
 msgid "Shift + Arrow Left"
-msgstr ""
+msgstr "Shift + Aneccab s azelmaḍ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-18
@@ -327,17 +312,17 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-70
 msgid "Ctrl + Arrow Left"
-msgstr ""
+msgstr "CTRL + Aneccab s azelmaḍ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-18
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "Frem arma d azelmaḍ awal s wawal"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-76
 msgid "Ctrl + Shift + Arrow Left"
-msgstr ""
+msgstr "CTRL + Shift + Aneccab s azelmaḍ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-18
@@ -347,7 +332,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-69
 msgid "Arrow Right"
-msgstr ""
+msgstr "Aneccab s ayeffus"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18
@@ -357,7 +342,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-84
 msgid "Shift + Arrow Right"
-msgstr ""
+msgstr "Shift + Aneccab s ayeffus"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-18
@@ -367,17 +352,17 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-73
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-73
 msgid "Ctrl + Arrow Right"
-msgstr ""
+msgstr "CTRL + Aneccab s ayeffus"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "Frem arma d ayeffus awal s wawal"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-77
 msgid "Ctrl + Shift + Arrow Right"
-msgstr ""
+msgstr "CTRL + Shift + Aneccab s ayeffus"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
@@ -387,7 +372,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-68
 msgid "Arrow Up"
-msgstr ""
+msgstr "Aneccab d asawen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
@@ -397,7 +382,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-78
 msgid "Shift + Arrow Up"
-msgstr ""
+msgstr "Shift + Aneccab d asawen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-18
@@ -407,17 +392,17 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-95
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-95
 msgid "Ctrl + Arrow Up"
-msgstr ""
+msgstr "CTRL + Aneccab d asawen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "Fren arrma d tazwara n tṣeddart"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-77
 msgid "Ctrl + Shift + Arrow Up"
-msgstr ""
+msgstr "CTRL + Shift + Aneccab d asawen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-18
@@ -427,7 +412,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-70
 msgid "Arrow Down"
-msgstr ""
+msgstr "Aneccab d akesser"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
@@ -437,7 +422,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-80
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-80
 msgid "Shift + Arrow Down"
-msgstr ""
+msgstr "Shift + Aneccab d akesser"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-18
@@ -447,17 +432,17 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-91
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-91
 msgid "Ctrl + Arrow Down"
-msgstr ""
+msgstr "CTRL + Aneccab d akesser"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "Fren arrma d taggara n tṣeddart"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-71
 msgid "Ctrl + Shift + Arrow Down"
-msgstr ""
+msgstr "CTRL + Shift + Aneccab d akesser"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
@@ -467,7 +452,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-68
 msgid "Home"
-msgstr ""
+msgstr "Agejdan"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
@@ -477,7 +462,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-85
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-85
 msgid "Shift + Home"
-msgstr ""
+msgstr "Shift + Tazwara"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-18
@@ -488,7 +473,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-68
 msgid "Ctrl + Home"
-msgstr ""
+msgstr "Ctrl + Tazwara"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 msgid "Go and select text to start of document"
@@ -497,7 +482,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-83
 msgid "Ctrl + Shift + Home"
-msgstr ""
+msgstr "Ctrl + Shift + Agejdan"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-18
@@ -507,7 +492,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-62
 msgid "End"
-msgstr ""
+msgstr "Tagara"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
@@ -517,7 +502,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-79
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-79
 msgid "Shift + End"
-msgstr ""
+msgstr "Tagara"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-18
@@ -527,9 +512,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-66
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-66
-#, fuzzy
 msgid "Ctrl + End"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + Taggara"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 msgid "Go and select text to end of document"
@@ -538,7 +522,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-82
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-81
 msgid "Ctrl + Shift + End"
-msgstr ""
+msgstr "Ctrl + Shift + Tazwara"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Move the view up one page"
@@ -554,7 +538,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-82
 msgid "Ctrl + PageUp"
-msgstr ""
+msgstr "Ctrl + Asebter d asawen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 msgid "Extend the selection up one page"
@@ -562,7 +546,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-77
 msgid "Shift + PageUp"
-msgstr ""
+msgstr "Shift + Asebter d asawen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Move the view down one page"
@@ -578,7 +562,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-82
 msgid "Ctrl + PageDown"
-msgstr ""
+msgstr "Ctrl + Asebter d akesser"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Extend the selection down one page"
@@ -586,40 +570,39 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-79
 msgid "Shift + PageDown"
-msgstr ""
+msgstr "Shift + Asebter d akesser"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "Kkes arma d tazwara n wawal"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-72
 msgid "Ctrl + Backspace"
-msgstr ""
+msgstr "CTRL + Tuɣalin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Kkes arma d taggara n wawal"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-66
-#, fuzzy
 msgid "Ctrl + Del"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "Kkes arma d tazwara n tefyirt"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-76
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Ctrl + Shift + Tuɣalin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-18
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Kkes arma d taggara n tefyirt"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-70
 msgid "Ctrl + Shift + Del"
-msgstr ""
+msgstr "Ctrl + Shift + Kkes"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:94-9
 msgid "Shortcut Keys for Tables"
@@ -639,7 +622,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-18
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Ctrl + Tarigla"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-56
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
@@ -647,7 +630,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Alt + Arrow Keys"
-msgstr ""
+msgstr "Alt + Tiqeffalin n tnila"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-62
 msgid "Increases/decreases the size of the column/row on the right/bottom cell edge"
@@ -655,7 +638,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt + Shift + Tiqeffalin n tnila"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -663,7 +646,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
 msgid "Alt + Ctrl + Arrow Keys"
-msgstr ""
+msgstr "Alt + CTRL + Tiqeffalin n tnila"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-77
@@ -672,11 +655,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr ""
+msgstr "Alt +Alt + Shift + Tiqeffalin n tnila"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-18
 msgid "Alt + Insert"
-msgstr ""
+msgstr "Alt + Ger"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-58
 msgid "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key inserts cell"
@@ -684,7 +667,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-18
 msgid "Alt + Del"
-msgstr ""
+msgstr "Alt + Kkes"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-55
 msgid "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key merges cell with neighboring cell"
@@ -692,7 +675,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Shift + Ctrl + Del"
-msgstr ""
+msgstr "Shift + Ctrl + Kkes"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:106-86
 msgid "If no whole cell is selected, the text from the cursor to the end of the current sentence is deleted. If the cursor is at the end of a cell, and no whole cell is selected, the contents of the next cell are deleted."
@@ -716,7 +699,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:113-60
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Ctrl + Alt + F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-18
 msgid "Insert endnote"
@@ -724,7 +707,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-59
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Ctrl + Alt + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
@@ -734,16 +717,15 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-59
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-59
 msgid "Ctrl + Alt + C"
-msgstr ""
+msgstr "Ctrl + Alt + C"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-18
 msgid "Insert soft hyphen"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-63
-#, fuzzy
 msgid "Ctrl + -"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-18
 msgid "Insert non-breaking hyphen"
@@ -751,7 +733,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-71
 msgid "Ctrl + Shift + -"
-msgstr ""
+msgstr "Ctrl + Shift + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-18
 msgid "Insert non-breaking space"
@@ -759,7 +741,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-70
 msgid "Ctrl + Shift + Space"
-msgstr ""
+msgstr "Ctrl + Shift + Tallunt"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-18
 msgid "Insert line break"
@@ -767,7 +749,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-62
 msgid "Shift + Enter"
-msgstr ""
+msgstr "Shift + Kcem"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Manual page break"
@@ -775,9 +757,8 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-93
-#, fuzzy
 msgid "Ctrl + Enter"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + Kcem"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Column break (in multicolumnar text)"
@@ -785,7 +766,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-81
 msgid "Ctrl + Shift + Enter"
-msgstr ""
+msgstr "Ctrl + Shift + Taggara"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
 msgid "Insert new paragraph directly before or after a section, or before a table"
@@ -794,7 +775,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-155
 msgid "Alt + Enter"
-msgstr ""
+msgstr "Alt + Kcem"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
 msgid "Insert new paragraph without numbering inside a list. Does not work when the cursor is at the end of the list."
@@ -809,9 +790,8 @@ msgid "Display comment"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-60
-#, fuzzy
 msgid "Ctrl + F1"
-msgstr "Ctrl + Z"
+msgstr "Ctrl + F1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid "Fill Down"
@@ -827,7 +807,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-84
 msgid "Ctrl + Shift + 1"
-msgstr ""
+msgstr "Ctrl + Shift + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Standard exponential format"
@@ -835,7 +815,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-72
 msgid "Ctrl + Shift + 2"
-msgstr ""
+msgstr "Ctrl + Shift + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid "Standard date format"
@@ -843,7 +823,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-65
 msgid "Ctrl + Shift + 3"
-msgstr ""
+msgstr "Ctrl + Shift + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Standard currency format"
@@ -851,7 +831,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-69
 msgid "Ctrl + Shift + 4"
-msgstr ""
+msgstr "Ctrl + Shift + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid "Standard percentage format (two decimal places)"
@@ -859,7 +839,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-92
 msgid "Ctrl + Shift + 5"
-msgstr ""
+msgstr "Ctrl + Shift + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid "Standard format"
@@ -867,7 +847,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-60
 msgid "Ctrl + Shift + 6"
-msgstr ""
+msgstr "Ctrl + Shift + 6"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-18
 msgid "Demote list item (list item has to be selected)"
@@ -876,7 +856,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-92
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-99
 msgid "Tab"
-msgstr ""
+msgstr "Tabulation"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-18
 msgid "Promote list item (list item has to be selected)"
@@ -885,7 +865,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-107
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Shift + Tarigla"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:173-9
 msgid "Text selection and navigation in a textbox"
@@ -909,7 +889,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-166
 msgid "Esc"
-msgstr ""
+msgstr "Zgel"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-18
 msgid "Select objects in the order in which they were created"
@@ -925,7 +905,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "Fren akk deg umray / sebter n usunneɣ"
 
 #: html/loleaflet-help.html%2Bdiv.h1:212-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -973,7 +953,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:221-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:342-5
 msgid "Formulas"
-msgstr ""
+msgstr "Tinfaliyin"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:222-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:348-5
@@ -1027,7 +1007,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:239-5
 msgid "General"
-msgstr ""
+msgstr "Amatu"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:473-5
@@ -1037,12 +1017,12 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:537-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Tiferlit n usiḍen"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:247-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:565-5
 msgid "Presentations"
-msgstr ""
+msgstr "Asenked"
 
 #: html/loleaflet-help.html%2Bdiv.p:249-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
@@ -1074,7 +1054,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:262-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
-msgstr ""
+msgstr "<span class=\"def\">Umuɣen n usatal:</span> S utekki ɣef tqeffalt tayeffust n tɣerdayt, ad d-iban wumuɣ s tludna icudden ɣer tɣawsa s ujerriḍ."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
@@ -1206,7 +1186,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr ""
+msgstr "Ticki ɣur-k agbut agensan yettwagezmen neɣ yettwaneɣlen, tzemred ad tsenṭeḍ agbur-a s wumuɣ asatalan."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
@@ -1230,15 +1210,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:319-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
-msgstr ""
+msgstr "<span class=\"def\">Abeddl deg udlif:</span> Tekki snat n tikkal ɣef udlif akked ad tferneḍ-t. Seqdec umuɣen n usatal akken ad ternuḍ iferdisen n udlif am uzwel, igellusen, d wiyaḍ. Fren <span class=\"ui\">Azilal n yisefka</span> akked <span class=\"ui\">Anaw n udlif</span> akken ad tbeddleḍ isefka n udlis akked ufran n wanaw n udlif."
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
-msgstr ""
+msgstr "<span class=\"def\">Amasal n udlif:</span> Umuɣ-nni n usatal ad k-yawi ɣer tfelwit n yisefka n udlif akked ufran n wanaw n udlif."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
-msgstr ""
+msgstr "<span class=\"def\">Amasal n yizriren n yisefka:</span> Ldi umuɣ n usatal sakin fren <span class=\"ui\">Msel izriren n yisefka</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:322-5
 msgid "Handling images"
@@ -1350,11 +1330,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:378-5
 msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
-msgstr ""
+msgstr "<span class=\"def\">Iwenniten:</span> Deg tferkit n usiḍen ad tizmired ad tegreḍ yiwen n uwennit deg tebniqt. Ticki tferneḍ  <span class=\"ui\">Ger awennit</span>, ad d-iban usfaylu ara k-yeǧǧen ad taruḍ agbur i uwennit. Taneqqiḍt tazeggaɣt ad tban deg tama tayeffust n tebniqt ticki tesɛa awennit. Srifeg s tɣerdayt ɣef tebniqt akken ad tsekneḍ iwenniten."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:380-5
 msgid "<span class=\"def\">Conditional formatting:</span> <span class=\"productname\">%productName</span> adds symbols to each cell of a range based on cells conditions. Select the cell range and click the <span class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the symbol set to apply on the range."
-msgstr ""
+msgstr "<span class=\"def\">Amasal s tewtilin:</span> <span class=\"productname\">%productName</span> ad yernu izamulen i yal tabniqt n uzilal yebnan ɣef tiwtilin n tebniqin. Fren azilal n tebniqin sakin tekki ɣef tignit <span class=\"ui\">Amasal s tewtilin</span> deg ufeggag n yifecka. Fren azamul akken ad tesmerseḍ azilal."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:388-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
@@ -1382,7 +1362,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
-msgstr ""
+msgstr "<span class=\"def\">Amasal n uɣanib:</span> <span class=\"productname\">%productName</span> isefrak iɣunab n tṣeddarin. Tzemred ad tesmerseḍ aɣanib n tseddart yellan. Fren umuɣ <span class=\"ui\">Ẓreg</span> → <span class=\"ui\">Ẓreg iɣunab</span> akken ad tbeddleḍ aɣanib."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:401-5
 msgid "Handling Tables"
@@ -1414,7 +1394,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:410-5
 msgid "<span class=\"def\">Comments:</span> Comments are inserted in the text and displayed on the right side of the screen."
-msgstr ""
+msgstr "<span class=\"def\">Iwenniten:</span> Iwenniten ad ttwagren deg uḍris daɣen ad ttwaseknen deg tama tayeffust n ugdil."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable spaces are shown as marks to assisting text alignment, editing and formatting."
@@ -1426,7 +1406,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:413-5
 msgid "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index can be updated with new entries."
-msgstr ""
+msgstr "<span class=\"def\">Amatar s ugemmay:</span> Amatar s ugemmay yellan izmer ad yettwaklqem s yinekcam imaynuten."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:414-5
 msgid "<span class=\"def\">Page header and footer:</span> Headers and footers are available for the existing page style applied in the document at the cursor position."
@@ -1434,7 +1414,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
-msgstr ""
+msgstr "<span class=\"def\">Tizmilin n uḍar d uqerru:</span> Tizmilin n uḍar d uqerru ttwasefrakent."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
 msgid "<span class=\"productname\">%productName</span> Impress edits presentations in a way that should be familiar to people. Operations like typing text, cut, copy and pasting contents, selecting text , inserting, resizing, anchoring images, adding and handling tables, are similar to a desktop presentation application. Use the keyboard, menus and toolbars to perform actions in your document."
@@ -1554,7 +1534,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
-msgstr ""
+msgstr "Tuccḍiwin n tseddats deg uḍris ad ttwacerḍent s ujerriḍ anili s ddaw. Tekki ɣer uḍris s ujerriḍ s tqeffalt tayeffust n tɣerdayt akken ad teldiḍ umuɣ s yisumar i useɣti n tuccḍiwin n terrumt akked ilugan n tjerrumt ur netwadar ara. Fren isumar deg uyeffus akken ad tbeddleḍ aḍris."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
@@ -1618,7 +1598,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "With track changes enabled your document is shown the following manner:"
-msgstr ""
+msgstr "S urmad n uḍfar n yibeddilen, isemli-ik ad yettwasken s tarrayt-a:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."
@@ -1690,7 +1670,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:517-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "Fren ma tebɣiḍ ad tbeddleḍ asuḍen n usebter"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:519-5
 msgid "To return to portrait orientation, repeat the procedure, choosing Portrait in “With page style”."
@@ -1719,7 +1699,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:527-5
 msgid "Applying a paragraph style:"
-msgstr ""
+msgstr "Asemres aɣanib n tṣeddart"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:529-11
 msgid "Place the cursor at the paragraph to be formatted"
@@ -1795,7 +1775,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:560-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Amek ara beddleɣ isem i tferkit?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:561-5
 msgid "Rename a sheet in the spreadsheet document using the context menu (using the right mouse button) over the sheet tab in the bottom. Enter the new sheet name in the dialog that follows."
@@ -1803,7 +1783,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:566-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Amek ara slekmeɣ asenked-iw tura?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:568-11
 msgid "Open the presentation in <span class=\"productname\">%productName</span>"
@@ -1823,11 +1803,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-9
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or <span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</span>). A dialog opens."
-msgstr ""
+msgstr "Choose <span class=\"ui\">Amasal</span> → <span class=\"ui\">Izirig</span> (neɣ <span class=\"ui\">Tajumma</span>, neɣ <span class=\"ui\">Adig akked Teɣzi</span>). Asaylu ad d-yeldi."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:578-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Sbadu timeẓliyin n uferdis n tɣawsa."
 
 #~ msgid "LOLeaflet Help"
 #~ msgstr "Amnir n tallalt LO"

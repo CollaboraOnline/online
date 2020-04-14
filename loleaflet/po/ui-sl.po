@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-03-25 19:21+0000\n"
+"PO-Revision-Date: 2020-04-11 11:43+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sl/>\n"
 "Language: sl\n"
@@ -321,7 +321,7 @@ msgstr "Brez"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Polno"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -384,10 +384,8 @@ msgid "Font Size"
 msgstr "Velikost pisave"
 
 #: src/control/Control.JSDialogBuilder.js:1441
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Obrobe"
+msgstr "Obrobe celic"
 
 #: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"

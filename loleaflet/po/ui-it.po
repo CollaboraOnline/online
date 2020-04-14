@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-03-24 11:22+0000\n"
+"PO-Revision-Date: 2020-04-10 08:07+0000\n"
 "Last-Translator: Valter Mura <valtermura@gmail.com>\n"
 "Language-Team: Italian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/it/>\n"
 "Language: it\n"
@@ -324,7 +324,7 @@ msgstr "Nessuno"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "In tinta unita"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -387,10 +387,8 @@ msgid "Font Size"
 msgstr "Dimensione carattere"
 
 #: src/control/Control.JSDialogBuilder.js:1441
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Bordi"
+msgstr "Bordi delle celle"
 
 #: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"

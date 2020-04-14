@@ -93,7 +93,7 @@
     <string name="file_creation_failed">Tworzenie pliku nie powiodło się</string>
     <string name="file_exists_warning">Plik o tej nazwie już istnieje i zostanie zastąpiony.</string>
     <string name="no_items">Brak pozycji</string>
-    <string name="no_recent_items">Otwórz plik używając ikony folderu na pasku narzędzi.</string>
+    <string name="no_recent_items">Otwórz plik, używając ikony folderu na pasku narzędzi.</string>
     <string name="app_vendor">To wydanie zostało dostarczone przez $VENDOR.</string>
     <string name="app_description">$APP_NAME to nowoczesny i łatwy w użyciu zestaw programów biurowych, do których należą m.in. edytor tekstów, arkusz kalkulacyjny, program do prezentacji i inne.</string>
     <string name="app_version">Wersja: %1$s, identyfikator kompilacji: %2$s</string>

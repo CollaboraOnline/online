@@ -100,4 +100,6 @@
     <string name="sort">Sort by</string>
     <string name="filter">Filter by</string>
     <string name="pref_category_editor">Editor Settings</string>
+    <string name="remove_from_list">Remove from the list</string>
+    <string name="file_actions_icon_desc">File actions</string>
 </resources>
