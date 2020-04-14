@@ -114,6 +114,11 @@
       <text desc="Watermark text to be displayed on the document if entered" type="string"></text>
     </watermark>
 
+    <welcome>
+      <enable type="bool" desc="Controls whether the welcome screen should be shown to the users on new install and updates." default="true">true</enable>
+      <path desc="Path to 'welcome-$lang.html' files served on first start or when the version changes. When empty, defaults to the Release notes." type="path" relative="true" default="loleaflet/welcome"></path>
+    </welcome>
+
     <storage desc="Backend storage">
         <filesystem allow="false" />
         <wopi desc="Allow/deny wopi storage. Mutually exclusive with webdav." allow="true">

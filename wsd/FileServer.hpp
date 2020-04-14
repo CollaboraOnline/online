@@ -35,7 +35,7 @@ public:
     /// Clean cached files.
     static void uninitialize() { FileHash.clear(); }
 
-    static void readDirToHash(const std::string &basePath, const std::string &path);
+    static void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
 
     static const std::string *getCompressedFile(const std::string &path);
 

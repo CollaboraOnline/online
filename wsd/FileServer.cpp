@@ -469,7 +469,7 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
     socket->send(oss.str());
 }
 
-void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path)
+void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix)
 {
     struct dirent *currentFile;
     struct stat fileStat;
@@ -539,7 +539,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
             } while(true);
 
-            FileHash.emplace(relPath, std::make_pair(uncompressedFile, compressedFile));
+            FileHash.emplace(prefix + relPath, std::make_pair(uncompressedFile, compressedFile));
             deflateEnd(&strm);
         }
     }
@@ -551,13 +551,20 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
 void FileServerRequestHandler::initialize()
 {
-    static const std::vector<std::string> subdirs = { "/loleaflet/dist" };
-    for(const auto& subdir: subdirs)
+    // loleaflet files
+    try {
+        readDirToHash(LOOLWSD::FileServerRoot, "/loleaflet/dist");
+    } catch (...) {
+        LOG_ERR("Failed to read from directory " << LOOLWSD::FileServerRoot);
+    }
+
+    // welcome / release notes files
+    if (!LOOLWSD::WelcomeFilesRoot.empty())
     {
         try {
-            readDirToHash(LOOLWSD::FileServerRoot, subdir);
+            readDirToHash(LOOLWSD::WelcomeFilesRoot, "", "/loleaflet/dist/welcome");
         } catch (...) {
-            LOG_ERR("Failed to read from directory " << subdir);
+            LOG_ERR("Failed to read from directory " << LOOLWSD::WelcomeFilesRoot);
         }
     }
 }

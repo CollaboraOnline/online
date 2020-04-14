@@ -718,6 +718,7 @@ std::string LOOLWSD::LoTemplate;
 std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
+std::string LOOLWSD::WelcomeFilesRoot;
 std::string LOOLWSD::ServiceRoot;
 std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::OSInfo;
@@ -940,7 +941,9 @@ void LOOLWSD::initialize(Application& self)
             { "sys_template_path", "systemplate" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
-            { "trace[@enable]", "false" }
+            { "trace[@enable]", "false" },
+            { "welcome.enable", "true" },
+            { "welcome.path", "loleaflet/welcome" }
           };
 
     // Set default values, in case they are missing from the config file.
@@ -1145,7 +1148,14 @@ void LOOLWSD::initialize(Application& self)
     ChildRoot = getPathFromConfig("child_root_path");
     ServerName = config().getString("server_name");
 
+    LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
+    LOG_DBG("FileServerRoot after config: " << FileServerRoot);
+
+    WelcomeFilesRoot = getPathFromConfig("welcome.path");
+    if (!getConfigValue<bool>(conf, "welcome.enable", true))
+        WelcomeFilesRoot = "";
+
     NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
     if (NumPreSpawnedChildren < 1)
     {
