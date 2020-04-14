@@ -115,12 +115,16 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
     public void onBindViewHolder(ViewHolder holder, int position) {
         final RecentFile file = recentFiles.get(position);
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mActivity.open(file.uri);
+
             }
-        });
+        };
+
+        holder.filenameView.setOnClickListener(clickListener);
+        holder.imageView.setOnClickListener(clickListener);
 
         holder.fileActionsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
