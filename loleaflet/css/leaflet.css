@@ -874,23 +874,36 @@ input.clipboard {
 	line-height: 7px;
 	}
 
-/* A triangle pointing up */
-.loleaflet-ruler-tabstop {
-	width: 0;
-	height: 0;
-	vertical-align: bottom;
-	display: inline-block;
-	/* So that we hardcode this in just one place */
-	--loleaflet-ruler-tabstop-border: 8;
-	border-top: calc(var(--loleaflet-ruler-tabstop-border) * 1px) solid transparent;
-	border-left: calc(var(--loleaflet-ruler-tabstop-border) * 1px) solid transparent;
-	/* Offset the left border with left margin to make this really take zero horizontal space until the JS code bumps the marginLeft */
-	margin-left: calc(-1 * var(--loleaflet-ruler-tabstop-border) * 1px);
-	border-right: calc(var(--loleaflet-ruler-tabstop-border) * 1px) solid transparent;
-	/* Ditto for the right border, this is left as is */
-	margin-right: calc(-1 * var(--loleaflet-ruler-tabstop-border) * 1px);
-	border-bottom: calc(var(--loleaflet-ruler-tabstop-border) * 1px) solid black;
-	margin-bottom: calc(-1 * var(--loleaflet-ruler-tabstop-border) * 1px / 2);
+.loleaflet-ruler-tabstop-left {
+	width: 20px;
+	height: 20px;
+	background: url(images/tabstop-left.svg);
+	position: absolute;
+	pointer-events: none;
+}
+
+.loleaflet-ruler-tabstop-right {
+	width: 20px;
+	height: 20px;
+	background: url(images/tabstop-right.svg);
+	position: absolute;
+	pointer-events: none;
+}
+
+.loleaflet-ruler-tabstop-center {
+	width: 20px;
+	height: 20px;
+	background: url(images/tabstop-center.svg);
+	position: absolute;
+	pointer-events: none;
+}
+
+.loleaflet-ruler-tabstop-decimal {
+	width: 20px;
+	height: 20px;
+	background: url(images/tabstop-decimal.svg);
+	position: absolute;
+	pointer-events: none;
 }
 
 .loleaflet-ruler-margin {

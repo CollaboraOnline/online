@@ -3,7 +3,7 @@
  * Ruler Handler
  */
 
-/* global $ L _ */
+/* global $ L _ Hammer */
 L.Control.Ruler = L.Control.extend({
 	options: {
 		interactive: true,
@@ -24,6 +24,7 @@ L.Control.Ruler = L.Control.extend({
 
 	onAdd: function(map) {
 		map.on('rulerupdate', this._updateOptions, this);
+		map.on('tabstoplistupdate', this._updateTabStops, this);
 		map.on('docsize', this._updatePaintTimer, this);
 		map.on('scrolloffset resize', this._fixOffset, this);
 		map.on('updatepermission', this._changeInteractions, this);
@@ -73,12 +74,23 @@ L.Control.Ruler = L.Control.extend({
 
 		// Tab stops
 		this._rTSContainer = L.DomUtil.create('div', 'loleaflet-ruler-tabstopcontainer', this._rMarginWrapper);
-		if (window.ThisIsTheiOSApp)
-			L.DomEvent.on(this._rTSContainer, 'touchstart', this._initiateTabstopDrag, this);
-		else
-			L.DomEvent.on(this._rTSContainer, 'mousedown', this._initiateTabstopDrag, this);
+		L.DomEvent.on(this._rTSContainer, 'mousedown', this._initiateTabstopDrag, this);
 
+		var self = this;
 
+		if (L.Browser.touch) {
+			this._hammer = new Hammer(this._rTSContainer);
+			this._hammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+			this._hammer.on('panstart', function (event) {
+				self._initiateTabstopDrag(event);
+			});
+			this._hammer.on('panmove', function (event) {
+				self._moveTabstop(event);
+			});
+			this._hammer.on('panend', function (event) {
+				self._endTabstopDrag(event);
+			});
+		}
 		return this._rWrapper;
 	},
 
@@ -96,14 +108,25 @@ L.Control.Ruler = L.Control.extend({
 
 		// pageWidth on the other hand *is* really in mm100.
 		this.options.pageWidth = parseInt(obj['pageWidth']);
-		this.options.tabs = [];
-		// As are the position values of the elements in the tabs array.
-		for (var i in obj['tabs']) {
-			this.options.tabs[i] = { position: parseInt(obj['tabs'][i].position), style: parseInt(obj['tabs'][i].style) };
-		}
+
 		// to be enabled only after adding support for other length units as well
 		// this.options.unit = obj['unit'].trim();
 
+		this._updateBreakPoints();
+	},
+
+	_updateTabStops: function(obj) {
+		this.options.tabs = [];
+		var jsonTabstops = obj['tabstops'];
+		if (jsonTabstops === '')
+			return;
+		for (var i in jsonTabstops) {
+			var jsonTabstop = jsonTabstops[i];
+			this.options.tabs[i] = {
+				position: parseInt(jsonTabstop.position),
+				style: parseInt(jsonTabstop.type)
+			};
+		}
 		this._updateBreakPoints();
 	},
 
@@ -167,22 +190,41 @@ L.Control.Ruler = L.Control.extend({
 		// The tabstops. Only draw user-created ones, with style RULER_TAB_LEFT,
 		// RULER_TAB_RIGHT, RULER_TAB_CENTER, and RULER_TAB_DECIMAL. See <svtools/ruler.hxx>.
 
-		$('.loleaflet-ruler-tabstop').remove();
+		$('.loleaflet-ruler-tabstop-left').remove();
+		$('.loleaflet-ruler-tabstop-right').remove();
+		$('.loleaflet-ruler-tabstop-center').remove();
+		$('.loleaflet-ruler-tabstop-decimal').remove();
 
 		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
-		var tabStopWidthAccum = 0;
 		this._rTSContainer.tabStops = [];
-		for (num = 0; num < this.options.tabs.length; num++) {
-			if (this.options.tabs[num].style >= 4)
+		for (var tabstopIndex = 0; tabstopIndex < this.options.tabs.length; tabstopIndex++) {
+			var markerClass = null;
+			var currentTabstop = this.options.tabs[tabstopIndex];
+			switch (currentTabstop.style) {
+			case 0:
+				markerClass = 'loleaflet-ruler-tabstop-left';
 				break;
-			marker = L.DomUtil.create('div', 'loleaflet-ruler-tabstop', this._rTSContainer);
-			var thisWidth = this.options.tabs[num].position - tabStopWidthAccum;
-			var tabstopBorder = getComputedStyle(marker, null).getPropertyValue('--loleaflet-ruler-tabstop-border');
-			marker.style.marginLeft = (pxPerMm100 * thisWidth - tabstopBorder) + 'px';
-			marker.tabStopNumber = num;
-			marker.tabStopLocation = { left: pxPerMm100 * tabStopWidthAccum, right: pxPerMm100 * (tabStopWidthAccum + thisWidth) };
-			this._rTSContainer.tabStops[num] = marker;
-			tabStopWidthAccum += thisWidth;
+			case 1:
+				markerClass = 'loleaflet-ruler-tabstop-right';
+				break;
+			case 2:
+				markerClass = 'loleaflet-ruler-tabstop-center';
+				break;
+			case 3:
+				markerClass = 'loleaflet-ruler-tabstop-decimal';
+				break;
+			}
+			if (markerClass != null) {
+				marker = L.DomUtil.create('div', markerClass, this._rTSContainer);
+				var positionPixel = currentTabstop.position * pxPerMm100;
+				var markerWidth = marker.offsetWidth;
+				var markerHalfWidth = markerWidth / 2.0;
+				marker.tabStopLocation = { left: positionPixel - markerHalfWidth, center: positionPixel, right: positionPixel + markerHalfWidth };
+				marker.style.left = marker.tabStopLocation.left + 'px';
+				marker.tabStopNumber = tabstopIndex;
+				this._rTSContainer.tabStops[tabstopIndex] = marker;
+				marker.style.cursor = 'move';
+			}
 		}
 
 		if (!this.options.marginSet) {
@@ -281,48 +323,6 @@ L.Control.Ruler = L.Control.extend({
 		}
 	},
 
-	_initiateTabstopDrag: function(e) {
-		// console.log('===> _initiateTabstopDrag');
-		if (e.type === 'touchstart') {
-			if (e.touches.length !== 1)
-				return;
-		}
-
-		// Are there any tab stops?
-		// e.currentTarget == this._rTSContainer, so yeah, we could use that, too.
-		if (!e.currentTarget || e.currentTarget.tabStops.length === 0)
-			return;
-
-		// Check if "close enough" to one unambiguous tab stop
-		var closestIndex = -1;
-		var closestDistance = 1000000;
-		var nextClosestDistance;
-		for (var i = 0; i < e.currentTarget.tabStops.length; i++) {
-			var distance = Math.abs(e.layerX - e.currentTarget.tabStops[i].tabStopLocation.right);
-			if (distance < closestDistance) {
-				nextClosestDistance = closestDistance;
-				closestDistance = distance;
-				closestIndex = i;
-			}
-		}
-		if (nextClosestDistance - closestDistance <= 10) {
-			// Nope, not clear which one it was closest to
-			return;
-		}
-
-		e.currentTarget.tabStopBeingDragged = closestIndex;
-		e.currentTarget.tabStopPrevPos = e.layerX;
-
-		if (window.ThisIsTheiOSApp) {
-			L.DomEvent.on(e.currentTarget, 'touchmove', this._moveTabstop, this);
-			L.DomEvent.on(e.currentTarget, 'touchend', this._endTabstopDrag, this);
-		}
-		else {
-			L.DomEvent.on(e.currentTarget, 'mousemove', this._moveTabstop, this);
-			L.DomEvent.on(e.currentTarget, 'mouseup', this._endTabstopDrag, this);
-		}
-	},
-
 	_moveMargin: function(e) {
 		if (e.type === 'touchmove')
 			e.clientX = e.touches[0].clientX;
@@ -345,20 +345,6 @@ L.Control.Ruler = L.Control.extend({
 			this._lToolTip.innerText = (Math.round(newPos / (this.options.DraggableConvertRatio * 100)) / 10).toString() + unit;
 			this._lMarginDrag.style.width = newPos + 'px';
 		}
-	},
-
-	_moveTabstop: function(e) {
-		if (!e.currentTarget)
-			return;
-
-		var pixelDiff = e.layerX - e.currentTarget.tabStopPrevPos;
-		var diff = this._map._docLayer._pixelsToTwips({x: pixelDiff, y:0}).x;
-		if (diff === 0)
-			return;
-
-		// console.log('===> _moveTabstop ' + e.currentTarget.tabStopBeingDragged + ' pixels:' + pixelDiff + ', twips:' + diff);
-		this._map.sendUnoCommand('.uno:MoveTabstop?Tabstop=' + e.currentTarget.tabStopBeingDragged + '&Amount=' + diff);
-		e.currentTarget.tabStopPrevPos = e.layerX;
 	},
 
 	_endDrag: function(e) {
@@ -400,19 +386,120 @@ L.Control.Ruler = L.Control.extend({
 		this._map._socket.sendMessage('uno .uno:RulerChangeState ' + JSON.stringify(unoObj));
 	},
 
-	_endTabstopDrag: function(e) {
-		if (!e.currentTarget)
-			return;
+	_initiateTabstopDrag: function(event) {
+		// console.log('===> _initiateTabstopDrag ' + event.type);
 
-		// console.log('===> _endTabstopDrag ' + e.type);
-		if (window.ThisIsTheiOSApp) {
-			L.DomEvent.off(e.currentTarget, 'touchmove', this._moveTabstop, this);
-			L.DomEvent.off(e.currentTarget, 'touchend', this._endTabstopDrag, this);
+		var tabstopContainer = null;
+		var pointX = null;
+
+		if (event.type === 'panstart') {
+			tabstopContainer = event.target;
+			pointX = event.center.x - event.target.getBoundingClientRect().left;
 		}
 		else {
-			L.DomEvent.off(e.currentTarget, 'mousemove', this._moveTabstop, this);
-			L.DomEvent.off(e.currentTarget, 'mouseup', this._endTabstopDrag, this);
+			tabstopContainer = event.currentTarget;
+			pointX = event.layerX;
 		}
+
+		// check if we hit any tabstop
+		var tabstop = null;
+		var margin = 10;
+		var tabstopDiffFromCenter = 100000000; // just a big initial condition
+
+		for (var i = 0; i < tabstopContainer.tabStops.length; i++) {
+			var current = tabstopContainer.tabStops[i];
+			var location = current.tabStopLocation;
+			if (pointX >= location.left - margin && pointX <= location.right + margin) {
+				var diff = Math.abs(pointX - location.center);
+				if (diff < tabstopDiffFromCenter) {
+					tabstop = current;
+					tabstopDiffFromCenter = diff;
+				}
+			}
+		}
+
+		if (tabstop == null) {
+			var positionTwip = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+			var params = {
+				Index: {
+					type : 'int32',
+					value : -1
+				},
+				Position: {
+					type : 'int32',
+					value : positionTwip
+				}
+			};
+			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
+			return;
+		}
+
+		tabstopContainer.tabStopMarkerBeingDragged = tabstop;
+		tabstopContainer.tabStopInitialPosiiton = pointX;
+
+		if (event.pointerType !== 'touch') {
+			L.DomEvent.on(this._rTSContainer, 'mousemove', this._moveTabstop, this);
+			L.DomEvent.on(this._rTSContainer, 'mouseup', this._endTabstopDrag, this);
+			L.DomEvent.on(this._rTSContainer, 'mouseout', this._endTabstopDrag, this);
+		}
+	},
+
+	_moveTabstop: function(event) {
+		var tabstopContainer = null;
+		var pointX = null;
+
+		if (event.type === 'panmove') {
+			tabstopContainer = event.target;
+			pointX = event.center.x - event.target.getBoundingClientRect().left;
+		}
+		else {
+			tabstopContainer = event.currentTarget;
+			pointX = event.layerX;
+		}
+
+		//console.log('===> _moveTabstop ' + event.type);
+
+		var pixelDiff = pointX - tabstopContainer.tabStopInitialPosiiton;
+		var marker = tabstopContainer.tabStopMarkerBeingDragged;
+		marker.style.left = (marker.tabStopLocation.left + pixelDiff) + 'px';
+	},
+
+	_endTabstopDrag: function(event) {
+		//console.log('===> _endTabstopDrag ' + event.type);
+
+		var tabstopContainer = null;
+		var pointX = null;
+		if (event.type === 'panend') {
+			tabstopContainer = event.target;
+			pointX = event.center.x - event.target.getBoundingClientRect().left;
+		}
+		else {
+			tabstopContainer = event.currentTarget;
+			pointX = event.layerX;
+		}
+
+		var marker = tabstopContainer.tabStopMarkerBeingDragged;
+
+		if (event.type == 'mouseout') {
+			marker.style.left = (marker.tabStopLocation.left) + 'px';
+		}
+		else {
+			var positionTwip = this._map._docLayer._pixelsToTwips({x: pointX, y: 0}).x;
+			var params = {
+				Index: {
+					type : 'int32',
+					value : marker.tabStopNumber
+				},
+				Position: {
+					type : 'int32',
+					value : positionTwip
+				}
+			};
+			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
+		}
+		L.DomEvent.off(this._rTSContainer, 'mousemove', this._moveTabstop, this);
+		L.DomEvent.off(this._rTSContainer, 'mouseup', this._endTabstopDrag, this);
+		L.DomEvent.off(this._rTSContainer, 'mouseout', this._endTabstopDrag, this);
 	},
 
 });

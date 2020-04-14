@@ -709,6 +709,15 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('calcfunctionlist:')) {
 			this._onCalcFunctionListMsg(textMsg.substring('calcfunctionlist:'.length + 1));
 		}
+		else if (textMsg.startsWith('tabstoplistupdate:')) {
+			this._onTabStopListUpdate(textMsg);
+		}
+	},
+
+	_onTabStopListUpdate: function (textMsg) {
+		textMsg = textMsg.substring('tabstoplistupdate:'.length + 1);
+		var json = JSON.parse(textMsg);
+		this._map.fire('tabstoplistupdate', json);
 	},
 
 	toggleTileDebugModeImpl: function() {
