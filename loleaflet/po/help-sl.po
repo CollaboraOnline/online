@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: LibreOffice Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-30 19:52+0000\n"
+"PO-Revision-Date: 2020-04-11 11:43+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/sl/>\n"
 "Language: sl\n"
@@ -1133,11 +1133,11 @@ msgstr "Kopiraj in prilepi"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
-msgstr ""
+msgstr "Podprto je kopiranje, izrezovanje in lepljenje obogatenega besedila ne le v danem dokumentu, temveč tudi med dokumenti v istem ali drugem <span class=\"productname\">%productName</span>. Za interno rabo lahko uporabniki kopirajo/izrežejo vsebino, vključno s slikami in mešano vsebino, na osebnem računalniku z neposredno uporabo tipk za bližnjice (<span class=\"kbd\">krmilka</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">krmilka</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">krmilka</span> + <span class=\"kbd\">V</span>). Iz varnostnih razlogov je potrebno uporabiti <span class=\"kbd\">krmilka</span> + <span class=\"kbd\">V</span> za lepljenje na osebnem računalniku, medtem ko za izrezovanje in kopiranje lahko uporabite kontekstne menije. Na sistemih Android in iOS besedilo izberete z dvojim tapkanjem, z dolgim tapkom pa dostopate prek kontekstnega menija do ukazov za kopiranje/izrezovanje/lepljenje."
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
-msgstr ""
+msgstr "Če želite kopirati večje dele vsebine v druge programe na svoji napravi, pritisnite gumb <span class=\"ui\">Začni prenos</span>, nato ponovno kopirajte to na njihovo odložišče, da bo na voljo za ciljni program. To omogoča majhen gradnik, ki se pojavi v desnem spodnjem kotu in je potreben le za izvoz vsebine za lepljenje v zunanje programe. Ta korak tudi pretvori kompleksne vrste predmetov v statične slike."
 
 #: html/loleaflet-help.html%2Bdiv.h4:291-5
 msgid "Document repair"
@@ -1221,7 +1221,7 @@ msgstr "<span class=\"def\">Oblikovanje grafikona:</span> isti kontekstni meni v
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
-msgstr ""
+msgstr "<span class=\"def\">Oblikovanje niza podatkov:</span> odprite kontekstni meni in izberite <span class=\"ui\">Oblikuj niz podatkov</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:322-5
 msgid "Handling images"
@@ -1269,7 +1269,7 @@ msgstr "Če želite sistematično preveriti črkovanje celotnega dokumenta, upor
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr ""
+msgstr "Spletno preglednico urejate na enak način kot urejate preglednico na namizju. Operacije, kot so vnos podatkov, izbiranje obsegov, stolpcev, vrstic ali delovnih listo so enake. Uporabite tipkovnico, menije in orodno vrstico, da upravljate dejanja v preglednici. Podprto je tudi vlečenje vsebine celic za zapolnjevanje celic s podatki. Ukazi za kopiranje, izrezovanje in lepljenje so na voljo v kontekstnem meniju. Sledenje vnesenim podatkom s <span class=\"kbd\">tabulatorko</span> pomika kazalko na naslednjo celico na desni, z <span class=\"kbd\">vnašalko</span> pa v celico pod njo, kar vse poenostavlja nadaljnji vnos podatkov."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
@@ -1285,7 +1285,7 @@ msgstr "Jezik formul je znan vsakemu uporabniku preglednic in je podrobno predst
 
 #: html/loleaflet-help.html%2Bdiv.div.p:349-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
-msgstr ""
+msgstr "<span class=\"def\">Neposredno oblikovanje:</span> celice, stolpce, vrstice in delovne liste preglednic lahko oblikujete z neposrednim oblikovanjem iz menijev, orodnih vrstic in kontekstnih menijev. Neposredno oblikovanje se nanaša na trenutno izbrani predmet. Če želite oblikovati celico, uporabite meni ali kombinacijo tipk <span class=\"kbd\">krmilka</span> + <span class=\"kbd\">1</span>. Pogovorno okno omogoča kompleksno in povsem prilagojeno oblikovanje števil, kot tudi pisav, naprednih obrob, ozadja, zaščite celic ter druge možnosti."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:353-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."
@@ -1309,11 +1309,11 @@ msgstr "<span class=\"ui\">Napredni filter</span> podpira do osem hkratnih pogoj
 
 #: html/loleaflet-help.html%2Bdiv.div.p:363-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
-msgstr ""
+msgstr "<span class=\"def\">Orisovanje:</span> iz svojih podatkov lahko ustvarite oris in združujete vrstice in stolpce, tako da lahko strnete ali razpostrete skupine z enim samim klikom, kar poenostavlja predstavitev hierarhičnih podatkov."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:365-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"
-msgstr ""
+msgstr "<span class=\"def\">Preverjanje veljavnosti podatkov:</span> vsaki celici lahko določite veljavno obliko podatkov. Neveljavni vnosi v celico bodo zavrnjeni. To storite na naslednji način:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
@@ -1325,7 +1325,7 @@ msgstr "Izberite kriterij za veljavnost v spustnem meniju <span class=\"ui\">Dov
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:373-9
 msgid "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\">OK</span> to close the dialog."
-msgstr ""
+msgstr "Uporabite zavihka <span class=\"ui\">Pomoč pri vnosu</span> in <span class=\"ui\">Opozorila o napakah</span> , da okrepite interakcijo med uporabniki. Kliknite <span class=\"ui\">V redu</span>, da zaprete pogovorno okno."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:376-11
 msgid "To remove the validity of the cell, open the dialog and set the <span class=\"ui\">Allow</span> list to “All values”."
@@ -1341,7 +1341,7 @@ msgstr "<span class=\"def\">Pogojno oblikovanje:</span> <span class=\"productnam
 
 #: html/loleaflet-help.html%2Bdiv.div.p:388-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> ureja besedilne dokumente na enak način kot urejate dokument na namizju. Ponuja realistično postavitev WYSIWYG (angl. What You See Is What You Get), ki priročno prikazuje dokument, kakor bo natisnjen. Operacije, kot so vnos besedila, kopiranje, izrezovanje, lepljenje vsebine, izbiranje besedila, vstavljanje, spreminjanje velikosti in sidranje slik, dodajanje in upravljanje tabel in grafikonov, so podobne tistim v namiznem urejevalniku besedil. Svoj dokument urejate z uporabo tipkovnice, menijev in orodnih vrstic."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
@@ -1353,11 +1353,11 @@ msgstr "Oblikovanje besedila"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:394-5
 msgid "<span class=\"productname\">%productName</span> supports modern techniques for paragraph formatting through styles. A style is a set of text properties (font, color, background and many more) labeled with a name, the style name. Use style to apply the same set of properties to many paragraphs in the document and produce a uniform, professional look. Also, if you change one of the style formatting properties, all paragraphs with the same style changes formatting as well, simplifying the effort of formatting many paragraph individually."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> podpira sodobne tehnike oblikovanja odstavkov s slogi. Slog je nabor lastnosti besedila (pisava, barva, ozadje in številne druge), označenih s skupnim imenom, z imenom sloga. Uporabite slog, da uveljavite isti nabor lastnosti za številne odstavke v dokumentu in dosežete enoten, profesionalen videz. Prav tako je pomembno vedeti, da s spremembo ene lastnosti oblikovanja sloga spremenite tudi oblikovanje vseh odstavkov s tem slogom, kar zelo poenostavlja potrebo po preoblikovanju večjega števila odstavkov."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:395-5
 msgid "In contrast, direct formatting applies formatting to selected excerpts of the document contents. On a long document, direct formatting must be applied in every text excerpt, turning text formatting a long task, subject to errors and delays."
-msgstr ""
+msgstr "Na drugi strani neposredno oblikovanje uveljavlja oblikovanje na izbranih delih vsebine dokumenta. V daljših dokumentih je potrebno uporabiti neposredno oblikovanje na vsakem odlomku besedila, kar naredi iz oblikovanja besedila dolgotrajno opravilo, pri katerem lahko prihaja do napak in zamud."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:396-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format text document objects by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected."
@@ -1449,11 +1449,11 @@ msgstr "<span class=\"def\">Matrica prosojnice:</span> izberite matrico prosojni
 
 #: html/loleaflet-help.html%2Bdiv.div.p:436-5
 msgid "<span class=\"def\">Slide transitions:</span> <span class=\"productname\">%productName</span> Impress provides visual effects when displaying a new slide in the slide show. Slide transitions are property of the slide, use the side bar to set the slide transition when in edit mode."
-msgstr ""
+msgstr "<span class=\"def\">Prehodi med prosojnicami:</span> <span class=\"productname\">%productName</span> Impress ponuja vizualne učinke ob prikazu nove prosojnice v projekciji. Prehodi med prosojnicami so lastnosti prosojnic; prek stranske vrstice določite prehod med prosojnicami, ko se nahajate v urejevalnem načinu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:437-5
 msgid "<span class=\"def\">Object animation:</span> Individual object in the slide can have animation. Use the side bar to configure the slide transition for a selected object or set of objects."
-msgstr ""
+msgstr "<span class=\"def\">Animacija predmeta:</span> vsak posamezen predmet na prosojnici lahko animiramo. Uporabite stransko vrstico, da prilagodite prehod med prosojnicami za izbrani predmet ali nabor predmetov."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:438-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
@@ -1585,7 +1585,7 @@ msgstr "Izberite <span class=\"ui\">Vstavi</span> → <span class=\"ui\">Posebni
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:486-11
 msgid "You can either browse the characters displayed with the drop lists or type a search key in the <span class=\"ui\">Search</span> box. If you know the Unicode numeric code of the special character, enter in the boxes on the right."
-msgstr ""
+msgstr "Brskate lahko med znaki, prikazanimi v spustnih seznamih, ali vnesete iskano geslo v polje <span class=\"ui\">Išči</span>. Če poznate številsko kodo Unicode posebnega znaka, jo vnesite v polja na desni."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:487-11
 msgid "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <span class=\"ui\">Cancel</span>."
@@ -1629,7 +1629,7 @@ msgstr "Za vklop oz. izklop prikaza sprememb izberite menijski ukaz <span class=
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
-msgstr ""
+msgstr "Spremembe lahko sprejmete ali zavrnete. Če jih želite sprejeti ali zavreči, kliknite ustrezno ikono v polju komentarja na desni strani dokumenta. Lahko pa izberete tudi menijski ukaz <span class=\"ui\">Uredi</span> → <span class=\"ui\">Sledi spremembam</span> → <span class=\"ui\">Sprejmi</span> oz. <span class=\"ui\">Zavrni</span>. Če želite dodatno filtrirati spremembe, preden jih sprejmete ali zavrnete, izberite <span class=\"ui\">Uredi</span> → <span class=\"ui\">Sledi spremembam</span> → <span class=\"ui\">Upravljaj</span>. Odpre se pogovorno okno, v katerem je seznam vseh zabeleženih sprememb. Uporabite gumbe glede na želena dejanja."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
 msgid "How do I set the margins of the document?"
@@ -1718,7 +1718,7 @@ msgstr "Zakaj se je ravnokar vneseno besedilo samodejno spremenilo? Kako ga povr
 
 #: html/loleaflet-help.html%2Bdiv.div.p:533-5
 msgid "You have the AutoCorrection enabled. AutoCorrection changes the text just typed into an internal table of corresponding text. In most cases, AutoCorrection fixes typos while you are typing. If AutoCorrection is not necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
-msgstr ""
+msgstr "Samopopravke imate vključene. Samopopravki spremenijo ravno vneseno besedilo v notranjo tabelo ustreznega besedila. V večini primerov samopopravki samodejno odpravljajo tipkarske napake med vnašanjem. Če samopopravki niso potrebni, jih onemogočite z ukazom <span class=\"ui\">Orodja</span> → <span class=\"ui\">Samopopravki</span> → <span class=\"ui\">Med vnosom</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:538-5
 msgid "How can I select data to print?"
@@ -1774,7 +1774,7 @@ msgstr "Kaj predstavlja ikona »Počisti neposredno oblikovanje«?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:559-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
-msgstr ""
+msgstr "Neposredno oblikovanje je oblikovanje, neposredno uveljavljeno na izbranih delih vsebine odstavka ali celice preglednice, in se prekriva z dodeljenim slogom oblikovanja. Če želite obnoviti oblikovanje na nastavljeni slog, izberite besedilo ali celico preglednice in izberite <span class=\"ui\">Oblika</span> → <span class=\"ui\">Počisti neposredno oblikovanje</span> ali uporabite gumb v orodni vrstici."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:560-5
 msgid "How do I rename a sheet?"

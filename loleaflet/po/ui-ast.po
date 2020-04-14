@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-04-07 08:12+0000\n"
+"PO-Revision-Date: 2020-04-09 10:19+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -266,7 +266,7 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
-msgstr ""
+msgstr "Iguar el documentu"
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
@@ -344,19 +344,19 @@ msgstr "Elipsoidal"
 
 #: src/control/Control.JSDialogBuilder.js:172
 msgid "Quadratic"
-msgstr ""
+msgstr "Cuadráticu"
 
 #: src/control/Control.JSDialogBuilder.js:175
 msgid "Square"
-msgstr ""
+msgstr "Cuadráu"
 
 #: src/control/Control.JSDialogBuilder.js:178
 msgid "Fixed size"
-msgstr ""
+msgstr "Tamañu fixu"
 
 #: src/control/Control.JSDialogBuilder.js:807
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: src/control/Control.JSDialogBuilder.js:810
 msgid "Gradient"
@@ -474,7 +474,7 @@ msgstr "Zarrar el documentu"
 #: src/control/Control.Menubar.js:367 src/control/Control.Menubar.js:485
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:576
 msgid "Repair"
-msgstr ""
+msgstr "Iguar"
 
 #: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:280
 #: src/control/Control.Toolbar.js:1136

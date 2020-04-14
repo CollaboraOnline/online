@@ -7,14 +7,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2016-05-12 14:35+0000\n"
-"Last-Translator: belkacem77 <belkacem77@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-04-08 11:11+0000\n"
+"Last-Translator: Muḥend Velqasem <belkacem77@gmail.com>\n"
+"Language-Team: Kabyle <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/kab/>\n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 2.7\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:6
@@ -23,27 +24,27 @@ msgstr ""
 
 #: admin/admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "Iγewwaṛen"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "Agzul"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(amiran)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "Tasleḍt"
 
 #: admin/admin.strings.js:11
 msgid "History"
-msgstr ""
+msgstr "Azray"
 
 #: admin/admin.strings.js:12
 msgid "Dashboard"
-msgstr ""
+msgstr "Tafelwit n usenqed"
 
 #: admin/admin.strings.js:13
 msgid "Users online"
@@ -51,7 +52,7 @@ msgstr ""
 
 #: admin/admin.strings.js:14
 msgid "User Name"
-msgstr ""
+msgstr "Isem n useqdac"
 
 #: admin/admin.strings.js:15
 msgid "Documents opened"
@@ -75,11 +76,11 @@ msgstr ""
 
 #: admin/admin.strings.js:20
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin/admin.strings.js:21
 msgid "Document"
-msgstr ""
+msgstr "Iemli"
 
 #: admin/admin.strings.js:22
 msgid "Number of views"
@@ -87,7 +88,7 @@ msgstr ""
 
 #: admin/admin.strings.js:23
 msgid "Elapsed time"
-msgstr ""
+msgstr "Durée écoulée"
 
 #: admin/admin.strings.js:24
 msgid "Idle time"
@@ -95,7 +96,7 @@ msgstr ""
 
 #: admin/admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "Yebeddel"
 
 #: admin/admin.strings.js:26
 msgid "Kill"
@@ -103,7 +104,7 @@ msgstr ""
 
 #: admin/admin.strings.js:27
 msgid "Graphs"
-msgstr ""
+msgstr "Idlifen"
 
 #: admin/admin.strings.js:28
 msgid "Memory Graph"
@@ -120,7 +121,7 @@ msgstr ""
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:252
 #: src/layer/tile/TileLayer.js:396
 msgid "Save"
-msgstr ""
+msgstr "Sekles"
 
 #: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"
@@ -160,7 +161,7 @@ msgstr ""
 
 #: admin/admin.strings.js:41
 msgid "Refresh"
-msgstr ""
+msgstr "Smiren"
 
 #: admin/admin.strings.js:42
 msgid "Shutdown Server"
@@ -176,7 +177,7 @@ msgstr ""
 
 #: admin/src/AdminSocketAnalytics.js:216
 msgid "Sent"
-msgstr ""
+msgstr "Envoyé"
 
 #: admin/src/AdminSocketBase.js:54
 msgid "Connection error"
@@ -191,7 +192,7 @@ msgstr ""
 #: src/control/Control.Tabs.js:218 src/control/Control.Toolbar.js:219
 #: src/control/Toolbar.js:457
 msgid "OK"
-msgstr ""
+msgstr "Seɣbel"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1164
@@ -199,11 +200,11 @@ msgstr ""
 #: src/control/Control.Toolbar.js:220 src/control/Toolbar.js:458
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:397
 msgid "Cancel"
-msgstr ""
+msgstr "Semmet"
 
 #: admin/src/AdminSocketOverview.js:190 admin/src/AdminSocketOverview.js:292
 msgid "Documents"
-msgstr ""
+msgstr "Isemliyen"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
@@ -215,15 +216,15 @@ msgstr ""
 
 #: admin/src/Util.js:14
 msgid "MB"
-msgstr ""
+msgstr "Mo"
 
 #: admin/src/Util.js:14
 msgid "GB"
-msgstr ""
+msgstr "Go"
 
 #: admin/src/Util.js:14
 msgid "TB"
-msgstr ""
+msgstr "To"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -235,11 +236,11 @@ msgstr ""
 
 #: admin/src/Util.js:54
 msgid " s"
-msgstr ""
+msgstr "s"
 
 #: src/control/Control.AlertDialog.js:25 src/control/Signing.js:608
 msgid "Close"
-msgstr ""
+msgstr "Mdel"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
@@ -247,7 +248,7 @@ msgstr ""
 
 #: src/control/Control.AlertDialog.js:73
 msgid "Edit"
-msgstr ""
+msgstr "Édition"
 
 #: src/control/Control.AlertDialog.js:95
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -255,11 +256,11 @@ msgstr ""
 
 #: src/control/Control.ContextMenu.js:188
 msgid "Delete"
-msgstr ""
+msgstr "Kkes"
 
 #: src/control/Control.ContextMenu.js:272
 msgid "Paste Special"
-msgstr ""
+msgstr "Asenteḍ usligl"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -267,15 +268,15 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
-msgstr ""
+msgstr "Ṣṣenf"
 
 #: src/control/Control.DocumentRepair.js:46
 msgid "Index"
-msgstr ""
+msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:276
 msgid "Comment"
-msgstr ""
+msgstr "Commentaire"
 
 #: src/control/Control.DocumentRepair.js:50
 msgid "User name"
@@ -283,7 +284,7 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:52
 msgid "Timestamp"
-msgstr ""
+msgstr "Asragemz"
 
 #: src/control/Control.DocumentRepair.js:56
 msgid "Jump to state"
@@ -303,7 +304,7 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "Beddu taktert"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
@@ -311,21 +312,21 @@ msgstr ""
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Ulac ini"
 
 #: src/control/Control.JSDialogBuilder.js:153
 #: src/control/Control.JSDialogBuilder.js:804
 #: src/control/Control.Toolbar.js:1600
 msgid "None"
-msgstr ""
+msgstr "Ula yiwen"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Zur"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
-msgstr ""
+msgstr "Imzirig"
 
 #: src/control/Control.JSDialogBuilder.js:162
 msgid "Axial"
@@ -345,7 +346,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:175
 msgid "Square"
-msgstr ""
+msgstr "Amkuẓ"
 
 #: src/control/Control.JSDialogBuilder.js:178
 msgid "Fixed size"
@@ -353,11 +354,11 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:807
 msgid "Color"
-msgstr ""
+msgstr "Couleur"
 
 #: src/control/Control.JSDialogBuilder.js:810
 msgid "Gradient"
-msgstr ""
+msgstr "Gradient"
 
 #: src/control/Control.JSDialogBuilder.js:813
 msgid "Hatching"
@@ -365,15 +366,15 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:817
 msgid "Pattern"
-msgstr ""
+msgstr "Talɣa"
 
 #: src/control/Control.JSDialogBuilder.js:950
 msgid "From"
-msgstr ""
+msgstr "Seg"
 
 #: src/control/Control.JSDialogBuilder.js:953
 msgid "To"
-msgstr ""
+msgstr "I"
 
 #: src/control/Control.JSDialogBuilder.js:1088
 msgid "Font Name"
@@ -381,7 +382,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1090
 msgid "Font Size"
-msgstr ""
+msgstr "Teɣzi n tsefsit"
 
 #: src/control/Control.JSDialogBuilder.js:1441
 msgid "Cell borders"
@@ -389,16 +390,16 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"
-msgstr ""
+msgstr "Lignes"
 
 #: src/control/Control.JSDialogBuilder.js:1631
 msgid "Columns"
-msgstr ""
+msgstr "Colonnes"
 
 #: src/control/Control.JSDialogBuilder.js:1651
 #: src/control/Control.Toolbar.js:956
 msgid "Insert table"
-msgstr ""
+msgstr "Ger tafelwit"
 
 #: src/control/Control.JSDialogBuilder.js:1680
 msgid "Line style:"
@@ -415,7 +416,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:353 src/control/Control.Menubar.js:469
 #: src/control/Control.Menubar.js:518 src/control/Control.Menubar.js:563
 msgid "Share..."
-msgstr ""
+msgstr "Bḍu..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:254
 #: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:471
@@ -489,7 +490,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:92 src/control/Control.Menubar.js:94
 #: src/control/Control.Menubar.js:640 src/control/Control.Menubar.js:642
 msgid "All"
-msgstr ""
+msgstr "Meṛṛa"
 
 #: src/control/Control.Menubar.js:143
 msgid "Text orientation"
@@ -503,7 +504,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Inegzumen n unasiw"
 
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459
@@ -514,7 +515,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:511
 #: src/control/Control.Menubar.js:556 src/control/Control.Menubar.js:618
 msgid "About"
-msgstr ""
+msgstr "Awal ɣef..."
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:346
 #: src/control/Control.Menubar.js:462 src/map/Map.js:420
@@ -557,15 +558,15 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:501
 msgid "Page Setup"
-msgstr ""
+msgstr "Tawila n usebtar"
 
 #: src/control/Control.Menubar.js:502
 msgid "Portrait"
-msgstr ""
+msgstr "Tafrist"
 
 #: src/control/Control.Menubar.js:503
 msgid "Landscape"
-msgstr ""
+msgstr "Agama"
 
 #: src/control/Control.Menubar.js:759 src/control/Control.Toolbar.js:2027
 msgid "Reset to Default Language"
@@ -609,15 +610,15 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:843
 msgid "Default Style"
-msgstr ""
+msgstr "Aɣanib n lexṣas"
 
 #: src/control/Control.Toolbar.js:900
 msgid "Borders"
-msgstr ""
+msgstr "Lerryuf"
 
 #: src/control/Control.Toolbar.js:908
 msgid "More..."
-msgstr ""
+msgstr "Ugar..."
 
 #: src/control/Control.Toolbar.js:961
 msgid "Insert Local Image"
@@ -629,7 +630,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1023
 msgid "Function Wizard"
-msgstr ""
+msgstr "Amarag n twuri"
 
 #: src/control/Control.Toolbar.js:1067
 msgid "First sheet"
@@ -653,7 +654,7 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1113
 msgid "Search"
-msgstr ""
+msgstr "Anadi"
 
 #: src/control/Control.Toolbar.js:1119
 msgid "Cancel the search"
@@ -667,7 +668,7 @@ msgstr ""
 #: src/control/Control.Toolbar.js:1129 src/layer/tile/CalcTileLayer.js:123
 #: src/layer/tile/ImpressTileLayer.js:158 src/layer/tile/WriterTileLayer.js:103
 msgid "Current"
-msgstr ""
+msgstr "Amiran"
 
 #: src/control/Control.Toolbar.js:1200
 msgid "%user has joined"
@@ -699,31 +700,31 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:1593
 msgid "Average"
-msgstr ""
+msgstr "Talemmast"
 
 #: src/control/Control.Toolbar.js:1594
 msgid "CountA"
-msgstr ""
+msgstr "AMḌAZALEN"
 
 #: src/control/Control.Toolbar.js:1595
 msgid "Count"
-msgstr ""
+msgstr "Amḍan"
 
 #: src/control/Control.Toolbar.js:1596
 msgid "Maximum"
-msgstr ""
+msgstr "Maximum"
 
 #: src/control/Control.Toolbar.js:1597
 msgid "Minimum"
-msgstr ""
+msgstr "Minimum"
 
 #: src/control/Control.Toolbar.js:1598
 msgid "Sum"
-msgstr ""
+msgstr "Timernit"
 
 #: src/control/Control.Toolbar.js:1599
 msgid "Selection count"
-msgstr ""
+msgstr "Amḍan n ufran"
 
 #: src/control/Control.Toolbar.js:1622
 msgid "Number of Pages"
@@ -751,11 +752,11 @@ msgstr ""
 
 #: src/control/Control.Toolbar.js:2124
 msgid "Style"
-msgstr ""
+msgstr "Aɣanib"
 
 #: src/control/Control.Toolbar.js:2147
 msgid "Font"
-msgstr ""
+msgstr "Police"
 
 #: src/control/Control.Toolbar.js:2172
 msgid "Previous slide"
@@ -779,7 +780,7 @@ msgstr ""
 
 #: src/control/Ruler.js:200
 msgid "Right Margin"
-msgstr ""
+msgstr "Tama tayeffust"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -819,7 +820,7 @@ msgstr ""
 
 #: src/control/Signing.js:330
 msgid "Type:"
-msgstr ""
+msgstr "Anaw:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
@@ -851,15 +852,15 @@ msgstr ""
 
 #: src/control/Signing.js:603
 msgid "Status:"
-msgstr ""
+msgstr "Addad:"
 
 #: src/control/Signing.js:604
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/control/Signing.js:607
 msgid "Login"
-msgstr ""
+msgstr "Tuqqna"
 
 #: src/control/Signing.js:616
 msgid "Not Signed"
@@ -911,7 +912,7 @@ msgstr ""
 
 #: src/control/Toolbar.js:104 src/map/Map.js:1470
 msgid "Saving..."
-msgstr ""
+msgstr "Asekles..."
 
 #: src/control/Toolbar.js:115
 msgid "Renaming..."
@@ -927,11 +928,11 @@ msgstr ""
 
 #: src/control/Toolbar.js:453
 msgid "Text"
-msgstr ""
+msgstr "Texte"
 
 #: src/control/Toolbar.js:454
 msgid "Link"
-msgstr ""
+msgstr "Aseɣwen"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -983,11 +984,11 @@ msgstr ""
 
 #: src/core/Socket.js:521
 msgid "Discard"
-msgstr ""
+msgstr "Sefsex"
 
 #: src/core/Socket.js:526
 msgid "Overwrite"
-msgstr ""
+msgstr "Sfeɛj"
 
 #: src/core/Socket.js:531
 msgid "Save to new file"
@@ -1011,11 +1012,11 @@ msgstr ""
 
 #: src/core/Socket.js:745 src/map/Map.js:1473
 msgid "Loading..."
-msgstr ""
+msgstr "Yettali-d"
 
 #: src/core/Socket.js:745
 msgid "Connecting..."
-msgstr ""
+msgstr "Tuqqna..."
 
 #: src/core/Socket.js:1022
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
@@ -1133,11 +1134,11 @@ msgstr ""
 
 #: src/layer/marker/Annotation.js:234
 msgid "Open menu"
-msgstr ""
+msgstr "Ldi umuɣ"
 
 #: src/layer/marker/Annotation.js:255 src/layer/tile/TileLayer.js:243
 msgid "Reply"
-msgstr ""
+msgstr "Err"
 
 #: src/layer/tile/CalcTileLayer.js:75 src/layer/tile/ImpressTileLayer.js:118
 #: src/layer/tile/WriterTileLayer.js:56
@@ -1152,19 +1153,19 @@ msgstr ""
 #: src/layer/tile/CalcTileLayer.js:230 src/layer/tile/ImpressTileLayer.js:225
 #: src/layer/tile/WriterTileLayer.js:162
 msgid "Hide the search bar"
-msgstr ""
+msgstr "Sken afeggag n unadi"
 
 #: src/layer/tile/TileLayer.js:237
 msgid "Modify"
-msgstr ""
+msgstr "Beddel"
 
 #: src/layer/tile/TileLayer.js:249
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: src/layer/tile/TileLayer.js:255
 msgid "Resolve"
-msgstr ""
+msgstr "Fru"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1192,17 +1193,17 @@ msgstr ""
 
 #: src/map/Map.js:252
 msgid "Initializing..."
-msgstr ""
+msgstr "Awennez..."
 
 #: src/map/Map.js:455
 #, javascript-format
 msgid "%d seconds ago"
-msgstr ""
+msgstr "%d n tasinin aya"
 
 #: src/map/Map.js:458
 #, javascript-format
 msgid "%d minutes ago"
-msgstr ""
+msgstr "%d n tesdatin aya"
 
 #: src/map/Map.js:1326
 msgid "Inactive document - please click to resume editing"

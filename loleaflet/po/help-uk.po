@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-30 19:52+0000\n"
+"PO-Revision-Date: 2020-04-14 06:54+0000\n"
 "Last-Translator: Євген Кондратюк <lachend@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/uk/>\n"
 "Language: uk\n"
@@ -1135,19 +1135,19 @@ msgstr "Існує підтримка копіювання/вирізки нас
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
-msgstr ""
+msgstr "Щоб скопіювати великий об'єм даних в інші програми на Вашому пристрої, потрібно натиснути кнопку <span class=\"ui\">Почати завантаження</span>, а потім скопіювати їх до буферу обміну, щоб цільова програма змогла їх прочитати. Ця операція виконується крихітним віджетом, що виринає в правому нижньому куті, і потрібен лише для експорту даних у зовнішні програми. Цей крок також перетворює комплексні об'єкти у растрові зображення."
 
 #: html/loleaflet-help.html%2Bdiv.h4:291-5
 msgid "Document repair"
-msgstr ""
+msgstr "Відновлення документа"
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Коли кілька людей одночасно редагують один документ, може виникнути ситуація, коли їхні зміни викличуть програмний конфлікт. Функція \"Відновлення документа\" дозволяє користувачам відмінити зміни, зроблені іншими редакторами, і повернути документ до попереднього стану."
 
 #: html/loleaflet-help.html%2Bdiv.p:293-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
-msgstr ""
+msgstr "Щоб відкотитись до обраного стану, виділіть його мишкою і натисніть  <span class=\"ui\">Перейти до стану</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:295-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."

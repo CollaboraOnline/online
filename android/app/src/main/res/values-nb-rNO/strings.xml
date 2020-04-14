@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="no_items">Ingen elementer</string>
+    <string name="loading">Laster...</string>
+    <string name="storage_permission_required">Lagringstillatelse er nødvendig</string>
+    <string name="file_creation_failed">Opprettelse av fil mislyktes</string>
+    <string name="file_exists_warning">En fil med dette navnet eksisterer allerede, og vil bli overskrevet.</string>
+    <string name="temp_file_saving_disabled">Denne filen er skrivebeskyttet. Lagring er deaktivert.</string>
+    <string name="app_version">" Versjon: %1$s, Build ID: %2$s"</string>
+    <string name="pref_show_hidden_files">Skjulte filer/mapper</string>
+    <string name="pref_category_editor">Innstillinger for Editor</string>
+    <string name="pref_category_explorer">Innstillinger for filbehandling</string>
+    <string name="grid_view">Rutenett</string>
+    <string name="list_view">Liste</string>
+    <string name="failed_to_load_file">Kunne ikke bestemme hvilken fil som skal lastes inn</string>
+    <string name="app_name_settings">Innstillinger</string>
+    <string name="no_recent_items">Åpne en fil ved å bruke mappeikonet på verktøylinjen.</string>
+    <string name="app_vendor">Denne utgivelsen ble levert av $VENDOR.</string>
+    <string name="app_description">$APP_NAME er en moderne produktivitetspakke for tekstbehandling, regneark, presentasjoner og mer, som er basert på åpen kildekode og enkel å bruke.</string>
+    <string name="pref_viewmode_summary">Vis filer i et rutenett eller i en liste.</string>
+    <string name="pref_sort_summary">Velg hvordan du sorterer filer: A-Z, etter størrelse eller dato.</string>
+    <string name="pref_show_hidden_files_summary">Aktiver for å vise skjulte filer/mapper</string>
+</resources>

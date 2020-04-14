@@ -8,4 +8,9 @@
     <string name="failed_to_load_file">Kunne ikke bestemme filen som skal lastes inn</string>
     <string name="storage_permission_required">Lagringstillatelse er nødvendig</string>
     <string name="temp_file_saving_disabled">Denne filen er skrivebeskyttet, lagring er deaktivert.</string>
+    <string name="exiting">Avslutter...</string>
+    <string name="rate_our_app_text">Hvis du liker dette, vennligst gi oss 5 stjerner i Google Play. Dine gode anmeldelser er vår beste motivasjon.</string>
+    <string name="rate_our_app_title">Takk for at du bruker %1$s!</string>
+    <string name="later">Senere</string>
+    <string name="rate_now">Ranger nå</string>
 </resources>

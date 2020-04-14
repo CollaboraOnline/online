@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-02-22 08:15+0000\n"
+"PO-Revision-Date: 2020-04-08 16:01+0000\n"
 "Last-Translator: Karl Morten Ramberg <karl.m.ramberg@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/nb_NO/>\n"
 "Language: nb\n"
@@ -171,7 +171,7 @@ msgstr "Slå av Serveren"
 
 #: admin/admin.strings.js:43
 msgid "Server uptime"
-msgstr ""
+msgstr "Oppetid på server"
 
 #: admin/src/AdminSocketAnalytics.js:212
 msgid "Received"
@@ -194,7 +194,7 @@ msgstr "Er du sikker på at du vil avslutte denne økten?"
 #: src/control/Control.Tabs.js:218 src/control/Control.Toolbar.js:219
 #: src/control/Toolbar.js:457
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1164
@@ -258,7 +258,7 @@ msgstr "Serveren fikk en %0 feil under kjøring av %1 kommandoen."
 
 #: src/control/Control.ContextMenu.js:188
 msgid "Delete"
-msgstr ""
+msgstr "Slett"
 
 #: src/control/Control.ContextMenu.js:272
 msgid "Paste Special"
@@ -298,23 +298,23 @@ msgstr "Du"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "Start nedlasting"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "Bekreft kopiering til utklippstavle"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "Start opplasting"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr ""
+msgstr "Start kryss kopiering/innliming"
 
 #: src/control/ColorPicker.js:121
 msgid "No color"
-msgstr ""
+msgstr "Ingen farge"
 
 #: src/control/Control.JSDialogBuilder.js:153
 #: src/control/Control.JSDialogBuilder.js:804
@@ -324,81 +324,79 @@ msgstr "Ingen"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Ugjennomsiktig"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
-msgstr ""
+msgstr "Linjær"
 
 #: src/control/Control.JSDialogBuilder.js:162
 msgid "Axial"
-msgstr ""
+msgstr "Aksial"
 
 #: src/control/Control.JSDialogBuilder.js:165
 msgid "Radial"
-msgstr ""
+msgstr "Radial"
 
 #: src/control/Control.JSDialogBuilder.js:168
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Ellipsoid"
 
 #: src/control/Control.JSDialogBuilder.js:172
 msgid "Quadratic"
-msgstr ""
+msgstr "Kvadratisk"
 
 #: src/control/Control.JSDialogBuilder.js:175
 msgid "Square"
-msgstr ""
+msgstr "Kvadrat"
 
 #: src/control/Control.JSDialogBuilder.js:178
 msgid "Fixed size"
-msgstr ""
+msgstr "Fast størrelse"
 
 #: src/control/Control.JSDialogBuilder.js:807
 msgid "Color"
-msgstr ""
+msgstr "Farge"
 
 #: src/control/Control.JSDialogBuilder.js:810
 msgid "Gradient"
-msgstr ""
+msgstr "Gradient"
 
 #: src/control/Control.JSDialogBuilder.js:813
 msgid "Hatching"
-msgstr ""
+msgstr "Skyggelegging"
 
 #: src/control/Control.JSDialogBuilder.js:817
 msgid "Pattern"
-msgstr ""
+msgstr "Mønster"
 
 #: src/control/Control.JSDialogBuilder.js:950
 msgid "From"
-msgstr ""
+msgstr "Fra"
 
 #: src/control/Control.JSDialogBuilder.js:953
 msgid "To"
-msgstr ""
+msgstr "Til"
 
 #: src/control/Control.JSDialogBuilder.js:1088
 msgid "Font Name"
-msgstr "Fontnavn:"
+msgstr "Fontnavn"
 
 #: src/control/Control.JSDialogBuilder.js:1090
 msgid "Font Size"
 msgstr "Fontstørrelse"
 
 #: src/control/Control.JSDialogBuilder.js:1441
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
 msgstr "Kantlinjer"
 
 #: src/control/Control.JSDialogBuilder.js:1630
 msgid "Rows"
-msgstr ""
+msgstr "Rader"
 
 #: src/control/Control.JSDialogBuilder.js:1631
 msgid "Columns"
-msgstr ""
+msgstr "Kolonner"
 
 #: src/control/Control.JSDialogBuilder.js:1651
 #: src/control/Control.Toolbar.js:956
@@ -407,7 +405,7 @@ msgstr "Sett inn tabell"
 
 #: src/control/Control.JSDialogBuilder.js:1680
 msgid "Line style:"
-msgstr ""
+msgstr "Linjestil:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:228
 #: src/control/Control.Menubar.js:230 src/control/Control.Menubar.js:232
@@ -458,7 +456,7 @@ msgstr "Rik tekst (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:480
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:472
 #: src/control/Signing.js:601
@@ -483,7 +481,7 @@ msgstr "Tilbakestill forstørring/forminsking"
 
 #: src/control/Control.Menubar.js:65
 msgid "Show Ruler"
-msgstr ""
+msgstr "Vis linjal"
 
 #: src/control/Control.Menubar.js:75 src/control/Control.Menubar.js:292
 #: src/control/Control.Menubar.js:382 src/control/Control.Menubar.js:624
@@ -503,7 +501,7 @@ msgstr "Tekstretning"
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:341
 #: src/control/Control.Menubar.js:457
 msgid "Online Help"
-msgstr ""
+msgstr "Online Hjelp"
 
 #: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:342
 #: src/control/Control.Menubar.js:458
@@ -513,7 +511,7 @@ msgstr "Tastatursnarveier"
 #: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:459
 msgid "Report an issue"
-msgstr ""
+msgstr "Rapporter et problem"
 
 #: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:344
 #: src/control/Control.Menubar.js:460 src/control/Control.Menubar.js:511
@@ -558,41 +556,39 @@ msgstr "Excel-regneark (.xlsx)"
 #: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:522
 #: src/control/Control.Menubar.js:567
 msgid "Export as"
-msgstr ""
+msgstr "Eksporter som"
 
 #: src/control/Control.Menubar.js:501
 msgid "Page Setup"
-msgstr ""
+msgstr "Sideoppsett"
 
 #: src/control/Control.Menubar.js:502
 msgid "Portrait"
-msgstr ""
+msgstr "Portrett"
 
 #: src/control/Control.Menubar.js:503
 msgid "Landscape"
-msgstr ""
+msgstr "Landskap"
 
 #: src/control/Control.Menubar.js:759 src/control/Control.Toolbar.js:2027
 msgid "Reset to Default Language"
 msgstr "Nullstill til standardspråk"
 
 #: src/control/Control.Menubar.js:1079
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "Sett inn former"
+msgstr "Sett inn form"
 
 #: src/control/Control.Menubar.js:1161
 msgid "Are you sure you want to delete this slide?"
-msgstr "Er du sikker på at du vil slette detre lysboldet?"
+msgstr "Er du sikker på at du vil slette dette lysbildet?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
-msgstr "Rull opp merknader"
+msgstr "Rull opp i merknader"
 
 #: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
-msgstr "Rull ned merknader"
+msgstr "Rull ned i merknader"
 
 #: src/control/Control.Tabs.js:48
 msgid "Insert sheet before this"
@@ -608,7 +604,7 @@ msgstr "Er du sikker på at du vil slette dette arket, %sheet%?"
 
 #: src/control/Control.Tabs.js:216
 msgid "Enter new sheet name"
-msgstr "Angi nytt navn på arket"
+msgstr "Gi arket et nytt navn"
 
 #: src/control/Control.Toolbar.js:217
 msgid "Are you sure you want to delete this page?"
@@ -616,7 +612,7 @@ msgstr "Er du sikker på at du vil slette denne siden?"
 
 #: src/control/Control.Toolbar.js:843
 msgid "Default Style"
-msgstr ""
+msgstr "Standard Stil"
 
 #: src/control/Control.Toolbar.js:900
 msgid "Borders"
@@ -635,10 +631,8 @@ msgid "Insert shapes"
 msgstr "Sett inn former"
 
 #: src/control/Control.Toolbar.js:1023
-#, fuzzy
-#| msgid "Function"
 msgid "Function Wizard"
-msgstr "Funksjon"
+msgstr "Funksjonsveileder"
 
 #: src/control/Control.Toolbar.js:1067
 msgid "First sheet"
@@ -671,7 +665,7 @@ msgstr "Avbryt søket"
 #: src/control/Control.Toolbar.js:1126 src/layer/tile/CalcTileLayer.js:120
 #: src/layer/tile/ImpressTileLayer.js:155 src/layer/tile/WriterTileLayer.js:100
 msgid "Always follow the editor"
-msgstr "Følg alltid redaktøren"
+msgstr "Følg alltid editoren"
 
 #: src/control/Control.Toolbar.js:1129 src/layer/tile/CalcTileLayer.js:123
 #: src/layer/tile/ImpressTileLayer.js:158 src/layer/tile/WriterTileLayer.js:103
@@ -700,7 +694,7 @@ msgstr "Åpner tekstmodus."
 
 #: src/control/Control.Toolbar.js:1584 src/control/Control.Toolbar.js:1637
 msgid "Selection Mode"
-msgstr "Merkingsmodus"
+msgstr "Utvalgsmodus"
 
 #: src/control/Control.Toolbar.js:1589
 msgid "Choice of functions"
@@ -732,7 +726,7 @@ msgstr "Sum"
 
 #: src/control/Control.Toolbar.js:1599
 msgid "Selection count"
-msgstr "Utvalgs teller"
+msgstr "Utvalgsteller"
 
 #: src/control/Control.Toolbar.js:1622
 msgid "Number of Pages"
@@ -764,7 +758,7 @@ msgstr "Stil"
 
 #: src/control/Control.Toolbar.js:2147
 msgid "Font"
-msgstr "Skrift:"
+msgstr "Font:"
 
 #: src/control/Control.Toolbar.js:2172
 msgid "Previous slide"
@@ -780,7 +774,7 @@ msgstr "Konflikt Angre/Gjør om med flere brukere. Vennligst bruk reparer dokume
 
 #: src/control/Control.Toolbar.js:2530
 msgid "Readonly"
-msgstr "Kun lesing"
+msgstr "Skrivebeskyttet"
 
 #: src/control/Ruler.js:199
 msgid "Left Margin"
@@ -796,7 +790,7 @@ msgstr "Vennligs skriv inn PIN koden"
 
 #: src/control/Signing.js:214
 msgid "Error at login."
-msgstr "Feil ved ligginn"
+msgstr "Feil ved logginn"
 
 #: src/control/Signing.js:227
 msgid "Please scan the code"
@@ -820,7 +814,7 @@ msgstr "Vennligst skriv inn PIN-koden fra E-post eller SMS"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
-msgstr "Logg inn fra e-post eller mobilnummer"
+msgstr "Logg inn med e-post eller mobilnummer"
 
 #: src/control/Signing.js:329
 msgid "Select document type to upload"
@@ -860,7 +854,7 @@ msgstr "Signer"
 
 #: src/control/Signing.js:603
 msgid "Status:"
-msgstr "Status"
+msgstr "Status:"
 
 #: src/control/Signing.js:604
 msgid "N/A"
@@ -884,7 +878,7 @@ msgstr "Signert og validert"
 
 #: src/control/Signing.js:623
 msgid "This document has an invalid signature."
-msgstr "Dette dokumentet har en ugyldig sgnatur."
+msgstr "Dette dokumentet har en ugyldig signatur."
 
 #: src/control/Signing.js:624
 msgid "Signature broken"
@@ -896,7 +890,7 @@ msgstr "Signaturen var gyldig, men dokumentet har blitt endret"
 
 #: src/control/Signing.js:628
 msgid "Signed but document modified"
-msgstr "Signert, men dokumentet er midifisert"
+msgstr "Signert, men dokumentet er modifisert"
 
 #: src/control/Signing.js:631
 msgid "The signature is OK, but the certificate could not be validated."
@@ -932,15 +926,15 @@ msgstr "Denne versjonen av %productName kjøres på"
 
 #: src/control/Toolbar.js:451
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Sett inn hyperlenke"
 
 #: src/control/Toolbar.js:453
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: src/control/Toolbar.js:454
 msgid "Link"
-msgstr ""
+msgstr "Lenke"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
@@ -952,7 +946,7 @@ msgstr "Uff. Det har oppstått et problem med tilkoblingen til LibreOffice Onlin
 
 #: src/core/Socket.js:288
 msgid "Served by:"
-msgstr ""
+msgstr "Servert av:"
 
 #: src/core/Socket.js:293
 msgid "Unsupported server version."
@@ -968,7 +962,7 @@ msgstr "Inaktivt dokument, vennligst klikk for å fortsette redigering"
 
 #: src/core/Socket.js:372
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr "Tjeneren tas ned for vedlikehold (autolagring)"
+msgstr "Serveren tas ned for vedlikehold (autolagring)"
 
 #: src/core/Socket.js:376
 msgid "Oops, there is a problem connecting the document"
@@ -976,11 +970,11 @@ msgstr "Oops, problem med å koble til dokumentet"
 
 #: src/core/Socket.js:380
 msgid "Server is recycling and will be available shortly"
-msgstr "Tjeneren starter opp og vil snart være tilgjengelig"
+msgstr "Serveren starter opp og vil snart være tilgjengelig"
 
 #: src/core/Socket.js:408
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
-msgstr "Dokumentet har blitt endret på tjeneren. Laster det nye dokumentet. Din versjon er tilgjengelig som en revisjon."
+msgstr "Dokumentet har blitt endret på serveren. Laster det nye dokumentet. Din versjon er tilgjengelig som en revisjon."
 
 #: src/core/Socket.js:414
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
@@ -1032,15 +1026,15 @@ msgstr "Vi kan  dessverre ikke koble til ditt dokument nå. Prøv å koble til p
 
 #: src/errormessages.js:13
 msgid "No disk space left on server, please contact the server administrator to continue."
-msgstr "Ingen ledig plass på tjeneren, vennligst kontakt administator."
+msgstr "Ingen ledig plass på serveren, vennligst kontakt administator."
 
 #: src/errormessages.js:14
 msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
-msgstr "Verts-URL-en er tom. loolwsd-tenaren er sannsynelig vis satt opp feil. Kontakt administrator."
+msgstr "Verts-URL-en er tom. loolwsd-serveren er sannsynlig vis satt opp feil. Kontakt administrator."
 
 #: src/errormessages.js:15
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr "Dette er en versjon av {productname} som ikke blir støttet. For å unngå inntrykket av at dette er brukbart til bruk i virksomheter, vil denne meldingen vises når mer enn {docs} dokument eller flere enn {connections} koblinger er brukt samtidig."
+msgstr "Dette er en versjon av {productname} som ikke blir støttet. For å unngå inntrykket av at dette bør brukes i virksomheter, vil denne meldingen vises når mer enn {docs} dokument eller flere enn {connections} koblinger er brukt samtidig."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1084,15 +1078,15 @@ msgstr "Du forlater editoren, er du sikker på at du vil gå til %url?"
 
 #: src/errormessages.js:26
 msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr ""
+msgstr "Kunne ikke laste inn dokumentet. Dette dokumentet er enten feilformet eller tar mer ressurser enn tillatt. Kontakt administratoren."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
-msgstr ""
+msgstr "Kunne ikke laste inn dokumentet."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr ""
+msgstr "Lagring mislyktes på grunn av at det ikke var igjen noe diskplass. Dokument vil nå være skrivebeskyttet."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1100,16 +1094,16 @@ msgstr "Dokumentet kan ikke lagres pga utgått eller ugyldig aksess tilgang."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Dokumentet kan ikke lagres."
 
 #: src/errormessages.js:34
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Dokument kan ikke bli gitt nytt navn."
 
 #: src/errormessages.js:38
 #, javascript-format
 msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
-msgstr "Mislyktes i å lese dokumentet fra lagringssted. Vennligst kontak administratoren for t lagringstjeneren (%storageserver)"
+msgstr "Mislyktes i å lese dokumentet fra lagringssted. Vennligst kontakt administratoren for lagringsserveren (%storageserver)"
 
 #: src/errormessages.js:39
 #, javascript-format
@@ -1126,11 +1120,11 @@ msgstr "Dokumentet kan ikke lagres. Sjekk dine tillatelser eller kontakt servera
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Opplasting av fil til server mislyktes, filen ble ikke funnet."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Opplasting av fil til server mislyktes, filen er for stor."
 
 #: src/layer/marker/Annotation.js:220
 msgid "Accept change"
@@ -1173,19 +1167,19 @@ msgstr "Slett"
 
 #: src/layer/tile/TileLayer.js:255
 msgid "Resolve"
-msgstr ""
+msgstr "Løs"
 
 #: src/map/Clipboard.js:133
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
+msgstr "For å lime inn utenfor %productName, må du først klikke på nedlastingsknappen"
 
 #: src/map/Clipboard.js:278
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Kunne ikke laste ned utklippstavlen. Kopier på nytt"
 
 #: src/map/Clipboard.js:776
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr ""
+msgstr "<p> Bruk kopier/lim inn-knappene på skjermtastaturet. </p>"
 
 #: src/map/Clipboard.js:778
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
@@ -1193,11 +1187,11 @@ msgstr "<p>Nettleseren din har begrenset tilgang til utklippstavlen,<ul><li><b> 
 
 #: src/map/Clipboard.js:811
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr ""
+msgstr "<p> Hvis du vil dele større elementer av dokumentet ditt med andre applikasjoner, er det nødvendig å først laste dem ned til enheten din. For å gjøre det, trykk på \"Start nedlasting\" -knappen nedenfor, og klikk \"Bekreft kopi til utklippstavle\" når du er ferdig. </p> <p> Hvis du kopierer og limer inn mellom dokumenter i %productName, er det ikke nødvendig å laste ned. </p>"
 
 #: src/map/Clipboard.js:827
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr ""
+msgstr "<p> En nedlasting på grunn av  en stor kopiering/lim inn operasjon har allerede startet. Vent til den gjeldende nedlastingener ferdig eller avbryt den før du starter en ny </p>"
 
 #: src/map/Map.js:252
 msgid "Initializing..."
@@ -1215,17 +1209,17 @@ msgstr "%d minutter siden"
 
 #: src/map/Map.js:1326
 msgid "Inactive document - please click to resume editing"
-msgstr "Inaktivt dkument, vennligs klikk for å fortsette redigering"
+msgstr "Inaktivt dokument, vennligst klikk for å fortsette redigering"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "Filen av typen: %0 kan ikke lastes opp til serveren siden filen ikke har noe navn"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Filen av typen:% 0 kan ikke lastes opp til serveren siden filen er tom"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1233,7 +1227,7 @@ msgstr "Laster opp…"
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Opplasting av fil til server mislyktes med status: %0"
 
 #: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-01-03 10:08+0000\n"
+"PO-Revision-Date: 2020-04-11 11:43+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/ios/sl/>\n"
 "Language: sl\n"
@@ -13,19 +13,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: Version+information
 msgid "Version information"
-msgstr ""
+msgstr "Podatki o različici"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Prstni odtis git (spletna)"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Prstni odtis git (osnova)"
 
 #: Settings
 msgid "Settings"

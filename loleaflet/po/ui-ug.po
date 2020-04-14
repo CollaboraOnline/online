@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-04-13 09:32+0000\n"
+"Last-Translator: Abduqadir Abliz <Sahran@live.com>\n"
+"Language-Team: Uyghur <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ug/>\n"
+"Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /ug/libo_online/loleaflet-ui-ug.po\n"
 "X-Pootle-Revision: 3938222\n"
 
@@ -53,7 +54,7 @@ msgstr "توردىكى ئىشلەتكۈچى"
 
 #: admin/admin.strings.js:14
 msgid "User Name"
-msgstr ""
+msgstr "ئىشلەتكۈچى ئىسمى"
 
 #: admin/admin.strings.js:15
 msgid "Documents opened"
@@ -61,7 +62,7 @@ msgstr "پۈتۈك ئېچىلدى"
 
 #: admin/admin.strings.js:16
 msgid "Number of Documents"
-msgstr ""
+msgstr "پۈتۈك سانى"
 
 #: admin/admin.strings.js:17
 msgid "Memory consumed"
@@ -69,11 +70,11 @@ msgstr "ئەسلەك سەرپىياتى"
 
 #: admin/admin.strings.js:18
 msgid "Bytes sent"
-msgstr ""
+msgstr "بايت يوللاندى"
 
 #: admin/admin.strings.js:19
 msgid "Bytes received"
-msgstr ""
+msgstr "بايت تاپشۇرۇۋالدى"
 
 #: admin/admin.strings.js:20
 msgid "PID"
@@ -93,11 +94,11 @@ msgstr "كەتكەن ۋاقىت"
 
 #: admin/admin.strings.js:24
 msgid "Idle time"
-msgstr ""
+msgstr "بوش ۋاقىت"
 
 #: admin/admin.strings.js:25
 msgid "Modified"
-msgstr ""
+msgstr "ئۆزگەرتىلدى"
 
 #: admin/admin.strings.js:26
 msgid "Kill"
@@ -109,15 +110,15 @@ msgstr "گىرافىك"
 
 #: admin/admin.strings.js:28
 msgid "Memory Graph"
-msgstr ""
+msgstr "ساقلىغۇچ گىرافىكى"
 
 #: admin/admin.strings.js:29
 msgid "CPU Graph"
-msgstr ""
+msgstr "CPU گىرافىكى"
 
 #: admin/admin.strings.js:30
 msgid "Network Graph"
-msgstr ""
+msgstr "تور گىرافىكى"
 
 #: admin/admin.strings.js:31 src/layer/marker/Annotation.js:252
 #: src/layer/tile/TileLayer.js:396
