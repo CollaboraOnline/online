@@ -144,6 +144,7 @@ namespace
             return
                 strcmp(path, "program/wizards") != 0 &&
                 strcmp(path, "sdk") != 0 &&
+                strcmp(path, "debugsource") != 0 &&
                 strcmp(path, "share/basic") != 0 &&
                 strcmp(path, "share/Scripts/java") != 0 &&
                 strcmp(path, "share/Scripts/javascript") != 0 &&
@@ -163,8 +164,10 @@ namespace
             if (!dot)
                 return true;
 
-            if (!strcmp(dot, ".dbg") ||
-                !strcmp(dot, ".so"))
+            if (!strcmp(dot, ".dbg"))
+                return false;
+
+            if (!strcmp(dot, ".so"))
             {
                 // NSS is problematic ...
                 if (strstr(path, "libnspr4") ||
