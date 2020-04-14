@@ -281,9 +281,10 @@ namespace FileUtil
                 nftw(path.c_str(), nftw_cb, 128, FTW_DEPTH | FTW_PHYS);
             }
         }
-        catch (const std::exception&)
+        catch (const std::exception&e)
         {
             // Already removed or we don't care about failures.
+            LOG_DBG("Exception removing " << path << " " << recursive << " : " << e.what());
         }
 #endif
     }
