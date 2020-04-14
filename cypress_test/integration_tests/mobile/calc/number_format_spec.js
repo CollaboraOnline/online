@@ -35,7 +35,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#category')
 			.click();
 
-		helper.selectItemByContent('.mobile-wizard.ui-combobox-text', formattingString)
+		cy.contains('.mobile-wizard.ui-combobox-text', formattingString)
 			.click();
 
 		// Combobox entry contains the selected format
@@ -221,7 +221,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#category')
 			.click();
 
-		helper.selectItemByContent('.mobile-wizard.ui-combobox-text', 'Date')
+		cy.contains('.mobile-wizard.ui-combobox-text', 'Date')
 			.click();
 
 		// Combobox entry contains the selected format

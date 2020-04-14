@@ -111,11 +111,11 @@ describe('Focus tests', function() {
 		mobileHelper.openInsertionWizard();
 
 		// Select More Fields
-		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget', 'More Fields...')
+		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget', 'More Fields...')
 			.click();
 
 		// Insert a field
-		helper.selectItemByContent('.menu-entry-with-icon', 'Page Number')
+		cy.contains('.menu-entry-with-icon', 'Page Number')
 			.click();
 
 		cy.get('#mobile-wizard')
@@ -133,7 +133,7 @@ describe('Focus tests', function() {
 		mobileHelper.openInsertionWizard();
 
 		// Do insertion
-		helper.selectItemByContent('.menu-entry-with-icon', 'Shape')
+		cy.contains('.menu-entry-with-icon', 'Shape')
 			.click();
 
 		cy.get('.col.w2ui-icon.basicshapes_rectangle').

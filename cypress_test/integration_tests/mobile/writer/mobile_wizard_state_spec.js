@@ -34,7 +34,7 @@ describe('Mobile wizard state tests', function() {
 		// Open hamburger menu
 		mobileHelper.openHamburgerMenu();
 
-		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'About')
+		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'About')
 			.should('be.visible');
 
 		// Close hamburger menu
@@ -53,7 +53,7 @@ describe('Mobile wizard state tests', function() {
 		// Open context wizard by right click on document
 		mobileHelper.longPressOnDocument(40, 40);
 
-		helper.selectItemByContent('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'Paste')
+		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'Paste')
 			.should('be.visible');
 
 		// TODO: fix this bug

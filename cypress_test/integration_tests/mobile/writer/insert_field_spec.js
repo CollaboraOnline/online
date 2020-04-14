@@ -14,7 +14,7 @@ describe('Insert fields via insertion wizard.', function() {
 		mobileHelper.openInsertionWizard();
 
 		// Open fields submenu
-		helper.selectItemByContent('.menu-entry-with-icon.flex-fullwidth', 'More Fields...')
+		cy.contains('.menu-entry-with-icon.flex-fullwidth', 'More Fields...')
 			.click();
 
 		cy.get('.ui-content.level-0.mobile-wizard')
@@ -27,7 +27,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert page number field.', function() {
 		// Insert field
-		helper.selectItemByContent('.menu-entry-with-icon', 'Page Number')
+		cy.contains('.menu-entry-with-icon', 'Page Number')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -39,7 +39,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert page count field.', function() {
 		// Insert field
-		helper.selectItemByContent('.menu-entry-with-icon', 'Page Count')
+		cy.contains('.menu-entry-with-icon', 'Page Count')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -51,7 +51,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert date field.', function() {
 		// Insert field
-		helper.selectItemByContent('.menu-entry-with-icon', 'Date')
+		cy.contains('.menu-entry-with-icon', 'Date')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -63,7 +63,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert time field.', function() {
 		// Insert field
-		helper.selectItemByContent('.menu-entry-with-icon', 'Time')
+		cy.contains('.menu-entry-with-icon', 'Time')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -75,7 +75,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert title field.', function() {
 		// Insert field
-		helper.selectItemByContent('.menu-entry-with-icon', 'Title')
+		cy.contains('.menu-entry-with-icon', 'Title')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -87,7 +87,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert author field.', function() {
 		// Insert field
-		helper.selectItemByContent('.menu-entry-with-icon', 'First Author')
+		cy.contains('.menu-entry-with-icon', 'First Author')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -100,7 +100,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 	it('Insert subject field.', function() {
 		// Insert field
-		helper.selectItemByContent('.menu-entry-with-icon', 'Subject')
+		cy.contains('.menu-entry-with-icon', 'Subject')
 			.click();
 
 		writerHelper.copyTextToClipboard();

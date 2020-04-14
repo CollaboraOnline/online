@@ -26,7 +26,7 @@ describe('Clipboard operations.', function() {
 				cy.get('body').rightclick(XPos, YPos);
 			});
 
-		helper.selectItemByContent('.context-menu-link', 'Copy')
+		cy.contains('.context-menu-link', 'Copy')
 			.click();
 
 		// Loleaflet code can not execute document.execCommand() when executed by cypress

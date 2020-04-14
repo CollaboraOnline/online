@@ -55,7 +55,7 @@ describe('Calc spell checking menu.', function() {
 	it('Apply suggestion.', function() {
 		openContextMenu();
 
-		helper.selectItemByContent('.context-menu-link', 'hello')
+		cy.contains('.context-menu-link', 'hello')
 			.click();
 
 		// Click outside of the cell
@@ -80,7 +80,7 @@ describe('Calc spell checking menu.', function() {
 	it('Ignore all.', function() {
 		openContextMenu();
 
-		helper.selectItemByContent('.context-menu-link', 'Ignore\u00a0All')
+		cy.contains('.context-menu-link', 'Ignore All')
 			.click();
 
 		// Click outside of the cell
@@ -96,14 +96,14 @@ describe('Calc spell checking menu.', function() {
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		helper.selectItemByContent('.context-menu-link', 'Paste')
+		cy.contains('.context-menu-link', 'Paste')
 			.should('be.visible');
 	});
 
 	it('Apply language for word.', function() {
 		openContextMenu();
 
-		helper.selectItemByContent('.context-menu-link', 'Word\u00a0is Finnish')
+		cy.contains('.context-menu-link', 'Word is Finnish')
 			.click();
 
 		// Click outside of the cell
@@ -119,14 +119,14 @@ describe('Calc spell checking menu.', function() {
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		helper.selectItemByContent('.context-menu-link', 'Paste')
+		cy.contains('.context-menu-link', 'Paste')
 			.should('be.visible');
 	});
 
 	it('Apply language for paragraph.', function() {
 		openContextMenu();
 
-		helper.selectItemByContent('.context-menu-link', 'Paragraph\u00a0is Finnish')
+		cy.contains('.context-menu-link', 'Paragraph is Finnish')
 			.click();
 
 		// Click outside of the cell
@@ -142,7 +142,7 @@ describe('Calc spell checking menu.', function() {
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		helper.selectItemByContent('.context-menu-link', 'Paste')
+		cy.contains('.context-menu-link', 'Paste')
 			.should('be.visible');
 	});
 });

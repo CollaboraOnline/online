@@ -1,7 +1,6 @@
 /* global cy expect require*/
 
 var mobileHelper = require('../../common/mobile_helper');
-var helper = require('../../common/helper');
 
 function copyTextToClipboard() {
 	cy.log('Copying text to clipboard - start.');
@@ -60,11 +59,11 @@ function selectAllMobile() {
 	mobileHelper.openHamburgerMenu();
 
 	// Open edit menu
-	helper.selectItemByContent('.ui-header.level-0 .menu-entry-with-icon', 'Edit')
+	cy.contains('.ui-header.level-0 .menu-entry-with-icon', 'Edit')
 		.click();
 
 	// Do the selection
-	helper.selectItemByContent('.ui-header.level-1 .menu-entry-with-icon', 'Select All')
+	cy.contains('.ui-header.level-1 .menu-entry-with-icon', 'Select All')
 		.click();
 	cy.get('.leaflet-marker-icon')
 		.should('exist');

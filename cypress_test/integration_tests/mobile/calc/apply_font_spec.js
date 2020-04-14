@@ -87,7 +87,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontnamecombobox')
 			.click();
 
-		helper.selectItemByContent('.mobile-wizard.ui-combobox-text', 'Linux Libertine G')
+		cy.contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G')
 			.click();
 
 		cy.get('.level-1[title="Font Name"] .mobile-wizard.ui-combobox-text.selected')
@@ -111,7 +111,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontsizecombobox')
 			.click();
 
-		helper.selectItemByContent('.mobile-wizard.ui-combobox-text', '14')
+		cy.contains('.mobile-wizard.ui-combobox-text', '14')
 			.click();
 
 		if (Cypress.env('LO_CORE_VERSION') === 'master')

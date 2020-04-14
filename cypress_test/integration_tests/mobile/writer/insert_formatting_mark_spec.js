@@ -14,7 +14,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		mobileHelper.openInsertionWizard();
 
 		// Open formatting marks
-		helper.selectItemByContent('.menu-entry-with-icon.flex-fullwidth', 'Formatting Mark')
+		cy.contains('.menu-entry-with-icon.flex-fullwidth', 'Formatting Mark')
 			.click();
 
 		cy.get('.ui-content.level-0.mobile-wizard')
@@ -26,7 +26,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert non-breaking space.', function() {
-		helper.selectItemByContent('.menu-entry-with-icon', 'Non-breaking space')
+		cy.contains('.menu-entry-with-icon', 'Non-breaking space')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -39,7 +39,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert non-breaking hyphen.', function() {
-		helper.selectItemByContent('.menu-entry-with-icon', 'Non-breaking hyphen')
+		cy.contains('.menu-entry-with-icon', 'Non-breaking hyphen')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -52,7 +52,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert soft hyphen.', function() {
-		helper.selectItemByContent('.menu-entry-with-icon', 'Soft hyphen')
+		cy.contains('.menu-entry-with-icon', 'Soft hyphen')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -65,7 +65,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert no-width optional break.', function() {
-		helper.selectItemByContent('.menu-entry-with-icon', 'No-width optional break')
+		cy.contains('.menu-entry-with-icon', 'No-width optional break')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -78,7 +78,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert no-width no break.', function() {
-		helper.selectItemByContent('.menu-entry-with-icon', 'No-width no break')
+		cy.contains('.menu-entry-with-icon', 'No-width no break')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -91,7 +91,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert left-to-right mark.', function() {
-		helper.selectItemByContent('.menu-entry-with-icon', 'Left-to-right mark')
+		cy.contains('.menu-entry-with-icon', 'Left-to-right mark')
 			.click();
 
 		writerHelper.copyTextToClipboard();
@@ -104,7 +104,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert right-to-left mark.', function() {
-		helper.selectItemByContent('.menu-entry-with-icon', 'Right-to-left mark')
+		cy.contains('.menu-entry-with-icon', 'Right-to-left mark')
 			.click();
 
 		writerHelper.copyTextToClipboard();
