@@ -16,7 +16,7 @@ var Util = Base.extend({
 			kbytes /= unit;
 		}
 
-		return kbytes + ' ' + units[i];
+		return kbytes.toFixed(1) + ' ' + units[i];
 	},
 
 	humanizeSecs: function(secs) {
