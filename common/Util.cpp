@@ -963,10 +963,13 @@ namespace Util
             std::vector<std::string> infoList = Util::splitStringToVector(str, '\n');
             std::map<std::string, std::string> releaseInfo = Util::stringVectorToMap(infoList, '=');
 
-            if (releaseInfo.find("PRETTY_NAME") != releaseInfo.end()) {
-                return releaseInfo["PRETTY_NAME"];
+            auto it = releaseInfo.find("PRETTY_NAME");
+            if (it != releaseInfo.end())
+            {
+                return it->second;
             }
-            else{
+            else
+            {
                 return "unknown";
             }
         }
