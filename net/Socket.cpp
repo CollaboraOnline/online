@@ -219,7 +219,6 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         timeout.tv_sec = timeoutMaxMicroS / (1000 * 1000);
         timeout.tv_nsec = (timeoutMaxMicroS % (1000 * 1000)) * 1000;
         rc = ::ppoll(&_pollFds[0], size + 1, &timeout, nullptr);
-        LOG_TRC("ppoll result " << rc << " errno " << strerror(errno));
 #  else
         int timeoutMaxMs = (timeoutMaxMicroS + 9999) / 1000;
         LOG_TRC("Legacy Poll start, timeoutMs: " << timeoutMaxMs);

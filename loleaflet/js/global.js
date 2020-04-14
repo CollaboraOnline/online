@@ -260,7 +260,6 @@
 		this.sendQueue = '';
 		this.sendTimeout = undefined;
 		this.doSend = function () {
-			that.sendTimeout = undefined;
 			console.debug('send msg "' + that.sendQueue + '"');
 			var req = new XMLHttpRequest();
 			req.open('POST', that.getEndPoint('write'));
@@ -279,6 +278,7 @@
 			}
 			req.send(that.sendQueue);
 			that.sendQueue = '';
+			that.sendTimeout = undefined;
 		};
 		this.getSessionId = function() {
 			var req = new XMLHttpRequest();
@@ -318,7 +318,7 @@
 		// horrors ...
 		this.waitConnect = function() {
 			console.debug('proxy: waiting - ' + that.readWaiting + ' on session ' + that.sessionId);
-			if (that.readWaiting > 4) // max 4 waiting connections concurrently.
+			if (that.readWaiting >= 4) // max 4 waiting connections concurrently.
 				return;
 			if (that.sessionId == 'fetchsession')
 				return; // waiting for our session id.

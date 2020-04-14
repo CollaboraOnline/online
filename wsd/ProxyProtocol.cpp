@@ -219,6 +219,13 @@ void ProxyProtocolHandler::getIOStats(uint64_t &sent, uint64_t &recv)
 void ProxyProtocolHandler::dumpState(std::ostream& os)
 {
     os << "proxy protocol sockets: " << _outSockets.size() << " writeQueue: " << _writeQueue.size() << ":\n";
+    os << "\t";
+    for (auto &it : _outSockets)
+    {
+        auto sock = it.lock();
+        os << "#" << (sock ? sock->getFD() : -2) << " ";
+    }
+    os << "\n";
     for (auto it : _writeQueue)
         Util::dumpHex(os, "\twrite queue entry:", "\t\t", *it);
     if (_msgHandler)
