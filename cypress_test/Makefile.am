@@ -159,7 +159,7 @@ define run_desktop_tests
 			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
-		$(call execute_run_parallel,$(RUN_COMMAND),$(2))\
+		$(call execute_run_parallel,$(RUN_COMMAND),$(2),"make check-desktop spec=$(1)")\
 	,\
 		$(RUN_COMMAND)\
 	)
@@ -176,7 +176,7 @@ define run_mobile_tests
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
-		$(call execute_run_parallel,$(RUN_COMMAND),$(2))\
+		$(call execute_run_parallel,$(RUN_COMMAND),$(2),"make check-mobile spec=$(1)")\
 	,\
 		$(RUN_COMMAND)\
 	)
@@ -192,9 +192,15 @@ define execute_run_parallel
 		     echo "`echo $(1) && $(1)`" >> $(2) 2>&1 && \
 		     if [ -z `grep -o -m 1 "Error:" $(2)` ];\
 			then cat $(2);\
-			else cat $(2) >> $(ERROR_LOG); \
+			else cat $(2) >> $(ERROR_LOG)&& \
+			     echo "" >> $(ERROR_LOG) && \
+			     echo "To run this test file call: $(3)" >> $(ERROR_LOG) &&\
+			     echo "" >> $(ERROR_LOG); \
 		     fi;\
-		else cat $(2) >> $(ERROR_LOG);\
+		else cat $(2) >> $(ERROR_LOG) && \
+		     echo "" >> $(ERROR_LOG) && \
+		     echo "To run this test file call: $(3)" >> $(ERROR_LOG) &&\
+		     echo "" >> $(ERROR_LOG); \
 	fi;
 endef
 
