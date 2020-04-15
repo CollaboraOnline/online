@@ -1713,10 +1713,14 @@ function setupToolbar(e) {
 	}
 
 	$('#closebutton').click(function() {
-		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-		if (!map._disableDefaultAction['UI_Close']) {
-			map.remove();
+		if (window.ThisIsAMobileApp) {
+			window.postMobileMessage('BYE');
+		} else {
+			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
+			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+			if (!map._disableDefaultAction['UI_Close']) {
+				map.remove();
+			}
 		}
 	});
 }
