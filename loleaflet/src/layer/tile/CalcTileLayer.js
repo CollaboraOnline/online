@@ -73,38 +73,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 	onMobileInit: function (map) {
 		map.addControl(L.control.mobileTopBar('spreadsheet'));
 
-		var toolbar = $('#formulabar');
-		toolbar.w2toolbar({
-			name: 'formulabar',
-			tooltip: 'bottom',
-			hidden: true,
-			items: [
-				{type: 'html',  id: 'left'},
-				{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
-				{type: 'html', id: 'formula', html: '<div id="calc-inputbar-wrapper"><div id="calc-inputbar"></div></div>'}
-			],
-			onClick: function (e) {
-				window.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
-			},
-			onRefresh: function() {
-				$('#addressInput').off('keyup', window.onAddressInput).on('keyup', window.onAddressInput);
-			}
-		});
-		toolbar.bind('touchstart', function(e) {
-			w2ui['formulabar'].touchStarted = true;
-			var touchEvent = e.originalEvent;
-			if (touchEvent && touchEvent.touches.length > 1) {
-				L.DomEvent.preventDefault(e);
-			}
-		});
+		map.addControl(L.control.formulaBar({showfunctionwizard: false}));
 
-		$(w2ui.formulabar.box).find('.w2ui-scroll-left, .w2ui-scroll-right').hide();
-		w2ui.formulabar.on('resize', function(target, e) {
-			e.isCancelled = true;
-		});
-
-		toolbar = $('#spreadsheet-toolbar');
+		var toolbar = $('#spreadsheet-toolbar');
 		toolbar.w2toolbar({
 			name: 'spreadsheet-toolbar',
 			tooltip: 'bottom',

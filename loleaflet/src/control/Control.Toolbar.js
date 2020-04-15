@@ -91,10 +91,6 @@ function onClick(e, id, item) {
 		var toolbar = w2ui['editbar'];
 		item = toolbar.get(id);
 	}
-	else if ('formulabar' in w2ui && w2ui['formulabar'].get(id) !== null) {
-		toolbar = w2ui['formulabar'];
-		item = toolbar.get(id);
-	}
 	else if ('document-signing-bar' in w2ui && w2ui['document-signing-bar'].get(id) !== null) {
 		toolbar = w2ui['document-signing-bar'];
 		item = toolbar.get(id);
@@ -907,37 +903,6 @@ function createMainToolbar() {
 	});
 }
 
-function createFormulaBar() {
-	var toolbar = $('#formulabar');
-	toolbar.w2toolbar({
-		name: 'formulabar',
-		tooltip: 'bottom',
-		hidden: true,
-		items: [
-			{type: 'html',  id: 'left'},
-			{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
-			{type: 'break'},
-			{type: 'button',  id: 'functiondialog', img: 'functiondialog', hint: _('Function Wizard'), uno: '.uno:FunctionDialog'},
-			{type: 'html', id: 'formula', html: '<div id="calc-inputbar-wrapper"><div id="calc-inputbar"></div></div>'}
-		],
-		onClick: function (e) {
-			onClick(e, e.target);
-			hideTooltip(this, e.target);
-		},
-		onRefresh: function() {
-			$('#addressInput').off('keyup', onAddressInput).on('keyup', onAddressInput);
-		}
-	});
-	toolbar.bind('touchstart', function() {
-		w2ui['formulabar'].touchStarted = true;
-	});
-
-	$(w2ui.formulabar.box).find('.w2ui-scroll-left, .w2ui-scroll-right').hide();
-	w2ui.formulabar.on('resize', function(target, e) {
-		e.isCancelled = true;
-	});
-}
-
 function createSigningBar() {
 	if (L.DomUtil.get('document-signing-bar') !== null) {
 		var toolbar = $('#document-signing-bar');
@@ -1008,7 +973,7 @@ function createPresentationToolbar() {
 
 function initNormalToolbar() {
 	createMainToolbar();
-	createFormulaBar();
+	map.addControl(L.control.formulaBar({showfunctionwizard: true}));
 	createSigningBar();
 	createSpreadsheetToolbar();
 	createPresentationToolbar();
@@ -1226,68 +1191,6 @@ function onInsertBackground() {
 	return false;
 }
 
-function onAddressInput(e) {
-	if (e.keyCode === 13) {
-		// address control should not have focus anymore
-		map.focus();
-		var value = L.DomUtil.get('addressInput').value;
-		var command = {
-			ToPoint : {
-				type: 'string',
-				value: value
-			}
-
-		};
-		map.sendUnoCommand('.uno:GoToCell', command);
-	} else if (e.keyCode === 27) { // 27 = esc key
-		map.sendUnoCommand('.uno:Cancel');
-		map.focus();
-	}
-}
-
-function onFormulaInput(e) {
-	// keycode = 13 is 'enter'
-	if (e.keyCode === 13) {
-		// formula bar should not have focus anymore
-		map.focus();
-
-		// forward the 'enter' keystroke to map to deal with the formula entered
-		var data = {
-			originalEvent: e
-		};
-		map.fire('keypress', data);
-	} else if (e.keyCode === 27) { // 27 = esc key
-		map.sendUnoCommand('.uno:Cancel');
-		map.focus();
-	} else {
-		map.cellEnterString(L.DomUtil.get('formulaInput').value);
-	}
-}
-
-function onFormulaBarFocus() {
-	var formulabar = w2ui.formulabar;
-	formulabar.hide('sum');
-	formulabar.hide('function');
-	formulabar.show('cancelformula');
-	formulabar.show('acceptformula');
-}
-
-function onFormulaBarBlur() {
-	// The timeout is needed because we want 'click' event on 'cancel',
-	// 'accept' button to act before we hide these buttons because
-	// once hidden, click event won't be processed.
-	// TODO: Some better way to do it ?
-	setTimeout(function() {
-		var formulabar = w2ui.formulabar;
-		formulabar.show('sum');
-		formulabar.show('function');
-		formulabar.hide('cancelformula');
-		formulabar.hide('acceptformula');
-	}, 250);
-}
-
-
-
 function onWopiProps(e) {
 	if (e.HideSaveOption) {
 		w2ui['editbar'].hide('save');
@@ -1347,7 +1250,6 @@ function onDocLayerInit() {
 		if (!window.mode.isMobile()) {
 			$('#spreadsheet-toolbar').show();
 		}
-		$('#formulabar').show();
 
 		break;
 	case 'text':
@@ -1841,23 +1743,12 @@ function onUpdatePermission(e) {
 	}
 
 	var spreadsheetButtons = ['insertsheet'];
-	var formulaBarButtons = ['functiondialog', 'sum', 'function'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
 	if (e.perm === 'edit') {
 		// Enable list boxes
 		$('.styles-select').prop('disabled', false);
 		$('.fonts-select').prop('disabled', false);
 		$('.fontsizes-select').prop('disabled', false);
-
-		// Enable formula bar
-		$('#addressInput').prop('disabled', false);
-		$('#formulaInput').prop('disabled', false);
-		toolbar = w2ui.formulabar;
-		if (toolbar) {
-			formulaBarButtons.forEach(function(id) {
-				toolbar.enable(id);
-			});
-		}
 
 		toolbar = w2ui['spreadsheet-toolbar'];
 		if (toolbar) {
@@ -1902,17 +1793,6 @@ function onUpdatePermission(e) {
 		$('.styles-select').prop('disabled', true);
 		$('.fonts-select').prop('disabled', true);
 		$('.fontsizes-select').prop('disabled', true);
-
-		// Disable formula bar
-		$('#addressInput').prop('disabled', true);
-		$('#formulaInput').prop('disabled', true);
-
-		toolbar = w2ui.formulabar;
-		if (toolbar) {
-			formulaBarButtons.forEach(function(id) {
-				toolbar.disable(id);
-			});
-		}
 
 		toolbar = w2ui['spreadsheet-toolbar'];
 		if (toolbar) {
@@ -2005,13 +1885,6 @@ function setupToolbar(e) {
 		}
 	});
 
-	map.on('celladdress', function (e) {
-		if (document.activeElement !== L.DomUtil.get('addressInput')) {
-			// if the user is not editing the address field
-			L.DomUtil.get('addressInput').value = e.address;
-		}
-	});
-
 	if (!window.mode.isMobile()) {
 		map.on('updatetoolbarcommandvalues', function(e) {
 			updateCommandValues(e);
@@ -2044,10 +1917,6 @@ function setupToolbar(e) {
 global.setupToolbar = setupToolbar;
 global.onClick = onClick;
 global.hideTooltip = hideTooltip;
-global.onAddressInput = onAddressInput;
-global.onFormulaInput = onFormulaInput;
-global.onFormulaBarBlur = onFormulaBarBlur;
-global.onFormulaBarFocus = onFormulaBarFocus;
 global.onStyleSelect = onStyleSelect;
 global.insertTable = insertTable;
 global.insertShapes = insertShapes;
