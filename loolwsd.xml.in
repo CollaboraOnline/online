@@ -115,7 +115,7 @@
     </watermark>
 
     <welcome>
-      <enable type="bool" desc="Controls whether the welcome screen should be shown to the users on new install and updates." default="true">true</enable>
+      <enable type="bool" desc="Controls whether the welcome screen should be shown to the users on new install and updates." default="@ENABLE_WELCOME_MESSAGE@">@ENABLE_WELCOME_MESSAGE@</enable>
       <path desc="Path to 'welcome-$lang.html' files served on first start or when the version changes. When empty, defaults to the Release notes." type="path" relative="true" default="loleaflet/welcome"></path>
     </welcome>
 
