@@ -1143,6 +1143,8 @@ function initNormalToolbar() {
 					selected: 'zoom100',
 					mobile: false,
 					items: [
+						{ id: 'zoom35', text: '35', scale: 4},
+						{ id: 'zoom40', text: '40', scale: 5},
 						{ id: 'zoom50', text: '50', scale: 6},
 						{ id: 'zoom60', text: '60', scale: 7},
 						{ id: 'zoom70', text: '70', scale: 8},
@@ -1151,7 +1153,11 @@ function initNormalToolbar() {
 						{ id: 'zoom120', text: '120', scale: 11},
 						{ id: 'zoom150', text: '150', scale: 12},
 						{ id: 'zoom175', text: '175', scale: 13},
-						{ id: 'zoom200', text: '200', scale: 14}
+						{ id: 'zoom200', text: '200', scale: 14},
+						{ id: 'zoom235', text: '235', scale: 15},
+						{ id: 'zoom280', text: '280', scale: 16},
+						{ id: 'zoom335', text: '335', scale: 17},
+						{ id: 'zoom400', text: '400', scale: 18},
 					]
 				},
 				{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
@@ -2603,18 +2609,25 @@ function setupToolbar(e) {
 		var zoomPercent = 100;
 		var zoomSelected = null;
 		switch (map.getZoom()) {
-		case 6:  zoomPercent =  50; zoomSelected = 'zoom50'; break;
-		case 7:  zoomPercent =  60; zoomSelected = 'zoom60'; break;
-		case 8:  zoomPercent =  70; zoomSelected = 'zoom70'; break;
-		case 9:  zoomPercent =  85; zoomSelected = 'zoom85'; break;
-		case 10: zoomPercent = 100; zoomSelected = 'zoom100'; break;
-		case 11: zoomPercent = 120; zoomSelected = 'zoom120'; break;
-		case 12: zoomPercent = 150; zoomSelected = 'zoom150'; break;
-		case 13: zoomPercent = 175; zoomSelected = 'zoom175'; break;
-		case 14: zoomPercent = 200; zoomSelected = 'zoom200'; break;
+		case 4:  zoomPercent =  35; zoomSelected = 'zoom35'; break;  // 0.3535
+		case 5:  zoomPercent =  40; zoomSelected = 'zoom40'; break;  // 0.4204
+		case 6:  zoomPercent =  50; zoomSelected = 'zoom50'; break;  // 0.5
+		case 7:  zoomPercent =  60; zoomSelected = 'zoom60'; break;  // 0.5946
+		case 8:  zoomPercent =  70; zoomSelected = 'zoom70'; break;  // 0.7071
+		case 9:  zoomPercent =  85; zoomSelected = 'zoom85'; break;  // 0.8409
+		case 10: zoomPercent = 100; zoomSelected = 'zoom100'; break; // 1
+		case 11: zoomPercent = 120; zoomSelected = 'zoom120'; break; // 1.1892
+		// Why do we call this 150% even if it is actually closer to 140%
+		case 12: zoomPercent = 150; zoomSelected = 'zoom150'; break; // 1.4142
+		case 13: zoomPercent = 170; zoomSelected = 'zoom170'; break; // 1.6818
+		case 14: zoomPercent = 200; zoomSelected = 'zoom200'; break; // 2
+		case 15: zoomPercent = 235; zoomSelected = 'zoom235'; break; // 2.3784
+		case 16: zoomPercent = 280; zoomSelected = 'zoom280'; break; // 2.8284
+		case 17: zoomPercent = 335; zoomSelected = 'zoom335'; break; // 3.3636
+		case 18: zoomPercent = 400; zoomSelected = 'zoom400'; break; // 4
 		default:
 			var zoomRatio = map.getZoomScale(map.getZoom(), map.options.zoom);
-			zoomPercent = Math.round(zoomRatio * 100) + '%';
+			zoomPercent = Math.round(zoomRatio * 100);
 			break;
 		}
 		w2ui['actionbar'].set('zoom', {text: zoomPercent, selected: zoomSelected});
