@@ -22,7 +22,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#ScNumberFormatPropertyPanel')
 			.click();
 
-		cy.get('#category')
+		cy.get('#numberformatcombobox')
 			.should('be.visible');
 	});
 
@@ -32,14 +32,14 @@ describe('Apply number formatting.', function() {
 
 	function selectFormatting(formattingString) {
 		// Select formatting list
-		cy.get('#category')
+		cy.get('#numberformatcombobox')
 			.click();
 
 		cy.contains('.mobile-wizard.ui-combobox-text', formattingString)
 			.click();
 
 		// Combobox entry contains the selected format
-		cy.get('#category .ui-header-left')
+		cy.get('#numberformatcombobox .ui-header-left')
 			.should('have.text', formattingString);
 	}
 
@@ -82,7 +82,7 @@ describe('Apply number formatting.', function() {
 			.should('have.class', 'selected');
 
 		// TODO: combobox entry is not updated
-		//cy.get('#category .ui-header-left')
+		//cy.get('#numberformatcombobox .ui-header-left')
 		//	.should('have.text', 'Percent');
 
 		// Decimal and leading zeros are changed.
@@ -140,7 +140,7 @@ describe('Apply number formatting.', function() {
 			.should('have.class', 'selected');
 
 		// TODO: combobox entry is not updated
-		//cy.get('#category .ui-header-left')
+		//cy.get('#numberformatcombobox .ui-header-left')
 		//	.should('have.text', 'Currency');
 
 		// Decimal and leading zeros are changed.
@@ -207,7 +207,7 @@ describe('Apply number formatting.', function() {
 		//	.should('have.class', 'selected');
 
 		// TODO: combobox entry is not updated
-		//cy.get('#category .ui-header-left')
+		//cy.get('#numberformatcombobox .ui-header-left')
 		//	.should('have.text', 'Number');
 
 		calcHelper.copyContentToClipboard();
@@ -218,14 +218,14 @@ describe('Apply number formatting.', function() {
 
 	it('Select date format from list.', function() {
 		// Change to date
-		cy.get('#category')
+		cy.get('#numberformatcombobox')
 			.click();
 
 		cy.contains('.mobile-wizard.ui-combobox-text', 'Date')
 			.click();
 
 		// Combobox entry contains the selected format
-		cy.get('#category .ui-header-left')
+		cy.get('#numberformatcombobox .ui-header-left')
 			.should('have.text', 'Date ');
 
 		// Decimal and leading zeros are changed.
