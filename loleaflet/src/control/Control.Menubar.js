@@ -241,7 +241,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
-				{name: _('Latest Updates'), id: 'latest-updates', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -343,7 +342,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
-				{name: _('Latest Updates'), id: 'latest-updates', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -460,7 +458,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
-				{name: _('Latest Updates'), id: 'latest-updates', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -513,7 +510,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 			]
 			},
-			{name: _('Latest Updates'), id: 'latest-updates', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
@@ -560,7 +556,6 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{uno: '.uno:SpellOnline'},
 			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
-			{name: _('Latest Updates'), id: 'latest-updates', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
@@ -624,7 +619,6 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{uno: '.uno:SpellOnline'},
 			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
-			{name: _('Latest Updates'), id: 'latest-updates', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
@@ -712,7 +706,7 @@ L.Control.Menubar = L.Control.extend({
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'print', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showresolved', // view menu
-			'about', 'keyboard-shortcuts', 'latest-updates', 'online-help', 'report-an-issue' // help menu
+			'about', 'keyboard-shortcuts', 'online-help', 'report-an-issue' // help menu
 		]
 	},
 
@@ -1181,8 +1175,6 @@ L.Control.Menubar = L.Control.extend({
 			});
 		} else if (id === 'about') {
 			this._map.showLOAboutDialog();
-		} else if (id === 'latest-updates') {
-			this._map.showWelcomeDialog(/*calledFromMenu=*/true);
 		} else if (id === 'report-an-issue') {
 			window.open('https://bugs.documentfoundation.org/enter_bug.cgi?product=LibreOffice%20Online', '_blank');
 		} else if (id === 'inserthyperlink') {
