@@ -9,12 +9,6 @@
 
 var map;
 
-function onDelete(e) {
-	if (e !== false) {
-		map.deletePage();
-	}
-}
-
 function _updateVisibilityForToolbar(toolbar) {
 	if (!toolbar)
 		return;
@@ -99,10 +93,6 @@ function onClick(e, id, item) {
 		toolbar = w2ui['actionbar'];
 		item = toolbar.get(id);
 	}
-	else if ('presentation-toolbar' in w2ui && w2ui['presentation-toolbar'].get(id) !== null) {
-		toolbar = w2ui['presentation-toolbar'];
-		item = toolbar.get(id);
-	}
 	else if (w2ui['searchbar'].get(id) !== null) {
 		toolbar = w2ui['searchbar'];
 		item = toolbar.get(id);
@@ -157,22 +147,6 @@ function onClick(e, id, item) {
 	}
 	else if (id === 'insertannotation') {
 		map.insertComment();
-	}
-	else if (id === 'insertpage') {
-		map.insertPage();
-	}
-	else if (id === 'duplicatepage') {
-		map.duplicatePage();
-	}
-	else if (id === 'deletepage') {
-		vex.dialog.confirm({
-			message: _('Are you sure you want to delete this page?'),
-			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
-			],
-			callback: onDelete
-		});
 	}
 	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
 		L.DomUtil.get('insertgraphic').click();
@@ -899,37 +873,12 @@ function createSigningBar() {
 	}
 }
 
-function createPresentationToolbar() {
-	var toolbar = $('#presentation-toolbar');
-	toolbar.w2toolbar({
-		name: 'presentation-toolbar',
-		tooltip: 'bottom',
-		hidden: true,
-		items: [
-			{type: 'html',  id: 'left'},
-			{type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _('Fullscreen presentation')},
-			{type: 'break', id: 'presentationbreak', hidden:true},
-			{type: 'button',  id: 'insertpage', img: 'insertpage', hint: _UNO('.uno:TaskPaneInsertPage', 'presentation')},
-			{type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: _UNO('.uno:DuplicateSlide', 'presentation')},
-			{type: 'button',  id: 'deletepage', img: 'deletepage', hint: _UNO('.uno:DeleteSlide', 'presentation')},
-			{type: 'html',  id: 'right'}
-		],
-		onClick: function (e) {
-			onClick(e, e.target);
-			hideTooltip(this, e.target);
-		}
-	});
-	toolbar.bind('touchstart', function() {
-		w2ui['presentation-toolbar'].touchStarted = true;
-	});
-}
-
 function initNormalToolbar() {
 	createMainToolbar();
 	map.addControl(L.control.formulaBar({showfunctionwizard: true}));
 	createSigningBar();
 	map.addControl(L.control.sheetsBar({shownavigation: true}));
-	createPresentationToolbar();
+	map.addControl(L.control.presentationBar());
 }
 
 function setupSearchInput() {
@@ -1148,9 +1097,6 @@ function onWopiProps(e) {
 	if (e.HideSaveOption) {
 		w2ui['editbar'].hide('save');
 	}
-	if (e.HideExportOption) {
-		w2ui['presentation-toolbar'].hide('presentation', 'presentationbreak');
-	}
 	if (e.HidePrintOption) {
 		w2ui['editbar'].hide('print');
 	}
@@ -1230,21 +1176,12 @@ function onDocLayerInit() {
 			toolbarUp.show('breaksidebar', 'modifypage');
 		}
 
-		var presentationToolbar = w2ui['presentation-toolbar'];
-		if (!map['wopi'].HideExportOption && presentationToolbar) {
-			presentationToolbar.show('presentation', 'presentationbreak');
-		}
-
 		// FALLTHROUGH intended
 	case 'drawing':
 		if (toolbarUp)
 			toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
 			'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
-
-		if (!window.mode.isMobile()) {
-			$('#presentation-toolbar').show();
-		}
 		break;
 	}
 
@@ -1685,39 +1622,11 @@ function onUpdatePermission(e) {
 		}
 	}
 
-	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
 	if (e.perm === 'edit') {
 		// Enable list boxes
 		$('.styles-select').prop('disabled', false);
 		$('.fonts-select').prop('disabled', false);
 		$('.fontsizes-select').prop('disabled', false);
-
-		toolbar = w2ui['presentation-toolbar'];
-		if (toolbar) {
-			presentationButtons.forEach(function(id) {
-				toolbar.enable(id);
-			});
-		}
-
-		if (toolbar) {
-			presentationButtons.forEach(function(id) {
-				if (id === 'deletepage') {
-					var itemState = map['stateChangeHandler'].getItemValue('.uno:DeletePage');
-				} else if (id === 'insertpage') {
-					itemState = map['stateChangeHandler'].getItemValue('.uno:InsertPage');
-				} else if (id === 'duplicatepage') {
-					itemState = map['stateChangeHandler'].getItemValue('.uno:DuplicatePage');
-				} else {
-					itemState = 'enabled';
-				}
-
-				if (itemState === 'enabled') {
-					toolbar.enable(id);
-				} else {
-					toolbar.disable(id);
-				}
-			});
-		}
 
 		if (window.mode.isMobile()) {
 			$('#toolbar-down').show();
@@ -1728,13 +1637,6 @@ function onUpdatePermission(e) {
 		$('.styles-select').prop('disabled', true);
 		$('.fonts-select').prop('disabled', true);
 		$('.fontsizes-select').prop('disabled', true);
-
-		toolbar = w2ui['presentation-toolbar'];
-		if (toolbar) {
-			presentationButtons.forEach(function(id) {
-				toolbar.disable(id);
-			});
-		}
 
 		if (window.mode.isMobile()) {
 			$('#toolbar-down').hide();

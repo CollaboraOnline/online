@@ -116,14 +116,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	onMobileInit: function (map) {
 		map.addControl(L.control.mobileTopBar('presentation'));
 
-		var toolbar = $('#presentation-toolbar');
-		toolbar.w2toolbar({
-			name: 'presentation-toolbar',
-			tooltip: 'bottom',
-			hidden: true,
-			items: []
-		});
-
 		map.addControl(L.control.mobileBottomBar('presentation'));
 
 		map.addControl(L.control.searchBar());
