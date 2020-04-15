@@ -99,10 +99,6 @@ function onClick(e, id, item) {
 		toolbar = w2ui['actionbar'];
 		item = toolbar.get(id);
 	}
-	else if ('spreadsheet-toolbar' in w2ui && w2ui['spreadsheet-toolbar'].get(id) !== null) {
-		toolbar = w2ui['spreadsheet-toolbar'];
-		item = toolbar.get(id);
-	}
 	else if ('presentation-toolbar' in w2ui && w2ui['presentation-toolbar'].get(id) !== null) {
 		toolbar = w2ui['presentation-toolbar'];
 		item = toolbar.get(id);
@@ -177,26 +173,6 @@ function onClick(e, id, item) {
 			],
 			callback: onDelete
 		});
-	}
-	else if (id === 'insertsheet') {
-		var nPos = $('#spreadsheet-tab-scroll')[0].childElementCount;
-		map.insertPage(nPos);
-		map.insertPage.scrollToEnd = true;
-	}
-	else if (id === 'firstrecord') {
-		$('#spreadsheet-tab-scroll').scrollLeft(0);
-	}
-	// TODO: We should get visible tab's width instead of 60px
-	else if (id === 'nextrecord') {
-		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() + 60);
-	}
-	else if (id === 'prevrecord') {
-		$('#spreadsheet-tab-scroll').scrollLeft($('#spreadsheet-tab-scroll').scrollLeft() - 30);
-	}
-	else if (id === 'lastrecord') {
-		// Set a very high value, so that scroll is set to the maximum possible value internally.
-		// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
-		L.DomUtil.get('spreadsheet-tab-scroll').scrollLeft = 100000;
 	}
 	else if (id === 'insertgraphic' || item.id === 'localgraphic') {
 		L.DomUtil.get('insertgraphic').click();
@@ -923,29 +899,6 @@ function createSigningBar() {
 	}
 }
 
-function createSpreadsheetToolbar() {
-	var toolbar = $('#spreadsheet-toolbar');
-	toolbar.w2toolbar({
-		name: 'spreadsheet-toolbar',
-		tooltip: 'bottom',
-		hidden: true,
-		items: [
-			{type: 'button',  id: 'firstrecord',  img: 'firstrecord', hint: _('First sheet')},
-			{type: 'button',  id: 'prevrecord',  img: 'prevrecord', hint: _('Previous sheet')},
-			{type: 'button',  id: 'nextrecord',  img: 'nextrecord', hint: _('Next sheet')},
-			{type: 'button',  id: 'lastrecord',  img: 'lastrecord', hint: _('Last sheet')},
-			{type: 'button',  id: 'insertsheet', img: 'insertsheet', hint: _('Insert sheet')}
-		],
-		onClick: function (e) {
-			onClick(e, e.target);
-			hideTooltip(this, e.target);
-		}
-	});
-	toolbar.bind('touchstart', function() {
-		w2ui['spreadsheet-toolbar'].touchStarted = true;
-	});
-}
-
 function createPresentationToolbar() {
 	var toolbar = $('#presentation-toolbar');
 	toolbar.w2toolbar({
@@ -975,7 +928,7 @@ function initNormalToolbar() {
 	createMainToolbar();
 	map.addControl(L.control.formulaBar({showfunctionwizard: true}));
 	createSigningBar();
-	createSpreadsheetToolbar();
+	map.addControl(L.control.sheetsBar({shownavigation: true}));
 	createPresentationToolbar();
 }
 
@@ -1247,10 +1200,6 @@ function onDocLayerInit() {
 			toolbarUp.remove('styles');
 		}
 
-		if (!window.mode.isMobile()) {
-			$('#spreadsheet-toolbar').show();
-		}
-
 		break;
 	case 'text':
 		if (toolbarUp)
@@ -1329,12 +1278,6 @@ function onDocLayerInit() {
 					      // + ' (' + window.visualViewport.scale + '*' + window.visualViewport.width + 'x' + window.visualViewport.height + ')'
 					      // TODO: Yes, it would be better to see it change as you rotate the device or invoke Split View.
 					     );
-	}
-
-	if (docType == 'spreadsheet') {
-		var el = w2ui['spreadsheet-toolbar'];
-		if (el)
-			el.resize();
 	}
 
 	data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
@@ -1742,20 +1685,12 @@ function onUpdatePermission(e) {
 		}
 	}
 
-	var spreadsheetButtons = ['insertsheet'];
 	var presentationButtons = ['insertpage', 'duplicatepage', 'deletepage'];
 	if (e.perm === 'edit') {
 		// Enable list boxes
 		$('.styles-select').prop('disabled', false);
 		$('.fonts-select').prop('disabled', false);
 		$('.fontsizes-select').prop('disabled', false);
-
-		toolbar = w2ui['spreadsheet-toolbar'];
-		if (toolbar) {
-			spreadsheetButtons.forEach(function(id) {
-				toolbar.enable(id);
-			});
-		}
 
 		toolbar = w2ui['presentation-toolbar'];
 		if (toolbar) {
@@ -1793,13 +1728,6 @@ function onUpdatePermission(e) {
 		$('.styles-select').prop('disabled', true);
 		$('.fonts-select').prop('disabled', true);
 		$('.fontsizes-select').prop('disabled', true);
-
-		toolbar = w2ui['spreadsheet-toolbar'];
-		if (toolbar) {
-			spreadsheetButtons.forEach(function(id) {
-				toolbar.disable(id);
-			});
-		}
 
 		toolbar = w2ui['presentation-toolbar'];
 		if (toolbar) {

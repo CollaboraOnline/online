@@ -268,6 +268,7 @@ LOLEAFLET_JS =\
 	src/control/Control.MobileBottomBar.js \
 	src/control/Control.UserList.js \
 	src/control/Control.FormulaBar.js \
+	src/control/Control.SheetsBar.js \
 	src/control/Control.Layers.js \
 	src/control/Search.js \
 	src/control/Permission.js \

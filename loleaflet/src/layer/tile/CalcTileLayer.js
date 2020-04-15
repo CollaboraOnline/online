@@ -3,7 +3,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global $ _ w2ui w2utils */
+/* global w2ui w2utils */
 L.CalcTileLayer = L.TileLayer.extend({
 	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
 							  * 0.1986cm with TeX points,
@@ -75,25 +75,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 		map.addControl(L.control.formulaBar({showfunctionwizard: false}));
 
-		var toolbar = $('#spreadsheet-toolbar');
-		toolbar.w2toolbar({
-			name: 'spreadsheet-toolbar',
-			tooltip: 'bottom',
-			hidden: true,
-			items: [{type: 'button',  id: 'insertsheet', img: 'insertsheet', hint: _('Insert sheet')}],
-			onClick: function (e) {
-				window.onClick(e, e.target);
-				window.hideTooltip(this, e.target);
-			}
-		});
-		toolbar.bind('touchstart', function(e) {
-			w2ui['spreadsheet-toolbar'].touchStarted = true;
-			var touchEvent = e.originalEvent;
-			if (touchEvent && touchEvent.touches.length > 1) {
-				L.DomEvent.preventDefault(e);
-			}
-		});
-		toolbar.show();
+		map.addControl(L.control.sheetsBar({shownavigation: false}));
 
 		map.addControl(L.control.mobileBottomBar('spreadsheet'));
 
