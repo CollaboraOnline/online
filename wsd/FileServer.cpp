@@ -56,6 +56,10 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
+/// Place from where we serve the welcome-<lang>.html; defaults to
+/// welcome.html if no lang matches.
+#define WELCOME_ENDPOINT "/loleaflet/dist/welcome"
+
 namespace {
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
@@ -283,8 +287,11 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
 
         std::vector<std::string> requestSegments;
         requestUri.getPathSegments(requestSegments);
-        const std::string relPath = getRequestPathname(request);
-        const std::string endPoint = requestSegments[requestSegments.size() - 1];
+        if (requestSegments.size() < 1)
+            throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
+
+        std::string relPath = getRequestPathname(request);
+        std::string endPoint = requestSegments[requestSegments.size() - 1];
         const auto& config = Application::instance().config();
 
         if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
@@ -301,8 +308,39 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
             }
         }
 
+        // handling of the language in welcome-*.html - shorten the langtag as
+        // necessary, if we don't have the particular language version
+        if (Util::startsWith(relPath, WELCOME_ENDPOINT "/"))
+        {
+            bool found = true;
+            while (FileHash.find(relPath) == FileHash.end())
+            {
+                size_t dot = relPath.find_last_of('.');
+                if (dot == std::string::npos)
+                {
+                    found = false;
+                    break;
+                }
+
+                size_t dash = relPath.find_last_of("-_", dot);
+                if (dash == std::string::npos)
+                {
+                    found = false;
+                    break;
+                }
+
+                relPath = relPath.substr(0, dash) + relPath.substr(dot);
+                LOG_TRC("Shortening welcome file request to: " << relPath);
+            }
+
+            if (!found)
+                throw Poco::FileNotFoundException("Invalid URI welcome file request: [" + requestUri.toString() + "].");
+
+            endPoint = relPath.substr(sizeof(WELCOME_ENDPOINT));
+        }
+
         // Is this a file we read at startup - if not; its not for serving.
-        if (requestSegments.size() < 1 || FileHash.find(relPath) == FileHash.end())
+        if (FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
@@ -562,7 +600,7 @@ void FileServerRequestHandler::initialize()
     if (!LOOLWSD::WelcomeFilesRoot.empty())
     {
         try {
-            readDirToHash(LOOLWSD::WelcomeFilesRoot, "", "/loleaflet/dist/welcome");
+            readDirToHash(LOOLWSD::WelcomeFilesRoot, "", WELCOME_ENDPOINT);
         } catch (...) {
             LOG_ERR("Failed to read from directory " << LOOLWSD::WelcomeFilesRoot);
         }
