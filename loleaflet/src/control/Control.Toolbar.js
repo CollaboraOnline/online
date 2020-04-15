@@ -169,29 +169,6 @@ function onClick(e, id, item) {
 	else if (id === 'backgroundcolor' && typeof e.color !== 'undefined') {
 		onColorPick(id, e.color);
 	}
-	else if (id === 'sum') {
-		map.sendUnoCommand('.uno:AutoSum');
-	}
-	else if (id === 'function') {
-		L.DomUtil.get('formulaInput').value = '=';
-		L.DomUtil.get('formulaInput').focus();
-		map.cellEnterString(L.DomUtil.get('formulaInput').value);
-	}
-	else if (id === 'cancelformula') {
-		map.sendUnoCommand('.uno:Cancel');
-		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
-		w2ui['formulabar'].show('sum', 'function');
-	}
-	else if (id === 'acceptformula') {
-		// focus on map, and press enter
-		map.focus();
-		map._docLayer.postKeyboardEvent('input',
-						 map.keyboard.keyCodes.enter,
-						 map.keyboard._toUNOKeyCode(map.keyboard.keyCodes.enter));
-
-		w2ui['formulabar'].hide('acceptformula', 'cancelformula');
-		w2ui['formulabar'].show('sum', 'function');
-	}
 	else if (id === 'fold' || id === 'hamburger-tablet') {
 		map.toggleMenubar();
 	}

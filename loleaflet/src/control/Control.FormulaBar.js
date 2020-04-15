@@ -119,47 +119,6 @@ L.Control.FormulaBar = L.Control.extend({
 		}
 	},
 
-	onFormulaInput: function(e) {
-		// keycode = 13 is 'enter'
-		if (e.keyCode === 13) {
-			// formula bar should not have focus anymore
-			this.map.focus();
-
-			// forward the 'enter' keystroke to map to deal with the formula entered
-			var data = {
-				originalEvent: e
-			};
-			this.map.fire('keypress', data);
-		} else if (e.keyCode === 27) { // 27 = esc key
-			this.map.sendUnoCommand('.uno:Cancel');
-			this.map.focus();
-		} else {
-			this.map.cellEnterString(L.DomUtil.get('formulaInput').value);
-		}
-	},
-
-	onFormulaBarFocus: function() {
-		var formulabar = w2ui.formulabar;
-		formulabar.hide('sum');
-		formulabar.hide('function');
-		formulabar.show('cancelformula');
-		formulabar.show('acceptformula');
-	},
-
-	onFormulaBarBlur: function() {
-		// The timeout is needed because we want 'click' event on 'cancel',
-		// 'accept' button to act before we hide these buttons because
-		// once hidden, click event won't be processed.
-		// TODO: Some better way to do it ?
-		setTimeout(function() {
-			var formulabar = w2ui.formulabar;
-			formulabar.show('sum');
-			formulabar.show('function');
-			formulabar.hide('cancelformula');
-			formulabar.hide('acceptformula');
-		}, 250);
-	},
-
 	onAddressInput: function(e) {
 		if (e.keyCode === 13) {
 			// address control should not have focus anymore
