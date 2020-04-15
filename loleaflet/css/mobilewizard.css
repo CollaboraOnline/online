@@ -39,10 +39,6 @@ span#main-menu-btn-icon {
 	filter: none !important;
 }
 
-#denominatorplaces .spinfieldimage{
-	display: none;
-}
-
 .ui-header.level-1.mobile-wizard.ui-widget img[src='images/lc_downloadas-pdf.svg']{
 	visibility: visible;
 }
