@@ -344,7 +344,8 @@ L.Map.include({
 		});
 	},
 
-	showWelcomeDialog: function() {
+	// show the actual welcome dialog with the given data
+	_showWelcomeDialogVex: function(data) {
 		var w;
 		var iw = window.innerWidth;
 		if (iw < 768) {
@@ -356,43 +357,58 @@ L.Map.include({
 		else {
 			w = iw / 5 + 590;
 		}
-		var map = this;
-		var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
-		$.get(welcomeLocation, function(data, textStatus) {
-			if (textStatus !== 'success') {
-				// Welcome dialog disabled in loolwsd.xml or nonexistant for some other reason
-				// Let's check back in a week (60 x 60 x 24 x 7 = 604800 seconds)
-				var welcomeDisabledCookie = 'loolWelcomeDisabled=true; max-age=604800; SameSite=Strict';
-				document.cookie = welcomeDisabledCookie;
-				return;
-			}
-			var WSDVerCookie = 'WSDWelcomeVer=' + map._socket.WSDServer.Version;
-			// Cookie will not expire for a year, and it will not be sent to other domains
-			WSDVerCookie += '; max-age=31536000; SameSite=Strict';
-			vex.open({
-				unsafeContent: data,
-				showCloseButton: true,
-				escapeButtonCloses: true,
-				overlayClosesOnClick: true,
-				closeAllOnPopState: false,
-				buttons: {},
-				afterOpen: function() {
-					var $vexContent = $(this.contentEl);
-					this.contentEl.style.width = w + 'px';
-					map.enable(false);
 
-					$vexContent.attr('tabindex', -1);
-					$vexContent.focus();
-					// workaround for https://github.com/HubSpot/vex/issues/43
-					$('.vex-overlay').css({ 'pointer-events': 'none'});
-				},
-				beforeClose: function () {
-					map.focus();
-					map.enable(true);
+		// show the dialog
+		var map = this;
+		vex.open({
+			unsafeContent: data,
+			showCloseButton: true,
+			escapeButtonCloses: true,
+			overlayClosesOnClick: true,
+			closeAllOnPopState: false,
+			buttons: {},
+			afterOpen: function() {
+				var $vexContent = $(this.contentEl);
+				this.contentEl.style.width = w + 'px';
+				map.enable(false);
+
+				$vexContent.attr('tabindex', -1);
+				$vexContent.focus();
+				// workaround for https://github.com/HubSpot/vex/issues/43
+				$('.vex-overlay').css({ 'pointer-events': 'none'});
+			},
+			beforeClose: function () {
+				map.focus();
+				map.enable(true);
+			}
+		});
+	},
+
+	showWelcomeDialog: function(calledFromMenu) {
+		console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
+		var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
+
+		// try to load the welcome message
+		var map = this;
+		$.get(welcomeLocation)
+			.done(function(data) {
+				map._showWelcomeDialogVex(data);
+				if (!calledFromMenu) {
+					var WSDVerCookie = 'WSDWelcomeVersion=' + map._socket.WSDServer.Version;
+					// Cookie will not expire for a year, and it will not be sent to other domains
+					WSDVerCookie += '; max-age=31536000; SameSite=Strict';
 					document.cookie = WSDVerCookie;
 				}
+			})
+			.fail(function() {
+				// Welcome dialog disabled in loolwsd.xml or nonexistant for some other reason
+				// Let's check back in a day (60 x 60 x 24 = 86400 seconds)
+				var welcomeDisabledCookie = 'WSDWelcomeDisabled=true; max-age=86400; SameSite=Strict';
+				document.cookie = welcomeDisabledCookie;
+
+				if (calledFromMenu)
+					map._showWelcomeDialogVex(_('We are sorry, the information about the latest updates is not available.'));
 			});
-		});
 	},
 
 	getCookie: function(name) {
@@ -408,10 +424,10 @@ L.Map.include({
 	},
 
 	shouldWelcome: function() {
-		var currentVerCookie = this.getCookie('WSDWelcomeVer');
-		var newVerCookie = 'WSDWelcomeVer=' + this._socket.WSDServer.Version;
-		var welcomeDisabledCookie = this.getCookie('loolWelcomeDisabled');
-		var isWelcomeDisabled = welcomeDisabledCookie === 'loolWelcomeDisabled=true';
+		var currentVerCookie = this.getCookie('WSDWelcomeVersion');
+		var newVerCookie = 'WSDWelcomeVersion=' + this._socket.WSDServer.Version;
+		var welcomeDisabledCookie = this.getCookie('WSDWelcomeDisabled');
+		var isWelcomeDisabled = welcomeDisabledCookie === 'WSDWelcomeDisabled=true';
 
 		if (currentVerCookie !== newVerCookie && !isWelcomeDisabled && !L.Browser.cypressTest) {
 			return true;

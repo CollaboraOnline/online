@@ -1182,7 +1182,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'about') {
 			this._map.showLOAboutDialog();
 		} else if (id === 'latest-updates') {
-			this._map.showWelcomeDialog();
+			this._map.showWelcomeDialog(/*calledFromMenu=*/true);
 		} else if (id === 'report-an-issue') {
 			window.open('https://bugs.documentfoundation.org/enter_bug.cgi?product=LibreOffice%20Online', '_blank');
 		} else if (id === 'inserthyperlink') {
@@ -1303,9 +1303,6 @@ L.Control.Menubar = L.Control.extend({
 			return false;
 		}
 		if (menuItem.id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
-			return false;
-		}
-		if (menuItem.id === 'latest-updates' && (L.DomUtil.get('about-dialog') === null)) {
 			return false;
 		}
 		if (menuItem.id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
