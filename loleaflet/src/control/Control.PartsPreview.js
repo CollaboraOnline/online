@@ -387,7 +387,8 @@ L.Control.PartsPreview = L.Control.extend({
 		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing') {
 			if (!this._previewInitialized)
 				return;
-			this._previewTiles[e.id].src = e.tile;
+			if (this._previewTiles[e.id])
+				this._previewTiles[e.id].src = e.tile;
 		}
 	},
 
