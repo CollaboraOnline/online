@@ -424,12 +424,15 @@ L.Map.include({
 	},
 
 	shouldWelcome: function() {
+		if (!window.enableWelcomeMessage || L.Browser.cypressTest)
+			return false;
+
 		var currentVerCookie = this.getCookie('WSDWelcomeVersion');
 		var newVerCookie = 'WSDWelcomeVersion=' + this._socket.WSDServer.Version;
 		var welcomeDisabledCookie = this.getCookie('WSDWelcomeDisabled');
 		var isWelcomeDisabled = welcomeDisabledCookie === 'WSDWelcomeDisabled=true';
 
-		if (currentVerCookie !== newVerCookie && !isWelcomeDisabled && !L.Browser.cypressTest) {
+		if (currentVerCookie !== newVerCookie && !isWelcomeDisabled) {
 			return true;
 		}
 

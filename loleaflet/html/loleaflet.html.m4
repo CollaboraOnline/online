@@ -234,6 +234,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.accessTokenTTL = '';
       window.accessHeader = '';
       window.loleafletLogging = 'true';
+      window.enableWelcomeMessage = false;
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;
       window.reuseCookies = '';
@@ -246,6 +247,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
       window.accessHeader = '%ACCESS_HEADER%';
       window.loleafletLogging = '%LOLEAFLET_LOGGING%';
+      window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
       window.reuseCookies = '%REUSE_COOKIES%';

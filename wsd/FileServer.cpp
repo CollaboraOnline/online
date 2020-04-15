@@ -737,6 +737,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     const std::string idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");
     Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), idleTimeoutSecs);
 
+    std::string enableWelcomeMessage = "false";
+    if (config.getBool("welcome.enable", false))
+        enableWelcomeMessage = "true";
+    Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
+
     // Capture cookies so we can optionally reuse them for the storage requests.
     {
         NameValueCollection cookies;
