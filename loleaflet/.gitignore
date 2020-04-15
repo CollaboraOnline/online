@@ -20,7 +20,6 @@ plugins/draw-0.2.4/dist/*.js
 plugins/draw-0.2.4/npm-debug.log
 coverage/
 /load_test_out
-/spec/data/load_test
 *.tar.gz
 dist/l10n/ui-*json
 dist/l10n/help-*.json

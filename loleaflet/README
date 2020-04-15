@@ -132,25 +132,6 @@ loolwsd.xml. After entering the correct password you should be able to monitor t
 users, memory consumption, document URLs with number of users viewing that document etc. You can also kill the
 documents directly from the panel which would result in closing the socket connection to the respective document.
 
-Testing
--------
-    - to run the unit tests
-        + open spec/loleaflet.html in the browser
-    - to simulate an editing session and to get the tile loading times
-        + open spec/tilebench.html in the browser
-    - to simulate a client opening several documents in the browser
-        + open spec/loadtest.html in the browser
-    - to simulate a client opening several documents in the console
-        + run: node_modules/.bin/mocha spec/headlessLoadTest.js
-    - to simulate multiple clients opening several documents in the console
-        + run: make load-test
-
-The structure of the unit tests:
-Loleaflet unit tests are located under spec/loleaflet. Following Leaflet's testing style, each test's path
-should mirror the source's path, so spec/loleaflet/control/ToolbarSpec.js tests the features from
-src/control/Toolbar.js . Any new test file needs also to be added in spec/leaflet.html
-
-
 API & events
 ------------
 
