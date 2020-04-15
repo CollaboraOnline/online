@@ -258,6 +258,11 @@ AC_ARG_WITH([max-documents],
              AS_HELP_STRING([--with-max-documents],
                            [Set the limit on the total number of documents. Def: 10, Min: 2.]))
 
+AC_ARG_ENABLE(welcome-message,
+    AS_HELP_STRING([--enable-welcome-message],
+        [Enables welcome message on version update. Can be changed later in loolwsd.xml.])
+)
+
 AC_ARG_WITH([sanitizer],
              AS_HELP_STRING([--with-sanitizer],
                            [Enable one or more compatible sanitizers. E.g. --with-sanitizer=address,undefined,leak]))
@@ -592,6 +597,11 @@ AS_IF([test "$MAX_DOCUMENTS" -lt "2"],
       [MAX_DOCUMENTS="2"])
 AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
 AC_SUBST(MAX_DOCUMENTS)
+
+ENABLE_WELCOME_MESSAGE=false
+AS_IF([test "$enable_welcome_message" = "yes"],
+      [ENABLE_WELCOME_MESSAGE="true"])
+AC_SUBST(ENABLE_WELCOME_MESSAGE)
 
 VEREIGN_URL=
 if test "$enable_vereign" = "yes"; then
