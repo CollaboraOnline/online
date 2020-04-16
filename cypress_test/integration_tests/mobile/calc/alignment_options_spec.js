@@ -1,5 +1,7 @@
 /* global describe it cy beforeEach require afterEach*/
 
+import 'cypress-wait-until';
+
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
@@ -10,7 +12,27 @@ describe('Change alignment settings.', function() {
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
+	});
 
+	afterEach(function() {
+		helper.afterAll('alignment_options.ods');
+	});
+
+	function getTextPosForFirstCell() {
+		calcHelper.dblClickOnFirstCell();
+
+		// Select text content
+		cy.get('textarea.clipboard')
+			.type('{ctrl}a', {force: true});
+
+		cy.get('.leaflet-selection-marker-start')
+			.invoke('position')
+			.as('currentTextPos');
+
+		calcHelper.removeTextSelection();
+	}
+
+	function openAlignmentPaneForFirstCell() {
 		calcHelper.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
@@ -20,13 +42,11 @@ describe('Change alignment settings.', function() {
 
 		cy.get('#AlignLeft')
 			.should('be.visible');
-	});
-
-	afterEach(function() {
-		helper.afterAll('alignment_options.ods');
-	});
+	}
 
 	it('Apply left/right alignment', function() {
+		openAlignmentPaneForFirstCell();
+
 		// Set right aligment first
 		cy.get('#AlignRight')
 			.click();
@@ -54,6 +74,8 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Align to center horizontally.', function() {
+		openAlignmentPaneForFirstCell();
+
 		cy.get('#AlignHorizontalCenter')
 			.click();
 
@@ -64,6 +86,8 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Change to block alignment.', function() {
+		openAlignmentPaneForFirstCell();
+
 		// Set right aligment first
 		cy.get('#AlignBlock')
 			.click();
@@ -75,6 +99,8 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Right-to-left and left-to-right writing mode.', function() {
+		openAlignmentPaneForFirstCell();
+
 		cy.get('#ParaRightToLeft')
 			.click();
 
@@ -90,6 +116,8 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Align to the top and to bottom.', function() {
+		openAlignmentPaneForFirstCell();
+
 		cy.get('#AlignTop')
 			.click();
 
@@ -116,6 +144,8 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Align to center vertically.', function() {
+		openAlignmentPaneForFirstCell();
+
 		cy.get('#AlignVCenter')
 			.click();
 
@@ -123,5 +153,53 @@ describe('Change alignment settings.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'middle');
+	});
+
+	it('Increment / decrement text indent.', function() {
+		// Get text position first
+		getTextPosForFirstCell();
+		cy.get('@currentTextPos')
+			.as('originalTextPos');
+
+		openAlignmentPaneForFirstCell();
+
+		// Increase indent
+		cy.get('#IncrementIndent')
+			.click();
+
+		// We use the text position as indicator
+		cy.waitUntil(function() {
+			getTextPosForFirstCell();
+
+			return cy.get('@currentTextPos')
+				.then(function(currentTextPos) {
+					cy.get('@originalTextPos')
+						.then(function(originalTextPos) {
+							return originalTextPos.left < currentTextPos.left;
+						});
+				});
+		});
+
+		cy.get('@currentTextPos')
+			.as('originalTextPos');
+
+		// Decrease indent
+		openAlignmentPaneForFirstCell();
+
+		cy.get('#DecrementIndent')
+			.click();
+
+		// We use the text position as indicator
+		cy.waitUntil(function() {
+			getTextPosForFirstCell();
+
+			return cy.get('@currentTextPos')
+				.then(function(currentTextPos) {
+					cy.get('@originalTextPos')
+						.then(function(originalTextPos) {
+							return originalTextPos.left > currentTextPos.left;
+						});
+				});
+		});
 	});
 });
