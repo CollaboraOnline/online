@@ -71,7 +71,8 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!(condition))                                                                          \
         {                                                                                          \
-            std::cerr << "Assertion failure: " << (#condition) << std::endl;                       \
+            std::cerr << "Assertion failure: " << (message) << ". Condition: " << (#condition)     \
+                      << std::endl;                                                                \
             LOK_ASSERT_IMPL(condition);                                                            \
             CPPUNIT_ASSERT_MESSAGE((message), (condition));                                        \
         }                                                                                          \
