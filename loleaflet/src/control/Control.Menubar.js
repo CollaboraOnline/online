@@ -690,7 +690,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
-					{uno: '.uno:Text'},
+					{name: _UNO('.uno:Text', 'presentation'), id: 'inserttextbox', type: 'action'},
 					{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
 						{uno: '.uno:InsertDateFieldFix'},
 						{uno: '.uno:InsertDateFieldVar'},
@@ -1211,6 +1211,8 @@ L.Control.Menubar = L.Control.extend({
 			$('#toolbar-search').show();
 			$('#mobile-edit-button').hide();
 			L.DomUtil.get('search-input').focus();
+		} else if (id === 'inserttextbox') {
+			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
 		}
 		// Inform the host if asked
 		if (postmessage)
