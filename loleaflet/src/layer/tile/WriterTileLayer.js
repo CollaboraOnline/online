@@ -39,9 +39,7 @@ L.WriterTileLayer = L.TileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			this.onMobileInit(map);
-		}
+		map.uiManager.initializeSpecializedUI('text');
 	},
 
 	onAdd: function (map) {
@@ -49,16 +47,6 @@ L.WriterTileLayer = L.TileLayer.extend({
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = L.annotationManager(map);
 		map.on('updatemaxbounds', this._onUpdateMaxBounds, this);
-	},
-
-	onMobileInit: function (map) {
-		map.addControl(L.control.mobileBottomBar('text'));
-
-		map.addControl(L.control.mobileTopBar('text'));
-
-		map.addControl(L.control.searchBar());
-
-		map.on('updatepermission', window.onUpdatePermission);
 	},
 
 	onAnnotationModify: function (annotation) {

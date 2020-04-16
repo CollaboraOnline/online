@@ -9,15 +9,6 @@
 
 var map;
 
-function resizeToolbar() {
-	if ($(window).width() !== map.getSize().x) {
-		var toolbarUp = w2ui['editbar'];
-		var statusbar = w2ui['actionbar'];
-		toolbarUp.resize();
-		statusbar.resize();
-	}
-}
-
 function _cancelSearch() {
 	var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
 	var searchInput = L.DomUtil.get('search-input');
@@ -590,22 +581,6 @@ function hideTooltip(toolbar, id) {
 	}
 }
 
-function createToolbar() {
-
-	if (window.mode.isMobile()) {
-		$('#toolbar-search').hide();
-		$('#mobile-edit-button').show();
-	} else {
-		$('#toolbar-down').show();
-		initNormalToolbar();
-	}
-}
-
-function initNormalToolbar() {
-	map.addControl(L.control.topToolbar());
-	map.addControl(L.control.signingBar());
-}
-
 function setupSearchInput() {
 	$('#search-input').off('input', onSearchInput).on('input', onSearchInput);
 	$('#search-input').off('keydown', onSearchKeyDown).on('keydown', onSearchKeyDown);
@@ -1062,18 +1037,6 @@ function onUpdatePermission(e) {
 			}
 		}
 	}
-
-	if (e.perm === 'edit') {
-		if (window.mode.isMobile()) {
-			$('#toolbar-down').show();
-		}
-	}
-	else if (window.mode.isMobile()) {
-		$('#toolbar-down').hide();
-	}
-
-	// We've resized the document container.
-	map.invalidateSize();
 }
 
 function editorUpdate(e) { // eslint-disable-line no-unused-vars
@@ -1103,10 +1066,6 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 
 global.editorUpdate = editorUpdate;
 
-$(window).resize(function() {
-	resizeToolbar();
-});
-
 $(document).ready(function() {
 	// Attach insert file action
 	$('#insertgraphic').on('change', onInsertFile);
@@ -1115,8 +1074,6 @@ $(document).ready(function() {
 
 function setupToolbar(e) {
 	map = e;
-
-	createToolbar();
 
 	map.on('focussearch', function () {
 		var entry = L.DomUtil.get('search-input');

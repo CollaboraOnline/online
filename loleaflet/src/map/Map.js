@@ -53,6 +53,12 @@ L.Map = L.Evented.extend({
 		cursorURL: 'images/cursors'
 	},
 
+	// uiManager is set in main.js
+	uiManager: null,
+
+	// Control.LokDialog instance, is set in Control.UIManager.js
+	dialog: null,
+
 	lastActiveTime: Date.now(),
 
 	initialize: function (id, options) { // (HTMLElement or String, Object)

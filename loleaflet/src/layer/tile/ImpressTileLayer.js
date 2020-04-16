@@ -3,7 +3,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global $ w2ui w2utils L */
+/* global $ L */
 
 L.ImpressTileLayer = L.TileLayer.extend({
 	extraSize: L.point(290, 0),
@@ -50,8 +50,10 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
 		map.on('orientationchange', this.onOrientationChange, this);
 		map.on('resize', this.onResize, this);
+
+		map.uiManager.initializeSpecializedUI('presentation');
+
 		if (window.mode.isMobile()) {
-			this.onMobileInit(map);
 			L.Control.MobileWizard.mergeOptions({maxHeight: '55%'});
 			var mobileWizard = L.DomUtil.get('mobile-wizard');
 			var mobileWizardContent = L.DomUtil.get('mobile-wizard-content');
@@ -60,8 +62,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			L.DomUtil.toBack(container);
 			map.addControl(L.control.partsPreview(container, preview, {fetchThumbnail: false}));
 			L.DomUtil.addClass(mobileWizardContent, 'with-slide-sorter-above');
-		} else {
-			this.onDesktopAndTabletInit(map);
 		}
 	},
 
@@ -113,35 +113,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				partNames: this._partHashes
 			});
 		}
-	},
-
-	onDesktopAndTabletInit: function(map) {
-		map.addControl(L.control.presentationBar());
-	},
-
-	onMobileInit: function (map) {
-		map.addControl(L.control.mobileTopBar('presentation'));
-
-		map.addControl(L.control.mobileBottomBar('presentation'));
-
-		map.addControl(L.control.searchBar());
-
-		map.on('updatetoolbarcommandvalues', function() {
-			w2ui['editbar'].refresh();
-		});
-
-		map.on('showbusy', function(e) {
-			w2utils.lock(w2ui['actionbar'].box, e.label, true);
-		});
-
-		map.on('hidebusy', function() {
-			// If locked, unlock
-			if (w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
-				w2utils.unlock(w2ui['actionbar'].box);
-			}
-		});
-
-		map.on('updatepermission', window.onUpdatePermission);
 	},
 
 	onAdd: function (map) {

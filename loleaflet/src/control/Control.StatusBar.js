@@ -3,7 +3,7 @@
  * L.Control.StatusBar
  */
 
-/* global $ w2ui w2utils _ _UNO */
+/* global $ w2ui _ _UNO */
 L.Control.StatusBar = L.Control.extend({
 
 	initialize: function () {
@@ -11,10 +11,10 @@ L.Control.StatusBar = L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
-
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('commandvalues', this.onCommandValues, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
+		this.create();
 	},
 
 	hideTooltip: function(toolbar, id) {
@@ -221,6 +221,8 @@ L.Control.StatusBar = L.Control.extend({
 					window.setupSearchInput();
 				}
 			});
+
+			toolbar.show();
 		}
 
 		toolbar.bind('touchstart', function() {
@@ -243,19 +245,6 @@ L.Control.StatusBar = L.Control.extend({
 				}, 500);
 			}
 		});
-
-		if (!window.mode.isMobile()) {	
-			this.map.on('showbusy', function(e) {
-				w2utils.lock(w2ui['actionbar'].box, e.label, true);
-			});
-	
-			this.map.on('hidebusy', function() {
-				// If locked, unlock
-				if (w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
-					w2utils.unlock(w2ui['actionbar'].box);
-				}
-			});
-		}
 
 		this.map.on('zoomend', function () {
 			var zoomPercent = 100;

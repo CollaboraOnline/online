@@ -3,7 +3,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global w2ui w2utils */
+/* global */
 L.CalcTileLayer = L.TileLayer.extend({
 	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
 							  * 0.1986cm with TeX points,
@@ -51,12 +51,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.on('AnnotationReply', this._onAnnotationReply, this);
 		map.on('AnnotationSave', this._onAnnotationSave, this);
 
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			this.onMobileInit(map);
-		}
-
-		map.addControl(L.control.sheetsBar({shownavigation: true}));
-		map.addControl(L.control.formulaBar({showfunctionwizard: true}));
+		map.uiManager.initializeSpecializedUI('spreadsheet');
 	},
 
 	clearAnnotations: function () {
@@ -72,35 +67,6 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.addControl(L.control.rowHeader());
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = {};
-	},
-
-	onMobileInit: function (map) {
-		map.addControl(L.control.mobileTopBar('spreadsheet'));
-
-		map.addControl(L.control.formulaBar({showfunctionwizard: false}));
-
-		map.addControl(L.control.sheetsBar({shownavigation: false}));
-
-		map.addControl(L.control.mobileBottomBar('spreadsheet'));
-
-		map.addControl(L.control.searchBar());
-
-		map.on('updatetoolbarcommandvalues', function() {
-			w2ui['editbar'].refresh();
-		});
-
-		map.on('showbusy', function(e) {
-			w2utils.lock(w2ui['actionbar'].box, e.label, true);
-		});
-
-		map.on('hidebusy', function() {
-			// If locked, unlock
-			if (w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
-				w2utils.unlock(w2ui['actionbar'].box);
-			}
-		});
-
-		map.on('updatepermission', window.onUpdatePermission);
 	},
 
 	onAnnotationModify: function (annotation) {

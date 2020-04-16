@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader reuseCookies */
-/* global vex host serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs setupToolbar*/
+/* global vex host serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs*/
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
 
@@ -68,23 +68,13 @@ var map = L.map('map', {
 });
 
 ////// Controls /////
-var menubar = L.control.menubar();
-map.menubar = menubar;
-map.addControl(menubar);
-var statusbar = L.control.statusBar();
-map.addControl(statusbar);
-statusbar.create();
-setupToolbar(map);
-map.addControl(L.control.scroll());
-map.addControl(L.control.alertDialog());
-map.addControl(L.control.mobileWizard());
-map.addControl(L.control.languageDialog());
-map.dialog = L.control.lokDialog();
-map.addControl(map.dialog);
-map.addControl(L.control.contextMenu());
-map.addControl(L.control.infobar());
+
+map.uiManager = L.control.uiManager();
+map.addControl(map.uiManager);
+
+map.uiManager.initializeBasicUI();
+
 map.loadDocument(global.socket);
-map.addControl(L.control.userList());
 
 global.socket = map._socket;
 window.addEventListener('beforeunload', function () {
