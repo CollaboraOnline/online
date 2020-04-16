@@ -524,18 +524,26 @@ pot:
 		admin/src/AdminSocketOverview.js \
 		admin/src/AdminSocketSettings.js \
 		admin/src/Util.js \
+		src/control/ColorPicker.js \
 		src/control/Control.AlertDialog.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.DownloadProgress.js \
-		src/control/ColorPicker.js \
+		src/control/Control.FormulaBar.js \
 		src/control/Control.JSDialogBuilder.js \
 		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
+		src/control/Control.MobileBottomBar.js \
+		src/control/Control.MobileTopBar.js \
 		src/control/Control.MobileWizard.js \
+		src/control/Control.PresentationBar.js \
 		src/control/Control.Scroll.Annotation.js \
+		src/control/Control.SearchBar.js \
+		src/control/Control.SheetsBar.js \
+		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
+		src/control/Control.UserList.js \
 		src/control/Ruler.js \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
