@@ -1,3 +1,9 @@
+loolwsd (4.2.2-2) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.2-2
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 16 Apr 2020 14:35:00 +0200
+
 loolwsd (4.2.2-1) unstable; urgency=medium
 
   * https://cgit.freedesktop.org/libreoffice/online/log/?h=CODE-4.2.2-1
