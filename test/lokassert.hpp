@@ -29,7 +29,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
 #define LOK_ASSERT_IMPL(X) assert(X);
 #else
 #define LOK_ASSERT_IMPL(X)
-#endif //LOK_BREAK_ON_ASSERTION
+#endif //LOK_ABORT_ON_ASSERTION
 
 #define LOK_ASSERT(condition)                                                                      \
     do                                                                                             \
