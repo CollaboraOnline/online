@@ -81,9 +81,8 @@ describe('Apply number formatting.', function() {
 		cy.get('#NumberFormatPercentimg')
 			.should('have.class', 'selected');
 
-		// TODO: combobox entry is not updated
-		//cy.get('#numberformatcombobox .ui-header-left')
-		//	.should('have.text', 'Percent');
+		cy.get('#numberformatcombobox .ui-header-left')
+			.should('have.text', 'Percent');
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
@@ -139,9 +138,8 @@ describe('Apply number formatting.', function() {
 		cy.get('#NumberFormatCurrencyimg')
 			.should('have.class', 'selected');
 
-		// TODO: combobox entry is not updated
-		//cy.get('#numberformatcombobox .ui-header-left')
-		//	.should('have.text', 'Currency');
+		cy.get('#numberformatcombobox .ui-header-left')
+			.should('have.text', 'Currency');
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
@@ -202,13 +200,11 @@ describe('Apply number formatting.', function() {
 		cy.get('#NumberFormatDecimal')
 			.click();
 
-		// TODO: this state is missing here
-		//cy.get('#NumberFormatDecimalimg')
-		//	.should('have.class', 'selected');
+		cy.get('#NumberFormatDecimalimg')
+			.should('have.class', 'selected');
 
-		// TODO: combobox entry is not updated
-		//cy.get('#numberformatcombobox .ui-header-left')
-		//	.should('have.text', 'Number');
+		cy.get('#numberformatcombobox .ui-header-left')
+			.should('have.text', 'Number');
 
 		calcHelper.copyContentToClipboard();
 
