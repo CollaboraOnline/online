@@ -60,6 +60,8 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			L.DomUtil.toBack(container);
 			map.addControl(L.control.partsPreview(container, preview, {fetchThumbnail: false}));
 			L.DomUtil.addClass(mobileWizardContent, 'with-slide-sorter-above');
+		} else {
+			this.onDesktopAndTabletInit(map);
 		}
 	},
 
@@ -111,6 +113,10 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				partNames: this._partHashes
 			});
 		}
+	},
+
+	onDesktopAndTabletInit: function(map) {
+		map.addControl(L.control.presentationBar());
 	},
 
 	onMobileInit: function (map) {

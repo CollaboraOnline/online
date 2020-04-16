@@ -855,7 +855,6 @@ function initNormalToolbar() {
 	map.addControl(L.control.formulaBar({showfunctionwizard: true}));
 	createSigningBar();
 	map.addControl(L.control.sheetsBar({shownavigation: true}));
-	map.addControl(L.control.presentationBar());
 }
 
 function setupSearchInput() {
