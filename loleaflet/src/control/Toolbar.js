@@ -363,8 +363,8 @@ L.Map.include({
 		vex.open({
 			unsafeContent: data,
 			showCloseButton: true,
-			escapeButtonCloses: true,
-			overlayClosesOnClick: true,
+			escapeButtonCloses: false,
+			overlayClosesOnClick: false,
 			closeAllOnPopState: false,
 			buttons: {},
 			afterOpen: function() {
