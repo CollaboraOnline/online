@@ -56,7 +56,8 @@ L.Control.Menubar = L.Control.extend({
 				]},
 				{uno: '.uno:EditStyle'}
 			]},
-			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
+			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu',
+			 menu: (window.mode.isTablet() ? [] : [
 				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
@@ -64,13 +65,13 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				{type: 'separator'},
+			]).concat([
 				{uno: '.uno:ControlCodes'},
 				{type: 'separator'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:Sidebar'},
-			]
-			},
+			])},
 			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},

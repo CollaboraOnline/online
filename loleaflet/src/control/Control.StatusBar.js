@@ -186,6 +186,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'button',  id: 'prev', img: 'prev', hint: _UNO('.uno:PageUp', 'text')},
 					{type: 'button',  id: 'next', img: 'next', hint: _UNO('.uno:PageDown', 'text')},
 					{type: 'break', id: 'prevnextbreak'},
+				].concat(window.mode.isTablet() ? [] : [
 					{type: 'button',  id: 'zoomreset', img: 'zoomreset', hint: _('Reset zoom')},
 					{type: 'button',  id: 'zoomout', img: 'zoomout', hint: _UNO('.uno:ZoomMinus')},
 					{type: 'menu-radio', id: 'zoom', text: '100',
@@ -210,7 +211,7 @@ L.Control.StatusBar = L.Control.extend({
 						]
 					},
 					{type: 'button',  id: 'zoomin', img: 'zoomin', hint: _UNO('.uno:ZoomPlus')}
-				],
+				]),
 				onClick: function (e) {
 					that.hideTooltip(this, e.target);
 					that.onClick(e, e.target, e.item, e.subItem);
