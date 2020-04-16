@@ -601,6 +601,7 @@ AC_SUBST(MAX_DOCUMENTS)
 ENABLE_WELCOME_MESSAGE=false
 AS_IF([test "$enable_welcome_message" = "yes"],
       [ENABLE_WELCOME_MESSAGE="true"])
+AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],["$ENABLE_WELCOME_MESSAGE"],[Should the Release notes message on startup should be enabled be default?])
 AC_SUBST(ENABLE_WELCOME_MESSAGE)
 
 VEREIGN_URL=

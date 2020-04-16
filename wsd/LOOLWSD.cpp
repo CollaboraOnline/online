@@ -937,7 +937,7 @@ void LOOLWSD::initialize(Application& self)
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
             { "trace[@enable]", "false" },
-            { "welcome.enable", "true" },
+            { "welcome.enable", ENABLE_WELCOME_MESSAGE },
             { "welcome.path", "loleaflet/welcome" }
           };
 
