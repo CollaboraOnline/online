@@ -392,15 +392,14 @@ describe('Apply number formatting.', function() {
 	it('Apply red color for negative numbers.', function() {
 		// Check default value
 		cy.get('#negativenumbersred input')
-			.should('not.have.attr', 'checked', 'checked');
+			.should('not.have.prop', 'checked', true);
 
 		// Change the option
 		cy.get('#negativenumbersred input')
 			.click();
 
-		// TODO
-		//cy.get('#negativenumbersred input')
-		//	.should('have.attr', 'checked', 'checked');
+		cy.get('#negativenumbersred input')
+			.should('have.prop', 'checked', true);
 
 		calcHelper.copyContentToClipboard();
 
@@ -414,15 +413,14 @@ describe('Apply number formatting.', function() {
 	it('Add thousands separator.', function() {
 		// Check default value
 		cy.get('#thousandseparator input')
-			.should('not.have.attr', 'checked', 'checked');
+			.should('not.have.prop', 'checked', true);
 
 		// Change the option
 		cy.get('#thousandseparator input')
 			.click();
 
-		// TODO
-		//cy.get('#thousandseparator input')
-		//	.should('have.attr', 'checked', 'checked');
+		cy.get('#thousandseparator input')
+			.should('have.prop', 'checked', true);
 
 		calcHelper.copyContentToClipboard();
 
