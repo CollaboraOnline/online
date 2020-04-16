@@ -1,7 +1,5 @@
 /* global describe it cy beforeEach require expect afterEach Cypress*/
 
-import 'cypress-wait-until';
-
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
@@ -126,12 +124,10 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		cy.get('#document-container').type('xxxx');
 
-		var cursorOrigLeft = 0;
 		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1) ;
-				cursorOrigLeft = cursor[0].getBoundingClientRect().left;
-			});
+			.invoke('offset')
+			.its('left')
+			.as('cursorOrigLeft');
 
 		mobileHelper.openInsertionWizard();
 
@@ -149,25 +145,24 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.contains('.menu-entry-no-icon', 'All')
 			.click();
 
-		// Check that the cursor was moved
-		cy.waitUntil(function() {
-			return cy.get('.blinking-cursor')
-				.then(function(cursor) {
-					expect(cursor).to.have.lengthOf(1);
-					return cursor[0].getBoundingClientRect().left < cursorOrigLeft;
-				});
-		});
+		cy.get('@cursorOrigLeft')
+			.then(function(cursorOrigLeft) {
+				cy.get('.blinking-cursor')
+					.invoke('offset')
+					.its('left')
+					.should('be.lessThan', cursorOrigLeft);
+			});
 	});
 
 	it('Insert footer.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container').type('xxxx');
-		var cursorOrigTop = 0;
+		cy.get('#document-container')
+			.type('xxxx');
+
 		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1) ;
-				cursorOrigTop = cursor[0].getBoundingClientRect().top;
-			});
+			.invoke('offset')
+			.its('top')
+			.as('cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -186,24 +181,24 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Check that the cursor was moved
-		cy.waitUntil(function() {
-			return cy.get('.blinking-cursor')
-				.then(function(cursor) {
-					expect(cursor).to.have.lengthOf(1);
-					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
-				});
-		});
+		cy.get('@cursorOrigTop')
+			.then(function(cursorOrigTop) {
+				cy.get('.blinking-cursor')
+					.invoke('offset')
+					.its('top')
+					.should('be.greaterThan', cursorOrigTop);
+			});
 	});
 
 	it('Insert footnote.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container').type('xxxx');
-		var cursorOrigTop = 0;
+		cy.get('#document-container')
+			.type('xxxx');
+
 		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				cursorOrigTop = cursor[0].getBoundingClientRect().top;
-			});
+			.invoke('offset')
+			.its('top')
+			.as('cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -212,24 +207,24 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Check that the cursor was moved
-		cy.waitUntil(function() {
-			return cy.get('.blinking-cursor')
-				.then(function(cursor) {
-					expect(cursor).to.have.lengthOf(1);
-					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
-				});
-		});
+		cy.get('@cursorOrigTop')
+			.then(function(cursorOrigTop) {
+				cy.get('.blinking-cursor')
+					.invoke('offset')
+					.its('top')
+					.should('be.greaterThan', cursorOrigTop);
+			});
 	});
 
 	it('Insert endnote.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container').type('xxxx');
-		var cursorOrigTop = 0;
+		cy.get('#document-container')
+			.type('xxxx');
+
 		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				cursorOrigTop = cursor[0].getBoundingClientRect().top;
-			});
+			.invoke('offset')
+			.its('top')
+			.as('cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -238,24 +233,24 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Check that the cursor was moved
-		cy.waitUntil(function() {
-			return cy.get('.blinking-cursor')
-				.then(function(cursor) {
-					expect(cursor).to.have.lengthOf(1);
-					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
-				});
-		});
+		cy.get('@cursorOrigTop')
+			.then(function(cursorOrigTop) {
+				cy.get('.blinking-cursor')
+					.invoke('offset')
+					.its('top')
+					.should('be.greaterThan', cursorOrigTop);
+			});
 	});
 
 	it('Insert page break.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container').type('xxxx');
-		var cursorOrigTop = 0;
+		cy.get('#document-container')
+			.type('xxxx');
+
 		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				cursorOrigTop = cursor[0].getBoundingClientRect().top;
-			});
+			.invoke('offset')
+			.its('top')
+			.as('cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -264,24 +259,24 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Check that the cursor was moved
-		cy.waitUntil(function() {
-			return cy.get('.blinking-cursor')
-				.then(function(cursor) {
-					expect(cursor).to.have.lengthOf(1);
-					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
-				});
-		});
+		cy.get('@cursorOrigTop')
+			.then(function(cursorOrigTop) {
+				cy.get('.blinking-cursor')
+					.invoke('offset')
+					.its('top')
+					.should('be.greaterThan', cursorOrigTop);
+			});
 	});
 
 	it('Insert column break.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container').type('xxxx');
-		var cursorOrigTop = 0;
+		cy.get('#document-container')
+			.type('xxxx');
+
 		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1);
-				cursorOrigTop = cursor[0].getBoundingClientRect().top;
-			});
+			.invoke('offset')
+			.its('top')
+			.as('cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -290,13 +285,13 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Check that the cursor was moved
-		cy.waitUntil(function() {
-			return cy.get('.blinking-cursor')
-				.then(function(cursor) {
-					expect(cursor).to.have.lengthOf(1);
-					return cursor[0].getBoundingClientRect().top > cursorOrigTop;
-				});
-		});
+		cy.get('@cursorOrigTop')
+			.then(function(cursorOrigTop) {
+				cy.get('.blinking-cursor')
+					.invoke('offset')
+					.its('top')
+					.should('be.greaterThan', cursorOrigTop);
+			});
 	});
 
 	it('Insert hyperlink.', function() {
