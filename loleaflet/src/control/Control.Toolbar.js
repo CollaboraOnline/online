@@ -85,10 +85,6 @@ function onClick(e, id, item) {
 		var toolbar = w2ui['editbar'];
 		item = toolbar.get(id);
 	}
-	else if ('document-signing-bar' in w2ui && w2ui['document-signing-bar'].get(id) !== null) {
-		toolbar = w2ui['document-signing-bar'];
-		item = toolbar.get(id);
-	}
 	else if ('actionbar' in w2ui && w2ui['actionbar'].get(id) !== null) {
 		toolbar = w2ui['actionbar'];
 		item = toolbar.get(id);
@@ -188,9 +184,6 @@ function onClick(e, id, item) {
 	}
 	else if (id === 'languagecode') {
 		map.fire('languagedialog');
-	}
-	else {
-		map.handleSigningClickEvent(id, item); // this handles a bunch of signing bar click events
 	}
 }
 
@@ -830,29 +823,9 @@ function createMainToolbar() {
 	});
 }
 
-function createSigningBar() {
-	if (L.DomUtil.get('document-signing-bar') !== null) {
-		var toolbar = $('#document-signing-bar');
-		toolbar.w2toolbar({
-			name: 'document-signing-bar',
-			tooltip: 'bottom',
-			items: map.setupSigningToolbarItems(),
-			onClick: function (e) {
-				onClick(e, e.target);
-				hideTooltip(this, e.target);
-			},
-			onRefresh: function() {
-			}
-		});
-		toolbar.bind('touchstart', function() {
-			w2ui['document-signing-bar'].touchStarted = true;
-		});
-	}
-}
-
 function initNormalToolbar() {
 	createMainToolbar();
-	createSigningBar();
+	map.addControl(L.control.signingBar());
 }
 
 function setupSearchInput() {
@@ -1157,10 +1130,6 @@ function onDocLayerInit() {
 			'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
 			'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
 		break;
-	}
-
-	if (L.DomUtil.get('document-signing-bar') !== null) {
-		map.signingInitializeBar();
 	}
 
 	_updateToolbarsVisibility();

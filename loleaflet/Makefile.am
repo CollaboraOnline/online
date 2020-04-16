@@ -270,6 +270,7 @@ LOLEAFLET_JS =\
 	src/control/Control.FormulaBar.js \
 	src/control/Control.SheetsBar.js \
 	src/control/Control.PresentationBar.js \
+	src/control/Control.SigningBar.js \
 	src/control/Control.Layers.js \
 	src/control/Search.js \
 	src/control/Permission.js \
@@ -540,6 +541,7 @@ pot:
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.SearchBar.js \
 		src/control/Control.SheetsBar.js \
+		src/control/Control.SigningBar.js \
 		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
