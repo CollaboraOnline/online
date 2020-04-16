@@ -852,9 +852,7 @@ function createSigningBar() {
 
 function initNormalToolbar() {
 	createMainToolbar();
-	map.addControl(L.control.formulaBar({showfunctionwizard: true}));
 	createSigningBar();
-	map.addControl(L.control.sheetsBar({shownavigation: true}));
 }
 
 function setupSearchInput() {
