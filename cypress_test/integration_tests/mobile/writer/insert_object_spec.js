@@ -16,18 +16,8 @@ describe('Insert objects via insertion wizard.', function() {
 		helper.afterAll('insert_object.odt');
 	});
 
-	function initAliasToZero(aliasName) {
-		cy.get('body')
-			.invoke('offset')
-			.its('left')
-			.as(aliasName);
-
-		cy.get('@' + aliasName)
-			.should('be.equal', 0);
-	}
-
 	function getCursorPos(offsetProperty, aliasName) {
-		initAliasToZero(aliasName);
+		helper.initAliasToNegative(aliasName);
 
 		cy.get('.blinking-cursor')
 			.invoke('offset')

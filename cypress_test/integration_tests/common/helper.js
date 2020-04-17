@@ -160,6 +160,22 @@ function afterAll(fileName) {
 	cy.log('Waiting for closing the document - end.');
 }
 
+
+function initAliasToNegative(aliasName) {
+	cy.log('Initializing alias to a negative value - start.');
+	cy.log('Param - aliasName: ' + aliasName);
+
+	cy.get('#copy-paste-container')
+		.invoke('offset')
+		.its('top')
+		.as(aliasName);
+
+	cy.get('@' + aliasName)
+		.should('be.lessThan', 0);
+
+	cy.log('Initializing alias to a negative value - end.');
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -169,3 +185,4 @@ module.exports.clearAllText = clearAllText;
 module.exports.getTextForClipboard = getTextForClipboard;
 module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.afterAll = afterAll;
+module.exports.initAliasToNegative = initAliasToNegative;
