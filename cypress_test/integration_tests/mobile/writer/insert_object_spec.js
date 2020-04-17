@@ -16,6 +16,28 @@ describe('Insert objects via insertion wizard.', function() {
 		helper.afterAll('insert_object.odt');
 	});
 
+	function initAliasToZero(aliasName) {
+		cy.get('body')
+			.invoke('offset')
+			.its('left')
+			.as(aliasName);
+
+		cy.get('@' + aliasName)
+			.should('be.equal', 0);
+	}
+
+	function getCursorPos(offsetProperty, aliasName) {
+		initAliasToZero(aliasName);
+
+		cy.get('.blinking-cursor')
+			.invoke('offset')
+			.its(offsetProperty)
+			.as(aliasName);
+
+		cy.get('@' + aliasName)
+			.should('be.greaterThan', 0);
+	}
+
 	it('Insert local image.', function() {
 		mobileHelper.openInsertionWizard();
 
@@ -124,10 +146,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		cy.get('#document-container').type('xxxx');
 
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its('left')
-			.as('cursorOrigLeft');
+		getCursorPos('left', 'cursorOrigLeft');
 
 		mobileHelper.openInsertionWizard();
 
@@ -159,10 +178,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#document-container')
 			.type('xxxx');
 
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its('top')
-			.as('cursorOrigTop');
+		getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -195,10 +211,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#document-container')
 			.type('xxxx');
 
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its('top')
-			.as('cursorOrigTop');
+		getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -221,10 +234,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#document-container')
 			.type('xxxx');
 
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its('top')
-			.as('cursorOrigTop');
+		getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -247,10 +257,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#document-container')
 			.type('xxxx');
 
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its('top')
-			.as('cursorOrigTop');
+		getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -273,10 +280,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#document-container')
 			.type('xxxx');
 
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its('top')
-			.as('cursorOrigTop');
+		getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
