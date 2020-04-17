@@ -348,6 +348,8 @@ L.Map.include({
 	_showWelcomeDialogVex: function(data) {
 		var w;
 		var iw = window.innerWidth;
+		var hasDismissBtn = window.enableWelcomeMessageButton;
+
 		if (iw < 768) {
 			w = iw - 30;
 		}
@@ -358,21 +360,41 @@ L.Map.include({
 			w = iw / 5 + 590;
 		}
 
+		if (hasDismissBtn) {
+			var ih = window.innerHeight;
+			var h = ih / 2;
+			if (iw < 768) {
+				h = ih - 170; // Hopefully enough padding to avoid extra scroll-bar on mobile,
+			}
+			var containerDiv = '<div style="max-height:' + h + 'px;overflow-y:auto;">';
+			containerDiv += data;
+			containerDiv += '</div>';
+			data = containerDiv;
+		}
+
 		// show the dialog
 		var map = this;
-		vex.open({
-			unsafeContent: data,
-			showCloseButton: true,
+		vex.dialog.open({
+			unsafeMessage: data,
+			showCloseButton: !hasDismissBtn,
 			escapeButtonCloses: false,
 			overlayClosesOnClick: false,
 			closeAllOnPopState: false,
-			buttons: {},
+			focusFirstInput: false, // Needed to avoid auto-scroll to the bottom
+			buttons: !hasDismissBtn ? {} : [
+				$.extend({}, vex.dialog.buttons.YES, { text: _('I understand the risks') }),
+			],
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				this.contentEl.style.width = w + 'px';
 				map.enable(false);
 
 				$vexContent.attr('tabindex', -1);
+				// Work-around to avoid the ugly all-bold dialog message on mobile
+				if (window.mode.isMobile()) {
+					var dlgMsg = document.getElementsByClassName('vex-dialog-message')[0];
+					dlgMsg.setAttribute('class', 'vex-content');
+				}
 				$vexContent.focus();
 				// workaround for https://github.com/HubSpot/vex/issues/43
 				$('.vex-overlay').css({ 'pointer-events': 'none'});
