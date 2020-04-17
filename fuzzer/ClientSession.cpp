@@ -35,7 +35,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     }
 
     // Make sure SocketPoll::_newCallbacks does not grow forever, leading to OOM.
-    Admin::instance().poll(SocketPoll::DefaultPollTimeoutMs);
+    Admin::instance().poll(SocketPoll::DefaultPollTimeoutMicroS);
     return 0;
 }
 
