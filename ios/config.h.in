@@ -8,48 +8,48 @@
 
 /* Whether to compile in some extra debugging support code and disable some
    security pieces */
-#undef ENABLE_DEBUG
+#define ENABLE_DEBUG 0
 
 /* Whether to enable setting of capabilities */
-#undef ENABLE_SETCAP
+#define ENABLE_SETCAP 0
 
 /* Whether to enable SSL */
-#undef ENABLE_SSL
+#define ENABLE_SSL 0
 
 /* Whether to enable support key */
-#undef ENABLE_SUPPORT_KEY
+#define ENABLE_SUPPORT_KEY 0
 
 /* Should the Release notes message on startup should be enabled be default?
    */
 #define ENABLE_WELCOME_MESSAGE "false"
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
-#undef HAVE_DLFCN_H
+#define HAVE_DLFCN_H 0
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-#undef HAVE_INTTYPES_H
+#define HAVE_INTTYPES_H 0
 
 /* Define to 1 if you have the `pam' library (-lpam). */
-#undef HAVE_LIBPAM
+#define HAVE_LIBPAM 0
 
 /* Define to 1 if you have the <LibreOfficeKit/LibreOfficeKit.h> header file.
    */
-#undef HAVE_LIBREOFFICEKIT_LIBREOFFICEKIT_H
+#define HAVE_LIBREOFFICEKIT_LIBREOFFICEKIT_H 1
 
 /* Define to 1 if you have the <linux/seccomp.h> header file. */
-#undef HAVE_LINUX_SECCOMP_H
+#define HAVE_LINUX_SECCOMP_H 0
 
 /* Define to 1 if you have the <memory.h> header file. */
-#undef HAVE_MEMORY_H
+#define HAVE_MEMORY_H 1
 
 /* Whether OpenSSL has PKCS5_PBKDF2_HMAC() */
-#undef HAVE_PKCS5_PBKDF2_HMAC
+#define HAVE_PKCS5_PBKDF2_HMAC 0
 
 /* Define to 1 if you have the <Poco/Net/WebSocket.h> header file. */
-#undef HAVE_POCO_NET_WEBSOCKET_H
+#define HAVE_POCO_NET_WEBSOCKET_H 1
 
 /* Define to 1 if you have the <security/pam_appl.h> header file. */
-#undef HAVE_SECURITY_PAM_APPL_H
+#define HAVE_SECURITY_PAM_APPL_H 0
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -58,7 +58,7 @@
 #define HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the <strings.h> header file. */
-#undef HAVE_STRINGS_H
+#define HAVE_STRINGS_H 0
 
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
