@@ -1027,7 +1027,7 @@ L.Control.Menubar = L.Control.extend({
 							self.options.allowedViewModeActions.splice(index, 1);
 						}
 					} else if (id === 'showruler') {
-						if (self._map.isRulerVisible()) {
+						if (self._map.uiManager.isRulerVisible()) {
 							$(aItem).addClass(constChecked);
 						} else {
 							$(aItem).removeClass(constChecked);
@@ -1156,7 +1156,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'fullscreen') {
 			L.toggleFullScreen();
 		} else if (id === 'showruler') {
-			this._map.toggleRuler();
+			this._map.uiManager.toggleRuler();
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
 			this._map.fire('fullscreen');
 		} else if (id === 'insertpage') {

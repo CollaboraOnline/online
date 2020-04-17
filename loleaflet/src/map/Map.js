@@ -3,19 +3,6 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-function moveObjectVertically(obj, diff) {
-	if (obj) {
-		var prevTop = obj.css('top');
-		if (prevTop) {
-			prevTop = parseInt(prevTop.slice(0, -2)) + diff;
-		}
-		else {
-			prevTop = 0 + diff;
-		}
-		obj.css({'top': String(prevTop) + 'px'});
-	}
-}
-
 function isAnyVexDialogActive() {
 	var res = false;
 	for (var vexId in vex.getAll()) {
@@ -53,7 +40,7 @@ L.Map = L.Evented.extend({
 		cursorURL: 'images/cursors'
 	},
 
-	// uiManager is set in main.js
+	// Control.UIManager instance, set in main.js
 	uiManager: null,
 
 	// Control.LokDialog instance, is set in Control.UIManager.js
@@ -1762,74 +1749,6 @@ L.Map = L.Evented.extend({
 			args: {FollowedViewId: this._docLayer._followThis,
 				IsFollowUser: followUser,
 				IsFollowEditor: followEditor}});
-	},
-
-	showMenubar: function() {
-		if (!this.isMenubarHidden())
-			return;
-		$('.main-nav').show();
-		if (L.Params.closeButtonEnabled && !window.mode.isTablet()) {
-			$('#closebuttonwrapper').show();
-		}
-
-		var obj = $('.unfold');
-		obj.removeClass('w2ui-icon unfold');
-		obj.addClass('w2ui-icon fold');
-
-		moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
-		moveObjectVertically($(this.options.documentContainer), 36);
-		moveObjectVertically($('#presentation-controls-wrapper'), 36);
-		moveObjectVertically($('#sidebar-dock-wrapper'), 36);
-	},
-
-	hideMenubar: function() {
-		if (this.isMenubarHidden())
-			return;
-		$('.main-nav').hide();
-		if (L.Params.closeButtonEnabled) {
-			$('#closebuttonwrapper').hide();
-		}
-
-		var obj = $('.fold');
-		obj.removeClass('w2ui-icon fold');
-		obj.addClass('w2ui-icon unfold');
-
-		moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
-		moveObjectVertically($(this.options.documentContainer), -36);
-		moveObjectVertically($('#presentation-controls-wrapper'), -36);
-		moveObjectVertically($('#sidebar-dock-wrapper'), -36);
-	},
-
-	isMenubarHidden: function() {
-		return $('.main-nav').css('display') === 'none';
-	},
-
-	toggleMenubar: function() {
-		if (this.isMenubarHidden())
-			this.showMenubar();
-		else
-			this.hideMenubar();
-	},
-
-	showRuler: function() {
-		$('.loleaflet-ruler').show();
-		$('#map').addClass('hasruler');
-	},
-
-	hideRuler: function() {
-		$('.loleaflet-ruler').hide();
-		$('#map').removeClass('hasruler');
-	},
-
-	toggleRuler: function() {
-		if (this.isRulerVisible())
-			this.hideRuler();
-		else
-			this.showRuler();
-	},
-
-	isRulerVisible: function() {
-		return $('.loleaflet-ruler').is(':visible');
 	},
 
 	hasObjectFocusDarkOverlay: function() {

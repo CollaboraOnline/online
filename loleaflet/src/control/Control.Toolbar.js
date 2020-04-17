@@ -127,7 +127,7 @@ function onClick(e, id, item) {
 		onColorPick(id, e.color);
 	}
 	else if (id === 'fold' || id === 'hamburger-tablet') {
-		map.toggleMenubar();
+		map.uiManager.toggleMenubar();
 	}
 	else if (id === 'close' || id === 'closemobile') {
 		if (window.ThisIsAMobileApp) {

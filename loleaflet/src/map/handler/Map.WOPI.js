@@ -247,16 +247,16 @@ L.Map.WOPI = L.Handler.extend({
 			w2ui['actionbar'].remove(msg.Values.id);
 		}
 		else if (msg.MessageId === 'Show_Menubar') {
-			this._map.showMenubar();
+			this._map.uiManager.showMenubar();
 		}
 		else if (msg.MessageId === 'Hide_Menubar') {
-			this._map.hideMenubar();
+			this._map.uiManager.hideMenubar();
 		}
 		else if (msg.MessageId === 'Show_Ruler') {
-			this._map.showRuler();
+			this._map.uiManager.showRuler();
 		}
 		else if (msg.MessageId === 'Hide_Ruler') {
-			this._map.hideRuler();
+			this._map.uiManager.hideRuler();
 		}
 		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
 			if (!msg.Values) {

@@ -1,6 +1,7 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control.UIManager
+ * L.Control.UIManager - initializes the UI elements like toolbars, menubar or ruler
+                         and allows to controll them (show/hide)
  */
 
 /* global $ setupToolbar w2ui w2utils */
@@ -10,6 +11,8 @@ L.Control.UIManager = L.Control.extend({
 
 		map.on('updatepermission', this.onUpdatePermission, this);
 	},
+
+	// UI initialization
 
 	initializeBasicUI: function() {
 		var that = this;
@@ -81,6 +84,80 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
+	// Menubar
+
+	showMenubar: function() {
+		if (!this.isMenubarHidden())
+			return;
+		$('.main-nav').show();
+		if (L.Params.closeButtonEnabled && !window.mode.isTablet()) {
+			$('#closebuttonwrapper').show();
+		}
+
+		var obj = $('.unfold');
+		obj.removeClass('w2ui-icon unfold');
+		obj.addClass('w2ui-icon fold');
+
+		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
+		this.moveObjectVertically($('#document-container'), 36);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
+	},
+
+	hideMenubar: function() {
+		if (this.isMenubarHidden())
+			return;
+		$('.main-nav').hide();
+		if (L.Params.closeButtonEnabled) {
+			$('#closebuttonwrapper').hide();
+		}
+
+		var obj = $('.fold');
+		obj.removeClass('w2ui-icon fold');
+		obj.addClass('w2ui-icon unfold');
+
+		this.moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
+		this.moveObjectVertically($('#document-container'), -36);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
+	},
+
+	isMenubarHidden: function() {
+		return $('.main-nav').css('display') === 'none';
+	},
+
+	toggleMenubar: function() {
+		if (this.isMenubarHidden())
+			this.showMenubar();
+		else
+			this.hideMenubar();
+	},
+
+	// Ruler
+
+	showRuler: function() {
+		$('.loleaflet-ruler').show();
+		$('#map').addClass('hasruler');
+	},
+
+	hideRuler: function() {
+		$('.loleaflet-ruler').hide();
+		$('#map').removeClass('hasruler');
+	},
+
+	toggleRuler: function() {
+		if (this.isRulerVisible())
+			this.hideRuler();
+		else
+			this.showRuler();
+	},
+
+	isRulerVisible: function() {
+		return $('.loleaflet-ruler').is(':visible');
+	},
+
+	// Event handlers
+
 	onUpdatePermission: function(e) {
 		if (window.mode.isMobile()) {
 			if (e.perm === 'edit') {
@@ -101,6 +178,21 @@ L.Control.UIManager = L.Control.extend({
 			var statusbar = w2ui['actionbar'];
 			toolbarUp.resize();
 			statusbar.resize();
+		}
+	},
+
+	// Helper functions
+
+	moveObjectVertically: function(obj, diff) {
+		if (obj) {
+			var prevTop = obj.css('top');
+			if (prevTop) {
+				prevTop = parseInt(prevTop.slice(0, -2)) + diff;
+			}
+			else {
+				prevTop = 0 + diff;
+			}
+			obj.css({'top': String(prevTop) + 'px'});
 		}
 	}
 });
