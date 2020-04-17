@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require afterEach expect*/
 
 import 'cypress-wait-until';
 
@@ -27,7 +27,7 @@ describe('Change alignment settings.', function() {
 
 		helper.initAliasToNegative('currentTextPos');
 
-		cy.get('.leaflet-selection-marker-start')
+		cy.get('.leaflet-selection-marker-end')
 			.invoke('offset')
 			.its('left')
 			.as('currentTextPos');
@@ -265,5 +265,110 @@ describe('Change alignment settings.', function() {
 						});
 				});
 		});
+	});
+
+	it('Enable text wrapping.', function() {
+		helper.initAliasToNegative('originalTextPos');
+
+		getTextPosForFirstCell();
+		cy.get('@currentTextPos')
+			.as('originalTextPos');
+
+		cy.get('@currentTextPos')
+			.should('be.greaterThan', 0);
+
+		openAlignmentPaneForFirstCell();
+
+		cy.get('input#wraptext')
+			.should('not.have.prop', 'checked', true);
+
+		cy.get('input#wraptext')
+			.click();
+
+		cy.get('input#wraptext')
+			.should('have.prop', 'checked', true);
+
+		// We use the text position as indicator
+		cy.waitUntil(function() {
+			getTextPosForFirstCell();
+
+			return cy.get('@currentTextPos')
+				.then(function(currentTextPos) {
+					cy.get('@originalTextPos')
+						.then(function(originalTextPos) {
+							return originalTextPos > currentTextPos;
+						});
+				});
+		});
+	});
+
+	it('Apply stacked option.', function() {
+		openAlignmentPaneForFirstCell();
+
+		cy.get('input#stacked')
+			.should('not.have.prop', 'checked', true);
+
+		cy.get('input#stacked')
+			.click();
+
+		cy.get('input#stacked')
+			.should('have.prop', 'checked', true);
+
+		cy.wait(500);
+
+		// TODO: we don't have a good indicator here
+		// neither the text position nor the clipboard container does not help here.
+	});
+
+	it('Merge cells.', function() {
+		// Select the full row
+		cy.get('.spreadsheet-header-rows')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(1);
+
+				var XPos = (items[0].getBoundingClientRect().right + items[0].getBoundingClientRect().left) / 2;
+				var YPos = items[0].getBoundingClientRect().top + 10;
+				cy.get('body')
+					.click(XPos, YPos);
+			});
+
+		cy.get('.spreadsheet-cell-resize-marker')
+			.should('exist');
+
+		// Even after we get the cell row selection the merge cell options is still enabled
+		// So we open mobile wizard again and again until merge cells get the right state
+		mobileHelper.openMobileWizard();
+		cy.waitUntil(function() {
+			mobileHelper.closeMobileWizard();
+			mobileHelper.openMobileWizard();
+
+			cy.get('#ScAlignmentPropertyPanel')
+				.click();
+
+			cy.get('#AlignLeft')
+				.should('be.visible');
+
+			return cy.get('input#mergecells')
+				.then(function(items) {
+					expect(items).to.have.lengthOf(1);
+					return !items[0].hasAttribute('disabled');
+				});
+		});
+
+		// Click merge cells
+		cy.get('input#mergecells')
+			.should('not.have.prop', 'checked', true);
+
+		cy.get('input#mergecells')
+			.click();
+
+		cy.get('input#mergecells')
+			.should('have.prop', 'checked', true);
+
+		// Check content
+		calcHelper.copyContentToClipboard();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'colspan', '1024');
 	});
 });
