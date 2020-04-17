@@ -3564,8 +3564,8 @@ int LOOLWSD::innerMain()
         UnitWSD::get().invokeTest();
 
         // This timeout affects the recovery time of prespawned children.
-        const int waitMicroS = UnitWSD::isUnitTesting() ?
-            UnitWSD::get().getTimeoutMilliSeconds() * 1000 / 4 :
+        const long waitMicroS = UnitWSD::isUnitTesting() ?
+            static_cast<long>(UnitWSD::get().getTimeoutMilliSeconds()) * 1000 / 4 :
             SocketPoll::DefaultPollTimeoutMicroS * 4;
         mainWait.poll(waitMicroS);
 
