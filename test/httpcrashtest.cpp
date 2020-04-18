@@ -166,7 +166,7 @@ void HTTPCrashTest::testCrashKit()
         int flags;
         char buffer[READ_BUFFER_SIZE];
         const int bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG(testname << "Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
+        TST_LOG(testname << "Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
 
         // While we expect no more messages after shutdown call, apparently
         // sometimes we _do_ get data. Even when the receiveFrame in the loop

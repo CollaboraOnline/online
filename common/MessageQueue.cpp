@@ -10,7 +10,7 @@
 #include <config.h>
 
 #include "MessageQueue.hpp"
-
+#include <climits>
 #include <algorithm>
 
 #include <Poco/JSON/JSON.h>

@@ -273,7 +273,7 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& tes
     do
     {
         bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags);
-        TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer.begin(), bytes, flags));
+        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer.begin(), bytes, flags));
         std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
     }
     while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
@@ -325,7 +325,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                     if (LOOLProtocol::matchPrefix(prefix, message))
                     {
                         TST_LOG("[" << prefix <<  "] Matched " <<
-                                LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags));
+                                LOOLWebSocket::getAbbreviatedFrameDump(response.data(), bytes, flags));
                         return response;
                     }
                 }
@@ -349,7 +349,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                     }
 
                     TST_LOG("[" << prefix <<  "] Ignored " <<
-                            LOOLProtocol::getAbbreviatedFrameDump(response.data(), bytes, flags));
+                            LOOLWebSocket::getAbbreviatedFrameDump(response.data(), bytes, flags));
                 }
             }
         }
@@ -539,7 +539,7 @@ void SocketProcessor(const std::string& testname,
         }
 
         n = socket->receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, n, flags));
+        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, n, flags));
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
             if (!handler(std::string(buffer, n)))

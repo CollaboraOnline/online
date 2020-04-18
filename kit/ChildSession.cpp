@@ -11,6 +11,7 @@
 
 #include "ChildSession.hpp"
 
+#include <climits>
 #include <fstream>
 #include <sstream>
 

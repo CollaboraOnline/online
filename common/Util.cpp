@@ -25,6 +25,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <fcntl.h>
 
 #include <atomic>
 #include <cassert>
@@ -51,7 +52,6 @@
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/Net/WebSocket.h>
 #include <Poco/Process.h>
 #include <Poco/RandomStream.h>
 #include <Poco/TemporaryFile.h>

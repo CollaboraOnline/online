@@ -110,18 +110,18 @@ UnitBase::TestResult UnitSession::testHandshake()
         int flags = 0;
         char buffer[1024] = { 0 };
         int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
+        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
         LOK_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
+        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
         if (bytes > 0 && !std::strstr(buffer, "error:"))
         {
             LOK_ASSERT_EQUAL(std::string("statusindicator: connect"),
                                  std::string(buffer, bytes));
 
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
+            TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
             if (!std::strstr(buffer, "error:"))
             {
                 LOK_ASSERT_EQUAL(std::string("statusindicator: ready"),
@@ -134,7 +134,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
                 // close frame message
                 bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-                TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
+                TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
                 LOK_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
                                == Poco::Net::WebSocket::FRAME_OP_CLOSE);
             }
@@ -146,7 +146,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
             // close frame message
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Got " << LOOLProtocol::getAbbreviatedFrameDump(buffer, bytes, flags));
+            TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
             LOK_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
                            == Poco::Net::WebSocket::FRAME_OP_CLOSE);
         }

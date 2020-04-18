@@ -62,7 +62,7 @@ public:
             if (n <= 0)
                 LOG_TRC("Got nothing (" << n << ")");
             else
-                LOG_TRC("Got frame: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, n, flags));
+                LOG_TRC("Got frame: " << getAbbreviatedFrameDump(buffer, n, flags));
 
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
             {
@@ -103,11 +103,11 @@ public:
         if (result != length)
         {
             LOG_ERR("Sent incomplete message, expected " << length << " bytes but sent " << result <<
-                    " for: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, length, flags));
+                    " for: " << getAbbreviatedFrameDump(buffer, length, flags));
         }
         else
         {
-            LOG_TRC("Sent frame: " << LOOLProtocol::getAbbreviatedFrameDump(buffer, length, flags));
+            LOG_TRC("Sent frame: " << getAbbreviatedFrameDump(buffer, length, flags));
         }
 
         return result;
@@ -153,6 +153,38 @@ public:
                 // Nothing we can do.
             }
         }
+    }
+
+    // Return a string dump of a WebSocket frame: Its opcode, length, first line (if present),
+    // flags. For human-readable logging purposes. Format not guaranteed to be stable. Not to be
+    // inspected programmatically.
+    static inline
+    std::string getAbbreviatedFrameDump(const char *message, const int length, const int flags)
+    {
+        std::ostringstream result;
+        switch (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
+        {
+#define CASE(x) case Poco::Net::WebSocket::FRAME_OP_##x: result << #x; break
+        CASE(CONT);
+        CASE(TEXT);
+        CASE(BINARY);
+        CASE(CLOSE);
+        CASE(PING);
+        CASE(PONG);
+#undef CASE
+        default:
+            result << Poco::format("%#x", flags);
+            break;
+        }
+        result << " " << std::setw(3) << length << " bytes";
+
+        if (length > 0 &&
+            ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_TEXT ||
+             (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_BINARY ||
+             (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_PING ||
+             (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_PONG))
+            result << ": '" << LOOLProtocol::getAbbreviatedMessage(message, length) << "'";
+        return result.str();
     }
 };
 
