@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_SOCKET_HPP
-#define INCLUDED_SOCKET_HPP
+#pragma once
 
 #include <poll.h>
 #include <unistd.h>
@@ -1166,6 +1165,5 @@ namespace HttpHelper
                   Poco::Net::HTTPResponse& response, bool noCache = false, bool deflate = false,
                   const bool headerOnly = false);
 }
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

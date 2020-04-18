@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_LOOLPROTOCOL_HPP
-#define INCLUDED_LOOLPROTOCOL_HPP
+#pragma once
 
 #include <cstdint>
 #include <cstdlib>
@@ -345,7 +344,5 @@ namespace LOOLProtocol
         return result.str();
     }
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

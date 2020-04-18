@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_LOOLWSD_HPP
-#define INCLUDED_LOOLWSD_HPP
+#pragma once
 
 #include <algorithm>
 #include <atomic>
@@ -495,7 +494,5 @@ public:
     static int prisonerServerSocketFD;
 #endif
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

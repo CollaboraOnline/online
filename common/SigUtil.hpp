@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_SIGNALUTIL_HPP
-#define INCLUDED_SIGNALUTIL_HPP
+#pragma once
 
 #include <atomic>
 #include <mutex>
@@ -82,7 +81,5 @@ namespace SigUtil
 #endif // !MOBILEAPP
 
 } // end namespace SigUtil
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

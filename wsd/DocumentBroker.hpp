@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_DOCUMENTBROKER_HPP
-#define INCLUDED_DOCUMENTBROKER_HPP
+#pragma once
 
 #include <csignal>
 
@@ -447,7 +446,5 @@ public:
     /// Cleanup path and its parent
     static void removeFile(const std::string &uri);
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

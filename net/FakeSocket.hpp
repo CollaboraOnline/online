@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_FAKESOCKET_H
-#define INCLUDED_FAKESOCKET_H
+#pragma once
 
 #if MOBILEAPP
 
@@ -51,7 +50,5 @@ int fakeSocketClose(int fd);
 void fakeSocketDumpState();
 
 #endif // MOBILEAPP
-
-#endif // INCLUDED_FAKESOCKET_H
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

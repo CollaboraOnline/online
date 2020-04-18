@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_CHILDSESSION_HPP
-#define INCLUDED_CHILDSESSION_HPP
+#pragma once
 
 #include <mutex>
 #include <unordered_map>
@@ -335,7 +334,5 @@ private:
     /// If we are copying to clipboard.
     bool _copyToClipboard;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

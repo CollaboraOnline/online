@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_ASSERT_HPP
-#define INCLUDED_ASSERT_HPP
+#pragma once
 
 #include <assert.h>
 
@@ -85,5 +84,3 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
         LOK_ASSERT_IMPL(!"Forced failure");                                                               \
         CPPUNIT_FAIL((message));                                                                   \
     } while (false)
-
-#endif //INCLUDED_ASSERT_HPP

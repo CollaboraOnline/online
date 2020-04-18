@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_LOG_HPP
-#define INCLUDED_LOG_HPP
+#pragma once
 
 #include <sys/syscall.h>
 #include <unistd.h>
@@ -408,7 +407,5 @@ namespace Log
             return RET;                                                                            \
         }                                                                                          \
     } while (false)
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

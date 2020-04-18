@@ -9,8 +9,7 @@
 
 // WOPI Authorization
 
-#ifndef INCLUDED_AUTHORIZATION_HPP
-#define INCLUDED_AUTHORIZATION_HPP
+#pragma once
 
 #include <string>
 
@@ -50,7 +49,5 @@ public:
     /// Set the Authorization: header in request.
     void authorizeRequest(Poco::Net::HTTPRequest& request) const;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#ifndef INCLUDED_UNIT_HPP
-#define INCLUDED_UNIT_HPP
+
+#pragma once
 
 #include <atomic>
 #include <cassert>
@@ -299,7 +299,5 @@ public:
         return nullptr;
     }
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

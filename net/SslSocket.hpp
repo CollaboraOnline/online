@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_SSLSOCKET_HPP
-#define INCLUDED_SSLSOCKET_HPP
+#pragma once
 
 #include <cerrno>
 
@@ -308,7 +307,5 @@ private:
     /// read or write in non-blocking.
     bool _doHandshake;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

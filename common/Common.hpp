@@ -7,11 +7,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#pragma once
+
 #include <string>
 
 // Default values and other shared data between processes.
-#ifndef INCLUDED_COMMON_HPP
-#define INCLUDED_COMMON_HPP
 
 constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 
@@ -49,7 +49,5 @@ constexpr const char CAPABILITIES_END_POINT[] = "/hosting/capabilities";
 // The client port number, both loolwsd and the kits have this.
 extern int ClientPortNumber;
 extern std::string MasterLocation;
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

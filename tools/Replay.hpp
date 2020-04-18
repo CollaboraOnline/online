@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_REPLAY_HPP
-#define INCLUDED_REPLAY_HPP
+#pragma once
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -285,7 +284,5 @@ private:
     /// Doc URI to _sessions map. _sessions are maps of SessionID to Connection.
     std::map<std::string, std::map<std::string, std::shared_ptr<Connection>>> _sessions;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

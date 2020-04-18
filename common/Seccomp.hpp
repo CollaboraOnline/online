@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#ifndef INCLUDED_SECCOMP_HPP
-#define INCLUDED_SECCOMP_HPP
+
+#pragma once
 
 #include <Protocol.hpp>
 
@@ -23,7 +23,5 @@ namespace Rlimit {
     /// Returns true iff it handled the command, regardless of success/failure.
     bool handleSetrlimitCommand(const StringVector& tokens);
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

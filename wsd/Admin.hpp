@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_ADMIN_HPP
-#define INCLUDED_ADMIN_HPP
+#pragma once
 
 #include <mutex>
 
@@ -187,7 +186,5 @@ private:
     static const int MinStatsIntervalMs;
     static const int DefStatsIntervalMs;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

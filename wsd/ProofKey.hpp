@@ -8,8 +8,8 @@
  */
 
 // WOPI proof management
-#ifndef INCLUDED_PROOFKEY_HPP
-#define INCLUDED_PROOFKEY_HPP
+
+#pragma once
 
 #include <string>
 #include <utility>
@@ -71,7 +71,5 @@ VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::str
 // Returns pairs <attribute, value> to set in proof-key element in discovery xml.
 // If no proof key, returns empty vector
 const VecOfStringPairs& GetProofKeyAttributes();
-
-#endif // INCLUDED_PROOFKEY_HPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

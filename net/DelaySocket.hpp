@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_DELAY_SOCKET_HPP
-#define INCLUDED_DELAY_SOCKET_HPP
+#pragma once
 
 #include <Socket.hpp>
 
@@ -21,7 +20,5 @@ namespace Delay
     int create(int delayMs, int physicalFd);
     void dumpState(std::ostream &os);
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

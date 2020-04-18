@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#ifndef INCLUDED_DELTA_HPP
-#define INCLUDED_DELTA_HPP
+
+#pragma once
 
 #include <vector>
 #include <assert.h>
@@ -268,7 +268,5 @@ class DeltaGenerator {
         return false;
     }
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

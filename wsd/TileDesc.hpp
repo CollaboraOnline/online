@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_TILEDESC_HPP
-#define INCLUDED_TILEDESC_HPP
+#pragma once
 
 #include <cassert>
 #include <map>
@@ -567,7 +566,5 @@ private:
     int _tileWidth;
     int _tileHeight;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_TEST_HELPERS_HPP
-#define INCLUDED_TEST_HELPERS_HPP
+#pragma once
 
 #include <iterator>
 
@@ -802,6 +801,5 @@ inline std::string getAllText(const std::shared_ptr<LOOLWebSocket>& socket,
 }
 
 }
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

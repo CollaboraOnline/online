@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_CRYPTO_HPP
-#define INCLUDED_CRYPTO_HPP
+#pragma once
 
 #if ENABLE_SUPPORT_KEY
 
@@ -36,8 +35,6 @@ public:
 
     std::string data() const;
 };
-
-#endif
 
 #endif
 

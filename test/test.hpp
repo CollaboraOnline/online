@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_TEST_HPP
-#define INCLUDED_TEST_HPP
+#pragma once
 
 #include <vector>
 
@@ -36,7 +35,5 @@ int getClientPort();
 
 /// How many live loolkit processes do we have ?
 int getLoolKitProcessCount();
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

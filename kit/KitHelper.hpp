@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_LOKITHELPER_HPP
-#define INCLUDED_LOKITHELPER_HPP
+#pragma once
 
 #include <sstream>
 #include <string>
@@ -124,7 +123,5 @@ namespace LOKitHelper
         return oss.str();
     }
 }
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

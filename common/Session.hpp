@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_SESSION_HPP
-#define INCLUDED_SESSION_HPP
+#pragma once
 
 #include <atomic>
 #include <cassert>
@@ -290,7 +289,5 @@ private:
     /// the canonical id unique to the set of rendering properties of this session
     int _canonicalViewId;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

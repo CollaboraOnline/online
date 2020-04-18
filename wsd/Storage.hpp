@@ -8,8 +8,8 @@
  */
 
 // Storage abstraction.
-#ifndef INCLUDED_STORAGE_HPP
-#define INCLUDED_STORAGE_HPP
+
+#pragma once
 
 #include <set>
 #include <string>
@@ -625,7 +625,5 @@ public:
 private:
     std::unique_ptr<AuthBase> _authAgent;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

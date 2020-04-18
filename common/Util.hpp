@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_UTIL_HPP
-#define INCLUDED_UTIL_HPP
+#pragma once
 
 #include <cassert>
 #include <cerrno>
@@ -1004,7 +1003,5 @@ int main(int argc, char**argv)
     #endif
 
 } // end namespace Util
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

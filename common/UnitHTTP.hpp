@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#ifndef INCLUDED_UNITHTTP_HPP
-#define INCLUDED_UNITHTTP_HPP
+
+#pragma once
 
 #include <memory>
 #include <sstream>
@@ -156,7 +156,5 @@ public:
         return _socket;
     }
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_MESSAGE_HPP
-#define INCLUDED_MESSAGE_HPP
+#pragma once
 
 #include <atomic>
 #include <string>
@@ -183,7 +182,5 @@ private:
     const std::string _abbr;
     const Type _type;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

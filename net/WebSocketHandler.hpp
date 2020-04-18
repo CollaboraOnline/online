@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_WEBSOCKETHANDLER_HPP
-#define INCLUDED_WEBSOCKETHANDLER_HPP
+#pragma once
 
 #include <chrono>
 #include <memory>
@@ -808,7 +807,5 @@ protected:
         _lastPingSentTime = std::chrono::steady_clock::now();
     }
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

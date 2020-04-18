@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_COUNTLOOLKITPROCESSES_HPP
-#define INCLUDED_COUNTLOOLKITPROCESSES_HPP
+#pragma once
 
 #include <iostream>
 #include <thread>
@@ -110,7 +109,5 @@ static void testNoExtraLoolKitsLeft()
 
     TST_LOG(" (" << durationMs << " ms)");
 }
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

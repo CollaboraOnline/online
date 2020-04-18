@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_MESSAGEQUEUE_HPP
-#define INCLUDED_MESSAGEQUEUE_HPP
+#pragma once
 
 #include <algorithm>
 #include <condition_variable>
@@ -252,7 +251,5 @@ private:
     /// been happening (0 == oldest, size() - 1 == newest).
     std::vector<int> _viewOrder;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

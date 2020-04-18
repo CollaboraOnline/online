@@ -7,6 +7,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#pragma once
+
 /* cairo - a vector graphics library with display and print output
  *
  * Copyright © 2003 University of Southern California

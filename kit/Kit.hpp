@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#ifndef INCLUDED_LOOLKIT_HPP
-#define INCLUDED_LOOLKIT_HPP
+
+#pragma once
 
 #include <map>
 #include <string>
@@ -141,7 +141,5 @@ std::string anonymizeUsername(const std::string& username);
 
 /// For the mobile, we need access to the document to perform eg. saveAs() for printing.
 std::shared_ptr<lok::Document> getLOKDocument();
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

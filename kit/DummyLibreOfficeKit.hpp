@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_DESKTOP_INC_LIB_INIT_HXX
-#define INCLUDED_DESKTOP_INC_LIB_INIT_HXX
+#pragma once
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
@@ -22,8 +21,6 @@ LibreOfficeKit* dummy_lok_init_2(const char *install_path,  const char *user_pro
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

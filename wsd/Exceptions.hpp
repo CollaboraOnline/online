@@ -9,8 +9,8 @@
 
 // Exception classes to differentiate between the
 // different error situations and handling.
-#ifndef INCLUDED_EXCEPTIONS_HPP
-#define INCLUDED_EXCEPTIONS_HPP
+
+#pragma once
 
 #include <exception>
 #include <stdexcept>
@@ -80,7 +80,5 @@ class ParseError : public LoolException
 public:
     using LoolException::LoolException;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

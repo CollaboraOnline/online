@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_TILECACHE_HPP
-#define INCLUDED_TILECACHE_HPP
+#pragma once
 
 #include <iosfwd>
 #include <memory>
@@ -204,7 +203,5 @@ private:
     // old-style file-name to data grab-bag.
     std::map<std::string, Tile> _streamCache[(int)StreamType::Last];
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

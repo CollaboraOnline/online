@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_STRINGVECTOR_HPP
-#define INCLUDED_STRINGVECTOR_HPP
+#pragma once
 
 #include <string>
 #include <vector>
@@ -76,7 +75,5 @@ public:
     /// Compares the nth token with the mth token from an other StringVector.
     bool equals(size_t index, const StringVector& other, size_t otherIndex);
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_JSONUTIL_HPP
-#define INCLUDED_JSONUTIL_HPP
+#pragma once
 
 #include <cstddef>
 #include <set>
@@ -139,8 +138,6 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
 }
 
 } // end namespace JsonUtil
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
 

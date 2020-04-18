@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_FILESERVER_HPP
-#define INCLUDED_FILESERVER_HPP
+#pragma once
 
 #include <string>
 #include "Socket.hpp"
@@ -47,7 +46,5 @@ private:
                           const std::shared_ptr<StreamSocket>& socket, const std::string& shortMessage,
                           const std::string& longMessage, const std::string& extraHeader = "");
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

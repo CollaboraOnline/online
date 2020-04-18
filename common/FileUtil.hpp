@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_FILEUTIL_HPP
-#define INCLUDED_FILEUTIL_HPP
+#pragma once
 
 #include <string>
 
@@ -97,7 +96,5 @@ namespace FileUtil
     }
 
 } // end namespace FileUtil
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

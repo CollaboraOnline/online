@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_CLIENTSSESSION_HPP
-#define INCLUDED_CLIENTSSESSION_HPP
+#pragma once
 
 #include "Session.hpp"
 #include "Storage.hpp"
@@ -288,8 +287,5 @@ private:
     ///Time when loading of view started
     std::chrono::steady_clock::time_point _viewLoadStart;
 };
-
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -10,6 +10,8 @@
  * Place for simple security-related code.
  */
 
+#pragma once
+
 #include <sys/mount.h>
 #include <sys/types.h>
 

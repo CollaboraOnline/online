@@ -9,13 +9,11 @@
 
 // A list of user-visible messages.
 // This list is intended to be centralized for review and i18n support.
-#ifndef INCLUDED_USERMESSAGES_HPP
-#define INCLUDED_USERMESSAGES_HPP
+
+#pragma once
 
 constexpr const char* SERVICE_UNAVAILABLE_INTERNAL_ERROR = "error: cmd=socket kind=serviceunavailable";
 constexpr const char* PAYLOAD_UNAVAILABLE_LIMIT_REACHED = "error: cmd=socket kind=hardlimitreached params=%u,%u";
 constexpr const char* PAYLOAD_INFO_LIMIT_REACHED = "info: cmd=socket kind=limitreached params=%u,%u";
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

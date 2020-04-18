@@ -8,8 +8,8 @@
  */
 
 // Authentication and Authorization support.
-#ifndef INCLUDED_AUTH_HPP
-#define INCLUDED_AUTH_HPP
+
+#pragma once
 
 #include <cassert>
 #include <string>
@@ -100,8 +100,6 @@ private:
     const std::string _authVerifyUrl;
     const std::string _authorizationCode;
 };
-
-#endif
 
 #endif
 

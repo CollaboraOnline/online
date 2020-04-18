@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_SENDERQUEUE_HPP
-#define INCLUDED_SENDERQUEUE_HPP
+#pragma once
 
 #include <condition_variable>
 #include <deque>
@@ -155,7 +154,5 @@ private:
     std::deque<Item> _queue;
     typedef typename std::deque<Item>::value_type queue_item_t;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

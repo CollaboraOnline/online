@@ -7,8 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef INCLUDED_ADMINMODEL_HPP
-#define INCLUDED_ADMINMODEL_HPP
+#pragma once
 
 #include <memory>
 #include <set>
@@ -369,7 +368,5 @@ private:
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

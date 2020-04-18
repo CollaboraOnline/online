@@ -8,8 +8,8 @@
  */
 
 // Clipboard abstraction.
-#ifndef INCLUDED_CLIPBOARD_HPP
-#define INCLUDED_CLIPBOARD_HPP
+
+#pragma once
 
 #include <string>
 #include <vector>
@@ -141,7 +141,5 @@ public:
         }
     }
 };
-
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
