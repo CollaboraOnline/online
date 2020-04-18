@@ -2154,7 +2154,7 @@ protected:
             std::string url;
             URI::decode(docKey, url);
             LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
-            Util::setThreadName("kitbroker_" + docId);
+            Util::setThreadName("kit_" + docId);
 
             if (!document)
                 document = std::make_shared<Document>(
