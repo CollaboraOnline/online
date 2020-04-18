@@ -97,21 +97,37 @@ bool ProxyProtocolHandler::parseEmitIncoming(
 
     while (in.size() > 0)
     {
-        if (in[0] != 'T' && in[0] != 'B')
+        // Type
+        if ((in[0] != 'T' && in[0] != 'B') || in.size() < 2)
         {
             LOG_ERR("Invalid message type " << in[0]);
             return false;
         }
         auto it = in.begin() + 1;
+
+        // Serial
         for (; it != in.end() && *it != '\n'; ++it);
         *it = '\0';
-        uint64_t len = strtoll( &in[1], nullptr, 16 );
+        uint64_t serial = strtoll( &in[1], nullptr, 16 );
+        in.erase(in.begin(), it + 1);
+        if (in.size() < 2)
+        {
+            LOG_ERR("Invalid message framing size " << in.size());
+            return false;
+        }
+
+        // Length
+        it = in.begin();
+        for (; it != in.end() && *it != '\n'; ++it);
+        *it = '\0';
+        uint64_t len = strtoll( &in[0], nullptr, 16 );
         in.erase(in.begin(), it + 1);
         if (len > in.size())
         {
             LOG_ERR("Invalid message length " << len << " vs " << in.size());
             return false;
         }
+
         // far from efficient:
         std::vector<char> data;
         data.insert(data.begin(), in.begin(), in.begin() + len + 1);
@@ -124,6 +140,9 @@ bool ProxyProtocolHandler::parseEmitIncoming(
         }
         in.erase(in.begin(), in.begin() + 1);
 
+        if (serial != _inSerial + 1)
+            LOG_ERR("Serial mismatch " << serial << " vs. " << (_inSerial + 1));
+        _inSerial = serial;
         _msgHandler->handleMessage(data);
     }
     return true;
@@ -180,7 +199,7 @@ void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
 
 int ProxyProtocolHandler::sendMessage(const char *msg, const size_t len, bool text, bool flush)
 {
-    _writeQueue.push_back(std::make_shared<Message>(msg, len, text));
+    _writeQueue.push_back(std::make_shared<Message>(msg, len, text, _outSerial++));
     if (flush)
     {
         auto sock = popOutSocket();

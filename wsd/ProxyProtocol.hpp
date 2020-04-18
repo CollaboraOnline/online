@@ -16,12 +16,16 @@
  * Implementation that builds a websocket like protocol from many
  * individual proxied HTTP requests back to back.
  *
- * we use a trivial framing: <hex-length>\r\n<content>\r\n
+ * we use a trivial framing: [T(ext)|B(inary)]<hex-serial->\n<hex-length>\n<content>\n
  */
 class ProxyProtocolHandler : public ProtocolHandlerInterface
 {
 public:
-    ProxyProtocolHandler() { }
+    ProxyProtocolHandler() :
+        _inSerial(0),
+        _outSerial(0)
+    {
+    }
 
     virtual ~ProxyProtocolHandler() { }
 
@@ -67,12 +71,12 @@ private:
 
     struct Message : public std::vector<char>
     {
-        Message(const char *msg, const size_t len, bool text)
+        Message(const char *msg, const size_t len, bool text, uint64_t serial)
         {
             const char *type = text ? "T" : "B";
             insert(end(), type, type + 1);
             std::ostringstream os;
-            os << std::hex << "0x" << len << "\n";
+            os << std::hex << "0x" << serial << "\n" << "0x" << len << "\n";
             std::string str = os.str();
             insert(end(), str.c_str(), str.c_str() + str.size());
             insert(end(), msg, msg + len);
@@ -83,6 +87,8 @@ private:
     /// queue things when we have no socket to hand.
     std::vector<std::shared_ptr<Message>> _writeQueue;
     std::vector<std::weak_ptr<StreamSocket>> _outSockets;
+    uint64_t _inSerial;
+    uint64_t _outSerial;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

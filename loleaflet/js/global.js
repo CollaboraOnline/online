@@ -208,6 +208,8 @@
 		this.id = window.proxySocketCounter++;
 		this.sendCounter = 0;
 		this.readWaiting = 0;
+		this.inSerial = 0;
+		this.outSerial = 0;
 		this.onclose = function() {
 		};
 		this.onerror = function() {
@@ -231,14 +233,32 @@
 					console.debug('wrong data type: ' + type);
 					break;
 				}
-				if (arr[i+1] !== 48 && arr[i+2] !== 120) // '0x'
+				i++;
+
+				// Serial
+				if (arr[i] !== 48 && arr[i+1] !== 120) // '0x'
 				{
 					console.debug('missing hex preamble');
 					break;
 				}
-				i += 3;
+				i += 2;
 				var numStr = '';
 				var start = i;
+				while (arr[i] != 10) // '\n'
+					i++;
+				numStr = decoder.decode(arr.slice(start, i)); // FIXME: IE11
+				var serial = parseInt(numStr, 16);
+
+				i++; // skip \n
+
+				// Size:
+				if (arr[i] !== 48 && arr[i+1] !== 120) // '0x'
+				{
+					console.debug('missing hex preamble');
+					break;
+				}
+				i += 2;
+				start = i;
 				while (arr[i] != 10) // '\n'
 					i++;
 				numStr = decoder.decode(arr.slice(start, i)); // FIXME: IE11
@@ -252,6 +272,10 @@
 				else
 					data = arr.slice(i, i + size);
 
+				if (serial !== that.inSerial + 1) {
+					console.debug('Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1));
+				}
+				that.inSerial = serial;
 				this.onmessage({ data: data });
 
 				i += size; // skip trailing '\n' in loop-increment
@@ -295,7 +319,9 @@
 		};
 		this.send = function(msg) {
 			this.sendQueue = this.sendQueue.concat(
-				'B0x' + msg.length.toString(16) + '\n' + msg + '\n');
+				'B0x' + this.outSerial.toString(16) + '\n' +
+				'0x' + msg.length.toString(16) + '\n' + msg + '\n');
+			this.outSerial++;
 			if (this.sessionId !== 'fetchsession' && this.sendTimeout === undefined)
 				this.sendTimeout = setTimeout(this.doSend, 2 /* ms */);
 		};
