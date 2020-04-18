@@ -82,7 +82,6 @@ public:
         WebSocketHandler(/* isClient = */ true, /* isMasking */ false),
         _socketName(socketName)
     {
-        LOG_TRC("===> Here is ServerWSHandler");
     }
 
 protected:

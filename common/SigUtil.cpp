@@ -56,13 +56,11 @@ namespace SigUtil
 
     bool getTerminationFlag()
     {
-        LOG_TRC("getTerminationFlag: " << (TerminationFlag ? "YES" : "NO"));
         return TerminationFlag;
     }
 
     void setTerminationFlag()
     {
-        LOG_TRC("setTerminationFlag");
         TerminationFlag = true;
     }
 
