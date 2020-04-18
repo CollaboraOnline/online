@@ -58,8 +58,10 @@ public:
 
 #include "LOOLWSD.hpp"
 
-/// Represents a new LOK child that is read
-/// to host a document.
+/// A ChildProcess object represents a KIT process that hosts a document and manipulates the
+/// document using the LibreOfficeKit API. It isn't actually a child of the WSD process, but a
+/// grandchild. The comments loosely talk about "child" anyway.
+
 class ChildProcess : public WSProcess
 {
 public:

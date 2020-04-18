@@ -38,10 +38,10 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(
                                                  const std::string& uri
 #endif
                                                  );
-// This is common code used to setup as socket to both
-// forkit and child document processes via a websocket.
-// In general, a WSProcess instance represents a child
-// process with which we can communicate through websocket.
+// A WSProcess object in the WSD process represents a descendant process, either the direct child
+// process FORKIT or a grandchild KIT process, with which the WSD process communicates through a
+// WebSocket.
+
 class WSProcess
 {
 public:
