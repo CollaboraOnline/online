@@ -2334,8 +2334,8 @@ private:
 //                    Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
                     handleClipboardRequest(request, message, disposition);
                 }
-                else if (request.has("ProxyPrefix") && reqPathTokens.count() > 2 &&
-                         (reqPathTokens[reqPathTokens.count()-2] == "ws"))
+                else if (request.has("ProxyPrefix") && reqPathTokens.count() > 3 &&
+                         (reqPathTokens[reqPathTokens.count()-3] == "ws"))
                 {
                     std::string decodedUri; // WOPISrc
                     Poco::URI::decode(reqPathTokens[1], decodedUri);

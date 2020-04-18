@@ -334,7 +334,7 @@
 		};
 		this.getEndPoint = function(type) {
 			var base = this.uri;
-			return base.replace(/^ws/, 'http') + '/' + type;
+			return base.replace(/^ws/, 'http') + '/' + type + '/' + this.outSerial;
 		};
 		console.debug('proxy: new socket ' + this.id + ' ' + this.uri);
 
