@@ -74,6 +74,7 @@ public:
         WSProcess("ChildProcess", pid, socket, std::make_shared<WebSocketHandler>(socket, request)),
         _jailId(jailId)
     {
+        LOG_TRC("==> new ChildProcess");
     }
 
 
@@ -92,10 +93,13 @@ private:
 
 class ClientSession;
 
-/// DocumentBroker is responsible for setting up a document
-/// in jail and brokering loading it from Storage
-/// and saving it back.
+/// DocumentBroker is responsible for setting up a document in jail and brokering loading it from
+/// Storage and saving it back.
+
 /// Contains URI, physical path, etc.
+
+/// There is one DocumentBroker object in the WSD process for each document that is open (in 1..n sessions).
+
 class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 {
     class DocumentBrokerPoll;
