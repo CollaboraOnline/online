@@ -1081,10 +1081,10 @@ fi
 
 if test "$enable_androidapp" = "yes"; then
     AC_CONFIG_FILES([android/Makefile
-                 android/build.gradle
-                 android/app/appSettings.gradle
-                 android/lib/libSettings.gradle
-                 android/lib/src/main/cpp/CMakeLists.txt])
+                 $srcdir/android/build.gradle:android/build.gradle.in
+                 $srcdir/android/app/appSettings.gradle:android/app/appSettings.gradle.in
+                 $srcdir/android/lib/libSettings.gradle:android/lib/libSettings.gradle.in
+                 $srcdir/android/lib/src/main/cpp/CMakeLists.txt:android/lib/src/main/cpp/CMakeLists.txt.in])
 fi
 
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
