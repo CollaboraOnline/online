@@ -2,10 +2,16 @@ CTAGS = ctags
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 
-if !ENABLE_MOBILEAPP
-L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(builddir)/dist/l10n/%.json,$(L10N_PO))
+if ENABLE_ANDROIDAPP
+DIST_FOLDER = $(abs_top_srcdir)/android/lib/src/main/assets/dist
 else
-L10N_IOS_ALL_JS = $(builddir)/dist/l10n-all.js
+DIST_FOLDER = $(builddir)/dist
+endif
+
+if !ENABLE_MOBILEAPP
+L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(DIST_FOLDER)/l10n/%.json,$(L10N_PO))
+else
+L10N_IOS_ALL_JS = $(DIST_FOLDER)/l10n-all.js
 L10N_JSON = $(L10N_IOS_ALL_JS)
 
 $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
@@ -21,28 +27,28 @@ endif
 
 JQUERY_LIGHTNESS_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
-JQUERY_LIGHTNESS_DIST_IMAGES = $(patsubst $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png,$(builddir)/dist/images/%.png,$(JQUERY_LIGHTNESS_IMAGES))
+JQUERY_LIGHTNESS_DIST_IMAGES = $(patsubst $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_LIGHTNESS_IMAGES))
 
 JQUERY_MINIFIED_IMAGE_PATH = node_modules/jquery-ui/themes/base/minified/images
 JQUERY_MINIFIED_IMAGES = $(wildcard $(JQUERY_MINIFIED_IMAGE_PATH)/*.png)
-JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(builddir)/dist/images/%.png,$(JQUERY_MINIFIED_IMAGES))
+JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_MINIFIED_IMAGES))
 
 LOLEAFLET_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
-LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(builddir)/dist/%,$(LOLEAFLET_IMAGES_SRC))
+LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(DIST_FOLDER)/%,$(LOLEAFLET_IMAGES_SRC))
 LOLEAFLET_IMAGES_CUSTOM_SRC = $(shell find $(CUSTOM_ICONS_DIRECTORY) -name '*.*')
-LOLEAFLET_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(builddir)/dist/images/%,$(LOLEAFLET_IMAGES_CUSTOM_SRC))
+LOLEAFLET_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(DIST_FOLDER)/images/%,$(LOLEAFLET_IMAGES_CUSTOM_SRC))
 
 LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
 if !ENABLE_MOBILEAPP
-LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(builddir)/dist/l10n/%,$(LOLEAFLET_L10N_SRC))
+LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(DIST_FOLDER)/l10n/%,$(LOLEAFLET_L10N_SRC))
 endif
 
 LOLEAFLET_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
-LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(builddir)/dist/%.html,$(LOLEAFLET_HTML_SRC))
+LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(DIST_FOLDER)/%.html,$(LOLEAFLET_HTML_SRC))
 
 LOLEAFLET_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html')
 LOLEAFLET_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
-LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(builddir)/dist/admin/%,$(LOLEAFLET_ADMIN_SRC))
+LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(DIST_FOLDER)/admin/%,$(LOLEAFLET_ADMIN_SRC))
 
 define file_target
 $(1): $(2)
@@ -56,7 +62,7 @@ endef
 
 define file_targets
 $(foreach file,$(1),$(call file_target,\
-	$(builddir)/dist/$(notdir $(file)),\
+	$(DIST_FOLDER)/$(notdir $(file)),\
 	$(file)))
 endef
 
@@ -120,7 +126,7 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/vex.css \
 	$(builddir)/node_modules/jquery-ui/themes/ui-lightness/jquery-ui.css
 
-LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(builddir)/dist/$(notdir $(file)))
+LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(DIST_FOLDER)/$(notdir $(file)))
 LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
 
 $(eval $(call file_targets,$(LOLEAFLET_CSS)))
@@ -150,10 +156,10 @@ LOLEAFLET_LIBS_JS +=\
 	w2ui-1.5.rc1.js
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
-NODE_MODULES_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(NODE_MODULES_JS))
+NODE_MODULES_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(NODE_MODULES_JS))
 
 LOLEAFLET_LIBS_JS_SRC = $(patsubst %.js,$(srcdir)/js/%.js,$(LOLEAFLET_LIBS_JS))
-LOLEAFLET_LIBS_JS_DST = $(patsubst %.js,$(builddir)/dist/%.js,$(LOLEAFLET_LIBS_JS))
+LOLEAFLET_LIBS_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(LOLEAFLET_LIBS_JS))
 
 LOLEAFLET_JS =\
 	src/Leaflet.js \
@@ -294,7 +300,7 @@ LOLEAFLET_JS =\
 	src/main.js
 
 LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
-LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(builddir)/dist/src/%.js,$(LOLEAFLET_JS_SRC))
+LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC))
 
 COMMA := ,
 EMPTY :=
@@ -310,7 +316,7 @@ all-local:
 	@$(MAKE) build-loleaflet
 
 if !ENABLE_MOBILEAPP
-ADMIN_BUNDLE = $(builddir)/dist/admin-bundle.js
+ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
 build-loleaflet: | $(LOLEAFLET_L10N_DST) \
@@ -321,17 +327,14 @@ build-loleaflet: | $(LOLEAFLET_L10N_DST) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(ADMIN_BUNDLE) \
-	$(builddir)/dist/bundle.css \
-	$(builddir)/dist/device-mobile.css \
-	$(builddir)/dist/device-tablet.css \
-	$(builddir)/dist/device-desktop.css \
-	$(builddir)/dist/bundle.js \
-	$(builddir)/dist/loleaflet.html
+	$(DIST_FOLDER)/bundle.css \
+	$(DIST_FOLDER)/device-mobile.css \
+	$(DIST_FOLDER)/device-tablet.css \
+	$(DIST_FOLDER)/device-desktop.css \
+	$(DIST_FOLDER)/bundle.js \
+	$(DIST_FOLDER)/loleaflet.html
 	@echo "build loleaflet completed"
 if ENABLE_ANDROIDAPP
-	@rm -rf $(abs_top_srcdir)/android/lib/src/main/assets
-	@mkdir -p $(abs_top_srcdir)/android/lib/src/main/assets
-	@cp -a $(builddir)/dist $(abs_top_srcdir)/android/lib/src/main/assets/
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(abs_top_srcdir)/android/lib/src/main/assets/dist/ ; else touch $(abs_top_srcdir)/android/lib/src/main/assets/dist/branding.css ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/toolbar-bg.svg ; fi
@@ -345,7 +348,7 @@ if ENABLE_ANDROIDAPP
 	@echo
 endif
 
-$(builddir)/dist/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
+$(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	$(LOLEAFLET_PREFIX)/dist/admin-src.js
 	@NODE_PATH=$(abs_builddir)/node_modules:$(LOLEAFLET_PREFIX)/dist $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(filter true,$(ENABLE_DEBUG)),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
 
@@ -358,15 +361,16 @@ $(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 
 if ENABLE_DEBUG
 $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST)
+	@mkdir -p $(dir $@)
 	@echo "Checking for loleaflet JS errors..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@touch $@
 
-$(builddir)/dist/bundle.css: $(LOLEAFLET_CSS_DST)
+$(DIST_FOLDER)/bundle.css: $(LOLEAFLET_CSS_DST)
 	@touch $@
 
-$(builddir)/dist/bundle.js: $(NODE_MODULES_JS_DST) \
+$(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(LOLEAFLET_LIBS_JS_DST)
 	@touch $@
@@ -385,15 +389,15 @@ $(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
 		-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_JS))) \
 		$(srcdir)/loleaflet-src.js.m4 > $@
 
-$(builddir)/dist/bundle.css: $(LOLEAFLET_CSS)
+$(DIST_FOLDER)/bundle.css: $(LOLEAFLET_CSS)
 	@echo "Uglify loleaflet css files..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@
 
-$(builddir)/dist/global.js: $(srcdir)/js/global.js
+$(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	@echo "Uglify global.js file..."
 	@NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@
 
-$(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
+$(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_SRC) \
 	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
 	$(LOLEAFLET_LIBS_JS_SRC)
 	@echo "Uglify loleaflet js files..."
@@ -407,9 +411,9 @@ $(builddir)/dist/bundle.js: $(NODE_MODULES_JS_SRC) \
 		--output $@
 endif
 
-$(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) $(builddir)/dist/bundle.css $(builddir)/dist/global.js \
+$(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/global.js \
 \
-	$(builddir)/dist/bundle.css $(builddir)/dist/bundle.js
+	$(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js
 	@echo "Generating loleaflet.html..."
 	@m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
@@ -417,7 +421,7 @@ $(builddir)/dist/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HT
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
 		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DLOLEAFLET_CSS="$(subst $(SPACE),$(COMMA),$(LOLEAFLET_CSS_M4))" \
-		-DGLOBAL_JS="$(abs_builddir)/dist/global.js" \
+		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		$(LOLEAFLET_LIBS_JS) \
 		$(call LOLEAFLET_JS,$(srcdir)/build/build.js))" \
@@ -428,7 +432,7 @@ node_modules: npm-shrinkwrap.json
 	@npm install
 	@touch node_modules
 
-$(builddir)/dist/device-%.css: $(srcdir)/css/device-%.css
+$(DIST_FOLDER)/device-%.css: $(srcdir)/css/device-%.css
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		NODE_PATH=$(abs_builddir)/node_modules $(NODE) node_modules/uglifycss/uglifycss $< > $@ ; \
@@ -436,7 +440,7 @@ $(builddir)/dist/device-%.css: $(srcdir)/css/device-%.css
 		ln -sf $(abs_srcdir)/$< $@ ; \
 	fi
 
-$(builddir)/dist/plugins/%.js: $(srcdir)/plugins/%.js
+$(DIST_FOLDER)/plugins/%.js: $(srcdir)/plugins/%.js
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		`cp $< $@`; \
@@ -444,15 +448,15 @@ $(builddir)/dist/plugins/%.js: $(srcdir)/plugins/%.js
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
 
-$(builddir)/dist/images/%: $(CUSTOM_ICONS_DIRECTORY)/%
+$(DIST_FOLDER)/images/%: $(CUSTOM_ICONS_DIRECTORY)/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/images/%: $(srcdir)/images/%
+$(DIST_FOLDER)/images/%: $(srcdir)/images/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/%.html: $(srcdir)/html/%.html
+$(DIST_FOLDER)/%.html: $(srcdir)/html/%.html
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		`cp $< $@`; \
@@ -460,7 +464,7 @@ $(builddir)/dist/%.html: $(srcdir)/html/%.html
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
 
-$(builddir)/dist/src/%.js: $(srcdir)/src/%.js
+$(DIST_FOLDER)/src/%.js: $(srcdir)/src/%.js
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		`cp $< $@`; \
@@ -469,7 +473,7 @@ $(builddir)/dist/src/%.js: $(srcdir)/src/%.js
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
 
-$(builddir)/dist/%.js: $(srcdir)/js/%.js
+$(DIST_FOLDER)/%.js: $(srcdir)/js/%.js
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		`cp $< $@`; \
@@ -477,34 +481,34 @@ $(builddir)/dist/%.js: $(srcdir)/js/%.js
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
 
-$(builddir)/dist/node_modules/%.js: $(builddir)/node_modules/%.js
+$(DIST_FOLDER)/node_modules/%.js: $(builddir)/node_modules/%.js
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/$(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png: $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png
+$(DIST_FOLDER)/$(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png: $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/images/%.png: $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png
+$(DIST_FOLDER)/images/%.png: $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/$(JQUERY_MINIFIED_IMAGE_PATH)/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
+$(DIST_FOLDER)/$(JQUERY_MINIFIED_IMAGE_PATH)/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/images/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
+$(DIST_FOLDER)/images/%.png: $(JQUERY_MINIFIED_IMAGE_PATH)/%.png
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/l10n/%: $(srcdir)/l10n/%
+$(DIST_FOLDER)/l10n/%: $(srcdir)/l10n/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(builddir)/dist/l10n/%.json: $(srcdir)/po/%.po
+$(DIST_FOLDER)/l10n/%.json: $(srcdir)/po/%.po
 	@$(srcdir)/util/po2json.py $< -o $@
 
-$(builddir)/dist/admin/%: $(srcdir)/admin/%
+$(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
@@ -580,8 +584,8 @@ l10n: pot
 
 clean-local:
 	rm -rf node_modules
-	rm -rf $(builddir)/dist
-	rm -rf $(builddir)/build/dist
+	@rm -rf $(DIST_FOLDER)/dist
+	@rm -rf $(builddir)/build/dist
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
 
