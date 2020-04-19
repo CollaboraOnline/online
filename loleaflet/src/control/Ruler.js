@@ -255,8 +255,8 @@ L.Control.Ruler = L.Control.extend({
 		this._rMarginDrag.style.width = (this.options.DraggableConvertRatio*rMargin) + 'px';
 
 		// Put the _rTSContainer in the right place
-		this._rTSContainer.style.marginLeft = (this.options.DraggableConvertRatio * lMargin) + 'px';
-		this._rTSContainer.style.width = 'calc(' + this._rFace.style.width + ' - ' + this._rMarginMarker.style.width + ')';
+		this._rTSContainer.style.left = (this.options.DraggableConvertRatio * lMargin) + 'px';
+		this._rTSContainer.style.right = (this.options.DraggableConvertRatio * rMargin) + 'px';
 
 		if (this.options.interactive) {
 			this._changeInteractions({perm:'edit'});
