@@ -5,6 +5,7 @@ apply from: 'libSettings.gradle'
 
 android {
     compileSdkVersion 28
+    buildDir = "${rootProject.getBuildDir()}/lib"
 
     defaultConfig {
         minSdkVersion 21
@@ -58,6 +59,7 @@ android {
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
+            buildStagingDirectory "${rootProject.getBuildDir()}/cmake"
         }
     }
 }

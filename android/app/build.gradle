@@ -5,6 +5,7 @@ apply from: 'appSettings.gradle'
 
 android {
     compileSdkVersion 28
+    buildDir = "${rootProject.getBuildDir()}/app"
 
     defaultConfig {
         // applicationId, versionCode and versionName are defined in appSettings.gradle

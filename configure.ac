@@ -1081,6 +1081,7 @@ fi
 
 if test "$enable_androidapp" = "yes"; then
     AC_CONFIG_FILES([android/Makefile
+                 android/build.gradle
                  android/app/appSettings.gradle
                  android/lib/libSettings.gradle
                  android/lib/src/main/cpp/CMakeLists.txt])
