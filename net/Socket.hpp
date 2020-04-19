@@ -1106,9 +1106,9 @@ protected:
 
     void dumpState(std::ostream& os) override;
 
-    void setShutdownSignalled(bool shutdownSignalled)
+    void setShutdownSignalled()
     {
-        _shutdownSignalled = shutdownSignalled;
+        _shutdownSignalled = true;
     }
 
     bool isShutdownSignalled() const

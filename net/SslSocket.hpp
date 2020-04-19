@@ -63,7 +63,7 @@ public:
 
         if (!isShutdownSignalled())
         {
-            setShutdownSignalled(true);
+            setShutdownSignalled();
             SslStreamSocket::closeConnection();
         }
 
