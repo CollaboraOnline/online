@@ -109,7 +109,6 @@ static std::shared_ptr<Document> document;
 #ifndef BUILDING_TESTS
 static bool AnonymizeUserData = false;
 static uint64_t AnonymizationSalt = 82589933;
-static std::string ObfuscatedFileId;
 #endif
 
 #if ENABLE_DEBUG
