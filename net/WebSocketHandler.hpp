@@ -122,7 +122,7 @@ public:
     void sendCloseFrame(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE, const std::string& statusMessage = "")
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (socket == nullptr)
+        if (!socket)
         {
             LOG_ERR("No socket associated with WebSocketHandler " << this);
             return;
@@ -404,23 +404,21 @@ public:
     /// Implementation of the ProtocolHandlerInterface.
     virtual void handleIncomingMessage(SocketDisposition&) override
     {
-        // LOG_TRC("***** WebSocketHandler::handleIncomingMessage()");
-
         std::shared_ptr<StreamSocket> socket = _socket.lock();
 
 #if MOBILEAPP
         // No separate "upgrade" is going on
-        if (socket != nullptr && !socket->isWebSocket())
+        if (socket && !socket->isWebSocket())
             socket->setWebSocket();
 #endif
 
-        if (socket == nullptr)
+        if (!socket)
         {
             LOG_ERR("No socket associated with WebSocketHandler " << this);
         }
 #if !MOBILEAPP
         else if (_isClient && !socket->isWebSocket())
-            handleClientUpgrade();
+            handleClientUpgrade(socket);
 #endif
         else
         {
@@ -694,7 +692,7 @@ protected:
     void upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (socket == nullptr)
+        if (!socket)
             throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
 
         LOG_TRC("#" << socket->getFD() << ": Upgrading to WebSocket.");
@@ -730,9 +728,9 @@ protected:
 
 #if !MOBILEAPP
     // Handle incoming upgrade to full socket as client WS.
-    void handleClientUpgrade()
+    void handleClientUpgrade(const std::shared_ptr<StreamSocket>& socket)
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        assert(socket && "socket must be valid");
 
         LOG_TRC("Incoming client websocket upgrade response: "
                 << std::string(&socket->getInBuffer()[0], socket->getInBuffer().size()));
@@ -800,7 +798,8 @@ protected:
     void setWebSocket()
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
-        socket->setWebSocket();
+        if (socket)
+            socket->setWebSocket();
 
         // No need to ping right upon connection/upgrade,
         // but do reset the time to avoid pinging immediately after.

@@ -1358,12 +1358,16 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 << "X-Content-Type-Options: nosniff\r\n"
                 << "\r\n";
             auto socket = it.lock();
+            if (!socket)
+                continue;
+
             if (!empty)
             {
                 oss.write(&payload->data()[header], payload->size() - header);
                 socket->setSocketBufferSize(std::min(payload->size() + 256,
                                                      size_t(Socket::MaximumSendBufferSize)));
             }
+
             socket->send(oss.str());
             socket->shutdown();
             LOG_INF("Queued " << (empty?"empty":"clipboard") << " response for send.");

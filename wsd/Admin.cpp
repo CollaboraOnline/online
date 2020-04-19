@@ -330,6 +330,11 @@ bool AdminSocketHandler::handleInitialRequest(
     }
 
     std::shared_ptr<StreamSocket> socket = socketWeak.lock();
+    if (!socket)
+    {
+        LOG_ERR("Invalid socket while reading initial request.");
+        return false;
+    }
 
     const std::string& requestURI = request.getURI();
     StringVector pathTokens(LOOLProtocol::tokenize(requestURI, '/'));

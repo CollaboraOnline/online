@@ -656,7 +656,9 @@ void TileCache::TileBeingRendered::dumpState(std::ostream& os)
     for (const auto& it : _subscribers)
     {
         std::shared_ptr<ClientSession> session = it.lock();
-        os << "      " << session->getId() << " " << session->getUserId() << " " << session->getName() << "\n";
+        if (session)
+            os << "      " << session->getId() << ' ' << session->getUserId() << ' '
+               << session->getName() << '\n';
     }
 }
 

@@ -1937,7 +1937,6 @@ private:
     /// Called after successful socket reads.
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
-        // LOG_TRC("***** PrisonerRequestDispatcher::handleIncomingMessage()");
         if (_childProcess.lock())
         {
             // FIXME: inelegant etc. - derogate to websocket code
@@ -1946,6 +1945,11 @@ private:
         }
 
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
+        if (!socket)
+        {
+            LOG_ERR("Invalid socket while reading incoming message.");
+            return;
+        }
 
         Poco::MemoryInputStream message(&socket->getInBuffer()[0],
                                         socket->getInBuffer().size());;
@@ -2194,6 +2198,11 @@ private:
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (!socket)
+        {
+            LOG_ERR("Invalid socket while handling incoming client request");
+            return;
+        }
 
 #if !MOBILEAPP
         if (!LOOLWSD::isSSLEnabled() && socket->sniffSSL())
@@ -2247,7 +2256,7 @@ private:
             else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
             {
                 // File server
-                handleFileServerRequest(request, message);
+                handleFileServerRequest(request, message, socket);
             }
             else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
             {
@@ -2308,23 +2317,23 @@ private:
                       request.getMethod() == HTTPRequest::HTTP_HEAD) &&
                      request.getURI() == "/")
             {
-                handleRootRequest(request);
+                handleRootRequest(request, socket);
             }
             else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
             {
-                handleFaviconRequest(request);
+                handleFaviconRequest(request, socket);
             }
             else if (request.getMethod() == HTTPRequest::HTTP_GET && (request.getURI() == "/hosting/discovery" || request.getURI() == "/hosting/discovery/"))
             {
-                handleWopiDiscoveryRequest(request);
+                handleWopiDiscoveryRequest(request, socket);
             }
             else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == CAPABILITIES_END_POINT)
             {
-                handleCapabilitiesRequest(request);
+                handleCapabilitiesRequest(request, socket);
             }
             else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/robots.txt")
             {
-                handleRobotsTxtRequest(request);
+                handleRobotsTxtRequest(request, socket);
             }
             else
             {
@@ -2332,7 +2341,7 @@ private:
                 if (reqPathTokens.count() > 1 && reqPathTokens[0] == "lool" && reqPathTokens[1] == "clipboard")
                 {
 //                    Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
-                    handleClipboardRequest(request, message, disposition);
+                    handleClipboardRequest(request, message, disposition, socket);
                 }
                 else if (request.has("ProxyPrefix") && reqPathTokens.count() > 2 &&
                          (reqPathTokens[reqPathTokens.count()-2] == "ws"))
@@ -2345,14 +2354,14 @@ private:
                     reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
                 {
                     // All post requests have url prefix 'lool'.
-                    handlePostRequest(request, message, disposition);
+                    handlePostRequest(request, message, disposition, socket);
                 }
                 else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
                          request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
                 {
                     std::string decodedUri; // WOPISrc
                     Poco::URI::decode(reqPathTokens[1], decodedUri);
-                    handleClientWsUpgrade(request, decodedUri, disposition);
+                    handleClientWsUpgrade(request, decodedUri, disposition, socket);
                 }
                 else
                 {
@@ -2396,7 +2405,9 @@ private:
         Poco::Net::HTTPRequest request;
         // The 2nd parameter is the response to the HULLO message (which we
         // respond with the path of the document)
-        handleClientWsUpgrade(request, std::string(socket->getInBuffer().data(), socket->getInBuffer().size()), disposition);
+        handleClientWsUpgrade(
+            request, std::string(socket->getInBuffer().data(), socket->getInBuffer().size()),
+            disposition, socket);
         socket->getInBuffer().clear();
 #endif
     }
@@ -2412,15 +2423,20 @@ private:
     }
 
 #if !MOBILEAPP
-    void handleFileServerRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message)
+    void handleFileServerRequest(const Poco::Net::HTTPRequest& request,
+                                 Poco::MemoryInputStream& message,
+                                 const std::shared_ptr<StreamSocket>& socket)
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        assert(socket && "Must have a valid socket");
         FileServerRequestHandler::handleRequest(request, message, socket);
         socket->shutdown();
     }
 
-    void handleRootRequest(const Poco::Net::HTTPRequest& request)
+    void handleRootRequest(const Poco::Net::HTTPRequest& request,
+                           const std::shared_ptr<StreamSocket>& socket)
     {
+        assert(socket && "Must have a valid socket");
+
         LOG_DBG("HTTP request: " << request.getURI());
         const std::string mimeType = "text/plain";
         const std::string responseString = "OK";
@@ -2438,14 +2454,16 @@ private:
             oss << responseString;
         }
 
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent / response successfully.");
     }
 
-    void handleFaviconRequest(const Poco::Net::HTTPRequest& request)
+    void handleFaviconRequest(const Poco::Net::HTTPRequest& request,
+                              const std::shared_ptr<StreamSocket>& socket)
     {
+        assert(socket && "Must have a valid socket");
+
         LOG_DBG("Favicon request: " << request.getURI());
         std::string mimeType = "image/vnd.microsoft.icon";
         std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
@@ -2454,14 +2472,16 @@ private:
             faviconPath = LOOLWSD::FileServerRoot + "/favicon.ico";
         }
 
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
         Poco::Net::HTTPResponse response;
         HttpHelper::sendFile(socket, faviconPath, mimeType, response);
         socket->shutdown();
     }
 
-    void handleWopiDiscoveryRequest(const Poco::Net::HTTPRequest& request)
+    void handleWopiDiscoveryRequest(const Poco::Net::HTTPRequest& request,
+                                    const std::shared_ptr<StreamSocket>& socket)
     {
+        assert(socket && "Must have a valid socket");
+
         LOG_DBG("Wopi discovery request: " << request.getURI());
 
         std::string xml = getFileContent("discovery.xml");
@@ -2479,17 +2499,19 @@ private:
             "\r\n"
             << xml;
 
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
     }
 
-    void handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request)
+    void handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
+                                   const std::shared_ptr<StreamSocket>& socket)
     {
+        assert(socket && "Must have a valid socket");
+
         LOG_DBG("Wopi capabilities request: " << request.getURI());
 
-        std::string capabilities = getCapabilitiesJson(request);
+        const std::string capabilities = getCapabilitiesJson(request, socket);
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
@@ -2501,7 +2523,6 @@ private:
             "\r\n"
             << capabilities;
 
-        auto socket = _socket.lock();
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent capabilities.json successfully.");
@@ -2509,8 +2530,11 @@ private:
 
     void handleClipboardRequest(const Poco::Net::HTTPRequest& request,
                                 Poco::MemoryInputStream& message,
-                                SocketDisposition &disposition)
+                                SocketDisposition &disposition,
+                                const std::shared_ptr<StreamSocket>& socket)
     {
+        assert(socket && "Must have a valid socket");
+
         LOG_DBG("Clipboard " << ((request.getMethod() == HTTPRequest::HTTP_GET) ? "GET" : "POST") <<
                 " request: " << request.getURI());
 
@@ -2579,7 +2603,7 @@ private:
             LOG_TRC("queued clipboard command " << type << " on docBroker fetch");
         }
         // fallback to persistent clipboards if we can
-        else if (!DocumentBroker::lookupSendClipboardTag(_socket.lock(), tag, false))
+        else if (!DocumentBroker::lookupSendClipboardTag(socket, tag, false))
         {
             LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag <<
                     " and broker: " << (docBroker ? "" : "not ") << "found");
@@ -2598,14 +2622,16 @@ private:
                 << "Content-Length: 0\r\n"
                 << "\r\n"
                 << errMsg;
-            auto socket = _socket.lock();
             socket->send(oss.str());
             socket->shutdown();
         }
     }
 
-    void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request)
+    void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
+                                const std::shared_ptr<StreamSocket>& socket)
     {
+        assert(socket && "Must have a valid socket");
+
         LOG_DBG("HTTP request: " << request.getURI());
         const std::string mimeType = "text/plain";
         const std::string responseString = "User-agent: *\nDisallow: /\n";
@@ -2623,7 +2649,6 @@ private:
             oss << responseString;
         }
 
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent robots.txt response successfully.");
@@ -2669,12 +2694,14 @@ private:
 
     void handlePostRequest(const Poco::Net::HTTPRequest& request,
                            Poco::MemoryInputStream& message,
-                           SocketDisposition &disposition)
+                           SocketDisposition& disposition,
+                           const std::shared_ptr<StreamSocket>& socket)
     {
+        assert(socket && "Must have a valid socket");
+
         LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(request.getURI()) << "]");
 
         Poco::Net::HTTPResponse response;
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
 
         StringTokenizer tokens(request.getURI(), "/?");
         if (tokens.count() > 2 && tokens[2] == "convert-to")
@@ -2968,14 +2995,10 @@ private:
     }
 
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request, const std::string& url,
-                               SocketDisposition &disposition)
+                               SocketDisposition& disposition,
+                               const std::shared_ptr<StreamSocket>& socket)
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (!socket)
-        {
-            LOG_WRN("No socket to handle client WS upgrade for request: " << LOOLWSD::anonymizeUrl(request.getURI()) << ", url: " << url);
-            return;
-        }
+        assert(socket && "Must have a valid socket");
 
         // must be trace for anonymization
         LOG_TRC("Client WS request: " << request.getURI() << ", url: " << url << ", socket #" << socket->getFD());
@@ -3197,9 +3220,10 @@ private:
     }
 
     /// Create the /hosting/capabilities JSON and return as string.
-    std::string getCapabilitiesJson(const Poco::Net::HTTPRequest& request)
+    std::string getCapabilitiesJson(const Poco::Net::HTTPRequest& request,
+                                    const std::shared_ptr<StreamSocket>& socket)
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        assert(socket && "Must have a valid socket");
 
         // Can the convert-to be used?
         Poco::JSON::Object::Ptr convert_to = new Poco::JSON::Object;

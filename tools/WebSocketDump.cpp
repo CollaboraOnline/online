@@ -70,6 +70,12 @@ private:
     void handleIncomingMessage(SocketDisposition &disposition) override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (!socket)
+        {
+            LOG_ERR("Invalid socket while reading client message.");
+            return;
+        }
+
         std::vector<char>& in = socket->getInBuffer();
         LOG_TRC("#" << socket->getFD() << " handling incoming " << in.size() << " bytes.");
 
