@@ -388,7 +388,11 @@ L.Control.Ruler = L.Control.extend({
 
 	_initiateTabstopDrag: function(event) {
 		// console.log('===> _initiateTabstopDrag ' + event.type);
-
+		if (event.button !== 0) {
+			event.stopPropagation(); // prevent handling of the mother event elsewhere
+			return;
+		}
+		
 		var tabstopContainer = null;
 		var pointX = null;
 
