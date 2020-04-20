@@ -396,14 +396,14 @@ L.Map.include({
 				if (!calledFromMenu) {
 					var WSDVerCookie = 'WSDWelcomeVersion=' + map._socket.WSDServer.Version;
 					// Cookie will not expire for a year, and it will not be sent to other domains
-					WSDVerCookie += '; max-age=31536000; SameSite=Strict';
+					WSDVerCookie += '; max-age=31536000; SameSite=Strict; path=/loleaflet';
 					document.cookie = WSDVerCookie;
 				}
 			})
 			.fail(function() {
 				// Welcome dialog disabled in loolwsd.xml or nonexistant for some other reason
 				// Let's check back in a day (60 x 60 x 24 = 86400 seconds)
-				var welcomeDisabledCookie = 'WSDWelcomeDisabled=true; max-age=86400; SameSite=Strict';
+				var welcomeDisabledCookie = 'WSDWelcomeDisabled=true; max-age=86400; SameSite=Strict; path=/loleaflet';
 				document.cookie = welcomeDisabledCookie;
 
 				if (calledFromMenu)
