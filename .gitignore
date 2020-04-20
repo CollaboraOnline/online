@@ -90,6 +90,7 @@ docker/builddir
 ios/Mobile/Info.plist
 ios/Mobile/Fonts
 ios/Mobile/Branding
+ios/Mobile/Resources/Settings.bundle/Root.plist
 
 # symlinks created by configure for the iOS app Xcode project
 lobuilddir-symlink
