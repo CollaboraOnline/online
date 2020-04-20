@@ -72,3 +72,11 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.0-alpha01'
     implementation project(path: ':lib')
 }
+
+task build_loleaflet(type: Exec) {
+	commandLine 'make', '-C', '../../'
+}
+
+afterEvaluate {
+	preBuild.dependsOn build_loleaflet
+}
