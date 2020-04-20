@@ -39,20 +39,6 @@ namespace FileUtil
     // We work around some of the mess of using the same sources both on the server side and in unit
     // tests with conditional compilation based on BUILDING_TESTS.
 
-#ifndef BUILDING_TESTS
-    // Send a 'error:' message with the specified cmd and kind parameters to all connected
-    // clients. This function can be called either in loolwsd or loolkit processes, even if only
-    // loolwsd obviously has contact with the actual clients; in loolkit it will be forwarded to
-    // loolwsd for redistribution. (This function must be implemented separately in each program
-    // that uses it, it is not in Util.cpp.)
-    void alertAllUsers(const std::string& cmd, const std::string& kind);
-#else
-    // No-op implementation in the test programs
-    inline void alertAllUsers(const std::string&, const std::string&)
-    {
-    }
-#endif
-
     // Add the file system that 'path' is located on to a list of file systems that are periodically
     // checked for available space. The list is initially empty.
     void registerFileSystemForDiskSpaceChecks(const std::string& path);
