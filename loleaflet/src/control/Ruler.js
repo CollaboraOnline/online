@@ -388,11 +388,7 @@ L.Control.Ruler = L.Control.extend({
 
 	_initiateTabstopDrag: function(event) {
 		// console.log('===> _initiateTabstopDrag ' + event.type);
-		if (event.button !== 0) {
-			event.stopPropagation(); // prevent handling of the mother event elsewhere
-			return;
-		}
-		
+
 		var tabstopContainer = null;
 		var pointX = null;
 
@@ -403,6 +399,28 @@ L.Control.Ruler = L.Control.extend({
 		else {
 			tabstopContainer = event.currentTarget;
 			pointX = event.layerX;
+		}
+
+		if (event.button === 2) {
+			this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+
+			$.contextMenu({
+				selector: '.loleaflet-ruler-tabstopcontainer',
+				className: 'loleaflet-font',
+				items: {
+					inserttabstop: {
+						name: _('Insert tabstop'),
+						callback: (this._insertTabstop).bind(this)
+					}
+				}
+			});
+
+			event.stopPropagation();
+			return;
+		}
+		else if (event.button !== 0) {
+			event.stopPropagation(); // prevent handling of the mother event elsewhere
+			return;
 		}
 
 		// check if we hit any tabstop
@@ -423,18 +441,6 @@ L.Control.Ruler = L.Control.extend({
 		}
 
 		if (tabstop == null) {
-			var positionTwip = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
-			var params = {
-				Index: {
-					type : 'int32',
-					value : -1
-				},
-				Position: {
-					type : 'int32',
-					value : positionTwip
-				}
-			};
-			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
 			return;
 		}
 
@@ -504,6 +510,22 @@ L.Control.Ruler = L.Control.extend({
 		L.DomEvent.off(this._rTSContainer, 'mousemove', this._moveTabstop, this);
 		L.DomEvent.off(this._rTSContainer, 'mouseup', this._endTabstopDrag, this);
 		L.DomEvent.off(this._rTSContainer, 'mouseout', this._endTabstopDrag, this);
+	},
+
+	_insertTabstop: function() {
+		if (this.currentPositionInTwips != null) {
+			var params = {
+				Index: {
+					type : 'int32',
+					value : -1
+				},
+				Position: {
+					type : 'int32',
+					value : this.currentPositionInTwips
+				}
+			};
+			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
+		}
 	},
 
 });
