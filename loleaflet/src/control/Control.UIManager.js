@@ -32,6 +32,7 @@ L.Control.UIManager = L.Control.extend({
 
 		setupToolbar(this.map);
 
+		this.map.addControl(L.control.documentNameInput());
 		this.map.addControl(L.control.scroll());
 		this.map.addControl(L.control.alertDialog());
 		this.map.addControl(L.control.mobileWizard());
