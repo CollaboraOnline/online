@@ -1387,11 +1387,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.id === 'fillgrad1') {
 			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
 			gradientItem.startcolor = color;
-			return '.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem);
+			builder.map.sendUnoCommand('.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem));
+			return;
 		} else if (data.id === 'fillgrad2') {
 			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
 			gradientItem.endcolor = color;
-			return '.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem);
+			builder.map.sendUnoCommand('.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem));
+			return;
 		}
 
 		var command = data.command + '?Color:string=' + color;
