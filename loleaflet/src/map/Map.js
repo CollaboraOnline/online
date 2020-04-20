@@ -200,7 +200,7 @@ L.Map = L.Evented.extend({
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');
 			}
-			if (((window.ThisIsTheiOSApp && window.mode.isTablet()) || window.mode.isDesktop()) && this._docLayer._docType == 'text') {
+			if ((window.mode.isTablet() || window.mode.isDesktop()) && this._docLayer._docType == 'text') {
 				var interactiveRuler = this._permission === 'edit' ? true : false;
 				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
 			}
