@@ -406,27 +406,30 @@ L.Control.Ruler = L.Control.extend({
 			tabstopContainer = event.currentTarget;
 			pointX = event.layerX;
 		}
+		tabstopContainer.tabStopMarkerBeingDragged = null;
 
-		if (event.button === 2) {
-			this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
-
-			$.contextMenu({
-				selector: '.loleaflet-ruler-tabstopcontainer',
-				className: 'loleaflet-font',
-				items: {
-					inserttabstop: {
-						name: _('Insert tabstop'),
-						callback: (this._insertTabstop).bind(this)
+		// Check what to do when a mouse buttons is clicked, ignore touch
+		if (event.type !== 'panstart') {
+			// right-click inside tabstop container
+			if (event.button === 2) {
+				this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+				$.contextMenu({
+					selector: '.loleaflet-ruler-tabstopcontainer',
+					className: 'loleaflet-font',
+					items: {
+						inserttabstop: {
+							name: _('Insert tabstop'),
+							callback: (this._insertTabstop).bind(this)
+						}
 					}
-				}
-			});
-
-			event.stopPropagation();
-			return;
-		}
-		else if (event.button !== 0) {
-			event.stopPropagation(); // prevent handling of the mother event elsewhere
-			return;
+				});
+				event.stopPropagation();
+				return;
+			}
+			else if (event.button !== 0) {
+				event.stopPropagation(); // prevent handling of the mother event elsewhere
+				return;
+			}
 		}
 
 		// check if we hit any tabstop
@@ -473,10 +476,15 @@ L.Control.Ruler = L.Control.extend({
 			pointX = event.layerX;
 		}
 
+		if (tabstopContainer === null)
+			return;
+		var marker = tabstopContainer.tabStopMarkerBeingDragged;
+		if (marker === null)
+			return;
+
 		//console.log('===> _moveTabstop ' + event.type);
 
 		var pixelDiff = pointX - tabstopContainer.tabStopInitialPosiiton;
-		var marker = tabstopContainer.tabStopMarkerBeingDragged;
 		marker.style.left = (marker.tabStopLocation.left + pixelDiff) + 'px';
 	},
 
@@ -494,7 +502,11 @@ L.Control.Ruler = L.Control.extend({
 			pointX = event.layerX;
 		}
 
+		if (tabstopContainer === null)
+			return;
 		var marker = tabstopContainer.tabStopMarkerBeingDragged;
+		if (marker === null)
+			return;
 
 		if (event.type == 'mouseout') {
 			marker.style.left = (marker.tabStopLocation.left) + 'px';
