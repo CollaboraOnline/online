@@ -401,6 +401,11 @@ void AdminModel::setCpuStatsSize(unsigned size)
     int wasteValuesLen = _cpuStats.size() - size;
     while (wasteValuesLen-- > 0)
     {
+        if (_cpuStats.empty())
+        {
+            break;
+        }
+
         _cpuStats.pop_front();
     }
     _cpuStatsSize = size;

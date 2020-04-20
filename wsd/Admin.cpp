@@ -238,7 +238,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             }
             else if (settingName == "cpu_stats_size")
             {
-                if (settingVal != std::stoi(model.query(settingName)))
+                if (settingVal != std::stol(model.query(settingName)))
                 {
                     model.setCpuStatsSize(settingVal);
                 }
