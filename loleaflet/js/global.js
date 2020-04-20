@@ -273,7 +273,7 @@
 					data = arr.slice(i, i + size);
 
 				if (serial !== that.inSerial + 1) {
-					console.debug("Error: serial mismatch " + serial + " vs. " + (that.inSerial + 1));
+					console.debug('Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1));
 				}
 				that.inSerial = serial;
 				this.onmessage({ data: data });
