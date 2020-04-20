@@ -420,6 +420,11 @@ void AdminModel::setMemStatsSize(unsigned size)
     int wasteValuesLen = _memStats.size() - size;
     while (wasteValuesLen-- > 0)
     {
+        if (_memStats.empty())
+        {
+            break;
+        }
+
         _memStats.pop_front();
     }
     _memStatsSize = size;

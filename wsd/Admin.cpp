@@ -222,7 +222,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             const std::string settingName = setting[0];
             if (settingName == "mem_stats_size")
             {
-                if (settingVal != std::stoi(model.query(settingName)))
+                if (settingVal != std::stol(model.query(settingName)))
                 {
                     model.setMemStatsSize(settingVal);
                 }
