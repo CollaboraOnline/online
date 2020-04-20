@@ -81,6 +81,9 @@ L.Control.Ruler = L.Control.extend({
 		if (L.Browser.touch) {
 			this._hammer = new Hammer(this._rTSContainer);
 			this._hammer.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+			this._hammer.get('press').set({
+				time: 500
+			});
 			this._hammer.on('panstart', function (event) {
 				self._initiateTabstopDrag(event);
 			});
@@ -89,6 +92,9 @@ L.Control.Ruler = L.Control.extend({
 			});
 			this._hammer.on('panend', function (event) {
 				self._endTabstopDrag(event);
+			});
+			this._hammer.on('press', function (event) {
+				self._onTabstopContainerLongPress(event);
 			});
 		}
 		return this._rWrapper;
@@ -510,6 +516,22 @@ L.Control.Ruler = L.Control.extend({
 		L.DomEvent.off(this._rTSContainer, 'mousemove', this._moveTabstop, this);
 		L.DomEvent.off(this._rTSContainer, 'mouseup', this._endTabstopDrag, this);
 		L.DomEvent.off(this._rTSContainer, 'mouseout', this._endTabstopDrag, this);
+	},
+
+	_onTabstopContainerLongPress: function(event) {
+		var pointX = event.center.x - event.target.getBoundingClientRect().left;
+		this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+
+		$.contextMenu({
+			selector: '.loleaflet-ruler-tabstopcontainer',
+			className: 'loleaflet-font',
+			items: {
+				inserttabstop: {
+					name: _('Insert tabstop'),
+					callback: (this._insertTabstop).bind(this)
+				}
+			}
+		});
 	},
 
 	_insertTabstop: function() {
