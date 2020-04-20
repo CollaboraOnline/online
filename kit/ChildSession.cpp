@@ -1464,7 +1464,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
     {
         if (tokens[1] == ".uno:fakeDiskFull")
         {
-            Util::alertAllUsers("internal", "diskfull");
+            _docManager->alertAllUsers("internal", "diskfull");
         }
         else
         {

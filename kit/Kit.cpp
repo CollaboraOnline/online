@@ -105,7 +105,6 @@ using std::size_t;
 
 // We only host a single document in our lifetime.
 class Document;
-static std::shared_ptr<Document> document;
 #ifndef BUILDING_TESTS
 static bool AnonymizeUserData = false;
 static uint64_t AnonymizationSalt = 82589933;
@@ -1197,6 +1196,11 @@ public:
         return false;
     }
 
+    void alertAllUsers(const std::string& cmd, const std::string& kind)
+    {
+        alertAllUsers("errortoall: cmd=" + cmd + " kind=" + kind);
+    }
+
     static void GlobalCallback(const int type, const char* p, void* data)
     {
         if (SigUtil::getTerminationFlag())
@@ -2035,6 +2039,11 @@ private:
         return _obfuscatedFileId;
     }
 
+    void alertAllUsers(const std::string& msg)
+    {
+        sendTextFrame(msg);
+    }
+
 private:
     std::shared_ptr<lok::Office> _loKit;
     const std::string _jailId;
@@ -2091,140 +2100,11 @@ std::shared_ptr<lok::Document> getLOKDocument()
     return Document::_loKitDocument;
 }
 
-class KitWebSocketHandler final : public WebSocketHandler
-{
-    std::shared_ptr<TileQueue> _queue;
-    std::string _socketName;
-    std::shared_ptr<lok::Office> _loKit;
-    std::string _jailId;
-
-public:
-    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId) :
-        WebSocketHandler(/* isClient = */ true, /* isMasking */ false),
-        _queue(std::make_shared<TileQueue>()),
-        _socketName(socketName),
-        _loKit(loKit),
-        _jailId(jailId)
-    {
-    }
-
-protected:
-    void handleMessage(const std::vector<char>& data) override
-    {
-        std::string message(data.data(), data.size());
-
-#if !MOBILEAPP
-        if (UnitKit::get().filterKitMessage(this, message))
-            return;
-#endif
-        StringVector tokens = LOOLProtocol::tokenize(message);
-        Log::StreamLogger logger = Log::debug();
-        if (logger.enabled())
-        {
-            logger << _socketName << ": recv [";
-            for (const auto& token : tokens)
-            {
-                // Don't log user-data, there are anonymized versions that get logged instead.
-                if (Util::startsWith(tokens.getParam(token), "jail") ||
-                    Util::startsWith(tokens.getParam(token), "author") ||
-                    Util::startsWith(tokens.getParam(token), "name") ||
-                    Util::startsWith(tokens.getParam(token), "url"))
-                    continue;
-
-                logger << tokens.getParam(token) << ' ';
-            }
-
-            LOG_END(logger, true);
-        }
-
-        // Note: Syntax or parsing errors here are unexpected and fatal.
-        if (SigUtil::getTerminationFlag())
-        {
-            LOG_DBG("Too late, TerminationFlag is set, we're going down");
-        }
-        else if (tokens.equals(0, "session"))
-        {
-            const std::string& sessionId = tokens[1];
-            const std::string& docKey = tokens[2];
-            const std::string& docId = tokens[3];
-            const std::string fileId = Util::getFilenameFromURL(docKey);
-            Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
-
-            std::string url;
-            URI::decode(docKey, url);
-            LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
-            Util::setThreadName("kit_" + docId);
-
-            if (!document)
-                document = std::make_shared<Document>(
-                    _loKit, _jailId, docKey, docId, url, _queue,
-                    std::static_pointer_cast<WebSocketHandler>(shared_from_this()));
-
-            // Validate and create session.
-            if (!(url == document->getUrl() && document->createSession(sessionId)))
-            {
-                LOG_DBG("CreateSession failed.");
-            }
-        }
-
-        else if (tokens.equals(0, "exit"))
-        {
-#if !MOBILEAPP
-            LOG_INF("Terminating immediately due to parent 'exit' command.");
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
-#else
-            LOG_INF("Setting TerminationFlag due to 'exit' command.");
-            SigUtil::setTerminationFlag();
-            document.reset();
-#endif
-        }
-        else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") || tokens.equals(0, "canceltiles") ||
-                tokens.equals(0, "paintwindow") || tokens.equals(0, "resizewindow") ||
-                LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
-        {
-            if (document)
-            {
-                _queue->put(message);
-            }
-            else
-            {
-                LOG_WRN("No document while processing " << tokens[0] << " request.");
-            }
-        }
-        else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
-        {
-#if !MOBILEAPP
-            // Currently only rlimit entries are supported.
-            if (!Rlimit::handleSetrlimitCommand(tokens))
-            {
-                LOG_ERR("Unknown setconfig command: " << message);
-            }
-#endif
-        }
-        else
-        {
-            LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
-        }
-    }
-
-    void onDisconnect() override
-    {
-#if !MOBILEAPP
-        LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
-        SigUtil::setTerminationFlag();
-#endif
-    }
-};
-
-void documentViewCallback(const int type, const char* payload, void* data)
-{
-    Document::ViewCallback(type, payload, data);
-}
-
 class KitSocketPoll : public SocketPoll
 {
     std::chrono::steady_clock::time_point _pollEnd;
+    std::shared_ptr<Document> _document;
+
 public:
     KitSocketPoll() :
         SocketPoll("kit")
@@ -2234,8 +2114,8 @@ public:
     // process pending message-queue events.
     void drainQueue(const std::chrono::steady_clock::time_point &now)
     {
-        if (document)
-            document->drainQueue(now);
+        if (_document)
+            _document->drainQueue(now);
     }
 
     // called from inside poll, inside a wakeup
@@ -2286,7 +2166,7 @@ public:
         drainQueue(std::chrono::steady_clock::now());
 
 #if !MOBILEAPP
-        if (document && document->purgeSessions() == 0)
+        if (_document && _document->purgeSessions() == 0)
         {
             LOG_INF("Last session discarded. Setting TerminationFlag");
             SigUtil::setTerminationFlag();
@@ -2296,7 +2176,149 @@ public:
         // Report the number of events we processed.
         return eventsSignalled;
     }
+
+    void setDocument(std::shared_ptr<Document> document)
+    {
+        _document = document;
+    }
 };
+
+class KitWebSocketHandler final : public WebSocketHandler
+{
+    std::shared_ptr<TileQueue> _queue;
+    std::string _socketName;
+    std::shared_ptr<lok::Office> _loKit;
+    std::string _jailId;
+    std::shared_ptr<Document> _document;
+    KitSocketPoll &_ksPoll;
+
+public:
+    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId, KitSocketPoll& ksPoll) :
+        WebSocketHandler(/* isClient = */ true, /* isMasking */ false),
+        _queue(std::make_shared<TileQueue>()),
+        _socketName(socketName),
+        _loKit(loKit),
+        _jailId(jailId),
+        _ksPoll(ksPoll)
+    {
+    }
+
+protected:
+    void handleMessage(const std::vector<char>& data) override
+    {
+        std::string message(data.data(), data.size());
+
+#if !MOBILEAPP
+        if (UnitKit::get().filterKitMessage(this, message))
+            return;
+#endif
+        StringVector tokens = LOOLProtocol::tokenize(message);
+        Log::StreamLogger logger = Log::debug();
+        if (logger.enabled())
+        {
+            logger << _socketName << ": recv [";
+            for (const auto& token : tokens)
+            {
+                // Don't log user-data, there are anonymized versions that get logged instead.
+                if (Util::startsWith(tokens.getParam(token), "jail") ||
+                    Util::startsWith(tokens.getParam(token), "author") ||
+                    Util::startsWith(tokens.getParam(token), "name") ||
+                    Util::startsWith(tokens.getParam(token), "url"))
+                    continue;
+
+                logger << tokens.getParam(token) << ' ';
+            }
+
+            LOG_END(logger, true);
+        }
+
+        // Note: Syntax or parsing errors here are unexpected and fatal.
+        if (SigUtil::getTerminationFlag())
+        {
+            LOG_DBG("Too late, TerminationFlag is set, we're going down");
+        }
+        else if (tokens.equals(0, "session"))
+        {
+            const std::string& sessionId = tokens[1];
+            const std::string& docKey = tokens[2];
+            const std::string& docId = tokens[3];
+            const std::string fileId = Util::getFilenameFromURL(docKey);
+            Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
+
+            std::string url;
+            URI::decode(docKey, url);
+            LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
+            Util::setThreadName("kit_" + docId);
+
+            if (!_document)
+            {
+                _document = std::make_shared<Document>(
+                    _loKit, _jailId, docKey, docId, url, _queue,
+                    std::static_pointer_cast<WebSocketHandler>(shared_from_this()));
+                _ksPoll.setDocument(_document);
+            }
+
+            // Validate and create session.
+            if (!(url == _document->getUrl() && _document->createSession(sessionId)))
+            {
+                LOG_DBG("CreateSession failed.");
+            }
+        }
+
+        else if (tokens.equals(0, "exit"))
+        {
+#if !MOBILEAPP
+            LOG_INF("Terminating immediately due to parent 'exit' command.");
+            Log::shutdown();
+            std::_Exit(EX_SOFTWARE);
+#else
+            LOG_INF("Setting TerminationFlag due to 'exit' command.");
+            SigUtil::setTerminationFlag();
+            _document.reset();
+#endif
+        }
+        else if (tokens.equals(0, "tile") || tokens.equals(0, "tilecombine") || tokens.equals(0, "canceltiles") ||
+                tokens.equals(0, "paintwindow") || tokens.equals(0, "resizewindow") ||
+                LOOLProtocol::getFirstToken(tokens[0], '-') == "child")
+        {
+            if (_document)
+            {
+                _queue->put(message);
+            }
+            else
+            {
+                LOG_WRN("No document while processing " << tokens[0] << " request.");
+            }
+        }
+        else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
+        {
+#if !MOBILEAPP
+            // Currently only rlimit entries are supported.
+            if (!Rlimit::handleSetrlimitCommand(tokens))
+            {
+                LOG_ERR("Unknown setconfig command: " << message);
+            }
+#endif
+        }
+        else
+        {
+            LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
+        }
+    }
+
+    void onDisconnect() override
+    {
+#if !MOBILEAPP
+        LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
+        SigUtil::setTerminationFlag();
+#endif
+    }
+};
+
+void documentViewCallback(const int type, const char* payload, void* data)
+{
+    Document::ViewCallback(type, payload, data);
+}
 
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* pData, int timeoutUs)
@@ -2660,8 +2682,9 @@ void lokit_main(
         KitSocketPoll mainKit;
         mainKit.runOnClientThread(); // We will do the polling on this thread.
 
-        std::shared_ptr<ProtocolHandlerInterface> websocketHandler =
-            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId);
+        std::shared_ptr<KitWebSocketHandler> websocketHandler =
+            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit);
+
 #if !MOBILEAPP
         mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler);
 #else
@@ -2827,23 +2850,6 @@ std::string anonymizeUsername(const std::string& username)
 #endif
 }
 
-#if !defined(BUILDING_TESTS) && !defined(KIT_IN_PROCESS)
-namespace Util
-{
-
-void alertAllUsers(const std::string& msg)
-{
-    document->sendTextFrame(msg);
-}
-
-void alertAllUsers(const std::string& cmd, const std::string& kind)
-{
-    alertAllUsers("errortoall: cmd=" + cmd + " kind=" + kind);
-}
-
-}
-#endif
-
-#endif // MOBILEAPP
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

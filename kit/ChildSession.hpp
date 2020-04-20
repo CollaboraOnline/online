@@ -69,6 +69,8 @@ public:
     virtual std::shared_ptr<TileQueue>& getTileQueue() = 0;
 
     virtual bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) = 0;
+
+    virtual void alertAllUsers(const std::string& cmd, const std::string& kind) = 0;
 };
 
 struct RecordedEvent

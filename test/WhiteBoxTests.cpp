@@ -561,6 +561,10 @@ public:
     {
         return true;
     }
+
+    void alertAllUsers(const std::string& /*cmd*/, const std::string& /*kind*/) override
+    {
+    }
 };
 
 void WhiteBoxTests::testEmptyCellCursor()
