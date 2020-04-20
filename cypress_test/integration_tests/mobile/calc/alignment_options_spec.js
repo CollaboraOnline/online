@@ -317,7 +317,7 @@ describe('Change alignment settings.', function() {
 		cy.wait(500);
 
 		// TODO: we don't have a good indicator here
-		// neither the text position nor the clipboard container does not help here.
+		// neither the text position nor the clipboard container helps here.
 	});
 
 	it('Merge cells.', function() {
@@ -335,7 +335,7 @@ describe('Change alignment settings.', function() {
 		cy.get('.spreadsheet-cell-resize-marker')
 			.should('exist');
 
-		// Even after we get the cell row selection the merge cell options is still enabled
+		// Even after we get the cell row selection the merge cell options is still disabled
 		// So we open mobile wizard again and again until merge cells get the right state
 		mobileHelper.openMobileWizard();
 		cy.waitUntil(function() {
