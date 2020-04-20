@@ -45,12 +45,6 @@ namespace filesystem = ::std::filesystem;
 
 namespace
 {
-    void alertAllUsersAndLog(const std::string& message, const std::string& cmd, const std::string& kind)
-    {
-        LOG_ERR(message);
-        Util::alertAllUsers(cmd, kind);
-    }
-
 #if HAVE_STD_FILESYSTEM
 /// Class to delete files when the process ends.
 class FileDeleter
@@ -179,61 +173,6 @@ namespace FileUtil
 #endif
 
         return dstPath;
-    }
-
-    bool saveDataToFileSafely(const std::string& fileName, const char *data, size_t size)
-    {
-        const auto tempFileName = fileName + ".temp";
-        std::fstream outStream(tempFileName, std::ios::out);
-
-        // If we can't create the file properly, just remove it
-        if (!outStream.good())
-        {
-            alertAllUsersAndLog("Creating " + tempFileName + " failed, disk full?", "internal", "diskfull");
-            // Try removing both just in case
-            std::remove(tempFileName.c_str());
-            std::remove(fileName.c_str());
-            return false;
-        }
-        else
-        {
-            outStream.write(data, size);
-            if (!outStream.good())
-            {
-                alertAllUsersAndLog("Writing to " + tempFileName + " failed, disk full?", "internal", "diskfull");
-                outStream.close();
-                std::remove(tempFileName.c_str());
-                std::remove(fileName.c_str());
-                return false;
-            }
-            else
-            {
-                outStream.close();
-                if (!outStream.good())
-                {
-                    alertAllUsersAndLog("Closing " + tempFileName + " failed, disk full?", "internal", "diskfull");
-                    std::remove(tempFileName.c_str());
-                    std::remove(fileName.c_str());
-                    return false;
-                }
-                else
-                {
-                    // Everything OK, rename the file to its proper name
-                    if (std::rename(tempFileName.c_str(), fileName.c_str()) == 0)
-                    {
-                        LOG_DBG("Renaming " << tempFileName << " to " << fileName << " OK.");
-                        return true;
-                    }
-                    else
-                    {
-                        alertAllUsersAndLog("Renaming " + tempFileName + " to " + fileName + " failed, disk full?", "internal", "diskfull");
-                        std::remove(tempFileName.c_str());
-                        std::remove(fileName.c_str());
-                        return false;
-                    }
-                }
-            }
-        }
     }
 
 #if 1 // !HAVE_STD_FILESYSTEM
