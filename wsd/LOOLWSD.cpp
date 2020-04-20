@@ -696,11 +696,11 @@ inline std::string getServiceURI(const std::string &sub, bool asAdmin = false)
 
 std::atomic<uint64_t> LOOLWSD::NextConnectionId(1);
 
+#if !MOBILEAPP
 #ifndef KIT_IN_PROCESS
 std::atomic<int> LOOLWSD::ForKitProcId(-1);
 std::shared_ptr<ForKitProcess> LOOLWSD::ForKitProc;
 #endif
-#if !MOBILEAPP
 bool LOOLWSD::NoCapsForKit = false;
 bool LOOLWSD::NoSeccomp = false;
 bool LOOLWSD::AdminEnabled = true;
@@ -755,6 +755,7 @@ public:
     /// Check prisoners are still alive and balanced.
     void wakeupHook() override;
 
+#if !MOBILEAPP
     // Resets the forkit porcess object
     void setForKitProcess(const std::weak_ptr<ForKitProcess>& forKitProc)
     {
@@ -790,6 +791,7 @@ public:
 
 private:
     std::weak_ptr<ForKitProcess> _forKitProc;
+#endif
 };
 
 /// This thread listens for and accepts prisoner kit processes.
@@ -809,6 +811,8 @@ public:
     }
 };
 
+#if !MOBILEAPP
+
 void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
 {
     LOG_TRC("ForKitProcWSHandler: handling incoming [" << LOOLProtocol::getAbbreviatedMessage(&data[0], data.size()) << "].");
@@ -820,9 +824,7 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
         int count = std::stoi(tokens[1]);
         if (count >= 0)
         {
-#if !MOBILEAPP
             Admin::instance().addSegFaultCount(count);
-#endif
             LOG_INF(count << " loolkit processes crashed with segmentation fault.");
         }
         else
@@ -835,6 +837,8 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
         LOG_ERR("ForKitProcWSHandler: unknown command: " << tokens[0]);
     }
 }
+
+#endif
 
 LOOLWSD::LOOLWSD()
 {

@@ -181,6 +181,8 @@ public:
     std::shared_ptr<Socket> _socket;
 };
 
+#if !MOBILEAPP
+
 class ForKitProcWSHandler: public WebSocketHandler
 {
 public:
@@ -203,6 +205,8 @@ public:
     }
 };
 
+#endif
+
 /// The Server class which is responsible for all
 /// external interactions.
 class LOOLWSD : public Poco::Util::ServerApplication
@@ -222,9 +226,9 @@ public:
 #if ENABLE_DEBUG
     static bool SingleKit;
 #endif
-#endif
     static std::shared_ptr<ForKitProcess> ForKitProc;
     static std::atomic<int> ForKitProcId;
+#endif
     static bool DummyLOK;
     static std::string FuzzFileName;
     static std::string ConfigFile;
