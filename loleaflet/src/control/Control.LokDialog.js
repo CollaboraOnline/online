@@ -282,6 +282,8 @@ L.Control.LokDialog = L.Control.extend({
 			top = parseInt(e.position.split(',')[1]);
 		}
 
+		var lines = 0;
+
 		if (e.title && typeof brandProductName !== 'undefined') {
 			e.title = e.title.replace('Collabora Office', brandProductName);
 		}
@@ -291,7 +293,8 @@ L.Control.LokDialog = L.Control.extend({
 				// When left/top are invalid, the dialog shows in the center.
 				this._launchDialog(e.id, left, top, width, height, e.title);
 			} else if (e.winType === 'calc-input-win') {
-				this._launchCalcInputBar(e.id, width, height);
+				lines = parseInt(e.lines);
+				this._launchCalcInputBar(e.id, width, height, lines);
 			} else if (e.winType === 'deck') {
 				if (!window.mode.isMobile()) {
 					this._launchSidebar(e.id, width, height);
@@ -360,11 +363,13 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'size_changed') {
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
-			if (e.winType  === 'deck' || this._isSidebar(e.id)) {
+			if (e.winType === 'deck' || this._isSidebar(e.id)) {
 				$('#' + strId).remove();
 				this._launchSidebar(e.id, width, height);
-			} else if (e.winType  === 'calc-input-win' || this.isCalcInputBar(e.id))
-				this._launchCalcInputBar(e.id, width, height);
+			} else if (e.winType === 'calc-input-win' || this.isCalcInputBar(e.id)) {
+				lines = parseInt(e.lines);
+				this._launchCalcInputBar(e.id, width, height, lines);
+			}
 			else {
 				$('#' + strId).remove();
 				this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
@@ -799,21 +804,21 @@ L.Control.LokDialog = L.Control.extend({
 		this._sendPaintWindow(id, this._createRectStr(id));
 	},
 
-	_launchCalcInputBar: function(id, width, height) {
-		console.log('_launchCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height);
-		if (!this._calcInputBar || this._calcInputBar.id != id) {
+	_launchCalcInputBar: function(id, width, height, textLines) {
+		console.log('_launchCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
+		if (!this._calcInputBar || this._calcInputBar.id !== id) {
 			if (this._calcInputBar)
 				$('#' + this._calcInputBar.strId).remove();
-			this._createCalcInputbar(id, width, height);
+			this._createCalcInputbar(id, width, height, textLines);
 		} else {
 			// Update in-place. We will resize during rendering.
-			this._adjustCalcInputBar(id, width, height);
+			this._adjustCalcInputBar(id, width, height, textLines);
 		}
 
 		console.log('_launchCalcInputBar: end');
 	},
 
-	_adjustCalcInputBar: function(id, width, height) {
+	_adjustCalcInputBar: function(id, width, height, textLines) {
 		if (this._calcInputBar) {
 			var oldHeight = this._calcInputBar.height;
 			var delta = height - oldHeight;
@@ -822,7 +827,7 @@ L.Control.LokDialog = L.Control.extend({
 
 				// Recreate the input-bar.
 				$('#' + this._calcInputBar.strId).remove();
-				this._createCalcInputbar(id, width, height);
+				this._createCalcInputbar(id, width, height, textLines);
 
 				// Resize the container.
 				var documentContainer = L.DomUtil.get('document-container');
@@ -886,8 +891,8 @@ L.Control.LokDialog = L.Control.extend({
 		}
 	},
 
-	_createCalcInputbar: function(id, width, height) {
-		console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height);
+	_createCalcInputbar: function(id, width, height, textLines) {
+		console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		var strId = this._toStrId(id);
 
 		$('#calc-inputbar-wrapper').css({display: 'block'});
@@ -896,6 +901,12 @@ L.Control.LokDialog = L.Control.extend({
 		container.id = strId;
 		L.DomUtil.setStyle(container, 'width', '100%');
 		L.DomUtil.setStyle(container, 'height', height + 'px');
+
+		if (textLines > 1) {
+			$('#formulabar').addClass('inputbar_multiline');
+		} else {
+			$('#formulabar').removeClass('inputbar_multiline');
+		}
 
 		//var eventLayer = L.DomUtil.create('div', '', container);
 		// Create the canvas.
@@ -942,6 +953,7 @@ L.Control.LokDialog = L.Control.extend({
 			top: 0,
 			width: width,
 			height: height,
+			textLines: textLines,
 			cursor: null,
 			textSelection: {rectangles: selections, handles: handles, startHandle: startHandle, endHandle: endHandle},
 			child: null, // never used for inputbar
