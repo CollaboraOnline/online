@@ -148,11 +148,11 @@ Proof::Proof()
         }
         catch (const Poco::Exception& e)
         {
-            LOG_ERR("Could not open proof RSA key: " << e.displayText());
+            LOG_ERR("Could not open proof RSA key, Poco exception: " << e.displayText());
         }
         catch (const std::exception& e)
         {
-            LOG_ERR("Could not open proof RSA key: " << e.what());
+            LOG_ERR("Could not open proof RSA key, standard exception: " << e.what());
         }
         catch (...)
         {

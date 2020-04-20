@@ -532,16 +532,27 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         const auto startTime = std::chrono::steady_clock::now();
 
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
+        Log::StreamLogger logger = Log::trace();
+        if (logger.enabled())
+        {
+            logger << "WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n";
+            for (const auto& pair : request)
+            {
+                logger << '\t' << pair.first << ": " << pair.second << " / ";
+            }
+
+            LOG_END(logger, true);
+        }
+
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
-        Log::StreamLogger logger = Log::trace();
         if (logger.enabled())
         {
-            logger << "WOPI::CheckFileInfo header for URI [" << uriAnonym << "]:\n";
+            logger << "WOPI::CheckFileInfo response header for URI [" << uriAnonym << "]:\n";
             for (const auto& pair : response)
             {
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
