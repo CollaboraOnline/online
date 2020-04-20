@@ -184,6 +184,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             doctemplate = value;
             ++offset;
         }
+        else if (name == "deviceFormFactor")
+        {
+            _deviceFormFactor = value;
+            ++offset;
+        }
     }
 
     Util::mapAnonymized(_userId, _userIdAnonym);

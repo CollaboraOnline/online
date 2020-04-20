@@ -820,6 +820,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " lang=" << getLang();
         }
 
+        if (!getDeviceFormFactor().empty())
+        {
+            oss << " deviceFormFactor=" << getDeviceFormFactor();
+        }
+
         if (!getWatermarkText().empty())
         {
             std::string encodedWatermarkText;

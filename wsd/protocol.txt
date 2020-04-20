@@ -90,7 +90,7 @@ load <pathname>
 
     Deprecated.
 
-load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [options=<options>]
+load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [deviceFormFactor=<device type>] [options=<options>]
 
     part is an optional parameter. <partNumber> is a number.
 
@@ -99,6 +99,9 @@ load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [options=<
 
     lang specifies the locale to which we should switch before loading the
     document
+
+    deviceFormFactor specifies the form factor of the device the client is running on
+    it can be one of the following: 'desktop', 'tablet', 'mobile'
 
     options are the whole rest of the line, not URL-encoded, and must be valid JSON.
 

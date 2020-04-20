@@ -1675,10 +1675,14 @@ private:
         const std::string& docPassword = session->getDocPassword();
         const bool haveDocPassword = session->getHaveDocPassword();
         const std::string& lang = session->getLang();
+        const std::string& deviceFormFactor = session->getDeviceFormFactor();
 
         std::string options;
         if (!lang.empty())
             options = "Language=" + lang;
+
+        if (!deviceFormFactor.empty())
+            options += ",DeviceFormFactor=" + deviceFormFactor;
 
         if (!_loKitDocument)
         {

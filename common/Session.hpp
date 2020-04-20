@@ -197,6 +197,8 @@ public:
         _canonicalViewId = map.getCanonicalId(_watermarkText);
     }
 
+    const std::string& getDeviceFormFactor() const { return _deviceFormFactor; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -288,6 +290,9 @@ private:
 
     /// the canonical id unique to the set of rendering properties of this session
     int _canonicalViewId;
+
+    /// The form factor of the device where the client is running: desktop, tablet, mobile.
+    std::string _deviceFormFactor;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

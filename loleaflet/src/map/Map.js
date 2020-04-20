@@ -215,14 +215,12 @@ L.Map = L.Evented.extend({
 				L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 			}
 
-			// We need core's knowledge of whether it is a mobile phone or not (which is
-			// what .uno:LOKSetMobile does) to be in sync with the test in
-			// _onJSDialogMsg in TileLayer.js.
+			// We need core's knowledge of whether it is a mobile phone
+			// or not to be in sync with the test in _onJSDialogMsg in TileLayer.js.
 			if (window.mode.isMobile())
 			{
 				this._size = new L.Point(0,0);
 				this._onResize();
-				this._socket.sendMessage('uno .uno:LOKSetMobile');
 			}
 		});
 		this.on('updatetoolbarcommandvalues', function(e) {

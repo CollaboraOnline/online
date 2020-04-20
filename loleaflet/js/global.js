@@ -158,8 +158,20 @@
 		},
 		isDesktop: function() {
 			return !L.Browser.mobile;
+		},
+		getDeviceFormFactor: function() {
+			if (window.mode.isMobile())
+				return 'mobile';
+			else if (window.mode.isTablet())
+				return 'tablet';
+			else if (window.mode.isDesktop())
+				return 'desktop';
+			else
+				return null;
 		}
 	};
+
+	global.deviceFormFactor = window.mode.getDeviceFormFactor();
 
 	document.addEventListener('contextmenu', function(e) {
 		if (e.preventDefault) {
@@ -548,6 +560,11 @@
 					}
 					// renderingOptions?
 				}
+
+				if (window.deviceFormFactor) {
+					msg += ' deviceFormFactor=' + window.deviceFormFactor;
+				}
+
 				global.socket.send(msg);
 			}
 		};
