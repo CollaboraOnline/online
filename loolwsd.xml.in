@@ -116,6 +116,7 @@
 
     <welcome>
       <enable type="bool" desc="Controls whether the welcome screen should be shown to the users on new install and updates." default="@ENABLE_WELCOME_MESSAGE@">@ENABLE_WELCOME_MESSAGE@</enable>
+      <enable_button type="bool" desc="Controls whether the welcome screen should have an explanatory button instead of an X button to close the dialog." default="@ENABLE_WELCOME_MESSAGE_BUTTON@">@ENABLE_WELCOME_MESSAGE_BUTTON@</enable_button>
       <path desc="Path to 'welcome-$lang.html' files served on first start or when the version changes. When empty, defaults to the Release notes." type="path" relative="true" default="loleaflet/welcome"></path>
     </welcome>
 
