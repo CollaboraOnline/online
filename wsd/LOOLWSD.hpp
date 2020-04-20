@@ -229,8 +229,10 @@ public:
     static std::shared_ptr<ForKitProcess> ForKitProc;
     static std::atomic<int> ForKitProcId;
 #endif
+#ifdef FUZZER
     static bool DummyLOK;
     static std::string FuzzFileName;
+#endif
     static std::string ConfigFile;
     static std::string ConfigDir;
     static std::string SysTemplate;
