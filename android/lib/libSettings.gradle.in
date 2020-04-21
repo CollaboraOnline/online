@@ -10,6 +10,7 @@ ext {
     liboVersionMinor    = '@LOOLWSD_VERSION_MAJOR@'
     liboGitFullCommit   = '@LOOLWSD_VERSION_HASH@'
     liboApplicationId   = '@ANDROID_PACKAGE_NAME@'
+    liboBrandingDir     = '@APP_BRANDING_DIR@'
     liboAndroidAbi      = '@ANDROID_ABI@'
     liboGooglePlay      = '@APP_GOOGLE_PLAY@'
 }

@@ -181,6 +181,11 @@ task createFullConfig(type: Copy) {
     }
 }
 
+task copyBrandTheme(type: Copy) {
+	from "${liboBrandingDir}/online-theme"
+	into "src/main/assets/share/theme_definitions/online"
+}
+
 task createStrippedConfig {
     def preserveDir = file("src/main/assets/share/config/soffice.cfg/empty")
     outputs.dir "src/main/assets/share/registry/res"
@@ -273,4 +278,11 @@ ReferenceOOoMajorMinor=4.1
 
 // creating the UI stuff is cheap, don't bother only applying it for the flavor..
 preBuild.dependsOn 'createRCfiles',
-        'createFullConfig'
+        'createFullConfig',
+        'copyBrandTheme'
+
+afterEvaluate {
+	if (!file("${liboBrandingDir}").exists()) {
+		copyBrandTheme.enabled = false
+	}
+}
