@@ -340,7 +340,7 @@ Java_org_libreoffice_androidlib_LOActivity_saveAs(JNIEnv *env, jobject instance,
     const char *fileUri = env->GetStringUTFChars(fileUri_, 0);
     const char *format = env->GetStringUTFChars(format_, 0);
 
-    getLOKDocument()->saveAs(fileUri, format, nullptr);
+    getLOKDocumentForAndroidOnly()->saveAs(fileUri, format, nullptr);
 
     env->ReleaseStringUTFChars(fileUri_, fileUri);
     env->ReleaseStringUTFChars(format_, format);
@@ -356,7 +356,7 @@ Java_org_libreoffice_androidlib_LOActivity_postUnoCommand(JNIEnv* pEnv, jobject 
     if (arguments != nullptr)
         pArguments = pEnv->GetStringUTFChars(arguments, nullptr);
 
-    getLOKDocument()->postUnoCommand(pCommand, pArguments, bNotifyWhenFinished);
+    getLOKDocumentForAndroidOnly()->postUnoCommand(pCommand, pArguments, bNotifyWhenFinished);
 
     pEnv->ReleaseStringUTFChars(command, pCommand);
     if (arguments != nullptr)
@@ -402,9 +402,9 @@ Java_org_libreoffice_androidlib_LOActivity_getClipboardContent(JNIEnv *env, jobj
     jclass class_LokClipboardData = env->GetObjectClass(lokClipboardData);
     jfieldID fieldId_LokClipboardData_clipboardEntries = env->GetFieldID(class_LokClipboardData , "clipboardEntries", "Ljava/util/ArrayList;");
 
-    if (getLOKDocument()->getClipboard(mimeTypes,
-                                       &outCount, &outMimeTypes,
-                                       &outSizes, &outStreams))
+    if (getLOKDocumentForAndroidOnly()->getClipboard(mimeTypes,
+                                                     &outCount, &outMimeTypes,
+                                                     &outSizes, &outStreams))
     {
         // return early
         if (outCount == 0)
@@ -440,9 +440,9 @@ Java_org_libreoffice_androidlib_LOActivity_getClipboardContent(JNIEnv *env, jobj
 
     const char* mimeTypesHTML[] = { "text/plain;charset=utf-8", "text/html", nullptr };
 
-    if (getLOKDocument()->getClipboard(mimeTypesHTML,
-                                       &outCount, &outMimeTypes,
-                                       &outSizes, &outStreams))
+    if (getLOKDocumentForAndroidOnly()->getClipboard(mimeTypesHTML,
+                                                     &outCount, &outMimeTypes,
+                                                     &outSizes, &outStreams))
     {
         // return early
         if (outCount == 0)
@@ -522,7 +522,7 @@ Java_org_libreoffice_androidlib_LOActivity_setClipboardContent(JNIEnv *env, jobj
         pStreams[nEntryIndex] = dataArray;
     }
 
-    getLOKDocument()->setClipboard(nEntrySize, pMimeTypes, pSizes, pStreams);
+    getLOKDocumentForAndroidOnly()->setClipboard(nEntrySize, pMimeTypes, pSizes, pStreams);
 }
 
 extern "C"
@@ -533,7 +533,7 @@ Java_org_libreoffice_androidlib_LOActivity_paste(JNIEnv *env, jobject instance, 
     size_t dataArrayLength = env->GetArrayLength(inData);
     char* dataArray = new char[dataArrayLength];
     env->GetByteArrayRegion(inData, 0, dataArrayLength, reinterpret_cast<jbyte*>(dataArray));
-    getLOKDocument()->paste(mimeType, dataArray, dataArrayLength);
+    getLOKDocumentForAndroidOnly()->paste(mimeType, dataArray, dataArrayLength);
     env->ReleaseStringUTFChars(inMimeType, mimeType);
 }
 

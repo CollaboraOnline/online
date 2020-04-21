@@ -1428,6 +1428,9 @@ private:
 #ifdef IOS
             lok_document = nullptr;
 #endif
+#ifdef __ANDROID__
+            _loKitDocumentForAndroidOnly.reset();
+#endif
             _loKitDocument.reset();
             LOG_INF("Document [" << anonymizeUrl(_url) << "] session [" << sessionId << "] unloaded Document.");
             return;
@@ -1661,6 +1664,9 @@ private:
             LOG_DBG("Calling lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ", \"" << options << "\").");
             const auto start = std::chrono::system_clock::now();
             _loKitDocument.reset(_loKit->documentLoad(pURL, options.c_str()));
+#ifdef __ANDROID__
+            _loKitDocumentForAndroidOnly = _loKitDocument;
+#endif
             const auto duration = std::chrono::system_clock::now() - start;
             const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
             const double totalTime = elapsed/1000.;
@@ -2056,7 +2062,10 @@ private:
     std::string _jailedUrl;
     std::string _renderOpts;
 
-    static std::shared_ptr<lok::Document> _loKitDocument;
+    std::shared_ptr<lok::Document> _loKitDocument;
+#ifdef __ANDROID__
+    static std::shared_ptr<lok::Document> _loKitDocumentForAndroidOnly;
+#endif
     std::shared_ptr<TileQueue> _tileQueue;
     std::shared_ptr<WebSocketHandler> _websocketHandler;
 
@@ -2089,16 +2098,21 @@ private:
     /// For showing disconnected user info in the doc repair dialog.
     std::map<int, UserInfo> _sessionUserInfo;
     std::chrono::steady_clock::time_point _lastMemStatsTime;
-
-    friend std::shared_ptr<lok::Document> getLOKDocument();
+#ifdef __ANDROID__
+    friend std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
+#endif
 };
 
-std::shared_ptr<lok::Document> Document::_loKitDocument = std::shared_ptr<lok::Document>();
+#ifdef __ANDROID__
 
-std::shared_ptr<lok::Document> getLOKDocument()
+std::shared_ptr<lok::Document> Document::_loKitDocumentForAndroidOnly = std::shared_ptr<lok::Document>();
+
+std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly()
 {
-    return Document::_loKitDocument;
+    return Document::_loKitDocumentForAndroidOnly;
 }
+
+#endif
 
 class KitSocketPoll : public SocketPoll
 {
