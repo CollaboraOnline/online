@@ -3,7 +3,7 @@
  * L.Control.SearchBar
  */
 
-/* global $ w2ui _UNO */
+/* global $ w2ui _UNO _ */
 L.Control.MobileTopBar = L.Control.extend({
 
 	options: {
@@ -41,6 +41,8 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'spacer'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
+				{type: 'button', hidden: true, id: 'acceptformula',  img: 'ok', hint: _('Accept')},
+				{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
 //				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
@@ -107,6 +109,21 @@ L.Control.MobileTopBar = L.Control.extend({
 			else {
 				this.map.toggleCommandState(window.getUNOCommand(item.uno));
 			}
+		}
+		else if (id === 'cancelformula') {
+			this.map.sendUnoCommand('.uno:Cancel');
+			w2ui['actionbar'].hide('acceptformula', 'cancelformula');
+			w2ui['actionbar'].show('undo', 'redo');
+		}
+		else if (id === 'acceptformula') {
+			// focus on map, and press enter
+			this.map.focus();
+			this.map._docLayer.postKeyboardEvent('input',
+				this.map.keyboard.keyCodes.enter,
+				this.map.keyboard._toUNOKeyCode(this.map.keyboard.keyCodes.enter));
+
+			w2ui['actionbar'].hide('acceptformula', 'cancelformula');
+			w2ui['actionbar'].show('undo', 'redo');
 		}
 		else if (id === 'insertcomment') {
 			this.map.insertComment();

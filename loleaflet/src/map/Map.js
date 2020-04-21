@@ -1401,6 +1401,7 @@ L.Map = L.Evented.extend({
 		if (this.dialog._calcInputBar) {
 			var inputBarId = this.dialog._calcInputBar.id;
 			this.dialog._updateTextSelection(inputBarId);
+			this.onFormulaBarBlur();
 		}
 	},
 

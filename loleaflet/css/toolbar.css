@@ -661,6 +661,7 @@ button.leaflet-control-search-next
 
 .w2ui-icon.functiondialog{ background: url('images/lc_functiondialog.svg') no-repeat center !important; }
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
+.w2ui-icon.ok{ background: url('images/lc_ok.svg') no-repeat center !important; }
 .w2ui-icon.cancel{ background: url('images/lc_cancel.svg') no-repeat center !important; }
 .w2ui-icon.color{ background: url('images/lc_color.svg') no-repeat center !important; }
 .w2ui-icon.deletepage{ background: url('images/lc_deletepage.svg') no-repeat center !important; }

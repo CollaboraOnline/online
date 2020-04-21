@@ -144,6 +144,30 @@ L.Control.FormulaBar = L.Control.extend({
 	}
 });
 
+L.Map.include({
+	onFormulaBarFocus: function() {
+		var mobileTopBar = w2ui['actionbar'];
+		mobileTopBar.hide('undo');
+		mobileTopBar.hide('redo');
+		mobileTopBar.show('cancelformula');
+		mobileTopBar.show('acceptformula');
+	},
+
+	onFormulaBarBlur: function() {
+		// The timeout is needed because we want 'click' event on 'cancel',
+		// 'accept' button to act before we hide these buttons because
+		// once hidden, click event won't be processed.
+		// TODO: Some better way to do it ?
+		setTimeout(function() {
+			var mobileTopBar = w2ui['actionbar'];
+			mobileTopBar.show('undo');
+			mobileTopBar.show('redo');
+			mobileTopBar.hide('cancelformula');
+			mobileTopBar.hide('acceptformula');
+		}, 250);
+	}
+});
+
 L.control.formulaBar = function (options) {
 	return new L.Control.FormulaBar(options);
 };
