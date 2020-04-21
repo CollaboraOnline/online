@@ -987,6 +987,23 @@ function setupToolbar(e) {
 		entry.select();
 	});
 
+	map.on('search', function (e) {
+		var searchInput = L.DomUtil.get('search-input');
+		var toolbar = w2ui['actionbar'];
+		if (e.count === 0) {
+			toolbar.disable('searchprev');
+			toolbar.disable('searchnext');
+			toolbar.hide('cancelsearch');
+			L.DomUtil.addClass(searchInput, 'search-not-found');
+			$('#findthis').addClass('search-not-found');
+			map.resetSelection();
+			setTimeout(function () {
+				$('#findthis').removeClass('search-not-found');
+				L.DomUtil.removeClass(searchInput, 'search-not-found');
+			}, 500);
+		}
+	});
+
 	map.on('hyperlinkclicked', function (e) {
 		if (e.url) {
 			if (e.coordinates) {

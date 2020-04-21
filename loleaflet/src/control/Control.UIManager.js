@@ -15,17 +15,21 @@ L.Control.UIManager = L.Control.extend({
 	// UI initialization
 
 	initializeBasicUI: function() {
-		var menubar = L.control.menubar();
-		this.map.menubar = menubar;
-		this.map.addControl(menubar);
-
-		this.map.addControl(L.control.statusBar());
+		if (window.mode.isMobile() || !window.enableNotebookbar) {
+			var menubar = L.control.menubar();
+			this.map.menubar = menubar;
+			this.map.addControl(menubar);
+		}
 
 		if (window.mode.isMobile()) {
 			$('#mobile-edit-button').show();
 		} else {
-			this.map.addControl(L.control.topToolbar());
+			if (!window.enableNotebookbar) {
+				this.map.addControl(L.control.topToolbar());
+			}
+
 			this.map.addControl(L.control.signingBar());
+			this.map.addControl(L.control.statusBar());
 		}
 
 		setupToolbar(this.map);
@@ -61,6 +65,8 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(L.control.mobileBottomBar(docType));
 			this.map.addControl(L.control.mobileTopBar(docType));
 			this.map.addControl(L.control.searchBar());
+		} else if (window.enableNotebookbar) {
+			this.map.addControl(L.control.notebookbar({docType: docType}));
 		}
 
 		if (docType === 'spreadsheet') {

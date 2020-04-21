@@ -239,23 +239,6 @@ L.Control.StatusBar = L.Control.extend({
 			w2ui['actionbar'].touchStarted = true;
 		});
 
-		this.map.on('search', function (e) {
-			var searchInput = L.DomUtil.get('search-input');
-			var toolbar = w2ui['actionbar'];
-			if (e.count === 0) {
-				toolbar.disable('searchprev');
-				toolbar.disable('searchnext');
-				toolbar.hide('cancelsearch');
-				L.DomUtil.addClass(searchInput, 'search-not-found');
-				$('#findthis').addClass('search-not-found');
-				that.map.resetSelection();
-				setTimeout(function () {
-					$('#findthis').removeClass('search-not-found');
-					L.DomUtil.removeClass(searchInput, 'search-not-found');
-				}, 500);
-			}
-		});
-
 		this.map.on('zoomend', function () {
 			var zoomPercent = 100;
 			var zoomSelected = null;
