@@ -337,7 +337,6 @@ if ENABLE_ANDROIDAPP
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/toolbar-bg.svg ; fi
 	@if test -d "$(APP_BRANDING_DIR)/android" ; then for I in `cd "$(APP_BRANDING_DIR)/android" && find . -type f` ; do mkdir -p $(abs_top_srcdir)/android/lib/src/main/res/`dirname $$I` ; cp -a "$(APP_BRANDING_DIR)/android/$$I" "$(abs_top_srcdir)/android/app/src/main/res/$$I" ; done ; fi
 	@if test -d "$(APP_BRANDING_DIR)/online-theme" ; then mkdir -p $(abs_top_srcdir)/android/lib/src/main/assets/share/theme_definitions ; cp -a "$(APP_BRANDING_DIR)/online-theme" "$(abs_top_srcdir)/android/lib/src/main/assets/share/theme_definitions/online" ; fi
-	@if test ! -e "$(abs_top_srcdir)/android/app/src/main/res/drawable/drawer_header_brand.png" ; then cp -a "$(abs_top_srcdir)/android/app/src/main/res/drawable/drawer_header.png" "$(abs_top_srcdir)/android/app/src/main/res/drawable/drawer_header_brand.png" ; fi
 	@echo
 	@echo "Copied JS, HTML and CSS to the Android project (android/lib/src/main/assets/dist)."
 	@echo
