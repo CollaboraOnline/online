@@ -1322,8 +1322,7 @@ public:
             // all views have to be in sync
             tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
         }
-        else if (type == LOK_CALLBACK_INVALIDATE_VIEW_CURSOR ||
-                 type == LOK_CALLBACK_CELL_VIEW_CURSOR)
+        else if (type == LOK_CALLBACK_CELL_VIEW_CURSOR)
         {
             // these should go to all views but the one that that triggered it
             tileQueue->put("callback except-" + targetViewId + ' ' + std::to_string(type) + ' ' + payload);
