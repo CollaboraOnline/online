@@ -55,7 +55,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#BackgroundColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(255, 0, 0);');
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'bgcolor', '#FF0000');
@@ -67,7 +67,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-2')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000');
@@ -80,7 +80,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-2')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000');
@@ -91,7 +91,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-1')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('not.have.attr', 'style');
@@ -103,7 +103,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-3')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-right: 1px solid #000000');
@@ -115,7 +115,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-4')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000; border-right: 1px solid #000000');
@@ -127,7 +127,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-5')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000');
@@ -139,7 +139,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-6')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-bottom: 1px solid #000000');
@@ -151,7 +151,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-7')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000');
@@ -163,7 +163,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-8')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
@@ -175,7 +175,11 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-9')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.length', 4)
+			.should('have.attr', 'style');
 
 		cy.get('#copy-paste-container table td')
 			.then(function(cells) {
@@ -191,7 +195,11 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-10')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.length', 4)
+			.should('have.attr', 'style');
 
 		cy.get('#copy-paste-container table td')
 			.then(function(cells) {
@@ -217,7 +225,11 @@ describe('Change cell appearance.', function() {
 		// TODO
 		cy.wait(200);
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.length', 4)
+			.should('have.attr', 'style');
 
 		cy.get('#copy-paste-container table td')
 			.then(function(cells) {
@@ -240,7 +252,11 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-12')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.length', 4)
+			.should('have.attr', 'style');
 
 		cy.get('#copy-paste-container table td')
 			.then(function(cells) {
@@ -278,7 +294,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#FrameLineColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(255, 153, 0);');
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #ff9900');

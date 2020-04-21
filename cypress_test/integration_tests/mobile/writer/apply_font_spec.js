@@ -64,7 +64,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontnamecombobox .ui-header-right .entry-value')
 			.should('have.text', 'Linux Libertine G');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Linux Libertine G');
@@ -92,7 +92,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontsizecombobox .ui-header-right .entry-value')
 			.should('have.text', '36');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 36pt');
@@ -103,7 +103,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Bold')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -114,7 +114,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Italic')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p i')
 			.should('exist');
@@ -125,7 +125,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Underlineimg')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p u')
 			.should('exist');
@@ -136,7 +136,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Strikeoutimg')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p strike')
 			.should('exist');
@@ -147,7 +147,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Shadowedimg')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		// TODO: Shadowed is not in the clipboard content.
 	});
@@ -157,7 +157,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Growimg')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 42pt');
@@ -168,7 +168,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Shrinkimg')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 38pt');
@@ -188,7 +188,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'color', '#6aa84f');
@@ -208,7 +208,7 @@ describe('Apply font changes.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: #93c47d');
@@ -219,7 +219,7 @@ describe('Apply font changes.', function() {
 		cy.get('#SuperScriptimg')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p sup')
 			.should('exist');
@@ -230,7 +230,7 @@ describe('Apply font changes.', function() {
 		cy.get('#SubScriptimg')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p sub')
 			.should('exist');
@@ -252,7 +252,7 @@ describe('Apply font changes.', function() {
 		// Apply Title style
 		applyStyle('Title');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Liberation Sans, sans-serif');
@@ -262,7 +262,7 @@ describe('Apply font changes.', function() {
 		// Clear formatting
 		applyStyle('Clear formatting');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style', 'margin-bottom: 0in; line-height: 100%');

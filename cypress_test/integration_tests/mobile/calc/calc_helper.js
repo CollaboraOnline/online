@@ -39,22 +39,6 @@ function dblClickOnFirstCell() {
 	clickOnFirstCell(false, true);
 }
 
-function copyContentToClipboard() {
-	cy.log('Copying content to clipboard - start.');
-
-	selectAllMobile();
-
-	cy.get('.leaflet-tile-container')
-		.then(function(items) {
-			expect(items).to.have.lengthOf(1);
-			var XPos = items[0].getBoundingClientRect().right + 10;
-			var YPos = items[0].getBoundingClientRect().top + 10;
-			mobileHelper.executeCopyFromContextMenu(XPos, YPos);
-		});
-
-	cy.log('Copying content to clipboard - end.');
-}
-
 function removeTextSelection() {
 	cy.log('Removing text selection - start.');
 
@@ -71,28 +55,29 @@ function removeTextSelection() {
 			.click();
 
 		cy.get('.spreadsheet-cell-resize-marker')
-			.should('exist');
+			.invoke('attr', 'style')
+			.should('contain', '-8px,');
 	}
 
 	cy.log('Removing text selection - end.');
 }
 
-function selectAllMobile() {
+function selectAllMobile(removeSelection = true) {
 	cy.log('Selecting all text - start.');
 
-	removeTextSelection();
-
+	if (removeSelection)
+		removeTextSelection();
 
 	cy.get('#spreadsheet-header-corner')
 		.click();
 
-	cy.get('.leaflet-marker-icon')
-		.should('exist');
+	cy.get('.spreadsheet-cell-resize-marker')
+		.invoke('attr', 'style')
+		.should('contain', '(-9px, -8px,');
 
 	cy.log('Selecting all text - end.');
 }
 
-module.exports.copyContentToClipboard = copyContentToClipboard;
 module.exports.removeTextSelection = removeTextSelection;
 module.exports.selectAllMobile = selectAllMobile;
 module.exports.clickOnFirstCell = clickOnFirstCell;

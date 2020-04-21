@@ -61,7 +61,7 @@ describe('Calc insertion wizard.', function() {
 		cy.get('.blinking-cursor')
 			.should('be.visible');
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td a')
 			.contains('some text');
@@ -94,7 +94,7 @@ describe('Calc insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Date')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;MM/DD/YY');
@@ -105,7 +105,7 @@ describe('Calc insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Time')
 			.click();
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;HH:MM:SS AM/PM');

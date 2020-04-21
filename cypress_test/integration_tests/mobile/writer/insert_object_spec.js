@@ -84,7 +84,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Two rows
 		cy.get('#copy-paste-container tr')
@@ -122,7 +122,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Three rows
 		cy.get('#copy-paste-container tr')
@@ -309,7 +309,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\nsome text');

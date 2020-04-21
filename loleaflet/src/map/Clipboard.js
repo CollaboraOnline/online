@@ -494,7 +494,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_beforeSelectImpl: function(operation) {
-		if ((L.Browser.isInternetExplorer || L.Browser.cypressTest) && operation != 'paste')
+		if (L.Browser.isInternetExplorer && operation != 'paste')
 			// We need populate our content into the div for
 			// the brower to copy.
 			this._dummyDiv.innerHTML = this._getHtmlForClipboard();
@@ -547,8 +547,7 @@ L.Clipboard = L.Class.extend({
 	_execOnElement: function(operation) {
 		var serial = this._clipboardSerial;
 
-		if (!L.Browser.cypressTest)
-			this._resetDiv();
+		this._resetDiv();
 
 		var success = false;
 		var active = null;
@@ -573,7 +572,7 @@ L.Clipboard = L.Class.extend({
 		var serial = this._clipboardSerial;
 
 		// try a direct execCommand.
-		if ((L.Browser.isInternetExplorer || L.Browser.cypressTest) && operation != 'paste')
+		if (L.Browser.isInternetExplorer && operation != 'paste')
 			this._beforeSelectImpl(operation);
 		if (document.execCommand(operation) &&
 		    serial !== this._clipboardSerial) {
@@ -715,6 +714,9 @@ L.Clipboard = L.Class.extend({
 	setTextSelectionHTML: function(html) {
 		this._selectionType = 'text';
 		this._selectionContent = html;
+		if (L.Browser.cypressTest) {
+			this._dummyDiv.innerHTML = html;
+		}
 	},
 
 	// sets the selection to some (cell formula) text)

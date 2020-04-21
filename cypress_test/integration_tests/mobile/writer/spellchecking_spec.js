@@ -53,13 +53,10 @@ describe('Spell checking menu.', function() {
 		cy.contains('.context-menu-link', 'hello')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].innerText).to.have.string('hello');
-			});
+			.should('contain.text', 'hello');
 	});
 
 	it('Ignore one.', function() {

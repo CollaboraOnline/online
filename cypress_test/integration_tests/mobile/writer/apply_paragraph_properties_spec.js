@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require expect afterEach Cypress*/
+/* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -42,7 +42,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#LeftParaimg')
 			.should('have.class', 'selected');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'left');
@@ -53,7 +53,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#CenterPara')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
@@ -64,7 +64,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#RightPara')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'right');
@@ -75,7 +75,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#JustifyPara')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'justify');
@@ -86,7 +86,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaRightToLeft')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'dir', 'rtl');
@@ -104,7 +104,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaLeftToRight')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('not.have.attr', 'dir');
@@ -119,7 +119,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#DefaultBullet')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container ul li p')
 			.should('exist');
@@ -134,7 +134,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#DefaultNumbering')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container ol li p')
 			.should('exist');
@@ -159,13 +159,11 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#mobile-wizard-back')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['background']).to.be.equal('rgb(106, 168, 79)');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'background: #6aa84f');
 	});
 
 	it('Increase / decrease para spacing.', function() {
@@ -175,14 +173,15 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaspaceIncrease')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['margin-top']).to.be.equal('0.08in');
-				expect(item[0].style['margin-bottom']).to.be.equal('0.08in');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'margin-top: 0.08in');
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'style')
+			.should('contain', 'margin-bottom: 0.08in');
 
 		// Select text
 		writerHelper.selectAllMobile();
@@ -197,14 +196,15 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#ParaspaceDecrease')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['margin-top']).to.be.equal('0.04in');
-				expect(item[0].style['margin-bottom']).to.be.equal('0.04in');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'margin-top: 0.04in');
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'style')
+			.should('contain', 'margin-bottom: 0.04in');
 	});
 
 	it('Change para spacing via combobox.', function() {
@@ -233,14 +233,15 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#belowparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['margin-top']).to.be.equal('0.06in');
-				expect(item[0].style['margin-bottom']).to.be.equal('0.02in');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'margin-top: 0.06in');
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'style')
+			.should('contain', 'margin-bottom: 0.02in');
 	});
 
 	it('Increase / decrease indent.', function() {
@@ -250,13 +251,11 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#IncrementIndent')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['margin-left']).to.be.equal('0.98in');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'margin-left: 0.98in');
 
 		// Select text
 		writerHelper.selectAllMobile();
@@ -271,13 +270,11 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#DecrementIndent')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['margin-left']).to.be.equal('0.49in');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'margin-left: 0.49in');
 	});
 
 	it('Apply before text indent.', function() {
@@ -291,13 +288,11 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#beforetextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['margin-left']).to.be.equal('0.04in');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'margin-left: 0.04in');
 	});
 
 	it('Apply after text indent.', function() {
@@ -311,13 +306,11 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#aftertextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['margin-right']).to.be.equal('0.04in');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'margin-right: 0.04in');
 	});
 
 	it('Apply first line indent.', function() {
@@ -331,13 +324,11 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#firstlineindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].style['text-indent']).to.be.equal('0.04in');
-			});
+			.should('have.attr', 'style')
+			.should('contain', 'text-indent: 0.04in');
 	});
 
 	it('Linespacing item is hidden.', function() {

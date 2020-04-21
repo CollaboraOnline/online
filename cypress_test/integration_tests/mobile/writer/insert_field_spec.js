@@ -30,7 +30,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Page Number')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'PAGE')
@@ -42,7 +42,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Page Count')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCSTAT')
@@ -54,7 +54,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Date')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DATETIME')
@@ -66,7 +66,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Time')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DATETIME')
@@ -78,7 +78,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Title')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
@@ -90,7 +90,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'First Author')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
@@ -103,7 +103,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Subject')
 			.click();
 
-		writerHelper.copyTextToClipboard();
+		writerHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')

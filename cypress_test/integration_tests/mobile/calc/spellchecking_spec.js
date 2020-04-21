@@ -68,13 +68,10 @@ describe('Calc spell checking menu.', function() {
 					.click(XPos, YPos);
 			});
 
-		calcHelper.copyContentToClipboard();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].innerText).to.have.string('hello');
-			});
+			.should('contain.text', 'hello');
 	});
 
 	it('Ignore all.', function() {

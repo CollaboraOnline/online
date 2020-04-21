@@ -2,7 +2,6 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var impressHelper = require('./impress_helper');
 
 describe('Spell checking menu.', function() {
 	beforeEach(function() {
@@ -66,13 +65,10 @@ describe('Spell checking menu.', function() {
 		cy.contains('.context-menu-link', 'hello')
 			.click();
 
-		impressHelper.copyShapeContentToClipboard();
+		helper.selectAllText(false);
 
 		cy.get('#copy-paste-container pre')
-			.then(function(item) {
-				expect(item).to.have.lengthOf(1);
-				expect(item[0].innerText).to.have.string('hello');
-			});
+			.should('contain.text', 'hello');
 	});
 
 	it('Ignore all.', function() {

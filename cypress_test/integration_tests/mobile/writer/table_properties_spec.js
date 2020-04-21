@@ -1,18 +1,10 @@
-/* global describe it cy require afterEach expect Cypress beforeEach*/
+/* global describe it cy require expect Cypress*/
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
-	beforeEach(function() {
-		mobileHelper.beforeAllMobile('table_properties.odt', 'writer');
-	});
-
-	afterEach(function() {
-		helper.afterAll('table_properties.odt');
-	});
-
 	function before(testFile) {
 		helper.loadTestDoc(testFile, 'writer', true);
 
@@ -50,7 +42,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -60,7 +52,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -71,6 +63,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			});
 		cy.get('#copy-paste-container td')
 			.should('have.length', 8);
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Insert row after.', function() {
@@ -79,7 +73,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -89,7 +83,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -100,6 +94,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			});
 		cy.get('#copy-paste-container td')
 			.should('have.length', 8);
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Insert column before.', function() {
@@ -108,7 +104,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -118,7 +114,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -129,6 +125,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 				expect(columns[0].textContent).to.not.have.string('text');
 				expect(columns[1].textContent).to.have.string('text');
 			});
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Insert column after.', function() {
@@ -137,7 +135,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -147,7 +145,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -158,6 +156,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 				expect(columns[0].textContent).to.have.string('text');
 				expect(columns[1].textContent).to.not.have.string('text');
 			});
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Delete row.', function() {
@@ -166,7 +166,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -176,7 +176,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -187,6 +187,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			});
 		cy.get('#copy-paste-container td')
 			.should('have.length', 4);
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Delete column.', function() {
@@ -195,7 +197,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -205,7 +207,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -217,6 +219,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 				expect(columns[1].textContent).to.not.have.string('text');
 				expect(columns[2].textContent).to.not.have.string('text');
 			});
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Delete table.', function() {
@@ -225,7 +229,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -246,6 +250,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 				expect(markers).to.have.lengthOf(2);
 				expect(markers[0].getBoundingClientRect().top).to.equal(markers[1].getBoundingClientRect().top);
 			});
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Merge cells.', function() {
@@ -254,7 +260,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		moveCursorToFirstCell();
 
@@ -267,13 +273,15 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#MergeCells')
 			.click();
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
 			.should('have.length', 2);
 		cy.get('#copy-paste-container td')
 			.should('have.length', 3);
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Change row height.', function() {
@@ -282,7 +290,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -297,11 +305,13 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#rowheight .spinfield')
 			.should('have.attr', 'value', '1.4');
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check row height
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'height', '125');
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Change column width.', function() {
@@ -310,7 +320,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
 
-		before('table_properties2.odt');
+		before('table_properties.odt');
 
 		openTablePanel();
 
@@ -325,11 +335,13 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#columnwidth .spinfield')
 			.should('have.attr', 'value', '5.6');
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check row height
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '81%');
+
+		helper.afterAll('table_properties.odt');
 	});
 
 	it('Set minimal row height.', function() {
@@ -350,11 +362,13 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetMinimalRowHeight')
 			.click();
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
 			.should('not.have.attr', 'height');
+
+		helper.afterAll('table_with_text.odt');
 	});
 
 	it('Set optimal row height.', function() {
@@ -374,9 +388,14 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetOptimalRowHeight')
 			.click();
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check new row height
+		cy.get('#copy-paste-container td:nth-of-type(1n)')
+			.should('have.attr', 'height');
+		cy.get('#copy-paste-container td:nth-of-type(2n)')
+			.should('not.have.attr', 'height');
+
 		cy.get('#copy-paste-container td')
 			.then(function(items) {
 				expect(items).have.lengthOf(6);
@@ -389,6 +408,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 						expect(items[i]).not.have.attr('height');
 				}
 			});
+
+		helper.afterAll('table_with_text.odt');
 	});
 
 	it('Distribute rows.', function() {
@@ -408,9 +429,14 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#DistributeRows')
 			.click();
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
 		// Check new row height
+		cy.get('#copy-paste-container td:nth-of-type(1n)')
+			.should('have.attr', 'height');
+		cy.get('#copy-paste-container td:nth-of-type(2n)')
+			.should('not.have.attr', 'height');
+
 		cy.get('#copy-paste-container td')
 			.then(function(items) {
 				expect(items).have.lengthOf(6);
@@ -423,6 +449,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 						expect(items[i]).not.have.attr('height');
 				}
 			});
+
+		helper.afterAll('table_with_text.odt');
 	});
 
 	it('Set minimal column width.', function() {
@@ -442,16 +470,12 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetMinimalColumnWidth')
 			.click();
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
-		// Check new row height
 		cy.get('#copy-paste-container td')
-			.then(function(items) {
-				expect(items).have.lengthOf(6);
-				for (var i = 0; i < items.length; i++) {
-					expect(items[i]).have.attr('width', '24');
-				}
-			});
+			.should('have.attr', 'width', '24');
+
+		helper.afterAll('table_with_text.odt');
 	});
 
 	it('Set optimal column width.', function() {
@@ -471,19 +495,14 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetOptimalColumnWidth')
 			.click();
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
-		// Check new row height
-		cy.get('#copy-paste-container td')
-			.then(function(items) {
-				expect(items).have.lengthOf(6);
-				for (var i = 0; i < items.length; i++) {
-					if (i == 1 || i == 3 || i == 5)
-						expect(items[i]).have.attr('width', '323');
-					else
-						expect(items[i]).have.attr('width', '324');
-				}
-			});
+		cy.get('#copy-paste-container td:nth-of-type(1n)')
+			.should('have.attr', 'width', '324');
+		cy.get('#copy-paste-container td:nth-of-type(2n)')
+			.should('have.attr', 'width', '323');
+
+		helper.afterAll('table_with_text.odt');
 	});
 
 	it('Distribute columns.', function() {
@@ -503,15 +522,11 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#DistributeColumns')
 			.click();
 
-		writerHelper.copyTableToClipboard();
+		writerHelper.selectAllMobile();
 
-		// Check new row height
 		cy.get('#copy-paste-container td')
-			.then(function(items) {
-				expect(items).have.lengthOf(6);
-				for (var i = 0; i < items.length; i++) {
-					expect(items[i]).have.attr('width', '323');
-				}
-			});
+			.should('have.attr', 'width', '323');
+
+		helper.afterAll('table_with_text.odt');
 	});
 });
