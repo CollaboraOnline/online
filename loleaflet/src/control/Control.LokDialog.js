@@ -381,6 +381,7 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'text_selection') {
 			if (this._isOpen(e.id)) {
 				var rectangles = [];
+				var startHandleVisible, endHandleVisible;
 				if (e.rectangles) {
 					var dataList = e.rectangles.match(/\d+/g);
 					if (dataList != null) {
@@ -394,7 +395,14 @@ L.Control.LokDialog = L.Control.extend({
 						}
 					}
 				}
-				this._updateTextSelection(e.id, rectangles);
+
+				if (e.startHandleVisible) {
+					startHandleVisible = e.startHandleVisible === 'true';
+				}
+				if (e.endHandleVisible) {
+					endHandleVisible = e.endHandleVisible === 'true';
+				}
+				this._updateTextSelection(e.id, rectangles, startHandleVisible, endHandleVisible);
 			}
 		} else if (e.action === 'title_changed') {
 			if (e.title && this._dialogs[parseInt(e.id)]) {
@@ -455,18 +463,26 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.addClass(cursor, 'blinking-cursor');
 	},
 
-	_updateTextSelection: function(dlgId, rectangles) {
+	_updateTextSelection: function(dlgId, rectangles, startHandleVisible, endHandleVisible) {
 		var strId = this._toIntId(dlgId);
 		var selections = this._dialogs[strId].textSelection.rectangles;
 		L.DomUtil.empty(selections);
 		var handles = this._dialogs[strId].textSelection.handles;
-		var startHandle = this._dialogs[strId].textSelection.startHandle;
-		var endHandle = this._dialogs[strId].textSelection.endHandle;
+		var startHandle, endHandle;
+		if (startHandleVisible) {
+			startHandle = this._dialogs[strId].textSelection.startHandle;
+		} else if (handles.start) {
+			L.DomUtil.remove(handles.start);
+			handles.start = null;
+		}
+		if (endHandleVisible) {
+			endHandle = this._dialogs[strId].textSelection.endHandle;
+		}  else if (handles.end) {
+			L.DomUtil.remove(handles.end);
+			handles.end = null;
+		}
 
 		if (!rectangles || rectangles.length < 1) {
-			if (!startHandle.isDragged && !endHandle.isDragged) {
-				L.DomUtil.empty(handles);
-			}
 			return;
 		}
 
@@ -480,34 +496,43 @@ L.Control.LokDialog = L.Control.extend({
 			L.DomUtil.setStyle(container, 'top', rect.y + 'px');
 		}
 
-		var startRect = rectangles[0];
-		var endRect  = rectangles[rectangles.length - 1];
-		if (startRect.width < 1 || endRect.width < 1)
-			return;
-		startRect = {x: startRect.x, y: startRect.y, width: 1, height: startRect.height};
-		endRect = {x: endRect.x + endRect.width - 1, y: endRect.y, width: 1, height: endRect.height};
-		var startPos = L.point(startRect.x, startRect.y + startRect.height);
-		startPos = startPos.subtract(L.point(0, 2));
-		startHandle.lastPos = startPos;
-		startHandle.rowHeight = startRect.height;
-		var endPos = L.point(endRect.x, endRect.y + endRect.height);
-		endPos = endPos.subtract(L.point(0, 2));
-		endHandle.lastPos = endPos;
-		endHandle.rowHeight = endRect.height;
+		var startPos;
+		if (startHandle) {
+			var startRect = rectangles[0];
+			if (startRect.width < 1)
+				return;
+			startRect = {x: startRect.x, y: startRect.y, width: 1, height: startRect.height};
+			startPos = L.point(startRect.x, startRect.y + startRect.height);
+			startPos = startPos.subtract(L.point(0, 2));
+			startHandle.lastPos = startPos;
+			startHandle.rowHeight = startRect.height;
+		}
 
-		if (!startHandle.isDragged) {
-			if (!handles.children || !handles.children[0])
-				handles.appendChild(startHandle);
-			//console.log('lokdialog: _updateTextSelection: startPos: x: ' + startPos.x + ', y: ' + startPos.y);
+		var endPos;
+		if (endHandle) {
+			var endRect = rectangles[rectangles.length - 1];
+			if (endRect.width < 1)
+				return;
+			endRect = {x: endRect.x + endRect.width - 1, y: endRect.y, width: 1, height: endRect.height};
+			endPos = L.point(endRect.x, endRect.y + endRect.height);
+			endPos = endPos.subtract(L.point(0, 2));
+			endHandle.lastPos = endPos;
+			endHandle.rowHeight = endRect.height;
+		}
+
+		if (startHandle && handles.draggingStopped) {
+			if (!handles.start)
+				handles.start = handles.appendChild(startHandle);
+			// console.log('lokdialog: _updateTextSelection: startPos: x: ' + startPos.x + ', y: ' + startPos.y);
 			startHandle.pos = startPos;
 			L.DomUtil.setStyle(startHandle, 'left',  startPos.x + 'px');
 			L.DomUtil.setStyle(startHandle, 'top', startPos.y + 'px');
 		}
 
-		if (!endHandle.isDragged) {
-			if (!handles.children || !handles.children[1])
-				handles.appendChild(endHandle);
-			//console.log('lokdialog: _updateTextSelection: endPos: x: ' + endPos.x + ', y: ' + endPos.y);
+		if (endHandle && handles.draggingStopped) {
+			if (!handles.end)
+				handles.end = handles.appendChild(endHandle);
+			// console.log('lokdialog: _updateTextSelection: endPos: x: ' + endPos.x + ', y: ' + endPos.y);
 			endHandle.pos = endPos;
 			L.DomUtil.setStyle(endHandle, 'left',  endPos.x + 'px');
 			L.DomUtil.setStyle(endHandle, 'top', endPos.y + 'px');
@@ -521,9 +546,24 @@ L.Control.LokDialog = L.Control.extend({
 		e.target.isDragged = true;
 		e.target.dragStartPos = mousePos;
 
+		// single input line: check if after moving to a new line the handles have swapped position
+		if (handles.scrollDir !== 0 && handles.start && handles.end) {
+			var startDX = Math.abs(handles.beforeScrollingPosX - handles.start.pos.x);
+			var endDX = Math.abs(handles.beforeScrollingPosX - handles.end.pos.x);
+			if (handles.scrollDir === -1 && handles.lastDraggedHandle === 'end' && startDX < endDX) {
+				handles.lastDraggedHandle = 'start';
+			} else if (handles.scrollDir === 1 && handles.lastDraggedHandle === 'start' && endDX < startDX) {
+				handles.lastDraggedHandle = 'end';
+			}
+		}
+
+		handles.scrollDir = 0;
+		handles.beforeScrollingPosX = 0;
+		handles.draggingStopped = false;
 		if (!handles.lastDraggedHandle)
 			handles.lastDraggedHandle = 'end';
 		var swap = handles.lastDraggedHandle !== e.target.type;
+		// check if we need to notify the lok core of swapping the mark/cursor roles
 		if (swap) {
 			handles.lastDraggedHandle = e.target.type;
 			var pos = e.target.pos;
@@ -534,68 +574,94 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onSelectionHandleDrag: function (e) {
 		var handles = this._calcInputBar.textSelection.handles;
-		var startHandle = handles.children[0];
-		var endHandle = handles.children[1];
-		var dragEnd = e.type === 'mouseup' || e.type === 'mouseout' || e.type === 'panend';
+		var startHandle = handles.start;
+		var endHandle = handles.end;
 
-		if ((!startHandle || !startHandle.isDragged) && (!endHandle || !endHandle.isDragged) && dragEnd) {
-			var code = 0;
+		var dragEnd = e.type === 'mouseup' || e.type === 'panend';
+		// when stopDragging is true we do not update the text selection
+		// further even if the dragging action is not over
+		var stopDragging = dragEnd || e.type === 'mouseout';
+
+		// single input line: dragging with no text selected -> move to previous/next line
+		var keyCode = 0;
+		if (dragEnd && (!startHandle || !startHandle.isDragged) && (!endHandle || !endHandle.isDragged)) {
 			if (e.deltaX > 30 || e.deltaY > 20)
-				code = 1025; // ArrowUp
+				keyCode = 1025; // ArrowUp
 			else if (e.deltaX < -30 || e.deltaY < -20)
-				code = 1024; // ArrowDown
-			if (code) {
-				this._map._docLayer.postKeyboardEvent('input', 0, code);
+				keyCode = 1024; // ArrowDown
+			if (keyCode) {
+				this._map._docLayer.postKeyboardEvent('input', 0, keyCode);
 				this._map._textInput._emptyArea();
-				this._map._docLayer.postKeyboardEvent('up', 0, code);
+				this._map._docLayer.postKeyboardEvent('up', 0, keyCode);
 			}
+			return;
 		}
 
-		if (!endHandle || !startHandle)
-			return;
-
 		var draggedHandle;
-		if (startHandle.isDragged)
+		if (startHandle && startHandle.isDragged)
 			draggedHandle = startHandle;
-		else if (endHandle.isDragged)
+		else if (endHandle && endHandle.isDragged)
 			draggedHandle = endHandle;
 		if (!draggedHandle)
 			return;
-
 		if (dragEnd)
 			draggedHandle.isDragged = false;
+		if (handles.draggingStopped)
+			return;
+		if (stopDragging)
+			handles.draggingStopped = true;
+
 		var mousePos = L.DomEvent.getMousePosition(e.pointers ? e.srcEvent : e, handles);
 		var pos = draggedHandle.pos.add(mousePos.subtract(draggedHandle.dragStartPos));
-		var maxX = parseInt(handles.style.width) - 5;
-		var maxY = parseInt(handles.style.height) - 5;
-		if (pos.x < handles.offsetX)
-			pos.x = dragEnd ? draggedHandle.lastPos.x : handles.offsetX;
-		else if (mousePos.x > maxX)
-			pos.x = dragEnd ? draggedHandle.lastPos.x : maxX;
-		if (pos.y < handles.offsetY)
-			pos.y = dragEnd ? draggedHandle.lastPos.y : handles.offsetY;
-		else if (mousePos.y > maxY)
-			pos.y = dragEnd ? draggedHandle.lastPos.y : maxY;
 
+		// try to avoid unpleasant small vertical bouncing when dragging the handle horizontally
 		if (Math.abs(pos.y - draggedHandle.lastPos.y) < 6) {
 			pos.y = draggedHandle.lastPos.y;
 		}
 
-		if (draggedHandle.type === 'end') {
+		// try to avoid to swap the handles position when they are both visible
+		if (startHandle && draggedHandle.type === 'end') {
 			if (startHandle.pos.y - pos.y > 2)
 				pos.y = draggedHandle.lastPos.y;
 			if (startHandle.pos.y - pos.y > -2 && pos.x - startHandle.pos.x < 2)
 				pos = draggedHandle.lastPos;
 		}
-		if (draggedHandle.type === 'start') {
+		if (endHandle && draggedHandle.type === 'start') {
 			if (pos.y - endHandle.pos.y > 2)
 				pos.y = draggedHandle.lastPos.y;
 			if (pos.y - endHandle.pos.y > -endHandle.rowHeight && endHandle.pos.x - pos.x < 2)
 				pos = draggedHandle.lastPos;
 		}
 
+		var dragAreaWidth = parseInt(handles.style.width);
+		var dragAreaHeight = parseInt(handles.style.height);
+		var maxX = dragAreaWidth - 5;
+		var maxY = dragAreaHeight - 5;
+
+		// handle cases where the handle is dragged out of the input area
+		if (pos.x < handles.offsetX)
+			pos.x = stopDragging ? draggedHandle.lastPos.x : handles.offsetX;
+		else if (pos.x > maxX)
+			pos.x = stopDragging ? draggedHandle.lastPos.x : maxX;
+
+		if (pos.y < handles.offsetY) {
+			handles.scrollDir = -1;
+			keyCode = 5121; // Shift + ArrowUp
+			pos.y = stopDragging ? draggedHandle.lastPos.y : handles.offsetY;
+		}
+		else if (pos.y > maxY) {
+			if (pos.y > dragAreaHeight - 1 || e.type === 'mouseout') { // on desktop mouseout works better
+				handles.scrollDir = 1;
+				keyCode = 5120; // Shift + ArrowDown
+			}
+			pos.y = stopDragging ? draggedHandle.lastPos.y : maxY;
+		}
+
+		if (keyCode)
+			handles.draggingStopped = true;
+
 		var handlePos = pos;
-		if (dragEnd) {
+		if (stopDragging) {
 			handlePos = draggedHandle.lastPos;
 			draggedHandle.pos = pos;
 		}
@@ -604,6 +670,14 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setStyle(draggedHandle, 'top', handlePos.y + 'px');
 		this._map._socket.sendMessage('windowselecttext id=' + draggedHandle.dialogId +
 			                          ' swap=false x=' + pos.x + ' y=' + pos.y);
+
+		// check if we need to move to previous/next line
+		if (keyCode) {
+			handles.beforeScrollingPosX = pos.x;
+			this._map._docLayer.postKeyboardEvent('input', 0, keyCode);
+			this._map._textInput._emptyArea();
+			this._map._docLayer.postKeyboardEvent('up', 0, keyCode);
+		}
 	},
 
 	focus: function(dlgId, acceptInput) {
@@ -840,7 +914,9 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomUtil.setStyle(handles, 'position', 'absolute');
 		L.DomUtil.setStyle(handles, 'background', 'transparent');
 		this._setCanvasWidthHeight(handles, width, height);
-		handles.offsetX = window.mode.isMobile() ? 0 : 48;   // 48 with sigma and equal buttons
+		handles.draggingStopped = true;
+		handles.scrollDir = 0;
+		handles.offsetX = window.mode.isMobile() ? 0 : 48; // 48 with sigma and equal buttons
 		handles.offsetY = 0;
 		var startHandle = document.createElement('div');
 		L.DomUtil.addClass(startHandle, 'leaflet-selection-marker-start');
