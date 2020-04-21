@@ -79,7 +79,7 @@ task copyBrandFiles(type: Copy) {
 	into "src/main/res"
 }
 
-task build_loleaflet(type: Exec) {
+task generateLoleafletAssets(type: Exec) {
 	commandLine 'make', '-C', '../../'
 }
 
@@ -88,5 +88,7 @@ afterEvaluate {
 		copyBrandFiles.enabled = false
 	}
 
-	preBuild.dependsOn copyBrandFiles, build_loleaflet
+	preBuild.dependsOn copyBrandFiles
+	generateDebugAssets.dependsOn generateLoleafletAssets
+	generateReleaseAssets.dependsOn generateLoleafletAssets
 }

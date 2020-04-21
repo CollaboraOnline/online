@@ -339,11 +339,7 @@ if ENABLE_ANDROIDAPP
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/toolbar-bg.svg ; fi
 	@echo
-	@echo "Copied JS, HTML and CSS to the Android project (android/lib/src/main/assets/dist)."
-	@echo
-	@echo "  Now you need to build the actual .apk from Android Studio:"
-	@echo "  Just open the 'android' subdir as a project there and build."
-	@echo
+	@echo "JS, HTML and CSS has been updated (android/lib/src/main/assets/dist)."
 endif
 
 $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
