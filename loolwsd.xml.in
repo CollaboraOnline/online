@@ -132,6 +132,10 @@
       <path desc="Path to 'welcome-$lang.html' files served on first start or when the version changes. When empty, defaults to the Release notes." type="path" relative="true" default="loleaflet/welcome"></path>
     </welcome>
 
+    <user_interface>
+      <mode type="string" desc="Controls the user interface style (classic|notebookbar)" default="@USER_INTERFACE_MODE@">@USER_INTERFACE_MODE@</mode>
+    </user_interface>
+
     <storage desc="Backend storage">
         <filesystem allow="false" />
         <wopi desc="Allow/deny wopi storage. Mutually exclusive with webdav." allow="true">

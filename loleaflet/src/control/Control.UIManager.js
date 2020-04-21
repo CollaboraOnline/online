@@ -15,7 +15,9 @@ L.Control.UIManager = L.Control.extend({
 	// UI initialization
 
 	initializeBasicUI: function() {
-		if (window.mode.isMobile() || !window.enableNotebookbar) {
+		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
+
+		if (window.mode.isMobile() || !enableNotebookbar) {
 			var menubar = L.control.menubar();
 			this.map.menubar = menubar;
 			this.map.addControl(menubar);
@@ -24,7 +26,7 @@ L.Control.UIManager = L.Control.extend({
 		if (window.mode.isMobile()) {
 			$('#mobile-edit-button').show();
 		} else {
-			if (!window.enableNotebookbar) {
+			if (!enableNotebookbar) {
 				this.map.addControl(L.control.topToolbar());
 			}
 
@@ -60,12 +62,13 @@ L.Control.UIManager = L.Control.extend({
 
 	initializeSpecializedUI: function(docType) {
 		var isDesktop = window.mode.isDesktop();
+		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
 
 		if (window.mode.isMobile()) {
 			this.map.addControl(L.control.mobileBottomBar(docType));
 			this.map.addControl(L.control.mobileTopBar(docType));
 			this.map.addControl(L.control.searchBar());
-		} else if (window.enableNotebookbar) {
+		} else if (enableNotebookbar) {
 			if (docType === 'spreadsheet') {
 				this.map.addControl(L.control.notebookbarCalc());
 			} else if (docType === 'presentation') {
