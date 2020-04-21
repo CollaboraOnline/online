@@ -200,6 +200,9 @@ L.Control.StatusBar = L.Control.extend({
 						selected: 'zoom100',
 						mobile: false,
 						items: [
+							{ id: 'zoom20', text: '20', scale: 1},
+							{ id: 'zoom25', text: '25', scale: 2},
+							{ id: 'zoom30', text: '30', scale: 3},
 							{ id: 'zoom35', text: '35', scale: 4},
 							{ id: 'zoom40', text: '40', scale: 5},
 							{ id: 'zoom50', text: '50', scale: 6},
@@ -257,6 +260,9 @@ L.Control.StatusBar = L.Control.extend({
 			var zoomPercent = 100;
 			var zoomSelected = null;
 			switch (that.map.getZoom()) {
+			case 1:  zoomPercent =  20; zoomSelected = 'zoom20'; break;  // 0.2102
+			case 2:  zoomPercent =  25; zoomSelected = 'zoom25'; break;  // 0.2500
+			case 3:  zoomPercent =  30; zoomSelected = 'zoom30'; break;  // 0.2973
 			case 4:  zoomPercent =  35; zoomSelected = 'zoom35'; break;  // 0.3535
 			case 5:  zoomPercent =  40; zoomSelected = 'zoom40'; break;  // 0.4204
 			case 6:  zoomPercent =  50; zoomSelected = 'zoom50'; break;  // 0.5

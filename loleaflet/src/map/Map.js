@@ -23,7 +23,7 @@ L.Map = L.Evented.extend({
 		// is approximately 1.2. Thus 4 corresponds to six steps of division by pow(2,1/4) =
 		// 35%. 18 corresponds to 8 steps of multiplication by pow(2,1/4) = 400%. The
 		// percentages available are then rounded to the nearest five percent.
-		minZoom: 4,
+		minZoom: 1,
 		maxZoom: 18,
 		maxBounds: L.latLngBounds([0, 0], [-100, 100]),
 		fadeAnimation: false, // Not useful for typing.
