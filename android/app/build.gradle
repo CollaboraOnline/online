@@ -74,10 +74,20 @@ dependencies {
     implementation project(path: ':lib')
 }
 
+task copyBrandFiles(type: Copy) {
+	from "${liboBrandingDir}/android"
+	into "src/main/res"
+	println 'copy files done'
+}
+
 task build_loleaflet(type: Exec) {
 	commandLine 'make', '-C', '../../'
 }
 
 afterEvaluate {
-	preBuild.dependsOn build_loleaflet
+	if (!project.ext.liboHasBranding.equals("true") || !file("${liboBrandingDir}").exists()) {
+		copyBrandFiles.enabled = false;
+	}
+
+	preBuild.dependsOn copyBrandFiles, build_loleaflet
 }
