@@ -525,6 +525,25 @@ p.mobile-wizard.ui-combobox-text.selected {
 .spinfieldcontainer input.spinfield {
 	padding-top: 0px;
 }
+input.spinfield:disabled {
+	background: linear-gradient(to right, white 0%, #ebebe4 15%, #ebebe4 40%, white 100%);
+	color: #bbb !important;
+}
+
+input.spinfield:disabled + .spinfieldunit {
+	color: #bbb !important;
+}
+
+input.spinfield:disabled ~ .spinfieldcontrols * {
+	color: #bbb !important;
+	border-color: #dfdfdf !important;
+	background-color: #f9f9f9;
+}
+
+input.spinfield:disabled ~ .spinfieldcontrols *:active {
+	background-color: #f9f9f9 !important;
+}
+
 /*insert table special layout*/
 .inserttablecontrols p.ui-text{
 	position: absolute;
@@ -680,9 +699,6 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage {
 	opacity: 0.5;
 }
 div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:focus .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:hover .spinfieldimage {
-	opacity: 1 !important;
-}
-div#mobile-wizard-content .spinfield:active .spinfieldimage, div#mobile-wizard-content .spinfield:focus .spinfieldimage, div#mobile-wizard-content .spinfield:hover .spinfieldimage {
 	opacity: 1 !important;
 }
 #buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
