@@ -886,10 +886,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'fillattr':
-			var hatch = items.getItemValue('.uno:FillHatch');
-			var bitmap = items.getItemValue('.uno:FillBitmap');
-			if (hatch || bitmap) {
-				// TODO
+			state = items.getItemValue('.uno:FillPageColor');
+			if (state) {
+				return state;
+			}
+			break;
+
+		case 'fillattr2':
+			state = items.getItemValue('.uno:FillPageGradient');
+			if (state) {
+				return state.startcolor;
+			}
+			break;
+
+		case 'fillattr3':
+			state = items.getItemValue('.uno:FillPageGradient');
+			if (state) {
+				return state.endcolor;
 			}
 			break;
 
@@ -1396,6 +1409,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return;
 		} else if (data.id === 'fillattr') {
 			builder.map.sendUnoCommand('.uno:FillPageColor?Color:string=' + color);
+			return;
+		} else if (data.id === 'fillattr2') {
+			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillPageGradient');
+			gradientItem.startcolor = color;
+			builder.map.sendUnoCommand('.uno:FillPageGradient?FillPageGradientJSON:string=' + JSON.stringify(gradientItem));
+			return;
+		} else if (data.id === 'fillattr3') {
+			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillPageGradient');
+			gradientItem.endcolor = color;
+			builder.map.sendUnoCommand('.uno:FillPageGradient?FillPageGradientJSON:string=' + JSON.stringify(gradientItem));
 			return;
 		}
 
