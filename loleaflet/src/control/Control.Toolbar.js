@@ -733,7 +733,6 @@ function onWopiProps(e) {
 
 function onCommandStateChanged(e) {
 	var toolbar = w2ui['editbar'];
-	var statusbar = w2ui['actionbar'];
 	var commandName = e.commandName;
 	var state = e.state;
 	var color, div;
@@ -832,12 +831,6 @@ function onCommandStateChanged(e) {
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
 	else if (map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
 		var toolbarUp = toolbar;
-		if (window.mode.isMobile()) {
-			toolbarUp = statusbar;
-		}
-		else if (map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
-			toolbarUp = w2ui['presentation-toolbar'];
-		}
 		if (state === 'enabled') {
 			toolbarUp.enable(id);
 		} else {
@@ -1018,7 +1011,6 @@ function setupToolbar(e) {
 	map.on('wopiprops', onWopiProps);
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
-	map.on('commandstatechanged', onCommandStateChanged);
 
 	if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
@@ -1049,5 +1041,7 @@ global.createShapesPanel = createShapesPanel;
 global.onUpdatePermission = onUpdatePermission;
 global.setupSearchInput = setupSearchInput;
 global.getUNOCommand = getUNOCommand;
+global.unoCmdToToolbarId = unoCmdToToolbarId;
+global.onCommandStateChanged = onCommandStateChanged;
 
 }(window));

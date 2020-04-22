@@ -19,6 +19,7 @@ L.Control.MobileTopBar = L.Control.extend({
 		this.create();
 
 		map.on('updatepermission', this.onUpdatePermission, this);
+		map.on('commandstatechanged', this.onCommandStateChanged, this);
 	},
 
 	getToolItems: function(docType) {
@@ -184,7 +185,24 @@ L.Control.MobileTopBar = L.Control.extend({
 				});
 			}
 		}
-	}
+	},
+
+	onCommandStateChanged: function(e) {
+		var commandName = e.commandName;
+		var state = e.state;
+
+		if (this.map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
+			var id = window.unoCmdToToolbarId(commandName);
+			var toolbar = w2ui['actionbar'];
+
+			if (state === 'enabled') {
+				toolbar.enable(id);
+			} else {
+				toolbar.uncheck(id);
+				toolbar.disable(id);
+			}
+		}
+	},
 });
 
 L.control.mobileTopBar = function (docType) {

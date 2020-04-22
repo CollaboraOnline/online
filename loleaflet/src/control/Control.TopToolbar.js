@@ -546,6 +546,9 @@ L.Control.TopToolbar = L.Control.extend({
 			}
 			$('.fontsizes-select').val(state).trigger('change');
 		}
+
+		// call shared handler for font color and higlight items handling
+		window.onCommandStateChanged(e);
 	}
 });
 

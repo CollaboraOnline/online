@@ -16,6 +16,7 @@ L.Control.PresentationBar = L.Control.extend({
 		map.on('wopiprops', this.onWopiProps, this);
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
+		map.on('commandstatechanged', this.onCommandStateChanged, this);
 	},
 
 	create: function() {
@@ -146,6 +147,26 @@ L.Control.PresentationBar = L.Control.extend({
 				presentationButtons.forEach(function(id) {
 					toolbar.disable(id);
 				});
+			}
+		}
+	},
+
+	onCommandStateChanged: function(e) {
+		var commandName = e.commandName;
+		var state = e.state;
+
+		if (this.map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
+			var id = window.unoCmdToToolbarId(commandName);
+
+			if (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage') {
+				var toolbar = w2ui['presentation-toolbar'];
+
+				if (state === 'enabled') {
+					toolbar.enable(id);
+				} else {
+					toolbar.uncheck(id);
+					toolbar.disable(id);
+				}
 			}
 		}
 	},

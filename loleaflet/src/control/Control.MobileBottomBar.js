@@ -17,6 +17,8 @@ L.Control.MobileBottomBar = L.Control.extend({
 	onAdd: function (map) {
 		this.map = map;
 		this.create();
+
+		map.on('commandstatechanged', window.onCommandStateChanged);
 	},
 
 	getToolItems: function(docType) {
