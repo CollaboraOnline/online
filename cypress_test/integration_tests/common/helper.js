@@ -1,4 +1,4 @@
-/* global cy Cypress expect*/
+/* global cy Cypress*/
 
 function loadTestDoc(fileName, subFolder, mobile) {
 	cy.log('Loading test document - start.');
@@ -55,18 +55,14 @@ function loadTestDoc(fileName, subFolder, mobile) {
 
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
 function assertNoKeyboardInput() {
-	cy.window().then(win => {
-		var acceptInput = win.canAcceptKeyboardInput();
-		expect(acceptInput, 'Should accept input').to.equal(false);
-	});
+	cy.get('textarea.clipboard')
+		.should('have.attr', 'data-accept-input', 'false');
 }
 
 // Assert that keyboard input is accepted (i.e. keyboard should be VISIBLE).
 function assertHaveKeyboardInput() {
-	cy.window().then(win => {
-		var acceptInput = win.canAcceptKeyboardInput();
-		expect(acceptInput, 'Should accept input').to.equal(true);
-	});
+	cy.get('textarea.clipboard')
+		.should('have.attr', 'data-accept-input', 'true');
 }
 
 // Assert that we have cursor and focus.

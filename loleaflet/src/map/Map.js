@@ -310,19 +310,6 @@ L.Map = L.Evented.extend({
 				this._docLoadedOnce = this._docLoaded;
 			}
 		}, this);
-
-		if (L.Browser.cypressTest) {
-			// Expose some helpers in test mode, as
-			// Cypress doesn't suppor them.
-			var map = this;
-
-			// This is used to track whether we *intended*
-			// the keyboard to be visible or hidden.
-			// There is no way track the keyboard state
-			// programmatically, so the next best thing
-			// is to track what we intended to do.
-			window.canAcceptKeyboardInput = function() { return map.canAcceptKeyboardInput(); };
-		}
 	},
 
 	loadDocument: function(socket) {

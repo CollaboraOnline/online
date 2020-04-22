@@ -29,7 +29,7 @@ L.TextInput = L.Layer.extend({
 
 		// If the last focus intended to accept user input.
 		// Signifies whether the keyboard is meant to be visible.
-		this._acceptInput = false;
+		this._setAcceptInput(false);
 
 		// Content
 		this._lastContent = []; // unicode characters
@@ -162,7 +162,7 @@ L.TextInput = L.Layer.extend({
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
 		if (this._map._permission !== 'edit') {
-			this._acceptInput = false;
+			this._setAcceptInput(false);
 			return;
 		}
 
@@ -174,16 +174,16 @@ L.TextInput = L.Layer.extend({
 		this._textArea.focus();
 
 		if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true) {
-			this._acceptInput = false;
+			this._setAcceptInput(false);
 			this._textArea.blur();
 			this._textArea.removeAttribute('readonly');
 		} else {
-			this._acceptInput = true;
+			this._setAcceptInput(true);
 		}
 	},
 
 	blur: function() {
-		this._acceptInput = false;
+		this._setAcceptInput(false);
 		this._textArea.blur();
 	},
 
@@ -741,6 +741,18 @@ L.TextInput = L.Layer.extend({
 		var cursorPos = this._map._docLayer._latLngToTwips(ev.target.getLatLng());
 		this._map._docLayer._postMouseEvent('buttondown', cursorPos.x, cursorPos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', cursorPos.x, cursorPos.y, 1, 1, 0);
+	},
+
+	_setAcceptInput: function(accept) {
+		if (L.Browser.cypressTest && this._textArea) {
+			// This is used to track whether we *intended*
+			// the keyboard to be visible or hidden.
+			// There is no way track the keyboard state
+			// programmatically, so the next best thing
+			// is to track what we intended to do.
+			this._textArea.setAttribute('data-accept-input', accept);
+		}
+		this._acceptInput = accept;
 	}
 });
 

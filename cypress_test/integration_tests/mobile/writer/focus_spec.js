@@ -175,9 +175,7 @@ describe('Focus tests', function() {
 		//	.should('be.eq', 'clipboard');
 
 		// This is unstable too
-		//cy.window().then(win => {
-		//	expect(win.canAcceptKeyboardInput(), 'Should accept input').to.equal(true);
-		//});
+		// helper.assertHaveKeyboardInput()
 	});
 
 	it('Focus with hamburger menu.', function() {
@@ -256,9 +254,7 @@ describe('Focus tests', function() {
 		cy.get('#tb_editbar_item_bold div table')
 			.should('not.have.class', 'checked');
 
-		cy.window().then(win => {
-			win.lastInputState = win.canAcceptKeyboardInput();
-		});
+		helper.assertHaveKeyboardInput();
 
 		cy.get('#tb_editbar_item_bold')
 			.click();
@@ -266,10 +262,7 @@ describe('Focus tests', function() {
 		cy.get('#tb_editbar_item_bold div table')
 			.should('have.class', 'checked');
 
-		cy.window().then(win => {
-			var acceptInput = win.canAcceptKeyboardInput();
-			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
-		});
+		helper.assertHaveKeyboardInput();
 	});
 
 	it('Apply italic, check keyboard.', function() {
@@ -285,9 +278,7 @@ describe('Focus tests', function() {
 		cy.get('#tb_editbar_item_italic div table')
 			.should('not.have.class', 'checked');
 
-		cy.window().then(win => {
-			win.lastInputState = win.canAcceptKeyboardInput();
-		});
+		helper.assertHaveKeyboardInput();
 
 		cy.get('#tb_editbar_item_italic')
 			.click();
@@ -295,10 +286,7 @@ describe('Focus tests', function() {
 		cy.get('#tb_editbar_item_italic div table')
 			.should('have.class', 'checked');
 
-		cy.window().then(win => {
-			var acceptInput = win.canAcceptKeyboardInput();
-			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
-		});
+		helper.assertHaveKeyboardInput();
 	});
 
 	it('Apply underline, check keyboard.', function() {
@@ -314,9 +302,7 @@ describe('Focus tests', function() {
 		cy.get('#tb_editbar_item_underline div table')
 			.should('not.have.class', 'checked');
 
-		cy.window().then(win => {
-			win.lastInputState = win.canAcceptKeyboardInput();
-		});
+		helper.assertHaveKeyboardInput();
 
 		cy.get('#tb_editbar_item_underline')
 			.click();
@@ -324,9 +310,6 @@ describe('Focus tests', function() {
 		cy.get('#tb_editbar_item_underline div table')
 			.should('have.class', 'checked');
 
-		cy.window().then(win => {
-			var acceptInput = win.canAcceptKeyboardInput();
-			expect(acceptInput, 'Should accept input').to.equal(win.lastInputState);
-		});
+		helper.assertHaveKeyboardInput();
 	});
 });
