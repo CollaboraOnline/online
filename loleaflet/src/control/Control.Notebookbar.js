@@ -13,7 +13,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map = map;
 
 		var homeTab = JSON.parse(this.getHomeTab());
-		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map});
+		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
 		builder.build($('#toolbar-wrapper').get(0), [homeTab]);
 	},
 
