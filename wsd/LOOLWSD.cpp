@@ -2917,8 +2917,7 @@ private:
 
         std::string fullURL = request.getURI();
         std::string ending = "/ws/wait";
-        bool isWaiting = (fullURL.size() > ending.size() &&
-                          std::equal(ending.rbegin(), ending.rend(), fullURL.rbegin()));
+        bool isWaiting = fullURL.find(ending) != std::string::npos;
         if (docBroker)
         {
             // need to move into the DocumentBroker context before doing session lookup / creation etc.
