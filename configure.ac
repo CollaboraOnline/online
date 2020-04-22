@@ -1080,8 +1080,7 @@ if test "$enable_iosapp" = "yes"; then
 fi
 
 if test "$enable_androidapp" = "yes"; then
-    AC_CONFIG_FILES([android/Makefile
-                 $srcdir/android/build.gradle:android/build.gradle.in
+    AC_CONFIG_FILES([$srcdir/android/build.gradle:android/build.gradle.in
                  $srcdir/android/app/appSettings.gradle:android/app/appSettings.gradle.in
                  $srcdir/android/lib/libSettings.gradle:android/lib/libSettings.gradle.in
                  $srcdir/android/lib/src/main/cpp/CMakeLists.txt:android/lib/src/main/cpp/CMakeLists.txt.in])

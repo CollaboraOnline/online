@@ -186,6 +186,19 @@ task copyBrandTheme(type: Copy) {
 	into "src/main/assets/share/theme_definitions/online"
 }
 
+task copyDocTemplates(type: Copy) {
+        from "${rootProject.getRootDir()}/templates/untitled.odp",
+             "${rootProject.getRootDir()}/templates/untitled.ods",
+             "${rootProject.getRootDir()}/templates/untitled.odt"
+        into "src/main/assets/templates"
+}
+
+task copyKitConfig(type: Copy) {
+        from "${file(rootProject.getRootDir()).getParent()}/loolkitconfig-mobile.xcu"
+        into "src/main/assets/etc/loolwsd"
+        rename { "loolkitconfig.xcu" }
+}
+
 task createStrippedConfig {
     def preserveDir = file("src/main/assets/share/config/soffice.cfg/empty")
     outputs.dir "src/main/assets/share/registry/res"
@@ -276,6 +289,10 @@ ReferenceOOoMajorMinor=4.1
     }
 }
 
+clean.doFirst {
+	delete "src/main/assets"
+}
+
 // creating the UI stuff is cheap, don't bother only applying it for the flavor..
 preBuild.dependsOn 'createRCfiles',
         'createFullConfig',
@@ -285,4 +302,6 @@ afterEvaluate {
 	if (!file("${liboBrandingDir}").exists()) {
 		copyBrandTheme.enabled = false
 	}
+	generateDebugAssets.dependsOn copyDocTemplates, copyKitConfig
+	generateReleaseAssets.dependsOn copyDocTemplates, copyKitConfig
 }
