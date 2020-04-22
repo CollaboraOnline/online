@@ -1196,7 +1196,7 @@ public:
         return false;
     }
 
-    void alertAllUsers(const std::string& cmd, const std::string& kind)
+    void alertAllUsers(const std::string& cmd, const std::string& kind) override
     {
         alertAllUsers("errortoall: cmd=" + cmd + " kind=" + kind);
     }
