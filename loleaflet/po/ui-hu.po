@@ -947,7 +947,6 @@ msgstr "Átnevezés..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr "Megértettem a kockázatokat"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."
