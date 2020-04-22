@@ -15,6 +15,13 @@ L.Control.StatusBar = L.Control.extend({
 		map.on('commandvalues', this.onCommandValues, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		this.create();
+
+		$(window).resize(function() {
+			if ($(window).width() !== map.getSize().x) {
+				var statusbar = w2ui['actionbar'];
+				statusbar.resize();
+			}
+		});
 	},
 
 	hideTooltip: function(toolbar, id) {

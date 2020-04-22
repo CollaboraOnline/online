@@ -22,6 +22,13 @@ L.Control.TopToolbar = L.Control.extend({
 		if (!window.mode.isMobile()) {
 			map.on('updatetoolbarcommandvalues', this.updateCommandValues, this);
 		}
+
+		$(window).resize(function() {
+			if ($(window).width() !== map.getSize().x) {
+				var toolbar = w2ui['editbar'];
+				toolbar.resize();
+			}
+		});
 	},
 
 	onFontSizeSelect: function(e) {

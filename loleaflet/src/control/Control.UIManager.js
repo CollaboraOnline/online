@@ -15,8 +15,6 @@ L.Control.UIManager = L.Control.extend({
 	// UI initialization
 
 	initializeBasicUI: function() {
-		var that = this;
-
 		var menubar = L.control.menubar();
 		this.map.menubar = menubar;
 		this.map.addControl(menubar);
@@ -53,10 +51,6 @@ L.Control.UIManager = L.Control.extend({
 			if (w2ui['actionbar'] && w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
 				w2utils.unlock(w2ui['actionbar'].box);
 			}
-		});
-
-		$(window).resize(function() {
-			that.resizeToolbars();
 		});
 	},
 
@@ -171,15 +165,6 @@ L.Control.UIManager = L.Control.extend({
 
 		// We've resized the document container.
 		this.map.invalidateSize();
-	},
-
-	resizeToolbars: function() {
-		if ($(window).width() !== this.map.getSize().x) {
-			var toolbarUp = w2ui['editbar'];
-			var statusbar = w2ui['actionbar'];
-			toolbarUp.resize();
-			statusbar.resize();
-		}
 	},
 
 	// Helper functions
