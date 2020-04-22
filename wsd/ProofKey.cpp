@@ -143,7 +143,7 @@ Proof::Proof()
             std::string msg = e.displayText() +
                 "\nNo proof-key will be present in discovery."
                 "\nIf you need to use WOPI security, generate an RSA key using this command line:"
-                "\n    ssh-keygen -t rsa -N \"\" -f \"" + keyPath + "\"";
+                "\n    ssh-keygen -t rsa -N \"\" -m PEM -f \"" + keyPath + "\"";
             LOG_WRN(msg);
         }
         catch (const Poco::Exception& e)
