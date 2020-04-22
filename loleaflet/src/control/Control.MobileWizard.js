@@ -355,7 +355,8 @@ L.Control.MobileWizard = L.Control.extend({
 			if (isSidebar)
 				this._modifySidebarLayout(data);
 
-			L.control.jsDialogBuilder({mobileWizard: this, map: this.map}).build(this.content.get(0), [data]);
+			var builder = L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
+			builder.build(this.content.get(0), [data]);
 
 			this._mainTitle = data.text ? data.text : '';
 			this._setTitle(this._mainTitle);

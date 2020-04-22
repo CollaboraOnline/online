@@ -8,6 +8,10 @@
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
+	options: {
+		cssClass: 'mobile-wizard'
+	},
+
 	/* Handler is a function which takes three parameters:
 	 * parentContainer - place where insert the content
 	 * data - data of a control under process
@@ -350,7 +354,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconPath, updateCallback) {
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 		if (data && data.id)
 			sectionTitle.id = data.id;
@@ -415,7 +419,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		}, this);
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
 		contentDiv.title = data.text;
 
 		var contentData = content.length ? content : [content];
@@ -443,7 +447,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_calcFunctionEntry: function(parentContainer, data, contentNode, builder) {
-		var sectionTitle = L.DomUtil.create('div', 'func-entry ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		var sectionTitle = L.DomUtil.create('div', 'func-entry ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 		if (data && data.id)
 			sectionTitle.id = data.id;
@@ -457,7 +461,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var arrowSpan = L.DomUtil.create('div', 'func-info-icon', rightDiv);
 		arrowSpan.innerHTML = '';
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
 		contentDiv.title = data.text;
 
 		builder._currentDepth++;
@@ -510,7 +514,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_explorableMenu: function(parentContainer, title, children, builder, customContent, dataid) {
 		dataid = dataid || 0;
 		var icon = null;
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 
 		var commandName = dataid;
@@ -535,7 +539,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', sectionTitle);
 		arrowSpan.innerHTML = '>';
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
 		contentDiv.title = title;
 
 		if (customContent) {
@@ -611,9 +615,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_tabsControlHandler: function(parentContainer, data, builder) {
 		if (data.tabs) {
-			var tabsContainer = L.DomUtil.create('div', 'ui-tabs mobile-wizard ui-widget');
+			var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget');
 			tabsContainer.id = data.id;
-			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content mobile-wizard ui-widget', parentContainer);
+			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', parentContainer);
 
 			var tabs = [];
 			var contentDivs = [];
@@ -623,17 +627,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				var title = builder._cleanText(item.text);
 
-				var tab = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
+				var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				tab.id = data.tabs[tabIdx].name;
 				if (data.selected == data.tabs[tabIdx].id)
 					$(tab).addClass('selected');
 				tabs[tabIdx] = tab;
 
-				var label = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab);
+				var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
 				label.innerHTML = title;
 				labels[tabIdx] = title;
 
-				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', contentsContainer);
+				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 				contentDiv.title = title;
 
 				$(contentDiv).hide();
@@ -662,8 +666,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_panelTabsHandler: function(parentContainer, data, builder) {
-		var tabsContainer = L.DomUtil.create('div', 'ui-tabs mobile-wizard ui-widget');
-		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content mobile-wizard ui-widget', parentContainer);
+		var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget');
+		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', parentContainer);
 
 		var tabs = [];
 		var contentDivs = [];
@@ -673,15 +677,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var title = builder._cleanText(item.text);
 
-			var tab = L.DomUtil.create('div', 'ui-tab mobile-wizard', tabsContainer);
+			var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 			tab.id = title;
 			tabs[tabIdx] = tab;
 
-			var label = L.DomUtil.create('span', 'ui-tab-content mobile-wizard unolabel', tab);
+			var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
 			label.innerHTML = title;
 			labels[tabIdx] = title;
 
-			var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', contentsContainer);
+			var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 			contentDiv.title = title;
 
 			builder._currentDepth++;
@@ -1184,7 +1188,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_editControl: function(parentContainer, data, builder, callback) {
-		var edit = L.DomUtil.create('input', 'ui-edit mobile-wizard', parentContainer);
+		var edit = L.DomUtil.create('input', 'ui-edit ' + builder.options.cssClass, parentContainer);
 		edit.value = builder._cleanText(data.text);
 		edit.id = data.id;
 
@@ -1276,7 +1280,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_explorableEditControl: function(parentContainer, data, builder) {
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 		if (data && data.id)
 			sectionTitle.id = data.id;
@@ -1293,7 +1297,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
 		arrowSpan.innerHTML = '>';
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
 		contentDiv.title = data.text;
 
 		var entries = [];
@@ -1427,7 +1431,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_comboboxEntry: function(parentContainer, data, builder) {
-		var fixedtext = L.DomUtil.create('p', 'mobile-wizard', parentContainer);
+		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
 		fixedtext.innerHTML = builder._cleanText(data.text);
 		fixedtext.parent = data.parent;
 
@@ -1441,7 +1445,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
-		var fixedtext = L.DomUtil.create('p', 'mobile-wizard', parentContainer);
+		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
 		fixedtext.innerHTML = builder._cleanText(data.text);
 		fixedtext.id = data.id;
 		if (data.style && data.style.length) {
@@ -1456,8 +1460,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_htmlControl: function(parentContainer, data) {
-		var container = L.DomUtil.create('div', 'mobile-wizard', parentContainer);
+	_htmlControl: function(parentContainer, data, builder) {
+		var container = L.DomUtil.create('div', builder.options.cssClass, parentContainer);
 		container.appendChild(data.content);
 		container.id = data.id;
 		if (data.style && data.style.length) {
@@ -1555,7 +1559,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!(data.children && data.children.length))
 			return false;
 
-		var divElem = L.DomUtil.create('div', 'mobile-wizard', parentContainer);
+		var divElem = L.DomUtil.create('div', builder.options.cssClass, parentContainer);
 		if (data.style && data.style.length)
 			L.DomUtil.addClass(divElem, data.style);
 		for (var i = 0; i < data.children.length; ++i) {
@@ -1573,7 +1577,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var sampleSizeClass = 'color-sample-small';
 		if (data.size === 'big')
 			sampleSizeClass = 'color-sample-big';
-		var colorSample = L.DomUtil.create('div', 'mobile-wizard ' + sampleSizeClass, parentContainer);
+		var colorSample = L.DomUtil.create('div', builder.options.cssClass + ' ' + sampleSizeClass, parentContainer);
 		colorSample.id = data.id;
 		colorSample.style.backgroundColor = data.color;
 		colorSample.name = data.color.substring(1);
@@ -1709,7 +1713,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_borderControl: function(parentContainer, data, builder) {
-		var bordercontrollabel = L.DomUtil.create('p', 'mobile-wizard ui-text', parentContainer);
+		var bordercontrollabel = L.DomUtil.create('p', builder.options.cssClass + ' ui-text', parentContainer);
 		bordercontrollabel.innerHTML = _('Cell borders');
 		bordercontrollabel.id = data.id + 'label';
 		for (var i = 1; i < 13; ++i)
@@ -1839,7 +1843,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		var menuEntry = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard ui-widget', parentContainer);
+		var menuEntry = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 
 		if (data.hyperlink) {
 			menuEntry = L.DomUtil.create('a', 'context-menu-link', menuEntry);
