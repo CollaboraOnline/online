@@ -1,11 +1,14 @@
-/* global describe it cy require afterEach*/
+/* global describe it cy require afterEach beforeEach*/
 
-var helper = require('../common/helper');
+var helper = require('../../common/helper');
 
 describe('Slide operations', function() {
+	beforeEach(function() {
+		helper.loadTestDoc('slide_operations.odp', 'impress');
+	});
 
 	afterEach(function() {
-		helper.afterAll('focus.odp');
+		helper.afterAll('slide_operations.odp');
 	});
 
 	function assertNumberOfSlides(slides) {
@@ -14,8 +17,6 @@ describe('Slide operations', function() {
 	}
 
 	it('Add slides', function() {
-		helper.loadTestDoc('focus.odp');
-
 		cy.get('#tb_presentation-toolbar_item_insertpage')
 			.should('not.have.class', 'disabled')
 			.click();
@@ -24,8 +25,6 @@ describe('Slide operations', function() {
 	});
 
 	it('Remove slides', function() {
-		helper.loadTestDoc('focus.odp');
-
 		// Add slides
 		cy.get('#tb_presentation-toolbar_item_insertpage')
 			.should('not.have.class', 'disabled')
@@ -48,8 +47,6 @@ describe('Slide operations', function() {
 	});
 
 	it('Duplicate slide', function() {
-		helper.loadTestDoc('focus.odp');
-
 		cy.get('#tb_presentation-toolbar_item_duplicatepage')
 			.should('not.have.class', 'disabled')
 			.click();
