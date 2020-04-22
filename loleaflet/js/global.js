@@ -280,9 +280,11 @@
 		else if (global.accessHeader !== '') {
 			wopiParams = { 'access_header': global.accessHeader };
 		}
-		docParams = Object.keys(wopiParams).map(function(key) {
-			return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
-		}).join('&');
+		if (wopiParams) {
+			docParams = Object.keys(wopiParams).map(function(key) {
+				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
+			}).join('&');
+		}
 	} else {
 		global.docURL = filePath;
 	}
