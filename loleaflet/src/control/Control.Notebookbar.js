@@ -3,7 +3,7 @@
  * L.Control.Notebookbar
  */
 
-/* global */
+/* global $ */
 L.Control.Notebookbar = L.Control.extend({
 	options: {
 		docType: ''
@@ -11,7 +11,19 @@ L.Control.Notebookbar = L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
+
+		var homeTab = JSON.parse(this.getHomeTab());
+		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map});
+		builder.build($('#toolbar-wrapper').get(0), [homeTab]);
 	},
+
+	setTabs: function(tabs) {
+		$('nav').prepend(tabs);
+	},
+
+	getHomeTab: function() {
+		return '';
+	}
 
 });
 
