@@ -13,15 +13,19 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	build: function(parent, data) {
 		this._amendJSDialogData(data);
 
-		var table = L.DomUtil.create('table', '', parent);
-		var tr = L.DomUtil.create('tr', '', table);
+		if (data.length > 1) {
+			var table = L.DomUtil.create('table', '', parent);
+			var tr = L.DomUtil.create('tr', '', table);
+		} else {
+			tr = parent;
+		}
 
 		for (var childIndex in data) {
 			var childData = data[childIndex];
 			if (!childData)
 				continue;
 
-			var td = L.DomUtil.create('td', '', tr);
+			var td = (data.length > 1) ? L.DomUtil.create('td', '', tr) : tr;
 
 			this._parentize(childData);
 			var childType = childData.type;
