@@ -99,4 +99,7 @@
     <string name="pref_enable_chrome_debugger">Foutopsporing Chrome</string>
     <string name="share_document">Delen dit document</string>
     <string name="pref_enable_chrome_debugger_info">Activeren om het werktuig voor foutopsporing in Chrome in dit document te gebruiken.</string>
+    <string name="remove_from_list">Van de lijst verwijderen</string>
+    <string name="file_actions_icon_desc">Bestandsacties</string>
+    <string name="pref_category_editor">Editor-instellingen</string>
 </resources>

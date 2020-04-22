@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-04-04 10:24+0000\n"
+"PO-Revision-Date: 2020-04-18 13:00+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -1335,7 +1335,7 @@ msgstr "<span class=\"def\">Komentáře:</span> V sešitu můžete vložit jeden
 
 #: html/loleaflet-help.html%2Bdiv.div.p:380-5
 msgid "<span class=\"def\">Conditional formatting:</span> <span class=\"productname\">%productName</span> adds symbols to each cell of a range based on cells conditions. Select the cell range and click the <span class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the symbol set to apply on the range."
-msgstr "<span class=\"def\">Podmíněné formátování:</span><span class=\"productname\">%productName</span> přidá ke každé buňce oblasti symbol, a to podle stanovených podmínek. Vyberte oblast buněk a na nástrojové liště klepněte na ikonu <span class=\"ui\">Podmíněné formátování</span>. Vyberte symbol, který se má v oblasti použít."
+msgstr "<span class=\"def\">Podmíněné formátování:</span> <span class=\"productname\">%productName</span> přidá ke každé buňce oblasti symbol, a to podle stanovených podmínek. Vyberte oblast buněk a na nástrojové liště klepněte na ikonu <span class=\"ui\">Podmíněné formátování</span>. Vyberte symbol, který se má v oblasti použít."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:388-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
@@ -1355,7 +1355,7 @@ msgstr "<span class=\"productname\">%productName</span> nabízí moderní způso
 
 #: html/loleaflet-help.html%2Bdiv.div.p:395-5
 msgid "In contrast, direct formatting applies formatting to selected excerpts of the document contents. On a long document, direct formatting must be applied in every text excerpt, turning text formatting a long task, subject to errors and delays."
-msgstr "Naproti tomu přímé formátování mění vlastnosti textu u vybraných částí dokumentu. V rozsáhlých dokumentech je tak nutno přímé formátování použít pro každou příslušnou část textu. Pak je formátování textu zdlouhavé a náchylné k chybám."
+msgstr "Naproti tomu přímé formátování mění vlastnosti textu u vybraných částí dokumentu. V rozsáhlých dokumentech je tak nutné přímé formátování použít pro každou příslušnou část textu. Pak je formátování textu zdlouhavé a náchylné k chybám."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:396-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format text document objects by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected."
@@ -1383,7 +1383,7 @@ msgstr "Sledování změn"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:406-5
 msgid "When you turn on Track Changes, <span class=\"productname\">%productName</span> marks up new changes made to the document. Select this option again to turn it off."
-msgstr "Pokud zapnete sledování změn, <span class=\"productname\">%productName</span>  označí nové změny provedené v dokumentu. Sledování vypnete opětovnou volbou této možnosti."
+msgstr "Pokud zapnete sledování změn, <span class=\"productname\">%productName</span> označí nové změny provedené v dokumentu. Sledování vypnete opětovnou volbou této možnosti."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:408-5
 msgid "Changes made by different people are shown in different colors and each tracked change can be accepted or rejected, using the box the appears on the right. You can also add a comment there."
@@ -1403,7 +1403,7 @@ msgstr "<span class=\"def\">Řídicí znaky:</span> Odstavec, stránka a nezlomi
 
 #: html/loleaflet-help.html%2Bdiv.div.p:412-5
 msgid "<span class=\"def\">Fields:</span> A basic set of fields is available to insert in the document."
-msgstr "<span class=\"def\">Pole:</span> Do dokumentu lze vkládat základní soubor polí."
+msgstr "<span class=\"def\">Pole:</span> Do dokumentu lze vkládat základní typy polí."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:413-5
 msgid "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index can be updated with new entries."
@@ -1435,7 +1435,7 @@ msgstr "Klepnutím na náhled snímku na panelu se na tento snímek přepnete, z
 
 #: html/loleaflet-help.html%2Bdiv.div.p:430-5
 msgid "Use the slide pane toolbar in the bottom to start the slideshow, add slide, duplicate or delete the current slide."
-msgstr "Pomocí nástrojové lišty v dolní části panelu snímků můžete spustit prezentaci a vložit nový snímek nebo duplikovat či smazat aktuální snímek."
+msgstr "Pomocí nástrojové lišty v dolní části panelu snímků můžete spustit prezentaci, vložit nový snímek a duplikovat či smazat aktuální snímek."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:433-5
 msgid "<span class=\"def\">Slide layouts:</span> <span class=\"productname\">%productName</span> Impress let you change the slide layout. Select the desired slide layout in the drop-down layout list."
@@ -1455,7 +1455,7 @@ msgstr "<span class=\"def\">Animace objektu:</span> Jednotlivé objekty na sním
 
 #: html/loleaflet-help.html%2Bdiv.div.p:438-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
-msgstr "<span class=\"def\">Tabulky:</span> Vkládá do prezentace tabulky. Motiv vzhledu tabulky vyberete pomocí postranní lišty."
+msgstr "<span class=\"def\">Tabulky:</span> Do prezentace můžete vkládat tabulky. Motiv vzhledu tabulky vyberete pomocí postranní lišty."
 
 #: html/loleaflet-help.html%2Bdiv.h4:442-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"

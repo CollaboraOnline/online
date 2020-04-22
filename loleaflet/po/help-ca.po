@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-04-14 18:36+0000\n"
+"PO-Revision-Date: 2020-04-20 07:28+0000\n"
 "Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
@@ -1267,7 +1267,7 @@ msgstr "Per a comprovar sistemàticament l'ortografia de tot el document, trieu 
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr ""
+msgstr "Editeu un full de càlcul en línia de la mateixa manera que ho feu en un full de càlcul d'escriptori. Les operacions d'introducció  de dades, selecció d'intervals columnes, files o fulls són iguals. Useu el teclat, menús o la barra d'eines per a executar ordres en el full de càlcul. També és possible arrossegar el contingut de cel·les per a emplenar altres cel·les amb dades. Les ordres de copiar, retallar i enganxar són disponibles en el menú contextual. Després d'introduir dades en una cel·la, la tecla <span class=\"kbd\">Tab</span> mou el cursor a la cel·la següent cap a la dreta, i amb <span class=\"kbd\">Retorn</span> es mou cap a la cel·la inferior, per a facilitar l'entrada de més dades."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
@@ -1299,7 +1299,7 @@ msgstr "Podeu fer servir el <span class=\"ui\">Filtre automàtic</span>, per exe
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:360-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
-msgstr ""
+msgstr "En el diàleg <span class=\"ui\">Filtre estàndard</span>, podeu definir intervals que contenen els valors d'uns camps de data determinats. Podeu usar el filtre estàndard per a connectar les condicions amb els operadors lògics I o O."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:361-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
@@ -1311,7 +1311,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:365-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"
-msgstr ""
+msgstr "<span class=\"def\">Validació de dades:</span> Per a cada cel·la, podeu definir les entrades que seran vàlida. Les entrades vàlides d'una cel·la es rebutjaran. Per a activar la validació de dades:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
@@ -1319,7 +1319,7 @@ msgstr "Trieu <span class=\"ui\">Validesa</span> al menú <span class=\"ui\">Dad
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:371-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."
-msgstr ""
+msgstr "Seleccioneu els criteris de validació en la llista <span class=\"ui\">Permet</span>. Depenent dels criteris, poden aparèixer més opcions. Empleneu les dades sol·licitades."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:373-9
 msgid "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\">OK</span> to close the dialog."
@@ -1343,7 +1343,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:391-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
-msgstr ""
+msgstr "Els menús contextuals són disponibles fent clic amb el botó secundari del ratolí. Les ordres disponibles en el menú contextual són relacionades, però no de manera extensiva, amb l'objecte seleccionat en el document."
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:393-5
 msgid "Formatting text"

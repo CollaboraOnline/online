@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-04-04 15:13+0000\n"
+"PO-Revision-Date: 2020-04-21 11:44+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/sk/>\n"
 "Language: sk\n"
@@ -1542,10 +1542,8 @@ msgid "What is the blue wavy underline in some words in the text?"
 msgstr "Čo znamená v texte modrá vlnovka pod niektorými slovami?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
-#, fuzzy
-#| msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
-msgstr "Modrou vlnovkou sú v texte označené gramatické chyby. Kliknutím pravým tlačidlom myši na podčiarknutý text otvoríte menu s návrhmi na opravu chyby a s príslušnými gramatickými pravidlami. Text zmeníte tým, že návrh vyberiete."
+msgstr "Modrou vlnovkou sú v texte označené gramatické chyby. Kliknutím pravým tlačidlom myši na podčiarknutý text otvoríte menu s návrhmi na opravu chyby a s príslušnými gramatickými pravidlami. Text zmeníte tak, že návrh vyberiete."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
