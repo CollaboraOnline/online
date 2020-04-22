@@ -123,8 +123,13 @@ function clearAllText() {
 // Expects getTextForClipboard return the given
 // plain-text, and asserts equality.
 function expectTextForClipboard(expectedPlainText) {
-	cy.get('#copy-paste-container pre')
-		.should('have.text', expectedPlainText);
+	if (isWriter()) {
+		cy.get('#copy-paste-container p font')
+			.should('have.text', expectedPlainText);
+	} else {
+		cy.get('#copy-paste-container pre')
+			.should('have.text', expectedPlainText);
+	}
 }
 
 function afterAll(fileName) {
@@ -167,6 +172,18 @@ function initAliasToNegative(aliasName) {
 	cy.log('Initializing alias to a negative value - end.');
 }
 
+function isCalc() {
+	return Cypress.$('.spreadsheet-header-columns').length != 0;
+}
+
+function isImpress() {
+	return Cypress.$('#slide-sorter').length != 0;
+}
+
+function isWriter() {
+	return !isCalc() && !isImpress();
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -176,3 +193,6 @@ module.exports.clearAllText = clearAllText;
 module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.afterAll = afterAll;
 module.exports.initAliasToNegative = initAliasToNegative;
+module.exports.isCalc = isCalc;
+module.exports.isImpress = isImpress;
+module.exports.isWriter = isWriter;

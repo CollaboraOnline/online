@@ -55,8 +55,7 @@ describe('Spell checking menu.', function() {
 
 		writerHelper.selectAllMobile();
 
-		cy.get('#copy-paste-container p')
-			.should('contain.text', 'hello');
+		helper.expectTextForClipboard('hello');
 	});
 
 	it('Ignore one.', function() {
