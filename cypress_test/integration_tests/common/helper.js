@@ -105,8 +105,19 @@ function clearAllText() {
 
 	cy.log('Clear all text');
 
+	// Trigger select all
 	cy.get('textarea.clipboard')
-		.type('{ctrl}a{del}').wait(300);
+		.type('{ctrl}a');
+
+	cy.get('.leaflet-marker-icon')
+		.should('exist');
+
+	// Then remove
+	cy.get('textarea.clipboard')
+		.type('{del}');
+
+	cy.get('.leaflet-marker-icon')
+		.should('not.exist');
 }
 
 // Expects getTextForClipboard return the given
