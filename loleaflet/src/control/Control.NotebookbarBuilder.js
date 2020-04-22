@@ -10,35 +10,36 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this.map = map;
 	},
 
-	build: function(parent, data) {
+	build: function(parent, data, hasVerticalParent) {
 		this._amendJSDialogData(data);
 
-		if (data.length > 1) {
-			var table = L.DomUtil.create('table', '', parent);
-			var tr = L.DomUtil.create('tr', '', table);
-		} else {
-			tr = parent;
-		}
+		var containerToInsert = parent;
 
 		for (var childIndex in data) {
 			var childData = data[childIndex];
 			if (!childData)
 				continue;
 
-			var td = (data.length > 1) ? L.DomUtil.create('td', '', tr) : tr;
+			if (!hasVerticalParent)
+				var td = L.DomUtil.create('td', '', containerToInsert);
+			else {
+				containerToInsert = L.DomUtil.create('tr', '', parent);
+				td = L.DomUtil.create('td', '', containerToInsert);
+			}
+
+			var isVertical = childData.vertical === 'true' ? true : false;
 
 			this._parentize(childData);
 			var childType = childData.type;
 			var processChildren = true;
-			var needsToCreateContainer =
-				childType == 'panel' || childType == 'frame';
 
 			if ((childData.id === undefined || childData.id === '' || childData.id === null)
 				&& (childType == 'checkbox' || childType == 'radiobutton')) {
 				continue;
 			}
 
-			var childObject = needsToCreateContainer ? L.DomUtil.createWithId('div', childData.id, td) : td;
+			var table = L.DomUtil.create('table', '', td);
+			var childObject = L.DomUtil.create('tr', '', table);
 
 			var handler = this._controlHandlers[childType];
 			var twoPanelsAsChildren =
@@ -56,7 +57,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					console.warn('Unsupported control type: \"' + childType + '\"');
 
 				if (processChildren && childData.children != undefined)
-					this.build(childObject, childData.children);
+					this.build(childObject, childData.children, isVertical);
 				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
 					$('#' + childData.id).addClass('hidden-from-event');
 				}
