@@ -55,7 +55,7 @@ build the native parts on Windows.
    endif
    endif
   +endif
-   
+
    #
    # Define Tools
 
@@ -81,6 +81,10 @@ build the native parts on Windows.
   + Start Android Studio
   + Open this 'android' subdir as a project
   + Build from Android Studio (Build -> Make Project)
+
+Or
+
+  + command line:  ./gradlew build
 
 == Building 32bit + 64bit combined .apk ==
 
@@ -141,7 +145,7 @@ to setup lldb to actually read & use them.
 From now on, you will be able to debug directly in the Android Studio
 debugger.  Happy debugging!
 
-Note: to re-buld your app with a newly compiled libnative-lo code - it is 
+Note: to re-buld your app with a newly compiled libnative-lo code - it is
 
 == Tip: How to speed up your core.git build ==
 
