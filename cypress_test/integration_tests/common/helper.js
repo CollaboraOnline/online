@@ -113,27 +113,11 @@ function clearAllText() {
 		.type('{ctrl}a{del}').wait(300);
 }
 
-// Returns the text that should go to the
-// clipboard on Ctrl+C.
-// So this isn't equivalent to reading the
-// clipboard (which Cypress doesn't support).
-// Takes a closure f that takes the text
-// string as argument. Use as follows:
-// helper.getTextForClipboard((plainText) => {
-// 	expect(plainText, 'Selection Text').to.equal(testText);
-// });
-function getTextForClipboard(f) {
-	cy.window().then(win => {
-		f(win.getTextForClipboard());
-	});
-}
-
 // Expects getTextForClipboard return the given
 // plain-text, and asserts equality.
 function expectTextForClipboard(expectedPlainText) {
-	getTextForClipboard((plainText) => {
-		expect(plainText, 'Selection Text').to.equal(expectedPlainText);
-	});
+	cy.get('#copy-paste-container pre')
+		.should('have.text', expectedPlainText);
 }
 
 function afterAll(fileName) {
@@ -182,7 +166,6 @@ module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
 module.exports.assertHaveKeyboardInput = assertHaveKeyboardInput;
 module.exports.selectAllText = selectAllText;
 module.exports.clearAllText = clearAllText;
-module.exports.getTextForClipboard = getTextForClipboard;
 module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.afterAll = afterAll;
 module.exports.initAliasToNegative = initAliasToNegative;

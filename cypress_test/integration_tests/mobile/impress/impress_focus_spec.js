@@ -64,7 +64,7 @@ describe('Impress focus tests', function() {
 
 		// End editing.
 		cy.get('#document-container')
-			.type('{esc}').wait(500);
+			.type('{esc}');
 
 		impress.assertNotInTextEditMode();
 
@@ -101,7 +101,7 @@ describe('Impress focus tests', function() {
 
 				// End editing.
 				cy.get('#document-container')
-					.type('{esc}').wait(500);
+					.type('{esc}');
 
 				impress.assertNotInTextEditMode();
 
@@ -111,7 +111,7 @@ describe('Impress focus tests', function() {
 						expect(items).have.length(1);
 
 						cy.get('#document-container')
-							.click(posX, posY).wait(500);
+							.click(posX, posY);
 
 						impress.assertInTextEditMode();
 
@@ -122,7 +122,7 @@ describe('Impress focus tests', function() {
 
 						// End editing.
 						cy.get('#document-container')
-							.type('{esc}').wait(500);
+							.type('{esc}');
 
 						impress.assertNotInTextEditMode();
 					});

@@ -322,13 +322,6 @@ L.Map = L.Evented.extend({
 			// programmatically, so the next best thing
 			// is to track what we intended to do.
 			window.canAcceptKeyboardInput = function() { return map.canAcceptKeyboardInput(); };
-
-			// This is used to extract the text we *intended*
-			// to put on the clipboard. There is currently
-			// no way to actually put data on the clipboard
-			// programmatically, so this is the way to test
-			// what we "copied".
-			window.getTextForClipboard = function() { return map._clip.stripHTML(map._clip._getHtmlForClipboard()); };
 		}
 	},
 
