@@ -10,6 +10,22 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this.map = map;
 	},
 
+	_overrideHandlers: function() {
+		this._controlHandlers['combobox'] = undefined;
+		this._controlHandlers['listbox'] = undefined;
+
+		this._toolitemHandlers['.uno:XLineColor'] = undefined;
+		this._toolitemHandlers['.uno:SelectWidth'] = undefined;
+		this._toolitemHandlers['.uno:FontColor'] = undefined;
+		this._toolitemHandlers['.uno:BackColor'] = undefined;
+		this._toolitemHandlers['.uno:CharBackColor'] = undefined;
+		this._toolitemHandlers['.uno:BackgroundColor'] = undefined;
+		this._toolitemHandlers['.uno:FrameLineColor'] = undefined;
+		this._toolitemHandlers['.uno:Color'] = undefined;
+		this._toolitemHandlers['.uno:FillColor'] = undefined;
+		this._toolitemHandlers['.uno:ResetAttributes'] = undefined;
+	},
+
 	build: function(parent, data, hasVerticalParent) {
 		this._amendJSDialogData(data);
 
@@ -70,5 +86,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 L.control.notebookbarBuilder = function (options) {
 	var builder = new L.Control.NotebookbarBuilder(options);
 	builder._setup(options);
+	builder._overrideHandlers();
 	return builder;
 };
