@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-16 15:32+0200\n"
+"POT-Creation-Date: 2020-04-22 16:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,14 +189,14 @@ msgstr ""
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1173
 #: src/control/Control.PresentationBar.js:81 src/control/Control.Tabs.js:201
-#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:552
+#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:574
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1174
 #: src/control/Control.PresentationBar.js:82 src/control/Control.Tabs.js:202
-#: src/control/Control.Tabs.js:219 src/control/Toolbar.js:553
+#: src/control/Control.Tabs.js:219 src/control/Toolbar.js:575
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:400
 msgid "Cancel"
 msgstr ""
@@ -319,7 +319,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:153
 #: src/control/Control.JSDialogBuilder.js:870
-#: src/control/Control.StatusBar.js:338
+#: src/control/Control.StatusBar.js:327
 msgid "None"
 msgstr ""
 
@@ -387,31 +387,31 @@ msgstr ""
 msgid "Font Size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1484
+#: src/control/Control.JSDialogBuilder.js:1489
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1673
+#: src/control/Control.JSDialogBuilder.js:1678
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1674
+#: src/control/Control.JSDialogBuilder.js:1679
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1694
+#: src/control/Control.JSDialogBuilder.js:1699
 #: src/control/Control.TopToolbar.js:211
 msgid "Insert table"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1723
+#: src/control/Control.JSDialogBuilder.js:1728
 msgid "Line style:"
 msgstr ""
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:229
 #: src/control/Control.Menubar.js:231 src/control/Control.Menubar.js:233
 #: src/control/Control.Menubar.js:340 src/control/Control.Menubar.js:456
-#: src/control/Control.StatusBar.js:505
+#: src/control/Control.StatusBar.js:494
 msgid "None (Do not check spelling)"
 msgstr ""
 
@@ -533,7 +533,7 @@ msgid "About"
 msgstr ""
 
 #: src/control/Control.Menubar.js:247 src/control/Control.Menubar.js:349
-#: src/control/Control.Menubar.js:466 src/map/Map.js:415
+#: src/control/Control.Menubar.js:466 src/map/Map.js:408
 msgid "Last modification"
 msgstr ""
 
@@ -583,7 +583,7 @@ msgstr ""
 msgid "Landscape"
 msgstr ""
 
-#: src/control/Control.Menubar.js:769 src/control/Control.StatusBar.js:504
+#: src/control/Control.Menubar.js:769 src/control/Control.StatusBar.js:493
 msgid "Reset to Default Language"
 msgstr ""
 
@@ -645,63 +645,63 @@ msgstr ""
 msgid "Cancel the search"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:303
+#: src/control/Control.StatusBar.js:292
 msgid "Number of Sheets"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:308
+#: src/control/Control.StatusBar.js:297
 msgid "Selected range of cells"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:313 src/control/Control.StatusBar.js:362
+#: src/control/Control.StatusBar.js:302 src/control/Control.StatusBar.js:351
 msgid "Entering text mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:322 src/control/Control.StatusBar.js:367
+#: src/control/Control.StatusBar.js:311 src/control/Control.StatusBar.js:356
 msgid "Selection Mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:316
 msgid "Choice of functions"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:331
+#: src/control/Control.StatusBar.js:320
 msgid "Average"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:332
+#: src/control/Control.StatusBar.js:321
 msgid "CountA"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:333
+#: src/control/Control.StatusBar.js:322
 msgid "Count"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:334
+#: src/control/Control.StatusBar.js:323
 msgid "Maximum"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:335
+#: src/control/Control.StatusBar.js:324
 msgid "Minimum"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:336
+#: src/control/Control.StatusBar.js:325
 msgid "Sum"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:337
+#: src/control/Control.StatusBar.js:326
 msgid "Selection count"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:352
+#: src/control/Control.StatusBar.js:341
 msgid "Number of Pages"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:357
+#: src/control/Control.StatusBar.js:346
 msgid "Word Counter"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:384
+#: src/control/Control.StatusBar.js:373
 msgid "Number of Slides"
 msgstr ""
 
@@ -721,15 +721,15 @@ msgstr ""
 msgid "Enter new sheet name"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:979
+#: src/control/Control.Toolbar.js:954
 msgid "Previous slide"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:980
+#: src/control/Control.Toolbar.js:955
 msgid "Next slide"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:1038
+#: src/control/Control.Toolbar.js:1013
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
@@ -794,12 +794,16 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
-#: src/control/Ruler.js:241
+#: src/control/Ruler.js:247
 msgid "Left Margin"
 msgstr ""
 
-#: src/control/Ruler.js:242
+#: src/control/Ruler.js:248
 msgid "Right Margin"
+msgstr ""
+
+#: src/control/Ruler.js:421 src/control/Ruler.js:542
+msgid "Insert tabstop"
 msgstr ""
 
 #: src/control/Signing.js:195
@@ -930,7 +934,7 @@ msgstr ""
 msgid "Downloading..."
 msgstr ""
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1465
+#: src/control/Toolbar.js:104 src/map/Map.js:1458
 msgid "Saving..."
 msgstr ""
 
@@ -938,24 +942,28 @@ msgstr ""
 msgid "Renaming..."
 msgstr ""
 
-#: src/control/Toolbar.js:410
+#: src/control/Toolbar.js:385
+msgid "I understand the risks"
+msgstr ""
+
+#: src/control/Toolbar.js:432
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:454
+#: src/control/Toolbar.js:476
 msgid "This version of %productName is powered by"
 msgstr ""
 
-#: src/control/Toolbar.js:546
+#: src/control/Toolbar.js:568
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:548
+#: src/control/Toolbar.js:570
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:549
+#: src/control/Toolbar.js:571
 msgid "Link"
 msgstr ""
 
@@ -1045,7 +1053,7 @@ msgstr ""
 msgid "Wrong password provided. Please try again."
 msgstr ""
 
-#: src/core/Socket.js:749 src/map/Map.js:1468
+#: src/core/Socket.js:749 src/map/Map.js:1461
 msgid "Loading..."
 msgstr ""
 
@@ -1228,18 +1236,18 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:780
+#: src/map/Clipboard.js:782
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:782
+#: src/map/Clipboard.js:784
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
 
-#: src/map/Clipboard.js:815
+#: src/map/Clipboard.js:817
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1248,28 +1256,28 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:831
+#: src/map/Clipboard.js:833
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
 
-#: src/map/Map.js:247
+#: src/map/Map.js:240
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:450
+#: src/map/Map.js:443
 #, javascript-format
 msgid "%d seconds ago"
 msgstr ""
 
-#: src/map/Map.js:453
+#: src/map/Map.js:446
 #, javascript-format
 msgid "%d minutes ago"
 msgstr ""
 
-#: src/map/Map.js:1321
+#: src/map/Map.js:1314
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
