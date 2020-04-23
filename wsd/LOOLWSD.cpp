@@ -728,6 +728,7 @@ std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
 bool LOOLWSD::AnonymizeUserData = false;
+bool LOOLWSD::CheckLoolUser = true;
 #if ENABLE_SSL
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
@@ -1422,6 +1423,10 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
+    optionSet.addOption(Option("disable-lool-user-checking", "", "Don't check whether loolwsd is running under the user 'lool'.  NOTE: This is insecure, use only when you know what you are doing!")
+                        .required(false)
+                        .repeatable(false));
+
     optionSet.addOption(Option("override", "o", "Override any setting by providing full xmlpath=value.")
                         .required(false)
                         .repeatable(true)
@@ -1482,6 +1487,8 @@ void LOOLWSD::handleOption(const std::string& optionName,
         ClientPortNumber = std::stoi(value);
     else if (optionName == "disable-ssl")
         _overrideSettings["ssl.enable"] = "false";
+    else if (optionName == "disable-lool-user-checking")
+        CheckLoolUser = false;
     else if (optionName == "override")
     {
         std::string optName;
@@ -1739,6 +1746,9 @@ bool LOOLWSD::createForKit()
 
     if (NoSeccomp)
         args.push_back("--noseccomp");
+
+    if (!CheckLoolUser)
+        args.push_back("--disable-lool-user-checking");
 
 #if ENABLE_DEBUG
     if (SingleKit)

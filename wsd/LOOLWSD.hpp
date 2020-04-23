@@ -246,6 +246,7 @@ public:
     static std::string HostIdentifier; ///< A unique random hash that identifies this server
     static std::string LogLevel;
     static bool AnonymizeUserData;
+    static bool CheckLoolUser;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
 #if !MOBILEAPP

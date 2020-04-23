@@ -398,7 +398,20 @@ static void printArgumentHelp()
 
 int main(int argc, char** argv)
 {
-    if (!hasCorrectUID("loolforkit"))
+    // early check for avoiding the security check for username 'lool'
+    // (deliberately only this, not moving the entire parameter parsing here)
+    bool checkLoolUser = true;
+    for (int i = 0; i < argc; ++i)
+    {
+        char *cmd = argv[i];
+        if (std::strstr(cmd, "--disable-lool-user-checking") == cmd)
+        {
+            std::cerr << "Security: Check for the 'lool' username overridden on the command line." << std::endl;
+            checkLoolUser = false;
+        }
+    }
+
+    if (checkLoolUser && !hasCorrectUID("loolforkit"))
     {
         return EX_SOFTWARE;
     }
@@ -526,7 +539,7 @@ int main(int argc, char** argv)
         // we are running without seccomp protection
         else if (std::strstr(cmd, "--noseccomp") == cmd)
         {
-            LOG_ERR("Security :Running without the ability to filter system calls is ill advised.");
+            LOG_ERR("Security: Running without the ability to filter system calls is ill advised.");
             NoSeccomp = true;
         }
     }

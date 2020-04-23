@@ -34,8 +34,8 @@ static int hasCorrectUID(const char *appName)
         return 1;
     else {
         fprintf(stderr, "Error: %s incorrect user-name: %s - aborting\n",
-		appName, pw && pw->pw_name ? pw->pw_name : "<null>");
-	return 0;
+                appName, pw && pw->pw_name ? pw->pw_name : "<null>");
+        return 0;
     }
 #endif
 }
