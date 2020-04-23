@@ -11,23 +11,76 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['combobox'] = undefined;
-		this._controlHandlers['listbox'] = undefined;
+		this._controlHandlers['combobox'] = function() {return false;};
+		this._controlHandlers['listbox'] = function() {return false;};
 
-		this._toolitemHandlers['.uno:XLineColor'] = undefined;
-		this._toolitemHandlers['.uno:SelectWidth'] = undefined;
-		this._toolitemHandlers['.uno:FontColor'] = undefined;
-		this._toolitemHandlers['.uno:BackColor'] = undefined;
-		this._toolitemHandlers['.uno:CharBackColor'] = undefined;
-		this._toolitemHandlers['.uno:BackgroundColor'] = undefined;
-		this._toolitemHandlers['.uno:FrameLineColor'] = undefined;
-		this._toolitemHandlers['.uno:Color'] = undefined;
-		this._toolitemHandlers['.uno:FillColor'] = undefined;
-		this._toolitemHandlers['.uno:ResetAttributes'] = undefined;
+		this._toolitemHandlers['.uno:XLineColor'] = function() {};
+		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
+		this._toolitemHandlers['.uno:FontColor'] = function() {};
+		this._toolitemHandlers['.uno:BackColor'] = function() {};
+		this._toolitemHandlers['.uno:CharBackColor'] = function() {};
+		this._toolitemHandlers['.uno:BackgroundColor'] = function() {};
+		this._toolitemHandlers['.uno:FrameLineColor'] = function() {};
+		this._toolitemHandlers['.uno:Color'] = function() {};
+		this._toolitemHandlers['.uno:FillColor'] = function() {};
+		this._toolitemHandlers['.uno:ResetAttributes'] = function() {};
 	},
 
-	build: function(parent, data, hasVerticalParent) {
+	_unoToolButton: function(parentContainer, data, builder) {
+		var button = null;
+
+		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+
+		if (data.command) {
+			var id = data.command.substr('.uno:'.length);
+			div.id = id;
+
+			var icon = builder._createIconPath(data.command);
+			var buttonId = id + 'img';
+
+			button = L.DomUtil.create('img', 'ui-content unobutton', div);
+			button.src = icon;
+			button.id = buttonId;
+
+			var updateFunction = function() {
+				var items = builder.map['stateChangeHandler'];
+				var state = items.getItemValue(data.command);
+
+				if (state && state === 'true')
+					$(button).addClass('selected');
+				else
+					$(button).removeClass('selected');
+			};
+
+			updateFunction();
+
+			builder.map.on('commandstatechanged', function(e) {
+				if (e.commandName === data.command)
+					updateFunction();
+			}, this);
+
+		} else {
+			button = L.DomUtil.create('label', 'ui-content unolabel', div);
+			button.innerHTML = builder._cleanText(data.text);
+		}
+
+		$(div).click(function () {
+			builder.callback('toolbutton', 'click', button, data.command, builder);
+		});
+
+		if (data.enabled == 'false')
+			$(button).attr('disabled', 'disabled');
+
+		return false;
+	},
+
+	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
 		this._amendJSDialogData(data);
+
+		if (hasVerticalParent === undefined) {
+			parent = L.DomUtil.create('table', 'root-container ' + this.options.cssClass, parent);
+			parent = L.DomUtil.create('tr', '', parent);
+		}
 
 		var containerToInsert = parent;
 
@@ -36,11 +89,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			if (!childData)
 				continue;
 
-			if (!hasVerticalParent)
-				var td = L.DomUtil.create('td', '', containerToInsert);
-			else {
-				containerToInsert = L.DomUtil.create('tr', '', parent);
-				td = L.DomUtil.create('td', '', containerToInsert);
+			if (parentHasManyChildren) {
+				if (!hasVerticalParent)
+					var td = L.DomUtil.create('td', '', containerToInsert);
+				else {
+					containerToInsert = L.DomUtil.create('tr', '', parent);
+					td = L.DomUtil.create('td', '', containerToInsert);
+				}
+			} else {
+				td = containerToInsert;
 			}
 
 			var isVertical = childData.vertical === 'true' ? true : false;
@@ -54,8 +111,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				continue;
 			}
 
-			var table = L.DomUtil.create('table', '', td);
-			var childObject = L.DomUtil.create('tr', '', table);
+			var hasManyChildren = childData.children && childData.children.length > 1;
+			if (hasManyChildren) {
+				var table = L.DomUtil.create('table', '', td);
+				var childObject = L.DomUtil.create('tr', '', table);
+			} else {
+				childObject = td;
+			}
 
 			var handler = this._controlHandlers[childType];
 			var twoPanelsAsChildren =
@@ -73,7 +135,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					console.warn('Unsupported control type: \"' + childType + '\"');
 
 				if (processChildren && childData.children != undefined)
-					this.build(childObject, childData.children, isVertical);
+					this.build(childObject, childData.children, isVertical, hasManyChildren);
 				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
 					$('#' + childData.id).addClass('hidden-from-event');
 				}

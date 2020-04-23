@@ -21,6 +21,9 @@ L.Control.Notebookbar = L.Control.extend({
 		$('nav').prepend(tabs);
 	},
 
+	// required, called by builder, not needed in this container
+	setCurrentScrollPosition: function() {},
+
 	getHomeTab: function() {
 		return '';
 	}

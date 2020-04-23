@@ -1,4 +1,6 @@
 
+/* tabs */
+
 .ui-tabs.notebookbar {
 	display: inline-block;
 }
@@ -7,4 +9,32 @@
 	float: left;
 	margin-right: 10px;
 	font-size: 12pt;
+}
+
+/* root container */
+
+.root-container.notebookbar {
+	position: fixed;
+	top: 20px;
+}
+
+/* unobuttons */
+
+#SendToBack.notebookbar, #ObjectBackOne.notebookbar, #ObjectForwardOne.notebookbar, #BringToFront.notebookbar, #SetObjectToBackground.notebookbar, #SetObjectToForeground.notebookbar, #FlipVertical.notebookbar, #FlipHorizontal.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar, #StyleApply.notebookbar, #StyleUpdateByExample.notebookbar, #StyleNewByExample.notebookbar, #Shadowed.notebookbar, #Grow.notebookbar, #Shrink.notebookbar, #Spacing.notebookbar, #SuperScript.notebookbar, #SubScript.notebookbar,#AlignLeft.notebookbar, #AlignRight.notebookbar, #AlignHorizontalCenter.notebookbar, #AlignBlock.notebookbar, #ParaRightToLeft.notebookbar, #ParaLeftToRight.notebookbar, #AlignTop.notebookbar, #AlignVCenter.notebookbar, #AlignBottom.notebookbar, #IncrementIndent.notebookbar, #DecrementIndent.notebookbar, #LeftPara.notebookbar, #RightPara.notebookbar, #CenterPara.notebookbar, #JustifyPara.notebookbar, #DefaultBullet.notebookbar, #DefaultNumbering.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #LineSpacing.notebookbar, #HangingIndent.notebookbar, #CellVertTop.notebookbar, #CellVertCenter.notebookbar, #CellVertBottom.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #DeleteTable.notebookbar, #MergeCells.notebookbar{
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+#buttonbefore.notebookbar, #buttonafter.notebookbar, #buttonoptimal.notebookbar, #buttonparallel.notebookbar, #buttonnone.notebookbar, #buttonthrough.notebookbar, #bottom.notebookbar, #top.notebookbar, #standard.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar{
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+.unotoolbutton.notebookbar .unobutton {
+	width: 24px !important;
+	height: 24px !important;
+}
+
+.ui-content.notebookbar .unobutton.selected {
+	box-shadow: 0 0 0px 4px #e6e6e640 !important;
 }

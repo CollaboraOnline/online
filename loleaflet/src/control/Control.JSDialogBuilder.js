@@ -1505,7 +1505,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_unoToolButton: function(parentContainer, data, builder) {
 		var button = null;
 
-		var div = this._createIdentifiable('div', 'ui-content unospan', parentContainer, data);
+		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.cssClass + ' ui-content unospan', parentContainer, data);
 
 		if (data.command) {
 			var id = data.command.substr('.uno:'.length);
