@@ -545,26 +545,42 @@ public:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         return sendFrame(socket, data, len, WSFrameMask::Fin | static_cast<unsigned char>(code), flush);
     }
-private:
-    /// Sends a WebSocket frame given the data, length, and flags.
-    /// Returns the number of bytes written (including frame overhead) on success,
-    /// 0 for closed/invalid socket, and -1 for other errors.
-    int sendFrame(const std::shared_ptr<StreamSocket>& socket,
-                  const char* data, const uint64_t len,
-                  unsigned char flags, const bool flush = true) const
+
+#if !MOBILEAPP
+    /// Sends a message while giving at the same time the rights
+    /// for file descriptor to the receiving process.
+    /// DO NOT USE IT unless you have no other option.
+    int sendTextMessageWithFD(const char* msg, size_t len, int fd)
     {
-        if (!socket || data == nullptr || len == 0)
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+
+        if (!socket || msg == nullptr || len == 0)
             return -1;
 
         if (socket->isClosed())
             return 0;
 
         socket->assertCorrectThread();
-        std::vector<char>& out = socket->getOutBuffer();
+
+        std::vector<char> out;
+
+        buildFrame(msg, len, WSFrameMask::Fin | static_cast<char>(WSOpCode::Text), out);
+
+        const size_t size = out.size();
+
+        socket->sendFD(out.data(), out.size(), fd);
+
+        return size;
+    }
+#endif
+
+protected:
 
 #if !MOBILEAPP
-        const size_t oldSize = out.size();
-
+    /// Builds a websocket frame based on data and flags received as parameters.
+    /// The frame is output in 'out' parameter
+    void buildFrame(const char* data, const uint64_t len, unsigned char flags, std::vector<char>& out) const
+    {
         out.push_back(flags);
 
         int maskFlag = _isMasking ? 0x80 : 0;
@@ -612,6 +628,30 @@ private:
             // Copy the data.
             out.insert(out.end(), data, data + len);
         }
+    }
+#endif
+
+    /// Sends a WebSocket frame given the data, length, and flags.
+    /// Returns the number of bytes written (including frame overhead) on success,
+    /// 0 for closed/invalid socket, and -1 for other errors.
+    int sendFrame(const std::shared_ptr<StreamSocket>& socket,
+                  const char* data, const uint64_t len,
+                  unsigned char flags, const bool flush = true) const
+    {
+        if (!socket || data == nullptr || len == 0)
+            return -1;
+
+        if (socket->isClosed())
+            return 0;
+
+        socket->assertCorrectThread();
+        std::vector<char>& out = socket->getOutBuffer();
+
+#if !MOBILEAPP
+        const size_t oldSize = out.size();
+
+        buildFrame(data, len, flags, out);
+
         const size_t size = out.size() - oldSize;
 
         if (flush)
@@ -631,8 +671,6 @@ private:
 
         return size;
     }
-
-protected:
 
     bool isControlFrame(WSOpCode code){ return code >= WSOpCode::Close; }
 
@@ -663,7 +701,7 @@ protected:
             _msgHandler->handleMessage(data);
     }
 
-    std::weak_ptr<StreamSocket>& getSocket()
+    const std::weak_ptr<StreamSocket>& getSocket() const
     {
         return _socket;
     }

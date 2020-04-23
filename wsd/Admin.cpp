@@ -572,10 +572,6 @@ void Admin::updateLastActivityTime(const std::string& docKey)
     addCallback([=]{ _model.updateLastActivityTime(docKey); });
 }
 
-void Admin::updateMemoryDirty(const std::string& docKey, int dirty)
-{
-    addCallback([=] { _model.updateMemoryDirty(docKey, dirty); });
-}
 
 void Admin::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
 {
@@ -595,6 +591,11 @@ void Admin::setDocWopiDownloadDuration(const std::string& docKey, std::chrono::m
 void Admin::setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration)
 {
     addCallback([=]{ _model.setDocWopiUploadDuration(docKey, uploadDuration); });
+}
+
+void Admin::setDocProcSMapsFD(const std::string& docKey, const int smapsFD)
+{
+    addCallback([=]{ _model.setDocProcSMapsFD(docKey, smapsFD); });
 }
 
 void Admin::addSegFaultCount(unsigned segFaultCount)

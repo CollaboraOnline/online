@@ -108,7 +108,6 @@ public:
     void rescheduleCpuTimer(unsigned interval);
 
     void updateLastActivityTime(const std::string& docKey);
-    void updateMemoryDirty(const std::string& docKey, int dirty);
     void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
 
     void dumpState(std::ostream& os) override;
@@ -130,6 +129,7 @@ public:
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
     void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration);
+    void setDocProcSMapsFD(const std::string& docKey, const int smapsFD);
     void addSegFaultCount(unsigned segFaultCount);
 
     void getMetrics(std::ostringstream &metrics);

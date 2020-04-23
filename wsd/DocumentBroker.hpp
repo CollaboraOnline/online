@@ -73,22 +73,28 @@ public:
                  const Poco::Net::HTTPRequest &request) :
 
         WSProcess("ChildProcess", pid, socket, std::make_shared<WebSocketHandler>(socket, request)),
-        _jailId(jailId)
+        _jailId(jailId),
+        _smapsFD(-1)
     {
     }
 
 
     ChildProcess(ChildProcess&& other) = delete;
 
+    virtual ~ChildProcess(){ ::close(_smapsFD); }
+
     const ChildProcess& operator=(ChildProcess&& other) = delete;
 
     void setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker);
     std::shared_ptr<DocumentBroker> getDocumentBroker() const { return _docBroker.lock(); }
     const std::string& getJailId() const { return _jailId; }
+    void setSMapsFD(int smapsFD) { _smapsFD = smapsFD;}
+    int getSMapsFD(){ return _smapsFD; }
 
 private:
     const std::string _jailId;
     std::weak_ptr<DocumentBroker> _docBroker;
+    int _smapsFD;
 };
 
 class ClientSession;

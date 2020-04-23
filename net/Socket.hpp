@@ -758,9 +758,16 @@ class StreamSocket : public Socket,
                      public std::enable_shared_from_this<StreamSocket>
 {
 public:
+    enum ReadType
+    {
+        NormalRead,
+        UseRecvmsgExpectFD
+    };
+
     /// Create a StreamSocket from native FD.
     StreamSocket(const int fd, bool /* isClient */,
-                 std::shared_ptr<ProtocolHandlerInterface> socketHandler) :
+                 std::shared_ptr<ProtocolHandlerInterface> socketHandler,
+                 ReadType readType = NormalRead) :
         Socket(fd),
         _socketHandler(std::move(socketHandler)),
         _bytesSent(0),
@@ -768,7 +775,9 @@ public:
         _wsState(WSState::HTTP),
         _closed(false),
         _sentHTTPContinue(false),
-        _shutdownSignalled(false)
+        _shutdownSignalled(false),
+        _incomingFD(-1),
+        _readType(readType)
     {
         LOG_DBG("StreamSocket ctor #" << fd);
 
@@ -845,6 +854,45 @@ public:
     /// Adds Date and User-Agent.
     void send(Poco::Net::HTTPResponse& response);
 
+    /// Sends data with file descriptor as control data.
+    /// Can be used only with Unix sockets.
+    void sendFD(const char* data, const uint64_t len, int fd)
+    {
+        assertCorrectThread();
+
+        // Flush existing non-ancillary data
+        // so that our non-ancillary data will
+        // match ancillary data.
+        if (getOutBuffer().size() > 0)
+        {
+            writeOutgoingData();
+        }
+
+        msghdr msg;
+        iovec iov[1];
+
+        iov[0].iov_base = const_cast<char*>(data);
+        iov[0].iov_len = len;
+
+        msg.msg_name = nullptr;
+        msg.msg_namelen = 0;
+        msg.msg_iov = &iov[0];
+        msg.msg_iovlen = 1;
+
+        char adata[CMSG_SPACE(sizeof(int))];
+        cmsghdr *cmsg = (cmsghdr*)adata;
+        cmsg->cmsg_type = SCM_RIGHTS;
+        cmsg->cmsg_level = SOL_SOCKET;
+        cmsg->cmsg_len = CMSG_LEN(sizeof(int));
+        *(int *)CMSG_DATA(cmsg) = fd;
+
+        msg.msg_control = const_cast<char*>(adata);
+        msg.msg_controllen = CMSG_LEN(sizeof(int));
+        msg.msg_flags = 0;
+
+        sendmsg(getFD(), &msg, 0);
+    }
+
     /// Reads data by invoking readData() and buffering.
     /// Return false iff the socket is closed.
     virtual bool readIncomingData()
@@ -908,10 +956,12 @@ public:
     /// but we can't have a shared_ptr in the ctor.
     template <typename TSocket>
     static
-    std::shared_ptr<TSocket> create(const int fd, bool isClient, std::shared_ptr<ProtocolHandlerInterface> handler)
+    std::shared_ptr<TSocket> create(const int fd, bool isClient,
+                                    std::shared_ptr<ProtocolHandlerInterface> handler,
+                                    ReadType readType = NormalRead)
     {
         ProtocolHandlerInterface* pHandler = handler.get();
-        auto socket = std::make_shared<TSocket>(fd, isClient, std::move(handler));
+        auto socket = std::make_shared<TSocket>(fd, isClient, std::move(handler), readType);
         pHandler->onConnect(socket);
         return socket;
     }
@@ -970,6 +1020,11 @@ public:
     std::vector<char>& getOutBuffer()
     {
         return _outBuffer;
+    }
+
+    int getIncomingFD()
+    {
+        return _incomingFD;
     }
 
 protected:
@@ -1099,11 +1154,59 @@ public:
     void dumpState(std::ostream& os) override;
 
 protected:
+    /// Reads data with file descriptor as control data if received.
+    /// Can be used only with Unix sockets.
+    int readFD(char* buf, int len, int& fd)
+    {
+        msghdr msg;
+        iovec iov[1];
+        /// We don't expect more than one FD
+        char ctrl[CMSG_SPACE(sizeof(int))];
+        int ctrlLen = sizeof(ctrl);
+
+        iov[0].iov_base = buf;
+        iov[0].iov_len = len;
+
+        msg.msg_name = nullptr;
+        msg.msg_namelen = 0;
+        msg.msg_iov = &iov[0];
+        msg.msg_iovlen = 1;
+        msg.msg_control = ctrl;
+        msg.msg_controllen = ctrlLen;
+        msg.msg_flags = 0;
+
+        int ret = recvmsg(getFD(), &msg, 0);
+        if (ret >= 0)
+        {
+            if (msg.msg_controllen)
+            {
+                cmsghdr *cmsg = CMSG_FIRSTHDR(&msg);
+                if (cmsg && cmsg->cmsg_type == SCM_RIGHTS && cmsg->cmsg_len == CMSG_LEN(sizeof(int)))
+                {
+                    fd = *(int*)CMSG_DATA(cmsg);
+                    if (_readType == UseRecvmsgExpectFD)
+                    {
+                        _readType = NormalRead;
+                    }
+                }
+            }
+        }
+        else
+        {
+            LOG_ERR("recvmsg call ended with error: " << errno);
+        }
+
+        return ret;
+    }
+
     /// Override to handle reading of socket data differently.
     virtual int readData(char* buf, int len)
     {
         assertCorrectThread();
 #if !MOBILEAPP
+        if (_readType == UseRecvmsgExpectFD)
+            return readFD(buf, len, _incomingFD);
+
         return ::read(getFD(), buf, len);
 #else
         return fakeSocketRead(getFD(), buf, len);
@@ -1156,6 +1259,8 @@ protected:
 
     /// True when shutdown was requested via shutdown().
     bool _shutdownSignalled;
+    int _incomingFD;
+    ReadType _readType;
 };
 
 enum class WSOpCode : unsigned char {

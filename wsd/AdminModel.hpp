@@ -121,8 +121,16 @@ public:
           _recvBytes(0),
           _wopiDownloadDuration(0),
           _wopiUploadDuration(0),
+          _procSMaps(nullptr),
+          _lastTimeSMapsRead(0),
           _isModified(false)
     {
+    }
+
+    ~Document()
+    {
+        if (_procSMaps)
+            fclose(_procSMaps);
     }
 
     const std::string getDocKey() const { return _docKey; }
@@ -149,8 +157,7 @@ public:
     const std::map<std::string, View>& getViews() const { return _views; }
 
     void updateLastActivityTime() { _lastActivity = std::time(nullptr); }
-    bool updateMemoryDirty(int dirty);
-    int getMemoryDirty() const { return _memoryDirty; }
+    int getMemoryDirty() const;
 
     std::pair<std::time_t, std::string> getSnapshot() const;
     const std::string getHistory() const;
@@ -176,6 +183,7 @@ public:
     std::chrono::milliseconds getWopiDownloadDuration() const { return _wopiDownloadDuration; }
     void setWopiUploadDuration(const std::chrono::milliseconds wopiUploadDuration) { _wopiUploadDuration = wopiUploadDuration; }
     std::chrono::milliseconds getWopiUploadDuration() const { return _wopiUploadDuration; }
+    void setProcSMapsFD(const int smapsFD) { _procSMaps = fdopen(smapsFD, "r"); }
 
     std::string to_string() const;
 
@@ -189,7 +197,7 @@ private:
     /// Hosted filename
     std::string _filename;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
-    int _memoryDirty;
+    mutable int _memoryDirty;
     /// Last noted Jiffy count
     unsigned _lastJiffy;
 
@@ -204,6 +212,9 @@ private:
     //Download/upload duration from/to storage for this document
     std::chrono::milliseconds _wopiDownloadDuration;
     std::chrono::milliseconds _wopiUploadDuration;
+
+    FILE* _procSMaps;
+    mutable std::time_t _lastTimeSMapsRead;
 
     /// Per-doc kit process settings.
     DocProcSettings _docProcSettings;
@@ -306,7 +317,6 @@ public:
     void removeDocument(const std::string& docKey);
 
     void updateLastActivityTime(const std::string& docKey);
-    void updateMemoryDirty(const std::string& docKey, int dirty);
 
     void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
 
@@ -321,6 +331,7 @@ public:
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
     void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration);
+    void setDocProcSMapsFD(const std::string& docKey, const int smapsFD);
     void addSegFaultCount(unsigned segFaultCount);
     void setForKitPid(pid_t pid) { _forKitPid = pid; }
 

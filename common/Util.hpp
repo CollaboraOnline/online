@@ -144,6 +144,10 @@ namespace Util
     /// Example: "procmemstats: pid=123 rss=12400 pss=566"
     std::string getMemoryStats(FILE* file);
 
+    /// Reads from SMaps file Pss and Private_Dirty values and
+    /// returns them as a pair in the same order
+    std::pair<size_t, size_t> getPssAndDirtyFromSMaps(FILE* file);
+
     size_t getCpuUsage(const Poco::Process::PID pid);
 
     size_t getStatFromPid(const Poco::Process::PID pid, int ind);

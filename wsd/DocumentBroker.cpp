@@ -1593,13 +1593,14 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             Util::alertAllUsers(cmd, kind);
         }
 #if !MOBILEAPP
-        else if (command == "procmemstats:")
+        else if (command == "smapsfd:")
         {
-            int dirty;
-            if (message->getTokenInteger("dirty", dirty))
+            std::shared_ptr<StreamSocket> socket = std::static_pointer_cast<StreamSocket>(_childProcess->_socket);
+            if (socket)
             {
-                Admin::instance().updateMemoryDirty(
-                    _docKey, dirty + getMemorySize()/1024);
+                _childProcess->setSMapsFD(socket->getIncomingFD());
+                Admin::instance().setDocProcSMapsFD(_docKey, _childProcess->getSMapsFD());
+                LOG_DBG("Received smaps fd");
             }
         }
 #endif
