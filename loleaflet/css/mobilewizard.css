@@ -540,8 +540,11 @@ input.spinfield:disabled ~ .spinfieldcontrols * {
 	background-color: #f9f9f9;
 }
 
-input.spinfield:disabled ~ .spinfieldcontrols *:active {
+input.spinfield:disabled ~ .spinfieldcontrols *:active, input.spinfield:disabled ~ .spinfieldcontrols *:hover, input.spinfield:disabled ~ .spinfieldcontrols *:focus {
 	background-color: #f9f9f9 !important;
+	filter: none;
+	font-size: 100%;
+	font-weight: normal;
 }
 
 /*insert table special layout*/
@@ -700,6 +703,9 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage {
 }
 div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:focus .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:hover .spinfieldimage {
 	opacity: 1 !important;
+}
+div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
+	opacity: 0.5 !important;
 }
 #buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
 	margin: 0;

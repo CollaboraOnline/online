@@ -1044,8 +1044,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.max != undefined)
 			$(spinfield).attr('max', data.max);
 
-		if (data.enabled == 'false')
+		if (data.enabled == 'false') {
 			$(spinfield).attr('disabled', 'disabled');
+			$(image).addClass('disabled');
+		}
 
 		if (data.readOnly === true)
 			$(spinfield).attr('readOnly', 'true');
@@ -1081,17 +1083,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 
 		plus.addEventListener('click', function() {
-			if (customCallback)
-				customCallback('spinfield', 'plus', div, this.value, builder);
-			else
-				builder.callback('spinfield', 'plus', div, this.value, builder);
+			var attrdisabled = $(spinfield).attr('disabled');
+			if (attrdisabled !== 'disabled') {
+				if (customCallback)
+					customCallback('spinfield', 'plus', div, this.value, builder);
+				else
+					builder.callback('spinfield', 'plus', div, this.value, builder);
+			}
 		});
 
 		minus.addEventListener('click', function() {
-			if (customCallback)
-				customCallback('spinfield', 'minus', div, this.value, builder);
-			else
-				builder.callback('spinfield', 'minus', div, this.value, builder);
+			var attrdisabled = $(spinfield).attr('disabled');
+			if (attrdisabled !== 'disabled') {
+				if (customCallback)
+					customCallback('spinfield', 'minus', div, this.value, builder);
+				else
+					builder.callback('spinfield', 'minus', div, this.value, builder);
+			}
 		});
 
 		if (data.hidden)
