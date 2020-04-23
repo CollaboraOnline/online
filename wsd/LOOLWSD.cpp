@@ -2485,8 +2485,17 @@ private:
         LOG_DBG("Wopi discovery request: " << request.getURI());
 
         std::string xml = getFileContent("discovery.xml");
-        const std::string hostname = (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
-        Poco::replaceInPlace(xml, std::string("%SERVER_HOST%"), hostname);
+        std::string srvUrl =
+#if ENABLE_SSL
+            ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
+#else
+            "http://"
+#endif
+            + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName)
+            + LOOLWSD::ServiceRoot;
+        if (request.has("ProxyPrefix"))
+            srvUrl += request["ProxyPrefix"];
+        Poco::replaceInPlace(xml, std::string("%SRV_URI%"), srvUrl);
 
         // TODO: Refactor this to some common handler.
         std::ostringstream oss;
@@ -3169,20 +3178,14 @@ private:
             discoveryPath = LOOLWSD::FileServerRoot + "/discovery.xml";
         }
 
-        const std::string action = "action";
-        const std::string urlsrc = "urlsrc";
         const auto& config = Application::instance().config();
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        const std::string rootUriValue =
-#if ENABLE_SSL
-            ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://")
-#else
-            "http://"
-#endif
-            + std::string("%SERVER_HOST%")
-            + LOOLWSD::ServiceRoot;
-        const std::string uriValue = rootUriValue
-                                   + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
+
+        const std::string action = "action";
+        const std::string urlsrc = "urlsrc";
+
+        const std::string rootUriValue = "%SRV_URI%";
+        const std::string uriValue = rootUriValue + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;
