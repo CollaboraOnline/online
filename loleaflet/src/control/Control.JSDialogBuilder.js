@@ -1679,7 +1679,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_clearFormattingControl: function(parentContainer, data, builder) {
 		var iconPath = builder._createIconPath(data.command);
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' mobile-wizard-widebutton ui-widget', parentContainer);
+		var sectionTitle = L.DomUtil.create('div', 'ui-header ' + builder.options.cssClass + ' level-' + builder._currentDepth + ' mobile-wizard-widebutton ui-widget', parentContainer);
+		sectionTitle.id = 'clearFormatting';
 		$(sectionTitle).css('justify-content', 'space-between');
 
 		if (data && data.id)
@@ -1693,8 +1694,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			icon.alt = '';
 			titleClass = 'menu-entry-with-icon';
 		}
-		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
-		titleSpan.innerHTML =  builder._cleanText(_UNO(data.command));
+
+		if (builder.options.noLabelsForUnoButtons !== true) {
+			var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
+			titleSpan.innerHTML =  builder._cleanText(_UNO(data.command));
+		}
 
 		$(sectionTitle).click(function () {
 			builder.callback('toolbutton', 'click', sectionTitle, data.command, builder);

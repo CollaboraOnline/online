@@ -24,7 +24,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:FrameLineColor'] = function() {};
 		this._toolitemHandlers['.uno:Color'] = function() {};
 		this._toolitemHandlers['.uno:FillColor'] = function() {};
-		this._toolitemHandlers['.uno:ResetAttributes'] = function() {};
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {

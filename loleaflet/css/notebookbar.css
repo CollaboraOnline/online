@@ -55,9 +55,19 @@
 	box-shadow: 0 0 0px 4px #e6e6e640 !important;
 }
 
-.ui-content.notebookbar .unobutton:hover {
+.ui-content.notebookbar .unobutton:hover, #clearFormatting.notebookbar div img:hover {
 	box-shadow: 0 0 0px 4px #e6e6e6b0;
 	border-radius: 0.1px;
 	background-color: #e6e6e6b0;
 	cursor: pointer;
+}
+
+/* Reset attributes control */
+#clearFormatting.notebookbar div img {
+	width: 24px !important;
+	height: 24px !important;
+}
+
+#clearFormatting.notebookbar {
+	height: 24px !important;
 }
