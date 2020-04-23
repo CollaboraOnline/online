@@ -301,8 +301,19 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
-				{uno: '.uno:HeaderAndFooter'}]
-			},
+				{uno: '.uno:HeaderAndFooter'},
+				{type: 'separator'},
+				{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
+					{uno: '.uno:InsertDateFieldFix'},
+					{uno: '.uno:InsertDateFieldVar'},
+					{uno: '.uno:InsertTimeFieldFix'},
+					{uno: '.uno:InsertTimeFieldVar'},
+					{type: 'separator'},
+					{name: _UNO('.uno:InsertSlideField', 'presentation'), id: 'insertslidefield', type: 'action'},
+					{name: _UNO('.uno:InsertSlideTitleField', 'presentation'), id: 'insertslidetitlefield', type: 'action'},
+					{name: _UNO('.uno:InsertSlidesField', 'presentation'), id: 'insertslidesfield', type: 'action'},
+				]},
+			]},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
