@@ -252,33 +252,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_updateListBox: function(builder, contentDiv, contentNode, sectionTitle, data, state) {
-		if ($(sectionTitle).find('.entry-value')[0])
-			sectionTitle = $($(sectionTitle).find('.entry-value')).get(0);
-		else
-			sectionTitle = $(sectionTitle).find('.ui-header-left').find('span')[0];
-
+	_updateListBox: function(builder, sectionTitle, data, state) {
 		if (!sectionTitle)
 			return;
 
-		$(contentDiv).find('.selected').removeClass('selected');
-
-		var hasChildren = $(contentDiv).children().length > 0 && contentNode.children && contentNode.children.length > 0;
 		var updateBy = builder._getListBoxUpdateType(data.id);
-		if (updateBy === 'index') {
+
+		if (updateBy === 'index')
 			sectionTitle.innerHTML = data.entries[state];
-			data.selectedEntries[0] = state;
-			contentDiv.title = data.entries[state];
-			if (hasChildren) {
-				$($(contentDiv).children().get(state)).addClass('selected');
-			}
-		} else if (updateBy === 'value') {
+		else if (updateBy === 'value')
 			sectionTitle.innerHTML = state;
-			if (hasChildren) {
-				$(contentDiv).find('p').filter(function() {
-					return $(this).text() === state;
-				}).addClass('selected');
-			}
+
+		if (builder.refreshSidebar) {
+			builder.wizard._refreshSidebar(0);
+			builder.refreshSidebar = false;
 		}
 	},
 
@@ -301,6 +288,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
 
+		if (!valueNode && data.command) {
+			var items = builder.map['stateChangeHandler'];
+			var val = items.getItemValue(data.command);
+			if (val)
+				valueNode = L.DomUtil.create('div', '', null);
+		}
+
 		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
 		if (valueNode) {
 			var valueDiv = L.DomUtil.create('div', 'entry-value', rightDiv);
@@ -309,6 +303,34 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
 		arrowSpan.innerHTML = '>';
+
+		var updateFunction = function(titleSpan) {
+			var state = null;
+			if (data.id)
+				state = builder._getUnoStateForItemId(data.id, builder);
+
+			if (state && builder._getListBoxUpdateType(data.id)) {
+				titleSpan.innerHTML = data.text;
+				builder._updateListBox(builder, valueNode?valueDiv:titleSpan, data, state);
+			} else if (state) {
+				titleSpan.innerHTML = state;
+			} else {
+				titleSpan.innerHTML = data.text;
+			}
+		};
+
+		updateCallback ? updateCallback(titleSpan) : updateFunction(titleSpan);
+
+		builder.map.on('commandstatechanged', function(e) {
+			if (e.commandName === data.command || e.commandName === builder._mapWindowIdToUnoCommand(data.id))
+			{
+				if (updateCallback)
+					updateCallback(titleSpan);
+				else
+					updateFunction(titleSpan);
+			}
+
+		}, this);
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' mobile-wizard', parentContainer);
 		contentDiv.title = data.text;
@@ -332,33 +354,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		else
 			$(sectionTitle).hide();
-
-		var updateFunction = function(titleSpan) {
-			var state = null;
-			if (data.id)
-				state = builder._getUnoStateForItemId(data.id, builder);
-
-			if (builder._getListBoxUpdateType(data.id)) {
-				builder._updateListBox(builder, contentDiv, contentNode, sectionTitle, data, state);
-			} else if (state) {
-				titleSpan.innerHTML = state;
-			} else {
-				titleSpan.innerHTML = data.text;
-			}
-		};
-
-		updateCallback ? updateCallback(titleSpan) : updateFunction(titleSpan);
-
-		builder.map.on('commandstatechanged', function(e) {
-			if (e.commandName === data.command || e.commandName === builder._mapWindowIdToUnoCommand(data.id))
-			{
-				if (updateCallback)
-					updateCallback(titleSpan);
-				else
-					updateFunction(titleSpan);
-			}
-
-		}, this);
 	},
 
 	_calcFunctionEntry: function(parentContainer, data, contentNode, builder) {
@@ -1244,6 +1239,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			L.DomUtil.addClass(fixedtext, data.style);
 
 		$(fixedtext).click(function () {
+			builder.refreshSidebar = true;
 			builder.callback('combobox', 'selected', fixedtext.parent, data.pos + ';' + fixedtext.innerHTML, builder);
 		});
 	},
@@ -1349,6 +1345,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		$(div).click(function () {
+			builder.refreshSidebar = true;
 			builder.callback('toolbutton', 'click', button, data.command, builder);
 		});
 

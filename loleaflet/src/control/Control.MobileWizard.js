@@ -266,21 +266,36 @@ L.Control.MobileWizard = L.Control.extend({
 		if (this._tabs && path && path.length)
 			this._selectTab(path[0]);
 
+		var _path = [];
+		var goBack = false;
+
 		for (var index in path) {
-			$('[title=\'' + path[index] + '\'').prev().trigger('click', {animate: false});
+			var elem = $('[title=\'' + path[index] + '\'').prev();
+			if (elem.length) {
+				$(elem).trigger('click', {animate: false});
+				_path.push(path[index]);
+			}
+			else
+				goBack = true;
 		}
 
-		this._currentPath = path;
+		if (goBack) {
+			this._currentScrollPosition = 0;
+			$('#mobile-wizard-content').animate({ scrollTop: 0 }, 0);
+		}
+
+		this._currentPath = _path;
 	},
 
-	_refreshSidebar: function() {
+	_refreshSidebar: function(ms) {
+		ms = ms !== undefined ? ms : 400;
 		var map = this.map;
 		setTimeout(function () {
 			var message = 'dialogevent ' +
 			    (window.sidebarId !== undefined ? window.sidebarId : -1) +
 			    ' {\"id\":\"-1\"}';
 			map._socket.sendMessage(message);
-		}, 400);
+		}, ms);
 	},
 
 	_updateMapSize: function() {
