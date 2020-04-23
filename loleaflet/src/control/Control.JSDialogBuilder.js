@@ -9,7 +9,15 @@
 L.Control.JSDialogBuilder = L.Control.extend({
 
 	options: {
-		cssClass: 'mobile-wizard'
+		// reference to map
+		map: null,
+		// reference to the parent container
+		mobileWizard: null,
+		// css class name added to the html nodes
+		cssClass: 'mobile-wizard',
+
+		// create only icon without label
+		noLabelsForUnoButtons: false
 	},
 
 	/* Handler is a function which takes three parameters:
@@ -1505,7 +1513,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_unoToolButton: function(parentContainer, data, builder) {
 		var button = null;
 
-		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.cssClass + ' ui-content unospan', parentContainer, data);
+		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
 		if (data.command) {
 			var id = data.command.substr('.uno:'.length);
@@ -1518,9 +1526,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button.src = icon;
 			button.id = buttonId;
 
-			var label = L.DomUtil.create('span', 'ui-content unolabel', div);
-			label.for = buttonId;
-			label.innerHTML = data.text;
+			if (builder.options.noLabelsForUnoButtons !== true) {
+				var label = L.DomUtil.create('span', 'ui-content unolabel', div);
+				label.for = buttonId;
+				label.innerHTML = data.text;
+			}
 
 			var updateFunction = function() {
 				var items = builder.map['stateChangeHandler'];

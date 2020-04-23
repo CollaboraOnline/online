@@ -6,8 +6,9 @@
 /* global $ */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
-	onAdd: function (map) {
-		this.map = map;
+	_customizeOptions: function() {
+		this.options.noLabelsForUnoButtons = true;
+		this.options.cssClass = 'notebookbar';
 	},
 
 	_overrideHandlers: function() {
@@ -24,54 +25,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Color'] = function() {};
 		this._toolitemHandlers['.uno:FillColor'] = function() {};
 		this._toolitemHandlers['.uno:ResetAttributes'] = function() {};
-	},
-
-	_unoToolButton: function(parentContainer, data, builder) {
-		var button = null;
-
-		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
-
-		if (data.command) {
-			var id = data.command.substr('.uno:'.length);
-			div.id = id;
-
-			var icon = builder._createIconPath(data.command);
-			var buttonId = id + 'img';
-
-			button = L.DomUtil.create('img', 'ui-content unobutton', div);
-			button.src = icon;
-			button.id = buttonId;
-
-			var updateFunction = function() {
-				var items = builder.map['stateChangeHandler'];
-				var state = items.getItemValue(data.command);
-
-				if (state && state === 'true')
-					$(button).addClass('selected');
-				else
-					$(button).removeClass('selected');
-			};
-
-			updateFunction();
-
-			builder.map.on('commandstatechanged', function(e) {
-				if (e.commandName === data.command)
-					updateFunction();
-			}, this);
-
-		} else {
-			button = L.DomUtil.create('label', 'ui-content unolabel', div);
-			button.innerHTML = builder._cleanText(data.text);
-		}
-
-		$(div).click(function () {
-			builder.callback('toolbutton', 'click', button, data.command, builder);
-		});
-
-		if (data.enabled == 'false')
-			$(button).attr('disabled', 'disabled');
-
-		return false;
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
@@ -149,5 +102,6 @@ L.control.notebookbarBuilder = function (options) {
 	var builder = new L.Control.NotebookbarBuilder(options);
 	builder._setup(options);
 	builder._overrideHandlers();
+	builder._customizeOptions();
 	return builder;
 };
