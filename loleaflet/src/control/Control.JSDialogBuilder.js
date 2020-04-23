@@ -862,7 +862,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			break;
 
-		case 'fillstyle':
+		case 'fillstylearea':
 			state = items.getItemValue('.uno:FillStyle');
 			if (state) {
 				switch (state) {
