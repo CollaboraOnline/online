@@ -1,4 +1,8 @@
 
+.ui-tabs.notebookbar {
+	display: inline-block;
+}
+
 .ui-tab.notebookbar {
 	float: left;
 	margin-right: 10px;
