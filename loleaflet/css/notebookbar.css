@@ -3,12 +3,28 @@
 
 .ui-tabs.notebookbar {
 	display: inline-block;
+	z-index: 1000;
 }
 
 .ui-tab.notebookbar {
 	float: left;
 	margin-right: 10px;
 	font-size: 12pt;
+}
+
+.ui-tab.selected.notebookbar {
+	border: none;
+	color: #0b87e7;
+	border-radius: 0px;
+	border-bottom: solid 1px #0b87e7;
+	font-weight: bold;
+}
+
+.ui-tab.notebookbar:hover {
+	box-shadow: 0 0 0px 4px #e6e6e6b0;
+	border-radius: 0.1px;
+	background-color: #e6e6e6b0;
+	cursor: pointer;
 }
 
 /* root container */
@@ -37,4 +53,11 @@
 
 .ui-content.notebookbar .unobutton.selected {
 	box-shadow: 0 0 0px 4px #e6e6e640 !important;
+}
+
+.ui-content.notebookbar .unobutton:hover {
+	box-shadow: 0 0 0px 4px #e6e6e6b0;
+	border-radius: 0.1px;
+	background-color: #e6e6e6b0;
+	cursor: pointer;
 }
