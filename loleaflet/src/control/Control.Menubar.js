@@ -696,6 +696,10 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertDateFieldVar'},
 						{uno: '.uno:InsertTimeFieldFix'},
 						{uno: '.uno:InsertTimeFieldVar'},
+						{type: 'separator'},
+						{name: _UNO('.uno:InsertSlideField', 'presentation'), id: 'insertslidefield', type: 'action'},
+						{name: _UNO('.uno:InsertSlideTitleField', 'presentation'), id: 'insertslidetitlefield', type: 'action'},
+						{name: _UNO('.uno:InsertSlidesField', 'presentation'), id: 'insertslidesfield', type: 'action'},
 					]},
 				]
 			}
@@ -1213,6 +1217,12 @@ L.Control.Menubar = L.Control.extend({
 			L.DomUtil.get('search-input').focus();
 		} else if (id === 'inserttextbox') {
 			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
+		} else if (id === 'insertslidefield') {
+			this._map.sendUnoCommand('.uno:InsertPageField');
+		} else if (id === 'insertslidetitlefield') {
+			this._map.sendUnoCommand('.uno:InsertPageTitleField');
+		} else if (id === 'insertslidesfield') {
+			this._map.sendUnoCommand('.uno:InsertPagesField');
 		}
 		// Inform the host if asked
 		if (postmessage)
