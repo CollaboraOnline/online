@@ -12,8 +12,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['combobox'] = function() {return false;};
-		this._controlHandlers['listbox'] = function() {return false;};
+		this._controlHandlers['combobox'] = function() { return false; };
+		this._controlHandlers['listbox'] = function() { return false; };
+		this._controlHandlers['pushbutton'] = function() { return false; };
 
 		this._toolitemHandlers['.uno:XLineColor'] = function() {};
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
@@ -24,6 +25,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:FrameLineColor'] = function() {};
 		this._toolitemHandlers['.uno:Color'] = function() {};
 		this._toolitemHandlers['.uno:FillColor'] = function() {};
+		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
