@@ -23,13 +23,15 @@ else
 bin_PROGRAMS += loolwsd
 endif
 
-dist_bin_SCRIPTS = loolwsd-systemplate-setup
+dist_bin_SCRIPTS = loolwsd-systemplate-setup \
+                   loolwsd-generate-proof-key
 
 man_MANS = man/loolwsd.1 \
            man/loolforkit.1 \
            man/loolconvert.1 \
            man/loolconfig.1 \
-           man/loolwsd-systemplate-setup.1
+           man/loolwsd-systemplate-setup.1 \
+           man/loolwsd-generate-proof-key.1
 
 dist_doc_DATA = wsd/README \
                 wsd/README.vars \

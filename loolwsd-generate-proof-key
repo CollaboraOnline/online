@@ -1,0 +1,32 @@
+#!/bin/bash
+
+SUDO=''
+if (( $EUID != 0 )); then
+    if hash sudo 2>/dev/null; then
+        SUDO='sudo'
+    else
+        "Run the script as root."
+        exit 1
+    fi
+fi
+
+if [ -f /etc/loolwsd/proof_key ]; then
+    echo "/etc/loolwsd/proof_key exists already."
+    exit 0
+fi
+
+if hash ssh-keygen 2>/dev/null; then
+    $SUDO ssh-keygen -t rsa -N "" -m PEM -f /etc/loolwsd/proof_key
+    if [ $? -ne 0 ] ; then
+        exit $?
+	fi
+    if id -u lool >/dev/null 2>&1; then
+        $SUDO chown lool: /etc/loolwsd/proof_key
+    else
+        echo "User lool does not exist. Please reinstall loolwsd package, or in case of manual installation from source, create the lool user manually."
+    fi
+else
+	echo "ssh-keygen command not found. Please install openssh client tools."
+    exit 127
+fi
+

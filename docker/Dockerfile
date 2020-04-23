@@ -31,6 +31,7 @@ RUN rm -rf /var/cache/loolwsd/*
 RUN rm -rf /opt/lool
 RUN mkdir -p /opt/lool/child-roots
 RUN loolwsd-systemplate-setup /opt/lool/systemplate /opt/libreoffice >/dev/null 2>&1
+RUN loolwsd-generate-proof-key >/dev/null 2>&1
 RUN touch /var/log/loolwsd.log
 # Fix permissions
 RUN chown lool:lool /var/log/loolwsd.log
