@@ -3,7 +3,7 @@
  * L.Control.NotebookbarBuilder
  */
 
-/* global $ */
+/* global $ _ */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_customizeOptions: function() {
@@ -12,8 +12,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['combobox'] = function() { return false; };
-		this._controlHandlers['listbox'] = function() { return false; };
+		this._controlHandlers['combobox'] = this._comboboxControl;
+		this._controlHandlers['listbox'] = this._comboboxControl;
 		this._controlHandlers['pushbutton'] = function() { return false; };
 
 		this._toolitemHandlers['.uno:XLineColor'] = function() {};
@@ -26,6 +26,21 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Color'] = function() {};
 		this._toolitemHandlers['.uno:FillColor'] = function() {};
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
+	},
+
+	_comboboxControl: function(parentContainer, data, builder) {
+		if (!data.entries || data.entries.length === 0)
+			return false;
+
+		var select = L.DomUtil.createWithId('select', data.id, parentContainer);
+		$(select).addClass(builder.options.cssClass);
+
+		$(select).select2({
+			data: data.entries.sort(function (a, b) {return a.localeCompare(b);}),
+			placeholder: _(builder._cleanText(data.text))
+		});
+
+		return false;
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
