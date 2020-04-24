@@ -117,7 +117,7 @@ define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
 	@echo
 	@NODE_PATH=$(abs_dir)/node_modules $(NODE) $(ESLINT_BINARY) $(abs_srcdir) \
-		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_top_srcdir)/loleaflet/.eslintrc
+		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_srcdir)/.eslintrc
 	@echo
 endef
 

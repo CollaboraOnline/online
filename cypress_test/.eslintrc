@@ -1,0 +1,9 @@
+{
+  "extends": "../loleaflet/.eslintrc",
+  "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+      }
+  },
+}
