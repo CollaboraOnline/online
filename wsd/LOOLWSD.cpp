@@ -119,6 +119,7 @@ using Poco::Net::PartHandler;
 #  include <Kit.hpp>
 #endif
 #include <Log.hpp>
+#include <MobileApp.hpp>
 #include <Protocol.hpp>
 #include <Session.hpp>
 #if ENABLE_SSL
@@ -486,17 +487,20 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
 }
 
 #if MOBILEAPP
+#ifndef IOS
 std::mutex LOOLWSD::lokit_main_mutex;
 #endif
+#endif
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::string& uri)
+std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId)
 {
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     const auto startTime = std::chrono::steady_clock::now();
 
 #if !MOBILEAPP
-    (void)uri;
+    (void) mobileAppDocId;
+
     LOG_DBG("getNewChild: Rebalancing children.");
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     ++numPreSpawn; // Replace the one we'll dispatch just now.
@@ -519,12 +523,15 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::string& uri)
 
     std::thread([&]
                 {
-                    std::lock_guard<std::mutex> lokit_main_lock(LOOLWSD::lokit_main_mutex);
+#ifndef IOS
+                    std::lock_guard<std::mutex> lock(LOOLWSD::lokit_main_mutex);
                     Util::setThreadName("lokit_main");
-
-                    // Ugly to have that static global, otoh we know there is just one LOOLWSD
-                    // object. (Even in real Online.)
-                    lokit_main(uri, LOOLWSD::prisonerServerSocketFD, 1);
+#else
+                    Util::setThreadName("lokit_main_" + Util::encodeId(mobileAppDocId, 3));
+#endif
+                    // Ugly to have that static global LOOLWSD::prisonerServerSocketFD, Otoh we know
+                    // there is just one LOOLWSD object. (Even in real Online.)
+                    lokit_main(LOOLWSD::prisonerServerSocketFD, mobileAppDocId);
                 }).detach();
 #endif
 
@@ -1853,7 +1860,8 @@ static std::shared_ptr<DocumentBroker>
                           const std::string& uri,
                           const std::string& docKey,
                           const std::string& id,
-                          const Poco::URI& uriPublic)
+                          const Poco::URI& uriPublic,
+                          unsigned mobileAppDocId = 0)
 {
     LOG_INF("Find or create DocBroker for docKey [" << docKey <<
             "] for session [" << id << "] on url [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
@@ -1925,7 +1933,7 @@ static std::shared_ptr<DocumentBroker>
 
         // Set the one we just created.
         LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey);
+        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey, mobileAppDocId);
         DocBrokers.emplace(docKey, docBroker);
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
     }
@@ -2453,12 +2461,26 @@ private:
         socket->eraseFirstInputBytes(map);
 #else
         Poco::Net::HTTPRequest request;
-        // The 2nd parameter is the response to the HULLO message (which we
-        // respond with the path of the document)
+
+#ifdef IOS
+        // The URL of the document is sent over the FakeSocket by the code in
+        // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
+        // HULLO message from the JavaScript in global.js.
+
+        // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
+        char *space = strchr(socket->getInBuffer().data(), ' ');
+        assert(space != nullptr);
+        unsigned appDocId = std::strtoul(space + 1, nullptr, 10);
+
+        handleClientWsUpgrade(
+            request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
+            disposition, socket, appDocId);
+#else
         handleClientWsUpgrade(
             request, RequestDetails(std::string(socket->getInBuffer().data(),
                                                 socket->getInBuffer().size())),
             disposition, socket);
+#endif
         socket->getInBuffer().clear();
 #endif
     }
@@ -2946,7 +2968,6 @@ private:
 
         throw BadRequestException("Invalid or unknown request.");
     }
-#endif
 
     void handleClientProxyRequest(const Poco::Net::HTTPRequest& request,
                                   const RequestDetails &requestDetails,
@@ -3053,11 +3074,13 @@ private:
             streamSocket->shutdown();
         }
     }
+#endif
 
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
                                const RequestDetails &requestDetails,
                                SocketDisposition& disposition,
-                               const std::shared_ptr<StreamSocket>& socket)
+                               const std::shared_ptr<StreamSocket>& socket,
+                               unsigned mobileAppDocId = 0)
     {
         const std::string url = requestDetails.getDocumentURI();
         assert(socket && "Must have a valid socket");
@@ -3114,7 +3137,7 @@ private:
             // Request a kit process for this doc.
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
                 std::static_pointer_cast<ProtocolHandlerInterface>(ws),
-                DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
+                DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic, mobileAppDocId);
             if (docBroker)
             {
                 std::shared_ptr<ClientSession> clientSession =
@@ -3510,11 +3533,13 @@ private:
 
         void wakeupHook() override
         {
+#if !MOBILEAPP
             if (SigUtil::getDumpGlobalState())
             {
                 dump_state();
                 SigUtil::resetDumpGlobalState();
             }
+#endif
         }
     };
     /// This thread & poll accepts incoming connections.
@@ -3971,7 +3996,7 @@ void LOOLWSD::cleanup()
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
-#if MOBILEAPP
+#if MOBILEAPP && !defined IOS
     SigUtil::resetTerminationFlag();
 #endif
 
@@ -3991,10 +4016,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
     cleanup();
 
     UnitWSD::get().returnValue(returnValue);
-
-#if MOBILEAPP
-    fakeSocketDumpState();
-#endif
 
     LOG_INF("Process [loolwsd] finished.");
     return returnValue;

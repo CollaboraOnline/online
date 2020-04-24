@@ -93,6 +93,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Session.cpp \
                  common/Seccomp.cpp \
                  common/MessageQueue.cpp \
+                 common/MobileApp.cpp \
                  common/SigUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
@@ -250,6 +251,7 @@ shared_headers = common/Common.hpp \
                  common/Authorization.hpp \
                  common/MessageQueue.hpp \
                  common/Message.hpp \
+                 common/MobileApp.hpp \
                  common/Png.hpp \
                  common/Rectangle.hpp \
                  common/SigUtil.hpp \

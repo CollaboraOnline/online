@@ -37,11 +37,14 @@ void lokit_main(
                 bool queryVersionInfo,
                 bool displayVersion,
 #else
-                const std::string& documentUri,
                 int docBrokerSocket,
 #endif
-                size_t spareKitId
+                size_t numericIdentifier
                 );
+
+#ifdef IOS
+void runKitLoopInAThread();
+#endif
 
 /// We need to get several env. vars right
 void setupKitEnvironment();

@@ -153,14 +153,6 @@ public:
 
     bool continuePolling() override
     {
-#if MOBILEAPP
-        if (MobileTerminationFlag)
-        {
-            LOG_TRC("Noticed MobileTerminationFlag.");
-            MobileTerminationFlag = false;
-            return false;
-        }
-#endif
         return TerminatingPoll::continuePolling();
     }
 
@@ -176,7 +168,8 @@ std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 DocumentBroker::DocumentBroker(ChildType type,
                                const std::string& uri,
                                const Poco::URI& uriPublic,
-                               const std::string& docKey) :
+                               const std::string& docKey,
+                               unsigned mobileAppDocId) :
     _limitLifeSeconds(0),
     _uriOrig(uri),
     _type(type),
@@ -200,10 +193,15 @@ DocumentBroker::DocumentBroker(ChildType type,
     _lockCtx(new LockContext()),
     _tileVersion(0),
     _debugRenderedTileCount(0),
-    _wopiLoadDuration(0)
+    _wopiLoadDuration(0),
+    _mobileAppDocId(mobileAppDocId)
 {
     assert(!_docKey.empty());
     assert(!LOOLWSD::ChildRoot.empty());
+
+#ifdef IOS
+    assert(_mobileAppDocId > 0);
+#endif
 
     LOG_INF("DocumentBroker [" << LOOLWSD::anonymizeUrl(_uriPublic.toString()) <<
             "] created with docKey [" << _docKey << ']');
@@ -242,7 +240,7 @@ void DocumentBroker::pollThread()
     do
     {
         static const int timeoutMs = COMMAND_TIMEOUT_MS * 5;
-        _childProcess = getNewChild_Blocks(getPublicUri().getPath());
+        _childProcess = getNewChild_Blocks();
         if (_childProcess ||
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                   _threadStart).count() > timeoutMs)
@@ -253,7 +251,8 @@ void DocumentBroker::pollThread()
     }
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag());
 #else
-    _childProcess = getNewChild_Blocks(getPublicUri().getPath());
+    assert(_mobileAppDocId > 0);
+    _childProcess = getNewChild_Blocks(_mobileAppDocId);
 #endif
 
     if (!_childProcess)

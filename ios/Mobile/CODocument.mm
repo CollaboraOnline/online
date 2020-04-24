@@ -32,6 +32,7 @@
 #import "KitHelper.hpp"
 #import "Log.hpp"
 #import "LOOLWSD.hpp"
+#import "MobileApp.hpp"
 #import "Protocol.hpp"
 
 @implementation CODocument
@@ -39,6 +40,12 @@
 - (id)contentsForType:(NSString*)typeName error:(NSError **)errorPtr {
     return [NSData dataWithContentsOfFile:[copyFileURL path] options:0 error:errorPtr];
 }
+
+// We keep a running count of opening documents here. This is not necessarily in sync with the
+// DocBrokerId in DocumentBroker due to potential parallelism when opening multiple documents in
+// quick succession.
+
+static std::atomic<unsigned> appDocIdCounter(1);
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
 
@@ -59,10 +66,13 @@
 
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+    appDocId = appDocIdCounter++;
+    allocateDocumentDataForMobileAppDocId(appDocId).coDocument = self;
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[copyFileURL absoluteString]],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
                                [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
-                               [NSURLQueryItem queryItemWithName:@"lang" value:app_locale]
+                               [NSURLQueryItem queryItemWithName:@"lang" value:app_locale],
+                               [NSURLQueryItem queryItemWithName:@"appdocid" value:[NSString stringWithFormat:@"%u", appDocId]],
                              ];
 
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];

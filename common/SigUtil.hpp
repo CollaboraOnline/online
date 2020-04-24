@@ -13,13 +13,9 @@
 #include <mutex>
 #include <signal.h>
 
-#if MOBILEAPP
-static constexpr bool ShutdownRequestFlag(false);
-extern std::atomic<bool> MobileTerminationFlag;
-#endif
-
 namespace SigUtil
 {
+#ifndef IOS
     /// Get the flag used to commence clean shutdown.
     /// requestShutdown() is used to set the flag.
     bool getShutdownRequestFlag();
@@ -33,13 +29,28 @@ namespace SigUtil
     /// Only necessary in Mobile.
     void resetTerminationFlag();
 #endif
+#else
+    // In the mobile apps we have no need to shut down the app.
+    inline constexpr bool getShutdownRequestFlag()
+    {
+        return false;
+    }
 
+    inline constexpr bool getTerminationFlag()
+    {
+        return false;
+    }
+
+    inline void setTerminationFlag()
+    {
+    }
+#endif
+
+#if !MOBILEAPP
     /// Get the flag to dump internal state.
     bool getDumpGlobalState();
     /// Reset the flag to dump internal state.
     void resetDumpGlobalState();
-
-#if !MOBILEAPP
 
     /// Wait for the signal handler, if any,
     /// and prevent _Exit while collecting backtrace.

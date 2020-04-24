@@ -257,6 +257,11 @@ static bool checkForPoll(std::vector<FakeSocketPair>& fds, struct pollfd *pollfd
                     retval = true;
                 }
             }
+            if (fds[pollfds[i].fd/2].shutdown[N])
+            {
+                    pollfds[i].revents |= POLLHUP;
+                    retval = true;
+            }
         }
     }
     return retval;

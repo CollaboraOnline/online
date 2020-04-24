@@ -20,7 +20,6 @@
 @property (strong) NSURL *slideshowURL;
 
 - (void)bye;
-+ (DocumentViewController*)singleton;
 
 @end
 

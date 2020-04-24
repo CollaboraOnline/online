@@ -128,11 +128,11 @@ public:
     /// Dummy document broker that is marked to destroy.
     DocumentBroker();
 
-    /// Construct DocumentBroker with URI, docKey, and root path.
     DocumentBroker(ChildType type,
                    const std::string& uri,
                    const Poco::URI& uriPublic,
-                   const std::string& docKey);
+                   const std::string& docKey,
+                   unsigned mobileAppDocId = 0);
 
     virtual ~DocumentBroker();
 
@@ -439,6 +439,9 @@ private:
 
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
+
+    // Relevant only in the mobile apps
+    const unsigned _mobileAppDocId;
 };
 
 #if !MOBILEAPP

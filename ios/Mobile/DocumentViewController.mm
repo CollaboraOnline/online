@@ -22,12 +22,11 @@
 #import "FakeSocket.hpp"
 #import "LOOLWSD.hpp"
 #import "Log.hpp"
+#import "MobileApp.hpp"
 #import "SigUtil.hpp"
 #import "Util.hpp"
 
 #import "DocumentViewController.h"
-
-static DocumentViewController* theSingleton = nil;
 
 @interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate, UIDocumentPickerDelegate> {
     int closeNotificationPipeForForwardingThread[2];
@@ -78,8 +77,6 @@ static IMP standardImpOfInputAccessoryView = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    theSingleton = self;
 
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
@@ -317,10 +314,6 @@ static IMP standardImpOfInputAccessoryView = nil;
                                            // is saved by closing it.
                                            fakeSocketClose(self->closeNotificationPipeForForwardingThread[1]);
 
-                                           // Flag to make the inter-thread plumbing in the Online
-                                           // bits go away quicker.
-                                           MobileTerminationFlag = true;
-
                                            // Close our end of the fake socket connection to the
                                            // ClientSession thread, so that it terminates
                                            fakeSocketClose(self.document->fakeClientFd);
@@ -348,13 +341,14 @@ static IMP standardImpOfInputAccessoryView = nil;
                                assert(false);
                            });
 
-            // First we simply send it the URL. This corresponds to the GET request with Upgrade to
-            // WebSocket.
+            // First we simply send the Online C++ parts the URL and the appDocId. This corresponds
+            // to the GET request with Upgrade to WebSocket.
             std::string url([[self.document->copyFileURL absoluteString] UTF8String]);
             p.fd = self.document->fakeClientFd;
             p.events = POLLOUT;
             fakeSocketPoll(&p, 1, -1);
-            fakeSocketWrite(self.document->fakeClientFd, url.c_str(), url.size());
+            std::string message(url + " " + std::to_string(self.document->appDocId));
+            fakeSocketWrite(self.document->fakeClientFd, message.c_str(), message.size());
 
             return;
         } else if ([message.body isEqualToString:@"BYE"]) {
@@ -369,7 +363,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             self.slideshowFile = Util::createRandomTmpDir() + "/slideshow.svg";
             self.slideshowURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:self.slideshowFile.c_str()] isDirectory:NO];
 
-            lok_document->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
+            getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
 
             // Add a new full-screen WebView displaying the slideshow.
 
@@ -423,7 +417,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
             std::string printFile = Util::createRandomTmpDir() + "/print.pdf";
             NSURL *printURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:printFile.c_str()] isDirectory:NO];
-            lok_document->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
+            getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
 
             UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
             UIPrintInfo *printInfo = [UIPrintInfo printInfo];
@@ -476,7 +470,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
                 std::remove([[downloadAsTmpURL path] UTF8String]);
 
-                lok_document->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
+                getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
 
                 // Then verify that it indeed was saved, and then use an
                 // UIDocumentPickerViewController to ask the user where to store the exported
@@ -526,29 +520,15 @@ static IMP standardImpOfInputAccessoryView = nil;
     // Close one end of the socket pair, that will wake up the forwarding thread above
     fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
-    // We can't wait for the LOOLWSD::lokit_main_mutex directly here because this is called on the
-    // main queue and the main queue must be ready to execute code dispatched by the system APIs
-    // used to do document saving.
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+    // deallocateDocumentDataForMobileAppDocId(self.document->appDocId);
+
+    [[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil];
+
+    // The dismissViewControllerAnimated must be done on the main queue.
+    dispatch_async(dispatch_get_main_queue(),
                    ^{
-                       // Wait for lokit_main thread to exit
-                       std::lock_guard<std::mutex> lock(LOOLWSD::lokit_main_mutex);
-
-                       theSingleton = nil;
-
-                       [[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil];
-
-                       // And only then let the document browsing view show up again. The
-                       // dismissViewControllerAnimated must be done on the main queue.
-                       dispatch_async(dispatch_get_main_queue(),
-                                      ^{
-                                          [self dismissDocumentViewController];
-                                      });
+                       [self dismissDocumentViewController];
                    });
-}
-
-+ (DocumentViewController*)singleton {
-    return theSingleton;
 }
 
 @end

@@ -6,26 +6,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#import <string>
-
 #import <UIKit/UIKit.h>
 
-#define LOK_USE_UNSTABLE_API
-#import <LibreOfficeKit/LibreOfficeKit.h>
+#import "SceneDelegate.h"
 
-@class DocumentViewController;
+@implementation SceneDelegate
 
-@interface CODocument : UIDocument {
-@public
-    int fakeClientFd;
-    NSURL *copyFileURL;
-    unsigned appDocId;
-}
-
-@property (weak) DocumentViewController *viewController;
-
-- (void)send2JS:(const char*)buffer length:(int)length;
+// Nothing needed so far, the window property in the .h file is enough.
 
 @end
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
+

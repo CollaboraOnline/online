@@ -10,6 +10,7 @@
 #include <config.h>
 
 #include "ChildSession.hpp"
+#include "MobileApp.hpp"
 
 #include <climits>
 #include <fstream>
@@ -30,10 +31,6 @@
 #include <Poco/Net/SSLManager.h>
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
-#endif
-
-#ifdef IOS
-#import "DocumentViewController.h"
 #endif
 
 #include <common/FileUtil.hpp>
@@ -2486,11 +2483,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
             if (!commandName.isEmpty() && commandName.toString() == ".uno:Save" && !success.isEmpty() && success.toString() == "true")
             {
-                CODocument *document = [[DocumentViewController singleton] document];
-
+                CODocument *document = getDocumentDataForMobileAppDocId(_docManager->getMobileAppDocId()).coDocument;
                 [document saveToURL:[document fileURL]
-                 forSaveOperation:UIDocumentSaveForOverwriting
-                 completionHandler:^(BOOL success) {
+                   forSaveOperation:UIDocumentSaveForOverwriting
+                  completionHandler:^(BOOL success) {
                         LOG_TRC("ChildSession::loKitCallback() save completion handler gets " << (success?"YES":"NO"));
                     }];
             }

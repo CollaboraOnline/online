@@ -66,6 +66,8 @@
 		BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */; };
 		BECD984024336DD400016117 /* device-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983E24336DD400016117 /* device-mobile.css */; };
 		BECD984124336DD400016117 /* device-tablet.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983F24336DD400016117 /* device-tablet.css */; };
+		BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEDCC84C2452F82800FB02BD /* MobileApp.cpp */; };
+		BEDCC8992456FFAD00FB02BD /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDCC8982456FFAC00FB02BD /* SceneDelegate.m */; };
 		BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEFB1EE021C29CC70081D757 /* L10n.mm */; };
 /* End PBXBuildFile section */
 
@@ -1176,6 +1178,10 @@
 		BECBD41423D9C98500DA5582 /* svddrgmt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svddrgmt.cxx; path = "../../ios-device/svx/source/svdraw/svddrgmt.cxx"; sourceTree = "<group>"; };
 		BECD983E24336DD400016117 /* device-mobile.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-mobile.css"; path = "../../../loleaflet/dist/device-mobile.css"; sourceTree = "<group>"; };
 		BECD983F24336DD400016117 /* device-tablet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-tablet.css"; path = "../../../loleaflet/dist/device-tablet.css"; sourceTree = "<group>"; };
+		BEDCC84C2452F82800FB02BD /* MobileApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MobileApp.cpp; sourceTree = "<group>"; };
+		BEDCC84D2452F82800FB02BD /* MobileApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MobileApp.hpp; sourceTree = "<group>"; };
+		BEDCC8972456FFAC00FB02BD /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		BEDCC8982456FFAC00FB02BD /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		BEDCC943246175E100FB02BD /* sessionlistener.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sessionlistener.cxx; path = "../../ios-device/framework/source/services/sessionlistener.cxx"; sourceTree = "<group>"; };
 		BEDCC944246175E100FB02BD /* substitutepathvars.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = substitutepathvars.cxx; path = "../../ios-device/framework/source/services/substitutepathvars.cxx"; sourceTree = "<group>"; };
 		BEDCC945246175E100FB02BD /* pathsettings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pathsettings.cxx; path = "../../ios-device/framework/source/services/pathsettings.cxx"; sourceTree = "<group>"; };
@@ -1885,6 +1891,8 @@
 				BE58E129217F295B00249358 /* Log.hpp */,
 				BE5EB5BD213FE29900E0826C /* MessageQueue.cpp */,
 				BE58E12D217F295B00249358 /* MessageQueue.hpp */,
+				BEDCC84C2452F82800FB02BD /* MobileApp.cpp */,
+				BEDCC84D2452F82800FB02BD /* MobileApp.hpp */,
 				BE58E12A217F295B00249358 /* Png.hpp */,
 				BE5EB5BF213FE29900E0826C /* Protocol.cpp */,
 				BE58E12E217F295B00249358 /* Protocol.hpp */,
@@ -2276,6 +2284,8 @@
 				BE8D77312136762500AC58EA /* DocumentViewController.mm */,
 				BEFB1EDF21C29CC70081D757 /* L10n.h */,
 				BEFB1EE021C29CC70081D757 /* L10n.mm */,
+				BEDCC8972456FFAC00FB02BD /* SceneDelegate.h */,
+				BEDCC8982456FFAC00FB02BD /* SceneDelegate.m */,
 				BE80E45C21B6CEF100859C97 /* TemplateSectionHeaderView.h */,
 				BE80E45D21B6CEF200859C97 /* TemplateSectionHeaderView.m */,
 				BE80E45621B68F5000859C97 /* TemplateCollectionViewController.h */,
@@ -3032,8 +3042,10 @@
 				BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */,
 				BE5EB5D22140039100E0826C /* LOOLWSD.cpp in Sources */,
 				BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */,
+				BEDCC8992456FFAD00FB02BD /* SceneDelegate.m in Sources */,
 				BE5EB5C6213FE29900E0826C /* SigUtil.cpp in Sources */,
 				BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */,
+				BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */,
 				BE5EB5DA2140363100E0826C /* ios.mm in Sources */,
 				BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */,
 				BEA28377214FFD8C00848631 /* Unit.cpp in Sources */,

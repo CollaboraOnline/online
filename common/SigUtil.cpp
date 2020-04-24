@@ -38,14 +38,10 @@
 #include "Common.hpp"
 #include "Log.hpp"
 
+#ifndef IOS
 static std::atomic<bool> TerminationFlag(false);
 static std::atomic<bool> DumpGlobalState(false);
-#if MOBILEAPP
-std::atomic<bool> MobileTerminationFlag(false);
-#else
-// Mobile defines its own, which is constexpr.
 static std::atomic<bool> ShutdownRequestFlag(false);
-#endif
 
 namespace SigUtil
 {
@@ -71,6 +67,7 @@ namespace SigUtil
     }
 #endif
 
+#if !MOBILEAPP
     bool getDumpGlobalState()
     {
         return DumpGlobalState;
@@ -80,11 +77,7 @@ namespace SigUtil
     {
         DumpGlobalState = false;
     }
-}
 
-#if !MOBILEAPP
-namespace SigUtil
-{
     /// This traps the signal-handler so we don't _Exit
     /// while dumping stack trace. It's re-entrant.
     /// Used to safely increment and decrement the signal-handler trap.
@@ -384,8 +377,9 @@ namespace SigUtil
 
         return false;
     }
+#endif // !MOBILEAPP
 }
 
-#endif // !MOBILEAPP
+#endif // !IOS
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

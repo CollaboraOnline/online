@@ -89,10 +89,10 @@
 #undef LT_OBJDIR
 
 /* Limit the maximum number of open connections */
-#define MAX_CONNECTIONS 3
+#define MAX_CONNECTIONS 100
 
 /* Limit the maximum number of open documents */
-#define MAX_DOCUMENTS 1
+#define MAX_DOCUMENTS 100
 
 /* Define to 1 if this is a mobileapp (eg. Android) build. */
 #define MOBILEAPP 1

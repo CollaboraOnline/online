@@ -52,6 +52,7 @@
 
 #include "ChildSession.hpp"
 #include <Common.hpp>
+#include <MobileApp.hpp>
 #include <FileUtil.hpp>
 #include "KitHelper.hpp"
 #include "Kit.hpp"
@@ -768,7 +769,8 @@ public:
              const std::string& docId,
              const std::string& url,
              std::shared_ptr<TileQueue> tileQueue,
-             const std::shared_ptr<WebSocketHandler>& websocketHandler)
+             const std::shared_ptr<WebSocketHandler>& websocketHandler,
+             unsigned mobileAppDocId)
       : _loKit(loKit),
         _jailId(jailId),
         _docKey(docKey),
@@ -784,7 +786,8 @@ public:
         _stop(false),
         _isLoading(0),
         _editorId(-1),
-        _editorChangeWarning(false)
+        _editorChangeWarning(false),
+        _mobileAppDocId(mobileAppDocId)
     {
         LOG_INF("Document ctor for [" << _docKey <<
                 "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
@@ -809,6 +812,11 @@ public:
         {
             session.second->resetDocManager();
         }
+
+#ifdef IOS
+        deallocateDocumentDataForMobileAppDocId(_mobileAppDocId);
+#endif
+
     }
 
     const std::string& getUrl() const { return _url; }
@@ -1247,6 +1255,11 @@ public:
         alertAllUsers("errortoall: cmd=" + cmd + " kind=" + kind);
     }
 
+    unsigned getMobileAppDocId() override
+    {
+        return _mobileAppDocId;
+    }
+
     static void GlobalCallback(const int type, const char* p, void* data)
     {
         if (SigUtil::getTerminationFlag())
@@ -1465,9 +1478,6 @@ private:
 #endif
             LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
                     _sessions.size() << " sessions still. Destroying the document.");
-#ifdef IOS
-            lok_document = nullptr;
-#endif
 #ifdef __ANDROID__
             _loKitDocumentForAndroidOnly.reset();
 #endif
@@ -1716,9 +1726,7 @@ private:
             const double totalTime = elapsed/1000.;
             LOG_DBG("Returned lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ") in " << totalTime << "ms.");
 #ifdef IOS
-            // The iOS app (and the Android one) has max one document open at a time, so we can keep
-            // a pointer to it in a global.
-            lok_document = _loKitDocument.get();
+            getDocumentDataForMobileAppDocId(_mobileAppDocId).loKitDocument = _loKitDocument.get();
 #endif
             if (!_loKitDocument || !_loKitDocument->get())
             {
@@ -2135,6 +2143,8 @@ private:
 #ifdef __ANDROID__
     friend std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
 #endif
+
+    const unsigned _mobileAppDocId;
 };
 
 #ifdef __ANDROID__
@@ -2153,10 +2163,42 @@ class KitSocketPoll : public SocketPoll
     std::chrono::steady_clock::time_point _pollEnd;
     std::shared_ptr<Document> _document;
 
-public:
     KitSocketPoll() :
         SocketPoll("kit")
     {
+#ifdef IOS
+        terminationFlag = false;
+#endif
+    }
+
+public:
+    ~KitSocketPoll()
+    {
+#ifdef IOS
+        std::unique_lock<std::mutex> lock(KSPollsMutex);
+        std::shared_ptr<KitSocketPoll> p;
+        auto i = KSPolls.begin();
+        for (; i != KSPolls.end(); ++i)
+        {
+            p = i->lock();
+            if (p && p.get() == this)
+                break;
+        }
+        assert(i != KSPolls.end());
+        KSPolls.erase(i);
+#endif
+    }
+
+    static std::shared_ptr<KitSocketPoll> create()
+    {
+        KitSocketPoll *p = new KitSocketPoll();
+        auto result = std::shared_ptr<KitSocketPoll>(p);
+#ifdef IOS
+        std::unique_lock<std::mutex> lock(KSPollsMutex);
+        KSPolls.push_back(result);
+        // KSPollsCV.notify_one();
+#endif
+        return result;
     }
 
     // process pending message-queue events.
@@ -2229,7 +2271,25 @@ public:
     {
         _document = std::move(document);
     }
+
+#ifdef IOS
+    static std::mutex KSPollsMutex;
+    // static std::condition_variable KSPollsCV;
+    static std::vector<std::weak_ptr<KitSocketPoll>> KSPolls;
+
+    std::mutex terminationMutex;
+    std::condition_variable terminationCV;
+    bool terminationFlag;
+#endif
 };
+
+#ifdef IOS
+
+std::mutex KitSocketPoll::KSPollsMutex;
+// std::condition_variable KitSocketPoll::KSPollsCV;
+std::vector<std::weak_ptr<KitSocketPoll>> KitSocketPoll::KSPolls;
+
+#endif
 
 class KitWebSocketHandler final : public WebSocketHandler
 {
@@ -2238,16 +2298,18 @@ class KitWebSocketHandler final : public WebSocketHandler
     std::shared_ptr<lok::Office> _loKit;
     std::string _jailId;
     std::shared_ptr<Document> _document;
-    KitSocketPoll &_ksPoll;
+    std::shared_ptr<KitSocketPoll> _ksPoll;
+    const unsigned _mobileAppDocId;
 
 public:
-    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId, KitSocketPoll& ksPoll) :
+    KitWebSocketHandler(const std::string& socketName, const std::shared_ptr<lok::Office>& loKit, const std::string& jailId, std::shared_ptr<KitSocketPoll> ksPoll, unsigned mobileAppDocId) :
         WebSocketHandler(/* isClient = */ true, /* isMasking */ false),
         _queue(std::make_shared<TileQueue>()),
         _socketName(socketName),
         _loKit(loKit),
         _jailId(jailId),
-        _ksPoll(ksPoll)
+        _ksPoll(ksPoll),
+        _mobileAppDocId(mobileAppDocId)
     {
     }
 
@@ -2296,14 +2358,16 @@ protected:
             std::string url;
             URI::decode(docKey, url);
             LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
+#ifndef IOS
             Util::setThreadName("kit_" + docId);
-
+#endif
             if (!_document)
             {
                 _document = std::make_shared<Document>(
                     _loKit, _jailId, docKey, docId, url, _queue,
-                    std::static_pointer_cast<WebSocketHandler>(shared_from_this()));
-                _ksPoll.setDocument(_document);
+                    std::static_pointer_cast<WebSocketHandler>(shared_from_this()),
+                    _mobileAppDocId);
+                _ksPoll->setDocument(_document);
             }
 
             // Validate and create session.
@@ -2320,8 +2384,15 @@ protected:
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
 #else
+#ifdef IOS
+            LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
+            std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
+            _ksPoll->terminationFlag = true;
+            _ksPoll->terminationCV.notify_all();
+#else
             LOG_INF("Setting TerminationFlag due to 'exit' command.");
             SigUtil::setTerminationFlag();
+#endif
             _document.reset();
 #endif
         }
@@ -2360,6 +2431,11 @@ protected:
         LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
 #endif
+#ifdef IOS
+        std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
+        _ksPoll->terminationFlag = true;
+        _ksPoll->terminationCV.notify_all();
+#endif
     }
 };
 
@@ -2371,19 +2447,62 @@ void documentViewCallback(const int type, const char* payload, void* data)
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* pData, int timeoutUs)
 {
+#ifndef IOS
     if (!pData)
         return 0;
     else
         return reinterpret_cast<KitSocketPoll*>(pData)->kitPoll(timeoutUs);
+#else
+    std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
+    if (KitSocketPoll::KSPolls.size() == 0)
+    {
+        // KitSocketPoll::KSPollsCV.wait(lock);
+        lock.unlock();
+        std::this_thread::sleep_for(std::chrono::microseconds(timeoutUs));
+    }
+    else
+    {
+        std::vector<std::shared_ptr<KitSocketPoll>> v;
+        for (const auto &i : KitSocketPoll::KSPolls)
+        {
+            auto p = i.lock();
+            if (p)
+                v.push_back(p);
+        }
+        lock.unlock();
+        for (const auto &p : v)
+            p->kitPoll(timeoutUs);
+    }
+
+    // We never want to exit the main loop
+    return 0;
+#endif
 }
 
 /// Called by LOK main-loop
 void wakeCallback(void* pData)
 {
+#ifndef IOS
     if (!pData)
         return;
     else
         return reinterpret_cast<KitSocketPoll*>(pData)->wakeup();
+#else
+    std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
+    if (KitSocketPoll::KSPolls.size() == 0)
+        return;
+
+    std::vector<std::shared_ptr<KitSocketPoll>> v;
+    for (const auto &i : KitSocketPoll::KSPolls)
+    {
+        auto p = i.lock();
+        if (p)
+            v.push_back(p);
+    }
+    lock.unlock();
+    for (const auto &p : v)
+        p->wakeup();
+#endif
 }
 
 void setupKitEnvironment()
@@ -2435,10 +2554,9 @@ void lokit_main(
                 bool queryVersion,
                 bool displayVersion,
 #else
-                const std::string& documentUri,
                 int docBrokerSocket,
 #endif
-                size_t spareKitId
+                size_t numericIdentifier
                 )
 {
 #if !MOBILEAPP
@@ -2448,7 +2566,7 @@ void lokit_main(
     SigUtil::setTerminationSignals();
 #endif
 
-    Util::setThreadName("kit_spare_" + Util::encodeId(spareKitId, 3));
+    Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));
 
     // Reinitialize logging when forked.
     const bool logToFile = std::getenv("LOOL_LOGFILE");
@@ -2497,8 +2615,6 @@ void lokit_main(
     std::shared_ptr<lok::Office> loKit;
     Path jailPath;
     ChildSession::NoCapsForKit = noCapabilities;
-#else
-    AnonymizeUserData = false;
 #endif // MOBILEAPP
 
     try
@@ -2699,8 +2815,11 @@ void lokit_main(
 
 #else // MOBILEAPP
 
-        // was not done by the preload
+#ifndef IOS
+        // Was not done by the preload.
+        // For iOS we call it in -[AppDelegate application: didFinishLaunchingWithOptions:]
         setupKitEnvironment();
+#endif
 
 #if defined(__linux) && !defined(__ANDROID__)
         Poco::URI userInstallationURI("file", LO_PATH);
@@ -2727,16 +2846,16 @@ void lokit_main(
 
 #endif // MOBILEAPP
 
-        KitSocketPoll mainKit;
-        mainKit.runOnClientThread(); // We will do the polling on this thread.
+        auto mainKit = KitSocketPoll::create();
+        mainKit->runOnClientThread(); // We will do the polling on this thread.
 
         std::shared_ptr<KitWebSocketHandler> websocketHandler =
-            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit);
+            std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit, numericIdentifier);
 
 #if !MOBILEAPP
-        mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler, ProcSMapsFile);
+        mainKit->insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler, ProcSMapsFile);
 #else
-        mainKit.insertNewFakeSocket(docBrokerSocket, websocketHandler);
+        mainKit->insertNewFakeSocket(docBrokerSocket, websocketHandler);
 #endif
 
         LOG_INF("New kit client websocket inserted.");
@@ -2749,6 +2868,7 @@ void lokit_main(
         }
 #endif
 
+#ifndef IOS
         if (!LIBREOFFICEKIT_HAS(kit, runLoop))
         {
             LOG_ERR("Kit is missing Unipoll API");
@@ -2758,7 +2878,7 @@ void lokit_main(
 
         LOG_INF("Kit unipoll loop run");
 
-        loKit->runLoop(pollCallback, wakeCallback, &mainKit);
+        loKit->runLoop(pollCallback, wakeCallback, mainKit.get());
 
         LOG_INF("Kit unipoll loop run terminated.");
 
@@ -2772,6 +2892,11 @@ void lokit_main(
 
         // Let forkit handle the jail cleanup.
 #endif
+
+#else // IOS
+        std::unique_lock<std::mutex> lock(mainKit->terminationMutex);
+        mainKit->terminationCV.wait(lock,[&]{ return mainKit->terminationFlag; } );
+#endif // !IOS
     }
     catch (const Exception& exc)
     {
@@ -2793,7 +2918,35 @@ void lokit_main(
 
 #endif
 }
-#endif
+
+#ifdef IOS
+
+// In the iOS app we can have several documents open in the app process at the same time, thus
+// several lokit_main() functions running at the same time. We want just one LO main loop, though,
+// so we start it separately in its own thread.
+
+void runKitLoopInAThread()
+{
+    std::thread([&]
+                {
+                    Util::setThreadName("lokit_runloop");
+
+                    std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(lo_kit);
+                    int dummy;
+                    loKit->runLoop(pollCallback, wakeCallback, &dummy);
+
+                    // Should never return
+                    assert(false);
+
+                    NSLog(@"loKit->runLoop() unexpectedly returned");
+
+                    std::abort();
+                }).detach();
+}
+
+#endif // IOS
+
+#endif // !BUILDING_TESTS
 
 std::string anonymizeUrl(const std::string& url)
 {

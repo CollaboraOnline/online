@@ -34,7 +34,7 @@ class TraceFileWriter;
 class DocumentBroker;
 class ClipboardCache;
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::string& uri);
+std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId = 0);
 
 // A WSProcess object in the WSD process represents a descendant process, either the direct child
 // process FORKIT or a grandchild KIT process, with which the WSD process communicates through a
@@ -257,8 +257,10 @@ public:
     static std::set<const Poco::Util::AbstractConfiguration*> PluginConfigurations;
     static std::chrono::time_point<std::chrono::system_clock> StartTime;
 #if MOBILEAPP
+#ifndef IOS
     /// This is used to be able to wait until the lokit main thread has finished (and it is safe to load a new document).
     static std::mutex lokit_main_mutex;
+#endif
 #endif
 
     /// For testing only [!]
