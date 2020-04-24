@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-22 16:32+0200\n"
+"POT-Creation-Date: 2020-04-24 20:11+0200\n"
 "PO-Revision-Date: 2020-02-25 10:42+0000\n"
 "Last-Translator: So <sou@e06.itscom.net>\n"
 "Language-Team: Japanese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ja/>\n"
@@ -190,15 +190,15 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "本当にこのセッションを終了しますか？"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1173
-#: src/control/Control.PresentationBar.js:81 src/control/Control.Tabs.js:201
+#: src/control/Control.Menubar.js:1188
+#: src/control/Control.PresentationBar.js:82 src/control/Control.Tabs.js:201
 #: src/control/Control.Tabs.js:218 src/control/Toolbar.js:574
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1174
-#: src/control/Control.PresentationBar.js:82 src/control/Control.Tabs.js:202
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1189
+#: src/control/Control.PresentationBar.js:83 src/control/Control.Tabs.js:202
 #: src/control/Control.Tabs.js:219 src/control/Toolbar.js:575
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:400
 msgid "Cancel"
@@ -323,8 +323,8 @@ msgid "Function Wizard"
 msgstr "関数"
 
 #: src/control/Control.JSDialogBuilder.js:153
-#: src/control/Control.JSDialogBuilder.js:870
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.JSDialogBuilder.js:865
+#: src/control/Control.StatusBar.js:340
 msgid "None"
 msgstr "なし"
 
@@ -360,138 +360,150 @@ msgstr ""
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:873
+#: src/control/Control.JSDialogBuilder.js:868
 msgid "Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:876
+#: src/control/Control.JSDialogBuilder.js:871
 msgid "Gradient"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:879
+#: src/control/Control.JSDialogBuilder.js:874
 msgid "Hatching"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:883
+#: src/control/Control.JSDialogBuilder.js:878
 msgid "Pattern"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:988
+#: src/control/Control.JSDialogBuilder.js:996
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:991
+#: src/control/Control.JSDialogBuilder.js:999
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1131
+#: src/control/Control.JSDialogBuilder.js:1147
 #, fuzzy
 #| msgid "Font"
 msgid "Font Name"
 msgstr "フォント"
 
-#: src/control/Control.JSDialogBuilder.js:1133
+#: src/control/Control.JSDialogBuilder.js:1149
 #, fuzzy
 #| msgid "Font"
 msgid "Font Size"
 msgstr "フォント"
 
-#: src/control/Control.JSDialogBuilder.js:1489
+#: src/control/Control.JSDialogBuilder.js:1517
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1678
+#: src/control/Control.JSDialogBuilder.js:1540
+msgid "Background Color"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1542
+msgid "Gradient Start"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1544
+msgid "Gradient End"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1679
+#: src/control/Control.JSDialogBuilder.js:1714
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1699
-#: src/control/Control.TopToolbar.js:211
+#: src/control/Control.JSDialogBuilder.js:1734
+#: src/control/Control.TopToolbar.js:218
 msgid "Insert table"
 msgstr "表の挿入"
 
-#: src/control/Control.JSDialogBuilder.js:1728
+#: src/control/Control.JSDialogBuilder.js:1763
 msgid "Line style:"
 msgstr ""
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:229
 #: src/control/Control.Menubar.js:231 src/control/Control.Menubar.js:233
-#: src/control/Control.Menubar.js:340 src/control/Control.Menubar.js:456
-#: src/control/Control.StatusBar.js:494
+#: src/control/Control.Menubar.js:351 src/control/Control.Menubar.js:467
+#: src/control/Control.StatusBar.js:507
 msgid "None (Do not check spelling)"
 msgstr "なし(スペルチェックを行わない)"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:254
-#: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:473
-#: src/control/Control.Menubar.js:524 src/control/Control.Menubar.js:571
+#: src/control/Control.Menubar.js:367 src/control/Control.Menubar.js:484
+#: src/control/Control.Menubar.js:535 src/control/Control.Menubar.js:582
 msgid "Share..."
 msgstr "共有..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:256
-#: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:475
-#: src/control/Control.Menubar.js:526 src/control/Control.Menubar.js:573
+#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:486
+#: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:584
 msgid "See revision history"
 msgstr "改訂履歴を見る"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:257
-#: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:478
-#: src/control/Control.Menubar.js:528 src/control/Control.Menubar.js:575
+#: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:489
+#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:586
 msgid "Download as"
 msgstr "形式を指定してダウンロード"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:257
-#: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:478
-#: src/control/Control.Menubar.js:528 src/control/Control.Menubar.js:575
+#: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:489
+#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:586
 msgid "Export as"
 msgstr ""
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:258
-#: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:479
-#: src/control/Control.Menubar.js:529 src/control/Control.Menubar.js:576
+#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:490
+#: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:587
 msgid "PDF Document (.pdf)"
 msgstr "PDFドキュメント (.pdf)"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:480
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:491
 msgid "ODF text document (.odt)"
 msgstr "ODF 文書ドキュメント (.odt)"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:481
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:492
 msgid "Word 2003 Document (.doc)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:482
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:493
 msgid "Word Document (.docx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:483
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:494
 msgid "Rich Text (.rtf)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:484
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:495
 msgid "EPUB (.epub)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:476
+#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:487
 #: src/control/Signing.js:601
 msgid "Sign document"
 msgstr "ドキュメントに署名"
 
 #: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:263
-#: src/control/Control.Menubar.js:365
+#: src/control/Control.Menubar.js:376
 msgid "Close document"
 msgstr "ドキュメントを閉じる"
 
 #: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:268
-#: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:489
-#: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:584
+#: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:500
+#: src/control/Control.Menubar.js:548 src/control/Control.Menubar.js:595
 msgid "Repair"
 msgstr "修復"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:282
-#: src/control/Control.StatusBar.js:190
+#: src/control/Control.StatusBar.js:197
 msgid "Reset zoom"
 msgstr "表示倍率をリセット"
 
@@ -500,13 +512,13 @@ msgid "Show Ruler"
 msgstr ""
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:294
-#: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:634
-#: src/control/Control.Menubar.js:674 src/control/Control.Menubar.js:687
+#: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:645
+#: src/control/Control.Menubar.js:685 src/control/Control.Menubar.js:698
 msgid "Local Image..."
 msgstr ""
 
 #: src/control/Control.Menubar.js:93 src/control/Control.Menubar.js:95
-#: src/control/Control.Menubar.js:650 src/control/Control.Menubar.js:652
+#: src/control/Control.Menubar.js:661 src/control/Control.Menubar.js:663
 msgid "All"
 msgstr "全て"
 
@@ -514,108 +526,108 @@ msgstr "全て"
 msgid "Text orientation"
 msgstr "文字の方向"
 
-#: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:343
-#: src/control/Control.Menubar.js:460
+#: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:354
+#: src/control/Control.Menubar.js:471
 msgid "Online Help"
 msgstr ""
 
-#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:344
-#: src/control/Control.Menubar.js:461
+#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:355
+#: src/control/Control.Menubar.js:472
 msgid "Keyboard shortcuts"
 msgstr "キーボードショートカット"
 
-#: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:345
-#: src/control/Control.Menubar.js:462
+#: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:356
+#: src/control/Control.Menubar.js:473
 msgid "Report an issue"
 msgstr ""
 
-#: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:346
-#: src/control/Control.Menubar.js:463 src/control/Control.Menubar.js:516
-#: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:627
+#: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:357
+#: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:527
+#: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:638
 msgid "Latest Updates"
 msgstr ""
 
-#: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:347
-#: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:517
-#: src/control/Control.Menubar.js:564 src/control/Control.Menubar.js:628
+#: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:358
+#: src/control/Control.Menubar.js:475 src/control/Control.Menubar.js:528
+#: src/control/Control.Menubar.js:575 src/control/Control.Menubar.js:639
 msgid "About"
 msgstr "このソフトウェアについて"
 
-#: src/control/Control.Menubar.js:247 src/control/Control.Menubar.js:349
-#: src/control/Control.Menubar.js:466 src/map/Map.js:408
+#: src/control/Control.Menubar.js:247 src/control/Control.Menubar.js:360
+#: src/control/Control.Menubar.js:477 src/map/Map.js:388
 msgid "Last modification"
 msgstr ""
 
-#: src/control/Control.Menubar.js:259 src/control/Control.Menubar.js:530
+#: src/control/Control.Menubar.js:259 src/control/Control.Menubar.js:541
 msgid "ODF presentation (.odp)"
 msgstr "ODFプレゼンテーション(.odp)"
 
-#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:531
+#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:542
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:532
+#: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:543
 msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:334 src/control/Control.Menubar.js:562
-#: src/control/Control.PresentationBar.js:30
+#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:573
+#: src/control/Control.PresentationBar.js:31
 msgid "Fullscreen presentation"
 msgstr "全画面プレゼンテーション"
 
-#: src/control/Control.Menubar.js:361 src/control/Control.Menubar.js:577
+#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:588
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF表計算(.ods)"
 
-#: src/control/Control.Menubar.js:362 src/control/Control.Menubar.js:578
+#: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:589
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:363 src/control/Control.Menubar.js:579
+#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:590
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:496 src/control/Control.Menubar.js:544
-#: src/control/Control.Menubar.js:591 src/control/Control.StatusBar.js:175
+#: src/control/Control.Menubar.js:507 src/control/Control.Menubar.js:555
+#: src/control/Control.Menubar.js:602 src/control/Control.StatusBar.js:182
 #, fuzzy
 msgid "Search"
 msgstr "検索:"
 
-#: src/control/Control.Menubar.js:506
+#: src/control/Control.Menubar.js:517
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:507
+#: src/control/Control.Menubar.js:518
 msgid "Portrait"
 msgstr ""
 
-#: src/control/Control.Menubar.js:508
+#: src/control/Control.Menubar.js:519
 msgid "Landscape"
 msgstr ""
 
-#: src/control/Control.Menubar.js:769 src/control/Control.StatusBar.js:493
+#: src/control/Control.Menubar.js:784 src/control/Control.StatusBar.js:506
 msgid "Reset to Default Language"
 msgstr "既定の言語に戻す"
 
-#: src/control/Control.Menubar.js:1089
+#: src/control/Control.Menubar.js:1104
 #, fuzzy
 #| msgid "Insert shapes"
 msgid "Insert Shape"
 msgstr "シェイプの挿入"
 
-#: src/control/Control.Menubar.js:1171
+#: src/control/Control.Menubar.js:1186
 msgid "Are you sure you want to delete this slide?"
 msgstr "このスライドを本当に削除してよろしいですか？"
 
-#: src/control/Control.MobileBottomBar.js:25
-#: src/control/Control.MobileBottomBar.js:53
-#: src/control/Control.MobileBottomBar.js:82
+#: src/control/Control.MobileBottomBar.js:27
+#: src/control/Control.MobileBottomBar.js:55
+#: src/control/Control.MobileBottomBar.js:84
 #, fuzzy
 #| msgid "Cancel the search"
 msgid "Show the search bar"
 msgstr "検索のキャンセル"
 
-#: src/control/Control.PresentationBar.js:79
+#: src/control/Control.PresentationBar.js:80
 msgid "Are you sure you want to delete this page?"
 msgstr "このページを本当に削除してよろしいですか？"
 
@@ -659,67 +671,67 @@ msgstr "最後のシート"
 msgid "Insert sheet"
 msgstr "シートの挿入"
 
-#: src/control/Control.StatusBar.js:181
+#: src/control/Control.StatusBar.js:188
 msgid "Cancel the search"
 msgstr "検索のキャンセル"
 
-#: src/control/Control.StatusBar.js:292
+#: src/control/Control.StatusBar.js:305
 msgid "Number of Sheets"
 msgstr "シートの数"
 
-#: src/control/Control.StatusBar.js:297
+#: src/control/Control.StatusBar.js:310
 msgid "Selected range of cells"
 msgstr "セルの選択範囲"
 
-#: src/control/Control.StatusBar.js:302 src/control/Control.StatusBar.js:351
+#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:364
 msgid "Entering text mode"
 msgstr "テキストモードに入る"
 
-#: src/control/Control.StatusBar.js:311 src/control/Control.StatusBar.js:356
+#: src/control/Control.StatusBar.js:324 src/control/Control.StatusBar.js:369
 msgid "Selection Mode"
 msgstr "選択モード"
 
-#: src/control/Control.StatusBar.js:316
+#: src/control/Control.StatusBar.js:329
 msgid "Choice of functions"
 msgstr "関数の選択"
 
-#: src/control/Control.StatusBar.js:320
+#: src/control/Control.StatusBar.js:333
 msgid "Average"
 msgstr "平均"
 
-#: src/control/Control.StatusBar.js:321
+#: src/control/Control.StatusBar.js:334
 msgid "CountA"
 msgstr "COUNTA"
 
-#: src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:335
 msgid "Count"
 msgstr "数"
 
-#: src/control/Control.StatusBar.js:323
+#: src/control/Control.StatusBar.js:336
 msgid "Maximum"
 msgstr "最大"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:337
 msgid "Minimum"
 msgstr "最小"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:338
 msgid "Sum"
 msgstr "合計"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:339
 msgid "Selection count"
 msgstr "選択した個数"
 
-#: src/control/Control.StatusBar.js:341
+#: src/control/Control.StatusBar.js:354
 msgid "Number of Pages"
 msgstr "ページ数"
 
-#: src/control/Control.StatusBar.js:346
+#: src/control/Control.StatusBar.js:359
 msgid "Word Counter"
 msgstr "単語を数える"
 
-#: src/control/Control.StatusBar.js:373
+#: src/control/Control.StatusBar.js:386
 msgid "Number of Slides"
 msgstr "スライド数"
 
@@ -739,43 +751,43 @@ msgstr "選択したシート %sheet% を削除しますか？"
 msgid "Enter new sheet name"
 msgstr "新しいシート名を入力してください。"
 
-#: src/control/Control.Toolbar.js:954
+#: src/control/Control.Toolbar.js:860
 msgid "Previous slide"
 msgstr "前のスライド"
 
-#: src/control/Control.Toolbar.js:955
+#: src/control/Control.Toolbar.js:861
 msgid "Next slide"
 msgstr "次のスライド"
 
-#: src/control/Control.Toolbar.js:1013
+#: src/control/Control.Toolbar.js:919
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "複数のユーザーによる元に戻す・やり直しの処理が衝突しました。解決するにはドキュメントの修復を利用してください。"
 
-#: src/control/Control.TopToolbar.js:98
+#: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:155
+#: src/control/Control.TopToolbar.js:162
 msgid "Borders"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:163
+#: src/control/Control.TopToolbar.js:170
 msgid "More..."
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:216
+#: src/control/Control.TopToolbar.js:223
 msgid "Insert Local Image"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:220
+#: src/control/Control.TopToolbar.js:227
 msgid "Insert shapes"
 msgstr "シェイプの挿入"
 
-#: src/control/Control.TopToolbar.js:446
+#: src/control/Control.TopToolbar.js:453
 msgid "Style"
 msgstr "スタイル"
 
-#: src/control/Control.TopToolbar.js:469
+#: src/control/Control.TopToolbar.js:476
 msgid "Font"
 msgstr "フォント"
 
@@ -954,7 +966,7 @@ msgstr ""
 msgid "Downloading..."
 msgstr "ダウンロード中..."
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1458
+#: src/control/Toolbar.js:104 src/map/Map.js:1438
 msgid "Saving..."
 msgstr "保存中..."
 
@@ -1062,7 +1074,7 @@ msgstr "キャンセルを押下すると表示モードで開きます。"
 msgid "Wrong password provided. Please try again."
 msgstr "パスワードが間違っています、再度挑戦してください。"
 
-#: src/core/Socket.js:749 src/map/Map.js:1461
+#: src/core/Socket.js:749 src/map/Map.js:1441
 msgid "Loading..."
 msgstr "読み込み中..."
 
@@ -1234,17 +1246,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr "初期化しています..."
 
-#: src/map/Map.js:443
+#: src/map/Map.js:423
 #, javascript-format
 msgid "%d seconds ago"
 msgstr ""
 
-#: src/map/Map.js:446
+#: src/map/Map.js:426
 #, javascript-format
 msgid "%d minutes ago"
 msgstr ""
 
-#: src/map/Map.js:1314
+#: src/map/Map.js:1294
 msgid "Inactive document - please click to resume editing"
 msgstr "休止中のドキュメント - 編集を継続するにはクリックしてください"
 
