@@ -32,24 +32,25 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	selectedTab: function(tabText) {
+		console.log(tabText);
 		switch (tabText) {
-		case 'Home':
+		case 'HomeLabel':
 			this.loadTab(this.getHomeTab());
 			break;
 
-		case 'Insert':
+		case 'InsertLabel':
 			this.loadTab(this.getInsertTab());
 			break;
 
-		case 'Layout':
+		case 'LayoutLabel':
 			this.loadTab(this.getLayoutTab());
 			break;
 		
-		case 'References':
+		case 'ReferencesLabel':
 			this.loadTab(this.getReferencesTab());
 			break;
 
-		case 'Table':
+		case 'TableLabel':
 			this.loadTab(this.getTableTab());
 			break;
 		}

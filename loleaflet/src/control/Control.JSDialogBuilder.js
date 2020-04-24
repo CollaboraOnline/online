@@ -605,7 +605,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_createTabClick: function(builder, t, tabs, contentDivs, labels)
+	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
 	{
 		return function() {
 			$(tabs[t]).addClass('selected');
@@ -617,7 +617,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			}
 			$(contentDivs[t]).show();
-			builder.wizard.selectedTab(labels[t]);
+			builder.wizard.selectedTab(tabIds[t]);
 		};
 	},
 
@@ -629,7 +629,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var tabs = [];
 			var contentDivs = [];
-			var labels = [];
+			var tabIds = [];
 			for (var tabIdx = 0; tabIdx < data.tabs.length; tabIdx++) {
 				var item = data.tabs[tabIdx];
 
@@ -640,10 +640,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (data.selected == data.tabs[tabIdx].id)
 					$(tab).addClass('selected');
 				tabs[tabIdx] = tab;
+				tabIds[tabIdx] = tab.id;
 
 				var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
 				label.innerHTML = title;
-				labels[tabIdx] = title;
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 				contentDiv.title = title;
@@ -659,7 +659,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					// to get capture of 't' right has to be a sub fn.
 					var fn = function(id) {
 						return function() {
-							builder._createTabClick(builder, id, tabs, contentDivs, labels)();
+							builder._createTabClick(builder, id, tabs, contentDivs, tabIds)();
 							builder.callback('tabcontrol', 'selecttab', tabsContainer, id, builder);
 						};
 					};
