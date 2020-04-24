@@ -36,6 +36,22 @@ L.Control.Notebookbar = L.Control.extend({
 		case 'Home':
 			this.loadTab(this.getHomeTab());
 			break;
+
+		case 'Insert':
+			this.loadTab(this.getInsertTab());
+			break;
+
+		case 'Layout':
+			this.loadTab(this.getLayoutTab());
+			break;
+		
+		case 'References':
+			this.loadTab(this.getReferencesTab());
+			break;
+
+		case 'Table':
+			this.loadTab(this.getTableTab());
+			break;
 		}
 	},
 
@@ -44,8 +60,19 @@ L.Control.Notebookbar = L.Control.extend({
 
 	getHomeTab: function() {
 		return '';
-	}
+	},
 
+	getInsertTab: function() {
+		return '';
+	},
+
+	getLayoutTab: function() {
+		return '';
+	},
+
+	getReferencesTab: function() {
+		return '';
+	}
 });
 
 L.control.notebookbar = function (options) {
