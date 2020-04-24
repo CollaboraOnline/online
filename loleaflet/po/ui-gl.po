@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-22 16:32+0200\n"
-"PO-Revision-Date: 2020-02-23 18:15+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
+"PO-Revision-Date: 2020-04-24 10:48+0000\n"
+"Last-Translator: Xosé <xosecalvo@gmail.com>\n"
 "Language-Team: Galician <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/gl/>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
@@ -328,7 +328,7 @@ msgstr "Ningún"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Sólido"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -391,10 +391,8 @@ msgid "Font Size"
 msgstr "Tamaño do tipo de letra"
 
 #: src/control/Control.JSDialogBuilder.js:1489
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Bordos"
+msgstr "Bordos de cela"
 
 #: src/control/Control.JSDialogBuilder.js:1678
 msgid "Rows"
@@ -468,7 +466,7 @@ msgstr "Texto enriquecido (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:484
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:476
 #: src/control/Signing.js:601
@@ -529,7 +527,7 @@ msgstr "Informar dun problema"
 #: src/control/Control.Menubar.js:463 src/control/Control.Menubar.js:516
 #: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:627
 msgid "Latest Updates"
-msgstr ""
+msgstr "Últimas actualizacións"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:347
 #: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:517
@@ -593,10 +591,8 @@ msgid "Reset to Default Language"
 msgstr "Restabelecer o idioma predeterminado"
 
 #: src/control/Control.Menubar.js:1089
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "Inserir formas"
+msgstr "Inserir forma"
 
 #: src/control/Control.Menubar.js:1171
 msgid "Are you sure you want to delete this slide?"
@@ -809,10 +805,8 @@ msgid "Right Margin"
 msgstr "Marxe dereita"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Inserir táboa"
+msgstr "Inserir tabulación"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -952,11 +946,11 @@ msgstr "A renomear..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Entendo os riscos"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "Lamentámolo, mais a información sobre as actualizacións máis recentes non está dispoñíbel."
 
 #: src/control/Toolbar.js:476
 msgid "This version of %productName is powered by"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-22 16:32+0200\n"
-"PO-Revision-Date: 2020-04-10 08:07+0000\n"
+"PO-Revision-Date: 2020-04-24 10:48+0000\n"
 "Last-Translator: Valter Mura <valtermura@gmail.com>\n"
 "Language-Team: Italian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/it/>\n"
 "Language: it\n"
@@ -527,7 +527,7 @@ msgstr "Segnala un problema"
 #: src/control/Control.Menubar.js:463 src/control/Control.Menubar.js:516
 #: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:627
 msgid "Latest Updates"
-msgstr ""
+msgstr "Ultimi aggiornamenti"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:347
 #: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:517
@@ -805,10 +805,8 @@ msgid "Right Margin"
 msgstr "Margine destro"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Inserisci tabella"
+msgstr "Inserisci tabulazione"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -949,11 +947,11 @@ msgstr "Rinomina..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Ho capito i rischi"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "Non sono disponibili informazioni sugli ultimi aggiornamenti."
 
 #: src/control/Toolbar.js:476
 msgid "This version of %productName is powered by"

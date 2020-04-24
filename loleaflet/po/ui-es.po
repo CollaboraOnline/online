@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-22 16:32+0200\n"
-"PO-Revision-Date: 2020-04-17 00:34+0000\n"
+"PO-Revision-Date: 2020-04-24 10:48+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
 "Language: es\n"
@@ -804,10 +804,8 @@ msgid "Right Margin"
 msgstr "Margen derecho"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Insertar tabla"
+msgstr "Insertar tabulador"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -947,7 +945,7 @@ msgstr "Cambiando el nombre…"
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Comprendo los riesgos"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."

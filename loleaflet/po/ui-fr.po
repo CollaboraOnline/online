@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-22 16:32+0200\n"
-"PO-Revision-Date: 2020-03-27 17:04+0000\n"
+"PO-Revision-Date: 2020-04-22 21:55+0000\n"
 "Last-Translator: sophie <gautier.sophie@gmail.com>\n"
 "Language-Team: French <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/fr/>\n"
 "Language: fr\n"
@@ -328,7 +328,7 @@ msgstr "Aucun(e)"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Plein"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -391,10 +391,8 @@ msgid "Font Size"
 msgstr "Taille de la police"
 
 #: src/control/Control.JSDialogBuilder.js:1489
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Bordures"
+msgstr "Bordures des cellules"
 
 #: src/control/Control.JSDialogBuilder.js:1678
 msgid "Rows"
@@ -529,7 +527,7 @@ msgstr "Signaler un problème"
 #: src/control/Control.Menubar.js:463 src/control/Control.Menubar.js:516
 #: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:627
 msgid "Latest Updates"
-msgstr ""
+msgstr "Dernières mises à jour"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:347
 #: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:517
@@ -807,10 +805,8 @@ msgid "Right Margin"
 msgstr "Marge droite"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Insérer un tableau"
+msgstr "Insérer une tabulation"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -950,11 +946,11 @@ msgstr "Renommage..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Je comprends les risques"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "Nous sommes désolés, les informations à propos des dernières mises à jour ne sont pas disponibles."
 
 #: src/control/Toolbar.js:476
 msgid "This version of %productName is powered by"
