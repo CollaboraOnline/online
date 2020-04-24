@@ -571,7 +571,7 @@ public:
     {
         if (InhibitThreadChecks)
             return;
-        std::thread::id us = std::thread::id();
+        std::thread::id us = std::this_thread::get_id();
         if (_owner == us)
             return; // all well
         LOG_DBG("Ununusual - SocketPoll used from a new thread");
