@@ -1,12 +1,14 @@
 #!/bin/bash
 
 SUDO=''
-if (( $EUID != 0 )); then
-    if hash sudo 2>/dev/null; then
-        SUDO='sudo'
-    else
-        "Run the script as root."
-        exit 1
+if [ ! -w "/etc/loolwsd" ]; then
+    if (( $EUID != 0 )); then
+        if hash sudo 2>/dev/null; then
+            SUDO='sudo'
+        else
+            echo "Run the script as root."
+            exit 1
+        fi
     fi
 fi
 
