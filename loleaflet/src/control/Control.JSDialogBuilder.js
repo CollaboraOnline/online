@@ -1537,13 +1537,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			valueNode.style.backgroundColor = selectedColor;
 			if (titleSpan) {
 				if (data.id === 'fillattr')
-					titleSpan.innerHTML = _('Background Color');
+					data.text = _('Background Color');
 				else if (data.id === 'fillattr2')
-					titleSpan.innerHTML = _('Gradient Start');
+					data.text = _('Gradient Start');
 				else if (data.id === 'fillattr3')
-					titleSpan.innerHTML = _('Gradient End');
-				else
-					titleSpan.innerHTML = data.text;
+					data.text = _('Gradient End');
+				titleSpan.innerHTML = data.text;
 			}
 		}.bind(this);
 
