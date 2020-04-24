@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
+require('cypress-wait-until');
 
 describe('Insert objects via insertion wizard.', function() {
 	beforeEach(function() {
@@ -156,10 +157,14 @@ describe('Insert objects via insertion wizard.', function() {
 
 		cy.get('@cursorOrigLeft')
 			.then(function(cursorOrigLeft) {
-				cy.get('.blinking-cursor')
-					.invoke('offset')
-					.its('left')
-					.should('be.lessThan', cursorOrigLeft);
+				cy.waitUntil(function() {
+					return cy.get('.blinking-cursor')
+						.invoke('offset')
+						.its('left')
+						.then(function(cursorCurrentLeft) {
+							return cursorCurrentLeft < cursorOrigLeft;
+						});
+				});
 			});
 	});
 
@@ -189,10 +194,14 @@ describe('Insert objects via insertion wizard.', function() {
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
-					.invoke('offset')
-					.its('top')
-					.should('be.greaterThan', cursorOrigTop);
+				cy.waitUntil(function() {
+					return cy.get('.blinking-cursor')
+						.invoke('offset')
+						.its('top')
+						.then(function(cursorCurrentTop) {
+							return cursorCurrentTop > cursorOrigTop;
+						});
+				});
 			});
 	});
 
@@ -212,10 +221,14 @@ describe('Insert objects via insertion wizard.', function() {
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
-					.invoke('offset')
-					.its('top')
-					.should('be.greaterThan', cursorOrigTop);
+				cy.waitUntil(function() {
+					return cy.get('.blinking-cursor')
+						.invoke('offset')
+						.its('top')
+						.then(function(cursorCurrentTop) {
+							return cursorCurrentTop > cursorOrigTop;
+						});
+				});
 			});
 	});
 
@@ -258,10 +271,14 @@ describe('Insert objects via insertion wizard.', function() {
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
-					.invoke('offset')
-					.its('top')
-					.should('be.greaterThan', cursorOrigTop);
+				cy.waitUntil(function() {
+					return cy.get('.blinking-cursor')
+						.invoke('offset')
+						.its('top')
+						.then(function(cursorCurrentTop) {
+							return cursorCurrentTop > cursorOrigTop;
+						});
+				});
 			});
 	});
 
@@ -281,10 +298,14 @@ describe('Insert objects via insertion wizard.', function() {
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
-					.invoke('offset')
-					.its('top')
-					.should('be.greaterThan', cursorOrigTop);
+				cy.waitUntil(function() {
+					return cy.get('.blinking-cursor')
+						.invoke('offset')
+						.its('top')
+						.then(function(cursorCurrentTop) {
+							return cursorCurrentTop > cursorOrigTop;
+						});
+				});
 			});
 	});
 
