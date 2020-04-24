@@ -1530,6 +1530,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var label = L.DomUtil.create('span', 'ui-content unolabel', div);
 				label.for = buttonId;
 				label.innerHTML = data.text;
+			} else {
+				div.title = data.text;
+				$(div).tooltip();
 			}
 
 			var updateFunction = function() {
