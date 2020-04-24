@@ -11,7 +11,7 @@ span.menu-entry-icon img {
 }
 
 #mobile-wizard.menuwizard #mobile-wizard-content{
-	overflow: hidden !important;
+	overflow-y: auto !important;
 }
 
 #mobile-wizard.menuwizard{
