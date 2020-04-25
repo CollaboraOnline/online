@@ -70,7 +70,7 @@ namespace Log
         const std::string& getName() const { return _name; }
 
         void setLogger(Poco::Logger* logger) { _logger = logger; };
-        Poco::Logger* getLogger() { return _logger; }
+        Poco::Logger* getLogger() const { return _logger; }
     };
     static StaticNameHelper Source;
     bool IsShutdown = false;
@@ -112,38 +112,153 @@ namespace Log
         signalLog(buf + i + 1);
     }
 
-    char* prefix(char* buffer, const std::size_t len, const char* level)
+    /// Convert an unsigned number to ascii with 0 padding.
+    template <int Width> void to_ascii_fixed(char* buf, size_t num)
     {
-        const char *threadName = Util::getThreadName();
-        Poco::DateTime time;
+        buf[Width - 1] = '0' + num % 10; // Units.
+
+        if (Width > 1)
+        {
+            num /= 10;
+            buf[Width - 2] = '0' + num % 10; // Tens.
+        }
+
+        if (Width > 2)
+        {
+            num /= 10;
+            buf[Width - 3] = '0' + num % 10; // Hundreds.
+        }
+
+        if (Width > 3)
+        {
+            num /= 10;
+            buf[Width - 4] = '0' + num % 10; // Thousands.
+        }
+
+        if (Width > 4)
+        {
+            num /= 10;
+            buf[Width - 5] = '0' + num % 10; // Ten-Thousands.
+        }
+
+        if (Width > 5)
+        {
+            num /= 10;
+            buf[Width - 6] = '0' + num % 10; // Hundred-Thousands.
+        }
+
+        static_assert(Width >= 1 && Width <= 6, "Width is invalid.");
+    }
+
+    /// Copy a null-terminated string into another.
+    /// Expects the destination to be large enough.
+    /// Note: unlike strcpy, this returns the *new* out
+    /// (destination) pointer, which saves a strlen call.
+    char* strcopy(const char* in, char* out)
+    {
+        while (*in)
+            *out++ = *in++;
+        return out;
+    }
+
+    /// Convert unsigned long num to base-10 ascii in place.
+    /// Returns the *end* position.
+    char* to_ascii(char* buf, size_t num)
+    {
+        int i = 0;
+        do
+        {
+            buf[i++] = '0' + num % 10;
+            num /= 10;
+        } while (num > 0);
+
+        // Reverse.
+        for (char *front = buf, *back = buf + i - 1; back > front; ++front, --back)
+        {
+            const char t = *front;
+            *front = *back;
+            *back = t;
+        }
+
+        return buf + i;
+    }
+
+    char* prefix(const Poco::DateTime& time, char* buffer, const char* level)
+    {
+        // Note that snprintf is deemed signal-safe in most common implementations.
+        char* pos = strcopy((Source.getInited() ? Source.getId().c_str() : "<shutdown>"), buffer);
+        *pos++ = '-';
+
+        // Thread ID.
 #ifdef __linux
         const long osTid = Util::getThreadId();
-        // Note that snprintf is deemed signal-safe in most common implementations.
-        snprintf(buffer, len, "%s-%.05lu %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
-                    (Source.getInited() ? Source.getId().c_str() : "<shutdown>"),
-                    osTid,
-                    time.year(), time.month(), time.day(),
-                    time.hour(), time.minute(), time.second(),
-                    time.millisecond() * 1000 + time.microsecond(),
-                    threadName, level);
+        if (osTid > 99999)
+        {
+            if (osTid > 999999)
+                pos = to_ascii(pos, osTid);
+            else
+            {
+                to_ascii_fixed<6>(pos, osTid);
+                pos += 6;
+            }
+        }
+        else
+        {
+            to_ascii_fixed<5>(pos, osTid);
+            pos += 5;
+        }
 #elif defined IOS
         uint64_t osTid;
         pthread_threadid_np(nullptr, &osTid);
-        snprintf(buffer, len, "%s-%#.05llx %.4u-%.2u-%.2u %.2u:%.2u:%.2u.%.6u [ %s ] %s  ",
-                    (Source.getInited() ? Source.getId().c_str() : "<shutdown>"),
-                    osTid,
-                    time.year(), time.month(), time.day(),
-                    time.hour(), time.minute(), time.second(),
-                    time.millisecond() * 1000 + time.microsecond(),
-                    threadName, level);
+        snprintf(pos, 32, "%#.05llx", osTid);
+        while (*pos++); // Skip to end.
 #endif
+
+        // YYYY-MM-DD.
+        *pos++ = ' ';
+        to_ascii_fixed<4>(pos, time.year());
+        pos[4] = '-';
+        pos += 5;
+        to_ascii_fixed<2>(pos, time.month());
+        pos[2] = '-';
+        pos += 3;
+        to_ascii_fixed<2>(pos, time.day());
+        pos[2] = ' ';
+        pos += 3;
+
+        // HH:MM:SS.uS
+        to_ascii_fixed<2>(pos, time.hour());
+        pos[2] = ':';
+        pos += 3;
+        to_ascii_fixed<2>(pos, time.minute());
+        pos[2] = ':';
+        pos += 3;
+        to_ascii_fixed<2>(pos, time.second());
+        pos[2] = '.';
+        pos += 3;
+        to_ascii_fixed<6>(pos, time.millisecond() * 1000 + time.microsecond());
+        pos[6] = ' ';
+        pos[7] = '[';
+        pos[8] = ' ';
+        pos += 9;
+
+        pos = strcopy(Util::getThreadName(), pos);
+        pos[0] = ' ';
+        pos[1] = ']';
+        pos[2] = ' ';
+        pos += 3;
+        pos = strcopy(level, pos);
+        pos[0] = ' ';
+        pos[1] = ' ';
+        pos[2] = '\0';
+
         return buffer;
     }
 
     void signalLogPrefix()
     {
         char buffer[1024];
-        prefix(buffer, sizeof(buffer) - 1, "SIG");
+        prefix<sizeof(buffer) - 1>(buffer, "SIG");
         signalLog(buffer);
     }
 
