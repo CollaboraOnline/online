@@ -650,7 +650,7 @@ public:
 };
 
 #if !MOBILEAPP
-static FILE* ProcSMapsFile = nullptr;
+static int ProcSMapsFile = -1;
 #endif
 
 class ThreadPool {
@@ -796,14 +796,14 @@ public:
         assert(_loKit);
 
 #if !MOBILEAPP
-        if (ProcSMapsFile)
+        if (ProcSMapsFile >= 0)
         {
             static const std::string str = "smapsfd:";
-            if (websocketHandler->sendTextMessageWithFD(str.c_str(), str.size(), ProcSMapsFile->_fileno) > 0)
+            if (websocketHandler->sendTextMessageWithFD(str.c_str(), str.size(), ProcSMapsFile) > 0)
             {
                 LOG_DBG("Successfully sent smaps fd to wsd");
-                fclose(ProcSMapsFile);
-                ProcSMapsFile = nullptr;
+                close(ProcSMapsFile);
+                ProcSMapsFile = -1;
             }
             else
             {
@@ -2601,11 +2601,9 @@ void lokit_main(
                 LOG_SYS("mknod(" << jailPath.toString() << "/dev/random) failed. Mount must not use nodev flag.");
             }
 
-            ProcSMapsFile = fopen("/proc/self/smaps", "r");
-            if (ProcSMapsFile == nullptr)
-            {
-                LOG_SYS("Failed to symlink /proc/self/smaps. Memory stats will be missing.");
-            }
+            ProcSMapsFile = open("/proc/self/smaps", O_RDONLY);
+            if (ProcSMapsFile < 0)
+                LOG_SYS("Failed to open /proc/self/smaps. Memory stats will be missing.");
 
             LOG_INF("chroot(\"" << jailPath.toString() << "\")");
             if (chroot(jailPath.toString().c_str()) == -1)
