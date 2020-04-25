@@ -194,10 +194,6 @@ public:
     static bool NoCapsForKit;
 
     /// Create a new ChildSession
-    /// ws The socket between master and kit (jailed).
-    /// loKit The LOKit instance.
-    /// loKitDocument The instance to an existing document (when opening
-    ///                 a new view) or nullptr (when first view).
     /// jailId The JailID of the jail root directory,
     //         used by downloadas to construct jailed path.
     ChildSession(
