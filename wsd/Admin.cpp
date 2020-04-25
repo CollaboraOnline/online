@@ -45,6 +45,7 @@ using Poco::Util::Application;
 const int Admin::MinStatsIntervalMs = 50;
 const int Admin::DefStatsIntervalMs = 1000;
 
+
 /// Process incoming websocket messages
 void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
 {
@@ -362,7 +363,6 @@ bool AdminSocketHandler::handleInitialRequest(
 /// An admin command processor.
 Admin::Admin() :
     SocketPoll("admin"),
-    _model(AdminModel()),
     _forKitPid(-1),
     _lastTotalMemory(0),
     _lastJiffies(0),

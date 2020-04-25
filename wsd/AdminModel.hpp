@@ -100,6 +100,10 @@ public:
 /// A document in Admin controller.
 class Document
 {
+    // cf. FILE* member.
+    Document(const Document &) = delete;
+    Document& operator = (const Document &) = delete;
+
 public:
     Document(const std::string& docKey,
              Poco::Process::PID pid,
@@ -245,8 +249,9 @@ private:
 /// The Admin controller implementation.
 class AdminModel
 {
+    AdminModel(const AdminModel &) = delete;
+    AdminModel& operator = (const AdminModel &) = delete;
 public:
-
     AdminModel() :
         _segFaultCount(0),
         _owner(std::this_thread::get_id())
@@ -342,8 +347,8 @@ private:
 
 private:
     std::map<int, Subscriber> _subscribers;
-    std::map<std::string, Document> _documents;
-    std::map<std::string, Document> _expiredDocuments;
+    std::map<std::string, std::unique_ptr<Document>> _documents;
+    std::map<std::string, std::unique_ptr<Document>> _expiredDocuments;
 
     /// The last N total memory Dirty size.
     std::list<unsigned> _memStats;

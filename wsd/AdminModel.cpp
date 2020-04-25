@@ -201,7 +201,7 @@ std::string AdminModel::getAllHistory() const
     for (const auto& d : _documents)
     {
         oss << separator1;
-        oss << d.second.getHistory();
+        oss << d.second->getHistory();
         separator1 = ",";
     }
     oss << "], \"expiredDocuments\" : [";
@@ -209,7 +209,7 @@ std::string AdminModel::getAllHistory() const
     for (const auto& ed : _expiredDocuments)
     {
         oss << separator1;
-        oss << ed.second.getHistory();
+        oss << ed.second->getHistory();
         separator1 = ",";
     }
     oss << "]}";
@@ -274,9 +274,9 @@ unsigned AdminModel::getKitsMemoryUsage()
     unsigned docs = 0;
     for (const auto& it : _documents)
     {
-        if (!it.second.isExpired())
+        if (!it.second->isExpired())
         {
-            const int bytes = it.second.getMemoryDirty();
+            const int bytes = it.second->getMemoryDirty();
             if (bytes > 0)
             {
                 totalMem += bytes;
@@ -301,17 +301,17 @@ size_t AdminModel::getKitsJiffies()
     size_t totalJ = 0;
     for (auto& it : _documents)
     {
-        if (!it.second.isExpired())
+        if (!it.second->isExpired())
         {
-            const int pid = it.second.getPid();
+            const int pid = it.second->getPid();
             if (pid > 0)
             {
                 unsigned newJ = Util::getCpuUsage(pid);
-                unsigned prevJ = it.second.getLastJiffies();
+                unsigned prevJ = it.second->getLastJiffies();
                 if(newJ >= prevJ)
                 {
                     totalJ += (newJ - prevJ);
-                    it.second.setLastJiffies(newJ);
+                    it.second->setLastJiffies(newJ);
                 }
             }
         }
@@ -459,7 +459,7 @@ void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t rec
 
     auto doc = _documents.find(docKey);
     if(doc != _documents.end())
-        doc->second.addBytes(sent, recv);
+        doc->second->addBytes(sent, recv);
 
     _sentBytesTotal += sent;
     _recvBytesTotal += recv;
@@ -471,7 +471,7 @@ void AdminModel::modificationAlert(const std::string& docKey, Poco::Process::PID
 
     auto doc = _documents.find(docKey);
     if (doc != _documents.end())
-        doc->second.setModified(value);
+        doc->second->setModified(value);
 
     std::ostringstream oss;
     oss << "modifications "
@@ -487,9 +487,9 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
 {
     assertCorrectThread();
 
-    const auto ret = _documents.emplace(docKey, Document(docKey, pid, filename));
-    ret.first->second.takeSnapshot();
-    ret.first->second.addView(sessionId, userName, userId);
+    const auto ret = _documents.emplace(docKey, std::unique_ptr<Document>(new Document(docKey, pid, filename)));
+    ret.first->second->takeSnapshot();
+    ret.first->second->addView(sessionId, userName, userId);
     LOG_DBG("Added admin document [" << docKey << "].");
 
     std::string encodedUsername;
@@ -524,7 +524,7 @@ void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
     }
     else
     {
-        oss << _documents.begin()->second.getMemoryDirty();
+        oss << _documents.begin()->second->getMemoryDirty();
     }
 
     notify(oss.str());
@@ -535,22 +535,24 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
     assertCorrectThread();
 
     auto docIt = _documents.find(docKey);
-    if (docIt != _documents.end() && !docIt->second.isExpired())
+    if (docIt != _documents.end() && !docIt->second->isExpired())
     {
         // Notify the subscribers
         std::ostringstream oss;
         oss << "rmdoc "
-            << docIt->second.getPid() << ' '
+            << docIt->second->getPid() << ' '
             << sessionId;
         notify(oss.str());
 
         // The idea is to only expire the document and keep the history
         // of documents open and close, to be able to give a detailed summary
         // to the admin console with views.
-        if (docIt->second.expireView(sessionId) == 0)
+        if (docIt->second->expireView(sessionId) == 0)
         {
-            _expiredDocuments.emplace(docIt->first + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()), docIt->second);
+            std::unique_ptr<Document> doc;
+            std::swap(doc, docIt->second);
             _documents.erase(docIt);
+            _expiredDocuments.emplace(docIt->first + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()), std::move(doc));
         }
     }
 }
@@ -564,19 +566,21 @@ void AdminModel::removeDocument(const std::string& docKey)
     {
         std::ostringstream oss;
         oss << "rmdoc "
-            << docIt->second.getPid() << ' ';
+            << docIt->second->getPid() << ' ';
         const std::string msg = oss.str();
 
-        for (const auto& pair : docIt->second.getViews())
+        for (const auto& pair : docIt->second->getViews())
         {
             // Notify the subscribers
             notify(msg + pair.first);
-            docIt->second.expireView(pair.first);
+            docIt->second->expireView(pair.first);
         }
 
         LOG_DBG("Removed admin document [" << docKey << "].");
-        _expiredDocuments.emplace(docIt->first + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()), docIt->second);
+        std::unique_ptr<Document> doc;
+        std::swap(doc, docIt->second);
         _documents.erase(docIt);
+        _expiredDocuments.emplace(docIt->first + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()), std::move(doc));
     }
 }
 
@@ -639,9 +643,9 @@ unsigned AdminModel::getTotalActiveViews()
     unsigned numTotalViews = 0;
     for (const auto& it: _documents)
     {
-        if (!it.second.isExpired())
+        if (!it.second->isExpired())
         {
-            numTotalViews += it.second.getActiveViews();
+            numTotalViews += it.second->getActiveViews();
         }
     }
 
@@ -654,10 +658,10 @@ std::vector<DocBasicInfo> AdminModel::getDocumentsSortedByIdle() const
     docs.reserve(_documents.size());
     for (const auto& it: _documents)
     {
-        docs.emplace_back(it.second.getDocKey(),
-                          it.second.getIdleTime(),
-                          it.second.getMemoryDirty(),
-                          !it.second.getModifiedStatus());
+        docs.emplace_back(it.second->getDocKey(),
+                          it.second->getIdleTime(),
+                          it.second->getMemoryDirty(),
+                          !it.second->getModifiedStatus());
     }
 
     // Sort the list by idle times;
@@ -680,21 +684,21 @@ std::string AdminModel::getDocuments() const
     std::string separator1;
     for (const auto& it: _documents)
     {
-        if (!it.second.isExpired())
+        if (!it.second->isExpired())
         {
             std::string encodedFilename;
-            Poco::URI::encode(it.second.getFilename(), " ", encodedFilename);
+            Poco::URI::encode(it.second->getFilename(), " ", encodedFilename);
             oss << separator1 << '{' << ' '
-                << "\"pid\"" << ':' << it.second.getPid() << ','
-                << "\"docKey\"" << ':' << '"' << it.second.getDocKey() << '"' << ','
+                << "\"pid\"" << ':' << it.second->getPid() << ','
+                << "\"docKey\"" << ':' << '"' << it.second->getDocKey() << '"' << ','
                 << "\"fileName\"" << ':' << '"' << encodedFilename << '"' << ','
-                << "\"activeViews\"" << ':' << it.second.getActiveViews() << ','
-                << "\"memory\"" << ':' << it.second.getMemoryDirty() << ','
-                << "\"elapsedTime\"" << ':' << it.second.getElapsedTime() << ','
-                << "\"idleTime\"" << ':' << it.second.getIdleTime() << ','
-                << "\"modified\"" << ':' << '"' << (it.second.getModifiedStatus() ? "Yes" : "No") << '"' << ','
+                << "\"activeViews\"" << ':' << it.second->getActiveViews() << ','
+                << "\"memory\"" << ':' << it.second->getMemoryDirty() << ','
+                << "\"elapsedTime\"" << ':' << it.second->getElapsedTime() << ','
+                << "\"idleTime\"" << ':' << it.second->getIdleTime() << ','
+                << "\"modified\"" << ':' << '"' << (it.second->getModifiedStatus() ? "Yes" : "No") << '"' << ','
                 << "\"views\"" << ':' << '[';
-            viewers = it.second.getViews();
+            viewers = it.second->getViews();
             std::string separator;
             for(const auto& viewIt: viewers)
             {
@@ -723,11 +727,11 @@ void AdminModel::updateLastActivityTime(const std::string& docKey)
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())
     {
-        if (docIt->second.getIdleTime() >= 10)
+        if (docIt->second->getIdleTime() >= 10)
         {
-            docIt->second.takeSnapshot(); // I would like to keep the idle time
-            docIt->second.updateLastActivityTime();
-            notify("resetidle " + std::to_string(docIt->second.getPid()));
+            docIt->second->takeSnapshot(); // I would like to keep the idle time
+            docIt->second->updateLastActivityTime();
+            notify("resetidle " + std::to_string(docIt->second->getPid()));
         }
     }
 }
@@ -746,9 +750,9 @@ void AdminModel::updateMemoryDirty(const std::string& docKey, int dirty)
 
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end() &&
-        docIt->second.updateMemoryDirty(dirty))
+        docIt->second->updateMemoryDirty(dirty))
     {
-        notify("propchange " + std::to_string(docIt->second.getPid()) +
+        notify("propchange " + std::to_string(docIt->second->getPid()) +
                " mem " + std::to_string(dirty));
     }
 }
@@ -762,23 +766,23 @@ double AdminModel::getServerUptime()
 
 void AdminModel::setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
 {
-    std::map<std::string, Document>::iterator it = _documents.find(docKey);
+    auto it = _documents.find(docKey);
     if (it != _documents.end())
-        it->second.setViewLoadDuration(sessionId, viewLoadDuration);
+        it->second->setViewLoadDuration(sessionId, viewLoadDuration);
 }
 
 void AdminModel::setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration)
 {
-    std::map<std::string, Document>::iterator it = _documents.find(docKey);
+    auto it = _documents.find(docKey);
     if (it != _documents.end())
-        it->second.setWopiDownloadDuration(wopiDownloadDuration);
+        it->second->setWopiDownloadDuration(wopiDownloadDuration);
 }
 
 void AdminModel::setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration)
 {
-    std::map<std::string, Document>::iterator it = _documents.find(docKey);
+    auto it = _documents.find(docKey);
     if (it != _documents.end())
-        it->second.setWopiUploadDuration(wopiUploadDuration);
+        it->second->setWopiUploadDuration(wopiUploadDuration);
 }
 
 void AdminModel::addSegFaultCount(unsigned segFaultCount)
@@ -927,7 +931,7 @@ struct DocumentAggregateStats
         for (const auto& v : d.getViews())
             _viewLoadDuration.Update(v.second.getLoadDuration().count(), active);
     }
-    
+
     ActiveExpiredStats _kitUsedMemory;
     ActiveExpiredStats _viewsCount;
     ActiveExpiredStats _activeViewsCount;
@@ -957,10 +961,10 @@ struct KitProcStats
 void AdminModel::CalcDocAggregateStats(DocumentAggregateStats& stats)
 {
     for (auto& d : _documents)
-        stats.Update(d.second, true);
+        stats.Update(*d.second.get(), true);
 
     for (auto& d : _expiredDocuments)
-        stats.Update(d.second, false);
+        stats.Update(*d.second.get(), false);
 }
 
 void CalcKitStats(KitProcStats& stats)
@@ -1037,10 +1041,7 @@ std::set<pid_t> AdminModel::getDocumentPids() const
     std::set<pid_t> pids;
 
     for (const auto& it : _documents)
-    {
-        const Document& document = it.second;
-        pids.insert(document.getPid());
-    }
+        pids.insert(it.second->getPid());
 
     return pids;
 }

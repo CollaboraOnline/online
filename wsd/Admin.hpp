@@ -56,6 +56,8 @@ class MemoryStatsTask;
 /// An admin command processor.
 class Admin : public SocketPoll
 {
+    Admin(const Admin &) = delete;
+    Admin& operator = (const Admin &) = delete;
     Admin();
 public:
     virtual ~Admin();
