@@ -26,7 +26,7 @@ describe('Shape operations', function() {
 
 		// Check whether the rectangle was inserted as an SVG
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
-			.then(function(svg) {
+			.should(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
 			});

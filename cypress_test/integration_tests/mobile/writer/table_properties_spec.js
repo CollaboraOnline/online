@@ -391,11 +391,6 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		writerHelper.selectAllMobile();
 
 		// Check new row height
-		cy.get('#copy-paste-container td:nth-of-type(1n)')
-			.should('have.attr', 'height');
-		cy.get('#copy-paste-container td:nth-of-type(2n)')
-			.should('not.have.attr', 'height');
-
 		cy.get('#copy-paste-container td')
 			.should(function(items) {
 				expect(items).to.have.lengthOf(6);

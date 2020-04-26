@@ -178,11 +178,8 @@ describe('Change cell appearance.', function() {
 		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
-			.should('have.length', 4)
-			.should('have.attr', 'style');
-
-		cy.get('#copy-paste-container table td')
-			.then(function(cells) {
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(4);
 				for (var i = 0; i < cells.length; i++) {
 					expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000');
 				}
@@ -198,11 +195,8 @@ describe('Change cell appearance.', function() {
 		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
-			.should('have.length', 4)
-			.should('have.attr', 'style');
-
-		cy.get('#copy-paste-container table td')
-			.then(function(cells) {
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(4);
 				for (var i = 0; i < cells.length; i++) {
 					if (i == 0)
 						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000');
@@ -228,11 +222,8 @@ describe('Change cell appearance.', function() {
 		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
-			.should('have.length', 4)
-			.should('have.attr', 'style');
-
-		cy.get('#copy-paste-container table td')
-			.then(function(cells) {
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(4);
 				for (var i = 0; i < cells.length; i++) {
 					if (i == 0)
 						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
@@ -255,11 +246,8 @@ describe('Change cell appearance.', function() {
 		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
-			.should('have.length', 4)
-			.should('have.attr', 'style');
-
-		cy.get('#copy-paste-container table td')
-			.then(function(cells) {
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(4);
 				for (var i = 0; i < cells.length; i++) {
 					if (i == 0)
 						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
