@@ -56,8 +56,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
-			.should('have.length', 4)
-			.then(function(rows) {
+			.should(function(rows) {
+				expect(rows).to.have.lengthOf(4);
 				expect(rows[0].textContent).to.not.have.string('text');
 				expect(rows[1].textContent).to.have.string('text');
 			});
@@ -87,8 +87,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
-			.should('have.length', 4)
-			.then(function(rows) {
+			.should(function(rows) {
+				expect(rows).to.have.lengthOf(4);
 				expect(rows[0].textContent).to.have.string('text');
 				expect(rows[1].textContent).to.not.have.string('text');
 			});
@@ -120,8 +120,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#copy-paste-container tr')
 			.should('have.length', 3);
 		cy.get('#copy-paste-container td')
-			.should('have.length', 9)
-			.then(function(columns) {
+			.should(function(columns) {
+				expect(columns).to.have.lengthOf(9);
 				expect(columns[0].textContent).to.not.have.string('text');
 				expect(columns[1].textContent).to.have.string('text');
 			});
@@ -151,8 +151,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#copy-paste-container tr')
 			.should('have.length', 3);
 		cy.get('#copy-paste-container td')
-			.should('have.length', 9)
-			.then(function(columns) {
+			.should(function(columns) {
+				expect(columns).to.have.lengthOf(9);
 				expect(columns[0].textContent).to.have.string('text');
 				expect(columns[1].textContent).to.not.have.string('text');
 			});
@@ -180,10 +180,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
-			.should('have.length', 2)
-			.then(function(columns) {
-				expect(columns[0].textContent).to.not.have.string('text');
-				expect(columns[1].textContent).to.not.have.string('text');
+			.should(function(rows) {
+				expect(rows).to.have.lengthOf(2);
+				expect(rows[0].textContent).to.not.have.string('text');
+				expect(rows[1].textContent).to.not.have.string('text');
 			});
 		cy.get('#copy-paste-container td')
 			.should('have.length', 4);
@@ -213,8 +213,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#copy-paste-container tr')
 			.should('have.length', 3);
 		cy.get('#copy-paste-container td')
-			.should('have.length', 3)
-			.then(function(columns) {
+			.should(function(columns) {
+				expect(columns).to.have.lengthOf(3);
 				expect(columns[0].textContent).to.not.have.string('text');
 				expect(columns[1].textContent).to.not.have.string('text');
 				expect(columns[2].textContent).to.not.have.string('text');
@@ -246,7 +246,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		// Check markers are in the same row (we have text selection only)
 		cy.get('.leaflet-marker-icon')
-			.then(function(markers) {
+			.should(function(markers) {
 				expect(markers).to.have.lengthOf(2);
 				expect(markers[0].getBoundingClientRect().top).to.equal(markers[1].getBoundingClientRect().top);
 			});
@@ -397,8 +397,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('not.have.attr', 'height');
 
 		cy.get('#copy-paste-container td')
-			.then(function(items) {
-				expect(items).have.lengthOf(6);
+			.should(function(items) {
+				expect(items).to.have.lengthOf(6);
 				for (var i = 0; i < items.length; i++) {
 					if (i == 0 || i == 4)
 						expect(items[i]).have.attr('height', '33');
@@ -432,13 +432,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		writerHelper.selectAllMobile();
 
 		// Check new row height
-		cy.get('#copy-paste-container td:nth-of-type(1n)')
-			.should('have.attr', 'height');
-		cy.get('#copy-paste-container td:nth-of-type(2n)')
-			.should('not.have.attr', 'height');
-
 		cy.get('#copy-paste-container td')
-			.then(function(items) {
+			.should(function(items) {
 				expect(items).have.lengthOf(6);
 				for (var i = 0; i < items.length; i++) {
 					if (i == 0 || i == 4)
