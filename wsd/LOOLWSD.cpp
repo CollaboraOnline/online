@@ -760,7 +760,7 @@ public:
     void wakeupHook() override;
 
 #if !MOBILEAPP
-    // Resets the forkit porcess object
+    // Resets the forkit process object
     void setForKitProcess(const std::weak_ptr<ForKitProcess>& forKitProc)
     {
         assertCorrectThread();
@@ -3004,7 +3004,7 @@ private:
                             {
                                 LOG_ERR("Error while loading : " << exc.what());
                             }
-                            // badness occured:
+                            // badness occurred:
                             std::ostringstream oss;
                             oss << "HTTP/1.1 400\r\n"
                                 << "Date: " << Util::getHttpTimeNow() << "\r\n"

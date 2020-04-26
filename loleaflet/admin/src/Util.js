@@ -7,7 +7,7 @@
 var Util = Base.extend({
 	constructor: null
 
-}, { // class itnerface
+}, { // class interface
 
 	humanizeMem: function (kbytes) {
 		var unit = 1000;

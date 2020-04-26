@@ -16,7 +16,7 @@ if ("document" in window.self) {
 
 // Full polyfill for browsers with no classList support
 // Including IE < Edge missing SVGElement.classList
-if (!("classList" in document.createElement("_")) 
+if (!("classList" in document.createElement("_"))
 	|| document.createElementNS && !("classList" in document.createElementNS("http://www.w3.org/2000/svg","g"))) {
 
 (function (view) {
@@ -446,7 +446,7 @@ function serialize(form, options) {
     for (var i=0 ; i<elements.length ; ++i) {
         var element = elements[i];
 
-        // ingore disabled fields
+        // ignore disabled fields
         if ((!options.disabled && element.disabled) || !element.name) {
             continue;
         }
@@ -824,7 +824,7 @@ function serialize(form, options) {
     for (var i=0 ; i<elements.length ; ++i) {
         var element = elements[i];
 
-        // ingore disabled fields
+        // ignore disabled fields
         if ((!options.disabled && element.disabled) || !element.name) {
             continue;
         }

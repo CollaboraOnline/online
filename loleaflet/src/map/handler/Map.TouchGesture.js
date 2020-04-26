@@ -289,7 +289,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		// edit mode not entered, or toggled, keyboard toggles, etc.).
 		// We only process the first tap and subsequent ones are handled
 		// by the double-tap and triple-tap handlers below.
-		// Note: Hammer has requireFailure() which supressses this call
+		// Note: Hammer has requireFailure() which suppresses this call
 		// when multi-taps are detected. This isn't working for us.
 		if (e.tapCount > 1)
 			return;

@@ -145,7 +145,7 @@ to setup lldb to actually read & use them.
 From now on, you will be able to debug directly in the Android Studio
 debugger.  Happy debugging!
 
-Note: to re-buld your app with a newly compiled libnative-lo code - it is
+Note: to re-build your app with a newly compiled libnative-lo code - it is
 
 == Tip: How to speed up your core.git build ==
 

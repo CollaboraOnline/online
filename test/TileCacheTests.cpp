@@ -1443,7 +1443,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
     // For the first input wsd will send all invalidated tiles
     LOK_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket, "tile:", testname, 500) > 1);
 
-    // For the later inputs wsd will send one tile, since other ones are indentical
+    // For the later inputs wsd will send one tile, since other ones are identical
     for(int i = 0; i < 5; ++i)
     {
         sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0", testname);

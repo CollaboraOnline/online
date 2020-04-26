@@ -377,7 +377,7 @@ namespace FileUtil
     }
 
     /// Anonymize user names and IDs.
-    /// Will use the Obfuscated User ID if one is provied via WOPI.
+    /// Will use the Obfuscated User ID if one is provided via WOPI.
     std::string anonymizeUsername(const std::string& username)
     {
         return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;

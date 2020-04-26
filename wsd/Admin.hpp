@@ -23,7 +23,7 @@ class Admin;
 class AdminSocketHandler : public WebSocketHandler
 {
 public:
-    /// Client connection to remote amdin socket
+    /// Client connection to remote admin socket
     AdminSocketHandler(Admin* adminManager);
 
     /// Connection from remote admin socket

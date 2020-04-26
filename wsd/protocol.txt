@@ -1,6 +1,6 @@
 All communication consists of messages that are one line of
 human-readable UTF-8 text (with no terminating newline), optionally
-followed by a single newline and arbitrary (potentialy even binary)
+followed by a single newline and arbitrary (potentially even binary)
 data.
 
 The WebSocket distinction between 'text' and 'binary' frames has no
@@ -42,7 +42,7 @@ canceltiles
 tileprocessed tile=<tileid>
 
     Previously sent tile (server -> client) arrived and processed by the client.
-    Tileid has the next stucture : <selected part>:<tile x coord>:<tile y coord>:<tile width in twips>:<tile height in twips>
+    Tileid has the next structure : <selected part>:<tile x coord>:<tile y coord>:<tile width in twips>:<tile height in twips>
 
 downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
@@ -256,7 +256,7 @@ asksignaturestatus
 
 signdocument
 
-    Sign the current document with the input cetificate and private key.
+    Sign the current document with the input certificate and private key.
 
 rendershapeselection mimetype=<mimeType>
 

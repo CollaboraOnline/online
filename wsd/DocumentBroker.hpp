@@ -397,7 +397,7 @@ private:
     /// All session of this DocBroker by ID.
     SessionMap<ClientSession> _sessions;
 
-    /// If we set the user-requested inital (on load) settings to be forced.
+    /// If we set the user-requested initial (on load) settings to be forced.
     std::set<std::string> _isInitialStateSet;
 
     std::unique_ptr<StorageBase> _storage;

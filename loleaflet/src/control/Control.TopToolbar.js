@@ -270,7 +270,7 @@ L.Control.TopToolbar = L.Control.extend({
 					window.insertShapes();
 			}
 		});
-	
+
 		toolbar.bind('touchstart', function() {
 			w2ui['editbar'].touchStarted = true;
 		});
@@ -398,7 +398,7 @@ L.Control.TopToolbar = L.Control.extend({
 			if (commands && commands.length > 0) {
 				// Inserts a separator element
 				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
-	
+
 				commands.forEach(function (command) {
 					var translated = command.text;
 					if (L.Styles.styleMappings[command.text]) {
@@ -424,7 +424,7 @@ L.Control.TopToolbar = L.Control.extend({
 			if (topStyles.length > 0) {
 				// Inserts a separator element
 				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
-	
+
 				topStyles.forEach(function (style) {
 					data = data.concat({id: style, text: L.Styles.styleMappings[style].toLocaleString()});
 				}, this);
@@ -554,7 +554,7 @@ L.Control.TopToolbar = L.Control.extend({
 			$('.fontsizes-select').val(state).trigger('change');
 		}
 
-		// call shared handler for font color and higlight items handling
+		// call shared handler for font color and highlight items handling
 		window.onCommandStateChanged(e);
 	}
 });

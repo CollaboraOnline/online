@@ -63,7 +63,7 @@ describe('Toolbar tests', function() {
 		cy.get('#tb_actionbar_item_undo')
 			.should('have.class', 'disabled');
 
-		// Type somthing in the document
+		// Type something in the document
 		cy.get('#document-container').type('x');
 
 		// Button should become enabled
@@ -83,7 +83,7 @@ describe('Toolbar tests', function() {
 		cy.get('#tb_actionbar_item_redo')
 			.should('have.class', 'disabled');
 
-		// Type somthing in the document
+		// Type something in the document
 		cy.get('#document-container').type('x');
 
 		// Button should be still disabled

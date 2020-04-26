@@ -136,7 +136,7 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
         String filename = file.filename;
         long length = file.fileLength;
 
-        // TODO Date not avaiable now
+        // TODO Date not available now
         //Date date = null;
 
         holder.filenameView.setText(filename);
@@ -177,7 +177,7 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
             holder.fileSizeView.setText(size);
             holder.fileSizeUnitView.setText(unit);
 
-            /* TODO Date not avaiable now
+            /* TODO Date not available now
             if (date != null) {
                 SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy hh:ss");
                 //TODO format date

@@ -92,7 +92,7 @@ T getJSONValue(const Poco::JSON::Object::Ptr &object, const std::string& key)
 }
 
 /// Function that searches `object` for `key` and warns if there are minor mis-spellings involved.
-/// Upon successfull search, fills `value` with value found in object.
+/// Upon successful search, fills `value` with value found in object.
 /// Removes the entry from the JSON object if @bRemove == true.
 template <typename T>
 bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& value, bool bRemove = true)

@@ -43,7 +43,7 @@
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
 
     // If this method is called a second time on the same CODocument object, just ignore it. This
-    // seems to happen occastionally when the device is awakened after sleep. See tdf#122543.
+    // seems to happen occasionally when the device is awakened after sleep. See tdf#122543.
     if (fakeClientFd >= 0)
         return YES;
 

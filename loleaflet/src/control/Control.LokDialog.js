@@ -1413,7 +1413,7 @@ L.Control.LokDialog = L.Control.extend({
 		// The image is rendered per the HiDPI scale we used
 		// while requesting rendering the image. Here we
 		// set the canvas to have the actual size, while
-		// the image is rendred with the HiDPI scale.
+		// the image is rendered with the HiDPI scale.
 		this._setCanvasWidthHeight(canvas, this._dialogs[parentId].childwidth,
 						this._dialogs[parentId].childheight);
 

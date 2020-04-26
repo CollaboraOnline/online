@@ -193,7 +193,7 @@ public:
             return;
         }
 
-        // Sometimes we get the content with the first recieve.
+        // Sometimes we get the content with the first receive.
         if (strstr(buffer, "\357\273\277This is some text.\nAnd some more.\n"))
         {
             return;

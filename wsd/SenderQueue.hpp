@@ -107,7 +107,7 @@ private:
                  command == "invalidatecursor:" ||
                  command == "setpart:")
         {
-            // Remove previous identical enties of this command,
+            // Remove previous identical entries of this command,
             // if any, and use most recent (incoming).
             const auto& pos = std::find_if(_queue.begin(), _queue.end(),
                 [&command](const queue_item_t& cur)

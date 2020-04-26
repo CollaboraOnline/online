@@ -574,7 +574,7 @@ public:
         std::thread::id us = std::this_thread::get_id();
         if (_owner == us)
             return; // all well
-        LOG_DBG("Ununusual - SocketPoll used from a new thread");
+        LOG_DBG("Unusual - SocketPoll used from a new thread");
         _owner = us;
         for (const auto& it : _pollSockets)
             it->setThreadOwner(us);
@@ -1116,7 +1116,7 @@ public:
             ssize_t len;
             do
             {
-                // Writing more than we can absorb in the kernel causes SSL wasteage.
+                // Writing more than we can absorb in the kernel causes SSL wastage.
                 len = writeData(&_outBuffer[0], std::min((int)_outBuffer.size(),
                                                          getSendBufferSize()));
 

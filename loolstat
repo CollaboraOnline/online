@@ -72,8 +72,8 @@ THREADS=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{.*}' | $WC -l);
 # get the number of running client socket.
 LOOLWSD_CLIENT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{client_socket}' | $WC -l);
 
-# get the number of running prision socket.
-LOOLWSD_PRISIONER=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{prision_socket}' | $WC -l);
+# get the number of running prison socket.
+LOOLWSD_PRISONER=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '{prison_socket}' | $WC -l);
 
 # get the number of processes swapped out.
 SWAPPEDOUT=$($PSTREE -a -h -A -p $LOOLWSD_PID | $GREP -o '(.*)' | $WC -l);
@@ -85,6 +85,6 @@ printf " %-10s %d\n" "Running process:" "$PROCESS";
 printf " %-10s %d\n" "Running threads:" "$THREADS";
 printf " %-10s %d\n" "Process swapped out:" "$SWAPPEDOUT";
 printf " %-10s %d\n" "Socket Client   threads:" "$LOOLWSD_CLIENT";
-printf " %-10s %d\n" "Socket Prision  threads:" "$LOOLWSD_PRISIONER";
+printf " %-10s %d\n" "Socket Prison  threads:" "$LOOLWSD_PRISONER";
 $TOP -bn 1 | $GREP -E 'loolwsd|COMMAND'
 

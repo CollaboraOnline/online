@@ -60,7 +60,7 @@ A string for the domain the host page sends/receives PostMessages from, we only 
 Size of the file in bytes (64bit)
 
 ### TemplateSource
-The ID of file (like the wopi/files/ID) can be a non-existing file.  In that case, the file will be created from a template when the template (eg. an OTT file) is specifiend as "TemplateSource" in the CheckFileInfo response.
+The ID of file (like the wopi/files/ID) can be a non-existing file.  In that case, the file will be created from a template when the template (eg. an OTT file) is specified as "TemplateSource" in the CheckFileInfo response.
 
 The TemplateSource is supposed to be an URL like https://somewhere/accessible/file.ott that is accessible by the Online.
 
@@ -70,7 +70,7 @@ For the actual saving of the content, normal PutFile mechanism will be used.
 A boolean flag, indicating whether the user has permission to edit and/or over-write the file. If not set PutFile will fail.
 
 ### UserCanNotWriteRelative
-A boolean flag indiciating that the user cannot Save-As on this server, so PutFileRelative will fail.
+A boolean flag indicating that the user cannot Save-As on this server, so PutFileRelative will fail.
 
 ### UserId
 A programmatic string identifier of the user.

@@ -490,7 +490,7 @@ L.Map.include({
 					$('#recover-from-email').text(_('Recover from email'));
 					library.listIdentities().then(function(response) {
 						var identities = response.data;
-						var identitiesDiv = $vexContent.find('#identites');
+						var identitiesDiv = $vexContent.find('#identities');
 						for (var key in identities) {
 							var button = $('<input class="identity-button" type="button"/>');
 							button.attr('value', identities[key].initials);

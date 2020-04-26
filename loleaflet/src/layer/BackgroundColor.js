@@ -39,7 +39,7 @@ L.BackgroundColor = L.Layer.extend({
 	}
 });
 
-// Libreoffice-specific functionality follows.
+// LibreOffice-specific functionality follows.
 
 /*
  * A L.BackgroundColor that automatically resets its color

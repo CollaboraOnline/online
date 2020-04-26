@@ -3801,7 +3801,7 @@ S2.define('select2/dropdown',[
   };
 
   Dropdown.prototype.position = function ($dropdown, $container) {
-    // Should be implmented in subclasses
+    // Should be implemented in subclasses
   };
 
   Dropdown.prototype.destroy = function () {
@@ -4323,7 +4323,7 @@ S2.define('select2/dropdown/selectOnClose',[
 
     var data = $highlightedResults.data('data');
 
-    // Don't re-select already selected resulte
+    // Don't re-select already selected results
     if (
       (data.element != null && data.element.selected) ||
       (data.element == null && data.selected)

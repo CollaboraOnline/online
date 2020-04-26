@@ -250,7 +250,7 @@ L.Clipboard = L.Class.extend({
 	// Suck the data from one server to another asynchronously ...
 	_dataTransferDownloadAndPasteAsync: function(src, dest, fallbackHtml) {
 		var that = this;
-		// FIXME: add a timestamp in the links (?) ignroe old / un-responsive servers (?)
+		// FIXME: add a timestamp in the links (?) ignore old / un-responsive servers (?)
 		that._doAsyncDownload(
 			'GET', src, null,
 			function(response) {
@@ -465,7 +465,7 @@ L.Clipboard = L.Class.extend({
 		}
 
 		var text = this._getHtmlForClipboard();
-//		this._stopHideDownload(); - this confuses the borwser ruins copy/cut on iOS
+//		this._stopHideDownload(); - this confuses the browser ruins copy/cut on iOS
 
 		var plainText = this.stripHTML(text);
 		if (ev.clipboardData) { // Standard
@@ -496,7 +496,7 @@ L.Clipboard = L.Class.extend({
 	_beforeSelectImpl: function(operation) {
 		if (L.Browser.isInternetExplorer && operation != 'paste')
 			// We need populate our content into the div for
-			// the brower to copy.
+			// the browser to copy.
 			this._dummyDiv.innerHTML = this._getHtmlForClipboard();
 		else
 			// We need some spaces in there ...

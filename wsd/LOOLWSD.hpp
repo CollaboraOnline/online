@@ -358,7 +358,7 @@ public:
     static bool checkAndRestoreForKit();
 
     /// Creates a new instance of Forkit.
-    /// Return true when successfull.
+    /// Return true when successful.
     static bool createForKit();
 
     /// Sends a message to ForKit through PrisonerPoll.
@@ -385,7 +385,7 @@ public:
     }
 
     /// Anonymize user names and IDs.
-    /// Will use the Obfuscated User ID if one is provied via WOPI.
+    /// Will use the Obfuscated User ID if one is provided via WOPI.
     static std::string anonymizeUsername(const std::string& username)
     {
         return FileUtil::anonymizeUsername(username);

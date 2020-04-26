@@ -44,7 +44,7 @@ make POCO_TARGET_OSARCH=x86_64 install
 This will install the poco static libraries and headers to your $home
 directory into poco-ios-arm64 (and poco-ios-x64) directory. You can
 change the directory to your wishes, but by installing it this way into
-a directory in $HOME it doesn't polute your root directories, doesn't
+a directory in $HOME it doesn't pollute your root directories, doesn't
 need root permissions and can be removed easily.
 
 If compiler can't find <string.h> you need to install:
@@ -77,7 +77,7 @@ Then back to the Mac:
 
 As you were able to build LibreOffice in step 1, you must already have
 GNU autoconf installed on the Mac. Install also GNU automake and
-libtool. Preferrably from sources, to make sure a potential
+libtool. Preferably from sources, to make sure a potential
 installation of brew or similar will not pollute your environment with
 unknown stuff.
 

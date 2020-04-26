@@ -393,7 +393,7 @@ L.GridLayer = L.Layer.extend({
 		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
 		bottomRight = bottomRight.multiplyBy(scale);
 		if (extraSize) {
-			// extraSize is unscalled.
+			// extraSize is unscaled.
 			bottomRight = bottomRight.add(extraSize);
 		}
 		bottomRight = this._map.unproject(bottomRight);
@@ -408,7 +408,7 @@ L.GridLayer = L.Layer.extend({
 			this._docHeightTwips / this._tileHeightTwips);
 		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize);
 		if (extraSize) {
-			// extraSize is unscalled.
+			// extraSize is unscaled.
 			scrollPixelLimits = scrollPixelLimits.add(extraSize);
 		}
 		this._docPixelSize = {x: scrollPixelLimits.x, y: scrollPixelLimits.y};
@@ -439,7 +439,7 @@ L.GridLayer = L.Layer.extend({
 		}
 		else if (this._map.options._origMaxBounds) {
 			// if after zoomimg the document becomes larger than the viewing area
-			// we need to restore the inital bounds
+			// we need to restore the initial bounds
 			this._map.setMaxBounds(this._map.options._origMaxBounds);
 			this._map.options._origMaxBounds = null;
 		}
@@ -989,7 +989,7 @@ L.GridLayer = L.Layer.extend({
 				var current = coordsQueue[i];
 
 				// extend the bound vertically if possible (so far it was
-				// continous)
+				// continuous)
 				if (!hasHole && (current.y === bound.y + 1)) {
 					rowLocked = true;
 					++bound.y;

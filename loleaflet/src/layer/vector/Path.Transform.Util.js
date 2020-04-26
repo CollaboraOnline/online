@@ -5,7 +5,7 @@
 L.PathTransform = {};
 
 /**
- * Point on the line segment or its extention
+ * Point on the line segment or its extension
  *
  * @param  {L.Point} start
  * @param  {L.Point} final

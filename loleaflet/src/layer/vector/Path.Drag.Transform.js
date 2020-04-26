@@ -28,7 +28,7 @@ L.Path.include({
 	},
 
 	/**
-	 * Check if the feature was dragged, that'll supress the click event
+	 * Check if the feature was dragged, that'll suppress the click event
 	 * on mouseup. That fixes popups for example
 	 *
 	 * @param  {MouseEvent} e

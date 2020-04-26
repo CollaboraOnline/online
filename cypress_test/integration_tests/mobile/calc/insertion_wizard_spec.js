@@ -23,7 +23,7 @@ describe('Calc insertion wizard.', function() {
 		helper.afterAll('insertion_wizard.ods');
 	});
 
-	it('Check existance of image insertion items.', function() {
+	it('Check existence of image insertion items.', function() {
 		cy.contains('.menu-entry-with-icon', 'Local Image...')
 			.should('be.visible');
 

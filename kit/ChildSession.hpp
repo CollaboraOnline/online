@@ -35,7 +35,7 @@ class DocumentManagerInterface
 public:
     virtual ~DocumentManagerInterface()  {}
 
-    /// Reqest loading a document, or a new view, if one exists.
+    /// Request loading a document, or a new view, if one exists.
     virtual bool onLoad(const std::string& sessionId,
                         const std::string& uriAnonym,
                         const std::string& renderOpts,
@@ -170,7 +170,7 @@ public:
         _recordedStates[name] = value;
     }
 
-    /// In the case we need to rememeber all the events that come, not just
+    /// In the case we need to remember all the events that come, not just
     /// the final state.
     void recordEventSequence(const int type, const std::string& payload)
     {
@@ -322,7 +322,7 @@ private:
     /// View ID, returned by createView() or 0 by default.
     int _viewId;
 
-    /// Whether document has been opened succesfuly
+    /// Whether document has been opened successfully
     bool _isDocLoaded;
 
     std::string _docType;

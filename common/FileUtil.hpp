@@ -23,7 +23,7 @@ namespace FileUtil
     std::string anonymizeUrl(const std::string& url);
 
     /// Anonymize user names and IDs.
-    /// Will use the Obfuscated User ID if one is provied via WOPI.
+    /// Will use the Obfuscated User ID if one is provided via WOPI.
     std::string anonymizeUsername(const std::string& username);
 
     /// Create a secure, random directory path.
@@ -55,7 +55,7 @@ namespace FileUtil
     bool checkDiskSpace(const std::string& path);
 
     /// Safely remove a file or directory.
-    /// Supresses exception when the file is already removed.
+    /// Suppresses exception when the file is already removed.
     /// This can happen when there is a race (unavoidable) or when
     /// we don't care to check before we remove (when no race exists).
     void removeFile(const std::string& path, const bool recursive = false);

@@ -1648,7 +1648,7 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 
 		for (var i = 0; i < this._referencesAll.length; i++) {
-			// Avoid doubed marks, add only marks for current sheet
+			// Avoid doubled marks, add only marks for current sheet
 			if ((this._references == null || !hasMark(this._references.getLayers(), this._referencesAll[i].mark))
 				&& this._selectedPart === this._referencesAll[i].part) {
 				this._references.addLayer(this._referencesAll[i].mark);
@@ -2696,7 +2696,7 @@ L.TileLayer = L.GridLayer.extend({
 				return;
 			}
 
-			// handle scroling
+			// handle scrolling
 
 			// This is rather hacky, but it seems to be the only way to make the
 			// marker follow the mouse cursor if the document is autoscrolled under

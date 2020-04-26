@@ -98,7 +98,7 @@ public:
 
     /// Create the TileBeingRendered object for the given tile indicating that the tile was sent to
     /// the kit for rendering. Note: subscribeToTileRendering calls this internally, so you don't need
-    /// to call this method if you need also to subcribe for the rendered tile.
+    /// to call this method if you need also to subscribe for the rendered tile.
     void registerTileBeingRendered(const TileDesc& tile);
 
     /// Cancels all tile requests by the given subscriber.

@@ -1971,7 +1971,7 @@ w2utils.event = {
             id              : null,     // id for the tag, otherwise input id is used
             html            : text,     // or html
             position        : 'right|top',  // can be left, right, top, bottom
-            align           : 'none',   // can be none, left, right (only works for potision: top | bottom)
+            align           : 'none',   // can be none, left, right (only works for position: top | bottom)
             left            : 0,        // delta for left coordinate
             top             : 0,        // delta for top coordinate
             style           : '',       // adition style for the tag
@@ -2009,7 +2009,7 @@ w2utils.event = {
             var tagID  = w2utils.escapeId(origID);
             var $tags  = $('#w2ui-tag-'+tagID);
             if (text === '' || text == null) {
-                // remmove element
+                // remove element
                 $tags.css('opacity', 0);
                 clearInterval($tags.data('timer'));
                 $tags.remove();
@@ -2784,7 +2784,7 @@ w2utils.event = {
             color: options,
             transparent: true
         };
-        // add remove transarent color
+        // add remove transparent color
         if (options.transparent && pal[0][1] == '555555') {
             pal[0].splice(1, 1);
             pal[0].push('');

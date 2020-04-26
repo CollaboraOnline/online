@@ -38,7 +38,7 @@ describe('Change cell appearance.', function() {
 		openAppearencePanel();
 	}
 
-	it('Apply backgound color', function() {
+	it('Apply background color', function() {
 		openAppearencePanelOnFirtsCell();
 
 		// Select a new color

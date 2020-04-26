@@ -55,7 +55,7 @@ public class ProgressDialog {
             .create();
     }
 
-    /** Set the progress to indereterminate state. */
+    /** Set the progress to indeterminate state. */
     public void indeterminate(int messageId) {
         create();
 
@@ -66,7 +66,7 @@ public class ProgressDialog {
         mProgressDialog.show();
     }
 
-    /** Set the progress to indereterminate state. */
+    /** Set the progress to indeterminate state. */
     public void determinate(int messageId) {
         create();
 

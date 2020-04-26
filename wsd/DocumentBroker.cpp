@@ -2388,8 +2388,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  last saved: " << Util::getSteadyClockAsString(_lastSaveTime);
     os << "\n  last save request: " << Util::getSteadyClockAsString(_lastSaveRequestTime);
     os << "\n  last save response: " << Util::getSteadyClockAsString(_lastSaveResponseTime);
-    os << "\n  last modifed: " << Util::getHttpTime(_documentLastModifiedTime);
-    os << "\n  file last modifed: " << Util::getHttpTime(_lastFileModifiedTime);
+    os << "\n  last modified: " << Util::getHttpTime(_documentLastModifiedTime);
+    os << "\n  file last modified: " << Util::getHttpTime(_lastFileModifiedTime);
     if (_limitLifeSeconds)
         os << "\n  life limit in seconds: " << _limitLifeSeconds;
     os << "\n  idle time: " << getIdleTimeSecs();

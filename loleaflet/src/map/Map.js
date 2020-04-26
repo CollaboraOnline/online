@@ -1521,7 +1521,7 @@ L.Map = L.Evented.extend({
 			e.preventDefault();
 		}
 
-		// workaround for drawing shapes, wihout this shapes cannot be shrunken
+		// workaround for drawing shapes, without this shapes cannot be shrunken
 		if (target !== undefined && target._path !== undefined && type === 'mousemove') {
 			target = undefined;
 		}

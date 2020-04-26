@@ -288,7 +288,7 @@ L.TileLayer.include({
 		}
 	},
 	_onSelectRowColumnClick: function(e) {
-		// fake seelcting a column
+		// fake selecting a column
 		this._postSelectTextEvent('start', e.target._start.x + 5, e.target._start.y + 5);
 		this._postSelectTextEvent('end', e.target._end.x - 5, e.target._end.y - 5);
 	},

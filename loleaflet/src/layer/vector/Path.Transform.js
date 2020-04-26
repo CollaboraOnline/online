@@ -533,7 +533,7 @@ L.Handler.PathTransform = L.Handler.extend({
 
 
 	/**
-	* Rotation marker and small connectin handle
+	* Rotation marker and small connecting handle
 	*/
 	_createRotationHandlers: function() {
 		var map     = this._map;

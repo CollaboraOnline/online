@@ -8,7 +8,7 @@ L.ObjectFocusDarkOverlay = L.Layer.extend({
 	}
 });
 
-// Libreoffice-specific functionality follows.
+// LibreOffice-specific functionality follows.
 
 /*
  * A L.ObjectFocusDarkOverlay

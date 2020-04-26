@@ -154,7 +154,7 @@ AC_ARG_ENABLE([androidapp],
 
 AC_ARG_ENABLE([android-google-play],
               AS_HELP_STRING([--enable-android-google-play],
-                             [When enabled, the app encoruages the user periodically to rate the app on Google Play Store.]))
+                             [When enabled, the app encourages the user periodically to rate the app on Google Play Store.]))
 
 AC_ARG_WITH(android-package-name,
             AS_HELP_STRING([--with-android-package-name="org.libreoffice.androidapp"],
@@ -172,7 +172,7 @@ AC_ARG_WITH([app-name],
 
 AC_ARG_WITH([icon-theme],
               AS_HELP_STRING([--with-icon-theme=<path>],
-                             [Path to custom icon theme (similiar to loleflet/images).]))
+                             [Path to custom icon theme (similar to loleflet/images).]))
 
 AC_ARG_WITH(vendor,
     AS_HELP_STRING([--with-vendor="John the Builder"],
@@ -327,11 +327,11 @@ AC_SUBST(ENABLE_DEBUG_PROTOCOL)
 ENABLE_BROWSERSYNC=
 browsersync_msg="disabled: copy files to the target directory"
 if test "$enable_browsersync" = "yes"; then
-   AC_DEFINE([ENABLE_BROWSERSYNC],1,[Whether to create symlinks instead of copying files to the target dorectory to run browsersync])
+   AC_DEFINE([ENABLE_BROWSERSYNC],1,[Whether to create symlinks instead of copying files to the target directory to run browsersync])
    ENABLE_BROWSERSYNC=true
    browsersync_msg="enabled: create symlinks in the target directory"
 else
-    AC_DEFINE([ENABLE_BROWSERSYNC],0,[Whether to create symlinks instead of copying files to the target dorectory to run browsersync])
+    AC_DEFINE([ENABLE_BROWSERSYNC],0,[Whether to create symlinks instead of copying files to the target directory to run browsersync])
 fi
 AC_SUBST(ENABLE_BROWSERSYNC)
 
