@@ -1,7 +1,5 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
-import 'cypress-wait-until';
-
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
@@ -179,17 +177,18 @@ describe('Change alignment settings.', function() {
 			.click();
 
 		// We use the text position as indicator
-		cy.waitUntil(function() {
-			getTextPosForFirstCell();
+		cy.get('body')
+			.should(function() {
+				getTextPosForFirstCell();
 
-			return cy.get('@currentTextPos')
-				.then(function(currentTextPos) {
-					cy.get('@originalTextPos')
-						.then(function(originalTextPos) {
-							return originalTextPos < currentTextPos;
-						});
-				});
-		});
+				cy.get('@currentTextPos')
+					.then(function(currentTextPos) {
+						cy.get('@originalTextPos')
+							.then(function(originalTextPos) {
+								expect(originalTextPos).to.be.lessThan(currentTextPos);
+							});
+					});
+			});
 
 		helper.initAliasToNegative('originalTextPos');
 
@@ -206,17 +205,18 @@ describe('Change alignment settings.', function() {
 			.click();
 
 		// We use the text position as indicator
-		cy.waitUntil(function() {
-			getTextPosForFirstCell();
+		cy.get('body')
+			.should(function() {
+				getTextPosForFirstCell();
 
-			return cy.get('@currentTextPos')
-				.then(function(currentTextPos) {
-					cy.get('@originalTextPos')
-						.then(function(originalTextPos) {
-							return originalTextPos > currentTextPos;
-						});
-				});
-		});
+				cy.get('@currentTextPos')
+					.then(function(currentTextPos) {
+						cy.get('@originalTextPos')
+							.then(function(originalTextPos) {
+								expect(originalTextPos).to.be.greaterThan(currentTextPos);
+							});
+					});
+			});
 	});
 
 	it.skip('Change text indent via input field.', function() {
@@ -254,17 +254,18 @@ describe('Change alignment settings.', function() {
 			.type('20{enter}');
 
 		// We use the text position as indicator
-		cy.waitUntil(function() {
-			getTextPosForFirstCell();
+		cy.get('body')
+			.should(function() {
+				getTextPosForFirstCell();
 
-			return cy.get('@currentTextPos')
-				.then(function(currentTextPos) {
-					cy.get('@originalTextPos')
-						.then(function(originalTextPos) {
-							return originalTextPos < currentTextPos;
-						});
-				});
-		});
+				cy.get('@currentTextPos')
+					.then(function(currentTextPos) {
+						cy.get('@originalTextPos')
+							.then(function(originalTextPos) {
+								expect(originalTextPos).to.be.lessThan(currentTextPos);
+							});
+					});
+			});
 	});
 
 	it('Enable text wrapping.', function() {
@@ -289,17 +290,18 @@ describe('Change alignment settings.', function() {
 			.should('have.prop', 'checked', true);
 
 		// We use the text position as indicator
-		cy.waitUntil(function() {
-			getTextPosForFirstCell();
+		cy.get('body')
+			.should(function() {
+				getTextPosForFirstCell();
 
-			return cy.get('@currentTextPos')
-				.then(function(currentTextPos) {
-					cy.get('@originalTextPos')
-						.then(function(originalTextPos) {
-							return originalTextPos > currentTextPos;
-						});
-				});
-		});
+				cy.get('@currentTextPos')
+					.then(function(currentTextPos) {
+						cy.get('@originalTextPos')
+							.then(function(originalTextPos) {
+								expect(originalTextPos).to.be.greaterThan(currentTextPos);
+							});
+					});
+			});
 	});
 
 	it('Apply stacked option.', function() {
@@ -338,22 +340,23 @@ describe('Change alignment settings.', function() {
 		// Even after we get the cell row selection the merge cell options is still disabled
 		// So we open mobile wizard again and again until merge cells get the right state
 		mobileHelper.openMobileWizard();
-		cy.waitUntil(function() {
-			mobileHelper.closeMobileWizard();
-			mobileHelper.openMobileWizard();
+		cy.get('body')
+			.should(function() {
+				mobileHelper.closeMobileWizard();
+				mobileHelper.openMobileWizard();
 
-			cy.get('#ScAlignmentPropertyPanel')
-				.click();
+				cy.get('#ScAlignmentPropertyPanel')
+					.click();
 
-			cy.get('#AlignLeft')
-				.should('be.visible');
+				cy.get('#AlignLeft')
+					.should('be.visible');
 
-			return cy.get('input#mergecells')
-				.then(function(items) {
-					expect(items).to.have.lengthOf(1);
-					return !items[0].hasAttribute('disabled');
-				});
-		});
+				cy.get('input#mergecells')
+					.then(function(items) {
+						expect(items).to.have.lengthOf(1);
+						expect(items[0]).to.not.have.attr('disabled');
+					});
+			});
 
 		// Click merge cells
 		cy.get('input#mergecells')
