@@ -29,9 +29,23 @@
 
 /* root container */
 
-.root-container.notebookbar {
+.notebookbar-scroll-wrapper ~ .w2ui-scroll-left, .notebookbar-scroll-wrapper ~ .w2ui-scroll-right {
 	position: fixed;
-	top: 20px;
+	top: 37px;
+}
+
+.notebookbar-scroll-wrapper {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 40px;
+
+	overflow-x: scroll;
+
+	margin-top: -25px;
+
+	/* be sure no scrollbar is visible on the bottom */
+	min-height: 130px;
 }
 
 /* unobuttons */
