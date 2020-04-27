@@ -1513,6 +1513,17 @@ L.Control.LokDialog = L.Control.extend({
 		if (!canvas)
 			return; // no floating window to paint to
 
+		// Make sure the child is not trimmed on the right.
+		var width = this._dialogs[parentId].childwidth;
+		var left = this._dialogs[parentId].childx;
+		var dialogContainer = L.DomUtil.get(strId).parentNode;
+		if (left + width > dialogContainer.clientWidth) {
+			// Align the right of the child to the right of the parent.
+			left -= Math.max(0, (left + width) - dialogContainer.clientWidth);
+			this._dialogs[parentId].childx = left;
+			L.DomUtil.setStyle(canvas, 'left', left + 'px');
+		}
+
 		// The image is rendered per the HiDPI scale we used
 		// while requesting rendering the image. Here we
 		// set the canvas to have the actual size, while
