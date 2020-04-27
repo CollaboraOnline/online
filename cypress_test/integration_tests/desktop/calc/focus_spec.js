@@ -3,8 +3,6 @@
 var helper = require('../../common/helper');
 var calc = require('../../common/calc');
 
-var delayForEventsMs = 300; // The maximum roundrip time for an event to fire based on some action.
-
 describe('Calc focus tests', function() {
 	beforeEach(function() {
 		helper.beforeAllDesktop('focus.ods', 'calc');
@@ -30,7 +28,7 @@ describe('Calc focus tests', function() {
 		// Type some text.
 		var text1 = 'Hello from Calc';
 		helper.typeText('textarea.clipboard', text1);
-		cy.get('textarea.clipboard').type('{enter}').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{enter}');
 
 		// Select the first cell to edit the same one.
 		calc.clickOnFirstCell();
@@ -40,7 +38,7 @@ describe('Calc focus tests', function() {
 		cy.get('textarea.clipboard').type('{ctrl}a');
 		helper.expectTextForClipboard(text1);
 		// End editing.
-		cy.get('textarea.clipboard').type('{enter}').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{enter}');
 
 		// Type some more text, at the end.
 		cy.log('Appending text at the end.');
@@ -50,10 +48,10 @@ describe('Calc focus tests', function() {
 		var text2 = ', this is a test.';
 		helper.typeText('textarea.clipboard', text2);
 		// Validate.
-		cy.get('textarea.clipboard').type('{ctrl}a').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
-		cy.get('textarea.clipboard').type('{enter}').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{enter}');
 
 		// Type some more text, in the middle.
 		cy.log('Inserting text in the middle.');
@@ -63,7 +61,7 @@ describe('Calc focus tests', function() {
 		var text3 = ' BAZINGA';
 		helper.typeText('textarea.clipboard', text3);
 		// Validate.
-		cy.get('textarea.clipboard').type('{ctrl}a').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{ctrl}a');
 		//NOTE: If this fails, it's probably because we clicked
 		// at a different point in the text.
 		helper.expectTextForClipboard(text1 + ', this is a' + text3 + ' test.');

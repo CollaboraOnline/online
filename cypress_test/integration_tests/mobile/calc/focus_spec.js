@@ -5,8 +5,6 @@ var mobileHelper = require('../../common/mobile_helper');
 var calc = require('../../common/calc');
 var calcHelper = require('./calc_helper');
 
-var delayForEventsMs = 300; // The maximum roundrip time for an event to fire based on some action.
-
 describe('Calc focus tests', function() {
 	beforeEach(function() {
 		mobileHelper.beforeAllMobile('focus.ods', 'calc');
@@ -103,7 +101,7 @@ describe('Calc focus tests', function() {
 		// Type some text.
 		var text1 = 'Hello from Calc';
 		cy.get('textarea.clipboard').type(text1);
-		cy.get('textarea.clipboard').type('{enter}').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{enter}');
 
 		helper.assertNoKeyboardInput();
 
@@ -118,7 +116,8 @@ describe('Calc focus tests', function() {
 		helper.expectTextForClipboard(text1);
 
 		// Accept changes.
-		cy.get('textarea.clipboard').type('{enter}').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{enter}');
+		helper.assertNoKeyboardInput();
 
 		// Type some more text, at the end.
 		cy.log('Appending text at the end.');
@@ -129,10 +128,10 @@ describe('Calc focus tests', function() {
 		var text2 = ', this is a test.';
 		cy.get('textarea.clipboard').type(text2);
 		// Validate.
-		cy.get('textarea.clipboard').type('{ctrl}a').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
-		cy.get('textarea.clipboard').type('{enter}').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{enter}');
 		helper.assertNoKeyboardInput();
 
 		// Type some more text, in the middle.
@@ -144,12 +143,12 @@ describe('Calc focus tests', function() {
 		var text3 = ', BAZINGA';
 		helper.typeText('textarea.clipboard', text3);
 		// Validate.
-		cy.get('textarea.clipboard').type('{ctrl}a').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{ctrl}a');
 		//NOTE: If this fails, it's probably because we clicked
 		// at a different point in the text.
 		helper.expectTextForClipboard(text1 + text3 + text2);
 		// End editing.
-		cy.get('textarea.clipboard').type('{enter}').wait(delayForEventsMs);
+		cy.get('textarea.clipboard').type('{enter}');
 		helper.assertNoKeyboardInput();
 	});
 });
