@@ -915,7 +915,7 @@ struct DocumentAggregateStats
 {
     void Update(const Document &d, bool active)
     {
-        _kitUsedMemory.Update(d.getMemoryDirty(), active);
+        _kitUsedMemory.Update(d.getMemoryDirty() * 1024, active);
         _viewsCount.Update(d.getViews().size(), active);
         _activeViewsCount.Update(d.getActiveViews(), active);
         _expiredViewsCount.Update(d.getViews().size() - d.getActiveViews(), active);
@@ -1012,7 +1012,7 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     oss << "kit_assigned_count " << kitStats.assignedCount << std::endl;
     oss << "kit_segfault_count " << _segFaultCount << std::endl;
     PrintKitAggregateMetrics(oss, "thread_count", "", kitStats._threadCount);
-    PrintKitAggregateMetrics(oss, "memory_used", "bytes", docStats._kitUsedMemory._all);
+    PrintKitAggregateMetrics(oss, "memory_used", "bytes", docStats._kitUsedMemory._active);
     PrintKitAggregateMetrics(oss, "cpu_time", "seconds", kitStats._cpuTime);
     oss << std::endl;
 
