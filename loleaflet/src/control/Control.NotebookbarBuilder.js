@@ -204,7 +204,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
 			if (hasManyChildren) {
-				var table = L.DomUtil.create('table', '', td);
+				var table = L.DomUtil.createWithId('table', 'table-' + childData.id, td);
+				$(table).addClass(this.options.cssClass);
 				var childObject = L.DomUtil.create('tr', '', table);
 			} else {
 				childObject = td;
