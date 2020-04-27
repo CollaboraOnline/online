@@ -133,6 +133,9 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#ratio #ratio')
 			.should('have.prop', 'checked', true);
 
+		// TODO: flickering here?
+		cy.wait(300);
+
 		// Change height
 		cy.get('#selectheight .spinfield')
 			.clear()
