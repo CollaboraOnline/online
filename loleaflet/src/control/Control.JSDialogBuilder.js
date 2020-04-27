@@ -997,29 +997,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			break;
 
-		case 'fillstylearea':
-			state = items.getItemValue('.uno:FillStyle');
-			if (state) {
-				switch (state) {
-				case 'NONE':
-					return _('None');
-
-				case 'SOLID':
-					return _('Color');
-
-				case 'GRADIENT':
-					return _('Gradient');
-
-				case 'HATCH':
-					return _('Hatching');
-
-				case 'BITMAP':
-					// FIXME: can be bitmap or pattern, for now we cant import bitmap
-					return _('Pattern');
-				}
-			}
-			break;
-
 		case 'fillattr':
 			state = items.getItemValue('.uno:FillPageColor');
 			if (state) {
