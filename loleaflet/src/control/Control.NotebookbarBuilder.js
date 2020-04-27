@@ -16,15 +16,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['listbox'] = this._comboboxControl;
 		this._controlHandlers['pushbutton'] = function() { return false; };
 
-		this._toolitemHandlers['.uno:XLineColor'] = function() {};
+		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
-		this._toolitemHandlers['.uno:FontColor'] = function() {};
-		this._toolitemHandlers['.uno:BackColor'] = function() {};
-		this._toolitemHandlers['.uno:CharBackColor'] = function() {};
-		this._toolitemHandlers['.uno:BackgroundColor'] = function() {};
-		this._toolitemHandlers['.uno:FrameLineColor'] = function() {};
-		this._toolitemHandlers['.uno:Color'] = function() {};
-		this._toolitemHandlers['.uno:FillColor'] = function() {};
+		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:BackgroundColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
+		this._toolitemHandlers['.uno:Color'] = this._colorControl;
+		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
@@ -39,6 +39,67 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			data: data.entries.sort(function (a, b) {return a.localeCompare(b);}),
 			placeholder: _(builder._cleanText(data.text))
 		});
+
+		return false;
+	},
+
+	_colorControl: function(parentContainer, data, builder) {
+		var titleOverride = builder._getTitleForControlWithId(data.id);
+		if (titleOverride)
+			data.text = titleOverride;
+
+		data.id = data.id ? data.id : (data.command ? data.command.replace('.uno:', '') : undefined);
+
+		data.text = builder._cleanText(data.text);
+
+		if (data.command) {
+			var div = builder._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+
+			var id = data.command.substr('.uno:'.length);
+			div.id = id;
+
+			div.title = data.text;
+			$(div).tooltip();
+
+			var icon = builder._createIconPath(data.command);
+			var buttonId = id + 'img';
+
+			var button = L.DomUtil.create('img', 'ui-content unobutton', div);
+			button.src = icon;
+			button.id = buttonId;
+
+			var valueNode =  L.DomUtil.create('div', 'selected-color', div);
+
+			var selectedColor;
+
+			var updateFunction = function (color) {
+				selectedColor = builder._getCurrentColor(data, builder);
+				valueNode.style.backgroundColor = color ? color : selectedColor;
+			};
+
+			updateFunction();
+
+			builder.map.on('commandstatechanged', function(e) {
+				if (e.commandName === data.command)
+					updateFunction();
+			}, this);
+
+			var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
+
+			$(div).click(function() {
+				$(div).w2color({ color: selectedColor, transparent: noColorControl }, function (color) {
+					if (color != null) {
+						if (color) {
+							updateFunction('#' + color);
+							builder._sendColorCommand(builder, data, color);
+						} else {
+							updateFunction('#FFFFFF');
+							builder._sendColorCommand(builder, data, 'transparent');
+						}
+					}
+				});
+			});
+		}
 
 		return false;
 	},

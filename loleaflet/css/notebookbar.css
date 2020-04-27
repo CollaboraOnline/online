@@ -62,6 +62,14 @@
 	cursor: pointer;
 }
 
+.unotoolbutton.notebookbar .selected-color {
+	height: 5px;
+	width: 24px;
+	position: relative;
+	top: -4px;
+	border: 1px solid silver;
+}
+
 /* Reset attributes control */
 #clearFormatting.notebookbar div img {
 	width: 24px !important;
