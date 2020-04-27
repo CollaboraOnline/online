@@ -18,7 +18,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['spinfield'] = function() { return false; };
 
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
@@ -26,6 +25,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
+
+		this._toolitemHandlers['.uno:InsertTable'] = this._insertTableControl;
+
+		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
+
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
@@ -78,6 +82,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
+		var commandOverride = data.command === '.uno:Color';
+		if (commandOverride)
+			data.command = '.uno:FontColor';
+
 		var titleOverride = builder._getTitleForControlWithId(data.id);
 		if (titleOverride)
 			data.text = titleOverride;
@@ -136,6 +144,22 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 
 		return false;
+	},
+
+	_insertTableControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			if (!$('.inserttable-grid').length) {
+				$(control.container).w2overlay(window.getInsertTablePopupHtml());
+				window.insertTable();
+
+				$('.inserttable-grid .row .col').click(function () {
+					$(control.container).w2overlay();
+				});
+			}
+		});
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {

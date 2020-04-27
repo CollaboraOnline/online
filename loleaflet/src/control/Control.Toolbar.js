@@ -233,6 +233,15 @@ function setConditionalFormatIconSet(num) {
 
 global.setConditionalFormatIconSet = setConditionalFormatIconSet;
 
+function getInsertTablePopupHtml() {
+	return '<div id="inserttable-wrapper">\
+					<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all">\
+						<div class="inserttable-grid"></div>\
+						<div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div>\
+					</div>\
+				</div>';
+}
+
 function insertTable() {
 	var rows = 10;
 	var cols = 10;
@@ -1053,6 +1062,7 @@ global.setupToolbar = setupToolbar;
 global.onClick = onClick;
 global.hideTooltip = hideTooltip;
 global.insertTable = insertTable;
+global.getInsertTablePopupHtml = getInsertTablePopupHtml;
 global.insertShapes = insertShapes;
 global.createShapesPanel = createShapesPanel;
 global.onUpdatePermission = onUpdatePermission;

@@ -1515,7 +1515,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_unoToolButton: function(parentContainer, data, builder) {
 		var button = null;
 
+		var controls = {};
+
 		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+		controls['container'] = div;
 
 		if (data.command) {
 			var id = data.command.substr('.uno:'.length);
@@ -1528,10 +1531,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button.src = icon;
 			button.id = buttonId;
 
+			controls['button'] = button;
+
 			if (builder.options.noLabelsForUnoButtons !== true) {
 				var label = L.DomUtil.create('span', 'ui-content unolabel', div);
 				label.for = buttonId;
 				label.innerHTML = data.text;
+
+				controls['label'] = label;
 			} else {
 				div.title = data.text;
 				$(div).tooltip();
@@ -1557,6 +1564,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.innerHTML = builder._cleanText(data.text);
+			controls['label'] = button;
 		}
 
 		$(div).click(function () {
@@ -1567,7 +1575,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled == 'false')
 			$(button).attr('disabled', 'disabled');
 
-		return false;
+		return controls;
 	},
 
 	_divContainerHandler: function (parentContainer, data, builder) {
