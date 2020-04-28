@@ -641,44 +641,62 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
 namespace {
-    // The user can override the ServerRoot with a new prefix.
-    std::string getResponseRoot(const HTTPRequest &request)
-    {
-        if (!request.has("ProxyPrefix"))
-            return LOOLWSD::ServiceRoot;
-        std::string proxyPrefix = request.get("ProxyPrefix", "");
-
-        // skip url to the root path.
-        size_t pos = proxyPrefix.find("://");
-        if (pos != std::string::npos) {
-            pos = proxyPrefix.find("/", pos + 3);
-            if (pos != std::string::npos)
-                proxyPrefix = proxyPrefix.substr(pos);
-            else
-                LOG_DBG("Unusual proxy prefix '" << proxyPrefix << "'");
-        } else
-            LOG_DBG("No http[s]:// in unusual proxy prefix '" << proxyPrefix);
-        return proxyPrefix;
-    }
-
-    std::string getWebSocketUrl(const HTTPRequest &request)
-    {
-        bool ssl = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination());
-        std::string proxyPrefix = request.get("ProxyPrefix", "");
-        std::string serverName = LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName;
-        if (proxyPrefix.size() > 0)
+    /// Very simple splitting of proxy URLs without fear of escaping or validation.
+    class ProxyURL {
+        std::string _schemeAuthority;
+        std::string _pathPlus;
+    public:
+        ProxyURL(const HTTPRequest &request)
         {
-            ssl = !strcmp(proxyPrefix.c_str(), "https://");
-            serverName = request.getHost();
+            // The user can override the ServerRoot with a new prefix.
+            if (_pathPlus.size() <= 0)
+                _pathPlus = LOOLWSD::ServiceRoot;
+
+            if (_schemeAuthority.size() <= 0)
+            {
+                bool ssl = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination());
+                std::string serverName = LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName;
+                _schemeAuthority = (ssl ? "wss://" : "ws://") + serverName;
+            }
+
+            // A well formed ProxyPrefix will override it.
+            std::string url = request.get("ProxyPrefix", "");
+            if (url.size() <= 0)
+                return;
+
+            size_t pos = url.find("://");
+            if (pos != std::string::npos) {
+                pos = url.find("/", pos + 3);
+                if (pos != std::string::npos)
+                {
+                    _schemeAuthority = url.substr(0, pos);
+                    _pathPlus = url.substr(pos);
+                    return;
+                }
+                else
+                    LOG_ERR("Unusual proxy prefix '" << url << "'");
+            } else
+                LOG_ERR("No http[s]:// in unusual proxy prefix '" << url << "'");
+
         }
-        return (ssl ? "wss://" : "ws://") + serverName;
-    }
+
+        std::string getResponseRoot() const
+        {
+            return _pathPlus;
+        }
+
+        std::string getWebSocketUrl() const
+        {
+            return _schemeAuthority;
+        }
+    };
 }
 
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message,
                                               const std::shared_ptr<StreamSocket>& socket)
 {
-    const auto host = getWebSocketUrl(request);
+    ProxyURL cnxDetails(request);
+
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
     // Is this a file we read at startup - if not; its not for serving.
@@ -725,12 +743,12 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
         socketProxy = "true";
     Poco::replaceInPlace(preprocess, std::string("%SOCKET_PROXY%"), socketProxy);
 
-    std::string responseRoot = getResponseRoot(request);
+    std::string responseRoot = cnxDetails.getResponseRoot();
 
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
-    Poco::replaceInPlace(preprocess, std::string("%HOST%"), host);
+    Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
 
@@ -807,7 +825,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
            "frame-src 'self' blob: " << documentSigningURL << "; "
-           "connect-src 'self' " << host << "; "
+           "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
            "font-src 'self' data:; "
@@ -816,7 +834,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     // Frame ancestors: Allow loolwsd host, wopi host and anything configured.
     std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
     std::string frameAncestors = configFrameAncestor;
-    Poco::URI uriHost(host);
+    Poco::URI uriHost(cnxDetails.getWebSocketUrl());
     if (uriHost.getHost() != configFrameAncestor)
         frameAncestors += " " + uriHost.getHost() + ":*";
 
@@ -945,7 +963,8 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
-    std::string responseRoot = getResponseRoot(request);
+    ProxyURL cnxDetails(request);
+    std::string responseRoot = cnxDetails.getResponseRoot();
 
     static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
     static const std::string footerPage("<div class=\"footer navbar-fixed-bottom text-info text-center\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</div>");
