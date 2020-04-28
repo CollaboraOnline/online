@@ -1178,24 +1178,17 @@ protected:
         msg.msg_flags = 0;
 
         int ret = recvmsg(getFD(), &msg, 0);
-        if (ret >= 0)
+        if (ret > 0 && msg.msg_controllen)
         {
-            if (msg.msg_controllen)
+            cmsghdr *cmsg = CMSG_FIRSTHDR(&msg);
+            if (cmsg && cmsg->cmsg_type == SCM_RIGHTS && cmsg->cmsg_len == CMSG_LEN(sizeof(int)))
             {
-                cmsghdr *cmsg = CMSG_FIRSTHDR(&msg);
-                if (cmsg && cmsg->cmsg_type == SCM_RIGHTS && cmsg->cmsg_len == CMSG_LEN(sizeof(int)))
+                fd = *(int*)CMSG_DATA(cmsg);
+                if (_readType == UseRecvmsgExpectFD)
                 {
-                    fd = *(int*)CMSG_DATA(cmsg);
-                    if (_readType == UseRecvmsgExpectFD)
-                    {
-                        _readType = NormalRead;
-                    }
+                    _readType = NormalRead;
                 }
             }
-        }
-        else
-        {
-            LOG_ERR("recvmsg call ended with error: " << errno);
         }
 
         return ret;
