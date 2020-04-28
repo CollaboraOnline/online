@@ -311,9 +311,19 @@
 			req.responseType = 'text';
 			req.addEventListener('load', function() {
 				console.debug('got session: ' + this.responseText);
-				that.sessionId = this.responseText;
-				that.readyState = 1;
-				that.onopen();
+				if (this.responseText.indexOf('\n') >= 0)
+				{
+					console.debug('Error: failed to fetch session id!');
+					that.onerror();
+					that.onclose();
+					that.readyState = 3;
+				}
+				else
+				{
+					that.sessionId = this.responseText;
+					that.readyState = 1;
+					that.onopen();
+				}
 			});
 			req.send('');
 		};
