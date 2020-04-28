@@ -63,6 +63,36 @@ L.Control.Notebookbar = L.Control.extend({
 			break;
 		}
 	},
+	
+	getTabs: function() {
+		return [
+			{
+				'text': '~Home',
+				'id': '2',
+				'name': 'HomeLabel'
+			},
+			{
+				'text': '~Insert',
+				'id': '3',
+				'name': 'InsertLabel'
+			},
+			{
+				'text': '~Layout',
+				'id': '4',
+				'name': 'LayoutLabel'
+			},
+			{
+				'text': 'Reference~s',
+				'id': '5',
+				'name': 'ReferencesLabel'
+			},
+			{
+				'text': '~Table',
+				'id': '8',
+				'name': 'TableLabel'
+			}
+		];
+	},
 
 	// required, called by builder, not needed in this container
 	setCurrentScrollPosition: function() {},

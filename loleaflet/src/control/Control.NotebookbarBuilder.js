@@ -14,6 +14,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_overrideHandlers: function() {
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['listbox'] = this._comboboxControl;
+		this._controlHandlers['tabcontrol'] = this._overridenTabsControlHandler;
+
 		this._controlHandlers['pushbutton'] = function() { return false; };
 		this._controlHandlers['spinfield'] = function() { return false; };
 
@@ -105,6 +107,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		builder._setupComboboxSelectionHandler(select, data.id, builder);
 
 		return false;
+	},
+
+	_overridenTabsControlHandler: function(parentContainer, data, builder) {
+		data.tabs = builder.wizard.getTabs();
+		return builder._tabsControlHandler(parentContainer, data, builder);
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
