@@ -33,7 +33,6 @@
 static LOOLWSD *loolwsd = nullptr;
 
 NSString *app_locale;
-BOOL empty_tile_cache;
 
 static void download(NSURL *source, NSURL *destination) {
     [[[NSURLSession sharedSession] downloadTaskWithURL:source
