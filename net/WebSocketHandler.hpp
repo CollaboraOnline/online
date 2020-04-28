@@ -546,34 +546,6 @@ public:
         return sendFrame(socket, data, len, WSFrameMask::Fin | static_cast<unsigned char>(code), flush);
     }
 
-#if !MOBILEAPP
-    /// Sends a message while giving at the same time the rights
-    /// for file descriptor to the receiving process.
-    /// DO NOT USE IT unless you have no other option.
-    int sendTextMessageWithFD(const char* msg, size_t len, int fd)
-    {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-
-        if (!socket || msg == nullptr || len == 0)
-            return -1;
-
-        if (socket->isClosed())
-            return 0;
-
-        socket->assertCorrectThread();
-
-        std::vector<char> out;
-
-        buildFrame(msg, len, WSFrameMask::Fin | static_cast<char>(WSOpCode::Text), out);
-
-        const size_t size = out.size();
-
-        socket->sendFD(out.data(), out.size(), fd);
-
-        return size;
-    }
-#endif
-
 protected:
 
 #if !MOBILEAPP
