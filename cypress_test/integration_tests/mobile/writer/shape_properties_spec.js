@@ -119,7 +119,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'd', 'M 1965,4863 L 7957,18073 1965,18073 1965,4863 1965,4863 Z');
 	});
 
-	it('Change size with keep ratio enabled.', function() {
+	it.skip('Change size with keep ratio enabled.', function() {
 		// TODO: Entering a value inside the spinbutton has no effect on the shape.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
@@ -217,7 +217,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'stroke', 'rgb(152,0,0)');
 	});
 
-	it('Change line style', function() {
+	it.skip('Change line style', function() {
 		// TODO: Layout of the line properties panel is completely broken.
 		if (Cypress.env('LO_CORE_VERSION') === 'master')
 			return;
