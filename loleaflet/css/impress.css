@@ -1,0 +1,10 @@
+.presentation-doctype #map{
+	box-shadow: rgb(223, 223, 223) 0px 0px inset, #b6b6b6 1px 0px 0px inset;
+}
+#presentation-controls-wrapper {
+	background: #dfdfdf !important;
+	border-top: 1px solid #b6b6b6 !important;
+}
+#presentation-controls-wrapper .mCSB_draggerRail{
+	background: transparent;
+}
