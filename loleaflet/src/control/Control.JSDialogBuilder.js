@@ -195,7 +195,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.wizard.setCurrentScrollPosition();
 
 		if (objectType == 'toolbutton' && eventType == 'click') {
-			builder.map.sendUnoCommand(data);
+			// encode spaces
+			var encodedCommand = data.replace(' ', '%20');
+			builder.map.sendUnoCommand(encodedCommand);
 		} else if (object) {
 			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
 			var message = 'dialogevent ' + (window.sidebarId !== undefined ? window.sidebarId : -1) +
