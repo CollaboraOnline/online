@@ -33,19 +33,42 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
+	onCommandStateChanged: function(e) {
+		var commandName = e.commandName;
+		var state = e.state;
+
+		if (commandName === '.uno:CharFontName') {
+			$('#fontnamecombobox').val(state).trigger('change');
+		} else if (commandName === '.uno:FontHeight') {
+			$('#fontsizecombobox').val(state).trigger('change');
+		} else if (commandName === '.uno:StyleApply') {
+			$('#applystyle').val(state).trigger('change');
+		}
+	},
+
 	_setupComboboxSelectionHandler: function(combobox, id, builder) {
+		var items = builder.map['stateChangeHandler'];
+
 		if (id === 'fontnamecombobox') {
 			$(combobox).on('select2:select', function (e) {
 				var font = e.target.value;
 				builder.map.applyFont(font);
 				builder.map.focus();
 			});
-		} else if (id === 'fontsizecombobox') {
+
+			var state = items.getItemValue('.uno:CharFontName');
+			$(combobox).val(state).trigger('change');
+		}
+		else if (id === 'fontsizecombobox') {
 			$(combobox).on('select2:select', function (e) {
 				builder.map.applyFontSize(e.target.value);
 				builder.map.focus();
 			});
-		} else if (id === 'applystyle') {
+
+			state = items.getItemValue('.uno:FontHeight');
+			$(combobox).val(state).trigger('change');
+		}
+		else if (id === 'applystyle') {
 			$(combobox).on('select2:select', function (e) {
 				var style = e.target.value;
 				var docType = builder.map.getDocType();
@@ -61,6 +84,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 				builder.map.focus();
 			});
+
+			state = items.getItemValue('.uno:StyleApply');
+			$(combobox).val(state).trigger('change');
 		}
 	},
 
@@ -242,5 +268,6 @@ L.control.notebookbarBuilder = function (options) {
 	builder._setup(options);
 	builder._overrideHandlers();
 	builder._customizeOptions();
+	options.map.on('commandstatechanged', builder.onCommandStateChanged, builder);
 	return builder;
 };
