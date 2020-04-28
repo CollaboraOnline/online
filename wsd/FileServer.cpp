@@ -647,15 +647,38 @@ namespace {
         if (!request.has("ProxyPrefix"))
             return LOOLWSD::ServiceRoot;
         std::string proxyPrefix = request.get("ProxyPrefix", "");
+
+        // skip url to the root path.
+        size_t pos = proxyPrefix.find("://");
+        if (pos != std::string::npos) {
+            pos = proxyPrefix.find("/", pos + 3);
+            if (pos != std::string::npos)
+                proxyPrefix = proxyPrefix.substr(pos);
+            else
+                LOG_DBG("Unusual proxy prefix '" << proxyPrefix << "'");
+        } else
+            LOG_DBG("No http[s]:// in unusual proxy prefix '" << proxyPrefix);
         return proxyPrefix;
+    }
+
+    std::string getWebSocketUrl(const HTTPRequest &request)
+    {
+        bool ssl = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination());
+        std::string proxyPrefix = request.get("ProxyPrefix", "");
+        std::string serverName = LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName;
+        if (proxyPrefix.size() > 0)
+        {
+            ssl = !strcmp(proxyPrefix.c_str(), "https://");
+            serverName = request.getHost();
+        }
+        return (ssl ? "wss://" : "ws://") + serverName;
     }
 }
 
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message,
                                               const std::shared_ptr<StreamSocket>& socket)
 {
-    const auto host = ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "wss://" : "ws://")
-                    + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+    const auto host = getWebSocketUrl(request);
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
     // Is this a file we read at startup - if not; its not for serving.

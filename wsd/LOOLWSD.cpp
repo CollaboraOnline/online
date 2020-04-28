@@ -2504,7 +2504,7 @@ private:
             + (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName)
             + LOOLWSD::ServiceRoot;
         if (request.has("ProxyPrefix"))
-            srvUrl += request["ProxyPrefix"];
+            srvUrl = request["ProxyPrefix"];
         Poco::replaceInPlace(xml, std::string("%SRV_URI%"), srvUrl);
 
         // TODO: Refactor this to some common handler.
