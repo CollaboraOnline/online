@@ -29,6 +29,37 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
+	_setupComboboxSelectionHandler: function(combobox, id, builder) {
+		if (id === 'fontnamecombobox') {
+			$(combobox).on('select2:select', function (e) {
+				var font = e.target.value;
+				builder.map.applyFont(font);
+				builder.map.focus();
+			});
+		} else if (id === 'fontsizecombobox') {
+			$(combobox).on('select2:select', function (e) {
+				builder.map.applyFontSize(e.target.value);
+				builder.map.focus();
+			});
+		} else if (id === 'applystyle') {
+			$(combobox).on('select2:select', function (e) {
+				var style = e.target.value;
+				var docType = builder.map.getDocType();
+
+				if (style.startsWith('.uno:'))
+					builder.map.sendUnoCommand(style);
+				else if (docType === 'text')
+					builder.map.applyStyle(style, 'ParagraphStyles');
+				else if (docType === 'spreadsheet')
+					builder.map.applyStyle(style, 'CellStyles');
+				else if (docType === 'presentation' || docType === 'drawing')
+					builder.map.applyLayout(style);
+
+				builder.map.focus();
+			});
+		}
+	},
+
 	_comboboxControl: function(parentContainer, data, builder) {
 		if (!data.entries || data.entries.length === 0)
 			return false;
@@ -40,6 +71,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			data: data.entries.sort(function (a, b) {return a.localeCompare(b);}),
 			placeholder: _(builder._cleanText(data.text))
 		});
+
+		builder._setupComboboxSelectionHandler(select, data.id, builder);
 
 		return false;
 	},
