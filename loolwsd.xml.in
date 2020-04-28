@@ -143,7 +143,7 @@
             <enable type="bool" desc="Controls whether SSL encryption between storage and loolwsd is enabled. Defaults when empty to following the ssl.enable setting"></enable>
             <cert_file_path desc="Path to the cert file" relative="false"></cert_file_path>
             <key_file_path desc="Path to the key file" relative="false"></key_file_path>
-            <ca_file_path desc="Path to the ca file" relative="false"></ca_file_path>
+            <ca_file_path desc="Path to the ca file. If this is not empty, then SSL verification will be strict, otherwise cert of storage (WOPI-like host) will not be verified." relative="false"></ca_file_path>
             <cipher_list desc="List of OpenSSL ciphers to accept. If empty the defaults are used. These can be overriden only if absolutely needed."></cipher_list>
         </ssl>
     </storage>
