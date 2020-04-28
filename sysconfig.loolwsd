@@ -4,3 +4,10 @@
 ## Default:	""
 ## ServiceRestart: loolwsd
 #
+
+# warning/info logging from LOKit
+# read the documentation at https://docs.libreoffice.org/sal/html/sal_log.html
+# Example:
+# Log WebDAV-related messages, that is interesting for debugging Insert - Image operation
+# SAL_LOG="+TIMESTAMP+INFO.ucb.ucp.webdav+WARN.ucb.ucp.webdav"
+SAL_LOG="-INFO-WARN"
