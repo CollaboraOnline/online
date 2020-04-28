@@ -1340,7 +1340,8 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
 
 #if !MOBILEAPP
     // Tell the admin console about this new doc
-    Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(), session->getUserId());
+    Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
+                             session->getUserId(), _childProcess->getSMapsFD());
     Admin::instance().setDocWopiDownloadDuration(_docKey, _wopiLoadDuration);
 #endif
 
@@ -1591,18 +1592,6 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOG_CHECK_RET(kind != "", false);
             Util::alertAllUsers(cmd, kind);
         }
-#if !MOBILEAPP
-        else if (command == "smapsfd:")
-        {
-            std::shared_ptr<StreamSocket> socket = std::static_pointer_cast<StreamSocket>(_childProcess->_socket);
-            if (socket)
-            {
-                _childProcess->setSMapsFD(socket->getIncomingFD());
-                Admin::instance().setDocProcSMapsFD(_docKey, _childProcess->getSMapsFD());
-                LOG_DBG("Received smaps fd");
-            }
-        }
-#endif
         else
         {
             LOG_ERR("Unexpected message: [" << msg << "].");

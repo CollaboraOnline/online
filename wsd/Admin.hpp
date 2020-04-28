@@ -84,7 +84,9 @@ public:
     void update(const std::string& message);
 
     /// Calls with same pid will increment view count, if pid already exists
-    void addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId, const std::string& userName, const std::string& userId);
+    void addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename,
+                const std::string& sessionId, const std::string& userName, const std::string& userId,
+                const int smapsFD);
 
     /// Decrement view count till becomes zero after which doc is removed
     void rmDoc(const std::string& docKey, const std::string& sessionId);
@@ -129,7 +131,6 @@ public:
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
     void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration);
-    void setDocProcSMapsFD(const std::string& docKey, const int smapsFD);
     void addSegFaultCount(unsigned segFaultCount);
 
     void getMetrics(std::ostringstream &metrics);

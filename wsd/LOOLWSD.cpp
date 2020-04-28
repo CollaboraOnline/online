@@ -2032,6 +2032,7 @@ private:
 
             auto child = std::make_shared<ChildProcess>(pid, jailId, socket, request);
 
+            child->setSMapsFD(socket->getIncomingFD());
             _childProcess = child; // weak
 
             // Remove from prisoner poll since there is no activity
@@ -2072,7 +2073,7 @@ private:
         if (docBroker)
             docBroker->handleInput(data);
         else
-            LOG_WRN("Child " << child->getPid() <<
+                LOG_WRN("Child " << child->getPid() <<
                     " has no DocumentBroker to handle message: [" << abbr << "].");
     }
 

@@ -311,7 +311,9 @@ public:
 
     void notify(const std::string& message);
 
-    void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename, const std::string& sessionId, const std::string& userName, const std::string& userId);
+    void addDocument(const std::string& docKey, Poco::Process::PID pid, const std::string& filename,
+                     const std::string& sessionId, const std::string& userName, const std::string& userId,
+                     const int smapsFD);
 
     void removeDocument(const std::string& docKey, const std::string& sessionId);
     void removeDocument(const std::string& docKey);
@@ -331,7 +333,6 @@ public:
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
     void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration);
-    void setDocProcSMapsFD(const std::string& docKey, const int smapsFD);
     void addSegFaultCount(unsigned segFaultCount);
     void setForKitPid(pid_t pid) { _forKitPid = pid; }
 

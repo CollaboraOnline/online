@@ -483,9 +483,10 @@ void Admin::modificationAlert(const std::string& dockey, Poco::Process::PID pid,
 }
 
 void Admin::addDoc(const std::string& docKey, Poco::Process::PID pid, const std::string& filename,
-        const std::string& sessionId, const std::string& userName, const std::string& userId)
+                   const std::string& sessionId, const std::string& userName, const std::string& userId,
+                   const int smapsFD)
 {
-    addCallback([=] { _model.addDocument(docKey, pid, filename, sessionId, userName, userId); });
+    addCallback([=] { _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFD); });
 }
 
 void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
@@ -591,11 +592,6 @@ void Admin::setDocWopiDownloadDuration(const std::string& docKey, std::chrono::m
 void Admin::setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration)
 {
     addCallback([=]{ _model.setDocWopiUploadDuration(docKey, uploadDuration); });
-}
-
-void Admin::setDocProcSMapsFD(const std::string& docKey, const int smapsFD)
-{
-    addCallback([=]{ _model.setDocProcSMapsFD(docKey, smapsFD); });
 }
 
 void Admin::addSegFaultCount(unsigned segFaultCount)

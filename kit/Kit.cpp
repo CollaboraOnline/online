@@ -649,9 +649,6 @@ public:
     }
 };
 
-#if !MOBILEAPP
-static int ProcSMapsFile = -1;
-#endif
 
 class ThreadPool {
     std::mutex _mutex;
@@ -795,22 +792,6 @@ public:
                 "] and id [" << _docId << "].");
         assert(_loKit);
 
-#if !MOBILEAPP
-        if (ProcSMapsFile >= 0)
-        {
-            static const std::string str = "smapsfd:";
-            if (websocketHandler->sendTextMessageWithFD(str.c_str(), str.size(), ProcSMapsFile) > 0)
-            {
-                LOG_DBG("Successfully sent smaps fd to wsd");
-                close(ProcSMapsFile);
-                ProcSMapsFile = -1;
-            }
-            else
-            {
-                LOG_ERR("Failed to send smaps fd to wsd");
-            }
-        }
-#endif
     }
 
     virtual ~Document()
@@ -2505,6 +2486,7 @@ void lokit_main(
 
     std::string userdir_url;
     std::string instdir_path;
+    int ProcSMapsFile = -1;
 
     // lokit's destroy typically throws from
     // framework/source/services/modulemanager.cxx:198
@@ -2749,7 +2731,7 @@ void lokit_main(
             std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit);
 
 #if !MOBILEAPP
-        mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler);
+        mainKit.insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler, ProcSMapsFile);
 #else
         mainKit.insertNewFakeSocket(docBrokerSocket, websocketHandler);
 #endif

@@ -495,11 +495,13 @@ void AdminModel::modificationAlert(const std::string& docKey, Poco::Process::PID
 
 void AdminModel::addDocument(const std::string& docKey, Poco::Process::PID pid,
                              const std::string& filename, const std::string& sessionId,
-                             const std::string& userName, const std::string& userId)
+                             const std::string& userName, const std::string& userId,
+                             const int smapsFD)
 {
     assertCorrectThread();
 
     const auto ret = _documents.emplace(docKey, std::unique_ptr<Document>(new Document(docKey, pid, filename)));
+    ret.first->second->setProcSMapsFD(smapsFD);
     ret.first->second->takeSnapshot();
     ret.first->second->addView(sessionId, userName, userId);
     LOG_DBG("Added admin document [" << docKey << "].");
@@ -774,13 +776,6 @@ void AdminModel::setDocWopiUploadDuration(const std::string& docKey, const std::
     auto it = _documents.find(docKey);
     if (it != _documents.end())
         it->second->setWopiUploadDuration(wopiUploadDuration);
-}
-
-void AdminModel::setDocProcSMapsFD(const std::string& docKey, const int smapsFD)
-{
-    auto it = _documents.find(docKey);
-    if (it != _documents.end())
-        it->second->setProcSMapsFD(smapsFD);
 }
 
 void AdminModel::addSegFaultCount(unsigned segFaultCount)

@@ -407,7 +407,7 @@ void SocketPoll::insertNewWebSocketSync(
 // should this be a static method in the WebsocketHandler(?)
 void SocketPoll::clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocket>& socket,
                                                const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler,
-                                               const std::string &pathAndQuery)
+                                               const std::string &pathAndQuery, const int shareFD)
 {
     // cf. WebSocketHandler::upgradeToWebSocket (?)
     // send Sec-WebSocket-Key: <hmm> ... Sec-WebSocket-Protocol: chat, Sec-WebSocket-Version: 13
@@ -426,14 +426,21 @@ void SocketPoll::clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocke
         "Sec-WebSocket-Version:13\r\n"
         "User-Agent: " WOPI_AGENT_STRING "\r\n"
         "\r\n";
-    socket->send(oss.str());
+    if (shareFD == -1)
+        socket->send(oss.str());
+    else
+    {
+        std::string request = oss.str();
+        socket->sendFD(request.c_str(), request.size(), shareFD);
+    }
     websocketHandler->onConnect(socket);
 }
 
 void SocketPoll::insertNewUnixSocket(
     const std::string &location,
     const std::string &pathAndQuery,
-    const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler)
+    const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler,
+    const int shareFD)
 {
     int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0);
 
@@ -456,7 +463,7 @@ void SocketPoll::insertNewUnixSocket(
         if (socket)
         {
             LOG_DBG("Connected to local UDS " << location << " #" << socket->getFD());
-            clientRequestWebsocketUpgrade(socket, websocketHandler, pathAndQuery);
+            clientRequestWebsocketUpgrade(socket, websocketHandler, pathAndQuery, shareFD);
             insertNewSocket(socket);
         }
     }
