@@ -992,13 +992,31 @@ fi
 
 AC_SUBST(ENABLE_SETCAP)
 
+
+tryLinkFile () {
+    if test ! -r "$1"; then
+        AC_MSG_ERROR(["$1: file not found"])
+    fi
+
+    rm -f $2
+    ln -s "$1" "$2" 2>/dev/null ||
+    ln "$1" "$2" 2>/dev/null ||
+    cp -p "$1" "$2" ||
+    AC_MSG_ERROR(["cannot link or copy $1 to $2"])
+}
+
+if test "$srcdir" != '.'; then
+    mkdir -p loleaflet
+    tryLinkFile $srcdir/loleaflet/package.json loleaflet/package.json
+    tryLinkFile $srcdir/loleaflet/archived-packages loleaflet/archived-packages
+    cp -p $srcdir/loleaflet/npm-shrinkwrap.json loleaflet/npm-shrinkwrap.json
+fi
+
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
 AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
-AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
 AC_CONFIG_LINKS([cypress_test/package.json:cypress_test/package.json])
 AC_CONFIG_LINKS([cypress_test/cypress.json:cypress_test/cypress.json])
 AC_LINK_FILES([cypress_test/plugins], [cypress_test/plugins])
-AC_LINK_FILES([loleaflet/archived-packages], [loleaflet/archived-packages])
 AC_LINK_FILES([cypress_test/eslint_plugin], [cypress_test/eslint_plugin])
 
 APP_BRANDING_DIR=
@@ -1069,7 +1087,6 @@ AC_CONFIG_FILES([Makefile
                  gtk/Makefile
                  test/Makefile
                  loleaflet/Makefile
-                 loleaflet/npm-shrinkwrap.json
                  loolwsd.spec
                  loolwsd.xml
                  debian/loolwsd.postinst])
@@ -1088,6 +1105,8 @@ if test "$enable_androidapp" = "yes"; then
 fi
 
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
+
+AC_CONFIG_COMMANDS_PRE([echo Installing node modules packages... && (cd loleaflet && npm install)])
 
 AC_OUTPUT
 

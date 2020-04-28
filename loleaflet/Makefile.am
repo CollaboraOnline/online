@@ -1,5 +1,6 @@
 MAKEFLAGS = --no-builtin-rules
 CTAGS = ctags
+CONFIG_STATUS_DEPENDENCIES=$(builddir)/node_modules
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 
@@ -320,10 +321,8 @@ LOLEAFLET_PREFIX := $(if $(filter true,$(ENABLE_DEBUG)),$(abs_builddir),$(abs_bu
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
-all-local:
+all-local: build-loleaflet
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
-	@$(MAKE) node_modules
-	@$(MAKE) build-loleaflet
 
 if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
@@ -432,7 +431,7 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML
 		-DVENDOR="$(VENDOR)" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
-node_modules: npm-shrinkwrap.json
+node_modules: package.json archived-packages
 	@npm install
 	@touch node_modules
 
@@ -593,7 +592,6 @@ l10n: pot
 #	done
 
 clean-local:
-	rm -rf node_modules
 	@rm -rf $(DIST_FOLDER)
 	@rm -rf $(builddir)/build/dist
 	@rm -f $(abs_srcdir)/jsconfig.json
