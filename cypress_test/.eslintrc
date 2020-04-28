@@ -1,5 +1,9 @@
 {
   "extends": "../loleaflet/.eslintrc",
+  "plugins": ["cypress-rules"],
+  "rules": {
+      "cypress-rules/no-get-contains-chain": 2
+  },
   "parserOptions": {
       "ecmaVersion": 6,
       "sourceType": "module",

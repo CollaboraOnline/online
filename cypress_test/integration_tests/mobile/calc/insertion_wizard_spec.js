@@ -64,7 +64,7 @@ describe('Calc insertion wizard.', function() {
 		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td a')
-			.contains('some text');
+			.should('have.text', 'some text');
 
 		cy.get('#copy-paste-container table td a')
 			.should('have.attr', 'href', 'http://www.something.com');
