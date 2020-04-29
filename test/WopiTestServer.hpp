@@ -6,14 +6,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 #include "config.h"
 
 #include "helpers.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
-
 
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
@@ -22,6 +20,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 #include <Poco/Timestamp.h>
+#include <Poco/Util/LayeredConfiguration.h>
 
 class WopiTestServer : public UnitWSD
 {
@@ -96,6 +95,13 @@ public:
 
     virtual void assertRenameFileRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
+    }
+
+    void configure(Poco::Util::LayeredConfiguration& config) override
+    {
+        UnitWSD::configure(config);
+        // we're still internally confused as to https vs. http in places.
+        config.setBool("storage.ssl.as_scheme", false);
     }
 
 protected:

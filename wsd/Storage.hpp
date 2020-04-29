@@ -279,6 +279,9 @@ private:
 
     static bool FilesystemEnabled;
     static bool WopiEnabled;
+    /// If true, use only the WOPI URL for whether to use SSL to talk to storage server
+    static bool SSLAsScheme;
+    /// If true, force SSL communication with storage server
     static bool SSLEnabled;
     /// Allowed/denied WOPI hosts, if any and if WOPI is enabled.
     static Util::RegexListMatcher WopiHosts;

@@ -15,7 +15,6 @@
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Util/LayeredConfiguration.h>
 
 class UnitWOPITemplate : public WopiTestServer
 {

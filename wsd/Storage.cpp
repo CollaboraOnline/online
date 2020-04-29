@@ -55,7 +55,8 @@ using std::size_t;
 
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
-bool StorageBase::SSLEnabled;
+bool StorageBase::SSLAsScheme = true;
+bool StorageBase::SSLEnabled = false;
 Util::RegexListMatcher StorageBase::WopiHosts;
 
 #if !MOBILEAPP
@@ -125,6 +126,10 @@ void StorageBase::initialize()
 
     // Init client
     Poco::Net::Context::Params sslClientParams;
+
+    // false default for upgrade to preserve legacy configuration
+    // in-config-file defaults are true.
+    SSLAsScheme = LOOLWSD::getConfigValue<bool>("storage.ssl.as_scheme", false);
 
     // Fallback to ssl.enable if not set - for back compatibility & simplicity.
     SSLEnabled = LOOLWSD::getConfigValue<bool>(
@@ -398,15 +403,29 @@ LocalStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::s
 #if !MOBILEAPP
 
 Poco::Net::HTTPClientSession* StorageBase::getHTTPClientSession(const Poco::URI& uri)
- {
+{
+    bool useSSL = false;
+    if (SSLAsScheme)
+    {
+        // the WOPI URI itself should control whether we use SSL or not
+        // for whether we verify vs. certificates, cf. above
+        useSSL = uri.getScheme() != "http";
+    }
+    else
+    {
+        // We decoupled the Wopi communication from client communication because
+        // the Wopi communication must have an independent policy.
+        // So, we will use here only Storage settings.
+        useSSL = SSLEnabled || LOOLWSD::isSSLTermination();
+    }
     // We decoupled the Wopi communication from client communication because
     // the Wopi communication must have an independent policy.
     // So, we will use here only Storage settings.
-    return (SSLEnabled || LOOLWSD::isSSLTermination())
-         ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(),
-                                             Poco::Net::SSLManager::instance().defaultClientContext())
-         : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
- }
+    return useSSL
+        ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(),
+                                            Poco::Net::SSLManager::instance().defaultClientContext())
+        : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+}
 
 namespace
 {
