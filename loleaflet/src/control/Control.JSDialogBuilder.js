@@ -1492,6 +1492,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var prefixLength = '.uno:'.length;
 		if (name.substr(0, prefixLength) == '.uno:')
 			cleanName = name.substr(prefixLength);
+		cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
 		return 'images/lc_' + cleanName.toLowerCase() + '.svg';
 	},
 
@@ -1521,7 +1522,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		controls['container'] = div;
 
 		if (data.command) {
-			var id = data.command.substr('.uno:'.length);
+			var id = encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '');
 			div.id = id;
 
 			var icon = builder._createIconPath(data.command);
