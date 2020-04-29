@@ -68,10 +68,15 @@ L.Control.UIManager = L.Control.extend({
 		} else if (window.enableNotebookbar) {
 			this.map.addControl(L.control.notebookbar({docType: docType}));
 
-			this.moveObjectVertically($('#spreadsheet-row-column-frame'), 40);
-			this.moveObjectVertically($('#document-container'), 81);
-			this.moveObjectVertically($('#presentation-controls-wrapper'), 40);
-			this.moveObjectVertically($('#sidebar-dock-wrapper'), 40);
+			var additionalOffset = 0;
+			if (docType === 'spreadsheet') {
+				additionalOffset = 56;
+			}
+
+			this.moveObjectVertically($('#spreadsheet-row-column-frame'), 121);
+			this.moveObjectVertically($('#document-container'), 84 + additionalOffset);
+			this.moveObjectVertically($('#presentation-controls-wrapper'), 84);
+			this.moveObjectVertically($('#sidebar-dock-wrapper'), 43);
 		}
 
 		if (docType === 'spreadsheet') {

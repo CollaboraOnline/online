@@ -29,7 +29,7 @@ L.Control.Notebookbar = L.Control.extend({
 		tabJSON = JSON.parse(tabJSON);
 		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
 
-		var parent = $('#toolbar-wrapper').get(0);
+		var parent = $('#toolbar-up').get(0);
 		var container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', parent);
 
 		builder.build(container, [tabJSON]);
@@ -68,7 +68,7 @@ L.Control.Notebookbar = L.Control.extend({
 	setCurrentScrollPosition: function() {},
 
 	createScrollButtons: function() {
-		var parent = $('#toolbar-wrapper').get(0);
+		var parent = $('#toolbar-up').get(0);
 
 		var left = L.DomUtil.create('div', 'w2ui-scroll-left', parent);
 		var right = L.DomUtil.create('div', 'w2ui-scroll-right', parent);
@@ -90,8 +90,8 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	setupResizeHandler: function() {
-		$(window).resize(function() {
-			var container = $('#toolbar-wrapper').get(0);
+		var handler = function() {
+			var container = $('#toolbar-up').get(0);
 			var rootContainer = $('.notebookbar-scroll-wrapper table').get(0);
 
 			if ($(rootContainer).outerWidth() > $(window).width()) {
@@ -109,7 +109,10 @@ L.Control.Notebookbar = L.Control.extend({
 				$(container).find('.w2ui-scroll-left').hide();
 				$(container).find('.w2ui-scroll-right').hide();
 			}
-		});
+		};
+
+		$(window).resize(handler);
+		$('.notebookbar-scroll-wrapper').scroll(handler);
 	},
 
 	getHomeTab: function() {

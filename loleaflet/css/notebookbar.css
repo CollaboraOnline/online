@@ -29,23 +29,20 @@
 
 /* root container */
 
-.notebookbar-scroll-wrapper ~ .w2ui-scroll-left, .notebookbar-scroll-wrapper ~ .w2ui-scroll-right {
-	position: fixed;
-	top: 37px;
+.notebookbar-scroll-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+	height: 105px;
+	margin-top: -25px;
+	padding-top: 5px;
 }
 
-.notebookbar-scroll-wrapper {
-	position: fixed;
-	left: 0px;
-	right: 0px;
-	top: 40px;
-
-	overflow-x: scroll;
-
-	margin-top: -25px;
-
-	/* be sure no scrollbar is visible on the bottom */
-	min-height: 130px;
+.notebookbar-scroll-wrapper::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
 }
 
 /* unobuttons */
