@@ -2568,6 +2568,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_TAB_STOP_LIST:
         sendTextFrame("tabstoplistupdate: " + payload);
         break;
+    case LOK_CALLBACK_FORM_FIELD_BUTTON:
+        sendTextFrame("formfieldbutton: " + payload);
+        break;
 
 #if !ENABLE_DEBUG
     // we want a compilation-time failure in the debug builds; but ERR in the

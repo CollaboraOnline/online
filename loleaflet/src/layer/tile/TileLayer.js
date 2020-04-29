@@ -726,6 +726,10 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.fire('contextchange', {context: message[1]});
 			}
 		}
+		else if (textMsg.startsWith('formfieldbutton:')) {
+			this._onFormFieldButtonMsg(textMsg);
+			console.error(textMsg);
+		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
@@ -3351,6 +3355,17 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 		this._previewInvalidations = [];
+	},
+
+	_onFormFieldButtonMsg: function (textMsg) {
+		textMsg = textMsg.substring('formfieldbutton:'.length + 1);
+		var json = JSON.parse(textMsg);
+		if (json.action === 'show') {
+			this._formFieldButton = new L.FormFieldButton(json);
+			this._map.addLayer(this._formFieldButton);
+		} else {
+			this._map.removeLayer(this._formFieldButton);
+		}
 	},
 
 	_debugGetTimeArray: function() {

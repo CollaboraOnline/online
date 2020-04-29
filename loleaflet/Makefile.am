@@ -230,6 +230,7 @@ LOLEAFLET_JS =\
 	src/layer/vector/Path.Transform.SVG.VML.js \
 	src/layer/vector/Canvas.js \
 	src/layer/vector/Path.Transform.Canvas.js \
+	src/layer/FormFieldButtonLayer.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
 	src/map/handler/Map.Drag.js \

@@ -1045,6 +1045,7 @@ L.Map = L.Evented.extend({
 		this.createPane('overlayPane');
 		this.createPane('markerPane');
 		this.createPane('popupPane');
+		this.createPane('formfieldPane');
 
 		if (!this.options.markerZoomAnimation) {
 			L.DomUtil.addClass(panes.markerPane, 'leaflet-zoom-hide');
