@@ -3,7 +3,7 @@
  * L.Control.NotebookbarBuilder
  */
 
-/* global $ _ */
+/* global $ _ _UNO */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_customizeOptions: function() {
@@ -29,6 +29,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
 
 		this._toolitemHandlers['.uno:InsertTable'] = this._insertTableControl;
+		this._toolitemHandlers['.uno:InsertGraphic'] = this._insertGraphicControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 
@@ -191,6 +192,31 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				$('.inserttable-grid .row .col').click(function () {
 					$(control.container).w2overlay();
 				});
+			}
+		});
+	},
+
+	_insertGraphicControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			if (builder.map['wopi'].EnableInsertRemoteImage) {
+				$(control.container).w2menu({
+					items: [
+						{id: 'localgraphic', text: _('Insert Local Image')},
+						{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)}
+					],
+					onSelect: function (event) {
+						if (event.item.id === 'localgraphic') {
+							L.DomUtil.get('insertgraphic').click();
+						} else if (event.item.id === 'remotegraphic') {
+							builder.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
+						}
+					}
+				});
+			} else {
+				L.DomUtil.get('insertgraphic').click();
 			}
 		});
 	},
