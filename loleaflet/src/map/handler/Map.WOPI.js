@@ -189,6 +189,12 @@ L.Map.WOPI = L.Handler.extend({
 			return true;
 		}
 
+		var origin = window.location.protocol + '//' + window.location.hostname;
+		if (origin === e.origin) {
+			this._cachedGoodOrigin = e.origin;
+			return true;
+		}
+
 		return false;
 	},
 
