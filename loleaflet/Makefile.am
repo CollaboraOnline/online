@@ -1,3 +1,4 @@
+MAKEFLAGS = --no-builtin-rules
 CTAGS = ctags
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
