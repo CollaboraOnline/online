@@ -81,7 +81,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	border: 1px solid silver;
 }
 
-/* Reset attributes control */
+/* Home tab */
 #clearFormatting.notebookbar div img {
 	width: 24px !important;
 	height: 24px !important;
@@ -89,4 +89,33 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 #clearFormatting.notebookbar {
 	height: 24px !important;
+}
+
+#Paste.notebookbar img, #InsertAnnotation.notebookbar img, #SearchDialog.notebookbar img {
+	height: 32px !important;
+	width: 32px !important;
+}
+
+#ControlCodes.notebookbar {
+	padding-left: 30px !important;
+}
+
+#fontnamecombobox.notebookbar ~ .select2 {
+	width: 150px !important;
+}
+
+#fontsizecombobox.notebookbar ~ .select2 {
+	width: 50px !important;
+}
+
+#applystyle.notebookbar ~ .select2 {
+	width: 170px !important;
+}
+
+#table-StyleParagraphSection1.notebookbar, #table-GroupB15.notebookbar, #table-GroupB11.notebookbar {
+	margin-top: -5px;
+}
+
+#Copy.notebookbar, #clearFormatting.notebookbar, #table-GroupB20.notebookbar {
+	margin-top: 10px;
 }
