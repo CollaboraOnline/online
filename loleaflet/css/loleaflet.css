@@ -527,3 +527,8 @@ body {
 		-webkit-user-select: none;
 		-o-user-select: none;
 }
+
+.drop-down-button {
+	background: #FF0000;
+	position: absolute;
+}
