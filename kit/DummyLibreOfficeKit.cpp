@@ -11,6 +11,7 @@
 
 #include "DummyLibreOfficeKit.hpp"
 
+#include <cstdlib>
 #include <cstring>
 #include <memory>
 
