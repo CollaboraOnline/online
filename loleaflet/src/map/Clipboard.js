@@ -656,6 +656,9 @@ L.Clipboard = L.Class.extend({
 		if (isAnyVexDialogActive() && !this._map.hasFocus())
 			return;
 
+		if (this._map.isEditingAnnotation())
+			return;
+
 		// If the focus is in the search box, paste there.
 		if (this._map.isSearching())
 			return;
