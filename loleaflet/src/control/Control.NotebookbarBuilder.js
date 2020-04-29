@@ -30,6 +30,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		this._toolitemHandlers['.uno:InsertTable'] = this._insertTableControl;
 		this._toolitemHandlers['.uno:InsertGraphic'] = this._insertGraphicControl;
+		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 
@@ -219,6 +220,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				L.DomUtil.get('insertgraphic').click();
 			}
 		});
+	},
+
+	_insertAnnotationControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {builder.map.insertComment();});
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
