@@ -941,7 +941,7 @@ struct KitProcStats
     void UpdateAggregateStats(int pid)
     {
         _threadCount.Update(Util::getStatFromPid(pid, 19));
-        _cpuTime.Update(Util::getCpuUsage(pid));
+        _cpuTime.Update(Util::getCpuUsage(pid) / sysconf (_SC_CLK_TCK));
     }
 
     int unassignedCount;
