@@ -141,6 +141,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
 		this._controlHandlers['tabcontrol'] = this._tabsControlHandler;
 		this._controlHandlers['paneltabs'] = this._panelTabsHandler;
+		this._controlHandlers['singlepanel'] = this._singlePanelHandler;
 		this._controlHandlers['container'] = this._containerHandler;
 		this._controlHandlers['window'] = this._containerHandler;
 		this._controlHandlers['borderwindow'] = this._containerHandler;
@@ -736,6 +737,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(tabs[0]).click();
 		builder.wizard.goLevelDown(contentDivs[0]);
 
+		return false;
+	},
+
+	_singlePanelHandler: function(parentContainer, data, builder) {
+		var item = data[0];
+		if (item.children) {
+			var child = item.children[0];
+			builder.build(parentContainer, [child]);
+		}
 		return false;
 	},
 
@@ -2068,7 +2078,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			    && childData.children[0] && childData.children[0].type == 'panel'
 			    && childData.children[1] && childData.children[1].type == 'panel';
 
-			if (twoPanelsAsChildren) {
+			if (childData.children && childData.children.length == 1
+				&& childData.children[0] && childData.children[0].type == 'panel') {
+				handler = this._controlHandlers['singlepanel'];
+				processChildren = handler(childObject, childData.children, this);
+			} else if (twoPanelsAsChildren) {
 				handler = this._controlHandlers['paneltabs'];
 				processChildren = handler(childObject, childData.children, this);
 			} else {

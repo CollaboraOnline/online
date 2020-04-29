@@ -2250,7 +2250,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map._textInput.showCursor();
 
 			// Don't show the keyboard when the Wizard is visible.
-			if (!window.mobileWizard) {
+			if (!window.mobileWizard && !window.pageMobileWizard && !window.insertionMobileWizard) {
 				// If the user is editing, show the keyboard, but don't change
 				// anything if nothing is changed.
 				this._map.focus(true);

@@ -110,6 +110,10 @@ L.Control.MobileWizard = L.Control.extend({
 		if (window.insertionMobileWizard === true)
 			window.insertionMobileWizard = false;
 
+		if (window.pageMobileWizard === true)
+			window.pageMobilewizard = false;
+
+
 		this._updateToolbarItemStateByClose();
 
 		if (!this.map.hasFocus()) {

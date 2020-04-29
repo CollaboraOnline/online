@@ -514,10 +514,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:PreviousTrackedChange'},
 				{uno: '.uno:NextTrackedChange'}
 			]},
-			{name: _('Page Setup'), id: 'pagesetup', type: 'menu', menu: [
-				{name: _('Portrait'), id: 'setportrait', uno: '.uno:ToggleOrientation'},
-				{name: _('Landscape'), id: 'setlandscape', uno: '.uno:ToggleOrientation'}
-			]},
+			{name: _('Page Setup'), id: 'pagesetup', type: 'action'},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:ControlCodes'},
 				{uno: '.uno:SpellOnline'},
@@ -1234,6 +1231,10 @@ L.Control.Menubar = L.Control.extend({
 			this._map.sendUnoCommand('.uno:InsertPageTitleField');
 		} else if (id === 'insertslidesfield') {
 			this._map.sendUnoCommand('.uno:InsertPagesField');
+		} else if (id === 'pagesetup') {
+			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
+			this._map.fire('showwizardsidebar');
+			window.pageMobileWizard = true;
 		}
 		// Inform the host if asked
 		if (postmessage)
@@ -1331,12 +1332,6 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
 			return false;
 		}
-		if (menuItem.id === 'setportrait' && this._map['stateChangeHandler'].getItemValue('.uno:Orientation') === 'IsPortrait') {
-			return false;
-		}
-		else if (menuItem.id === 'setlandscape' && this._map['stateChangeHandler'].getItemValue('.uno:Orientation') === 'IsLandscape') {
-			return false;
-		}
 		if (this._map._permission === 'readonly' && menuItem.type === 'menu') {
 			var found = false;
 			for (var j in this.options.allowedReadonlyMenus) {
@@ -1352,6 +1347,7 @@ L.Control.Menubar = L.Control.extend({
 			switch (menuItem.id) {
 			case 'last-mod':
 			case 'save':
+			case 'pagesetup':
 				return false;
 			}
 		}
