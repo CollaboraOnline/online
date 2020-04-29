@@ -212,7 +212,7 @@ NODE_BINS = \
 
 $(NODE_BINS): $(NPM_INSTALLED);
 
-$(NPM_INSTALLED): package.json
+$(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
 	@npm install
 	@mkdir -p $(dir $(NPM_INSTALLED))
 	@touch $(NPM_INSTALLED)
