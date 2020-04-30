@@ -44,6 +44,26 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Zoom'] = function() {};
 		this._toolitemHandlers['.uno:PrintPreview'] = function() {};
 		this._toolitemHandlers['.uno:Navigator'] = function() {};
+		this._toolitemHandlers['.uno:InsertObject'] = function() {};
+		this._toolitemHandlers['.uno:Gallery'] = function() {};
+		this._toolitemHandlers['.uno:InsertAVMedia'] = function() {};
+		this._toolitemHandlers['.uno:Line'] = function() {};
+		this._toolitemHandlers['.uno:Polygon_Unfilled'] = function() {};
+		this._toolitemHandlers['.uno:Bezier_Unfilled'] = function() {};
+		this._toolitemHandlers['.uno:ArrowsToolbox'] = function() {};
+		this._toolitemHandlers['.uno:BasicShapes.ellipse'] = function() {};
+		this._toolitemHandlers['.uno:DrawCaption'] = function() {};
+		this._toolitemHandlers['.uno:LineToolbox'] = function() {};
+		this._toolitemHandlers['.uno:BasicShapes.rectangle'] = function() {};
+		this._toolitemHandlers['.uno:SymbolShapes'] = function() {};
+		this._toolitemHandlers['.uno:ArrowShapes'] = function() {};
+		this._toolitemHandlers['.uno:StarShapes'] = function() {};
+		this._toolitemHandlers['.uno:CalloutShapes'] = function() {};
+		this._toolitemHandlers['.uno:FlowChartShapes'] = function() {};
+		this._toolitemHandlers['.uno:InsertObjectStarMath'] = function() {};
+		this._toolitemHandlers['.uno:EmojiControl'] = function() {};
+		this._toolitemHandlers['.uno:InsertDraw'] = function() {};
+		this._toolitemHandlers['.uno:EditGlossary'] = function() {};
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
