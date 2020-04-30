@@ -59,7 +59,7 @@ $(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_loolwsd)
 
-$(MOBILE_TEST_FILES_DONE): $(PID_FILE)
+$(MOBILE_TEST_FILES_DONE): $(PID_FILE) $(DESKTOP_TEST_FILES_DONE)
 	$(if $(PARALLEL_BUILD),\
 		$(call run_mobile_tests,$(subst $(MOBILE_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
 		$(call run_mobile_tests))
