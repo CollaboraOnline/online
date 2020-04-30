@@ -1238,7 +1238,7 @@ L.Control.LokDialog = L.Control.extend({
 		// on mobile, force the positioning to the top, so that it is not
 		// covered by the virtual keyboard
 		if (window.mode.isMobile()) {
-			$(dialogContainer).dialog('option', 'position', { my: 'left top', at: 'let top', of: '#document-container' });
+			$(dialogContainer).dialog('option', 'position', { my: 'center top', at: 'center top', of: '#document-container' });
 			transformation.origin = 'center top';
 			transformation.translate.y = 0;
 		}
