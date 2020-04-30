@@ -528,7 +528,25 @@ body {
 		-o-user-select: none;
 }
 
-.drop-down-button {
-	background: #FF0000;
+.form-field-frame {
+	border: 1px solid;
 	position: absolute;
+	height: 100%;
+}
+
+.form-field-button {
+	background: #FFFFFF;
+	position: absolute;
+	border: 1px solid;
+	height: 100%;
+	box-sizing: content-box;
+	padding: 0px;
+}
+
+.form-field-button:hover, .form-field-button:focus {
+  background: #DDDDDD;
+}
+
+.form-field-button-image {
+	margin: 3px;
 }
