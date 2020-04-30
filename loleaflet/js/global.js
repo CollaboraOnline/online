@@ -402,7 +402,13 @@
 				relBases.pop(); // bin last - css name.
 				var replaceBase = 'url("' + relBases.join('/') + '/images/';
 
-				var rules = sheets[i].cssRules || sheets[i].rules;
+				var rules;
+				try {
+					rules = sheets[i].cssRules || sheets[i].rules;
+				} catch (err) {
+					console.log('Missing CSS from ' + sheets[i].href);
+					continue;
+				}
 				for (var r = 0; r < rules.length; ++r) {
 					if (!rules[r] || !rules[r].style)
 						continue;
