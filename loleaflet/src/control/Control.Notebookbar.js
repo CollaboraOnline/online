@@ -61,6 +61,10 @@ L.Control.Notebookbar = L.Control.extend({
 		case 'TableLabel':
 			this.loadTab(this.getTableTab());
 			break;
+
+		case 'ReviewLabel':
+			this.loadTab(this.getReviewTab());
+			break;
 		}
 	},
 	
@@ -85,6 +89,11 @@ L.Control.Notebookbar = L.Control.extend({
 				'text': 'Reference~s',
 				'id': '5',
 				'name': 'ReferencesLabel'
+			},
+			{
+				'text': '~Review',
+				'id': '6',
+				'name': 'ReviewLabel'
 			},
 			{
 				'text': '~Table',
@@ -158,6 +167,14 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	getReferencesTab: function() {
+		return '';
+	},
+
+	getTableTab: function() {
+		return '';
+	},
+
+	getReviewTab: function() {
 		return '';
 	}
 });
