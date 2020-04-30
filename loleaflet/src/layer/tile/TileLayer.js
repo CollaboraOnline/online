@@ -3038,18 +3038,12 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._dropDownButton);
 	},
 
-	_getDropDownMarker: function (height) {
-		if (height) {
-			var maxHeight = 27; // it matches the max height of the same control in core
-			var topMargin = 0;
-			if (height > maxHeight) {
-				topMargin = height - maxHeight;
-				height = maxHeight;
-			}
+	_getDropDownMarker: function (dropDownSize) {
+		if (dropDownSize) {
 			var icon =  L.divIcon({
 				className: 'spreadsheet-drop-down-marker',
-				iconSize: [undefined, height],
-				iconAnchor: [0, -topMargin]
+				iconSize: [dropDownSize, dropDownSize],
+				iconAnchor: [0, 0]
 			});
 			this._dropDownButton.setIcon(icon);
 		}
