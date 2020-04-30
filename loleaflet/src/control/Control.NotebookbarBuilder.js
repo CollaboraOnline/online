@@ -69,6 +69,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:AttributePageSize'] = function() {};
 		this._toolitemHandlers['.uno:PageColumnType'] = function() {};
 		this._toolitemHandlers['.uno:SelectObject'] = function() {};
+		this._toolitemHandlers['.uno:BibliographyComponent'] = function() {};
+		this._toolitemHandlers['.uno:ViewDataSourceBrowser'] = function() {};
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
