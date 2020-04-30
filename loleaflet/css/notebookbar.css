@@ -130,7 +130,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-top: 10px;
 }
 
-#InsertPagebreak.notebookbar img,
+#table-Insert-Section-Pagebreak #InsertPagebreak.notebookbar img,
 #table-Insert-Section-Table #InsertTable.notebookbar img,
 #InsertObjectChart.notebookbar img,
 #table-Insert-Section-Image #InsertGraphic.notebookbar img,
@@ -142,4 +142,31 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #table-Insert-Section-Symbol #CharmapControl.notebookbar img{
 	height: 32px !important;
 	width: 32px !important;
+}
+
+/* Layout Tab */
+
+#table-LayoutBox, #table-Wrap8.notebookbar {
+	margin-top: 5px;
+}
+
+#FormatGroup.notebookbar img,
+#BringToFront.notebookbar img,
+#ObjectForwardOne.notebookbar img,
+#SendToBack.notebookbar img,
+#ObjectBackOne.notebookbar img,
+#PageDialog.notebookbar img {
+	height: 32px !important;
+	width: 32px !important;
+}
+
+#table-Layout-Section-ParaMargin {
+	display: none;
+}
+
+#InsertBreak.notebookbar,
+#Watermark.notebookbar,
+#LineNumberingDialog.notebookbar
+ {
+	margin-top: 10px;
 }

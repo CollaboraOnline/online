@@ -64,6 +64,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:EmojiControl'] = function() {};
 		this._toolitemHandlers['.uno:InsertDraw'] = function() {};
 		this._toolitemHandlers['.uno:EditGlossary'] = function() {};
+		this._toolitemHandlers['.uno:PageMargin'] = function() {};
+		this._toolitemHandlers['.uno:Orientation'] = function() {};
+		this._toolitemHandlers['.uno:AttributePageSize'] = function() {};
+		this._toolitemHandlers['.uno:PageColumnType'] = function() {};
+		this._toolitemHandlers['.uno:SelectObject'] = function() {};
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
