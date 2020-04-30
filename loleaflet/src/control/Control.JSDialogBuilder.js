@@ -1120,13 +1120,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				return String(state.replace(',', '.') / 100.0);
 			}
 			break;
-
-		case 'transtype':
-			state = items.getItemValue('.uno:FillFloatTransparence');
-			if (state) {
-				return builder._gradientStyleToLabel(state.style);
-			}
-			break;
 		}
 
 		return null;
