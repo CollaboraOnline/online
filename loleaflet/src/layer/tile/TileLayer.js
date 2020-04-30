@@ -156,7 +156,7 @@ L.TileLayer = L.GridLayer.extend({
 				className: 'spreadsheet-drop-down-marker',
 				iconSize: null
 			}),
-			interactive: false
+			interactive: true
 		});
 
 		this._cellResizeMarkerStart = L.marker(new L.LatLng(0, 0), {
@@ -337,6 +337,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._cellResizeMarkerStart.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._cellResizeMarkerEnd.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._cellAutofillMarker.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
+		this._dropDownButton.on('click', this._onDropDownButtonClick, this);
 
 		map.setPermission(this.options.permission);
 
@@ -2827,6 +2828,12 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (this._cellAutofillMarker === e.target) {
 			this._postMouseEvent(buttonType, aMousePosition.x, aMousePosition.y, 1, 1, 0);
+		}
+	},
+
+	_onDropDownButtonClick: function () {
+		if (this._validatedCellXY && this._cellCursorXY && this._validatedCellXY.equals(this._cellCursorXY)) {
+			this._map.sendUnoCommand('.uno:DataSelect');
 		}
 	},
 
