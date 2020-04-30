@@ -715,7 +715,7 @@ bool LOOLWSD::DummyLOK = false;
 std::string LOOLWSD::FuzzFileName;
 #endif
 std::string LOOLWSD::SysTemplate;
-std::string LOOLWSD::LoTemplate;
+std::string LOOLWSD::LoTemplate = LO_PATH;
 std::string LOOLWSD::ChildRoot;
 std::string LOOLWSD::ServerName;
 std::string LOOLWSD::FileServerRoot;
@@ -1145,7 +1145,6 @@ void LOOLWSD::initialize(Application& self)
 #endif
 
     SysTemplate = getPathFromConfig("sys_template_path");
-    LoTemplate = LO_PATH;
     ChildRoot = getPathFromConfig("child_root_path");
     ServerName = config().getString("server_name");
 
@@ -1441,6 +1440,11 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("path"));
 
+    optionSet.addOption(Option("lo-template-path", "", "Override the LOK core installation directory path.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("path"));
+
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -1499,6 +1503,8 @@ void LOOLWSD::handleOption(const std::string& optionName,
         ConfigFile = value;
     else if (optionName == "config-dir")
         ConfigDir = value;
+    else if (optionName == "lo-template-path")
+        LoTemplate = value;
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
