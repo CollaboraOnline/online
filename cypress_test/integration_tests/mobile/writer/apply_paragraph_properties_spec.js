@@ -210,9 +210,9 @@ describe('Apply paragraph properties.', function() {
 	it('Change para spacing via combobox.', function() {
 		// Check para spacing current value
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.0');
+			.should('have.attr', 'value', '0');
 		cy.get('#belowparaspacing .spinfield')
-			.should('have.attr', 'value', '0.0');
+			.should('have.attr', 'value', '0');
 
 		// Change spacing
 		cy.get('#aboveparaspacing .spinfieldcontrols .plus')

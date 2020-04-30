@@ -8,7 +8,7 @@ describe('Shape operations', function() {
 		helper.afterAll('shape_operations.odt', 'writer');
 	});
 
-	it('Insert a simple shape.', function() {
+	it.skip('Insert a simple shape.', function() {
 		helper.loadTestDoc('shape_operations.odt');
 
 		// Scroll on the up toolbar

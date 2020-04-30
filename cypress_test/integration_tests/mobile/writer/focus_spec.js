@@ -90,7 +90,7 @@ describe('Focus tests', function() {
 			.click();
 
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.0')
+			.should('have.attr', 'value', '0')
 			.click();
 
 		// The spinfield should have the focus now.
