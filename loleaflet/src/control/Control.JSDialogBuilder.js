@@ -17,7 +17,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		cssClass: 'mobile-wizard',
 
 		// create only icon without label
-		noLabelsForUnoButtons: false
+		noLabelsForUnoButtons: false,
+
+		// create labels next to the icon
+		useInLineLabelsForUnoButtons: false
 	},
 
 	/* Handler is a function which takes three parameters:
@@ -1543,6 +1546,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			} else {
 				div.title = data.text;
 				$(div).tooltip();
+			}
+
+			if (builder.options.useInLineLabelsForUnoButtons === true) {
+				$(div).addClass('inline');
+				label = L.DomUtil.create('span', 'ui-content unolabel', div);
+				label.for = buttonId;
+				label.innerHTML = data.text;
+
+				controls['label'] = label;
 			}
 
 			var updateFunction = function() {

@@ -62,11 +62,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	height: 24px !important;
 }
 
-.ui-content.notebookbar .unobutton.selected {
+.unotoolbutton.notebookbar .unobutton.selected {
 	box-shadow: 0 0 0px 4px #e6e6e640 !important;
 }
 
-.ui-content.notebookbar .unobutton:hover, #clearFormatting.notebookbar div img:hover {
+.unotoolbutton.notebookbar:hover, #clearFormatting.notebookbar div img:hover {
 	box-shadow: 0 0 0px 4px #e6e6e6b0;
 	border-radius: 0.1px;
 	background-color: #e6e6e6b0;
@@ -79,6 +79,19 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	position: relative;
 	top: -4px;
 	border: 1px solid silver;
+}
+
+/* unobuttons with inline labels */
+
+.inline.notebookbar {
+	float: left;
+	width: max-content;
+	display: inline-table;
+}
+
+#FormatPaintbrush span
+{
+	display: none;
 }
 
 /* Home tab */

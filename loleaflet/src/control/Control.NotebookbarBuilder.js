@@ -8,6 +8,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_customizeOptions: function() {
 		this.options.noLabelsForUnoButtons = true;
+		this.options.useInLineLabelsForUnoButtons = false;
 		this.options.cssClass = 'notebookbar';
 	},
 
@@ -392,11 +393,16 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				else
 					console.warn('Unsupported control type: \"' + childType + '\"');
 
+				if (childType === 'toolbox' && hasVerticalParent === true && childData.children.length === 1)
+					this.options.useInLineLabelsForUnoButtons = true;
+
 				if (processChildren && childData.children != undefined)
 					this.build(childObject, childData.children, isVertical, hasManyChildren);
 				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
 					$('#' + childData.id).addClass('hidden-from-event');
 				}
+
+				this.options.useInLineLabelsForUnoButtons = false;
 			}
 		}
 	}
