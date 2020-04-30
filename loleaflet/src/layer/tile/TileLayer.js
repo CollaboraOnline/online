@@ -338,6 +338,9 @@ L.TileLayer = L.GridLayer.extend({
 		this._cellResizeMarkerEnd.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._cellAutofillMarker.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._dropDownButton.on('click', this._onDropDownButtonClick, this);
+		// The 'tap' events are not broadcasted by L.Map.TouchGesture, A specialized 'dropdownmarkertapped' event is
+		// generated just for the validity-dropdown-icon.
+		map.on('dropdownmarkertapped', this._onDropDownButtonClick, this);
 
 		map.setPermission(this.options.permission);
 

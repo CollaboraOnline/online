@@ -311,6 +311,15 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		this._map.fire('closepopups');
 		this._map.fire('closemobilewizard');
+
+		// The validity dropdown marker icon (exists only in calc) needs to be notified of tap events if it is the target.
+		var dropDownMarkers = document.getElementsByClassName('leaflet-marker-icon spreadsheet-drop-down-marker');
+		if (dropDownMarkers.length == 1 && dropDownMarkers[0] && e.target && e.target == dropDownMarkers[0]) {
+			this._map.fire('dropdownmarkertapped');
+			// don't send the mouse-event to core
+			return;
+		}
+
 		this._map.fire('editorgotfocus');
 
 		var docLayer = this._map._docLayer;
