@@ -36,6 +36,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Cut'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:Copy'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:Paste'] = this._clipboardButtonControl;
+		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 
@@ -196,6 +197,22 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				window.insertTable();
 
 				$('.inserttable-grid .row .col').click(function () {
+					$(control.container).w2overlay();
+				});
+			}
+		});
+	},
+
+	_shapesControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			if (!$('.insertshape-grid').length) {
+				$(control.container).w2overlay(window.getShapesPopupHtml());
+				window.insertShapes();
+
+				$('.insertshape-grid .row .col').click(function () {
 					$(control.container).w2overlay();
 				});
 			}

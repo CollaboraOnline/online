@@ -502,6 +502,14 @@ function insertShapes(mobile) {
 	});
 }
 
+function getShapesPopupHtml() {
+	return '<div id="insertshape-wrapper">\
+				<div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all">\
+					<div class="insertshape-grid"></div>\
+				</div>\
+			</div>';
+}
+
 function getColorPickerData(type) {
 	var uno;
 	if (type === 'Font Color') {
@@ -1063,6 +1071,7 @@ global.onClick = onClick;
 global.hideTooltip = hideTooltip;
 global.insertTable = insertTable;
 global.getInsertTablePopupHtml = getInsertTablePopupHtml;
+global.getShapesPopupHtml = getShapesPopupHtml;
 global.insertShapes = insertShapes;
 global.createShapesPanel = createShapesPanel;
 global.onUpdatePermission = onUpdatePermission;
