@@ -71,6 +71,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:SelectObject'] = function() {};
 		this._toolitemHandlers['.uno:BibliographyComponent'] = function() {};
 		this._toolitemHandlers['.uno:ViewDataSourceBrowser'] = function() {};
+		this._toolitemHandlers['.uno:FormatArea'] = function() {};
+		this._toolitemHandlers['.uno:SetBorderStyle'] = function() {};
+		this._toolitemHandlers['.uno:LineStyle'] = function() {};
+		this._toolitemHandlers['.uno:InsertFormula'] = function() {};
+		this._toolitemHandlers['.uno:AutoSum'] = function() {};
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 

@@ -196,3 +196,42 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 {
 	margin-top: 10px;
 }
+
+/* Table Tab */
+
+#table-Table-Container,
+#table-SectionBottom85.notebookbar
+{
+	margin-top: 5px;
+}
+
+#table-Table-Section-Layout #InsertCaptionDialog.notebookbar img,
+#BorderDialog.notebookbar img,
+#MergeCells.notebookbar img,
+#EntireCell.notebookbar img,
+#OptimizeTable.notebookbar img,
+#AutoFormat.notebookbar img,
+#TableSort.notebookbar img,
+#TableNumberFormatDialog.notebookbar img,
+#TableDialog.notebookbar img
+{
+	height: 32px !important;
+	width: 32px !important;
+}
+
+#table-SectionBottom40.notebookbar,
+#SplitTable.notebookbar,
+#EntireRow.notebookbar,
+#DeleteTable.notebookbar,
+#table-SectionBottom44.notebookbar
+{
+	margin-top: 10px !important;
+}
+
+#NumberFormatPercent.notebookbar {
+	margin-right: 10px;
+}
+
+#table-box17.notebookbar #BackgroundColor {
+	padding-left: 15px;
+}
