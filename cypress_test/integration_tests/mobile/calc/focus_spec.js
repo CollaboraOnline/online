@@ -76,8 +76,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	// Regression here: 'BAZINGA' text is typed at an incorrect position.
-	it.skip('Formula-bar focus', function() {
+	it('Formula-bar focus', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
@@ -141,12 +140,16 @@ describe('Calc focus tests', function() {
 		calc.clickFormulaBar();
 		cy.get('body').trigger('mouseover');
 		helper.assertCursorAndFocus();
+
+		// Move cursor before text2
+		cy.get('textarea.clipboard').type('{end}');
+		for (var i = 0; i < text2.length; i++)
+			cy.get('textarea.clipboard').type('{leftarrow}');
+
 		var text3 = ', BAZINGA';
 		helper.typeText('textarea.clipboard', text3);
 		// Validate.
 		cy.get('textarea.clipboard').type('{ctrl}a');
-		//NOTE: If this fails, it's probably because we clicked
-		// at a different point in the text.
 		helper.expectTextForClipboard(text1 + text3 + text2);
 		// End editing.
 		cy.get('textarea.clipboard').type('{enter}');
