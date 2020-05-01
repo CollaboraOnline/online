@@ -5,9 +5,6 @@
 
 /* global $ */
 L.Control.Notebookbar = L.Control.extend({
-	options: {
-		docType: ''
-	},
 
 	onAdd: function (map) {
 		this.map = map;
@@ -39,68 +36,13 @@ L.Control.Notebookbar = L.Control.extend({
 		$('nav').prepend(tabs);
 	},
 
-	selectedTab: function(tabText) {
-		console.log(tabText);
-		switch (tabText) {
-		case 'HomeLabel':
-			this.loadTab(this.getHomeTab());
-			break;
-
-		case 'InsertLabel':
-			this.loadTab(this.getInsertTab());
-			break;
-
-		case 'LayoutLabel':
-			this.loadTab(this.getLayoutTab());
-			break;
-		
-		case 'ReferencesLabel':
-			this.loadTab(this.getReferencesTab());
-			break;
-
-		case 'TableLabel':
-			this.loadTab(this.getTableTab());
-			break;
-
-		case 'ReviewLabel':
-			this.loadTab(this.getReviewTab());
-			break;
-		}
+	selectedTab: function() {
+		// implement in child classes
 	},
 	
 	getTabs: function() {
-		return [
-			{
-				'text': '~Home',
-				'id': '2',
-				'name': 'HomeLabel'
-			},
-			{
-				'text': '~Insert',
-				'id': '3',
-				'name': 'InsertLabel'
-			},
-			{
-				'text': '~Layout',
-				'id': '4',
-				'name': 'LayoutLabel'
-			},
-			{
-				'text': 'Reference~s',
-				'id': '5',
-				'name': 'ReferencesLabel'
-			},
-			{
-				'text': '~Review',
-				'id': '6',
-				'name': 'ReviewLabel'
-			},
-			{
-				'text': '~Table',
-				'id': '8',
-				'name': 'TableLabel'
-			}
-		];
+		// implement in child classes
+		return [];
 	},
 
 	// required, called by builder, not needed in this container
@@ -153,32 +95,4 @@ L.Control.Notebookbar = L.Control.extend({
 		$(window).resize(handler);
 		$('.notebookbar-scroll-wrapper').scroll(handler);
 	},
-
-	getHomeTab: function() {
-		return '';
-	},
-
-	getInsertTab: function() {
-		return '';
-	},
-
-	getLayoutTab: function() {
-		return '';
-	},
-
-	getReferencesTab: function() {
-		return '';
-	},
-
-	getTableTab: function() {
-		return '';
-	},
-
-	getReviewTab: function() {
-		return '';
-	}
 });
-
-L.control.notebookbar = function (options) {
-	return new L.Control.Notebookbar(options);
-};

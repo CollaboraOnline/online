@@ -66,7 +66,11 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(L.control.mobileTopBar(docType));
 			this.map.addControl(L.control.searchBar());
 		} else if (window.enableNotebookbar) {
-			this.map.addControl(L.control.notebookbar({docType: docType}));
+			if (docType === 'spreadsheet') {
+				this.map.addControl(L.control.notebookbarCalc());
+			} else {
+				this.map.addControl(L.control.notebookbarWriter());
+			}
 
 			var additionalOffset = 0;
 			if (docType === 'spreadsheet') {
