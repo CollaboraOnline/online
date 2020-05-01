@@ -842,6 +842,39 @@ input.clipboard {
 	position: absolute;
 	}
 
+.loleaflet-ruler-indentation-marker-down {
+	width: 17px;
+	height: 11px;
+	background: url(images/indentation_marker_down.svg);
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 12;
+	background-repeat: no-repeat;
+}
+
+.loleaflet-ruler-indentation-marker-up {
+	width: 17px;
+	height: 11px;
+	background: url(images/indentation_marker_up.svg);
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	z-index: 12;
+	background-repeat: no-repeat;
+}
+
+.loleaflet-ruler-indentation-marker-center{
+	position: fixed;
+	display: none;
+	height: 100vh;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	border-right: 2px dotted grey;
+	z-index: 12;
+}
+
 .loleaflet-ruler-marginwrapper {
 	height: 100%;
 	position: absolute;
