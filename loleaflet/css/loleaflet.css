@@ -544,9 +544,22 @@ body {
 }
 
 .form-field-button:hover, .form-field-button:focus {
-  background: #DDDDDD;
+	background: #DDDDDD;
 }
 
 .form-field-button-image {
 	margin: 3px;
+}
+
+.drop-down-field-list {
+	position: absolute;
+	border: 1px solid;
+}
+
+.drop-down-field-list-item {
+	width: 100%;
+}
+
+.drop-down-field-list-item.selected {
+	background: #99CCFF;
 }
