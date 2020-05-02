@@ -294,7 +294,7 @@ L.Control.LokDialog = L.Control.extend({
 				this._launchDialog(e.id, left, top, width, height, e.title);
 			} else if (e.winType === 'calc-input-win') {
 				lines = parseInt(e.lines);
-				this._launchCalcInputBar(e.id, width, height, lines);
+				this._launchCalcInputBar(e.id, left, top, width, height, lines);
 			} else if (e.winType === 'deck') {
 				if (!window.mode.isMobile()) {
 					this._launchSidebar(e.id, width, height);
@@ -368,7 +368,9 @@ L.Control.LokDialog = L.Control.extend({
 				this._launchSidebar(e.id, width, height);
 			} else if (e.winType === 'calc-input-win' || this.isCalcInputBar(e.id)) {
 				lines = parseInt(e.lines);
-				this._launchCalcInputBar(e.id, width, height, lines);
+				left = left | this._calcInputBar.left;
+				top = top | this._calcInputBar.top;
+				this._launchCalcInputBar(e.id, left, top, width, height, lines);
 			}
 			else {
 				$('#' + strId).remove();
@@ -804,21 +806,22 @@ L.Control.LokDialog = L.Control.extend({
 		this._sendPaintWindow(id, this._createRectStr(id));
 	},
 
-	_launchCalcInputBar: function(id, width, height, textLines) {
-		console.log('_launchCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
+	_launchCalcInputBar: function(id, left, top, width, height, textLines) {
+		console.log('_launchCalcInputBar: start: id: ' + id + ', left: ' + left + ', top: ' + top
+			+ ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		if (!this._calcInputBar || this._calcInputBar.id !== id) {
 			if (this._calcInputBar)
 				$('#' + this._calcInputBar.strId).remove();
-			this._createCalcInputbar(id, width, height, textLines);
+			this._createCalcInputbar(id, left, top, width, height, textLines);
 		} else {
 			// Update in-place. We will resize during rendering.
-			this._adjustCalcInputBar(id, width, height, textLines);
+			this._adjustCalcInputBar(id, left, top, width, height, textLines);
 		}
 
 		console.log('_launchCalcInputBar: end');
 	},
 
-	_adjustCalcInputBar: function(id, width, height, textLines) {
+	_adjustCalcInputBar: function(id, left, top, width, height, textLines) {
 		if (this._calcInputBar) {
 			var oldHeight = this._calcInputBar.height;
 			var delta = height - oldHeight;
@@ -827,17 +830,17 @@ L.Control.LokDialog = L.Control.extend({
 
 				// Recreate the input-bar.
 				$('#' + this._calcInputBar.strId).remove();
-				this._createCalcInputbar(id, width, height, textLines);
+				this._createCalcInputbar(id, left, top, width, height, textLines);
 
 				// Resize the container.
 				var documentContainer = L.DomUtil.get('document-container');
 				if (documentContainer) {
-					var top = documentContainer.offsetTop;
+					var offsetTop = documentContainer.offsetTop;
 					var noTopProp = true;
 					var props = documentContainer.style.cssText.split(';');
 					for (var i = 0; i < props.length; ++i) {
 						if (props[i].startsWith('top')) {
-							props[i] = 'top: ' + (top + delta).toString() + 'px !important';
+							props[i] = 'top: ' + (offsetTop + delta).toString() + 'px !important';
 							documentContainer.setAttribute('style', props.join(';'));
 							noTopProp = false;
 							break;
@@ -845,19 +848,19 @@ L.Control.LokDialog = L.Control.extend({
 					}
 					if (noTopProp) {
 						var styleAttr = documentContainer.style.cssText;
-						styleAttr += '; top: ' + (top + delta).toString() + 'px !important';
+						styleAttr += '; top: ' + (offsetTop + delta).toString() + 'px !important';
 						documentContainer.setAttribute('style', styleAttr);
 					}
 				}
 
 				var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 				if (spreadsheetRowColumnFrame) {
-					top = spreadsheetRowColumnFrame.offsetTop;
+					offsetTop = spreadsheetRowColumnFrame.offsetTop;
 					noTopProp = true;
 					props = spreadsheetRowColumnFrame.style.cssText.split(';');
 					for (i = 0; i < props.length; ++i) {
 						if (props[i].startsWith('top')) {
-							props[i] = 'top: ' + (top + delta).toString() + 'px !important';
+							props[i] = 'top: ' + (offsetTop + delta).toString() + 'px !important';
 							spreadsheetRowColumnFrame.setAttribute('style', props.join(';'));
 							noTopProp = false;
 							break;
@@ -865,7 +868,7 @@ L.Control.LokDialog = L.Control.extend({
 					}
 					if (noTopProp) {
 						styleAttr = spreadsheetRowColumnFrame.style.cssText;
-						styleAttr += '; top: ' + (top + delta).toString() + 'px !important';
+						styleAttr += '; top: ' + (offsetTop + delta).toString() + 'px !important';
 						spreadsheetRowColumnFrame.setAttribute('style', styleAttr);
 					}
 				}
@@ -891,7 +894,7 @@ L.Control.LokDialog = L.Control.extend({
 		}
 	},
 
-	_createCalcInputbar: function(id, width, height, textLines) {
+	_createCalcInputbar: function(id, left, top, width, height, textLines) {
 		console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		var strId = this._toStrId(id);
 
@@ -949,8 +952,8 @@ L.Control.LokDialog = L.Control.extend({
 			strId: strId,
 			isSidebar: false,
 			isCalcInputBar: true,
-			left: 0,
-			top: 0,
+			left: left,
+			top: top,
 			width: width,
 			height: height,
 			textLines: textLines,
@@ -1111,7 +1114,12 @@ L.Control.LokDialog = L.Control.extend({
 				this._onSelectionHandleDrag(e);
 				return;
 			}
+
 			var pos = this._isSelectionHandle(e.target) ? L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
+			if (this.isCalcInputBar(id)) {
+				pos.x += this._calcInputBar.left;
+				pos.y += this._calcInputBar.top;
+			}
 			this._postWindowMouseEvent('move', id, pos.x, pos.y, 1, 0, 0);
 		}, this);
 
@@ -1150,6 +1158,10 @@ L.Control.LokDialog = L.Control.extend({
 			// 'mousedown' -> 'buttondown'
 			var lokEventType = e.type.replace('mouse', 'button');
 			var pos = this._isSelectionHandle(e.target) ? L.DomEvent.getMousePosition(e, canvas) : {x: e.offsetX, y: e.offsetY};
+			if (this.isCalcInputBar(id)) {
+				pos.x += this._calcInputBar.left;
+				pos.y += this._calcInputBar.top;
+			}
 			this._postWindowMouseEvent(lokEventType, id, pos.x, pos.y, 1, buttons, modifier);
 			this._map.setWinId(id);
 			//dlgInput.focus();
