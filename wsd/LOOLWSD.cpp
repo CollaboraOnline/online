@@ -491,17 +491,14 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
 std::mutex LOOLWSD::lokit_main_mutex;
 #endif
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(
-#if MOBILEAPP
-                                                 const std::string& uri
-#endif
-                                                 )
+std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::string& uri)
 {
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     const auto startTime = std::chrono::steady_clock::now();
 
 #if !MOBILEAPP
+    (void)uri;
     LOG_DBG("getNewChild: Rebalancing children.");
     int numPreSpawn = LOOLWSD::NumPreSpawnedChildren;
     ++numPreSpawn; // Replace the one we'll dispatch just now.

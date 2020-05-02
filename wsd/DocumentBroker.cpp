@@ -228,7 +228,7 @@ void DocumentBroker::pollThread()
     do
     {
         static const int timeoutMs = COMMAND_TIMEOUT_MS * 5;
-        _childProcess = getNewChild_Blocks();
+        _childProcess = getNewChild_Blocks(getPublicUri().getPath());
         if (_childProcess ||
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                   _threadStart).count() > timeoutMs)
