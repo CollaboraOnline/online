@@ -914,6 +914,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.limit_stack_mem_kb", "8000" },
             { "per_document.limit_virt_mem_mb", "0" },
             { "per_document.max_concurrency", "4" },
+            { "per_document.batch_priority", "5" },
             { "per_document.redlining_as_comments", "false" },
             { "per_view.idle_timeout_secs", "900" },
             { "per_view.out_of_focus_timeout_secs", "120" },
@@ -1816,6 +1817,7 @@ std::mutex Connection::Mutex;
 /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
 static std::shared_ptr<DocumentBroker>
     findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
+                          DocumentBroker::ChildType type,
                           const std::string& uri,
                           const std::string& docKey,
                           const std::string& id,
@@ -1891,7 +1893,7 @@ static std::shared_ptr<DocumentBroker>
 
         // Set the one we just created.
         LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-        docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey);
+        docBroker = std::make_shared<DocumentBroker>(type, uri, uriPublic, docKey);
         DocBrokers.emplace(docKey, docBroker);
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
     }
@@ -2962,7 +2964,7 @@ private:
         std::shared_ptr<ProtocolHandlerInterface> none;
         // Request a kit process for this doc.
         std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
-            none, url, docKey, _id, uriPublic);
+            none, DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
 
         std::string fullURL = request.getURI();
         std::string ending = "/ws/wait";
@@ -3078,7 +3080,8 @@ private:
 
             // Request a kit process for this doc.
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
-                std::static_pointer_cast<ProtocolHandlerInterface>(ws), url, docKey, _id, uriPublic);
+                std::static_pointer_cast<ProtocolHandlerInterface>(ws),
+                DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
             if (docBroker)
             {
 #if MOBILEAPP

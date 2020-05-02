@@ -172,11 +172,13 @@ public:
 
 std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
-DocumentBroker::DocumentBroker(const std::string& uri,
+DocumentBroker::DocumentBroker(ChildType type,
+                               const std::string& uri,
                                const Poco::URI& uriPublic,
                                const std::string& docKey) :
     _limitLifeSeconds(0),
     _uriOrig(uri),
+    _type(type),
     _uriPublic(uriPublic),
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
@@ -204,6 +206,17 @@ DocumentBroker::DocumentBroker(const std::string& uri,
 
     LOG_INF("DocumentBroker [" << LOOLWSD::anonymizeUrl(_uriPublic.toString()) <<
             "] created with docKey [" << _docKey << "]");
+}
+
+void DocumentBroker::setupPriorities()
+{
+#if !MOBILEAPP
+    if (_type == ChildType::Batch)
+    {
+        int prio = LOOLWSD::getConfigValue<int>("per_document.batch_priority", 5);
+        Util::setProcessAndThreadPriorities(_childProcess->getPid(), prio);
+    }
+#endif // !MOBILE
 }
 
 void DocumentBroker::startThread()
@@ -270,6 +283,8 @@ void DocumentBroker::pollThread()
 
     _childProcess->setDocumentBroker(shared_from_this());
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
+
+    setupPriorities();
 
     static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
 
@@ -2226,7 +2241,7 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
                                  const std::string& docKey,
                                  const std::string& format,
                                  const std::string& sOptions) :
-    DocumentBroker(uri, uriPublic, docKey),
+    DocumentBroker(ChildType::Batch, uri, uriPublic, docKey),
     _format(format),
     _sOptions(sOptions)
 {

@@ -14,9 +14,10 @@
 #include <csignal>
 #include <sys/poll.h>
 #ifdef __linux
-#include <sys/prctl.h>
-#include <sys/syscall.h>
-#include <sys/vfs.h>
+#  include <sys/prctl.h>
+#  include <sys/syscall.h>
+#  include <sys/vfs.h>
+#  include <sys/resource.h>
 #elif defined IOS
 #import <Foundation/Foundation.h>
 #endif
@@ -520,6 +521,18 @@ namespace Util
         }
         return 0;
     }
+
+    void setProcessAndThreadPriorities(const pid_t pid, int prio)
+    {
+        int res = setpriority(PRIO_PROCESS, pid, prio);
+        LOG_TRC("Lowered kit [" << (int)pid << "] priority: " << prio << " with result: " << res);
+
+        // rely on Linux thread-id priority setting to drop this thread' priority
+        pid_t tid = getThreadId();
+        res = setpriority(PRIO_PROCESS, tid, prio);
+        LOG_TRC("Lowered own thread [" << (int)tid << "] priority: " << prio << " with result: " << res);
+    }
+
 #endif
 
     std::string replace(std::string result, const std::string& a, const std::string& b)

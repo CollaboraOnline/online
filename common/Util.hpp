@@ -151,6 +151,9 @@ namespace Util
     size_t getCpuUsage(const pid_t pid);
 
     size_t getStatFromPid(const pid_t pid, int ind);
+
+    /// Sets priorities for a given pid & the current thread
+    void setProcessAndThreadPriorities(const pid_t pid, int prio);
 #endif
 
     std::string replace(std::string s, const std::string& a, const std::string& b);

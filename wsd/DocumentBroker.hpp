@@ -109,7 +109,15 @@ class ClientSession;
 class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 {
     class DocumentBrokerPoll;
+
+    void setupPriorities();
+
 public:
+    /// How to prioritize this document.
+    enum class ChildType {
+        Interactive, Batch
+    };
+
     static Poco::URI sanitizeURI(const std::string& uri);
 
     /// Returns a document-specific key based
@@ -120,7 +128,8 @@ public:
     DocumentBroker();
 
     /// Construct DocumentBroker with URI, docKey, and root path.
-    DocumentBroker(const std::string& uri,
+    DocumentBroker(ChildType type,
+                   const std::string& uri,
                    const Poco::URI& uriPublic,
                    const std::string& docKey);
 
@@ -361,6 +370,8 @@ protected:
     /// Seconds to live for, or 0 forever
     int64_t _limitLifeSeconds;
     std::string _uriOrig;
+    /// What type are we: affects priority.
+    ChildType _type;
 private:
     const Poco::URI _uriPublic;
     /// URL-based key. May be repeated during the lifetime of WSD.
