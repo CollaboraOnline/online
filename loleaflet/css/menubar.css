@@ -39,6 +39,7 @@
     table-layout: fixed;
     border-spacing: 5px 0px;
     max-height: 39px;
+    z-index: 100000;
 }
 
 .main-nav {
