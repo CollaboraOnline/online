@@ -345,7 +345,7 @@ L.Map.include({
 	},
 
 	// show the actual welcome dialog with the given data
-	_showWelcomeDialogVex: function(data) {
+	_showWelcomeDialogVex: function(data, calledFromMenu) {
 		var w;
 		var iw = window.innerWidth;
 		var hasDismissBtn = window.enableWelcomeMessageButton;
@@ -400,6 +400,12 @@ L.Map.include({
 				$('.vex-overlay').css({ 'pointer-events': 'none'});
 			},
 			beforeClose: function () {
+				if (!calledFromMenu) {
+					var WSDVerCookie = 'WSDWelcomeVersion=' + map._socket.WSDServer.Version;
+					// Cookie will not expire for a year, and it will not be sent to other domains
+					WSDVerCookie += '; max-age=31536000; SameSite=Strict; path=/loleaflet';
+					document.cookie = WSDVerCookie;
+				}
 				map.focus();
 				map.enable(true);
 			}
@@ -414,13 +420,7 @@ L.Map.include({
 		var map = this;
 		$.get(welcomeLocation)
 			.done(function(data) {
-				map._showWelcomeDialogVex(data);
-				if (!calledFromMenu) {
-					var WSDVerCookie = 'WSDWelcomeVersion=' + map._socket.WSDServer.Version;
-					// Cookie will not expire for a year, and it will not be sent to other domains
-					WSDVerCookie += '; max-age=31536000; SameSite=Strict; path=/loleaflet';
-					document.cookie = WSDVerCookie;
-				}
+				map._showWelcomeDialogVex(data, calledFromMenu);
 			})
 			.fail(function() {
 				// Welcome dialog disabled in loolwsd.xml or nonexistant for some other reason
