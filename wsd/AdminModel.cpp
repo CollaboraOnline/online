@@ -543,6 +543,17 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     notify(oss.str());
 }
 
+void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt)
+{
+    std::unique_ptr<Document> doc;
+    std::swap(doc, docIt->second);
+    std::string docItKey = docIt->first;
+    _documents.erase(docIt);
+    _expiredDocuments.emplace(docItKey + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                                            std::chrono::steady_clock::now().time_since_epoch()).count()),
+                              std::move(doc));
+}
+
 void AdminModel::removeDocument(const std::string& docKey, const std::string& sessionId)
 {
     assertCorrectThread();
@@ -561,13 +572,7 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
         // of documents open and close, to be able to give a detailed summary
         // to the admin console with views.
         if (docIt->second->expireView(sessionId) == 0)
-        {
-            std::unique_ptr<Document> doc;
-            std::swap(doc, docIt->second);
-            std::string docItKey = docIt->first;
-            _documents.erase(docIt);
-            _expiredDocuments.emplace(docItKey + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()), std::move(doc));
-        }
+            doRemove(docIt);
     }
 }
 
@@ -591,10 +596,7 @@ void AdminModel::removeDocument(const std::string& docKey)
         }
 
         LOG_DBG("Removed admin document [" << docKey << "].");
-        std::unique_ptr<Document> doc;
-        std::swap(doc, docIt->second);
-        _documents.erase(docIt);
-        _expiredDocuments.emplace(docIt->first + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()), std::move(doc));
+        doRemove(docIt);
     }
 }
 

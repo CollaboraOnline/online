@@ -341,6 +341,8 @@ public:
     static int getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids);
 
 private:
+    void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);
+
     std::string getMemStats();
 
     std::string getSentActivity();
