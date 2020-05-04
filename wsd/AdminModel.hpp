@@ -375,12 +375,12 @@ private:
     std::list<unsigned> _recvStats;
     unsigned _recvStatsSize = 200;
 
-    uint64_t _sentBytesTotal;
-    uint64_t _recvBytesTotal;
+    uint64_t _sentBytesTotal = 0;
+    uint64_t _recvBytesTotal = 0;
 
-    uint64_t _segFaultCount;
+    uint64_t _segFaultCount = 0;
 
-    pid_t _forKitPid;
+    pid_t _forKitPid = 0;
 
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;
