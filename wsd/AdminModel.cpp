@@ -564,8 +564,9 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
         {
             std::unique_ptr<Document> doc;
             std::swap(doc, docIt->second);
+            std::string docItKey = docIt->first;
             _documents.erase(docIt);
-            _expiredDocuments.emplace(docIt->first + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()), std::move(doc));
+            _expiredDocuments.emplace(docItKey + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count()), std::move(doc));
         }
     }
 }
