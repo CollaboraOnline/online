@@ -5,13 +5,12 @@
 /* global $ _ vex */
 L.Map.include({
 	setPermission: function (perm) {
+		var button = $('#mobile-edit-button');
+		button.off('click');
+		var that = this;
 		if (perm === 'edit') {
 			if (window.mode.isMobile() || window.mode.isTablet()) {
-				var button = $('#mobile-edit-button');
 				button.show();
-				button.off('click');
-
-				var that = this;
 				button.on('click', function () {
 					that._switchToEditMode();
 				});
@@ -28,7 +27,11 @@ L.Map.include({
 			}
 		}
 		else if (perm === 'view' || perm === 'readonly') {
-			if (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet())) {
+			if (window.ThisIsTheAndroidApp) {
+				button.on('click', function () {
+					that._requestFileCopy();
+				});
+			} else if (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet())) {
 				$('#mobile-edit-button').hide();
 			}
 
@@ -80,6 +83,12 @@ L.Map.include({
 			// not reason enough to pop up the on-screen keyboard.
 			if (!(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp))
 				this.focus();
+		}
+	},
+
+	_requestFileCopy: function() {
+		if (window.docPermission === 'readonly') {
+			window.postMobileMessage('REQUESTFILECOPY');
 		}
 	},
 
