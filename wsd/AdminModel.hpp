@@ -303,8 +303,8 @@ private:
     std::list<unsigned> _recvStats;
     unsigned _recvStatsSize = 100;
 
-    uint64_t _sentBytesTotal;
-    uint64_t _recvBytesTotal;
+    uint64_t _sentBytesTotal = 0;
+    uint64_t _recvBytesTotal = 0;
 
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;

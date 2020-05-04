@@ -300,14 +300,24 @@ void DocumentBroker::pollThread()
             lastBWUpdateTime = now;
             uint64_t sent, recv;
             getIOStats(sent, recv);
+
+            uint64_t deltaSent = 0, deltaRecv = 0;
+
+            // connection drop transiently reduces this.
+            if (sent > adminSent)
+            {
+                deltaSent = sent - adminSent;
+                adminSent = sent;
+            }
+            if (recv > deltaRecv)
+            {
+                deltaRecv = recv - adminRecv;
+                adminRecv = recv;
+            }
+            LOG_TRC("Doc [" << _docKey << "] added stats sent: +" << deltaSent << ", recv: +" << deltaRecv << " bytes to totals.");
+
             // send change since last notification.
-            Admin::instance().addBytes(getDocKey(),
-                                       // connection drop transiently reduces this.
-                                       (sent > adminSent ? (sent - adminSent): uint64_t(0)),
-                                       (recv > adminRecv ? (recv - adminRecv): uint64_t(0)));
-            adminSent = sent;
-            adminRecv = recv;
-            LOG_TRC("Doc [" << _docKey << "] added stats sent: " << sent << ", recv: " << recv << " bytes to totals.");
+            Admin::instance().addBytes(getDocKey(), deltaSent, deltaRecv);
         }
 #endif
 
