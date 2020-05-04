@@ -11,7 +11,7 @@ var Util = Base.extend({
 
 	humanizeMem: function (kbytes) {
 		var unit = 1000;
-		var units = [_('kB'), _('MB'), _('GB'), _('TB')];
+		var units = [_('kB'), _('MB'), _('GB'), _('TB'), _('PB'), _('EB'), _('ZB'), _('YB'), _('BB')];
 		for (var i = 0; Math.abs(kbytes) >= unit && i < units.length; i++) {
 			kbytes /= unit;
 		}
