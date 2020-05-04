@@ -77,6 +77,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:LineStyle'] = function() {};
 		this._toolitemHandlers['.uno:InsertFormula'] = function() {};
 		this._toolitemHandlers['.uno:AutoSum'] = function() {};
+		this._toolitemHandlers['.uno:ReplyComment'] = function() {};
+		this._toolitemHandlers['.uno:DeleteComment'] = function() {};
+		this._toolitemHandlers['.uno:CompareDocuments'] = function() {};
+		this._toolitemHandlers['.uno:MergeDocuments'] = function() {};
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
