@@ -166,7 +166,7 @@ L.Map.WOPI = L.Handler.extend({
 			this._allowedOrigins = ancestors;
 			// convert to JS regexps from localhost:* to https*://localhost:.*
 			for (i = 0; i < ancestors.length; i++) {
-				this._allowedOrigins[i] = 'https*://' + ancestors[i].replace(/:\*/, ':.*');
+				this._allowedOrigins[i] = '(http|https)://' + ancestors[i].replace(/:\*/, ':?.*');
 			}
 		}
 
@@ -185,12 +185,6 @@ L.Map.WOPI = L.Handler.extend({
 		if (window.location.ancestorOrigins &&
 		    window.location.ancestorOrigins.contains(e.origin))
 		{
-			this._cachedGoodOrigin = e.origin;
-			return true;
-		}
-
-		var origin = window.location.protocol + '//' + window.location.hostname;
-		if (origin === e.origin) {
 			this._cachedGoodOrigin = e.origin;
 			return true;
 		}
