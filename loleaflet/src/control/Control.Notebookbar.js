@@ -23,7 +23,6 @@ L.Control.Notebookbar = L.Control.extend({
 
 	loadTab: function(tabJSON) {
 		this.clearNotebookbar();
-		tabJSON = JSON.parse(tabJSON);
 		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
 
 		var parent = $('#toolbar-up').get(0);
