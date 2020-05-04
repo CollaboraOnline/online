@@ -38,6 +38,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Copy'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:Paste'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
+		this._toolitemHandlers['.uno:ConditionalFormatMenu'] = this._conditionalFormatControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
@@ -254,6 +255,21 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				window.insertShapes();
 
 				$('.insertshape-grid .row .col').click(function () {
+					$(control.container).w2overlay();
+				});
+			}
+		});
+	},
+
+	_conditionalFormatControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			if (!$('#conditionalformatmenu-grid').length) {
+				$(control.container).w2overlay(window.getConditionalFormatMenuHtml());
+
+				$('#conditionalformatmenu-grid tr td').click(function () {
 					$(control.container).w2overlay();
 				});
 			}
