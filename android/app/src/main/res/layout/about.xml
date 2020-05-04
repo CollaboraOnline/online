@@ -41,7 +41,7 @@
         android:id="@+id/about_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_version"
+        android:text="@string/app_version_and_hash"
         android:textAlignment="center"
         android:textIsSelectable="true"
         android:textSize="14sp" />
