@@ -13,8 +13,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['combobox'] = this._comboboxControl;
-		this._controlHandlers['listbox'] = this._comboboxControl;
+		this._controlHandlers['combobox'] = this._comboboxControlHandler;
+		this._controlHandlers['listbox'] = this._comboboxControlHandler;
 		this._controlHandlers['tabcontrol'] = this._overridenTabsControlHandler;
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
@@ -159,13 +159,21 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		return false;
 	},
 
+	_comboboxControlHandler: function(parentContainer, data, builder) {
+		if ((data.command === '.uno:StyleApply' && builder.map.getDocType() === 'spreadsheet') ||
+			(data.id === ''))
+			return false;
+
+		return builder._comboboxControl(parentContainer, data, builder);
+	},
+
 	_overridenTabsControlHandler: function(parentContainer, data, builder) {
 		data.tabs = builder.wizard.getTabs();
 		return builder._tabsControlHandler(parentContainer, data, builder);
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
-		var commandOverride = data.command === '.uno:Color';
+		var commandOverride = data.command === '.uno:Color' && builder.map.getDocType() === 'text';
 		if (commandOverride)
 			data.command = '.uno:FontColor';
 
