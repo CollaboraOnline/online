@@ -248,3 +248,29 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #table-box17.notebookbar #BackgroundColor {
 	padding-left: 15px;
 }
+
+/* Review Tab */
+
+#table-ReviewBox {
+       margin-top: 5px;
+}
+
+#SpellingAndGrammarDialog.notebookbar img,
+#ThesaurusDialog.notebookbar img,
+#TrackChanges.notebookbar img,
+#ShowTrackedChanges.notebookbar img,
+#ProtectTraceChangeMode.notebookbar img,
+#EditDoc.notebookbar img,
+#AcceptTrackedChanges.notebookbar img
+{
+       height: 32px !important;
+       width: 32px !important;
+}
+
+#WordCountDialog.notebookbar,
+#PreviousTrackedChange.notebookbar,
+#RejectTrackedChange.notebookbar,
+#RejectAllTrackedChanges.notebookbar
+{
+       margin-top: 10px !important;
+}
