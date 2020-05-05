@@ -68,17 +68,16 @@ L.FormFieldButton = L.Layer.extend({
 		L.DomUtil.setPosition(this._dropDownList, listPos);
 		this._dropDownList.style.minWidth = (this.frameWidth + this.frameHeight) + 'px';
 
-		// TODO: use the actual list here
-		var stringList = ['text1', 'text2', 'string', 'selected_item'];
-		var selected = 'selected_item';
-		for (var i = 0; i < stringList.length; ++i) {
+		var itemList = this._buttonData.params.items;
+		var selected = parseInt(this._buttonData.params.selected);
+		for (var i = 0; i < itemList.length; ++i) {
 			var option = L.DomUtil.create('div', 'drop-down-field-list-item', this._dropDownList);
-			option.innerHTML = stringList[i];
+			option.innerHTML = itemList[i];
 			option.addEventListener('click', this._onListItemSelect);
 			// Stop propagation to the main document
 			option.addEventListener('mouseup', function(event) {event.stopPropagation();});
 			option.addEventListener('mousedown', function(event) {event.stopPropagation();});
-			if (stringList[i] === selected)
+			if (i === selected)
 				option.classList.add('selected');
 		}
 	},
