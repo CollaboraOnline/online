@@ -907,7 +907,10 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
             setLoaded(true);
 
             // Now return the jailed path.
-            return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
+            if (LOOLWSD::NoCapsForKit)
+                return getRootFilePath();
+            else
+                return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
         }
     }
     catch (const Poco::Exception& pexc)
