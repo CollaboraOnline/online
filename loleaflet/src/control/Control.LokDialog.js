@@ -1198,6 +1198,8 @@ L.Control.LokDialog = L.Control.extend({
 				endHandle.isDragged = false;
 
 			var point = L.DomEvent.getMousePosition(ev.srcEvent, handles);
+			point.x += that._calcInputBar.left;
+			point.y += that._calcInputBar.top;
 
 			that._postWindowMouseEvent('buttondown', id, point.x, point.y, 1, 1, 0);
 			that._postWindowMouseEvent('buttonup', id, point.x, point.y, 1, 1, 0);
