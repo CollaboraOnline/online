@@ -10,73 +10,103 @@ L.FormFieldButton = L.Layer.extend({
 	},
 
 	initialize: function (data) {
-		if (data.type === 'drop-down') {
-			var strTwips = data.textArea.match(/\d+/g);
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-			var bottomRightTwips = topLeftTwips.add(offset);
-			this._buttonAreaTwips = [topLeftTwips, bottomRightTwips];
-			this._buttonData = data;
-		}
+		console.assert(data.type === 'drop-down');
+		this._buttonData = data;
 	},
 
 	onAdd: function (map) {
 		this._clearButton();
-
 		this._buildFormButton(map);
 	},
 
 	_buildFormButton: function(map) {
-		this._container = L.DomUtil.create('div', 'form-field-button-container', this.getPane('formfieldPane'));
+		// We use a container to have the frame and the drop-down button the same height
+		var container = L.DomUtil.create('div', 'form-field-button-container', this.getPane('formfieldPane'));
 
-		// Create a frame around the text area
-		this._frame = L.DomUtil.create('div', 'form-field-frame', this._container);
+		// Calculate button area in layer point unot
+		var buttonArea = this._calculateButtonArea(map);
+
+		// Build the frame around the text area
+		var frameData = this._buildButtonFrame(container, buttonArea);
+		var framePos = frameData[0];
+		var frameWidth = frameData[1];
+		var frameHeight = frameData[2];
+
+		// We set the shared height here.
+		container.style.height = frameHeight + 'px';
+
+		// Add a drop down button to open the list
+		this._buildDropDownButton(container, framePos, frameWidth);
+
+		// Build list of items opened by clicking on the drop down button
+		this._buildDropDownList(framePos, frameWidth, frameHeight);
+	},
+
+	_calculateButtonArea: function(map) {
+		// First get the data from the message in twips.
+		var strTwips = this._buttonData.textArea.match(/\d+/g);
+		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+		var bottomRightTwips = topLeftTwips.add(offset);
+		var buttonAreaTwips = [topLeftTwips, bottomRightTwips];
+
+		// Then convert to unit which can be used on the layer.
 		var buttonAreaLatLng = new L.LatLngBounds(
-				map._docLayer._twipsToLatLng(this._buttonAreaTwips[0], this._map.getZoom()),
-				map._docLayer._twipsToLatLng(this._buttonAreaTwips[1], this._map.getZoom()));
+				map._docLayer._twipsToLatLng(buttonAreaTwips[0], this._map.getZoom()),
+				map._docLayer._twipsToLatLng(buttonAreaTwips[1], this._map.getZoom()));
 
 		var buttonAreaLayer = new L.Bounds(
-				this._map.latLngToLayerPoint(buttonAreaLatLng.getNorthWest()),
-				this._map.latLngToLayerPoint(buttonAreaLatLng.getSouthEast()));
+				map.latLngToLayerPoint(buttonAreaLatLng.getNorthWest()),
+				map.latLngToLayerPoint(buttonAreaLatLng.getSouthEast()));
+
+		return buttonAreaLayer;
+	},
+
+	_buildButtonFrame: function(container, buttonArea) {
+		// Create a frame around the text area
+		var buttonFrame = L.DomUtil.create('div', 'form-field-frame', container);
 
 		// Use a small padding between the text and the frame
 		var extraPadding = 2;
-		var size = buttonAreaLayer.getSize();
-		this.frameWidth = size.x + 1.5 * extraPadding;
-		this.frameHeight = size.y + 1.5 * extraPadding;
-		this._frame.style.width = this.frameWidth + 'px';
-		this._container.style.height = this.frameHeight + 'px';
+		var size = buttonArea.getSize();
+		var frameWidth = size.x + 1.5 * extraPadding;
+		var frameHeight = size.y + 1.5 * extraPadding;
+		buttonFrame.style.width = frameWidth + 'px';
 
-		this.framePos = new L.Point(buttonAreaLayer.min.x - extraPadding, buttonAreaLayer.min.y - extraPadding);
-		L.DomUtil.setPosition(this._frame, this.framePos);
+		var framePos = new L.Point(buttonArea.min.x - extraPadding, buttonArea.min.y - extraPadding);
+		L.DomUtil.setPosition(buttonFrame, framePos);
 
-		// Add a drop down button to open the list
-		this._button = L.DomUtil.create('button', 'form-field-button', this._container);
-		var buttonPos = new L.Point(buttonAreaLayer.max.x + extraPadding, buttonAreaLayer.min.y - extraPadding);
-		L.DomUtil.setPosition(this._button, buttonPos);
-		this._button.style.width = this._container.style.height;
+		return [framePos, frameWidth, frameHeight];
+	},
 
-		var image = L.DomUtil.create('img', 'form-field-button-image', this._button);
+	_buildDropDownButton: function(container, framePos, frameWidth) {
+		var button = L.DomUtil.create('button', 'form-field-button', container);
+		var buttonPos = new L.Point(framePos.x + frameWidth, framePos.y);
+		L.DomUtil.setPosition(button, buttonPos);
+		button.style.width = container.style.height;
+
+		var image = L.DomUtil.create('img', 'form-field-button-image', button);
 		image.src = 'images/unfold.svg';
 
-		this._button.addEventListener('click', this._onClickDropDown);
+		button.addEventListener('click', this._onClickDropDown);
+	},
 
-		// Build list of items
-		this._dropDownList = L.DomUtil.create('div', 'drop-down-field-list', this.getPane('formfieldPane'));
+	_buildDropDownList: function(framePos, frameWidth, frameHeight) {
+		var dropDownList = L.DomUtil.create('div', 'drop-down-field-list', this.getPane('formfieldPane'));
 		$('.drop-down-field-list').hide();
-		var listPos = this.framePos;
-		L.DomUtil.setPosition(this._dropDownList, listPos);
-		this._dropDownList.style.minWidth = (this.frameWidth + this.frameHeight) + 'px';
+		L.DomUtil.setPosition(dropDownList, framePos);
+		dropDownList.style.minWidth = (frameWidth + frameHeight) + 'px';
 
 		var itemList = this._buttonData.params.items;
 		var selected = parseInt(this._buttonData.params.selected);
 		for (var i = 0; i < itemList.length; ++i) {
-			var option = L.DomUtil.create('div', 'drop-down-field-list-item', this._dropDownList);
+			var option = L.DomUtil.create('div', 'drop-down-field-list-item', dropDownList);
 			option.innerHTML = itemList[i];
 			option.addEventListener('click', this._onListItemSelect);
 			// Stop propagation to the main document
 			option.addEventListener('mouseup', function(event) {event.stopPropagation();});
 			option.addEventListener('mousedown', function(event) {event.stopPropagation();});
+
 			if (i === selected)
 				option.classList.add('selected');
 		}
@@ -101,8 +131,6 @@ L.FormFieldButton = L.Layer.extend({
 
 	_clearButton: function() {
 		this.getPane('formfieldPane').innerHTML = '';
-		this._frame = undefined;
-		this._button = undefined;
 	}
 
 });
