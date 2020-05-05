@@ -2239,6 +2239,7 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
     }
 }
 
+#if !MOBILEAPP
 static std::atomic<size_t> NumConverters;
 
 size_t ConvertToBroker::getInstanceCount()
@@ -2260,7 +2261,6 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
     _limitLifeSeconds = limit_convert_secs;
 }
 
-#if !MOBILEAPP
 bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std::string &id)
 {
     std::shared_ptr<ConvertToBroker> docBroker = std::static_pointer_cast<ConvertToBroker>(shared_from_this());
@@ -2308,7 +2308,6 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
         });
     return true;
 }
-#endif
 
 void ConvertToBroker::dispose()
 {
@@ -2347,7 +2346,12 @@ void ConvertToBroker::setLoaded()
     // FIXME: Check for security violations.
     Poco::Path toPath(getPublicUri().getPath());
     toPath.setExtension(_format);
-    const std::string toJailURL = "file://" + std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
+
+    // file:///user/docs/filename.ext normally, file:///<jail-root>/user/docs/filename.ext in the nocaps case
+    const std::string toJailURL = "file://" +
+        (LOOLWSD::NoCapsForKit? getJailRoot(): "") +
+        std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
+
     std::string encodedTo;
     Poco::URI::encode(toJailURL, "", encodedTo);
 
@@ -2359,6 +2363,7 @@ void ConvertToBroker::setLoaded()
 
     _clientSession->handleMessage(saveasRequest);
 }
+#endif
 
 std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()
 {

@@ -3434,7 +3434,10 @@ public:
                   << "[ " << DocBrokers.size() << " ]:\n";
         for (auto &i : DocBrokers)
             i.second->dumpState(os);
+
+#if !MOBILEAPP
         os << "Converter count: " << ConvertToBroker::getInstanceCount() << "\n";
+#endif
 
         Socket::InhibitThreadChecks = false;
         SocketPoll::InhibitThreadChecks = false;

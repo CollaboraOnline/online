@@ -1210,13 +1210,15 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
         // URI constructor implicitly decodes when it gets std::string as param
         Poco::URI resultURL(encodedURL);
-        if (resultURL.getScheme() == "file")
+
+        // Prepend the jail path in the normal (non-nocaps) case
+        if (resultURL.getScheme() == "file" && !LOOLWSD::NoCapsForKit)
         {
             std::string relative(resultURL.getPath());
             if (relative.size() > 0 && relative[0] == '/')
                 relative = relative.substr(1);
 
-            // Rewrite file:// URLs, as they are visible to the outside world.
+            // Rewrite file:// URLs to be visible to the outside world.
             const Path path(docBroker->getJailRoot(), relative);
             if (Poco::File(path).exists())
             {

@@ -442,6 +442,7 @@ private:
     static std::atomic<unsigned> DocBrokerId;
 };
 
+#if !MOBILEAPP
 class ConvertToBroker : public DocumentBroker
 {
     const std::string _format;
@@ -457,10 +458,8 @@ public:
                     const std::string& sOptions);
     virtual ~ConvertToBroker();
 
-#if !MOBILEAPP
     /// Move socket to this broker for response & do conversion
     bool startConversion(SocketDisposition &disposition, const std::string &id);
-#endif
 
     /// Called when removed from the DocBrokers list
     void dispose() override;
@@ -474,5 +473,6 @@ public:
     /// Cleanup path and its parent
     static void removeFile(const std::string &uri);
 };
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
