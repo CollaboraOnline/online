@@ -504,7 +504,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'searchdialog', uno: '.uno:SearchDialog'},
 			{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 				{uno: '.uno:TrackChanges'},
 				{uno: '.uno:ShowTrackedChanges'},
@@ -549,7 +549,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'searchdialog', uno: '.uno:SearchDialog'},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
 				{uno: '.uno:InsertRowsBefore'},
 				{uno: '.uno:InsertRowsAfter'},
@@ -596,7 +596,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'searchdialog', uno: '.uno:SearchDialog'},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), id: 'sheetmenu', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), id: 'insertrowsmenu', type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
@@ -1218,11 +1218,6 @@ L.Control.Menubar = L.Control.extend({
 			}
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
-		} else if (id === 'searchdialog') {
-			$('#toolbar-down').hide();
-			$('#toolbar-search').show();
-			$('#mobile-edit-button').hide();
-			L.DomUtil.get('search-input').focus();
 		} else if (id === 'inserttextbox') {
 			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
 		} else if (id === 'insertslidefield') {
