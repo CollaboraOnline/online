@@ -44,7 +44,7 @@ ClientSession::ClientSession(
     const std::shared_ptr<DocumentBroker>& docBroker,
     const Poco::URI& uriPublic,
     const bool readOnly,
-    const std::string& hostNoTrust) :
+    const ServerURL &serverURL) :
     Session(ws, "ToClient-" + id, id, readOnly),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
@@ -58,7 +58,7 @@ ClientSession::ClientSession(
     _tileWidthTwips(0),
     _tileHeightTwips(0),
     _kitViewId(-1),
-    _hostNoTrust(hostNoTrust),
+    _serverURL(serverURL),
     _isTextDocument(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;
@@ -207,12 +207,11 @@ std::string ClientSession::getClipboardURI(bool encode)
     std::string encodeChars = ",/?:@&=+$#"; // match JS encodeURIComponent
     Poco::URI::encode(wopiSrc.toString(), encodeChars, encodedFrom);
 
-    std::string proto = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) ? "https://" : "http://";
-    std::string meta = proto + _hostNoTrust +
+    std::string meta = _serverURL.getSubURLForEndpoint(
         "/lool/clipboard?WOPISrc=" + encodedFrom +
         "&ServerId=" + LOOLWSD::HostIdentifier +
         "&ViewId=" + std::to_string(getKitViewId()) +
-        "&Tag=" + _clipboardKeys[0];
+        "&Tag=" + _clipboardKeys[0]);
 
     if (!encode)
         return meta;
@@ -1030,6 +1029,7 @@ void ClientSession::writeQueuedMessages()
     LOG_TRC(getName() << " ClientSession: performed write.");
 }
 
+// NB. also see loleaflet/src/map/Clipboard.js that does this in JS for stubs.
 void ClientSession::postProcessCopyPayload(std::shared_ptr<Message> payload)
 {
     // Insert our meta origin if we can
@@ -1043,6 +1043,7 @@ void ClientSession::postProcessCopyPayload(std::shared_ptr<Message> payload)
             if (pos != std::string::npos) // assume text/html
             {
                 const std::string meta = getClipboardURI();
+                LOG_TRC("Inject clipboard meta origin of '" << meta << "'");
                 const std::string origin = "<meta name=\"origin\" content=\"" + meta + "\"/>\n";
                 data.insert(data.begin() + pos, origin.begin(), origin.end());
                 return true;
@@ -1719,7 +1720,7 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\ttile size Pixel: " << _tileWidthPixel << "x" << _tileHeightPixel
        << "\n\t\ttile size Twips: " << _tileWidthTwips << "x" << _tileHeightTwips
        << "\n\t\tkit ViewId: " << _kitViewId
-       << "\n\t\thost (un-trusted): " << _hostNoTrust
+       << "\n\t\tour URL (un-trusted): " << _serverURL.getSubURLForEndpoint("")
        << "\n\t\tisTextDocument: " << _isTextDocument
        << "\n\t\tclipboardKeys[0]: " << _clipboardKeys[0]
        << "\n\t\tclipboardKeys[1]: " << _clipboardKeys[1]

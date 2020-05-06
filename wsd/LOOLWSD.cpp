@@ -2956,7 +2956,7 @@ private:
             }
         }
 
-        const std::string hostNoTrust = (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
+        ServerURL serverURL(request);
 
         LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
         (void)request; (void)message; (void)disposition;
@@ -2973,7 +2973,7 @@ private:
         {
             // need to move into the DocumentBroker context before doing session lookup / creation etc.
             std::string id = _id;
-            disposition.setMove([docBroker, id, uriPublic, isReadOnly, hostNoTrust, sessionId, isWaiting]
+            disposition.setMove([docBroker, id, uriPublic, isReadOnly, serverURL, sessionId, isWaiting]
                                 (const std::shared_ptr<Socket> &moveSocket)
                 {
                     LOG_TRC("Setting up docbroker thread for " << docBroker->getDocKey());
@@ -2983,7 +2983,7 @@ private:
                     // We no longer own this socket.
                     moveSocket->setThreadOwner(std::thread::id());
 
-                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly, hostNoTrust,
+                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly, serverURL,
                                             sessionId, moveSocket, isWaiting]()
                         {
                             // Now inside the document broker thread ...
@@ -2994,7 +2994,7 @@ private:
                             {
                                 docBroker->handleProxyRequest(
                                     sessionId, id, uriPublic, isReadOnly,
-                                    hostNoTrust, streamSocket, isWaiting);
+                                    serverURL, streamSocket, isWaiting);
                                 return;
                             }
                             catch (const UnauthorizedRequestException& exc)
@@ -3084,15 +3084,9 @@ private:
                 DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
             if (docBroker)
             {
-#if MOBILEAPP
-                const std::string hostNoTrust;
-#else
-                // We can send this back to whomever sent it to us though.
-                const std::string hostNoTrust = (LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName);
-#endif
-
+                ServerURL serverURL(request);
                 std::shared_ptr<ClientSession> clientSession =
-                    docBroker->createNewClientSession(ws, _id, uriPublic, isReadOnly, hostNoTrust);
+                    docBroker->createNewClientSession(ws, _id, uriPublic, isReadOnly, serverURL);
                 if (clientSession)
                 {
                     // Transfer the client socket to the DocumentBroker when we get back to the poll:

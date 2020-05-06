@@ -43,6 +43,7 @@
 #include <Crypto.hpp>
 #include "FileServer.hpp"
 #include "LOOLWSD.hpp"
+#include "ServerURL.hpp"
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include <Util.hpp>
@@ -641,61 +642,12 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
 namespace {
-    /// Very simple splitting of proxy URLs without fear of escaping or validation.
-    class ProxyURL {
-        std::string _schemeAuthority;
-        std::string _pathPlus;
-    public:
-        ProxyURL(const HTTPRequest &request)
-        {
-            // The user can override the ServerRoot with a new prefix.
-            if (_pathPlus.size() <= 0)
-                _pathPlus = LOOLWSD::ServiceRoot;
-
-            if (_schemeAuthority.size() <= 0)
-            {
-                bool ssl = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination());
-                std::string serverName = LOOLWSD::ServerName.empty() ? request.getHost() : LOOLWSD::ServerName;
-                _schemeAuthority = (ssl ? "wss://" : "ws://") + serverName;
-            }
-
-            // A well formed ProxyPrefix will override it.
-            std::string url = request.get("ProxyPrefix", "");
-            if (url.size() <= 0)
-                return;
-
-            size_t pos = url.find("://");
-            if (pos != std::string::npos) {
-                pos = url.find("/", pos + 3);
-                if (pos != std::string::npos)
-                {
-                    _schemeAuthority = url.substr(0, pos);
-                    _pathPlus = url.substr(pos);
-                    return;
-                }
-                else
-                    LOG_ERR("Unusual proxy prefix '" << url << "'");
-            } else
-                LOG_ERR("No http[s]:// in unusual proxy prefix '" << url << "'");
-
-        }
-
-        std::string getResponseRoot() const
-        {
-            return _pathPlus;
-        }
-
-        std::string getWebSocketUrl() const
-        {
-            return _schemeAuthority;
-        }
-    };
 }
 
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message,
                                               const std::shared_ptr<StreamSocket>& socket)
 {
-    ProxyURL cnxDetails(request);
+    ServerURL cnxDetails(request);
 
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
@@ -963,7 +915,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
-    ProxyURL cnxDetails(request);
+    ServerURL cnxDetails(request);
     std::string responseRoot = cnxDetails.getResponseRoot();
 
     static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");

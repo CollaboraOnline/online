@@ -225,6 +225,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/ProofKey.hpp \
               wsd/QueueHandler.hpp \
               wsd/SenderQueue.hpp \
+              wsd/ServerURL.hpp \
               wsd/Storage.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \

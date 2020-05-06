@@ -13,6 +13,7 @@
 #include "Storage.hpp"
 #include "MessageQueue.hpp"
 #include "SenderQueue.hpp"
+#include "ServerURL.hpp"
 #include "DocumentBroker.hpp"
 #include <Poco/URI.h>
 #include <Rectangle.hpp>
@@ -33,7 +34,7 @@ public:
                   const std::shared_ptr<DocumentBroker>& docBroker,
                   const Poco::URI& uriPublic,
                   const bool isReadOnly,
-                  const std::string& hostNoTrust);
+                  const ServerURL &serverURL);
     void construct();
     virtual ~ClientSession();
 
@@ -260,8 +261,8 @@ private:
     /// The integer id of the view in the Kit process
     int _kitViewId;
 
-    /// Un-trusted hostname of our service from the client
-    const std::string _hostNoTrust;
+    /// How to find our service from the client.
+    const ServerURL _serverURL;
 
     /// Client is using a text document?
     bool _isTextDocument;

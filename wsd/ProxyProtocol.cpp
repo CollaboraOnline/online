@@ -24,7 +24,7 @@ void DocumentBroker::handleProxyRequest(
     const std::string& id,
     const Poco::URI& uriPublic,
     const bool isReadOnly,
-    const std::string& hostNoTrust,
+    const ServerURL &serverURL,
     const std::shared_ptr<StreamSocket> &socket,
     bool isWaiting)
 {
@@ -34,7 +34,7 @@ void DocumentBroker::handleProxyRequest(
         LOG_TRC("proxy: Create session for " << _docKey);
         clientSession = createNewClientSession(
                 std::make_shared<ProxyProtocolHandler>(),
-                id, uriPublic, isReadOnly, hostNoTrust);
+                id, uriPublic, isReadOnly, serverURL);
         addSession(clientSession);
         LOOLWSD::checkDiskSpaceAndWarnClients(true);
         LOOLWSD::checkSessionLimitsAndWarnClients();

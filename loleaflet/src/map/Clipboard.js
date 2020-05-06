@@ -99,6 +99,10 @@ L.Clipboard = L.Class.extend({
 			'&Tag=' + this._accessKey[idx];
 	},
 
+	getMetaURL: function(idx) {
+		return this.getMetaBase() + this.getMetaPath(idx);
+	},
+
 	// Returns the marker used to identify stub messages.
 	_getHtmlStubMarker: function() {
 		return '<title>Stub HTML Message</title>';
@@ -111,7 +115,7 @@ L.Clipboard = L.Class.extend({
 
 	// wrap some content with our stub magic
 	_originWrapBody: function(body, isStub) {
-		var encodedOrigin = encodeURIComponent(this.getMetaPath());
+		var encodedOrigin = encodeURIComponent(this.getMetaURL());
 		var text =  '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
 		            '<html>\n' +
 		            '  <head>\n';
@@ -340,8 +344,7 @@ L.Clipboard = L.Class.extend({
 		if (meta !== '')
 		{
 			console.log('Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"');
-			var destination = this.getMetaBase() + this.getMetaPath();
-			this._dataTransferDownloadAndPasteAsync(meta, destination, htmlText);
+			this._dataTransferDownloadAndPasteAsync(meta, this.getMetaURL(), htmlText);
 			return;
 		}
 
@@ -397,8 +400,7 @@ L.Clipboard = L.Class.extend({
 			formData.append('file', content);
 
 			var that = this;
-			var destination = this.getMetaBase() + this.getMetaPath();
-			this._doAsyncDownload('POST', destination, formData,
+			this._doAsyncDownload('POST', this.getMetaURL(), formData,
 							function() {
 								console.log('Posted ' + content.size + ' bytes successfully');
 								if (usePasteKeyEvent) {
@@ -439,7 +441,7 @@ L.Clipboard = L.Class.extend({
 				text = this._getStubHtml();
 				this._onDownloadOnLargeCopyPaste();
 				this._downloadProgress.setURI( // richer, bigger HTML ...
-					this.getMetaBase() + this.getMetaPath() + '&MimeType=text/html');
+					this.getMetaURL() + '&MimeType=text/html');
 			}
 		} else if (this._selectionType === null) {
 			console.log('Copy/Cut with no selection!');
