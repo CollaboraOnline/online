@@ -112,6 +112,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 
 			return controls;
+		},
+
+		listenNumericChanges: function (data, builder, controls, customCallback) {
+			// It listens server state changes using GetControlState
+			// to avoid unit conversion
+			builder.map.on('commandstatechanged', function(e) {
+				var value = e.state[data.id];
+				if (value) {
+					value = parseFloat(value);
+					$(controls.spinfield).attr('value', value);
+				}
+			}, this);
+
+			controls.spinfield.addEventListener('change', function() {
+				if (customCallback)
+					customCallback();
+				else
+					builder.callback('spinfield', 'value', controls.container, this.value, builder);
+			});
 		}
 	},
 
@@ -125,6 +144,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['spinfield'] = this._spinfieldControl;
 		this._controlHandlers['metricfield'] = this._metricfieldControl;
+		this._controlHandlers['formattedfield'] = this._formattedfieldControl;
 		this._controlHandlers['edit'] = this._editControl;
 		this._controlHandlers['multilineedit'] = this._multiLineEditControl;
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
@@ -1183,26 +1203,30 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_formattedfieldControl: function(parentContainer, data, builder, customCallback) {
+		var value, units, controls;
+
+		// formatted control does not contain unit property
+		units = data.text.split(' ');
+		if (units.length == 2) {
+			data.unit = units[1];
+		}
+
+		controls = L.Control.JSDialogBuilder.baseSpinField(parentContainer, data, builder, customCallback);
+
+		L.Control.JSDialogBuilder.listenNumericChanges(data, builder, controls, customCallback);
+
+		value = parseFloat(data.value);
+		$(controls.spinfield).attr('value', value);
+
+		return false;
+	},
+
+
 	_metricfieldControl: function(parentContainer, data, builder, customCallback) {
 		var value;
 		var controls = L.Control.JSDialogBuilder.baseSpinField(parentContainer, data, builder, customCallback);
-
-		// It listens server state changes using GetControlState
-		// to avoid unit conversion
-		builder.map.on('commandstatechanged', function(e) {
-			value = e.state[data.id];
-			if (value) {
-				value = parseFloat(value);
-				$(controls.spinfield).attr('value', value);
-			}
-		}, this);
-
-		controls.spinfield.addEventListener('change', function() {
-			if (customCallback)
-				customCallback();
-			else
-				builder.callback('spinfield', 'value', controls.container, this.value, builder);
-		});
+		L.Control.JSDialogBuilder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
 		$(controls.spinfield).attr('value', value);
