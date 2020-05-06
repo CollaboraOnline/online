@@ -507,6 +507,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SelectAll'}
 			]},
 			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{uno: '.uno:WordCountDialog'},
 			{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 				{uno: '.uno:TrackChanges'},
 				{uno: '.uno:ShowTrackedChanges'},
