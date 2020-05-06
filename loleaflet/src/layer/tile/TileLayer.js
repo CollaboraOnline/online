@@ -728,7 +728,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('formfieldbutton:')) {
 			this._onFormFieldButtonMsg(textMsg);
-			console.error(textMsg);
 		}
 	},
 

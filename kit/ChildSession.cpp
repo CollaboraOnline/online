@@ -301,7 +301,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "rendershapeselection") ||
                tokens.equals(0, "removetextcontext") ||
                tokens.equals(0, "dialogevent") ||
-               tokens.equals(0, "completefunction"));
+               tokens.equals(0, "completefunction")||
+               tokens.equals(0, "formfieldevent"));
 
         if (tokens.equals(0, "clientzoom"))
         {
@@ -445,6 +446,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "completefunction"))
         {
             return completeFunction(buffer, length, tokens);
+        }
+        else if (tokens.equals(0, "formfieldevent"))
+        {
+            return formFieldEvent(buffer, length, tokens);
         }
         else
         {
@@ -1422,6 +1427,23 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
     unsigned nLOKWindowId = std::stoi(tokens[1].c_str());
     getLOKitDocument()->sendDialogEvent(nLOKWindowId,
         tokens.cat(std::string(" "), 2).c_str());
+
+    return true;
+}
+
+bool ChildSession::formFieldEvent(const char* buffer, int length, const StringVector& /*tokens*/)
+{
+    std::string sFirstLine = getFirstLine(buffer, length);
+    std::string sArguments = sFirstLine.substr(std::string("formfieldevent ").size());
+
+    if (sArguments.empty())
+    {
+        sendTextFrameAndLogError("error: cmd=formfieldevent kind=syntax");
+        return false;
+    }
+
+    getLOKitDocument()->setView(_viewId);
+    getLOKitDocument()->sendFormFieldEvent(sArguments.c_str());
 
     return true;
 }

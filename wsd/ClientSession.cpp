@@ -439,7 +439,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "resizewindow" &&
              tokens[0] != "removetextcontext" &&
              tokens[0] != "dialogevent" &&
-             tokens[0] != "completefunction")
+             tokens[0] != "completefunction" &&
+             tokens[0] != "formfieldevent")
     {
         LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=unknown");
@@ -720,6 +721,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "completefunction"))
     {
         return forwardToChild(std::string(buffer, length), docBroker);
+    }
+    else if (tokens.equals(0, "formfieldevent"))
+    {
+        return forwardToChild(firstLine, docBroker);
     }
     else
     {

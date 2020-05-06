@@ -15,6 +15,7 @@ L.FormFieldButton = L.Layer.extend({
 	},
 
 	onAdd: function (map) {
+		this.map = map;
 		this._clearButton();
 		this._buildFormButton(map);
 	},
@@ -102,7 +103,10 @@ L.FormFieldButton = L.Layer.extend({
 		for (var i = 0; i < itemList.length; ++i) {
 			var option = L.DomUtil.create('div', 'drop-down-field-list-item', dropDownList);
 			option.innerHTML = itemList[i];
+
 			option.addEventListener('click', this._onListItemSelect);
+			option.map = this.map;
+
 			// Stop propagation to the main document
 			option.addEventListener('mouseup', function(event) {event.stopPropagation();});
 			option.addEventListener('mousedown', function(event) {event.stopPropagation();});
@@ -116,17 +120,27 @@ L.FormFieldButton = L.Layer.extend({
 		this._clearButton();
 	},
 
-	_onClickDropDown: function() {
+	_onClickDropDown: function(event) {
 		$('.drop-down-field-list').show();
+		event.stopPropagation();
 	},
 
 	_onListItemSelect: function(event) {
+		$('.drop-down-field-list').hide();
 		$('.drop-down-field-list-item.selected').removeClass('selected');
 		event.target.classList.add('selected');
-		// TODO: send back
-		$('.drop-down-field-list').hide();
+
 		event.stopPropagation();
-		console.warn(event.target.textContent);
+
+		// Find item index
+		var index = $(event.target).index();
+
+		var message = 'formfieldevent {\"type\": \"drop-down\",' +
+				      '\"cmd\": \"selected\",' +
+					  '\"data\":\"' + index.toString() + '\"}';
+
+		// Apply selection in the document.
+		this.map._socket.sendMessage(message);
 	},
 
 	_clearButton: function() {
