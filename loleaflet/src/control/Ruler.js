@@ -533,17 +533,21 @@ L.Control.Ruler = L.Control.extend({
 	_onTabstopContainerLongPress: function(event) {
 		var pointX = event.center.x - event.target.getBoundingClientRect().left;
 		this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
-
-		$.contextMenu({
-			selector: '.loleaflet-ruler-tabstopcontainer',
-			className: 'loleaflet-font',
-			items: {
-				inserttabstop: {
-					name: _('Insert tabstop'),
-					callback: (this._insertTabstop).bind(this)
+		if (window.mode.isMobile() || window.mode.isTablet()) {
+			this._insertTabstop();
+		}
+		else {
+			$.contextMenu({
+				selector: '.loleaflet-ruler-tabstopcontainer',
+				className: 'loleaflet-font',
+				items: {
+					inserttabstop: {
+						name: _('Insert tabstop'),
+						callback: (this._insertTabstop).bind(this)
+					}
 				}
-			}
-		});
+			});
+		}
 	},
 
 	_insertTabstop: function() {
