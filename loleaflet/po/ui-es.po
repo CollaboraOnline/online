@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-04-24 10:48+0000\n"
+"PO-Revision-Date: 2020-04-25 06:21+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/es/>\n"
 "Language: es\n"
@@ -395,19 +395,15 @@ msgstr "Bordes de celda"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Color de fondo"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Degradado"
+msgstr "Inicio de degradado"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Degradado"
+msgstr "Fin de degradado"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"

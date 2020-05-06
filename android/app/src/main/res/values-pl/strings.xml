@@ -96,10 +96,15 @@
     <string name="no_recent_items">Otwórz plik, używając ikony folderu na pasku narzędzi.</string>
     <string name="app_vendor">To wydanie zostało dostarczone przez $VENDOR.</string>
     <string name="app_description">$APP_NAME to nowoczesny i łatwy w użyciu zestaw programów biurowych, do których należą m.in. edytor tekstów, arkusz kalkulacyjny, program do prezentacji i inne.</string>
-    <string name="app_version">Wersja: %1$s, identyfikator kompilacji: %2$s</string>
+    <string name="app_version">Wersja: %1$s
+\nOnline \'git-hash\': %2$s
+\nGłówny \'git-hash\': %3$s</string>
     <string name="app_name_settings">Ustawienia</string>
     <string name="temp_file_saving_disabled">Ten plik jest tylko do odczytu, zapisywanie jest wyłączone.</string>
     <string name="pref_category_editor">Ustawienia edytora</string>
     <string name="remove_from_list">Usuń z listy</string>
     <string name="file_actions_icon_desc">Akcje pliku</string>
+    <string name="app_version_and_hash">Wersja: %1$s
+\nOnline \'git-hash\': %2$s
+\nGłówny \'git-hash\': %3$s</string>
 </resources>

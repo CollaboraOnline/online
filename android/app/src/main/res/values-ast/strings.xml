@@ -40,7 +40,9 @@
     <string name="loading">Cargando…</string>
     <string name="pref_show_debug_info">Amosar mensaxes de depuración</string>
     <string name="storage_permission_required">Ríquese permisu d\'almacenamientu</string>
-    <string name="app_version">Versión: %1$s, id. de compilación: %2$s</string>
+    <string name="app_version">Versión: %1$s
+\nRevisión del depósitu Git «online»: %2$s
+\nRevisión del depósitu Git «core»: %3$s</string>
     <string name="owncloud_unspecified_error">Error ensin especificar al coneutar col sirvidor na nube. Revisa la configuración y/o tenta sero.</string>
     <string name="owncloud_unauthorized">Nun se pudo aniciar sesión nel sirvidor na nube. Revisa la configuración.</string>
     <string name="owncloud_wrong_connection">Nun se pudo coneutar col sirvidor na nube. Revisa la configuración.</string>
@@ -73,4 +75,8 @@
     <string name="app_vendor">Esta versión facilitóla $VENDOR.</string>
     <string name="app_description">$APP_NAME ye un paquete modernu de productividá informática, fácil d\'utilizar y de códigu abiertu pa procesamientu de testos, fueyes de cálculu, presentaciones y más.</string>
     <string name="pref_category_editor">Axustes del editor</string>
+    <string name="file_actions_icon_desc">Aiciones de ficheros</string>
+    <string name="app_version_and_hash">Versión: %1$s
+\nRevisión del depósitu Git «online»: %2$s
+\nRevisión del depósitu Git «core»: %3$s</string>
 </resources>

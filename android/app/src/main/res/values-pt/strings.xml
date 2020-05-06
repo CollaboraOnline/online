@@ -53,7 +53,9 @@
     <string name="no_items">Não há itens</string>
     <string name="no_recent_items">Por favor abra um ficheiro através do ícone existente na barra de ferramentas.</string>
     <string name="app_vendor">Esta versão foi disponibilizada por $VENDOR.</string>
-    <string name="app_version">Versão: %1$s, ID de compilação: %2$s</string>
+    <string name="app_version">Versão: %1$s
+\nonline git-hash: %2$s
+\ncore git-hash: %3$s</string>
     <string name="app_name_settings">Definições</string>
     <string name="otg_warning">Funcionalidade experimental: utilize apenas se puder escrever dados no dispositivo OTG.</string>
     <string name="pref_sort_summary">Selecione o modo de organização dos ficheiros: A-Z, tamanho ou data.</string>
@@ -102,4 +104,7 @@
     <string name="pref_category_editor">Definições do editor</string>
     <string name="remove_from_list">Remover da lista</string>
     <string name="file_actions_icon_desc">Ações para ficheiros</string>
+    <string name="app_version_and_hash">Versão: %1$s
+\nonline git-hash: %2$s
+\ncore git-hash: %3$s</string>
 </resources>

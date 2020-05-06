@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-04-19 20:11+0000\n"
+"PO-Revision-Date: 2020-04-26 09:09+0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/pt/>\n"
 "Language: pt\n"
@@ -396,19 +396,15 @@ msgstr "Contornos da célula"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Cor de fundo"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Gradiente"
+msgstr "Início do gradiente"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Gradiente"
+msgstr "Final do gradiente"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"
@@ -821,10 +817,8 @@ msgid "Right Margin"
 msgstr "Margem direita"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Inserir tabela"
+msgstr "Inserir marca de tabulação"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -964,7 +958,7 @@ msgstr "A mudar nome..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Eu percebo os riscos"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."

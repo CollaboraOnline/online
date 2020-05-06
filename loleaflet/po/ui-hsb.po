@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-04-18 01:32+0000\n"
+"PO-Revision-Date: 2020-04-28 01:19+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hsb/>\n"
 "Language: hsb\n"
@@ -396,19 +396,15 @@ msgstr "Kromy cele"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Pozadkowa barba"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Přeběh"
+msgstr "Spočatk přeběha"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Přeběh"
+msgstr "Kónc přeběha"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"
@@ -821,10 +817,8 @@ msgid "Right Margin"
 msgstr "Prawa kroma"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Tabelu zasadźić"
+msgstr "Tabulator zasadźić"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -964,7 +958,7 @@ msgstr "Přemjenuje so..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Rozumju rizika"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."

@@ -88,7 +88,9 @@
     <string name="no_items">Keine Elemente</string>
     <string name="no_recent_items">Öffnen Sie bitte eine Datei über das Ordnersymbol in der Symbolleiste.</string>
     <string name="app_description">$APP_NAME ist eine moderne, benutzerfreundliche Open Source Office-Anwendung für Textverarbeitung, Tabellenkalkulationen, Präsentationen und mehr.</string>
-    <string name="app_version">Version: %1$s, Build-ID: %2$s</string>
+    <string name="app_version">Version: %1$s
+\nOnline git-Hash: %2$s
+\nKern git-Hash: %3$s</string>
     <string name="unable_to_go_further">Weiter gehen nicht möglich.</string>
     <string name="loading">Laden…</string>
     <string name="reason_required_to_read_documents">Zum Lesen Ihrer Dokumente ist eine Speichererlaubnis erforderlich.</string>
@@ -102,4 +104,7 @@
     <string name="pref_category_editor">Editor-Einstellungen</string>
     <string name="remove_from_list">Von der Liste entfernen</string>
     <string name="file_actions_icon_desc">Dateiaktionen</string>
+    <string name="app_version_and_hash">Version: %1$s
+\nOnline git-Hash: %2$s
+\nKern git-Hash: %3$s</string>
 </resources>

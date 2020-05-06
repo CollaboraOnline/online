@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-04-18 13:00+0000\n"
+"PO-Revision-Date: 2020-04-25 12:58+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -1499,7 +1499,7 @@ msgstr "Kopie dokumentu se uloží pod novým názvem do téže složky."
 
 #: html/loleaflet-help.html%2Bdiv.h4:456-5
 msgid "How can I quit <span class=\"productname\">%productName</span> without saving my edits?"
-msgstr "Jak ukončím <span class=\"productname\">%productName</span> , aniž by se uložily úpravy?"
+msgstr "Jak ukončím <span class=\"productname\">%productName</span>, aniž by se uložily úpravy?"
 
 #: html/loleaflet-help.html%2Bdiv.p:457-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."
@@ -1527,7 +1527,7 @@ msgstr "Jak odstraním z dokumentu červené vlnovky?"
 
 #: html/loleaflet-help.html%2Bdiv.p:463-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
-msgstr "Zvolte v nabídce  <span class=\"ui\">Nástroje</span> a zrušte zaškrtnutí příkazu <span class=\"ui\">Automatická kontrola pravopisu</span>."
+msgstr "Zvolte v nabídce <span class=\"ui\">Nástroje</span> a zrušte zaškrtnutí příkazu <span class=\"ui\">Automatická kontrola pravopisu</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:464-5
 msgid "What is the blue wavy underline in some words in the text?"
@@ -1579,7 +1579,7 @@ msgstr "Umístěte kurzor na místo, kam chcete znak vložit."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."
-msgstr "Zvolte <span class=\"ui\">Vložit</span> → <span class=\"ui\">Speciální znak</span> nebo klepněte na odpovídají ikonu na nástrojové liště. Zobrazí se dialogové okno."
+msgstr "Zvolte <span class=\"ui\">Vložit</span> → <span class=\"ui\">Speciální znak</span> nebo klepněte na odpovídající ikonu na nástrojové liště. Zobrazí se dialogové okno."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:486-11
 msgid "You can either browse the characters displayed with the drop lists or type a search key in the <span class=\"ui\">Search</span> box. If you know the Unicode numeric code of the special character, enter in the boxes on the right."
@@ -1716,7 +1716,7 @@ msgstr "Proč se automaticky změnil právě napsaný text? Jak tuto změnu zru�
 
 #: html/loleaflet-help.html%2Bdiv.div.p:533-5
 msgid "You have the AutoCorrection enabled. AutoCorrection changes the text just typed into an internal table of corresponding text. In most cases, AutoCorrection fixes typos while you are typing. If AutoCorrection is not necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
-msgstr "Máte povolenu funkci  automatických oprav. Ta mění právě napsaný text podle interní tabulky na odpovídající jiný text. Ve většině případů se tak během psaní opravují překlepy. Pokud automatické opravy nepotřebujete, zakažte je v <span class=\"ui\">Nástroje</span> → <span class=\"ui\">Automatické opravy</span> → <span class=\"ui\">Při psaní</span>."
+msgstr "Máte povolenu funkci automatických oprav. Ta mění právě napsaný text podle interní tabulky na odpovídající jiný text. Ve většině případů se tak během psaní opravují překlepy. Pokud automatické opravy nepotřebujete, zakažte je v <span class=\"ui\">Nástroje</span> → <span class=\"ui\">Automatické opravy</span> → <span class=\"ui\">Při psaní</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:538-5
 msgid "How can I select data to print?"
@@ -1804,7 +1804,7 @@ msgstr "Vyberte na snímku požadovaný tvar. Zobrazí se u něj úchyty."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-9
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or <span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</span>). A dialog opens."
-msgstr "Zvolte <span class=\"ui\">Format</span> → <span class=\"ui\">Čára</span> (případně  <span class=\"ui\">Oblast</span> nebo <span class=\"ui\">Umístění a a velikost</span>). Zobrazí se dialogové okno."
+msgstr "Zvolte <span class=\"ui\">Format</span> → <span class=\"ui\">Čára</span> (případně <span class=\"ui\">Oblast</span> nebo <span class=\"ui\">Umístění a a velikost</span>). Zobrazí se dialogové okno."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:578-11
 msgid "Set the properties of the element of the object."

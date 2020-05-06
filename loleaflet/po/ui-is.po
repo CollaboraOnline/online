@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-02-23 18:15+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
+"PO-Revision-Date: 2020-05-06 08:58+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/is/>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
@@ -328,7 +328,7 @@ msgstr "Ekkert"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Einlitt"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -391,26 +391,20 @@ msgid "Font Size"
 msgstr "Leturstærð"
 
 #: src/control/Control.JSDialogBuilder.js:1517
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Jaðrar"
+msgstr "Jaðrar reita"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Bakgrunnslitur"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Litstigull"
+msgstr "Upphaf litstiguls"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Litstigull"
+msgstr "Endir litstiguls"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"
@@ -484,7 +478,7 @@ msgstr "RTF sniðinn texti (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:495
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:487
 #: src/control/Signing.js:601
@@ -545,7 +539,7 @@ msgstr "Tilkynntu um vandamál"
 #: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:527
 #: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:638
 msgid "Latest Updates"
-msgstr ""
+msgstr "Nýjustu uppfærslur"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:475 src/control/Control.Menubar.js:528
@@ -609,10 +603,8 @@ msgid "Reset to Default Language"
 msgstr "Endursetja í sjálfgefið tungumál"
 
 #: src/control/Control.Menubar.js:1104
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
-msgstr "Setja inn form"
+msgstr "Setja inn lögun"
 
 #: src/control/Control.Menubar.js:1186
 msgid "Are you sure you want to delete this slide?"
@@ -825,10 +817,8 @@ msgid "Right Margin"
 msgstr "Hægri spássía"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Setja inn töflu"
+msgstr "Setja inn inndráttarmerki"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -968,11 +958,11 @@ msgstr "Endurnefni..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Ég skil áhættuna"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "Því miður, upplýsingar um nýjustu uppfærslur eru ekki tiltækar."
 
 #: src/control/Toolbar.js:476
 msgid "This version of %productName is powered by"

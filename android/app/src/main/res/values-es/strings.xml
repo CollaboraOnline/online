@@ -2,7 +2,9 @@
 <resources>
     <!--string name="app_name" aquí falta la definición deliberadamente, se completa en build.gradle.-->
     <string name="app_name_settings">Configuración</string>
-    <string name="app_version">Versión: %1$s, id. de compilación: %2$s</string>
+    <string name="app_version">Versión: %1$s
+\nRevisión del repositorio Git «online»: %2$s
+\nRevisión del repositorio Git «core»: %3$s</string>
     <string name="app_description">$APP_NAME es un conjunto de productividad de código abierto moderno y fácil de usar, para procesamiento de textos, hojas de cálculo, presentaciones y más.</string>
     <string name="app_vendor">$VENDOR le suministra esta versión.</string>
     <string name="no_recent_items">Abra un archivo mediante el icono de la carpeta en la barra de herramientas.</string>
@@ -120,4 +122,7 @@
     <string name="pref_category_editor">Configuración del editor</string>
     <string name="file_actions_icon_desc">Acciones de archivo</string>
     <string name="remove_from_list">Quitar de la lista</string>
+    <string name="app_version_and_hash">Versión: %1$s
+\nRevisión del repositorio Git «online»: %2$s
+\nRevisión del repositorio Git «core»: %3$s</string>
 </resources>

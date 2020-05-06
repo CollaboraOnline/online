@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-04-01 10:44+0000\n"
+"PO-Revision-Date: 2020-05-04 06:35+0000\n"
 "Last-Translator: Adam Rak <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://weblate.documentfoundation.org/projects/libo_online/ios/pl/>\n"
 "Language: pl\n"
@@ -23,11 +23,11 @@ msgstr "Informacje o wersji"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr "Hash online git"
+msgstr "Online 'git-hash'"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr "Hash rdzenia git"
+msgstr "Główny 'git-hash'"
 
 #: Settings
 msgid "Settings"

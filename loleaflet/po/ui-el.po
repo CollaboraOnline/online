@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-04-24 10:48+0000\n"
+"PO-Revision-Date: 2020-04-24 21:50+0000\n"
 "Last-Translator: Dimitris Spingos <dmtrs32@gmail.com>\n"
 "Language-Team: Greek <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/el/>\n"
 "Language: el\n"
@@ -396,19 +396,15 @@ msgstr "Περιγράμματα κελιού"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Χρώμα παρασκηνίου"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Διαβάθμιση"
+msgstr "Έναρξη διαβάθμισης"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Διαβάθμιση"
+msgstr "Τέλος διαβάθμισης"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"

@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-05 12:13+0000\n"
-"Last-Translator: Carlos Moreira <crolidge@hotmail.com>\n"
+"PO-Revision-Date: 2020-04-26 09:09+0000\n"
+"Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
@@ -1043,7 +1043,7 @@ msgstr "O <span class=\"productname\">%productName</span> apresenta-lhe uma pequ
 
 #: html/loleaflet-help.html%2Bdiv.p:259-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
-msgstr ""
+msgstr "O <span class=\"productname\">%productName</span> utiliza as funcionalidades dos navegadores web para adaptar a interface ao tamanho da área de visualização, incluindo os ecrãs pequenos dos dispositivos móveis. A interface é composta por:"
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."

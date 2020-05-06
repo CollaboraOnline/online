@@ -87,7 +87,9 @@
     <string name="no_recent_items">Obriu un fitxer mitjançant la icona de la carpeta a la barra d\'eines.</string>
     <string name="app_vendor">$VENDOR us forneix aquesta versió.</string>
     <string name="app_description">El $APP_NAME és un modern conjunt d\'aplicacions de productivitat de codi obert per a processar textos, fulls de càlcul i presentacions fàcilment.</string>
-    <string name="app_version">Versió: %1$s, id. de muntatge: %2$s</string>
+    <string name="app_version">Versió: %1$s
+\nRevisió del dipòsit Git «online»: %2$s
+\nRevisió del dipòsit Git «core»: %3$s</string>
     <string name="app_name_settings">Configuració</string>
     <string name="owncloud_unspecified_error">S\'ha produït un error no especificat en connectar amb el servidor al núvol. Comproveu la configuració o intenteu-ho de nou més tard.</string>
     <string name="owncloud_unauthorized">No es pot iniciar una sessió al servidor al núvol. Comproveu la configuració.</string>
@@ -102,4 +104,7 @@
     <string name="pref_category_editor">Configuració de l\'editor</string>
     <string name="remove_from_list">Treu de la llista</string>
     <string name="file_actions_icon_desc">Accions del fitxer</string>
+    <string name="app_version_and_hash">Versió: %1$s
+\nRevisió del dipòsit Git «online»: %2$s
+\nRevisió del dipòsit Git «core»: %3$s</string>
 </resources>

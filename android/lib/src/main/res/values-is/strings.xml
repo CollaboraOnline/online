@@ -6,4 +6,10 @@
     <string name="failed_to_load_file">Mistókst að ákvarða hvaða skrá eigi að hlaða inn</string>
     <string name="storage_permission_required">Heimild til aðgangs að gagnageymslu er nauðsynleg</string>
     <string name="temp_file_saving_disabled">Þessi skrá er aðeins lesanleg, vistun er óvirk.</string>
+    <string name="preparing_for_the_first_start_after_an_update">Undirbý fyrstu ræsingu eftir uppfærslu.</string>
+    <string name="rate_now">Gefa einkunn núna</string>
+    <string name="later">Seinna</string>
+    <string name="rate_our_app_title">Takk fyrir að nota %1$s!</string>
+    <string name="rate_our_app_text">Ef þér líkar þetta, skaltu endilega gefa okkur 5 stjörnur á Google Play. Góðar umsagnir notenda er það sem drífur okkur áfram.</string>
+    <string name="exiting">Hætti...</string>
 </resources>

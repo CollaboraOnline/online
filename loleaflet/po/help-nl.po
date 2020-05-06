@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-02-17 04:11+0000\n"
+"PO-Revision-Date: 2020-04-27 08:54+0000\n"
 "Last-Translator: kees538 <kees538@gmail.com>\n"
 "Language-Team: Dutch <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/nl/>\n"
 "Language: nl\n"
@@ -1091,7 +1091,7 @@ msgstr "Tekst, grafieken, vormen en svg-afbeeldingen blijven scherp. Bij het inz
 
 #: html/loleaflet-help.html%2Bdiv.p:274-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "Het gebruik van de zoomfunctie van de browser heeft invloed op het document en de gebruikersinterfacegebieden."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-04-03 21:24+0000\n"
+"PO-Revision-Date: 2020-04-25 12:58+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
@@ -396,19 +396,15 @@ msgstr "Ohraničení buněk"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Barva pozadí"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Přechod"
+msgstr "Začátek přechodu"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Přechod"
+msgstr "Konec přechodu"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"
@@ -543,7 +539,7 @@ msgstr "Nahlásit chybu"
 #: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:527
 #: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:638
 msgid "Latest Updates"
-msgstr ""
+msgstr "Nejnovější aktualizace"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:475 src/control/Control.Menubar.js:528
@@ -821,10 +817,8 @@ msgid "Right Margin"
 msgstr "Pravý okraj"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Vložit tabulku"
+msgstr "Vložit tabulátor"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -964,11 +958,11 @@ msgstr "Přejmenovávání..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Beru riziko na vědomí"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "Informace o nejnovějších aktualizacích není k dispozici."
 
 #: src/control/Toolbar.js:476
 msgid "This version of %productName is powered by"
