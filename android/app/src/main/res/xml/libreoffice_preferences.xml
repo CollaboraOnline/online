@@ -32,6 +32,19 @@
     </PreferenceCategory-->
 
     <PreferenceCategory
+        android:title="@string/theme"
+        android:key="PREF_CATEGORY_THEME"
+        app:iconSpaceReserved="false" >
+
+        <Preference
+            android:title="@string/choose_theme"
+            android:key="THEME_SELECTION"
+            android:summary="@string/theme_system_default"
+            app:iconSpaceReserved="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_editor"
         android:key="PREF_CATEGORY_EDITOR"
         app:iconSpaceReserved="false" >

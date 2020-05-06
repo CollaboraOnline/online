@@ -2,8 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="LibreOfficeTheme" parent="LibreOfficeTheme.Base"/>
 
-    <style name="LibreOfficeTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-    </style>
+    <style name="LibreOfficeTheme.Base" parent="Theme.AppCompat.DayNight.NoActionBar"/>
 
     <style name="ListItemText">
         <item name="android:gravity">center_vertical</item>
@@ -11,7 +10,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="LibreOfficeTheme.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="LibreOfficeTheme.Toolbar" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/toolbar_background</item>
     </style>
 
@@ -27,6 +26,6 @@
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">normal</item>
         <item name="android:padding">5dp</item>
-        <item name="android:background">@drawable/label_background</item>
+        <item name="android:background">?android:attr/colorPrimary</item>
     </style>
 </resources>

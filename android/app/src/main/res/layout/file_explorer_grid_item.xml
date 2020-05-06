@@ -41,7 +41,7 @@
             android:gravity="center_vertical"
             android:maxLines="2"
             android:textAlignment="center"
-            android:textColor="@android:color/secondary_text_light"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="15sp"
             android:textStyle="bold"
             tools:text="file or dirname" />
@@ -53,6 +53,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/file_actions_icon_desc"
             android:scaleType="fitStart"
+            android:tint="?android:attr/textColorPrimary"
             app:srcCompat="@drawable/ic_more_vert_black_24dp" />
     </LinearLayout>
 
