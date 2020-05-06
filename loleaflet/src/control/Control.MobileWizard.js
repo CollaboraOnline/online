@@ -327,6 +327,9 @@ L.Control.MobileWizard = L.Control.extend({
 				this._lastSidebarData = dataString;
 			}
 
+			if (this.map.getDocType() === 'presentation')
+				$('#mobile-wizard-header').show();
+
 			this._isActive = true;
 			var currentPath = null;
 			var lastScrollPosition = null;
