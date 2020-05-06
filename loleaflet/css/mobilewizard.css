@@ -738,6 +738,11 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 .checkbutton{
 	clear: both;
 }
+.checkbutton label {
+    line-height: 44px;
+    vertical-align: top;
+    padding-left: 4%;
+}
 #mobile-wizard input[type=checkbox]:disabled{
 	border: 2px solid #ddd;
 	box-shadow: none;
@@ -793,7 +798,7 @@ input[type=checkbox]#UseBandingColumnStyle, input[type=checkbox]#UseLastColumnSt
 	font-weight: bold;
 	background-color: #0b87e7;
 	border: 1px solid #0b87e7;
-	margin: 0 4%;
+	margin: 5px 4%;
 }
 #mobile-wizard button:focus{
 	outline: none;
@@ -805,6 +810,7 @@ input[type=checkbox]#UseBandingColumnStyle, input[type=checkbox]#UseLastColumnSt
 }
 #mobile-wizard button:disabled{
 	background-color: silver;
+	border-color: silver;
 }
 #enablecontour + button {
 	float: right;
