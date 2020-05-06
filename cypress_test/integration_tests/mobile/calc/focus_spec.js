@@ -76,8 +76,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	// Regression here: can't edit formula bar
-	it.skip('Formula-bar focus', function() {
+	it('Formula-bar focus', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
