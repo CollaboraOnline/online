@@ -81,6 +81,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -99,7 +100,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private int filterMode = FileUtilities.ALL;
     private int sortMode;
     private boolean showHiddenFiles;
-
     // dynamic permissions IDs
     private static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 0;
 
@@ -121,6 +121,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     public static final String NEW_FILE_PATH_KEY = "NEW_FILE_PATH_KEY";
     public static final String NEW_DOC_TYPE_KEY = "NEW_DOC_TYPE_KEY";
+    public static final String NIGHT_MODE_KEY = "NIGHT_MODE";
 
     public static final String GRID_VIEW = "0";
     public static final String LIST_VIEW = "1";
@@ -157,14 +158,15 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        PreferenceManager.setDefaultValues(this, R.xml.documentprovider_preferences, false);
+        readPreferences();
+        int mode = prefs.getInt(NIGHT_MODE_KEY, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        AppCompatDelegate.setDefaultNightMode(mode);
         super.onCreate(savedInstanceState);
 
         // initialize document provider factory
         //DocumentProviderFactory.initialize(this);
         //documentProviderFactory = DocumentProviderFactory.getInstance();
-
-        PreferenceManager.setDefaultValues(this, R.xml.documentprovider_preferences, false);
-        readPreferences();
 
         SettingsListenerModel.getInstance().setListener(this);
 
@@ -174,6 +176,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         // init UI and populate with contents from the provider
         createUI();
+
         fabOpenAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_open);
         fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close);
     }
@@ -867,6 +870,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     /** Uploading back when we return from the LOActivity. */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case LO_ACTIVITY_REQUEST_CODE: {
                 // TODO probably kill this, we don't need to do anything here any more
@@ -896,7 +900,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 Uri uri = data.getData();
                 getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-                String extension = (requestCode == CREATE_DOCUMENT_REQUEST_CODE)? "odt": ((requestCode == CREATE_SPREADSHEET_REQUEST_CODE)? "ods": "odp");
+                String extension = (requestCode == CREATE_DOCUMENT_REQUEST_CODE) ? "odt" : ((requestCode == CREATE_SPREADSHEET_REQUEST_CODE) ? "ods" : "odp");
                 createNewFile(uri, extension);
 
                 open(uri);

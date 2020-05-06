@@ -15,6 +15,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
+    android:theme="@style/LibreOfficeTheme.Base"
+    style="@style/LibreOfficeTheme.Base"
     android:focusableInTouchMode="true"
     android:focusable="true">
 
@@ -23,6 +25,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/overview_coordinator_layout"
         android:layout_width="match_parent"
+        android:background="?android:attr/colorBackground"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -33,10 +36,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/toolbar_background"
                 android:elevation="3dp"
-                app:theme="@style/LibreOfficeTheme.Toolbar"
-                app:popupTheme="@style/LibreOfficeTheme"
+                app:theme="@style/LibreOfficeTheme.Base"
+                app:popupTheme="@style/LibreOfficeTheme.Base"
                 app:layout_scrollFlags="enterAlways|scroll" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -72,6 +74,7 @@
                         android:layout_width="96dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:tint="?android:attr/colorControlNormal"
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/ic_list_black_24dp" />
                 </LinearLayout>
@@ -167,7 +170,7 @@
                     android:layout_marginBottom="@dimen/new_doc_fab_tweak_bottom"
                     android:clickable="true"
                     android:focusable="true"
-                    app:backgroundTint="@color/background_normal"
+                    app:backgroundTint="?android:attr/colorPrimary"
                     app:fabSize="mini"
                     app:srcCompat="@drawable/writer"
                     app:useCompatPadding="true" />
@@ -200,7 +203,7 @@
                     android:layout_marginBottom="@dimen/new_doc_fab_tweak_bottom"
                     android:clickable="true"
                     android:focusable="true"
-                    app:backgroundTint="@color/background_normal"
+                    app:backgroundTint="?android:attr/colorPrimary"
                     app:fabSize="mini"
                     app:srcCompat="@drawable/impress"
                     app:useCompatPadding="true" />
@@ -233,7 +236,7 @@
                     android:layout_marginBottom="@dimen/new_doc_fab_tweak_bottom"
                     android:clickable="true"
                     android:focusable="true"
-                    app:backgroundTint="@color/background_normal"
+                    app:backgroundTint="?android:attr/colorPrimary"
                     app:fabSize="mini"
                     app:srcCompat="@drawable/calc"
                     app:useCompatPadding="true" />
@@ -251,9 +254,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/background_normal"
-        android:theme="@style/LibreOfficeTheme.NavigationView"
+        android:theme="@style/LibreOfficeTheme.Base"
         app:headerLayout="@layout/navigation_header"
-        app:menu="@menu/navigation_menu" />
+        app:menu="@menu/navigation_menu"/>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
