@@ -82,6 +82,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:DeleteComment'] = function() {};
 		this._toolitemHandlers['.uno:CompareDocuments'] = function() {};
 		this._toolitemHandlers['.uno:MergeDocuments'] = function() {};
+		this._toolitemHandlers['.uno:FunctionBox'] = function() {};
+		this._toolitemHandlers['.uno:EditAnnotation'] = function() {};
+		this._toolitemHandlers['.uno:ShowAllNotes'] = function() {};
+		this._toolitemHandlers['.uno:HideAllNotes'] = function() {};
+		this._toolitemHandlers['.uno:ShareDocument'] = function() {};
+		this._toolitemHandlers['.uno:EditDoc'] = function() {};
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
