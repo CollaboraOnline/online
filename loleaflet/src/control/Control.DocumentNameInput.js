@@ -52,22 +52,20 @@ L.Control.DocumentNameInput = L.Control.extend({
 			this.documentNameCancel();
 		}
 	},
-	
+
 	onDocumentNameFocus: function() {
 		// hide the caret in the main document
 		this.map._onLostFocus();
 	},
 
 	onDocLayerInit: function() {
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			if (!window.ThisIsAMobileApp)
-				$('#document-name-input').hide();
-			else
-				$('#document-name-input').show();
+		// FIXME: Android app would display a temporary filename, not the actual filename
+		if (window.ThisIsTheAndroidApp) {
+			$('#document-name-input').hide();
 		} else {
 			$('#document-name-input').show();
 		}
-	
+
 		if (window.ThisIsAMobileApp) {
 			// We can now set the document name in the menu bar
 			$('#document-name-input').prop('disabled', false);
@@ -88,7 +86,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 			// set the document name into the name field
 			$('#document-name-input').val(e.BaseFileName);
 		}
-	
+
 		if (e.UserCanNotWriteRelative === false) {
 			// Save As allowed
 			$('#document-name-input').prop('disabled', false);
