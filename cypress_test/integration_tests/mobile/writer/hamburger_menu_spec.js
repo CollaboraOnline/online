@@ -656,12 +656,20 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		// Search bar become visible
-		cy.get('#toolbar-search')
-			.should('be.visible');
+		cy.get('#mobile-wizard-content')
+			.should('not.be.empty');
+
+		cy.wait(1500);
 
 		// Search for some word
-		cy.get('#search-input')
-			.type('a');
+		cy.get('#searchterm')
+			.type('a{enter}');
+
+		cy.get('#search')
+			.should('not.have.attr', 'disabled');
+
+		cy.get('#search')
+			.click();
 
 		// Part of the text should be selected
 		cy.get('.leaflet-marker-icon')
@@ -672,43 +680,6 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
-
-		// Go for the second match
-		cy.get('.w2ui-tb-image.w2ui-icon.next')
-			.click();
-
-		cy.get('#copy-paste-container p b')
-			.should('exist');
-
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
-
-		// Go back to the first match
-		cy.get('.w2ui-tb-image.w2ui-icon.prev')
-			.click();
-
-		cy.get('#copy-paste-container p b')
-			.should('not.exist');
-
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
-
-		// Remove search word
-		cy.get('#search-input')
-			.should('have.prop', 'value', 'a');
-
-		cy.get('.w2ui-tb-image.w2ui-icon.cancel')
-			.click();
-
-		cy.get('#search-input')
-			.should('have.prop', 'value', '');
-
-		// Close search toolbar
-		cy.get('.w2ui-tb-image.w2ui-icon.unfold')
-			.click();
-
-		cy.get('#toolbar-search')
-			.should('not.be.visible');
 	});
 
 	it('Check word counts.', function() {

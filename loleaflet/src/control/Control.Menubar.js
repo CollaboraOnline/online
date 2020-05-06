@@ -1222,10 +1222,14 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		} else if (id === 'searchdialog') {
-			$('#toolbar-down').hide();
-			$('#toolbar-search').show();
-			$('#mobile-edit-button').hide();
-			L.DomUtil.get('search-input').focus();
+			if (this._map._permission === 'readonly') {
+				$('#toolbar-down').hide();
+				$('#toolbar-search').show();
+				$('#mobile-edit-button').hide();
+				L.DomUtil.get('search-input').focus();
+			} else {
+				this._map.sendUnoCommand('.uno:SearchDialog');
+			}
 		} else if (id === 'inserttextbox') {
 			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
 		} else if (id === 'insertslidefield') {
