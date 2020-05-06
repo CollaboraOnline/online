@@ -145,4 +145,11 @@
     <string name="bmp_null">Bmp is null!</string>
     <string name="directory_not_saved">Directory not saved.</string>
     <string name="title_activity_show_html">About</string>
+
+    <!-- Theme settings -->
+    <string name="theme">Theme</string>
+    <string name="choose_theme">Choose theme</string>
+    <string name="theme_system_default">System default</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
 </resources>
