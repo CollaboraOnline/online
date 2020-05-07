@@ -1173,6 +1173,19 @@
 		BECBD41423D9C98500DA5582 /* svddrgmt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svddrgmt.cxx; path = "../../ios-device/svx/source/svdraw/svddrgmt.cxx"; sourceTree = "<group>"; };
 		BECD983E24336DD400016117 /* device-mobile.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-mobile.css"; path = "../../../loleaflet/dist/device-mobile.css"; sourceTree = "<group>"; };
 		BECD983F24336DD400016117 /* device-tablet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-tablet.css"; path = "../../../loleaflet/dist/device-tablet.css"; sourceTree = "<group>"; };
+		BEDCC943246175E100FB02BD /* sessionlistener.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sessionlistener.cxx; path = "../../ios-device/framework/source/services/sessionlistener.cxx"; sourceTree = "<group>"; };
+		BEDCC944246175E100FB02BD /* substitutepathvars.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = substitutepathvars.cxx; path = "../../ios-device/framework/source/services/substitutepathvars.cxx"; sourceTree = "<group>"; };
+		BEDCC945246175E100FB02BD /* pathsettings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pathsettings.cxx; path = "../../ios-device/framework/source/services/pathsettings.cxx"; sourceTree = "<group>"; };
+		BEDCC946246175E100FB02BD /* urltransformer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = urltransformer.cxx; path = "../../ios-device/framework/source/services/urltransformer.cxx"; sourceTree = "<group>"; };
+		BEDCC947246175E100FB02BD /* dispatchhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dispatchhelper.cxx; path = "../../ios-device/framework/source/services/dispatchhelper.cxx"; sourceTree = "<group>"; };
+		BEDCC948246175E200FB02BD /* autorecovery.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = autorecovery.cxx; path = "../../ios-device/framework/source/services/autorecovery.cxx"; sourceTree = "<group>"; };
+		BEDCC949246175E200FB02BD /* modulemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = modulemanager.cxx; path = "../../ios-device/framework/source/services/modulemanager.cxx"; sourceTree = "<group>"; };
+		BEDCC94A246175E200FB02BD /* mediatypedetectionhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mediatypedetectionhelper.cxx; path = "../../ios-device/framework/source/services/mediatypedetectionhelper.cxx"; sourceTree = "<group>"; };
+		BEDCC94B246175E200FB02BD /* ContextChangeEventMultiplexer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ContextChangeEventMultiplexer.cxx; path = "../../ios-device/framework/source/services/ContextChangeEventMultiplexer.cxx"; sourceTree = "<group>"; };
+		BEDCC94C246175E200FB02BD /* desktop.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = desktop.cxx; path = "../../ios-device/framework/source/services/desktop.cxx"; sourceTree = "<group>"; };
+		BEDCC94D246175E200FB02BD /* frame.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cxx; path = "../../ios-device/framework/source/services/frame.cxx"; sourceTree = "<group>"; };
+		BEDCC94E246175E200FB02BD /* taskcreatorsrv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = taskcreatorsrv.cxx; path = "../../ios-device/framework/source/services/taskcreatorsrv.cxx"; sourceTree = "<group>"; };
+		BEDCC94F246175E200FB02BD /* uriabbreviation.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uriabbreviation.cxx; path = "../../ios-device/framework/source/services/uriabbreviation.cxx"; sourceTree = "<group>"; };
 		BEF755A723E8200A008A4BB2 /* drawdoc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc.cxx; path = "../../ios-device/sd/source/core/drawdoc.cxx"; sourceTree = "<group>"; };
 		BEF755A823E8200A008A4BB2 /* drawdoc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc3.cxx; path = "../../ios-device/sd/source/core/drawdoc3.cxx"; sourceTree = "<group>"; };
 		BEF755A923E8200A008A4BB2 /* sdiocmpt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdiocmpt.cxx; path = "../../ios-device/sd/source/core/sdiocmpt.cxx"; sourceTree = "<group>"; };
@@ -1908,6 +1921,7 @@
 				BEA8CDC12199AC7A009FE17E /* comphelper */,
 				BE80E43321B5629300859C97 /* cppuhelper */,
 				BE34D182218CFC6C00815297 /* desktop */,
+				BEDCC941246175A700FB02BD /* framework */,
 				BEA8CDC42199E5ED009FE17E /* i18nlangtag */,
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE93D43C216D555C007A39F4 /* sfx2 */,
@@ -2844,6 +2858,34 @@
 				BECBD32323D9C5D000DA5582 /* viewpt3d2.cxx */,
 			);
 			name = engine3d;
+			sourceTree = "<group>";
+		};
+		BEDCC941246175A700FB02BD /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				BEDCC942246175C300FB02BD /* services */,
+			);
+			name = framework;
+			sourceTree = "<group>";
+		};
+		BEDCC942246175C300FB02BD /* services */ = {
+			isa = PBXGroup;
+			children = (
+				BEDCC948246175E200FB02BD /* autorecovery.cxx */,
+				BEDCC94B246175E200FB02BD /* ContextChangeEventMultiplexer.cxx */,
+				BEDCC94C246175E200FB02BD /* desktop.cxx */,
+				BEDCC947246175E100FB02BD /* dispatchhelper.cxx */,
+				BEDCC94D246175E200FB02BD /* frame.cxx */,
+				BEDCC94A246175E200FB02BD /* mediatypedetectionhelper.cxx */,
+				BEDCC949246175E200FB02BD /* modulemanager.cxx */,
+				BEDCC945246175E100FB02BD /* pathsettings.cxx */,
+				BEDCC943246175E100FB02BD /* sessionlistener.cxx */,
+				BEDCC944246175E100FB02BD /* substitutepathvars.cxx */,
+				BEDCC94E246175E200FB02BD /* taskcreatorsrv.cxx */,
+				BEDCC94F246175E200FB02BD /* uriabbreviation.cxx */,
+				BEDCC946246175E100FB02BD /* urltransformer.cxx */,
+			);
+			name = services;
 			sourceTree = "<group>";
 		};
 		BEF755A623E81FEB008A4BB2 /* core */ = {
