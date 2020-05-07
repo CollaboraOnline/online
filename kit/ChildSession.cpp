@@ -1428,10 +1428,11 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
 
 bool ChildSession::completeFunction(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
-    int index;
+    std::string functionName;
 
     if (tokens.size() != 2 ||
-        !getTokenInteger(tokens[1], "index", index))
+        !getTokenString(tokens[1], "name", functionName) ||
+        functionName.empty())
     {
         sendTextFrameAndLogError("error: cmd=completefunction kind=syntax");
         return false;
@@ -1439,7 +1440,7 @@ bool ChildSession::completeFunction(const char* /*buffer*/, int /*length*/, cons
 
     getLOKitDocument()->setView(_viewId);
 
-    getLOKitDocument()->completeFunction(index);
+    getLOKitDocument()->completeFunction(functionName.c_str());
     return true;
 }
 

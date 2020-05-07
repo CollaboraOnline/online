@@ -813,6 +813,14 @@ public class LOActivity extends AppCompatActivity {
         mWebView.post(new Runnable() {
             public void run() {
                 Log.i(TAG, "Forwarding to the WebView: " + message);
+
+                /* Debug only: in case the message is too long, truncated in the logcat, and you need to see it.
+                final int size = 80;
+                for (int start = 0; start < message.length(); start += size) {
+                    Log.i(TAG, "split: " + message.substring(start, Math.min(message.length(), start + size)));
+                }
+                */
+
                 mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data':" + message + "});");
             }
         });
