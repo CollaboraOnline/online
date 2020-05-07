@@ -16,12 +16,13 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     std::string uri;
     Poco::URI uriPublic;
     std::string docKey = "/fuzz/fuzz.odt";
-    auto docBroker = std::make_shared<DocumentBroker>(uri, uriPublic, docKey);
+    auto docBroker = std::make_shared<DocumentBroker>(DocumentBroker::ChildType::Interactive, uri,
+                                                      uriPublic, docKey);
 
     std::shared_ptr<ProtocolHandlerInterface> ws;
     std::string id;
     bool isReadOnly = false;
-    const ServerURL serverURL("", "");
+    const ServerURL serverURL;
     auto session
         = std::make_shared<ClientSession>(ws, id, docBroker, uriPublic, isReadOnly, serverURL);
 

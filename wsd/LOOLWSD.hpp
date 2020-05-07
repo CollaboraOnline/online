@@ -273,7 +273,7 @@ public:
     static bool isSSLEnabled()
     {
 #if ENABLE_SSL
-        return LOOLWSD::SSLEnabled.get();
+        return !Util::isFuzzing() && LOOLWSD::SSLEnabled.get();
 #else
         return false;
 #endif
@@ -282,7 +282,7 @@ public:
     static bool isSSLTermination()
     {
 #if ENABLE_SSL
-        return LOOLWSD::SSLTermination.get();
+        return !Util::isFuzzing() && LOOLWSD::SSLTermination.get();
 #else
         return false;
 #endif
