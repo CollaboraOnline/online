@@ -348,6 +348,15 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background-color: #e6e6e640;
 }
 
+.unotoolbutton.disabled {
+	color: #707070;
+}
+
+.unotoolbutton.disabled img {
+	-webkit-filter: grayscale(90%);
+	filter: grayscale(90%);
+}
+
 #mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
 	margin-top: 0px !important;
 }
