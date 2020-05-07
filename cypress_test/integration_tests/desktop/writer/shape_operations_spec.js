@@ -8,8 +8,8 @@ describe('Shape operations', function() {
 		helper.afterAll('shape_operations.odt', 'writer');
 	});
 
-	it.skip('Insert a simple shape.', function() {
-		helper.loadTestDoc('shape_operations.odt');
+	it('Insert a simple shape.', function() {
+		helper.loadTestDoc('shape_operations.odt', 'writer');
 
 		// Scroll on the up toolbar
 		cy.get('#toolbar-up .w2ui-scroll-right').click();
