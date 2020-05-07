@@ -39,6 +39,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Paste'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
 		this._toolitemHandlers['.uno:ConditionalFormatMenu'] = this._conditionalFormatControl;
+		this._toolitemHandlers['.uno:SetDefault'] = this._clearFormattingControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
@@ -88,6 +89,22 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:HideAllNotes'] = function() {};
 		this._toolitemHandlers['.uno:ShareDocument'] = function() {};
 		this._toolitemHandlers['.uno:EditDoc'] = function() {};
+		this._toolitemHandlers['.uno:AssignLayout'] = function() {};
+		this._toolitemHandlers['.uno:ConnectorToolbox'] = function() {};
+		this._toolitemHandlers['.uno:Presentation'] = function() {};
+		this._toolitemHandlers['.uno:PresentationCurrentSlide'] = function() {};
+		this._toolitemHandlers['.uno:PresentationLayout'] = function() {};
+		this._toolitemHandlers['.uno:FontworkGalleryFloater'] = function() {};
+		this._toolitemHandlers['.uno:CapturePoint'] = function() {};
+		this._toolitemHandlers['.uno:Objects3DToolbox'] = function() {};
+		this._toolitemHandlers['.uno:InsertMath'] = function() {};
+		this._toolitemHandlers['.uno:ShowAnnotations'] = function() {};
+		this._toolitemHandlers['.uno:DeleteAnnotation'] = function() {};
+		this._toolitemHandlers['.uno:NextAnnotation'] = function() {};
+		this._toolitemHandlers['.uno:PreviousAnnotation'] = function() {};
+		this._toolitemHandlers['.uno:AnimationEffects'] = function() {};
+		this._toolitemHandlers['.uno:OptimizeTable'] = function() {};
+		this._toolitemHandlers['.uno:TableDesign'] = function() {};
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
