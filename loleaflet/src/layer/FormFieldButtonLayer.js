@@ -90,6 +90,10 @@ L.FormFieldButton = L.Layer.extend({
 		image.src = 'images/unfold.svg';
 
 		button.addEventListener('click', this._onClickDropDown);
+
+		// Stop propagation to the main document
+		button.addEventListener('mouseup', function(event) {event.stopPropagation();});
+		button.addEventListener('mousedown', function(event) {event.stopPropagation();});
 	},
 
 	_buildDropDownList: function(framePos, frameWidth, frameHeight) {
