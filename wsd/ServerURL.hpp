@@ -26,7 +26,13 @@ class ServerURL
 public:
     ServerURL(const Poco::Net::HTTPRequest &request)
     {
+#if MOBILEAPP
+        (void)request;
+        // getHost fires an exception on mobile.
+        init("mobile", "");
+#else
         init(request.getHost(), request.get("ProxyPrefix", ""));
+#endif
     }
 
     explicit ServerURL()
