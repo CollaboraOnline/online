@@ -720,17 +720,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "completefunction"))
     {
-        int temp;
-        if (tokens.size() != 2 ||
-            !getTokenInteger(tokens[1], "index", temp))
-        {
-            LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
-            return true;
-        }
-        else
-        {
-            return forwardToChild(std::string(buffer, length), docBroker);
-        }
+        return forwardToChild(std::string(buffer, length), docBroker);
     }
     else
     {

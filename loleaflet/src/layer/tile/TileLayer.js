@@ -824,6 +824,7 @@ L.TileLayer = L.GridLayer.extend({
 				id: '',
 				type: 'calcfuncpanel',
 				text: name,
+				functionName: name,
 				index: func.index,
 				enabled: true,
 				children: []
@@ -863,6 +864,7 @@ L.TileLayer = L.GridLayer.extend({
 				id: '',
 				type: 'calcfuncpanel',
 				text: name,
+				functionName: name,
 				index: func.index,
 				category: func.category,
 				enabled: true,
