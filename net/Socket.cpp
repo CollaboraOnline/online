@@ -694,6 +694,18 @@ int Socket::getPid() const
     return creds.pid;
 }
 
+// Does this socket come from the localhost ?
+bool Socket::isLocal() const
+{
+    if (_clientAddress.size() < 1)
+        return false;
+    if (_clientAddress[0] == '/') // Unix socket
+        return true;
+    if (_clientAddress == "::1")
+        return true;
+    return  _clientAddress.rfind("127.0.0.", 0);
+}
+
 std::shared_ptr<Socket> LocalServerSocket::accept()
 {
     const int rc = ::accept4(getFD(), nullptr, nullptr, SOCK_NONBLOCK);

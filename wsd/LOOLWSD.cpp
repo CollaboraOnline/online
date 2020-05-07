@@ -725,6 +725,7 @@ std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
 bool LOOLWSD::AnonymizeUserData = false;
 bool LOOLWSD::CheckLoolUser = true;
+bool LOOLWSD::IsProxyPrefixEnabled = false;
 #if ENABLE_SSL
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
 Util::RuntimeConstant<bool> LOOLWSD::SSLTermination;
@@ -901,6 +902,7 @@ void LOOLWSD::initialize(Application& self)
             { "net.listen", "any" },
             { "net.proto", "all" },
             { "net.service_root", "" },
+            { "net.proxy_prefix", "false" },
             { "num_prespawn_children", "1" },
             { "per_document.always_save_on_exit", "false" },
             { "per_document.autosave_duration_secs", "300" },
@@ -1119,6 +1121,8 @@ void LOOLWSD::initialize(Application& self)
     ServiceRoot = getPathFromConfig("net.service_root");
     while (ServiceRoot.length() > 0 && ServiceRoot[ServiceRoot.length() - 1] == '/')
         ServiceRoot.pop_back();
+
+    IsProxyPrefixEnabled = getConfigValue<bool>(conf, "net.proxy_prefix", false);
 
 #if ENABLE_SSL
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
@@ -2255,6 +2259,15 @@ private:
             // Check and remove the ServiceRoot from the request.getURI()
             if (!Util::startsWith(request.getURI(), LOOLWSD::ServiceRoot))
                 throw BadRequestException("The request does not start with prefix: " + LOOLWSD::ServiceRoot);
+
+            // Config & security ...
+            if (request.has("ProxyPrefix"))
+            {
+                if (!LOOLWSD::IsProxyPrefixEnabled)
+                    throw BadRequestException("ProxyPrefix present but net.proxy_prefix is not enabled");
+                else if (!socket->isLocal())
+                    throw BadRequestException("ProxyPrefix request from non-local socket");
+            }
 
             std::string requestURIString(request.getURI().substr(LOOLWSD::ServiceRoot.length()));
             request.setURI(requestURIString);

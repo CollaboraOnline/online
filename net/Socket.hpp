@@ -274,6 +274,9 @@ public:
     }
 #endif
 
+    // Does this socket come from the localhost ?
+    bool isLocal() const;
+
     virtual void dumpState(std::ostream&) {}
 
     /// Set the thread-id we're bound to

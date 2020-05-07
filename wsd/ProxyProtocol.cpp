@@ -31,6 +31,11 @@ void DocumentBroker::handleProxyRequest(
     std::shared_ptr<ClientSession> clientSession;
     if (sessionId == "fetchsession")
     {
+        bool isLocal = socket->isLocal();
+        LOG_TRC("proxy: validate that socket is from localhost: " << isLocal);
+        if (!isLocal)
+            throw BadRequestException("invalid host - only connect from localhost");
+
         LOG_TRC("proxy: Create session for " << _docKey);
         clientSession = createNewClientSession(
                 std::make_shared<ProxyProtocolHandler>(),
