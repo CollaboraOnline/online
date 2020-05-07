@@ -532,6 +532,7 @@ body {
 	border: 1px solid;
 	position: absolute;
 	height: 100%;
+	border-radius: 2px;
 }
 
 .form-field-button {
@@ -541,6 +542,7 @@ body {
 	height: 100%;
 	box-sizing: content-box;
 	padding: 0px;
+	border-radius: 2px;
 }
 
 .form-field-button:hover, .form-field-button:focus {
@@ -554,6 +556,7 @@ body {
 .drop-down-field-list {
 	position: absolute;
 	border: 1px solid;
+	cursor: pointer;
 }
 
 .drop-down-field-list-item {
@@ -562,4 +565,7 @@ body {
 
 .drop-down-field-list-item.selected {
 	background: #99CCFF;
+}
+.drop-down-field-list-item:hover {
+	background: #0b87e7;
 }
