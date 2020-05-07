@@ -68,6 +68,8 @@ L.Control.UIManager = L.Control.extend({
 		} else if (window.enableNotebookbar) {
 			if (docType === 'spreadsheet') {
 				this.map.addControl(L.control.notebookbarCalc());
+			} else if (docType === 'presentation') {
+				this.map.addControl(L.control.notebookbarImpress());
 			} else {
 				this.map.addControl(L.control.notebookbarWriter());
 			}

@@ -285,6 +285,7 @@ LOLEAFLET_JS =\
 	src/control/Control.Notebookbar.js \
 	src/control/Control.NotebookbarWriter.js \
 	src/control/Control.NotebookbarCalc.js \
+	src/control/Control.NotebookbarImpress.js \
 	src/control/Control.NotebookbarBuilder.js \
 	src/control/Control.Layers.js \
 	src/control/Search.js \
@@ -557,6 +558,7 @@ pot:
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarWriter.js \
 		src/control/Control.NotebookbarCalc.js \
+		src/control/Control.NotebookbarImpress.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Ruler.js \
 		src/control/Signing.js \
