@@ -503,6 +503,9 @@ L.Control.LokDialog = L.Control.extend({
 			handles.end = null;
 		}
 
+		if (!handles.start && !handles.end)
+			handles.draggingStopped = true;
+
 		if (!rectangles || rectangles.length < 1) {
 			return;
 		}
