@@ -167,7 +167,8 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
         }
     }
 
-    if (!flushQueueTo(streamSocket) && isWaiting)
+    bool sentMsg = flushQueueTo(streamSocket);
+    if (!sentMsg && isWaiting)
     {
         LOG_TRC("proxy: queue a waiting out socket #" << streamSocket->getFD());
         // longer running 'write socket' (marked 'read' by the client)
@@ -185,7 +186,21 @@ void ProxyProtocolHandler::handleRequest(bool isWaiting, const std::shared_ptr<S
     }
     else
     {
-        LOG_TRC("Return a reply immediately");
+        if (!sentMsg)
+        {
+            // FIXME: we should really wait around a bit.
+            LOG_TRC("Nothing to send - closing immediately");
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "Content-Length: " << 0 << "\r\n"
+                "\r\n";
+            streamSocket->send(oss.str());
+        }
+        else
+            LOG_TRC("Returned a reply immediately");
+
         socket->shutdown();
     }
 }
