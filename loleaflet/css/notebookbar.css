@@ -66,7 +66,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	box-shadow: 0 0 0px 4px #e6e6e640 !important;
 }
 
-.unotoolbutton.notebookbar:hover, #clearFormatting.notebookbar div img:hover {
+.unotoolbutton.notebookbar:not(.disabled):hover, #clearFormatting.notebookbar div img:hover {
 	box-shadow: 0 0 0px 4px #e6e6e6b0;
 	border-radius: 0.1px;
 	background-color: #e6e6e6b0;

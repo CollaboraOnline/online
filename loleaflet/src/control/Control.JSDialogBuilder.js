@@ -1584,6 +1584,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					$(button).addClass('selected');
 				else
 					$(button).removeClass('selected');
+
+				if (state && state === 'disabled')
+					$(div).addClass('disabled');
+				else
+					$(div).removeClass('disabled');
 			};
 
 			updateFunction();
@@ -1600,8 +1605,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		$(div).click(function () {
-			builder.refreshSidebar = true;
-			builder.callback('toolbutton', 'click', button, data.command, builder);
+			if (!$(div).hasClass('disabled')) {
+				builder.refreshSidebar = true;
+				builder.callback('toolbutton', 'click', button, data.command, builder);
+			}
 		});
 
 		if (data.enabled == 'false')
