@@ -131,17 +131,13 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-top: -5px;
 }
 
-#Copy.notebookbar, #clearFormatting.notebookbar, #table-GroupB20.notebookbar {
+#Copy.notebookbar, #clearFormatting.notebookbar, #table-Home-Section-Insert #table-GroupB20.notebookbar {
 	margin-top: 10px;
 }
 
-/* Inset Tab */
+/* Insert Tab */
 
-#table-Insert-Container {
-	margin-top: 5px;
-}
-
-#InsertReferenceField.notebookbar, #InsertSection.notebookbar, #BasicShapes.notebookbar {
+#InsertReferenceField.notebookbar, #InsertSection.notebookbar, #table-shapes6 #BasicShapes.notebookbar {
 	margin-top: 10px;
 }
 
@@ -234,6 +230,13 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 32px !important;
 }
 
+#table-Table-Section-Merge #table-GroupB61 #SplitCell.notebookbar img,
+#table-Table-Section-Select #table-GroupB65 #SelectTable.notebookbar img
+{
+	height: 24px !important;
+	width: 24px !important;
+}
+
 #table-SectionBottom40.notebookbar,
 #SplitTable.notebookbar,
 #EntireRow.notebookbar,
@@ -279,6 +282,15 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Calc */
 
+/* Home tab */
+
+#table-HomeBox #table-PasteBox1 #table-SectionBottom10 #SortAscending.notebookbar,
+#table-HomeBox #table-PasteBox1 #table-SectionBottom10 #DataFilterAutoFilter.notebookbar,
+#table-Home-Section-Find #SearchDialog.notebookbar
+{
+	display: none;
+}
+
 /* Insert Tab */
 
 #table-InsertBox {
@@ -310,4 +322,66 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 {
 	height: 32px !important;
 	width: 32px !important;
+}
+
+/* Impress */
+
+/* Home Tab */
+
+#table-Home-Section-Slide #table-LineB9.notebookbar
+{
+	margin-top: 10px;
+}
+
+#table-shapes15 #BasicShapes.notebookbar
+{
+	display: none;
+}
+
+#table-SectionBottom5 #Text.notebookbar img
+{
+	height: 32px !important;
+	width: 32px !important;
+}
+
+/* Insert Tab */
+
+#table-Insert-Section-DrawText #Text.notebookbar img,
+#table-Insert-Section-Slide #InsertPage.notebookbar img
+{
+	height: 32px !important;
+	width: 32px !important;
+}
+
+/* Review Tab */
+
+#table-GroupB40 #Hyphenation.notebookbar
+{
+	margin-top: 10px;
+}
+
+#table-GroupB42 #DeleteAllAnnotation.notebookbar img
+{
+	height: 32px !important;
+	width: 32px !important;
+}
+
+#table-GroupB37 #InsertAnnotation.notebookbar
+{
+	display: none;
+}
+
+/* Table Tab */
+
+#table-box11 #FrameLineColor.notebookbar img,
+#table-Table-Section-Merge #SplitCell.notebookbar img,
+#table-Table-Section-Select #SelectTable.notebookbar img
+{
+	height: 32px !important;
+	width: 32px !important;
+}
+
+#table-Table-Section-Layout #table-SectionBottom57.notebookbar
+{
+	margin-top: 10px;
 }
