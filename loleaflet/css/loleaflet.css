@@ -547,6 +547,7 @@ body {
 
 .form-field-button:hover, .form-field-button:focus {
 	background: #DDDDDD;
+	outline: 0;
 }
 
 .form-field-button-image {
