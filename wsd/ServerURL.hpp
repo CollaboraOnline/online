@@ -19,7 +19,8 @@
  */
 class ServerURL
 {
-    std::string _schemeProtocol;
+    bool        _ssl;
+    bool        _websocket;
     std::string _schemeAuthority;
     std::string _pathPlus;
 public:
@@ -38,9 +39,9 @@ public:
         // The user can override the ServerRoot with a new prefix.
         _pathPlus = LOOLWSD::ServiceRoot;
 
-        bool ssl = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination());
+        _ssl = (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination());
+        _websocket = true;
         std::string serverName = LOOLWSD::ServerName.empty() ? host : LOOLWSD::ServerName;
-        _schemeProtocol = (ssl ? "wss://" : "ws://");
         _schemeAuthority = serverName;
 
         // A well formed ProxyPrefix will override it.
@@ -54,7 +55,9 @@ public:
             auto hostEndPos = url.find("/", pos);
             if (hostEndPos != std::string::npos)
             {
-                _schemeProtocol = url.substr(0, pos);
+                _websocket = false;
+                std::string schemeProtocol = url.substr(0, pos);
+                _ssl = (schemeProtocol != "http://");
                 _schemeAuthority = url.substr(pos, hostEndPos - pos);
                 _pathPlus = url.substr(hostEndPos);
                 return;
@@ -72,12 +75,15 @@ public:
 
     std::string getWebSocketUrl() const
     {
-        return _schemeProtocol + _schemeAuthority;
+        std::string schemeProtocol = (_websocket ? "ws" : "http");
+        if (_ssl)
+            schemeProtocol += "s";
+        return schemeProtocol + "://" + _schemeAuthority;
     }
 
     std::string getSubURLForEndpoint(const std::string &path) const
     {
-        return _schemeProtocol + _schemeAuthority + _pathPlus + path;
+        return std::string("http") + (_ssl ? "s" : "") + "://" + _schemeAuthority + _pathPlus + path;
     }
 };
 
