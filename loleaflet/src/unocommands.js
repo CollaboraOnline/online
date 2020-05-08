@@ -266,6 +266,7 @@ var unoCommandsArray = {
 	SetAnchorToFrame:{text:{menu:_('To ~Frame'),},},
 	SetAnchorToPage:{spreadsheet:{menu:_('To P~age'),},text:{menu:_('To P~age'),},},
 	SetAnchorToPara:{text:{menu:_('To ~Paragraph'),},},
+	SetDefault:{global:{menu:_('Clear ~Direct Formatting'),},},
 	SetLanguageAllTextMenu:{global:{menu:_('For All Text'),},},
 	SetLanguageParagraphMenu:{global:{menu:_('For Paragraph'),},},
 	SetLanguageSelectionMenu:{global:{menu:_('For Selection'),},},

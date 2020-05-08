@@ -172,6 +172,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:ResetAttributes'] = this._clearFormattingControl;
+		this._toolitemHandlers['.uno:SetDefault'] = this._clearFormattingControl;
 
 		this._currentDepth = 0;
 	},
