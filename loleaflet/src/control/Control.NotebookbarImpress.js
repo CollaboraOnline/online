@@ -6,6 +6,37 @@
 /* global */
 L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
+	getShortcutsBarData: function() {
+		return [
+			{
+				'id': 'shortcutstoolbox',
+				'type': 'toolbox',
+				'children': [
+					{
+						'type': 'toolitem',
+						'text': 'Save',
+						'command': '.uno:Save'
+					},
+					{
+						'type': 'toolitem',
+						'text': 'Start Presentation',
+						'command': '.uno:Presentation'
+					},
+					{
+						'type': 'toolitem',
+						'text': 'Undo',
+						'command': '.uno:Undo'
+					},
+					{
+						'type': 'toolitem',
+						'text': 'Redo',
+						'command': '.uno:Redo'
+					}
+				]
+			}
+		];
+	},
+
 	selectedTab: function(tabText) {
 		switch (tabText) {
 		case 'HomeLabel':

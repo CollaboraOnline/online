@@ -40,6 +40,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
 		this._toolitemHandlers['.uno:ConditionalFormatMenu'] = this._conditionalFormatControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._clearFormattingControl;
+		this._toolitemHandlers['.uno:Presentation'] = this._startPresentationControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
@@ -91,7 +92,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:EditDoc'] = function() {};
 		this._toolitemHandlers['.uno:AssignLayout'] = function() {};
 		this._toolitemHandlers['.uno:ConnectorToolbox'] = function() {};
-		this._toolitemHandlers['.uno:Presentation'] = function() {};
 		this._toolitemHandlers['.uno:PresentationCurrentSlide'] = function() {};
 		this._toolitemHandlers['.uno:PresentationLayout'] = function() {};
 		this._toolitemHandlers['.uno:FontworkGalleryFloater'] = function() {};
@@ -377,6 +377,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
 			builder.map.sendUnoCommand('.uno:InsertSymbol');
+		});
+	},
+
+	_startPresentationControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			builder.map.fire('fullscreen');
 		});
 	},
 
