@@ -1747,6 +1747,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			titleClass = 'menu-entry-with-icon';
 		}
 
+		var updateFunction = function() {
+			var items = builder.map['stateChangeHandler'];
+			var state = items.getItemValue(data.command);
+
+			if (state && state === 'disabled')
+				$(sectionTitle).addClass('disabled');
+			else
+				$(sectionTitle).removeClass('disabled');
+		};
+
+		updateFunction();
+
+		builder.map.on('commandstatechanged', function(e) {
+			if (e.commandName === data.command)
+				updateFunction();
+		}, this);
+
 		if (builder.options.noLabelsForUnoButtons !== true) {
 			var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
 			titleSpan.innerHTML =  builder._cleanText(_UNO(data.command));

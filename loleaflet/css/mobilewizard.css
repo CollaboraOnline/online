@@ -348,13 +348,13 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background-color: #e6e6e640;
 }
 
-.unotoolbutton.disabled {
-	color: #707070;
+.unotoolbutton.disabled, .mobile-wizard-widebutton.disabled {
+	color: silver;
 }
 
-.unotoolbutton.disabled img {
-	-webkit-filter: grayscale(90%);
-	filter: grayscale(90%);
+.unotoolbutton.disabled img, .mobile-wizard-widebutton.disabled img {
+	-webkit-filter: grayscale(90%) brightness(120%);
+	filter: grayscale(90%) brightness(120%);
 }
 
 #mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
