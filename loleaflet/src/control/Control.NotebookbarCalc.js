@@ -27,7 +27,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'text': '~Home',
 				'id': '2',
-				'name': 'HomeLabel'
+				'name': 'HomeLabel',
+				'context': 'default|Cell'
 			},
 			{
 				'text': '~Insert',

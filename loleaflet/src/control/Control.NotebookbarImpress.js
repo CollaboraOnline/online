@@ -62,7 +62,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			{
 				'text': '~Home',
 				'id': '2',
-				'name': 'HomeLabel'
+				'name': 'HomeLabel',
+				'context': 'default|DrawText'
 			},
 			{
 				'text': '~Insert',
@@ -77,7 +78,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			{
 				'text': '~Table',
 				'id': '8',
-				'name': 'TableLabel'
+				'name': 'TableLabel',
+				'context': 'Table'
 			}
 		];
 	},

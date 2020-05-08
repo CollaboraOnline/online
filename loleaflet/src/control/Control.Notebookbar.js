@@ -13,6 +13,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 		this.createScrollButtons();
 		this.setupResizeHandler();
+
+		this.map.on('contextchange', this.onContextChange, this);
 	},
 
 	clearNotebookbar: function() {
@@ -129,4 +131,18 @@ L.Control.Notebookbar = L.Control.extend({
 		$(window).resize(handler);
 		$('.notebookbar-scroll-wrapper').scroll(handler);
 	},
+
+	onContextChange: function(event) {
+		var tabs = this.getTabs();
+		for (var tab in tabs) {
+			if (tabs[tab].context) {
+				var contexts = tabs[tab].context.split('|');
+				for (var context in contexts) {
+					if (contexts[context] === event.context) {
+						this.selectedTab(tabs[tab].name);
+					}
+				}
+			}
+		}
+	}
 });
