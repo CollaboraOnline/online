@@ -27,6 +27,24 @@
 	cursor: pointer;
 }
 
+/* shortcuts bar */
+
+.notebookbar-shortcuts-bar {
+	display: inline-block;
+	position: relative;
+	z-index: 10000;
+}
+
+.notebookbar-shortcuts-bar .unotoolbutton.notebookbar {
+	margin-right: 10px;
+}
+
+.notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
+	width: 16px !important;
+	height: 16px !important;
+	margin-right: 0px;
+}
+
 /* root container */
 
 .notebookbar-scroll-wrapper {

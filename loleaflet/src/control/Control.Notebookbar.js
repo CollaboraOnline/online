@@ -33,6 +33,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 	setTabs: function(tabs) {
 		$('nav').prepend(tabs);
+		this.createShortcutsBar();
 	},
 
 	selectedTab: function() {
@@ -42,6 +43,40 @@ L.Control.Notebookbar = L.Control.extend({
 	getTabs: function() {
 		// implement in child classes
 		return [];
+	},
+
+	getShortcutsBarData: function() {
+		return [
+			{
+				'id': 'shortcutstoolbox',
+				'type': 'toolbox',
+				'children': [
+					{
+						'type': 'toolitem',
+						'text': 'Save',
+						'command': '.uno:Save'
+					},
+					{
+						'type': 'toolitem',
+						'text': 'Undo',
+						'command': '.uno:Undo'
+					},
+					{
+						'type': 'toolitem',
+						'text': 'Redo',
+						'command': '.uno:Redo'
+					}
+				]
+			}
+		];
+	},
+
+	createShortcutsBar: function() {
+		var shortcutsBar = L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
+		$('nav').prepend(shortcutsBar);
+
+		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
+		builder.build(shortcutsBar, this.getShortcutsBarData());
 	},
 
 	// required, called by builder, not needed in this container
