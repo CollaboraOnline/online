@@ -51,9 +51,22 @@ if [ -z "$LIBREOFFICE_BUILD_TARGET" ]; then
 fi;
 echo "LibreOffice build target: '$LIBREOFFICE_BUILD_TARGET'"
 
-# do everything in the builddir
+
 SRCDIR=$(realpath `dirname $0`)
-INSTDIR="$SRCDIR/instdir"
+
+if [ -z "$(lsb_release -si)" ]; then
+	echo "WARNING: Unable to determine your distribution"
+	echo "(Is lsb_release installed?)"
+	echo "Using Ubuntu Dockerfile."
+	HOST_OS="Ubuntu"
+else
+	HOST_OS=$(lsb_release -si)
+fi
+if ! [ -e "$HOST_OS" ]; then
+  echo "There is no suitable Dockerfile for your host system."
+  echo "Please fix this problem and re-run $0"
+  exit 1
+fi
 BUILDDIR="$SRCDIR/builddir"
 
 mkdir -p "$BUILDDIR"
@@ -104,7 +117,11 @@ cp -a libreoffice/instdir "$INSTDIR"/opt/libreoffice
 # Create new docker image
 if [ -z "$NO_DOCKER_IMAGE" ]; then
   cd "$SRCDIR"
-  docker build --no-cache -t $DOCKER_HUB_REPO:$DOCKER_HUB_TAG . || exit 1
+
+  # Pull the image first to be sure we're using the latest available
+  docker pull $(grep "FROM " $HOST_OS | cut -d ' ' -f 2)
+
+  docker build --no-cache -t $DOCKER_HUB_REPO:$DOCKER_HUB_TAG -f $HOST_OS . || exit 1
   if [ -z "$NO_DOCKER_PUSH" ]; then
     docker push $DOCKER_HUB_REPO:$DOCKER_HUB_TAG || exit 1
   fi;
