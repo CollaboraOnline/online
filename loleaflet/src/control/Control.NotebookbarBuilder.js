@@ -41,6 +41,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ConditionalFormatMenu'] = this._conditionalFormatControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._clearFormattingControl;
 		this._toolitemHandlers['.uno:Presentation'] = this._startPresentationControl;
+		this._toolitemHandlers['.uno:Save'] = this._saveControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
@@ -386,6 +387,21 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
 			builder.map.fire('fullscreen');
+		});
+	},
+
+	_saveControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			// Save only when not read-only.
+			if (builder.map._permission !== 'readonly') {
+				builder.map.fire('postMessage', {msgId: 'UI_Save'});
+				if (!builder.map._disableDefaultAction['UI_Save']) {
+					builder.map.save(false, false);
+				}
+			}
 		});
 	},
 
