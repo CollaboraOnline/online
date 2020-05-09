@@ -378,6 +378,13 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	viewRowColumnHeaders: function (e) {
 		if (e.data.columns && e.data.columns.length > 0) {
 			this.fillColumns(e.data.columns, e.data.columnGroups, e.converter, e.context);
+			this._onUpdateCurrentColumn(e.cursor);
+			if (e.selection && e.selection.hasSelection) {
+				this._onUpdateSelection(e.selection);
+			}
+			else {
+				this._onClearSelection();
+			}
 		}
 	},
 

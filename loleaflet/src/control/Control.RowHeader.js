@@ -367,6 +367,13 @@ L.Control.RowHeader = L.Control.Header.extend({
 	viewRowColumnHeaders: function (e) {
 		if (e.data.rows && e.data.rows.length) {
 			this.fillRows(e.data.rows, e.data.rowGroups, e.converter, e.context);
+			this._onUpdateCurrentRow(e.cursor);
+			if (e.selection && e.selection.hasSelection) {
+				this._onUpdateSelection(e.selection);
+			}
+			else {
+				this._onClearSelection();
+			}
 		}
 	},
 
