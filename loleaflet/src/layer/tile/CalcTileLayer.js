@@ -567,3 +567,844 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._onUpdateCurrentHeader();
 	}
 });
+
+
+// TODO: Move these somewhere more appropriate.
+
+// Sheet geometry data
+L.SheetGeometry = L.Class.extend({
+
+	// sheetGeomJSON is expected to be the parsed JSON message from core
+	// in response to client command '.uno:SheetGeometryData' with
+	// all flags (ie 'columns', 'rows', 'sizes', 'hidden', 'filtered',
+	// 'groups') enabled.
+	initialize: function (sheetGeomJSON, tileWidthTwips, tileHeightTwips,
+		tileSizeCSSPixels, dpiScale) {
+
+		if (typeof sheetGeomJSON !== 'object' ||
+			typeof tileWidthTwips !== 'number' ||
+			typeof tileHeightTwips !== 'number' ||
+			typeof tileSizeCSSPixels !== 'number' ||
+			typeof dpiScale !== 'number') {
+			console.error('Incorrect constructor argument types or missing required arguments');
+			return;
+		}
+
+		this._columns = new L.SheetDimension();
+		this._rows = new L.SheetDimension();
+		this._unoCommand = '.uno:SheetGeometryData';
+
+		// Set various unit conversion info early on because on update() call below, these info are needed.
+		this.setTileGeometryData(tileWidthTwips, tileHeightTwips, tileSizeCSSPixels,
+			dpiScale, false /* update position info ?*/);
+
+		this.update(sheetGeomJSON, /* checkCompleteness */ true);
+	},
+
+	update: function (sheetGeomJSON, checkCompleteness) {
+
+		if (!this._testValidity(sheetGeomJSON, checkCompleteness)) {
+			return false;
+		}
+
+		var updateOK = true;
+		if (sheetGeomJSON.columns) {
+			if (!this._columns.update(sheetGeomJSON.columns)) {
+				console.error(this._unoCommand + ': columns update failed.');
+				updateOK = false;
+			}
+		}
+
+		if (sheetGeomJSON.rows) {
+			if (!this._rows.update(sheetGeomJSON.rows)) {
+				console.error(this._unoCommand + ': rows update failed.');
+				updateOK = false;
+			}
+		}
+
+		this._columns.setMaxIndex(+sheetGeomJSON.maxtiledcolumn);
+		this._rows.setMaxIndex(+sheetGeomJSON.maxtiledrow);
+
+		return updateOK;
+	},
+
+	setTileGeometryData: function (tileWidthTwips, tileHeightTwips, tileSizeCSSPixels,
+		dpiScale, updatePositions) {
+
+		this._columns.setTileGeometryData(tileWidthTwips, tileSizeCSSPixels, dpiScale, updatePositions);
+		this._rows.setTileGeometryData(tileHeightTwips, tileSizeCSSPixels, dpiScale, updatePositions);
+	},
+
+	setViewArea: function (topLeftTwipsPoint, sizeTwips) {
+
+		if (!(topLeftTwipsPoint instanceof L.Point) || !(sizeTwips instanceof L.Point)) {
+			console.error('invalid argument types');
+			return false;
+		}
+
+		var left   = topLeftTwipsPoint.x;
+		var top    = topLeftTwipsPoint.y;
+		var right  = left + sizeTwips.x;
+		var bottom = top + sizeTwips.y;
+
+		this._columns.setViewLimits(left, right);
+		this._rows.setViewLimits(top, bottom);
+
+		return true;
+	},
+
+	// returns an object with keys 'start' and 'end' indicating the
+	// column range in the current view area.
+	getViewColumnRange: function () {
+		return this._columns.getViewElementRange();
+	},
+
+	// returns an object with keys 'start' and 'end' indicating the
+	// row range in the current view area.
+	getViewRowRange: function () {
+		return this._rows.getViewElementRange();
+	},
+
+	getViewCellRange: function () {
+		return {
+			columnrange: this.getViewColumnRange(),
+			rowrange: this.getViewRowRange()
+		};
+	},
+
+	// Returns an object with the following fields:
+	// columnIndex should be zero based.
+	// 'startpos' (start position of the column in css pixels), 'size' (column size in css pixels).
+	// Note: All these fields are computed by assuming zero sizes for hidden/filtered columns.
+	getColumnData: function (columnIndex) {
+		return this._columns.getElementData(columnIndex);
+	},
+
+	// Returns an object with the following fields:
+	// rowIndex should be zero based.
+	// 'startpos' (start position of the row in css pixels), 'size' (row size in css pixels).
+	// Note: All these fields are computed by assuming zero sizes for hidden/filtered rows.
+	getRowData: function (rowIndex) {
+		return this._rows.getElementData(rowIndex);
+	},
+
+	// Runs the callback for every column in the inclusive range [columnStart, columnEnd].
+	// callback is expected to have a signature of (column, columnData)
+	// where 'column' will contain the column index(zero based) and 'columnData' will be an object with
+	// the same fields as returned by getColumnData().
+	forEachColumnInRange: function (columnStart, columnEnd, callback) {
+		this._columns.forEachInRange(columnStart, columnEnd, callback);
+	},
+
+	// Runs the callback for every row in the inclusive range [rowStart, rowEnd].
+	// callback is expected to have a signature of (row, rowData)
+	// where 'row' will contain the row index(zero based) and 'rowData' will be an object with
+	// the same fields as returned by getRowData().
+	forEachRowInRange: function (rowStart, rowEnd, callback) {
+		this._rows.forEachInRange(rowStart, rowEnd, callback);
+	},
+
+	getColumnGroupLevels: function () {
+		return this._columns.getGroupLevels();
+	},
+
+	getRowGroupLevels: function () {
+		return this._rows.getGroupLevels();
+	},
+
+	getColumnGroupsDataInView: function () {
+		return this._columns.getGroupsDataInView();
+	},
+
+	getRowGroupsDataInView: function () {
+		return this._rows.getGroupsDataInView();
+	},
+
+	_testValidity: function (sheetGeomJSON, checkCompleteness) {
+
+		if (!sheetGeomJSON.hasOwnProperty('commandName')) {
+			console.error(this._unoCommand + ' response has no property named "commandName".');
+			return false;
+		}
+
+		if (sheetGeomJSON.commandName !== this._unoCommand) {
+			console.error('JSON response has wrong commandName: ' +
+				sheetGeomJSON.commandName + ' expected: ' +
+				this._unoCommand);
+			return false;
+		}
+
+		if (typeof sheetGeomJSON.maxtiledcolumn !== 'string' ||
+			!/^\d+$/.test(sheetGeomJSON.maxtiledcolumn)) {
+			console.error('JSON is missing/unreadable maxtiledcolumn property');
+			return false;
+		}
+
+		if (typeof sheetGeomJSON.maxtiledrow !== 'string' ||
+			!/^\d+$/.test(sheetGeomJSON.maxtiledrow)) {
+			console.error('JSON is missing/unreadable maxtiledrow property');
+			return false;
+		}
+
+		if (checkCompleteness) {
+
+			if (!sheetGeomJSON.hasOwnProperty('rows') ||
+				!sheetGeomJSON.hasOwnProperty('columns')) {
+
+				console.error(this._unoCommand + ' response is incomplete.');
+				return false;
+			}
+
+			if (typeof sheetGeomJSON.rows !== 'object' ||
+				typeof sheetGeomJSON.columns !== 'object') {
+
+				console.error(this._unoCommand + ' response has invalid rows/columns children.');
+				return false;
+			}
+
+			var expectedFields = ['sizes', 'hidden', 'filtered'];
+			for (var idx = 0; idx < expectedFields.length; idx++) {
+
+				var fieldName = expectedFields[idx];
+				var encodingForCols = sheetGeomJSON.columns[fieldName];
+				var encodingForRows = sheetGeomJSON.rows[fieldName];
+
+				// Don't accept empty string or any other types.
+				if (typeof encodingForRows !== 'string' || !encodingForRows) {
+					console.error(this._unoCommand + ' response has invalid value for rows.' +
+						fieldName);
+					return false;
+				}
+
+				// Don't accept empty string or any other types.
+				if (typeof encodingForCols !== 'string' || !encodingForCols) {
+					console.error(this._unoCommand + ' response has invalid value for columns.' +
+						fieldName);
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+});
+
+// Used to represent/query geometry data about either rows or columns.
+L.SheetDimension = L.Class.extend({
+
+	initialize: function () {
+
+		this._sizes = new L.SpanList();
+		this._hidden = new L.BoolSpanList();
+		this._filtered = new L.BoolSpanList();
+		this._groups = new L.DimensionOutlines();
+
+		// This is used to store the span-list of sizes
+		// with hidden/filtered elements set to zero size.
+		// This needs to be updated whenever
+		// this._sizes/this._hidden/this._filtered are modified.
+		this._visibleSizes = undefined;
+	},
+
+	update: function (jsonObject) {
+
+		if (typeof jsonObject !== 'object') {
+			return false;
+		}
+
+		var regenerateVisibleSizes = false;
+		var loadsOK = true;
+		if (jsonObject.hasOwnProperty('sizes')) {
+			loadsOK = this._sizes.load(jsonObject.sizes);
+			regenerateVisibleSizes = true;
+		}
+
+		if (jsonObject.hasOwnProperty('hidden')) {
+			var thisLoadOK = this._hidden.load(jsonObject.hidden);
+			loadsOK = loadsOK && thisLoadOK;
+			regenerateVisibleSizes = true;
+		}
+
+		if (jsonObject.hasOwnProperty('filtered')) {
+			thisLoadOK = this._filtered.load(jsonObject.filtered);
+			loadsOK = loadsOK && thisLoadOK;
+			regenerateVisibleSizes = true;
+		}
+
+		if (jsonObject.hasOwnProperty('groups')) {
+			thisLoadOK = this._groups.load(jsonObject.groups);
+			loadsOK = loadsOK && thisLoadOK;
+		}
+
+		if (loadsOK && regenerateVisibleSizes) {
+			this._updateVisible();
+		}
+
+		return loadsOK;
+	},
+
+	setMaxIndex: function (maxIndex) {
+		this._maxIndex = maxIndex;
+	},
+
+	setTileGeometryData: function (tileSizeTwips, tileSizeCSSPixels, dpiScale, updatePositions) {
+		if (updatePositions === undefined) {
+			updatePositions = true;
+		}
+
+		this._twipsPerCSSPixel = tileSizeTwips / tileSizeCSSPixels;
+		this._devPixelsPerCssPixel = dpiScale;
+
+		if (updatePositions) {
+			// We need to compute positions data for every zoom change.
+			this._updatePositions();
+		}
+	},
+
+	_updateVisible: function () {
+
+		var invisibleSpanList = this._hidden.union(this._filtered); // this._hidden is not modified.
+		this._visibleSizes = this._sizes.applyZeroValues(invisibleSpanList); // this._sizes is not modified.
+		this._updatePositions();
+	},
+
+	_updatePositions: function() {
+
+		var posDevPx = 0; // position in device pixels.
+		var dimensionObj = this;
+		this._visibleSizes.addCustomDataForEachSpan(function (
+			index,
+			size, /* size in twips of one element in the span */
+			spanLength /* #elements in the span */) {
+
+			// Important: rounding needs to be done in device pixels exactly like the core.
+			var sizeDevPxOne = Math.floor(size / dimensionObj._twipsPerCSSPixel * dimensionObj._devPixelsPerCssPixel);
+			posDevPx += (sizeDevPxOne * spanLength);
+			var posCssPx = posDevPx / dimensionObj._devPixelsPerCssPixel;
+			// position in device-pixel aligned twips.
+			var posTileTwips = Math.floor(posCssPx * dimensionObj._twipsPerCSSPixel);
+
+			var customData = {
+				sizedev: sizeDevPxOne,
+				posdevpx: posDevPx,
+				poscsspx: posCssPx,
+				postiletwips: posTileTwips
+			};
+
+			return customData;
+		});
+	},
+
+	getElementData: function (index) {
+		var span = this._visibleSizes.getSpanDataByIndex(index);
+		if (span === undefined) {
+			return undefined;
+		}
+
+		return this._getElementDataFromSpanByIndex(index, span);
+	},
+
+	_getElementDataFromSpanByIndex: function (index, span) {
+		if (span === undefined || index < span.start || span.end < index) {
+			return undefined;
+		}
+
+		var numSizes = span.end - index + 1;
+		// all in css pixels.
+		return {
+			startpos: (span.data.posdevpx - span.data.sizedev * numSizes) / this._devPixelsPerCssPixel,
+			size: span.data.sizedev / this._devPixelsPerCssPixel
+		};
+	},
+
+	forEachInRange: function (start, end, callback) {
+
+		var dimensionObj = this;
+		this._visibleSizes.forEachSpanInRange(start, end, function (span) {
+			var first = Math.max(span.start, start);
+			var last = Math.min(span.end, end);
+			for (var index = first; index <= last; ++index) {
+				callback(index, dimensionObj._getElementDataFromSpanByIndex(index, span));
+			}
+		});
+	},
+
+	_getIndexFromTileTwipsPos: function (pos) {
+		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'postiletwips');
+		var elementCount = span.end - span.start + 1;
+		var posStart = ((span.data.posdevpx - span.data.sizedev * elementCount) /
+			this._devPixelsPerCssPixel * this._twipsPerCSSPixel);
+		var posEnd = span.data.postiletwips;
+		var sizeOne = (posEnd - posStart) / elementCount;
+		var relativeIndex = Math.round((pos - posStart) / sizeOne);
+
+		return span.start + relativeIndex;
+	},
+
+	setViewLimits: function (startPosTileTwips, endPosTileTwips) {
+
+		// Extend the range a bit, to compensate for rounding errors.
+		this._viewStartIndex = Math.max(0, this._getIndexFromTileTwipsPos(startPosTileTwips) - 2);
+		this._viewEndIndex = Math.min(this._maxIndex, this._getIndexFromTileTwipsPos(endPosTileTwips) + 2);
+	},
+
+	getViewElementRange: function () {
+		return {
+			start: this._viewStartIndex,
+			end: this._viewEndIndex
+		};
+	},
+
+	getGroupLevels: function () {
+		return this._outlines.getLevels();
+	},
+
+	getGroupsDataInView: function () {
+		var groupsData = [];
+		var levels = this._outlines.getLevels();
+		if (!levels) {
+			return groupsData;
+		}
+
+		var dimensionObj = this;
+		this._outlines.forEachGroupInRange(this._viewStartIndex, this._viewEndIndex,
+			function (levelIdx, groupIdx, start, end, hidden) {
+
+				var startElementData = dimensionObj.getElementData(start, true /* device pixels */);
+				var endElementData = dimensionObj.getElementData(end, true /* device pixels */);
+				groupsData.push({
+					level: (levelIdx + 1).toString(),
+					index: groupIdx.toString(),
+					startPos: startElementData.startpos.toString(),
+					endPos: (endElementData.startpos + endElementData.size).toString(),
+					hidden: hidden ? '1' : '0'
+				});
+			});
+
+		return groupsData;
+	},
+
+	getMaxIndex: function () {
+		return this._maxIndex;
+	}
+});
+
+L.SpanList = L.Class.extend({
+
+	initialize: function (encoding) {
+
+		// spans are objects with keys: 'index' and 'value'.
+		// 'index' holds the last element of the span.
+		// Optionally custom data of a span can be added
+		// under the key 'data' via addCustomDataForEachSpan.
+		this._spanlist = [];
+		if (typeof encoding !== 'string') {
+			return;
+		}
+
+		this.load(encoding);
+	},
+
+	load: function (encoding) {
+
+		if (typeof encoding !== 'string') {
+			return false;
+		}
+
+		var result = parseSpanListEncoding(encoding, false /* boolean value ? */);
+		if (result === undefined) {
+			return false;
+		}
+
+		this._spanlist = result.spanlist;
+		return true;
+	},
+
+	// Runs in O(#spans in 'this' + #spans in 'other')
+	applyZeroValues: function (other) {
+
+		if (!(other instanceof L.BoolSpanList)) {
+			return undefined;
+		}
+
+		// Ensure both spanlists have the same total range.
+		if (this._spanlist[this._spanlist.length - 1].index !== other._spanlist[other._spanlist.length - 1]) {
+			return undefined;
+		}
+
+		var maxElement = this._spanlist[this._spanlist.length - 1].index;
+		var result = new L.SpanList();
+
+		var thisIdx = 0;
+		var otherIdx = 0;
+		var zeroBit = other._startBit;
+		var resultValue = zeroBit ? 0 : this._spanlist[thisIdx].value;
+
+		while (thisIdx < this._spanlist.length && otherIdx < other._spanlist.length) {
+
+			// end elements of the current spans of 'this' and 'other'.
+			var thisElement = this._spanlist[thisIdx].index;
+			var otherElement = other._spanlist[otherIdx];
+
+			var lastElement = otherElement;
+			if (thisElement < otherElement) {
+				lastElement = thisElement;
+				++thisIdx;
+			}
+			else if (otherElement < thisElement) {
+				zeroBit = !zeroBit;
+				++otherIdx;
+			}
+			else { // both elements are equal.
+				zeroBit = !zeroBit;
+				++thisIdx;
+				++otherIdx;
+			}
+
+			var nextResultValue = resultValue;
+			if (thisIdx < this._spanlist.length) {
+				nextResultValue = zeroBit ? 0 : this._spanlist[thisIdx].value;
+			}
+
+			if (resultValue != nextResultValue || lastElement >= maxElement) {
+				// In the result spanlist a new span start from lastElement+1
+				// or reached the maximum possible element.
+				result._spanlist.push({index: lastElement, value: resultValue});
+				resultValue = nextResultValue;
+			}
+		}
+
+		return result;
+	},
+
+	addCustomDataForEachSpan: function (getCustomDataCallback) {
+
+		var prevIndex = -1;
+		this._spanlist.forEach(function (span) {
+			span.data = getCustomDataCallback(
+				span.index, span.value,
+				span.index - prevIndex);
+			prevIndex = span.index;
+		});
+	},
+
+	getSpanDataByIndex: function (index) {
+		var spanid = this._searchByIndex(index);
+		if (spanid == -1) {
+			return undefined;
+		}
+
+		return this._getSpanData(spanid);
+	},
+
+	getSpanDataByCustomDataField: function (value, fieldName) {
+		var spanid = this._searchByCustomDataField(value, fieldName);
+		if (spanid == -1) {
+			return undefined;
+		}
+
+		return this._getSpanData(spanid);
+	},
+
+	forEachSpanInRange: function (start, end, callback) {
+
+		if (start > end) {
+			return;
+		}
+
+		var startId = this._searchByIndex(start);
+		var endId = this._searchByIndex(end);
+
+		if (startId == -1 || endId == -1) {
+			return;
+		}
+
+		for (var id = startId; id <= endId; ++id) {
+			callback(this._getSpanData(id));
+		}
+	},
+
+	_getSpanData: function (spanid) {
+
+		var span = this._spanlist[spanid];
+		var dataClone = undefined;
+		if (span.data) {
+			dataClone = {};
+			Object.keys(span.data).forEach(function (key) {
+				dataClone[key] = span.data[key];
+			});
+		}
+
+		return {
+			start: spanid ? this._spanlist[spanid - 1].index + 1 : 0,
+			end: span.index,
+			size: span.value,
+			data: dataClone
+		};
+	},
+
+	_searchByIndex: function (index) {
+
+		if (index < 0 || index > this._spanlist[this._spanlist.length - 1].index) {
+			return -1;
+		}
+
+		var start = 0;
+		var end = this._spanlist.length - 1;
+		var mid = -1;
+		while (start <= end) {
+			mid = Math.round((start + end) / 2);
+			var spanstart = mid ? this._spanlist[mid - 1].index + 1 : 0;
+			var spanend = this._spanlist[mid].index;
+			if (spanstart <= index && index <= spanend) {
+				break;
+			}
+
+			if (index < spanstart) {
+				end = mid - 1;
+			}
+			else { // spanend < index
+				start = mid + 1;
+			}
+		}
+
+		return mid;
+	},
+
+	_searchByCustomDataField: function (value, fieldName) {
+
+		// All custom searchable data values are assumed to start from 0 at the start of first span.
+		var maxValue = this._spanlist[this._spanlist.length - 1].data[fieldName];
+		if (value < 0 || value > maxValue) {
+			return -1;
+		}
+
+		var start = 0;
+		var end = this._spanlist.length - 1;
+		var mid = -1;
+		while (start <= end) {
+			mid = Math.round((start + end) / 2);
+			var valuestart = mid ? this._spanlist[mid - 1].data[fieldName] + 1 : 0;
+			var valueend = this._spanlist[mid].data[fieldName];
+			if (valuestart <= value && value <= valueend) {
+				break;
+			}
+
+			if (value < valuestart) {
+				end = mid - 1;
+			}
+			else { // valueend < value
+				start = mid + 1;
+			}
+		}
+
+		// may fail for custom data ?
+		return (start <= end) ? mid : -1;
+	}
+
+});
+
+L.BoolSpanList = L.SpanList.extend({
+
+	load: function (encoding) {
+
+		if (typeof encoding !== 'string') {
+			return false;
+		}
+
+		var result = parseSpanListEncoding(encoding, true /* boolean value ? */);
+		if (result === undefined) {
+			return false;
+		}
+
+		this._spanlist = result.spanlist;
+		this._startBit = result.startBit;
+		return true;
+	},
+
+	// Runs in O(#spans in 'this' + #spans in 'other')
+	union: function (other) {
+
+		if (!(other instanceof L.BoolSpanList)) {
+			return undefined;
+		}
+
+		// Ensure both spanlists have the same total range.
+		if (this._spanlist[this._spanlist.length - 1] !== other._spanlist[other._spanlist.length - 1]) {
+			return undefined;
+		}
+
+		var maxElement = this._spanlist[this._spanlist.length - 1];
+
+		var result = new L.BoolSpanList();
+		var thisBit = this._startBit;
+		var otherBit = other._startBit;
+		var resultBit = thisBit || otherBit;
+		result._startBit = resultBit;
+
+		var thisIdx = 0;
+		var otherIdx = 0;
+
+		while (thisIdx < this._spanlist.length && otherIdx < other._spanlist.length) {
+
+			// end elements of the current spans of 'this' and 'other'.
+			var thisElement = this._spanlist[thisIdx];
+			var otherElement = other._spanlist[otherIdx];
+
+			var lastElement = otherElement;
+			if (thisElement < otherElement) {
+				lastElement = thisElement;
+				thisBit = !thisBit;
+				++thisIdx;
+			}
+			else if (otherElement < thisElement) {
+				otherBit = !otherBit;
+				++otherIdx;
+			}
+			else { // both elements are equal.
+				thisBit = !thisBit;
+				otherBit = !otherBit;
+				++thisIdx;
+				++otherIdx;
+			}
+
+			var nextResultBit = (thisBit || otherBit);
+			if (resultBit != nextResultBit || lastElement >= maxElement) {
+				// In the result spanlist a new span start from lastElement+1
+				// or reached the maximum possible element.
+				result._spanlist.push(lastElement);
+				resultBit = nextResultBit;
+			}
+		}
+
+		return result;
+	}
+});
+
+function parseSpanListEncoding(encoding, booleanValue) {
+
+	var spanlist = [];
+	var splits = encoding.split(' ');
+	if (splits.length < 2) {
+		return undefined;
+	}
+
+	var startBit = false;
+	if (booleanValue) {
+		var parts = splits[0].split(':');
+		if (parts.length != 2) {
+			return undefined;
+		}
+		startBit = parseInt(parts[0]);
+		var first = parseInt(parts[1]);
+		if (isNaN(startBit) || isNaN(first)) {
+			return undefined;
+		}
+		spanlist.push(first);
+	}
+
+	startBit = Boolean(startBit);
+
+	for (var idx = 0; idx < splits.length - 1; ++idx) {
+
+		if (booleanValue) {
+			if (!idx) {
+				continue;
+			}
+
+			var entry = parseInt(splits[idx]);
+			if (isNaN(entry)) {
+				return undefined;
+			}
+
+			spanlist.push(entry);
+			continue;
+		}
+
+		var spanParts = splits[idx].split(':');
+		if (spanParts.length != 2) {
+			return undefined;
+		}
+
+		var span = {
+			index: parseInt(spanParts[1]),
+			value: parseInt(spanParts[0])
+		};
+
+		if (isNaN(span.index) || isNaN(span.value)) {
+			return undefined;
+		}
+
+		spanlist.push(span);
+	}
+
+	var result = {spanlist: spanlist};
+
+	if (booleanValue) {
+		result.startBit = startBit;
+	}
+
+	return result;
+}
+
+L.DimensionOutlines = L.Class.extend({
+
+	initialize: function (encoding) {
+
+		this._outlines = [];
+		if (typeof encoding !== 'string') {
+			return;
+		}
+
+		this.load(encoding);
+	},
+
+	load: function (encoding) {
+
+		if (typeof encoding !== 'string') {
+			return false;
+		}
+
+		var levels = encoding.split(' ');
+		if (levels.length < 2) {
+			// No outline.
+			return true;
+		}
+
+		var outlines = [];
+
+		for (var levelIdx = 0; levelIdx < levels.length - 1; ++levelIdx) {
+			var collectionSplits = levels[levelIdx].split(',');
+			var collections = [];
+			if (collectionSplits.length < 2) {
+				return false;
+			}
+
+			for (var collIdx = 0; collIdx < collectionSplits.length - 1; ++collIdx) {
+				var entrySplits = collectionSplits[collIdx].split(':');
+				if (entrySplits.length < 4) {
+					return false;
+				}
+
+				var olineEntry = {
+					start: parseInt(entrySplits[0]),
+					size: parseInt(entrySplits[1]),
+					hidden: parseInt(entrySplits[2]),
+					visible: parseInt(entrySplits[3])
+				};
+
+				if (isNaN(olineEntry.start) || isNaN(olineEntry.size) ||
+					isNaN(olineEntry.hidden) || isNaN(olineEntry.visible)) {
+					return false;
+				}
+
+				collections.push(olineEntry);
+			}
+
+			outlines.push(collections);
+		}
+
+		this._outlines = outlines;
+		return true;
+	}
+});
