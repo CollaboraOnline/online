@@ -213,10 +213,11 @@
 		this.binaryType = 'arraybuffer';
 		this.bufferedAmount = 0;
 		this.extensions = '';
+		this.unloading = false;
 		this.protocol = '';
 		this.connected = true;
 		this.readyState = 0; // connecting
-		this.sessionId = 'fetchsession';
+		this.sessionId = 'open';
 		this.id = window.proxySocketCounter++;
 		this.sendCounter = 0;
 		this.readWaiting = 0;
@@ -299,9 +300,8 @@
 			console.debug('send msg "' + that.sendQueue + '"');
 			var req = new XMLHttpRequest();
 			req.open('POST', that.getEndPoint('write'));
-			req.setRequestHeader('SessionId', that.sessionId);
-			if (that.sessionId === 'fetchsession')
-				console.debug('session fetch not completed');
+			if (that.sessionId === 'open')
+				console.debug('new session not completed');
 			else
 			{
 				req.responseType = 'arraybuffer';
@@ -318,8 +318,7 @@
 		};
 		this.getSessionId = function() {
 			var req = new XMLHttpRequest();
-			req.open('POST', that.getEndPoint('write'));
-			req.setRequestHeader('SessionId', that.sessionId);
+			req.open('POST', that.getEndPoint('open'));
 			req.responseType = 'text';
 			req.addEventListener('load', function() {
 				console.debug('got session: ' + this.responseText);
@@ -344,8 +343,19 @@
 				'B0x' + this.outSerial.toString(16) + '\n' +
 				'0x' + msg.length.toString(16) + '\n' + msg + '\n');
 			this.outSerial++;
-			if (this.sessionId !== 'fetchsession' && this.sendTimeout === undefined)
+			if (this.sessionId !== 'open' && this.sendTimeout === undefined)
 				this.sendTimeout = setTimeout(this.doSend, 2 /* ms */);
+		};
+		this.sendCloseMsg = function(beacon) {
+			var url = that.getEndPoint('close');
+			if (!beacon)
+			{
+				var req = new XMLHttpRequest();
+				req.open('POST', url);
+				req.send('');
+			}
+			else
+				navigator.sendBeacon(url, '');
 		};
 		this.close = function() {
 			console.debug('proxy: close socket');
@@ -353,10 +363,15 @@
 			this.onclose();
 			clearInterval(this.waitInterval);
 			this.waitInterval = undefined;
+			this.sendCloseMsg(this.unloading);
+			this.sessionId = 'open';
 		};
-		this.getEndPoint = function(type) {
+		this.setUnloading = function() {
+			this.unloading = true;
+		};
+		this.getEndPoint = function(command) {
 			var base = this.uri;
-			return base + '/' + type + '/' + this.outSerial;
+			return base + '/' + this.sessionId + '/' + command + '/' + this.outSerial;
 		};
 		console.debug('proxy: new socket ' + this.id + ' ' + this.uri);
 
@@ -368,7 +383,7 @@
 			console.debug('proxy: waiting - ' + that.readWaiting + ' on session ' + that.sessionId);
 			if (that.readWaiting >= 4) // max 4 waiting connections concurrently.
 				return;
-			if (that.sessionId == 'fetchsession')
+			if (that.sessionId == 'open')
 				return; // waiting for our session id.
 			var req = new XMLHttpRequest();
 			// fetch session id:
@@ -384,7 +399,6 @@
 				that.waitConnect();
 			});
 			req.open('GET', that.getEndPoint('wait'));
-			req.setRequestHeader('SessionId', that.sessionId);
 			req.responseType = 'arraybuffer';
 			req.send('');
 			that.readWaiting++;

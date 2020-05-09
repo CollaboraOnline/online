@@ -385,7 +385,7 @@ public:
     /// Do some of the queued writing.
     virtual void performWrites() = 0;
 
-    /// Called when the is disconnected and will be destroyed.
+    /// Called when the socket is disconnected and will be destroyed.
     /// Will be called exactly once.
     virtual void onDisconnect() {}
 

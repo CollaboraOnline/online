@@ -30,9 +30,7 @@ public:
     virtual ~ProxyProtocolHandler() { }
 
     /// Will be called exactly once by setHandler
-    void onConnect(const std::shared_ptr<StreamSocket>& /* socket */) override
-    {
-    }
+    void onConnect(const std::shared_ptr<StreamSocket>& /* socket */) override {}
 
     /// Called after successful socket reads.
     void handleIncomingMessage(SocketDisposition &/* disposition */) override;
@@ -61,10 +59,15 @@ public:
     void getIOStats(uint64_t &sent, uint64_t &recv) override;
     void dumpState(std::ostream& os) override;
     bool parseEmitIncoming(const std::shared_ptr<StreamSocket> &socket);
+
     void handleRequest(bool isWaiting, const std::shared_ptr<Socket> &socket);
+
+    /// tell our handler we've received a close.
+    void notifyDisconnected();
 
 private:
     std::shared_ptr<StreamSocket> popOutSocket();
+    /// can we find anything to send back if we try ?
     bool slurpHasMessages();
     int sendMessage(const char *msg, const size_t len, bool text, bool flush);
     bool flushQueueTo(const std::shared_ptr<StreamSocket> &socket);

@@ -7,6 +7,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * The ProxyProtocol creates a web-socket like connection over HTTP
+ * requests. URLs are formed like this:
+ *      0              1           2      3          4         5
+ *   /lool/<encoded-document-url>/ws/<session-id>/<command>/<serial>
+ * <session-id> can be 'unknown'
+ * <command> can be 'open', 'write', 'wait', or 'close'
+ */
+
 #include <config.h>
 
 #include "DocumentBroker.hpp"
@@ -20,18 +29,18 @@
 #include <cassert>
 
 void DocumentBroker::handleProxyRequest(
-    const std::string& sessionId,
     const std::string& id,
     const Poco::URI& uriPublic,
     const bool isReadOnly,
     const RequestDetails &requestDetails,
-    const std::shared_ptr<StreamSocket> &socket,
-    bool isWaiting)
+    const std::shared_ptr<StreamSocket> &socket)
 {
+    const size_t session = 3;
+    const size_t command = 4;
+    const size_t serial = 5;
+
     std::shared_ptr<ClientSession> clientSession;
-
-
-    if (sessionId == "fetchsession")
+    if (requestDetails.equals(command, "open"))
     {
         bool isLocal = socket->isLocal();
         LOG_TRC("proxy: validate that socket is from localhost: " << isLocal);
@@ -64,6 +73,7 @@ void DocumentBroker::handleProxyRequest(
     }
     else
     {
+        std::string sessionId = requestDetails[session];
         LOG_TRC("proxy: find session for " << _docKey << " with id " << sessionId);
         for (const auto &it : _sessions)
         {
@@ -87,9 +97,16 @@ void DocumentBroker::handleProxyRequest(
     // this DocumentBroker's poll handles reading & writing
     addSocketToPoll(socket);
 
-    auto proxy = std::static_pointer_cast<ProxyProtocolHandler>(
-        protocol);
+    auto proxy = std::static_pointer_cast<ProxyProtocolHandler>(protocol);
+    if (requestDetails.equals(command, "close"))
+    {
+        LOG_TRC("Close session");
+        proxy->notifyDisconnected();
+        return;
+    }
 
+    (void)serial; // in URL for logging, debugging, and uniqueness.
+    bool isWaiting = requestDetails.equals(command, "wait");
     proxy->handleRequest(isWaiting, socket);
 }
 
@@ -98,9 +115,11 @@ bool ProxyProtocolHandler::parseEmitIncoming(
 {
     std::vector<char> &in = socket->getInBuffer();
 
+#if 0 // protocol debugging.
     std::stringstream oss;
     socket->dumpState(oss);
     LOG_TRC("Parse message:\n" << oss.str());
+#endif
 
     while (in.size() > 0)
     {
@@ -217,6 +236,12 @@ void ProxyProtocolHandler::handleIncomingMessage(SocketDisposition &disposition)
     std::stringstream oss;
     disposition.getSocket()->dumpState(oss);
     LOG_ERR("If you got here, it means we failed to parse this properly in handleRequest: " << oss.str());
+}
+
+void ProxyProtocolHandler::notifyDisconnected()
+{
+    if (_msgHandler)
+        _msgHandler->onDisconnect();
 }
 
 int ProxyProtocolHandler::sendMessage(const char *msg, const size_t len, bool text, bool flush)

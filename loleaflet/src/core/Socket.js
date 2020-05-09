@@ -104,6 +104,11 @@ L.Socket = L.Class.extend({
 		                                            120 * 1000);
 	},
 
+	setUnloading: function() {
+		if (this.socket.setUnloading)
+			this.socket.setUnloading();
+	},
+
 	close: function () {
 		this.socket.onerror = function () {};
 		this.socket.onclose = function () {};

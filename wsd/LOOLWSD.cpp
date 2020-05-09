@@ -2909,11 +2909,7 @@ private:
                                   Poco::MemoryInputStream& message,
                                   SocketDisposition &disposition)
     {
-        if (!request.has("SessionId"))
-            throw BadRequestException("No session id header on proxied request");
-
         std::string url = requestDetails.getDocumentURI();
-        std::string sessionId = request.get("SessionId");
 
         LOG_INF("URL [" << url << "].");
         const auto uriPublic = DocumentBroker::sanitizeURI(url);
@@ -2943,15 +2939,12 @@ private:
         // Request a kit process for this doc.
         std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
             none, DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
-
-        std::string fullURL = request.getURI();
-        std::string ending = "/ws/wait";
-        bool isWaiting = fullURL.find(ending) != std::string::npos;
         if (docBroker)
         {
             // need to move into the DocumentBroker context before doing session lookup / creation etc.
             std::string id = _id;
-            disposition.setMove([docBroker, id, uriPublic, isReadOnly, requestDetails, sessionId, isWaiting]
+            disposition.setMove([docBroker, id, uriPublic,
+                                 isReadOnly, requestDetails]
                                 (const std::shared_ptr<Socket> &moveSocket)
                 {
                     LOG_TRC("Setting up docbroker thread for " << docBroker->getDocKey());
@@ -2961,8 +2954,8 @@ private:
                     // We no longer own this socket.
                     moveSocket->setThreadOwner(std::thread::id());
 
-                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly, requestDetails,
-                                            sessionId, moveSocket, isWaiting]()
+                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly,
+                                            requestDetails, moveSocket]()
                         {
                             // Now inside the document broker thread ...
                             LOG_TRC("In the docbroker thread for " << docBroker->getDocKey());
@@ -2971,8 +2964,8 @@ private:
                             try
                             {
                                 docBroker->handleProxyRequest(
-                                    sessionId, id, uriPublic, isReadOnly,
-                                    requestDetails, streamSocket, isWaiting);
+                                    id, uriPublic, isReadOnly,
+                                    requestDetails, streamSocket);
                                 return;
                             }
                             catch (const UnauthorizedRequestException& exc)

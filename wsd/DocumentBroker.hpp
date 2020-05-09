@@ -158,13 +158,11 @@ public:
 
     /// Find or create a new client session for the PHP proxy
     void handleProxyRequest(
-        const std::string& sessionId,
         const std::string& id,
         const Poco::URI& uriPublic,
         const bool isReadOnly,
         const RequestDetails &requestDetails,
-        const std::shared_ptr<StreamSocket> &socket,
-        bool isWaiting);
+        const std::shared_ptr<StreamSocket> &socket);
 
     /// Thread safe termination of this broker if it has a lingering thread
     void joinThread();

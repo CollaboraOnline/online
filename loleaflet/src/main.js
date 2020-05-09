@@ -79,6 +79,8 @@ map.loadDocument(global.socket);
 global.socket = map._socket;
 window.addEventListener('beforeunload', function () {
 	if (map && map._socket) {
+		if (map._socket.setUnloading)
+			map._socket.setUnloading();
 		map._socket.close();
 	}
 });
