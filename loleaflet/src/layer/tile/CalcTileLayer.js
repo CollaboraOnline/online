@@ -373,6 +373,10 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_onUpdateCurrentHeader: function() {
+		this._map.fire('updatecurrentheader', this._getCursorPosSize());
+	},
+
+	_getCursorPosSize: function () {
 		var x = -1, y = -1;
 		if (this._cellCursorXY) {
 			x = this._cellCursorXY.x + 1;
@@ -382,20 +386,30 @@ L.CalcTileLayer = L.TileLayer.extend({
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			size = this._cellCursorTwips.getSize();
 		}
-		this._map.fire('updatecurrentheader', {curX: x, curY: y, width: size.x, height: size.y});
+
+		return { curX: x, curY: y, width: size.x, height: size.y };
 	},
 
 	_onUpdateSelectionHeader: function () {
+		var selectionHeaderData = this._getSelectionHeaderData();
+		if (selectionHeaderData.hasSelection) {
+			this._map.fire('updateselectionheader', selectionHeaderData);
+			return;
+		}
+
+		this._map.fire('clearselectionheader');
+	},
+
+	_getSelectionHeaderData: function() {
 		var layers = this._selections.getLayers();
 		var layer = layers.pop();
 		if (layers.length === 0 && layer && layer.getLatLngs().length === 1) {
 			var start = this._latLngToTwips(layer.getBounds().getNorthWest()).add([1, 1]);
 			var end = this._latLngToTwips(layer.getBounds().getSouthEast()).subtract([1, 1]);
-			this._map.fire('updateselectionheader', {start: start, end: end});
+			return { hasSelection: true, start: start, end: end };
 		}
-		else {
-			this._map.fire('clearselectionheader');
-		}
+
+		return { hasSelection: false };
 	},
 
 	_onStatusMsg: function (textMsg) {
@@ -452,14 +466,14 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 		var comment;
 		if (values.commandName === '.uno:ViewRowColumnHeaders') {
-//			console.log('view row column headers: ' + JSON.stringify(values));
 			this._map.fire('viewrowcolumnheaders', {
 				data: values,
+				cursor: this._getCursorPosSize(),
+				selection: this._getSelectionHeaderData(),
 				converter: this._twipsToPixels,
 				context: this
 			});
-			this._onUpdateCurrentHeader();
-			this._onUpdateSelectionHeader();
+
 		} else if (values.comments) {
 			this.clearAnnotations();
 			for (var index in values.comments) {
