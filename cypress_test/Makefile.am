@@ -185,12 +185,12 @@ endef
 define execute_run_parallel
 	@mkdir -p $(dir $(2)) && touch $(2) && \
 	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
-	if [ -z `grep -o -m 1 "Error:" $(2)` ];\
+	if [ -z `grep -o -m 1 "Error:\|Command failed:" $(2)` ];\
 		then cat $(2);\
 		elif [ -z $(CYPRESS_NO_SECOND_CHANCE) ]; \
 		then echo "Second chance!" > $(2) && \
 		     echo "`echo $(1) && $(1)`" >> $(2) 2>&1 && \
-		     if [ -z `grep -o -m 1 "Error:" $(2)` ];\
+		     if [ -z `grep -o -m 1 "Error:\|Command failed:" $(2)` ];\
 			then cat $(2);\
 			else cat $(2) >> $(ERROR_LOG)&& \
 			     echo "" >> $(ERROR_LOG) && \
