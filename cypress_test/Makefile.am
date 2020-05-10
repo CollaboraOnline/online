@@ -143,7 +143,7 @@ endef
 #https://docs.cypress.io/guides/guides/continuous-integration.html#Xvfb
 define start_Xvfb
 	@echo "Launching Xvfb..."
-	Xvfb :$(DISPLAY_NUMBER) &
+	Xvfb :$(DISPLAY_NUMBER) -screen 0 1280x800x24 &
 	while [ ! -f /tmp/.X$(DISPLAY_NUMBER)-lock ] ; do sleep 1; done
 	@echo
 endef
