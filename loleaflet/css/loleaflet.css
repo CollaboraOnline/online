@@ -558,6 +558,7 @@ body {
 	position: absolute;
 	border: 1px solid;
 	cursor: pointer;
+	background: #000000;
 }
 
 .drop-down-field-list-item {
