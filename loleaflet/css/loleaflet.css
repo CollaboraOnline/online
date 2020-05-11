@@ -562,7 +562,9 @@ body {
 }
 
 .drop-down-field-list-item {
-	width: 100%;
+	width: calc(100% - 10px);
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .drop-down-field-list-item.selected {
