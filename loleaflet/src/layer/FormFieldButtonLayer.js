@@ -104,20 +104,30 @@ L.FormFieldButton = L.Layer.extend({
 
 		var itemList = this._buttonData.params.items;
 		var selected = parseInt(this._buttonData.params.selected);
+
 		for (var i = 0; i < itemList.length; ++i) {
-			var option = L.DomUtil.create('div', 'drop-down-field-list-item', dropDownList);
-			option.innerHTML = itemList[i];
-
-			option.addEventListener('click', this._onListItemSelect);
-			option.map = this.map;
-
-			// Stop propagation to the main document
-			option.addEventListener('mouseup', function(event) {event.stopPropagation();});
-			option.addEventListener('mousedown', function(event) {event.stopPropagation();});
-
-			if (i === selected)
-				option.classList.add('selected');
+			this._buildListItem(dropDownList, itemList[i], i === selected);
 		}
+
+		if (this._buttonData.params.items.length === 0) {
+			this._buildListItem(dropDownList, this._buttonData.params.placeholderText, false);
+		}
+	},
+
+	_buildListItem: function(parent, text, selected) {
+		var option = L.DomUtil.create('div', 'drop-down-field-list-item', parent);
+		option.innerHTML = text;
+
+		option.addEventListener('click', this._onListItemSelect);
+		option.map = this.map;
+		option._buttonData = this._buttonData;
+
+		// Stop propagation to the main document
+		option.addEventListener('mouseup', function(event) {event.stopPropagation();});
+		option.addEventListener('mousedown', function(event) {event.stopPropagation();});
+
+		if (selected === true)
+			option.classList.add('selected');
 	},
 
 	onRemove: function () {
@@ -131,16 +141,20 @@ L.FormFieldButton = L.Layer.extend({
 
 	_onListItemSelect: function(event) {
 		$('.drop-down-field-list').hide();
+		event.stopPropagation();
+
+		if (this._buttonData.params.items.length === 0)
+			return;
+
 		$('.drop-down-field-list-item.selected').removeClass('selected');
 		event.target.classList.add('selected');
 
-		event.stopPropagation();
 
 		// Find item index
 		var index = $(event.target).index();
 
 		var message = 'formfieldevent {\"type\": \"drop-down\",' +
-				      '\"cmd\": \"selected\",' +
+					  '\"cmd\": \"selected\",' +
 					  '\"data\":\"' + index.toString() + '\"}';
 
 		// Apply selection in the document.
