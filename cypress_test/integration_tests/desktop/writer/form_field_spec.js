@@ -227,6 +227,21 @@ describe('Form field button tests.', function() {
 		buttonShouldExist();
 
 		cy.get('.drop-down-field-list-item')
+			.should('have.text', 'No Item specified');
+
+		cy.get('.drop-down-field-list-item.selected')
+			.should('not.exist');
+
+		cy.get('.form-field-button')
+			.click();
+
+		cy.get('.drop-down-field-list')
+			.should('be.visible');
+
+		cy.contains('.drop-down-field-list-item', 'No Item specified')
+			.click();
+
+		cy.get('.drop-down-field-list-item.selected')
 			.should('not.exist');
 	});
 });
