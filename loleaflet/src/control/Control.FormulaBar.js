@@ -40,7 +40,7 @@ L.Control.FormulaBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			},
 			onRefresh: function() {
-				$('#addressInput').off('keyup', this.onAddressInput, this).on('keyup', this.onAddressInput, this);
+				$('#addressInput').off('keyup', that.onAddressInput.bind(that)).on('keyup', that.onAddressInput.bind(that));
 			}
 		});
 		toolbar.bind('touchstart', function(e) {
