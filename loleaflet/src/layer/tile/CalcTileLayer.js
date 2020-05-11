@@ -264,13 +264,13 @@ L.CalcTileLayer = L.TileLayer.extend({
 				}
 			}
 		} else if (textMsg.startsWith('invalidateheader: column')) {
-			this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
+			this.requestViewRowColumnData({x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: row')) {
-			this._map.fire('updaterowcolumnheaders', {x: 0, y: this._map._getTopLeftPoint().y, offset: {x: 0, y: undefined}});
+			this.requestViewRowColumnData({x: 0, y: this._map._getTopLeftPoint().y, offset: {x: 0, y: undefined}});
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: all')) {
-			this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y, offset: {x: undefined, y: undefined}});
+			this.requestViewRowColumnData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y, offset: {x: undefined, y: undefined}});
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
@@ -361,14 +361,14 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._map.setPart(part, true);
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
 			// TODO: test it!
-			this._map.fire('updaterowcolumnheaders');
+			this.requestViewRowColumnData();
 		}
 	},
 
 	_onZoomRowColumns: function () {
 		this._sendClientZoom();
 		// TODO: test it!
-		this._map.fire('updaterowcolumnheaders');
+		this.requestViewRowColumnData();
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
 
@@ -452,6 +452,49 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._resetPreFetching(true);
 			this._update();
 		}
+	},
+
+	// This send .uno:ViewRowColumnHeaders command to core with the new view coordinates.
+	requestViewRowColumnData: function (coordinatesData) {
+
+		// There are places that call this function with no arguments to indicate that the
+		// command arguments should be the current map area coordinates.
+		if (typeof coordinatesData != 'object') {
+			coordinatesData = {};
+		}
+
+		var offset = coordinatesData.offset || {};
+
+		var topLeftPoint = new L.Point(coordinatesData.x, coordinatesData.y);
+		var sizePx = this._map.getSize();
+
+		if (topLeftPoint.x === undefined) {
+			topLeftPoint.x = this._map._getTopLeftPoint().x;
+		}
+		if (topLeftPoint.y === undefined) {
+			topLeftPoint.y = this._map._getTopLeftPoint().y;
+		}
+
+		if (offset.x === 0) {
+			topLeftPoint.x = -1;
+			sizePx.x = 0;
+		}
+		if (offset.y === 0) {
+			topLeftPoint.y = -1;
+			sizePx.y = 0;
+		}
+
+		var pos = this._pixelsToTwips(topLeftPoint);
+		var size = this._pixelsToTwips(sizePx);
+		var payload = 'commandvalues command=.uno:ViewRowColumnHeaders?x=' + Math.round(pos.x) + '&y=' + Math.round(pos.y) +
+			'&width=' + Math.round(size.x) + '&height=' + Math.round(size.y);
+
+		if (coordinatesData.outline) {
+			payload += '&columnOutline=' + coordinatesData.outline.column + '&groupLevel=' + coordinatesData.outline.level
+				+ '&groupIndex=' + coordinatesData.outline.index + '&groupHidden=' + coordinatesData.outline.hidden;
+		}
+
+		this._map._socket.sendMessage(payload);
 	},
 
 	_handleViewRowColumnHeadersMsg: function (jsonMsgObj) {
