@@ -23,7 +23,6 @@ L.Control.Scroll = L.Control.extend({
 		map.on('handleautoscroll', this._onHandleAutoScroll, this);
 		map.on('docsize', this._onUpdateSize, this);
 		map.on('updatescrolloffset', this._onUpdateScrollOffset, this);
-		map.on('updaterowcolumnheaders', this._onUpdateRowColumnHeaders, this);
 
 		var control = this;
 		var autoHideTimeout = null;
@@ -115,7 +114,7 @@ L.Control.Scroll = L.Control.extend({
 			return;
 		}
 
-		this._onUpdateRowColumnHeaders({ x: newLeft, y: newTop, offset: offset});
+		this._map._docLayer.requestViewRowColumnData({ x: newLeft, y: newTop, offset: offset});
 
 		this._prevScrollY = newTop;
 		this._prevScrollX = newLeft;
@@ -268,7 +267,7 @@ L.Control.Scroll = L.Control.extend({
 			offset.y = 1;
 		}
 		if (e.updateHeaders && this._map._docLayer._docType === 'spreadsheet') {
-			this._onUpdateRowColumnHeaders({x: e.x, y: e.y, offset: offset});
+			this._map._docLayer.requestViewRowColumnData({x: e.x, y: e.y, offset: offset});
 		}
 		this._map.fire('scrolloffset', offset);
 		this._ignoreScroll = null;
@@ -276,41 +275,6 @@ L.Control.Scroll = L.Control.extend({
 		this._prevScrollY = e.y;
 		this._prevScrollX = e.x;
 		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {callbacks: false, timeout:0});
-	},
-
-	_onUpdateRowColumnHeaders: function(e) {
-		var offset = e.offset || {};
-
-		var topLeftPoint = new L.Point(e.x, e.y);
-		var sizePx = this._map.getSize();
-
-		if (topLeftPoint.x === undefined) {
-			topLeftPoint.x = this._map._getTopLeftPoint().x;
-		}
-		if (topLeftPoint.y === undefined) {
-			topLeftPoint.y = this._map._getTopLeftPoint().y;
-		}
-
-		if (offset.x === 0) {
-			topLeftPoint.x = -1;
-			sizePx.x = 0;
-		}
-		if (offset.y === 0) {
-			topLeftPoint.y = -1;
-			sizePx.y = 0;
-		}
-
-		var pos = this._map._docLayer._pixelsToTwips(topLeftPoint);
-		var size = this._map._docLayer._pixelsToTwips(sizePx);
-		var payload = 'commandvalues command=.uno:ViewRowColumnHeaders?x=' + Math.round(pos.x) + '&y=' + Math.round(pos.y) +
-			'&width=' + Math.round(size.x) + '&height=' + Math.round(size.y);
-
-		if (e.outline) {
-			payload += '&columnOutline=' + e.outline.column + '&groupLevel=' + e.outline.level
-				+ '&groupIndex=' + e.outline.index + '&groupHidden=' + e.outline.hidden;
-		}
-
-		this._map._socket.sendMessage(payload);
 	}
 });
 

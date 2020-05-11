@@ -323,7 +323,9 @@ L.Map = L.Evented.extend({
 		// TODO: remove duplicated init code
 		this._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 		this._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
-		this.fire('updaterowcolumnheaders');
+		if (this._docLayer._docType === 'spreadsheet') {
+			this._docLayer.requestViewRowColumnData();
+		}
 		this._docLayer._getToolbarCommandsValues();
 	},
 

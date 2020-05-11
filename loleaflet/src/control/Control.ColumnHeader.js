@@ -193,7 +193,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_updateColumnHeader: function () {
-		this._map.fire('updaterowcolumnheaders', {x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
+		this._map._docLayer.requestViewRowColumnData({x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
 	},
 
 	drawHeaderEntry: function (entry, isOver, isHighlighted, isCurrent) {
