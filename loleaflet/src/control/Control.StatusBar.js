@@ -109,7 +109,15 @@ L.Control.StatusBar = L.Control.extend({
 
 		var docLayer = this.map._docLayer;
 
-		if (id === 'zoomin' && this.map.getZoom() < this.map.getMaxZoom()) {
+		if (item.uno) {
+			if (item.unosheet && this.map.getDocType() === 'spreadsheet') {
+				this.map.toggleCommandState(item.unosheet);
+			}
+			else {
+				this.map.toggleCommandState(window.getUNOCommand(item.uno));
+			}
+		}
+		else if (id === 'zoomin' && this.map.getZoom() < this.map.getMaxZoom()) {
 			this.map.zoomIn(1);
 		}
 		else if (id === 'zoomout' && this.map.getZoom() > this.map.getMinZoom()) {
