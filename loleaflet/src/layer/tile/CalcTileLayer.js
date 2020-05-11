@@ -454,6 +454,16 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	_handleViewRowColumnHeadersMsg: function (jsonMsgObj) {
+		this._map.fire('viewrowcolumnheaders', {
+			data: jsonMsgObj,
+			cursor: this._getCursorPosSize(),
+			selection: this._getSelectionHeaderData(),
+			converter: this._twipsToPixels,
+			context: this
+		});
+	},
+
 	_onCommandValuesMsg: function (textMsg) {
 		var jsonIdx = textMsg.indexOf('{');
 		if (jsonIdx === -1)
@@ -466,13 +476,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 		var comment;
 		if (values.commandName === '.uno:ViewRowColumnHeaders') {
-			this._map.fire('viewrowcolumnheaders', {
-				data: values,
-				cursor: this._getCursorPosSize(),
-				selection: this._getSelectionHeaderData(),
-				converter: this._twipsToPixels,
-				context: this
-			});
+			this._handleViewRowColumnHeadersMsg(values);
 
 		} else if (values.comments) {
 			this.clearAnnotations();
