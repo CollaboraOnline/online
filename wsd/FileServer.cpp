@@ -265,7 +265,9 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     return true;
 }
 
-void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::MemoryInputStream& message,
+void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
+                                             const RequestDetails &requestDetails,
+                                             Poco::MemoryInputStream& message,
                                              const std::shared_ptr<StreamSocket>& socket)
 {
     try
@@ -347,7 +349,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
         if (endPoint == loleafletHtml)
         {
-            preprocessFile(request, message, socket);
+            preprocessFile(request, requestDetails, message, socket);
             return;
         }
 
@@ -358,7 +360,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request, Poco::M
                 endPoint == "adminHistory.html" ||
                 endPoint == "adminAnalytics.html")
             {
-                preprocessAdminFile(request, socket);
+                preprocessAdminFile(request, requestDetails, socket);
                 return;
             }
 
@@ -644,10 +646,12 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 namespace {
 }
 
-void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::MemoryInputStream& message,
+void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
+                                              const RequestDetails &requestDetails,
+                                              Poco::MemoryInputStream& message,
                                               const std::shared_ptr<StreamSocket>& socket)
 {
-    ServerURL cnxDetails(request);
+    ServerURL cnxDetails(requestDetails);
 
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
@@ -691,7 +695,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     }
 
     std::string socketProxy = "false";
-    if (request.has("ProxyPrefix"))
+    if (requestDetails.isProxy())
         socketProxy = "true";
     Poco::replaceInPlace(preprocess, std::string("%SOCKET_PROXY%"), socketProxy);
 
@@ -905,7 +909,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request, Poco::
     LOG_DBG("Sent file: " << relPath << ": " << preprocess);
 }
 
-void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
+                                                   const RequestDetails &requestDetails,
+                                                   const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::Net::HTTPResponse response;
 
@@ -915,7 +921,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,co
     if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
-    ServerURL cnxDetails(request);
+    ServerURL cnxDetails(requestDetails);
     std::string responseRoot = cnxDetails.getResponseRoot();
 
     static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");

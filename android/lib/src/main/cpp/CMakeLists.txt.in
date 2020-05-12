@@ -19,6 +19,7 @@ add_library(androidapp SHARED
             ../../../../../wsd/ClientSession.cpp
             ../../../../../wsd/DocumentBroker.cpp
             ../../../../../wsd/LOOLWSD.cpp
+	    ../../../../../wsd/RequestDetails.cpp
             ../../../../../wsd/Storage.cpp
             ../../../../../wsd/TileCache.cpp)
 

@@ -25,6 +25,7 @@
 
 #include "Util.hpp"
 #include "FileUtil.hpp"
+#include "RequestDetails.hpp"
 #include "WebSocketHandler.hpp"
 
 class ChildProcess;

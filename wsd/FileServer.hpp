@@ -14,19 +14,27 @@
 
 #include <Poco/MemoryStream.h>
 
+class RequestDetails;
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler
 {
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
 
-    static void preprocessFile(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
+    static void preprocessFile(const Poco::Net::HTTPRequest& request,
+                               const RequestDetails &requestDetails,
+                               Poco::MemoryInputStream& message,
                                const std::shared_ptr<StreamSocket>& socket);
-    static void preprocessAdminFile(const Poco::Net::HTTPRequest& request, const std::shared_ptr<StreamSocket>& socket);
+    static void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
+                                    const RequestDetails &requestDetails,
+                                    const std::shared_ptr<StreamSocket>& socket);
 public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
 
-    static void handleRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message, const std::shared_ptr<StreamSocket>& socket);
+    static void handleRequest(const Poco::Net::HTTPRequest& request,
+                              const RequestDetails &requestDetails,
+                              Poco::MemoryInputStream& message,
+                              const std::shared_ptr<StreamSocket>& socket);
 
     /// Read all files that we can serve into memory and compress them.
     static void initialize();

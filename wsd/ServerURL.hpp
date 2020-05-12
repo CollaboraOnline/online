@@ -10,11 +10,11 @@
 #pragma once
 
 #include <string>
-#include <Poco/Net/HTTPRequest.h>
+#include "RequestDetails.hpp"
 #include "LOOLWSD.hpp"
 
 /** This class helps us to build a URL that will reliably point back
- * at our service. It does very simple splitting of proxy U
+ * at our service. It does very simple splitting of proxy URL
  * and handles the proxy prefix feature.
  */
 class ServerURL
@@ -24,15 +24,10 @@ class ServerURL
     std::string _schemeAuthority;
     std::string _pathPlus;
 public:
-    ServerURL(const Poco::Net::HTTPRequest &request)
+    ServerURL(const RequestDetails &requestDetails)
     {
-#if MOBILEAPP
-        (void)request;
-        // getHost fires an exception on mobile.
-        init("mobile", "");
-#else
-        init(request.getHost(), request.get("ProxyPrefix", ""));
-#endif
+        init(requestDetails.getHostUntrusted(),
+             requestDetails.getProxyPrefix());
     }
 
     explicit ServerURL()

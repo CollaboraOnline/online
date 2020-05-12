@@ -115,6 +115,7 @@ loolwsd_sources = common/Crypto.cpp \
                   wsd/LOOLWSD.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
+                  wsd/RequestDetails.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \
                   wsd/ProofKey.cpp
@@ -224,6 +225,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/LOOLWSD.hpp \
               wsd/ProofKey.hpp \
               wsd/QueueHandler.hpp \
+              wsd/RequestDetails.hpp \
               wsd/SenderQueue.hpp \
               wsd/ServerURL.hpp \
               wsd/Storage.hpp \
