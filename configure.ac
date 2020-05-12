@@ -999,6 +999,8 @@ AC_CONFIG_LINKS([cypress_test/package.json:cypress_test/package.json])
 AC_CONFIG_LINKS([cypress_test/cypress.json:cypress_test/cypress.json])
 AC_LINK_FILES([cypress_test/plugins], [cypress_test/plugins])
 AC_LINK_FILES([loleaflet/archived-packages], [loleaflet/archived-packages])
+AC_LINK_FILES([cypress_test/eslint_plugin], [cypress_test/eslint_plugin])
+AC_LINK_FILES([cypress_test/support], [cypress_test/support])
 
 APP_BRANDING_DIR=
 APP_IC_LAUNCHER="ic_launcher"

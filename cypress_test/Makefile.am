@@ -1,5 +1,7 @@
 if ENABLE_CYPRESS
 
+export NODE_PATH=$(abs_builddir)/node_modules
+
 abs_dir = $(if $(filter $(abs_builddir),$(abs_srcdir)),.,$(abs_srcdir))
 CYPRESS_BINARY = $(abs_builddir)/node_modules/cypress/bin/cypress
 ESLINT_BINARY = $(abs_builddir)/node_modules/eslint/bin/eslint.js
@@ -116,7 +118,7 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
 	@echo
-	@NODE_PATH=$(abs_dir)/node_modules $(NODE) $(ESLINT_BINARY) $(abs_srcdir) \
+	@$(NODE) $(ESLINT_BINARY) $(abs_srcdir) \
 		--ignore-path $(abs_srcdir)/.eslintignore --config $(abs_srcdir)/.eslintrc
 	@echo
 endef
