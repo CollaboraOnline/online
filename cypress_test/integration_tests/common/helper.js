@@ -1,5 +1,9 @@
 /* global cy Cypress*/
 
+function onCommandStateChanged(e) {
+	Cypress.log({ displayName: 'onCommandState', message: e.commandName + '=' + JSON.stringify(e.state)});
+}
+
 function loadTestDoc(fileName, subFolder, mobile) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
@@ -47,7 +51,11 @@ function loadTestDoc(fileName, subFolder, mobile) {
 	cy.visit(URI, {
 		onLoad: function(win) {
 			win.onerror = cy.onUncaughtException;
-		}});
+		}})
+		.then(function(win) {
+			var map = win.L.Map.THIS;
+			map.on('commandstatechanged', onCommandStateChanged);
+		});
 	// Wait for the document to fully load
 	cy.get('.leaflet-tile-loaded', {timeout : 10000});
 
