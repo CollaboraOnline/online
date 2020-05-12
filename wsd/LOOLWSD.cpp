@@ -278,6 +278,95 @@ void alertAllUsersInternal(const std::string& msg)
 
 } // end anonymous namespace
 
+class RequestDetails {
+    Poco::URI _uri;
+    bool _isGet;
+    bool _isHead;
+    bool _isProxy;
+    bool _isWebSocket;
+    std::string _uriString;
+    StringVector _pathSegs;
+public:
+    RequestDetails(Poco::Net::HTTPRequest &request)
+    {
+        // Check and remove the ServiceRoot from the request.getURI()
+        if (!Util::startsWith(request.getURI(), LOOLWSD::ServiceRoot))
+            throw BadRequestException("The request does not start with prefix: " + LOOLWSD::ServiceRoot);
+
+        // re-writes ServiceRoot out of request
+        _uriString = request.getURI().substr(LOOLWSD::ServiceRoot.length());
+        request.setURI(_uriString);
+        _uri = Poco::URI(_uriString);
+        const std::string &method = request.getMethod();
+        _isGet = method == "GET";
+        _isHead = method == "HEAD";
+        _isProxy = request.has("ProxyPrefix");
+        auto it = request.find("Upgrade");
+        _isWebSocket = it != request.end() && (Poco::icompare(it->second, "websocket") == 0);
+
+        std::vector<StringToken> tokens;
+        if (_uriString.size() > 0)
+        {
+            size_t i, start;
+            for (i = start = 0; i < _uriString.size(); ++i)
+            {
+                if (_uriString[i] == '/' || _uriString[i] == '?')
+                {
+                    if (i - start > 1) // ignore empty
+                        tokens.emplace_back(start, i - start);
+                    start = i + 1;
+                }
+            }
+            if (i - start > 1) // ignore empty
+                tokens.emplace_back(start, i - start);
+            _pathSegs = StringVector(_uriString, tokens);
+        }
+    }
+    std::string getURI() const
+    {
+        return _uriString;
+    }
+    bool isProxy() const
+    {
+        return _isProxy;
+    }
+    bool isWebSocket() const
+    {
+        return _isWebSocket;
+    }
+    bool isGet(const char *path) const
+    {
+        return _isGet && _uriString == path;
+    }
+    bool isGetOrHead(const char *path) const
+    {
+        return (_isGet || _isHead) && _uriString == path;
+    }
+    bool startsWith(const char *path)
+    {
+        return !strncmp(_uriString.c_str(), path, strlen(path));
+    }
+    bool equals(size_t index, const char *string) const
+    {
+        return _pathSegs.equals(index, string);
+    }
+    std::string operator[](size_t index) const
+    {
+        return _pathSegs[index];
+    }
+    std::string toString() const
+    {
+        std::ostringstream oss;
+        oss << _uriString << " " << (_isGet?"G":"")
+            << (_isHead?"H":"") << (_isProxy?"Proxy":"")
+            << (_isWebSocket?"WebSocket":"");
+        oss << " path: " << _pathSegs.size();
+        for (size_t i = 0; i < _pathSegs.size(); ++i)
+            oss << " '" << _pathSegs[i] << "'";
+        return oss.str();
+    }
+};
+
 void LOOLWSD::checkSessionLimitsAndWarnClients()
 {
 #if !ENABLE_SUPPORT_KEY
@@ -2256,12 +2345,12 @@ private:
             // update the read cursor - headers are not altered by chunks.
             message.seekg(startmessage.tellg(), std::ios::beg);
 
-            // Check and remove the ServiceRoot from the request.getURI()
-            if (!Util::startsWith(request.getURI(), LOOLWSD::ServiceRoot))
-                throw BadRequestException("The request does not start with prefix: " + LOOLWSD::ServiceRoot);
+            // re-write ServiceRoot and cache.
+            RequestDetails requestDetails(request);
+//            LOG_TRC("Request details " << requestDetails.toString());
 
             // Config & security ...
-            if (request.has("ProxyPrefix"))
+            if (requestDetails.isProxy())
             {
                 if (!LOOLWSD::IsProxyPrefixEnabled)
                     throw BadRequestException("ProxyPrefix present but net.proxy_prefix is not enabled");
@@ -2269,24 +2358,18 @@ private:
                     throw BadRequestException("ProxyPrefix request from non-local socket");
             }
 
-            std::string requestURIString(request.getURI().substr(LOOLWSD::ServiceRoot.length()));
-            request.setURI(requestURIString);
-
             // Routing
-            Poco::URI requestUri(request.getURI());
-            std::vector<std::string> reqPathSegs;
-            requestUri.getPathSegments(reqPathSegs);
-
             if (UnitWSD::get().handleHttpRequest(request, message, socket))
             {
                 // Unit testing, nothing to do here
             }
-            else if (reqPathSegs.size() >= 1 && reqPathSegs[0] == "loleaflet")
+            else if (requestDetails.equals(0, "loleaflet"))
             {
                 // File server
                 handleFileServerRequest(request, message, socket);
             }
-            else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "adminws")
+            else if (requestDetails.equals(0, "lool") &&
+                     requestDetails.equals(1, "adminws"))
             {
                 // Admin connections
                 LOG_INF("Admin request: " << request.getURI());
@@ -2299,9 +2382,10 @@ private:
                 }
 
             }
-            else if (reqPathSegs.size() >= 2 && reqPathSegs[0] == "lool" && reqPathSegs[1] == "getMetrics")
+            else if (requestDetails.equals(0, "lool") &&
+                     requestDetails.equals(1, "getMetrics"))
             {
-                //See metrics.txt
+                // See metrics.txt
                 std::shared_ptr<Poco::Net::HTTPResponse> response(new Poco::Net::HTTPResponse());
 
                 if (!LOOLWSD::AdminEnabled)
@@ -2340,72 +2424,61 @@ private:
                             Admin::instance().sendMetricsAsync(streamSocket, response);
                         });
             }
-            // Client post and websocket connections
-            else if ((request.getMethod() == HTTPRequest::HTTP_GET ||
-                      request.getMethod() == HTTPRequest::HTTP_HEAD) &&
-                     request.getURI() == "/")
-            {
+            else if (requestDetails.isGetOrHead("/"))
                 handleRootRequest(request, socket);
-            }
-            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/favicon.ico")
-            {
+
+            else if (requestDetails.isGet("/favicon.ico"))
                 handleFaviconRequest(request, socket);
-            }
-            else if (request.getMethod() == HTTPRequest::HTTP_GET && (request.getURI() == "/hosting/discovery" || request.getURI() == "/hosting/discovery/"))
-            {
+
+            else if (requestDetails.isGet("/hosting/discovery") ||
+                     requestDetails.isGet("/hosting/discovery/"))
                 handleWopiDiscoveryRequest(request, socket);
-            }
-            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == CAPABILITIES_END_POINT)
-            {
+
+            else if (requestDetails.isGet(CAPABILITIES_END_POINT))
                 handleCapabilitiesRequest(request, socket);
-            }
-            else if (request.getMethod() == HTTPRequest::HTTP_GET && request.getURI() == "/robots.txt")
-            {
+
+            else if (requestDetails.isGet("/robots.txt"))
                 handleRobotsTxtRequest(request, socket);
+
+            else if (requestDetails.equals(0, "lool") &&
+                     requestDetails.equals(1, "clipboard"))
+            {
+//              Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
+                handleClipboardRequest(request, message, disposition, socket);
+            }
+
+            else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
+            {
+                std::string decodedUri; // WOPISrc
+                Poco::URI::decode(requestDetails[1], decodedUri);
+                handleClientProxyRequest(request, decodedUri, message, disposition);
+            }
+            else if (requestDetails.equals(0, "lool") &&
+                     requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
+            {
+                std::string decodedUri; // WOPISrc
+                Poco::URI::decode(requestDetails[1], decodedUri);
+                handleClientWsUpgrade(request, decodedUri, disposition, socket);
+            }
+            else if (!requestDetails.isWebSocket() && requestDetails.equals(0, "lool"))
+            {
+                // All post requests have url prefix 'lool'.
+                handlePostRequest(request, message, disposition, socket);
             }
             else
             {
-                StringTokenizer reqPathTokens(request.getURI(), "/?", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
-                if (reqPathTokens.count() > 1 && reqPathTokens[0] == "lool" && reqPathTokens[1] == "clipboard")
-                {
-//                    Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
-                    handleClipboardRequest(request, message, disposition, socket);
-                }
-                else if (request.has("ProxyPrefix") && reqPathTokens.count() > 3 &&
-                         (reqPathTokens[reqPathTokens.count()-3] == "ws"))
-                {
-                    std::string decodedUri; // WOPISrc
-                    Poco::URI::decode(reqPathTokens[1], decodedUri);
-                    handleClientProxyRequest(request, decodedUri, message, disposition);
-                }
-                else if (!(request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0) &&
-                    reqPathTokens.count() > 0 && reqPathTokens[0] == "lool")
-                {
-                    // All post requests have url prefix 'lool'.
-                    handlePostRequest(request, message, disposition, socket);
-                }
-                else if (reqPathTokens.count() > 2 && reqPathTokens[0] == "lool" && reqPathTokens[2] == "ws" &&
-                         request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
-                {
-                    std::string decodedUri; // WOPISrc
-                    Poco::URI::decode(reqPathTokens[1], decodedUri);
-                    handleClientWsUpgrade(request, decodedUri, disposition, socket);
-                }
-                else
-                {
-                    LOG_ERR("Unknown resource: " << request.getURI());
+                LOG_ERR("Unknown resource: " << requestDetails.toString());
 
-                    // Bad request.
-                    std::ostringstream oss;
-                    oss << "HTTP/1.1 400\r\n"
-                        "Date: " << Util::getHttpTimeNow() << "\r\n"
-                        "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                        "Content-Length: 0\r\n"
-                        "\r\n";
-                    socket->send(oss.str());
-                    socket->shutdown();
-                    return;
-                }
+                // Bad request.
+                std::ostringstream oss;
+                oss << "HTTP/1.1 400\r\n"
+                    "Date: " << Util::getHttpTimeNow() << "\r\n"
+                    "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                    "Content-Length: 0\r\n"
+                    "\r\n";
+                socket->send(oss.str());
+                socket->shutdown();
+                return;
             }
         }
         catch (const std::exception& exc)

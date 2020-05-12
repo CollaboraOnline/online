@@ -30,7 +30,6 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/Timestamp.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
