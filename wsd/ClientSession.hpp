@@ -171,6 +171,9 @@ public:
     /// Generate and rotate a new clipboard hash, sending it if appropriate
     void rotateClipboardKey(bool notifyClient);
 
+    /// Generate an access token for this session via proxy protocol.
+    const std::string &getOrCreateProxyAccess();
+
 private:
     std::shared_ptr<ClientSession> client_from_this()
     {
@@ -282,8 +285,11 @@ private:
     /// Sockets to send binary selection content to
     std::vector<std::weak_ptr<StreamSocket>> _clipSockets;
 
-    ///Time when loading of view started
+    /// Time when loading of view started
     std::chrono::steady_clock::time_point _viewLoadStart;
+
+    /// Secure session id token for proxyprotocol authentication
+    std::string _proxyAccess;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

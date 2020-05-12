@@ -55,17 +55,17 @@ void DocumentBroker::handleProxyRequest(
         LOOLWSD::checkDiskSpaceAndWarnClients(true);
         LOOLWSD::checkSessionLimitsAndWarnClients();
 
-        LOG_TRC("proxy: Returning sessionId " << clientSession->getId());
+        const std::string &sessionId = clientSession->getOrCreateProxyAccess();
+        LOG_TRC("proxy: Returning sessionId " << sessionId);
 
         std::ostringstream oss;
         oss << "HTTP/1.1 200 OK\r\n"
             "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
             "User-Agent: " WOPI_AGENT_STRING "\r\n"
-            "Content-Length: " << clientSession->getId().size() << "\r\n"
+            "Content-Length: " << sessionId.size() << "\r\n"
             "Content-Type: application/json\r\n"
             "X-Content-Type-Options: nosniff\r\n"
-            "\r\n"
-            << clientSession->getId();
+            "\r\n" << sessionId;
 
         socket->send(oss.str());
         socket->shutdown();
@@ -77,7 +77,7 @@ void DocumentBroker::handleProxyRequest(
         LOG_TRC("proxy: find session for " << _docKey << " with id " << sessionId);
         for (const auto &it : _sessions)
         {
-            if (it.second->getId() == sessionId)
+            if (it.second->getOrCreateProxyAccess() == sessionId)
             {
                 clientSession = it.second;
                 break;

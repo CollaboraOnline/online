@@ -35,6 +35,11 @@ using namespace LOOLProtocol;
 
 using Poco::Path;
 
+// rotates regularly
+const int ClipboardTokenLengthBytes = 16;
+// home-use, disabled by default.
+const int ProxyAccessTokenLengthBytes = 32;
+
 static std::mutex GlobalSessionMapMutex;
 static std::unordered_map<std::string, std::weak_ptr<ClientSession>> GlobalSessionMap;
 
@@ -188,7 +193,8 @@ void ClientSession::rotateClipboardKey(bool notifyClient)
         return;
 
     _clipboardKeys[1] = _clipboardKeys[0];
-    _clipboardKeys[0] = Util::rng::getHardRandomHexString(16);
+    _clipboardKeys[0] = Util::rng::getHardRandomHexString(
+        ClipboardTokenLengthBytes);
     LOG_TRC("Clipboard key on [" << getId() << "] set to " << _clipboardKeys[0] <<
             " last was " << _clipboardKeys[1]);
     if (notifyClient)
@@ -1719,7 +1725,8 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tisTextDocument: " << _isTextDocument
        << "\n\t\tclipboardKeys[0]: " << _clipboardKeys[0]
        << "\n\t\tclipboardKeys[1]: " << _clipboardKeys[1]
-       << "\n\t\tclip sockets: " << _clipSockets.size();
+       << "\n\t\tclip sockets: " << _clipSockets.size()
+       << "\n\t\tproxy access:: " << _proxyAccess;
 
     if (_protocol)
     {
@@ -1731,6 +1738,14 @@ void ClientSession::dumpState(std::ostream& os)
     os << "\n";
     _senderQueue.dumpState(os);
 
+}
+
+const std::string &ClientSession::getOrCreateProxyAccess()
+{
+    if (_proxyAccess.size() <= 0)
+        _proxyAccess = Util::rng::getHardRandomHexString(
+            ProxyAccessTokenLengthBytes);
+    return _proxyAccess;
 }
 
 void ClientSession::handleTileInvalidation(const std::string& message,
