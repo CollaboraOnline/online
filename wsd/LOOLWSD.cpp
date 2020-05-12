@@ -93,7 +93,6 @@ using Poco::Net::PartHandler;
 #include <Poco/Path.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
-#include <Poco/StringTokenizer.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/AbstractConfiguration.h>
@@ -161,7 +160,6 @@ using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Path;
 using Poco::StreamCopier;
-using Poco::StringTokenizer;
 using Poco::TemporaryFile;
 using Poco::URI;
 using Poco::Util::Application;
@@ -353,6 +351,10 @@ public:
     std::string operator[](size_t index) const
     {
         return _pathSegs[index];
+    }
+    size_t size() const
+    {
+        return _pathSegs.size();
     }
     std::string toString() const
     {
@@ -2463,7 +2465,7 @@ private:
             else if (!requestDetails.isWebSocket() && requestDetails.equals(0, "lool"))
             {
                 // All post requests have url prefix 'lool'.
-                handlePostRequest(request, message, disposition, socket);
+                handlePostRequest(requestDetails, request, message, disposition, socket);
             }
             else
             {
@@ -2802,19 +2804,19 @@ private:
             return false;
     }
 
-    void handlePostRequest(const Poco::Net::HTTPRequest& request,
+    void handlePostRequest(const RequestDetails &requestDetails,
+                           const Poco::Net::HTTPRequest& request,
                            Poco::MemoryInputStream& message,
                            SocketDisposition& disposition,
                            const std::shared_ptr<StreamSocket>& socket)
     {
         assert(socket && "Must have a valid socket");
 
-        LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(request.getURI()) << "]");
+        LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(requestDetails.getURI()) << "]");
 
         Poco::Net::HTTPResponse response;
 
-        StringTokenizer tokens(request.getURI(), "/?");
-        if (tokens.count() > 2 && tokens[2] == "convert-to")
+        if (requestDetails.equals(1, "convert-to"))
         {
             // Validate sender - FIXME: should do this even earlier.
             if (!allowConvertTo(socket->clientAddress(), request, true))
@@ -2840,8 +2842,8 @@ private:
             bool bFullSheetPreview = sFullSheetPreview == "true" ? true : false;
 
             // prefer what is in the URI
-            if (tokens.count() > 3)
-                format = tokens[3];
+            if (requestDetails.size() > 2)
+                format = requestDetails[2];
 
             std::string fromPath = handler.getFilename();
             LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
@@ -2881,7 +2883,7 @@ private:
             }
             return;
         }
-        else if (tokens.count() >= 4 && tokens[3] == "insertfile")
+        else if (requestDetails.equals(2, "insertfile"))
         {
             LOG_INF("Insert file request.");
 
@@ -2896,7 +2898,7 @@ private:
                 // Validate the docKey
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
                 std::string decodedUri;
-                URI::decode(tokens[2], decodedUri);
+                URI::decode(requestDetails[1], decodedUri);
                 const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
                 auto docBrokerIt = DocBrokers.find(docKey);
 
@@ -2922,14 +2924,14 @@ private:
                 }
             }
         }
-        else if (tokens.count() >= 6)
+        else if (requestDetails.size() >= 5)
         {
             LOG_INF("File download request.");
             // TODO: Check that the user in question has access to this file!
 
             // 1. Validate the dockey
             std::string decodedUri;
-            URI::decode(tokens[2], decodedUri);
+            URI::decode(requestDetails[1], decodedUri);
             const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
             auto docBrokerIt = DocBrokers.find(docKey);
@@ -2939,7 +2941,7 @@ private:
             }
 
             // 2. Cross-check if received child id is correct
-            if (docBrokerIt->second->getJailId() != tokens[3])
+            if (docBrokerIt->second->getJailId() != requestDetails[2])
             {
                 throw BadRequestException("ChildId does not correspond to docKey");
             }
@@ -2947,16 +2949,16 @@ private:
             // 3. Don't let user download the file in main doc directory containing
             // the document being edited otherwise we will end up deleting main directory
             // after download finishes
-            if (docBrokerIt->second->getJailId() == tokens[4])
+            if (docBrokerIt->second->getJailId() == requestDetails[3])
             {
                 throw BadRequestException("RandomDir cannot be equal to ChildId");
             }
             docBrokersLock.unlock();
 
             std::string fileName;
-            URI::decode(tokens[5], fileName);
-            const Path filePath(LOOLWSD::ChildRoot + tokens[3]
-                                + JAILED_DOCUMENT_ROOT + tokens[4] + "/" + fileName);
+            URI::decode(requestDetails[4], fileName);
+            const Path filePath(LOOLWSD::ChildRoot + requestDetails[2]
+                                + JAILED_DOCUMENT_ROOT + requestDetails[3] + "/" + fileName);
             const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath.toString());
             LOG_INF("HTTP request for: " << filePathAnonym);
             if (filePath.isAbsolute() && File(filePath).exists())
