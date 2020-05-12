@@ -87,5 +87,6 @@ window.addEventListener('beforeunload', function () {
 
 window.docPermission = permission;
 window.bundlejsLoaded = true;
+L.Map.THIS = map;
 
 }(window));

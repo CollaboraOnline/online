@@ -14,6 +14,10 @@ function isAnyVexDialogActive() {
 /* global vex $ _ */
 L.Map = L.Evented.extend({
 
+	statics: {
+		THIS : undefined
+	},
+
 	options: {
 		crs: L.CRS.Simple,
 		center: [0, 0],
