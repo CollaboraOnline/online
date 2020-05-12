@@ -44,7 +44,7 @@ ClientSession::ClientSession(
     const std::shared_ptr<DocumentBroker>& docBroker,
     const Poco::URI& uriPublic,
     const bool readOnly,
-    const ServerURL &serverURL) :
+    const RequestDetails &requestDetails) :
     Session(ws, "ToClient-" + id, id, readOnly),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
@@ -58,7 +58,7 @@ ClientSession::ClientSession(
     _tileWidthTwips(0),
     _tileHeightTwips(0),
     _kitViewId(-1),
-    _serverURL(serverURL),
+    _serverURL(requestDetails),
     _isTextDocument(false)
 {
     const size_t curConnections = ++LOOLWSD::NumConnections;

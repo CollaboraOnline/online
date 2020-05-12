@@ -2936,8 +2936,6 @@ private:
             }
         }
 
-        ServerURL serverURL(requestDetails);
-
         LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
         (void)request; (void)message; (void)disposition;
 
@@ -2953,7 +2951,7 @@ private:
         {
             // need to move into the DocumentBroker context before doing session lookup / creation etc.
             std::string id = _id;
-            disposition.setMove([docBroker, id, uriPublic, isReadOnly, serverURL, sessionId, isWaiting]
+            disposition.setMove([docBroker, id, uriPublic, isReadOnly, requestDetails, sessionId, isWaiting]
                                 (const std::shared_ptr<Socket> &moveSocket)
                 {
                     LOG_TRC("Setting up docbroker thread for " << docBroker->getDocKey());
@@ -2963,7 +2961,7 @@ private:
                     // We no longer own this socket.
                     moveSocket->setThreadOwner(std::thread::id());
 
-                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly, serverURL,
+                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly, requestDetails,
                                             sessionId, moveSocket, isWaiting]()
                         {
                             // Now inside the document broker thread ...
@@ -2974,7 +2972,7 @@ private:
                             {
                                 docBroker->handleProxyRequest(
                                     sessionId, id, uriPublic, isReadOnly,
-                                    serverURL, streamSocket, isWaiting);
+                                    requestDetails, streamSocket, isWaiting);
                                 return;
                             }
                             catch (const UnauthorizedRequestException& exc)
@@ -3066,9 +3064,8 @@ private:
                 DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic);
             if (docBroker)
             {
-                ServerURL serverURL(requestDetails);
                 std::shared_ptr<ClientSession> clientSession =
-                    docBroker->createNewClientSession(ws, _id, uriPublic, isReadOnly, serverURL);
+                    docBroker->createNewClientSession(ws, _id, uriPublic, isReadOnly, requestDetails);
                 if (clientSession)
                 {
                     // Transfer the client socket to the DocumentBroker when we get back to the poll:

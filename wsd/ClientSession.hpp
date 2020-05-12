@@ -34,7 +34,7 @@ public:
                   const std::shared_ptr<DocumentBroker>& docBroker,
                   const Poco::URI& uriPublic,
                   const bool isReadOnly,
-                  const ServerURL &serverURL);
+                  const RequestDetails &requestDetails);
     void construct();
     virtual ~ClientSession();
 

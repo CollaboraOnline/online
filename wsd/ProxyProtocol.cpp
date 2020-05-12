@@ -24,11 +24,13 @@ void DocumentBroker::handleProxyRequest(
     const std::string& id,
     const Poco::URI& uriPublic,
     const bool isReadOnly,
-    const ServerURL &serverURL,
+    const RequestDetails &requestDetails,
     const std::shared_ptr<StreamSocket> &socket,
     bool isWaiting)
 {
     std::shared_ptr<ClientSession> clientSession;
+
+
     if (sessionId == "fetchsession")
     {
         bool isLocal = socket->isLocal();
@@ -39,7 +41,7 @@ void DocumentBroker::handleProxyRequest(
         LOG_TRC("proxy: Create session for " << _docKey);
         clientSession = createNewClientSession(
                 std::make_shared<ProxyProtocolHandler>(),
-                id, uriPublic, isReadOnly, serverURL);
+                id, uriPublic, isReadOnly, requestDetails);
         addSession(clientSession);
         LOOLWSD::checkDiskSpaceAndWarnClients(true);
         LOOLWSD::checkSessionLimitsAndWarnClients();

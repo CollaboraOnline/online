@@ -22,9 +22,9 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     std::shared_ptr<ProtocolHandlerInterface> ws;
     std::string id;
     bool isReadOnly = false;
-    const ServerURL serverURL;
+    const RequestDetails requestDetails("fuzzer");
     auto session
-        = std::make_shared<ClientSession>(ws, id, docBroker, uriPublic, isReadOnly, serverURL);
+        = std::make_shared<ClientSession>(ws, id, docBroker, uriPublic, isReadOnly, requestDetails);
 
     std::string input(reinterpret_cast<const char*>(data), size);
     std::stringstream ss(input);

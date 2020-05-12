@@ -1526,7 +1526,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
     const std::string& id,
     const Poco::URI& uriPublic,
     const bool isReadOnly,
-    const ServerURL &serverURL)
+    const RequestDetails &requestDetails)
 {
     try
     {
@@ -1541,7 +1541,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
         // In case of WOPI, if this session is not set as readonly, it might be set so
         // later after making a call to WOPI host which tells us the permission on files
         // (UserCanWrite param).
-        auto session = std::make_shared<ClientSession>(ws, id, shared_from_this(), uriPublic, isReadOnly, serverURL);
+        auto session = std::make_shared<ClientSession>(ws, id, shared_from_this(), uriPublic, isReadOnly, requestDetails);
         session->construct();
 
         return session;
@@ -2269,8 +2269,8 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
     const bool isReadOnly = true;
     // FIXME: associate this with moveSocket (?)
     std::shared_ptr<ProtocolHandlerInterface> nullPtr;
-    ServerURL serverURL;
-    _clientSession = std::make_shared<ClientSession>(nullPtr, id, docBroker, getPublicUri(), isReadOnly, serverURL);
+    RequestDetails requestDetails("convert-to");
+    _clientSession = std::make_shared<ClientSession>(nullPtr, id, docBroker, getPublicUri(), isReadOnly, requestDetails);
     _clientSession->construct();
 
     if (!_clientSession)

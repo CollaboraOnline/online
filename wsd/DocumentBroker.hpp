@@ -97,7 +97,7 @@ private:
     int _smapsFD;
 };
 
-class ServerURL;
+class RequestDetails;
 class ClientSession;
 
 /// DocumentBroker is responsible for setting up a document in jail and brokering loading it from
@@ -154,7 +154,7 @@ public:
         const std::string& id,
         const Poco::URI& uriPublic,
         const bool isReadOnly,
-        const ServerURL &serverURL);
+        const RequestDetails &requestDetails);
 
     /// Find or create a new client session for the PHP proxy
     void handleProxyRequest(
@@ -162,7 +162,7 @@ public:
         const std::string& id,
         const Poco::URI& uriPublic,
         const bool isReadOnly,
-        const ServerURL &serverURL,
+        const RequestDetails &requestDetails,
         const std::shared_ptr<StreamSocket> &socket,
         bool isWaiting);
 
