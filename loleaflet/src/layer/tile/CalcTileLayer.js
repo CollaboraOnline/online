@@ -497,6 +497,42 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._map._socket.sendMessage(payload);
 	},
 
+	// sends the .uno:SheetGeometryData command optionally with arguments.
+	requestSheetGeomtryData: function (flags) {
+		var unoCmd = '.uno:SheetGeometryData';
+		var haveArgs = (typeof flags == 'object' && (flags.columns === true || flags.rows === true));
+		var payload = 'commandvalues command=' + unoCmd;
+
+		if (haveArgs) {
+			var argList = [];
+			if (flags.columns === true) {
+				argList.push('columns=1');
+			}
+			if (flags.rows === true) {
+				argList.push('rows=1');
+			}
+
+			var dataTypeFlagNames = ['sizes', 'hidden', 'filtered', 'groups'];
+			var dataTypesPresent = false;
+			dataTypeFlagNames.forEach(function (name) {
+				if (flags[name] === true) {
+					argList.push(name + '=1');
+					dataTypesPresent = true;
+				}
+			});
+
+			if (!dataTypesPresent) {
+				dataTypeFlagNames.forEach(function (name) {
+					argList.push(name + '=1');
+				});
+			}
+
+			payload += '?' + argList.join('&');
+		}
+
+		this._map._socket.sendMessage(payload);
+	},
+
 	_handleViewRowColumnHeadersMsg: function (jsonMsgObj) {
 		this._map.fire('viewrowcolumnheaders', {
 			data: jsonMsgObj,
@@ -505,6 +541,11 @@ L.CalcTileLayer = L.TileLayer.extend({
 			converter: this._twipsToPixels,
 			context: this
 		});
+	},
+
+	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
+		// TODO: use the L.SheetGeometry datastructure
+		this._map.sheetGeomData = jsonMsgObj;
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -520,6 +561,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 		var comment;
 		if (values.commandName === '.uno:ViewRowColumnHeaders') {
 			this._handleViewRowColumnHeadersMsg(values);
+
+		} else if (values.commandName === '.uno:SheetGeometryData') {
+			this._handleSheetGeometryDataMsg(values);
 
 		} else if (values.comments) {
 			this.clearAnnotations();
