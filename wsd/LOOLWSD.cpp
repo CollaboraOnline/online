@@ -320,6 +320,15 @@ public:
             _pathSegs = StringVector(_uriString, tokens);
         }
     }
+    // matches the WOPISrc if used. For load balancing
+    // must be 2nd element in the path after /lool/<here>
+    std::string getDocumentURI() const
+    {
+        assert(equals(0, "lool"));
+        std::string decodedUri;
+        Poco::URI::decode(_pathSegs[1], decodedUri);
+        return decodedUri;
+    }
     std::string getURI() const
     {
         return _uriString;
@@ -2450,18 +2459,12 @@ private:
             }
 
             else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
-            {
-                std::string decodedUri; // WOPISrc
-                Poco::URI::decode(requestDetails[1], decodedUri);
-                handleClientProxyRequest(request, decodedUri, message, disposition);
-            }
+                handleClientProxyRequest(request, requestDetails.getDocumentURI(), message, disposition);
+
             else if (requestDetails.equals(0, "lool") &&
                      requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
-            {
-                std::string decodedUri; // WOPISrc
-                Poco::URI::decode(requestDetails[1], decodedUri);
-                handleClientWsUpgrade(request, decodedUri, disposition, socket);
-            }
+                handleClientWsUpgrade(request, requestDetails.getDocumentURI(), disposition, socket);
+
             else if (!requestDetails.isWebSocket() && requestDetails.equals(0, "lool"))
             {
                 // All post requests have url prefix 'lool'.
@@ -2897,8 +2900,7 @@ private:
 
                 // Validate the docKey
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-                std::string decodedUri;
-                URI::decode(requestDetails[1], decodedUri);
+                std::string decodedUri = requestDetails.getDocumentURI();
                 const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
                 auto docBrokerIt = DocBrokers.find(docKey);
 
@@ -2930,8 +2932,7 @@ private:
             // TODO: Check that the user in question has access to this file!
 
             // 1. Validate the dockey
-            std::string decodedUri;
-            URI::decode(requestDetails[1], decodedUri);
+            std::string decodedUri = requestDetails.getDocumentURI();
             const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
             auto docBrokerIt = DocBrokers.find(docKey);
