@@ -220,7 +220,7 @@
 		this.sessionId = 'open';
 		this.id = window.proxySocketCounter++;
 		this.sendCounter = 0;
-		this.readWaiting = 0;
+		this.msgInflight = 0;
 		this.inSerial = 0;
 		this.outSerial = 0;
 		this.onclose = function() {
@@ -295,26 +295,34 @@
 			}
 		};
 		this.sendQueue = '';
-		this.sendTimeout = undefined;
 		this.doSend = function () {
-			console.debug('send msg "' + that.sendQueue + '"');
+			if (that.sessionId === 'open')
+			{
+				console.debug('new session not completed');
+				return;
+			}
+			if (that.msgInflight >= 4) // something went badly wrong.
+			{
+				console.debug('High latency connection - too much in-flight, pausing');
+				return;
+			}
+			console.debug('send msg - ' + that.msgInflight + ' on session ' +
+				      that.sessionId + '  queue: "' + that.sendQueue + '"');
 			var req = new XMLHttpRequest();
 			req.open('POST', that.getEndPoint('write'));
-			if (that.sessionId === 'open')
-				console.debug('new session not completed');
-			else
-			{
-				req.responseType = 'arraybuffer';
-				req.addEventListener('load', function() {
-					if (this.status == 200)
-						that.parseIncomingArray(new Uint8Array(this.response));
-					else
-						console.debug('proxy: error on incoming response');
-				});
-			}
+			req.responseType = 'arraybuffer';
+			req.addEventListener('load', function() {
+				if (this.status == 200)
+					that.parseIncomingArray(new Uint8Array(this.response));
+				else
+					console.debug('proxy: error on incoming response');
+			});
+			req.addEventListener('loadend', function() {
+				that.msgInflight--;
+			});
 			req.send(that.sendQueue);
 			that.sendQueue = '';
-			that.sendTimeout = undefined;
+			that.msgInflight++;
 		};
 		this.getSessionId = function() {
 			var req = new XMLHttpRequest();
@@ -343,8 +351,6 @@
 				'B0x' + this.outSerial.toString(16) + '\n' +
 				'0x' + msg.length.toString(16) + '\n' + msg + '\n');
 			this.outSerial++;
-			if (this.sessionId !== 'open' && this.sendTimeout === undefined)
-				this.sendTimeout = setTimeout(this.doSend, 2 /* ms */);
 		};
 		this.sendCloseMsg = function(beacon) {
 			var url = that.getEndPoint('close');
@@ -378,32 +384,11 @@
 		// queue fetch of session id.
 		this.getSessionId();
 
-		// horrors ...
-		this.waitConnect = function() {
-			console.debug('proxy: waiting - ' + that.readWaiting + ' on session ' + that.sessionId);
-			if (that.readWaiting >= 4) // max 4 waiting connections concurrently.
-				return;
-			if (that.sessionId == 'open')
-				return; // waiting for our session id.
-			var req = new XMLHttpRequest();
-			// fetch session id:
-			req.addEventListener('load', function() {
-				if (this.status == 200)
-					that.parseIncomingArray(new Uint8Array(this.response));
-				else
-					console.debug('Handle error ' + this.status);
-			});
-			req.addEventListener('loadend', function() {
-				that.readWaiting--;
-				console.debug('proxy: wait ended, re-issue');
-				that.waitConnect();
-			});
-			req.open('GET', that.getEndPoint('wait'));
-			req.responseType = 'arraybuffer';
-			req.send('');
-			that.readWaiting++;
-		};
-		this.waitInterval = setInterval(this.waitConnect, 250);
+		// For those who think that long-running sockets are a
+		// better way to wait: you're so right. However, each
+		// consumes a scarce server worker thread while it waits,
+		// so ... back in the real world:
+		this.pollInterval = setInterval(this.doSend, 25);
 	};
 
 	if (global.socketProxy)
