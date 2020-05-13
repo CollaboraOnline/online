@@ -9,6 +9,7 @@ l10nstrings.strOverview = _('Overview');
 l10nstrings.strCurrent = _('(current)');
 l10nstrings.strAnalytics = _('Analytics');
 l10nstrings.strHistory = _('History');
+l10nstrings.strLog = _('Log');
 l10nstrings.strDashboard = _('Dashboard');
 l10nstrings.strUsersOnline = _('Users online');
 l10nstrings.strUserName = _('User Name');
@@ -40,7 +41,7 @@ l10nstrings.strDocuments = _('Documents:');
 l10nstrings.strExpired = _('Expired:');
 l10nstrings.strRefresh = _('Refresh');
 l10nstrings.strShutdown = _('Shutdown Server');
-l10nstrings.strServerUptime = _('Server uptime')
+l10nstrings.strServerUptime = _('Server uptime');
 
 if (module) {
 	module.exports = l10nstrings;

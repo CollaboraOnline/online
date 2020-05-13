@@ -363,7 +363,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             if (endPoint == "admin.html" ||
                 endPoint == "adminSettings.html" ||
                 endPoint == "adminHistory.html" ||
-                endPoint == "adminAnalytics.html")
+                endPoint == "adminAnalytics.html" ||
+                endPoint == "adminLog.html")
             {
                 preprocessAdminFile(request, requestDetails, socket);
                 return;

@@ -736,6 +736,15 @@ settings
 
     Queries the server for configurable settings from admin console.
 
+log_lines
+    Gets last n lines from "loolwsd.log" file.
+
+channel_list
+    Gets the log channels list with their respective log levels.
+
+update-log-levels
+    Updates the log channels' log levels with the given log levels. Format is: "update-log-levels channel1name=loglevel channel2name=loglevel".
+
 set <setting1=value1> <setting2=value2> ...
 
     Sets a particular setting (must be one returned as response to
