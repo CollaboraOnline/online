@@ -843,8 +843,8 @@ input.clipboard {
 	}
 
 .loleaflet-ruler-indentation-marker-down {
-	width: 17px;
-	height: 11px;
+	width: 14px;
+	height: 10px;
 	background: url(images/indentation_marker_down.svg);
 	position: absolute;
 	left: 0;
@@ -854,8 +854,8 @@ input.clipboard {
 }
 
 .loleaflet-ruler-indentation-marker-up {
-	width: 17px;
-	height: 11px;
+	width: 14px;
+	height: 10px;
 	background: url(images/indentation_marker_up.svg);
 	position: absolute;
 	left: 0;

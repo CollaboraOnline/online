@@ -220,9 +220,9 @@ L.Control.Ruler = L.Control.extend({
 
 		// Conversion to mm100.
 		if (this.options.indentUnit === 'inch') {
-			this.options.firstLineIndent = (this.options.firstLineIndent) * 2540;
-			this.options.leftParagraphIndent = (this.options.leftParagraphIndent) * 2540;
-			this.options.rightParagraphIndent = (this.options.rightParagraphIndent) * 2540;
+			this.options.firstLineIndent = this.options.firstLineIndent * 2540;
+			this.options.leftParagraphIndent = this.options.leftParagraphIndent * 2540;
+			this.options.rightParagraphIndent = this.options.rightParagraphIndent * 2540;
 		}
 
 		this.options.firstLineIndent *= pxPerMm100;
@@ -235,10 +235,9 @@ L.Control.Ruler = L.Control.extend({
 		var pEndPosition = this._rTSContainer.getBoundingClientRect().right - this.options.rightParagraphIndent;
 
 		// We calculated the positions. Now we should move them to left in order to make their sharp edge point to the right direction..
-		var halfWidth = (this._firstLineMarker.getBoundingClientRect().right - this._firstLineMarker.getBoundingClientRect().left) * 0.5;
-		this._firstLineMarker.style.left = (fLinePosition - halfWidth) + 'px';
-		this._pStartMarker.style.left = (pStartPosition - halfWidth) + 'px';
-		this._pEndMarker.style.left = (pEndPosition - halfWidth) + 'px';
+		this._firstLineMarker.style.left = (fLinePosition - (this._firstLineMarker.getBoundingClientRect().width / 2.0)) + 'px';
+		this._pStartMarker.style.left = (pStartPosition - (this._pStartMarker.getBoundingClientRect().width / 2.0)) + 'px';
+		this._pEndMarker.style.left = (pEndPosition - (this._pEndMarker.getBoundingClientRect().width / 2.0)) + 'px';
 
 		this._markerVerticalLine.style.top = this._rTSContainer.getBoundingClientRect().bottom + 'px';
 	},
@@ -262,8 +261,6 @@ L.Control.Ruler = L.Control.extend({
 
 		if (this.options.margin1 == null || this.options.margin2 == null)
 			return;
-
-		this._updateParagraphIndentations();
 
 		if (this._map._docLayer._annotations._items.length === 0
 		|| this._map._docLayer._annotations._items.length
@@ -387,6 +384,8 @@ L.Control.Ruler = L.Control.extend({
 		// Put the _rTSContainer in the right place
 		this._rTSContainer.style.left = (this.options.DraggableConvertRatio * lMargin) + 'px';
 		this._rTSContainer.style.right = (this.options.DraggableConvertRatio * rMargin) + 'px';
+
+		this._updateParagraphIndentations();
 
 		if (this.options.interactive) {
 			this._changeInteractions({perm:'edit'});

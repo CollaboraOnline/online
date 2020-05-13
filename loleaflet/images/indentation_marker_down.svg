@@ -1,3 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 140 110" >
-    <polygon points="10,10 130,10 130,50 70,100 10,50" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14" height="10" version="1.1" viewBox="0 0 14 10" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <polygon transform="matrix(.10796 0 0 .098871 -.55736 -.50999)" points="130 50 70 100 10 50 10 10 130 10" fill="#fff" stroke="#000" stroke-width="9.6788"/>
 </svg>
