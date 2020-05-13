@@ -105,6 +105,12 @@ public:
 
     unsigned getNetStatsInterval();
 
+    std::string getChannelLogLevels();
+
+    void setChannelLogLevel(std::string _channelName, std::string _level);
+
+    std::string getLogLines();
+
     void rescheduleMemTimer(unsigned interval);
 
     void rescheduleCpuTimer(unsigned interval);
@@ -180,9 +186,9 @@ private:
     };
     std::vector<MonitorConnectRecord> _pendingConnects;
 
-    std::atomic<int> _cpuStatsTaskIntervalMs;
-    std::atomic<int> _memStatsTaskIntervalMs;
-    std::atomic<int> _netStatsTaskIntervalMs;
+    int _cpuStatsTaskIntervalMs;
+    int _memStatsTaskIntervalMs;
+    int _netStatsTaskIntervalMs;
     DocProcSettings _defDocProcSettings;
 
     // Don't update any more frequently than this since it's excessive.

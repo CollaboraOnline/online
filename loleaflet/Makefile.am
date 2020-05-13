@@ -94,7 +94,8 @@ LOLEAFLET_ADMIN_JS =\
 	admin/src/AdminSocketOverview.js \
 	admin/src/AdminSocketAnalytics.js \
 	admin/src/AdminSocketSettings.js \
-	admin/src/AdminSocketHistory.js
+	admin/src/AdminSocketHistory.js \
+	admin/src/AdminSocketLog.js
 
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \

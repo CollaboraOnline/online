@@ -151,6 +151,9 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     else if (tokens.equals(0, "uptime"))
         sendTextFrame("uptime " + std::to_string(model.getServerUptime()));
 
+    else if (tokens.equals(0, "log_lines"))
+        sendTextFrame("log_lines " + _admin->getLogLines());
+
     else if (tokens.equals(0, "kill") && tokens.size() == 2)
     {
         try
@@ -196,6 +199,10 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             << "limit_num_open_files=" << docProcSettings.getLimitNumberOpenFiles() << ' ';
 
         sendTextFrame(oss.str());
+    }
+    else if (tokens.equals(0, "channel_list"))
+    {
+        sendTextFrame("channel_list " + _admin->getChannelLogLevels());
     }
     else if (tokens.equals(0, "shutdown"))
     {
@@ -271,6 +278,18 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
                 _admin->setDefDocProcSettings(docProcSettings, true);
             }
         }
+    }
+    else if (tokens.equals(0, "update-log-levels") && tokens.size() > 1) {
+        for (size_t i = 1; i < tokens.size(); i++)
+        {
+            StringVector _channel(LOOLProtocol::tokenize(tokens[i], '='));
+            if (_channel.size() == 2)
+            {
+                _admin->setChannelLogLevel((_channel[0] != "?" ? _channel[0]: ""), _channel[1]);
+            }
+        }
+        // Let's send back the current log levels in return. So the user can be sure of the values.
+        sendTextFrame("channel_list " + _admin->getChannelLogLevels());
     }
 }
 
@@ -550,17 +569,104 @@ size_t Admin::getTotalCpuUsage()
 
 unsigned Admin::getMemStatsInterval()
 {
+    assertCorrectThread();
     return _memStatsTaskIntervalMs;
 }
 
 unsigned Admin::getCpuStatsInterval()
 {
+    assertCorrectThread();
     return _cpuStatsTaskIntervalMs;
 }
 
 unsigned Admin::getNetStatsInterval()
 {
+    assertCorrectThread();
     return _netStatsTaskIntervalMs;
+}
+
+std::string Admin::getChannelLogLevels()
+{
+    std::string result = "";
+    // Get the list of channels..
+    std::vector<std::string> nameList;
+    Log::logger().names(nameList);
+
+    std::string levelList[9] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
+
+    for (size_t i = 0; i < nameList.size(); i++)
+    {
+        result += (nameList[i] != "" ? nameList[i]: "?") + "=" + levelList[Log::logger().get(nameList[i]).getLevel()] + (i != nameList.size() - 1 ? " ": "");
+    }
+
+    return result;
+}
+
+void Admin::setChannelLogLevel(std::string _channelName, std::string _level)
+{
+    assertCorrectThread();
+
+    std::string levelList[9] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
+    if (std::find(std::begin(levelList), std::end(levelList), _level) == std::end(levelList))
+    {
+        _level = "trace";
+    }
+
+    // Get the list of channels..
+    std::vector<std::string> nameList;
+    Log::logger().names(nameList);
+
+    for (size_t i = 0; i < nameList.size(); i++)
+    {
+        if (nameList[i] == _channelName)
+        {
+            Log::logger().get(nameList[i]).setLevel(_level);
+            break;
+        }
+    }
+}
+
+std::string Admin::getLogLines()
+{
+    assertCorrectThread();
+
+    try {
+        int lineCount = 500;
+        std::string fName = LOOLWSD::getPathFromConfig("logging.file.property[0]");
+        std::ifstream infile(fName);
+
+        std::string line;
+        std::deque<std::string> lines;
+
+        while (std::getline(infile, line))
+        {
+            std::istringstream iss(line);
+            lines.push_back(line);
+            if (lines.size() > (size_t)lineCount)
+            {
+                lines.pop_front();
+            }
+        }
+
+        infile.close();
+
+        if (lines.size() < (size_t)lineCount)
+        {
+            lineCount = (int)lines.size();
+        }
+
+        line = ""; // Use the same variable to include result.
+        // Newest will be on top.
+        for (int i = lineCount - 1; i >= 0; i--)
+        {
+            line += "\n" + lines[i];
+        }
+
+        return line;
+    }
+    catch (const std::exception& e) {
+        return "Could not read the log file.";
+    }
 }
 
 AdminModel& Admin::getModel()
