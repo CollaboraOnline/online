@@ -975,6 +975,7 @@ L.SheetDimension = L.Class.extend({
 		});
 	},
 
+	// computes element index from tile-twips position.
 	_getIndexFromTileTwipsPos: function (pos) {
 		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'postiletwips');
 		var elementCount = span.end - span.start + 1;
@@ -982,16 +983,17 @@ L.SheetDimension = L.Class.extend({
 			this._devPixelsPerCssPixel * this._twipsPerCSSPixel);
 		var posEnd = span.data.postiletwips;
 		var sizeOne = (posEnd - posStart) / elementCount;
-		var relativeIndex = Math.round((pos - posStart) / sizeOne);
+
+		// always round down as relativeIndex is zero-based.
+		var relativeIndex = Math.floor((pos - posStart) / sizeOne);
 
 		return span.start + relativeIndex;
 	},
 
 	setViewLimits: function (startPosTileTwips, endPosTileTwips) {
 
-		// Extend the range a bit, to compensate for rounding errors.
-		this._viewStartIndex = Math.max(0, this._getIndexFromTileTwipsPos(startPosTileTwips) - 2);
-		this._viewEndIndex = Math.min(this._maxIndex, this._getIndexFromTileTwipsPos(endPosTileTwips) + 2);
+		this._viewStartIndex = Math.max(0, this._getIndexFromTileTwipsPos(startPosTileTwips));
+		this._viewEndIndex = Math.min(this._maxIndex, this._getIndexFromTileTwipsPos(endPosTileTwips));
 	},
 
 	getViewElementRange: function () {
