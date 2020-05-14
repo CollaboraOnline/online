@@ -96,7 +96,7 @@ L.Map.FileInserter = L.Handler.extend({
 			var errMsg =  _('The file of type: %0 cannot be uploaded to server since the file has no name');
 			if (file.size === 0)
 				errMsg = _('The file of type: %0 cannot be uploaded to server since the file is empty');
-			errMsg.replace('%0', file.type);
+			errMsg = errMsg.replace('%0', file.type);
 			map.fire('error', {msg: errMsg});
 			return;
 		}
@@ -141,7 +141,7 @@ L.Map.FileInserter = L.Handler.extend({
 					}
 					else {
 						var msg = _('Uploading file to server failed with status: %0');
-						msg.replace('%0', xmlHttp.status);
+						msg = msg.replace('%0', xmlHttp.status);
 						map.fire('error', {msg: msg});
 					}
 				}
