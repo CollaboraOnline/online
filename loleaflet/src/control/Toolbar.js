@@ -416,8 +416,15 @@ L.Map.include({
 		console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
 		var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
 
-		// try to load the welcome message
 		var map = this;
+
+		// if the user doesn't accept cookies, or we get several triggers,
+		// ensure we only ever do this once.
+		if (!calledFromMenu && map._alreadyShownWelcomeDialog)
+			return;
+		map._alreadyShownWelcomeDialog = true;
+
+		// try to load the welcome message
 		$.get(welcomeLocation)
 			.done(function(data) {
 				map._showWelcomeDialogVex(data, calledFromMenu);
