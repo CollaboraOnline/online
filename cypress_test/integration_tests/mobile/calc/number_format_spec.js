@@ -385,7 +385,7 @@ describe('Apply number formatting.', function() {
 			.should('have.text', '001000');
 	});
 
-	it('Apply red color for negative numbers.', function() {
+	it.skip('Apply red color for negative numbers.', function() {
 		// Check default value
 		cy.get('#negativenumbersred input')
 			.should('not.have.prop', 'checked', true);
@@ -406,7 +406,7 @@ describe('Apply number formatting.', function() {
 			.should('have.text', '1000');
 	});
 
-	it('Add thousands separator.', function() {
+	it.skip('Add thousands separator.', function() {
 		// Check default value
 		cy.get('#thousandseparator input')
 			.should('not.have.prop', 'checked', true);
