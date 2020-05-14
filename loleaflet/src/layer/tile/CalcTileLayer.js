@@ -841,7 +841,7 @@ L.SheetDimension = L.Class.extend({
 		this._sizes = new L.SpanList();
 		this._hidden = new L.BoolSpanList();
 		this._filtered = new L.BoolSpanList();
-		this._groups = new L.DimensionOutlines();
+		this._outlines = new L.DimensionOutlines();
 
 		// This is used to store the span-list of sizes
 		// with hidden/filtered elements set to zero size.
@@ -876,7 +876,7 @@ L.SheetDimension = L.Class.extend({
 		}
 
 		if (jsonObject.hasOwnProperty('groups')) {
-			thisLoadOK = this._groups.load(jsonObject.groups);
+			thisLoadOK = this._outlines.load(jsonObject.groups);
 			loadsOK = loadsOK && thisLoadOK;
 		}
 
@@ -939,25 +939,27 @@ L.SheetDimension = L.Class.extend({
 		});
 	},
 
-	getElementData: function (index) {
+	// returns the element pos/size in css pixels by default.
+	getElementData: function (index, useDevicePixels) {
 		var span = this._visibleSizes.getSpanDataByIndex(index);
 		if (span === undefined) {
 			return undefined;
 		}
 
-		return this._getElementDataFromSpanByIndex(index, span);
+		return this._getElementDataFromSpanByIndex(index, span, useDevicePixels);
 	},
 
-	_getElementDataFromSpanByIndex: function (index, span) {
+	// returns element pos/size in css pixels by default.
+	_getElementDataFromSpanByIndex: function (index, span, useDevicePixels) {
 		if (span === undefined || index < span.start || span.end < index) {
 			return undefined;
 		}
 
 		var numSizes = span.end - index + 1;
-		// all in css pixels.
+		var pixelScale = useDevicePixels ? this._devPixelsPerCssPixel : 1;
 		return {
-			startpos: (span.data.posdevpx - span.data.sizedev * numSizes) / this._devPixelsPerCssPixel,
-			size: span.data.sizedev / this._devPixelsPerCssPixel
+			startpos: (span.data.posdevpx - span.data.sizedev * numSizes) / pixelScale,
+			size: span.data.sizedev / pixelScale
 		};
 	},
 
@@ -1432,15 +1434,18 @@ L.DimensionOutlines = L.Class.extend({
 
 				var olineEntry = {
 					start: parseInt(entrySplits[0]),
-					size: parseInt(entrySplits[1]),
+					end: parseInt(entrySplits[1]), // this is size.
 					hidden: parseInt(entrySplits[2]),
 					visible: parseInt(entrySplits[3])
 				};
 
-				if (isNaN(olineEntry.start) || isNaN(olineEntry.size) ||
+				if (isNaN(olineEntry.start) || isNaN(olineEntry.end) ||
 					isNaN(olineEntry.hidden) || isNaN(olineEntry.visible)) {
 					return false;
 				}
+
+				// correct the 'end' attribute.
+				olineEntry.end += (olineEntry.start - 1);
 
 				collections.push(olineEntry);
 			}
@@ -1450,5 +1455,132 @@ L.DimensionOutlines = L.Class.extend({
 
 		this._outlines = outlines;
 		return true;
+	},
+
+	getLevels: function () {
+		return this._outlines.length;
+	},
+
+	// Calls 'callback' for all groups in all levels that have an intersection with the inclusive element range [start, end].
+	// 'callback' is called with these parameters : (levelIdx, groupIdx, groupStart, groupEnd, groupHidden).
+	forEachGroupInRange: function (start, end, callback) {
+
+		if (start === undefined || end === undefined || callback === undefined) {
+			return;
+		}
+
+		if (!this._outlines.length || start > end) {
+			return;
+		}
+
+		// Search direction provider for binarySearch().
+		// Here we want to find the first group after or intersects elementIdx.
+		// return value : 0 for match, -1 for "try previous entries", +1 for "try next entries".
+		var directionProvider = function (elementIdx, prevGroup, curGroup/*, nextGroup*/) {
+
+			var direction = (elementIdx < curGroup.start) ? -1 :
+				(curGroup.end < elementIdx) ? 1 : 0;
+
+			if (direction >= 0) {
+				return direction;
+			}
+
+			// If curGroup is the first one, or elementidx is after prevGroup's end, then it is a match.
+			if (!prevGroup || (prevGroup.end < elementIdx)) {
+				return 0;
+			}
+
+			return -1;
+		};
+
+		for (var levelIdx = this._outlines.length - 1; levelIdx >= 0; --levelIdx) {
+
+			var groupsInLevel = this._outlines[levelIdx];
+			// Find the first group after or that intersects 'start'.
+			var startGroupIdx = binarySearch(groupsInLevel, start, directionProvider);
+			if (startGroupIdx == -1) {
+				// All groups at this level are before 'start'.
+				continue;
+			}
+
+			var startGroup = groupsInLevel[startGroupIdx];
+			if (end < startGroup.start) {
+				// No group at this level intersects the range [start, end].
+				continue;
+			}
+
+			for (var groupIdx = startGroupIdx; groupIdx < groupsInLevel.length; ++groupIdx) {
+				var group = groupsInLevel[groupIdx];
+				if (end < group.start) {
+					continue;
+				}
+
+				callback(levelIdx, groupIdx, group.start,
+					group.end, group.hidden);
+			}
+		}
 	}
 });
+
+
+// Does binary search on array for key, possibly using a custom direction provider.
+// Of course, this assumes that the array is sorted (w.r.t to the semantics of
+// the directionProvider when it is provided).
+// It returns the index of the match if successful else returns -1.
+//
+// directionProvider will be provided the following parameters :
+// (key, previousArrayElement, currentArrayElement, nextArrayElement)
+// previousArrayElement and nextArrayElement can be undefined when
+// currentArrayElement is the first or the last element of the array
+// respectively. This function should return:
+//   0: for a match(to stop search),
+//   1: to try searching upper half,
+//  -1: to try searching lower half
+
+function binarySearch(array, key, directionProvider) {
+
+	if (array === undefined || !array.length) {
+		return -1;
+	}
+
+	if (directionProvider === undefined) {
+		directionProvider = function (key, testvalue) {
+			return (key === testvalue) ? 0 :
+				(key < testvalue) ? -1 : 1;
+		};
+	}
+
+	var start = 0;
+	var end = array.length - 1;
+
+	// Bound checks and early exit.
+	var startDir = directionProvider(key, undefined, array[0], array[1]);
+	if (startDir <= 0) {
+		return startDir;
+	}
+
+	var endDir = directionProvider(key, array[end - 1], array[end]);
+	if (endDir >= 0) {
+		return endDir ? -1 : end;
+	}
+
+	var mid = -1;
+	while (start <= end) {
+		mid = Math.round((start + end) / 2);
+		var direction = directionProvider(key, array[mid-1],
+			array[mid], array[mid+1]);
+
+		if (direction == 0) {
+			break;
+		}
+
+		if (direction == -1) {
+			end = mid - 1;
+		}
+		else {
+			start = mid + 1;
+		}
+	}
+
+	return (start > end) ? -1 : mid;
+}
