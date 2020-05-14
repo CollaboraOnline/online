@@ -1387,7 +1387,8 @@ L.Map = L.Evented.extend({
 		if (this.editorHasFocus()) {
 			// The document has the focus.
 			var doclayer = this._docLayer;
-			doclayer._updateCursorAndOverlay();
+			if (doclayer)
+				doclayer._updateCursorAndOverlay();
 		} else if (acceptInput !== undefined) {
 			// A dialog has the focus.
 			this.focus(acceptInput);
