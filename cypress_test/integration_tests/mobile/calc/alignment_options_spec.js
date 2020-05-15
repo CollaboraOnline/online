@@ -268,7 +268,7 @@ describe('Change alignment settings.', function() {
 			});
 	});
 
-	it.skip('Enable text wrapping.', function() {
+	it('Enable text wrapping.', function() {
 		helper.initAliasToNegative('originalTextPos');
 
 		getTextPosForFirstCell();
@@ -322,7 +322,7 @@ describe('Change alignment settings.', function() {
 		// neither the text position nor the clipboard container helps here.
 	});
 
-	it.skip('Merge cells.', function() {
+	it('Merge cells.', function() {
 		// Select the full row
 		cy.get('.spreadsheet-header-rows')
 			.then(function(items) {
