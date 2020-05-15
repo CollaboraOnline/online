@@ -1040,6 +1040,10 @@ L.SheetDimension = L.Class.extend({
 	// computes element index from tile-twips position.
 	_getIndexFromTileTwipsPos: function (pos) {
 		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'postiletwips');
+		if (span === undefined) {
+			// enforce limits.
+			return (pos >= 0) ? this._maxIndex : 0;
+		}
 		var elementCount = span.end - span.start + 1;
 		var posStart = ((span.data.posdevpx - span.data.sizedev * elementCount) /
 			this._devPixelsPerCssPixel * this._twipsPerCSSPixel);
