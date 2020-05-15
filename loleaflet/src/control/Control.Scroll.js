@@ -114,11 +114,10 @@ L.Control.Scroll = L.Control.extend({
 			return;
 		}
 
-		this._map._docLayer.refreshViewData({ x: newLeft, y: newTop, offset: offset});
-
 		this._prevScrollY = newTop;
 		this._prevScrollX = newLeft;
 		this._map.fire('scrolloffset', offset);
+		this._map._docLayer.refreshViewData({ x: newLeft, y: newTop, offset: offset});
 		this._map.scroll(offset.x, offset.y);
 	},
 
@@ -266,10 +265,12 @@ L.Control.Scroll = L.Control.extend({
 		if (offset.y === 0) {
 			offset.y = 1;
 		}
+
+		this._map.fire('scrolloffset', offset);
 		if (e.updateHeaders && this._map._docLayer._docType === 'spreadsheet') {
 			this._map._docLayer.refreshViewData({x: e.x, y: e.y, offset: offset});
 		}
-		this._map.fire('scrolloffset', offset);
+
 		this._ignoreScroll = null;
 		$('.scroll-container').mCustomScrollbar('stop');
 		this._prevScrollY = e.y;
