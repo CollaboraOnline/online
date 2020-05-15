@@ -269,15 +269,15 @@ L.CalcTileLayer = L.TileLayer.extend({
 			}
 		} else if (textMsg.startsWith('invalidateheader: column')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0,
-				offset: {x: undefined, y: 0}}, true /* sheetGeometryChanged */);
+				offset: {x: undefined, y: 0}});
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: row')) {
 			this.refreshViewData({x: 0, y: this._map._getTopLeftPoint().y,
-				offset: {x: 0, y: undefined}}, true /* sheetGeometryChanged */);
+				offset: {x: 0, y: undefined}});
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: all')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y,
-				offset: {x: undefined, y: undefined}}, true /* sheetGeometryChanged */);
+				offset: {x: undefined, y: undefined}});
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
