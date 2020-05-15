@@ -53,6 +53,7 @@ echo "LibreOffice build target: '$LIBREOFFICE_BUILD_TARGET'"
 
 
 SRCDIR=$(realpath `dirname $0`)
+INSTDIR="$SRCDIR/instdir"
 
 if [ -z "$(lsb_release -si)" ]; then
 	echo "WARNING: Unable to determine your distribution"
@@ -62,7 +63,7 @@ if [ -z "$(lsb_release -si)" ]; then
 else
 	HOST_OS=$(lsb_release -si)
 fi
-if ! [ -e "$HOST_OS" ]; then
+if ! [ -e "$SRCDIR/$HOST_OS" ]; then
   echo "There is no suitable Dockerfile for your host system."
   echo "Please fix this problem and re-run $0"
   exit 1
