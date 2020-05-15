@@ -63,6 +63,7 @@
 		BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835F214ACA8500848631 /* FakeSocket.cpp */; };
 		BEA28377214FFD8C00848631 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA28376214FFD8C00848631 /* Unit.cpp */; };
 		BEB0E5D921C7CA800085A0CF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEB0E5D821C7CA800085A0CF /* Settings.bundle */; };
+		BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */; };
 		BECD984024336DD400016117 /* device-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983E24336DD400016117 /* device-mobile.css */; };
 		BECD984124336DD400016117 /* device-tablet.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983F24336DD400016117 /* device-tablet.css */; };
 		BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEFB1EE021C29CC70081D757 /* L10n.mm */; };
@@ -1054,6 +1055,8 @@
 		BEB6524E216FD0CA00B8C09A /* stream.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stream.cxx; path = "../../ios-device/tools/source/stream/stream.cxx"; sourceTree = "<group>"; };
 		BEB6524F216FD0CA00B8C09A /* strmwnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmwnt.cxx; path = "../../ios-device/tools/source/stream/strmwnt.cxx"; sourceTree = "<group>"; };
 		BEB65250216FD0CA00B8C09A /* strmunx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmunx.cxx; path = "../../ios-device/tools/source/stream/strmunx.cxx"; sourceTree = "<group>"; };
+		BEBF3EAE246EB1C800415E87 /* RequestDetails.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RequestDetails.hpp; sourceTree = "<group>"; };
+		BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestDetails.cpp; sourceTree = "<group>"; };
 		BECBD30323D7152900DA5582 /* SlsFramePainter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsFramePainter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.cxx"; sourceTree = "<group>"; };
 		BECBD30423D7152900DA5582 /* SlideSorterView.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideSorterView.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlideSorterView.cxx"; sourceTree = "<group>"; };
 		BECBD30523D7152900DA5582 /* SlsFramePainter.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlsFramePainter.hxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.hxx"; sourceTree = "<group>"; };
@@ -1903,6 +1906,8 @@
 		BE5EB5B7213FE21600E0826C /* wsd */ = {
 			isa = PBXGroup;
 			children = (
+				BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */,
+				BEBF3EAE246EB1C800415E87 /* RequestDetails.hpp */,
 				BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */,
 				BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */,
 				BE484B71228D8622001EE76C /* DocumentBroker.hpp */,
@@ -3033,6 +3038,7 @@
 				BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */,
 				BEA28377214FFD8C00848631 /* Unit.cpp in Sources */,
 				BE5EB5CF213FE2D000E0826C /* ClientSession.cpp in Sources */,
+				BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */,
 				BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */,
 				BE8D77402136762600AC58EA /* main.m in Sources */,
 				BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */,
