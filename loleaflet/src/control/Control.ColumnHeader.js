@@ -193,7 +193,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_updateColumnHeader: function () {
-		this._map._docLayer.requestViewRowColumnData({x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
+		this._map._docLayer.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
 	},
 
 	drawHeaderEntry: function (entry, isOver, isHighlighted, isCurrent) {
@@ -376,8 +376,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	viewRowColumnHeaders: function (e) {
-		if (e.data.columns && e.data.columns.length > 0) {
-			this.fillColumns(e.data.columns, e.data.columnGroups, e.converter, e.context);
+		var dataInEvent = (e.data && e.data.columns && e.data.columns.length > 0);
+		if (dataInEvent || e.updatecolumns) {
+			dataInEvent ? this.fillColumns(e.data.columns, e.data.columnGroups, e.converter, e.context) :
+				this.fillColumns(undefined, undefined, e.converter, e.context);
 			this._onUpdateCurrentColumn(e.cursor);
 			if (e.selection && e.selection.hasSelection) {
 				this._onUpdateSelection(e.selection);
@@ -389,7 +391,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	fillColumns: function (columns, colGroups, converter, context) {
-		if (columns.length < 2)
+		if (columns && columns.length < 2)
 			return;
 
 		var canvas = this._canvas;
@@ -413,20 +415,27 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._lastMouseOverIndex = undefined;
 		}
 
+		var sheetGeometry = this._map._docLayer.sheetGeometry;
+		var columnsGeometry = sheetGeometry ? sheetGeometry.getColumnsGeometry() : undefined;
+
 		// create data structure for column widths
-		this._tickMap = new L.Control.Header.GapTickMap(this._map, columns);
+		this._tickMap = new L.Control.Header.GapTickMap(this._map, columns, columnsGeometry);
 		this._startOffset = this._tickMap.getStartOffset();
 
 		// setup conversion routine
 		this.converter = L.Util.bind(converter, context);
 
 		// create group array
-		this._groupLevels = parseInt(columns[0].groupLevels);
+		this._groupLevels = columns ? parseInt(columns[0].groupLevels):
+			sheetGeometry.getColumnGroupLevels();
 		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
 
 		// collect group controls data
 		if (colGroups !== undefined && this._groups) {
 			this._collectGroupsData(colGroups);
+		}
+		else if (sheetGeometry) {
+			this._collectGroupsData(sheetGeometry.getColumnGroupsDataInView());
 		}
 
 		if (this._groups) {

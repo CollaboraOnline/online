@@ -324,7 +324,7 @@ L.Map = L.Evented.extend({
 		this._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 		this._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		if (this._docLayer._docType === 'spreadsheet') {
-			this._docLayer.requestViewRowColumnData();
+			this._docLayer.refreshViewData();
 		}
 		this._docLayer._getToolbarCommandsValues();
 	},

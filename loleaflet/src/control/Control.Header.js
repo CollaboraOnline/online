@@ -804,7 +804,35 @@ L.Control.Header.colHeaderHeight = undefined;
  */
 L.Control.Header.GapTickMap = L.Class.extend({
 
-	initialize: function (map, ticks) {
+	initialize: function (map, ticks, dimensionGeometry) {
+
+		if (dimensionGeometry) {
+			// Until .uno:ViewRowColumnHeaders is not phased out, we need to live with
+			// GapTickMap datastructure to avoid an invasive refactoring.
+			// L.SheetGeometry and L.SheetDimension datastructures can directly provide
+			// position/size of any row/column intuitively without using unnecessary
+			// terminologies like (1-based) Gap and (0-based) Tick.
+			var dimrange = dimensionGeometry.getViewElementRange();
+			var start = Math.max(0, dimrange.start - 2);
+			var startData = dimensionGeometry.getElementData(start);
+			var startText = start ? start + 1 : 0;
+			var endText = Math.min(dimensionGeometry.getMaxIndex(), dimrange.end + 2) + 1;
+
+			this._minTickIdx = startText;
+			this._maxTickIdx = endText;
+			this._startOffset = start ? startData.startpos + startData.size : 0;
+			this._tilePixelScale = 1; // We already have everything in css px.
+
+			ticks = start ? [] : [0];
+			dimensionGeometry.forEachInRange(start,
+				this._maxTickIdx - 1, function (idx, data) {
+					ticks[idx + 1] = data.startpos + data.size;
+				});
+
+			this._ticks = ticks;
+
+			return;
+		}
 
 		var gapSize;
 		this._ticks = [];
