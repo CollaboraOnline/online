@@ -33,7 +33,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
 				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
-				{type: 'drop', id: 'userlist', img: 'users', html: L.control.createUserListWidget()},
+				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		} else if (docType == 'spreadsheet') {
 			return [
@@ -47,7 +47,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
 //				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
 				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
-				{type: 'drop', id: 'userlist', img: 'users', html: L.control.createUserListWidget()},
+				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		} else if (docType == 'presentation') {
 			return [
