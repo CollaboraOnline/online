@@ -5,6 +5,10 @@
 
 /* global */
 L.CalcTileLayer = L.TileLayer.extend({
+	options: {
+		sheetGeometryDataEnabled: false
+	},
+
 	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
 							  * 0.1986cm with TeX points,
 							  * 0.1993cm with PS points. */
@@ -264,13 +268,16 @@ L.CalcTileLayer = L.TileLayer.extend({
 				}
 			}
 		} else if (textMsg.startsWith('invalidateheader: column')) {
-			this.requestViewRowColumnData({x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
+			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0,
+				offset: {x: undefined, y: 0}}, true /* sheetGeometryChanged */);
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: row')) {
-			this.requestViewRowColumnData({x: 0, y: this._map._getTopLeftPoint().y, offset: {x: 0, y: undefined}});
+			this.refreshViewData({x: 0, y: this._map._getTopLeftPoint().y,
+				offset: {x: 0, y: undefined}}, true /* sheetGeometryChanged */);
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: all')) {
-			this.requestViewRowColumnData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y, offset: {x: undefined, y: undefined}});
+			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y,
+				offset: {x: undefined, y: undefined}}, true /* sheetGeometryChanged */);
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
@@ -360,15 +367,17 @@ L.CalcTileLayer = L.TileLayer.extend({
 		if (part !== this._selectedPart && !this.isHiddenPart(part)) {
 			this._map.setPart(part, true);
 			this._map.fire('setpart', {selectedPart: this._selectedPart});
-			// TODO: test it!
-			this.requestViewRowColumnData();
+			this.refreshViewData(undefined, true /* sheetGeometryChanged */);
 		}
 	},
 
 	_onZoomRowColumns: function () {
 		this._sendClientZoom();
-		// TODO: test it!
-		this.requestViewRowColumnData();
+		if (this.sheetGeometry) {
+			this.sheetGeometry.setTileGeometryData(this._tileWidthTwips, this._tileHeightTwips,
+				this._tileSize, this._tilePixelScale);
+		}
+		this.refreshViewData();
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
 
@@ -454,8 +463,13 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 	},
 
-	// This send .uno:ViewRowColumnHeaders command to core with the new view coordinates.
-	requestViewRowColumnData: function (coordinatesData) {
+	// This initiates a selective repainting of row/col headers and
+	// gridlines based on the settings of coordinatesData.offset. This
+	// should be called whenever the view area changes (scrolling, panning,
+	// zooming, cursor moving out of view-area etc.).  Depending on the
+	// active sheet geometry data-source, it may ask core to send current
+	// view area's data or the global data on geometry changes.
+	refreshViewData: function (coordinatesData, sheetGeometryChanged) {
 
 		// There are places that call this function with no arguments to indicate that the
 		// command arguments should be the current map area coordinates.
@@ -475,32 +489,57 @@ L.CalcTileLayer = L.TileLayer.extend({
 			topLeftPoint.y = this._map._getTopLeftPoint().y;
 		}
 
+		var updateRows = true;
+		var updateCols = true;
+
 		if (offset.x === 0) {
-			topLeftPoint.x = -1;
-			sizePx.x = 0;
+			updateCols = false;
+			if (!this.options.sheetGeometryDataEnabled) {
+				topLeftPoint.x = -1;
+				sizePx.x = 0;
+			}
 		}
 		if (offset.y === 0) {
-			topLeftPoint.y = -1;
-			sizePx.y = 0;
+			updateRows = false;
+			if (!this.options.sheetGeometryDataEnabled) {
+				topLeftPoint.y = -1;
+				sizePx.y = 0;
+			}
 		}
 
 		var pos = this._pixelsToTwips(topLeftPoint);
 		var size = this._pixelsToTwips(sizePx);
+
+		if (!this.options.sheetGeometryDataEnabled) {
+			this.requestViewRowColumnData(pos, size);
+			return;
+		}
+
+		if (sheetGeometryChanged || !this.sheetGeometry) {
+			this.requestSheetGeometryData(
+				{columns: updateCols, rows: updateRows});
+			return;
+		}
+
+		this.sheetGeometry.setViewArea(pos, size);
+		this._updateHeadersGridLines(undefined, updateCols, updateRows);
+	},
+
+	// This send .uno:ViewRowColumnHeaders command to core with the new view coordinates (tile-twips).
+	requestViewRowColumnData: function (pos, size) {
+
 		var payload = 'commandvalues command=.uno:ViewRowColumnHeaders?x=' + Math.round(pos.x) + '&y=' + Math.round(pos.y) +
 			'&width=' + Math.round(size.x) + '&height=' + Math.round(size.y);
-
-		if (coordinatesData.outline) {
-			payload += '&columnOutline=' + coordinatesData.outline.column + '&groupLevel=' + coordinatesData.outline.level
-				+ '&groupIndex=' + coordinatesData.outline.index + '&groupHidden=' + coordinatesData.outline.hidden;
-		}
 
 		this._map._socket.sendMessage(payload);
 	},
 
 	// sends the .uno:SheetGeometryData command optionally with arguments.
-	requestSheetGeomtryData: function (flags) {
+	requestSheetGeometryData: function (flags) {
 		var unoCmd = '.uno:SheetGeometryData';
-		var haveArgs = (typeof flags == 'object' && (flags.columns === true || flags.rows === true));
+		var haveArgs = (typeof flags == 'object' &&
+			(flags.columns === true || flags.rows === true) &&
+			(flags.columns !== flags.rows));
 		var payload = 'commandvalues command=' + unoCmd;
 
 		if (haveArgs) {
@@ -533,9 +572,15 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._map._socket.sendMessage(payload);
 	},
 
-	_handleViewRowColumnHeadersMsg: function (jsonMsgObj) {
+	// Sends a notification to the row/col header and gridline controls that
+	// they need repainting.
+	// viewAreaData is the parsed .uno:ViewRowColumnHeaders JSON if that source is used.
+	// else it should be undefined.
+	_updateHeadersGridLines: function (viewAreaData, updateCols, updateRows) {
 		this._map.fire('viewrowcolumnheaders', {
-			data: jsonMsgObj,
+			data: viewAreaData,
+			updaterows: updateRows,
+			updatecolumns: updateCols,
 			cursor: this._getCursorPosSize(),
 			selection: this._getSelectionHeaderData(),
 			converter: this._twipsToPixels,
@@ -544,8 +589,17 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
-		// TODO: use the L.SheetGeometry datastructure
-		this._map.sheetGeomData = jsonMsgObj;
+		if (!this.sheetGeometry) {
+			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
+				this._tileWidthTwips, this._tileHeightTwips,
+				this._tileSize, this._tilePixelScale);
+		}
+
+		this.sheetGeometry.update(jsonMsgObj);
+		this.sheetGeometry.setViewArea(this._pixelsToTwips(this._map._getTopLeftPoint()),
+			this._pixelsToTwips(this._map.getSize()));
+		this._updateHeadersGridLines(undefined, true /* updateCols */,
+			true /* updateRows */);
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -560,7 +614,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 		var comment;
 		if (values.commandName === '.uno:ViewRowColumnHeaders') {
-			this._handleViewRowColumnHeadersMsg(values);
+			this._updateHeadersGridLines(values);
 
 		} else if (values.commandName === '.uno:SheetGeometryData') {
 			this._handleSheetGeometryDataMsg(values);
@@ -695,6 +749,14 @@ L.SheetGeometry = L.Class.extend({
 		this._rows.setViewLimits(top, bottom);
 
 		return true;
+	},
+
+	getColumnsGeometry: function () {
+		return this._columns;
+	},
+
+	getRowsGeometry: function () {
+		return this._rows;
 	},
 
 	// returns an object with keys 'start' and 'end' indicating the

@@ -114,7 +114,7 @@ L.Control.Scroll = L.Control.extend({
 			return;
 		}
 
-		this._map._docLayer.requestViewRowColumnData({ x: newLeft, y: newTop, offset: offset});
+		this._map._docLayer.refreshViewData({ x: newLeft, y: newTop, offset: offset});
 
 		this._prevScrollY = newTop;
 		this._prevScrollX = newLeft;
@@ -267,7 +267,7 @@ L.Control.Scroll = L.Control.extend({
 			offset.y = 1;
 		}
 		if (e.updateHeaders && this._map._docLayer._docType === 'spreadsheet') {
-			this._map._docLayer.requestViewRowColumnData({x: e.x, y: e.y, offset: offset});
+			this._map._docLayer.refreshViewData({x: e.x, y: e.y, offset: offset});
 		}
 		this._map.fire('scrolloffset', offset);
 		this._ignoreScroll = null;

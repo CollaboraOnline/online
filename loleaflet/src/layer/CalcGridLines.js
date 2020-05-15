@@ -78,8 +78,13 @@ L.CalcGridLines = L.LayerGroup.extend({
 		// into map coordinate units
 		var pixelToMapUnitRatio = this._map.options.crs.scale(this._map.getZoom());
 
-		if (ev.data.columns && ev.data.columns.length) {
-			ticks = new L.Control.Header.GapTickMap(this._map, ev.data.columns);
+		var colDataInEvent = ev.data && ev.data.columns && ev.data.columns.length;
+		var rowDataInEvent = ev.data && ev.data.rows && ev.data.rows.length;
+
+		if (colDataInEvent || ev.updatecolumns) {
+			var columnsData = colDataInEvent ? ev.data.columns : undefined;
+			var columnsGeometry = colDataInEvent ? undefined : this._map._docLayer.sheetGeometry.getColumnsGeometry();
+			ticks = new L.Control.Header.GapTickMap(this._map, columnsData, columnsGeometry);
 			this._colLines.clearLayers();
 
 			ticks.forEachTick(function(idx, pos) {
@@ -92,8 +97,10 @@ L.CalcGridLines = L.LayerGroup.extend({
 			}.bind(this));
 		}
 
-		if (ev.data.rows && ev.data.rows.length) {
-			ticks = new L.Control.Header.GapTickMap(this._map, ev.data.rows);
+		if (rowDataInEvent || ev.updaterows) {
+			var rowsData = rowDataInEvent ? ev.data.rows : undefined;
+			var rowsGeometry = rowDataInEvent ? undefined : this._map._docLayer.sheetGeometry.getRowsGeometry();
+			ticks = new L.Control.Header.GapTickMap(this._map, rowsData, rowsGeometry);
 			this._rowLines.clearLayers();
 
 			ticks.forEachTick(function(idx, pos) {
