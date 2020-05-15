@@ -1,0 +1,20 @@
+These fuzzers are meant to be built and executed inside lode.git's sanitizers
+environment (currently enables both asan and ubsan).
+
+online.git can be built the usual way, just the additional `--enable-fuzzers`
+flag is needed to build the fuzzers. It is useful to do this in a separate
+build tree, since the fuzzers config doesn't produce a `loolwsd` binary.
+
+Run the fuzzers like this:
+
+- Admin:
+
+----
+./admin_fuzzer -max_len=16384 fuzzer/admin-data/
+----
+
+- ClientSession:
+
+----
+./clientsession_fuzzer -max_len=16384 fuzzer/data/
+----
