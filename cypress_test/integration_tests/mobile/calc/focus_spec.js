@@ -95,7 +95,6 @@ describe('Calc focus tests', function() {
 
 		// Click in the formula-bar.
 		calc.clickFormulaBar();
-		cy.get('body').trigger('mouseover');
 		helper.assertCursorAndFocus();
 
 		// Type some text.
@@ -110,7 +109,6 @@ describe('Calc focus tests', function() {
 
 		// Check the text we typed.
 		calc.clickFormulaBar();
-		cy.get('body').trigger('mouseover');
 		helper.assertCursorAndFocus();
 		cy.get('textarea.clipboard').type('{ctrl}a');
 		helper.expectTextForClipboard(text1);
@@ -123,7 +121,6 @@ describe('Calc focus tests', function() {
 		cy.log('Appending text at the end.');
 		calc.clickOnFirstCell();
 		calc.clickFormulaBar();
-		cy.get('body').trigger('mouseover');
 		helper.assertCursorAndFocus();
 		var text2 = ', this is a test.';
 		cy.get('textarea.clipboard').type(text2);
@@ -138,7 +135,6 @@ describe('Calc focus tests', function() {
 		cy.log('Inserting text in the middle.');
 		calc.clickOnFirstCell();
 		calc.clickFormulaBar();
-		cy.get('body').trigger('mouseover');
 		helper.assertCursorAndFocus();
 
 		// Move cursor before text2

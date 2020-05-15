@@ -1,9 +1,9 @@
 /* global cy expect */
 
 // Click on the formula bar.
-// moveMouse is set to avoid leaving the mouse on the Formula-Bar,
+// mouseover is triggered to avoid leaving the mouse on the Formula-Bar,
 // which shows the tooltip and messes up tests.
-function clickFormulaBar(XPos = -1, moveMouse = true) {
+function clickFormulaBar() {
 
 	// The inputbar_container is 100% width, which
 	// can extend behind the sidebar. So we can't
@@ -14,15 +14,13 @@ function clickFormulaBar(XPos = -1, moveMouse = true) {
 	cy.get('.inputbar_canvas')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
-			if (XPos < 0) // Click in the center if undefined.
-				XPos = items[0].getBoundingClientRect().width / 2;
+			var XPos = items[0].getBoundingClientRect().width / 2;
 			var YPos = items[0].getBoundingClientRect().height / 2;
 			cy.get('.inputbar_container')
 				.click(XPos, YPos);
 		});
 
-	if (moveMouse)
-		cy.get('body').trigger('mouseover');
+	cy.get('body').trigger('mouseover');
 }
 
 // Click on the first cell.
