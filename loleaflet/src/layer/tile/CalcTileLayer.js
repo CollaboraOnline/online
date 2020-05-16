@@ -1259,61 +1259,29 @@ L.SpanList = L.Class.extend({
 
 	_searchByIndex: function (index) {
 
-		if (index < 0 || index > this._spanlist[this._spanlist.length - 1].index) {
-			return -1;
-		}
-
-		var start = 0;
-		var end = this._spanlist.length - 1;
-		var mid = -1;
-		while (start <= end) {
-			mid = Math.round((start + end) / 2);
-			var spanstart = mid ? this._spanlist[mid - 1].index + 1 : 0;
-			var spanend = this._spanlist[mid].index;
-			if (spanstart <= index && index <= spanend) {
-				break;
-			}
-
-			if (index < spanstart) {
-				end = mid - 1;
-			}
-			else { // spanend < index
-				start = mid + 1;
-			}
-		}
-
-		return mid;
+		return binarySearch(this._spanlist, index,
+			function directionProvider(testIndex, prevSpan, curSpan) {
+				var spanStart = prevSpan ?
+					prevSpan.index + 1 : 0;
+				var spanEnd = curSpan.index;
+				return (testIndex < spanStart) ? -1 :
+					(spanEnd < testIndex) ? 1 : 0;
+			});
 	},
 
 	_searchByCustomDataField: function (value, fieldName) {
 
-		// All custom searchable data values are assumed to start from 0 at the start of first span.
-		var maxValue = this._spanlist[this._spanlist.length - 1].data[fieldName];
-		if (value < 0 || value > maxValue) {
-			return -1;
-		}
+		// All custom searchable data values are assumed to start
+		// from 0 at the start of first span and are in non-decreasing order.
 
-		var start = 0;
-		var end = this._spanlist.length - 1;
-		var mid = -1;
-		while (start <= end) {
-			mid = Math.round((start + end) / 2);
-			var valuestart = mid ? this._spanlist[mid - 1].data[fieldName] + 1 : 0;
-			var valueend = this._spanlist[mid].data[fieldName];
-			if (valuestart <= value && value <= valueend) {
-				break;
-			}
-
-			if (value < valuestart) {
-				end = mid - 1;
-			}
-			else { // valueend < value
-				start = mid + 1;
-			}
-		}
-
-		// may fail for custom data ?
-		return (start <= end) ? mid : -1;
+		return binarySearch(this._spanlist, value,
+			function directionProvider(testValue, prevSpan, curSpan) {
+				var valueStart = prevSpan ?
+					prevSpan.data[fieldName] + 1 : 0;
+				var valueEnd = curSpan.data[fieldName];
+				return (testValue < valueStart) ? -1 :
+					(valueEnd < testValue) ? 1 : 0;
+			});
 	}
 
 });
