@@ -1193,6 +1193,10 @@ L.SpanList = L.Class.extend({
 
 	addCustomDataForEachSpan: function (getCustomDataCallback) {
 
+		if (typeof getCustomDataCallback != 'function') {
+			return;
+		}
+
 		var prevIndex = -1;
 		this._spanlist.forEach(function (span) {
 			span.data = getCustomDataCallback(
@@ -1203,6 +1207,11 @@ L.SpanList = L.Class.extend({
 	},
 
 	getSpanDataByIndex: function (index) {
+
+		if (typeof index != 'number') {
+			return undefined;
+		}
+
 		var spanid = this._searchByIndex(index);
 		if (spanid == -1) {
 			return undefined;
@@ -1212,6 +1221,11 @@ L.SpanList = L.Class.extend({
 	},
 
 	getSpanDataByCustomDataField: function (value, fieldName) {
+
+		if (typeof value != 'number' || typeof fieldName != 'string' || !fieldName) {
+			return undefined;
+		}
+
 		var spanid = this._searchByCustomDataField(value, fieldName);
 		if (spanid == -1) {
 			return undefined;
@@ -1222,7 +1236,8 @@ L.SpanList = L.Class.extend({
 
 	forEachSpanInRange: function (start, end, callback) {
 
-		if (start > end) {
+		if (typeof start != 'number' || typeof end != 'number' ||
+			typeof callback != 'function' || start > end) {
 			return;
 		}
 
@@ -1279,6 +1294,10 @@ L.SpanList = L.Class.extend({
 				var valueStart = prevSpan ?
 					prevSpan.data[fieldName] + 1 : 0;
 				var valueEnd = curSpan.data[fieldName];
+				if (valueStart === undefined || valueEnd === undefined) {
+					// fieldName not present in the 'data' property.
+					return -1;
+				}
 				return (testValue < valueStart) ? -1 :
 					(valueEnd < testValue) ? 1 : 0;
 			});
@@ -1501,7 +1520,7 @@ L.DimensionOutlines = L.Class.extend({
 	// 'callback' is called with these parameters : (levelIdx, groupIdx, groupStart, groupEnd, groupHidden).
 	forEachGroupInRange: function (start, end, callback) {
 
-		if (start === undefined || end === undefined || callback === undefined) {
+		if (typeof start != 'number' || typeof end != 'number' || typeof callback != 'function') {
 			return;
 		}
 
@@ -1575,11 +1594,11 @@ L.DimensionOutlines = L.Class.extend({
 
 function binarySearch(array, key, directionProvider) {
 
-	if (array === undefined || !array.length) {
+	if (!Array.isArray(array) || !array.length) {
 		return -1;
 	}
 
-	if (directionProvider === undefined) {
+	if (typeof directionProvider != 'function') {
 		directionProvider = function (key, testvalue) {
 			return (key === testvalue) ? 0 :
 				(key < testvalue) ? -1 : 1;
