@@ -1469,6 +1469,7 @@ L.DimensionOutlines = L.Class.extend({
 		var levels = encoding.split(' ');
 		if (levels.length < 2) {
 			// No outline.
+			this._outlines = [];
 			return true;
 		}
 
