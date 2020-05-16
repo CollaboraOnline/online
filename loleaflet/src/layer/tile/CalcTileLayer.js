@@ -1300,7 +1300,9 @@ L.SpanList = L.Class.extend({
 				}
 				return (testValue < valueStart) ? -1 :
 					(valueEnd < testValue) ? 1 : 0;
-			});
+			}, true /* find the first match in case of duplicates */);
+		// About the last argument: duplicates can happen, for instance if the
+		// custom field represents positions, and there are spans with zero sizes (hidden/filtered).
 	}
 
 });
@@ -1582,6 +1584,9 @@ L.DimensionOutlines = L.Class.extend({
 // Of course, this assumes that the array is sorted (w.r.t to the semantics of
 // the directionProvider when it is provided).
 // It returns the index of the match if successful else returns -1.
+// 'firstMatch' if true, some additional work is done to ensure that the index of
+// the first match (from the 0 index of the array) is returned in case there are
+// duplicates.
 //
 // directionProvider will be provided the following parameters :
 // (key, previousArrayElement, currentArrayElement, nextArrayElement)
@@ -1592,18 +1597,20 @@ L.DimensionOutlines = L.Class.extend({
 //   1: to try searching upper half,
 //  -1: to try searching lower half
 
-function binarySearch(array, key, directionProvider) {
+function binarySearch(array, key, directionProvider, firstMatch) {
 
 	if (!Array.isArray(array) || !array.length) {
 		return -1;
 	}
 
 	if (typeof directionProvider != 'function') {
-		directionProvider = function (key, testvalue) {
+		directionProvider = function (key, prevvalue, testvalue) {
 			return (key === testvalue) ? 0 :
 				(key < testvalue) ? -1 : 1;
 		};
 	}
+
+	firstMatch = (firstMatch === true);
 
 	var start = 0;
 	var end = array.length - 1;
@@ -1616,7 +1623,12 @@ function binarySearch(array, key, directionProvider) {
 
 	var endDir = directionProvider(key, array[end - 1], array[end]);
 	if (endDir >= 0) {
-		return endDir ? -1 : end;
+
+		if (endDir === 1) {
+			return -1;
+		}
+
+		return firstMatch ? _findFirstMatch(array, key, directionProvider, end) : end;
 	}
 
 	var mid = -1;
@@ -1637,5 +1649,22 @@ function binarySearch(array, key, directionProvider) {
 		}
 	}
 
-	return (start > end) ? -1 : mid;
+	return (start > end) ? -1 :
+		firstMatch ? _findFirstMatch(array, key, directionProvider, mid) : mid;
+}
+
+// Helper function for binarySearch().
+function _findFirstMatch(array, key, directionProvider, randomMatchingIndex) {
+
+	if (randomMatchingIndex === 0) {
+		return 0;
+	}
+
+	var index = randomMatchingIndex - 1;
+	while (index >= 0 && directionProvider(key,
+		array[index - 1], array[index], array[index + 1]) == 0) {
+		--index;
+	}
+
+	return index + 1;
 }
