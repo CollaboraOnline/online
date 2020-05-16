@@ -259,15 +259,21 @@ L.Control.Scroll = L.Control.extend({
 		// used on window resize
 		// also when dragging
 		var offset = new L.Point(e.x - this._prevScrollX, e.y - this._prevScrollY);
-		if (offset.x === 0) {
-			offset.x = 1;
-		}
-		if (offset.y === 0) {
-			offset.y = 1;
-		}
 
 		this._map.fire('scrolloffset', offset);
 		if (e.updateHeaders && this._map._docLayer._docType === 'spreadsheet') {
+			// This adjustment was just meant for refreshViewData()
+			// to indicate that both column/row headers/gridlines
+			// should be updated, no matter what the actual offset
+			// is (unsure why).
+			// TODO: Get rid of the 'offset' adjustment and
+			// only send boolean flags to refreshViewData().
+			if (offset.x === 0) {
+				offset.x = 1;
+			}
+			if (offset.y === 0) {
+				offset.y = 1;
+			}
 			this._map._docLayer.refreshViewData({x: e.x, y: e.y, offset: offset});
 		}
 
