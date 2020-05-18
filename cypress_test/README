@@ -78,6 +78,9 @@ Or open the file in the interactive test runner.
 
     make run-mobile
 
+Or run specific unit test:
+
+    make run-mobile spec=writer/apply_font_spec.js
 
 Openning interactive test runner
 ----------------------------------

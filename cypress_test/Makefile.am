@@ -106,8 +106,7 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Open cypress with desktop tests..."
 	@echo
-	$(CYPRESS_BINARY) open --config integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT) \
-			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
+	$(call run_interactive_test,DESKTOP,$(spec)) \
 			|| true
 	@$(KILL_COMMAND) || true
 
@@ -117,8 +116,7 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Open cypress with mobile tests..."
 	@echo
-	$(CYPRESS_BINARY) open --config integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT) \
-			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
+	$(call run_interactive_test,MOBILE,$(spec)) \
 			|| true
 	@$(KILL_COMMAND) || true
 
@@ -155,6 +153,19 @@ define start_Xvfb
 	Xvfb :$(DISPLAY_NUMBER) -screen 0 1280x800x24 &
 	while [ ! -f /tmp/.X$(DISPLAY_NUMBER)-lock ] ; do sleep 1; done
 	@echo
+endef
+
+DESKTOP_CONFIG = --config integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT) --env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT)
+
+MOBILE_CONFIG = --config integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT) --env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT)
+
+define run_interactive_test
+	$(if $(2),\
+		$(CYPRESS_BINARY) run --browser $(CHROME) --headed --no-exit \
+			$(if $(findstring DESKTOP,$(1)),\
+				$(DESKTOP_CONFIG) --spec=$(abs_dir)/integration_tests/desktop/$(2),\
+				$(MOBILE_CONFIG) --spec=$(abs_dir)/integration_tests/mobile/$(2)),\
+		$(CYPRESS_BINARY) open $(if $(findstring DESKTOP,$(1)),$(DESKTOP_CONFIG),$(MOBILE_CONFIG)))
 endef
 
 define run_desktop_tests
