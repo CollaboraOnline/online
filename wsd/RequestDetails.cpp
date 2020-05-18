@@ -39,13 +39,29 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request)
 #endif
 
     std::vector<StringToken> tokens;
-    if (_uriString.size() > 0)
+    const auto len = _uriString.size();
+    if (len > 0)
     {
-        size_t i, start;
-        for (i = start = 0; i < _uriString.size(); ++i)
+        std::size_t i, start;
+        for (i = start = 0; i < len; ++i)
         {
             if (_uriString[i] == '/' || _uriString[i] == '?')
             {
+                if (_uriString[i] == '/')
+                {
+                    // Wopi also uses /ws? in the URL, which
+                    // we need to avoid confusing with the
+                    // trailing /ws/<command>/<sessionId>/<serial>.
+                    // E.g. /ws?WOPISrc=
+                    if (i + 3 < len && _uriString[i + 1] == 'w' && _uriString[i + 2] == 's'
+                        && _uriString[i + 3] == '?')
+                    {
+                        // Skip over '/ws?'
+                        i += 4;
+                        continue;
+                    }
+                }
+
                 if (i - start > 1) // ignore empty
                     tokens.emplace_back(start, i - start);
                 start = i + 1;
