@@ -28,6 +28,24 @@ describe('Form field button tests.', function() {
 
 		cy.get('.drop-down-field-list')
 			.should('exist');
+
+		// Check also the position relative to the blinking cursor
+		cy.get('.blinking-cursor')
+			.then(function(cursors) {
+				// TODO: why we have two blinking cursors here?
+				//expect(cursors).to.have.lengthOf(1);
+
+				var cursorRect = cursors[0].getBoundingClientRect();
+				cy.get('.form-field-frame')
+					.should(function(frames) {
+						expect(frames).to.have.lengthOf(1);
+						var frameRect = frames[0].getBoundingClientRect();
+						expect(frameRect.top).to.be.lessThan(cursorRect.top);
+						expect(frameRect.bottom).to.be.greaterThan(cursorRect.bottom);
+						expect(frameRect.left).to.be.lessThan(cursorRect.left);
+						expect(frameRect.right).to.be.greaterThan(cursorRect.right);
+					});
+			});
 	}
 
 	it('Activate and deactivate form field button.', function() {
@@ -243,6 +261,40 @@ describe('Form field button tests.', function() {
 
 		cy.get('.drop-down-field-list-item.selected')
 			.should('not.exist');
+	});
+
+	it('Test field button after zoom.', function() {
+		helper.loadTestDoc('form_field.odt', 'writer');
+
+		// Move the cursor next to the form field
+		cy.get('textarea.clipboard')
+			.type('{rightArrow}');
+
+		buttonShouldExist();
+
+		// Do a zoom in
+		cy.get('#tb_actionbar_item_zoom')
+			.click();
+
+		cy.contains('.menu-text', '120')
+			.click();
+
+		cy.contains('#tb_actionbar_item_zoom', '120')
+			.should('exist');
+
+		buttonShouldExist();
+
+		// Do a zoom out
+		cy.get('#tb_actionbar_item_zoom')
+			.click();
+
+		cy.contains('.menu-text', '85')
+			.click();
+
+		cy.contains('#tb_actionbar_item_zoom', '85')
+			.should('exist');
+
+		buttonShouldExist();
 	});
 });
 
