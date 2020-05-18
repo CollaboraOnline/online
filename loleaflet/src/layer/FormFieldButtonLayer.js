@@ -41,6 +41,9 @@ L.FormFieldButton = L.Layer.extend({
 
 		// Build list of items opened by clicking on the drop down button
 		this._buildDropDownList(framePos, frameWidth, frameHeight);
+
+		map.on('zoomstart', this._onZoomStart, this);
+		map.on('zoomend', this._onZoomEnd, this);
 	},
 
 	_calculateButtonArea: function(map) {
@@ -159,6 +162,16 @@ L.FormFieldButton = L.Layer.extend({
 
 		// Apply selection in the document.
 		this.map._socket.sendMessage(message);
+	},
+
+	_onZoomStart: function() {
+		$('.drop-down-field-list').hide();
+		this._clearButton();
+	},
+
+	_onZoomEnd: function() {
+		// rebuild button on zoom
+		this.onAdd(this.map);
 	},
 
 	_clearButton: function() {
