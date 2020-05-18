@@ -295,6 +295,25 @@ describe('Form field button tests.', function() {
 			.should('exist');
 
 		buttonShouldExist();
+
+		// Now check that event listener does not do
+		// anything stupid after the button is removed.
+
+		// Move the cursor away from the field
+		cy.get('textarea.clipboard')
+			.type('{leftArrow}');
+
+		buttonShouldNotExist();
+
+		// Do a zoom in again
+		cy.get('#tb_actionbar_item_zoom')
+			.click();
+
+		cy.contains('.menu-text', '120')
+			.click();
+
+		cy.contains('#tb_actionbar_item_zoom', '120')
+			.should('exist');
 	});
 });
 

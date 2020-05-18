@@ -135,6 +135,8 @@ L.FormFieldButton = L.Layer.extend({
 
 	onRemove: function () {
 		this._clearButton();
+		this.map.off('zoomstart', this._onZoomStart, this);
+		this.map.off('zoomend', this._onZoomEnd, this);
 	},
 
 	_onClickDropDown: function(event) {
