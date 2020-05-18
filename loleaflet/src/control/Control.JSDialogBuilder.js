@@ -118,9 +118,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// It listens server state changes using GetControlState
 			// to avoid unit conversion
 			builder.map.on('commandstatechanged', function(e) {
-				var value = e.state[data.id];
+				var value = e.state[builder._getFieldFromId(data.id)];
 				if (value) {
-					value = parseFloat(value);
+					value = parseFloat(value.replace(',', '.'));
 					$(controls.spinfield).attr('value', value);
 				}
 			}, this);
@@ -1162,6 +1162,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		return null;
+	},
+
+	_getFieldFromId: function(id) {
+		switch (id) {
+		case 'aboveparaspacing':
+			return 'upper';
+		case 'belowparaspacing':
+			return 'lower';
+		case 'beforetextindent':
+			return 'left';
+		case 'aftertextindent':
+			return 'right';
+		case 'firstlineindent':
+			return 'firstline';
+		default:
+			return id;
+		}
 	},
 
 	_getTitleForControlWithId: function(id) {
