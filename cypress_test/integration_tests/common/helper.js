@@ -188,6 +188,22 @@ function initAliasToNegative(aliasName) {
 	cy.log('Initializing alias to a negative value - end.');
 }
 
+function initAliasToEmptyString(aliasName) {
+	cy.log('Initializing alias to empty string - start.');
+	cy.log('Param - aliasName: ' + aliasName);
+
+	// Do an empty slice to generate empty string
+	cy.get('#copy-paste-container')
+		.invoke('css', 'display')
+		.invoke('slice', '0', '0')
+		.as(aliasName);
+
+	cy.get('@' + aliasName)
+		.should('be.equal', '');
+
+	cy.log('Initializing alias to empty string - end.');
+}
+
 function isCalc() {
 	return Cypress.$('.spreadsheet-header-columns').length != 0;
 }
@@ -221,6 +237,7 @@ module.exports.clearAllText = clearAllText;
 module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.afterAll = afterAll;
 module.exports.initAliasToNegative = initAliasToNegative;
+module.exports.initAliasToEmptyString = initAliasToEmptyString;
 module.exports.isCalc = isCalc;
 module.exports.isImpress = isImpress;
 module.exports.isWriter = isWriter;

@@ -315,5 +315,75 @@ describe('Form field button tests.', function() {
 		cy.contains('#tb_actionbar_item_zoom', '120')
 			.should('exist');
 	});
+
+	it.skip('Test dynamic font size.', function() {
+		helper.loadTestDoc('form_field.odt', 'writer');
+
+		// Move the cursor next to the form field
+		cy.get('textarea.clipboard')
+			.type('{rightArrow}');
+
+		buttonShouldExist();
+
+		// Get the initial font size from the style
+		helper.initAliasToEmptyString('prevFontSize');
+
+		cy.get('.drop-down-field-list-item')
+			.invoke('css', 'font-size')
+			.as('prevFontSize');
+
+		cy.get('@prevFontSize')
+			.should('not.be.equal', '');
+
+		// Do a zoom in
+		cy.get('#tb_actionbar_item_zoom')
+			.click();
+
+		cy.contains('.menu-text', '280')
+			.click();
+
+		cy.contains('#tb_actionbar_item_zoom', '280')
+			.should('exist');
+
+		buttonShouldExist();
+
+		// Check that the font size was changed
+		cy.get('@prevFontSize')
+			.then(function(prevFontSize) {
+				cy.get('.drop-down-field-list-item')
+					.should(function(items) {
+						var prevSize = parseInt(prevFontSize, 10);
+						var currentSize = parseInt(items.css('font-size'), 10);
+						expect(currentSize).to.be.greaterThan(prevSize);
+					});
+			});
+
+		cy.get('.drop-down-field-list-item')
+			.invoke('css', 'font-size')
+			.as('prevFontSize');
+
+		// Do a zoom out
+		cy.get('#tb_actionbar_item_zoom')
+			.click();
+
+		cy.contains('.menu-text', '85')
+			.click();
+
+		cy.contains('#tb_actionbar_item_zoom', '85')
+			.should('exist');
+
+		buttonShouldExist();
+
+		// Check that the font size was changed
+		cy.get('@prevFontSize')
+			.then(function(prevFontSize) {
+				cy.get('.drop-down-field-list-item')
+					.should(function(items) {
+						var prevSize = parseInt(prevFontSize, 10);
+						var currentSize = parseInt(items.css('font-size'), 10);
+						expect(currentSize).to.be.lessThan(prevSize);
+					});
+			});
+	});
 });
 

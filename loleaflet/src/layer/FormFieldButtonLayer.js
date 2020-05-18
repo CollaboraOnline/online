@@ -109,17 +109,18 @@ L.FormFieldButton = L.Layer.extend({
 		var selected = parseInt(this._buttonData.params.selected);
 
 		for (var i = 0; i < itemList.length; ++i) {
-			this._buildListItem(dropDownList, itemList[i], i === selected);
+			this._buildListItem(dropDownList, itemList[i], frameHeight, i === selected);
 		}
 
 		if (this._buttonData.params.items.length === 0) {
-			this._buildListItem(dropDownList, this._buttonData.params.placeholderText, false);
+			this._buildListItem(dropDownList, this._buttonData.params.placeholderText, frameHeight, false);
 		}
 	},
 
-	_buildListItem: function(parent, text, selected) {
+	_buildListItem: function(parent, text, frameHeight, selected) {
 		var option = L.DomUtil.create('div', 'drop-down-field-list-item', parent);
 		option.innerHTML = text;
+		option.style.fontSize = frameHeight * 0.7 + 'px';
 
 		option.addEventListener('click', this._onListItemSelect);
 		option.map = this.map;
