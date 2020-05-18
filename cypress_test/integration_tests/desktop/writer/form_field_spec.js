@@ -8,6 +8,14 @@ describe('Form field button tests.', function() {
 		helper.afterAll('form_field.odt', 'writer');
 	});
 
+	function before(fileName, subFolder) {
+		helper.loadTestDoc(fileName, subFolder);
+
+		// Wait for the sidebar to change the zoom level by load
+		cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
+			.should('not.have.text', '100');
+	}
+
 	function buttonShouldNotExist() {
 		cy.get('.form-field-frame')
 			.should('not.exist');
@@ -48,8 +56,35 @@ describe('Form field button tests.', function() {
 			});
 	}
 
+	function doZoom(zoomIn) {
+		helper.initAliasToEmptyString('prevZoom');
+
+		cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
+			.invoke('text')
+			.as('prevZoom');
+
+		cy.get('@prevZoom')
+			.should('not.be.equal', '');
+
+		if (zoomIn) {
+			cy.get('.w2ui-tb-image.w2ui-icon.zoomin')
+				.click();
+		} else {
+			cy.get('.w2ui-tb-image.w2ui-icon.zoomout')
+				.click();
+		}
+
+		cy.get('@prevZoom')
+			.then(function(prevZoom) {
+				cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
+					.should(function(zoomItem) {
+						expect(zoomItem.text()).to.be.not.equal(prevZoom);
+					});
+			});
+	}
+
 	it('Activate and deactivate form field button.', function() {
-		helper.loadTestDoc('form_field.odt', 'writer');
+		before('form_field.odt', 'writer');
 
 		// We don't have the button by default
 		buttonShouldNotExist();
@@ -80,7 +115,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Check drop down list.', function() {
-		helper.loadTestDoc('form_field.odt', 'writer');
+		before('form_field.odt', 'writer');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -123,7 +158,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Test field editing', function() {
-		helper.loadTestDoc('form_field.odt', 'writer');
+		before('form_field.odt', 'writer');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -186,7 +221,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Multiple form field button activation.', function() {
-		helper.loadTestDoc('multiple_form_fields.odt', 'writer');
+		before('multiple_form_fields.odt', 'writer');
 
 		// We don't have the button by default
 		buttonShouldNotExist();
@@ -223,7 +258,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Test drop-down field with no selection.', function() {
-		helper.loadTestDoc('drop_down_form_field_noselection.odt', 'writer');
+		before('drop_down_form_field_noselection.odt', 'writer');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -236,7 +271,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Test drop-down field with no items.', function() {
-		helper.loadTestDoc('drop_down_form_field_noitem.odt', 'writer');
+		before('drop_down_form_field_noitem.odt', 'writer');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -263,8 +298,8 @@ describe('Form field button tests.', function() {
 			.should('not.exist');
 	});
 
-	it.skip('Test field button after zoom.', function() {
-		helper.loadTestDoc('form_field.odt', 'writer');
+	it('Test field button after zoom.', function() {
+		before('form_field.odt', 'writer');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -273,26 +308,12 @@ describe('Form field button tests.', function() {
 		buttonShouldExist();
 
 		// Do a zoom in
-		cy.get('#tb_actionbar_item_zoom')
-			.click();
-
-		cy.contains('.menu-text', '120')
-			.click();
-
-		cy.contains('#tb_actionbar_item_zoom', '120')
-			.should('exist');
+		doZoom(true);
 
 		buttonShouldExist();
 
 		// Do a zoom out
-		cy.get('#tb_actionbar_item_zoom')
-			.click();
-
-		cy.contains('.menu-text', '85')
-			.click();
-
-		cy.contains('#tb_actionbar_item_zoom', '85')
-			.should('exist');
+		doZoom(false);
 
 		buttonShouldExist();
 
@@ -306,18 +327,11 @@ describe('Form field button tests.', function() {
 		buttonShouldNotExist();
 
 		// Do a zoom in again
-		cy.get('#tb_actionbar_item_zoom')
-			.click();
-
-		cy.contains('.menu-text', '120')
-			.click();
-
-		cy.contains('#tb_actionbar_item_zoom', '120')
-			.should('exist');
+		doZoom(true);
 	});
 
-	it.skip('Test dynamic font size.', function() {
-		helper.loadTestDoc('form_field.odt', 'writer');
+	it('Test dynamic font size.', function() {
+		before('form_field.odt', 'writer');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -336,14 +350,7 @@ describe('Form field button tests.', function() {
 			.should('not.be.equal', '');
 
 		// Do a zoom in
-		cy.get('#tb_actionbar_item_zoom')
-			.click();
-
-		cy.contains('.menu-text', '280')
-			.click();
-
-		cy.contains('#tb_actionbar_item_zoom', '280')
-			.should('exist');
+		doZoom(true);
 
 		buttonShouldExist();
 
@@ -363,14 +370,7 @@ describe('Form field button tests.', function() {
 			.as('prevFontSize');
 
 		// Do a zoom out
-		cy.get('#tb_actionbar_item_zoom')
-			.click();
-
-		cy.contains('.menu-text', '85')
-			.click();
-
-		cy.contains('#tb_actionbar_item_zoom', '85')
-			.should('exist');
+		doZoom(false);
 
 		buttonShouldExist();
 
