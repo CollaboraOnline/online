@@ -519,6 +519,9 @@
 		else if (global.accessHeader !== '') {
 			wopiParams = { 'access_header': global.accessHeader };
 		}
+		else if (global.reuseCookies !== '') {
+			wopiParams = { 'reuse_cookies': global.reuseCookies };
+		}
 		if (wopiParams) {
 			docParams = Object.keys(wopiParams).map(function(key) {
 				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
