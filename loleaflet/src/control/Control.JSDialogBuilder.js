@@ -120,8 +120,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.on('commandstatechanged', function(e) {
 				var value = e.state[builder._getFieldFromId(data.id)];
 				if (value) {
-					value = parseFloat(value.replace(',', '.'));
-					$(controls.spinfield).attr('value', value);
+					if (customCallback)
+						customCallback();
+					else
+						builder.callback('spinfield', 'value', controls.container, this.value, builder);
 				}
 			}, this);
 
