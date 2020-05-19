@@ -2282,6 +2282,7 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_GRAPHIC_SELECTION ||
              type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED ||
              type == LOK_CALLBACK_INVALIDATE_HEADER ||
+             type == LOK_CALLBACK_INVALIDATE_SHEET_GEOMETRY ||
              type == LOK_CALLBACK_CELL_ADDRESS ||
              type == LOK_CALLBACK_REFERENCE_MARKS)
     {
@@ -2605,6 +2606,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_FORM_FIELD_BUTTON:
         sendTextFrame("formfieldbutton: " + payload);
+        break;
+    case LOK_CALLBACK_INVALIDATE_SHEET_GEOMETRY:
+        sendTextFrame("invalidatesheetgeometry: " + payload);
         break;
 
 #if !ENABLE_DEBUG
