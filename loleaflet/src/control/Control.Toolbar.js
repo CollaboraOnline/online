@@ -188,8 +188,7 @@ function closePopup() {
 function setBorderStyle(num, color) {
 	if (color === undefined)
 		color = 0; // black
-
-	if (color.startsWith('#'))
+	else if (color.startsWith('#'))
 		color = parseInt('0x' + color.substring(1, color.length));
 
 	switch (num) {
