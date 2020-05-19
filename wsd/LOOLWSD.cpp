@@ -1636,6 +1636,15 @@ bool LOOLWSD::checkAndRestoreForKit()
     return false;
 #else
 
+// clang issues warning for WIF*() macro usages below:
+// "equality comparison with extraneous parentheses [-Werror,-Wparentheses-equality]"
+// https://bugs.llvm.org/show_bug.cgi?id=22949
+
+#if defined __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wparentheses-equality"
+#endif
+
     if (ForKitProcId == -1)
     {
         // Fire the ForKit process for the first time.
@@ -1713,6 +1722,11 @@ bool LOOLWSD::checkAndRestoreForKit()
     }
 
     return false;
+
+#if defined __clang__
+#pragma clang diagnostic pop
+#endif
+
 #endif
 }
 
