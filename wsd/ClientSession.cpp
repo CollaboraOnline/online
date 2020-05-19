@@ -267,7 +267,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (!isReadOnly() && tokens.size() > 2)
             getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
 
-        docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0);
+        bool result = docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0);
+
+        std::string resultstr = result ? "true" : "false";
+        std::string msg = "commandresult: { \"command\": \"save\", \"success\": " + resultstr + " }";
+        docBroker->broadcastMessage(msg);
     }
     else if (tokens[0] == "savetostorage")
     {
@@ -275,10 +279,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (tokens.size() > 1)
             getTokenInteger(tokens[1], "force", force);
 
-        if (docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true))
-        {
-            docBroker->broadcastMessage("commandresult: { \"command\": \"savetostorage\", \"success\": true }");
-        }
+        bool result = docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true);
+        std::string resultstr = result ? "true" : "false";
+        std::string msg = "commandresult: { \"command\": \"savetostorage\", \"success\": " + resultstr + " }";
+        docBroker->broadcastMessage(msg);
     }
     else if (tokens[0] == "clientvisiblearea")
     {
