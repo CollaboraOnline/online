@@ -358,9 +358,16 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('commandresult: ')) {
 			var commandresult = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			if (commandresult['command'] === 'savetostorage' && commandresult['success']) {
-				// Close any open confirmation dialogs
-				vex.closeAll();
+			if (commandresult['command'] === 'savetostorage' || commandresult['command'] === 'save') {
+				if (commandresult['success']) {
+					// Close any open confirmation dialogs
+					vex.closeAll();
+				}
+
+				var postMessageObj = {
+					success: commandresult['success']
+				};
+				this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
 			}
 			return;
 		}
@@ -744,12 +751,6 @@ L.Socket = L.Class.extend({
 						}
 					});
 				}
-
-				// Issue the save response to be consistent with normal save.
-				var postMessageObj = {
-					success: true
-				};
-				this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
 			}
 			// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 		}
