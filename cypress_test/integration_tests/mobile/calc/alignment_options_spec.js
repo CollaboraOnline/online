@@ -92,7 +92,6 @@ describe('Change alignment settings.', function() {
 	it('Change to block alignment.', function() {
 		openAlignmentPaneForFirstCell();
 
-		// Set right aligment first
 		cy.get('#AlignBlock')
 			.click();
 

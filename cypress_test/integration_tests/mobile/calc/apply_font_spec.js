@@ -62,7 +62,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply strikeout.', function() {
-		// Apply bold
 		cy.get('#Strikeout')
 			.click();
 
@@ -73,7 +72,6 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply shadowed.', function() {
-		// Apply bold
 		cy.get('#Shadowed')
 			.click();
 
