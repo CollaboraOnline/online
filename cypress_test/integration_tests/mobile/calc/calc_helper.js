@@ -71,7 +71,10 @@ function selectAllMobile(removeSelection = true) {
 	cy.get('#spreadsheet-header-corner')
 		.click();
 
-	cy.get('.spreadsheet-cell-resize-marker')
+	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(2)')
+		.should('not.be.visible');
+
+	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(1)')
 		.invoke('attr', 'style')
 		.should('contain', '(-9px, -8px,');
 
