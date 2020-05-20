@@ -194,16 +194,21 @@ define execute_run_parallel
 		     echo "`echo $(1) && $(1)`" >> $(2) 2>&1 && \
 		     if [ -z `grep -o -m 1 "Error:\|Command failed:" $(2)` ];\
 			then cat $(2);\
-			else cat $(2) >> $(ERROR_LOG)&& \
-			     echo "" >> $(ERROR_LOG) && \
-			     echo "To run this test file call: $(3)" >> $(ERROR_LOG) &&\
-			     echo "" >> $(ERROR_LOG); \
+			else cat $(2) >> $(ERROR_LOG) && \
+			     echo -e $(call error_output_string,$(3)) >> $(ERROR_LOG); \
 		     fi;\
 		else cat $(2) >> $(ERROR_LOG) && \
-		     echo "" >> $(ERROR_LOG) && \
-		     echo "To run this test file call: $(3)" >> $(ERROR_LOG) &&\
-		     echo "" >> $(ERROR_LOG); \
+		     echo -e $(call error_output_string,$(3)) >> $(ERROR_LOG); \
 	fi;
+endef
+
+define error_output_string
+"\n\
+CypressError: a test failed, please do one of the following:\n\n\
+Run the failing test:\n\
+\t$(1)\n\n\
+Open the interactive test runner:\n\
+\t$(if $(findstring mobile,$(1)),make run-mobile,make run-desktop)\n"
 endef
 
 NODE_BINS = \
