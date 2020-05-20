@@ -77,6 +77,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
+				{uno: '.uno:InsertTable'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSection', id: 'insertsection'},
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
@@ -296,6 +297,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
 				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
+				{uno: '.uno:InsertTable'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{type: 'separator'},

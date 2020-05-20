@@ -184,6 +184,7 @@ var unoCommandsArray = {
 	InsertSlidesField:{presentation:{menu:_('Slide ~Count'),},},
 	InsertSoftHyphen:{global:{menu:_('S~oft hyphen'),},},
 	InsertSymbol:{global:{context:_('Insert Special Character'),menu:_('S~pecial Character...'),},},
+	InsertTable:{presentation:{menu:_('~Table...'),},text:{menu:_('Insert ~Table...'),},},
 	InsertTimeField:{global:{menu:_('Time Field'),},text:{menu:_('~Time'),},},
 	InsertTimeFieldFix:{presentation:{menu:_('~Time (fixed)'),},},
 	InsertTimeFieldVar:{presentation:{menu:_('T~ime (variable)'),},},
