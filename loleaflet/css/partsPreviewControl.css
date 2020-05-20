@@ -41,8 +41,8 @@
 
 /* One of (potentially many) selected parts, but not the current. */
 .preview-img-selectedpart {
-    border-color: #000000;
-    border-style: dotted;
+    border-color: #0b87e780 !important;
+    border-style: solid;
 }
 
 /* Highlight where a slide can be dropped when reordering by drag-and-drop. */
