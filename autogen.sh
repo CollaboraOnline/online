@@ -19,7 +19,7 @@ EOF
 if test `uname -s` = Linux; then
     libtoolize || failed "libtool"
 elif test `uname -s` = Darwin; then
-    libtoolize || glibtoolize || failed "Can't find libtoolize or glibtoolize. Use lode or instal it yourself."
+    libtoolize || glibtoolize || failed "Can't find libtoolize or glibtoolize. Use lode or install it yourself."
 fi
 
 aclocal || failed "aclocal"
