@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-04-24 10:48+0000\n"
+"PO-Revision-Date: 2020-05-07 16:05+0000\n"
 "Last-Translator: Valter Mura <valtermura@gmail.com>\n"
 "Language-Team: Italian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/it/>\n"
 "Language: it\n"
@@ -396,19 +396,15 @@ msgstr "Bordi delle celle"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Colore di sfondo"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Sfumatura"
+msgstr "Inizio sfumatura"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Sfumatura"
+msgstr "Fine sfumatura"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"

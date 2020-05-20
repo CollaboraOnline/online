@@ -102,4 +102,7 @@
     <string name="pref_category_editor">Nastavení editoru</string>
     <string name="remove_from_list">Odstranit ze seznamu</string>
     <string name="file_actions_icon_desc">Operace se soubory</string>
+    <string name="app_version_and_hash">Verze: %1$s
+\ngit-hash pro online: %2$s
+\ngit-hash pro core: %3$s</string>
 </resources>

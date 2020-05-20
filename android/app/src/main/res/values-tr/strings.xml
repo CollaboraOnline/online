@@ -115,4 +115,9 @@
     <string name="pref_enable_chrome_debugger">Chrome Hata Ayıklama</string>
     <string name="pref_enable_chrome_debugger_info">Belgede Chrome\'un Hata Ayıklama Aracını kullanmayı etkinleştir</string>
     <string name="pref_category_editor">Editör Ayarları</string>
+    <string name="remove_from_list">Listeden kaldır</string>
+    <string name="file_actions_icon_desc">Dosya işlemleri</string>
+    <string name="app_version_and_hash">Sürüm: %1$s
+\nçevrimiçi git-hash: %2$s
+\nçekirdek git-hash: %3$s</string>
 </resources>

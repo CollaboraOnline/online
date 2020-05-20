@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-04-08 12:33+0000\n"
+"PO-Revision-Date: 2020-05-06 21:12+0000\n"
 "Last-Translator: Stuart Swales <stuart.swales.croftnuisk@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/en_GB/>\n"
 "Language: en_GB\n"
@@ -396,19 +396,15 @@ msgstr "Cell borders"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Background Colour"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Gradient"
+msgstr "Gradient Start"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Gradient"
+msgstr "Gradient End"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"
@@ -543,7 +539,7 @@ msgstr "Report an issue"
 #: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:527
 #: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:638
 msgid "Latest Updates"
-msgstr ""
+msgstr "Latest Updates"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:475 src/control/Control.Menubar.js:528
@@ -821,10 +817,8 @@ msgid "Right Margin"
 msgstr "Right Margin"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Insert table"
+msgstr "Insert tabstop"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -964,11 +958,11 @@ msgstr "Renaming..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "I understand the risks"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "We are sorry, the information about the latest updates is not available."
 
 #: src/control/Toolbar.js:476
 msgid "This version of %productName is powered by"

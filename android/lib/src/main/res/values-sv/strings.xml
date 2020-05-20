@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="exiting">Avslutar...</string>
+    <string name="loading">Laddar...</string>
+    <string name="rate_our_app_text">Om du gillar den, ge oss 5 stjärnor på Google Play. Dina bra recensioner är vår bästa motivation.</string>
+    <string name="rate_our_app_title">Tack för att du använder %1$s!</string>
+    <string name="rate_now">Betygsätt nu</string>
+    <string name="later">Senare</string>
+    <string name="preparing_for_the_first_start_after_an_update">Förbereder första start efter uppdatering.</string>
+    <string name="cannot_open_file_chooser">Kan inte öppna filväljaren</string>
+    <string name="failed_to_insert_image">Det gick inte att infoga bilden</string>
+    <string name="failed_to_load_file">Det gick inte att fastställa vilken fil som ska laddas</string>
+    <string name="storage_permission_required">Behörighet krävs för lagring</string>
+    <string name="temp_file_saving_disabled">Denna fil är skrivskyddad, spara är inaktiverat.</string>
+</resources>
