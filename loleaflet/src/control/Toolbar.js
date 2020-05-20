@@ -489,6 +489,9 @@ L.Map.include({
 			productNameWithURL = productName;
 		content.find('#product-string').html(productString.replace('%productName', productNameWithURL));
 
+		if (window.socketProxy)
+			content.find('#slow-proxy').text(_('"Slow Proxy"'));
+
 		var w;
 		var iw = window.innerWidth;
 		if (iw < 768) {
