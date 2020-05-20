@@ -1,43 +1,4 @@
-/* global cy expect require Cypress*/
-
-var mobileHelper = require('../../common/mobile_helper');
-
-function clickOnFirstCell(firstClick = true, dblClick = false) {
-	cy.log('Clicking on first cell - start.');
-	cy.log('Param - firstClick: ' + firstClick);
-	cy.log('Param - dblClick: ' + dblClick);
-
-	// Enable editing if it's in read-only mode
-	mobileHelper.enableEditingMobile();
-
-	// Use the tile's edge to find the first cell's position
-	cy.get('.leaflet-tile-container')
-		.then(function(items) {
-			expect(items).to.have.lengthOf(1);
-			var XPos = items[0].getBoundingClientRect().right + 10;
-			var YPos = items[0].getBoundingClientRect().top + 10;
-			if (dblClick) {
-				cy.get('body')
-					.dblclick(XPos, YPos);
-			} else {
-				cy.get('body')
-					.click(XPos, YPos);
-			}
-		});
-
-	if (firstClick && !dblClick)
-		cy.get('.spreadsheet-cell-resize-marker')
-			.should('exist');
-	else
-		cy.get('.leaflet-cursor.blinking-cursor')
-			.should('exist');
-
-	cy.log('Clicking on first cell - end.');
-}
-
-function dblClickOnFirstCell() {
-	clickOnFirstCell(false, true);
-}
+/* global cy Cypress*/
 
 function removeTextSelection() {
 	cy.log('Removing text selection - start.');
@@ -83,5 +44,3 @@ function selectAllMobile(removeSelection = true) {
 
 module.exports.removeTextSelection = removeTextSelection;
 module.exports.selectAllMobile = selectAllMobile;
-module.exports.clickOnFirstCell = clickOnFirstCell;
-module.exports.dblClickOnFirstCell = dblClickOnFirstCell;

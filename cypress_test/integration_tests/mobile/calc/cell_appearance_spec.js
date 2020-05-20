@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var calc = require('../../common/calc');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
@@ -27,7 +28,7 @@ describe('Change cell appearance.', function() {
 	}
 
 	function openAppearencePanelOnFirtsCell() {
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		openAppearencePanel();
 	}

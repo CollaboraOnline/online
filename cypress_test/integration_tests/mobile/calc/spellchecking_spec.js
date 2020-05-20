@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var calc = require('../../common/calc');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
@@ -9,8 +10,7 @@ describe('Calc spell checking menu.', function() {
 		mobileHelper.beforeAllMobile('spellchecking.ods', 'calc');
 
 		// Click on edit button
-		cy.get('#mobile-edit-button')
-			.click();
+		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
@@ -19,7 +19,7 @@ describe('Calc spell checking menu.', function() {
 
 	function openContextMenu() {
 		// Step into edit mode
-		calcHelper.dblClickOnFirstCell();
+		calc.dblClickOnFirstCell();
 
 		// Select text content
 		cy.get('textarea.clipboard')
@@ -43,7 +43,7 @@ describe('Calc spell checking menu.', function() {
 				calcHelper.removeTextSelection();
 
 				// Step into edit mode again
-				calcHelper.dblClickOnFirstCell();
+				calc.dblClickOnFirstCell();
 
 				mobileHelper.longPressOnDocument(XPos, YPos);
 			});

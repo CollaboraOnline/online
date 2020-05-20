@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var calc = require('../../common/calc');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
@@ -11,7 +12,7 @@ describe('Calc insertion wizard.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');

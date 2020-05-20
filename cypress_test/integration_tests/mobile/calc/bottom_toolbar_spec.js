@@ -1,6 +1,7 @@
 /* global describe it cy require afterEach expect */
 
 var helper = require('../../common/helper');
+var calc = require('../../common/calc');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
@@ -11,7 +12,7 @@ describe('Interact with bottom toolbar.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 	}
 
 	afterEach(function() {
@@ -19,7 +20,7 @@ describe('Interact with bottom toolbar.', function() {
 	});
 
 	function getTextPosForFirstCell() {
-		calcHelper.dblClickOnFirstCell();
+		calc.dblClickOnFirstCell();
 
 		// Select text content
 		cy.get('textarea.clipboard')
@@ -164,7 +165,7 @@ describe('Interact with bottom toolbar.', function() {
 			.should('have.attr', 'align', 'right');
 
 		// Change alignment back
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.alignleft')
 			.click();
@@ -211,7 +212,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('@currentTextPos')
 			.should('be.greaterThan', 0);
 
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.wraptext')
 			.click();

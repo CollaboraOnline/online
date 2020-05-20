@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
+var calc = require('../../common/calc');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
@@ -11,7 +12,7 @@ describe('Apply number formatting.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -185,7 +186,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '$1,000.00');
 
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
 

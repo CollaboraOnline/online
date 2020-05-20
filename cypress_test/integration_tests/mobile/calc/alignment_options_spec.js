@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var calc = require('../../common/calc');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
@@ -17,7 +18,7 @@ describe('Change alignment settings.', function() {
 	});
 
 	function getTextPosForFirstCell() {
-		calcHelper.dblClickOnFirstCell();
+		calc.dblClickOnFirstCell();
 
 		// Select text content
 		cy.get('textarea.clipboard')
@@ -37,7 +38,7 @@ describe('Change alignment settings.', function() {
 	}
 
 	function openAlignmentPaneForFirstCell() {
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
 
@@ -61,7 +62,7 @@ describe('Change alignment settings.', function() {
 			.should('have.attr', 'align', 'right');
 
 		// Change alignment back
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
 
@@ -130,7 +131,7 @@ describe('Change alignment settings.', function() {
 			.should('have.attr', 'valign', 'top');
 
 		// Change alignment back
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
 

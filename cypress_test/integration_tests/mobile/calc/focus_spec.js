@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calc = require('../../common/calc');
-var calcHelper = require('./calc_helper');
 
 describe('Calc focus tests', function() {
 	beforeEach(function() {
@@ -26,7 +25,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// One tap on an other cell -> no focus on the document
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -59,7 +58,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// One tap on a cell -> no document focus
-		calcHelper.clickOnFirstCell();
+		calc.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -69,7 +68,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// Second tap on the same cell
-		calcHelper.clickOnFirstCell(false);
+		calc.clickOnFirstCell(false);
 
 		// Document has the focus
 		cy.document().its('activeElement.className')
