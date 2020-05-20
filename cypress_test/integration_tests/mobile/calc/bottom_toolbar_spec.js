@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach expect */
+/* global describe it cy require expect */
 
 var helper = require('../../common/helper');
 var calc = require('../../common/calc');
@@ -15,9 +15,9 @@ describe('Interact with bottom toolbar.', function() {
 		calc.clickOnFirstCell();
 	}
 
-	afterEach(function() {
-		helper.afterAll('apply_font.ods');
-	});
+	function after(fileName) {
+		helper.afterAll(fileName);
+	}
 
 	function getTextPosForFirstCell() {
 		calc.dblClickOnFirstCell();
@@ -49,6 +49,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td b')
 			.should('exist');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Apply italic.', function() {
@@ -61,6 +63,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td i')
 			.should('exist');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Apply underline.', function() {
@@ -73,6 +77,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td u')
 			.should('exist');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Apply strikeout.', function() {
@@ -85,6 +91,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td s')
 			.should('exist');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Apply font color.', function() {
@@ -103,6 +111,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'color', '#00FF00');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Apply highlight color.', function() {
@@ -121,6 +131,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'bgcolor', '#00FF00');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Merge cells', function() {
@@ -136,6 +148,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'colspan', '1024');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Apply left/right alignment', function() {
@@ -160,6 +174,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'left');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Align to center.', function() {
@@ -172,6 +188,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'center');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Change to block alignment.', function() {
@@ -184,6 +202,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'justify');
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Enable text wrapping.', function() {
@@ -216,6 +236,8 @@ describe('Interact with bottom toolbar.', function() {
 							});
 					});
 			});
+
+		after('bottom_toolbar.ods');
 	});
 
 	it('Insert row after.', function() {
@@ -240,6 +262,8 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table tr:nth-of-type(3)')
 			.should('contain.text', '2');
+
+		after('bottom_toolbar2.ods');
 	});
 
 	it('Insert column after.', function() {
@@ -267,5 +291,7 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table tr:nth-of-type(1) td:nth-of-type(3)')
 			.should('contain.text', '1');
+
+		after('bottom_toolbar2.ods');
 	});
 });
