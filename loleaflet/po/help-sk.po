@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-04-21 11:44+0000\n"
+"PO-Revision-Date: 2020-05-14 13:37+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/sk/>\n"
 "Language: sk\n"
@@ -1094,8 +1094,6 @@ msgid "Using the browser zoom affects the document and user interface areas."
 msgstr "Ak použijete funkciu priblíženia, ktorá je súčasťou prehliadača, ovplyvnená bude oblasť dokumentu, ako aj požívateľské rozhranie."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
-#, fuzzy
-#| msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the on the document is displayed. The actual information depends on the nature of the document."
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
 msgstr "<span class=\"def\">Lišta s informáciami:</span> Napravo od vyhľadávacej lišty sa zobrazuje sada informácií o dokumente. Typ informácií závisí od povahy dokumentu."
 
@@ -1172,8 +1170,6 @@ msgid "Pasting"
 msgstr "Vkladanie"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
-#, fuzzy
-#| msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, of from outside of the browser, the pasted content will preserve rich text."
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
 msgstr "Ak vložíte obsah skopírovaný v tom istom dokumente, zachovajú sa jeho formát a prvky. Ak ho skopírujete z iného dokumentu na inej karte či v inom okne prehliadača, prípadne z aplikácie mimo prehliadača, vo vloženom obsahu sa zachová formátovanie textu."
 
@@ -1366,8 +1362,6 @@ msgid "<span class=\"def\">Direct formatting:</span> You can format text documen
 msgstr "<span class=\"def\">Priame formátovanie:</span> Objekty textového dokumentu môžete formátovať priamo príkazmi z menu, nástrojovej lišty alebo kontextového menu. Priame formátovanie sa uplatňuje len na aktuálne vybratý objekt."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
-#, fuzzy
-#| msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> support paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
 msgstr "<span class=\"def\">Formátovanie štýlu:</span> <span class=\"productname\">%productName</span> podporuje štýly odseku. Na odsek môžete použiť akýkoľvek existujúci štýl odseku. Štýl zmeníte voľbou z ponuky <span class=\"ui\">Upraviť</span> → <span class=\"ui\">Upraviť štýl</span>."
 
@@ -1420,8 +1414,6 @@ msgid "<span class=\"def\">Page header and footer:</span> Headers and footers ar
 msgstr "<span class=\"def\">Polia hlavička a päta:</span> Hlavičky a päty sú dostupné v existujúcom štýle strany, ktorý je použitý v dokumente na mieste kurzora."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
-#, fuzzy
-#| msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported, being rendered as they are shown."
 msgid "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes are supported."
 msgstr "<span class=\"def\">Poznámky pod čiarou a koncové poznámky:</span> Podporované sú poznámky pod čiarou a koncové poznámky."
 
@@ -1606,8 +1598,6 @@ msgid "You have the Track Changes feature enabled for the document. Track Change
 msgstr "Máte v dokumente zapnuté sledovanie zmien. V dôsledku toho sa zaznamenávajú všetky zmeny textu a zobrazujú sa, aby si ich bolo možné neskôr prezrieť. Sledovanie zmien sa povoľuje voľbou <span class=\"ui\">Upraviť</span> → <span class=\"ui\">Sledovať zmeny</span> → <span class=\"ui\">Záznam</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
-#, fuzzy
-#| msgid "With track changes enabled your document show the following settings:"
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr "So sledovanými zmenami sa dokument zobrazuje nasledovne:"
 

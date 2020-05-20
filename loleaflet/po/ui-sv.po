@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-02-27 14:08+0000\n"
-"Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
+"PO-Revision-Date: 2020-05-18 08:39+0000\n"
+"Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -306,7 +306,7 @@ msgstr "Starta nedladdning"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
-msgstr "Bekräfta lagring som urklipp"
+msgstr "Bekräfta kopiering till urklipp"
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
@@ -328,7 +328,7 @@ msgstr "Ingen"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Solid"
-msgstr ""
+msgstr "Solid"
 
 #: src/control/Control.JSDialogBuilder.js:159
 msgid "Linear"
@@ -391,26 +391,20 @@ msgid "Font Size"
 msgstr "Teckensnittsstorlek"
 
 #: src/control/Control.JSDialogBuilder.js:1517
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Kanter"
+msgstr "Kantlinjer"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
-msgstr ""
+msgstr "Bakgrundsfärg"
 
 #: src/control/Control.JSDialogBuilder.js:1542
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Gradient"
+msgstr "Toning startfärg"
 
 #: src/control/Control.JSDialogBuilder.js:1544
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Gradient"
+msgstr "Toning slutfärg"
 
 #: src/control/Control.JSDialogBuilder.js:1713
 msgid "Rows"
@@ -484,7 +478,7 @@ msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:495
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:487
 #: src/control/Signing.js:601
@@ -545,7 +539,7 @@ msgstr "Rapportera ett problem"
 #: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:527
 #: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:638
 msgid "Latest Updates"
-msgstr ""
+msgstr "Senaste uppdateringarna"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:358
 #: src/control/Control.Menubar.js:475 src/control/Control.Menubar.js:528
@@ -609,8 +603,6 @@ msgid "Reset to Default Language"
 msgstr "Återställ till standardspråk"
 
 #: src/control/Control.Menubar.js:1104
-#, fuzzy
-#| msgid "Insert shapes"
 msgid "Insert Shape"
 msgstr "Infoga form"
 
@@ -825,10 +817,8 @@ msgid "Right Margin"
 msgstr "Höger marginal"
 
 #: src/control/Ruler.js:421 src/control/Ruler.js:542
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Infoga tabell"
+msgstr "Infoga tabbstopp"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -968,11 +958,11 @@ msgstr "Byter namn..."
 
 #: src/control/Toolbar.js:385
 msgid "I understand the risks"
-msgstr ""
+msgstr "Jag förstår riskerna"
 
 #: src/control/Toolbar.js:432
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "Vi är ledsna, informationen om de senaste uppdateringarna är inte tillgänglig."
 
 #: src/control/Toolbar.js:476
 msgid "This version of %productName is powered by"
@@ -992,7 +982,7 @@ msgstr "Länk"
 
 #: src/core/Socket.js:59
 msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr ""
+msgstr "IE11 har nått sitt maximala antal anslutningar. Se detta dokument för att öka denna gräns vid behov: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -1226,11 +1216,11 @@ msgstr "<p>Din webbläsare har mycket begränsad åtkomsttill urklipp, så anvä
 
 #: src/map/Clipboard.js:817
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr ""
+msgstr "<p>Om du vill dela större delar av ditt dokument med andra program krävs att du hämtar dem till din enhet. För att göra det tryck på knappen  \"Starta nedladdning\" nedan. När nedladdningen är klar klickar du på \"Bekräfta kopiering till urklipp\".</p><p>Om du kopierar mellan dokument i %productName behöver du inte hämta till din enhet.</p>"
 
 #: src/map/Clipboard.js:833
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr ""
+msgstr "<p>En hämtning på grund av en stor kopiera/klistra in aktivitet har redan startat. Avvakta pågående hämtning eller avbryt den innan du startar en ny</p>"
 
 #: src/map/Map.js:240
 msgid "Initializing..."

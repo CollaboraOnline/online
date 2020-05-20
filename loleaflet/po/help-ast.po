@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-02-17 04:11+0000\n"
+"PO-Revision-Date: 2020-05-14 08:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ast/>\n"
 "Language: ast\n"
@@ -294,9 +294,8 @@ msgstr "Esbilla de testu y navegación pel documentu"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:175-18
-#, fuzzy
 msgid "Select All"
-msgstr "Seleicionar too"
+msgstr "Esbillalo too"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:58-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-18

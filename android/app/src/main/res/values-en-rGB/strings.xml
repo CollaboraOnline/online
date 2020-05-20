@@ -102,4 +102,7 @@
     <string name="pref_category_editor">Editor Settings</string>
     <string name="remove_from_list">Remove from the list</string>
     <string name="file_actions_icon_desc">File actions</string>
+    <string name="app_version_and_hash">Version: %1$s
+\nonline git-hash: %2$s
+\ncore git-hash: %3$s</string>
 </resources>

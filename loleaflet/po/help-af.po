@@ -3,24 +3,25 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-05-14 08:13+0000\n"
+"Last-Translator: Paul Roos <iNetRoos@gmail.com>\n"
+"Language-Team: Afrikaans <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/af/>\n"
 "Language: af\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 "X-Pootle-Path: /af/libo_online/loleaflet-help-af.po\n"
 "X-Pootle-Revision: 3816701\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Snelsleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:21-9
 msgid "General Keyboard Shortcuts"
-msgstr ""
+msgstr "Algemene Snelsleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
@@ -48,7 +49,7 @@ msgstr "Ctrl + X"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-18
 msgid "Paste as unformatted text"
-msgstr ""
+msgstr "Plak teks ongeformateerd"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
 msgid "Ctrl + Alt + Shift + V"
@@ -64,7 +65,7 @@ msgstr "Ctrl + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-18
 msgid "Display the Keyboard shortcuts help"
-msgstr ""
+msgstr "Vertoon help vir snelsleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-80
 msgid "Ctrl + Shift + ?"
@@ -135,7 +136,7 @@ msgstr "Ctrl + Alt + 5"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-18
 msgid "Superscript"
-msgstr "Superskrif "
+msgstr "Superskrif"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-56
@@ -217,7 +218,7 @@ msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-18
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Verstek paragraafstyl  toepas"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-74
 msgid "Ctrl + 0"
@@ -266,7 +267,7 @@ msgstr "Ctrl + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:56-9
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "Dokument teks seleksie en -navigasie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:58-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
@@ -297,7 +298,7 @@ msgstr "Pyltjie Lings"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-18
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "Met merker selekteer teks na links"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-83
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-83
@@ -307,7 +308,7 @@ msgstr "Shift + Lings Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-18
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "Hop merker na vorige woord begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-70
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-70
@@ -317,7 +318,7 @@ msgstr "Ctrl + Links Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-18
 msgid "Select to the left word by word"
-msgstr ""
+msgstr "Selekteer teks na links woord vir woord"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-76
@@ -337,7 +338,7 @@ msgstr "Pyltjie Regs"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18
 msgid "Move cursor with selection to the right"
-msgstr ""
+msgstr "Met merker selekteer teks na regs"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-84
@@ -347,7 +348,7 @@ msgstr "Shift + Reg Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-18
 msgid "Go to start of the next word"
-msgstr ""
+msgstr "Hop merker na volgende woord se begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-73
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-73
@@ -357,7 +358,7 @@ msgstr "Ctrl + Regs Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
 msgid "Select to the right word by word"
-msgstr ""
+msgstr "Met merker selekteer na regs"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-77
@@ -371,14 +372,13 @@ msgstr "Skuif wyser een lyn op"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-68
-#, fuzzy
 msgid "Arrow Up"
-msgstr "Op Pyltjie"
+msgstr "Op Pyl sleutel"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "Met merker selekteer teks lyne opwaarts"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-78
@@ -388,7 +388,7 @@ msgstr "Shift + Op Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-18
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "Hop merker na begin vorige paragraaf"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-95
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-95
@@ -398,7 +398,7 @@ msgstr "Ctrl + Op Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "Met merker selekteer teks na paragraaf se begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-77
@@ -418,7 +418,7 @@ msgstr "Af Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "Met merker selekteer teks lyne afwaarts"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-80
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-80
@@ -428,7 +428,7 @@ msgstr "Shift + Af Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-18
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "Hop merker na volgende paragraaf begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-91
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-91
@@ -438,7 +438,7 @@ msgstr "Ctrl + Af Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "Met merker selekteer teks tot paragraaf einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-71
@@ -448,17 +448,17 @@ msgstr "Ctrl + Shift + Af Pyltjie"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "Met merker hop na lyn begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-68
 msgid "Home"
-msgstr ""
+msgstr "Na Begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "Met merker selekteer teks tot lyn begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-85
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-85
@@ -468,7 +468,7 @@ msgstr "Shift + Tuis"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-18
 msgid "Go to start of document"
-msgstr ""
+msgstr "Hop merker na dokument begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-18
@@ -478,7 +478,7 @@ msgstr "Ctrl + Tuis"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "Met merker selekteer teks na dokument begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-84
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-83
@@ -488,7 +488,7 @@ msgstr "Ctrl + Shift + Tuis"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-18
 msgid "Go to end of line"
-msgstr ""
+msgstr "Hop merker na lyn einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-62
@@ -498,7 +498,7 @@ msgstr "Einde"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "Met merker selekteer teks tot lyn einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-79
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-79
@@ -508,7 +508,7 @@ msgstr "Shift + Einde"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-18
 msgid "Go to end of document"
-msgstr ""
+msgstr "Hop merker tot dokument einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-66
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
@@ -518,7 +518,7 @@ msgstr "Ctrl + Einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 msgid "Go and select text to end of document"
-msgstr ""
+msgstr "Met merker selekteer teks tot dokument einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-82
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-81
@@ -527,55 +527,55 @@ msgstr "Ctrl + Shift + Einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Move the view up one page"
-msgstr ""
+msgstr "Hop merker een bladsy op"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-70
 msgid "PageUp"
-msgstr ""
+msgstr "Bladsy Op"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "Skakel merker tussen teks en kopstuk"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-82
 msgid "Ctrl + PageUp"
-msgstr ""
+msgstr "Ctrl + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "Verleng teks seleksie een bladsy op"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-77
 msgid "Shift + PageUp"
-msgstr ""
+msgstr "Shift + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Move the view down one page"
-msgstr ""
+msgstr "Hop merker af een bladsy"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-72
 msgid "PageDown"
-msgstr ""
+msgstr "PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "Skakel merker tussen teks en voetstuk"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-82
 msgid "Ctrl + PageDown"
-msgstr ""
+msgstr "Ctrl + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "Verleng teks seleksie een bladsy af"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-79
 msgid "Shift + PageDown"
-msgstr ""
+msgstr "Shift + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "Uitvee tot woord begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-72
 msgid "Ctrl + Backspace"
@@ -583,7 +583,7 @@ msgstr "Ctrl + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Uitvee tot woord einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-66
 msgid "Ctrl + Del"
@@ -598,9 +598,8 @@ msgid "Ctrl + Shift + Backspace"
 msgstr "Ctrl + Shift + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-18
-#, fuzzy
 msgid "Delete to end of sentence"
-msgstr "Skrap tot begin van sin"
+msgstr "Uitvee tot einde van sin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-70
 msgid "Ctrl + Shift + Del"
@@ -608,19 +607,19 @@ msgstr "Ctrl + Shift + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:94-9
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "Snelsleutels vir tabelle"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:96-54
 msgid "If the active cell is empty: selects the whole table. Otherwise: selects the contents of the active cell. Pressing again selects the entire table."
-msgstr ""
+msgstr "Indien die aktiewe sel leeg is: selekteer die hele tabel, anders selekteer net die aktiewe sel. By herhaling selekteer die hele tabel."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-57
 msgid "If the active cell is empty: goes to the beginning of the table. Otherwise: first press goes to beginning of the active cell, second press goes to beginning of the current table, third press goes to beginning of document."
-msgstr ""
+msgstr "Indien die aktiewe sel leeg is, hop merker na tabel se begin. Anders hop merker na aktiewe sel se begin, maar 'n tweede druk hop na die huidige tabel se begin; verder, 'n derde druk hop na dokument begin."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-56
 msgid "If the active cell is empty: goes to the end of the table. Otherwise: first press goes to the end of the active cell, second press goes to the end of the current table, third press goes to the end of the document."
-msgstr ""
+msgstr "Indien die aktiewe sel leeg is, hop merker na tabel se einde. Anders hop merker na aktiewe sel se einde, maar 'n tweede druk hop na die huidige tabel einde; verder, 'n derde druk hop na dokument einde."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-18
 msgid "Ctrl + Tab"
@@ -628,7 +627,7 @@ msgstr "Ctrl + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-56
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
-msgstr ""
+msgstr "Slegs in tabelle, voeg 'n tab stop in. Afhangende van die Window Manager in gebruik, kan Alt + Tab ook gebruik word."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Alt + Arrow Keys"
@@ -636,7 +635,7 @@ msgstr "Alt + Pyltjie Sleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-62
 msgid "Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr ""
+msgstr "Vergroot/verklein die sel grenswydte van die kolom regs / ry ondertoe"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt + Shift + Arrow Keys"
@@ -644,7 +643,7 @@ msgstr "Alt + Shift + Pyltjie Sleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr ""
+msgstr "Vergroot/verklein die sel grenswydte van die kolom links / ry boontoe"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
 msgid "Alt + Ctrl + Arrow Keys"
@@ -653,7 +652,7 @@ msgstr "Alt + Ctrl + Pyltjie Sleutels"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-77
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Soos Alt, maar slegs die aktiewe sel word verander"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 msgid "Ctrl + Alt + Shift + Arrow Keys"
@@ -665,7 +664,7 @@ msgstr "Alt + Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-58
 msgid "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key inserts cell"
-msgstr ""
+msgstr "3 sekonde tydsduur vir invoeg modus, Pyl sleutel voeg ry / kolom, Ctrl + Pyl sleutel voeg sel in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-18
 msgid "Alt + Del"
@@ -673,7 +672,7 @@ msgstr "Alt + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-55
 msgid "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key merges cell with neighboring cell"
-msgstr ""
+msgstr "3 sekonde tydsduur vir uitvee modus, Pyl sleutel vee ry / kolom uit, Ctrl + Pyl sleutel voeg sel by naasliggende sel"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Shift + Ctrl + Del"
@@ -681,23 +680,23 @@ msgstr "Shift + Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:106-86
 msgid "If no whole cell is selected, the text from the cursor to the end of the current sentence is deleted. If the cursor is at the end of a cell, and no whole cell is selected, the contents of the next cell are deleted."
-msgstr ""
+msgstr "As die huidige sel nie as 'n geheel geselekteer word nie, sal die teks geskrap word vanaf die merker tot aan die sel einde. As die wyser aan die sel se einde is met niks geselekteer, word die inhoud van die volgende sel geskrap."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:107-1
 msgid "If no whole cell is selected and the cursor is at the end of the table, the paragraph following the table will be deleted, unless it is the last paragraph in the document."
-msgstr ""
+msgstr "As geen sel ten volle geselekteer is nie en die merker is aan die tabel einde, sal die paragraaf net na die tabel geskrap word, mits dit nie die dokument se laaste paragraaf is nie."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:108-1
 msgid "If one or more cells are selected, the whole rows containing the selection will be deleted. If all rows are selected completely or partially, the entire table will be deleted."
-msgstr ""
+msgstr "Sou een of meer selle geselekteer wees, sal die ry van die sel/le geskrap word. Sou al die rye geheel of gedeeltelik geselekteer wees, sal die hele tabel geskrap word."
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:111-9
 msgid "Word processor functions"
-msgstr ""
+msgstr "Woordverwerker funksies"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:113-18
 msgid "Insert footnote"
-msgstr ""
+msgstr "Voeg voetnota in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:113-60
 msgid "Ctrl + Alt + F"
@@ -705,7 +704,7 @@ msgstr "Ctrl + Alt + F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-18
 msgid "Insert endnote"
-msgstr ""
+msgstr "Voeg eindnota in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-59
 msgid "Ctrl + Alt + D"
@@ -714,7 +713,7 @@ msgstr "Ctrl + Alt + D"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid "Insert comment"
-msgstr ""
+msgstr "Voeg kommentaar in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-59
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-59
@@ -723,7 +722,7 @@ msgstr "Ctrl + Alt + C"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-18
 msgid "Insert soft hyphen"
-msgstr ""
+msgstr "voeg sagte koppelteken in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-63
 msgid "Ctrl + -"
@@ -731,7 +730,7 @@ msgstr "Ctrl + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-18
 msgid "Insert non-breaking hyphen"
-msgstr ""
+msgstr "Voeg niebrekende koppelteken in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-71
 msgid "Ctrl + Shift + -"
@@ -739,7 +738,7 @@ msgstr "Ctrl + Shift + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-18
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "Voeg nie-brekende spasie in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-70
 msgid "Ctrl + Shift + Space"
@@ -747,7 +746,7 @@ msgstr "Ctrl + Shift + Space"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-18
 msgid "Insert line break"
-msgstr ""
+msgstr "Voeg lynbreek in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-62
 msgid "Shift + Enter"
@@ -755,7 +754,7 @@ msgstr "Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Manual page break"
-msgstr ""
+msgstr "Handmatige bladsybreek"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-93
@@ -764,7 +763,7 @@ msgstr "Ctrl + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Column break (in multicolumnar text)"
-msgstr ""
+msgstr "Kolombreek (in multikolom teks)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-81
 msgid "Ctrl + Shift + Enter"
@@ -772,7 +771,7 @@ msgstr "Ctrl + Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
 msgid "Insert new paragraph directly before or after a section, or before a table"
-msgstr ""
+msgstr "Voek 'n nuwe paragraaf in direk voor of na 'n seksie, of voor 'n tabel"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-155
@@ -781,7 +780,7 @@ msgstr "Alt + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
 msgid "Insert new paragraph without numbering inside a list. Does not work when the cursor is at the end of the list."
-msgstr ""
+msgstr "Voeg 'n ongenommerde paragraaf binne in 'n lys. Dit sal nie werk as die merker aan die einde van die lys is."
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:129-9
 msgid "Cell formatting"
@@ -789,7 +788,7 @@ msgstr "Sell formaat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid "Display comment"
-msgstr ""
+msgstr "Vertoon kommentaar"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-60
 msgid "Ctrl + F1"
@@ -797,15 +796,15 @@ msgstr "Ctrl + F1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid "Fill Down"
-msgstr ""
+msgstr "Vul na Onder"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid "Set Optimal Column Width"
-msgstr ""
+msgstr "Stel Optimale Kolomwydte"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Two decimal places, thousands separator"
-msgstr ""
+msgstr "Twee desimale en duisende skeier"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-84
 msgid "Ctrl + Shift + 1"
@@ -813,25 +812,23 @@ msgstr "Ctrl + Shift + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Standard exponential format"
-msgstr ""
+msgstr "Standaard Eksponentformaat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-72
 msgid "Ctrl + Shift + 2"
 msgstr "Ctrl + Shift + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
-#, fuzzy
 msgid "Standard date format"
-msgstr "Standaard formaat"
+msgstr "Standaard datumformaat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-65
-#, fuzzy
 msgid "Ctrl + Shift + 3"
 msgstr "Ctrl + Shift + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Standard currency format"
-msgstr ""
+msgstr "Standaard monetêre formaat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-69
 msgid "Ctrl + Shift + 4"
@@ -839,7 +836,7 @@ msgstr "Ctrl + Shift + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid "Standard percentage format (two decimal places)"
-msgstr ""
+msgstr "Standaard persentasie formaat (twee desimale plekke)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-92
 msgid "Ctrl + Shift + 5"
@@ -855,16 +852,16 @@ msgstr "Ctrl + Shift + 6"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-18
 msgid "Demote list item (list item has to be selected)"
-msgstr ""
+msgstr "Demoveer die geselekteerde lys item"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-92
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-99
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-18
 msgid "Promote list item (list item has to be selected)"
-msgstr ""
+msgstr "Promoveer geselekteerde lys item"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-107
@@ -873,23 +870,23 @@ msgstr "Shift + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:173-9
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "Teks seleksie en navigasie in 'n teksveld"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "Met merker selekteer teks tot teksveld begin"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-18
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "Met merker selekteer teks tot teksveld einde"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:201-9
 msgid "Slide / draw page keyboard shortcuts"
-msgstr ""
+msgstr "Gly / trek bladsy snelsleutels"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-18
 msgid "Escape current mode, i.e. from edit mode switch to object selection mode, from object selection mode switch to view mode."
-msgstr ""
+msgstr "Breek uit huidige modus, d.i. vanuit redigeer modus na objekseleksie modus, of van objekseleksie modus na normale vertoon modus."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-166
 msgid "Esc"
@@ -897,35 +894,33 @@ msgstr "Esc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-18
 msgid "Select objects in the order in which they were created"
-msgstr ""
+msgstr "Selekteer objekte in volgorde van skeppingsdatum"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr ""
+msgstr "Selekteer objekte in orde: Laaste geskep eerste geselekteer"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
 msgid "Move to next text object on slide / drawing page"
-msgstr ""
+msgstr "Skuif volgende teksobjek na skyfie- / tekening bladsy"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
 msgid "Select all in slide / drawing page"
-msgstr ""
+msgstr "Selekteer Alles in skyfie- / tekening bladsye"
 
 #: html/loleaflet-help.html%2Bdiv.h1:212-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Help"
 
 #: html/loleaflet-help.html%2Bdiv.p:213-5
 #: html/loleaflet-help.html%2Bdiv.h3:251-5
-#, fuzzy
-#| msgid "Cell formatting"
 msgid "Collaborative editing"
-msgstr "Sell formaat"
+msgstr "Samewerkende Redegering"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.h3:258-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> gebruikers koppelvlak"
 
 #: html/loleaflet-help.html%2Bdiv.p:215-5
 #: html/loleaflet-help.html%2Bdiv.h3:278-5
@@ -935,7 +930,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:216-5
 #: html/loleaflet-help.html%2Bdiv.h3:286-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Redigeer dokumente"
 
 #: html/loleaflet-help.html%2Bdiv.p:217-5
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
@@ -944,95 +939,95 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:352-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:432-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Gevorderde funksies"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:219-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:337-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Spreiblaaie"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:339-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Redigeer spreiblaaie"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:221-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:342-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formules"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:222-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:348-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Formateer spreblaaie"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:226-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:385-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> teks dokumente"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:227-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:387-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Redigeer teks dokumente"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:228-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:390-5
 msgid "Context menus"
-msgstr ""
+msgstr "Konteks kieslyste"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:400-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Gevorderde redigeerde funksies vir teks dokumente"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Voorleggings"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:233-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:421-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Redigeer voorleggings"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:234-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:424-5
 msgid "Slide show"
-msgstr ""
+msgstr "Skyfie voorlegging"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:235-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:428-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Skyfie venster"
 
 #: html/loleaflet-help.html%2Bdiv.p:238-5
 #: html/loleaflet-help.html%2Bdiv.h2:441-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Gereelde vrae"
 
 #: html/loleaflet-help.html%2Bdiv.p:239-5
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:241-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:473-5
 msgid "Text documents"
-msgstr ""
+msgstr "Teks dokumente"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:244-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:537-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Spreiblaaie"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:247-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:565-5
 msgid "Presentations"
-msgstr ""
+msgstr "Voorleggings"
 
 #: html/loleaflet-help.html%2Bdiv.p:249-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> stel u in staat om teksdokumente, spreiblaaie en aanbiedings van kantoordokumente direk in u blaaier te skep en te redigeer, op 'n eenvoudige en 'n reguit manier. U kan alleen aan 'n dokument werk, of saamwerk as deel van 'n span."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:253-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
@@ -1351,10 +1346,8 @@ msgid "Context menus are available on clicking the right mouse button. The comma
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:393-5
-#, fuzzy
-#| msgid "Text formatting"
 msgid "Formatting text"
-msgstr "SMS formaat"
+msgstr "Teks formatering"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:394-5
 msgid "<span class=\"productname\">%productName</span> supports modern techniques for paragraph formatting through styles. A style is a set of text properties (font, color, background and many more) labeled with a name, the style name. Use style to apply the same set of properties to many paragraphs in the document and produce a uniform, professional look. Also, if you change one of the style formatting properties, all paragraphs with the same style changes formatting as well, simplifying the effort of formatting many paragraph individually."
@@ -1706,10 +1699,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:527-5
-#, fuzzy
-#| msgid "Apply Heading 1 paragraph style"
 msgid "Applying a paragraph style:"
-msgstr "Implementeer Paragraafstyle Opskrif 1"
+msgstr "Aanwending van'n Paragraafstyl"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:529-11
 msgid "Place the cursor at the paragraph to be formatted"

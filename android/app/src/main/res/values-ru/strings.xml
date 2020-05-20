@@ -98,4 +98,11 @@
     <string name="pref_enable_chrome_debugger">"Отладка  Chrome"</string>
     <string name="pref_sort_title">Сортировка файлов</string>
     <string name="pref_file_explorer_title">Вид менеджера файлов</string>
+    <string name="storage_provider_settings">Настройки хранилища</string>
+    <string name="remove_from_list">Удалить из списка</string>
+    <string name="file_actions_icon_desc">Действия с файлами</string>
+    <string name="pref_category_editor">Настройки редактора</string>
+    <string name="app_version_and_hash">Версия: %1$s
+\nonline git-hash: %2$s
+\ncore git-hash: %3$s</string>
 </resources>

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 20:11+0200\n"
-"PO-Revision-Date: 2020-04-18 16:31+0000\n"
+"PO-Revision-Date: 2020-05-14 08:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -391,10 +391,8 @@ msgid "Font Size"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1517
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Berbesos"
+msgstr "Berbesos de la caxella"
 
 #: src/control/Control.JSDialogBuilder.js:1540
 msgid "Background Color"
@@ -605,10 +603,8 @@ msgid "Reset to Default Language"
 msgstr ""
 
 #: src/control/Control.Menubar.js:1104
-#, fuzzy
-#| msgid "Insert hyperlink"
 msgid "Insert Shape"
-msgstr "Inxertar hiperenllaz"
+msgstr "Inxertar una forma"
 
 #: src/control/Control.Menubar.js:1186
 msgid "Are you sure you want to delete this slide?"
