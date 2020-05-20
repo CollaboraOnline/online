@@ -1,4 +1,4 @@
-/* global cy Cypress*/
+/* global cy Cypress expect*/
 
 function removeTextSelection() {
 	cy.log('Removing text selection - start.');
@@ -42,5 +42,24 @@ function selectAllMobile(removeSelection = true) {
 	cy.log('Selecting all text - end.');
 }
 
+function selectFirstRow() {
+	cy.get('.spreadsheet-header-rows')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+
+			var XPos = (items[0].getBoundingClientRect().right + items[0].getBoundingClientRect().left) / 2;
+			var YPos = items[0].getBoundingClientRect().top + 10;
+			cy.get('body')
+				.click(XPos, YPos);
+		});
+
+	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(1)')
+		.should('be.visible');
+
+	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(2)')
+		.should('not.be.visible');
+}
+
 module.exports.removeTextSelection = removeTextSelection;
 module.exports.selectAllMobile = selectAllMobile;
+module.exports.selectFirstRow = selectFirstRow;

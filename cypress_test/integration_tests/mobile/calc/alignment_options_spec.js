@@ -324,18 +324,7 @@ describe('Change alignment settings.', function() {
 
 	it('Merge cells.', function() {
 		// Select the full row
-		cy.get('.spreadsheet-header-rows')
-			.then(function(items) {
-				expect(items).to.have.lengthOf(1);
-
-				var XPos = (items[0].getBoundingClientRect().right + items[0].getBoundingClientRect().left) / 2;
-				var YPos = items[0].getBoundingClientRect().top + 10;
-				cy.get('body')
-					.click(XPos, YPos);
-			});
-
-		cy.get('.spreadsheet-cell-resize-marker')
-			.should('exist');
+		calcHelper.selectFirstRow();
 
 		// Even after we get the cell row selection the merge cell options is still disabled
 		// So we open mobile wizard again and again until merge cells get the right state

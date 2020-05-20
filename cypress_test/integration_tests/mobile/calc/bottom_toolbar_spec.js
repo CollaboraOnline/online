@@ -127,21 +127,7 @@ describe('Interact with bottom toolbar.', function() {
 		before('bottom_toolbar.ods', 'calc');
 
 		// Select the full row
-		cy.get('.spreadsheet-header-rows')
-			.then(function(items) {
-				expect(items).to.have.lengthOf(1);
-
-				var XPos = (items[0].getBoundingClientRect().right + items[0].getBoundingClientRect().left) / 2;
-				var YPos = items[0].getBoundingClientRect().top + 10;
-				cy.get('body')
-					.click(XPos, YPos);
-			});
-
-		cy.get('.spreadsheet-cell-resize-marker')
-			.should('exist');
-
-		cy.get('.spreadsheet-cell-resize-marker:nth-of-type(2)')
-			.should('not.be.visible');
+		calcHelper.selectFirstRow();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.togglemergecells')
 			.click();
