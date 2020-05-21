@@ -530,8 +530,10 @@ L.CalcTileLayer = L.TileLayer.extend({
 			return;
 		}
 
-		this.sheetGeometry.setViewArea(pos, size);
-		this._updateHeadersGridLines(undefined, updateCols, updateRows);
+		if (this.sheetGeometry) {
+			this.sheetGeometry.setViewArea(pos, size);
+			this._updateHeadersGridLines(undefined, updateCols, updateRows);
+		}
 	},
 
 	// This send .uno:ViewRowColumnHeaders command to core with the new view coordinates (tile-twips).
@@ -545,6 +547,13 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 	// sends the .uno:SheetGeometryData command optionally with arguments.
 	requestSheetGeometryData: function (flags) {
+		if (!this.sheetGeometry) {
+			// Supress multiple requests at document load, till we get a response.
+			if (this._sheetGeomFirstWait === true) {
+				return;
+			}
+			this._sheetGeomFirstWait = true;
+		}
 		var unoCmd = '.uno:SheetGeometryData';
 		var haveArgs = (typeof flags == 'object' &&
 			(flags.columns === true || flags.rows === true || flags.all === true));
@@ -599,6 +608,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
 		if (!this.sheetGeometry) {
+			this._sheetGeomFirstWait = false;
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
 				this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, this._tilePixelScale);
