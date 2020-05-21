@@ -613,8 +613,10 @@ L.CalcTileLayer = L.TileLayer.extend({
 				this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, this._tilePixelScale);
 		}
+		else {
+			this.sheetGeometry.update(jsonMsgObj);
+		}
 
-		this.sheetGeometry.update(jsonMsgObj);
 		this.sheetGeometry.setViewArea(this._pixelsToTwips(this._map._getTopLeftPoint()),
 			this._pixelsToTwips(this._map.getSize()));
 		this._updateHeadersGridLines(undefined, true /* updateCols */,
