@@ -31,7 +31,7 @@ public:
             const enum Dir dir) :
         _forwardToken(getForwardToken(message.data(), message.size())),
         _data(skipWhitespace(message.data() + _forwardToken.size()), message.data() + message.size()),
-        _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
+        _tokens(Util::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
@@ -48,7 +48,7 @@ public:
             const size_t reserve) :
         _forwardToken(getForwardToken(message.data(), message.size())),
         _data(std::max(reserve, message.size())),
-        _tokens(LOOLProtocol::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
+        _tokens(Util::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(message)),
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(message)),
@@ -67,7 +67,7 @@ public:
             const enum Dir dir) :
         _forwardToken(getForwardToken(p, len)),
         _data(skipWhitespace(p + _forwardToken.size()), p + len),
-        _tokens(LOOLProtocol::tokenize(_data.data(), _data.size())),
+        _tokens(Util::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),

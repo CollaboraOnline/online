@@ -111,83 +111,6 @@ namespace LOOLProtocol
     bool getTokenStringFromMessage(const std::string& message, const std::string& name, std::string& value);
     bool getTokenKeywordFromMessage(const std::string& message, const std::string& name, const std::map<std::string, int>& map, int& value);
 
-    /// Tokenize space-delimited values until we hit new-line or the end.
-    template <typename T>
-    inline void tokenize(const char* data, const std::size_t size, const T& delimiter,
-                         std::vector<StringToken>& tokens)
-    {
-        if (size == 0 || data == nullptr || *data == '\0')
-            return;
-
-        tokens.reserve(16);
-
-        const char* start = data;
-        const char* end = data;
-        for (std::size_t i = 0; i < size && data[i] != '\n'; ++i, ++end)
-        {
-            if (data[i] == delimiter)
-            {
-                if (start != end && *start != delimiter)
-                    tokens.emplace_back(start - data, end - start);
-
-                start = end;
-            }
-            else if (*start == delimiter)
-                ++start;
-        }
-
-        if (start != end && *start != delimiter && *start != '\n')
-            tokens.emplace_back(start - data, end - start);
-    }
-
-    /// Tokenize single-char delimited values until we hit new-line or the end.
-    inline StringVector tokenize(const char* data, const std::size_t size,
-                                 const char delimiter = ' ')
-    {
-        if (size == 0 || data == nullptr || *data == '\0')
-            return StringVector();
-
-        std::vector<StringToken> tokens;
-        tokenize(data, size, delimiter, tokens);
-        return StringVector(std::string(data, size), tokens);
-    }
-
-    /// Tokenize single-char delimited values until we hit new-line or the end.
-    inline StringVector tokenize(const std::string& s, const char delimiter = ' ')
-    {
-        if (s.empty())
-            return StringVector();
-
-        std::vector<StringToken> tokens;
-        tokenize(s.data(), s.size(), delimiter, tokens);
-        return StringVector(s, tokens);
-    }
-
-    inline
-    StringVector tokenize(const std::string& s, const char* delimiter)
-    {
-        if (s.empty())
-            return StringVector();
-
-        std::size_t start = 0;
-        std::size_t end = s.find(delimiter, start);
-
-        std::vector<StringToken> tokens;
-        tokens.reserve(16);
-
-        tokens.emplace_back(start, end - start);
-        start = end + std::strlen(delimiter);
-
-        while(end != std::string::npos)
-        {
-            end = s.find(delimiter, start);
-            tokens.emplace_back(start, end - start);
-            start = end + std::strlen(delimiter);
-        }
-
-        return StringVector(s, tokens);
-    }
-
     inline
     std::vector<int> tokenizeInts(const char* data, const size_t size, const char delimiter = ',')
     {
@@ -224,7 +147,7 @@ namespace LOOLProtocol
 
     inline bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value)
     {
-        return getTokenInteger(tokenize(message), name, value);
+        return getTokenInteger(Util::tokenize(message), name, value);
     }
 
     /// Returns the first token of a message.

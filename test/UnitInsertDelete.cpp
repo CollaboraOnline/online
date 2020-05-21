@@ -35,7 +35,7 @@ void getPartHashCodes(const std::string& testname, const std::string& response,
     TST_LOG("Reading parts from [" << response << "].");
 
     // Expected format is something like 'type= parts= current= width= height= viewid= [hiddenparts=]'.
-    StringVector tokens(LOOLProtocol::tokenize(line, ' '));
+    StringVector tokens(Util::tokenize(line, ' '));
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
     CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size());
 #else
@@ -275,7 +275,7 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
         LOK_ASSERT_MESSAGE("missing property rectangle", command0->has("rectangle"));
 
         StringVector cursorTokens(
-            LOOLProtocol::tokenize(command0->get("rectangle").toString(), ','));
+            Util::tokenize(command0->get("rectangle").toString(), ','));
         LOK_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.size());
 
         // Create second view
@@ -291,7 +291,7 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
         LOK_ASSERT_MESSAGE("missing property rectangle", command->has("rectangle"));
 
         StringVector viewTokens(
-            LOOLProtocol::tokenize(command->get("rectangle").toString(), ','));
+            Util::tokenize(command->get("rectangle").toString(), ','));
         LOK_ASSERT_EQUAL(static_cast<size_t>(4), viewTokens.size());
 
         // check both cursor should be equal

@@ -141,7 +141,7 @@ private:
             LOG_INF("Incoming websocket request: " << request.getURI());
 
             const std::string& requestURI = request.getURI();
-            StringVector pathTokens(LOOLProtocol::tokenize(requestURI, '/'));
+            StringVector pathTokens(Util::tokenize(requestURI, '/'));
             if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
             {
                 auto dumpHandler = std::make_shared<DumpSocketHandler>(_socket, request);

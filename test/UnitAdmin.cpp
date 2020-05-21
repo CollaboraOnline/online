@@ -142,7 +142,7 @@ private:
         }
         lock.unlock();
 
-        StringVector tokens(LOOLProtocol::tokenize(_messageReceived, ' '));
+        StringVector tokens(Util::tokenize(_messageReceived, ' '));
         if (tokens.size() != 1 ||
             tokens[0] != "NotAuthenticated")
         {
@@ -173,7 +173,7 @@ private:
         }
         lock.unlock();
 
-        StringVector tokens(LOOLProtocol::tokenize(_messageReceived, ' '));
+        StringVector tokens(Util::tokenize(_messageReceived, ' '));
         if (tokens.size() != 1 ||
             tokens[0] != "InvalidAuthToken")
         {
@@ -225,7 +225,7 @@ private:
         lock.unlock();
 
         {
-            StringVector tokens(LOOLProtocol::tokenize(_messageReceived, ' '));
+            StringVector tokens(Util::tokenize(_messageReceived, ' '));
             if (tokens.size() != 5 ||
                 tokens[0] != "adddoc" ||
                 tokens[2] != documentPath1.substr(documentPath1.find_last_of('/') + 1) )
@@ -253,7 +253,7 @@ private:
         lock.unlock();
 
         {
-            StringVector tokens(LOOLProtocol::tokenize(_messageReceived, ' '));
+            StringVector tokens(Util::tokenize(_messageReceived, ' '));
             if (tokens.size() != 5 ||
                 tokens[0] != "adddoc" ||
                 tokens[2] != documentPath1.substr(documentPath1.find_last_of('/') + 1) )
@@ -288,7 +288,7 @@ private:
         lock.unlock();
 
         {
-            StringVector tokens(LOOLProtocol::tokenize(_messageReceived, ' '));
+            StringVector tokens(Util::tokenize(_messageReceived, ' '));
             if (tokens.size() != 5 ||
                 tokens[0] != "adddoc" ||
                 tokens[2] != documentPath2.substr(documentPath2.find_last_of('/') + 1) )
@@ -321,7 +321,7 @@ private:
         }
         lock.unlock();
 
-        StringVector tokens(LOOLProtocol::tokenize(_messageReceived, ' '));
+        StringVector tokens(Util::tokenize(_messageReceived, ' '));
         if (tokens.size() != 2 ||
             tokens[0] != "active_users_count")
         {
@@ -354,7 +354,7 @@ private:
         }
         lock.unlock();
 
-        StringVector tokens(LOOLProtocol::tokenize(_messageReceived, ' '));
+        StringVector tokens(Util::tokenize(_messageReceived, ' '));
         if (tokens.size() != 2 ||
             tokens[0] != "active_docs_count" ||
             std::stoi(tokens[1]) != _docsCount)
@@ -390,7 +390,7 @@ private:
         }
         lock.unlock();
 
-        StringVector tokens(LOOLProtocol::tokenize(_messageReceived, ' '));
+        StringVector tokens(Util::tokenize(_messageReceived, ' '));
         if (tokens.size() != 3 ||
             tokens[0] != "rmdoc" ||
             stoi(tokens[1]) != _docPid1)
