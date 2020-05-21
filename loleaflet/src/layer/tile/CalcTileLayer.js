@@ -269,15 +269,15 @@ L.CalcTileLayer = L.TileLayer.extend({
 			}
 		} else if (textMsg.startsWith('invalidateheader: column')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0,
-				offset: {x: undefined, y: 0}});
+				offset: {x: undefined, y: 0}}, true /* compatDataSrcOnly */);
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: row')) {
 			this.refreshViewData({x: 0, y: this._map._getTopLeftPoint().y,
-				offset: {x: 0, y: undefined}});
+				offset: {x: 0, y: undefined}}, true /* compatDataSrcOnly */);
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: all')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y,
-				offset: {x: undefined, y: undefined}});
+				offset: {x: undefined, y: undefined}}, true /* compatDataSrcOnly */);
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
@@ -365,7 +365,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (!this.isHiddenPart(part)) {
-			this.refreshViewData(undefined, true /* sheetGeometryChanged */);
+			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
 		}
 	},
 
@@ -467,8 +467,11 @@ L.CalcTileLayer = L.TileLayer.extend({
 	// zooming, cursor moving out of view-area etc.).  Depending on the
 	// active sheet geometry data-source, it may ask core to send current
 	// view area's data or the global data on geometry changes.
-	refreshViewData: function (coordinatesData, sheetGeometryChanged) {
+	refreshViewData: function (coordinatesData, compatDataSrcOnly, sheetGeometryChanged) {
 
+		if (this.options.sheetGeometryDataEnabled && compatDataSrcOnly) {
+			return;
+		}
 		// There are places that call this function with no arguments to indicate that the
 		// command arguments should be the current map area coordinates.
 		if (typeof coordinatesData != 'object') {
