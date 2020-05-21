@@ -772,8 +772,6 @@ L.Socket = L.Class.extend({
 			this._map.fire(mobileEvent);
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
-			// log the tile msg separately as we need the tile coordinates
-			this._logSocket('INCOMING', textMsg);
 
 			if (imgBytes !== undefined) {
 				try {
