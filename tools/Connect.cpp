@@ -88,7 +88,7 @@ public:
                     }
 
                     std::string firstLine = getFirstLine(buffer, n);
-                    StringVector tokens(LOOLProtocol::tokenize(firstLine, ' '));
+                    StringVector tokens(Util::tokenize(firstLine, ' '));
 
                     if (std::getenv("DISPLAY") != nullptr && tokens.equals(0, "tile:"))
                     {

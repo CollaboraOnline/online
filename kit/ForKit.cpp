@@ -90,7 +90,7 @@ protected:
         if (UnitKit::get().filterKitMessage(this, message))
             return;
 #endif
-        StringVector tokens = LOOLProtocol::tokenize(message);
+        StringVector tokens = Util::tokenize(message);
         Log::StreamLogger logger = Log::debug();
         if (logger.enabled())
         {
@@ -500,7 +500,7 @@ int main(int argc, char** argv)
         {
             eq = std::strchr(cmd, '=');
             const std::string rlimits = std::string(eq+1);
-            StringVector tokens = LOOLProtocol::tokenize(rlimits, ';');
+            StringVector tokens = Util::tokenize(rlimits, ';');
             for (const auto& cmdLimit : tokens)
             {
                 const std::pair<std::string, std::string> pair = Util::split(tokens.getParam(cmdLimit), ':');

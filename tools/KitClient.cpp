@@ -88,7 +88,7 @@ protected:
             std::string line;
             std::getline(std::cin, line);
 
-            StringVector tokens(LOOLProtocol::tokenize(line, ' '));
+            StringVector tokens(Util::tokenize(line, ' '));
 
             if (tokens.size() == 0)
                 continue;

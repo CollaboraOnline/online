@@ -101,7 +101,7 @@ const std::string JWTAuth::getAccessToken()
 
 bool JWTAuth::verify(const std::string& accessToken)
 {
-    StringVector tokens(LOOLProtocol::tokenize(accessToken, '.'));
+    StringVector tokens(Util::tokenize(accessToken, '.'));
 
     try
     {

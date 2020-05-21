@@ -136,7 +136,7 @@ public:
 
                 if(!tile.empty())
                 {
-                    StringVector tokens(LOOLProtocol::tokenize(tile, ' '));
+                    StringVector tokens(Util::tokenize(tile, ' '));
                     std::string nviewid = tokens[1].substr(std::string("nviewid=").size());
                     if (!nviewid.empty() && nviewid != "0")
                     {

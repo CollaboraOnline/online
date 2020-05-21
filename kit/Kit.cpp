@@ -1307,7 +1307,7 @@ public:
 
         if (type == LOK_CALLBACK_CELL_CURSOR)
         {
-            StringVector tokens(LOOLProtocol::tokenize(payload, ','));
+            StringVector tokens(Util::tokenize(payload, ','));
             // Payload may be 'EMPTY'.
             if (tokens.size() == 4)
             {
@@ -1325,7 +1325,7 @@ public:
             const Poco::Dynamic::Var result = parser.parse(payload);
             const auto& command = result.extract<Poco::JSON::Object::Ptr>();
             std::string rectangle = command->get("rectangle").toString();
-            StringVector tokens(LOOLProtocol::tokenize(rectangle, ','));
+            StringVector tokens(Util::tokenize(rectangle, ','));
             // Payload may be 'EMPTY'.
             if (tokens.size() == 4)
             {
@@ -1346,7 +1346,7 @@ public:
             targetViewId = command->get("viewId").toString();
             std::string part = command->get("part").toString();
             std::string text = command->get("rectangle").toString();
-            StringVector tokens(LOOLProtocol::tokenize(text, ','));
+            StringVector tokens(Util::tokenize(text, ','));
             // Payload may be 'EMPTY'.
             if (tokens.size() == 4)
             {
@@ -1941,7 +1941,7 @@ public:
 
                 LOG_TRC("Kit handling queue message: " << LOOLProtocol::getAbbreviatedMessage(input));
 
-                const StringVector tokens = LOOLProtocol::tokenize(input.data(), input.size());
+                const StringVector tokens = Util::tokenize(input.data(), input.size());
 
                 if (tokens.equals(0, "eof"))
                 {
@@ -2259,7 +2259,7 @@ protected:
         if (UnitKit::get().filterKitMessage(this, message))
             return;
 #endif
-        StringVector tokens = LOOLProtocol::tokenize(message);
+        StringVector tokens = Util::tokenize(message);
         Log::StreamLogger logger = Log::debug();
         if (logger.enabled())
         {
