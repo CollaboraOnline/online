@@ -295,6 +295,17 @@
 			}
 		};
 		this.sendQueue = '';
+		this._signalErrorClose = function() {
+			if (that.readyState < 3)
+			{
+				this.onerror();
+				this.onclose();
+				clearInterval(this.waitInterval);
+				this.waitInterval = undefined;
+				this.sessionId = 'open';
+			}
+			this.readyState = 3; // CLOSED
+		};
 		this.doSend = function () {
 			if (that.sessionId === 'open')
 			{
@@ -315,7 +326,10 @@
 				if (this.status == 200)
 					that.parseIncomingArray(new Uint8Array(this.response));
 				else
-					console.debug('proxy: error on incoming response');
+				{
+					console.debug('proxy: error on incoming response ' + this.status);
+					that._signalErrorClose();
+				}
 			});
 			req.addEventListener('loadend', function() {
 				that.msgInflight--;
@@ -333,9 +347,7 @@
 				if (this.responseText.indexOf('\n') >= 0)
 				{
 					console.debug('Error: failed to fetch session id!');
-					that.onerror();
-					that.onclose();
-					that.readyState = 3;
+					that._signalErrorClose();
 				}
 				else
 				{
