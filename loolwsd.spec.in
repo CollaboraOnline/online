@@ -37,7 +37,7 @@ Requires:       collaboraoffice6.2 collaboraoffice6.2-ure collaboraofficebasis6.
 Requires(post): coreutils grep sed
 %if 0%{?rhel}
 # loolwsd dependencies
-Requires:       systemd expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssl-libs pcre xz-libs zlib
+Requires:       systemd expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssh-clients openssl-libs pcre xz-libs zlib
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
 Requires:       expat fontconfig freetype libuuid bzip2-libs
 %endif
@@ -48,7 +48,7 @@ Requires(post): libcap-progs
 Requires:       systemd libopenssl1_0_0 libpcre1 libz1 libcap2 libpng12-0 %{fillup_prereq}
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
 # cd /opt/collaboraoffice6.2/program ; for i in soffice.bin *.so ;do ldd $i | grep '=>' | sed -e "s/^.*=> //" -e "s/ [(].*$//"; done | sort | uniq | xargs rpm -qf --qf="%{NAME}\n" | sort | uniq | grep -v collaboraoffice
-Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16 libuuid1
+Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16 libuuid1 openssh
 %endif
 
 %if 0%{?name_suffix:1}
