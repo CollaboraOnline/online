@@ -279,6 +279,14 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y,
 				offset: {x: undefined, y: undefined}}, true /* compatDataSrcOnly */);
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+		} else if (this.options.sheetGeometryDataEnabled &&
+				textMsg.startsWith('invalidatesheetgeometry:')) {
+			var params = textMsg.substring('invalidatesheetgeometry:'.length).trim().split(' ');
+			var flags = {};
+			params.forEach(function (param) {
+				flags[param] = true;
+			});
+			this.requestSheetGeometryData(flags);
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
@@ -539,16 +547,16 @@ L.CalcTileLayer = L.TileLayer.extend({
 	requestSheetGeometryData: function (flags) {
 		var unoCmd = '.uno:SheetGeometryData';
 		var haveArgs = (typeof flags == 'object' &&
-			(flags.columns === true || flags.rows === true) &&
-			(flags.columns !== flags.rows));
+			(flags.columns === true || flags.rows === true || flags.all === true));
 		var payload = 'commandvalues command=' + unoCmd;
 
 		if (haveArgs) {
 			var argList = [];
-			if (flags.columns === true) {
+			var both = (flags.all === true);
+			if (both || flags.columns === true) {
 				argList.push('columns=1');
 			}
-			if (flags.rows === true) {
+			if (both || flags.rows === true) {
 				argList.push('rows=1');
 			}
 
