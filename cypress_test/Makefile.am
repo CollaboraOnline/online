@@ -155,27 +155,36 @@ define start_Xvfb
 	@echo
 endef
 
-DESKTOP_CONFIG = --config integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT) --env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT)
+DESKTOP_CONFIG = \
+	--config integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT) \
+	--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT)
 
-MOBILE_CONFIG = --config integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT) --env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT)
+MOBILE_CONFIG = \
+	--config integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT) \
+	--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT)
 
 define run_interactive_test
 	$(if $(2),\
-		$(CYPRESS_BINARY) run --browser $(CHROME) --headed --no-exit \
+		$(CYPRESS_BINARY) run \
+			--browser $(CHROME) \
+			--headed --no-exit \
 			$(if $(findstring DESKTOP,$(1)),\
-				$(DESKTOP_CONFIG) --spec=$(abs_dir)/integration_tests/desktop/$(2),\
-				$(MOBILE_CONFIG) --spec=$(abs_dir)/integration_tests/mobile/$(2)),\
-		$(CYPRESS_BINARY) open $(if $(findstring DESKTOP,$(1)),$(DESKTOP_CONFIG),$(MOBILE_CONFIG)))
+				$(DESKTOP_CONFIG) \
+				--spec=$(abs_dir)/integration_tests/desktop/$(2),\
+				$(MOBILE_CONFIG) \
+				--spec=$(abs_dir)/integration_tests/mobile/$(2)),\
+		$(CYPRESS_BINARY) open \
+			$(if $(findstring DESKTOP,$(1)),$(DESKTOP_CONFIG),$(MOBILE_CONFIG)))
 endef
 
 define run_desktop_tests
 	@echo $(if $(1),"Running cypress desktop test: $(1)","Running cypress desktop tests...")
 	@echo
 	$(eval RUN_COMMAND = \
-		$(CYPRESS_BINARY) run --browser $(CHROME) \
-			--config integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT) \
+		$(CYPRESS_BINARY) run \
+			--browser $(CHROME) \
 			--headless \
-			--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
+			$(DESKTOP_CONFIG) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
@@ -189,10 +198,10 @@ define run_mobile_tests
 	@echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
 	@echo
 	$(eval RUN_COMMAND = \
-		$(CYPRESS_BINARY) run --browser $(CHROME) \
-			--config integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT) \
+		$(CYPRESS_BINARY) run \
+			--browser $(CHROME) \
 			--headless \
-			--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT) \
+			$(MOBILE_CONFIG) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
