@@ -1938,8 +1938,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					return newValue;
 				});
 			}
-			var command = '.uno:LineWidth?Width:double=' + newValue.toFixed(1);
-			builder.map.sendUnoCommand(command);
+
+			var command = '.uno:LineWidth';
+			var params = {
+				LineWidth: {
+					type : 'long',
+					value : (newValue * 100).toFixed(0)
+				}
+			};
+			builder.map.sendUnoCommand(command, params);
 		};
 
 		builder._spinfieldControl(parentContainer, lineData, builder, callbackFunction);
