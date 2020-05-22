@@ -1,0 +1,41 @@
+
+/* Word count dialog */
+
+#label9, #documentlabel-mobile {
+	color: #636363 !important;
+}
+
+#documentlabel-mobile {
+	padding-top: 10px;
+}
+
+#wordslabel,
+#inclspaceslabel,
+#exclspaceslabel,
+#cjkcharsft,
+#wordslabel2,
+#inclspaceslabel2,
+#exclspaceslabel2,
+#cjkcharsft2
+{
+	float: left;
+	clear: left;
+	width: 70%;
+	color: #636363 !important;
+}
+
+#selectwords,
+#selectchars,
+#selectcharsnospaces,
+#selectcjkchars,
+#docwords,
+#docchars,
+#doccharsnospaces,
+#doccjkchars
+{
+	float: right;
+	clear: right;
+	width: 20%;
+	border-bottom: none;
+	color: #636363 !important;
+}
