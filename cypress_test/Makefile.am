@@ -179,7 +179,7 @@ define run_desktop_tests
 			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
-		$(call execute_run_parallel,$(RUN_COMMAND),$(2),"make check-desktop spec=$(1)")\
+		$(call execute_run_parallel,$(RUN_COMMAND),$(2),desktop,$(1))\
 	,\
 		$(RUN_COMMAND)\
 	)
@@ -196,7 +196,7 @@ define run_mobile_tests
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
-		$(call execute_run_parallel,$(RUN_COMMAND),$(2),"make check-mobile spec=$(1)")\
+		$(call execute_run_parallel,$(RUN_COMMAND),$(2),mobile,$(1))\
 	,\
 		$(RUN_COMMAND)\
 	)
@@ -213,20 +213,20 @@ define execute_run_parallel
 		     if [ -z `grep -o -m 1 "Error:\|Command failed:" $(2)` ];\
 			then cat $(2);\
 			else cat $(2) >> $(ERROR_LOG) && \
-			     echo -e $(call error_output_string,$(3)) >> $(ERROR_LOG); \
+			     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
 		     fi;\
 		else cat $(2) >> $(ERROR_LOG) && \
-		     echo -e $(call error_output_string,$(3)) >> $(ERROR_LOG); \
+		     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
 	fi;
 endef
 
 define error_output_string
 "\n\
 CypressError: a test failed, please do one of the following:\n\n\
-Run the failing test:\n\
-\t$(1)\n\n\
-Open the interactive test runner:\n\
-\t$(if $(findstring mobile,$(1)),make run-mobile,make run-desktop)\n"
+Run the failing test in headless mode:\n\
+\tmake check-$(1) spec=$(2)\n\n\
+Open the failing test in the interactive test runner:\n\
+\tmake run-$(1) spec=$(2)\n"
 endef
 
 NODE_BINS = \

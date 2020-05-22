@@ -43,13 +43,13 @@ To run all mobile tests:
 
     make check-mobile
 
-To run one specific test suit of desktop tests,
+To run one specific test suite of desktop tests,
 use spec argument with a relative path to
 cypress_test/integration_tests/desktop/:
 
-    make check-desktop spec=example_desktop_test_spec.js
+    make check-desktop spec=writer/form_field_spec.js
 
-To run one specific test suit of mobile tests,
+To run one specific test suite of mobile tests,
 use spec argument with a relative path to
 cypress_test/integration_tests/mobile/:
 
@@ -59,10 +59,10 @@ cypress_test/integration_tests/mobile/:
 Running one specific test
 ------------------
 
-To run one test case of a test suit you can use Mocha's
+To run one test case of a test suite you can use Mocha's
 'only' feature. Just replace the it(...) function with
 it.only(...) in the spec file for the selected test case
-and run the test suit using the spec parameter.
+and run the test suite using the spec parameter.
 
 For example, to run the test with title 'Apply font name.'
 inside apply_font_spec.js file, you need to add it.only():
@@ -70,15 +70,11 @@ inside apply_font_spec.js file, you need to add it.only():
 -    it('Apply font name.', function() {
 +    it.only('Apply font name.', function() {
 
-Then run the test suit with:
+Then run the test suite with:
 
     make check-mobile spec=writer/apply_font_spec.js
 
-Or open the file in the interactive test runner.
-
-    make run-mobile
-
-Or run specific unit test:
+Or open the test suite in the interactive test runner:
 
     make run-mobile spec=writer/apply_font_spec.js
 
@@ -99,6 +95,18 @@ To open desktop tests in the test runner:
 To open mobile tests in the test runner:
 
     make run-mobile
+
+To open one specific test suite of desktop tests,
+use spec argument with a relative path to
+cypress_test/integration_tests/desktop/:
+
+    make run-desktop spec=writer/form_field_spec.js
+
+To open one specific test suite of mobile tests,
+use spec argument with a relative path to
+cypress_test/integration_tests/mobile/:
+
+    make run-mobile spec=writer/toolbar_spec.js
 
 During the build we run the tests with Chrome browser, so make sure
 you select Chrome browser on the GUI while checking tests.
