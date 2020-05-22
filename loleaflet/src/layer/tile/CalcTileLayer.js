@@ -1039,7 +1039,7 @@ L.SheetDimension = L.Class.extend({
 		}
 
 		var numSizes = span.end - index + 1;
-		var pixelScale = useDevicePixels ? this._devPixelsPerCssPixel : 1;
+		var pixelScale = useDevicePixels ? 1 : this._devPixelsPerCssPixel;
 		return {
 			startpos: (span.data.posdevpx - span.data.sizedev * numSizes) / pixelScale,
 			size: span.data.sizedev / pixelScale
