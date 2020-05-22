@@ -135,7 +135,6 @@
 .spreadsheet-header-columns {
 	display: inline-block;
 	white-space: nowrap;
-	width: 100%;
 	height: 100%;
 	border-spacing: 0px !important;
 	position: relative;
@@ -178,7 +177,6 @@
 
 .spreadsheet-header-rows {
 	width: 100%;
-	height: 100%;
 	border-spacing: 0px !important;
 	position: relative;
 	margin: 0px;
