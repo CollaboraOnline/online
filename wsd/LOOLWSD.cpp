@@ -3682,9 +3682,7 @@ int LOOLWSD::innerMain()
 
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
-#if ENABLE_DEBUG
     std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
-#endif
 
     // Reset the child-spawn timeout to the default, now that we're set.
     ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
