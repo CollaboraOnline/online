@@ -847,6 +847,26 @@ L.SheetGeometry = L.Class.extend({
 		return this._rows.getGroupsDataInView();
 	},
 
+	// accepts a rectangle in print twips coordinates and returns the equivalent rectangle
+	// in tile-twips aligned to the cells.
+	getTileTwipsSheetAreaFromPrint: function (rectangle) { // (L.Bounds) -> L.Bounds
+		if (!(rectangle instanceof L.Bounds)) {
+			console.error('Bad argument type, expected L.Bounds');
+			return rectangle;
+		}
+
+		var topLeft = rectangle.getTopLeft();
+		var bottomRight = rectangle.getBottomRight();
+
+		var horizBounds = this._columns.getTileTwipsRangeFromPrint(topLeft.x, bottomRight.x);
+		var vertBounds = this._rows.getTileTwipsRangeFromPrint(topLeft.y, bottomRight.y);
+
+		topLeft = new L.Point(horizBounds.startpos, vertBounds.startpos);
+		bottomRight = new L.Point(horizBounds.endpos, vertBounds.endpos);
+
+		return new L.Bounds(topLeft, bottomRight);
+	},
+
 	_testValidity: function (sheetGeomJSON, checkCompleteness) {
 
 		if (!sheetGeomJSON.hasOwnProperty('commandName')) {
@@ -998,6 +1018,7 @@ L.SheetDimension = L.Class.extend({
 	_updatePositions: function() {
 
 		var posDevPx = 0; // position in device pixels.
+		var posPrintTwips = 0;
 		var dimensionObj = this;
 		this._visibleSizes.addCustomDataForEachSpan(function (
 			index,
@@ -1010,12 +1031,14 @@ L.SheetDimension = L.Class.extend({
 			var posCssPx = posDevPx / dimensionObj._devPixelsPerCssPixel;
 			// position in device-pixel aligned twips.
 			var posTileTwips = Math.floor(posCssPx * dimensionObj._twipsPerCSSPixel);
+			posPrintTwips += (size * spanLength);
 
 			var customData = {
 				sizedev: sizeDevPxOne,
 				posdevpx: posDevPx,
 				poscsspx: posCssPx,
-				postiletwips: posTileTwips
+				postiletwips: posTileTwips,
+				posprinttwips: posPrintTwips
 			};
 
 			return customData;
@@ -1034,15 +1057,48 @@ L.SheetDimension = L.Class.extend({
 
 	// returns element pos/size in css pixels by default.
 	_getElementDataFromSpanByIndex: function (index, span, useDevicePixels) {
+		return this._getElementDataAnyFromSpanByIndex(index, span,
+				useDevicePixels ? 'devpixels' : 'csspixels');
+	},
+
+	// returns element pos/size in the requested unit.
+	_getElementDataAnyFromSpanByIndex: function (index, span, unitName) {
+
 		if (span === undefined || index < span.start || span.end < index) {
 			return undefined;
 		}
 
+		if (unitName !== 'csspixels' && unitName !== 'devpixels' &&
+				unitName !== 'tiletwips' && unitName !== 'printtwips') {
+			console.error('unsupported unitName: ' + unitName);
+			return undefined;
+		}
+
 		var numSizes = span.end - index + 1;
-		var pixelScale = useDevicePixels ? 1 : this._devPixelsPerCssPixel;
+		var inPixels = (unitName === 'csspixels' || unitName === 'devpixels');
+		if (inPixels) {
+			var useDevicePixels = (unitName === 'devpixels');
+			var pixelScale = useDevicePixels ? 1 : this._devPixelsPerCssPixel;
+			return {
+				startpos: (span.data.posdevpx - span.data.sizedev * numSizes) / pixelScale,
+				size: span.data.sizedev / pixelScale
+			};
+		}
+
+		if (unitName === 'printtwips') {
+			return {
+				startpos: (span.data.posprinttwips - span.size * numSizes),
+				size: span.size
+			};
+		}
+
+		// unitName is 'tiletwips'
+		// It is very important to calculate this from device pixel units to mirror the core calculations.
+		var twipsPerDevPixels = this._twipsPerCSSPixel / this._devPixelsPerCssPixel;
 		return {
-			startpos: (span.data.posdevpx - span.data.sizedev * numSizes) / pixelScale,
-			size: span.data.sizedev / pixelScale
+			startpos: Math.floor(
+				(span.data.posdevpx - span.data.sizedev * numSizes) * twipsPerDevPixels),
+			size: Math.floor(span.data.sizedev * twipsPerDevPixels)
 		};
 	},
 
@@ -1075,6 +1131,29 @@ L.SheetDimension = L.Class.extend({
 		var relativeIndex = Math.floor((pos - posStart) / sizeOne);
 
 		return span.start + relativeIndex;
+	},
+
+	// computes element index from print twips position and returns
+	// an object with this index and the span data.
+	_getSpanAndIndexFromPrintTwipsPos: function (pos) {
+		var result = {};
+		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'posprinttwips');
+		result.span = span;
+		if (span === undefined) {
+			// enforce limits.
+			result.index = (pos >= 0) ? this._maxIndex : 0;
+			result.span = this._visibleSizes.getSpanDataByIndex(result.index);
+			return result;
+		}
+		var elementCount = span.end - span.start + 1;
+		var posStart = (span.data.posprinttwips - span.size * elementCount);
+		var sizeOne = span.size;
+
+		// always round down as relativeIndex is zero-based.
+		var relativeIndex = Math.floor((pos - posStart) / sizeOne);
+
+		result.index = span.start + relativeIndex;
+		return result;
 	},
 
 	setViewLimits: function (startPosTileTwips, endPosTileTwips) {
@@ -1121,7 +1200,37 @@ L.SheetDimension = L.Class.extend({
 
 	getMaxIndex: function () {
 		return this._maxIndex;
-	}
+	},
+
+	// Accepts a start and end positions in print twips, and returns the
+	// corresponding positions in tile twips, by first computing the element range.
+	getTileTwipsRangeFromPrint: function (posStartPT, posEndPT) {
+		var startElement = this._getSpanAndIndexFromPrintTwipsPos(posStartPT);
+		var startData = this._getElementDataAnyFromSpanByIndex(startElement.index, startElement.span, 'tiletwips');
+		if (posStartPT === posEndPT) {
+			// range is hidden, send a minimal sized tile-twips range.
+			// Set the size = twips equivalent of 1 device pixel,
+			// to imitate what core does when it sends cursor/ranges in tile-twips coordinates.
+			var rangeSize = Math.floor(this._twipsPerCSSPixel / this._devPixelsPerCssPixel);
+			return {
+				startpos: startData.startpos,
+				endpos: startData.startpos + rangeSize
+			};
+		}
+		var endElement = this._getSpanAndIndexFromPrintTwipsPos(posEndPT);
+		var endData = this._getElementDataAnyFromSpanByIndex(endElement.index, endElement.span, 'tiletwips');
+
+		var startPos = startData.startpos;
+		var endPos = endData.startpos + endData.size;
+		if (endPos < startPos) {
+			endPos = startPos;
+		}
+
+		return {
+			startpos: startPos,
+			endpos: endPos
+		};
+	},
 });
 
 L.SpanList = L.Class.extend({
@@ -1311,10 +1420,10 @@ L.SpanList = L.Class.extend({
 		// from 0 at the start of first span and are in non-decreasing order.
 
 		return binarySearch(this._spanlist, value,
-			function directionProvider(testValue, prevSpan, curSpan) {
+			function directionProvider(testValue, prevSpan, curSpan, nextSpan) {
 				var valueStart = prevSpan ?
-					prevSpan.data[fieldName] + 1 : 0;
-				var valueEnd = curSpan.data[fieldName];
+					prevSpan.data[fieldName] : 0;
+				var valueEnd = curSpan.data[fieldName] - (nextSpan ? 1 : 0);
 				if (valueStart === undefined || valueEnd === undefined) {
 					// fieldName not present in the 'data' property.
 					return -1;

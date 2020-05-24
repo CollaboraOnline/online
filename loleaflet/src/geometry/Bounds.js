@@ -44,6 +44,14 @@ L.Bounds.prototype = {
 		return new L.Point(this.max.x, this.min.y);
 	},
 
+	getTopLeft: function () { // -> Point
+		return new L.Point(this.min.x, this.min.y);
+	},
+
+	getBottomRight: function () { // -> Point
+		return new L.Point(this.max.x, this.max.y);
+	},
+
 	getSize: function () {
 		return this.max.subtract(this.min);
 	},
