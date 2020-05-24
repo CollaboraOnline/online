@@ -2357,10 +2357,10 @@ private:
                         });
             }
             else if (requestDetails.isGetOrHead("/"))
-                handleRootRequest(request, socket);
+                handleRootRequest(requestDetails, socket);
 
             else if (requestDetails.isGet("/favicon.ico"))
-                handleFaviconRequest(request, socket);
+                handleFaviconRequest(requestDetails, socket);
 
             else if (requestDetails.isGet("/hosting/discovery") ||
                      requestDetails.isGet("/hosting/discovery/"))
@@ -3054,7 +3054,7 @@ private:
             LOG_INF("Starting GET request handler for session [" << _id << "] on url [" << LOOLWSD::anonymizeUrl(url) << "].");
 
             // Indicate to the client that document broker is searching.
-            const std::string status("statusindicator: find");
+            static const std::string status("statusindicator: find");
             LOG_TRC("Sending to Client [" << status << "].");
             ws->sendMessage(status);
 

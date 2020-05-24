@@ -66,7 +66,7 @@ public:
     }
     bool startsWith(const char *path)
     {
-        return !strncmp(_uriString.c_str(), path, strlen(path));
+        return Util::startsWith(_uriString, path);
     }
     bool equals(size_t index, const char *string) const
     {
