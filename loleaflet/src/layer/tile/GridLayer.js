@@ -211,12 +211,7 @@ L.GridLayer = L.Layer.extend({
 		    maxZoom = this.options.maxZoom;
 
 		for (var z in this._levels) {
-			if (this._levels[z].el.children.length || z === zoom) {
-				this._levels[z].el.style.zIndex = maxZoom - Math.abs(zoom - z);
-			} else {
-				L.DomUtil.remove(this._levels[z].el);
-				delete this._levels[z];
-			}
+			this._levels[z].el.style.zIndex = maxZoom - Math.abs(zoom - z);
 		}
 
 		var level = this._levels[zoom],
