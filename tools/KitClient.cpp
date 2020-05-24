@@ -112,7 +112,7 @@ protected:
                 std::cout << LOKitHelper::documentStatus(loKitDocument) << std::endl;
                 for (int i = 0; i < loKitDocument->pClass->getParts(loKitDocument); i++)
                 {
-                    std::cout << "  " << i << ": '" << loKitDocument->pClass->getPartName(loKitDocument, i) << "'" << std::endl;
+                    std::cout << "  " << i << ": '" << loKitDocument->pClass->getPartName(loKitDocument, i) << '\'' << std::endl;
                 }
             }
             else if (tokens.equals(0, "tile"))

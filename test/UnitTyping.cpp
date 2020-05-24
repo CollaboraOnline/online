@@ -46,7 +46,7 @@ public:
 
     bool filterAlertAllusers(const std::string & msg) override
     {
-        std::cout << "Alert: " << msg << "\n";
+        std::cout << "Alert: " << msg << '\n';
         return false;
     }
 
@@ -235,8 +235,8 @@ public:
 
                         if (!(num & 0x300)) // occasionally sleep some more - why not.
                             std::this_thread::sleep_for(std::chrono::milliseconds(waitMS*25));
-                    LOG_TRC("Send to " << which << " message " << msg);
-//                    std::cout << "Send to " << which << " message " << msg << "\n";
+                        LOG_TRC("Send to " << which << " message " << msg);
+                        // std::cout << "Send to " << which << " message " << msg << '\n';
                         sendTextFrame(sock, msg, testname);
                     }
                     liveTyping--;
@@ -264,12 +264,12 @@ public:
             results[i] = result;
 
             char target = 'a'+i;
-            LOG_TRC("Result [" << i << "] target " << target << " is '" << result << "'");
+            LOG_TRC("Result [" << i << "] target " << target << " is '" << result << '\'');
             for (size_t j = sizeof("textselectioncontent:"); j < result.size(); ++j)
             {
                 if (result[j] != ' ' && result[j] != target)
                 {
-                    LOG_TRC("Text contains incorrect char[" << j << "] = '" << result[j] << "' not " << target << " '" << result << "'");
+                    LOG_TRC("Text contains incorrect char[" << j << "] = '" << result[j] << "' not " << target << " '" << result << '\'');
                     if (result[j] != target)
                         return TestResult::Failed;
                 }

@@ -74,16 +74,16 @@ private:
 
     struct Message : public std::vector<char>
     {
-        Message(const char *msg, const size_t len, bool text, uint64_t serial)
+        Message(const char *msg, const std::size_t len, bool text, uint64_t serial)
         {
             const char *type = text ? "T" : "B";
             insert(end(), type, type + 1);
             std::ostringstream os;
-            os << std::hex << "0x" << serial << "\n" << "0x" << len << "\n";
-            std::string str = os.str();
+            os << std::hex << "0x" << serial << "\n0x" << len << '\n';
+            const std::string str = os.str();
             insert(end(), str.c_str(), str.c_str() + str.size());
             insert(end(), msg, msg + len);
-            const char *terminator = "\n";
+            constexpr const char *terminator = "\n";
             insert(end(), terminator, terminator + 1);
         }
     };

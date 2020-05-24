@@ -205,7 +205,7 @@ DocumentBroker::DocumentBroker(ChildType type,
     assert(!LOOLWSD::ChildRoot.empty());
 
     LOG_INF("DocumentBroker [" << LOOLWSD::anonymizeUrl(_uriPublic.toString()) <<
-            "] created with docKey [" << _docKey << "]");
+            "] created with docKey [" << _docKey << ']');
 }
 
 void DocumentBroker::setupPriorities()
@@ -729,7 +729,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 #endif
 
     LOG_DBG("Setting username [" << LOOLWSD::anonymizeUsername(username) << "] and userId [" <<
-            LOOLWSD::anonymizeUsername(userId) << "] for session [" << sessionId << "]");
+            LOOLWSD::anonymizeUsername(userId) << "] for session [" << sessionId << ']');
 
     session->setUserId(userId);
     session->setUserName(username);
@@ -799,7 +799,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                     // Extension matches, try the conversion. We convert the file to another one in
                     // the same (jail) directory, with just the new extension tacked on.
 
-                    const std::string newRootPath = _storage->getRootFilePath() + "." + newExtension;
+                    const std::string newRootPath = _storage->getRootFilePath() + '.' + newExtension;
 
                     // The commandline must contain the space-separated substring @INPUT@ that is
                     // replaced with the input file name, and @OUTPUT@ for the output file name.
@@ -838,7 +838,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                     }
 
                     _storage->setRootFilePath(newRootPath);
-                    localPath += "." + newExtension;
+                    localPath += '.' + newExtension;
                 }
 
                 // We successfully converted the file to something LO can use; break out of the for
@@ -996,7 +996,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     const std::string newFilename = Util::getFilenameFromURL(uri);
     const std::string fileId = Util::getFilenameFromURL(_docKey);
     if (LOOLWSD::AnonymizeUserData)
-        LOG_DBG("New filename [" << LOOLWSD::anonymizeUrl(newFilename) << "] will be known by its fileId [" << fileId << "]");
+        LOG_DBG("New filename [" << LOOLWSD::anonymizeUrl(newFilename) << "] will be known by its fileId [" << fileId << ']');
 
     Util::mapAnonymized(newFilename, fileId);
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uri);
@@ -1258,31 +1258,31 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
 
         std::ostringstream oss;
         // arguments init
-        oss << "{";
+        oss << '{';
 
         if (dontTerminateEdit)
         {
             oss << "\"DontTerminateEdit\":"
-                << "{"
-                << "\"type\":\"boolean\","
-                << "\"value\":true"
-                << "}";
+                   "{"
+                   "\"type\":\"boolean\","
+                   "\"value\":true"
+                   "}";
         }
 
         if (dontSaveIfUnmodified)
         {
             if (dontTerminateEdit)
-                oss << ",";
+                oss << ',';
 
             oss << "\"DontSaveIfUnmodified\":"
-                << "{"
-                << "\"type\":\"boolean\","
-                << "\"value\":true"
-                << "}";
+                   "{"
+                   "\"type\":\"boolean\","
+                   "\"value\":true"
+                   "}";
         }
 
         // arguments end
-        oss << "}";
+        oss << '}';
 
         assert(_storage);
         _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
@@ -1958,7 +1958,7 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to process tile response [" << firstLine << "]: " << exc.what() << ".");
+        LOG_ERR("Failed to process tile response [" << firstLine << "]: " << exc.what() << '.');
     }
 }
 
@@ -1992,7 +1992,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to process tile response [" << firstLine << "]: " << exc.what() << ".");
+        LOG_ERR("Failed to process tile response [" << firstLine << "]: " << exc.what() << '.');
     }
 }
 
@@ -2393,7 +2393,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     else
         os << "\n  still loading... " <<
             std::chrono::duration_cast<std::chrono::seconds>(
-                now - _threadStart).count() << "s";
+                now - _threadStart).count() << 's';
     os << "\n  sent: " << sent;
     os << "\n  recv: " << recv;
     os << "\n  modified?: " << isModified();

@@ -115,7 +115,7 @@ public:
         catch (const Poco::Exception &e)
         {
             std::cerr << "Failed to write data: " << e.name() <<
-                  " " << e.message() << "\n";
+                  ' ' << e.message() << '\n';
             return;
         }
 
@@ -126,7 +126,7 @@ public:
             std::istream& responseStream = session->receiveResponse(response);
 
             Poco::Path path(document);
-            std::string outPath = _app.getDestinationDir() + "/" + path.getBaseName() + "." + _app.getDestinationFormat();
+            std::string outPath = _app.getDestinationDir() + '/' + path.getBaseName() + '.' + _app.getDestinationFormat();
             std::ofstream fileStream(outPath);
 
             Poco::StreamCopier::copyStream(responseStream, fileStream);
@@ -134,7 +134,7 @@ public:
         catch (const Poco::Exception &e)
         {
             std::cerr << "Exception converting: " << e.name() <<
-                  " " << e.message() << "\n";
+                  ' ' << e.message() << '\n';
             return;
         }
 

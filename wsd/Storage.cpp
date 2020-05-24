@@ -97,7 +97,7 @@ void StorageBase::initialize()
     {
         for (size_t i = 0; ; ++i)
         {
-            const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
+            const std::string path = "storage.wopi.host[" + std::to_string(i) + ']';
             const std::string host = app.config().getString(path, "");
             if (!host.empty())
             {
@@ -331,7 +331,7 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/,
     {
         // Failed
         LOG_WRN("link(\"" << LOOLWSD::anonymizeUrl(publicFilePath) << "\", \"" << getRootFilePathAnonym() << "\") failed. Will copy. "
-                "Linking error: " << Util::symbolicErrno(errno) << " " << strerror(errno));
+                "Linking error: " << Util::symbolicErrno(errno) << ' ' << strerror(errno));
     }
 
     try
@@ -442,7 +442,7 @@ static void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
         {
             nvcCookies.add(cookieTokens[0], cookieTokens[1]);
             request.setCookies(nvcCookies);
-            LOG_TRC("Added storage debug cookie [" << cookieTokens[0] << "=" << cookieTokens[1] << "].");
+            LOG_TRC("Added storage debug cookie [" << cookieTokens[0] << '=' << cookieTokens[1] << "].");
         }
     }
 #endif
@@ -517,10 +517,10 @@ void LockContext::dumpState(std::ostream& os) const
 {
     if (!_supportsLocks)
         return;
-    os << "  lock:\n";
-    os << "    locked: " << _isLocked << "\n";
-    os << "    token: '" << _lockToken << "'\n";
-    os << "    last locked: " << Util::getSteadyClockAsString(_lastLockTime) << "\n";
+    os << "  lock:"
+          "\n    locked: " << _isLocked;
+    os << "\n    token: '" << _lockToken;
+    os << "\n    last locked: " << Util::getSteadyClockAsString(_lastLockTime) << '\n';
 }
 
 #if !MOBILEAPP
@@ -591,7 +591,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     catch (const Poco::Exception& pexc)
     {
         LOG_ERR("Cannot get file info from WOPI storage uri [" << uriAnonym << "]. Error: " <<
-                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
+                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
         throw;
     }
     catch (const BadRequestException& exc)
@@ -817,7 +817,7 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
     catch (const Poco::Exception& pexc)
     {
         LOG_ERR("Cannot " << wopiLog << " uri [" << uriAnonym << "]. Error: " <<
-                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
+                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
     }
     catch (const BadRequestException& exc)
     {
@@ -903,7 +903,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
                       std::ostreambuf_iterator<char>(ofs));
             ofs.close();
             LOG_INF("WOPI::GetFile downloaded " << getFileSize(getRootFilePath()) << " bytes from [" <<
-                    uriAnonym << "] -> " << getRootFilePathAnonym() << " in " << diff.count() << "s");
+                    uriAnonym << "] -> " << getRootFilePathAnonym() << " in " << diff.count() << 's');
             setLoaded(true);
 
             // Now return the jailed path.
@@ -916,7 +916,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
     catch (const Poco::Exception& pexc)
     {
         LOG_ERR("Cannot load document from WOPI storage uri [" + uriAnonym + "]. Error: " <<
-                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
+                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
         throw;
     }
     catch (const BadRequestException& exc)
@@ -1080,7 +1080,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
 
             LOG_INF(wopiLog << " response: " << responseString);
             LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePathAnonym <<
-                    "] -> [" << uriAnonym << "]: " << response.getStatus() << " " << response.getReason());
+                    "] -> [" << uriAnonym << "]: " << response.getStatus() << ' ' << response.getReason());
         }
 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
@@ -1149,7 +1149,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     catch (const Poco::Exception& pexc)
     {
         LOG_ERR("Cannot save file to WOPI storage uri [" << uriAnonym << "]. Error: " <<
-                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ")" : ""));
+                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
         saveResult.setResult(StorageBase::SaveResult::FAILED);
     }
     catch (const BadRequestException& exc)

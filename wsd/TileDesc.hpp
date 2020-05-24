@@ -249,8 +249,8 @@ public:
     std::string generateID() const
     {
         std::ostringstream tileID;
-        tileID << getPart() << ":" << getTilePosX() << ":" << getTilePosY() << ":"
-               << getTileWidth() << ":" << getTileHeight() << ":" << getNormalizedViewId();
+        tileID << getPart() << ':' << getTilePosX() << ':' << getTilePosY() << ':'
+               << getTileWidth() << ':' << getTileHeight() << ':' << getNormalizedViewId();
         return tileID.str();
     }
 

@@ -324,7 +324,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                 {
                     if (LOOLProtocol::matchPrefix(prefix, message))
                     {
-                        TST_LOG("[" << prefix <<  "] Matched " <<
+                        TST_LOG('[' << prefix <<  "] Matched " <<
                                 LOOLWebSocket::getAbbreviatedFrameDump(response.data(), bytes, flags));
                         return response;
                     }
@@ -348,7 +348,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
                         throw std::runtime_error(message);
                     }
 
-                    TST_LOG("[" << prefix <<  "] Ignored " <<
+                    TST_LOG('[' << prefix <<  "] Ignored " <<
                             LOOLWebSocket::getAbbreviatedFrameDump(response.data(), bytes, flags));
                 }
             }
@@ -674,7 +674,7 @@ inline void saveTileAs(const std::vector<char> &tileResponse,
     std::fstream outStream(filename, std::ios::out);
     outStream.write(res.data(), res.size());
     outStream.close();
-    TST_LOG("Saved [" << firstLine << "] to [" << filename << "]");
+    TST_LOG("Saved [" << firstLine << "] to [" << filename << ']');
 }
 
 inline std::vector<char> getTileAndSave(std::shared_ptr<LOOLWebSocket>& socket,
@@ -741,7 +741,7 @@ inline bool svgMatch(const char *testname, const std::vector<char> &response, co
         TST_LOG_APPEND(std::string(expectedSVG.data(), expectedSVG.size()));
         std::string newName = templateFile;
         newName += ".new";
-        TST_LOG_APPEND("Updated template writing to: " << newName << "\n");
+        TST_LOG_APPEND("Updated template writing to: " << newName << '\n');
         TST_LOG_END;
 
         FILE *of = fopen(Poco::Path(TDOC, newName).toString().c_str(), "w");

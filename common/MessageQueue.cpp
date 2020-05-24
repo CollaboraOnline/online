@@ -42,7 +42,7 @@ void TileQueue::put_impl(const Payload& value)
                     {
                         if (s.find("ver=" + tokens[i]) != std::string::npos)
                         {
-                            LOG_TRC("Matched " << tokens[i] << ", Removing [" << s << "]");
+                            LOG_TRC("Matched " << tokens[i] << ", Removing [" << s << ']');
                             return true;
                         }
                     }
@@ -243,8 +243,10 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             // just remove it
             if (msgX <= queuedX && queuedX + queuedW <= msgX + msgW && msgY <= queuedY && queuedY + queuedH <= msgY + msgH)
             {
-                LOG_TRC("Removing smaller invalidation: " << std::string(it.data(), it.size()) << " -> " <<
-                        tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << msgX << " " << msgY << " " << msgW << " " << msgH << " " << msgPart);
+                LOG_TRC("Removing smaller invalidation: "
+                        << std::string(it.data(), it.size()) << " -> " << tokens[0] << ' '
+                        << tokens[1] << ' ' << tokens[2] << ' ' << msgX << ' ' << msgY << ' '
+                        << msgW << ' ' << msgH << ' ' << msgPart);
 
                 // remove from the queue
                 getQueue().erase(getQueue().begin() + i);
@@ -268,9 +270,12 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     continue;
                 }
 
-                LOG_TRC("Merging invalidations: " << std::string(it.data(), it.size()) << " and " <<
-                        tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << msgX << " " << msgY << " " << msgW << " " << msgH << " " << msgPart << " -> " <<
-                        tokens[0] << " " << tokens[1] << " " << tokens[2] << " " << joinX << " " << joinY << " " << joinW << " " << joinH << " " << msgPart);
+                LOG_TRC("Merging invalidations: "
+                        << std::string(it.data(), it.size()) << " and " << tokens[0] << ' '
+                        << tokens[1] << ' ' << tokens[2] << ' ' << msgX << ' ' << msgY << ' '
+                        << msgW << ' ' << msgH << ' ' << msgPart << " -> " << tokens[0] << ' '
+                        << tokens[1] << ' ' << tokens[2] << ' ' << joinX << ' ' << joinY << ' '
+                        << joinW << ' ' << joinH << ' ' << msgPart);
 
                 msgX = joinX;
                 msgY = joinY;

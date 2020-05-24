@@ -75,7 +75,7 @@ public:
     {
         Poco::Net::HTTPRequest request(
             Poco::Net::HTTPRequest::HTTP_POST,
-            "/ping/" + _session_name + "/" + std::to_string(i));
+            "/ping/" + _session_name + '/' + std::to_string(i));
         try {
             Poco::Net::HTMLForm form;
             form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
@@ -85,7 +85,7 @@ public:
         catch (const Poco::Exception &e)
         {
             std::cerr << "Failed to write data: " << e.name() <<
-                  " " << e.message() << "\n";
+                  ' ' << e.message() << '\n';
             throw;
         }
     }
@@ -111,7 +111,7 @@ public:
         catch (const Poco::Exception &e)
         {
             std::cerr << "Exception converting: " << e.name() <<
-                  " " << e.message() << "\n";
+                  ' ' << e.message() << '\n';
             throw;
         }
         return number;
@@ -164,11 +164,11 @@ struct Client : public Poco::Util::Application
         second.sendPing(count + 1);
 
         back = first.getResponseInt();
-        std::cerr << "testPing: " << back << "\n";
+        std::cerr << "testPing: " << back << '\n';
         assert (back == count + 1);
 
         back = second.getResponseInt();
-        std::cerr << "testPing: " << back << "\n";
+        std::cerr << "testPing: " << back << '\n';
         assert (back == count + 2);
     }
 

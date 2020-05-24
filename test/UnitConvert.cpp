@@ -97,7 +97,7 @@ public:
     }
     bool filterKitMessage(WebSocketHandler *, std::string &message) override
     {
-        std::cerr << "kit message " << message << "\n";
+        std::cerr << "kit message " << message << '\n';
         if (message.find("load") != std::string::npos)
         {
             std::cerr << "Load message received - starting to sleep\n";

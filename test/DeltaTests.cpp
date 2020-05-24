@@ -85,7 +85,7 @@ std::vector<char> DeltaTests::applyDelta(
             int srcRow = (uint8_t)(delta[i+2]);
             int destRow = (uint8_t)(delta[i+3]);
 
-//            std::cout << "copy " << count <<" row(s) " << srcRow << " to " << destRow << "\n";
+//            std::cout << "copy " << count <<" row(s) " << srcRow << " to " << destRow << '\n';
             for (int cnt = 0; cnt < count; ++cnt)
             {
                 const char *src = &pixmap[width * (srcRow + cnt) * 4];
@@ -103,7 +103,7 @@ std::vector<char> DeltaTests::applyDelta(
             size_t length = (uint8_t)(delta[i+3]);
             i += 4;
 
-//            std::cout << "new " << length << " at " << destCol << ", " << destRow << "\n";
+//            std::cout << "new " << length << " at " << destCol << ", " << destRow << '\n';
             LOK_ASSERT(length <= width - destCol);
 
             char *dest = &output[width * destRow * 4 + destCol * 4];
@@ -112,7 +112,7 @@ std::vector<char> DeltaTests::applyDelta(
             break;
         }
         default:
-            std::cout << "Unknown delta code " << delta[i] << "\n";
+            std::cout << "Unknown delta code " << delta[i] << '\n';
             LOK_ASSERT(false);
             break;
         }
@@ -130,7 +130,7 @@ void DeltaTests::assertEqual(const std::vector<char> &a,
     {
         if (a[i] != b[i])
         {
-            std::cout << "Differences starting at byte " << i << " "
+            std::cout << "Differences starting at byte " << i << ' '
                       << (i/4 % width) << ", " << (i / (width * 4)) << ":\n";
             size_t len;
             for (len = 0; (a[i+len] != b[i+len] || len < 8) && i + len < a.size(); ++len)
@@ -138,9 +138,9 @@ void DeltaTests::assertEqual(const std::vector<char> &a,
                 std::cout << std::hex << (int)((unsigned char)a[i+len]) << " != ";
                 std::cout << std::hex << (int)((unsigned char)b[i+len]) << "  ";
                 if (len > 0 && (len % 16 == 0))
-                    std::cout<< "\n";
+                    std::cout<< '\n';
             }
-            std::cout << " size " << len << "\n";
+            std::cout << " size " << len << '\n';
             LOK_ASSERT(false);
         }
     }

@@ -63,7 +63,7 @@ private:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
-        LOG_TRC("#" << socket->getFD() << " Connected to ClientRequestDispatcher.");
+        LOG_TRC('#' << socket->getFD() << " Connected to ClientRequestDispatcher.");
     }
 
     /// Called after successful socket reads.
@@ -77,7 +77,7 @@ private:
         }
 
         std::vector<char>& in = socket->getInBuffer();
-        LOG_TRC("#" << socket->getFD() << " handling incoming " << in.size() << " bytes.");
+        LOG_TRC('#' << socket->getFD() << " handling incoming " << in.size() << " bytes.");
 
         // Find the end of the header, if any.
         static const std::string marker("\r\n\r\n");
@@ -85,7 +85,7 @@ private:
                                   marker.begin(), marker.end());
         if (itBody == in.end())
         {
-            LOG_DBG("#" << socket->getFD() << " doesn't have enough data yet.");
+            LOG_DBG('#' << socket->getFD() << " doesn't have enough data yet.");
             return;
         }
 
@@ -101,7 +101,7 @@ private:
             Log::StreamLogger logger = Log::info();
             if (logger.enabled())
             {
-                logger << "#" << socket->getFD() << ": Client HTTP Request: "
+                logger << '#' << socket->getFD() << ": Client HTTP Request: "
                        << request.getMethod() << ' '
                        << request.getURI() << ' '
                        << request.getVersion();
@@ -172,7 +172,7 @@ private:
             socket->shutdown();
 
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
-            LOG_INF("#" << socket->getFD() << " Exception while processing incoming request: [" <<
+            LOG_INF('#' << socket->getFD() << " Exception while processing incoming request: [" <<
                     LOOLProtocol::getAbbreviatedMessage(in) << "]: " << exc.what());
         }
 

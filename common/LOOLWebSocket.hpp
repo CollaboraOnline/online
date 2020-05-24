@@ -60,7 +60,7 @@ public:
             const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
 
             if (n <= 0)
-                LOG_TRC("Got nothing (" << n << ")");
+                LOG_TRC("Got nothing (" << n << ')');
             else
                 LOG_TRC("Got frame: " << getAbbreviatedFrameDump(buffer, n, flags));
 
@@ -176,14 +176,14 @@ public:
             result << Poco::format("%#x", flags);
             break;
         }
-        result << " " << std::setw(3) << length << " bytes";
+        result << ' ' << std::setw(3) << length << " bytes";
 
         if (length > 0 &&
             ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_TEXT ||
              (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_BINARY ||
              (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_PING ||
              (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_PONG))
-            result << ": '" << LOOLProtocol::getAbbreviatedMessage(message, length) << "'";
+            result << ": '" << LOOLProtocol::getAbbreviatedMessage(message, length) << '\'';
         return result.str();
     }
 };

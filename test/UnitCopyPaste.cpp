@@ -82,7 +82,7 @@ public:
 
             if (response.getContentType() != "application/octet-stream")
             {
-                std::cerr << "Error: mismatching content type for clipboard: " << response.getContentType() << "\n";
+                std::cerr << "Error: mismatching content type for clipboard: " << response.getContentType() << '\n';
                 exitTest(TestResult::Failed);
                 return std::shared_ptr<ClipboardData>();
             }
@@ -94,7 +94,7 @@ public:
             std::cerr << "got response\n";
             return clipboard;
         } catch (Poco::Exception &e) {
-            std::cerr << "Poco exception: " << e.message() << "\n";
+            std::cerr << "Poco exception: " << e.message() << '\n';
             exitTest(TestResult::Failed);
             return std::shared_ptr<ClipboardData>();
         }
@@ -118,7 +118,7 @@ public:
         }
         else if (value != content)
         {
-            std::cerr << "Error: clipboard content mismatch " << value.length() << " vs. " << content.length() << "\n";
+            std::cerr << "Error: clipboard content mismatch " << value.length() << " vs. " << content.length() << '\n';
             sleep (1); // output settle.
             Util::dumpHex(std::cerr, "\tclipboard:\n", "", value);
             Util::dumpHex(std::cerr, "\tshould be:\n", "", content);
@@ -184,7 +184,7 @@ public:
         if (response.getStatus() != expected)
         {
             std::cerr << "Error: response for clipboard "<< response.getStatus() <<
-                " != expected " << expected << "\n";
+                " != expected " << expected << '\n';
             exitTest(TestResult::Failed);
             return false;
         }
@@ -205,7 +205,7 @@ public:
             clientSession = sessions[session];
 
             std::string tag = clientSession->getClipboardURI(false); // nominally thread unsafe
-            std::cerr << "Got tag '" << tag << "' for session " << session << "\n";
+            std::cerr << "Got tag '" << tag << "' for session " << session << '\n';
             return tag;
     }
 
@@ -213,8 +213,8 @@ public:
     {
         std::stringstream clipData;
         clipData << "text/plain;charset=utf-8\n"
-                 << std::hex << text.length() << "\n"
-                 << text << "\n";
+                 << std::hex << text.length() << '\n'
+                 << text << '\n';
         return clipData.str();
     }
 
@@ -261,7 +261,7 @@ public:
         helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
 
         std::string existing = "2\t\n3\t\n5\t";
-        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + text + "\n"))
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + text + '\n'))
             return;
 
         std::cerr << "re-check no clipboard content\n";
@@ -281,7 +281,7 @@ public:
         std::cerr << "Check the result.\n";
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
         helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
-        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + newcontent + "\n"))
+        if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + newcontent + '\n'))
             return;
 
         std::cerr << "Setup clipboards:\n";

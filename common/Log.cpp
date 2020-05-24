@@ -312,13 +312,13 @@ namespace Log
         oss.str("");
         oss.clear();
 
-        oss << "Initializing " << name << ".";
+        oss << "Initializing " << name << '.';
 
         // TODO: replace with std::put_time when we move to gcc 5+.
         char buf[32];
         if (strftime(buf, sizeof(buf), "%a %F %T%z", std::localtime(&t)) > 0)
         {
-            oss << " Local time: " << buf << ".";
+            oss << " Local time: " << buf << '.';
         }
 
         oss <<  " Log level is [" << logger.getLevel() << "].";

@@ -69,7 +69,7 @@ std::pair<std::time_t, std::string> Document::getSnapshot() const
 {
     std::time_t ct = std::time(nullptr);
     std::ostringstream oss;
-    oss << "{";
+    oss << '{';
     oss << "\"creationTime\"" << ":" << ct << ",";
     oss << "\"memoryDirty\"" << ":" << getMemoryDirty() << ",";
     oss << "\"activeViews\"" << ":" << getActiveViews() << ",";
@@ -78,12 +78,12 @@ std::pair<std::time_t, std::string> Document::getSnapshot() const
     std::string separator;
     for (const auto& view : getViews())
     {
-        oss << separator << "\"";
+        oss << separator << '"';
         if(view.second.isExpired())
         {
-            oss << "-";
+            oss << '-';
         }
-        oss << view.first << "\"";
+        oss << view.first << '"';
         separator = ",";
     }
     oss << "],";
@@ -726,12 +726,12 @@ std::string AdminModel::getDocuments() const
                         separator = ',';
                 }
             }
-            oss << "]"
-                << "}";
+            oss << ']'
+                << '}';
             separator1 = ',';
         }
     }
-    oss << "]" << "}";
+    oss << ']' << '}';
 
     return oss.str();
 }
@@ -861,10 +861,10 @@ public:
         std::string newUnit = std::string(unit && unit[0] ? "_" : "") + unit;
         std::string newPrefix = prefix + std::string(prefix && prefix[0] ? "_" : "");
 
-        oss << newPrefix << "total" << newUnit << " " << _total << std::endl;
-        oss << newPrefix << "average" << newUnit << " " << getIntAverage() << std::endl;
-        oss << newPrefix << "min" << newUnit << " " << getMin() << std::endl;
-        oss << newPrefix << "max" << newUnit << " " << _max << std::endl;
+        oss << newPrefix << "total" << newUnit << ' ' << _total << std::endl;
+        oss << newPrefix << "average" << newUnit << ' ' << getIntAverage() << std::endl;
+        oss << newPrefix << "min" << newUnit << ' ' << getMin() << std::endl;
+        oss << newPrefix << "max" << newUnit << ' ' << _max << std::endl;
     }
 
 private:

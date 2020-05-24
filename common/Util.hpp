@@ -203,7 +203,7 @@ namespace Util
         for (unsigned int i = 0; i < width; i++)
         {
             if (i && (i % 8) == 0)
-                os << " ";
+                os << ' ';
             if ((offset + i) < buffer.size())
                 sprintf (scratch, "%.2x ", (unsigned char)buffer[offset+i]);
             else
@@ -254,7 +254,7 @@ namespace Util
             }
             lastLine.swap(line);
 
-            os << "\n";
+            os << '\n';
         }
         os.flush();
     }

@@ -301,7 +301,7 @@ static void dumpDiff(const AddrSpace &space,
                 haveAnnots = true;
             }
             str.resize(24, ' ');
-            annots << str << " ";
+            annots << str << ' ';
         }
         if (haveAnnots)
             printf ("annot:  %s\n", annots.str().c_str());

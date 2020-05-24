@@ -466,7 +466,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             std::ostringstream oss;
             response.write(oss);
             const std::string header = oss.str();
-            LOG_TRC("#" << socket->getFD() << ": Sending " <<
+            LOG_TRC('#' << socket->getFD() << ": Sending " <<
                     (!gzip ? "un":"") << "compressed : file [" << relPath << "]: " << header);
             socket->send(header);
             socket->send(*content);
@@ -544,8 +544,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         else if (S_ISREG(fileStat.st_mode))
         {
             fileCount++;
-            filesRead.append(currentFile->d_name);
-            filesRead.append(" ");
+            filesRead.append(currentFile->d_name) + ' ';
 
             std::ifstream file(basePath + relPath, std::ios::binary);
 
@@ -772,7 +771,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         request.getCookies(cookies);
         std::ostringstream cookieTokens;
         for (auto it = cookies.begin(); it != cookies.end(); it++)
-            cookieTokens << (*it).first << "=" << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
+            cookieTokens << (*it).first << '=' << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
 
         const std::string cookiesString = cookieTokens.str();
         if (!cookiesString.empty())
@@ -798,7 +797,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string frameAncestors = configFrameAncestor;
     Poco::URI uriHost(cnxDetails.getWebSocketUrl());
     if (uriHost.getHost() != configFrameAncestor)
-        frameAncestors += " " + uriHost.getHost() + ":*";
+        frameAncestors += ' ' + uriHost.getHost() + ":*";
 
     for (const auto& param : params)
     {
@@ -811,7 +810,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
             wopiFrameAncestor = uriWopiFrameAncestor.getHost();
             if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
             {
-                frameAncestors += " " + wopiFrameAncestor + ":*";
+                frameAncestors += ' ' + wopiFrameAncestor + ":*";
                 LOG_TRC("Picking frame ancestor from WOPISrc: " << wopiFrameAncestor);
             }
             break;
@@ -855,7 +854,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if ((LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()) && config.getBool("ssl.hpkp[@enable]", false))
     {
         size_t i = 0;
-        std::string pinPath = "ssl.hpkp.pins.pin[" + std::to_string(i) + "]";
+        std::string pinPath = "ssl.hpkp.pins.pin[" + std::to_string(i) + ']';
         std::ostringstream hpkpOss;
         bool keysPinned = false;
         while (config.has(pinPath))
@@ -866,7 +865,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                 hpkpOss << "pin-sha256=\"" << pin << "\"; ";
                 keysPinned = true;
             }
-            pinPath = "ssl.hpkp.pins.pin[" + std::to_string(++i) + "]";
+            pinPath = "ssl.hpkp.pins.pin[" + std::to_string(++i) + ']';
         }
 
         if (keysPinned && config.getBool("ssl.hpkp.max_age[@enable]", false))

@@ -11,7 +11,7 @@
 
 #include <net/DelaySocket.hpp>
 
-#define DELAY_LOG(X) std::cerr << X << "\n";
+#define DELAY_LOG(X) std::cerr << X << '\n';
 
 class Delayer;
 
@@ -63,7 +63,7 @@ public:
     void dumpState(std::ostream& os) override
     {
         os << "\tfd: " << getFD()
-           << "\n\tqueue: " << _chunks.size() << "\n";
+           << "\n\tqueue: " << _chunks.size() << '\n';
         auto now = std::chrono::steady_clock::now();
         for (auto &chunk : _chunks)
         {
@@ -85,7 +85,7 @@ public:
             int64_t remainingMicroS = std::chrono::duration_cast<std::chrono::microseconds>(
                 (*_chunks.begin())->getSendTime() - now).count();
             if (remainingMicroS < timeoutMaxMicroS)
-                DELAY_LOG("#" << getFD() << " reset timeout max to " << remainingMicroS
+                DELAY_LOG('#' << getFD() << " reset timeout max to " << remainingMicroS
                           << "us from " << timeoutMaxMicroS << "us\n");
             timeoutMaxMicroS = std::min(timeoutMaxMicroS, remainingMicroS);
         }
@@ -122,7 +122,7 @@ public:
             shutdown();
             break;
         }
-        DELAY_LOG("#" << getFD() << " changed to state " << newState << "\n");
+        DELAY_LOG('#' << getFD() << " changed to state " << newState << '\n');
         _state = newState;
     }
 
@@ -144,8 +144,8 @@ public:
                 changeState(EofFlushWrites);
             else if (len >= 0)
             {
-                DELAY_LOG("#" << getFD() << " read " << len
-                          << " to queue: " << _chunks.size() << "\n");
+                DELAY_LOG('#' << getFD() << " read " << len
+                          << " to queue: " << _chunks.size() << '\n');
                 chunk->getData().insert(chunk->getData().end(), &buf[0], &buf[len]);
                 if (_dest)
                     _dest->_chunks.push_back(chunk);
@@ -154,7 +154,7 @@ public:
             }
             else if (errno != EAGAIN && errno != EWOULDBLOCK)
             {
-                DELAY_LOG("#" << getFD() << " error : " << Util::symbolicErrno(errno) << ": " << strerror(errno) << "\n");
+                DELAY_LOG('#' << getFD() << " error : " << Util::symbolicErrno(errno) << ": " << strerror(errno) << '\n');
                 changeState(Closed); // FIXME - propagate the error ?
             }
         }
@@ -172,7 +172,7 @@ public:
             {
                 if (chunk->getData().size() == 0)
                 { // delayed error or close
-                    DELAY_LOG("#" << getFD() << " handling delayed close\n");
+                    DELAY_LOG('#' << getFD() << " handling delayed close\n");
                     changeState(Closed);
                 }
                 else
@@ -186,23 +186,23 @@ public:
                     {
                         if (errno == EAGAIN || errno == EWOULDBLOCK)
                         {
-                            DELAY_LOG("#" << getFD() << " full - waiting for write\n");
+                            DELAY_LOG('#' << getFD() << " full - waiting for write\n");
                         }
                         else
                         {
-                            DELAY_LOG("#" << getFD() << " failed onwards write "
+                            DELAY_LOG('#' << getFD() << " failed onwards write "
                                       << len << "bytes of "
                                       << chunk->getData().size()
                                       << " queue: " << _chunks.size() << " error: "
-                                      << Util::symbolicErrno(errno) << ": " << strerror(errno) << "\n");
+                                      << Util::symbolicErrno(errno) << ": " << strerror(errno) << '\n');
                             changeState(Closed);
                         }
                     }
                     else
                     {
-                        DELAY_LOG("#" << getFD() << " written onwards " << len << "bytes of "
+                        DELAY_LOG('#' << getFD() << " written onwards " << len << "bytes of "
                                   << chunk->getData().size()
-                                  << " queue: " << _chunks.size() << "\n");
+                                  << " queue: " << _chunks.size() << '\n');
                         if (len > 0)
                             chunk->getData().erase(chunk->getData().begin(), chunk->getData().begin() + len);
 
@@ -215,7 +215,7 @@ public:
 
         if (events & (POLLERR | POLLHUP | POLLNVAL))
         {
-            DELAY_LOG("#" << getFD() << " error events: " << events << "\n");
+            DELAY_LOG('#' << getFD() << " error events: " << events << '\n');
             changeState(Closed);
         }
 

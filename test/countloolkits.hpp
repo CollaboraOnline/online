@@ -71,7 +71,7 @@ static int countLoolKitProcesses(const int expected)
     std::ostringstream oss;
     oss << "Test kit pids are ";
     for (auto i : pids)
-        oss << i << " ";
+        oss << i << ' ';
     TST_LOG(oss.str());
 
     return count;

@@ -51,7 +51,7 @@ public:
     {
         fakeSocketSetLoggingCallback([](const std::string& line)
                                      {
-                                         std::cerr << line << "\n";
+                                         std::cerr << line << '\n';
                                      });
     }
 

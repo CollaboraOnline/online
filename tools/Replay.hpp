@@ -192,7 +192,7 @@ protected:
                     }
                     else
                     {
-                        std::cout << "New Document: " << uri << "\n";
+                        std::cout << "New Document: " << uri << '\n';
                         _childToDoc.emplace(rec.getPid(), uri);
                         std::shared_ptr<Connection> connection = Connection::create(_serverUri, uri, rec.getSessionId());
                         if (connection)
@@ -209,7 +209,7 @@ protected:
                     auto it = _sessions.find(uri);
                     if (it != _sessions.end())
                     {
-                        std::cout << "EndSession [" << rec.getSessionId() << "]: " << uri << "\n";
+                        std::cout << "EndSession [" << rec.getSessionId() << "]: " << uri << '\n';
 
                         it->second.erase(rec.getSessionId());
                         if (it->second.empty())

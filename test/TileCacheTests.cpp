@@ -326,7 +326,7 @@ void TileCacheTests::testCancelTiles()
                 LOK_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
             }
 
-            TST_LOG("Unexpected: [" << res << "]");
+            TST_LOG("Unexpected: [" << res << ']');
         }
     }
 }
@@ -363,7 +363,7 @@ void TileCacheTests::testCancelTilesMultiView()
                 LOK_ASSERT_MESSAGE("Did not expect getting message [" + res1 + "].", res1.empty());
             }
 
-            TST_LOG("Unexpected: [" << res1 << "]");
+            TST_LOG("Unexpected: [" << res1 << ']');
             continue;
         }
 
@@ -384,7 +384,7 @@ void TileCacheTests::testCancelTilesMultiView()
                 LOK_ASSERT_MESSAGE("Did not expect getting message [" + res2 + "].", res1.empty());
             }
 
-            TST_LOG("Unexpected: [" << res2 << "]");
+            TST_LOG("Unexpected: [" << res2 << ']');
             continue;
         }
 
@@ -1349,11 +1349,11 @@ void TileCacheTests::testTileProcessed()
 
             // Store tileID, so we can send it back
             StringVector tokens(LOOLProtocol::tokenize(tile, ' '));
-            std::string tileID = tokens[2].substr(std::string("part=").size()) + ":" +
-                                 tokens[5].substr(std::string("tileposx=").size()) + ":" +
-                                 tokens[6].substr(std::string("tileposy=").size()) + ":" +
-                                 tokens[7].substr(std::string("tileWidth=").size()) + ":" +
-                                 tokens[8].substr(std::string("tileHeight=").size()) + ":" +
+            std::string tileID = tokens[2].substr(std::string("part=").size()) + ':' +
+                                 tokens[5].substr(std::string("tileposx=").size()) + ':' +
+                                 tokens[6].substr(std::string("tileposy=").size()) + ':' +
+                                 tokens[7].substr(std::string("tileWidth=").size()) + ':' +
+                                 tokens[8].substr(std::string("tileHeight=").size()) + ':' +
                                  tokens[1].substr(std::string("nviewid=").size());
             tileIDs.push_back(tileID);
         }

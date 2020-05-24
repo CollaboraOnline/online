@@ -119,7 +119,7 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
 
             // We found something with some differences--warn and return.
             LOG_WRN("Incorrect JSON property [" << userInput << "]. Did you mean [" << key <<
-                    "] ? (Levenshtein distance: " << levDist << ")");
+                    "] ? (Levenshtein distance: " << levDist << ')');
 
             // Fail without exact match.
             return false;
@@ -129,7 +129,7 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
         if (bRemove)
             object->remove(userInput);
 
-        LOG_TRC("Found JSON property [" << userInput << "] => [" << value << "]");
+        LOG_TRC("Found JSON property [" << userInput << "] => [" << value << ']');
         return true;
     }
 
