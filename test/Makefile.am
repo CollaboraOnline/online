@@ -64,6 +64,7 @@ wsd_sources = \
             ../common/Authorization.cpp \
             ../kit/Kit.cpp \
             ../kit/TestStubs.cpp \
+            ../wsd/RequestDetails.cpp \
             ../wsd/TileCache.cpp \
             ../wsd/ProofKey.cpp
 
