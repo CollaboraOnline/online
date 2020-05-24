@@ -1145,10 +1145,11 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			this._cellCursorTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
+			this._cellCursorTwips = this._convertToTileTwipsSheetArea(
+							new L.Bounds(topLeftTwips, bottomRightTwips));
 			this._cellCursor = new L.LatLngBounds(
-							this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-							this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+					this._twipsToLatLng(this._cellCursorTwips.getTopLeft(), this._map.getZoom()),
+					this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
 			this._cellCursorXY = new L.Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
 		}
 
@@ -3378,6 +3379,15 @@ L.TileLayer = L.GridLayer.extend({
 		} else {
 			this._map.removeLayer(this._formFieldButton);
 		}
+	},
+
+	// convert the area in print-twips to tile-twips by computing the involved cell-range.
+	_convertToTileTwipsSheetArea: function (rectangle) {
+		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled) {
+			return rectangle;
+		}
+
+		return this.sheetGeometry.getTileTwipsSheetAreaFromPrint(rectangle);
 	},
 
 	_debugGetTimeArray: function() {
