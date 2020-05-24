@@ -309,13 +309,34 @@ L.Control.PartsPreview = L.Control.extend({
 
 			if (e.ctrlKey) {
 				this._map.selectPart(partId, 2, false); // Toggle selection on ctrl+click.
+				if (this.firstSelection === undefined)
+					this.firstSelection = this._map._docLayer._selectedPart;
 			} else if (e.altKey) {
 				console.log('alt');
 			} else if (e.shiftKey) {
-				console.log('shift');
+				if (this.firstSelection === undefined)
+					this.firstSelection = this._map._docLayer._selectedPart;
+
+				//deselect all slide
+				this._map.deselectAll();
+
+				//reselect the first origianl selection
+				this._map.setPart(this.firstSelection);
+				this._map.selectPart(this.firstSelection, 1, false);
+
+				if (this.firstSelection < partId) {
+					for (var id = this.firstSelection + 1; id <= partId; ++id) {
+						this._map.selectPart(id, 2, false);
+					}
+				} else if (this.firstSelection > partId) {
+					for (id = this.firstSelection - 1; id >= partId; --id) {
+						this._map.selectPart(id, 2, false);
+					}
+				}
 			} else {
 				this._map.setPart(partId);
 				this._map.selectPart(partId, 1, false); // And select.
+				this.firstSelection = partId;
 			}
 		}
 	},
