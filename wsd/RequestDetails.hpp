@@ -11,11 +11,15 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
+#include <common/StringVector.hpp>
+#include <common/Util.hpp>
+
 /**
  * A class to encapsulate various useful pieces from the request.
  * as well as path parsing goodness.
  */
-class RequestDetails {
+class RequestDetails
+{
     bool _isGet : 1;
     bool _isHead : 1;
     bool _isProxy : 1;
@@ -27,7 +31,7 @@ class RequestDetails {
     std::string _documentURI;
     StringVector _pathSegs;
 public:
-    RequestDetails(Poco::Net::HTTPRequest &request);
+    RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot);
     RequestDetails(const std::string &mobileURI);
     // matches the WOPISrc if used. For load balancing
     // must be 2nd element in the path after /lool/<here>
@@ -86,6 +90,7 @@ public:
         oss << _uriString << ' ' << (_isGet?"G":"")
             << (_isHead?"H":"") << (_isProxy?"Proxy":"")
             << (_isWebSocket?"WebSocket":"");
+        oss << " host: " << _hostUntrusted;
         oss << " path: " << _pathSegs.size();
         for (size_t i = 0; i < _pathSegs.size(); ++i)
             oss << " '" << _pathSegs[i] << "'";

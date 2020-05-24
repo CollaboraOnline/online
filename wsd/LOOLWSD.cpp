@@ -2276,7 +2276,7 @@ private:
             message.seekg(startmessage.tellg(), std::ios::beg);
 
             // re-write ServiceRoot and cache.
-            RequestDetails requestDetails(request);
+            RequestDetails requestDetails(request, LOOLWSD::ServiceRoot);
 //            LOG_TRC("Request details " << requestDetails.toString());
 
             // Config & security ...

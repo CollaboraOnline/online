@@ -22,7 +22,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     std::shared_ptr<ProtocolHandlerInterface> ws;
     std::string id;
     bool isReadOnly = false;
-    const RequestDetails requestDetails("fuzzer");
+    const RequestDetails requestDetails("fuzzer", LOOLWSD::ServiceRoot);
     auto session
         = std::make_shared<ClientSession>(ws, id, docBroker, uriPublic, isReadOnly, requestDetails);
 

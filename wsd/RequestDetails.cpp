@@ -8,20 +8,21 @@
  */
 
 #include <config.h>
-#include <Poco/URI.h>
-#include "LOOLWSD.hpp"
-#include "Exceptions.hpp"
+
 #include "RequestDetails.hpp"
 
-RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request)
+#include <Poco/URI.h>
+#include "Exceptions.hpp"
+
+RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot)
     : _isMobile(false)
 {
     // Check and remove the ServiceRoot from the request.getURI()
-    if (!Util::startsWith(request.getURI(), LOOLWSD::ServiceRoot))
-        throw BadRequestException("The request does not start with prefix: " + LOOLWSD::ServiceRoot);
+    if (!Util::startsWith(request.getURI(), serviceRoot))
+        throw BadRequestException("The request does not start with prefix: " + serviceRoot);
 
     // re-writes ServiceRoot out of request
-    _uriString = request.getURI().substr(LOOLWSD::ServiceRoot.length());
+    _uriString = request.getURI().substr(serviceRoot.length());
     request.setURI(_uriString);
     const std::string &method = request.getMethod();
     _isGet = method == "GET";
