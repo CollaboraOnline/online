@@ -409,7 +409,12 @@ L.Control.Ruler = L.Control.extend({
 		var firstTileXTranslate = parseInt(firstTile.style.left) - this._map._docLayer._tileWidthPx * columnNumber;
 
 		var tileContainer = mapPane.getElementsByClassName('leaflet-tile-container');
-		tileContainer = tileContainer[tileContainer.length - 1];
+		for (var i = 0; i < tileContainer.length; ++i) {
+			if (parseInt(tileContainer[i].style.zIndex) === this._map.getMaxZoom()) {
+				tileContainer = tileContainer[i];
+				break;
+			}
+		}
 		var tileContainerXTranslate = parseInt(tileContainer.style.transform.match(/\(([-0-9]*)/)[1]);
 		var mapPaneXTranslate = parseInt(mapPane.style.transform.match(/\(([-0-9]*)/)[1]);
 
