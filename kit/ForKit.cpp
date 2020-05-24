@@ -136,7 +136,7 @@ protected:
         }
         else
         {
-            LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
+            LOG_ERR("Bad or unknown token [" << tokens[0] << ']');
         }
     }
 
@@ -167,12 +167,12 @@ static bool haveCapability(cap_value_t capability)
     {
         if (cap_name)
         {
-            LOG_SFL("cap_get_flag failed for " << cap_name << ".");
+            LOG_SFL("cap_get_flag failed for " << cap_name << '.');
             cap_free(cap_name);
         }
         else
         {
-            LOG_SFL("cap_get_flag failed for capability " << capability << ".");
+            LOG_SFL("cap_get_flag failed for capability " << capability << '.');
         }
         return false;
     }
@@ -263,7 +263,7 @@ static void cleanupChildren()
         if (WSHandler)
         {
             std::stringstream stream;
-            stream << "segfaultcount " << segFaultCount << "\n";
+            stream << "segfaultcount " << segFaultCount << '\n';
             int ret = WSHandler->sendMessage(stream.str());
             if (ret == -1)
             {
@@ -297,7 +297,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     // Used to label the spare kit instances
     static size_t spareKitId = 0;
     ++spareKitId;
-    LOG_DBG("Forking a loolkit process with jailId: " << jailId << " as spare loolkit #" << spareKitId << ".");
+    LOG_DBG("Forking a loolkit process with jailId: " << jailId << " as spare loolkit #" << spareKitId << '.');
 
     const pid_t pid = fork();
     if (!pid)

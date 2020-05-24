@@ -26,7 +26,7 @@ namespace
 {
 void testStateChanged(const std::string& filename, std::set<std::string>& commands)
 {
-    const auto testname = "stateChanged_" + filename + " ";
+    const auto testname = "stateChanged_" + filename + ' ';
 
     Poco::RegularExpression reUno("\\.[a-zA-Z]*\\:[a-zA-Z]*\\=");
 

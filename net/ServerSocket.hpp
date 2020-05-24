@@ -82,7 +82,7 @@ public:
             if (!clientSocket)
             {
                 const std::string msg = "Failed to accept. (errno: ";
-                throw std::runtime_error(msg + std::strerror(errno) + ")");
+                throw std::runtime_error(msg + std::strerror(errno) + ')');
             }
 
             LOG_DBG("Accepted client #" << clientSocket->getFD());

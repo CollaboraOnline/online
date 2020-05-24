@@ -83,7 +83,7 @@ public:
     std::string toString() const
     {
         std::ostringstream oss;
-        oss << _uriString << " " << (_isGet?"G":"")
+        oss << _uriString << ' ' << (_isGet?"G":"")
             << (_isHead?"H":"") << (_isProxy?"Proxy":"")
             << (_isWebSocket?"WebSocket":"");
         oss << " path: " << _pathSegs.size();

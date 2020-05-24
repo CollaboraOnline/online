@@ -63,7 +63,7 @@ public:
 
     virtual ~WSProcess()
     {
-        LOG_DBG("~" << _name << " dtor [" << _pid << "].");
+        LOG_DBG('~' << _name << " dtor [" << _pid << "].");
 
         if (_pid <= 0)
             return;
@@ -147,7 +147,7 @@ public:
             throw;
         }
 
-        LOG_WRN("No socket to " << _name << " to send [" << LOOLProtocol::getAbbreviatedMessage(data) << "]");
+        LOG_WRN("No socket to " << _name << " to send [" << LOOLProtocol::getAbbreviatedMessage(data) << ']');
         return false;
     }
 

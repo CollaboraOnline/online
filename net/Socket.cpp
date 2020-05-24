@@ -504,7 +504,7 @@ void SocketPoll::insertNewFakeSocket(
 
 void ServerSocket::dumpState(std::ostream& os)
 {
-    os << "\t" << getFD() << "\t<accept>\n";
+    os << '\t' << getFD() << "\t<accept>\n";
 }
 
 void SocketDisposition::execute()
@@ -529,7 +529,7 @@ void WebSocketHandler::dumpState(std::ostream& os)
        << std::setw(5) << _pingTimeUs/1000. << "ms ";
     if (_wsPayload.size() > 0)
         Util::dumpHex(os, "\t\tws queued payload:\n", "\t\t", _wsPayload);
-    os << "\n";
+    os << '\n';
     if (_msgHandler)
         _msgHandler->dumpState(os);
 }
@@ -538,10 +538,10 @@ void StreamSocket::dumpState(std::ostream& os)
 {
     int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS;
     int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
-    os << "\t" << getFD() << "\t" << events << "\t"
-       << _inBuffer.size() << "\t" << _outBuffer.size() << "\t"
-       << " r: " << _bytesRecvd << "\t w: " << _bytesSent << "\t"
-       << clientAddress() << "\t";
+    os << '\t' << getFD() << '\t' << events << '\t'
+       << _inBuffer.size() << '\t' << _outBuffer.size() << '\t'
+       << " r: " << _bytesRecvd << "\t w: " << _bytesSent << '\t'
+       << clientAddress() << '\t';
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         Util::dumpHex(os, "\t\tinBuffer:\n", "\t\t", _inBuffer);
@@ -564,9 +564,9 @@ void SocketPoll::dumpState(std::ostream& os)
 {
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
     os << " Poll [" << _pollSockets.size() << "] - wakeup r: "
-       << _wakeup[0] << " w: " << _wakeup[1] << "\n";
+       << _wakeup[0] << " w: " << _wakeup[1] << '\n';
     if (_newCallbacks.size() > 0)
-        os << "\tcallbacks: " << _newCallbacks.size() << "\n";
+        os << "\tcallbacks: " << _newCallbacks.size() << '\n';
     os << "\tfd\tevents\trsize\twsize\n";
     for (auto &i : _pollSockets)
         i->dumpState(os);
@@ -688,7 +688,7 @@ int Socket::getPid() const
     socklen_t credSize = sizeof(struct ucred);
     if (getsockopt(_fd, SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
     {
-        LOG_TRC("Failed to get pid via peer creds on " << _fd << " " << strerror(errno));
+        LOG_TRC("Failed to get pid via peer creds on " << _fd << ' ' << strerror(errno));
         return -1;
     }
     return creds.pid;
@@ -721,7 +721,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         socklen_t credSize = sizeof(struct ucred);
         if (getsockopt(getFD(), SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
         {
-            LOG_ERR("Failed to get peer creds on " << getFD() << " " << strerror(errno));
+            LOG_ERR("Failed to get peer creds on " << getFD() << ' ' << strerror(errno));
             ::close(rc);
             return std::shared_ptr<Socket>(nullptr);
         }
@@ -740,7 +740,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         _socket->setClientAddress(addr);
 
         LOG_DBG("Accepted socket is UDS - address " << addr <<
-                " and uid/gid " << creds.uid << "/" << creds.gid);
+                " and uid/gid " << creds.uid << '/' << creds.gid);
         return _socket;
     }
     catch (const std::exception& ex)
@@ -788,7 +788,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                                Poco::Net::HTTPRequest &request,
                                MessageMap *map)
 {
-    LOG_TRC("#" << getFD() << " handling incoming " << _inBuffer.size() << " bytes.");
+    LOG_TRC('#' << getFD() << " handling incoming " << _inBuffer.size() << " bytes.");
 
     assert(!map || (map->_headerSize == 0 && map->_messageSize == 0));
 
@@ -798,7 +798,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                               marker.begin(), marker.end());
     if (itBody == _inBuffer.end())
     {
-        LOG_TRC("#" << getFD() << " doesn't have enough data yet.");
+        LOG_TRC('#' << getFD() << " doesn't have enough data yet.");
         return false;
     }
 
@@ -817,7 +817,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         Log::StreamLogger logger = Log::info();
         if (logger.enabled())
         {
-            logger << "#" << getFD() << ": " << clientName << " HTTP Request: "
+            logger << '#' << getFD() << ": " << clientName << " HTTP Request: "
                    << request.getMethod() << ' '
                    << request.getURI() << ' '
                    << request.getVersion();
@@ -846,7 +846,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         bool getExpectContinue =  !expect.empty() && Poco::icompare(expect, "100-continue") == 0;
         if (getExpectContinue && !_sentHTTPContinue)
         {
-            LOG_TRC("#" << getFD() << " got Expect: 100-continue, sending Continue");
+            LOG_TRC('#' << getFD() << " got Expect: 100-continue, sending Continue");
             // FIXME: should validate authentication headers early too.
             send("HTTP/1.1 100 Continue\r\n\r\n",
                  sizeof("HTTP/1.1 100 Continue\r\n\r\n") - 1);
@@ -1033,7 +1033,7 @@ namespace HttpHelper
         struct stat st;
         if (stat(path.c_str(), &st) != 0)
         {
-            LOG_WRN("#" << socket->getFD() << ": Failed to stat [" << path << "]. File will not be sent.");
+            LOG_WRN('#' << socket->getFD() << ": Failed to stat [" << path << "]. File will not be sent.");
             throw Poco::FileNotFoundException("Failed to stat [" + path + "]. File will not be sent.");
         }
 
@@ -1064,7 +1064,7 @@ namespace HttpHelper
         if (!deflate || true)
         {
             response.setContentLength(st.st_size);
-            LOG_TRC("#" << socket->getFD() << ": Sending " <<
+            LOG_TRC('#' << socket->getFD() << ": Sending " <<
                     (headerOnly ? "header for " : "") << " file [" << path << "].");
             socket->send(response);
 
@@ -1074,7 +1074,7 @@ namespace HttpHelper
         else
         {
             response.set("Content-Encoding", "deflate");
-            LOG_TRC("#" << socket->getFD() << ": Sending " <<
+            LOG_TRC('#' << socket->getFD() << ": Sending " <<
                     (headerOnly ? "header for " : "") << " file [" << path << "].");
             socket->send(response);
 

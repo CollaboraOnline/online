@@ -94,7 +94,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     if (!_isAuthenticated)
     {
         LOG_DBG("Not authenticated - message is '" << firstLine << "' " <<
-                tokens.size() << " first: '" << tokens[0] << "'");
+                tokens.size() << " first: '" << tokens[0] << '\'');
         sendMessage("NotAuthenticated");
         shutdown();
         return;
@@ -321,11 +321,11 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
 
     if (_isAuthenticated)
     {
-        LOG_TRC("send admin text frame '" << message << "'");
+        LOG_TRC("send admin text frame '" << message << '\'');
         sendMessage(message);
     }
     else
-        LOG_TRC("Skip sending message to non-authenticated client: '" << message << "'");
+        LOG_TRC("Skip sending message to non-authenticated client: '" << message << '\'');
 }
 
 void AdminSocketHandler::subscribeAsync(const std::shared_ptr<AdminSocketHandler>& handler)
@@ -596,7 +596,7 @@ std::string Admin::getChannelLogLevels()
 
     for (size_t i = 0; i < nameList.size(); i++)
     {
-        result += (nameList[i] != "" ? nameList[i]: "?") + "=" + levelList[Log::logger().get(nameList[i]).getLevel()] + (i != nameList.size() - 1 ? " ": "");
+        result += (nameList[i] != "" ? nameList[i]: "?") + '=' + levelList[Log::logger().get(nameList[i]).getLevel()] + (i != nameList.size() - 1 ? " ": "");
     }
 
     return result;
@@ -861,7 +861,7 @@ void Admin::start()
 
     for (size_t i = 0; ; ++i)
     {
-        const std::string path = "monitors.monitor[" + std::to_string(i) + "]";
+        const std::string path = "monitors.monitor[" + std::to_string(i) + ']';
         const std::string uri = config.getString(path, "");
         if (!config.has(path))
             break;

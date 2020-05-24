@@ -224,7 +224,7 @@ namespace
     {
         ++linkOrCopyFileCount;
         if (linkOrCopyVerboseLogging)
-            LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << "\"");
+            LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath.toString() << '"');
 
         if (link(fpath, newPath.toString().c_str()) == -1)
         {
@@ -328,10 +328,10 @@ namespace
             }
             break;
             case FTW_DNR:
-                LOG_ERR("nftw: Cannot read directory '" << fpath << "'");
+                LOG_ERR("nftw: Cannot read directory '" << fpath << '\'');
                 return FTW_STOP;
             case FTW_NS:
-                LOG_ERR("nftw: stat failed for '" << fpath << "'");
+                LOG_ERR("nftw: stat failed for '" << fpath << '\'');
                 return FTW_STOP;
             default:
                 LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
@@ -368,7 +368,7 @@ namespace
 
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
         {
-            LOG_SYS("linkOrCopy: nftw() failed for '" << source << "'");
+            LOG_SYS("linkOrCopy: nftw() failed for '" << source << '\'');
         }
 
         if (linkOrCopyVerboseLogging)
@@ -920,7 +920,7 @@ public:
     {
         LOG_INF("setDocumentPassword: passwordProtected=" << _isDocPasswordProtected <<
                 " passwordProvided=" << _haveDocPassword <<
-                " password='" << _docPassword << "'");
+                " password='" << _docPassword << '\'');
 
         if (_isDocPasswordProtected && _haveDocPassword)
         {
@@ -1010,7 +1010,7 @@ public:
         const size_t pixmapHeight = tilesByY * tileCombined.getHeight();
 
         if (pixmapWidth > 4096 || pixmapHeight > 4096)
-            LOG_WRN("Unusual extremely large tile combine of size " << pixmapWidth << "x" << pixmapHeight);
+            LOG_WRN("Unusual extremely large tile combine of size " << pixmapWidth << 'x' << pixmapHeight);
 
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         RenderBuffer pixmap(pixmapWidth, pixmapHeight);
@@ -1044,7 +1044,7 @@ public:
         // Render the whole area
         const double area = pixmapWidth * pixmapHeight;
         auto start = std::chrono::system_clock::now();
-        LOG_TRC("Calling paintPartTile(" << (void*)pixmap.data() << ")");
+        LOG_TRC("Calling paintPartTile(" << (void*)pixmap.data() << ')');
         _loKitDocument->paintPartTile(pixmap.data(),
                                       tileCombined.getPart(),
                                       pixmapWidth, pixmapHeight,
@@ -1092,7 +1092,7 @@ public:
             if (hash != 0 && oldWireId == wireId)
             {
                 // The tile content is identical to what the client already has, so skip it
-                LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << "," <<
+                LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << ',' <<
                         positionY << ") oldhash==hash (" << hash << "), wireId: " << wireId << " skipping");
                 tileIndex++;
                 continue;
@@ -1117,7 +1117,7 @@ public:
                         pushRendered(duplicateTiles, tiles[tileIndex], wireId, 0);
                         duplicateHashes.push_back(hash);
                         skipCompress = true;
-                        LOG_TRC("Rendering duplicate tile #" << tileIndex << " at (" << positionX << "," <<
+                        LOG_TRC("Rendering duplicate tile #" << tileIndex << " at (" << positionX << ',' <<
                                 positionY << ") oldhash==hash (" << hash << "), wireId: " << wireId << " skipping");
                         break;
                     }
@@ -1160,7 +1160,7 @@ public:
                     });
             }
 
-            LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << "," << positionY << ") with oldWireId=" <<
+            LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << ',' << positionY << ") with oldWireId=" <<
                     tiles[tileIndex].getOldWireId() << ", hash=" << hash << " wireId: " << wireId << " in " << imgSize << " bytes.");
             tileIndex++;
         }
@@ -1236,7 +1236,7 @@ public:
         catch (const Exception& exc)
         {
             LOG_ERR("Document::sendFrame: Exception: " << exc.displayText() <<
-                    (exc.nested() ? "( " + exc.nested()->displayText() + ")" : ""));
+                    (exc.nested() ? "( " + exc.nested()->displayText() + ')' : ""));
         }
 
         return false;
@@ -1544,7 +1544,7 @@ private:
         oss << "viewinfo: [";
         for (const auto& viewId : viewIds)
         {
-            oss << "{\"id\":" << viewId << ",";
+            oss << "{\"id\":" << viewId << ',';
             int color = 0;
             const auto itView = viewInfoMap.find(viewId);
             if (itView == viewInfoMap.end())
@@ -1572,7 +1572,7 @@ private:
         }
 
         oss.seekp(-1, std::ios_base::cur); // Remove last comma.
-        oss << "]";
+        oss << ']';
 
         // Broadcast updated viewinfo to all clients.
         notifyAll(oss.str());
@@ -1655,7 +1655,7 @@ private:
         catch(const Exception& exc)
         {
             LOG_ERR("Poco Exception: " << exc.displayText() <<
-                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+                    (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
         }
 
         return viewColors;
@@ -2350,7 +2350,7 @@ protected:
         }
         else
         {
-            LOG_ERR("Bad or unknown token [" << tokens[0] << "]");
+            LOG_ERR("Bad or unknown token [" << tokens[0] << ']');
         }
     }
 
@@ -2504,7 +2504,7 @@ void lokit_main(
     try
     {
 #if !MOBILEAPP
-        jailPath = Path::forDirectory(childRoot + "/" + jailId);
+        jailPath = Path::forDirectory(childRoot + '/' + jailId);
         LOG_INF("Jail path: " << jailPath.toString());
         File(jailPath).createDirectories();
         chmod(jailPath.toString().c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
@@ -2512,7 +2512,7 @@ void lokit_main(
         if (!ChildSession::NoCapsForKit)
         {
             userdir_url = "file:///user";
-            instdir_path = "/" + loSubPath + "/program";
+            instdir_path = '/' + loSubPath + "/program";
 
             // Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
             // interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
@@ -2610,7 +2610,7 @@ void lokit_main(
         {
             LOG_ERR("Security warning - using template " << loTemplate << " as install subpath - skipping chroot jail setup");
             userdir_url = "file:///" + jailPath.toString() + "/user";
-            instdir_path = "/" + loTemplate + "/program";
+            instdir_path = '/' + loTemplate + "/program";
         }
 
         // hard-random tmpdir inside the jail / root
@@ -2776,7 +2776,7 @@ void lokit_main(
     catch (const Exception& exc)
     {
         LOG_ERR("Poco Exception: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+                (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
     }
     catch (const std::exception& exc)
     {

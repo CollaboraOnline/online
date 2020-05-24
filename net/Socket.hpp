@@ -116,7 +116,7 @@ public:
 
     virtual ~Socket()
     {
-        LOG_TRC("#" << getFD() << " Socket dtor.");
+        LOG_TRC('#' << getFD() << " Socket dtor.");
 
         // Doesn't block on sockets; no error handling needed.
 #if !MOBILEAPP
@@ -146,7 +146,7 @@ public:
     /// TODO: Support separate read/write shutdown.
     virtual void shutdown()
     {
-        LOG_TRC("#" << _fd << ": socket shutdown RDWR.");
+        LOG_TRC('#' << _fd << ": socket shutdown RDWR.");
 #if !MOBILEAPP
         ::shutdown(_fd, SHUT_RDWR);
 #else
@@ -193,7 +193,7 @@ public:
         _sendBufferSize = getSocketBufferSize();
         if (rc != 0 || _sendBufferSize < 0 )
         {
-            LOG_ERR("#" << _fd << ": Error getting socket buffer size " << errno);
+            LOG_ERR('#' << _fd << ": Error getting socket buffer size " << errno);
             _sendBufferSize = DefaultSendBufferSize;
             return false;
         }
@@ -201,12 +201,12 @@ public:
         {
             if (_sendBufferSize > MaximumSendBufferSize * 2)
             {
-                LOG_TRC("#" << _fd << ": Clamped send buffer size to " <<
+                LOG_TRC('#' << _fd << ": Clamped send buffer size to " <<
                         MaximumSendBufferSize << " from " << _sendBufferSize);
                 _sendBufferSize = MaximumSendBufferSize;
             }
             else
-                LOG_TRC("#" << _fd << ": Set socket buffer size to " << _sendBufferSize);
+                LOG_TRC('#' << _fd << ": Set socket buffer size to " << _sendBufferSize);
             return true;
         }
     }
@@ -284,7 +284,7 @@ public:
     {
         if (id != _owner)
         {
-            LOG_DBG("#" << _fd << " Thread affinity set to " << Log::to_string(id) <<
+            LOG_DBG('#' << _fd << " Thread affinity set to " << Log::to_string(id) <<
                     " (was " << Log::to_string(_owner) << ").");
             _owner = id;
         }
@@ -303,7 +303,7 @@ public:
         // uninitialized owner means detached and can be invoked by any thread.
         const bool sameThread = (_owner == std::thread::id() || std::this_thread::get_id() == _owner);
         if (!sameThread)
-            LOG_ERR("#" << _fd << " Invoked from foreign thread. Expected: " <<
+            LOG_ERR('#' << _fd << " Invoked from foreign thread. Expected: " <<
                     Log::to_string(_owner) << " but called from " <<
                     std::this_thread::get_id() << " (" << Util::getThreadId() << ").");
 
@@ -325,7 +325,7 @@ protected:
         setNoDelay();
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
-        LOG_DBG("#" << _fd << " Thread affinity set to " << Log::to_string(_owner) << ".");
+        LOG_DBG('#' << _fd << " Thread affinity set to " << Log::to_string(_owner) << '.');
 
 #if !MOBILEAPP
 #if ENABLE_DEBUG
@@ -333,8 +333,8 @@ protected:
         {
             const int oldSize = getSocketBufferSize();
             setSocketBufferSize(0);
-            LOG_TRC("#" << _fd << ": Buffer size: " << getSendBufferSize() <<
-                    " (was " << oldSize << ")");
+            LOG_TRC('#' << _fd << ": Buffer size: " << getSendBufferSize() <<
+                    " (was " << oldSize << ')');
         }
 #endif
 #endif
@@ -493,7 +493,7 @@ public:
     /// Stop the polling thread.
     void stop()
     {
-        LOG_DBG("Stopping " << _name << ".");
+        LOG_DBG("Stopping " << _name << '.');
         _stop = true;
 #if MOBILEAPP
         {
@@ -512,7 +512,7 @@ public:
 
     void removeSockets()
     {
-        LOG_DBG("Removing all sockets from " << _name << ".");
+        LOG_DBG("Removing all sockets from " << _name << '.');
         assertCorrectThread();
 
         while (!_pollSockets.empty())
@@ -817,7 +817,7 @@ public:
     virtual void shutdown() override
     {
         _shutdownSignalled = true;
-        LOG_TRC("#" << getFD() << ": Async shutdown requested.");
+        LOG_TRC('#' << getFD() << ": Async shutdown requested.");
     }
 
     /// Perform the real shutdown.
@@ -994,7 +994,7 @@ public:
         size_t count = map._headerSize;
         size_t toErase = std::min(count, _inBuffer.size());
         if (toErase < count)
-            LOG_ERR("#" << getFD() << ": attempted to remove: " << count << " which is > size: " << _inBuffer.size() << " clamped to " << toErase);
+            LOG_ERR('#' << getFD() << ": attempted to remove: " << count << " which is > size: " << _inBuffer.size() << " clamped to " << toErase);
         if (toErase > 0)
             _inBuffer.erase(_inBuffer.begin(), _inBuffer.begin() + count);
     }
@@ -1055,7 +1055,7 @@ protected:
         // Always try to read.
         closed = !readIncomingData() || closed;
 
-        LOG_TRC("#" << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
+        LOG_TRC('#' << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
                 " bytes, closeSocket? " << closed);
 
 #ifdef LOG_SOCKET_DATA
@@ -1101,7 +1101,7 @@ protected:
 
         if (closed)
         {
-            LOG_TRC("#" << getFD() << ": Closed. Firing onDisconnect.");
+            LOG_TRC('#' << getFD() << ": Closed. Firing onDisconnect.");
             _closed = true;
             _socketHandler->onDisconnect();
         }
@@ -1125,7 +1125,7 @@ public:
                 len = writeData(&_outBuffer[0], std::min((int)_outBuffer.size(),
                                                          getSendBufferSize()));
 
-                LOG_TRC("#" << getFD() << ": Wrote outgoing data " << len << " bytes of "
+                LOG_TRC('#' << getFD() << ": Wrote outgoing data " << len << " bytes of "
                             << _outBuffer.size() << " bytes buffered.");
 
 #ifdef LOG_SOCKET_DATA
@@ -1135,7 +1135,7 @@ public:
 #endif
 
                 if (len <= 0 && errno != EAGAIN && errno != EWOULDBLOCK)
-                    LOG_SYS("#" << getFD() << ": Socket write returned " << len);
+                    LOG_SYS('#' << getFD() << ": Socket write returned " << len);
             }
             while (len < 0 && errno == EINTR);
 

@@ -492,7 +492,7 @@ std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscri
         if (itRem != subscribers.end())
         {
             LOG_TRC("Tile " << it->first.serialize() << " has " << subscribers.size() <<
-                    " subscribers. Removing " << subscriber->getName() << ".");
+                    " subscribers. Removing " << subscriber->getName() << '.');
             subscribers.erase(itRem, itRem + 1);
             if (subscribers.empty())
             {
@@ -652,7 +652,7 @@ void TileCache::saveDataToStreamCache(StreamType type, const std::string &fileNa
 
 void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 {
-    os << "    " << _tile.serialize() << " " << std::setw(4) << getElapsedTimeMs() << "ms " << _subscribers.size() << " subscribers\n";
+    os << "    " << _tile.serialize() << ' ' << std::setw(4) << getElapsedTimeMs() << "ms " << _subscribers.size() << " subscribers\n";
     for (const auto& it : _subscribers)
     {
         std::shared_ptr<ClientSession> session = it.lock();
@@ -668,7 +668,7 @@ void TileCache::dumpState(std::ostream& os)
     for (const auto& it : _cache)
     {
         os << "    " << std::setw(4) << it.first.getWireId()
-           << "\t" << std::setw(6) << it.second->size() << " bytes"
+           << '\t' << std::setw(6) << it.second->size() << " bytes"
            << "\t'" << it.first.serialize() << "'\n" ;
     }
 
@@ -684,11 +684,11 @@ void TileCache::dumpState(std::ostream& os)
         for (const auto& it : i)
         {
             os << "    " << it.first
-               << "\t" << std::setw(6) << it.second->size() << " bytes\n";
+               << '\t' << std::setw(6) << it.second->size() << " bytes\n";
         }
     }
 
-    os << "  tiles being rendered " << _tilesBeingRendered.size() << "\n";
+    os << "  tiles being rendered " << _tilesBeingRendered.size() << '\n';
     for (const auto& it : _tilesBeingRendered)
         it.second->dumpState(os);
 }

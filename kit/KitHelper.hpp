@@ -102,7 +102,7 @@ namespace LOKitHelper
 
             for (int i = 0; i < parts; ++i)
             {
-                oss << "\n";
+                oss << '\n';
                 ptrValue = loKitDocument->pClass->getPartName(loKitDocument, i);
                 oss << ptrValue;
                 std::free(ptrValue);
@@ -112,7 +112,7 @@ namespace LOKitHelper
             {
                 for (int i = 0; i < parts; ++i)
                 {
-                    oss << "\n";
+                    oss << '\n';
                     ptrValue = loKitDocument->pClass->getPartHash(loKitDocument, i);
                     oss << ptrValue;
                     std::free(ptrValue);

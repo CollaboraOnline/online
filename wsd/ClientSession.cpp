@@ -885,7 +885,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, const Stri
     TileCache::Tile cachedTile = docBroker->tileCache().lookupCachedStream(TileCache::StreamType::Font, font+text);
     if (cachedTile)
     {
-        const std::string response = "renderfont: " + tokens.cat(std::string(" "), 1) + "\n";
+        const std::string response = "renderfont: " + tokens.cat(std::string(" "), 1) + '\n';
         return sendTile(response, cachedTile);
     }
 
@@ -1047,7 +1047,7 @@ void ClientSession::postProcessCopyPayload(std::shared_ptr<Message> payload)
             if (pos != std::string::npos) // assume text/html
             {
                 const std::string meta = getClipboardURI();
-                LOG_TRC("Inject clipboard meta origin of '" << meta << "'");
+                LOG_TRC("Inject clipboard meta origin of '" << meta << '\'');
                 const std::string origin = "<meta name=\"origin\" content=\"" + meta + "\"/>\n";
                 data.insert(data.begin() + pos, origin.begin(), origin.end());
                 return true;
@@ -1269,7 +1269,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
                 Poco::Net::HTTPResponse response;
                 if (!fileName.empty())
-                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
                 HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType, response);
             }
@@ -1721,8 +1721,8 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tkeyEvents: " << _keyEvents
 //       << "\n\t\tvisibleArea: " << _clientVisibleArea
        << "\n\t\tclientSelectedPart: " << _clientSelectedPart
-       << "\n\t\ttile size Pixel: " << _tileWidthPixel << "x" << _tileHeightPixel
-       << "\n\t\ttile size Twips: " << _tileWidthTwips << "x" << _tileHeightTwips
+       << "\n\t\ttile size Pixel: " << _tileWidthPixel << 'x' << _tileHeightPixel
+       << "\n\t\ttile size Twips: " << _tileWidthTwips << 'x' << _tileHeightTwips
        << "\n\t\tkit ViewId: " << _kitViewId
        << "\n\t\tour URL (un-trusted): " << _serverURL.getSubURLForEndpoint("")
        << "\n\t\tisTextDocument: " << _isTextDocument
@@ -1738,7 +1738,7 @@ void ClientSession::dumpState(std::ostream& os)
         os << "\n\t\tsent/keystroke: " << (double)sent/_keyEvents << "bytes";
     }
 
-    os << "\n";
+    os << '\n';
     _senderQueue.dumpState(os);
 
 }

@@ -289,8 +289,8 @@ int Config::main(const std::vector<std::string>& args)
         const std::string passwordHash = stream.str();
 
         std::stringstream pwdConfigValue("pbkdf2.sha512.", std::ios_base::in | std::ios_base::out | std::ios_base::ate);
-        pwdConfigValue << std::to_string(_adminConfig.getPwdIterations()) << ".";
-        pwdConfigValue << saltHash << "." << passwordHash;
+        pwdConfigValue << std::to_string(_adminConfig.getPwdIterations()) << '.';
+        pwdConfigValue << saltHash << '.' << passwordHash;
         _loolConfig.setString("admin_console.username", adminUser);
         _loolConfig.setString("admin_console.secure_password[@desc]",
                               "Salt and password hash combination generated using PBKDF2 with SHA512 digest.");
@@ -348,8 +348,8 @@ int Config::main(const std::vector<std::string>& args)
             if (_loolConfig.has(args[1]))
             {
                 const std::string val = _loolConfig.getString(args[1]);
-                std::cout << "Previous value found in config file: \""  << val << "\"" << std::endl;
-                std::cout << "Changing value to: \"" << args[2] << "\"" << std::endl;
+                std::cout << "Previous value found in config file: \""  << val << '"' << std::endl;
+                std::cout << "Changing value to: \"" << args[2] << '"' << std::endl;
                 _loolConfig.setString(args[1], args[2]);
                 changed = true;
             }
@@ -388,7 +388,7 @@ int Config::main(const std::vector<std::string>& args)
     }
     else
     {
-        std::cerr << "No such command, \"" << args[0]  << "\"" << std::endl;
+        std::cerr << "No such command, \"" << args[0]  << '"' << std::endl;
         displayHelp();
     }
 

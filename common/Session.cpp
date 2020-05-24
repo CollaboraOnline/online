@@ -250,7 +250,7 @@ void Session::handleMessage(const std::vector<char> &data)
         LOG_ERR("Session::handleInput: Exception while handling [" <<
                 getAbbreviatedMessage(data) <<
                 "] in " << getName() << ": " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+                (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
     }
     catch (const std::exception& exc)
     {
@@ -288,7 +288,7 @@ void Session::dumpState(std::ostream& os)
        << "\n\t\tuserId: " << _userId
        << "\n\t\tuserName: " << _userName
        << "\n\t\tlang: " << _lang
-       << "\n";
+       << '\n';
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

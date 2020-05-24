@@ -88,7 +88,7 @@ SslContext::SslContext(const std::string& certFilePath,
             if (errCode != 1)
             {
                 std::string msg = getLastErrorMsg();
-                throw std::runtime_error(std::string("Cannot load CA file/directory at ") + caFilePath + " (" + msg + ")");
+                throw std::runtime_error(std::string("Cannot load CA file/directory at ") + caFilePath + " (" + msg + ')');
             }
         }
 
@@ -98,7 +98,7 @@ SslContext::SslContext(const std::string& certFilePath,
             if (errCode != 1)
             {
                 std::string msg = getLastErrorMsg();
-                throw std::runtime_error(std::string("Error loading private key from file ") + keyFilePath + " (" + msg + ")");
+                throw std::runtime_error(std::string("Error loading private key from file ") + keyFilePath + " (" + msg + ')');
             }
         }
 
@@ -108,7 +108,7 @@ SslContext::SslContext(const std::string& certFilePath,
             if (errCode != 1)
             {
                 std::string msg = getLastErrorMsg();
-                throw std::runtime_error(std::string("Error loading certificate from file ") + certFilePath + " (" + msg + ")");
+                throw std::runtime_error(std::string("Error loading certificate from file ") + certFilePath + " (" + msg + ')');
             }
         }
 

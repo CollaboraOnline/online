@@ -261,7 +261,7 @@ void alertAllUsersInternal(const std::string& msg)
 {
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
-    LOG_INF("Alerting all users: [" << msg << "]");
+    LOG_INF("Alerting all users: [" << msg << ']');
 
     if (UnitWSD::get().filterAlertAllusers(msg))
         return;
@@ -383,7 +383,7 @@ static int forkChildren(const int number)
 #ifdef KIT_IN_PROCESS
         forkLibreOfficeKit(LOOLWSD::ChildRoot, LOOLWSD::SysTemplate, LOOLWSD::LoTemplate, LO_JAIL_SUBPATH, number);
 #else
-        const std::string aMessage = "spawn " + std::to_string(number) + "\n";
+        const std::string aMessage = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
         LOOLWSD::sendMessageToForKit(aMessage);
 #endif
@@ -593,7 +593,7 @@ public:
     {
         if (!_filename.empty())
         {
-            LOG_TRC("Remove un-handled temporary file '" << _filename << "'");
+            LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
             ConvertToBroker::removeFile(_filename);
         }
     }
@@ -651,7 +651,7 @@ inline std::string getLaunchBase(bool asAdmin = false)
         if (user.empty() || passwd.empty())
             return "";
 
-        oss << user << ":" << passwd << "@";
+        oss << user << ':' << passwd << '@';
     }
 
     oss << LOOLWSD_TEST_HOST ":";
@@ -996,7 +996,7 @@ void LOOLWSD::initialize(Application& self)
     std::map<std::string, std::string> logProperties;
     for (std::size_t i = 0; ; ++i)
     {
-        const std::string confPath = "logging.file.property[" + std::to_string(i) + "]";
+        const std::string confPath = "logging.file.property[" + std::to_string(i) + ']';
         const std::string confName = config().getString(confPath + "[@name]", "");
         if (!confName.empty())
         {
@@ -1162,7 +1162,7 @@ void LOOLWSD::initialize(Application& self)
         LOG_WRN("Invalid num_prespawn_children in config (" << NumPreSpawnedChildren << "). Resetting to 1.");
         NumPreSpawnedChildren = 1;
     }
-    LOG_INF("NumPreSpawnedChildren set to " << NumPreSpawnedChildren << ".");
+    LOG_INF("NumPreSpawnedChildren set to " << NumPreSpawnedChildren << '.');
 
 #if !MOBILEAPP
     const auto maxConcurrency = getConfigValue<int>(conf, "per_document.max_concurrency", 4);
@@ -1170,7 +1170,7 @@ void LOOLWSD::initialize(Application& self)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
     }
-    LOG_INF("MAX_CONCURRENCY set to " << maxConcurrency << ".");
+    LOG_INF("MAX_CONCURRENCY set to " << maxConcurrency << '.');
 #endif
 
     const auto redlining = getConfigValue<bool>(conf, "per_document.redlining_as_comments", false);
@@ -1257,7 +1257,7 @@ void LOOLWSD::initialize(Application& self)
         std::vector<std::string> filters;
         for (size_t i = 0; ; ++i)
         {
-            const std::string confPath = "trace.filter.message[" + std::to_string(i) + "]";
+            const std::string confPath = "trace.filter.message[" + std::to_string(i) + ']';
             const std::string regex = config().getString(confPath, "");
             if (!regex.empty())
             {
@@ -1305,10 +1305,10 @@ void LOOLWSD::initialize(Application& self)
     const std::string adminURI = getServiceURI(LOOLWSD_TEST_ADMIN_CONSOLE, true);
     if (!adminURI.empty())
         std::cerr << "\nOr for the admin, monitoring, capabilities & discovery:\n\n"
-                  << adminURI << "\n"
-                  << getServiceURI(LOOLWSD_TEST_METRICS, true) << "\n"
-                  << getServiceURI("/hosting/capabilities") << "\n"
-                  << getServiceURI("/hosting/discovery") << "\n";
+                  << adminURI << '\n'
+                  << getServiceURI(LOOLWSD_TEST_METRICS, true) << '\n'
+                  << getServiceURI("/hosting/capabilities") << '\n'
+                  << getServiceURI("/hosting/discovery") << '\n';
 
     std::cerr << std::endl;
 #endif
@@ -1580,7 +1580,7 @@ bool LOOLWSD::checkAndRestoreForKit()
                 if (WIFEXITED(status))
                 {
                     LOG_INF("Forkit process [" << pid << "] exited with code: " <<
-                            WEXITSTATUS(status) << ".");
+                            WEXITSTATUS(status) << '.');
                 }
                 else
                 {
@@ -1607,7 +1607,7 @@ bool LOOLWSD::checkAndRestoreForKit()
             }
             else
             {
-                LOG_WRN("Unknown status returned by waitpid: " << std::hex << status << ".");
+                LOG_WRN("Unknown status returned by waitpid: " << std::hex << status << '.');
             }
 
             return true;
@@ -1845,7 +1845,7 @@ static std::shared_ptr<DocumentBroker>
 
     if (SigUtil::getTerminationFlag())
     {
-        LOG_ERR("TerminationFlag set. Not loading new session [" << id << "]");
+        LOG_ERR("TerminationFlag set. Not loading new session [" << id << ']');
         return nullptr;
     }
 
@@ -1879,7 +1879,7 @@ static std::shared_ptr<DocumentBroker>
 
     if (SigUtil::getTerminationFlag())
     {
-        LOG_ERR("TerminationFlag is set. Not loading new session [" << id << "]");
+        LOG_ERR("TerminationFlag is set. Not loading new session [" << id << ']');
         return nullptr;
     }
 
@@ -1939,14 +1939,14 @@ private:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         setSocket(socket);
-        LOG_TRC("#" << socket->getFD() << " Prisoner connected.");
+        LOG_TRC('#' << socket->getFD() << " Prisoner connected.");
     }
 
     void onDisconnect() override
     {
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
         if (socket)
-            LOG_TRC("#" << socket->getFD() << " Prisoner connection disconnected.");
+            LOG_TRC('#' << socket->getFD() << " Prisoner connection disconnected.");
         else
             LOG_WRN("Prisoner connection disconnected but without valid socket.");
 
@@ -2037,7 +2037,7 @@ private:
 
             socket->getInBuffer().clear();
 
-            LOG_INF("New child [" << pid << "], jailId: " << jailId << ".");
+            LOG_INF("New child [" << pid << "], jailId: " << jailId << '.');
 
             UnitWSD::get().newChild(*this);
 #else
@@ -2081,7 +2081,7 @@ private:
         const std::string abbr = getAbbreviatedMessage(data);
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
         if (socket)
-            LOG_TRC("#" << socket->getFD() << " Prisoner message [" << abbr << "].");
+            LOG_TRC('#' << socket->getFD() << " Prisoner message [" << abbr << "].");
         else
             LOG_WRN("Message handler called but without valid socket.");
 
@@ -2151,7 +2151,7 @@ public:
             // Parse the host allow settings.
             for (size_t i = 0; ; ++i)
             {
-                const std::string path = "net.post_allow.host[" + std::to_string(i) + "]";
+                const std::string path = "net.post_allow.host[" + std::to_string(i) + ']';
                 const auto host = app.config().getString(path, "");
                 if (!host.empty())
                 {
@@ -2219,7 +2219,7 @@ private:
     {
         _id = LOOLWSD::GetConnectionId();
         _socket = socket;
-        LOG_TRC("#" << socket->getFD() << " Connected to ClientRequestDispatcher.");
+        LOG_TRC('#' << socket->getFD() << " Connected to ClientRequestDispatcher.");
     }
 
     /// Called after successful socket reads.
@@ -2410,7 +2410,7 @@ private:
         }
         catch (const std::exception& exc)
         {
-            LOG_INF("#" << socket->getFD() << " Exception while processing incoming request: [" <<
+            LOG_INF('#' << socket->getFD() << " Exception while processing incoming request: [" <<
                     LOOLProtocol::getAbbreviatedMessage(socket->getInBuffer()) << "]: " << exc.what());
 
             // Bad request.
@@ -2727,7 +2727,7 @@ private:
     {
         assert(socket && "Must have a valid socket");
 
-        LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(requestDetails.getURI()) << "]");
+        LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(requestDetails.getURI()) << ']');
 
         Poco::Net::HTTPResponse response;
 
@@ -2873,7 +2873,7 @@ private:
             std::string fileName;
             URI::decode(requestDetails[4], fileName);
             const Path filePath(LOOLWSD::ChildRoot + requestDetails[2]
-                                + JAILED_DOCUMENT_ROOT + requestDetails[3] + "/" + fileName);
+                                + JAILED_DOCUMENT_ROOT + requestDetails[3] + '/' + fileName);
             const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath.toString());
             LOG_INF("HTTP request for: " << filePathAnonym);
             if (filePath.isAbsolute() && File(filePath).exists())
@@ -2895,7 +2895,7 @@ private:
                 // actually show it.
                 std::string contentType = getContentType(fileName);
                 if (serveAsAttachment && contentType != "image/svg+xml")
-                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                    response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
                 try
                 {
@@ -2956,7 +2956,7 @@ private:
             }
         }
 
-        LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
+        LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << '.');
         (void)request; (void)message; (void)disposition;
 
         std::shared_ptr<ProtocolHandlerInterface> none;
@@ -3073,7 +3073,7 @@ private:
                 }
             }
 
-            LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << ".");
+            LOG_INF("URL [" << LOOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << '.');
 
             // Request a kit process for this doc.
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
@@ -3397,22 +3397,21 @@ public:
         Socket::InhibitThreadChecks = true;
         SocketPoll::InhibitThreadChecks = true;
 
-        os << "LOOLWSDServer:\n"
+        os << "LOOLWSDServer:"
 #if !MOBILEAPP
-           << "  Ports: server " << ClientPortNumber
-           <<          " prisoner " << MasterLocation << "\n"
-           << "  SSL: " << (LOOLWSD::isSSLEnabled() ? "https" : "http") << "\n"
-           << "  SSL-Termination: " << (LOOLWSD::isSSLTermination() ? "yes" : "no") << "\n"
-           << "  Security " << (LOOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
-                            << (LOOLWSD::NoSeccomp ? "no" : "") << " api lockdown\n"
+           << "\n  Ports: server " << ClientPortNumber << " prisoner " << MasterLocation
+           << "\n  SSL: " << (LOOLWSD::isSSLEnabled() ? "https" : "http")
+           << "\n  SSL-Termination: " << (LOOLWSD::isSSLTermination() ? "yes" : "no")
+           << "\n  Security " << (LOOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
+           << (LOOLWSD::NoSeccomp ? "no" : "") << " api lockdown"
 #endif
-           << "  TerminationFlag: " << SigUtil::getTerminationFlag() << "\n"
-           << "  isShuttingDown: " << SigUtil::getShutdownRequestFlag() << "\n"
-           << "  NewChildren: " << NewChildren.size() << "\n"
-           << "  OutstandingForks: " << OutstandingForks << "\n"
-           << "  NumPreSpawnedChildren: " << LOOLWSD::NumPreSpawnedChildren << "\n";
+           << "\n  TerminationFlag: " << SigUtil::getTerminationFlag()
+           << "\n  isShuttingDown: " << SigUtil::getShutdownRequestFlag()
+           << "\n  NewChildren: " << NewChildren.size()
+           << "\n  OutstandingForks: " << OutstandingForks
+           << "\n  NumPreSpawnedChildren: " << LOOLWSD::NumPreSpawnedChildren;
 
-        os << "Server poll:\n";
+        os << "\nServer poll:\n";
         _acceptPoll.dumpState(os);
 
         os << "Web Server poll:\n";
@@ -3435,7 +3434,7 @@ public:
             i.second->dumpState(os);
 
 #if !MOBILEAPP
-        os << "Converter count: " << ConvertToBroker::getInstanceCount() << "\n";
+        os << "Converter count: " << ConvertToBroker::getInstanceCount() << '\n';
 #endif
 
         Socket::InhibitThreadChecks = false;
@@ -3539,7 +3538,7 @@ private:
             )
         {
             ++port;
-            LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << ".");
+            LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << '.');
             socket = getServerSocket(ClientListenAddr, port, WebServerPoll, factory);
         }
 

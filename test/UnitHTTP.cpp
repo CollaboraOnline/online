@@ -41,6 +41,7 @@ public:
 
     void testContinue()
     {
+        //FIXME: use logging
         std::cerr << "testContinue\n";
         for (int i = 0; i < 3; ++i)
         {
@@ -188,7 +189,7 @@ public:
         LOK_ASSERT_MESSAGE("Missing separator, got " + std::string(buffer), ptr);
         if (!ptr)
         {
-            std::cerr << "missing separator " << got << " '" << buffer << "\n";
+            std::cerr << "missing separator " << got << " '" << buffer << '\n';
             exitTest(TestResult::Failed);
             return;
         }
@@ -206,14 +207,14 @@ public:
             buffer[got] = '\0';
         else
         {
-            std::cerr << "No content returned " << got << "\n";
+            std::cerr << "No content returned " << got << '\n';
             exitTest(TestResult::Failed);
             return;
         }
 
         if (strcmp(buffer, "\357\273\277This is some text.\nAnd some more.\n"))
         {
-            std::cerr << "unexpected file content " << got << " '" << buffer << "\n";
+            std::cerr << "unexpected file content " << got << " '" << buffer << '\n';
             exitTest(TestResult::Failed);
             return;
         }

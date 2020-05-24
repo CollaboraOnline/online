@@ -47,7 +47,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
         if (!((expected) == (actual)))                                                             \
         {                                                                                          \
             std::cerr << "Assertion failure: Expected [" << (expected) << "] but got ["            \
-                      << (actual) << "]" << std::endl;                                             \
+                      << (actual) << ']' << std::endl;                                             \
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL((expected), (actual));                                            \
         }                                                                                          \

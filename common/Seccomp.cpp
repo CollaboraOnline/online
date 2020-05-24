@@ -261,7 +261,7 @@ void setRLimit(rlim_t confLim, int resource, const std::string &resourceText, co
     rlim_t lim = confLim;
     if (lim <= 0)
         lim = RLIM_INFINITY;
-    const std::string limTextWithUnit((lim == RLIM_INFINITY) ? "unlimited" : std::to_string(lim) + " " + unitText);
+    const std::string limTextWithUnit((lim == RLIM_INFINITY) ? "unlimited" : std::to_string(lim) + ' ' + unitText);
     if (resource != RLIMIT_FSIZE && resource != RLIMIT_NOFILE)
     {
         /* FIXME Currently the RLIMIT_FSIZE handling is non-ideal, and can
@@ -272,17 +272,17 @@ void setRLimit(rlim_t confLim, int resource, const std::string &resourceText, co
          */
         rlimit rlim = { lim, lim };
         if (setrlimit(resource, &rlim) != 0)
-            LOG_SYS("Failed to set " << resourceText << " to " << limTextWithUnit << ".");
+            LOG_SYS("Failed to set " << resourceText << " to " << limTextWithUnit << '.');
         if (getrlimit(resource, &rlim) == 0)
         {
-            const std::string setLimTextWithUnit((rlim.rlim_max == RLIM_INFINITY) ? "unlimited" : std::to_string(rlim.rlim_max) + " " + unitText);
-            LOG_INF(resourceText << " is " << setLimTextWithUnit << " after setting it to " << limTextWithUnit << ".");
+            const std::string setLimTextWithUnit((rlim.rlim_max == RLIM_INFINITY) ? "unlimited" : std::to_string(rlim.rlim_max) + ' ' + unitText);
+            LOG_INF(resourceText << " is " << setLimTextWithUnit << " after setting it to " << limTextWithUnit << '.');
         }
         else
-            LOG_SYS("Failed to get " << resourceText << ".");
+            LOG_SYS("Failed to get " << resourceText << '.');
     }
     else
-        LOG_INF("Ignored setting " << resourceText << " to " << limTextWithUnit << ".");
+        LOG_INF("Ignored setting " << resourceText << " to " << limTextWithUnit << '.');
 }
 
 bool handleSetrlimitCommand(const StringVector& tokens)

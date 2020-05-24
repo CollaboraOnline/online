@@ -83,7 +83,7 @@ static std::string flush()
 {
     static bool alwaysStderr = std::getenv("FAKESOCKET_LOG_ALWAYS_STDERR") != nullptr;
     if (alwaysStderr)
-        std::cerr << std::this_thread::get_id() << ":" << loggingBuffer.str() << std::endl;
+        std::cerr << std::this_thread::get_id() << ':' << loggingBuffer.str() << std::endl;
     else if (loggingCallback != nullptr)
         loggingCallback(loggingBuffer.str());
     loggingBuffer.str("");
@@ -146,7 +146,7 @@ int fakeSocketPipe2(int pipefd[2])
     pair.fd[1] = pair.fd[0] + 1;
     pipefd[1] = pair.fd[1];
 
-    FAKESOCKET_LOG("FakeSocket Pipe created (#" << pipefd[0] << ",#" << pipefd[1] << ")" << flush());
+    FAKESOCKET_LOG("FakeSocket Pipe created (#" << pipefd[0] << ",#" << pipefd[1] << ')' << flush());
 
     return 0;
 }
@@ -161,37 +161,37 @@ static std::string pollBits(int bits)
     if (bits & POLLERR)
     {
         if (result != "")
-            result += "+";
+            result += '+';
         result += "ERR";
     }
     if (bits & POLLHUP)
     {
         if (result != "")
-            result += "+";
+            result += '+';
         result += "HUP";
     }
     if (bits & POLLIN)
     {
         if (result != "")
-            result += "+";
+            result += '+';
         result += "IN";
     }
     if (bits & POLLNVAL)
     {
         if (result != "")
-            result += "+";
+            result += '+';
         result += "NVAL";
     }
     if (bits & POLLOUT)
     {
         if (result != "")
-            result += "+";
+            result += '+';
         result += "OUT";
     }
     if (bits & POLLPRI)
     {
         if (result != "")
-            result += "+";
+            result += '+';
         result += "PRI";
     }
 
@@ -253,8 +253,8 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
     for (int i = 0; i < nfds; i++)
     {
         if (i > 0)
-            FAKESOCKET_LOG(",");
-        FAKESOCKET_LOG("#" << pollfds[i].fd << ":" << pollBits(pollfds[i].events));
+            FAKESOCKET_LOG(',');
+        FAKESOCKET_LOG('#' << pollfds[i].fd << ':' << pollBits(pollfds[i].events));
     }
     FAKESOCKET_LOG(", timeout:" << timeout << flush());
 
@@ -294,8 +294,8 @@ int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)
     for (int i = 0; i < nfds; i++)
     {
         if (i > 0)
-            FAKESOCKET_LOG(",");
-        FAKESOCKET_LOG("#" << pollfds[i].fd << ":" << pollBits(pollfds[i].revents));
+            FAKESOCKET_LOG(',');
+        FAKESOCKET_LOG('#' << pollfds[i].fd << ':' << pollBits(pollfds[i].revents));
     }
     FAKESOCKET_LOG(": " << result << flush());
 

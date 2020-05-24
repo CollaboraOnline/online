@@ -384,7 +384,7 @@ namespace Util
         default: assert(false);
         }
 
-        unit += "B";
+        unit += 'B';
         std::stringstream ss;
         ss << std::fixed << std::setprecision(1) << val << ' ' << unit;
         return ss.str();
@@ -572,7 +572,7 @@ namespace Util
     {
         // Copy the current name.
         const std::string knownAs
-            = ThreadName[0] ? "known as [" + std::string(ThreadName) + "]" : "unnamed";
+            = ThreadName[0] ? "known as [" + std::string(ThreadName) + ']' : "unnamed";
 
         // Set the new name.
         strncpy(ThreadName, s.c_str(), sizeof(ThreadName) - 1);
@@ -864,7 +864,7 @@ namespace Util
             << time_modified
             << std::setw(6)
             << (time - lastModified_s).count() / 1000
-            << "Z";
+            << 'Z';
 
         return oss.str();
     }

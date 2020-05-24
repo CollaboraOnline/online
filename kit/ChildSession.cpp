@@ -656,7 +656,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const S
     }
 
     // Respond by the document status
-    LOG_DBG("Sending status after loading view " << _viewId << ".");
+    LOG_DBG("Sending status after loading view " << _viewId << '.');
     const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
     if (status.empty() || !sendTextFrame("status: " + status))
     {
@@ -699,7 +699,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
         return false;
     }
 
-    const std::string response = "renderfont: " + tokens.cat(std::string(" "), 1) + "\n";
+    const std::string response = "renderfont: " + tokens.cat(std::string(" "), 1) + '\n';
 
     std::vector<char> output;
     output.resize(response.size());
@@ -1614,7 +1614,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
     if (!paintRectangle.empty())
         response += " rectangle=" + paintRectangle;
 
-    response += "\n";
+    response += '\n';
 
     std::vector<char> output;
     output.reserve(response.size() + pixmapDataSize);

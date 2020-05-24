@@ -444,7 +444,7 @@ public:
                               ? "FAIL"
                               : (res == TestResult::TimedOut)
                                       ? "TIMEOUT"
-                                      : "??? (" + std::to_string((int)res) + ")"));
+                                      : "??? (" + std::to_string((int)res) + ')'));
                 exitTest(res);
                 assert(false);
                 return;

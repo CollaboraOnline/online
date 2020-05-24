@@ -72,12 +72,12 @@ public:
 
     void dumpState(std::ostream& os)
     {
-        os << "\n\t\tqueue size " << _queue.size() << "\n";
+        os << "\n\t\tqueue size " << _queue.size() << '\n';
         std::lock_guard<std::mutex> lock(_mutex);
         for (const Item &item : _queue)
         {
-            os << "\t\t\ttype: " << (item->isBinary() ? "binary" : "text") << "\n";
-            os << "\t\t\t" << item->abbr() << "\n";
+            os << "\t\t\ttype: " << (item->isBinary() ? "binary\n" : "text\n");
+            os << "\t\t\t" << item->abbr() << '\n';
         }
     }
 

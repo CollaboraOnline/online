@@ -223,7 +223,7 @@ namespace FileUtil
         catch (const std::exception&e)
         {
             // Already removed or we don't care about failures.
-            LOG_DBG("Exception removing " << path << " " << recursive << " : " << e.what());
+            LOG_DBG("Exception removing " << path << ' ' << recursive << " : " << e.what());
         }
 #endif
     }
@@ -273,7 +273,7 @@ namespace FileUtil
         if (lastSlash != std::string::npos)
         {
             const std::string dirPath = path.substr(0, lastSlash + 1) + '.';
-            LOG_INF("Registering filesystem for space checks: [" << dirPath << "]");
+            LOG_INF("Registering filesystem for space checks: [" << dirPath << ']');
 
             std::lock_guard<std::mutex> lock(fsmutex);
 

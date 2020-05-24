@@ -209,7 +209,7 @@ protected:
             {
                 {
                     std::unique_lock<std::mutex> lock(coutMutex);
-                    std::cout << "Sending: '" << line << "'" << std::endl;
+                    std::cout << "Sending: '" << line << '\'' << std::endl;
                 }
                 ws.sendFrame(line.c_str(), line.size());
             }

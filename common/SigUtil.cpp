@@ -308,7 +308,7 @@ namespace SigUtil
         stream << "\nERROR: Fatal signal! Attach debugger with:\n"
                << "sudo gdb --pid=" << getpid() << "\n or \n"
                << "sudo gdb --q --n --ex 'thread apply all backtrace full' --batch --pid="
-               << getpid() << "\n";
+               << getpid() << '\n';
         std::string streamStr = stream.str();
         assert (sizeof (FatalGdbString) > strlen(streamStr.c_str()) + 1);
         strncpy(FatalGdbString, streamStr.c_str(), sizeof(FatalGdbString)-1);

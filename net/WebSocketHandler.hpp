@@ -97,7 +97,7 @@ public:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
-        LOG_TRC("#" << socket->getFD() << " Connected to WS Handler " << this);
+        LOG_TRC('#' << socket->getFD() << " Connected to WS Handler " << this);
     }
 
     /// Status codes sent to peer on shutdown.
@@ -128,7 +128,7 @@ public:
             return;
         }
 
-        LOG_TRC("#" << socket->getFD() << ": Shutdown websocket, code: " <<
+        LOG_TRC('#' << socket->getFD() << ": Shutdown websocket, code: " <<
                 static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
         _shuttingDown = true;
 
@@ -193,7 +193,7 @@ public:
 #if !MOBILEAPP
         if (len < 2) // partial read
         {
-            LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
+            LOG_TRC('#' << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
             return false;
         }
 
@@ -209,7 +209,7 @@ public:
         {
             if (len < 2 + 2)
             {
-                LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
+                LOG_TRC('#' << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
                 return false;
             }
 
@@ -220,7 +220,7 @@ public:
         {
             if (len < 2 + 8)
             {
-                LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
+                LOG_TRC('#' << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
                 return false;
             }
             payloadLen = ((((uint64_t)p[9]) <<  0) + (((uint64_t)p[8]) <<  8) +
@@ -241,19 +241,19 @@ public:
 
         if (payloadLen + headerLen > len)
         { // partial read wait for more data.
-            LOG_TRC("#" << socket->getFD() << ": Still incomplete WebSocket frame, have " << len
+            LOG_TRC('#' << socket->getFD() << ": Still incomplete WebSocket frame, have " << len
                         << " bytes, frame is " << payloadLen + headerLen << " bytes");
             return false;
         }
 
         if (hasMask && _isClient)
         {
-            LOG_ERR("#" << socket->getFD() << ": Servers should not send masked frames. Only clients.");
+            LOG_ERR('#' << socket->getFD() << ": Servers should not send masked frames. Only clients.");
             shutdown(StatusCodes::PROTOCOL_ERROR);
             return true;
         }
 
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: "
+        LOG_TRC('#' << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: "
                     << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
 
         data = p + headerLen;
@@ -266,20 +266,20 @@ public:
 
             readPayload(data, payloadLen, mask, ctrlPayload);
             socket->getInBuffer().erase(socket->getInBuffer().begin(), socket->getInBuffer().begin() + headerLen + payloadLen);
-            LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket frame code " << static_cast<unsigned>(code) <<
+            LOG_TRC('#' << socket->getFD() << ": Incoming WebSocket frame code " << static_cast<unsigned>(code) <<
                 ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << payloadLen <<
                 ", residual socket data: " << socket->getInBuffer().size() << " bytes.");
 
             // All control frames MUST NOT be fragmented and MUST have a payload length of 125 bytes or less
             if (!fin)
             {
-                LOG_ERR("#" << socket->getFD() << ": A control frame cannot be fragmented.");
+                LOG_ERR('#' << socket->getFD() << ": A control frame cannot be fragmented.");
                 shutdown(StatusCodes::PROTOCOL_ERROR);
                 return true;
             }
             if (payloadLen > 125)
             {
-                LOG_ERR("#" << socket->getFD() << ": The payload length of a control frame must not exceed 125 bytes.");
+                LOG_ERR('#' << socket->getFD() << ": The payload length of a control frame must not exceed 125 bytes.");
                 shutdown(StatusCodes::PROTOCOL_ERROR);
                 return true;
             }
@@ -289,7 +289,7 @@ public:
             case WSOpCode::Pong:
                 if (_isClient)
                 {
-                    LOG_ERR("#" << socket->getFD() << ": Servers should not send pongs, only clients");
+                    LOG_ERR('#' << socket->getFD() << ": Servers should not send pongs, only clients");
                     shutdown(StatusCodes::POLICY_VIOLATION);
                     return true;
                 }
@@ -297,7 +297,7 @@ public:
                 {
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
                         (std::chrono::steady_clock::now() - _lastPingSentTime).count();
-                    LOG_TRC("#" << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
+                    LOG_TRC('#' << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
                 }
                 break;
             case WSOpCode::Ping:
@@ -310,7 +310,7 @@ public:
                 }
                 else
                 {
-                    LOG_ERR("#" << socket->getFD() << ": Clients should not send pings, only servers");
+                    LOG_ERR('#' << socket->getFD() << ": Clients should not send pings, only servers");
                     shutdown(StatusCodes::POLICY_VIOLATION);
                     return true;
                 }
@@ -323,7 +323,7 @@ public:
                     {
                         // Peer-initiated shutdown must be echoed.
                         // Otherwise, this is the echo to _our_ shutdown message, which we should ignore.
-                        LOG_TRC("#" << socket->getFD() << ": Peer initiated socket shutdown. Code: " << static_cast<int>(statusCode));
+                        LOG_TRC('#' << socket->getFD() << ": Peer initiated socket shutdown. Code: " << static_cast<int>(statusCode));
                         if (ctrlPayload.size())
                         {
                             statusCode = static_cast<StatusCodes>((((uint64_t)(unsigned char)ctrlPayload[0]) << 8) +
@@ -336,7 +336,7 @@ public:
                     return true;
                 }
             default:
-                LOG_ERR("#" << socket->getFD() << ": Received unknown control code");
+                LOG_ERR('#' << socket->getFD() << ": Received unknown control code");
                 shutdown(StatusCodes::PROTOCOL_ERROR);
                 break;
             }
@@ -349,14 +349,14 @@ public:
         {
             if (code != WSOpCode::Continuation)
             {
-                LOG_ERR("#" << socket->getFD() << ": A fragment that is not the first fragment of a message must have the opcode equal to 0.");
+                LOG_ERR('#' << socket->getFD() << ": A fragment that is not the first fragment of a message must have the opcode equal to 0.");
                 shutdown(StatusCodes::PROTOCOL_ERROR);
                 return true;
             }
         }
         else if (code == WSOpCode::Continuation)
         {
-            LOG_ERR("#" << socket->getFD() << ": An unfragmented message or the first fragment of a fragmented message must have the opcode different than 0.");
+            LOG_ERR('#' << socket->getFD() << ": An unfragmented message or the first fragment of a fragmented message must have the opcode different than 0.");
             shutdown(StatusCodes::PROTOCOL_ERROR);
             return true;
         }
@@ -374,7 +374,7 @@ public:
 
 #if !MOBILEAPP
 
-        LOG_TRC("#" << socket->getFD() << ": Incoming WebSocket frame code " << static_cast<unsigned>(code) <<
+        LOG_TRC('#' << socket->getFD() << ": Incoming WebSocket frame code " << static_cast<unsigned>(code) <<
                 ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << payloadLen <<
                 ", residual socket data: " << socket->getInBuffer().size() << " bytes, unmasked data: "+
                 Util::stringifyHexLine(_wsPayload, 0, std::min((size_t)32, _wsPayload.size())));
@@ -460,7 +460,7 @@ private:
             return;
         }
 
-        LOG_TRC("#" << socket->getFD() << ": Sending " <<
+        LOG_TRC('#' << socket->getFD() << ": Sending " <<
                 (const char *)(code == WSOpCode::Ping ? " ping." : "pong."));
         // FIXME: allow an empty payload.
         sendMessage(data, len, code, false);
@@ -629,7 +629,7 @@ protected:
         if (flush)
             socket->writeOutgoingData();
 #else
-        LOG_TRC("WebSocketHandle::sendFrame: Writing to #" << socket->getFD() << " " << len << " bytes");
+        LOG_TRC("WebSocketHandle::sendFrame: Writing to #" << socket->getFD() << ' ' << len << " bytes");
 
         // We ignore the flush parameter and always flush in the MOBILEAPP case because there is no
         // WebSocket framing, we put the messages as such into the FakeSocket queue.
@@ -705,7 +705,7 @@ protected:
         if (!socket)
             throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
 
-        LOG_TRC("#" << socket->getFD() << ": Upgrading to WebSocket.");
+        LOG_TRC('#' << socket->getFD() << ": Upgrading to WebSocket.");
         assert(!socket->isWebSocket());
 
 #if !MOBILEAPP
@@ -714,7 +714,7 @@ protected:
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
         const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
         // FIXME: other sanity checks ...
-        LOG_INF("#" << socket->getFD() << ": WebSocket version: " << wsVersion <<
+        LOG_INF('#' << socket->getFD() << ": WebSocket version: " << wsVersion <<
                 ", key: [" << wsKey << "], protocol: [" << wsProtocol << "].");
 
 #if ENABLE_DEBUG
@@ -730,7 +730,7 @@ protected:
             << "\r\n";
 
         const std::string res = oss.str();
-        LOG_TRC("#" << socket->getFD() << ": Sending WS Upgrade response: " << res);
+        LOG_TRC('#' << socket->getFD() << ": Sending WS Upgrade response: " << res);
         socket->send(res);
 #endif
         setWebSocket();

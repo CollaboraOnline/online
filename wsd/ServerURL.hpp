@@ -53,7 +53,7 @@ public:
         size_t pos = url.find("://");
         if (pos != std::string::npos) {
             pos += 3;
-            auto hostEndPos = url.find("/", pos);
+            auto hostEndPos = url.find('/', pos);
             if (hostEndPos != std::string::npos)
             {
                 _websocket = false;
@@ -64,9 +64,9 @@ public:
                 return;
             }
             else
-                LOG_ERR("Unusual proxy prefix '" << url << "'");
+                LOG_ERR("Unusual proxy prefix '" << url << '\'');
         } else
-            LOG_ERR("No http[s]:// in unusual proxy prefix '" << url << "'");
+            LOG_ERR("No http[s]:// in unusual proxy prefix '" << url << '\'');
     }
 
     std::string getResponseRoot() const
@@ -78,7 +78,7 @@ public:
     {
         std::string schemeProtocol = (_websocket ? "ws" : "http");
         if (_ssl)
-            schemeProtocol += "s";
+            schemeProtocol += 's';
         return schemeProtocol + "://" + _schemeAuthority;
     }
 
