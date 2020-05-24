@@ -90,6 +90,13 @@ L.Map.include({
 		}
 	},
 
+	deselectAll: function() {
+		var docLayer = this._docLayer;
+		while (docLayer._selectedParts.length > 0) {
+			this.selectPart(docLayer._selectedParts[0], 0, false);
+		}
+	},
+
 	getPreview: function (id, index, maxWidth, maxHeight, options) {
 		if (!this._docPreviews) {
 			this._docPreviews = {};
