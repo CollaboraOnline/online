@@ -3237,6 +3237,9 @@ private:
         // Set the product name
         capabilities->set("productName", APP_NAME);
 
+        // Set that this is a proxy.php-enabled instance
+        capabilities->set("hasProxyPrefix", LOOLWSD::IsProxyPrefixEnabled);
+
         std::ostringstream ostrJSON;
         capabilities->stringify(ostrJSON);
         return ostrJSON.str();
