@@ -2813,6 +2813,7 @@ private:
                     handler.takeFile();
                     response.setContentLength(0);
                     socket->send(response);
+                    socket->shutdown();
                     return;
                 }
             }
