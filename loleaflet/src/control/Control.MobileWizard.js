@@ -49,6 +49,7 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-titlebar').show();
 		$('#mobile-wizard-titlebar').css('top', '0px');
 		$('#mobile-wizard').removeClass('menuwizard');
+		$('#mobile-wizard').removeClass('funcwizard');
 		this._isTabMode = false;
 		this._currentPath = [];
 		this._tabs = [];
