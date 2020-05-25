@@ -940,7 +940,45 @@ void WhiteBoxTests::testRequestDetails_local()
         = "http://localhost/nextcloud/apps/richdocuments/proxy.php?req=";
 
     {
-        static const std::string URI = "/lool/file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt/ws/open/open/0";
+        static const std::string URI = "/lool/"
+                                       "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%"
+                                       "2Fdata%2Fhello-world.odt/ws/open/open/0";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        const std::string docUri = "file:///home/ash/prj/lo/online/test/data/hello-world.odt";
+
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
+        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
+        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(
+            std::string(
+                "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
+            details[1]);
+        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
+        LOK_ASSERT_EQUAL(std::string("open"), details[3]);
+        LOK_ASSERT_EQUAL(std::string("open"), details[4]);
+        LOK_ASSERT_EQUAL(std::string("0"), details[5]);
+    }
+
+    {
+        static const std::string URI = "/lool/"
+                                       "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%"
+                                       "2Fdata%2Fhello-world.odt/ws//write/2";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
@@ -968,58 +1006,8 @@ void WhiteBoxTests::testRequestDetails_local()
                 "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
             details[1]);
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("open"), details[3]);
-        LOK_ASSERT_EQUAL(std::string("open"), details[4]);
-    }
-
-    {
-        static const std::string URI
-            = "/lool/"
-              "http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%"
-              "2F165_ocgdpzbkm39u%3Faccess_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_"
-              "ttl%"
-              "3D0%26reuse_cookies%3DXCookieName%253DXCookieValue%253ASuperCookieName%253DBAZINGA/"
-              "ws?WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%"
-              "2Fwopi%"
-              "2Ffiles%2F165_ocgdpzbkm39u&compat=/ws/1c99a7bcdbf3209782d7eb38512e6564/write/2";
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
-                                       Poco::Net::HTTPMessage::HTTP_1_1);
-        request.setHost(Root);
-        request.set("User-Agent", WOPI_AGENT_STRING);
-        request.set("ProxyPrefix", ProxyPrefix);
-
-        RequestDetails details(request, "");
-        LOK_ASSERT_EQUAL(true, details.isProxy());
-        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
-
-        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
-        LOK_ASSERT_EQUAL(false, details.isWebSocket());
-        LOK_ASSERT_EQUAL(true, details.isGet());
-
-        const std::string docUri
-            = "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
-              "165_ocgdpzbkm39u?access_token=ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0&"
-              "reuse_cookies=XCookieName%3DXCookieValue%3ASuperCookieName%3DBAZINGA/"
-              "ws?WOPISrc=http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
-              "165_ocgdpzbkm39u&compat=";
-
-        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
-
-        LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
-        LOK_ASSERT_EQUAL(
-            std::string("http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%"
-                        "2Fwopi%2Ffiles%2F165_ocgdpzbkm39u%3Faccess_token%"
-                        "3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_ttl%3D0%26reuse_cookies%"
-                        "3DXCookieName%253DXCookieValue%253ASuperCookieName%253DBAZINGA/"
-                        "ws?WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%"
-                        "2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u&compat="),
-            details[1]);
-        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
-        LOK_ASSERT_EQUAL(std::string("1c99a7bcdbf3209782d7eb38512e6564"), details[3]);
-        LOK_ASSERT_EQUAL(std::string("write"), details[4]);
+        LOK_ASSERT_EQUAL(std::string("write"), details[3]);
+        LOK_ASSERT_EQUAL(std::string("2"), details[4]);
     }
 }
 
@@ -1134,7 +1122,7 @@ void WhiteBoxTests::testRequestDetails()
 
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
-        LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
         LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
         LOK_ASSERT(details.equals(0, "lool"));
         LOK_ASSERT_EQUAL(
@@ -1148,6 +1136,7 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
         LOK_ASSERT_EQUAL(std::string("1c99a7bcdbf3209782d7eb38512e6564"), details[3]);
         LOK_ASSERT_EQUAL(std::string("write"), details[4]);
+        LOK_ASSERT_EQUAL(std::string("2"), details[5]);
     }
 }
 
