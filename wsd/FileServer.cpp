@@ -347,7 +347,12 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
-        if (endPoint == loleafletHtml)
+        if (endPoint == loleafletHtml ||
+                endPoint == "help-localizations.json" ||
+                endPoint == "localizations.json" ||
+                endPoint == "locore-localizations.json" ||
+                endPoint == "uno-localizations.json" ||
+                endPoint == "uno-localizations-override.json")
         {
             preprocessFile(request, requestDetails, message, socket);
             return;
