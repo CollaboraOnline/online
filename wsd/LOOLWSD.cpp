@@ -2277,7 +2277,7 @@ private:
 
             // re-write ServiceRoot and cache.
             RequestDetails requestDetails(request, LOOLWSD::ServiceRoot);
-//            LOG_TRC("Request details " << requestDetails.toString());
+            // LOG_TRC("Request details " << requestDetails.toString());
 
             // Config & security ...
             if (requestDetails.isProxy())
@@ -2293,14 +2293,14 @@ private:
             {
                 // Unit testing, nothing to do here
             }
-            else if (requestDetails.equals(0, "loleaflet"))
+            else if (requestDetails.equals(RequestDetails::Field::Type, "loleaflet"))
             {
                 // File server
                 assert(socket && "Must have a valid socket");
                 FileServerRequestHandler::handleRequest(request, requestDetails, message, socket);
                 socket->shutdown();
             }
-            else if (requestDetails.equals(0, "lool") &&
+            else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
                      requestDetails.equals(1, "adminws"))
             {
                 // Admin connections
@@ -2314,7 +2314,7 @@ private:
                 }
 
             }
-            else if (requestDetails.equals(0, "lool") &&
+            else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
                      requestDetails.equals(1, "getMetrics"))
             {
                 // See metrics.txt
@@ -2372,7 +2372,7 @@ private:
             else if (requestDetails.isGet("/robots.txt"))
                 handleRobotsTxtRequest(request, socket);
 
-            else if (requestDetails.equals(0, "lool") &&
+            else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
                      requestDetails.equals(1, "clipboard"))
             {
 //              Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
@@ -2382,11 +2382,11 @@ private:
             else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
                 handleClientProxyRequest(request, requestDetails, message, disposition);
 
-            else if (requestDetails.equals(0, "lool") &&
+            else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
                      requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
                 handleClientWsUpgrade(request, requestDetails, disposition, socket);
 
-            else if (!requestDetails.isWebSocket() && requestDetails.equals(0, "lool"))
+            else if (!requestDetails.isWebSocket() && requestDetails.equals(RequestDetails::Field::Type, "lool"))
             {
                 // All post requests have url prefix 'lool'.
                 handlePostRequest(requestDetails, request, message, disposition, socket);
@@ -2810,9 +2810,10 @@ private:
                 const std::string formName(form.get("name"));
 
                 // Validate the docKey
-                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-                std::string decodedUri = requestDetails.getDocumentURI();
+                const std::string decodedUri = requestDetails.getLegacyDocumentURI();
                 const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
                 auto docBrokerIt = DocBrokers.find(docKey);
 
                 // Maybe just free the client from sending childid in form ?
@@ -2845,8 +2846,9 @@ private:
             // TODO: Check that the user in question has access to this file!
 
             // 1. Validate the dockey
-            std::string decodedUri = requestDetails.getDocumentURI();
+            const std::string decodedUri = requestDetails.getLegacyDocumentURI();
             const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
             auto docBrokerIt = DocBrokers.find(docKey);
             if (docBrokerIt == DocBrokers.end())
@@ -2932,7 +2934,8 @@ private:
                                   Poco::MemoryInputStream& message,
                                   SocketDisposition &disposition)
     {
-        std::string url = requestDetails.getDocumentURI();
+        //FIXME: The DocumentURI includes the WOPISrc, which makes it potentially invalid URI.
+        const std::string url = requestDetails.getLegacyDocumentURI();
 
         LOG_INF("URL [" << url << "].");
         const auto uriPublic = DocumentBroker::sanitizeURI(url);
@@ -3022,7 +3025,7 @@ private:
                                SocketDisposition& disposition,
                                const std::shared_ptr<StreamSocket>& socket)
     {
-        std::string url = requestDetails.getDocumentURI();
+        const std::string url = requestDetails.getLegacyDocumentURI();
         assert(socket && "Must have a valid socket");
 
         // must be trace for anonymization

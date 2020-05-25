@@ -35,12 +35,8 @@ void DocumentBroker::handleProxyRequest(
     const RequestDetails &requestDetails,
     const std::shared_ptr<StreamSocket> &socket)
 {
-    const size_t session = 3;
-    const size_t command = 4;
-    const size_t serial = 5;
-
     std::shared_ptr<ClientSession> clientSession;
-    if (requestDetails.equals(command, "open"))
+    if (requestDetails.equals(RequestDetails::Field::Command, "open"))
     {
         bool isLocal = socket->isLocal();
         LOG_TRC("proxy: validate that socket is from localhost: " << isLocal);
@@ -73,7 +69,7 @@ void DocumentBroker::handleProxyRequest(
     }
     else
     {
-        std::string sessionId = requestDetails[session];
+        const std::string sessionId = requestDetails.getField(RequestDetails::Field::SessionId);
         LOG_TRC("proxy: find session for " << _docKey << " with id " << sessionId);
         for (const auto &it : _sessions)
         {
@@ -98,15 +94,14 @@ void DocumentBroker::handleProxyRequest(
     addSocketToPoll(socket);
 
     auto proxy = std::static_pointer_cast<ProxyProtocolHandler>(protocol);
-    if (requestDetails.equals(command, "close"))
+    if (requestDetails.equals(RequestDetails::Field::Command, "close"))
     {
         LOG_TRC("Close session");
         proxy->notifyDisconnected();
         return;
     }
 
-    (void)serial; // in URL for logging, debugging, and uniqueness.
-    bool isWaiting = requestDetails.equals(command, "wait");
+    const bool isWaiting = requestDetails.equals(RequestDetails::Field::Command, "wait");
     proxy->handleRequest(isWaiting, socket);
 }
 
