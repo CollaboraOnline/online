@@ -2810,6 +2810,7 @@ private:
                     LOG_INF("Perform insertfile: " << formChildid << ", " << formName << ", filename: " << fileName);
                     File(dirPath).createDirectories();
                     File(handler.getFilename()).moveTo(fileName);
+                    handler.takeFile();
                     response.setContentLength(0);
                     socket->send(response);
                     return;
