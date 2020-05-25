@@ -235,8 +235,55 @@
 		};
 		this.onmessage = function() {
 		};
+		// IE11 compatibility ...
+		if (!!window.MSInputMethodContext && !!document.documentMode) {
+			this.decoder = {};
+			this.decoder.decode = function(bytes) {
+				var decoded = '';
+				var code = 0;
+				for (var i = 0; i < bytes.length;) {
+					var b = bytes[i];
+					var seqLen = 1;
+					// get bits off the top.
+					if (b <= 0x7f)
+						code = b & 0xff;
+					else if (b <= 0xdf) {
+						code = b & 0x1f;
+						seqLen = 2;
+					} else if (b <= 0xdf) {
+						code = b & 0x0f;
+						seqLen = 3;
+					} else if (b <= 0xf4) {
+						code = b & 0x07;
+						seqLen = 4;
+					}
+					var left = bytes.length - i;
+					if (left >= seqLen) {
+						for (var j = 1; j < seqLen; ++j)
+							code = (code << 6) | (bytes[i + j] & 0x3f);
+					} else { // skip to end
+						seqLen = left;
+						code = 0xfffd;
+					}
+					decoded += String.fromCharCode(code);
+					i += seqLen;
+				}
+				return decoded;
+			};
+			this.doSlice = function(bytes,start,end) {
+				var data = new Uint8Array(end - start + 1);
+				for (var i = 0; i <= (end - start); ++i)
+					data[i] = bytes[start + i];
+				return data;
+			};
+		} else {
+			this.decoder = new TextDecoder();
+			this.doSlice = function(bytes,start,end) { return bytes.slice(start,end); };
+		}
+		this.decode = function(bytes,start,end) {
+			return this.decoder.decode(this.doSlice(bytes, start,end));
+		};
 		this.parseIncomingArray = function(arr) {
-			var decoder = new TextDecoder();
 			console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i)
 			{
@@ -265,7 +312,7 @@
 				var start = i;
 				while (arr[i] != 10) // '\n'
 					i++;
-				numStr = decoder.decode(arr.slice(start, i)); // FIXME: IE11
+				numStr = this.decode(arr, start, i);
 				var serial = parseInt(numStr, 16);
 
 				i++; // skip \n
@@ -280,16 +327,16 @@
 				start = i;
 				while (arr[i] != 10) // '\n'
 					i++;
-				numStr = decoder.decode(arr.slice(start, i)); // FIXME: IE11
+				numStr = this.decode(arr, start, i);
 				var size = parseInt(numStr, 16);
 
 				i++; // skip \n
 
 				var data;
-				if (type == 'T') // FIXME: IE11
-					data = decoder.decode(arr.slice(i, i + size));
+				if (type == 'T')
+					data = this.decode(arr, i, i + size);
 				else
-					data = arr.slice(i, i + size);
+					data = this.doSlice(arr, i, i + size);
 
 				if (serial !== that.inSerial + 1) {
 					console.debug('Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1));
