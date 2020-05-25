@@ -357,7 +357,7 @@ void DocumentBroker::pollThread()
                     (now - lastBWUpdateTime).count() >= COMMAND_TIMEOUT_MS)
         {
             lastBWUpdateTime = now;
-            uint64_t sent, recv;
+            uint64_t sent = 0, recv = 0;
             getIOStats(sent, recv);
 
             uint64_t deltaSent = 0, deltaRecv = 0;
@@ -2232,7 +2232,7 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
     assertCorrectThread();
     for (const auto& sessionIt : _sessions)
     {
-        uint64_t s, r;
+        uint64_t s = 0, r = 0;
         sessionIt.second->getIOStats(s, r);
         sent += s;
         recv += r;
@@ -2377,7 +2377,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
-    uint64_t sent, recv;
+    uint64_t sent = 0, recv = 0;
     getIOStats(sent, recv);
 
     auto now = std::chrono::steady_clock::now();
