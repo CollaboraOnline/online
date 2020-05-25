@@ -2238,6 +2238,17 @@ private:
 
         Poco::MemoryInputStream startmessage(&socket->getInBuffer()[0],
                                              socket->getInBuffer().size());;
+
+#if 0 // debug a specific command's payload
+        if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
+        {
+            std::ostringstream oss;
+            oss << "Debug - specific command:\n";
+            socket->dumpState(oss);
+            LOG_INF(oss.str());
+        }
+#endif
+
         Poco::Net::HTTPRequest request;
 
         StreamSocket::MessageMap map;
