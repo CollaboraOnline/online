@@ -264,6 +264,7 @@ void Session::getIOStats(uint64_t &sent, uint64_t &recv)
     if (!_protocol)
     {
         LOG_TRC("ERR - missing protocol " << getName() << ": Get IO stats.");
+        sent = 0; recv = 0;
         return;
     }
 
