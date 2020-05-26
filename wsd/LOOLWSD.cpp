@@ -1407,7 +1407,11 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
-    optionSet.addOption(Option("version", "", "Display version information.")
+    optionSet.addOption(Option("version-hash", "", "Display product version-hash information.")
+                        .required(false)
+                        .repeatable(false));
+
+    optionSet.addOption(Option("version", "", "Display version and hash information.")
                         .required(false)
                         .repeatable(false));
 
@@ -1482,6 +1486,13 @@ void LOOLWSD::handleOption(const std::string& optionName,
     if (optionName == "help")
     {
         displayHelp();
+        std::exit(EX_OK);
+    }
+    else if (optionName == "version-hash")
+    {
+        std::string version, hash;
+        Util::getVersionInfo(version, hash);
+        std::cout << hash << std::endl;
         std::exit(EX_OK);
     }
     else if (optionName == "version")
@@ -3249,6 +3260,12 @@ private:
 
         // Set the product name
         capabilities->set("productName", APP_NAME);
+
+        // Set the product version
+        capabilities->set("productVersion", LOOLWSD_VERSION);
+
+        // Set the product version hash
+        capabilities->set("productVersionHash", LOOLWSD_VERSION_HASH);
 
         // Set that this is a proxy.php-enabled instance
         capabilities->set("hasProxyPrefix", LOOLWSD::IsProxyPrefixEnabled);
