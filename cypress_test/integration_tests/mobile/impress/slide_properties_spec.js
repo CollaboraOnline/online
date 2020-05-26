@@ -1,21 +1,24 @@
-/* global describe it beforeEach cy require afterEach expect */
+/* global describe it cy require afterEach expect */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Changing slide properties.', function() {
-	beforeEach(function() {
-		mobileHelper.beforeAllMobile('slide_properties.odp', 'impress');
+	var testFileName;
+
+	function before(fileName) {
+		testFileName = fileName;
+		mobileHelper.beforeAllMobile(testFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 
 		previewShouldBeFullWhite();
 
 		mobileHelper.openMobileWizard();
-	});
+	}
 
 	afterEach(function() {
-		helper.afterAll('insertion_wizard.odp');
+		helper.afterAll(testFileName);
 	});
 
 	function previewShouldBeFullWhite(fullWhite = true, slideNumber = 1) {
@@ -48,6 +51,8 @@ describe('Changing slide properties.', function() {
 	}
 
 	it('Apply solid color background.', function() {
+		before('slide_properties.odp');
+
 		// Change fill style
 		cy.get('#fillstyle')
 			.click();
@@ -89,6 +94,8 @@ describe('Changing slide properties.', function() {
 	});
 
 	it('Apply gradient fill.', function() {
+		before('slide_properties.odp');
+
 		// Change fill style
 		cy.get('#fillstyle')
 			.click();
@@ -148,6 +155,8 @@ describe('Changing slide properties.', function() {
 	});
 
 	it('Apply hatching fill.', function() {
+		before('slide_properties.odp');
+
 		// Change fill style
 		cy.get('#fillstyle')
 			.click();
@@ -186,6 +195,8 @@ describe('Changing slide properties.', function() {
 	});
 
 	it('Apply bitmap fill.', function() {
+		before('slide_properties.odp');
+
 		// Change fill style
 		cy.get('#fillstyle')
 			.click();
@@ -224,6 +235,8 @@ describe('Changing slide properties.', function() {
 	});
 
 	it('Apply pattern fill.', function() {
+		before('slide_properties.odp');
+
 		// Change fill style
 		cy.get('#fillstyle')
 			.click();
@@ -259,5 +272,78 @@ describe('Changing slide properties.', function() {
 
 		cy.get('#fillattr1 .ui-header-left')
 			.should('have.text', '50 Percent');
+	});
+
+	it('Remove slide fill.', function() {
+		before('slide_properties.odp');
+
+		// Apply color fill first
+		cy.get('#fillstyle')
+			.click();
+
+		cy.contains('.ui-combobox-text', 'Color')
+			.click();
+
+		cy.get('#fillstyle .ui-header-left')
+			.should('have.text', 'Color');
+
+		previewShouldBeFullWhite(false);
+
+		// Reopen mobile wizard
+		mobileHelper.closeMobileWizard();
+		mobileHelper.openMobileWizard();
+
+		cy.get('#fillstyle .ui-header-left')
+			.should('have.text', 'Color');
+
+		// Remove fill
+		cy.get('#fillstyle')
+			.click();
+
+		cy.contains('.ui-combobox-text', 'None')
+			.click();
+
+		cy.get('#fillstyle .ui-header-left')
+			.should('have.text', 'None');
+
+		previewShouldBeFullWhite();
+
+		// Reopen mobile wizard and check the settings again
+		mobileHelper.closeMobileWizard();
+		mobileHelper.openMobileWizard();
+
+		cy.get('#fillstyle .ui-header-left')
+			.should('have.text', 'None');
+	});
+
+	it('Change master background.', function() {
+		before('slide_properties2.odp');
+
+		// Master background is disabled, enable it first
+		cy.get('input#displaymasterbackground')
+			.should('not.have.prop', 'checked', true);
+
+		cy.get('input#displaymasterbackground')
+			.click();
+
+		cy.get('input#displaymasterbackground')
+			.should('have.prop', 'checked', true);
+
+		previewShouldBeFullWhite(false);
+
+		// Reopen mobile wizard and change the settings again
+		mobileHelper.closeMobileWizard();
+		mobileHelper.openMobileWizard();
+
+		cy.get('input#displaymasterbackground')
+			.should('have.prop', 'checked', true);
+
+		cy.get('input#displaymasterbackground')
+			.click();
+
+		cy.get('input#displaymasterbackground')
+			.should('not.have.prop', 'checked', true);
+
+		previewShouldBeFullWhite();
 	});
 });
