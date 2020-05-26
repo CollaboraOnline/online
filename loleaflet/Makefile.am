@@ -356,6 +356,25 @@ define prereq_css
 	$(if $(filter DEBUG,$(1)),$(LOLEAFLET_CSS_DST),$(LOLEAFLET_CSS))
 endef
 
+define bundle_all
+	$(if $(filter DEBUG,$(1)),\
+		@touch $@,\
+		@echo "Uglify loleaflet js files..."
+		@m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
+			-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS)) \
+			-DLOLEAFLET_LIBS_JS=$(subst $(SPACE),$(COMMA),$(LOLEAFLET_LIBS_JS_SRC)) \
+			-DLOLEAFLET_JS=$(INTERMEDIATE_DIR)/loleaflet-src.js \
+			$(srcdir)/bundle.js.m4 > $(INTERMEDIATE_DIR)/bundle.js
+		@$(NODE) node_modules/uglify-js/bin/uglifyjs \
+			$(INTERMEDIATE_DIR)/bundle.js \
+			--output $@)
+endef
+
+define prereq_all
+	$(if $(filter DEBUG,$(1)),$(NODE_MODULES_JS_DST) $(LOLEAFLET_LIBS_JS_DST),\
+		$(NODE_MODULES_JS_SRC) $(LOLEAFLET_LIBS_JS_SRC))
+endef
+
 all-local: build-loleaflet
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 
@@ -405,28 +424,15 @@ $(DIST_FOLDER)/bundle.css: $(call prereq_css,$(BUNDLE))
 	@mkdir -p $(dir $@)
 	$(call bundle_css,$(BUNDLE))
 
+$(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/loleaflet-src.js $(call prereq_all,$(BUNDLE))
+	@mkdir -p $(dir $@)
+	$(call bundle_all,$(BUNDLE))
+
 if ENABLE_DEBUG
-$(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_DST) \
-	$(INTERMEDIATE_DIR)/loleaflet-src.js \
-	$(LOLEAFLET_LIBS_JS_DST)
-	@touch $@
 else
 $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	@echo "Uglify global.js file..."
 	@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@
-
-$(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_SRC) \
-	$(INTERMEDIATE_DIR)/loleaflet-src.js \
-	$(LOLEAFLET_LIBS_JS_SRC)
-	@echo "Uglify loleaflet js files..."
-	@m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
-		-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS)) \
-		-DLOLEAFLET_LIBS_JS=$(subst $(SPACE),$(COMMA),$(LOLEAFLET_LIBS_JS_SRC)) \
-		-DLOLEAFLET_JS=$(builddir)/build/dist/loleaflet-src.js \
-		$(srcdir)/bundle.js.m4 > $(INTERMEDIATE_DIR)/bundle.js
-	$(NODE) node_modules/uglify-js/bin/uglifyjs \
-		$(INTERMEDIATE_DIR)/bundle.js \
-		--output $@
 endif
 
 $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
