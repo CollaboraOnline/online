@@ -58,6 +58,7 @@ LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(DIST_FOLDER)/admin/%,$(LOLE
 
 define file_target
 $(1): $(2)
+	@mkdir -p $$(dir $$@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		`cp $$< $$@`; \
 	else \
@@ -344,6 +345,17 @@ define prereq_loleaflet
 	$(if $(filter DEBUG,$(1)),$(LOLEAFLET_JS_DST),$(LOLEAFLET_JS_SRC))
 endef
 
+define bundle_css
+	$(if $(filter DEBUG,$(1)),\
+		@touch $@,\
+		@echo "Uglify loleaflet css files..."
+		@$(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@)
+endef
+
+define prereq_css
+	$(if $(filter DEBUG,$(1)),$(LOLEAFLET_CSS_DST),$(LOLEAFLET_CSS))
+endef
+
 all-local: build-loleaflet
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 
@@ -389,19 +401,16 @@ $(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet,$(BUNDLE))
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	$(call bundle_loleaflet($(BUNDLE)))
 
-if ENABLE_DEBUG
-$(DIST_FOLDER)/bundle.css: $(LOLEAFLET_CSS_DST)
-	@touch $@
+$(DIST_FOLDER)/bundle.css: $(call prereq_css,$(BUNDLE))
+	@mkdir -p $(dir $@)
+	$(call bundle_css,$(BUNDLE))
 
+if ENABLE_DEBUG
 $(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(INTERMEDIATE_DIR)/loleaflet-src.js \
 	$(LOLEAFLET_LIBS_JS_DST)
 	@touch $@
 else
-$(DIST_FOLDER)/bundle.css: $(LOLEAFLET_CSS)
-	@echo "Uglify loleaflet css files..."
-	@$(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@
-
 $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	@echo "Uglify global.js file..."
 	@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@
