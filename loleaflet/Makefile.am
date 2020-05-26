@@ -418,9 +418,11 @@ $(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_SRC) \
 		--output $@
 endif
 
-$(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) $(LOLEAFLET_WELCOME_DST) $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/global.js \
-\
-	$(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js
+$(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
+	$(LOLEAFLET_HTML_DST) \
+	$(DIST_FOLDER)/bundle.css \
+	$(DIST_FOLDER)/global.js \
+	$(DIST_FOLDER)/bundle.js
 	@echo "Generating loleaflet.html..."
 	@m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
