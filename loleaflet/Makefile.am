@@ -332,7 +332,7 @@ if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
-build-loleaflet: | $(LOLEAFLET_L10N_DST) \
+build-loleaflet: $(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(LOLEAFLET_IMAGES_CUSTOM_DST) \
