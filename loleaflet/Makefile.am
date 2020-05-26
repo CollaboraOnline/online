@@ -338,7 +338,6 @@ build-loleaflet: $(LOLEAFLET_L10N_DST) \
 	$(LOLEAFLET_IMAGES_CUSTOM_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
-	$(INTERMEDIATE_DIR)/loleaflet-src.js \
 	$(ADMIN_BUNDLE) \
 	$(DIST_FOLDER)/bundle.css \
 	$(DIST_FOLDER)/device-mobile.css \
