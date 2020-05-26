@@ -1106,7 +1106,8 @@ fi
 
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
 
-AC_CONFIG_COMMANDS_PRE([echo Installing node modules packages... && (cd loleaflet && npm install)])
+AC_CONFIG_COMMANDS_PRE([AS_IF([test `uname -s` = "Linux"],
+                              [echo Installing node modules packages... && (cd loleaflet && npm install)])])
 
 AC_OUTPUT
 
