@@ -5,8 +5,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Insert formatting mark via insertion wizard.', function() {
+	var testFileName = 'insert_formatting_mark.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('insert_formatting_mark.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -22,7 +24,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('insert_formatting_mark.odt');
+		helper.afterAll(testFileName);
 	});
 
 	it('Insert non-breaking space.', function() {

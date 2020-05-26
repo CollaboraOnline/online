@@ -5,15 +5,17 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Spell checking menu.', function() {
+	var testFileName = 'spellchecking.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('spellchecking.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
-		helper.afterAll('spellchecking.odt');
+		helper.afterAll(testFileName);
 	});
 
 	function openContextMenu() {

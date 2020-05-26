@@ -6,15 +6,17 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Change alignment settings.', function() {
+	var testFileName = 'alignment_options.ods';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('alignment_options.ods', 'calc');
+		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
-		helper.afterAll('alignment_options.ods');
+		helper.afterAll(testFileName);
 	});
 
 	function getTextPosForFirstCell() {

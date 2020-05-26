@@ -6,8 +6,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Apply font changes.', function() {
+	var testFileName = 'apply_font.ods';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('apply_font.ods', 'calc');
+		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -29,7 +31,7 @@ describe('Apply font changes.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('apply_font.ods');
+		helper.afterAll(testFileName);
 	});
 
 	it('Apply bold.', function() {

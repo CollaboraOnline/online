@@ -4,12 +4,14 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Focus tests', function() {
+	var testFileName = 'focus.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('focus.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 	});
 
 	afterEach(function() {
-		helper.afterAll('focus.odt');
+		helper.afterAll(testFileName);
 	});
 
 	it('Basic document focus.', function() {

@@ -5,15 +5,17 @@ var mobileHelper = require('../../common/mobile_helper');
 var calc = require('../../common/calc');
 
 describe('Calc focus tests', function() {
+	var testFileName = 'focus.ods';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('focus.ods', 'calc');
+		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Wait until the Formula-Bar is loaded.
 		cy.get('.inputbar_container', {timeout : 10000});
 	});
 
 	afterEach(function() {
-		helper.afterAll('focus.ods');
+		helper.afterAll(testFileName);
 	});
 
 	it('Basic document focus.', function() {

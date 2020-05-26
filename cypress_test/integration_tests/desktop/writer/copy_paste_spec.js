@@ -3,12 +3,14 @@
 var helper = require('../../common/helper');
 
 describe('Clipboard operations.', function() {
+	var testFileName = 'copy_paste.odt';
+
 	beforeEach(function() {
-		helper.loadTestDoc('copy_paste.odt', 'writer');
+		helper.loadTestDoc(testFileName, 'writer');
 	});
 
 	afterEach(function() {
-		helper.afterAll('copy_paste.odt');
+		helper.afterAll(testFileName);
 	});
 
 	it('Copy and Paste text.', function() {

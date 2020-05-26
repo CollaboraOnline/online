@@ -5,15 +5,17 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Insert objects via insertion wizard.', function() {
+	var testFileName = 'insert_object.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('insert_object.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
-		helper.afterAll('insert_object.odt');
+		helper.afterAll(testFileName);
 	});
 
 	function getCursorPos(offsetProperty, aliasName) {

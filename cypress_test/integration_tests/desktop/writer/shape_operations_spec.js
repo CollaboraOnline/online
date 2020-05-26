@@ -3,13 +3,14 @@
 var helper = require('../../common/helper');
 
 describe('Shape operations', function() {
+	var testFileName = 'shape_operations.odt';
 
 	afterEach(function() {
-		helper.afterAll('shape_operations.odt', 'writer');
+		helper.afterAll(testFileName, 'writer');
 	});
 
 	it('Insert a simple shape.', function() {
-		helper.loadTestDoc('shape_operations.odt', 'writer');
+		helper.loadTestDoc(testFileName, 'writer');
 
 		// Scroll on the up toolbar
 		cy.get('#toolbar-up .w2ui-scroll-right').click();

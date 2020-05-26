@@ -5,8 +5,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Apply font changes.', function() {
+	var testFileName = 'apply_font.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('apply_font.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -18,7 +20,7 @@ describe('Apply font changes.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('apply_font.odt');
+		helper.afterAll(testFileName);
 	});
 
 	function applyStyle(styleName) {

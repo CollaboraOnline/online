@@ -4,8 +4,10 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Impress insertion wizard.', function() {
+	var testFileName = 'insertion_wizard.odp';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('insertion_wizard.odp', 'impress');
+		mobileHelper.beforeAllMobile(testFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 
@@ -13,7 +15,7 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('insertion_wizard.odp');
+		helper.afterAll(testFileName);
 	});
 
 	function selectTextOfShape() {

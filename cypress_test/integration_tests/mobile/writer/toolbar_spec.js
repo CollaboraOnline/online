@@ -4,12 +4,14 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Toolbar tests', function() {
+	var testFileName = 'toolbar.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('toolbar.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 	});
 
 	afterEach(function() {
-		helper.afterAll('toolbar.odt');
+		helper.afterAll(testFileName);
 	});
 
 	it('State of mobile wizard toolbar item.', function() {

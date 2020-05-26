@@ -1,4 +1,4 @@
-/* global describe it cy require expect */
+/* global describe it cy require expect afterEach */
 
 var helper = require('../../common/helper');
 var calc = require('../../common/calc');
@@ -6,8 +6,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Interact with bottom toolbar.', function() {
-	function before(fileName, subPath) {
-		mobileHelper.beforeAllMobile(fileName, subPath);
+	var testFileName;
+
+	function before(fileName) {
+		testFileName = fileName;
+		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -15,9 +18,9 @@ describe('Interact with bottom toolbar.', function() {
 		calc.clickOnFirstCell();
 	}
 
-	function after(fileName) {
-		helper.afterAll(fileName);
-	}
+	afterEach(function() {
+		helper.afterAll(testFileName);
+	});
 
 	function getTextPosForFirstCell() {
 		calc.dblClickOnFirstCell();
@@ -40,7 +43,7 @@ describe('Interact with bottom toolbar.', function() {
 	}
 
 	it('Apply bold.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.bold')
 			.click();
@@ -49,12 +52,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td b')
 			.should('exist');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Apply italic.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.italic')
 			.click();
@@ -63,12 +64,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td i')
 			.should('exist');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Apply underline.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.underline')
 			.click();
@@ -77,12 +76,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td u')
 			.should('exist');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Apply strikeout.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.strikeout')
 			.click();
@@ -91,12 +88,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td s')
 			.should('exist');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Apply font color.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.textcolor')
 			.click();
@@ -111,12 +106,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'color', '#00FF00');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Apply highlight color.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.backcolor')
 			.click();
@@ -131,12 +124,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'bgcolor', '#00FF00');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Merge cells', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		// Select the full row
 		calcHelper.selectFirstRow();
@@ -148,12 +139,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'colspan', '1024');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Apply left/right alignment', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		// Set right aligment first
 		cy.get('.w2ui-tb-image.w2ui-icon.alignright')
@@ -174,12 +163,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'left');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Align to center.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.alignhorizontal')
 			.click();
@@ -188,12 +175,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'center');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Change to block alignment.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.alignblock')
 			.click();
@@ -202,12 +187,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'justify');
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Enable text wrapping.', function() {
-		before('bottom_toolbar.ods', 'calc');
+		before('bottom_toolbar.ods');
 
 		helper.initAliasToNegative('originalTextPos');
 
@@ -236,12 +219,10 @@ describe('Interact with bottom toolbar.', function() {
 							});
 					});
 			});
-
-		after('bottom_toolbar.ods');
 	});
 
 	it('Insert row after.', function() {
-		before('bottom_toolbar2.ods', 'calc');
+		before('bottom_toolbar2.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.insertrowsafter')
 			.click();
@@ -262,12 +243,10 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table tr:nth-of-type(3)')
 			.should('contain.text', '2');
-
-		after('bottom_toolbar2.ods');
 	});
 
 	it('Insert column after.', function() {
-		before('bottom_toolbar2.ods', 'calc');
+		before('bottom_toolbar2.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.insertcolumnsafter')
 			.click();
@@ -291,7 +270,5 @@ describe('Interact with bottom toolbar.', function() {
 
 		cy.get('#copy-paste-container table tr:nth-of-type(1) td:nth-of-type(3)')
 			.should('contain.text', '1');
-
-		after('bottom_toolbar2.ods');
 	});
 });

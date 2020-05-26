@@ -5,8 +5,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Pushing bottom toolbar items.', function() {
+	var testFileName = 'bottom_toolbar.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('bottom_toolbar.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -16,7 +18,7 @@ describe('Pushing bottom toolbar items.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('bottom_toolbar.odt');
+		helper.afterAll(testFileName);
 	});
 
 	it('Apply bold.', function() {

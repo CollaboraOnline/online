@@ -6,8 +6,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Calc insertion wizard.', function() {
+	var testFileName = 'insertion_wizard.ods';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('insertion_wizard.ods', 'calc');
+		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -21,7 +23,7 @@ describe('Calc insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('insertion_wizard.ods');
+		helper.afterAll(testFileName);
 	});
 
 	it('Check existence of image insertion items.', function() {

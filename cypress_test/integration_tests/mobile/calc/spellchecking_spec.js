@@ -6,15 +6,17 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Calc spell checking menu.', function() {
+	var testFileName = 'spellchecking.ods';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('spellchecking.ods', 'calc');
+		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
-		helper.afterAll('spellchecking.ods');
+		helper.afterAll(testFileName);
 	});
 
 	function openContextMenu() {

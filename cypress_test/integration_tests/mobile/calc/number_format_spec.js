@@ -6,8 +6,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Apply number formatting.', function() {
+	var testFileName = 'number_format.ods';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('number_format.ods', 'calc');
+		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -28,7 +30,7 @@ describe('Apply number formatting.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('number_format.ods');
+		helper.afterAll(testFileName);
 	});
 
 	function selectFormatting(formattingString) {

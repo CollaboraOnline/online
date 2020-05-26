@@ -4,15 +4,17 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Spell checking menu.', function() {
+	var testFileName = 'spellchecking.odp';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('spellchecking.odp', 'impress');
+		mobileHelper.beforeAllMobile(testFileName, 'impress');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
-		helper.afterAll('spellchecking.odp');
+		helper.afterAll(testFileName);
 	});
 
 	function openContextMenu() {

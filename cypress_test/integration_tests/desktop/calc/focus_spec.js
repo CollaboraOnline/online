@@ -4,15 +4,17 @@ var helper = require('../../common/helper');
 var calc = require('../../common/calc');
 
 describe('Calc focus tests', function() {
+	var testFileName = 'focus.ods';
+
 	beforeEach(function() {
-		helper.beforeAllDesktop('focus.ods', 'calc');
+		helper.beforeAllDesktop(testFileName, 'calc');
 
 		// Wait until the Formula-Bar is loaded.
 		cy.get('.inputbar_container', {timeout : 10000});
 	});
 
 	afterEach(function() {
-		helper.afterAll('focus.ods');
+		helper.afterAll(testFileName);
 	});
 
 	it('Formula-bar focus', function() {

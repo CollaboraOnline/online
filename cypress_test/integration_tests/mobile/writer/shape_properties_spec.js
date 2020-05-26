@@ -6,9 +6,10 @@ var writerHelper = require('./writer_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
 	var defaultGeometry = 'M 1965,4863 L 7957,10855 1965,10855 1965,4863 1965,4863 Z';
+	var testFileName = 'shape_properties.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('shape_properties.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -36,7 +37,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('shape_properties.odt');
+		helper.afterAll(testFileName);
 	});
 
 	function triggerNewSVG() {

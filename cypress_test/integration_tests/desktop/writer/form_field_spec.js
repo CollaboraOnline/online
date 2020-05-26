@@ -3,18 +3,19 @@
 var helper = require('../../common/helper');
 
 describe('Form field button tests.', function() {
+	var testFileName = 'shape_operations.odt';
 
-	afterEach(function() {
-		helper.afterAll('form_field.odt', 'writer');
-	});
-
-	function before(fileName, subFolder) {
-		helper.loadTestDoc(fileName, subFolder);
+	function before(fileName) {
+		testFileName = fileName;
+		helper.loadTestDoc(fileName, 'writer');
 
 		// Wait for the sidebar to change the zoom level by load
 		cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
 			.should('not.have.text', '100');
 	}
+	afterEach(function() {
+		helper.afterAll(testFileName, 'writer');
+	});
 
 	function buttonShouldNotExist() {
 		cy.get('.form-field-frame')
@@ -84,7 +85,7 @@ describe('Form field button tests.', function() {
 	}
 
 	it('Activate and deactivate form field button.', function() {
-		before('form_field.odt', 'writer');
+		before('form_field.odt');
 
 		// We don't have the button by default
 		buttonShouldNotExist();
@@ -115,7 +116,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Check drop down list.', function() {
-		before('form_field.odt', 'writer');
+		before('form_field.odt');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -158,7 +159,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Test field editing', function() {
-		before('form_field.odt', 'writer');
+		before('form_field.odt');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -221,7 +222,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Multiple form field button activation.', function() {
-		before('multiple_form_fields.odt', 'writer');
+		before('multiple_form_fields.odt');
 
 		// We don't have the button by default
 		buttonShouldNotExist();
@@ -258,7 +259,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Test drop-down field with no selection.', function() {
-		before('drop_down_form_field_noselection.odt', 'writer');
+		before('drop_down_form_field_noselection.odt');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -271,7 +272,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Test drop-down field with no items.', function() {
-		before('drop_down_form_field_noitem.odt', 'writer');
+		before('drop_down_form_field_noitem.odt');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -299,7 +300,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Test field button after zoom.', function() {
-		before('form_field.odt', 'writer');
+		before('form_field.odt');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')
@@ -331,7 +332,7 @@ describe('Form field button tests.', function() {
 	});
 
 	it('Test dynamic font size.', function() {
-		before('form_field.odt', 'writer');
+		before('form_field.odt');
 
 		// Move the cursor next to the form field
 		cy.get('textarea.clipboard')

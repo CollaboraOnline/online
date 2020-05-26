@@ -5,12 +5,14 @@ var mobileHelper = require('../../common/mobile_helper');
 var impress = require('../../common/impress');
 
 describe('Impress focus tests', function() {
+	var testFileName = 'focus.odp';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('focus.odp', 'impress');
+		mobileHelper.beforeAllMobile(testFileName, 'impress');
 	});
 
 	afterEach(function() {
-		helper.afterAll('focus.odp');
+		helper.afterAll(testFileName);
 	});
 
 	it('Select text box, no editing', function() {

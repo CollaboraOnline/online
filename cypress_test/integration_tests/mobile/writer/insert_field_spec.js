@@ -5,8 +5,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Insert fields via insertion wizard.', function() {
+	var testFileName = 'insert_field.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('insert_field.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -22,7 +24,7 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('insert_field.odt');
+		helper.afterAll(testFileName);
 	});
 
 	it('Insert page number field.', function() {

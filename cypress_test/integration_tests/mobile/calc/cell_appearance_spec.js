@@ -6,15 +6,17 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('./calc_helper');
 
 describe('Change cell appearance.', function() {
+	var testFileName = 'cell_appearance.ods';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('cell_appearance.ods', 'calc');
+		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
-		helper.afterAll('cell_appearance.ods');
+		helper.afterAll(testFileName);
 	});
 
 	function openAppearencePanel() {

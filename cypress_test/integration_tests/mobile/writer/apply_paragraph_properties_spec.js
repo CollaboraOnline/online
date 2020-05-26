@@ -5,8 +5,10 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('./writer_helper');
 
 describe('Apply paragraph properties.', function() {
+	var testFileName = 'apply_paragraph_properties.odt';
+
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile('apply_paragraph_properties.odt', 'writer');
+		mobileHelper.beforeAllMobile(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -25,7 +27,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll('apply_paragraph_properties.odt');
+		helper.afterAll(testFileName);
 	});
 
 	it('Apply left alignment.', function() {
