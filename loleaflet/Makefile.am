@@ -321,7 +321,7 @@ COMMA := ,
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
 LOLEAFLET_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
-LOLEAFLET_PREFIX := $(if $(filter true,$(ENABLE_DEBUG)),$(abs_builddir),$(abs_builddir)/build)
+INTERMEDIATE_DIR := $(if $(filter true,$(ENABLE_DEBUG)),$(abs_builddir),$(abs_builddir)/build)
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
@@ -338,7 +338,7 @@ build-loleaflet: $(LOLEAFLET_L10N_DST) \
 	$(LOLEAFLET_IMAGES_CUSTOM_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
-	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
+	$(INTERMEDIATE_DIR)/loleaflet-src.js \
 	$(ADMIN_BUNDLE) \
 	$(DIST_FOLDER)/bundle.css \
 	$(DIST_FOLDER)/device-mobile.css \
@@ -356,10 +356,10 @@ if ENABLE_ANDROIDAPP
 endif
 
 $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
-	$(LOLEAFLET_PREFIX)/dist/admin-src.js
-	@NODE_PATH=$(abs_builddir)/node_modules:$(LOLEAFLET_PREFIX)/dist $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(filter true,$(ENABLE_DEBUG)),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
+	$(INTERMEDIATE_DIR)/admin-src.js
+	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(filter true,$(ENABLE_DEBUG)),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
 
-$(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
+$(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@echo "Checking for admin JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
@@ -367,7 +367,7 @@ $(LOLEAFLET_PREFIX)/dist/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 
 
 if ENABLE_DEBUG
-$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_DST)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: $(LOLEAFLET_JS_DST)
 	@mkdir -p $(dir $@)
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
@@ -378,11 +378,11 @@ $(DIST_FOLDER)/bundle.css: $(LOLEAFLET_CSS_DST)
 	@touch $@
 
 $(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_DST) \
-	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
+	$(INTERMEDIATE_DIR)/loleaflet-src.js \
 	$(LOLEAFLET_LIBS_JS_DST)
 	@touch $@
 else
-$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
 	@mkdir -p $(dir $@)
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
@@ -405,16 +405,16 @@ $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@
 
 $(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_SRC) \
-	$(LOLEAFLET_PREFIX)/dist/loleaflet-src.js \
+	$(INTERMEDIATE_DIR)/loleaflet-src.js \
 	$(LOLEAFLET_LIBS_JS_SRC)
 	@echo "Uglify loleaflet js files..."
 	@m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
 		-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS)) \
 		-DLOLEAFLET_LIBS_JS=$(subst $(SPACE),$(COMMA),$(LOLEAFLET_LIBS_JS_SRC)) \
 		-DLOLEAFLET_JS=$(builddir)/build/dist/loleaflet-src.js \
-		$(srcdir)/bundle.js.m4 > $(LOLEAFLET_PREFIX)/dist/bundle.js
+		$(srcdir)/bundle.js.m4 > $(INTERMEDIATE_DIR)/bundle.js
 	$(NODE) node_modules/uglify-js/bin/uglifyjs \
-		$(LOLEAFLET_PREFIX)/dist/bundle.js \
+		$(INTERMEDIATE_DIR)/bundle.js \
 		--output $@
 endif
 
