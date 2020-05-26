@@ -325,6 +325,25 @@ INTERMEDIATE_DIR := $(if $(filter true,$(ENABLE_DEBUG)),$(abs_builddir),$(abs_bu
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
+BUNDLE ?= $(if $(filter true,$(ENABLE_DEBUG)),DEBUG,RELEASE)
+
+define bundle_loleaflet
+	$(if $(filter DEBUG,$(1)),\
+		@touch $@,
+		@m4 -PE -DIOSAPP=$(ENABLE_IOSAPP) \
+			-DGTKAPP=$(ENABLE_GTKAPP) \
+			-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
+			-DMOBILEAPPNAME="$(APP_NAME)" \
+			-DVERSION=$(LOLEAFLET_VERSION) \
+			-DCOPYRIGHT=$(srcdir)/src/copyright.js \
+			-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_JS))) \
+			$(srcdir)/loleaflet-src.js.m4 > $@)
+endef
+
+define prereq_loleaflet
+	$(if $(filter DEBUG,$(1)),$(LOLEAFLET_JS_DST),$(LOLEAFLET_JS_SRC))
+endef
+
 all-local: build-loleaflet
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 
@@ -363,16 +382,14 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
-
-
-if ENABLE_DEBUG
-$(INTERMEDIATE_DIR)/loleaflet-src.js: $(LOLEAFLET_JS_DST)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet,$(BUNDLE))
 	@mkdir -p $(dir $@)
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	@touch $@
+	$(call bundle_loleaflet($(BUNDLE)))
 
+if ENABLE_DEBUG
 $(DIST_FOLDER)/bundle.css: $(LOLEAFLET_CSS_DST)
 	@touch $@
 
@@ -381,20 +398,6 @@ $(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_DST) \
 	$(LOLEAFLET_LIBS_JS_DST)
 	@touch $@
 else
-$(INTERMEDIATE_DIR)/loleaflet-src.js: $(LOLEAFLET_JS_SRC)
-	@mkdir -p $(dir $@)
-	@echo "Checking for loleaflet JS errors..."
-	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
-		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	@m4 -PE -DIOSAPP=$(ENABLE_IOSAPP) \
-		-DGTKAPP=$(ENABLE_GTKAPP) \
-		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
-		-DMOBILEAPPNAME="$(APP_NAME)" \
-		-DVERSION=$(LOLEAFLET_VERSION) \
-		-DCOPYRIGHT=$(srcdir)/src/copyright.js \
-		-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_JS))) \
-		$(srcdir)/loleaflet-src.js.m4 > $@
-
 $(DIST_FOLDER)/bundle.css: $(LOLEAFLET_CSS)
 	@echo "Uglify loleaflet css files..."
 	@$(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@
