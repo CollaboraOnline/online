@@ -382,6 +382,8 @@ define global_file
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@)
 endef
 
+.PHONY: build-loleaflet
+
 all-local: build-loleaflet
 
 if !ENABLE_MOBILEAPP
