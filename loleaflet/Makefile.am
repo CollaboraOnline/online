@@ -5,11 +5,7 @@ L10N_PO = $(wildcard $(srcdir)/po/*.po)
 BUNDLE ?= $(if $(filter true,$(ENABLE_DEBUG)),DEBUG,RELEASE)
 IS_DEBUG = $(if $(filter DEBUG,$(BUNDLE)),true,)
 
-if ENABLE_ANDROIDAPP
-DIST_FOLDER = $(abs_top_srcdir)/android/lib/src/main/assets/dist
-else
-DIST_FOLDER = $(builddir)/dist
-endif
+DIST_FOLDER ?= $(builddir)/dist
 
 export NODE_PATH=$(abs_builddir)/node_module
 
@@ -412,9 +408,9 @@ build-loleaflet: compilets \
 	$(DIST_FOLDER)/loleaflet.html
 	@echo "build loleaflet completed"
 if ENABLE_ANDROIDAPP
-	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(abs_top_srcdir)/android/lib/src/main/assets/dist/ ; else touch $(abs_top_srcdir)/android/lib/src/main/assets/dist/branding.css ; fi
-	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/ ; fi
-	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(abs_top_srcdir)/android/lib/src/main/assets/dist/images/toolbar-bg.svg ; fi
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(DIST_FOLDER)/ ; else touch $(DIST_FOLDER)/branding.css ; fi
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(DIST_FOLDER)/images/ ; fi
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(DIST_FOLDER)/images/toolbar-bg.svg ; fi
 	@echo
 	@echo "JS, HTML and CSS has been updated (android/lib/src/main/assets/dist)."
 endif
