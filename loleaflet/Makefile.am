@@ -375,6 +375,13 @@ define prereq_all
 		$(NODE_MODULES_JS_SRC) $(LOLEAFLET_LIBS_JS_SRC))
 endef
 
+define global_file
+	$(if $(filter DEBUG,$(1)),
+		@cp $< $@,
+		@echo "Uglify global.js file..."
+		@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@)
+endef
+
 all-local: build-loleaflet
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 
@@ -428,12 +435,9 @@ $(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/loleaflet-src.js $(call prereq_all
 	@mkdir -p $(dir $@)
 	$(call bundle_all,$(BUNDLE))
 
-if ENABLE_DEBUG
-else
 $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
-	@echo "Uglify global.js file..."
-	@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@
-endif
+	@mkdir -p $(dir $@)
+	$(call global_file,$(BUNDLE))
 
 $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 	$(LOLEAFLET_HTML_DST) \
