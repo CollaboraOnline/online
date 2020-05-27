@@ -1858,10 +1858,12 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
+			var boundsTwips = this._convertToTileTwipsSheetArea(
+					new L.Bounds(topLeftTwips, bottomRightTwips));
 			var oldSelection = this._cellSelectionArea;
 			this._cellSelectionArea = new L.LatLngBounds(
-						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+					this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
+					this._twipsToLatLng(boundsTwips.getBottomRight(), this._map.getZoom()));
 
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 		} else {
