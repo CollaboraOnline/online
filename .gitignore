@@ -56,7 +56,7 @@ loolwsd.log
 *.mo
 
 # loleaflet
-loleaflet/build/dist
+loleaflet/build
 loleaflet/dist
 loleaflet/npm-shrinkwrap.json
 loleaflet/jsconfig.json

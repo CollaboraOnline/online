@@ -322,7 +322,7 @@ COMMA := ,
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
 LOLEAFLET_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
-INTERMEDIATE_DIR := $(if $(filter true,$(ENABLE_DEBUG)),$(abs_builddir),$(abs_builddir)/build)
+INTERMEDIATE_DIR ?= $(abs_builddir)/build
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
@@ -417,6 +417,7 @@ $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(filter true,$(ENABLE_DEBUG)),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
 
 $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
+	@mkdir -p $(dir $@)
 	@echo "Checking for admin JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
@@ -638,7 +639,7 @@ l10n: pot
 
 clean-local:
 	@rm -rf $(DIST_FOLDER)
-	@rm -rf $(builddir)/build/dist
+	@rm -rf $(INTERMEDIATE_DIR)
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
 
