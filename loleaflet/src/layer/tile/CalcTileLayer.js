@@ -1003,6 +1003,17 @@ L.SheetDimension = L.Class.extend({
 			updatePositions = true;
 		}
 
+		// Avoid position re-computations if no change in Zoom/dpiScale.
+		if (this._tileSizeTwips === tileSizeTwips &&
+			this._tileSizeCSSPixels === tileSizeCSSPixels &&
+			this._dpiScale === dpiScale) {
+			return;
+		}
+
+		this._tileSizeTwips = tileSizeTwips;
+		this._tileSizeCSSPixels = tileSizeCSSPixels;
+		this._dpiScale = dpiScale;
+
 		this._twipsPerCSSPixel = tileSizeTwips / tileSizeCSSPixels;
 		this._devPixelsPerCssPixel = dpiScale;
 
