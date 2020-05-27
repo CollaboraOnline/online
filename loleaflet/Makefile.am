@@ -454,7 +454,7 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		$(LOLEAFLET_LIBS_JS) \
-		$(call LOLEAFLET_JS,$(srcdir)/build/build.js))" \
+		$(LOLEAFLET_JS))" \
 		-DVENDOR="$(VENDOR)" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
