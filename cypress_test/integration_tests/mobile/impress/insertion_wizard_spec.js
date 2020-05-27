@@ -10,8 +10,6 @@ describe('Impress insertion wizard.', function() {
 		mobileHelper.beforeAllMobile(testFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
-
-		mobileHelper.openInsertionWizard();
 	});
 
 	afterEach(function() {
@@ -55,7 +53,24 @@ describe('Impress insertion wizard.', function() {
 			});*/
 	}
 
+	function stepIntoTextShapeEditing() {
+		// Click on the center of the slide to step into text edit mode
+		cy.get('#document-container')
+			.then(function(items) {
+				expect(items).to.have.length(1);
+				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
+				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
+				cy.get('body')
+					.dblclick(XPos, YPos);
+			});
+
+		cy.get('.leaflet-cursor.blinking-cursor')
+			.should('exist');
+	}
+
 	it('Check existence of image insertion items.', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'Local Image...')
 			.should('be.visible');
 
@@ -64,6 +79,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert comment.', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'Comment')
 			.click();
 
@@ -86,6 +103,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert default table.', function() {
+		mobileHelper.openInsertionWizard();
+
 		// Open Table submenu
 		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table')
 			.click();
@@ -108,6 +127,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert custom table.', function() {
+		mobileHelper.openInsertionWizard();
+
 		// Open Table submenu
 		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table')
 			.click();
@@ -139,6 +160,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
+		mobileHelper.openInsertionWizard();
+
 		// Open hyperlink dialog
 		cy.contains('.menu-entry-with-icon', 'Hyperlink...')
 			.click();
@@ -163,6 +186,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert shape.', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'Shape')
 			.click();
 
@@ -181,6 +206,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert text box.', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'Text Box')
 			.click();
 
@@ -194,6 +221,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert date field (fixed).', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
 			.click();
 
@@ -208,12 +237,13 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
-		cy.get('#copy-paste-container pre')
-			.invoke('text')
-			.should('match', regex);
+		cy.contains('#copy-paste-container pre', regex)
+			.should('exist');
 	});
 
 	it('Insert date field (variable).', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
 			.click();
 
@@ -228,12 +258,13 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
-		cy.get('#copy-paste-container pre')
-			.invoke('text')
-			.should('match', regex);
+		cy.contains('#copy-paste-container pre', regex)
+			.should('exist');
 	});
 
 	it('Insert time field (fixed).', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
 			.click();
 
@@ -248,12 +279,13 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
-		cy.get('#copy-paste-container pre')
-			.invoke('text')
-			.should('match', regex);
+		cy.contains('#copy-paste-container pre', regex)
+			.should('exist');
 	});
 
 	it('Insert time field (variable).', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
 			.click();
 
@@ -268,12 +300,13 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
-		cy.get('#copy-paste-container pre')
-			.invoke('text')
-			.should('match', regex);
+		cy.contains('#copy-paste-container pre', regex)
+			.should('exist');
 	});
 
 	it('Insert slide number.', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
 			.click();
 
@@ -290,6 +323,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert slide title.', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
 			.click();
 
@@ -306,6 +341,8 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	it('Insert slide count.', function() {
+		mobileHelper.openInsertionWizard();
+
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
 			.click();
 
@@ -314,6 +351,169 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that the shape is there
 		selectionShouldBeTextShape();
+
+		// Check the text
+		selectTextOfShape();
+
+		helper.expectTextForClipboard('1');
+	});
+
+	it('Insert hyperlink inside existing text shape.', function() {
+		stepIntoTextShapeEditing();
+
+		mobileHelper.openInsertionWizard();
+
+		// Open hyperlink dialog
+		cy.contains('.menu-entry-with-icon', 'Hyperlink...')
+			.click();
+
+		// Dialog is opened
+		cy.get('.vex-content.hyperlink-dialog')
+			.should('exist');
+
+		// Type text and link
+		cy.get('.vex-content.hyperlink-dialog input[name="text"]')
+			.type('some text');
+		cy.get('.vex-content.hyperlink-dialog input[name="link"]')
+			.type('www.something.com');
+
+		// Insert
+		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
+			.click();
+
+		// Check the text
+		selectTextOfShape();
+
+		helper.expectTextForClipboard('some text');
+
+		cy.get('.leaflet-popup-content a')
+			.should('have.text', 'http://www.something.com');
+	});
+
+	it('Insert date field (fixed) inside existing text shape.', function() {
+		stepIntoTextShapeEditing();
+
+		mobileHelper.openInsertionWizard();
+
+		cy.contains('.menu-entry-with-icon', 'More Fields...')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Date (fixed)')
+			.click();
+
+		// Check the text
+		selectTextOfShape();
+
+		// Check that we have a date in MM/DD/YY format
+		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
+		cy.contains('#copy-paste-container pre', regex)
+			.should('exist');
+	});
+
+	it('Insert date field (variable) inside existing text shape.', function() {
+		stepIntoTextShapeEditing();
+
+		mobileHelper.openInsertionWizard();
+
+		cy.contains('.menu-entry-with-icon', 'More Fields...')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Date (variable)')
+			.click();
+
+		// Check the text
+		selectTextOfShape();
+
+		// Check that we have a date in MM/DD/YY format
+		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
+		cy.contains('#copy-paste-container pre', regex)
+			.should('exist');
+	});
+
+	it('Insert time field (fixed) inside existing text shape.', function() {
+		stepIntoTextShapeEditing();
+
+		mobileHelper.openInsertionWizard();
+
+		cy.contains('.menu-entry-with-icon', 'More Fields...')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Time (fixed)')
+			.click();
+
+		// Check the text
+		selectTextOfShape();
+
+		// Check that we have a time in HH/MM/SS format
+		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
+		cy.contains('#copy-paste-container pre', regex)
+			.should('exist');
+	});
+
+	it('Insert time field (variable) inside existing text shape.', function() {
+		stepIntoTextShapeEditing();
+
+		mobileHelper.openInsertionWizard();
+
+		cy.contains('.menu-entry-with-icon', 'More Fields...')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Time (variable)')
+			.click();
+
+		// Check the text
+		selectTextOfShape();
+
+		// Check that we have a time in HH/MM/SS format
+		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
+		cy.contains('#copy-paste-container pre', regex)
+			.should('exist');
+	});
+
+	it('Insert slide number inside existing text shape.', function() {
+		stepIntoTextShapeEditing();
+
+		mobileHelper.openInsertionWizard();
+
+		cy.contains('.menu-entry-with-icon', 'More Fields...')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Slide Number')
+			.click();
+
+		// Check the text
+		selectTextOfShape();
+
+		helper.expectTextForClipboard('1');
+	});
+
+	it('Insert slide title inside existing text shape.', function() {
+		stepIntoTextShapeEditing();
+
+		mobileHelper.openInsertionWizard();
+
+		cy.contains('.menu-entry-with-icon', 'More Fields...')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Slide Title')
+			.click();
+
+		// Check the text
+		selectTextOfShape();
+
+		helper.expectTextForClipboard('Slide 1');
+	});
+
+	it('Insert slide count inside existing text shape.', function() {
+		stepIntoTextShapeEditing();
+
+		mobileHelper.openInsertionWizard();
+
+		cy.contains('.menu-entry-with-icon', 'More Fields...')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Slide Count')
+			.click();
 
 		// Check the text
 		selectTextOfShape();
