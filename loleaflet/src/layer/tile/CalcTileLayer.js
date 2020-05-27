@@ -243,7 +243,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
 			obj.comment.tab = parseInt(obj.comment.tab);
 			if (obj.comment.action === 'Add') {
-				obj.comment.cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
+				var cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
+				obj.comment.cellPos = this._convertToTileTwipsSheetArea(cellPos);
 				obj.comment.cellPos = L.latLngBounds(this._twipsToLatLng(obj.comment.cellPos.getBottomLeft()),
 					this._twipsToLatLng(obj.comment.cellPos.getTopRight()));
 				if (!this._annotations[obj.comment.tab]) {
@@ -261,7 +262,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 				}
 			} else if (obj.comment.action === 'Modify') {
 				var modified = this._annotations[obj.comment.tab][obj.comment.id];
-				obj.comment.cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
+				cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
+				obj.comment.cellPos = this._convertToTileTwipsSheetArea(cellPos);
 				obj.comment.cellPos = L.latLngBounds(this._twipsToLatLng(obj.comment.cellPos.getBottomLeft()),
 					this._twipsToLatLng(obj.comment.cellPos.getTopRight()));
 				if (modified) {
@@ -751,7 +753,6 @@ L.SheetGeometry = L.Class.extend({
 
 	setTileGeometryData: function (tileWidthTwips, tileHeightTwips, tileSizeCSSPixels,
 		dpiScale, updatePositions) {
-
 		this._columns.setTileGeometryData(tileWidthTwips, tileSizeCSSPixels, dpiScale, updatePositions);
 		this._rows.setTileGeometryData(tileHeightTwips, tileSizeCSSPixels, dpiScale, updatePositions);
 	},
@@ -997,6 +998,7 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	setTileGeometryData: function (tileSizeTwips, tileSizeCSSPixels, dpiScale, updatePositions) {
+
 		if (updatePositions === undefined) {
 			updatePositions = true;
 		}
