@@ -14,6 +14,12 @@ common/
 loleaflet/
 	The client side JavaScript component.
 
+test/
+	C++ based unit tests.
+
+cypress_test/
+	JavaScript based integration tests.
+
 It is recommended to read these files:
 
 	wsd/README
