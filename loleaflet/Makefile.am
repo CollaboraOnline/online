@@ -383,7 +383,6 @@ define global_file
 endef
 
 all-local: build-loleaflet
-	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 
 if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
@@ -422,6 +421,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 
 $(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet,$(BUNDLE))
 	@mkdir -p $(dir $@)
+	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
