@@ -49,6 +49,16 @@ describe('Changing slide properties.', function() {
 			});
 	}
 
+	function switchToMasterView() {
+		cy.get('#masterslidebutton')
+			.click();
+
+		cy.get('#closemasterslide')
+			.should('exist');
+
+		previewShouldBeFullWhite(false);
+	}
+
 	it('Apply solid color background.', function() {
 		// Change fill style
 		cy.get('#fillstyle')
@@ -471,5 +481,135 @@ describe('Changing slide properties.', function() {
 
 		cy.get('#masterslide .ui-header-left')
 			.should('have.text', 'Colored');
+	});
+
+	it('Apply layout.', function() {
+		// Apply title / subtitle layout
+		cy.get('#Layouts')
+			.click();
+
+		// Blank is the default
+		// TODO: wring item is selected by default
+		//cy.get('.layout:nth-of-type(1)')
+		//	.should('have.class', 'loleaflet-context-down');
+
+		// Select layout with title and content shape
+		cy.get('.layout:nth-of-type(3)')
+			.click();
+
+		previewShouldBeFullWhite(false);
+
+		// Reopen mobile wizard and check the settings again
+		mobileHelper.closeMobileWizard();
+		mobileHelper.openMobileWizard();
+
+		cy.get('#Layouts')
+			.click();
+
+		cy.get('.layout:nth-of-type(3)')
+			.should('have.class', 'loleaflet-context-down');
+	});
+
+	it('Change paper format in master view.', function() {
+		var EPS = 0.1;
+
+		switchToMasterView();
+
+		cy.get('#paperformat .ui-header-left')
+			.should('have.text', 'Screen 16:9');
+
+		// Preview should have the correct ratio
+		cy.get('.preview-frame:nth-of-type(2) img')
+			.should(function(previews) {
+				var sizeRatio = previews[0].width / previews[0].height;
+				expect(sizeRatio).to.be.greaterThan(16 / 9 - EPS);
+				expect(sizeRatio).to.be.lessThan(16 / 9 + EPS);
+			});
+
+		cy.get('#paperformat')
+			.click();
+
+		cy.contains('.ui-combobox-text', 'Screen 4:3')
+			.click();
+
+		cy.get('#paperformat .ui-header-left')
+			.should('have.text', 'Screen 4:3');
+
+		cy.get('.preview-frame:nth-of-type(2) img')
+			.should(function(previews) {
+				var sizeRatio = previews[0].width / previews[0].height;
+				expect(sizeRatio).to.be.greaterThan(4 / 3 - EPS);
+				expect(sizeRatio).to.be.lessThan(4 / 3 + EPS);
+			});
+
+		// Reopen mobile wizard and check the settings again
+		mobileHelper.closeMobileWizard();
+		mobileHelper.openMobileWizard();
+
+		cy.get('#paperformat .ui-header-left')
+			.should('have.text', 'Screen 4:3');
+	});
+
+	it('Change orientation in master view.', function() {
+		switchToMasterView();
+
+		// Preview should have the correct ratio (16/9)
+		cy.get('.preview-frame:nth-of-type(2) img')
+			.should(function(previews) {
+				expect(previews[0].width).to.be.greaterThan(previews[0].height);
+			});
+
+		cy.get('#orientation .ui-header-left')
+			.should('have.text', 'Landscape');
+
+		cy.get('#orientation')
+			.click();
+
+		cy.contains('.ui-combobox-text', 'Portrait')
+			.click();
+
+		cy.get('#orientation .ui-header-left')
+			.should('have.text', 'Portrait');
+
+		cy.get('.preview-frame:nth-of-type(2) img')
+			.should(function(previews) {
+				expect(previews[0].width).to.be.lessThan(previews[0].height);
+			});
+
+		// Reopen mobile wizard and check the settings again
+		mobileHelper.closeMobileWizard();
+		mobileHelper.openMobileWizard();
+
+		cy.get('#orientation .ui-header-left')
+			.should('have.text', 'Portrait');
+	});
+
+	it('Check disabled elements in master view.', function() {
+		switchToMasterView();
+
+		cy.get('#masterslide')
+			.should('have.class', 'disabled');
+
+		cy.get('#displaymasterbackground label')
+			.should('have.class', 'disabled');
+
+		cy.get('#displaymasterobjects label')
+			.should('have.class', 'disabled');
+
+		// Reopen mobile wizard and check the settings again
+		mobileHelper.closeMobileWizard();
+		mobileHelper.openMobileWizard();
+
+		cy.get('#closemasterslide')
+			.should('exist');
+
+		cy.get('#masterslide')
+			.should('have.class', 'disabled');
+
+		cy.get('#displaymasterbackground label')
+			.should('have.class', 'disabled');
+
+		cy.get('#displaymasterobjects label')
+			.should('have.class', 'disabled');
 	});
 });
