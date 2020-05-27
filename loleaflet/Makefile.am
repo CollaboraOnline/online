@@ -2,6 +2,8 @@ MAKEFLAGS = --no-builtin-rules
 CTAGS = ctags
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
+BUNDLE ?= $(if $(filter true,$(ENABLE_DEBUG)),DEBUG,RELEASE)
+IS_DEBUG = $(if $(filter DEBUG,$(BUNDLE)),true,)
 
 if ENABLE_ANDROIDAPP
 DIST_FOLDER = $(abs_top_srcdir)/android/lib/src/main/assets/dist
@@ -141,7 +143,7 @@ LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
 $(eval $(call file_targets,$(LOLEAFLET_CSS)))
 
 NODE_MODULES_JS =\
-	$(if $(filter true,$(ENABLE_DEBUG)),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
+	$(if $(IS_DEBUG),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
@@ -326,8 +328,6 @@ INTERMEDIATE_DIR ?= $(abs_builddir)/build
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
-BUNDLE ?= $(if $(filter true,$(ENABLE_DEBUG)),DEBUG,RELEASE)
-
 define bundle_loleaflet
 	$(if $(filter DEBUG,$(1)),\
 		@touch $@,
@@ -414,7 +414,7 @@ endif
 
 $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
-	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(filter true,$(ENABLE_DEBUG)),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
+	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(IS_DEBUG),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
 
 $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@mkdir -p $(dir $@)
@@ -448,7 +448,7 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 	$(DIST_FOLDER)/global.js \
 	$(DIST_FOLDER)/bundle.js
 	@echo "Generating loleaflet.html..."
-	@m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
+	@m4 -PE -DDEBUG=$(IS_DEBUG) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DGTKAPP=$(ENABLE_GTKAPP) \
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
