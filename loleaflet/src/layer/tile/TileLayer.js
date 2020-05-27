@@ -1711,10 +1711,11 @@ L.TileLayer = L.GridLayer.extend({
 			for (var i = 0; i < strTwips.length; i += 4) {
 				var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
 				var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
-				var topRightTwips = topLeftTwips.add(new L.Point(offset.x, 0));
-				var bottomLeftTwips = topLeftTwips.add(new L.Point(0, offset.y));
 				var bottomRightTwips = topLeftTwips.add(offset);
-				rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
+				var boundsTwips = this._convertToTileTwipsSheetArea(
+						new L.Bounds(topLeftTwips, bottomRightTwips));
+				rectangles.push([boundsTwips.getBottomLeft(), boundsTwips.getBottomRight(),
+						boundsTwips.getTopLeft(), boundsTwips.getTopRight()]);
 			}
 
 			this._viewSelections[viewId].part = viewPart;
