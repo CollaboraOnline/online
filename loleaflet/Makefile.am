@@ -329,7 +329,7 @@ INTERMEDIATE_DIR ?= $(abs_builddir)/build
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
 define bundle_loleaflet
-	$(if $(filter DEBUG,$(1)),\
+	$(if $(IS_DEBUG),\
 		@touch $@,
 		@m4 -PE -DIOSAPP=$(ENABLE_IOSAPP) \
 			-DGTKAPP=$(ENABLE_GTKAPP) \
@@ -342,22 +342,22 @@ define bundle_loleaflet
 endef
 
 define prereq_loleaflet
-	$(if $(filter DEBUG,$(1)),$(LOLEAFLET_JS_DST),$(LOLEAFLET_JS_SRC))
+	$(if $(IS_DEBUG),$(LOLEAFLET_JS_DST),$(LOLEAFLET_JS_SRC))
 endef
 
 define bundle_css
-	$(if $(filter DEBUG,$(1)),\
+	$(if $(IS_DEBUG),\
 		@touch $@,\
 		@echo "Uglify loleaflet css files..."
 		@$(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@)
 endef
 
 define prereq_css
-	$(if $(filter DEBUG,$(1)),$(LOLEAFLET_CSS_DST),$(LOLEAFLET_CSS))
+	$(if $(IS_DEBUG),$(LOLEAFLET_CSS_DST),$(LOLEAFLET_CSS))
 endef
 
 define bundle_all
-	$(if $(filter DEBUG,$(1)),\
+	$(if $(IS_DEBUG),\
 		@touch $@,\
 		@echo "Uglify loleaflet js files..."
 		@m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
@@ -371,12 +371,12 @@ define bundle_all
 endef
 
 define prereq_all
-	$(if $(filter DEBUG,$(1)),$(NODE_MODULES_JS_DST) $(LOLEAFLET_LIBS_JS_DST),\
+	$(if $(IS_DEBUG),$(NODE_MODULES_JS_DST) $(LOLEAFLET_LIBS_JS_DST),\
 		$(NODE_MODULES_JS_SRC) $(LOLEAFLET_LIBS_JS_SRC))
 endef
 
 define global_file
-	$(if $(filter DEBUG,$(1)),
+	$(if $(IS_DEBUG),
 		@cp $< $@,
 		@echo "Uglify global.js file..."
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@)
@@ -422,25 +422,25 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet,$(BUNDLE))
+$(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	$(call bundle_loleaflet($(BUNDLE)))
+	$(call bundle_loleaflet)
 
-$(DIST_FOLDER)/bundle.css: $(call prereq_css,$(BUNDLE))
+$(DIST_FOLDER)/bundle.css: $(call prereq_css)
 	@mkdir -p $(dir $@)
-	$(call bundle_css,$(BUNDLE))
+	$(call bundle_css)
 
-$(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/loleaflet-src.js $(call prereq_all,$(BUNDLE))
+$(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/loleaflet-src.js $(call prereq_all)
 	@mkdir -p $(dir $@)
-	$(call bundle_all,$(BUNDLE))
+	$(call bundle_all)
 
 $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	@mkdir -p $(dir $@)
-	$(call global_file,$(BUNDLE))
+	$(call global_file)
 
 $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 	$(LOLEAFLET_HTML_DST) \
