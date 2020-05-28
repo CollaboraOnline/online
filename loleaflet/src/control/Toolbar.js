@@ -414,7 +414,7 @@ L.Map.include({
 
 	showWelcomeDialog: function(calledFromMenu) {
 		console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
-		var welcomeLocation = window.host + window.serviceRoot + '/welcome/welcome-' + String.locale + '.html';
+		var welcomeLocation = window.location.origin + window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/')) + '/welcome/welcome-' + String.locale + '.html';
 
 		var map = this;
 
