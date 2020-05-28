@@ -1,6 +1,5 @@
 MAKEFLAGS = --no-builtin-rules
 CTAGS = ctags
-CONFIG_STATUS_DEPENDENCIES=$(builddir)/node_modules
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 
@@ -434,6 +433,12 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML
 node_modules: package.json archived-packages
 	@npm install
 	@touch node_modules
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status node_modules
+	@case '$?' in \
+	 *node_modules*) \
+	  touch Makefile;; \
+	esac;
 
 $(DIST_FOLDER)/device-%.css: $(srcdir)/css/device-%.css
 	@mkdir -p $(dir $@)
