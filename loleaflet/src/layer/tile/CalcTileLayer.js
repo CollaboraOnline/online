@@ -441,9 +441,40 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this.sheetGeometry.setTileGeometryData(this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, this._tilePixelScale);
 		}
+		this._restrictDocumentSize();
 		this._replayPrintTwipsMsgs();
 		this.refreshViewData();
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+	},
+
+	_restrictDocumentSize: function () {
+
+		if (!this.sheetGeometry) {
+			return;
+		}
+
+		var maxDocSize = this.sheetGeometry.getSize('tiletwips');
+		var newDocWidth = Math.min(maxDocSize.x, this._docWidthTwips);
+		var newDocHeight = Math.min(maxDocSize.y, this._docHeightTwips);
+
+		var shouldRestrict = (newDocWidth !== this._docWidthTwips ||
+				newDocHeight !== this._docHeightTwips);
+
+		if (!shouldRestrict) {
+			return;
+		}
+
+		var newWidthPx = newDocWidth / this._tileWidthTwips * this._tileSize;
+		var newHeightPx = newDocHeight / this._tileHeightTwips * this._tileSize;
+
+		var topLeft = this._map.unproject(new L.Point(0, 0));
+		var bottomRight = this._map.unproject(new L.Point(newWidthPx, newHeightPx));
+		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
+
+		this._docPixelSize = {x: newWidthPx, y: newHeightPx};
+		this._docWidthTwips = newDocWidth;
+		this._docHeightTwips = newDocHeight;
+		this._map.fire('docsize', {x: newWidthPx, y: newHeightPx});
 	},
 
 	_onUpdateCurrentHeader: function() {
@@ -995,6 +1026,13 @@ L.SheetGeometry = L.Class.extend({
 		return new L.Bounds(topLeft, bottomRight);
 	},
 
+	// Returns full sheet size as L.Point in the given unit.
+	// unit must be one of 'csspixels', 'devpixels', 'tiletwips', 'printtwips'
+	getSize: function (unit) {
+		return new L.Point(this._columns.getSize(unit),
+			this._rows.getSize(unit));
+	},
+
 	_testValidity: function (sheetGeomJSON, checkCompleteness) {
 
 		if (!sheetGeomJSON.hasOwnProperty('commandName')) {
@@ -1195,6 +1233,15 @@ L.SheetDimension = L.Class.extend({
 		return this._getElementDataFromSpanByIndex(index, span, useDevicePixels);
 	},
 
+	getElementDataAny: function (index, unitName) {
+		var span = this._visibleSizes.getSpanDataByIndex(index);
+		if (span === undefined) {
+			return undefined;
+		}
+
+		return this._getElementDataAnyFromSpanByIndex(index, span, unitName);
+	},
+
 	// returns element pos/size in css pixels by default.
 	_getElementDataFromSpanByIndex: function (index, span, useDevicePixels) {
 		return this._getElementDataAnyFromSpanByIndex(index, span,
@@ -1370,6 +1417,15 @@ L.SheetDimension = L.Class.extend({
 			startpos: startPos,
 			endpos: endPos
 		};
+	},
+
+	getSize: function (unit) {
+		var posSize = this.getElementDataAny(this._maxIndex, unit);
+		if (!posSize) {
+			return undefined;
+		}
+
+		return posSize.startpos + posSize.size;
 	},
 });
 
