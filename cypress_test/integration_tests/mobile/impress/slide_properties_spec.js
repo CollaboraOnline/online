@@ -611,5 +611,23 @@ describe('Changing slide properties.', function() {
 
 		cy.get('#displaymasterobjects label')
 			.should('have.class', 'disabled');
+
+		// Switch back to normal mode
+		cy.get('#closemasterslide')
+			.click();
+
+		cy.get('#masterslidebutton')
+			.should('exist');
+
+		previewShouldBeFullWhite();
+
+		cy.get('#masterslide')
+			.should('not.have.class', 'disabled');
+
+		cy.get('#displaymasterbackground label')
+			.should('not.have.class', 'disabled');
+
+		cy.get('#displaymasterobjects label')
+			.should('not.have.class', 'disabled');
 	});
 });
