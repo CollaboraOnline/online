@@ -439,8 +439,10 @@ node_modules: package.json archived-packages
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status node_modules
 	@case '$?' in \
-	 *node_modules*) \
-	  touch Makefile;; \
+	 *config.status*) \
+	  cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
+	 *) \
+	  cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@;; \
 	esac;
 
 $(DIST_FOLDER)/device-%.css: $(srcdir)/css/device-%.css
