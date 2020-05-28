@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-16 14:51+0000\n"
-"Last-Translator: Olivier Hallot <olivier.hallot@documentfoundation.org>\n"
+"PO-Revision-Date: 2020-05-24 07:21+0000\n"
+"Last-Translator: André Marcelo Alvarenga <andrealvarenga@gmx.net>\n"
 "Language-Team: Portuguese (Brazil) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -1111,7 +1111,7 @@ msgstr "Para abrir um documento basta clicar no documento e este abrirá o módu
 
 #: html/loleaflet-help.html%2Bdiv.p:282-5
 msgid "Documents in <span class=\"productname\">%productName</span> save automatically, but if you are concerned that a document is synchronized as quickly as possible you can also force saving using the <span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
-msgstr "E para proteger os seus documentos de qualquer imprevisto,  <span class=\"productname\">%productName</span> salva de forma automática todas as suas alterações. Mas lembre-se o menu <span class=\"ui\">Salvar</span> localizado em <span class=\"ui\">Arquivo</span> continua a estar disponível, podendo assim salvar imeditamente e de forma manual, diga adeus a quaisquer preocupações sabendo que os seus ficheiros estão salvaguardados."
+msgstr "Os documentos no <span class=\"productname\">%productName</span> são salvos de forma automática, mas se quiser sincronizar um documento o mais rápido possível, poderá também forçar o salvamento usando o item de menu <span class=\"ui\">Arquivo</span>  <span class=\"ui\">Salvar</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:283-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
@@ -1267,7 +1267,7 @@ msgstr "Para verificar a ortografia do documento inteiro, utilize o menu <span c
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr "Edite uma planilha online da mesma forma que uma planilha do desktop. Operações de entrada de dados, seleção de intervalos, linhas, colunas ou planilhas são as mesmas. Utilize o teclado, menus ou barra de ferramenta para acionar comandos na planilha. Arrastar o conteúdo de células para preencher outras células com adas também é possível. Os comandos de copiar, cortar e colar tmbém estão disponíveis nos menus de contexto. Teclar <span class=\"kbd\">Tab</span> após entrar dados move o cursor para a próxima célula à direita e com um  <span class=\"kbd\">Enter</span> move para a célula embaixo facilitando a entrada de dados."
+msgstr "Edite uma planilha online da mesma forma que uma planilha do desktop. Operações de entrada de dados, seleção de intervalos, linhas, colunas ou planilhas são as mesmas. Utilize o teclado, menus ou barra de ferramenta para acionar comandos na planilha. Arrastar o conteúdo de células para preencher outras células com adas também é possível. Os comandos de copiar, cortar e colar também estão disponíveis nos menus de contexto. Teclar <span class=\"kbd\">Tab</span> após entrar dados move o cursor para a próxima célula à direita e com um  <span class=\"kbd\">Enter</span> move para a célula embaixo facilitando a entrada de dados."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
@@ -1359,7 +1359,7 @@ msgstr "Em contraste, a formatação direta aplica formatação em trechos selec
 
 #: html/loleaflet-help.html%2Bdiv.div.p:396-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format text document objects by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected."
-msgstr "<span class=\"def\">Formatação direta:</span> Você pode formatar objetos do documento de texto diretamente a aprtir dos menus, barra de ferramentas e menus de contexto. A formatação direta é aplicada somente ao objeto selecionado."
+msgstr "<span class=\"def\">Formatação direta:</span> Você pode formatar objetos do documento de texto diretamente a partir dos menus, barra de ferramentas e menus de contexto. A formatação direta é aplicada somente ao objeto selecionado."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
 msgid "<span class=\"def\">Style formatting:</span> <span class=\"productname\">%productName</span> supports paragraph styles. You can apply an existing paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → <span class=\"ui\">Edit styles</span> to change style."
