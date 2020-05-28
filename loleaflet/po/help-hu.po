@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-03-17 16:36+0000\n"
+"PO-Revision-Date: 2020-05-27 11:00+0000\n"
 "Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hu/>\n"
 "Language: hu\n"
@@ -979,7 +979,7 @@ msgstr "Helyi menük"
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:400-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "A szövegszerkesztő bonyolultabb funkciói"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:232-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:419-5
@@ -1027,11 +1027,11 @@ msgstr "Bemutatók"
 
 #: html/loleaflet-help.html%2Bdiv.p:249-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
-msgstr ""
+msgstr "A <span class=\"productname\">%productName</span> lehetővé teszi, hogy irodai dokumentumokat, szövegeket, táblázatokat vagy bemutatókat hozzunk létre és szerkesszünk a böngészőben. A dokumentumokon nemcsak egy, hanem egyidőben több ember is egymással együttműködve dolgozhat."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:253-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
-msgstr ""
+msgstr "Minden felhasználónak saját színe van. A felhasználók kurzorja a dokumentumban az adott színnel jelenik meg. A saját villogó kurzorját mindenki feketének látja, de a többiek számára ez is egy adott színnel fog megjelenni."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:254-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
