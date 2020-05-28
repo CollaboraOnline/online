@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-05-20 13:07+0000\n"
-"Last-Translator: Andrew Lee (李健秋) <alee@collabora.com>\n"
+"PO-Revision-Date: 2020-05-20 14:41+0000\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/projects/libo_online/ios/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -22,12 +22,10 @@ msgid "Version information"
 msgstr "版本資訊"
 
 #: Online+git+hash
-#, fuzzy
 msgid "Online git hash"
 msgstr "Online git hash"
 
 #: Core+git+hash
-#, fuzzy
 msgid "Core git hash"
 msgstr "Core git hash"
 
