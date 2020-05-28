@@ -1344,8 +1344,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCellViewCursorMsg: function (textMsg) {
-		textMsg = textMsg.substring('cellviewcursor:'.length + 1);
-		var obj = JSON.parse(textMsg);
+		var obj = JSON.parse(textMsg.substring('cellviewcursor:'.length + 1));
 		var viewId = parseInt(obj.viewId);
 
 		// Ignore if viewid is same as ours
@@ -1374,6 +1373,10 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._cellViewCursors[viewId].part = parseInt(obj.part);
 		this._onUpdateCellViewCursor(viewId);
+
+		if (this.isCalc()) {
+			this._saveMessageForReplay(textMsg, viewId);
+		}
 	},
 
 	_onUpdateCellViewCursor: function (viewId) {
@@ -1694,8 +1697,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onTextViewSelectionMsg: function (textMsg) {
-		textMsg = textMsg.substring('textviewselection:'.length + 1);
-		var obj = JSON.parse(textMsg);
+		var obj = JSON.parse(textMsg.substring('textviewselection:'.length + 1));
 		var viewId = parseInt(obj.viewId);
 		var viewPart = parseInt(obj.part);
 
@@ -1725,6 +1727,10 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateTextViewSelection(viewId);
+
+		if (this.isCalc()) {
+			this._saveMessageForReplay(textMsg, viewId);
+		}
 	},
 
 	_updateReferenceMarks: function() {

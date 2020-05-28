@@ -238,7 +238,60 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	_saveMessageForReplay: function (textMsg, viewId) {
+		// If this.options.printTwipsMsgsEnabled is set, we will not get some messages (with coordinates)
+		// from core when zoom changes because print-twips coordinates are zoom-invariant. So we need to
+		// remember the last version of them and replay, when zoom is changed.
+		// We also need to replay the messages, when sheet-geometry changes. This is because it is possible for
+		// the updated print-twips messages to arrive before the sheet-geometry update message arrives.
+		if (!this.options.printTwipsMsgsEnabled) {
+			return;
+		}
+
+		if (!this._printTwipsMessagesForReplay) {
+			var ownViewTypes = [
+				'cellcursor',
+				'referencemarks',
+				'cellselectionarea',
+				'textselection',
+			];
+
+			var otherViewTypes = [
+				'cellviewcursor',
+				'textviewselection',
+			];
+
+			this._printTwipsMessagesForReplay = new L.MessageStore(ownViewTypes, otherViewTypes);
+		}
+
+		var colonIndex = textMsg.indexOf(':');
+		if (colonIndex === -1) {
+			return;
+		}
+
+		var msgType = textMsg.substring(0, colonIndex);
+		this._printTwipsMessagesForReplay.save(msgType, textMsg, viewId);
+	},
+
+	_clearMsgReplayStore: function () {
+		if (!this.options.printTwipsMsgsEnabled || !this._printTwipsMessagesForReplay) {
+			return;
+		}
+
+		this._printTwipsMessagesForReplay.clear();
+	},
+
+	// See _saveMessageForReplay.
+	_replayPrintTwipsMsgs: function () {
+		if (!this.options.printTwipsMsgsEnabled || !this._printTwipsMessagesForReplay) {
+			return;
+		}
+
+		this._printTwipsMessagesForReplay.forEach(this._onMessage.bind(this));
+	},
+
 	_onMessage: function (textMsg, img) {
+		this._saveMessageForReplay(textMsg);
 		if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
 			obj.comment.tab = parseInt(obj.comment.tab);
@@ -377,6 +430,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (!this.isHiddenPart(part)) {
+			this._clearMsgReplayStore();
 			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
 		}
 	},
@@ -387,6 +441,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this.sheetGeometry.setTileGeometryData(this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, this._tilePixelScale);
 		}
+		this._replayPrintTwipsMsgs();
 		this.refreshViewData();
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
@@ -621,6 +676,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this.sheetGeometry.update(jsonMsgObj);
 		}
 
+		this._replayPrintTwipsMsgs();
+
 		this.sheetGeometry.setViewArea(this._pixelsToTwips(this._map._getTopLeftPoint()),
 			this._pixelsToTwips(this._map.getSize()));
 		this._updateHeadersGridLines(undefined, true /* updateCols */,
@@ -688,6 +745,74 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onCellCursorMsg: function (textMsg) {
 		L.TileLayer.prototype._onCellCursorMsg.call(this, textMsg);
 		this._onUpdateCurrentHeader();
+	}
+});
+
+L.MessageStore = L.Class.extend({
+
+	// ownViewTypes : The types of messages related to own view.
+	// otherViewTypes: The types of messages related to other views.
+	initialize: function (ownViewTypes, otherViewTypes) {
+
+		if (!Array.isArray(ownViewTypes) || !Array.isArray(otherViewTypes)) {
+			console.error('Unexpected argument types');
+			return;
+		}
+
+		var ownMessages = {};
+		ownViewTypes.forEach(function (msgType) {
+			ownMessages[msgType] = '';
+		});
+		this._ownMessages = ownMessages;
+
+		var othersMessages = {};
+		otherViewTypes.forEach(function (msgType) {
+			othersMessages[msgType] = [];
+		});
+		this._othersMessages = othersMessages;
+	},
+
+	clear: function () {
+		var msgs = this._ownMessages;
+		Object.keys(msgs).forEach(function (msgType) {
+			msgs[msgType] = '';
+		});
+
+		msgs = this._othersMessages;
+		Object.keys(msgs).forEach(function (msgType) {
+			msgs[msgType] = [];
+		});
+	},
+
+	save: function (msgType, textMsg, viewId) {
+
+		var othersMessage = (typeof viewId === 'number');
+
+		if (!othersMessage && this._ownMessages.hasOwnProperty(msgType)) {
+			this._ownMessages[msgType] = textMsg;
+			return;
+		}
+
+		if (othersMessage && this._othersMessages.hasOwnProperty(msgType)) {
+			this._othersMessages[msgType][viewId] = textMsg;
+		}
+	},
+
+	forEach: function (callback) {
+		if (typeof callback !== 'function') {
+			console.error('Invalid callback type');
+			return;
+		}
+
+		var ownMessages = this._ownMessages;
+		Object.keys(this._ownMessages).forEach(function (msgType) {
+			callback(ownMessages[msgType]);
+		});
+
+		var othersMessages = this._othersMessages;
+		Object.keys(othersMessages).forEach(function (msgType) {
+			othersMessages[msgType].forEach(callback);
+		});
 	}
 });
 
