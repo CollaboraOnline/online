@@ -3610,8 +3610,8 @@ int LOOLWSD::innerMain()
     initializeSSL();
 
     // Force a uniform UTF-8 locale for ourselves & our children.
-    ::setenv("LC_ALL", "en_US.UTF-8", 1);
-    setlocale(LC_ALL, "en_US.UTF-8");
+    ::setenv("LC_ALL", "C.UTF-8", 1);
+    setlocale(LC_ALL, "C.UTF-8");
 
 #if !MOBILEAPP
     // We use the same option set for both parent and child loolwsd,
