@@ -215,7 +215,11 @@ L.Map.include({
 			w = iw / 5 + 590;
 		}
 		var map = this;
-		$.get('loleaflet-help.html', function(data) {
+		var helpLocation = 'loleaflet-help.html';
+		if (window.socketProxy)
+			helpLocation = window.host + window.serviceRoot + '/loleaflet/dist/' + helpLocation;
+
+		$.get(helpLocation, function(data) {
 			var productName;
 			if (window.ThisIsAMobileApp) {
 				productName = window.MobileAppName;
@@ -403,7 +407,10 @@ L.Map.include({
 				if (!calledFromMenu) {
 					var WSDVerCookie = 'WSDWelcomeVersion=' + map._socket.WSDServer.Version;
 					// Cookie will not expire for a year, and it will not be sent to other domains
-					WSDVerCookie += '; max-age=31536000; SameSite=Strict; path=/loleaflet';
+					var cookiePath = '/loleaflet';
+					if (window.socketProxy)
+						cookiePath = window.host + window.serviceRoot + cookiePath;
+					WSDVerCookie += '; max-age=31536000; SameSite=Strict; path=' + cookiePath;
 					document.cookie = WSDVerCookie;
 				}
 				map.focus();
@@ -414,7 +421,9 @@ L.Map.include({
 
 	showWelcomeDialog: function(calledFromMenu) {
 		console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
-		var welcomeLocation = window.location.origin + window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/')) + '/welcome/welcome-' + String.locale + '.html';
+		var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
+		if (window.socketProxy)
+			welcomeLocation = window.host + window.serviceRoot + '/loleaflet/dist/' + welcomeLocation;
 
 		var map = this;
 
@@ -432,7 +441,10 @@ L.Map.include({
 			.fail(function() {
 				// Welcome dialog disabled in loolwsd.xml or nonexistant for some other reason
 				// Let's check back in a day (60 x 60 x 24 = 86400 seconds)
-				var welcomeDisabledCookie = 'WSDWelcomeDisabled=true; max-age=86400; SameSite=Strict; path=/loleaflet';
+				var cookiePath = '/loleaflet';
+				if (window.socketProxy)
+					cookiePath = window.host + window.serviceRoot + cookiePath;
+				var welcomeDisabledCookie = 'WSDWelcomeDisabled=true; max-age=86400; SameSite=Strict; path=' + cookiePath;
 				document.cookie = welcomeDisabledCookie;
 
 				if (calledFromMenu)
