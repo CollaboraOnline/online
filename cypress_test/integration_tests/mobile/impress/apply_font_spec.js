@@ -13,10 +13,7 @@ describe('Apply font on text shape.', function() {
 
 		selectTextShape();
 
-		mobileHelper.openMobileWizard();
-
-		cy.get('#TextPropertyPanel')
-			.click();
+		openTextPropertiesPanel();
 	});
 
 	afterEach(function() {
@@ -62,6 +59,16 @@ describe('Apply font on text shape.', function() {
 
 		// Select text shape again which will retrigger a new SVG from core
 		selectTextShape();
+	}
+
+	function openTextPropertiesPanel() {
+		mobileHelper.openMobileWizard();
+
+		cy.get('#TextPropertyPanel')
+			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible');
 	}
 
 	it('Apply bold.', function() {
@@ -261,7 +268,7 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	it.skip('Clear direct formatting.', function() {
+	it('Clear direct formatting.', function() {
 		// Change the font size first
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
@@ -275,10 +282,12 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-size', '705px');
 
 		// Remove direct formatting
-		mobileHelper.openMobileWizard();
+		openTextPropertiesPanel();
 
-		cy.get('#TextPropertyPanel')
-			.click();
+		// Opening the mobile wizard for the second time
+		// triggeres two jsdialog message and so the mobile
+		// wizard is rendered twice.
+		cy.wait(500);
 
 		cy.get('#clearFormatting')
 			.click();
