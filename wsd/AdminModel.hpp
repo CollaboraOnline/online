@@ -121,7 +121,8 @@ public:
           _wopiUploadDuration(0),
           _procSMaps(nullptr),
           _lastTimeSMapsRead(0),
-          _isModified(false)
+          _isModified(false),
+          _hasMemDirtyChanged(true)
     {
     }
 
@@ -155,7 +156,8 @@ public:
     const std::map<std::string, View>& getViews() const { return _views; }
 
     void updateLastActivityTime() { _lastActivity = std::time(nullptr); }
-    int getMemoryDirty() const;
+    void updateMemoryDirty();
+    int getMemoryDirty() const { return _memoryDirty; }
 
     std::pair<std::time_t, std::string> getSnapshot() const;
     const std::string getHistory() const;
@@ -182,6 +184,8 @@ public:
     void setWopiUploadDuration(const std::chrono::milliseconds wopiUploadDuration) { _wopiUploadDuration = wopiUploadDuration; }
     std::chrono::milliseconds getWopiUploadDuration() const { return _wopiUploadDuration; }
     void setProcSMapsFD(const int smapsFD) { _procSMaps = fdopen(smapsFD, "r"); }
+    bool hasMemDirtyChanged() const { return _hasMemDirtyChanged; }
+    void setMemDirtyChanged(bool changeStatus) { _hasMemDirtyChanged = changeStatus; }
 
     std::string to_string() const;
 
@@ -195,7 +199,7 @@ private:
     /// Hosted filename
     std::string _filename;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
-    mutable int _memoryDirty;
+    int _memoryDirty;
     /// Last noted Jiffy count
     unsigned _lastJiffy;
 
@@ -212,11 +216,12 @@ private:
     std::chrono::milliseconds _wopiUploadDuration;
 
     FILE* _procSMaps;
-    mutable std::time_t _lastTimeSMapsRead;
+    std::time_t _lastTimeSMapsRead;
 
     /// Per-doc kit process settings.
     DocProcSettings _docProcSettings;
     bool _isModified;
+    bool _hasMemDirtyChanged;
 };
 
 /// An Admin session subscriber.
@@ -337,6 +342,8 @@ public:
     void getMetrics(std::ostringstream &oss);
 
     std::set<pid_t> getDocumentPids() const;
+    void UpdateMemoryDirty();
+    void notifyDocsMemDirtyChanged();
 
     static int getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids);
 
