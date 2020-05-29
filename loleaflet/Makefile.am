@@ -102,7 +102,7 @@ NODE_MODULES_SRC =\
 	select2@4.0.1 \
 	vex-js@4.1.0 \
 	l10n-for-node@0.0.1 \
-	@braintree/sanitize-url@3.0.0
+	@braintree/sanitize-url@4.0.1
 
 LOLEAFLET_CSS =\
 	$(builddir)/node_modules/select2/dist/css/select2.css \

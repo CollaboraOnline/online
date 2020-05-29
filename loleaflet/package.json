@@ -3,7 +3,7 @@
   "version": "0.8.0-dev",
   "description": "LibreOffice online front-end",
   "devDependencies": {
-    "@braintree/sanitize-url": "3.0.0",
+    "@braintree/sanitize-url": "4.0.1",
     "@types/jquery": "2.0.40",
     "autolinker": "1.4.3",
     "bootstrap": "3.3.6",
