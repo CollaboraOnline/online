@@ -152,10 +152,11 @@ body {
 }
 
 #sidebar-panel {
+	display: table;
 	padding: 0px;
 	margin: 0px;
 	position: relative;
-	width: 100%;
+	width: auto;
 	height: 100%;
 	overflow-x: hidden;
 	overflow-y: scroll;
