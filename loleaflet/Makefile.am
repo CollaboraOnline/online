@@ -97,7 +97,7 @@ LOLEAFLET_ADMIN_JS =\
 	admin/src/AdminSocketHistory.js
 
 NODE_MODULES_SRC =\
-	autolinker@1.4.3 \
+	autolinker@3.14.1 \
 	json-js@1.1.2 \
 	select2@4.0.1 \
 	vex-js@4.1.0 \

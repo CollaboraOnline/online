@@ -4,7 +4,7 @@
   "description": "LibreOffice online front-end",
   "devDependencies": {
     "@braintree/sanitize-url": "4.0.1",
-    "autolinker": "1.4.3",
+    "autolinker": "3.14.1",
     "bootstrap": "3.3.6",
     "browserify": "13.1.0",
     "browserify-css": "0.9.1",
