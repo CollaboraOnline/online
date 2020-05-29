@@ -261,7 +261,7 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	it('Clear direct formatting.', function() {
+	it.skip('Clear direct formatting.', function() {
 		// Change the font size first
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
