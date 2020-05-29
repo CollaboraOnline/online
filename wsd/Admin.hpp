@@ -142,6 +142,7 @@ private:
     /// Memory consumption has increased, start killing kits etc. till memory consumption gets back
     /// under @hardModeLimit
     void triggerMemoryCleanup(size_t hardModeLimit);
+    void notifyDocsMemDirtyChanged();
 
     /// Round the interval up to multiples of MinStatsIntervalMs.
     /// This is to avoid arbitrarily small intervals that hammer the server.

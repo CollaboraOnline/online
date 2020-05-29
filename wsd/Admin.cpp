@@ -424,6 +424,8 @@ void Admin::pollingThread()
             std::chrono::duration_cast<std::chrono::milliseconds>(now - lastMem).count();
         if (memWait <= MinStatsIntervalMs / 2) // Close enough
         {
+            _model.UpdateMemoryDirty();
+
             const size_t totalMem = getTotalMemoryUsage();
             _model.addMemStats(totalMem);
 
@@ -434,6 +436,8 @@ void Admin::pollingThread()
 
                 _lastTotalMemory = totalMem;
             }
+
+            notifyDocsMemDirtyChanged();
 
             memWait += _memStatsTaskIntervalMs;
             lastMem = now;
@@ -656,6 +660,11 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
             }
         }
     }
+}
+
+void Admin::notifyDocsMemDirtyChanged()
+{
+    _model.notifyDocsMemDirtyChanged();
 }
 
 void Admin::dumpState(std::ostream& os)

@@ -134,16 +134,18 @@ std::string Document::to_string() const
     return oss.str();
 }
 
-int Document::getMemoryDirty() const
+void Document::updateMemoryDirty()
 {
     // Avoid accessing smaps too often
     const time_t now = std::time(nullptr);
     if (now - _lastTimeSMapsRead >= 5)
     {
+        int lastMemDirty = _memoryDirty;
         _memoryDirty = _procSMaps  ? Util::getPssAndDirtyFromSMaps(_procSMaps).second : 0;
         _lastTimeSMapsRead = now;
+        if (lastMemDirty != _memoryDirty)
+            _hasMemDirtyChanged = true;
     }
-    return _memoryDirty;
 }
 
 bool Subscriber::notify(const std::string& message)
@@ -1039,6 +1041,27 @@ std::set<pid_t> AdminModel::getDocumentPids() const
         pids.insert(it.second->getPid());
 
     return pids;
+}
+
+void AdminModel::UpdateMemoryDirty()
+{
+    for (const auto& it: _documents)
+    {
+        it.second->updateMemoryDirty();
+    }
+}
+
+void AdminModel::notifyDocsMemDirtyChanged()
+{
+    for (const auto& it: _documents)
+    {
+        int memoryDirty = it.second->getMemoryDirty();
+        if (it.second->hasMemDirtyChanged())
+        {
+            notify("propchange " + std::to_string(it.second->getPid()) + " mem " + std::to_string(memoryDirty));
+            it.second->setMemDirtyChanged(false);
+        }
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
