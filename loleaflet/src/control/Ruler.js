@@ -425,6 +425,7 @@ L.Control.Ruler = L.Control.extend({
 		this._rFace.style.marginLeft = rulerOffset + 'px';
 
 		this.rulerOffset = rulerOffset; // Needed on different parts too..
+		this._updateParagraphIndentations();
 	},
 
 	_moveIndentation: function(e) {
