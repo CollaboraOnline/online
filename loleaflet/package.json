@@ -6,7 +6,7 @@
     "@braintree/sanitize-url": "4.0.1",
     "autolinker": "3.14.1",
     "bootstrap": "3.3.6",
-    "browserify": "13.1.0",
+    "browserify": "16.5.1",
     "browserify-css": "0.15.0",
     "d3": "3.5.17",
     "eslint": "3.0.0",
