@@ -284,11 +284,6 @@ describe('Apply font on text shape.', function() {
 		// Remove direct formatting
 		openTextPropertiesPanel();
 
-		// Opening the mobile wizard for the second time
-		// triggeres two jsdialog message and so the mobile
-		// wizard is rendered twice.
-		cy.wait(500);
-
 		cy.get('#clearFormatting')
 			.click();
 

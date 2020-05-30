@@ -144,6 +144,12 @@ function openMobileWizard() {
 	cy.get('#tb_actionbar_item_mobile_wizard table')
 		.should('have.class', 'checked');
 
+	// Mobile wizard is requested twice on opening
+	// The second request is sent after a 400 ms delay
+	// see _refreshSidebar() method. So let's just wait
+	// until mobile wizard gets it's final state.
+	cy.wait(1000);
+
 	cy.log('Opening mobile wizard - end.');
 }
 
