@@ -7,7 +7,7 @@
     "autolinker": "3.14.1",
     "bootstrap": "3.3.6",
     "browserify": "13.1.0",
-    "browserify-css": "0.9.1",
+    "browserify-css": "0.15.0",
     "d3": "3.5.17",
     "eslint": "3.0.0",
     "hammerjs": "2.0.8",
