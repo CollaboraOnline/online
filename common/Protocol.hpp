@@ -76,6 +76,23 @@ namespace LOOLProtocol
 
     bool getTokenInteger(const StringVector& tokens, const std::string& name, int& value);
 
+    /// Literal-string token names.
+    template <std::size_t N>
+    inline bool getTokenInteger(const std::string& token, const char (&name)[N], int& value)
+    {
+        // N includes null termination.
+        static_assert(N > 1, "Token name must be at least one character long.");
+        if (token.size() > N && token[N - 1] == '=' && token.compare(0, N - 1, name) == 0)
+        {
+            const char* str = token.data() + N;
+            char* endptr = nullptr;
+            value = std::strtol(str, &endptr, 10);
+            return (endptr > str);
+        }
+
+        return false;
+    }
+
     inline bool getTokenString(const StringVector& tokens,
                                const std::string& name,
                                std::string& value)
