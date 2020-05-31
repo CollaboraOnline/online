@@ -17,7 +17,7 @@ StringVector::StringVector(const std::string& string, const std::vector<StringTo
 {
 }
 
-std::string StringVector::operator[](size_t index) const
+std::string StringVector::operator[](std::size_t index) const
 {
     if (index >= _tokens.size())
     {
@@ -28,76 +28,7 @@ std::string StringVector::operator[](size_t index) const
     return _string.substr(token._index, token._length);
 }
 
-size_t StringVector::size() const { return _tokens.size(); }
-
-bool StringVector::empty() const { return _tokens.empty(); }
-
-std::vector<StringToken>::const_iterator StringVector::begin() const { return _tokens.begin(); }
-
-std::vector<StringToken>::iterator StringVector::begin() { return _tokens.begin(); }
-
-std::vector<StringToken>::const_iterator StringVector::end() const { return _tokens.end(); }
-
-std::vector<StringToken>::iterator StringVector::end() { return _tokens.end(); }
-
-std::vector<StringToken>::iterator StringVector::erase(std::vector<StringToken>::const_iterator it)
-{
-    return _tokens.erase(it);
-}
-
-void StringVector::push_back(const std::string& string)
-{
-    StringToken token;
-    token._index = _string.length();
-    token._length = string.length();
-    _tokens.push_back(token);
-    _string += string;
-}
-
-std::string StringVector::getParam(const StringToken& token) const
-{
-    return _string.substr(token._index, token._length);
-}
-
-std::string StringVector::cat(const std::string& separator, size_t offset) const
-{
-    std::string ret;
-    bool first = true;
-
-    if (offset >= _tokens.size())
-    {
-        return ret;
-    }
-
-    for (auto it = _tokens.begin() + offset; it != _tokens.end(); ++it)
-    {
-        if (first)
-        {
-            first = false;
-        }
-        else
-        {
-            ret += separator;
-        }
-
-        ret += getParam(*it);
-    }
-
-    return ret;
-}
-
-bool StringVector::equals(size_t index, const char* string) const
-{
-    if (index >= _tokens.size())
-    {
-        return false;
-    }
-
-    const StringToken& token = _tokens[index];
-    return _string.compare(token._index, token._length, string) == 0;
-}
-
-bool StringVector::equals(size_t index, const StringVector& other, size_t otherIndex)
+bool StringVector::equals(std::size_t index, const StringVector& other, std::size_t otherIndex)
 {
     if (index >= _tokens.size())
     {

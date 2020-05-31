@@ -699,7 +699,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
         return false;
     }
 
-    const std::string response = "renderfont: " + tokens.cat(std::string(" "), 1) + '\n';
+    const std::string response = "renderfont: " + tokens.cat(' ', 1) + '\n';
 
     std::vector<char> output;
     output.resize(response.size());
@@ -916,7 +916,7 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
     {
         if (tokens.size() > 5)
         {
-            filterOptions += tokens.cat(std::string(" "), 5);
+            filterOptions += tokens.cat(' ', 5);
         }
     }
 
@@ -1426,7 +1426,7 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
 
     unsigned nLOKWindowId = std::stoi(tokens[1].c_str());
     getLOKitDocument()->sendDialogEvent(nLOKWindowId,
-        tokens.cat(std::string(" "), 2).c_str());
+        tokens.cat(' ', 2).c_str());
 
     return true;
 }
@@ -1498,9 +1498,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
     }
     else
     {
-        getLOKitDocument()->postUnoCommand(tokens[1].c_str(),
-                                       tokens.cat(std::string(" "), 2).c_str(),
-                                       bNotify);
+        getLOKitDocument()->postUnoCommand(tokens[1].c_str(), tokens.cat(' ', 2).c_str(), bNotify);
     }
 
     return true;
@@ -2033,7 +2031,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
     {
         if (tokens.size() > 4)
         {
-            filterOptions += tokens.cat(std::string(" "), 4);
+            filterOptions += tokens.cat(' ', 4);
         }
     }
 

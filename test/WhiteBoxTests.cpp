@@ -815,6 +815,9 @@ void WhiteBoxTests::testStringVector()
 
     // Test cat().
     CPPUNIT_ASSERT_EQUAL(std::string("a b"), vector.cat(" ", 0));
+    CPPUNIT_ASSERT_EQUAL(std::string("a b"), vector.cat(' ', 0));
+    CPPUNIT_ASSERT_EQUAL(std::string("a*b"), vector.cat('*', 0));
+    CPPUNIT_ASSERT_EQUAL(std::string("a blah mlah b"), vector.cat(" blah mlah ", 0));
     CPPUNIT_ASSERT_EQUAL(std::string(), vector.cat(" ", 3));
     CPPUNIT_ASSERT_EQUAL(std::string(), vector.cat(" ", 42));
 

@@ -885,7 +885,7 @@ bool ClientSession::sendFontRendering(const char *buffer, int length, const Stri
     TileCache::Tile cachedTile = docBroker->tileCache().lookupCachedStream(TileCache::StreamType::Font, font+text);
     if (cachedTile)
     {
-        const std::string response = "renderfont: " + tokens.cat(std::string(" "), 1) + '\n';
+        const std::string response = "renderfont: " + tokens.cat(' ', 1) + '\n';
         return sendTile(response, cachedTile);
     }
 
