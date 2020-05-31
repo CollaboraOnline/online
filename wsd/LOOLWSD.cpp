@@ -1793,8 +1793,7 @@ bool LOOLWSD::createForKit()
     // ForKit always spawns one.
     ++OutstandingForks;
 
-    LOG_INF("Launching forkit process: " << forKitPath << ' ' <<
-            args.cat(std::string(" "), 0));
+    LOG_INF("Launching forkit process: " << forKitPath << ' ' << args.cat(' ', 0));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
     int child = Util::spawnProcess(forKitPath, args);

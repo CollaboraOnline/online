@@ -2069,7 +2069,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
             msg = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];
             msg += " jail=" + _uriJailed;
             msg += " xjail=" + _uriJailedAnonym;
-            msg += ' ' + tokens.cat(std::string(" "), 3);
+            msg += ' ' + tokens.cat(' ', 3);
         }
 
         _childProcess->sendTextFrame(msg);

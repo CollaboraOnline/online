@@ -200,7 +200,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         if (getTokenString(tokens[offset], "options", _docOptions))
         {
             if (tokens.size() > offset + 1)
-                _docOptions += tokens.cat(std::string(" "), offset + 1);
+                _docOptions += tokens.cat(' ', offset + 1);
         }
     }
 }
