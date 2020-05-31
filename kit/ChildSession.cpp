@@ -1349,7 +1349,6 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
                               const StringVector& tokens,
                               const LokEventTargetEnum target)
 {
-    int type, x, y, count;
     bool success = true;
 
     // default values for compatibility reasons with older loleaflets
@@ -1371,6 +1370,10 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
             minTokens++;
     }
 
+    int type = 0;
+    int x = 0;
+    int y = 0;
+    int count = 0;
     if (tokens.size() < minTokens ||
         !getTokenKeyword(tokens[counter++], "type",
                          {{"buttondown", LOK_MOUSEEVENT_MOUSEBUTTONDOWN},
