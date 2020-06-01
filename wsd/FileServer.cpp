@@ -529,6 +529,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
     size_t fileCount = 0;
     std::string filesRead;
+    filesRead.reserve(1024);
 
     while ((currentFile = readdir(workingdir)) != nullptr)
     {
@@ -544,7 +545,8 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         else if (S_ISREG(fileStat.st_mode))
         {
             fileCount++;
-            filesRead.append(currentFile->d_name) + ' ';
+            filesRead.append(currentFile->d_name);
+            filesRead += ' ';
 
             std::ifstream file(basePath + relPath, std::ios::binary);
 

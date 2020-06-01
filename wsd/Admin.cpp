@@ -113,7 +113,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     }
     else if (tokens.equals(0, "history"))
     {
-        sendTextFrame("{ \"History\": " + model.getAllHistory() + "}");
+        sendTextFrame("{ \"History\": " + model.getAllHistory() + '}');
     }
     else if (tokens.equals(0, "version"))
     {

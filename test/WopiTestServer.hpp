@@ -227,7 +227,7 @@ protected:
                     oss << "HTTP/1.1 409 Conflict\r\n"
                         "User-Agent: " WOPI_AGENT_STRING "\r\n"
                         "\r\n"
-                        "{\"LOOLStatusCode\":" << static_cast<int>(LOOLStatusCode::DocChanged) << "}";
+                        "{\"LOOLStatusCode\":" << static_cast<int>(LOOLStatusCode::DocChanged) << '}';
 
                     socket->send(oss.str());
                     socket->shutdown();

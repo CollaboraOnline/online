@@ -2414,7 +2414,7 @@ void DocumentBroker::dumpState(std::ostream& os)
         os << "\n  life limit in seconds: " << _limitLifeSeconds;
     os << "\n  idle time: " << getIdleTimeSecs();
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
-      << "( " << _cursorWidth << "," << _cursorHeight << ")\n";
+      << "( " << _cursorWidth << ',' << _cursorHeight << ")\n";
     _lockCtx->dumpState(os);
     if (_tileCache)
         _tileCache->dumpState(os);
