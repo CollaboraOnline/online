@@ -78,11 +78,7 @@ describe('Changing slide properties.', function() {
 		cy.get('#fillattr')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-5')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 5);
 
 		cy.get('#fillattr .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(0, 255, 0);');
@@ -122,20 +118,12 @@ describe('Changing slide properties.', function() {
 		cy.get('#fillattr2')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-2')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 2);
 
 		cy.get('#fillattr3')
 			.click();
 
-		cy.get('#color-picker-1-basic-color-4')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(1, 4);
 
 		cy.get('#fillattr2 .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(255, 0, 0);');

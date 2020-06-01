@@ -226,6 +226,23 @@ function closeInsertionWizard() {
 	cy.log('Closing insertion wizard - end.');
 }
 
+function selectFromColorPalette(paletteNum, groupNum, colorNum) {
+	cy.log('Selecting a color from the color palette - start.');
+
+	cy.get('#color-picker-' + paletteNum.toString() + '-basic-color-' + groupNum.toString())
+		.click();
+
+	if (colorNum !== undefined) {
+		cy.get('#color-picker-' + paletteNum.toString() + '-tint-' + colorNum.toString())
+			.click();
+	}
+
+	cy.get('#mobile-wizard-back')
+		.click();
+
+	cy.log('Selecting a color from the color palette - end.');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.beforeAllMobile = beforeAllMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
@@ -236,3 +253,4 @@ module.exports.closeMobileWizard = closeMobileWizard;
 module.exports.executeCopyFromContextMenu = executeCopyFromContextMenu;
 module.exports.openInsertionWizard = openInsertionWizard;
 module.exports.closeInsertionWizard = closeInsertionWizard;
+module.exports.selectFromColorPalette = selectFromColorPalette;

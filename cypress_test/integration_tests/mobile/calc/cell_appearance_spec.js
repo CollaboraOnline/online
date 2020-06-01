@@ -48,11 +48,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#BackgroundColor')
 			.click();
 
-		cy.get('#color-picker-1-basic-color-2')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(1, 2);
 
 		// Check that the color is shown as selected
 		cy.get('#BackgroundColor .color-sample-selected')
@@ -275,11 +271,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#FrameLineColor')
 			.click();
 
-		cy.get('#color-picker-2-basic-color-3')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(2, 3);
 
 		// Check that the color is shown as selected
 		cy.get('#FrameLineColor .color-sample-selected')

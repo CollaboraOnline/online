@@ -199,14 +199,7 @@ describe('Apply font on text shape.', function() {
 		cy.get('#Color')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-5')
-			.click();
-
-		cy.get('#color-picker-0-tint-2')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 5, 2);
 
 		triggerNewSVG();
 
@@ -220,14 +213,7 @@ describe('Apply font on text shape.', function() {
 		cy.get('#CharBackColor')
 			.click();
 
-		cy.get('#color-picker-1-basic-color-2')
-			.click();
-
-		cy.get('#color-picker-1-tint-2')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(1, 2, 2);
 
 		triggerNewSVG();
 

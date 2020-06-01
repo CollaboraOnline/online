@@ -88,8 +88,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_fontcolor')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-7')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 7);
 
 		cy.get('.w2ui-tb-image.w2ui-icon.textcolor')
 			.should('have.attr', 'style', 'box-shadow: rgb(255, 255, 255) 0px -2px inset, rgb(0, 0, 255) 0px -6px inset;');
@@ -104,8 +103,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_backcolor')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-9')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 9);
 
 		cy.get('.w2ui-tb-image.w2ui-icon.backcolor')
 			.should('have.attr', 'style', 'box-shadow: rgb(255, 255, 255) 0px -2px inset, rgb(255, 0, 255) 0px -6px inset;');

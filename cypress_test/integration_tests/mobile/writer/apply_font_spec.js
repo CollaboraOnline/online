@@ -181,14 +181,7 @@ describe('Apply font changes.', function() {
 		cy.get('#FontColor')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-5')
-			.click();
-
-		cy.get('#color-picker-0-tint-2')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 5, 2);
 
 		writerHelper.selectAllMobile();
 
@@ -201,14 +194,7 @@ describe('Apply font changes.', function() {
 		cy.get('#BackColor')
 			.click();
 
-		cy.get('#color-picker-1-basic-color-5')
-			.click();
-
-		cy.get('#color-picker-1-tint-4')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(1, 5, 4);
 
 		writerHelper.selectAllMobile();
 

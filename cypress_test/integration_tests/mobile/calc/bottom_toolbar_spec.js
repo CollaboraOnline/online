@@ -96,11 +96,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.textcolor')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-5')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 5);
 
 		calcHelper.selectAllMobile();
 
@@ -114,11 +110,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.backcolor')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-5')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 5);
 
 		calcHelper.selectAllMobile();
 

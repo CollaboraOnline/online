@@ -152,14 +152,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#BackgroundColor')
 			.click();
 
-		cy.get('#color-picker-2-basic-color-5')
-			.click();
-
-		cy.get('#color-picker-2-tint-2')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(2, 5, 2);
 
 		writerHelper.selectAllMobile();
 

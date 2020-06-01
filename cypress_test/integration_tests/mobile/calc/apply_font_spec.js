@@ -162,11 +162,7 @@ describe('Apply font changes.', function() {
 		cy.get('#Color')
 			.click();
 
-		cy.get('#color-picker-0-basic-color-5')
-			.click();
-
-		cy.get('#mobile-wizard-back')
-			.click();
+		mobileHelper.selectFromColorPalette(0, 5);
 
 		calcHelper.selectAllMobile();
 
