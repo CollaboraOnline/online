@@ -57,6 +57,16 @@ describe('Form field button tests.', function() {
 			});
 	}
 
+	function moveCursor(direction = 'left') {
+		if (direction == 'left') {
+			cy.get('textarea.clipboard')
+				.type('{leftArrow}', {force : true});
+		} else {
+			cy.get('textarea.clipboard')
+				.type('{rightArrow}', {force : true});
+		}
+	}
+
 	function doZoom(zoomIn) {
 		helper.initAliasToEmptyString('prevZoom');
 
@@ -91,26 +101,22 @@ describe('Form field button tests.', function() {
 		buttonShouldNotExist();
 
 		// Move the cursor next to the form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor again to the other side of the field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor away
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldNotExist();
 
 		// Move the cursor back next to the field
-		cy.get('textarea.clipboard')
-			.type('{leftArrow}');
+		moveCursor('left');
 
 		buttonShouldExist();
 	});
@@ -119,8 +125,7 @@ describe('Form field button tests.', function() {
 		before('form_field.odt');
 
 		// Move the cursor next to the form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
@@ -162,8 +167,7 @@ describe('Form field button tests.', function() {
 		before('form_field.odt');
 
 		// Move the cursor next to the form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		// Select a new item
 		cy.get('.form-field-button')
@@ -177,13 +181,12 @@ describe('Form field button tests.', function() {
 
 		// Move the cursor away and back
 		cy.get('textarea.clipboard')
-			.type('{leftArrow}');
+			.type('{home}', {force : true});
 
 		buttonShouldNotExist();
 
 		// Move the cursor back next to the field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
@@ -191,8 +194,7 @@ describe('Form field button tests.', function() {
 			.should('have.text', 'January');
 
 		// Do the same from the right side of the field.
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
@@ -206,14 +208,12 @@ describe('Form field button tests.', function() {
 		cy.contains('.drop-down-field-list-item', 'December')
 			.click();
 
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldNotExist();
 
 		// Move the cursor back next to the field
-		cy.get('textarea.clipboard')
-			.type('{leftArrow}');
+		moveCursor('left');
 
 		buttonShouldExist();
 
@@ -228,32 +228,26 @@ describe('Form field button tests.', function() {
 		buttonShouldNotExist();
 
 		// Move the cursor next to the first form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor to the other side of the field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor to the second form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor to the other side of the second field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
-		// Move the cursor away of the second field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldNotExist();
 	});
@@ -262,8 +256,7 @@ describe('Form field button tests.', function() {
 		before('drop_down_form_field_noselection.odt');
 
 		// Move the cursor next to the form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
@@ -275,8 +268,7 @@ describe('Form field button tests.', function() {
 		before('drop_down_form_field_noitem.odt');
 
 		// Move the cursor next to the form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
@@ -303,8 +295,7 @@ describe('Form field button tests.', function() {
 		before('form_field.odt');
 
 		// Move the cursor next to the form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
@@ -322,8 +313,7 @@ describe('Form field button tests.', function() {
 		// anything stupid after the button is removed.
 
 		// Move the cursor away from the field
-		cy.get('textarea.clipboard')
-			.type('{leftArrow}');
+		moveCursor('left');
 
 		buttonShouldNotExist();
 
@@ -335,8 +325,7 @@ describe('Form field button tests.', function() {
 		before('form_field.odt');
 
 		// Move the cursor next to the form field
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}');
+		moveCursor('right');
 
 		buttonShouldExist();
 
