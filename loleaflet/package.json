@@ -22,7 +22,7 @@
     "smartmenus": "1.0.0",
     "uglify-js": "3.9.4",
     "uglifycss": "0.0.29",
-    "uglifyify": "3.0.2",
+    "uglifyify": "5.0.2",
     "vex-js": "4.1.0"
   },
   "repository": {
