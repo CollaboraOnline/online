@@ -606,8 +606,29 @@ L.Control.Ruler = L.Control.extend({
 		this._map._socket.sendMessage('uno .uno:RulerChangeState ' + JSON.stringify(unoObj));
 	},
 
+	_getTabStopHit: function(tabstopContainer, pointX) {
+		var tabstop = null;
+		var margin = 10;
+		var tabstopDiffFromCenter = 100000000; // just a big initial condition
+
+		for (var i = 0; i < tabstopContainer.tabStops.length; i++) {
+			var current = tabstopContainer.tabStops[i];
+			var location = current.tabStopLocation;
+			if (pointX >= location.left - margin && pointX <= location.right + margin) {
+				var diff = Math.abs(pointX - location.center);
+				if (diff < tabstopDiffFromCenter) {
+					tabstop = current;
+					tabstopDiffFromCenter = diff;
+				}
+			}
+		}
+		return tabstop;
+	},
 	_initiateTabstopDrag: function(event) {
 		// console.log('===> _initiateTabstopDrag ' + event.type);
+
+		this.currentPositionInTwips = null;
+		this.currentTabStopIndex = null;
 
 		var tabstopContainer = null;
 		var pointX = null;
@@ -622,18 +643,37 @@ L.Control.Ruler = L.Control.extend({
 		}
 		tabstopContainer.tabStopMarkerBeingDragged = null;
 
+		// check if we hit any tabstop
+		var tabstop = this._getTabStopHit(tabstopContainer, pointX);
+
 		// Check what to do when a mouse buttons is clicked, ignore touch
 		if (event.type !== 'panstart') {
 			// right-click inside tabstop container
 			if (event.button === 2) {
-				this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+				if (tabstop == null) {
+					this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+				}
+				else {
+					this.currentTabStopIndex = tabstop.tabStopNumber;
+				}
+				var self = this;
 				$.contextMenu({
 					selector: '.loleaflet-ruler-tabstopcontainer',
 					className: 'loleaflet-font',
 					items: {
 						inserttabstop: {
 							name: _('Insert tabstop'),
-							callback: (this._insertTabstop).bind(this)
+							callback: (this._insertTabstop).bind(this),
+							visible: function() {
+								return self.currentPositionInTwips != null;
+							}
+						},
+						removetabstop: {
+							name: _('Delete tabstop'),
+							callback: (this._deleteTabstop).bind(this),
+							visible: function() {
+								return self.currentTabStopIndex != null;
+							}
 						}
 					}
 				});
@@ -643,23 +683,6 @@ L.Control.Ruler = L.Control.extend({
 			else if (event.button !== 0) {
 				event.stopPropagation(); // prevent handling of the mother event elsewhere
 				return;
-			}
-		}
-
-		// check if we hit any tabstop
-		var tabstop = null;
-		var margin = 10;
-		var tabstopDiffFromCenter = 100000000; // just a big initial condition
-
-		for (var i = 0; i < tabstopContainer.tabStops.length; i++) {
-			var current = tabstopContainer.tabStops[i];
-			var location = current.tabStopLocation;
-			if (pointX >= location.left - margin && pointX <= location.right + margin) {
-				var diff = Math.abs(pointX - location.center);
-				if (diff < tabstopDiffFromCenter) {
-					tabstop = current;
-					tabstopDiffFromCenter = diff;
-				}
 			}
 		}
 
@@ -735,6 +758,10 @@ L.Control.Ruler = L.Control.extend({
 				Position: {
 					type : 'int32',
 					value : positionTwip
+				},
+				Remove: {
+					type : 'boolean',
+					value : false
 				}
 			};
 			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
@@ -764,6 +791,27 @@ L.Control.Ruler = L.Control.extend({
 		}
 	},
 
+	_deleteTabstop: function() {
+		if (this.currentTabStopIndex != null) {
+			var params = {
+				Index: {
+					type : 'int32',
+					value : this.currentTabStopIndex
+				},
+				Position: {
+					type : 'int32',
+					value : 0
+				},
+				Remove: {
+					type : 'boolean',
+					value : true
+				}
+			};
+			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
+			this.currentTabStopIndex = null;
+		}
+	},
+
 	_insertTabstop: function() {
 		if (this.currentPositionInTwips != null) {
 			var params = {
@@ -774,9 +822,14 @@ L.Control.Ruler = L.Control.extend({
 				Position: {
 					type : 'int32',
 					value : this.currentPositionInTwips
+				},
+				Remove: {
+					type : 'boolean',
+					value : false
 				}
 			};
 			this._map.sendUnoCommand('.uno:ChangeTabStop', params);
+			this.currentPositionInTwips = null;
 		}
 	},
 
