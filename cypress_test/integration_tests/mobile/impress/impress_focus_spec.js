@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var impress = require('../../common/impress');
+var impressHelper = require('../../common/impress_helper');
 
 describe('Impress focus tests', function() {
 	var testFileName = 'focus.odp';
@@ -19,7 +19,7 @@ describe('Impress focus tests', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		impress.assertNotInTextEditMode();
+		impressHelper.assertNotInTextEditMode();
 
 		// Body has the focus -> can't type in the document
 		cy.document().its('activeElement.tagName')
@@ -49,26 +49,26 @@ describe('Impress focus tests', function() {
 			.should('exist');
 
 		// But no editing.
-		impress.assertNotInTextEditMode();
+		impressHelper.assertNotInTextEditMode();
 	});
 
 	it('Double-click to edit', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		impress.assertNotInTextEditMode();
+		impressHelper.assertNotInTextEditMode();
 
 		// Enter edit mode by double-clicking.
 		cy.get('#document-container')
 			.dblclick();
 
-		impress.typeTextAndVerify('Hello Impress');
+		impressHelper.typeTextAndVerify('Hello Impress');
 
 		// End editing.
 		cy.get('#document-container')
 			.type('{esc}');
 
-		impress.assertNotInTextEditMode();
+		impressHelper.assertNotInTextEditMode();
 
 		// Enter edit mode by double-clicking again.
 		cy.get('#document-container')
@@ -77,14 +77,14 @@ describe('Impress focus tests', function() {
 		// Clear the text.
 		helper.clearAllText();
 
-		impress.typeTextAndVerify('Bazinga Impress');
+		impressHelper.typeTextAndVerify('Bazinga Impress');
 	});
 
 	it('Single-click to edit', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		impress.assertNotInTextEditMode();
+		impressHelper.assertNotInTextEditMode();
 
 		cy.get('#document-container')
 			.then(function(items) {
@@ -99,13 +99,13 @@ describe('Impress focus tests', function() {
 				cy.get('#document-container')
 					.click(posX, posY);
 
-				impress.typeTextAndVerify('Hello Impress');
+				impressHelper.typeTextAndVerify('Hello Impress');
 
 				// End editing.
 				cy.get('#document-container')
 					.type('{esc}');
 
-				impress.assertNotInTextEditMode();
+				impressHelper.assertNotInTextEditMode();
 
 				// Single-click to re-edit.
 				cy.get('#document-container')
@@ -115,18 +115,18 @@ describe('Impress focus tests', function() {
 						cy.get('#document-container')
 							.click(posX, posY);
 
-						impress.assertInTextEditMode();
+						impressHelper.assertInTextEditMode();
 
 						// Clear the text.
 						helper.clearAllText();
 
-						impress.typeTextAndVerify('Bazinga Impress');
+						impressHelper.typeTextAndVerify('Bazinga Impress');
 
 						// End editing.
 						cy.get('#document-container')
 							.type('{esc}');
 
-						impress.assertNotInTextEditMode();
+						impressHelper.assertNotInTextEditMode();
 					});
 			});
 	});

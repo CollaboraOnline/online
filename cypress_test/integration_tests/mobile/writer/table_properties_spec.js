@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerHelper = require('./writer_helper');
+var writerMobileHelper = require('./writer_mobile_helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
 	var testFileName = 'spellchecking.odt';
@@ -31,7 +31,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	}
 
 	function moveCursorToFirstCell() {
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		cy.get('.blinking-cursor')
 			.then(function(cursor) {
@@ -59,7 +59,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -88,7 +88,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -117,7 +117,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -146,7 +146,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -175,7 +175,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -204,7 +204,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -237,7 +237,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		mobileHelper.closeMobileWizard();
 
 		// Do a new selection
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check markers are in the same row (we have text selection only)
 		cy.get('.leaflet-marker-icon')
@@ -266,7 +266,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#MergeCells')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -296,7 +296,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#rowheight .spinfield')
 			.should('have.attr', 'value', '1.4');
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check row height
 		cy.get('#copy-paste-container td')
@@ -324,7 +324,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#columnwidth .spinfield')
 			.should('have.attr', 'value', '5.6');
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check row height
 		cy.get('#copy-paste-container td')
@@ -349,7 +349,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetMinimalRowHeight')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -373,7 +373,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetOptimalRowHeight')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -407,7 +407,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#DistributeRows')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -441,7 +441,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetMinimalColumnWidth')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '24');
@@ -464,7 +464,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#SetOptimalColumnWidth')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container td:nth-of-type(1n)')
 			.should('have.attr', 'width', '324');
@@ -489,7 +489,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#DistributeColumns')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '323');

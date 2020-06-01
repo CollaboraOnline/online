@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerHelper = require('./writer_helper');
+var writerMobileHelper = require('./writer_mobile_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
 	var defaultGeometry = 'M 1965,4863 L 7957,10855 1965,10855 1965,4863 1965,4863 Z';
@@ -14,7 +14,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		cy.get('#document-container')
 			.type('{home}');

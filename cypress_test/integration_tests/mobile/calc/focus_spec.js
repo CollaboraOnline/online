@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calc = require('../../common/calc');
+var calcHelper = require('../../common/calc_helper');
 
 describe('Calc focus tests', function() {
 	var testFileName = 'focus.ods';
@@ -27,7 +27,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// One tap on an other cell -> no focus on the document
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -60,7 +60,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// One tap on a cell -> no document focus
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -70,7 +70,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// Second tap on the same cell
-		calc.clickOnFirstCell(false);
+		calcHelper.clickOnFirstCell(false);
 
 		// Document has the focus
 		cy.document().its('activeElement.className')
@@ -88,14 +88,14 @@ describe('Calc focus tests', function() {
 		helper.assertNoKeyboardInput();
 
 		// Select the first cell to edit the same one.
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		// No focus
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
 		// Click in the formula-bar.
-		calc.clickFormulaBar();
+		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 
 		// Type some text.
@@ -106,10 +106,10 @@ describe('Calc focus tests', function() {
 		helper.assertNoKeyboardInput();
 
 		// Select the first cell to edit the same one.
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		// Check the text we typed.
-		calc.clickFormulaBar();
+		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		cy.get('textarea.clipboard').type('{ctrl}a');
 		helper.expectTextForClipboard(text1);
@@ -120,8 +120,8 @@ describe('Calc focus tests', function() {
 
 		// Type some more text, at the end.
 		cy.log('Appending text at the end.');
-		calc.clickOnFirstCell();
-		calc.clickFormulaBar();
+		calcHelper.clickOnFirstCell();
+		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		var text2 = ', this is a test.';
 		cy.get('textarea.clipboard').type(text2);
@@ -134,8 +134,8 @@ describe('Calc focus tests', function() {
 
 		// Type some more text, in the middle.
 		cy.log('Inserting text in the middle.');
-		calc.clickOnFirstCell();
-		calc.clickFormulaBar();
+		calcHelper.clickOnFirstCell();
+		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 
 		// Move cursor before text2

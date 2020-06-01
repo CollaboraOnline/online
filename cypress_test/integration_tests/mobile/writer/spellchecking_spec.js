@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerHelper = require('./writer_helper');
+var writerMobileHelper = require('./writer_mobile_helper');
 
 describe('Spell checking menu.', function() {
 	var testFileName = 'spellchecking.odt';
@@ -20,7 +20,7 @@ describe('Spell checking menu.', function() {
 
 	function openContextMenu() {
 		// Do a new selection
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Open context menu
 		cy.get('.leaflet-marker-icon')
@@ -55,7 +55,7 @@ describe('Spell checking menu.', function() {
 		cy.contains('.context-menu-link', 'hello')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		helper.expectTextForClipboard('hello');
 	});

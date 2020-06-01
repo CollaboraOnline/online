@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerHelper = require('./writer_helper');
+var writerMobileHelper = require('./writer_mobile_helper');
 
 describe('Insert objects via insertion wizard.', function() {
 	var testFileName = 'insert_object.odt';
@@ -86,7 +86,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Two rows
 		cy.get('#copy-paste-container tr')
@@ -124,7 +124,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		// Three rows
 		cy.get('#copy-paste-container tr')
@@ -311,7 +311,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
 			.click();
 
-		writerHelper.selectAllMobile();
+		writerMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\nsome text');

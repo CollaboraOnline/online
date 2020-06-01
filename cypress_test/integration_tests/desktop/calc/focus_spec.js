@@ -1,7 +1,7 @@
 /* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
-var calc = require('../../common/calc');
+var calcHelper = require('../../common/calc_helper');
 
 describe('Calc focus tests', function() {
 	var testFileName = 'focus.ods';
@@ -21,10 +21,10 @@ describe('Calc focus tests', function() {
 
 		// Select the first cell to edit the same one.
 		// Use the tile's edge to find the first cell's position
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		// Click in the formula-bar.
-		calc.clickFormulaBar();
+		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 
 		// Type some text.
@@ -33,8 +33,8 @@ describe('Calc focus tests', function() {
 		cy.get('textarea.clipboard').type('{enter}');
 
 		// Select the first cell to edit the same one.
-		calc.clickOnFirstCell();
-		calc.clickFormulaBar();
+		calcHelper.clickOnFirstCell();
+		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		// Validate.
 		cy.get('textarea.clipboard').type('{ctrl}a');
@@ -44,8 +44,8 @@ describe('Calc focus tests', function() {
 
 		// Type some more text, at the end.
 		cy.log('Appending text at the end.');
-		calc.clickOnFirstCell();
-		calc.clickFormulaBar();
+		calcHelper.clickOnFirstCell();
+		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		var text2 = ', this is a test.';
 		helper.typeText('textarea.clipboard', text2);
@@ -57,8 +57,8 @@ describe('Calc focus tests', function() {
 
 		// Type some more text, in the middle.
 		cy.log('Inserting text in the middle.');
-		calc.clickOnFirstCell();
-		calc.clickFormulaBar();
+		calcHelper.clickOnFirstCell();
+		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		var text3 = ' BAZINGA';
 		helper.typeText('textarea.clipboard', text3);

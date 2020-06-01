@@ -1,9 +1,9 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
-var calc = require('../../common/calc');
+var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcHelper = require('./calc_helper');
+var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Calc insertion wizard.', function() {
 	var testFileName = 'insertion_wizard.ods';
@@ -14,7 +14,7 @@ describe('Calc insertion wizard.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -64,7 +64,7 @@ describe('Calc insertion wizard.', function() {
 		cy.get('.blinking-cursor')
 			.should('be.visible');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td a')
 			.should('have.text', 'some text');
@@ -97,7 +97,7 @@ describe('Calc insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Date')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;MM/DD/YY');
@@ -108,7 +108,7 @@ describe('Calc insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Time')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;HH:MM:SS AM/PM');

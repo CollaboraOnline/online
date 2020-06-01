@@ -1,9 +1,9 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
-var calc = require('../../common/calc');
+var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcHelper = require('./calc_helper');
+var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Change alignment settings.', function() {
 	var testFileName = 'alignment_options.ods';
@@ -20,7 +20,7 @@ describe('Change alignment settings.', function() {
 	});
 
 	function getTextPosForFirstCell() {
-		calc.dblClickOnFirstCell();
+		calcHelper.dblClickOnFirstCell();
 
 		// Select text content
 		cy.get('textarea.clipboard')
@@ -36,11 +36,11 @@ describe('Change alignment settings.', function() {
 		cy.get('@currentTextPos')
 			.should('be.greaterThan', 0);
 
-		calcHelper.removeTextSelection();
+		calcMobileHelper.removeTextSelection();
 	}
 
 	function openAlignmentPaneForFirstCell() {
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
 
@@ -58,13 +58,13 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignRight')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'right');
 
 		// Change alignment back
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
 
@@ -74,7 +74,7 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignLeft')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'left');
@@ -86,7 +86,7 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignHorizontalCenter')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'center');
@@ -98,7 +98,7 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignBlock')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'justify');
@@ -127,13 +127,13 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignTop')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'top');
 
 		// Change alignment back
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
 
@@ -143,7 +143,7 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignBottom')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'bottom');
@@ -155,7 +155,7 @@ describe('Change alignment settings.', function() {
 		cy.get('#AlignVCenter')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'middle');
@@ -243,7 +243,7 @@ describe('Change alignment settings.', function() {
 		cy.get('#IncrementIndent')
 			.click();
 
-		calcHelper.removeTextSelection();
+		calcMobileHelper.removeTextSelection();
 
 		openAlignmentPaneForFirstCell();
 
@@ -326,7 +326,7 @@ describe('Change alignment settings.', function() {
 
 	it('Merge cells.', function() {
 		// Select the full row
-		calcHelper.selectFirstRow();
+		calcMobileHelper.selectFirstRow();
 
 		// Even after we get the cell row selection the merge cell options is still disabled
 		// So we open mobile wizard again and again until merge cells get the right state
@@ -360,7 +360,7 @@ describe('Change alignment settings.', function() {
 			.should('have.prop', 'checked', true);
 
 		// Check content
-		calcHelper.selectAllMobile(false);
+		calcMobileHelper.selectAllMobile(false);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'colspan', '1024');

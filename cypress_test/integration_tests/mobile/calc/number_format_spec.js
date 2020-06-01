@@ -1,9 +1,9 @@
 /* global describe it cy beforeEach require afterEach Cypress*/
 
 var helper = require('../../common/helper');
-var calc = require('../../common/calc');
+var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcHelper = require('./calc_helper');
+var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Apply number formatting.', function() {
 	var testFileName = 'number_format.ods';
@@ -14,7 +14,7 @@ describe('Apply number formatting.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -62,7 +62,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;0.00%');
@@ -94,7 +94,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;0.00%');
@@ -119,7 +119,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;[$$-409]#,##0.00;[RED]-[$$-409]#,##0.00');
@@ -151,7 +151,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;[$$-409]#,##0.00;[RED]-[$$-409]#,##0.00');
@@ -180,7 +180,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;[$$-409]#,##0.00;[RED]-[$$-409]#,##0.00');
@@ -188,7 +188,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '$1,000.00');
 
-		calc.clickOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		mobileHelper.openMobileWizard();
 
@@ -209,7 +209,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#numberformatcombobox .ui-header-left')
 			.should('have.text', 'Number');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1,000.00');
@@ -234,7 +234,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;MM/DD/YY');
@@ -256,7 +256,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;HH:MM:SS AM/PM');
@@ -278,7 +278,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;0.00E+00');
@@ -297,7 +297,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;# ?/?');
@@ -316,7 +316,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;BOOLEAN');
@@ -335,7 +335,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;@');
@@ -357,7 +357,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#decimalplaces input')
 			.should('have.attr', 'value', '2');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;0.00');
@@ -379,7 +379,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '6');
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;000000');
@@ -400,7 +400,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#negativenumbersred input')
 			.should('have.prop', 'checked', true);
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;0;[RED]-0');
@@ -421,7 +421,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#thousandseparator input')
 			.should('have.prop', 'checked', true);
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdnum', '1033;0;#,##0');

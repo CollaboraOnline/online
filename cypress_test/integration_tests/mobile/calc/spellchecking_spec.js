@@ -1,9 +1,9 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
-var calc = require('../../common/calc');
+var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcHelper = require('./calc_helper');
+var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Calc spell checking menu.', function() {
 	var testFileName = 'spellchecking.ods';
@@ -21,7 +21,7 @@ describe('Calc spell checking menu.', function() {
 
 	function openContextMenu() {
 		// Step into edit mode
-		calc.dblClickOnFirstCell();
+		calcHelper.dblClickOnFirstCell();
 
 		// Select text content
 		cy.get('textarea.clipboard')
@@ -42,10 +42,10 @@ describe('Calc spell checking menu.', function() {
 				}
 
 				// Remove selection
-				calcHelper.removeTextSelection();
+				calcMobileHelper.removeTextSelection();
 
 				// Step into edit mode again
-				calc.dblClickOnFirstCell();
+				calcHelper.dblClickOnFirstCell();
 
 				mobileHelper.longPressOnDocument(XPos, YPos);
 			});
@@ -70,7 +70,7 @@ describe('Calc spell checking menu.', function() {
 					.click(XPos, YPos);
 			});
 
-		calcHelper.selectAllMobile();
+		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'hello');
