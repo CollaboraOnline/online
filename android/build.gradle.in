@@ -24,3 +24,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+afterEvaluate {
+    clean.dependsOn(':lib:clean')
+}

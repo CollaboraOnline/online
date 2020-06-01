@@ -291,6 +291,8 @@ ReferenceOOoMajorMinor=4.1
 
 clean.doFirst {
 	delete "src/main/assets"
+	delete "src/debug/assets"
+	delete "src/release/assets"
 }
 
 // creating the UI stuff is cheap, don't bother only applying it for the flavor..

@@ -1,5 +1,6 @@
 .gradle
 .idea
+/build
 /android.iml
 /build.gradle
 /local.properties
@@ -12,4 +13,6 @@
 /lib/src/main/assets/share/
 /lib/src/main/assets/unpack/
 /lib/src/main/assets/user/
+/lib/src/debug/assets
+/lib/src/release/assets
 /lib/src/main/cpp/lib
