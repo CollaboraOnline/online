@@ -26,6 +26,35 @@ module.exports = {
 					}
 				};
 			}
+		},
+		'no-get-invoke-match-chain': {
+			/**
+			* Catches cy.get(selector).invoke('text').should('match',...) calls in the code.
+			*
+			* Issue: In cypress test framework only the last getter command is retried.
+			* In this case it's the invoke method and so the get() method is
+			* not retried. Sometimes, it behaves unexpectedly, because the test
+			* retries to call the text method on an element, which might be removed
+			* in the meantime. Instead of searching for a new element matching both
+			* with the selector and the regular expression.
+			*
+			* Fix: We can use cy.contains(seletor, regexp) method instead.
+			* This is a compact command which will retry to match both the
+			* selector and the text matcher.
+			*
+			**/
+			create: function(context) {
+				return {
+					'CallExpression[callee.property.name=\'should\'][callee.object.callee.property.name=\'invoke\'][callee.object.callee.object.callee.property.name=\'get\']': function(expr) {
+						if (expr.arguments && expr.arguments.length === 2 && expr.arguments[0].value === 'match' &&
+							expr.callee.object.arguments &&
+							expr.callee.object.arguments.length === 1 &&
+							expr.callee.object.arguments[0].value === 'text') {
+							context.report(expr, 'Do not use this long chain for matching text. Use cy.contains(selector, regexp) instead for better retriability!');
+						}
+					}
+				};
+			}
 		}
 	}
 };
