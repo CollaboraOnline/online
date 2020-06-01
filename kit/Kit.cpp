@@ -1558,7 +1558,7 @@ private:
                 const std::string username = itView->second.getUserName();
                 oss << "\"username\":\"" << username << "\",";
                 if (!itView->second.getUserExtraInfo().empty())
-                    oss << "\"userextrainfo\":" << itView->second.getUserExtraInfo() << ",";
+                    oss << "\"userextrainfo\":" << itView->second.getUserExtraInfo() << ',';
                 const bool readonly = itView->second.isReadOnly();
                 oss << "\"readonly\":\"" << readonly << "\",";
                 const auto it = viewColorsMap.find(username);

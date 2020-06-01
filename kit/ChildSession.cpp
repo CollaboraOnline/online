@@ -1601,7 +1601,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
     const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
     const double totalTime = elapsed/1000.;
     LOG_TRC("paintWindow for " << winId << " returned " << width << "X" << height
-            << "@(" << startX << "," << startY << ")"
+            << "@(" << startX << ',' << startY << ','
             << " with dpi scale: " << dpiScale
             << " and rendered in " << totalTime
             << "ms (" << area / elapsed << " MP/s).");
@@ -2095,7 +2095,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
 
 bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
-    int part;
+    int part = 0;
     if (tokens.size() < 2 ||
         !getTokenInteger(tokens[1], "part", part))
     {

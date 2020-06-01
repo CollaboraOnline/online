@@ -70,9 +70,9 @@ std::pair<std::time_t, std::string> Document::getSnapshot() const
     std::time_t ct = std::time(nullptr);
     std::ostringstream oss;
     oss << '{';
-    oss << "\"creationTime\"" << ":" << ct << ",";
-    oss << "\"memoryDirty\"" << ":" << getMemoryDirty() << ",";
-    oss << "\"activeViews\"" << ":" << getActiveViews() << ",";
+    oss << "\"creationTime\"" << ':' << ct << ',';
+    oss << "\"memoryDirty\"" << ':' << getMemoryDirty() << ',';
+    oss << "\"activeViews\"" << ':' << getActiveViews() << ',';
 
     oss << "\"views\"" << ":[";
     std::string separator;
@@ -88,8 +88,8 @@ std::pair<std::time_t, std::string> Document::getSnapshot() const
     }
     oss << "],";
 
-    oss << "\"lastActivity\"" << ":" << _lastActivity;
-    oss << "}";
+    oss << "\"lastActivity\"" << ':' << _lastActivity;
+    oss << '}';
     return std::make_pair(ct, oss.str());
 }
 
@@ -99,9 +99,9 @@ const std::string Document::getHistory() const
     oss << "{";
     oss << "\"docKey\"" << ":\"" << _docKey << "\",";
     oss << "\"filename\"" << ":\"" << LOOLWSD::anonymizeUrl(getFilename()) << "\",";
-    oss << "\"start\"" << ":" << _start << ",";
-    oss << "\"end\"" << ":" << _end << ",";
-    oss << "\"pid\"" << ":" << getPid() << ",";
+    oss << "\"start\"" << ':' << _start << ',';
+    oss << "\"end\"" << ':' << _end << ',';
+    oss << "\"pid\"" << ':' << getPid() << ',';
     oss << "\"snapshots\"" << ":[";
     std::string separator;
     for (const auto& s : _snapshots)
