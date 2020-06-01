@@ -130,7 +130,7 @@ var
 	return Function.prototype[$to_locale_string].apply(String_ctr, arguments);
 }
 , loadFromDisk = String_ctr[$to_locale_string] = function (uri) {
-        const fs = require('fs');
+        var fs = require('fs');
         var read = fs.readFileSync(uri, 'utf8');
         return JSON.parse(read);
 }

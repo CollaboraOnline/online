@@ -20,7 +20,7 @@
     "select2": "4.0.13",
     "shrinkpack": "1.0.0-alpha",
     "smartmenus": "1.0.0",
-    "uglify-js": "2.4.24",
+    "uglify-js": "3.9.4",
     "uglifycss": "0.0.27",
     "uglifyify": "3.0.2",
     "vex-js": "4.1.0"
