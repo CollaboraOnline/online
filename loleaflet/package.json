@@ -12,7 +12,7 @@
     "eslint": "3.0.0",
     "hammerjs": "2.0.8",
     "jquery": "2.2.4",
-    "jquery-contextmenu": "2.2.3",
+    "jquery-contextmenu": "2.9.2",
     "jquery-mousewheel": "3.1.3",
     "jquery-ui": "1.10.5",
     "json-js": "1.1.2",
