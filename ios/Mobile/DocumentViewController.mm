@@ -16,6 +16,7 @@
 #import <objc/runtime.h>
 
 #import <poll.h>
+#import <sys/stat.h>
 
 #import "ios.h"
 #import "FakeSocket.hpp"
@@ -465,8 +466,13 @@ static IMP standardImpOfInputAccessoryView = nil;
                 // First save it in the requested format to a temporary location. First remove any
                 // leftover identically named temporary file.
 
+                NSURL *tmpFileDirectory = [[NSFileManager.defaultManager temporaryDirectory] URLByAppendingPathComponent:@"export"];
+                if (![NSFileManager.defaultManager createDirectoryAtURL:tmpFileDirectory withIntermediateDirectories:YES attributes:nil error:nil]) {
+                    LOG_ERR("Could not create directory " << [[tmpFileDirectory path] UTF8String]);
+                    return;
+                }
                 NSString *tmpFileName = [[[self.document->copyFileURL lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:[@"." stringByAppendingString:format]];
-                downloadAsTmpURL = [[NSFileManager.defaultManager temporaryDirectory] URLByAppendingPathComponent:tmpFileName];
+                downloadAsTmpURL = [tmpFileDirectory URLByAppendingPathComponent:tmpFileName];
 
                 std::remove([[downloadAsTmpURL path] UTF8String]);
 
@@ -479,15 +485,15 @@ static IMP standardImpOfInputAccessoryView = nil;
                 struct stat statBuf;
                 if (stat([[downloadAsTmpURL path] UTF8String], &statBuf) == -1) {
                     LOG_ERR("Could apparently not save to '" <<  [[downloadAsTmpURL path] UTF8String] << "'");
-                } else {
-                    UIDocumentPickerViewController *picker =
-                        [[UIDocumentPickerViewController alloc] initWithURL:downloadAsTmpURL
-                                                                     inMode:UIDocumentPickerModeExportToService];
-                    picker.delegate = self;
-                    [self presentViewController:picker
-                                       animated:YES
-                                     completion:nil];
+                    return;
                 }
+                UIDocumentPickerViewController *picker =
+                    [[UIDocumentPickerViewController alloc] initWithURL:downloadAsTmpURL
+                                                                 inMode:UIDocumentPickerModeExportToService];
+                picker.delegate = self;
+                [self presentViewController:picker
+                                   animated:YES
+                                 completion:nil];
                 return;
             }
         }
@@ -504,10 +510,12 @@ static IMP standardImpOfInputAccessoryView = nil;
 
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
     std::remove([[downloadAsTmpURL path] UTF8String]);
+    std::remove([[[downloadAsTmpURL URLByDeletingLastPathComponent] path] UTF8String]);
 }
 
 - (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {
     std::remove([[downloadAsTmpURL path] UTF8String]);
+    std::remove([[[downloadAsTmpURL URLByDeletingLastPathComponent] path] UTF8String]);
 }
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
