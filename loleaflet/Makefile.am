@@ -100,7 +100,7 @@ LOLEAFLET_ADMIN_JS =\
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
 	json-js@1.1.2 \
-	select2@4.0.1 \
+	select2@4.0.13 \
 	vex-js@4.1.0 \
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@4.0.1
