@@ -2810,7 +2810,7 @@ private:
                 const std::string formName(form.get("name"));
 
                 // Validate the docKey
-                const std::string decodedUri = requestDetails.getLegacyDocumentURI();
+                const std::string decodedUri = requestDetails.getDocumentURI();
                 const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
 
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -2846,7 +2846,7 @@ private:
             // TODO: Check that the user in question has access to this file!
 
             // 1. Validate the dockey
-            const std::string decodedUri = requestDetails.getLegacyDocumentURI();
+            const std::string decodedUri = requestDetails.getDocumentURI();
             const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
 
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -3025,7 +3025,7 @@ private:
                                SocketDisposition& disposition,
                                const std::shared_ptr<StreamSocket>& socket)
     {
-        const std::string url = requestDetails.getLegacyDocumentURI();
+        const std::string url = requestDetails.getDocumentURI();
         assert(socket && "Must have a valid socket");
 
         // must be trace for anonymization
