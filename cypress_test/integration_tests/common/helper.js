@@ -122,8 +122,7 @@ function clearAllText() {
 		.should('not.exist');
 }
 
-// Expects getTextForClipboard return the given
-// plain-text, and asserts equality.
+// Check that the clipboard text matches with the specified text.
 function expectTextForClipboard(expectedPlainText) {
 	if (isWriter()) {
 		cy.get('#copy-paste-container p font')
@@ -131,6 +130,18 @@ function expectTextForClipboard(expectedPlainText) {
 	} else {
 		cy.get('#copy-paste-container pre')
 			.should('have.text', expectedPlainText);
+	}
+}
+
+// Check that the clipboard text matches with the
+// passed regular expression.
+function matchClipboardText(regexp) {
+	if (isWriter()) {
+		cy.contains('#copy-paste-container p font', regexp)
+			.should('exist');
+	} else {
+		cy.contains('#copy-paste-container pre', regexp)
+			.should('exist');
 	}
 }
 
@@ -228,6 +239,7 @@ module.exports.assertHaveKeyboardInput = assertHaveKeyboardInput;
 module.exports.selectAllText = selectAllText;
 module.exports.clearAllText = clearAllText;
 module.exports.expectTextForClipboard = expectTextForClipboard;
+module.exports.matchClipboardText = matchClipboardText;
 module.exports.afterAll = afterAll;
 module.exports.initAliasToNegative = initAliasToNegative;
 module.exports.initAliasToEmptyString = initAliasToEmptyString;

@@ -237,8 +237,7 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
-		cy.contains('#copy-paste-container pre', regex)
-			.should('exist');
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert date field (variable).', function() {
@@ -258,8 +257,7 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
-		cy.contains('#copy-paste-container pre', regex)
-			.should('exist');
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert time field (fixed).', function() {
@@ -279,8 +277,7 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
-		cy.contains('#copy-paste-container pre', regex)
-			.should('exist');
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert time field (variable).', function() {
@@ -300,8 +297,7 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
-		cy.contains('#copy-paste-container pre', regex)
-			.should('exist');
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert slide number.', function() {
@@ -406,8 +402,7 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
-		cy.contains('#copy-paste-container pre', regex)
-			.should('exist');
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert date field (variable) inside existing text shape.', function() {
@@ -426,8 +421,7 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
-		cy.contains('#copy-paste-container pre', regex)
-			.should('exist');
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert time field (fixed) inside existing text shape.', function() {
@@ -446,8 +440,7 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
-		cy.contains('#copy-paste-container pre', regex)
-			.should('exist');
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert time field (variable) inside existing text shape.', function() {
@@ -466,8 +459,7 @@ describe('Impress insertion wizard.', function() {
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
-		cy.contains('#copy-paste-container pre', regex)
-			.should('exist');
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert slide number inside existing text shape.', function() {
