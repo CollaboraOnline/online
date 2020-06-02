@@ -225,7 +225,6 @@ wsd_headers = wsd/Admin.hpp \
               wsd/FileServer.hpp \
               wsd/LOOLWSD.hpp \
               wsd/ProofKey.hpp \
-              wsd/QueueHandler.hpp \
               wsd/RequestDetails.hpp \
               wsd/SenderQueue.hpp \
               wsd/ServerURL.hpp \
