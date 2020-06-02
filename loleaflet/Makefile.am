@@ -322,7 +322,7 @@ COMMA := ,
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
 LOLEAFLET_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
-INTERMEDIATE_DIR ?= $(abs_builddir)/build
+INTERMEDIATE_DIR ?= $(if $(IS_DEBUG),$(abs_builddir)/debug,$(abs_builddir)/release)
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
 
