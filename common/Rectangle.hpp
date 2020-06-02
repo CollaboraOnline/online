@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <algorithm> // std::min, std::max
 #include <limits>
 
 namespace Util

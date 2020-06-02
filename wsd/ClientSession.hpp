@@ -163,7 +163,7 @@ public:
     std::string getClipboardURI(bool encode = true);
 
     /// Adds and/or modified the copied payload before sending on to the client.
-    void postProcessCopyPayload(std::shared_ptr<Message> payload);
+    void postProcessCopyPayload(const std::shared_ptr<Message>& payload);
 
     /// Returns true if we're expired waiting for a clipboard and should be removed
     bool staleWaitDisconnect(const std::chrono::steady_clock::time_point &now);

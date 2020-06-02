@@ -602,7 +602,7 @@ std::string Admin::getChannelLogLevels()
     return result;
 }
 
-void Admin::setChannelLogLevel(std::string _channelName, std::string _level)
+void Admin::setChannelLogLevel(const std::string& _channelName, std::string _level)
 {
     assertCorrectThread();
 

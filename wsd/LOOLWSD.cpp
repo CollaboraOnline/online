@@ -2567,7 +2567,7 @@ private:
         Poco::URI requestUri(request.getURI());
         Poco::URI::QueryParameters params = requestUri.getQueryParameters();
         std::string WOPISrc, serverId, viewId, tag, mime;
-        for (auto it : params)
+        for (const auto& it : params)
         {
             if (it.first == "WOPISrc")
                 WOPISrc = it.second;
@@ -3937,6 +3937,7 @@ std::vector<std::shared_ptr<DocumentBroker>> LOOLWSD::getBrokersTestOnly()
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
     std::vector<std::shared_ptr<DocumentBroker>> result;
 
+    result.reserve(DocBrokers.size());
     for (auto& brokerIt : DocBrokers)
         result.push_back(brokerIt.second);
     return result;

@@ -107,7 +107,7 @@ public:
 
     std::string getChannelLogLevels();
 
-    void setChannelLogLevel(std::string _channelName, std::string _level);
+    void setChannelLogLevel(const std::string& _channelName, std::string _level);
 
     std::string getLogLines();
 
