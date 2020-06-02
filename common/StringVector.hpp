@@ -10,6 +10,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <vector>
 
 /**
@@ -42,9 +43,9 @@ class StringVector
 public:
     explicit StringVector() = default;
 
-    explicit StringVector(const std::string& string, const std::vector<StringToken>& tokens)
-        : _string(string)
-        , _tokens(tokens)
+    explicit StringVector(std::string string, std::vector<StringToken> tokens)
+        : _string(std::move(string))
+        , _tokens(std::move(tokens))
     {
     }
 

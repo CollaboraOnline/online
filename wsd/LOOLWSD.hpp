@@ -15,6 +15,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <utility>
 
 #include <signal.h>
 
@@ -50,7 +51,7 @@ public:
 
         _name(name),
         _pid(pid),
-        _ws(handler),
+        _ws(std::move(handler)),
         _socket(socket)
     {
         LOG_INF(_name << " ctor [" << _pid << "].");
