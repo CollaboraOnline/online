@@ -118,7 +118,7 @@ public:
     bool isBinary() const { return _type == Type::Binary; }
 
     /// Allows some in-line re-writing of the message
-    void rewriteDataBody(std::function<bool (std::vector<char> &)> func)
+    void rewriteDataBody(const std::function<bool (std::vector<char> &)>& func)
     {
         if (func(_data))
         {
