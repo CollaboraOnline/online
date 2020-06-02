@@ -1015,7 +1015,7 @@ int main(int argc, char**argv)
     std::string getHttpTime(std::chrono::system_clock::time_point time);
 
     //// Return timestamp of file
-    std::chrono::system_clock::time_point getFileTimestamp(std::string str_path);
+    std::chrono::system_clock::time_point getFileTimestamp(const std::string& str_path);
 
     //// Return time in ISO8061 fraction format
     std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time);
@@ -1059,7 +1059,7 @@ int main(int argc, char**argv)
      * Splits string into vector<string>. Does not accept referenced variables for easy
      * usage like (splitString("test", ..)) or (splitString(getStringOnTheFly(), ..))
      */
-    inline std::vector<std::string> splitStringToVector(std::string const str, const char delim)
+    inline std::vector<std::string> splitStringToVector(const std::string& str, const char delim)
     {
         size_t start;
         size_t end = 0;
@@ -1069,7 +1069,7 @@ int main(int argc, char**argv)
         while ((start = str.find_first_not_of(delim, end)) != std::string::npos)
         {
             end = str.find(delim, start);
-            result.push_back(str.substr(start, end - start));
+            result.emplace_back(str.substr(start, end - start));
         }
         return result;
     }

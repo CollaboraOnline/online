@@ -46,7 +46,7 @@ public:
         _schemeAuthority = serverName;
 
         // A well formed ProxyPrefix will override it.
-        std::string url = proxyPrefix;
+        const std::string& url = proxyPrefix;
         if (url.size() <= 0)
             return;
 

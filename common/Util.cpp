@@ -841,7 +841,7 @@ namespace Util
         return std::string::npos;
     }
 
-    std::chrono::system_clock::time_point getFileTimestamp(std::string str_path)
+    std::chrono::system_clock::time_point getFileTimestamp(const std::string& str_path)
     {
         struct stat file;
         stat(str_path.c_str(), &file);
