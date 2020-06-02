@@ -1034,7 +1034,7 @@ void ClientSession::writeQueuedMessages()
 }
 
 // NB. also see loleaflet/src/map/Clipboard.js that does this in JS for stubs.
-void ClientSession::postProcessCopyPayload(std::shared_ptr<Message> payload)
+void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& payload)
 {
     // Insert our meta origin if we can
     payload->rewriteDataBody([=](std::vector<char>& data) {
@@ -1359,7 +1359,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             LOOLWSD::SavedClipboards->insertClipboard(
                 _clipboardKeys, &payload->data()[header], payload->size() - header);
 
-        for (auto it : _clipSockets)
+        for (const auto& it : _clipSockets)
         {
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"

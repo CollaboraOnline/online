@@ -292,7 +292,7 @@ void ProxyProtocolHandler::dumpState(std::ostream& os)
         os << '#' << (sock ? sock->getFD() : -2) << ' ';
     }
     os << '\n';
-    for (auto it : _writeQueue)
+    for (const auto& it : _writeQueue)
         Util::dumpHex(os, "\twrite queue entry:", "\t\t", *it);
     if (_msgHandler)
         _msgHandler->dumpState(os);
@@ -336,7 +336,7 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
         return false;
 
     size_t totalSize = 0;
-    for (auto it : _writeQueue)
+    for (const auto& it : _writeQueue)
         totalSize += it->size();
 
     if (!totalSize)
@@ -354,7 +354,7 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
         "\r\n";
     socket->send(oss.str());
 
-    for (auto it : _writeQueue)
+    for (const auto& it : _writeQueue)
         socket->send(it->data(), it->size(), false);
     _writeQueue.clear();
 

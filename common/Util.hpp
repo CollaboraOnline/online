@@ -382,9 +382,8 @@ namespace Util
         return false;
     }
 
-    /// Tokenize space-delimited values until we hit new-line or the end.
-    template <typename T>
-    inline void tokenize(const char* data, const std::size_t size, const T& delimiter,
+    /// Tokenize delimited values until we hit new-line or the end.
+    inline void tokenize(const char* data, const std::size_t size, const char delimiter,
                          std::vector<StringToken>& tokens)
     {
         if (size == 0 || data == nullptr || *data == '\0')
