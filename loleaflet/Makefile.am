@@ -30,11 +30,11 @@ $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10
 	done
 endif
 
-JQUERY_LIGHTNESS_IMAGE_PATH = node_modules/jquery-ui/themes/ui-lightness/images
+JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
 JQUERY_LIGHTNESS_DIST_IMAGES = $(patsubst $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_LIGHTNESS_IMAGES))
 
-JQUERY_MINIFIED_IMAGE_PATH = node_modules/jquery-ui/themes/base/minified/images
+JQUERY_MINIFIED_IMAGE_PATH = node_modules/jquery-ui-dist/images
 JQUERY_MINIFIED_IMAGES = $(wildcard $(JQUERY_MINIFIED_IMAGE_PATH)/*.png)
 JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_MINIFIED_IMAGES))
 
@@ -136,7 +136,7 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/jsdialogs.css \
 	$(srcdir)/css/notebookbar.css \
 	$(srcdir)/css/vex.css \
-	$(builddir)/node_modules/jquery-ui/themes/ui-lightness/jquery-ui.css
+	$(srcdir)/css/jquery-ui-lightness.css
 
 LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(DIST_FOLDER)/$(notdir $(file)))
 LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
@@ -148,7 +148,7 @@ NODE_MODULES_JS =\
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
-	node_modules/jquery-ui/jquery-ui.js \
+	node_modules/jquery-ui-dist/jquery-ui.js \
 	node_modules/smartmenus/dist/jquery.smartmenus.js
 
 LOLEAFLET_LIBS_JS =\

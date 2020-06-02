@@ -14,7 +14,7 @@
     "jquery": "2.2.4",
     "jquery-contextmenu": "2.9.2",
     "jquery-mousewheel": "3.1.13",
-    "jquery-ui": "1.10.5",
+    "jquery-ui-dist": "^1.12.1",
     "json-js": "1.1.2",
     "l10n-for-node": "0.0.1",
     "select2": "4.0.13",
