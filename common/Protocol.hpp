@@ -95,60 +95,68 @@ namespace LOOLProtocol
     bool getTokenKeywordFromMessage(const std::string& message, const std::string& name, const std::map<std::string, int>& map, int& value);
 
     /// Tokenize space-delimited values until we hit new-line or the end.
-    inline
-    StringVector tokenize(const char* data, const size_t size, const char delimiter = ' ')
+    template <typename T>
+    inline void tokenize(const char* data, const std::size_t size, const T& delimiter,
+                         std::vector<StringToken>& tokens)
     {
-        std::vector<StringToken> tokens;
-        if (size == 0 || data == nullptr)
-        {
-            return StringVector(std::string(), {});
-        }
-        tokens.reserve(8);
+        if (size == 0 || data == nullptr || *data == '\0')
+            return;
+
+        tokens.reserve(16);
 
         const char* start = data;
         const char* end = data;
-        for (size_t i = 0; i < size && data[i] != '\n'; ++i, ++end)
+        for (std::size_t i = 0; i < size && data[i] != '\n'; ++i, ++end)
         {
             if (data[i] == delimiter)
             {
                 if (start != end && *start != delimiter)
-                {
                     tokens.emplace_back(start - data, end - start);
-                }
 
                 start = end;
             }
             else if (*start == delimiter)
-            {
                 ++start;
-            }
         }
 
         if (start != end && *start != delimiter && *start != '\n')
-        {
             tokens.emplace_back(start - data, end - start);
-        }
+    }
 
+    /// Tokenize single-char delimited values until we hit new-line or the end.
+    inline StringVector tokenize(const char* data, const std::size_t size,
+                                 const char delimiter = ' ')
+    {
+        if (size == 0 || data == nullptr || *data == '\0')
+            return StringVector();
+
+        std::vector<StringToken> tokens;
+        tokenize(data, size, delimiter, tokens);
         return StringVector(std::string(data, size), tokens);
     }
 
-    inline
-    StringVector tokenize(const std::string& s, const char delimiter = ' ')
+    /// Tokenize single-char delimited values until we hit new-line or the end.
+    inline StringVector tokenize(const std::string& s, const char delimiter = ' ')
     {
-        return tokenize(s.data(), s.size(), delimiter);
+        if (s.empty())
+            return StringVector();
+
+        std::vector<StringToken> tokens;
+        tokenize(s.data(), s.size(), delimiter, tokens);
+        return StringVector(s, tokens);
     }
 
     inline
     StringVector tokenize(const std::string& s, const char* delimiter)
     {
-        std::vector<StringToken> tokens;
-        if (s.size() == 0)
-        {
-            return StringVector(std::string(), {});
-        }
+        if (s.empty())
+            return StringVector();
 
-        size_t start = 0;
-        size_t end = s.find(delimiter, start);
+        std::size_t start = 0;
+        std::size_t end = s.find(delimiter, start);
+
+        std::vector<StringToken> tokens;
+        tokens.reserve(16);
 
         tokens.emplace_back(start, end - start);
         start = end + std::strlen(delimiter);

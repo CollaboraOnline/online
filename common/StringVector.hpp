@@ -40,12 +40,25 @@ class StringVector
     std::vector<StringToken> _tokens;
 
 public:
-    explicit StringVector();
+    explicit StringVector() = default;
 
-    explicit StringVector(const std::string& string, const std::vector<StringToken>& tokens);
+    explicit StringVector(const std::string& string, const std::vector<StringToken>& tokens)
+        : _string(string)
+        , _tokens(tokens)
+    {
+    }
 
     /// Unlike std::vector, gives an empty string if index is unexpected.
-    std::string operator[](std::size_t index) const;
+    std::string operator[](std::size_t index) const
+    {
+        if (index >= _tokens.size())
+        {
+            return std::string();
+        }
+
+        const StringToken& token = _tokens[index];
+        return _string.substr(token._index, token._length);
+    }
 
     std::size_t size() const { return _tokens.size(); }
 

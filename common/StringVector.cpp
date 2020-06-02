@@ -9,25 +9,6 @@
 
 #include "StringVector.hpp"
 
-StringVector::StringVector() = default;
-
-StringVector::StringVector(const std::string& string, const std::vector<StringToken>& tokens)
-    : _string(string),
-    _tokens(tokens)
-{
-}
-
-std::string StringVector::operator[](std::size_t index) const
-{
-    if (index >= _tokens.size())
-    {
-        return std::string();
-    }
-
-    const StringToken& token = _tokens[index];
-    return _string.substr(token._index, token._length);
-}
-
 bool StringVector::equals(std::size_t index, const StringVector& other, std::size_t otherIndex)
 {
     if (index >= _tokens.size())
