@@ -48,7 +48,6 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/Socket.h>
-#include <Poco/Runnable.h>
 #include <Poco/URI.h>
 
 #include "ChildSession.hpp"
@@ -2039,7 +2038,7 @@ public:
         }
         catch (const std::exception& exc)
         {
-            LOG_FTL("QueueHandler::run: Exception: " << exc.what());
+            LOG_FTL("drainQueue: Exception: " << exc.what());
 #if !MOBILEAPP
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
@@ -2047,7 +2046,7 @@ public:
         }
         catch (...)
         {
-            LOG_FTL("QueueHandler::run: Unknown exception");
+            LOG_FTL("drainQueue: Unknown exception");
 #if !MOBILEAPP
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
