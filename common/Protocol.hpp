@@ -41,9 +41,26 @@ namespace LOOLProtocol
     // Negative numbers for error.
     std::tuple<int, int, std::string> ParseVersion(const std::string& version);
 
-    bool stringToInteger(const std::string& input, int& value);
-    bool stringToUInt32(const std::string& input, uint32_t& value);
-    bool stringToUInt64(const std::string& input, uint64_t& value);
+    inline bool stringToInteger(const std::string& input, int& value)
+    {
+        bool res;
+        std::tie(value, res) = Util::i32FromString(input);
+        return res;
+    }
+
+    inline bool stringToUInt32(const std::string& input, uint32_t& value)
+    {
+        bool res;
+        std::tie(value, res) = Util::i32FromString(input);
+        return res;
+    }
+
+    inline bool stringToUInt64(const std::string& input, uint64_t& value)
+    {
+        bool res;
+        std::tie(value, res) = Util::u64FromString(input);
+        return res;
+    }
 
     inline
     bool parseNameValuePair(const std::string& token, std::string& name, std::string& value, const char delim = '=')

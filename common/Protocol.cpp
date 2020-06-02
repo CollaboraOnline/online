@@ -48,48 +48,6 @@ namespace LOOLProtocol
         return std::make_tuple(major, minor, patch);
     }
 
-    bool stringToInteger(const std::string& input, int& value)
-    {
-        try
-        {
-            value = std::stoi(input);
-        }
-        catch (std::invalid_argument&)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    bool stringToUInt32(const std::string& input, uint32_t& value)
-    {
-        try
-        {
-            value = std::stoul(input);
-        }
-        catch (std::invalid_argument&)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    bool stringToUInt64(const std::string& input, uint64_t& value)
-    {
-        try
-        {
-            value = std::stoull(input);
-        }
-        catch (std::invalid_argument&)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     bool getTokenInteger(const std::string& token, const std::string& name, int& value)
     {
         if (token.size() > (name.size() + 1) &&
