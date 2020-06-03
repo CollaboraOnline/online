@@ -140,10 +140,10 @@ private:
 
     Type detectType() const
     {
-        if (_tokens[0] == "tile:" ||
-            _tokens[0] == "tilecombine:" ||
-            _tokens[0] == "renderfont:" ||
-            _tokens[0] == "windowpaint:")
+        if (_tokens.equals(0, "tile:") ||
+            _tokens.equals(0, "tilecombine:") ||
+            _tokens.equals(0, "renderfont:") ||
+            _tokens.equals(0, "windowpaint:"))
         {
             return Type::Binary;
         }

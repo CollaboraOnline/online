@@ -125,6 +125,19 @@ public:
         return _string.compare(token._index, token._length, string) == 0;
     }
 
+    /// Compares the nth token with string.
+    template <std::size_t N>
+    bool equals(std::size_t index, const char (&string)[N]) const
+    {
+        if (index >= _tokens.size())
+        {
+            return false;
+        }
+
+        const StringToken& token = _tokens[index];
+        return _string.compare(token._index, token._length, string, N) == 0;
+    }
+
     /// Compares the nth token with the mth token from an other StringVector.
     bool equals(std::size_t index, const StringVector& other, std::size_t otherIndex);
 };
