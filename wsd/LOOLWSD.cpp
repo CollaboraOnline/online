@@ -2802,14 +2802,12 @@ private:
 
     static bool isSpreadsheet(const std::string& fileName)
     {
-        std::string sContentType = getContentType(fileName);
+        const std::string sContentType = getContentType(fileName);
 
-        if (sContentType == "application/vnd.oasis.opendocument.spreadsheet"
-            || sContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            || sContentType == "application/vnd.ms-excel")
-            return true;
-        else
-            return false;
+        return sContentType == "application/vnd.oasis.opendocument.spreadsheet"
+               || sContentType
+                      == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+               || sContentType == "application/vnd.ms-excel";
     }
 
     void handlePostRequest(const RequestDetails &requestDetails,
@@ -2844,29 +2842,26 @@ private:
             ConvertToPartHandler handler(/*convertTo =*/ true);
             HTMLForm form(request, message, handler);
 
-            std::string sOptions;
             std::string format = (form.has("format") ? form.get("format") : "");
-            std::string sFullSheetPreview = (form.has("FullSheetPreview") ? form.get("FullSheetPreview") : "");
-            bool bFullSheetPreview = sFullSheetPreview == "true" ? true : false;
-
             // prefer what is in the URI
             if (requestDetails.size() > 2)
                 format = requestDetails[2];
 
-            std::string fromPath = handler.getFilename();
+            const std::string fromPath = handler.getFilename();
             LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
             if (!fromPath.empty() && !format.empty())
             {
                 Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
                 const std::string docKey = DocumentBroker::getDocKey(uriPublic);
 
-                if (bFullSheetPreview && format == "pdf" && isSpreadsheet(fromPath))
+                std::string options;
+                const bool fullSheetPreview
+                    = (form.has("FullSheetPreview") && form.get("FullSheetPreview") == "true");
+                if (fullSheetPreview && format == "pdf" && isSpreadsheet(fromPath))
                 {
-                    sOptions += std::string(",FullSheetPreview=") + sFullSheetPreview + std::string("FULLSHEETPREVEND");
-                }
-                else
-                {
-                    bFullSheetPreview = false;
+                    //FIXME: We shouldn't have "true" as having the option already implies that
+                    // we want it enabled (i.e. we shouldn't set the option if we don't want it).
+                    options = ",FullSheetPreview=trueFULLSHEETPREVEND";
                 }
 
                 // This lock could become a bottleneck.
@@ -2874,7 +2869,7 @@ private:
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                 LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, sOptions);
+                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options);
                 handler.takeFile();
 
                 cleanupDocBrokers();
