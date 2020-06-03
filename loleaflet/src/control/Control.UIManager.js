@@ -114,8 +114,14 @@ L.Control.UIManager = L.Control.extend({
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 
 			if ((window.mode.isTablet() || window.mode.isDesktop())) {
+				var showRuler = true;
+				if (window.uiDefaults) {
+					if (window.uiDefaults[docType]) {
+						showRuler = window.uiDefaults[docType].ShowRuler || false;
+					}
+				}
 				var interactiveRuler = this.map.isPermissionEdit();
-				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this.map);
+				L.control.ruler({position:'topleft', interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
 			}
 		}
 
@@ -258,6 +264,37 @@ L.Control.UIManager = L.Control.extend({
 
 	isNotebookbarCollapsed: function() {
 		return $('#document-container').hasClass('tabs-collapsed');
+	},
+
+	// UI Defaults functions
+
+	showStatusBar: function() {
+		$('#document-container').css('bottom', this.documentBottom);
+		$('#presentation-controls-wrapper').css('bottom', this.presentationControlBottom);
+		$('#toolbar-down').show();
+		this.map.invalidateSize();
+	},
+
+	hideStatusBar: function(firstStart) {
+		if (!firstStart && !this.isStatusBarVisible())
+			return;
+
+		this.documentBottom = $('#document-container').css('bottom');
+		this.presentationControlBottom = $('#presentation-controls-wrapper').css('bottom');
+		$('#document-container').css('bottom', '0px');
+		$('#presentation-controls-wrapper').css('bottom','33px');
+		$('#toolbar-down').hide();
+	},
+
+	toggleStatusBar: function() {
+		if (this.isStatusBarVisible())
+			this.hideStatusBar();
+		else
+			this.showStatusBar();
+	},
+
+	isStatusBarVisible: function() {
+		return $('#toolbar-down').is(':visible');
 	},
 
 	// Event handlers
