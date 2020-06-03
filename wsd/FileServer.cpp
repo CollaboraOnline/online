@@ -677,6 +677,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_TRC("access_token=" << accessToken << ", access_token_ttl=" << accessTokenTtl);
     const std::string accessHeader = form.get("access_header", "");
     LOG_TRC("access_header=" << accessHeader);
+    const std::string uiDefaults = form.get("ui_defaults", "");
+    LOG_TRC("ui_defaults=" << uiDefaults);
 
     // Escape bad characters in access token.
     // This is placed directly in javascript in loleaflet.html, we need to make sure
@@ -718,6 +720,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
+    Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults));
 
     const auto& config = Application::instance().config();
     std::string protocolDebug = "false";

@@ -118,6 +118,7 @@ loolwsd_sources = common/Crypto.cpp \
                   wsd/LOOLWSD.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
+                  wsd/FileServerUtil.cpp \
                   wsd/RequestDetails.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \

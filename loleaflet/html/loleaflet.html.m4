@@ -260,7 +260,8 @@ m4_ifelse(MOBILEAPP,[true],
       window.protocolDebug = false;
       window.frameAncestors = '';
       window.socketProxy = false;
-      window.tileSize = 256;],
+      window.tileSize = 256;
+      window.uiDefaults = {};],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
       window.versionPath = '%VERSION%';
@@ -277,7 +278,8 @@ m4_ifelse(MOBILEAPP,[true],
       window.protocolDebug = %PROTOCOL_DEBUG%;
       window.frameAncestors = '%FRAME_ANCESTORS%';
       window.socketProxy = %SOCKET_PROXY%;
-      window.tileSize = 256;])
+      window.tileSize = 256;
+      window.uiDefaults = %UI_DEFAULTS%;])
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl
 
 // Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css

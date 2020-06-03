@@ -18,6 +18,8 @@ class RequestDetails;
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler
 {
+    friend class WhiteBoxTests; // for unit testing
+
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
 
     static void preprocessFile(const Poco::Net::HTTPRequest& request,
@@ -27,6 +29,12 @@ class FileServerRequestHandler
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
                                     const RequestDetails &requestDetails,
                                     const std::shared_ptr<StreamSocket>& socket);
+
+    /// Construct a JSON to be accepted by the loleflet.html from a list like
+    /// UIMode=classic;TextRuler=true;PresentationStatusbar=false
+    /// that is passed as "ui_defaults" hidden input during the iframe setup.
+    static std::string uiDefaultsToJSON(const std::string& uiDefaults);
+
 public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
