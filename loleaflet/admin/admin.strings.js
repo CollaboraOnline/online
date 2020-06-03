@@ -42,6 +42,11 @@ l10nstrings.strExpired = _('Expired:');
 l10nstrings.strRefresh = _('Refresh');
 l10nstrings.strShutdown = _('Shutdown Server');
 l10nstrings.strServerUptime = _('Server uptime');
+l10nstrings.strRefreshLog = _('Refresh Log');
+l10nstrings.strSetLogLevels = _('Set Log Levels');
+l10nstrings.strLogLevels = _('Log Levels');
+l10nstrings.strCloseModal = _('Close');
+l10nstrings.strUpdateLogLevels = _('Update Log Levels');
 
 if (module) {
 	module.exports = l10nstrings;

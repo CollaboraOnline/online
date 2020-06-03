@@ -1,151 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
+<main>
+  <div class="container">
+    <script>Admin.Overview(host);</script>
 
-    <title>LibreOffice Online - Admin console</title>
+    <h3 class="title is-3"><script>document.write(l10nstrings.strDashboard)</script></h3>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/admin-localizations.json" type="application/vnd.oftn.l10n+json"/>
-  </head>
-  <body>
-    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/admin-bundle.js"></script>
-    <!--%BRANDING_JS%-->
-    <script>if (typeof brandProductName !== 'undefined') {l10nstrings.strProductName = brandProductName}</script>
-    <script>document.title = l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole</script>
-    <script>
-      if (window.location.protocol == "https:") {
-          var host = 'wss://' + window.location.host + '%SERVICE_ROOT%/lool/adminws/';
-      }
-      else {
-          host = 'ws://' + window.location.host + '%SERVICE_ROOT%/lool/adminws/';
-      }
-
-      Admin.Overview(host);
-    </script>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="adminSettings.html"><script>document.write(l10nstrings.strSettings)</script></a></li>
-          </ul>
+    <div class="tile is-ancestor has-text-centered">
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strUsersOnline)</script></p>
+          <p class="title" id="active_users_count">0</p>
         </div>
       </div>
-    </nav>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#"><script>document.write(l10nstrings.strOverview)</script> <span class="sr-only"><script>document.write(l10nstrings.strCurrent)</script></span></a></li>
-            <li><a href="adminAnalytics.html"><script>document.write(l10nstrings.strAnalytics)</script></a></li>
-            <li><a href="adminHistory.html"><script>document.write(l10nstrings.strHistory)</script></a></li>
-            <li><a href="adminLog.html"><script>document.write(l10nstrings.strLog)</script></a></li>
-          </ul>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strDocumentsOpened)</script></p>
+          <p class="title" id="active_docs_count">0</p>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header"><script>document.write(l10nstrings.strDashboard)</script></h1>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strMemoryConsumed)</script></p>
+          <p class="title" id="mem_consumed">0</p>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strSentBytes)</script></p>
+          <p class="title" id="sent_bytes">0</p>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strRecvBytes)</script></p>
+          <p class="title" id="recv_bytes">0</p>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strServerUptime)</script></p>
+          <p class="title" id="uptime">0</p>
+        </div>
+      </div>
+    </div>
 
-	  <div class="row placeholders">
-	    <div class="col-xs-6 col-sm-4 col-md-2 placeholder">
-	      <div class="main-data" id="active_users_count">0</div>
-	      <h4><script>document.write(l10nstrings.strUsersOnline)</script></h4>
-	    </div>
-	    <div class="col-xs-6 col-sm-4 col-md-2 placeholder">
-	      <div class="main-data" id="active_docs_count">0</div>
-	      <h4><script>document.write(l10nstrings.strDocumentsOpened)</script></h4>
-	    </div>
-	    <div class="col-xs-6 col-sm-4 col-md-2 placeholder">
-	      <div class="main-data" id="mem_consumed">0</div>
-	      <h4><script>document.write(l10nstrings.strMemoryConsumed)</script></h4>
-	    </div>
-	    <div class="col-xs-6 col-sm-4 col-md-2 placeholder">
-	      <div class="main-data" id="sent_bytes">0</div>
-	      <h4><script>document.write(l10nstrings.strSentBytes)</script></h4>
-	    </div>
-	    <div class="col-xs-6 col-sm-4 col-md-2 placeholder">
-	      <div class="main-data" id="recv_bytes">0</div>
-	      <h4><script>document.write(l10nstrings.strRecvBytes)</script></h4>
-	    </div>
-	    <div class="col-xs-6 col-sm-2 placeholder">
-	      <div class="main-data" id="uptime">0</div>
-	      <h4><script>document.write(l10nstrings.strServerUptime)</script></h4>
-	    </div>
-	  </div>
-    <div class="container-fluid">
-      <ul class="nav nav-tabs">
-      <li class="active">
-        <a href="#view1" data-toggle="tab">
-          <h4><script>document.write(l10nstrings.strDocumentsOpened)</script></h4>
-        </a>
-      </li>
-      <li>
-        <a href="#view2" data-toggle="tab">
-          <h4><script>document.write(l10nstrings.strUsersOnline)</script></h4>
-        </a>
-      </li>
+    <div class="tabs">
+      <ul>
+        <li id="tab-documents-opened" class="is-active"><a><script>document.write(l10nstrings.strDocumentsOpened)</script></a></li>
+        <li id="tab-users-online"><a><script>document.write(l10nstrings.strUsersOnline)</script></a></li>
       </ul>
+    </div>
 
-      <div class="tab-content">
-        <div id="view1" class="active tab-pane table-responsive">
-    	    <table id="docview" class="table table-striped">
-    	      <thead>
-          		<tr>
-          		  <th><script>document.write(l10nstrings.strPid)</script></th>
-          		  <th><script>document.write(l10nstrings.strDocument)</script></th>
-          		  <th><script>document.write(l10nstrings.strNumberOfViews)</script></th>
-          		  <th><script>document.write(l10nstrings.strMemoryConsumed)</script></th>
-          		  <th><script>document.write(l10nstrings.strElapsedTime)</script></th>
-          		  <th><script>document.write(l10nstrings.strIdleTime)</script></th>
-          		  <th><script>document.write(l10nstrings.strModified)</script></th>
-          		</tr>
-    	      </thead>
-    	      <tbody id="doclist">
-    	      </tbody>
-    	    </table>
-        </div>
+    <div class="table-container is-fullwidth" id="tab-content-documents-opened" style="display:grid;">
+      <table id="docview" class="table is-fullwidth is-striped is-hoverable is-bordered">
+        <thead>
+          <tr>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strPid)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strDocument)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strNumberOfViews)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strMemoryConsumed)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strElapsedTime)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strIdleTime)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strModified)</script></th>
+          </tr>
+        </thead>
+        <tbody id="doclist"></tbody>
+      </table>
+    </div>
 
-        <div id="view2" class="tab-pane table-responsive">
-          <table id="userview" class="tab-pane table table-striped">
-            <thead>
-              <tr>
-                <th><script>document.write(l10nstrings.strUserName)</script></th>
-                <th><script>document.write(l10nstrings.strDocumentNumber)</script></th>
-              </tr>
-            </thead>
-            <tbody id="userlist">
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div class="table-container is-fullwidth" id="tab-content-users-online" style="display:none;">
+      <table id="userview" class="table is-bordered is-hoverable is-striped is-fullwidth">
+        <thead>
+          <tr>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strUserName)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strDocumentNumber)</script></th>
+          </tr>
+        </thead>
+        <tbody id="userlist"></tbody>
+      </table>
     </div>
   </div>
-</div>
+</main>
 
-    <div id="rowContextMenu" class="dropdown clearfix">
-      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
-        <li><a tabindex="-1" href="#"><script>document.write(l10nstrings.strKill)</script></a></li>
-      </ul>
-    </div>
-<!--%FOOTER%-->
-  </body>
-</html>
+<script>
+  document.getElementById('a-overwiew-mobile').classList.add('is-active');
+  document.getElementById('a-overwiew-tablet').classList.add('is-active');
+
+  document.getElementById('tab-documents-opened').onclick = function() {
+    document.getElementById('tab-documents-opened').className = 'is-active';
+    document.getElementById('tab-users-online').className = '';
+    document.getElementById('tab-content-documents-opened').style.display = 'grid';
+    document.getElementById('tab-content-users-online').style.display = 'none';
+  }
+
+  document.getElementById('tab-users-online').onclick = function() {
+    document.getElementById('tab-users-online').className = 'is-active';
+    document.getElementById('tab-documents-opened').className = '';
+    document.getElementById('tab-content-users-online').style.display = 'grid';
+    document.getElementById('tab-content-documents-opened').style.display = 'none';
+  }
+</script>

@@ -1,105 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
+<main>
+  <div class="container">
+    <script>Admin.Log(host);</script>
 
-    <title>LibreOffice Online - Admin console</title>
+    <h3 class="title is-3"><script>document.write(l10nstrings.strLog)</script></h3>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <link rel="localizations" href="%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/admin-localizations.json" type="application/vnd.oftn.l10n+json"/>
-  </head>
-  <body>
-    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/admin-bundle.js"></script>
-    <!--%BRANDING_JS%-->
-    <script>if (typeof brandProductName !== 'undefined') {l10nstrings.strProductName = brandProductName}</script>
-    <script>document.title = l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole</script>
-    <script>
-      if (window.location.protocol == "https:") {
-          var host = 'wss://' + window.location.host + '%SERVICE_ROOT%/lool/adminws/';
-      }
-      else {
-          host = 'ws://' + window.location.host + '%SERVICE_ROOT%/lool/adminws/';
-      }
-
-      Admin.Log(host)
-    </script>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="adminSettings.html"><script>document.write(l10nstrings.strSettings)</script></a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="admin.html"><script>document.write(l10nstrings.strOverview)</script> <span class="sr-only"><script>document.write(l10nstrings.strCurrent)</script></span></a></li>
-            <li><a href="adminAnalytics.html"><script>document.write(l10nstrings.strAnalytics)</script></a></li>
-            <li><a href="adminHistory.html"><script>document.write(l10nstrings.strHistory)</script></a></li>
-            <li class="active"><a href="adminLog.html"><script>document.write(l10nstrings.strLog)</script></a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header"><script>document.write(l10nstrings.strLog)</script></h1>
-          <div class="form-group text-right" style="width:100%">
-            <button type="button" class="btn btn-primary float-right" id="refresh-log" style="width:120px;">Refresh Log</button>
-            <button type="button" id="button-open-log-list-modal" class="btn btn-primary float-right" data-toggle="modal" style="width:120px;" data-target="#channel-list-modal">Set Log Levels</button>
-          </div>
-          <div class="form-group">
-            <textarea id="log-lines" style="width:100%;height:100%;min-height: calc(100vh - 250px);resize:vertical;" readonly="true"></textarea>
-          </div>
-        </div>
-      </div>
+    <div class="buttons is-fullwidth is-right">
+      <button type="button" class="button is-info" id="refresh-log" style="width:120px;"><script>document.write(l10nstrings.strRefreshLog)</script></button>
+      <button type="button" id="button-open-log-list-modal" class="button is-info" style="width:120px;">
+        <script>document.write(l10nstrings.strSetLogLevels)</script>
+      </button>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="channel-list-modal" tabindex="-1" role="dialog" aria-labelledby="log-level-list-label" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="log-level-list-label">
-              <i class="fa fa-spinner fa-spin"></i>
-              Log Levels
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="form-horizontal" id="form-channel-list" ></form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" form="form-channel-list" id="update-log-levels" class="btn btn-primary">Update Log Levels</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <textarea id="log-lines" style="width:100%;height:100%;min-height: calc(100vh - 250px);resize:vertical;" readonly="true"></textarea>
 
+  </div>
+</main>
 
-<!--%FOOTER%-->
-  </body>
-</html>
+<div class="modal" id="channel-list-modal">
+  <div class="modal-background" onclick="document.getElementById('channel-list-modal').classList.remove('is-active');"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title"><script>document.write(l10nstrings.strLogLevels)</script></p>
+      <button class="delete" onclick="document.getElementById('channel-list-modal').classList.remove('is-active');"></button>
+    </header>
+    <section class="modal-card-body">
+      <form class="form-horizontal" id="form-channel-list"></form>
+    </section>
+    <footer class="modal-card-foot is-fullwidth has-text-right">
+        <button type="button" onclick="document.getElementById('channel-list-modal').classList.remove('is-active');" class="button" style="width:120px;" data-dismiss="modal"><script>document.write(l10nstrings.strCloseModal)</script></button>
+        <button type="button" form="form-channel-list" id="update-log-levels" class="button is-primary" style="width:140px;"><script>document.write(l10nstrings.strUpdateLogLevels)</script></button>
+    </footer>
+  </div>
+</div>
+
+<script>
+  document.getElementById('a-log-mobile').classList.add('is-active');
+  document.getElementById('a-log-tablet').classList.add('is-active');
+  document.getElementById('button-open-log-list-modal').onclick = function() {
+    document.getElementById('channel-list-modal').classList.add('is-active');
+  };
+</script>

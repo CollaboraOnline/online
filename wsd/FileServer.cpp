@@ -933,11 +933,21 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     std::string responseRoot = cnxDetails.getResponseRoot();
 
     static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
-    static const std::string footerPage("<div class=\"footer navbar-fixed-bottom text-info text-center\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</div>");
+    static const std::string footerPage("<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");
 
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string adminFile = *getUncompressedFile(relPath);
+    std::vector<std::string> templatePath_vec = Util::splitStringToVector(relPath, '/');
+    std::string templatePath = "";
+    for (unsigned int i = 0; i < templatePath_vec.size() - 1; i++)
+    {
+        templatePath += templatePath_vec[i] + "/";
+    }
+    templatePath = "/" + templatePath + "admintemplate.html";
+    std::string templateFile = *getUncompressedFile(templatePath);
+    Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile); // Now template has the main content..
+
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
     std::string brandFooter;
 
@@ -953,10 +963,10 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     }
 #endif
 
-    Poco::replaceInPlace(adminFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
-    Poco::replaceInPlace(adminFile, std::string("<!--%FOOTER%-->"), brandFooter);
-    Poco::replaceInPlace(adminFile, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
-    Poco::replaceInPlace(adminFile, std::string("%SERVICE_ROOT%"), responseRoot);
+    Poco::replaceInPlace(templateFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
+    Poco::replaceInPlace(templateFile, std::string("<!--%FOOTER%-->"), brandFooter);
+    Poco::replaceInPlace(templateFile, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(templateFile, std::string("%SERVICE_ROOT%"), responseRoot);
 
     // Ask UAs to block if they detect any XSS attempt
     response.add("X-XSS-Protection", "1; mode=block");
@@ -971,7 +981,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
     std::ostringstream oss;
     response.write(oss);
-    oss << adminFile;
+    oss << templateFile;
     socket->send(oss.str());
 }
 

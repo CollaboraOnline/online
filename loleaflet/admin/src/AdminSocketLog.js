@@ -22,8 +22,8 @@ var AdminSocketLog = AdminSocketBase.extend({
 		e.stopPropagation();
 
 		// We change the colour of the button when we send the data and change it back when the task is done (in function applyChannelList). But it is happening too fast.
-		document.getElementById('update-log-levels').classList.add('btn-warning');
-		document.getElementById('update-log-levels').classList.remove('btn-primary');
+		document.getElementById('update-log-levels').classList.add('is-warning');
+		document.getElementById('update-log-levels').classList.remove('is-info');
 
 		// Get the form.
 		var form = document.getElementById('form-channel-list');
@@ -38,6 +38,7 @@ var AdminSocketLog = AdminSocketBase.extend({
 		}
 
 		this.socket.send(textToSend);
+		document.getElementById('channel-list-modal').classList.remove('is-active');
 	},
 
 	onSocketOpen: function() {
@@ -70,22 +71,22 @@ var AdminSocketLog = AdminSocketBase.extend({
 				var channelLogLevel = channelListArr[i].split('=')[1];
 
 				var newDiv = document.createElement('div');
-				newDiv.className = 'form-group';
+				newDiv.className = 'content';
 
 				var newLabel = document.createElement('label');
-				newLabel.className = 'control-label col-sm-6';
+				newLabel.className = 'label is-normal';
 				newLabel.setAttribute('for', 'channel-' + channelName);
 				newLabel.innerText = channelName;
 
 				var newSubDivision = document.createElement('div');
-				newSubDivision.className = 'col-sm-6';
+				newSubDivision.className = 'select';
 
 				var newSelectElement = document.createElement('select');
 				newSelectElement.name = 'channel-' + channelName;
 				newSelectElement.id = 'channel-' + channelName;
 				newSelectElement.innerHTML = innerHTML;
 				newSelectElement.value = channelLogLevel;
-				newSelectElement.style.width = '120px';
+				newSelectElement.style.width = '160px';
 				newSelectElement.className = 'form-control';
 
 				channelForm.appendChild(newDiv);
@@ -95,8 +96,8 @@ var AdminSocketLog = AdminSocketBase.extend({
 			}
 		}
 
-		document.getElementById('update-log-levels').classList.remove('btn-warning');
-		document.getElementById('update-log-levels').classList.add('btn-primary');
+		document.getElementById('update-log-levels').classList.remove('is-warning');
+		document.getElementById('update-log-levels').classList.add('is-info');
 	},
 
 	onSocketMessage: function(e) {
