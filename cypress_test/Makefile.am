@@ -12,7 +12,7 @@ NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
 PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
 ERROR_LOG=$(abs_builddir)/workdir/error.log
 
-SUPPORT_FILE = $(abs_srcdir)/support/index.js
+SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(abs_srcdir)/support/index.js)
 
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop

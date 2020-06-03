@@ -114,3 +114,17 @@ We are using different configuration and environment variables for
 mobile and desktop tests, that's why there are two separate commands
 for them and there is no option to open all the tests in the
 test runner.
+
+Known issues
+------------
+
+1. Different builddir and sourcedir with symlinks.
+
+Cypress has an issue with symlinks:
+https://github.com/cypress-io/cypress/issues/3482
+
+We use the related feature only when the build directory
+is different from the source directory. So to avoid this
+issue with the supportFile, you should build in the source
+directory or you should avoid symlinks in the path of the
+build directory.
