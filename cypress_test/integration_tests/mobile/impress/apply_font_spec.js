@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Apply font on text shape.', function() {
+describe('Apply font on text and on text shape.', function() {
 	var testFileName = 'apply_font.odp';
 
 	beforeEach(function() {
@@ -12,8 +12,6 @@ describe('Apply font on text shape.', function() {
 		mobileHelper.enableEditingMobile();
 
 		selectTextShape();
-
-		openTextPropertiesPanel();
 	});
 
 	afterEach(function() {
@@ -38,6 +36,23 @@ describe('Apply font on text shape.', function() {
 			.should('have.class', 'com.sun.star.drawing.TextShape');
 	}
 
+	function selectTextOfShape() {
+		// Double click onto the selected shape
+		cy.get('svg g .leaflet-interactive')
+			.then(function(items) {
+				expect(items).to.have.length(1);
+				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
+				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
+				cy.get('body')
+					.dblclick(XPos, YPos);
+			});
+
+		cy.get('.leaflet-cursor.blinking-cursor')
+			.should('exist');
+
+		helper.selectAllText(false);
+	}
+
 	function triggerNewSVG() {
 		mobileHelper.closeMobileWizard();
 
@@ -48,6 +63,9 @@ describe('Apply font on text shape.', function() {
 				var YPos = items[0].getBoundingClientRect().top;
 				cy.get('body')
 					.click(XPos, YPos);
+
+				cy.get('body')
+					.dblclick(XPos, YPos);
 			});
 
 		cy.get('.leaflet-drag-transform-marker')
@@ -71,7 +89,9 @@ describe('Apply font on text shape.', function() {
 			.should('be.visible');
 	}
 
-	it('Apply bold.', function() {
+	it('Apply bold on text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('#Bold')
 			.click();
 
@@ -81,7 +101,8 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-weight', '700');
 	});
 
-	it('Apply italic.', function() {
+	it('Apply italic on text shape.', function() {
+		openTextPropertiesPanel();
 
 		cy.get('#Italic')
 			.click();
@@ -92,7 +113,8 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-style', 'italic');
 	});
 
-	it('Apply underline.', function() {
+	it('Apply underline on text shape.', function() {
+		openTextPropertiesPanel();
 
 		cy.get('#Underline')
 			.click();
@@ -103,7 +125,8 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'text-decoration', 'underline');
 	});
 
-	it('Apply strikeout.', function() {
+	it('Apply strikeout on text shape.', function() {
+		openTextPropertiesPanel();
 
 		cy.get('#Strikeout')
 			.click();
@@ -114,7 +137,8 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'text-decoration', 'line-through');
 	});
 
-	it('Apply shadowed.', function() {
+	it('Apply shadowed on text shape.', function() {
+		openTextPropertiesPanel();
 
 		cy.get('#Shadowed')
 			.click();
@@ -125,7 +149,9 @@ describe('Apply font on text shape.', function() {
 		// TODO: shadowed property is not in the SVG
 	});
 
-	it('Change font name.', function() {
+	it('Change font name of text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('#fontnamecombobox')
 			.click();
 
@@ -144,7 +170,9 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-family', 'Linux Libertine G');
 	});
 
-	it('Change font size.', function() {
+	it('Change font size of text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
@@ -166,7 +194,9 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-size', '847px');
 	});
 
-	it('Grow font size.', function() {
+	it('Grow font size of text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
@@ -179,7 +209,9 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-size', '705px');
 	});
 
-	it('Shrink font size.', function() {
+	it('Shrink font size of text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
@@ -192,7 +224,9 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-size', '564px');
 	});
 
-	it.skip('Apply text color.', function() {
+	it.skip('Apply text color on text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('not.have.attr', 'font-color');
 
@@ -206,7 +240,9 @@ describe('Apply font on text shape.', function() {
 		// TODO: text color is not applied on the shape
 	});
 
-	it.skip('Apply highlight.', function() {
+	it.skip('Apply highlight on text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('not.have.attr', 'font-color');
 
@@ -220,7 +256,9 @@ describe('Apply font on text shape.', function() {
 		// TODO: highlight color is not applied on the shape
 	});
 
-	it('Apply superscript.', function() {
+	it('Apply superscript on text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3495');
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -237,7 +275,9 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	it('Apply subscript.', function() {
+	it('Apply subscript on text shape.', function() {
+		openTextPropertiesPanel();
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3495');
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -254,7 +294,9 @@ describe('Apply font on text shape.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	it('Clear direct formatting.', function() {
+	it('Clear direct formatting of text shape.', function() {
+		openTextPropertiesPanel();
+
 		// Change the font size first
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
@@ -277,5 +319,236 @@ describe('Apply font on text shape.', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
+	});
+
+	it('Apply bold on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#Bold')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-weight', '700');
+	});
+
+	it('Apply italic on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#Italic')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-style', 'italic');
+	});
+
+	it('Apply underline on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#Underline')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'text-decoration', 'underline');
+	});
+
+	it('Apply strikeout on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#Strikeout')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'text-decoration', 'line-through');
+	});
+
+	it('Apply shadowed on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#Shadowed')
+			.click();
+
+		triggerNewSVG();
+
+		cy.wait(400);
+		// TODO: shadowed property is not in the SVG
+	});
+
+	it('Change font name of selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#fontnamecombobox')
+			.click();
+
+		cy.contains('.ui-combobox-text', 'Linux Libertine G')
+			.click();
+
+		cy.get('#mobile-wizard-back')
+			.click();
+
+		cy.get('#fontnamecombobox .ui-header-right .entry-value')
+			.should('have.text', 'Linux Libertine G');
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-family', 'Linux Libertine G');
+	});
+
+	it('Change font size of selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '635px');
+
+		cy.get('#fontsizecombobox')
+			.click();
+
+		cy.contains('.mobile-wizard.ui-combobox-text', '24')
+			.click();
+
+		cy.get('#mobile-wizard-back')
+			.click();
+
+		cy.get('#fontsizecombobox .ui-header-right .entry-value')
+			.should('have.text', '24');
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '847px');
+	});
+
+	it('Grow font size of selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '635px');
+
+		cy.get('#Grow')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '705px');
+	});
+
+	it('Shrink font size of selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '635px');
+
+		cy.get('#Shrink')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '564px');
+	});
+
+	it('Apply text color on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('not.have.attr', 'font-color');
+
+		cy.get('#Color')
+			.click();
+
+		mobileHelper.selectFromColorPalette(0, 5, 2);
+
+		triggerNewSVG();
+
+		// TODO: text color is not in the SVG
+	});
+
+	it('Apply highlight on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('not.have.attr', 'font-color');
+
+		cy.get('#CharBackColor')
+			.click();
+
+		mobileHelper.selectFromColorPalette(1, 2, 2);
+
+		triggerNewSVG();
+
+		// TODO: highlight color is not in the SVG
+	});
+
+	it('Apply superscript on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
+			.should('have.attr', 'y', '3495');
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '635px');
+
+		cy.get('#SuperScript')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
+			.should('have.attr', 'y', '3285');
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '368px');
+	});
+
+	it('Apply subscript on selected text.', function() {
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
+			.should('have.attr', 'y', '3495');
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '635px');
+
+		cy.get('#SubScript')
+			.click();
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
+			.should('have.attr', 'y', '3705');
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+			.should('have.attr', 'font-size', '368px');
 	});
 });
