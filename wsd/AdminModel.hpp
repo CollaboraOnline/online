@@ -25,12 +25,12 @@ struct DocumentAggregateStats;
 class View
 {
 public:
-    View(const std::string& sessionId, const std::string& userName, const std::string& userId) :
-        _sessionId(sessionId),
-        _userName(userName),
-        _userId(userId),
-        _start(std::time(nullptr)),
-        _loadDuration(0)
+    View(std::string sessionId, std::string userName, std::string userId)
+        : _sessionId(std::move(sessionId))
+        , _userName(std::move(userName))
+        , _userId(std::move(userId))
+        , _start(std::time(nullptr))
+        , _loadDuration(0)
     {
     }
 
@@ -106,11 +106,11 @@ class DocBasicInfo
     bool _saved;
 
 public:
-    DocBasicInfo(const std::string& docKey, std::time_t idleTime, int mem, bool saved) :
-        _docKey(docKey),
-        _idleTime(idleTime),
-        _mem(mem),
-        _saved(saved)
+    DocBasicInfo(std::string docKey, std::time_t idleTime, int mem, bool saved)
+        : _docKey(std::move(docKey))
+        , _idleTime(idleTime)
+        , _mem(mem)
+        , _saved(saved)
     {
     }
 
@@ -131,29 +131,27 @@ class Document
     Document& operator = (const Document &) = delete;
 
 public:
-    Document(const std::string& docKey,
-             pid_t pid,
-             const std::string& filename)
-        : _docKey(docKey),
-          _pid(pid),
-          _activeViews(0),
-          _filename(filename),
-          _memoryDirty(0),
-          _lastJiffy(0),
-          _lastCpuPercentage(0),
-          _start(std::time(nullptr)),
-          _lastActivity(_start),
-          _end(0),
-          _sentBytes(0),
-          _recvBytes(0),
-          _wopiDownloadDuration(0),
-          _wopiUploadDuration(0),
-          _procSMaps(nullptr),
-          _lastTimeSMapsRead(0),
-          _isModified(false),
-          _hasMemDirtyChanged(true),
-          _badBehaviorDetectionTime(0),
-          _abortTime(0)
+    Document(std::string docKey, pid_t pid, std::string filename)
+        : _docKey(std::move(docKey))
+        , _pid(pid)
+        , _activeViews(0)
+        , _filename(std::move(filename))
+        , _memoryDirty(0)
+        , _lastJiffy(0)
+        , _lastCpuPercentage(0)
+        , _start(std::time(nullptr))
+        , _lastActivity(_start)
+        , _end(0)
+        , _sentBytes(0)
+        , _recvBytes(0)
+        , _wopiDownloadDuration(0)
+        , _wopiUploadDuration(0)
+        , _procSMaps(nullptr)
+        , _lastTimeSMapsRead(0)
+        , _isModified(false)
+        , _hasMemDirtyChanged(true)
+        , _badBehaviorDetectionTime(0)
+        , _abortTime(0)
     {
     }
 
@@ -264,9 +262,9 @@ private:
 class Subscriber
 {
 public:
-    Subscriber(const std::weak_ptr<WebSocketHandler>& ws)
-        : _ws(ws),
-          _start(std::time(nullptr))
+    explicit Subscriber(std::weak_ptr<WebSocketHandler> ws)
+        : _ws(std::move(ws))
+        , _start(std::time(nullptr))
     {
         LOG_INF("Subscriber ctor.");
     }
