@@ -128,6 +128,27 @@ PostMessage extensions
 ### App_LoadingStatus
 Was extended with field 'Status' with 'Document_Loaded' value when document was loaded successfully and 'Failed' in other case.
 
+User Interface modifications
+----------------------------
+
+Some parts of the user interface can be hidden or shown based or what the
+integration needs.  This is controlled by:
+
+    <input name="ui_defaults" value="VALUES" type="hidden"/>'
+
+during sending the form when the iframe is being set up (similarly as the
+access_token).  The VALUES can have a form like:
+
+    UIMode=notebookbar;TextRuler=false;PresentationStatusbar=false;SpreadsheetSidebar=false
+
+where the:
+
+* UIMode specifies the general mode of operatior (classic or notebookbar)
+
+* Text, Presentation or Spreadsheet - are prefixes to identify the component
+
+* Ruler, Statusbar, Sidebar - are the UI parts that can be affected by this.
+
 Alternative authentication possibility
 --------------------------------------
 
