@@ -46,9 +46,6 @@ endif
 LOLEAFLET_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
 LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(DIST_FOLDER)/%.html,$(LOLEAFLET_HTML_SRC))
 
-LOLEAFLET_WELCOME_SRC = $(shell find $(srcdir)/welcome -name '*.html')
-LOLEAFLET_WELCOME_DST = $(patsubst $(srcdir)/welcome/%.html,$(DIST_FOLDER)/welcome/%.html,$(LOLEAFLET_WELCOME_SRC))
-
 LOLEAFLET_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html')
 LOLEAFLET_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
 LOLEAFLET_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(DIST_FOLDER)/admin/%,$(LOLEAFLET_ADMIN_SRC))
@@ -415,7 +412,7 @@ $(DIST_FOLDER)/bundle.js: $(NODE_MODULES_JS_SRC) \
 		--output $@
 endif
 
-$(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) $(LOLEAFLET_WELCOME_DST) $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/global.js \
+$(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 $(LOLEAFLET_HTML_DST) $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/global.js \
 \
 	$(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js
 	@echo "Generating loleaflet.html..."
@@ -461,14 +458,6 @@ $(DIST_FOLDER)/images/%: $(srcdir)/images/%
 	@cp $< $@
 
 $(DIST_FOLDER)/%.html: $(srcdir)/html/%.html
-	@mkdir -p $(dir $@)
-	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
-		`cp $< $@`; \
-	else \
-		`ln -sf $(abs_srcdir)/$< $@`; \
-	fi
-
-$(DIST_FOLDER)/welcome/%.html: $(srcdir)/welcome/%.html
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		`cp $< $@`; \
