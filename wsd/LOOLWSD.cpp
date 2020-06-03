@@ -2485,13 +2485,9 @@ private:
         std::string mimeType = "image/vnd.microsoft.icon";
         std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
         if (!File(faviconPath).exists())
-        {
             faviconPath = LOOLWSD::FileServerRoot + "/favicon.ico";
-        }
 
-        Poco::Net::HTTPResponse response;
-        HttpHelper::sendFile(socket, faviconPath, mimeType, response);
-        socket->shutdown();
+        HttpHelper::sendFileAndShutdown(socket, faviconPath, mimeType);
     }
 
     void handleWopiDiscoveryRequest(const RequestDetails &requestDetails,
@@ -2900,7 +2896,7 @@ private:
 
                 try
                 {
-                    HttpHelper::sendFile(socket, filePath.toString(), contentType, response);
+                    HttpHelper::sendFileAndShutdown(socket, filePath.toString(), contentType, &response);
                 }
                 catch (const Exception& exc)
                 {

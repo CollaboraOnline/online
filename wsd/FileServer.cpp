@@ -442,7 +442,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 // Useful to not serve from memory sometimes especially during loleaflet development
                 // Avoids having to restart loolwsd everytime you make a change in loleaflet
                 const std::string filePath = Poco::Path(LOOLWSD::FileServerRoot, relPath).absolute().toString();
-                HttpHelper::sendFile(socket, filePath, mimeType, response, noCache);
+                HttpHelper::sendFileAndShutdown(socket, filePath, mimeType, &response, noCache);
                 return;
             }
 #endif
@@ -470,6 +470,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                     (!gzip ? "un":"") << "compressed : file [" << relPath << "]: " << header);
             socket->send(header);
             socket->send(*content);
+            // shutdown by caller
         }
     }
     catch (const Poco::Net::NotAuthenticatedException& exc)
