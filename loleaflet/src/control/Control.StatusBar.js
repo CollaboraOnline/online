@@ -240,7 +240,6 @@ L.Control.StatusBar = L.Control.extend({
 			});
 			if (window.mode.isDesktop())
 				toolbar.tooltip();
-			toolbar.show();
 		}
 
 		toolbar.bind('touchstart', function() {
@@ -397,6 +396,17 @@ L.Control.StatusBar = L.Control.extend({
 
 		if (statusbar)
 			statusbar.refresh();
+
+		var showStatusbar = true;
+		if (window.uiDefaults) {
+			if (window.uiDefaults[docType]) {
+				showStatusbar = window.uiDefaults[docType].ShowStatusbar !== false;
+			}
+		}
+		if (showStatusbar)
+			$('#toolbar-down').show();
+		else
+			this.map.uiManager.hideStatusBar(true);
 	},
 
 	_cancelSearch: function() {

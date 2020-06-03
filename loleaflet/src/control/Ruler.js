@@ -19,7 +19,8 @@ L.Control.Ruler = L.Control.extend({
 		tabs: [],
 		unit: null,
 		DraggableConvertRatio: null,
-		timer: null
+		timer: null,
+		showruler: true
 	},
 
 	onAdd: function(map) {
@@ -149,6 +150,12 @@ L.Control.Ruler = L.Control.extend({
 
 	_initLayout: function() {
 		this._rWrapper = L.DomUtil.create('div', 'loleaflet-ruler leaflet-bar leaflet-control leaflet-control-custom');
+		// We start it hidden rather than not initialzing at all.
+		// It is due to rulerupdate command that comes from LOK.
+		// If we delay its initialization, we can't calculate its margins and have to wait for another rulerupdate message to arrive.
+		if (!this.options.showruler) {
+			L.DomUtil.setStyle(this._rWrapper, 'display', 'none');
+		}
 		this._rFace = L.DomUtil.create('div', 'loleaflet-ruler-face', this._rWrapper);
 		this._rMarginWrapper = L.DomUtil.create('div', 'loleaflet-ruler-marginwrapper', this._rFace);
 		// BP => Break Points
