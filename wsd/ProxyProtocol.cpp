@@ -277,7 +277,7 @@ void ProxyProtocolHandler::getIOStats(uint64_t &sent, uint64_t &recv)
     sent = recv = 0;
 }
 
-void ProxyProtocolHandler::dumpState(std::ostream& os)
+void ProxyProtocolHandler::dumpProxyState(std::ostream& os)
 {
     os << "proxy protocol sockets: " << _outSockets.size() << " writeQueue: " << _writeQueue.size() << ":\n";
     os << '\t';

@@ -32,6 +32,7 @@
 #include "SenderQueue.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
+#include "ProxyProtocol.hpp"
 #include <common/Log.hpp>
 #include <common/Message.hpp>
 #include <common/Clipboard.hpp>
@@ -216,7 +217,7 @@ void DocumentBroker::setupPriorities()
         int prio = LOOLWSD::getConfigValue<int>("per_document.batch_priority", 5);
         Util::setProcessAndThreadPriorities(_childProcess->getPid(), prio);
     }
-#endif // !MOBILE
+#endif
 }
 
 void DocumentBroker::startThread()
@@ -2420,6 +2421,17 @@ void DocumentBroker::dumpState(std::ostream& os)
         _tileCache->dumpState(os);
 
     _poll->dumpState(os);
+
+#if !MOBILEAPP
+    // Bit nasty - need a cleaner way to dump state.
+    for (auto &it : _sessions)
+    {
+        auto proto = it.second->getProtocol();
+        auto proxy = dynamic_cast<ProxyProtocolHandler *>(proto.get());
+        if (proxy)
+            proxy->dumpProxyState(os);
+    }
+#endif
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
