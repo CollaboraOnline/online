@@ -2325,6 +2325,8 @@ void ConvertToBroker::dispose()
 
 ConvertToBroker::~ConvertToBroker()
 {
+    // Calling a virtual function from a dtor
+    // is only valid if there are no inheritors.
     dispose();
 }
 

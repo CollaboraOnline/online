@@ -442,7 +442,7 @@ private:
 };
 
 #if !MOBILEAPP
-class ConvertToBroker : public DocumentBroker
+class ConvertToBroker final : public DocumentBroker
 {
     const std::string _format;
     const std::string _sOptions;
