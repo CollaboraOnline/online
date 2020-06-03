@@ -23,6 +23,7 @@
 #include <RequestDetails.hpp>
 
 #include <common/Authorization.hpp>
+#include <wsd/FileServer.hpp>
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
@@ -48,6 +49,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRequestDetails_loleafletURI);
     CPPUNIT_TEST(testRequestDetails_local);
     CPPUNIT_TEST(testRequestDetails);
+    CPPUNIT_TEST(testUIDefaults);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -70,6 +72,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRequestDetails_loleafletURI();
     void testRequestDetails_local();
     void testRequestDetails();
+    void testUIDefaults();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -1561,6 +1564,18 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
     }
+}
+
+void WhiteBoxTests::testUIDefaults()
+{
+    LOK_ASSERT_EQUAL(std::string("{\"uiMode\":\"classic\"}"),
+                     FileServerRequestHandler::uiDefaultsToJSON("UIMode=classic;huh=bleh;"));
+
+    LOK_ASSERT_EQUAL(std::string("{\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true}}"),
+                     FileServerRequestHandler::uiDefaultsToJSON("TextRuler=true;SpreadsheetSidebar=false"));
+
+    LOK_ASSERT_EQUAL(std::string("{\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}"),
+                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
