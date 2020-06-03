@@ -162,7 +162,7 @@ bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h
     if (tokens.size() < 5)
         return false;
 
-    if (tokens[3] == "EMPTY,")
+    if (tokens.equals(3, "EMPTY,"))
     {
         part = std::atoi(tokens[4].c_str());
         return true;

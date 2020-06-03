@@ -108,7 +108,7 @@ public:
         std::string value;
 
         // allow empty clipboards
-        if (clipboard && mimeType == "" && content == "")
+        if (clipboard && mimeType.empty() && content.empty())
             return true;
 
         if (!clipboard || !clipboard->findType(mimeType, value))

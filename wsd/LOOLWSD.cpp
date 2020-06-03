@@ -2769,7 +2769,7 @@ private:
             ConvertToPartHandler handler(/*convertTo =*/ true);
             HTMLForm form(request, message, handler);
 
-            std::string sOptions("");
+            std::string sOptions;
             std::string format = (form.has("format") ? form.get("format") : "");
             std::string sFullSheetPreview = (form.has("FullSheetPreview") ? form.get("FullSheetPreview") : "");
             bool bFullSheetPreview = sFullSheetPreview == "true" ? true : false;

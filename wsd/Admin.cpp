@@ -606,7 +606,7 @@ unsigned Admin::getNetStatsInterval()
 
 std::string Admin::getChannelLogLevels()
 {
-    std::string result = "";
+    std::string result;
     // Get the list of channels..
     std::vector<std::string> nameList;
     Log::logger().names(nameList);

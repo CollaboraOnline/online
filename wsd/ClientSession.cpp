@@ -452,7 +452,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=unknown");
         return false;
     }
-    else if (getDocURL() == "")
+    else if (getDocURL().empty())
     {
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=nodocloaded");
         return false;
