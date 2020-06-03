@@ -10,6 +10,7 @@
 #pragma once
 
 #include <atomic>
+#include <cassert>
 #include <memory>
 #include <mutex>
 #include <string>

@@ -9,15 +9,17 @@
 
 #pragma once
 
+#include <cmath>
+#include <ctime>
+#include <list>
 #include <memory>
 #include <set>
 #include <string>
-#include <cmath>
-#include <list>
+#include <utility>
 
-#include "Log.hpp"
-#include "net/WebSocketHandler.hpp"
+#include <common/Log.hpp>
 #include "Util.hpp"
+#include "net/WebSocketHandler.hpp"
 
 struct DocumentAggregateStats;
 
@@ -161,7 +163,7 @@ public:
             fclose(_procSMaps);
     }
 
-    const std::string getDocKey() const { return _docKey; }
+    std::string getDocKey() const { return _docKey; }
 
     pid_t getPid() const { return _pid; }
 

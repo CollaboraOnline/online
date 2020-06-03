@@ -1019,10 +1019,10 @@ struct KitProcStats
 void AdminModel::CalcDocAggregateStats(DocumentAggregateStats& stats)
 {
     for (auto& d : _documents)
-        stats.Update(*d.second.get(), true);
+        stats.Update(*d.second, true);
 
     for (auto& d : _expiredDocuments)
-        stats.Update(*d.second.get(), false);
+        stats.Update(*d.second, false);
 }
 
 void CalcKitStats(KitProcStats& stats)

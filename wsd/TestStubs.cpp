@@ -23,7 +23,7 @@ void ClientSession::traceTileBySend(const TileDesc& /*tile*/, bool /*deduplicate
 
 void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& /*data*/) {};
 
-ClientSession::~ClientSession() {}
+ClientSession::~ClientSession() = default;
 
 void ClientSession::onDisconnect() {}
 
