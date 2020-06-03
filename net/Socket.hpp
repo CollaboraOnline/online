@@ -1278,10 +1278,10 @@ enum class WSOpCode : unsigned char {
 
 namespace HttpHelper
 {
-    /// Sends file as HTTP response.
-    void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path, const std::string& mediaType,
-                  Poco::Net::HTTPResponse& response, bool noCache = false, bool deflate = false,
-                  const bool headerOnly = false);
+    /// Sends file as HTTP response and shutdown the socket.
+    void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path, const std::string& mediaType,
+                             Poco::Net::HTTPResponse *optResponse = nullptr, bool noCache = false, bool deflate = false,
+                             const bool headerOnly = false);
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -1022,14 +1022,19 @@ namespace HttpHelper
         }
     }
 
-    void sendFile(const std::shared_ptr<StreamSocket>& socket,
-                  const std::string& path,
-                  const std::string& mediaType,
-                  Poco::Net::HTTPResponse& response,
-                  const bool noCache,
-                  const bool deflate,
-                  const bool headerOnly)
+    void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket,
+                             const std::string& path,
+                             const std::string& mediaType,
+                             Poco::Net::HTTPResponse *optResponse,
+                             const bool noCache,
+                             const bool deflate,
+                             const bool headerOnly)
     {
+        Poco::Net::HTTPResponse *response = optResponse;
+        Poco::Net::HTTPResponse  localResponse;
+        if (!response)
+            response = &localResponse;
+
         struct stat st;
         if (stat(path.c_str(), &st) != 0)
         {
@@ -1040,16 +1045,16 @@ namespace HttpHelper
         if (!noCache)
         {
             // 60 * 60 * 24 * 128 (days) = 11059200
-            response.set("Cache-Control", "max-age=11059200");
-            response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
+            response->set("Cache-Control", "max-age=11059200");
+            response->set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
         }
         else
         {
-            response.set("Cache-Control", "no-cache");
+            response->set("Cache-Control", "no-cache");
         }
 
-        response.setContentType(mediaType);
-        response.add("X-Content-Type-Options", "nosniff");
+        response->setContentType(mediaType);
+        response->add("X-Content-Type-Options", "nosniff");
 
         int bufferSize = std::min(st.st_size, (off_t)Socket::MaximumSendBufferSize);
         if (st.st_size >= socket->getSendBufferSize())
@@ -1063,24 +1068,25 @@ namespace HttpHelper
         // IE/Edge before enabling the deflate again
         if (!deflate || true)
         {
-            response.setContentLength(st.st_size);
+            response->setContentLength(st.st_size);
             LOG_TRC('#' << socket->getFD() << ": Sending " <<
                     (headerOnly ? "header for " : "") << " file [" << path << "].");
-            socket->send(response);
+            socket->send(*response);
 
             if (!headerOnly)
                 sendUncompressedFileContent(socket, path, bufferSize);
         }
         else
         {
-            response.set("Content-Encoding", "deflate");
+            response->set("Content-Encoding", "deflate");
             LOG_TRC('#' << socket->getFD() << ": Sending " <<
                     (headerOnly ? "header for " : "") << " file [" << path << "].");
-            socket->send(response);
+            socket->send(*response);
 
             if (!headerOnly)
                 sendDeflatedFileContent(socket, path, st.st_size);
         }
+        socket->shutdown();
     }
 }
 

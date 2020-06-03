@@ -1271,7 +1271,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 if (!fileName.empty())
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
-                HttpHelper::sendFile(_saveAsSocket, encodedFilePath, mimeType, response);
+                HttpHelper::sendFileAndShutdown(_saveAsSocket, encodedFilePath, mimeType, &response);
             }
 
             // Conversion is done, cleanup this fake session.

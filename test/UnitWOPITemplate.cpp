@@ -94,9 +94,7 @@ public:
         {
             LOG_INF("Fake wopi host request, handling template GetFile: " << uriReq.getPath());
 
-            Poco::Net::HTTPResponse response;
-            HttpHelper::sendFile(socket, TDOC "/test.ott", "", response);
-            socket->shutdown();
+            HttpHelper::sendFileAndShutdown(socket, TDOC "/test.ott", "");
 
             return true;
         }
