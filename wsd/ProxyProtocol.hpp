@@ -57,7 +57,10 @@ public:
     int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const override;
     void shutdown(bool goingAway = false, const std::string &statusMessage = "") override;
     void getIOStats(uint64_t &sent, uint64_t &recv) override;
-    void dumpState(std::ostream& os) override;
+    // don't duplicate ourselves for every socket
+    void dumpState(std::ostream&) override {}
+    // instead do it centrally.
+    void dumpProxyState(std::ostream& os);
     bool parseEmitIncoming(const std::shared_ptr<StreamSocket> &socket);
 
     void handleRequest(bool isWaiting, const std::shared_ptr<Socket> &socket);
