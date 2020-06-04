@@ -224,7 +224,10 @@ describe('Apply font on text and on text shape.', function() {
 			.should('have.attr', 'font-size', '564px');
 	});
 
-	it.skip('Apply text color on text shape.', function() {
+	it('Apply text color on text shape.', function() {
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.attr', 'fill', 'rgb(0,0,0)');
+
 		openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -237,7 +240,8 @@ describe('Apply font on text and on text shape.', function() {
 
 		triggerNewSVG();
 
-		// TODO: text color is not applied on the shape
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.attr', 'fill', 'rgb(106,168,79)');
 	});
 
 	it.skip('Apply highlight on text shape.', function() {
@@ -475,6 +479,9 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply text color on selected text.', function() {
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.attr', 'fill', 'rgb(0,0,0)');
+
 		selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
@@ -489,7 +496,8 @@ describe('Apply font on text and on text shape.', function() {
 
 		triggerNewSVG();
 
-		// TODO: text color is not in the SVG
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.attr', 'fill', 'rgb(106,168,79)');
 	});
 
 	it('Apply highlight on selected text.', function() {
