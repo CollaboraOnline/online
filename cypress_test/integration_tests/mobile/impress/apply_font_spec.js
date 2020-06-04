@@ -244,7 +244,7 @@ describe('Apply font on text and on text shape.', function() {
 			.should('have.attr', 'fill', 'rgb(106,168,79)');
 	});
 
-	it.skip('Apply highlight on text shape.', function() {
+	it('Apply highlight on text shape.', function() {
 		openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -255,9 +255,17 @@ describe('Apply font on text and on text shape.', function() {
 
 		mobileHelper.selectFromColorPalette(1, 2, 2);
 
+		cy.get('#CharBackColor .color-sample-selected')
+			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
+
 		triggerNewSVG();
 
-		// TODO: highlight color is not applied on the shape
+		// TODO: highlight color is not in the SVG
+		// At least check the mobile wizard's state
+		openTextPropertiesPanel();
+
+		cy.get('#CharBackColor .color-sample-selected')
+			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 	});
 
 	it('Apply superscript on text shape.', function() {
@@ -505,17 +513,24 @@ describe('Apply font on text and on text shape.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('not.have.attr', 'font-color');
-
 		cy.get('#CharBackColor')
 			.click();
 
 		mobileHelper.selectFromColorPalette(1, 2, 2);
 
+		cy.get('#CharBackColor .color-sample-selected')
+			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
+
 		triggerNewSVG();
 
 		// TODO: highlight color is not in the SVG
+		// At least check the mobile wizard's state
+		selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#CharBackColor .color-sample-selected')
+			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 	});
 
 	it('Apply superscript on selected text.', function() {
