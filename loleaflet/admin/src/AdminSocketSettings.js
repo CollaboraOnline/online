@@ -36,9 +36,11 @@ var AdminSocketSettings = AdminSocketBase.extend({
 						$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
 						$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
 					],
-					callback: function() {
+					callback: function(value) {
 						// TODO: Prompt for reason.
-						socketSettings.send('shutdown maintenance');
+						if (value) {
+							socketSettings.send('shutdown maintenance');
+						}
 					}
 				});
 			});
