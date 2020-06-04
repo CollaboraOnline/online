@@ -469,6 +469,7 @@ describe('Apply font on text and on text shape.', function() {
 
 		// TODO: highlight color is not in the SVG
 		// At least check the mobile wizard's state
+		cy.wait(400);
 		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
