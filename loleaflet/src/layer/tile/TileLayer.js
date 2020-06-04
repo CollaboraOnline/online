@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ */
+/* global vex $ L _ isAnyVexDialogActive */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -316,7 +316,8 @@ L.TileLayer = L.GridLayer.extend({
 		map.on('statusindicator',
 			function (e) {
 				if (e.statusType === 'alltilesloaded' && this._docType === 'spreadsheet') {
-					this._onCellCursorShift(true);
+					if (!isAnyVexDialogActive())
+						this._onCellCursorShift(true);
 				}
 				if (e.statusType === 'alltilesloaded' && this._map.shouldWelcome()) {
 					this._map.showWelcomeDialog();
