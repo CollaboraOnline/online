@@ -97,21 +97,20 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 		else if (option === 'net')
 			data = this._sentStatsData.concat(this._recvStatsData);
 
-		xScale = d3.scale.linear().range([this._graphMargins.left, this._graphWidth - this._graphMargins.right]).domain([d3.min(data, function(d) {
+		xScale = d3.scaleLinear().range([this._graphMargins.left, this._graphWidth - this._graphMargins.right]).domain([d3.min(data, function(d) {
 			return d.time;
 		}), d3.max(data, function(d) {
 			return d.time;
 		})]);
 
 
-		yScale = d3.scale.linear().range([this._graphHeight - this._graphMargins.bottom, this._graphMargins.top]).domain([d3.min(data, function(d) {
+		yScale = d3.scaleLinear().range([this._graphHeight - this._graphMargins.bottom, this._graphMargins.top]).domain([d3.min(data, function(d) {
 			return d.value;
 		}), d3.max(data, function(d) {
 			return d.value;
 		})]);
 
-		d3XAxis = d3.svg.axis()
-			.scale(xScale)
+		d3XAxis = d3.axisBottom(xScale)
 			.tickFormat(function(d) {
 				d = Math.abs(d / 1000);
 				var sUnit = 0;
@@ -128,49 +127,43 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 					return d + units[i];
 			});
 
-		d3Line = d3.svg.line()
+		d3Line = d3.line()
 			.x(function(d) {
 				return xScale(d.time);
 			})
 			.y(function(d) {
 				return yScale(d.value);
 			})
-			.interpolate('monotone');
+			.curve(d3.curveMonotoneX);
 
 		if (option === 'mem') {
 			this._xMemScale = xScale;
 			this._yMemScale = yScale;
 			this._d3MemXAxis = d3XAxis;
-			this._d3MemYAxis = d3.svg.axis()
-				.scale(this._yMemScale)
+			this._d3MemYAxis = d3.axisLeft(this._yMemScale)
 				.tickFormat(function (d) {
 					return Util.humanizeMem(d);
-				})
-				.orient('left');
+				});
 			this._d3MemLine = d3Line;
 		}
 		else if (option === 'cpu') {
 			this._xCpuScale = xScale;
 			this._yCpuScale = yScale;
 			this._d3CpuXAxis = d3XAxis;
-			this._d3CpuYAxis = d3.svg.axis()
-				.scale(this._yCpuScale)
+			this._d3CpuYAxis = d3.axisLeft(this._yCpuScale)
 				.tickFormat(function (d) {
 					return d + '%';
-				})
-				.orient('left');
+				});
 			this._d3CpuLine = d3Line;
 		}
 		else if (option === 'net') {
 			this._xNetScale = xScale;
 			this._yNetScale = yScale;
 			this._d3NetXAxis = d3XAxis;
-			this._d3NetYAxis = d3.svg.axis()
-				.scale(this._yNetScale)
+			this._d3NetYAxis = d3.axisLeft(this._yNetScale)
 				.tickFormat(function (d) {
 					return Util.humanizeMem(d/1000) + '/sec';
-				})
-				.orient('left');
+				});
 			this._d3NetSentLine = d3Line;
 			this._d3NetRecvLine = d3Line;
 
