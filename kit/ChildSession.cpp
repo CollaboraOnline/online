@@ -1314,9 +1314,9 @@ bool ChildSession::gestureEvent(const char* /*buffer*/, int /*length*/,
     bool success = true;
 
     unsigned int windowID = 0;
-    int x;
-    int y;
-    int offset;
+    int x = 0;
+    int y = 0;
+    int offset = 0;
     std::string type;
 
     if (tokens.size() < 6)
