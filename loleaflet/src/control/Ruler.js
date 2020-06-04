@@ -300,9 +300,7 @@ L.Control.Ruler = L.Control.extend({
 		// least in the US. (The ruler unit to use doesn't seem to be stored in the document
 		// at least for .odt?)
 		for (var num = 0; num <= (this.options.pageWidth / 1000) + 1; num++) {
-
 			var marker = L.DomUtil.create('div', 'loleaflet-ruler-maj', this._rBPContainer);
-
 			// The - 1 is to compensate for the left and right .5px borders of
 			// loleaflet-ruler-maj in leaflet.css.
 			marker.style.width = this.options.DraggableConvertRatio*1000 - 1 + 'px';
@@ -355,12 +353,9 @@ L.Control.Ruler = L.Control.extend({
 		}
 
 		if (!this.options.marginSet) {
-
 			this.options.marginSet = true;
-
 			this._lMarginMarker = L.DomUtil.create('div', 'loleaflet-ruler-margin loleaflet-ruler-left', this._rFace);
 			this._rMarginMarker =  L.DomUtil.create('div', 'loleaflet-ruler-margin loleaflet-ruler-right', this._rFace);
-
 			this._lMarginDrag = L.DomUtil.create('div', 'loleaflet-ruler-drag loleaflet-ruler-left', this._rMarginWrapper);
 			this._lToolTip = L.DomUtil.create('div', 'loleaflet-ruler-ltooltip', this._lMarginDrag);
 			this._rMarginDrag = L.DomUtil.create('div', 'loleaflet-ruler-drag loleaflet-ruler-right', this._rMarginWrapper);
@@ -372,7 +367,6 @@ L.Control.Ruler = L.Control.extend({
 				this.options.interactive = true;
 				L.DomEvent.on(this._rMarginDrag, 'touchstart', this._initiateDrag, this);
 				L.DomEvent.on(this._lMarginDrag, 'touchstart', this._initiateDrag, this);
-
 			}
 		}
 
@@ -625,11 +619,35 @@ L.Control.Ruler = L.Control.extend({
 		}
 		return tabstop;
 	},
+
+	_showTabstopContextMenu: function(position, tabstopNumber) {
+		var self = this;
+		this.currentPositionInTwips = position;
+		this.currentTabStopIndex = tabstopNumber;
+		$.contextMenu({
+			selector: '.loleaflet-ruler-tabstopcontainer',
+			className: 'loleaflet-font',
+			items: {
+				inserttabstop: {
+					name: _('Insert tabstop'),
+					callback: (this._insertTabstop).bind(this),
+					visible: function() {
+						return self.currentPositionInTwips != null;
+					}
+				},
+				removetabstop: {
+					name: _('Delete tabstop'),
+					callback: (this._deleteTabstop).bind(this),
+					visible: function() {
+						return self.currentTabStopIndex != null;
+					}
+				}
+			}
+		});
+	},
+
 	_initiateTabstopDrag: function(event) {
 		// console.log('===> _initiateTabstopDrag ' + event.type);
-
-		this.currentPositionInTwips = null;
-		this.currentTabStopIndex = null;
 
 		var tabstopContainer = null;
 		var pointX = null;
@@ -652,32 +670,12 @@ L.Control.Ruler = L.Control.extend({
 			// right-click inside tabstop container
 			if (event.button === 2) {
 				if (tabstop == null) {
-					this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+					var position = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+					this._showTabstopContextMenu(position, null);
 				}
 				else {
-					this.currentTabStopIndex = tabstop.tabStopNumber;
+					this._showTabstopContextMenu(null, tabstop.tabStopNumber);
 				}
-				var self = this;
-				$.contextMenu({
-					selector: '.loleaflet-ruler-tabstopcontainer',
-					className: 'loleaflet-font',
-					items: {
-						inserttabstop: {
-							name: _('Insert tabstop'),
-							callback: (this._insertTabstop).bind(this),
-							visible: function() {
-								return self.currentPositionInTwips != null;
-							}
-						},
-						removetabstop: {
-							name: _('Delete tabstop'),
-							callback: (this._deleteTabstop).bind(this),
-							visible: function() {
-								return self.currentTabStopIndex != null;
-							}
-						}
-					}
-				});
 				event.stopPropagation();
 				return;
 			}
@@ -773,22 +771,30 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_onTabstopContainerLongPress: function(event) {
-		var pointX = event.center.x - event.target.getBoundingClientRect().left;
-		this.currentPositionInTwips = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+		var tabstopContainer = event.target;
+		var pointX = event.center.x - tabstopContainer.getBoundingClientRect().left;
+		var pointXTwip = this._map._docLayer._pixelsToTwips({x: pointX, y:0}).x;
+		var tabstop = this._getTabStopHit(tabstopContainer, pointX);
+
 		if (window.mode.isMobile() || window.mode.isTablet()) {
-			this._insertTabstop();
+			if (tabstop == null) {
+				this.currentPositionInTwips = pointXTwip;
+				this.currentTabStopIndex = null;
+				this._insertTabstop();
+			}
+			else {
+				this.currentPositionInTwips = null;
+				this.currentTabStopIndex = tabstop.tabStopNumber;
+				this._deleteTabstop();
+			}
 		}
 		else {
-			$.contextMenu({
-				selector: '.loleaflet-ruler-tabstopcontainer',
-				className: 'loleaflet-font',
-				items: {
-					inserttabstop: {
-						name: _('Insert tabstop'),
-						callback: (this._insertTabstop).bind(this)
-					}
-				}
-			});
+			var tabstopNumber = null;
+			if (tabstop != null) {
+				tabstopNumber = tabstop.tabstopNumber;
+				pointXTwip = null;
+			}
+			this._showTabstopContextMenu(pointXTwip, tabstopNumber);
 		}
 	},
 
@@ -835,7 +841,6 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 });
-
 
 L.control.ruler = function (options) {
 	return new L.Control.Ruler(options);
