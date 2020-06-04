@@ -1,7 +1,8 @@
-/* global describe it cy beforeEach require expect afterEach*/
+/* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
+var impressMobileHelper = require('./impress_mobile_helper');
 
 describe('Apply font on text and on text shape.', function() {
 	var testFileName = 'apply_font.odp';
@@ -11,72 +12,15 @@ describe('Apply font on text and on text shape.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		selectTextShape();
+		impressMobileHelper.selectTextShapeInTheCenter();
 	});
 
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
 
-	function selectTextShape() {
-		// Click on the center of the slide to select the text shape there
-		cy.get('#document-container')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-				cy.get('body')
-					.click(XPos, YPos);
-			});
-
-		cy.get('.leaflet-drag-transform-marker')
-			.should('be.visible');
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
-			.should('have.class', 'com.sun.star.drawing.TextShape');
-	}
-
-	function selectTextOfShape() {
-		// Double click onto the selected shape
-		cy.get('svg g .leaflet-interactive')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-				cy.get('body')
-					.dblclick(XPos, YPos);
-			});
-
-		cy.get('.leaflet-cursor.blinking-cursor')
-			.should('exist');
-
-		helper.selectAllText(false);
-	}
-
 	function triggerNewSVG() {
-		mobileHelper.closeMobileWizard();
-
-		// Remove selection first with clicking next to the rotate handler
-		cy.get('.transform-handler--rotate')
-			.then(function(items) {
-				var XPos = items[0].getBoundingClientRect().left - 10;
-				var YPos = items[0].getBoundingClientRect().top;
-				cy.get('body')
-					.click(XPos, YPos);
-
-				cy.get('body')
-					.dblclick(XPos, YPos);
-			});
-
-		cy.get('.leaflet-drag-transform-marker')
-			.should('not.exist');
-
-		// If we click two fast on shape again
-		// then it steps into edit mode
-		cy.wait(200);
-
-		// Select text shape again which will retrigger a new SVG from core
-		selectTextShape();
+		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 	}
 
 	function openTextPropertiesPanel() {
@@ -334,7 +278,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply bold on selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -348,7 +292,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply italic on selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -362,7 +306,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply underline on selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -376,7 +320,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply strikeout on selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -390,7 +334,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply shadowed on selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -404,7 +348,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Change font name of selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -427,7 +371,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Change font size of selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -453,7 +397,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Grow font size of selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -470,7 +414,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Shrink font size of selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -490,7 +434,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(0,0,0)');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -509,7 +453,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply highlight on selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -525,7 +469,7 @@ describe('Apply font on text and on text shape.', function() {
 
 		// TODO: highlight color is not in the SVG
 		// At least check the mobile wizard's state
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -534,7 +478,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply superscript on selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 
@@ -555,7 +499,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	it('Apply subscript on selected text.', function() {
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.openMobileWizard();
 

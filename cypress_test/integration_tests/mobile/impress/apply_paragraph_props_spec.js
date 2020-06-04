@@ -1,7 +1,8 @@
-/* global describe it cy beforeEach require expect afterEach*/
+/* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
+var impressMobileHelper = require('./impress_mobile_helper');
 
 describe('Apply paragraph properties.', function() {
 	var testFileName = 'apply_paragraph_props.odp';
@@ -11,72 +12,15 @@ describe('Apply paragraph properties.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		selectTextShape();
+		impressMobileHelper.selectTextShapeInTheCenter();
 	});
 
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
 
-	function selectTextShape() {
-		// Click on the center of the slide to select the text shape there
-		cy.get('#document-container')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-				cy.get('body')
-					.click(XPos, YPos);
-			});
-
-		cy.get('.leaflet-drag-transform-marker')
-			.should('be.visible');
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
-			.should('have.class', 'Outline');
-	}
-
 	function triggerNewSVG() {
-		mobileHelper.closeMobileWizard();
-
-		// Remove selection first with clicking next to the rotate handler
-		cy.get('.transform-handler--rotate')
-			.then(function(items) {
-				var XPos = items[0].getBoundingClientRect().left - 10;
-				var YPos = items[0].getBoundingClientRect().top;
-				cy.get('body')
-					.click(XPos, YPos);
-
-				cy.get('body')
-					.dblclick(XPos, YPos);
-			});
-
-		cy.get('.leaflet-drag-transform-marker')
-			.should('not.exist');
-
-		// If we click two fast on shape again
-		// then it steps into edit mode
-		cy.wait(200);
-
-		// Select text shape again which will retrigger a new SVG from core
-		selectTextShape();
-	}
-
-	function selectTextOfShape() {
-		// Double click onto the selected shape
-		cy.get('svg g .leaflet-interactive')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-				cy.get('body')
-					.dblclick(XPos, YPos);
-			});
-
-		cy.get('.leaflet-cursor.blinking-cursor')
-			.should('exist');
-
-		helper.selectAllText(false);
+		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 	}
 
 	function openParagraphPropertiesPanel() {
@@ -281,7 +225,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		// Set right alignment first
 		openParagraphPropertiesPanel2();
@@ -295,7 +239,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'x', '23586');
 
 		// Set left alignment
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -312,7 +256,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -329,7 +273,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		// Set right alignment first
 		openParagraphPropertiesPanel2();
@@ -342,7 +286,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		// Then set justified alignment
 		openParagraphPropertiesPanel2();
@@ -360,7 +304,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		// Set bottom alignment first
 		openParagraphPropertiesPanel2();
@@ -373,7 +317,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '10811');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		// Then set top alignment
 		openParagraphPropertiesPanel2();
@@ -391,7 +335,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -409,7 +353,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('not.exist');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -427,7 +371,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -444,7 +388,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -465,7 +409,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -486,7 +430,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -498,7 +442,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6700');
 
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -516,7 +460,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'x', '1400');
 
 		// Change right-to-left first
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -529,7 +473,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'x', '23586');
 
 		// Change back to the default left-to-right
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -548,7 +492,7 @@ describe('Apply paragraph properties.', function() {
 			.should('not.exist');
 
 		// Apply bulleting first
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -563,7 +507,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'transform', 'translate(1700,4563)');
 
 		// Change bulleting level
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
@@ -576,7 +520,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'transform', 'translate(2900,4536)');
 
 		// Change bulleting level back to default
-		selectTextOfShape();
+		impressMobileHelper.selectTextOfShape();
 
 		openParagraphPropertiesPanel2();
 
