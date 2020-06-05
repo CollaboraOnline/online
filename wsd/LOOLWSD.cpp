@@ -852,7 +852,7 @@ LOOLWSD::~LOOLWSD()
 void LOOLWSD::initialize(Application& self)
 {
 #if !MOBILEAPP
-    if (geteuid() == 0)
+    if (geteuid() == 0 && CheckLoolUser)
     {
         throw std::runtime_error("Do not run as root. Please run as lool user.");
     }
