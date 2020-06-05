@@ -30,6 +30,10 @@ L.Bounds.prototype = {
 		return this;
 	},
 
+	clone: function () { // -> Bounds
+		return new L.Bounds(this.min, this.max);
+	},
+
 	getCenter: function (round) { // (Boolean) -> Point
 		return new L.Point(
 		        (this.min.x + this.max.x) / 2,
@@ -89,6 +93,18 @@ L.Bounds.prototype = {
 		    yIntersects = (max2.y >= min.y) && (min2.y <= max.y);
 
 		return xIntersects && yIntersects;
+	},
+
+	// non-destructive, returns a new Bounds
+	add: function (point) { // (Point) -> Bounds
+		return this.clone()._add(point);
+	},
+
+	// destructive, used directly for performance in situations where it's safe to modify existing Bounds
+	_add: function (point) { // (Point) -> Bounds
+		this.min._add(point);
+		this.max._add(point);
+		return this;
 	},
 
 	toString: function () {
