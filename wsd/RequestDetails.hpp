@@ -120,6 +120,8 @@ private:
     std::map<std::string, std::string> _params;
     std::map<Field, std::string> _fields;
 
+    void processURI();
+
 public:
 
     RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot);
