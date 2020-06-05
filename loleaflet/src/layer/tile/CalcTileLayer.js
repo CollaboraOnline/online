@@ -776,6 +776,26 @@ L.CalcTileLayer = L.TileLayer.extend({
 	_onCellCursorMsg: function (textMsg) {
 		L.TileLayer.prototype._onCellCursorMsg.call(this, textMsg);
 		this._onUpdateCurrentHeader();
+	},
+
+	_getCursorRectangle: function (msgObj) {
+
+		if (!this.options.printTwipsMsgsEnabled) {
+			return L.TileLayer.prototype._getCursorRectangle.call(this, msgObj);
+		}
+
+		if (typeof msgObj !== 'object' || !msgObj.hasOwnProperty('relrect') ||
+				!msgObj.hasOwnProperty('refpoint')) {
+			// This can happen because the kit sends such messages (sometimes)
+			// after doing its own parsing (probably needed for writer/impress?).
+			// These aren't needed for Calc.
+			return undefined;
+		}
+
+		var relrect = this._parseRectangle(msgObj.relrect);
+		var refpoint = this._parsePoint(msgObj.refpoint);
+		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
+		return relrect.add(refpoint);
 	}
 });
 
@@ -1004,6 +1024,18 @@ L.SheetGeometry = L.Class.extend({
 
 	getRowGroupsDataInView: function () {
 		return this._rows.getGroupsDataInView();
+	},
+
+	// accepts a point in print twips coordinates and returns the equivalent point
+	// in tile-twips.
+	getTileTwipsPointFromPrint: function (point) { // (L.Point) -> L.Point
+		if (!(point instanceof L.Point)) {
+			console.error('Bad argument type, expected L.Point');
+			return point;
+		}
+
+		return new L.Point(this._columns.getTileTwipsPosFromPrint(point.x),
+				this._rows.getTileTwipsPosFromPrint(point.y));
 	},
 
 	// accepts a rectangle in print twips coordinates and returns the equivalent rectangle
@@ -1387,6 +1419,25 @@ L.SheetDimension = L.Class.extend({
 
 	getMaxIndex: function () {
 		return this._maxIndex;
+	},
+
+	// Accepts a position in print twips and returns the corresponding position in tile twips.
+	getTileTwipsPosFromPrint: function (posPT) {
+
+		if (typeof posPT !== 'number') {
+			console.error('Wrong argument type');
+			return;
+		}
+
+		var element = this._getSpanAndIndexFromPrintTwipsPos(posPT);
+		var elementDataTT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'tiletwips');
+		var elementDataPT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'printtwips');
+
+		var offset = posPT - elementDataPT.startpos;
+		console.assert(offset >= 0, 'offset should not be negative');
+
+		// Preserve any offset from the matching column/row start position.
+		return elementDataTT.startpos + offset;
 	},
 
 	// Accepts a start and end positions in print twips, and returns the

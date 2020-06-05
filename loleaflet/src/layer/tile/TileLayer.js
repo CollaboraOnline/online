@@ -1247,9 +1247,12 @@ L.TileLayer = L.GridLayer.extend({
 	_onInvalidateCursorMsg: function (textMsg) {
 		textMsg = textMsg.substring('invalidatecursor:'.length + 1);
 		var obj = JSON.parse(textMsg);
+		var rectangle = this._getCursorRectangle(obj);
+		if (rectangle === undefined) {
+			return;
+		}
 		var modifierViewId = parseInt(obj.viewId);
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
-		var rectangle = this._getCursorRectangle(obj);
 		this._visibleCursor = new L.LatLngBounds(
 						this._twipsToLatLng(rectangle.getTopLeft(), this._map.getZoom()),
 						this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom()));
@@ -3407,6 +3410,21 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		return this._parseRectangle(msgObj.rectangle);
+	},
+
+	_parsePoint: function (pointString) {
+		if (typeof pointString !== 'string') {
+			console.error('invalid point string');
+			return undefined;
+		}
+
+		var pointParts = pointString.match(/\d+/g);
+		if (pointParts.length < 2) {
+			console.error('incomplete point');
+			return undefined;
+		}
+
+		return new L.Point(parseInt(pointParts[0]), parseInt(pointParts[1]));
 	},
 
 	_parseRectangle: function (rectString) {
