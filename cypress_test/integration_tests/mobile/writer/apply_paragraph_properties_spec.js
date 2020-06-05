@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress*/
+/* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -115,7 +115,7 @@ describe('Apply paragraph properties.', function() {
 	it('Apply default bulleting.', function() {
 		// TODO: Why this item is missing with core/master
 		// In desktop LO, sidebar contains this item.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		cy.get('#DefaultBullet')
@@ -130,7 +130,7 @@ describe('Apply paragraph properties.', function() {
 	it('Apply default numbering.', function() {
 		// TODO: Why this item is missing with core/master
 		// In desktop LO, sidebar contains this item.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		cy.get('#DefaultNumbering')
@@ -145,7 +145,7 @@ describe('Apply paragraph properties.', function() {
 	it('Apply background color.', function() {
 		// TODO: Why this item is missing with core/master
 		// In desktop LO, sidebar contains this item.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		// Change background color

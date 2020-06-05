@@ -1,4 +1,4 @@
-/* global describe it cy require expect Cypress afterEach */
+/* global describe it cy require expect afterEach */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -46,7 +46,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Insert row before.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -75,7 +75,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Insert row after.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -104,7 +104,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Insert column before.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -133,7 +133,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Insert column after.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -162,7 +162,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Delete row.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -191,7 +191,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Delete column.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -221,7 +221,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Delete table.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -250,7 +250,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Merge cells.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -278,7 +278,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Change row height.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -306,7 +306,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Change column width.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_properties.odt');
@@ -334,7 +334,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set minimal row height.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_with_text.odt');
@@ -359,7 +359,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set optimal row height.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_with_text.odt');
@@ -393,7 +393,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Distribute rows.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_with_text.odt');
@@ -427,7 +427,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set minimal column width.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_with_text.odt');
@@ -450,7 +450,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set optimal column width.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_with_text.odt');
@@ -475,7 +475,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Distribute columns.', function() {
 		// TODO: Select all does not work with core/master
 		// Table panel layout is also broken
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		before('table_with_text.odt');

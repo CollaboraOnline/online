@@ -1,11 +1,13 @@
-/* global cy Cypress expect*/
+/* global cy expect require */
+
+var helper = require('../../common/helper');
 
 function removeTextSelection() {
 	cy.log('Removing text selection - start.');
 
 	// TODO: select all does not work with core/master
 	// if we have a column selected
-	if (Cypress.env('LO_CORE_VERSION') === 'master') {
+	if (helper.getLOVersion() === 'master') {
 		cy.get('body')
 			.type('{enter}');
 

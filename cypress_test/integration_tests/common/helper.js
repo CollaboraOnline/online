@@ -148,8 +148,6 @@ function matchClipboardText(regexp) {
 function beforeAllDesktop(fileName, subFolder) {
 	var mobile = false;
 	loadTestDoc(fileName, subFolder, mobile);
-
-	// detectLOCoreVersion(); //TODO: implement Core version check.
 }
 
 function afterAll(fileName) {
@@ -232,6 +230,18 @@ function typeText(selector, text, delayMs=0) {
 	}
 }
 
+function getLOVersion() {
+	var versionString = Cypress.env('LO_CORE_VERSION');
+	if (versionString.includes('Collabora')) {
+		if (versionString.includes(' 6.2.')) {
+			return 'cp-6-2';
+		} else if (versionString.includes(' 6.4.')) {
+			return 'cp-6-4';
+		}
+	}
+	return 'master';
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -248,3 +258,4 @@ module.exports.isImpress = isImpress;
 module.exports.isWriter = isWriter;
 module.exports.beforeAllDesktop = beforeAllDesktop;
 module.exports.typeText = typeText;
+module.exports.getLOVersion = getLOVersion;

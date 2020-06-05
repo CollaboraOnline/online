@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress*/
+/* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -51,7 +51,7 @@ describe('Apply number formatting.', function() {
 
 		// TODO: Why this item is missing with core/master
 		// In desktop LO, sidebar contains this item.
-		if (Cypress.env('LO_CORE_VERSION') !== 'master')
+		if (helper.getLOVersion() !== 'master')
 			cy.get('#NumberFormatPercentimg')
 				.should('have.class', 'selected');
 
@@ -74,7 +74,7 @@ describe('Apply number formatting.', function() {
 	it('Push percent button.', function() {
 		// TODO: Why this item is missing with core/master
 		// In desktop LO, sidebar contains this item.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		// Change to percent
@@ -108,7 +108,7 @@ describe('Apply number formatting.', function() {
 
 		// TODO: Why this item is missing with core/master
 		// In desktop LO, sidebar contains this item.
-		if (Cypress.env('LO_CORE_VERSION') !== 'master')
+		if (helper.getLOVersion() !== 'master')
 			cy.get('#NumberFormatCurrencyimg')
 				.should('have.class', 'selected');
 
@@ -131,7 +131,7 @@ describe('Apply number formatting.', function() {
 	it('Push currency button.', function() {
 		// TODO: Why this item is missing with core/master
 		// In desktop LO, sidebar contains this item.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		// Change to currency
@@ -163,7 +163,7 @@ describe('Apply number formatting.', function() {
 	it('Push number button.', function() {
 		// TODO: Why this item is missing with core/master
 		// In desktop LO, sidebar contains this item.
-		if (Cypress.env('LO_CORE_VERSION') === 'master')
+		if (helper.getLOVersion() === 'master')
 			return;
 
 		// Change to currency first

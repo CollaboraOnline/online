@@ -1,4 +1,4 @@
-/* global cy Cypress expect require*/
+/* global cy expect require*/
 
 var helper = require('./helper');
 
@@ -22,45 +22,6 @@ function enableEditingMobile() {
 
 function beforeAllMobile(fileName, subFolder) {
 	helper.loadTestDoc(fileName, subFolder, true);
-
-	detectLOCoreVersion();
-}
-
-function detectLOCoreVersion() {
-	cy.log('Detecting core version - start.');
-
-	if (Cypress.env('LO_CORE_VERSION') === undefined) {
-		// Open hamburger menu
-		openHamburgerMenu();
-
-		// Open about dialog
-		cy.contains('.ui-header.level-0 .menu-entry-with-icon', 'About')
-			.click();
-
-		cy.get('.vex-content')
-			.should('exist');
-
-		// Get the version
-		cy.get('#lokit-version')
-			.then(function(items) {
-				expect(items).have.lengthOf(1);
-				if (items[0].textContent.includes('Collabora') &&
-				    items[0].textContent.includes('6.2')) {
-					Cypress.env('LO_CORE_VERSION', 'cp-6-2');}
-				else {
-					Cypress.env('LO_CORE_VERSION', 'master');
-				}
-			});
-
-		// Close about dialog
-		cy.get('.vex-close')
-			.click({force : true});
-
-		cy.get('.vex-content')
-			.should('not.exist');
-	}
-
-	cy.log('Detecting core version - end.');
 }
 
 function longPressOnDocument(posX, posY) {
