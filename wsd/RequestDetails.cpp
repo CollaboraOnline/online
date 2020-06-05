@@ -180,13 +180,16 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
 }
 
 RequestDetails::RequestDetails(const std::string &mobileURI)
-    : _isGet(false)
+    : _isGet(true)
     , _isHead(false)
     , _isProxy(false)
     , _isWebSocket(false)
 {
     _isMobile = true;
     _uriString = mobileURI;
+    // Not sure if these are correct in the case of file names that need URI-encoding.
+    _fields[Field::LegacyDocumentURI] = _uriString;
+    _fields[Field::DocumentURI] = _uriString;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
