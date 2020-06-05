@@ -3409,42 +3409,7 @@ L.TileLayer = L.GridLayer.extend({
 			return undefined;
 		}
 
-		return this._parseRectangle(msgObj.rectangle);
-	},
-
-	_parsePoint: function (pointString) {
-		if (typeof pointString !== 'string') {
-			console.error('invalid point string');
-			return undefined;
-		}
-
-		var pointParts = pointString.match(/\d+/g);
-		if (pointParts.length < 2) {
-			console.error('incomplete point');
-			return undefined;
-		}
-
-		return new L.Point(parseInt(pointParts[0]), parseInt(pointParts[1]));
-	},
-
-	_parseRectangle: function (rectString) {
-
-		if (typeof rectString !== 'string') {
-			console.error('invalid rectangle string');
-			return undefined;
-		}
-
-		var strTwips = rectString.match(/\d+/g);
-		if (strTwips.length < 4) {
-			console.error('incomplete rectangle');
-			return undefined;
-		}
-
-		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-		var bottomRightTwips = topLeftTwips.add(offset);
-
-		return new L.Bounds(topLeftTwips, bottomRightTwips);
+		return L.Bounds.parse(msgObj.rectangle);
 	},
 
 	_debugGetTimeArray: function() {

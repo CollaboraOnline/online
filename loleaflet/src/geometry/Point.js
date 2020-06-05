@@ -8,6 +8,21 @@ L.Point = function (x, y, round) {
 	this.y = (round ? Math.round(y) : y);
 };
 
+L.Point.parse = function (pointString) { // (string) -> Point
+	if (typeof pointString !== 'string') {
+		console.error('invalid point string');
+		return undefined;
+	}
+
+	var pointParts = pointString.match(/\d+/g);
+	if (pointParts === null || pointParts.length < 2) {
+		console.error('incomplete point');
+		return undefined;
+	}
+
+	return new L.Point(parseInt(pointParts[0]), parseInt(pointParts[1]));
+};
+
 L.Point.prototype = {
 
 	clone: function () {

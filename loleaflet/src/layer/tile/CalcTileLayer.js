@@ -792,8 +792,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 			return undefined;
 		}
 
-		var relrect = this._parseRectangle(msgObj.relrect);
-		var refpoint = this._parsePoint(msgObj.refpoint);
+		var relrect = L.Bounds.parse(msgObj.relrect);
+		var refpoint = L.Point.parse(msgObj.refpoint);
 		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
 		return relrect.add(refpoint);
 	}

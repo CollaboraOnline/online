@@ -13,6 +13,26 @@ L.Bounds = function (a, b) { //(Point, Point) or Point[]
 	}
 };
 
+L.Bounds.parse = function (rectString) { // (string) -> Bounds
+
+	if (typeof rectString !== 'string') {
+		console.error('invalid rectangle string');
+		return undefined;
+	}
+
+	var rectParts = rectString.match(/\d+/g);
+	if (rectParts === null || rectParts.length < 4) {
+		console.error('incomplete rectangle');
+		return undefined;
+	}
+
+	var refPoint1 = new L.Point(parseInt(rectParts[0]), parseInt(rectParts[1]));
+	var offset = new L.Point(parseInt(rectParts[2]), parseInt(rectParts[3]));
+	var refPoint2 = refPoint1.add(offset);
+
+	return new L.Bounds(refPoint1, refPoint2);
+};
+
 L.Bounds.prototype = {
 	// extend the bounds to contain the given point
 	extend: function (point) { // (Point)
