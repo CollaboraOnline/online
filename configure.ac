@@ -356,7 +356,9 @@ fi
 # to the Mac.
 # Android: We need these to setup the CMakeLists.txt properly.
 LOBUILDDIR=
-ANDROID_ABI="armeabi-v7a"
+if test -z "$ANDROID_ABI"; then
+  ANDROID_ABI="armeabi-v7a"
+fi
 LOBUILDDIR_ARM64_V8A=
 POCOINCLUDE=
 POCOINCLUDE_ARM64_V8A=
@@ -379,12 +381,20 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
        fi
 
        # Sanity check, just a random object file in the LibreOffice build tree - 64bit
+       if test "$ANDROID_ABI" = "x86_64" ; then
+           if test -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
+               AC_MSG_RESULT([$LOBUILDDIR])
+           else
+               AC_MSG_ERROR([This is not a LibreOffice 64bit core build directory: $LOBUILDDIR])
+           fi
+       else
        if test "$ANDROID_ABI" != "armeabi-v7a" ; then
            if test -f "$LOBUILDDIR_ARM64_V8A/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
                AC_MSG_RESULT([$LOBUILDDIR_ARM64_V8A])
            else
                AC_MSG_ERROR([This is not a LibreOffice 64bit core build directory: $LOBUILDDIR_ARM64_V8A])
            fi
+       fi
        fi
    fi
 
@@ -411,12 +421,20 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
        fi
 
        # Sanity check - 64bit
+       if test "$ANDROID_ABI" = "x86_64" ; then
+           if test -f "$POCOINCLUDE/Poco/Poco.h"; then
+               AC_MSG_RESULT([$POCOINCLUDE])
+           else
+               AC_MSG_ERROR([This is not a Poco 64bit include directory: $POCOINCLUDE])
+           fi
+       else
        if test "$ANDROID_ABI" != "armeabi-v7a" ; then
            if test -f "$POCOINCLUDE_ARM64_V8A/Poco/Poco.h"; then
                AC_MSG_RESULT([$POCOINCLUDE_ARM64_V8A])
            else
                AC_MSG_ERROR([This is not a Poco 64bit include directory: $POCOINCLUDE_ARM64_V8A])
            fi
+       fi
        fi
    fi
 
@@ -440,12 +458,20 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
        fi
 
        # Sanity check - 64bit
+       if test "$ANDROID_ABI" = "x86_64" ; then
+           if test -f "$POCOLIB/libPocoFoundation.a"; then
+               AC_MSG_RESULT([$POCOLIB])
+           else
+               AC_MSG_ERROR([This is not a Poco 64bit lib directory: $POCOLIB])
+           fi
+       else
        if test "$ANDROID_ABI" != "armeabi-v7a" ; then
            if test -f "$POCOLIB_ARM64_V8A/libPocoFoundation.a"; then
                AC_MSG_RESULT([$POCOLIB_ARM64_V8A])
            else
                AC_MSG_ERROR([This is not a Poco 64bit lib directory: $POCOLIB_ARM64_V8A])
            fi
+       fi
        fi
    fi
 
