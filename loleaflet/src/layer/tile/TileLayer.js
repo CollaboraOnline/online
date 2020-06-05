@@ -1249,13 +1249,10 @@ L.TileLayer = L.GridLayer.extend({
 		var obj = JSON.parse(textMsg);
 		var modifierViewId = parseInt(obj.viewId);
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
-		var strTwips = obj.rectangle.match(/\d+/g);
-		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-		var bottomRightTwips = topLeftTwips.add(offset);
+		var rectangle = this._getCursorRectangle(obj);
 		this._visibleCursor = new L.LatLngBounds(
-						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+						this._twipsToLatLng(rectangle.getTopLeft(), this._map.getZoom()),
+						this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom()));
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
@@ -3400,6 +3397,36 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		return this.sheetGeometry.getTileTwipsSheetAreaFromPrint(rectangle);
+	},
+
+	_getCursorRectangle: function (msgObj) {
+
+		if (typeof msgObj !== 'object' || !msgObj.hasOwnProperty('rectangle')) {
+			console.error('invalid cursor message');
+			return undefined;
+		}
+
+		return this._parseRectangle(msgObj.rectangle);
+	},
+
+	_parseRectangle: function (rectString) {
+
+		if (typeof rectString !== 'string') {
+			console.error('invalid rectangle string');
+			return undefined;
+		}
+
+		var strTwips = rectString.match(/\d+/g);
+		if (strTwips.length < 4) {
+			console.error('incomplete rectangle');
+			return undefined;
+		}
+
+		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+		var bottomRightTwips = topLeftTwips.add(offset);
+
+		return new L.Bounds(topLeftTwips, bottomRightTwips);
 	},
 
 	_debugGetTimeArray: function() {
