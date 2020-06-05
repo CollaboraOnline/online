@@ -64,10 +64,6 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert default table.', function() {
-		// TODO: Select all does not work with core/master
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		mobileHelper.openInsertionWizard();
 
 		// Open Table submenu
@@ -97,10 +93,6 @@ describe('Insert objects via insertion wizard.', function() {
 	});
 
 	it('Insert custom table.', function() {
-		// TODO: Select all does not work with core/master
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		mobileHelper.openInsertionWizard();
 
 		// Open Table submenu

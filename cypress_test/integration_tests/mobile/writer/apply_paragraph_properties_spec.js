@@ -113,11 +113,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply default bulleting.', function() {
-		// TODO: Why this item is missing with core/master
-		// In desktop LO, sidebar contains this item.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		cy.get('#DefaultBullet')
 			.click();
 
@@ -128,11 +123,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply default numbering.', function() {
-		// TODO: Why this item is missing with core/master
-		// In desktop LO, sidebar contains this item.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		cy.get('#DefaultNumbering')
 			.click();
 
@@ -143,11 +133,6 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply background color.', function() {
-		// TODO: Why this item is missing with core/master
-		// In desktop LO, sidebar contains this item.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		// Change background color
 		cy.get('#BackgroundColor')
 			.click();

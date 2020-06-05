@@ -49,11 +49,8 @@ describe('Apply number formatting.', function() {
 	it('Select percent format from list.', function() {
 		selectFormatting('Percent');
 
-		// TODO: Why this item is missing with core/master
-		// In desktop LO, sidebar contains this item.
-		if (helper.getLOVersion() !== 'master')
-			cy.get('#NumberFormatPercentimg')
-				.should('have.class', 'selected');
+		cy.get('#NumberFormatPercentimg')
+			.should('have.class', 'selected');
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
@@ -72,11 +69,6 @@ describe('Apply number formatting.', function() {
 	});
 
 	it('Push percent button.', function() {
-		// TODO: Why this item is missing with core/master
-		// In desktop LO, sidebar contains this item.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		// Change to percent
 		cy.get('#NumberFormatPercent')
 			.click();
@@ -106,11 +98,8 @@ describe('Apply number formatting.', function() {
 	it('Select currency format from list.', function() {
 		selectFormatting('Currency');
 
-		// TODO: Why this item is missing with core/master
-		// In desktop LO, sidebar contains this item.
-		if (helper.getLOVersion() !== 'master')
-			cy.get('#NumberFormatCurrencyimg')
-				.should('have.class', 'selected');
+		cy.get('#NumberFormatCurrencyimg')
+			.should('have.class', 'selected');
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
@@ -129,11 +118,6 @@ describe('Apply number formatting.', function() {
 	});
 
 	it('Push currency button.', function() {
-		// TODO: Why this item is missing with core/master
-		// In desktop LO, sidebar contains this item.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		// Change to currency
 		cy.get('#NumberFormatCurrency')
 			.click();
@@ -161,11 +145,6 @@ describe('Apply number formatting.', function() {
 	});
 
 	it('Push number button.', function() {
-		// TODO: Why this item is missing with core/master
-		// In desktop LO, sidebar contains this item.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		// Change to currency first
 		cy.get('#NumberFormatCurrency')
 			.click();

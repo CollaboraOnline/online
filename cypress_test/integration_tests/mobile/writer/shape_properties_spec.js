@@ -115,10 +115,6 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it.skip('Change size with keep ratio enabled.', function() {
-		// TODO: Entering a value inside the spinbutton has no effect on the shape.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		openPosSizePanel();
 
 		// Enable keep ratio
@@ -194,10 +190,6 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change line color', function() {
-		// TODO: Layout of the line properties panel is completely broken.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		openLinePropertyPanel();
 
 		cy.get('#XLineColor')
@@ -213,10 +205,6 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it.skip('Change line style', function() {
-		// TODO: Layout of the line properties panel is completely broken.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		openLinePropertyPanel();
 
 		cy.get('#linestyle')
@@ -232,10 +220,6 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change line width', function() {
-		// TODO: Layout of the line properties panel is completely broken.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		openLinePropertyPanel();
 
 		cy.get('#linewidth .spinfield')
@@ -261,10 +245,6 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change line transparency', function() {
-		// TODO: Layout of the line properties panel is completely broken.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		openLinePropertyPanel();
 
 		cy.get('#linetransparency .spinfield')
@@ -282,10 +262,6 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Arrow style items are hidden.', function() {
-		// TODO: Layout of the line properties panel is completely broken.
-		if (helper.getLOVersion() === 'master')
-			return;
-
 		openLinePropertyPanel();
 
 		cy.get('#linestyle')
