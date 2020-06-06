@@ -796,6 +796,39 @@ L.CalcTileLayer = L.TileLayer.extend({
 		var refpoint = L.Point.parse(msgObj.refpoint);
 		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
 		return relrect.add(refpoint);
+	},
+
+	_getTextSelectionRectangles: function (textMsg) {
+
+		if (!this.options.printTwipsMsgsEnabled) {
+			return L.TileLayer.prototype._getTextSelectionRectangles.call(this, textMsg);
+		}
+
+		if (typeof textMsg !== 'string') {
+			console.error('invalid text selection message');
+			return [];
+		}
+
+		var refpointDelim = '::';
+		var delimIndex = textMsg.indexOf(refpointDelim);
+		if (delimIndex === -1) {
+			// No refpoint information available, treat it as cell-range selection rectangle.
+			var rangeRectArray = L.Bounds.parseArray(textMsg);
+			rangeRectArray = rangeRectArray.map(function (rect) {
+				return this._convertToTileTwipsSheetArea(rect);
+			}, this);
+			return rangeRectArray;
+		}
+
+		var refpoint = L.Point.parse(textMsg.substring(delimIndex + refpointDelim.length));
+		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
+
+		var rectArray = L.Bounds.parseArray(textMsg.substring(0, delimIndex));
+		rectArray.forEach(function (rect) {
+			rect._add(refpoint); // compute absolute coordinates and update in-place.
+		});
+
+		return rectArray;
 	}
 });
 
