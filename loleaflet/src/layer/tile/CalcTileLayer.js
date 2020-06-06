@@ -780,19 +780,15 @@ L.CalcTileLayer = L.TileLayer.extend({
 
 	_getEditCursorRectangle: function (msgObj) {
 
-		if (!this.options.printTwipsMsgsEnabled) {
+		if (!this.options.printTwipsMsgsEnabled ||
+			!msgObj.hasOwnProperty('relrect') || !msgObj.hasOwnProperty('refpoint')) {
+			// 1) non-print-twips messaging mode OR
+			// 2) the edit-cursor belongs to draw/chart objects.
 			return L.TileLayer.prototype._getEditCursorRectangle.call(this, msgObj);
 		}
 
 		if (typeof msgObj !== 'object') {
 			console.error('invalid edit cursor message');
-			return undefined;
-		}
-
-		if (!msgObj.hasOwnProperty('relrect') || !msgObj.hasOwnProperty('refpoint')) {
-			// This can happen because the kit sends such messages (sometimes)
-			// after doing its own parsing (probably needed for writer/impress?).
-			// These aren't needed for Calc.
 			return undefined;
 		}
 
