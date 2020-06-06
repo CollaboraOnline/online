@@ -16,7 +16,7 @@ L.Bounds = function (a, b) { //(Point, Point) or Point[]
 L.Bounds.parse = function (rectString) { // (string) -> Bounds
 
 	if (typeof rectString !== 'string') {
-		console.error('invalid rectangle string');
+		console.error('invalid input type, expected string');
 		return undefined;
 	}
 
@@ -31,6 +31,29 @@ L.Bounds.parse = function (rectString) { // (string) -> Bounds
 	var refPoint2 = refPoint1.add(offset);
 
 	return new L.Bounds(refPoint1, refPoint2);
+};
+
+L.Bounds.parseArray = function (rectListString) { // (string) -> Bounds[]
+
+	if (typeof rectListString !== 'string') {
+		console.error('invalid input type, expected string');
+		return undefined;
+	}
+
+	var parts = rectListString.match(/\d+/g);
+	if (parts === null || parts.length < 4) {
+		return [];
+	}
+
+	var rectangles = [];
+	for (var i = 0; (i + 3) < parts.length; i += 4) {
+		var refPoint1 = new L.Point(parseInt(parts[i]), parseInt(parts[i + 1]));
+		var offset = new L.Point(parseInt(parts[i + 2]), parseInt(parts[i + 3]));
+		var refPoint2 = refPoint1.add(offset);
+		rectangles.push(new L.Bounds(refPoint1, refPoint2));
+	}
+
+	return rectangles;
 };
 
 L.Bounds.prototype = {
@@ -125,6 +148,13 @@ L.Bounds.prototype = {
 		this.min._add(point);
 		this.max._add(point);
 		return this;
+	},
+
+	getPointArray: function () { // -> Point[]
+		return [
+			this.getBottomLeft(), this.getBottomRight(),
+			this.getTopLeft(), this.getTopRight()
+		];
 	},
 
 	toString: function () {

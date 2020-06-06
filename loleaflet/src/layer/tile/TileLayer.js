@@ -1665,19 +1665,15 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onTextSelectionMsg: function (textMsg) {
-		var strTwips = textMsg.match(/\d+/g);
+
+		var rectArray = this._getTextSelectionRectangles(textMsg);
 		this._selections.clearLayers();
-		if (strTwips != null) {
-			var rectangles = [];
-			for (var i = 0; i < strTwips.length; i += 4) {
-				var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
-				var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
-				var bottomRightTwips = topLeftTwips.add(offset);
-				var boundsTwips = this._convertToTileTwipsSheetArea(
-						new L.Bounds(topLeftTwips, bottomRightTwips));
-				rectangles.push([boundsTwips.getBottomLeft(), boundsTwips.getBottomRight(),
-						boundsTwips.getTopLeft(), boundsTwips.getTopRight()]);
-			}
+
+		if (rectArray.length) {
+
+			var rectangles = rectArray.map(function (rect) {
+				return rect.getPointArray();
+			});
 
 			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
 			var selection = new L.Polygon(polygons, {
@@ -1706,19 +1702,14 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 
-		var strTwips = obj.selection.match(/\d+/g);
+		var rectArray = this._getTextSelectionRectangles(obj.selection);
 		this._viewSelections[viewId] = this._viewSelections[viewId] || {};
-		if (strTwips != null) {
-			var rectangles = [];
-			for (var i = 0; i < strTwips.length; i += 4) {
-				var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
-				var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
-				var bottomRightTwips = topLeftTwips.add(offset);
-				var boundsTwips = this._convertToTileTwipsSheetArea(
-						new L.Bounds(topLeftTwips, bottomRightTwips));
-				rectangles.push([boundsTwips.getBottomLeft(), boundsTwips.getBottomRight(),
-						boundsTwips.getTopLeft(), boundsTwips.getTopRight()]);
-			}
+
+		if (rectArray.length) {
+
+			var rectangles = rectArray.map(function (rect) {
+				return rect.getPointArray();
+			});
 
 			this._viewSelections[viewId].part = viewPart;
 			this._viewSelections[viewId].polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
@@ -1821,12 +1812,11 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onTextSelectionEndMsg: function (textMsg) {
-		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null && this._map._permission === 'edit') {
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-			var bottomRightTwips = topLeftTwips.add(offset);
+		var rectangles = this._getTextSelectionRectangles(textMsg);
 
+		if (rectangles.length && this._map._permission === 'edit') {
+			var topLeftTwips = rectangles[0].getTopLeft();
+			var bottomRightTwips = rectangles[0].getBottomRight();
 			var oldSelection = this._textSelectionEnd;
 			this._textSelectionEnd = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
@@ -1840,11 +1830,11 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onTextSelectionStartMsg: function (textMsg) {
-		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null && this._map._permission === 'edit') {
-			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-			var bottomRightTwips = topLeftTwips.add(offset);
+		var rectangles = this._getTextSelectionRectangles(textMsg);
+
+		if (rectangles.length && this._map._permission === 'edit') {
+			var topLeftTwips = rectangles[0].getTopLeft();
+			var bottomRightTwips = rectangles[0].getBottomRight();
 			var oldSelection = this._textSelectionStart;
 			//FIXME: The selection is really not two points, as they can be
 			//FIXME: on top of each other, but on separate lines. We should
@@ -3410,6 +3400,16 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		return L.Bounds.parse(msgObj.rectangle);
+	},
+
+	_getTextSelectionRectangles: function (textMsg) {
+
+		if (typeof textMsg !== 'string') {
+			console.error('invalid text selection message');
+			return [];
+		}
+
+		return L.Bounds.parseArray(textMsg);
 	},
 
 	_debugGetTimeArray: function() {
