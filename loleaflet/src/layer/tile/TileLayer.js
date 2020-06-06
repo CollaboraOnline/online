@@ -1247,7 +1247,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onInvalidateCursorMsg: function (textMsg) {
 		textMsg = textMsg.substring('invalidatecursor:'.length + 1);
 		var obj = JSON.parse(textMsg);
-		var rectangle = this._getCursorRectangle(obj);
+		var rectangle = this._getEditCursorRectangle(obj);
 		if (rectangle === undefined) {
 			return;
 		}
@@ -1315,15 +1315,15 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 
-		var strTwips = obj.rectangle.match(/\d+/g);
-		var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
-		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-		var bottomRightTwips = topLeftTwips.add(offset);
+		var rectangle = this._getEditCursorRectangle(obj);
+		if (rectangle === undefined) {
+			return;
+		}
 
 		this._viewCursors[viewId] = this._viewCursors[viewId] || {};
 		this._viewCursors[viewId].bounds = new L.LatLngBounds(
-			this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-			this._twipsToLatLng(bottomRightTwips, this._map.getZoom())),
+			this._twipsToLatLng(rectangle.getTopLeft(), this._map.getZoom()),
+			this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom())),
 		this._viewCursors[viewId].part = parseInt(obj.part);
 
 		// FIXME. Server not sending view visible cursor
@@ -3402,10 +3402,10 @@ L.TileLayer = L.GridLayer.extend({
 		return this.sheetGeometry.getTileTwipsSheetAreaFromPrint(rectangle);
 	},
 
-	_getCursorRectangle: function (msgObj) {
+	_getEditCursorRectangle: function (msgObj) {
 
 		if (typeof msgObj !== 'object' || !msgObj.hasOwnProperty('rectangle')) {
-			console.error('invalid cursor message');
+			console.error('invalid edit cursor message');
 			return undefined;
 		}
 

@@ -778,14 +778,18 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._onUpdateCurrentHeader();
 	},
 
-	_getCursorRectangle: function (msgObj) {
+	_getEditCursorRectangle: function (msgObj) {
 
 		if (!this.options.printTwipsMsgsEnabled) {
-			return L.TileLayer.prototype._getCursorRectangle.call(this, msgObj);
+			return L.TileLayer.prototype._getEditCursorRectangle.call(this, msgObj);
 		}
 
-		if (typeof msgObj !== 'object' || !msgObj.hasOwnProperty('relrect') ||
-				!msgObj.hasOwnProperty('refpoint')) {
+		if (typeof msgObj !== 'object') {
+			console.error('invalid edit cursor message');
+			return undefined;
+		}
+
+		if (!msgObj.hasOwnProperty('relrect') || !msgObj.hasOwnProperty('refpoint')) {
 			// This can happen because the kit sends such messages (sometimes)
 			// after doing its own parsing (probably needed for writer/impress?).
 			// These aren't needed for Calc.
