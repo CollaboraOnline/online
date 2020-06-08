@@ -567,7 +567,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, sectionTitle);
-			var iconURL = L.LOUtil.getImageURL('images/lc_' + iconName + '.svg');
+			var iconURL = L.LOUtil.getImageURL('lc_' + iconName + '.svg');
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconURL;
 			icon.alt = '';
