@@ -41,6 +41,34 @@ var testBlackLists = {
 				'Push number button.'
 			]
 		],
+	],
+
+	'cp-6-4': [
+		['desktop/calc/focus_spec.js',
+			[]
+		],
+		['mobile/calc/apply_font_spec.js',
+			[
+				'Apply font size.'
+			]
+		],
+		['mobile/writer/apply_font_spec.js',
+			[
+				'Apply font size.'
+			]
+		],
+		['mobile/impress/apply_font_spec.js',
+			[]
+		],
+		['mobile/impress/apply_font_spec.js',
+			[]
+		],
+		['mobile/impress/apply_paragraph_props_spec.js',
+			[]
+		],
+		['mobile/writer/table_properties_spec.js',
+			[]
+		],
 	]
 };
 
