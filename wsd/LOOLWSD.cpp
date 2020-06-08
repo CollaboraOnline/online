@@ -904,6 +904,12 @@ void LOOLWSD::initialize(Application& self)
             { "num_prespawn_children", "1" },
             { "per_document.always_save_on_exit", "false" },
             { "per_document.autosave_duration_secs", "300" },
+            { "per_document.cleanup.cleanup_interval_ms", "10000" },
+            { "per_document.cleanup.bad_behavior_period_secs", "60" },
+            { "per_document.cleanup.idle_time_secs", "300" },
+            { "per_document.cleanup.limit_dirty_mem_mb", "3072" },
+            { "per_document.cleanup.limit_cpu_per", "85" },
+            { "per_document.cleanup[@enable]", "false" },
             { "per_document.document_signing_url", VEREIGN_URL },
             { "per_document.idle_timeout_secs", "3600" },
             { "per_document.idlesave_duration_secs", "30" },
@@ -1290,6 +1296,15 @@ void LOOLWSD::initialize(Application& self)
     docProcSettings.setLimitStackMemKb(getConfigValue<int>("per_document.limit_stack_mem_kb", 0));
     docProcSettings.setLimitFileSizeMb(getConfigValue<int>("per_document.limit_file_size_mb", 0));
     docProcSettings.setLimitNumberOpenFiles(getConfigValue<int>("per_document.limit_num_open_files", 0));
+
+    DocCleanupSettings &docCleanupSettings = docProcSettings.getCleanupSettings();
+    docCleanupSettings.setEnable(getConfigValue<bool>("per_document.cleanup[@enable]", false));
+    docCleanupSettings.setCleanupInterval(getConfigValue<int>("per_document.cleanup.cleanup_interval_ms", 10000));
+    docCleanupSettings.setBadBehaviorPeriod(getConfigValue<int>("per_document.cleanup.bad_behavior_period_secs", 60));
+    docCleanupSettings.setIdleTime(getConfigValue<int>("per_document.cleanup.idle_time_secs", 300));
+    docCleanupSettings.setLimitDirtyMem(getConfigValue<int>("per_document.cleanup.limit_dirty_mem_mb", 3072));
+    docCleanupSettings.setLimitCpu(getConfigValue<int>("per_document.cleanup.limit_cpu_per", 85));
+
     Admin::instance().setDefDocProcSettings(docProcSettings, false);
 
 #if ENABLE_DEBUG

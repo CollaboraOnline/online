@@ -51,6 +51,30 @@ private:
     std::chrono::milliseconds _loadDuration;
 };
 
+struct DocCleanupSettings
+{
+    void setEnable(bool enable) { _enable = enable; }
+    bool getEnable() const { return _enable; }
+    void setCleanupInterval(size_t cleanupInterval) { _cleanupInterval = cleanupInterval; }
+    size_t getCleanupInterval() const { return _cleanupInterval; }
+    void setBadBehaviorPeriod(size_t badBehaviorPeriod) { _badBehaviorPeriod = badBehaviorPeriod; }
+    size_t getBadBehaviorPeriod() const { return _badBehaviorPeriod; }
+    void setIdleTime(size_t idleTime) { _idleTime = idleTime; }
+    size_t getIdleTime() { return _idleTime; }
+    void setLimitDirtyMem(size_t limitDirtyMem) { _limitDirtyMem = limitDirtyMem; }
+    size_t getLimitDirtyMem() const { return _limitDirtyMem; }
+    void setLimitCpu(size_t limitCpu) { _limitCpu = limitCpu; }
+    size_t getLimitCpu() const { return _limitCpu; }
+
+private:
+    bool _enable;
+    size_t _cleanupInterval;
+    size_t _badBehaviorPeriod;
+    size_t _idleTime;
+    size_t _limitDirtyMem;
+    size_t _limitCpu;
+};
+
 struct DocProcSettings
 {
     void setLimitVirtMemMb(size_t limitVirtMemMb) { _limitVirtMemMb = limitVirtMemMb; }
@@ -62,11 +86,15 @@ struct DocProcSettings
     void setLimitNumberOpenFiles(size_t limitNumberOpenFiles) { _limitNumberOpenFiles = limitNumberOpenFiles; }
     size_t getLimitNumberOpenFiles() const { return _limitNumberOpenFiles; }
 
+    DocCleanupSettings& getCleanupSettings() { return _docCleanupSettings; }
+
 private:
     size_t _limitVirtMemMb;
     size_t _limitStackMemKb;
     size_t _limitFileSizeMb;
     size_t _limitNumberOpenFiles;
+
+    DocCleanupSettings _docCleanupSettings;
 };
 
 /// Containing basic information about document
@@ -112,6 +140,7 @@ public:
           _filename(filename),
           _memoryDirty(0),
           _lastJiffy(0),
+          _lastCpuPercentage(0),
           _start(std::time(nullptr)),
           _lastActivity(_start),
           _end(0),
@@ -122,7 +151,9 @@ public:
           _procSMaps(nullptr),
           _lastTimeSMapsRead(0),
           _isModified(false),
-          _hasMemDirtyChanged(true)
+          _hasMemDirtyChanged(true),
+          _badBehaviorDetectionTime(0),
+          _abortTime(0)
     {
     }
 
@@ -151,13 +182,14 @@ public:
     unsigned getActiveViews() const { return _activeViews; }
 
     unsigned getLastJiffies() const { return _lastJiffy; }
-    void setLastJiffies(size_t newJ) { _lastJiffy = newJ; }
+    void setLastJiffies(size_t newJ);
+    unsigned getLastCpuPercentage(){ return _lastCpuPercentage; }
 
     const std::map<std::string, View>& getViews() const { return _views; }
 
     void updateLastActivityTime() { _lastActivity = std::time(nullptr); }
     void updateMemoryDirty();
-    int getMemoryDirty() const { return _memoryDirty; }
+    size_t getMemoryDirty() const { return _memoryDirty; }
 
     std::pair<std::time_t, std::string> getSnapshot() const;
     const std::string getHistory() const;
@@ -172,9 +204,6 @@ public:
         _recvBytes += recv;
     }
 
-    const DocProcSettings& getDocProcSettings() const { return _docProcSettings; }
-    void setDocProcSettings(const DocProcSettings& docProcSettings) { _docProcSettings = docProcSettings; }
-
     std::time_t getOpenTime() const { return isExpired() ? _end - _start : getElapsedTime(); }
     uint64_t getSentBytes() const { return _sentBytes; }
     uint64_t getRecvBytes() const { return _recvBytes; }
@@ -186,6 +215,10 @@ public:
     void setProcSMapsFD(const int smapsFD) { _procSMaps = fdopen(smapsFD, "r"); }
     bool hasMemDirtyChanged() const { return _hasMemDirtyChanged; }
     void setMemDirtyChanged(bool changeStatus) { _hasMemDirtyChanged = changeStatus; }
+    time_t getBadBehaviorDetectionTime(){ return _badBehaviorDetectionTime; }
+    void setBadBehaviorDetectionTime(time_t badBehaviorDetectionTime){ _badBehaviorDetectionTime = badBehaviorDetectionTime;}
+    time_t getAbortTime(){ return _abortTime; }
+    void setAbortTime(time_t abortTime) { _abortTime = abortTime; }
 
     std::string to_string() const;
 
@@ -199,9 +232,11 @@ private:
     /// Hosted filename
     std::string _filename;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
-    int _memoryDirty;
+    size_t _memoryDirty;
     /// Last noted Jiffy count
     unsigned _lastJiffy;
+    std::chrono::time_point<std::chrono::system_clock> _lastJiffyTime;
+    unsigned _lastCpuPercentage;
 
     std::time_t _start;
     std::time_t _lastActivity;
@@ -218,10 +253,11 @@ private:
     FILE* _procSMaps;
     std::time_t _lastTimeSMapsRead;
 
-    /// Per-doc kit process settings.
-    DocProcSettings _docProcSettings;
     bool _isModified;
     bool _hasMemDirtyChanged;
+
+    std::time_t _badBehaviorDetectionTime;
+    std::time_t _abortTime;
 };
 
 /// An Admin session subscriber.
@@ -332,6 +368,7 @@ public:
 
     /// Document basic info list sorted by most idle time
     std::vector<DocBasicInfo> getDocumentsSortedByIdle() const;
+    void cleanupResourceConsumingDocs();
 
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
@@ -344,6 +381,9 @@ public:
     std::set<pid_t> getDocumentPids() const;
     void UpdateMemoryDirty();
     void notifyDocsMemDirtyChanged();
+
+    const DocProcSettings& getDefDocProcSettings() const { return _defDocProcSettings; }
+    void setDefDocProcSettings(const DocProcSettings& docProcSettings) { _defDocProcSettings = docProcSettings; }
 
     static int getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids);
 
@@ -391,6 +431,8 @@ private:
 
     /// We check the owner even in the release builds, needs to be always correct.
     std::thread::id _owner;
+
+    DocProcSettings _defDocProcSettings;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
