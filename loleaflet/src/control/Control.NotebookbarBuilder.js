@@ -218,7 +218,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			div.title = data.text;
 			$(div).tooltip();
 
-			var icon = builder._createIconPath(data.command);
+			var icon = builder._createIconURL(data.command);
 			var buttonId = id + 'img';
 
 			var button = L.DomUtil.create('img', 'ui-content unobutton', div);

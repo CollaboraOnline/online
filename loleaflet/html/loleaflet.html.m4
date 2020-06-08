@@ -231,6 +231,7 @@ m4_ifelse(MOBILEAPP,[true],
 m4_ifelse(MOBILEAPP,[true],
      [window.host = '';
       window.serviceRoot = '';
+      window.versionPath = '%VERSION%';
       window.accessToken = '';
       window.accessTokenTTL = '';
       window.accessHeader = '';
@@ -246,6 +247,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.tileSize = 256;],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
+      window.versionPath = '%VERSION%';
       window.accessToken = '%ACCESS_TOKEN%';
       window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
       window.accessHeader = '%ACCESS_HEADER%';

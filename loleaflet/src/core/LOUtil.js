@@ -82,6 +82,25 @@ L.LOUtil = {
 		return rectangles;
 	},
 
+	/// unwind things to get a good absolute URL
+	getURL: function(path) {
+		if (path === '')
+			return '';
+		if (window.host === '' && window.serviceRoot === '')
+			return path; // mobile
+
+		var realHost = window.host.replace(/^ws/i, 'http');
+		var url = realHost + window.serviceRoot + '/loleaflet/' + window.versionPath;
+		if (path.substr(0,1) !== '/')
+			url += '/';
+		url += path;
+		return url;
+	},
+
+	getImageURL: function(imgName) {
+		return this.getURL('images/' + imgName);
+	},
+
 	/// oldFileName = Example.odt, suffix = new
 	/// returns: Example_new.odt
 	generateNewFileName: function(oldFileName, suffix) {
