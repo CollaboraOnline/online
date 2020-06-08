@@ -203,7 +203,7 @@ public:
 
     /// To be able to set the WOPI 'is autosave/is exitsave?' headers appropriately.
     void setIsAutosave(bool isAutosave) { _isAutosave = isAutosave; }
-    bool getIsAutosave() const { return _isAutosave; }
+    bool isAutosave() const { return _isAutosave; }
     void setIsExitSave(bool exitSave) { _isExitSave = exitSave; }
     bool isExitSave() const { return _isExitSave; }
     void setExtendedData(const std::string& extendedData) { _extendedData = extendedData; }

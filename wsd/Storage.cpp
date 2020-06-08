@@ -970,7 +970,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
             if (lockCtx._supportsLocks)
                 request.set("X-WOPI-Lock", lockCtx._lockToken);
             request.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified()? "true": "false");
-            request.set("X-LOOL-WOPI-IsAutosave", getIsAutosave()? "true": "false");
+            request.set("X-LOOL-WOPI-IsAutosave", isAutosave()? "true": "false");
             request.set("X-LOOL-WOPI-IsExitSave", isExitSave()? "true": "false");
             if (!getExtendedData().empty())
                 request.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
