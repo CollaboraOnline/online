@@ -124,6 +124,8 @@ public:
     void setDefDocProcSettings(const DocProcSettings& docProcSettings, bool notifyKit)
     {
         _defDocProcSettings = docProcSettings;
+        _model.setDefDocProcSettings(docProcSettings);
+        _cleanupIntervalMs = _defDocProcSettings.getCleanupSettings().getCleanupInterval();
         if (notifyKit)
             notifyForkit();
     }
@@ -149,6 +151,7 @@ private:
     /// under @hardModeLimit
     void triggerMemoryCleanup(size_t hardModeLimit);
     void notifyDocsMemDirtyChanged();
+    void cleanupResourceConsumingDocs();
 
     /// Round the interval up to multiples of MinStatsIntervalMs.
     /// This is to avoid arbitrarily small intervals that hammer the server.
@@ -190,6 +193,7 @@ private:
     int _cpuStatsTaskIntervalMs;
     int _memStatsTaskIntervalMs;
     int _netStatsTaskIntervalMs;
+    size_t _cleanupIntervalMs;
     DocProcSettings _defDocProcSettings;
 
     // Don't update any more frequently than this since it's excessive.

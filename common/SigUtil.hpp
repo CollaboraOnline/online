@@ -11,6 +11,7 @@
 
 #include <atomic>
 #include <mutex>
+#include <signal.h>
 
 #if MOBILEAPP
 static constexpr bool ShutdownRequestFlag(false);
@@ -73,7 +74,7 @@ namespace SigUtil
     /// Kills a child process and returns true when
     /// child pid is removed from the process table
     /// after a certain (short) timeout.
-    bool killChild(const int pid);
+    bool killChild(const int pid, const int signal = SIGKILL);
 
     /// Dump a signal-safe back-trace
     void dumpBacktrace();
