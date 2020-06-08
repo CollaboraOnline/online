@@ -211,15 +211,17 @@ define run_mobile_tests
 	)
 endef
 
+ERROR_MATCHER = "Error:\|Command failed:\|Timed out retrying"
+
 define execute_run_parallel
 	@mkdir -p $(dir $(2)) && touch $(2) && \
 	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
-	if [ -z `grep -o -m 1 "Error:\|Command failed:" $(2)` ];\
+	if [ -z `grep -o -m 1 $(ERROR_MATCHER) $(2)` ];\
 		then cat $(2);\
 		elif [ -z $(CYPRESS_NO_SECOND_CHANCE) ]; \
 		then echo "Second chance!" > $(2) && \
 		     echo "`echo $(1) && $(1)`" >> $(2) 2>&1 && \
-		     if [ -z `grep -o -m 1 "Error:\|Command failed:" $(2)` ];\
+		     if [ -z `grep -o -m 1 $(ERROR_MATCHER) $(2)` ];\
 			then cat $(2);\
 			else cat $(2) >> $(ERROR_LOG) && \
 			     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
