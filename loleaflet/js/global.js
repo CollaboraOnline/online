@@ -221,6 +221,7 @@
 		this.id = window.proxySocketCounter++;
 		this.sendCounter = 0;
 		this.msgInflight = 0;
+		this.openInflight = 0;
 		this.inSerial = 0;
 		this.outSerial = 0;
 		this.minPollMs = 25; // Anything less than ~25 ms can overwhelm the HTTP server.
@@ -354,8 +355,13 @@
 				this.onerror();
 				this.onclose();
 				clearInterval(this.waitInterval);
+				clearTimeout(this.delaySession);
 				this.waitInterval = undefined;
 				this.sessionId = 'open';
+				this.inSerial = 0;
+				this.outSerial = 0;
+				this.msgInflight = 0;
+				this.openInflight = 0;
 			}
 			this.readyState = 3; // CLOSED
 		};
@@ -371,9 +377,6 @@
 					console.debug('Session closed, opening a new one.');
 					that.getSessionId();
 				}
-				else
-					console.debug('New session not completed.');
-
 				return;
 			}
 
@@ -448,14 +451,41 @@
 			that.msgInflight++;
 		};
 		this.getSessionId = function() {
+			if (this.openInflight > 0)
+			{
+				console.debug('Waiting for session open');
+				return;
+			}
+
+			if (this.delaySession)
+				return;
+
+			// avoid attempting to re-connect too quickly
+			if (global.lastCreatedProxySocket)
+			{
+				var msSince = performance.now() - global.lastCreatedProxySocket;
+				if (msSince < 250) {
+					var delay = 250 - msSince;
+					console.debug('Wait to re-try session creation for ' + delay + 'ms');
+					this.curPollMs = delay; // ms
+					this.delaySession = setTimeout(function() {
+						that.delaySession = undefined;
+						that.getSessionId();
+					}, delay);
+					return;
+				}
+			}
+			global.lastCreatedProxySocket = performance.now();
+
 			var req = new XMLHttpRequest();
 			req.open('POST', that.getEndPoint('open'));
 			req.responseType = 'text';
 			req.addEventListener('load', function() {
 				console.debug('got session: ' + this.responseText);
-				if (this.responseText.indexOf('\n') >= 0)
+				if (this.status !== 200 || !this.responseText ||
+				    this.responseText.indexOf('\n') >= 0) // multi-line error
 				{
-					console.debug('Error: failed to fetch session id!');
+					console.debug('Error: failed to fetch session id! error: ' + this.status);
 					that._signalErrorClose();
 				}
 				else
@@ -465,7 +495,12 @@
 					that.onopen();
 				}
 			});
+			req.addEventListener('loadend', function() {
+				console.debug('Open completed state: ' + that.readyState);
+				that.openInflight--;
+			});
 			req.send('');
+			this.openInflight++;
 		};
 		this.send = function(msg) {
 			var hadData = this.sendQueue.length > 0;
@@ -503,6 +538,7 @@
 			this.readyState = 3;
 			this.onclose();
 			clearInterval(this.waitInterval);
+			clearTimeout(this.delaySession);
 			this.waitInterval = undefined;
 			if (oldState === 1) // was open
 				this.sendCloseMsg(this.unloading);
