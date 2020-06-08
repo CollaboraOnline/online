@@ -49,10 +49,10 @@ describe('Form field button tests.', function() {
 					.should(function(frames) {
 						expect(frames).to.have.lengthOf(1);
 						var frameRect = frames[0].getBoundingClientRect();
-						expect(frameRect.top).to.be.lessThan(cursorRect.top);
-						expect(frameRect.bottom).to.be.greaterThan(cursorRect.bottom);
-						expect(frameRect.left).to.be.lessThan(cursorRect.left);
-						expect(frameRect.right).to.be.greaterThan(cursorRect.right);
+						expect(frameRect.top).to.at.most(cursorRect.top);
+						expect(frameRect.bottom).to.be.at.least(cursorRect.bottom);
+						expect(frameRect.left).to.at.most(cursorRect.left);
+						expect(frameRect.right).to.be.at.least(cursorRect.right);
 					});
 			});
 	}
