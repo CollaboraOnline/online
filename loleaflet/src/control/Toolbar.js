@@ -157,7 +157,8 @@ L.Map.include({
 	},
 
 	sendUnoCommand: function (command, json) {
-		if (this._permission === 'edit') {
+		var isAllowedInReadOnly = command == '.uno:WordCountDialog';
+		if (this._permission === 'edit' || isAllowedInReadOnly) {
 			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
