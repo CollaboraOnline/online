@@ -498,12 +498,14 @@
 				navigator.sendBeacon(url, '');
 		};
 		this.close = function() {
+			var oldState = this.readyState;
 			console.debug('proxy: close socket');
 			this.readyState = 3;
 			this.onclose();
 			clearInterval(this.waitInterval);
 			this.waitInterval = undefined;
-			this.sendCloseMsg(this.unloading);
+			if (oldState === 1) // was open
+				this.sendCloseMsg(this.unloading);
 			this.sessionId = 'open';
 		};
 		this.setUnloading = function() {
