@@ -3016,6 +3016,21 @@ private:
                         });
                 });
         }
+        else
+        {
+            auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
+            LOG_ERR("Failed to find document");
+            // badness occurred:
+            std::ostringstream oss;
+            oss << "HTTP/1.1 400\r\n"
+                << "Date: " << Util::getHttpTimeNow() << "\r\n"
+                << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                << "Content-Length: \r\n"
+                << "\r\n";
+            // FIXME: send docunloading & re-try on client ?
+            streamSocket->send(oss.str());
+            streamSocket->shutdown();
+        }
     }
 
     void handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
