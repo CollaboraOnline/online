@@ -53,7 +53,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var commandName = data.id ? data.id.substring('.uno:'.length) : data.id;
 			if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 				var image = L.DomUtil.create('img', 'spinfieldimage', div);
-				var icon = builder._createIconPath(data.id);
+				var icon = builder._createIconURL(data.id);
 				image.src = icon;
 				icon.alt = '';
 			}
@@ -396,7 +396,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconPath, updateCallback) {
+	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconURL, updateCallback) {
 		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 		if (data && data.id)
@@ -409,10 +409,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var titleClass = '';
 		console.debug('sectionTitle.id' + sectionTitle.id);
 		if (sectionTitle.id === 'paperformat' || sectionTitle.id === 'orientation' || sectionTitle.id === 'masterslide' || sectionTitle.id === 'SdTableDesignPanel')
-			iconPath = 'images/lc_'+ sectionTitle.id.toLowerCase() +'.svg';
-		if (iconPath) {
+			iconURL = L.LOUtil.getImageURL('lc_'+ sectionTitle.id.toLowerCase() +'.svg');
+		if (iconURL) {
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
-			icon.src = iconPath;
+			icon.src = iconURL;
 			icon.alt = '';
 			titleClass = 'menu-entry-with-icon';
 		}
@@ -567,9 +567,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, sectionTitle);
-			var iconPath = 'images/lc_' + iconName + '.svg';
+			var iconURL = L.LOUtil.getImageURL('images/lc_' + iconName + '.svg');
 			icon = L.DomUtil.create('img', '', iconSpan);
-			icon.src = iconPath;
+			icon.src = iconURL;
 			icon.alt = '';
 			icon.addEventListener('error', function() {
 				icon.style.display = 'none';
@@ -627,7 +627,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (contentNode) {
 			var entryId = contentNode.id;
 			if (entryId && entryId.length) {
-				iconPath = builder._createIconPath(entryId);
+				iconPath = builder._createIconURL(entryId);
 			}
 		}
 
@@ -1453,7 +1453,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var iconPath = null;
 		if (data.command)
-			iconPath = builder._createIconPath(data.command);
+			iconPath = builder._createIconURL(data.command);
 
 		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath);
 
@@ -1475,7 +1475,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (image) {
 				image = image.substr(0, image.lastIndexOf('.'));
 				image = image.substr(image.lastIndexOf('/') + 1);
-				image = 'url("images/' + image + '.svg")';
+				image = 'url("' + L.LOUtil.getImageURL(image + '.svg') + '")';
 			}
 
 			if (image64) {
@@ -1548,7 +1548,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_createIconPath: function(name) {
+	_createIconURL: function(name) {
 		if (!name)
 			return '';
 
@@ -1557,7 +1557,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (name.substr(0, prefixLength) == '.uno:')
 			cleanName = name.substr(prefixLength);
 		cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
-		return 'images/lc_' + cleanName.toLowerCase() + '.svg';
+		return L.LOUtil.getImageURL('lc_' + cleanName.toLowerCase() + '.svg');
 	},
 
 	// make a class identifier from parent's id by walking up the tree
@@ -1589,7 +1589,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var id = encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '');
 			div.id = id;
 
-			var icon = builder._createIconPath(data.command);
+			var icon = builder._createIconURL(data.command);
 			var buttonId = id + 'img';
 
 			button = L.DomUtil.create('img', 'ui-content unobutton', div);
@@ -1772,7 +1772,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_clearFormattingControl: function(parentContainer, data, builder) {
-		var iconPath = builder._createIconPath(data.command);
+		var iconPath = builder._createIconURL(data.command);
 		var sectionTitle = L.DomUtil.create('div', 'ui-header ' + builder.options.cssClass + ' level-' + builder._currentDepth + ' mobile-wizard-widebutton ui-widget', parentContainer);
 		sectionTitle.id = 'clearFormatting';
 		$(sectionTitle).css('justify-content', 'space-between');
@@ -1824,7 +1824,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var buttonId = 'border-' + i;
 		button = L.DomUtil.create('img', 'ui-content borderbutton', div);
-		button.src = 'images/fr0' + i + '.svg';
+		button.src = L.LOUtil.getImageURL('fr0' + i + '.svg');
 		button.id = buttonId;
 
 		$(div).click(function () {
@@ -1873,7 +1873,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		updateFunction(null);
 
-		var iconPath = builder._createIconPath(data.command);
+		var iconPath = builder._createIconURL(data.command);
 		var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
 
 		var callback = function(color) {
@@ -1987,9 +1987,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, menuEntry);
-			var iconPath = 'images/lc_' + iconName + '.svg';
+			var iconURL = L.LOUtil.getImageURL('lc_' + iconName + '.svg');
 			icon = L.DomUtil.create('img', '', iconSpan);
-			icon.src = iconPath;
+			icon.src = iconURL;
 			icon.alt = '';
 			icon.addEventListener('error', function() {
 				icon.style.display = 'none';

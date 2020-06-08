@@ -90,7 +90,7 @@ L.FormFieldButton = L.Layer.extend({
 		button.style.width = container.style.height;
 
 		var image = L.DomUtil.create('img', 'form-field-button-image', button);
-		image.src = 'images/unfold.svg';
+		image.src = L.LOUtil.getImageURL('unfold.svg');
 
 		button.addEventListener('click', this._onClickDropDown);
 
