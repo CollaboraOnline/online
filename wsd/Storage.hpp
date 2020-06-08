@@ -202,7 +202,7 @@ public:
     bool isUserModified() const { return _isUserModified; }
 
     /// To be able to set the WOPI 'is autosave/is exitsave?' headers appropriately.
-    void setIsAutosave(bool isAutosave) { _isAutosave = isAutosave; }
+    void setIsAutosave(bool newIsAutosave) { _isAutosave = newIsAutosave; }
     bool isAutosave() const { return _isAutosave; }
     void setIsExitSave(bool exitSave) { _isExitSave = exitSave; }
     bool isExitSave() const { return _isExitSave; }
