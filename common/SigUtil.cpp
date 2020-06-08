@@ -355,13 +355,13 @@ namespace SigUtil
         sigaction(SIGUSR1, &action, nullptr);
     }
 
-    /// Kill the given pid with SIGTERM.  Returns true when the pid does not exist any more.
-    bool killChild(const int pid)
+    /// Kill the given pid with SIGKILL as default.  Returns true when the pid does not exist any more.
+    bool killChild(const int pid, const int signal)
     {
         LOG_DBG("Killing PID: " << pid);
         // Don't kill anything in the fuzzer case: pid == 0 would kill the fuzzer itself, and
         // killing random other processes is not a great idea, either.
-        if (Util::isFuzzing() || kill(pid, SIGKILL) == 0 || errno == ESRCH)
+        if (Util::isFuzzing() || kill(pid, signal) == 0 || errno == ESRCH)
         {
             // Killed or doesn't exist.
             return true;

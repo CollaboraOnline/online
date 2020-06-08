@@ -389,7 +389,8 @@ Admin::Admin() :
     _lastRecvCount(0),
     _cpuStatsTaskIntervalMs(DefStatsIntervalMs),
     _memStatsTaskIntervalMs(DefStatsIntervalMs * 2),
-    _netStatsTaskIntervalMs(DefStatsIntervalMs * 2)
+    _netStatsTaskIntervalMs(DefStatsIntervalMs * 2),
+    _cleanupIntervalMs(DefStatsIntervalMs * 10)
 {
     LOG_INF("Admin ctor.");
 
@@ -415,13 +416,14 @@ Admin::~Admin()
 
 void Admin::pollingThread()
 {
-    std::chrono::steady_clock::time_point lastCPU, lastMem, lastNet;
+    std::chrono::steady_clock::time_point lastCPU, lastMem, lastNet, lastCleanup;
 
     _model.setThreadOwner(std::this_thread::get_id());
 
     lastCPU = std::chrono::steady_clock::now();
     lastMem = lastCPU;
     lastNet = lastCPU;
+    lastCleanup = lastCPU;
 
     while (!isStop() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
     {
@@ -483,6 +485,19 @@ void Admin::pollingThread()
             lastNet = now;
         }
 
+        int cleanupWait = _cleanupIntervalMs -
+                std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCleanup).count();
+        if (cleanupWait <= MinStatsIntervalMs / 2) // Close enough
+        {
+            if (_defDocProcSettings.getCleanupSettings().getEnable())
+            {
+                cleanupResourceConsumingDocs();
+                
+                cleanupWait += _cleanupIntervalMs;
+                lastCleanup = now;
+            }
+        }
+
         // (re)-connect (with sync. DNS - urk) to one monitor at a time
         if (_pendingConnects.size())
         {
@@ -495,7 +510,7 @@ void Admin::pollingThread()
         }
 
         // Handle websockets & other work.
-        const int timeout = capAndRoundInterval(std::min(std::min(cpuWait, memWait), netWait));
+        const int timeout = capAndRoundInterval(std::min(std::min(std::min(cpuWait, memWait), netWait), cleanupWait));
         LOG_TRC("Admin poll for " << timeout << "ms.");
         poll(timeout * 1000); // continue with ms for admin, settings etc.
     }
@@ -771,6 +786,11 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
 void Admin::notifyDocsMemDirtyChanged()
 {
     _model.notifyDocsMemDirtyChanged();
+}
+
+void Admin::cleanupResourceConsumingDocs()
+{
+    _model.cleanupResourceConsumingDocs();
 }
 
 void Admin::dumpState(std::ostream& os)

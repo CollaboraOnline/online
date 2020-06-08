@@ -140,12 +140,22 @@ void Document::updateMemoryDirty()
     const time_t now = std::time(nullptr);
     if (now - _lastTimeSMapsRead >= 5)
     {
-        int lastMemDirty = _memoryDirty;
+        size_t lastMemDirty = _memoryDirty;
         _memoryDirty = _procSMaps  ? Util::getPssAndDirtyFromSMaps(_procSMaps).second : 0;
         _lastTimeSMapsRead = now;
         if (lastMemDirty != _memoryDirty)
             _hasMemDirtyChanged = true;
     }
+}
+
+void Document::setLastJiffies(size_t newJ)
+{
+    auto now = std::chrono::system_clock::now();
+    if (_lastJiffy)
+        _lastCpuPercentage = (100 * 1000 * (newJ - _lastJiffy) / ::sysconf(_SC_CLK_TCK))
+                            / std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastJiffyTime).count();
+    _lastJiffy = newJ;
+    _lastJiffyTime = now;
 }
 
 bool Subscriber::notify(const std::string& message)
@@ -690,6 +700,57 @@ std::vector<DocBasicInfo> AdminModel::getDocumentsSortedByIdle() const
               });
 
     return docs;
+}
+
+void AdminModel::cleanupResourceConsumingDocs()
+{
+    DocCleanupSettings& settings = _defDocProcSettings.getCleanupSettings();
+
+    for (const auto& it: _documents)
+    {
+        Document *doc = it.second.get();
+        if (!doc->isExpired())
+        {
+            size_t idleTime = doc->getIdleTime();
+            size_t memDirty = doc->getMemoryDirty();
+            unsigned cpuPercentage = doc->getLastCpuPercentage();
+
+            if (idleTime >= settings.getIdleTime() &&
+                (memDirty >= settings.getLimitDirtyMem() * 1024 ||
+                 cpuPercentage >= settings.getLimitCpu()))
+            {
+                time_t now = std::time(nullptr);
+                const size_t badBehaviorDuration = now - doc->getBadBehaviorDetectionTime();
+                if (!doc->getBadBehaviorDetectionTime())
+                {
+                    LOG_WRN("Detected resource consuming doc [" << doc->getDocKey() << "]: idle="
+                            << idleTime << " s, memory=" << memDirty << " KB, CPU=" << cpuPercentage << "%.");
+                    doc->setBadBehaviorDetectionTime(now);
+                }
+                else if (badBehaviorDuration >= settings.getBadBehaviorPeriod())
+                {
+                    // We should not try to close it nicely (closeDocument) because
+                    // we could lose it: it will be removed from our internal lists
+                    // but the process itself can hang and continue to exist and
+                    // consume resources.
+                    // Also, try first to SIGABRT the kit process so that a stack trace
+                    // could be dumped. If the process is still alive then, at next
+                    // iteration, try to SIGKILL it.
+                    if (SigUtil::killChild(doc->getPid(), doc->getAbortTime() ? SIGKILL : SIGABRT))
+                        LOG_ERR((doc->getAbortTime() ? "Killed" : "Aborted") << " resource consuming doc [" << doc->getDocKey() << "]");
+                    else
+                        LOG_ERR("Cannot " << (doc->getAbortTime() ? "kill" : "abort") << " resource consuming doc [" << doc->getDocKey() << "]");
+                    if (!doc->getAbortTime())
+                        doc->setAbortTime(time_t(nullptr));
+                }
+            }
+            else if (doc->getBadBehaviorDetectionTime())
+            {
+                doc->setBadBehaviorDetectionTime(0);
+                LOG_WRN("Removed doc [" << doc->getDocKey() << "] from resource consuming monitoring list");
+            }
+        }
+    }
 }
 
 std::string AdminModel::getDocuments() const
