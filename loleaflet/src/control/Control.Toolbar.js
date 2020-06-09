@@ -70,6 +70,10 @@ function onClick(e, id, item) {
 		throw new Error('unknown id: ' + id);
 	}
 
+	if (id === 'sidebar' || id === 'modifypage' || id === 'slidechangewindow' || id === 'customanimation' || id === 'masterslidespanel') {
+		window.initSidebarState = true;
+	}
+
 	// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
 	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
 		map.focus(map.canAcceptKeyboardInput()); // Maintain same keyboard state.
