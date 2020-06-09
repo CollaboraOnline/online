@@ -114,12 +114,7 @@ L.Control.UIManager = L.Control.extend({
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 
 			if ((window.mode.isTablet() || window.mode.isDesktop())) {
-				var showRuler = true;
-				if (window.uiDefaults) {
-					if (window.uiDefaults[docType]) {
-						showRuler = window.uiDefaults[docType].ShowRuler || false;
-					}
-				}
+				var showRuler = this.getSavedStateOrDefault('ShowRuler');
 				var interactiveRuler = this.map.isPermissionEdit();
 				L.control.ruler({position:'topleft', interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
 			}
@@ -190,11 +185,13 @@ L.Control.UIManager = L.Control.extend({
 	showRuler: function() {
 		$('.loleaflet-ruler').show();
 		$('#map').addClass('hasruler');
+		this.setSavedState('ShowRuler', true);
 	},
 
 	hideRuler: function() {
 		$('.loleaflet-ruler').hide();
 		$('#map').removeClass('hasruler');
+		this.setSavedState('ShowRuler', false);
 	},
 
 	toggleRuler: function() {
@@ -272,7 +269,7 @@ L.Control.UIManager = L.Control.extend({
 		$('#document-container').css('bottom', this.documentBottom);
 		$('#presentation-controls-wrapper').css('bottom', this.presentationControlBottom);
 		$('#toolbar-down').show();
-		this.map.invalidateSize();
+		this.setSavedState('ShowStatusbar', true);
 	},
 
 	hideStatusBar: function(firstStart) {
@@ -284,6 +281,8 @@ L.Control.UIManager = L.Control.extend({
 		$('#document-container').css('bottom', '0px');
 		$('#presentation-controls-wrapper').css('bottom','33px');
 		$('#toolbar-down').hide();
+		if (!firstStart)
+			this.setSavedState('ShowStatusbar', false);
 	},
 
 	toggleStatusBar: function() {
@@ -372,6 +371,31 @@ L.Control.UIManager = L.Control.extend({
 				prevTop = 0 + diff;
 			}
 			obj.css({'top': String(prevTop) + 'px'});
+		}
+	},
+
+	setSavedState: function(name, state) {
+		localStorage.setItem('UIDefaults_' + this.map.getDocType() + '_' + name, state);
+	},
+
+	getSavedStateOrDefault: function(name) {
+		var retval = true;
+		var docType = this.map.getDocType();
+		var state = localStorage.getItem('UIDefaults_' + docType + '_' + name);
+		switch (state) {
+		case 'true':
+			return true;
+		case 'false':
+			return false;
+		default:
+			// no saved state; must check the UIDefaults
+			if (window.uiDefaults && window.uiDefaults[docType])
+				retval = window.uiDefaults[docType][name];
+
+			if (retval === undefined || retval === null)
+				return true;
+			else
+				return retval;
 		}
 	}
 });

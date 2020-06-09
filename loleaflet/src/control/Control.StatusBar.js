@@ -397,12 +397,7 @@ L.Control.StatusBar = L.Control.extend({
 		if (statusbar)
 			statusbar.refresh();
 
-		var showStatusbar = true;
-		if (window.uiDefaults) {
-			if (window.uiDefaults[docType]) {
-				showStatusbar = window.uiDefaults[docType].ShowStatusbar !== false;
-			}
-		}
+		var showStatusbar = this.map.uiManager.getSavedStateOrDefault('ShowStatusbar');
 		if (showStatusbar)
 			$('#toolbar-down').show();
 		else
