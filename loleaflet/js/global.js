@@ -350,14 +350,16 @@
 		};
 		this.sendQueue = '';
 		this._signalErrorClose = function() {
+			clearInterval(this.pollInterval);
+			clearTimeout(this.delaySession);
+			this.pollInterval = undefined;
+			this.delaySession = undefined;
+
 			if (that.readyState < 3)
 			{
 				this.onerror();
 				this.onclose();
 			}
-			clearInterval(this.waitInterval);
-			clearTimeout(this.delaySession);
-			this.waitInterval = undefined;
 			this.sessionId = 'open';
 			this.inSerial = 0;
 			this.outSerial = 0;
@@ -365,9 +367,14 @@
 			this.openInflight = 0;
 			this.readyState = 3; // CLOSED
 		};
+		// For those who think that long-running sockets are a
+		// better way to wait: you're so right. However, each
+		// consumes a scarce server worker thread while it waits,
+		// so ... back in the real world:
 		this._setPollInterval = function(intervalMs) {
-			clearInterval(that.pollInterval);
-			that.pollInterval = setInterval(that.doSend, intervalMs);
+			clearInterval(this.pollInterval);
+			if (this.readyState === 1)
+				this.pollInterval = setInterval(this.doSend, intervalMs);
 		},
 		this.doSend = function () {
 			if (that.sessionId === 'open')
@@ -387,6 +394,11 @@
 					that.curPollMs = Math.min(that.maxPollMs, that.curPollMs * that.throttleFactor) | 0;
 					console.debug('High latency connection - too much in-flight, throttling to ' + that.curPollMs + ' ms.');
 					that._setPollInterval(that.curPollMs);
+				}
+				else if (performance.now() - that.lastDataTimestamp > 30 * 1000)
+				{
+					console.debug('Close connection after no response for 30secs');
+					that._signalErrorClose();
 				}
 				else
 					console.debug('High latency connection - too much in-flight, pausing.');
@@ -490,12 +502,7 @@
 					that.sessionId = this.responseText;
 					that.readyState = 1;
 					that.onopen();
-
-					// For those who think that long-running sockets are a
-					// better way to wait: you're so right. However, each
-					// consumes a scarce server worker thread while it waits,
-					// so ... back in the real world:
-					that.pollInterval = setInterval(that.doSend, that.curPollMs);
+					that._setPollInterval(that.curPollMs);
 				}
 			});
 			req.addEventListener('loadend', function() {
@@ -540,9 +547,9 @@
 			console.debug('proxy: close socket');
 			this.readyState = 3;
 			this.onclose();
-			clearInterval(this.waitInterval);
+			clearInterval(this.pollInterval);
 			clearTimeout(this.delaySession);
-			this.waitInterval = undefined;
+			this.pollInterval = undefined;
 			if (oldState === 1) // was open
 				this.sendCloseMsg(this.unloading);
 			this.sessionId = 'open';
