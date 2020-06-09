@@ -10,6 +10,7 @@ L.Map.WOPI = L.Handler.extend({
 	// wouldn't be possible otherwise.
 	PostMessageOrigin: '*',
 	BaseFileName: '',
+	BreadcrumbDocName: '',
 	DocumentLoadedTime: false,
 	HidePrintOption: false,
 	HideSaveOption: false,
@@ -76,6 +77,9 @@ L.Map.WOPI = L.Handler.extend({
 		}
 
 		this.BaseFileName = wopiInfo['BaseFileName'];
+		this.BreadcrumbDocName = wopiInfo['BreadcrumbDocName'];
+		if (this.BreadcrumbDocName === undefined)
+			this.BreadcrumbDocName = this.BaseFileName;
 		this.HidePrintOption = !!wopiInfo['HidePrintOption'];
 		this.HideSaveOption = !!wopiInfo['HideSaveOption'];
 		this.HideExportOption = !!wopiInfo['HideExportOption'];

@@ -613,6 +613,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     std::string watermarkText;
     std::string templateSaveAs;
     std::string templateSource;
+    std::string breadcrumbDocName;
     bool canWrite = false;
     bool enableOwnerTermination = false;
     std::string postMessageOrigin;
@@ -719,6 +720,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         JsonUtil::findJSONValue(object, "SupportsLocks", supportsLocks);
         JsonUtil::findJSONValue(object, "SupportsRename", supportsRename);
         JsonUtil::findJSONValue(object, "UserCanRename", userCanRename);
+        JsonUtil::findJSONValue(object, "BreadcrumbDocName", breadcrumbDocName);
         bool booleanFlag = false;
         if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
             disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
@@ -750,7 +752,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         watermarkText = overrideWatermarks;
 
     return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
-        {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, templateSource,
+        {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, templateSource, breadcrumbDocName,
          canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
          enableOwnerTermination, disablePrint, disableExport, disableCopy,
          disableInactiveMessages, downloadAsPostMessage, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,

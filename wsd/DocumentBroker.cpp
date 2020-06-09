@@ -663,6 +663,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             wopifileinfo->setHideExportOption(true);
 
         wopiInfo->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
+        if (wopifileinfo->getBreadcrumbDocName().size())
+            wopiInfo->set("BreadcrumbDocName", wopifileinfo->getBreadcrumbDocName());
 
         if (!wopifileinfo->getTemplateSaveAs().empty())
             wopiInfo->set("TemplateSaveAs", wopifileinfo->getTemplateSaveAs());

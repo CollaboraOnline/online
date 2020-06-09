@@ -381,6 +381,7 @@ public:
                      const std::string& watermarkText,
                      const std::string& templateSaveAs,
                      const std::string& templateSource,
+                     const std::string& breadcrumbDocName,
                      const bool userCanWrite,
                      const std::string& postMessageOrigin,
                      const bool hidePrintOption,
@@ -409,6 +410,7 @@ public:
               _watermarkText(watermarkText),
               _templateSaveAs(templateSaveAs),
               _templateSource(templateSource),
+              _breadcrumbDocName(breadcrumbDocName),
               _userCanWrite(userCanWrite),
               _postMessageOrigin(postMessageOrigin),
               _hidePrintOption(hidePrintOption),
@@ -446,6 +448,8 @@ public:
         const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
 
         const std::string& getTemplateSource() const { return _templateSource; }
+
+        const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
 
@@ -510,6 +514,8 @@ public:
         std::string _templateSaveAs;
         /// In case we want to use this file as a template.
         std::string _templateSource;
+        /// User readable string of document name to show in UI, if present.
+        std::string _breadcrumbDocName;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property

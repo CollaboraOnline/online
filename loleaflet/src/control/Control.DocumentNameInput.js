@@ -40,7 +40,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 	},
 
 	documentNameCancel: function() {
-		$('#document-name-input').val(this.map['wopi'].BaseFileName);
+		$('#document-name-input').val(this.map['wopi'].BreadcrumbDocName);
 		this.map._onGotFocus();
 	},
 
@@ -97,10 +97,9 @@ L.Control.DocumentNameInput = L.Control.extend({
 	},
 
 	onWopiProps: function(e) {
-		if (e.BaseFileName !== null) {
+		if (e.BaseFileName !== null)
 			// set the document name into the name field
-			$('#document-name-input').val(e.BaseFileName);
-		}
+			$('#document-name-input').val(e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName);
 
 		if (e.UserCanNotWriteRelative === false) {
 			// Save As allowed
