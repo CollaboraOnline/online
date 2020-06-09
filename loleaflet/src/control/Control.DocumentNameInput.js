@@ -59,6 +59,8 @@ L.Control.DocumentNameInput = L.Control.extend({
 	},
 
 	onDocLayerInit: function() {
+		$('#document-name-input').attr('size', $('#document-name-input').val().length);
+
 		// FIXME: Android app would display a temporary filename, not the actual filename
 		if (window.ThisIsTheAndroidApp) {
 			$('#document-name-input').hide();
