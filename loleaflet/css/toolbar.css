@@ -154,7 +154,6 @@ w2ui-toolbar {
 		font-size: 16px;
 		border: 1px solid transparent;
 		background-color: transparent;
-		width: 200px;
 }
 
 #document-name-input.editable {
@@ -169,7 +168,6 @@ w2ui-toolbar {
 		border: none;
 		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb;
 		background-color: white;
-		width: 200px;
 }
 
 #document-name-input.editable:hover:not(:focus) {
@@ -179,8 +177,7 @@ w2ui-toolbar {
 		background-image: url('images/baseline-edit.svg');
 		background-position: right;
 		background-repeat: no-repeat;
-		padding-right: 20px;
-		width: 181px;
+		padding-right: 2px;
 }
 #tb_editbar_item_fold table.w2ui-button {
 	margin: 0px 14px 0px 4px !important;
