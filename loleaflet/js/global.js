@@ -354,15 +354,15 @@
 			{
 				this.onerror();
 				this.onclose();
-				clearInterval(this.waitInterval);
-				clearTimeout(this.delaySession);
-				this.waitInterval = undefined;
-				this.sessionId = 'open';
-				this.inSerial = 0;
-				this.outSerial = 0;
-				this.msgInflight = 0;
-				this.openInflight = 0;
 			}
+			clearInterval(this.waitInterval);
+			clearTimeout(this.delaySession);
+			this.waitInterval = undefined;
+			this.sessionId = 'open';
+			this.inSerial = 0;
+			this.outSerial = 0;
+			this.msgInflight = 0;
+			this.openInflight = 0;
 			this.readyState = 3; // CLOSED
 		};
 		this._setPollInterval = function(intervalMs) {
@@ -373,10 +373,7 @@
 			if (that.sessionId === 'open')
 			{
 				if (that.readyState === 3)
-				{
-					console.debug('Session closed, opening a new one.');
-					that.getSessionId();
-				}
+					console.debug('Error: sending on closed socket');
 				return;
 			}
 
@@ -488,11 +485,17 @@
 					console.debug('Error: failed to fetch session id! error: ' + this.status);
 					that._signalErrorClose();
 				}
-				else
+				else // we connected - lets get going ...
 				{
 					that.sessionId = this.responseText;
 					that.readyState = 1;
 					that.onopen();
+
+					// For those who think that long-running sockets are a
+					// better way to wait: you're so right. However, each
+					// consumes a scarce server worker thread while it waits,
+					// so ... back in the real world:
+					that.pollInterval = setInterval(that.doSend, that.curPollMs);
 				}
 			});
 			req.addEventListener('loadend', function() {
@@ -555,12 +558,6 @@
 
 		// queue fetch of session id.
 		this.getSessionId();
-
-		// For those who think that long-running sockets are a
-		// better way to wait: you're so right. However, each
-		// consumes a scarce server worker thread while it waits,
-		// so ... back in the real world:
-		this.pollInterval = setInterval(this.doSend, this.curPollMs);
 	};
 
 	if (global.socketProxy)
