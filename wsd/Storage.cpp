@@ -737,6 +737,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "SupportsLocks", _supportsLocks);
     JsonUtil::findJSONValue(object, "SupportsRename", _supportsRename);
     JsonUtil::findJSONValue(object, "UserCanRename", _userCanRename);
+    JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
     bool booleanFlag = false;
     if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
         _disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);

@@ -386,6 +386,8 @@ public:
         const std::string& getWatermarkText() const { return _watermarkText; }
         const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
         const std::string& getTemplateSource() const { return _templateSource; }
+        const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
+
         bool getUserCanWrite() const { return _userCanWrite; }
         std::string& getPostMessageOrigin() { return _postMessageOrigin; }
         void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
@@ -425,6 +427,8 @@ public:
         std::string _templateSaveAs;
         /// In case we want to use this file as a template.
         std::string _templateSource;
+        /// User readable string of document name to show in UI, if present.
+        std::string _breadcrumbDocName;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property
