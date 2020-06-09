@@ -13,7 +13,7 @@
     "jquery": "2.2.4",
     "jquery-contextmenu": "2.9.2",
     "jquery-mousewheel": "3.1.13",
-    "jquery-ui-dist": "^1.12.1",
+    "jquery-ui-dist": "1.12.1",
     "json-js": "1.1.2",
     "l10n-for-node": "0.0.1",
     "select2": "4.0.13",
@@ -22,7 +22,8 @@
     "uglify-js": "3.9.4",
     "uglifycss": "0.0.29",
     "uglifyify": "5.0.2",
-    "vex-js": "4.1.0"
+    "vex-js": "4.1.0",
+    "typescript": "3.9.5"
   },
   "repository": {
     "type": "git",

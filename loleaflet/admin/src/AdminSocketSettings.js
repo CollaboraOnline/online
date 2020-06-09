@@ -2,7 +2,7 @@
 /*
 	Socket to be intialized on opening the settings page in Admin console
 */
-/* global vex $ AdminSocketBase Admin _ */
+/* global DlgYesNo $ AdminSocketBase Admin _ */
 var AdminSocketSettings = AdminSocketBase.extend({
 	constructor: function(host) {
 		this.base(host);
@@ -29,21 +29,18 @@ var AdminSocketSettings = AdminSocketBase.extend({
 				socketSettings.send(command);
 			});
 
-			$('#btnShutdown').click(function() {
-				vex.dialog.confirm({
-					message: _('Are you sure you want to shut down the server?'),
-					buttons: [
-						$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-						$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
-					],
-					callback: function(value) {
-						// TODO: Prompt for reason.
-						if (value) {
-							socketSettings.send('shutdown maintenance');
-						}
-					}
+			document.getElementById('btnShutdown').onclick = function() {
+				var dialog = (new DlgYesNo())
+				.title(_('Confirmation'))
+				.text(_('Are you sure you want to shut down the server?'))
+				.yesButtonText(_('OK'))
+				.noButtonText(_('Cancel'))
+				.type('warning')
+				.yesFunction(function() {
+					socketSettings.send('shutdown maintenance');
 				});
-			});
+				dialog.open();
+			};
 		});
 	},
 

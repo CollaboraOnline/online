@@ -1,0 +1,19 @@
+{
+  "compileOnSave": false,
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "sourceMap": false,
+      "moduleResolution": "classic",
+      "noImplicitAny": true,
+      "removeComments": false,
+      "preserveConstEnums": false,
+      "watch": false
+    },
+    "files": [
+      "admin/src/ModalDialogCreator.ts"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }

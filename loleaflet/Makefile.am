@@ -95,7 +95,8 @@ LOLEAFLET_ADMIN_JS =\
 	admin/src/AdminSocketAnalytics.js \
 	admin/src/AdminSocketSettings.js \
 	admin/src/AdminSocketHistory.js \
-	admin/src/AdminSocketLog.js
+	admin/src/AdminSocketLog.js \
+	admin/src/ModalDialogCreator.js
 
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
@@ -391,7 +392,11 @@ if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
-build-loleaflet: $(LOLEAFLET_L10N_DST) \
+compilets:
+	$(srcdir)/node_modules/typescript/bin/tsc
+
+build-loleaflet: compilets \
+	$(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(LOLEAFLET_IMAGES_CUSTOM_DST) \
