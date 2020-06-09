@@ -56,6 +56,12 @@ L.Control.DocumentNameInput = L.Control.extend({
 	onDocumentNameFocus: function() {
 		// hide the caret in the main document
 		this.map._onLostFocus();
+		var name = this.map['wopi'].BaseFileName;
+		var extn = name.lastIndexOf('.');
+		if (extn < 0)
+			extn = name.length;
+		$('#document-name-input').val(name);
+		$('#document-name-input')[0].setSelectionRange(0, extn);
 	},
 
 	onDocLayerInit: function() {
