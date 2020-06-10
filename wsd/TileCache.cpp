@@ -589,9 +589,8 @@ void TileCache::ensureCacheSize()
         WidSize(TileWireId w, size_t s) : _wid(w), _size(s) {}
     };
     std::vector<WidSize> wids;
-    for (auto &it : _cache)
-        wids.push_back(WidSize(it.first.getWireId(),
-                               itemCacheSize(it.second)));
+    for (const auto& it : _cache)
+        wids.emplace_back(it.first.getWireId(), itemCacheSize(it.second));
     std::sort(wids.begin(), wids.end(),
               [](const WidSize &a, const WidSize &b) { return a._wid < b._wid; });
 
