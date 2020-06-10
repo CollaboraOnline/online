@@ -612,6 +612,9 @@ L.Map.include({
 					map.sendUnoCommand('.uno:SetHyperlink', command);
 					map.focus();
 				}
+				else {
+					map.focus();
+				}
 			}
 		});
 	}

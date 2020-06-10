@@ -476,7 +476,7 @@ function insertShapes(mobile) {
 	var width = 10;
 	var $grid = $('.insertshape-grid');
 
-	if ($grid.children().size() > 0)
+	if ($grid.children().length > 0)
 		return;
 
 	for (var s in shapes) {
