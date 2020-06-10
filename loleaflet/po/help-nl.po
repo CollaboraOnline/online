@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-04-27 08:54+0000\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"PO-Revision-Date: 2020-07-06 08:19+0000\n"
 "Last-Translator: kees538 <kees538@gmail.com>\n"
 "Language-Team: Dutch <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/nl/>\n"
 "Language: nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-help-nl.po\n"
 "X-Pootle-Revision: 832994\n"
 
@@ -1115,19 +1115,19 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:283-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
-msgstr ""
+msgstr "Afhankelijk van de functies van uw browser, wordt het printvenster of een bericht \"Download PDF export?\" weergegeven. U kunt deze PDF afdrukken in uw favoriete PDF-lezer."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "Bij het sluiten van een document wordt het automatisch opgeslagen als het is gewijzigd."
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
-msgstr ""
+msgstr "Het bewerken van documenten moet bekend zijn bij iedereen die eerder een kantoortoepassing heeft gebruikt, maar hier zijn enkele onderscheidende kenmerken:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopiëren en plakken"
 
 #: html/loleaflet-help.html%2Bdiv.p:289-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
@@ -1139,11 +1139,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:291-5
 msgid "Document repair"
-msgstr ""
+msgstr "Document herstellen"
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Wanneer meerdere mensen tegelijkertijd hetzelfde document bewerken, is het mogelijk dat hun wijzigingen conflicteren en dit kan voor enige verwarring zorgen. Met de functie Documentherstel kunnen gebruikers de wijzigingen van andere redacteurs aan het document in een eerdere versie ongedaan maken."
 
 #: html/loleaflet-help.html%2Bdiv.p:293-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
@@ -1155,7 +1155,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:296-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Inactief document"
 
 #: html/loleaflet-help.html%2Bdiv.p:297-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
@@ -1163,51 +1163,51 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:299-5
 msgid "To continue editing, click on the document and the layover and message disappear. Any changes that may have been made by other users – while collaboratively editing the document – are re-loaded."
-msgstr ""
+msgstr "Om door te gaan met bewerken, klikt u op het document en de tussenstop en het bericht zal verdwijnen. Alle wijzigingen die mogelijk door andere gebruikers zijn aangebracht terwijl het document werd bewerkt, worden opnieuw geladen."
 
 #: html/loleaflet-help.html%2Bdiv.h4:300-5
 msgid "Pasting"
-msgstr ""
+msgstr "Invoegen"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
-msgstr ""
+msgstr "Wanneer u inhoud plakt die vanuit hetzelfde document is gekopieerd, blijven de indeling en elementen behouden. Als u kopieert vanuit een ander document, in een ander tabblad of browservenster, of van buiten de browser, behoudt de inhoud geplakt als Rich Text (RTF)."
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr ""
+msgstr "U kunt als niet-opgemaakte tekst plakken met de toetscombinatie: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
-msgstr ""
+msgstr "Wanneer u tekst uit het document invoegt, blijft de opmaak behouden. U kunt ook objecten zoals afbeeldingen invoegen als ze zijn gekopieerd uit het document waarin u werkt."
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text."
-msgstr ""
+msgstr "Wanneer u tekst van buiten het document plakt (een ander browservenster of een bureaubladtoepassing, wordt het als Rich Text RTF geplakt."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
-msgstr ""
+msgstr "Als u intern geknipte of gekopieerde inhoud heeft, kunt u deze inhoud plakken via het contextmenu."
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Diagrammen toevoegen"
 
 #: html/loleaflet-help.html%2Bdiv.p:309-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> ondersteunt het invoegen en visualiseren van diagrammen in documenten. Een diagram toevoegen:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:311-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
-msgstr ""
+msgstr "Selecteer een tabel in een tekstdocument, een bereik in een werkblad of een tabel in een presentatie."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
-msgstr ""
+msgstr "Kies <span class=\"ui\">Invoegen</span> → <span class=\"ui\">Diagram</span>. Pas uw diagram aan in de Zijbalk:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:316-11
 msgid "If no table or range was selected, a prototype chart is displayed."
-msgstr ""
+msgstr "Als er geen tabel of bereik is geselecteerd, wordt een prototypedigram weergegeven."
 
 #: html/loleaflet-help.html%2Bdiv.p:319-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
@@ -1215,7 +1215,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
-msgstr ""
+msgstr "<span class=\"def\">Diagram opmaken</span> Hetzelfde contextmenu brengt u naar de gegevenstabel en de selectie van het diagramtype."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."

@@ -102,4 +102,7 @@
     <string name="remove_from_list">Retirar da lista</string>
     <string name="file_actions_icon_desc">Accións para ficheiros</string>
     <string name="pref_category_editor">Configuración do editor</string>
+    <string name="app_version_and_hash">Versión: %1$s
+\nonline git-hash: %2$s
+\ncore git-hash: %3$s</string>
 </resources>

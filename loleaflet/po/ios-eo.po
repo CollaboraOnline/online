@@ -5,29 +5,29 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-02-05 12:45+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"PO-Revision-Date: 2020-07-09 07:12+0000\n"
+"Last-Translator: Donald Rogers <donr2648@clear.net.nz>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/ios/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /eo/libo_online/ios-eo.po\n"
 "X-Pootle-Revision: 3937770\n"
 
 #: Version+information
 msgid "Version information"
-msgstr ""
+msgstr "Versia informo"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Enreta Git-haketaĵo"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Kerna Git-haketaĵo"
 
 #: Settings
 msgid "Settings"

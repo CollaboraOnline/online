@@ -13,4 +13,5 @@
     <string name="later">Geroago</string>
     <string name="rate_now">Eman puntuazioa orain</string>
     <string name="exiting">Irteten...</string>
+    <string name="file_chromeos_read_only">Fitxategi hau ezin da gorde kokaleku honetan, irakurtzeko moduan irekiko da. Eraman Play fitxategietara irakurtzeko/idazteko atzipen osoa eduki ahal izateko.</string>
 </resources>

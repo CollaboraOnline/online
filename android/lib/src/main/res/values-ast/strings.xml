@@ -7,4 +7,5 @@
     <string name="later">Sero</string>
     <string name="failed_to_load_file">Nun pudo determinase qué ficheru cargar</string>
     <string name="exiting">Colando…</string>
+    <string name="failed_to_insert_image">Nun se pudo inxertar la imaxe</string>
 </resources>

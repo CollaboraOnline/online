@@ -28,7 +28,7 @@
     <string name="up_description">Ke direktori induk</string>
     <string name="password">Kata Sandi</string>
     <string name="user_name">nama Pengguna</string>
-    <string name="server_url_and_port">URL dan port cloud server</string>
+    <string name="server_url_and_port">"URL dan port server  cloud."</string>
     <string name="server_url">URL Peladen</string>
     <string name="otg_warning">Fitur Eksperimental: Gunakan hanya ketika alat OTG dapat ditulis.</string>
     <string name="otg_device_path">jalur alat OTG</string>
@@ -89,15 +89,20 @@
     <string name="pref_show_hidden_files_summary">Nyalakan untuk menampilkan berkas/folder tersembunyi</string>
     <string name="pref_show_hidden_files">File/Folder Tersembunyi</string>
     <string name="pref_category_editor">Pengaturan Penyunting</string>
-    <string name="pref_category_explorer">Pengaturan Manajer File</string>
+    <string name="pref_category_explorer">Pengaturan Manajer Berkas</string>
     <string name="grid_view">Kisi</string>
     <string name="failed_to_load_file">Gagal untuk menetapkan sebuah berkas untuk dimuat</string>
     <string name="file_creation_failed">Pembuatan berkas gagal</string>
     <string name="file_exists_warning">Sebuah berkas dengan nama ini telah ada, dan akan ditimpa.</string>
-    <string name="temp_file_saving_disabled">Berkas ini hanya baca, penyimpanan dimatikan.</string>
+    <string name="temp_file_saving_disabled">Berkas ini hanya baca, penyimpanan dinonaktifkan.</string>
     <string name="no_items">Tidak ada item</string>
-    <string name="no_recent_items">Silahkan buka sebuah berkas menggunakan ikon folder pada bilah alat.</string>
+    <string name="no_recent_items">Silakan buka sebuah berkas menggunakan ikon folder pada bilah alat.</string>
     <string name="app_vendor">Rilis ini dipasok oleh $VENDOR.</string>
-    <string name="app_description">$APP_NAME adalah rangkaian produktivitas sumber terbuka modern, mudah digunakan, untuk pemrosesan kata, spreadsheet, presentasi, dan lainnya.</string>
+    <string name="app_description">$APP_NAME adalah keluarga produktivitas sumber terbuka yang modern, mudah digunakan, untuk pemrosesan kata, lembar kerja, presentasi, dan lainnya.</string>
     <string name="app_version">Versi: %1$s, Nomor Pembentukan: %2$s</string>
+    <string name="storage_provider_settings">Pengaturan penyedia penyimpanan</string>
+    <string name="otg_missing_error">Berkas root tidak valid. Periksalah peranti OTG dan/atau konfigurasi Anda.</string>
+    <string name="app_version_and_hash">Versi: %1$s
+\ngit-hash daring: %2$s
+\ngit-hash core: %3$s</string>
 </resources>

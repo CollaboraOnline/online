@@ -102,4 +102,7 @@
     <string name="pref_category_editor">Nastavitve urejevalnika</string>
     <string name="file_actions_icon_desc">Dejanja datotek</string>
     <string name="remove_from_list">Odstrani s seznama</string>
+    <string name="app_version_and_hash">Različica: %1$s
+\nSpletna LO (git-hash): %2$s
+\nOsrčje LO (git-hash): %3$s</string>
 </resources>

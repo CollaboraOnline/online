@@ -13,4 +13,5 @@
     <string name="rate_our_app_title">Hvala, ker uporabljate %1$s!</string>
     <string name="later">Kasneje</string>
     <string name="rate_now">Ocenite zdaj</string>
+    <string name="file_chromeos_read_only">Te datoteke ni mogoče shraniti na tem mestu, zato je odprta samo za branje. Premaknite jih med datoteke Play, da boste imeli dostop s polnimi pravicami branja in pisanja.</string>
 </resources>
