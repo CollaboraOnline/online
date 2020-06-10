@@ -1632,7 +1632,7 @@ Authorization ClientSession::getAuthorization() const
 
 void ClientSession::addTileOnFly(const TileDesc& tile)
 {
-    _tilesOnFly.push_back({tile.generateID(), std::chrono::steady_clock::now()});
+    _tilesOnFly.emplace_back(tile.generateID(), std::chrono::steady_clock::now());
 }
 
 void ClientSession::clearTilesOnFly()
