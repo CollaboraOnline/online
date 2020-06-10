@@ -63,9 +63,6 @@ var testBlackLists = {
 				'Change font size of text shape.'
 			]
 		],
-		['mobile/impress/apply_paragraph_props_spec.js',
-			[]
-		],
 		['mobile/writer/table_properties_spec.js',
 			[]
 		],

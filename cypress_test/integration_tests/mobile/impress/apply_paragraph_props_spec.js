@@ -33,11 +33,14 @@ describe('Apply paragraph properties.', function() {
 			.should('be.visible');
 	}
 
-	function openParagraphPropertiesPanel2() {
+	function openListsPropertiesPanel() {
 		mobileHelper.openMobileWizard();
 
-		cy.get('#Paragraph')
+		cy.get('#ListsPropertyPanel')
 			.click();
+
+		cy.get('.ui-content.level-0.mobile-wizard')
+			.should('be.visible');
 	}
 
 	it('Apply left/right alignment on text shape.', function() {
@@ -156,7 +159,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('not.exist');
 
-		openParagraphPropertiesPanel();
+		openListsPropertiesPanel();
 
 		cy.get('#DefaultBullet')
 			.click();
@@ -172,7 +175,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
 
-		openParagraphPropertiesPanel();
+		openListsPropertiesPanel();
 
 		cy.get('#DefaultNumbering')
 			.click();
@@ -228,7 +231,7 @@ describe('Apply paragraph properties.', function() {
 		impressMobileHelper.selectTextOfShape();
 
 		// Set right alignment first
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#RightPara')
 			.click();
@@ -241,7 +244,7 @@ describe('Apply paragraph properties.', function() {
 		// Set left alignment
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#LeftPara')
 			.click();
@@ -258,7 +261,7 @@ describe('Apply paragraph properties.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#CenterPara')
 			.click();
@@ -276,7 +279,7 @@ describe('Apply paragraph properties.', function() {
 		impressMobileHelper.selectTextOfShape();
 
 		// Set right alignment first
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#RightPara')
 			.click();
@@ -289,7 +292,7 @@ describe('Apply paragraph properties.', function() {
 		impressMobileHelper.selectTextOfShape();
 
 		// Then set justified alignment
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#JustifyPara')
 			.click();
@@ -307,7 +310,7 @@ describe('Apply paragraph properties.', function() {
 		impressMobileHelper.selectTextOfShape();
 
 		// Set bottom alignment first
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#CellVertBottom')
 			.click();
@@ -320,7 +323,7 @@ describe('Apply paragraph properties.', function() {
 		impressMobileHelper.selectTextOfShape();
 
 		// Then set top alignment
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#CellVertTop')
 			.click();
@@ -337,7 +340,7 @@ describe('Apply paragraph properties.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#CellVertCenter')
 			.click();
@@ -355,7 +358,7 @@ describe('Apply paragraph properties.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openListsPropertiesPanel();
 
 		cy.get('#DefaultBullet')
 			.click();
@@ -373,7 +376,7 @@ describe('Apply paragraph properties.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openListsPropertiesPanel();
 
 		cy.get('#DefaultNumbering')
 			.click();
@@ -390,7 +393,7 @@ describe('Apply paragraph properties.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#aboveparaspacing input')
 			.clear()
@@ -411,7 +414,7 @@ describe('Apply paragraph properties.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#belowparaspacing input')
 			.clear()
@@ -432,7 +435,7 @@ describe('Apply paragraph properties.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#ParaspaceIncrease')
 			.click();
@@ -444,7 +447,7 @@ describe('Apply paragraph properties.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#ParaspaceDecrease')
 			.click();
@@ -462,7 +465,7 @@ describe('Apply paragraph properties.', function() {
 		// Change right-to-left first
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#ParaRightToLeft')
 			.click();
@@ -475,7 +478,7 @@ describe('Apply paragraph properties.', function() {
 		// Change back to the default left-to-right
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openParagraphPropertiesPanel();
 
 		cy.get('#ParaLeftToRight')
 			.click();
@@ -494,7 +497,7 @@ describe('Apply paragraph properties.', function() {
 		// Apply bulleting first
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openListsPropertiesPanel();
 
 		cy.get('#DefaultBullet')
 			.click();
@@ -509,7 +512,7 @@ describe('Apply paragraph properties.', function() {
 		// Change bulleting level
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openListsPropertiesPanel();
 
 		cy.get('#OutlineRight')
 			.click();
@@ -522,7 +525,7 @@ describe('Apply paragraph properties.', function() {
 		// Change bulleting level back to default
 		impressMobileHelper.selectTextOfShape();
 
-		openParagraphPropertiesPanel2();
+		openListsPropertiesPanel();
 
 		cy.get('#OutlineLeft')
 			.click();
