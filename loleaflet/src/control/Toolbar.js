@@ -411,7 +411,7 @@ L.Map.include({
 					var cookiePath = '/loleaflet';
 					if (window.socketProxy)
 						cookiePath = window.host + window.serviceRoot + cookiePath;
-					WSDVerCookie += '; max-age=31536000; SameSite=Strict; path=' + cookiePath;
+					WSDVerCookie += '; max-age=31536000; SameSite=Lax; path=' + cookiePath;
 					document.cookie = WSDVerCookie;
 				}
 				map.focus();
@@ -445,7 +445,7 @@ L.Map.include({
 				var cookiePath = '/loleaflet';
 				if (window.socketProxy)
 					cookiePath = window.host + window.serviceRoot + cookiePath;
-				var welcomeDisabledCookie = 'WSDWelcomeDisabled=true; max-age=86400; SameSite=Strict; path=' + cookiePath;
+				var welcomeDisabledCookie = 'WSDWelcomeDisabled=true; max-age=86400; SameSite=Lax; path=' + cookiePath;
 				document.cookie = welcomeDisabledCookie;
 
 				if (calledFromMenu)
