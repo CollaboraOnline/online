@@ -58,15 +58,24 @@ var testBlackLists = {
 			]
 		],
 		['mobile/impress/apply_font_spec.js',
-			[]
-		],
-		['mobile/impress/apply_font_spec.js',
-			[]
+			[
+				'Change font size of selected text.',
+				'Change font size of text shape.'
+			]
 		],
 		['mobile/impress/apply_paragraph_props_spec.js',
 			[]
 		],
 		['mobile/writer/table_properties_spec.js',
+			[]
+		],
+	],
+
+	'cp-6-2': [
+		['mobile/impress/apply_font_spec.js',
+			[]
+		],
+		['mobile/impress/apply_paragraph_props_spec.js',
 			[]
 		],
 	]
