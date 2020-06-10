@@ -65,7 +65,13 @@ L.Control.DocumentNameInput = L.Control.extend({
 	},
 
 	onDocLayerInit: function() {
-		$('#document-name-input').attr('size', $('#document-name-input').val().length);
+		var value = $('#document-name-input').val();
+		if (value.length < 27) {
+			$('#document-name-input').attr('size', value.length);
+		}
+		else {
+			$('#document-name-input').attr('size', '25');
+		}
 
 		// FIXME: Android app would display a temporary filename, not the actual filename
 		if (window.ThisIsTheAndroidApp) {
@@ -78,6 +84,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 			// We can now set the document name in the menu bar
 			$('#document-name-input').prop('disabled', false);
 			$('#document-name-input').removeClass('editable');
+			$('#document-title-pencil').removeClass('editable');
 			$('#document-name-input').focus(function() { $(this).blur(); });
 			// Call decodecodeURIComponent twice: Reverse both our encoding and the encoding of
 			// the name in the file system.
@@ -99,12 +106,14 @@ L.Control.DocumentNameInput = L.Control.extend({
 			// Save As allowed
 			$('#document-name-input').prop('disabled', false);
 			$('#document-name-input').addClass('editable');
+			$('#document-title-pencil').addClass('editable');
 			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
 			$('#document-name-input').off('focus', this.onDocumentNameFocus).on('focus', this.onDocumentNameFocus.bind(this));
 			$('#document-name-input').off('blur', this.documentNameCancel).on('blur', this.documentNameCancel.bind(this));
 		} else {
 			$('#document-name-input').prop('disabled', true);
 			$('#document-name-input').removeClass('editable');
+			$('#document-title-pencil').removeClass('editable');
 			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress);
 		}
 	}
