@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-20 23:01+0200\n"
+"POT-Creation-Date: 2020-06-05 23:08+0200\n"
 "PO-Revision-Date: 2020-03-05 12:13+0000\n"
 "Last-Translator: DaeHyun Sung(성대현, 成大鉉) <sungdh86@gmail.com>\n"
 "Language-Team: Korean <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ko/>\n"
@@ -45,139 +45,168 @@ msgid "History"
 msgstr "기록"
 
 #: admin/admin.strings.js:12
+#, fuzzy
+#| msgid "Login"
+msgid "Log"
+msgstr "로그인"
+
+#: admin/admin.strings.js:13
 msgid "Dashboard"
 msgstr "대시보드"
 
-#: admin/admin.strings.js:13
+#: admin/admin.strings.js:14
 msgid "Users online"
 msgstr "사용자 연결됨"
 
-#: admin/admin.strings.js:14
+#: admin/admin.strings.js:15
 msgid "User Name"
 msgstr "사용자 이름"
 
-#: admin/admin.strings.js:15
+#: admin/admin.strings.js:16
 msgid "Documents opened"
 msgstr "문서 열림"
 
-#: admin/admin.strings.js:16
+#: admin/admin.strings.js:17
 msgid "Number of Documents"
 msgstr "문서의 수"
 
-#: admin/admin.strings.js:17
+#: admin/admin.strings.js:18
 msgid "Memory consumed"
 msgstr "메모리가 사용됨"
 
-#: admin/admin.strings.js:18
+#: admin/admin.strings.js:19
 msgid "Bytes sent"
 msgstr "보낸 바이트"
 
-#: admin/admin.strings.js:19
+#: admin/admin.strings.js:20
 msgid "Bytes received"
 msgstr "받은 바이트"
 
-#: admin/admin.strings.js:20
+#: admin/admin.strings.js:21
 msgid "PID"
 msgstr "PID"
 
-#: admin/admin.strings.js:21
+#: admin/admin.strings.js:22
 msgid "Document"
 msgstr "문서"
 
-#: admin/admin.strings.js:22
+#: admin/admin.strings.js:23
 msgid "Number of views"
 msgstr "뷰의 수"
 
-#: admin/admin.strings.js:23
+#: admin/admin.strings.js:24
 msgid "Elapsed time"
 msgstr "경과 시간"
 
-#: admin/admin.strings.js:24
+#: admin/admin.strings.js:25
 msgid "Idle time"
 msgstr "대기 시간"
 
-#: admin/admin.strings.js:25
+#: admin/admin.strings.js:26
 msgid "Modified"
 msgstr "수정됨"
 
-#: admin/admin.strings.js:26
+#: admin/admin.strings.js:27
 msgid "Kill"
 msgstr "죽이기"
 
-#: admin/admin.strings.js:27
+#: admin/admin.strings.js:28
 msgid "Graphs"
 msgstr "그래프"
 
-#: admin/admin.strings.js:28
+#: admin/admin.strings.js:29
 msgid "Memory Graph"
 msgstr "메모리 그래프"
 
-#: admin/admin.strings.js:29
+#: admin/admin.strings.js:30
 msgid "CPU Graph"
 msgstr "CPU 그래프"
 
-#: admin/admin.strings.js:30
+#: admin/admin.strings.js:31
 msgid "Network Graph"
 msgstr "네트워크 그래프"
 
-#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:252
+#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:252
 #: src/layer/tile/TileLayer.js:403
 msgid "Save"
 msgstr "저장"
 
-#: admin/admin.strings.js:32
+#: admin/admin.strings.js:33
 msgid "Cache size of memory statistics"
 msgstr "메모리 통계의 캐시 크기"
 
-#: admin/admin.strings.js:33
+#: admin/admin.strings.js:34
 msgid "Time interval of memory statistics (in ms)"
 msgstr "메모리 통계의 시간 간격 (ms)"
 
-#: admin/admin.strings.js:34
+#: admin/admin.strings.js:35
 msgid "Cache size of CPU statistics"
 msgstr "CPU 통계의 캐시 크기"
 
-#: admin/admin.strings.js:35
+#: admin/admin.strings.js:36
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "CPU 통계의 시간 간격(ms)"
 
-#: admin/admin.strings.js:36
+#: admin/admin.strings.js:37
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "최대 문서 처리 가상 메모리 (MB) - 줄이기만 가능"
 
-#: admin/admin.strings.js:37
+#: admin/admin.strings.js:38
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr "최대 문서 처리 스택 메모리 (KB) - 줄이기만 가능"
 
-#: admin/admin.strings.js:38
+#: admin/admin.strings.js:39
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "디스크에 저장할 수 있는 최대 파일 크기 (MB) - 줄이기만 가능"
 
-#: admin/admin.strings.js:39
+#: admin/admin.strings.js:40
 msgid "Documents:"
 msgstr "문서:"
 
-#: admin/admin.strings.js:40
+#: admin/admin.strings.js:41
 msgid "Expired:"
 msgstr "만료:"
 
-#: admin/admin.strings.js:41
+#: admin/admin.strings.js:42
 msgid "Refresh"
 msgstr "새로 고침"
 
-#: admin/admin.strings.js:42
+#: admin/admin.strings.js:43
 msgid "Shutdown Server"
 msgstr "서버 내리기"
 
-#: admin/admin.strings.js:43
+#: admin/admin.strings.js:44
 msgid "Server uptime"
 msgstr "서버 가동 시간"
 
-#: admin/src/AdminSocketAnalytics.js:212
+#: admin/admin.strings.js:45
+#, fuzzy
+#| msgid "Refresh"
+msgid "Refresh Log"
+msgstr "새로 고침"
+
+#: admin/admin.strings.js:46
+msgid "Set Log Levels"
+msgstr ""
+
+#: admin/admin.strings.js:47
+msgid "Log Levels"
+msgstr ""
+
+#: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
+#: src/control/Signing.js:608
+msgid "Close"
+msgstr "닫기"
+
+#: admin/admin.strings.js:49
+msgid "Update Log Levels"
+msgstr ""
+
+#: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
 msgstr "받음"
 
-#: admin/src/AdminSocketAnalytics.js:216
+#: admin/src/AdminSocketAnalytics.js:209
 msgid "Sent"
 msgstr "보냄"
 
@@ -190,17 +219,17 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "이 세션을 정말 종료하겠습니까?"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1185
+#: src/control/Control.Menubar.js:1188
 #: src/control/Control.PresentationBar.js:82 src/control/Control.Tabs.js:201
-#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:584
+#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:596
 msgid "OK"
 msgstr "확인"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1186
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1189
 #: src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:83 src/control/Control.Tabs.js:202
-#: src/control/Control.Tabs.js:219 src/control/Toolbar.js:585
+#: src/control/Control.Tabs.js:219 src/control/Toolbar.js:597
 #: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:404
 msgid "Cancel"
 msgstr "취소"
@@ -272,10 +301,6 @@ msgstr " 초"
 #: src/control/ColorPicker.js:121
 msgid "No color"
 msgstr "색 없음"
-
-#: src/control/Control.AlertDialog.js:25 src/control/Signing.js:608
-msgid "Close"
-msgstr "닫기"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
@@ -408,115 +433,115 @@ msgstr "글꼴 이름"
 msgid "Font Size"
 msgstr "글꼴 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1833
+#: src/control/Control.JSDialogBuilder.js:1852
 #, fuzzy
 #| msgid "Borders"
 msgid "Cell borders"
 msgstr "테두리"
 
-#: src/control/Control.JSDialogBuilder.js:1856
+#: src/control/Control.JSDialogBuilder.js:1875
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1858
+#: src/control/Control.JSDialogBuilder.js:1877
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1860
+#: src/control/Control.JSDialogBuilder.js:1879
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2029
+#: src/control/Control.JSDialogBuilder.js:2055
 msgid "Rows"
 msgstr "열"
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2056
 msgid "Columns"
 msgstr "행"
 
-#: src/control/Control.JSDialogBuilder.js:2050
+#: src/control/Control.JSDialogBuilder.js:2076
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "표 삽입"
 
-#: src/control/Control.JSDialogBuilder.js:2079
+#: src/control/Control.JSDialogBuilder.js:2105
 msgid "Line style:"
 msgstr "줄 양식:"
 
-#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:229
-#: src/control/Control.Menubar.js:231 src/control/Control.Menubar.js:233
-#: src/control/Control.Menubar.js:351 src/control/Control.Menubar.js:467
+#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:230
+#: src/control/Control.Menubar.js:232 src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:353 src/control/Control.Menubar.js:469
 #: src/control/Control.StatusBar.js:498
 msgid "None (Do not check spelling)"
 msgstr "없음 (맞춤법 검사 안함)"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:254
-#: src/control/Control.Menubar.js:367 src/control/Control.Menubar.js:484
-#: src/control/Control.Menubar.js:532 src/control/Control.Menubar.js:579
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:255
+#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:486
+#: src/control/Control.Menubar.js:535 src/control/Control.Menubar.js:582
 msgid "Share..."
 msgstr "공유"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:256
-#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:486
-#: src/control/Control.Menubar.js:534 src/control/Control.Menubar.js:581
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:257
+#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:488
+#: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:584
 msgid "See revision history"
 msgstr "개정 내역 확인"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:257
-#: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:489
-#: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:583
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:258
+#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:491
+#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:586
 msgid "Download as"
 msgstr "다음 형식으로 내려 받기"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:257
-#: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:489
-#: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:583
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:258
+#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:491
+#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:586
 msgid "Export as"
 msgstr "내보내기"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:258
-#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:490
-#: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:584
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:259
+#: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:492
+#: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:587
 msgid "PDF Document (.pdf)"
 msgstr "PDF 문서 (.pdf)"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:491
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:493
 msgid "ODF text document (.odt)"
 msgstr "ODF 텍스트 문서 (.odt)"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:492
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:494
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 문서 (.doc)"
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:493
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:495
 msgid "Word Document (.docx)"
 msgstr "Word 문서 (.docx)"
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:494
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:496
 msgid "Rich Text (.rtf)"
 msgstr "서식 있는 텍스트 (.rtf)"
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:495
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:497
 msgid "EPUB (.epub)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:487
+#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:489
 #: src/control/Signing.js:601
 msgid "Sign document"
 msgstr "문서 서명"
 
-#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:263
-#: src/control/Control.Menubar.js:376
+#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:378
 msgid "Close document"
 msgstr "문서 닫기"
 
-#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:268
-#: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:500
-#: src/control/Control.Menubar.js:545 src/control/Control.Menubar.js:592
+#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:269
+#: src/control/Control.Menubar.js:383 src/control/Control.Menubar.js:502
+#: src/control/Control.Menubar.js:548 src/control/Control.Menubar.js:595
 msgid "Repair"
 msgstr "복구"
 
-#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:282
+#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:283
 #: src/control/Control.StatusBar.js:205
 msgid "Reset zoom"
 msgstr "배율 초기화"
@@ -525,14 +550,14 @@ msgstr "배율 초기화"
 msgid "Show Ruler"
 msgstr "눈금자 보기"
 
-#: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:294
-#: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:642
-#: src/control/Control.Menubar.js:682 src/control/Control.Menubar.js:695
+#: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:295
+#: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:645
+#: src/control/Control.Menubar.js:685 src/control/Control.Menubar.js:698
 msgid "Local Image..."
 msgstr "로컬 이미지..."
 
 #: src/control/Control.Menubar.js:93 src/control/Control.Menubar.js:95
-#: src/control/Control.Menubar.js:658 src/control/Control.Menubar.js:660
+#: src/control/Control.Menubar.js:661 src/control/Control.Menubar.js:663
 msgid "All"
 msgstr "전체"
 
@@ -540,87 +565,87 @@ msgstr "전체"
 msgid "Text orientation"
 msgstr "텍스트 방향"
 
-#: src/control/Control.Menubar.js:241 src/control/Control.Menubar.js:354
-#: src/control/Control.Menubar.js:471
+#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:356
+#: src/control/Control.Menubar.js:473
 msgid "Online Help"
 msgstr "온라인 도움말"
 
-#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:355
-#: src/control/Control.Menubar.js:472
+#: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:357
+#: src/control/Control.Menubar.js:474
 msgid "Keyboard shortcuts"
 msgstr "키보드 단축키"
 
-#: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:356
-#: src/control/Control.Menubar.js:473
+#: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:358
+#: src/control/Control.Menubar.js:475
 msgid "Report an issue"
 msgstr "문제 보고하기"
 
-#: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:357
-#: src/control/Control.Menubar.js:474 src/control/Control.Menubar.js:524
-#: src/control/Control.Menubar.js:571 src/control/Control.Menubar.js:635
+#: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:359
+#: src/control/Control.Menubar.js:476 src/control/Control.Menubar.js:527
+#: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:638
 msgid "Latest Updates"
 msgstr ""
 
-#: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:358
-#: src/control/Control.Menubar.js:475 src/control/Control.Menubar.js:525
-#: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:636
+#: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:360
+#: src/control/Control.Menubar.js:477 src/control/Control.Menubar.js:528
+#: src/control/Control.Menubar.js:575 src/control/Control.Menubar.js:639
 msgid "About"
 msgstr "정보"
 
-#: src/control/Control.Menubar.js:247 src/control/Control.Menubar.js:360
-#: src/control/Control.Menubar.js:477 src/map/Map.js:390
+#: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:479 src/map/Map.js:390
 msgid "Last modification"
 msgstr "마지막 수정"
 
-#: src/control/Control.Menubar.js:259 src/control/Control.Menubar.js:538
+#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:541
 msgid "ODF presentation (.odp)"
 msgstr "ODF 프레젠테이션 (.odp)"
 
-#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:539
+#: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:542
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 프레젠테이션 (.ppt)"
 
-#: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:540
+#: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:543
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint 프레젠테이션 (.pptx)"
 
-#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:570
+#: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:573
 #: src/control/Control.PresentationBar.js:31
 msgid "Fullscreen presentation"
 msgstr "프레젠테이션 전체 화면"
 
-#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:585
+#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:588
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF 스프레드시트 (.ods)"
 
-#: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:586
+#: src/control/Control.Menubar.js:375 src/control/Control.Menubar.js:589
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 스프레드시트 (.xls)"
 
-#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:587
+#: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:590
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel 스프레드시트 (.xlsx)"
 
-#: src/control/Control.Menubar.js:507 src/control/Control.Menubar.js:552
-#: src/control/Control.Menubar.js:599 src/control/Control.StatusBar.js:190
+#: src/control/Control.Menubar.js:509 src/control/Control.Menubar.js:555
+#: src/control/Control.Menubar.js:602 src/control/Control.StatusBar.js:190
 msgid "Search"
 msgstr "검색"
 
-#: src/control/Control.Menubar.js:517
+#: src/control/Control.Menubar.js:520
 msgid "Page Setup"
 msgstr "페이지 설정"
 
-#: src/control/Control.Menubar.js:781 src/control/Control.StatusBar.js:497
+#: src/control/Control.Menubar.js:784 src/control/Control.StatusBar.js:497
 msgid "Reset to Default Language"
 msgstr "기본 언어로 다시 설정"
 
-#: src/control/Control.Menubar.js:1101
+#: src/control/Control.Menubar.js:1104
 #, fuzzy
 #| msgid "Insert shapes"
 msgid "Insert Shape"
 msgstr "도형 삽입"
 
-#: src/control/Control.Menubar.js:1183
+#: src/control/Control.Menubar.js:1186
 msgid "Are you sure you want to delete this slide?"
 msgstr "이 슬라이드를 정말 삭제하겠습니까?"
 
@@ -828,18 +853,24 @@ msgstr "항상 편집자를 따라감"
 msgid "Current"
 msgstr "현재"
 
-#: src/control/Ruler.js:368
+#: src/control/Ruler.js:363
 msgid "Left Margin"
 msgstr "왼쪽 여백"
 
-#: src/control/Ruler.js:369
+#: src/control/Ruler.js:364
 msgid "Right Margin"
 msgstr "오른쪽 여백"
 
-#: src/control/Ruler.js:635 src/control/Ruler.js:759
+#: src/control/Ruler.js:637
 #, fuzzy
 #| msgid "Insert table"
 msgid "Insert tabstop"
+msgstr "표 삽입"
+
+#: src/control/Ruler.js:644
+#, fuzzy
+#| msgid "Insert table"
+msgid "Delete tabstop"
 msgstr "표 삽입"
 
 #: src/control/Signing.js:195
@@ -978,31 +1009,31 @@ msgstr "저장 중..."
 msgid "Renaming..."
 msgstr "이름 바꾸기..."
 
-#: src/control/Toolbar.js:385
+#: src/control/Toolbar.js:389
 msgid "I understand the risks"
 msgstr ""
 
-#: src/control/Toolbar.js:439
+#: src/control/Toolbar.js:451
 msgid "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:483
+#: src/control/Toolbar.js:495
 msgid "This version of %productName is powered by"
 msgstr "%productName 의 버전의 제공자"
 
-#: src/control/Toolbar.js:493
+#: src/control/Toolbar.js:505
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:578
+#: src/control/Toolbar.js:590
 msgid "Insert hyperlink"
 msgstr "하이퍼링크 삽입"
 
-#: src/control/Toolbar.js:580
+#: src/control/Toolbar.js:592
 msgid "Text"
 msgstr "문자"
 
-#: src/control/Toolbar.js:581
+#: src/control/Toolbar.js:593
 msgid "Link"
 msgstr "링크"
 
@@ -1022,75 +1053,75 @@ msgstr "서버제공자:"
 msgid "Unsupported server version."
 msgstr "지원하지 않는 서버 버전"
 
-#: src/core/Socket.js:374
+#: src/core/Socket.js:381
 msgid "Session terminated by document owner"
 msgstr "문서 소유자에 의해 세션이 만료되었습니다."
 
-#: src/core/Socket.js:378
+#: src/core/Socket.js:385
 msgid "Idle document - please click to reload and resume editing"
 msgstr "대기중인 문서 - 편집을 계속하려면 클릭하십시오.(새로 고침됨)"
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:392
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "유지보수를 위해 서버가 종료됩니다.(자동 저장됨)"
 
-#: src/core/Socket.js:389
+#: src/core/Socket.js:396
 msgid "Oops, there is a problem connecting the document"
 msgstr "문서를 여는데 문제가 발생했습니다."
 
-#: src/core/Socket.js:393
+#: src/core/Socket.js:400
 msgid "Server is recycling and will be available shortly"
 msgstr "서버를 재부팅하는 중으로 곧 사용이 가능합니다."
 
-#: src/core/Socket.js:421
+#: src/core/Socket.js:428
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
 msgstr "저장소의 문서가 변경되었습니다. 새 문서를 불러 옵니다. 작업한 내용은 개정 이력에서 확인할 수 있습니다."
 
-#: src/core/Socket.js:427
+#: src/core/Socket.js:434
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
 msgstr "이전 버전으로 복구합니다. 저장되지 않은 변경 사항은 개정 내역에서 확인할 수 있습니다."
 
-#: src/core/Socket.js:530
+#: src/core/Socket.js:537
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
 msgstr "저장소에 있는 문서가 변경되었습니다. 변경 사항을 어떻게 처리하겠습니까?"
 
-#: src/core/Socket.js:534
+#: src/core/Socket.js:541
 msgid "Discard"
 msgstr "버리기"
 
-#: src/core/Socket.js:539
+#: src/core/Socket.js:546
 msgid "Overwrite"
 msgstr "덮어쓰기"
 
-#: src/core/Socket.js:544
+#: src/core/Socket.js:551
 msgid "Save to new file"
 msgstr "새 파일로 저장"
 
-#: src/core/Socket.js:617
+#: src/core/Socket.js:624
 msgid "Document requires password to view."
 msgstr "문서를 보려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:620
+#: src/core/Socket.js:627
 msgid "Document requires password to modify."
 msgstr "문서를 수정하려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:622
+#: src/core/Socket.js:629
 msgid "Hit Cancel to open in view-only mode."
 msgstr "보기 전용 모드로 열려면 [취소]를 클릭하십시오."
 
-#: src/core/Socket.js:626
+#: src/core/Socket.js:633
 msgid "Wrong password provided. Please try again."
 msgstr "암호가 틀렸습니다. 다시 시도하십시오"
 
-#: src/core/Socket.js:758 src/map/Map.js:1446
+#: src/core/Socket.js:759 src/map/Map.js:1446
 msgid "Loading..."
 msgstr "불러오는 중..."
 
-#: src/core/Socket.js:758
+#: src/core/Socket.js:759
 msgid "Connecting..."
 msgstr "연결하는 중.."
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1036
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "문서에 연결할 수 없습니다. 다시 시도하십시오."
 
@@ -1291,6 +1322,10 @@ msgstr "템플릿으로 새로운 파일 만들기..."
 #: src/map/handler/Map.WOPI.js:422
 msgid "Creating copy..."
 msgstr "복사본 만드는 중..."
+
+#: admin/src/AdminSocketSettings.js:34
+msgid "Confirmation"
+msgstr ""
 
 #~ msgid "Color"
 #~ msgstr "색"

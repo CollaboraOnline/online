@@ -102,4 +102,7 @@
     <string name="pref_show_debug_info_summary">Aktiver for å vise feilsøkingsinformasjon i dokumentvisningen</string>
     <string name="pref_show_debug_info">Vis Feilsøkingsinfo</string>
     <string name="pref_filter_summary">Angi hvilke filter som skal brukes som standard</string>
+    <string name="app_version_and_hash">Versjon: %1$s
+\nonline git-hash: %2$s
+\nkjerne git-hash: %3$s</string>
 </resources>
