@@ -44,9 +44,6 @@ var testBlackLists = {
 	],
 
 	'cp-6-4': [
-		['desktop/calc/focus_spec.js',
-			[]
-		],
 		['mobile/calc/apply_font_spec.js',
 			[
 				'Apply font size.'
