@@ -5,9 +5,9 @@
   "requires": true,
   "dependencies": {
     "@braintree/sanitize-url": {
-      "version": "3.0.0",
-      "resolved": "file:archived-packages/@braintree/sanitize-url-3.0.0-ca67970b5.tar",
-      "integrity": "sha512-/JXgFN9pna2DJ4jEcSp2NRoU/ot1Pwunh/eu541VL2Tgt0MEbxUObmi6FTcsmhSDtCzn7+JDr6cWgqYMJlKXuw== sha512-ymeXC1qObTag/hhEG7BoTMdIzuhKekTxNJTIfiVXsoP1fUXHKBpr0EfCsSA06BuP5gxTPs2vDKjtmYbgvEfY+g==",
+      "version": "4.0.1",
+      "resolved": "file:archived-packages/@braintree/sanitize-url-4.0.1-4c7210b55.tar",
+      "integrity": "sha512-3vKEuKCJIL4d2aVuwE1MdweAspwBYc+KaBAa0S4as2nXPRpvts7GdU8vtSstsHlC3esK5nf/RJrAT7PQ1+psbA== sha512-THIQtVN491hY2rTZ/h5boj0CwDKrZQIUnfaj6RbpGwRJKfmEIgNpgcCJC3KZl1Vux9bQmdE2P4Q7cYUoSUQ4MA==",
       "dev": true
     },
     "@iarna/cli": {
@@ -81,12 +81,6 @@
         }
       }
     },
-    "@types/jquery": {
-      "version": "2.0.40",
-      "resolved": "file:archived-packages/@types/jquery-2.0.40-acdd69e29.tar",
-      "integrity": "sha1-4+Ljb9LdTh7nWFzcRTHscmXP6E8= sha1-rN1p4pt0zewV3DwHS8sGS8G4chM=",
-      "dev": true
-    },
     "JSONStream": {
       "version": "1.3.5",
       "resolved": "file:archived-packages/JSONStream-1.3.5-13e8abb8d.tar",
@@ -98,15 +92,9 @@
       }
     },
     "acorn": {
-      "version": "6.1.1",
-      "resolved": "file:archived-packages/acorn-6.1.1-8cf4e2c2d.tar",
-      "integrity": "sha512-HlX6tpBbdf+mrwLG6a1M4vfKby/1a7OBUssek0yUGLat1r0gt+85bqDvRmZNScTRtjcx08+u0GyihnnXnpyeZA== sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==",
-      "dev": true
-    },
-    "acorn-dynamic-import": {
-      "version": "4.0.0",
-      "resolved": "file:archived-packages/acorn-dynamic-import-4.0.0-7773848d0.tar",
-      "integrity": "sha512-OGI+1qhLIixnL5rqv8yQU4SIdkO/Tbxs4ltLC7n87OGjOZLMzz5O51TlBpCJTxvhGiT1JNE80KrfYd9nE63Pxg== sha512-d3OEjQV4ROpoflsnUA8HozoIR504TFxNivYEUi6uwz0IYhBkTDXGuWlNdMtybRt3nqVx/L6XqMt0FxkXuWKZhw==",
+      "version": "7.3.1",
+      "resolved": "file:archived-packages/acorn-7.3.1-b4b734c12.tar",
+      "integrity": "sha512-mOwOt8F8wURU/ojXNUwvK7PnGs9Ew3t07Sxl6AYn9FjyC8rsIpn/GNB7YXAmnQ6y8hRJ6NJMFG40rTAgz3JqnA== sha512-tLc0wSnatxAQHVHUapaHdz72pi9KUyHjq5KyHjGg9Y8Ifdc79pTh2XvI6I1/chZbnM7QtNKzh66ooDogPZSleA==",
       "dev": true
     },
     "acorn-jsx": {
@@ -127,21 +115,28 @@
       }
     },
     "acorn-node": {
-      "version": "1.6.2",
-      "resolved": "file:archived-packages/acorn-node-1.6.2-ac884d119.tar",
-      "integrity": "sha512-l8Tx1UMK3fagABldcFjuOxPp+x/5rGAIzyFaIkaN2nGY7b+vW+UGQUcrqBiVXJG3lxN9NBJL5B4ecW3sEOPs2g== sha512-rIhNEZuNI8ibQcL7ANm/mGyPukIaZsRNX9psFNQURyJW0nu6k8wjSDld20z6v2mDBWqX13pIEnk9gGZJHIlEXg==",
+      "version": "1.8.2",
+      "resolved": "file:archived-packages/acorn-node-1.8.2-f26b7e7ec.tar",
+      "integrity": "sha512-zv3YpSpmPDg8jtKGF37qPvguRZpI1oLJAyN92pf+DCgUS1s8BIp2NW3m3XtEHVv1hGT1SmM2JsntlOYIDPt3eA== sha512-8mt+fslDufLYntIoPAaIMUe/lrbrehIiwmR3t2k9LljIzoigEPF27eLk2hy8zSGzmR/ogr7zbRKINMo1u0yh5A==",
       "dev": true,
       "requires": {
-        "acorn": "^6.0.2",
-        "acorn-dynamic-import": "^4.0.0",
-        "acorn-walk": "^6.1.0",
-        "xtend": "^4.0.1"
+        "acorn": "^7.0.0",
+        "acorn-walk": "^7.0.0",
+        "xtend": "^4.0.2"
+      },
+      "dependencies": {
+        "xtend": {
+          "version": "4.0.2",
+          "resolved": "file:archived-packages/xtend-4.0.2-2ca614d62.tar",
+          "integrity": "sha512-eKdZ9fnwYKY7adPcwWpWV8XbpwtbBlL9d6L4gnuWV8SsdKLDDHXgyVCKr9kjCeyPKym/Fkjxnx30yAMpN/XP/Q== sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==",
+          "dev": true
+        }
       }
     },
     "acorn-walk": {
-      "version": "6.1.1",
-      "resolved": "file:archived-packages/acorn-walk-6.1.1-3ad530e89.tar",
-      "integrity": "sha512-BGTB+YBcC1+6VDQW3oXiYCFDpv9taWRi6awYWl6inhuW32UCdOBeiTE8keAY+qU1Qap8HTiikny9WYSRJtmEBQ== sha512-OtUw6JUTgxA2QoqqmrmQ7F2NYqiBPi/L2jqHyFtllhOUvXYQXf0Z1CYUinIfyT4bTCGmrA7gX9FvHA81uzCoVw==",
+      "version": "7.1.1",
+      "resolved": "file:archived-packages/acorn-walk-7.1.1-c1d94f636.tar",
+      "integrity": "sha512-p1xyPLd6G5AeJo/eOcz4bYhP5e1PwEhTgfNr8ri3xCZkV6l3PtDcv8srszHqSNquy3qiOoW4ZS62xXk5m3L+yg== sha512-wdlPY2tm/9XBr7QkKlq0WQVgiuGTX6YWPyRyBviSoScBuLfTVQhvwg6wJ369GJ/1nPfTLMfnrFIfjqVg6d+jQQ==",
       "dev": true
     },
     "agent-base": {
@@ -187,18 +182,6 @@
       "version": "1.5.1",
       "resolved": "file:archived-packages/ajv-keywords-1.5.1-314dd0a4b.tar",
       "integrity": "sha1-tsSw+FFH57HY/whr3ohzaOlq960= sha1-MU3QpLM2j609/NxU7eYXG4htrzw=",
-      "dev": true
-    },
-    "almond": {
-      "version": "0.3.3",
-      "resolved": "file:archived-packages/almond-0.3.3-a0e7c95ac.tar",
-      "integrity": "sha1-dpfccSizwGEWHO0HaWQ+ezaGCK0= sha1-oOfJWsdiTWQXtElLHmi/9pMWiiA=",
-      "dev": true
-    },
-    "amdefine": {
-      "version": "1.0.1",
-      "resolved": "file:archived-packages/amdefine-1.0.1-4a5282ac1.tar",
-      "integrity": "sha1-CFLLigB+ILHhIwqmnL8GwJaXgeU= sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=",
       "dev": true
     },
     "ansi-align": {
@@ -287,13 +270,10 @@
       }
     },
     "arr-diff": {
-      "version": "2.0.0",
-      "resolved": "file:archived-packages/arr-diff-2.0.0-8f3b827f9.tar",
-      "integrity": "sha1-LoY7iIlC8LXPqhWXWeb2lNs3/cI= sha1-jzuCf5Vai9ZpaX5KQlasPOrjVs8=",
-      "dev": true,
-      "requires": {
-        "arr-flatten": "^1.0.1"
-      }
+      "version": "4.0.0",
+      "resolved": "file:archived-packages/arr-diff-4.0.0-d6461074f.tar",
+      "integrity": "sha1-TqH1Oe6vvYAX/qmZ1MD257kqLoc= sha1-1kYQdP6/7HHn4VI1dhoyml3HxSA=",
+      "dev": true
     },
     "arr-flatten": {
       "version": "1.1.0",
@@ -301,28 +281,16 @@
       "integrity": "sha512-WCkeZqOxyeKVqVxlfJhKBCL0hQwtyw20j5wHz9C8ildZ28VWKV85xJ5dZyHSO0Ez6fekOXKo89quCXRA6ilHdQ== sha512-L3hKV5R/p5o81R7O02IGnwpDmkp6E982XhtbuwSe3O4qOtMMMtodicASA1Cny2U+aCXcNpml+m4dPsvsJ3jatg==",
       "dev": true
     },
-    "array-filter": {
-      "version": "0.0.1",
-      "resolved": "file:archived-packages/array-filter-0.0.1-7da8cf2e2.tar",
-      "integrity": "sha1-yBPZeN4EWIhFkS/fASkk/MSa32c= sha1-fajPLiZijtcygDWB/SH2fKzS7uw=",
-      "dev": true
-    },
-    "array-map": {
-      "version": "0.0.0",
-      "resolved": "file:archived-packages/array-map-0.0.0-88a2bab73.tar",
-      "integrity": "sha1-OsIhqwY/Um3dtQzJ+pLaRDbHFCc= sha1-iKK6tz0c97zVwbEYoAP2b2ZfpmI=",
-      "dev": true
-    },
-    "array-reduce": {
-      "version": "0.0.0",
-      "resolved": "file:archived-packages/array-reduce-0.0.0-173899d3f.tar",
-      "integrity": "sha1-VaHFaQRO8dP22vbNEn7TYB3PJZM= sha1-FziZ0//Rx9k4PkR5Ul2+J4yrXys=",
+    "arr-union": {
+      "version": "3.1.0",
+      "resolved": "file:archived-packages/arr-union-3.1.0-e39b09aea.tar",
+      "integrity": "sha1-OlADHFJN5rWA6dOAjPwd4pNCkiQ= sha1-45sJrqne+Gao8gbiiK9jkZuuOcQ=",
       "dev": true
     },
     "array-unique": {
-      "version": "0.2.1",
-      "resolved": "file:archived-packages/array-unique-0.2.1-a1d97ccaf.tar",
-      "integrity": "sha1-7nunS65uWxBERm7AgwSxN1BIUqA= sha1-odl8yvy8JiXMcPrc6zalDFiwGlM=",
+      "version": "0.3.2",
+      "resolved": "file:archived-packages/array-unique-0.3.2-a894b75d4.tar",
+      "integrity": "sha1-dwQvo+XrC3XPFC0oDfRSIgWRFDw= sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=",
       "dev": true
     },
     "asn1.js": {
@@ -334,14 +302,23 @@
         "bn.js": "^4.0.0",
         "inherits": "^2.0.1",
         "minimalistic-assert": "^1.0.0"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "file:archived-packages/bn.js-4.11.9-13a42862a.tar",
+          "integrity": "sha512-KG9VTNsd+c0aSeTf4ZOOKhZcTX4aR3kJaVXKy5r2xnrYlJUVwhEZcCwJTgA58w6HfgPOfcJlPQZqlVoeIdq6Mw== sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==",
+          "dev": true
+        }
       }
     },
     "assert": {
-      "version": "1.3.0",
-      "resolved": "file:archived-packages/assert-1.3.0-03939a622.tar",
-      "integrity": "sha1-u217gkxiCO8WBWvFyTBO9pINPHU= sha1-A5OaYiWCqBLMICMgoLmlbJuBWEk=",
+      "version": "1.5.0",
+      "resolved": "file:archived-packages/assert-1.5.0-103b206b0.tar",
+      "integrity": "sha512-mO1deBaH17lKTbORDMlm3fTulgr2dZ663zno+VNoJLaxAVUI+5/JMrqz7uLRIH3Mdrnn3HK3NmXmFgxPJPROeg== sha512-EDsgawzwoun2CZkCgtxJbv392v4nbk9XDD06zI+kQYoBM/3RBWLlEyJARDOmhAAosBjWACEkKL6S+lIZtcAubA==",
       "dev": true,
       "requires": {
+        "object-assign": "^4.1.1",
         "util": "0.10.3"
       },
       "dependencies": {
@@ -362,17 +339,26 @@
         }
       }
     },
-    "async": {
-      "version": "0.2.10",
-      "resolved": "file:archived-packages/async-0.2.10-b6bbe0b06.tar",
-      "integrity": "sha1-pFOm1LN/eQSVDSy2JBKBuQlAHTI= sha1-trvgsGdLnXGXCMo43owjfLUmw9E=",
+    "assign-symbols": {
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/assign-symbols-1.0.0-59667f41f.tar",
+      "integrity": "sha1-VS9PMj3caN5sKIsjNaTqoZBKyjA= sha1-WWZ/QfrdTyDMvCu5a41Pf3jsA2c=",
+      "dev": true
+    },
+    "atob": {
+      "version": "2.1.2",
+      "resolved": "file:archived-packages/atob-2.1.2-5a6eae928.tar",
+      "integrity": "sha512-1Tohw8AvoY+vY6eL7424Awz1uEgAwE5K6Rpq0HrSNyH54NVMy6qWv0sZYtU7qGzOp8L+l7dZKFbAPJN4HW2dzw== sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==",
       "dev": true
     },
     "autolinker": {
-      "version": "1.4.3",
-      "resolved": "file:archived-packages/autolinker-1.4.3-2e615057c.tar",
-      "integrity": "sha1-8W03GSjAqF9v7Vsbh7AbquuVvZ0= sha1-LmFQV8jjcTmabXeUmppq8k/kbfw=",
-      "dev": true
+      "version": "3.14.1",
+      "resolved": "file:archived-packages/autolinker-3.14.1-cafb111c8.tar",
+      "integrity": "sha512-2veDF0qujE26cl/tHcUI9Q856nbXlQC5W52umLqokyUbh3uhKFYbWNsFD5pf31FHPbu9pSi5kUawyih2yCFy6w== sha512-yvsRHIaY51EYDml6MGlbqyJGfl4n7zezGYf+R7gvM8c5LNpRGc4SISkvgAswSS8SWxk/OrGCylKV9mJyVstz7w==",
+      "dev": true,
+      "requires": {
+        "tslib": "^1.9.3"
+      }
     },
     "balanced-match": {
       "version": "1.0.0",
@@ -380,10 +366,65 @@
       "integrity": "sha1-7fk20zPODjZf2DR5Z3LKAwv5PUs= sha1-ibTRmasr7kneFk6gK4nORi1xt2c=",
       "dev": true
     },
+    "base": {
+      "version": "0.11.2",
+      "resolved": "file:archived-packages/base-0.11.2-e53e8fe31.tar",
+      "integrity": "sha512-o/Y/IwRg+LOz9VJ6E4c5AInP4x64iAMaAlV4wm/oZzwG5tfNQiBf0hioZBPTmbY4TzbWc/zFBuPviJx8j9q2IA== sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg==",
+      "dev": true,
+      "requires": {
+        "cache-base": "^1.0.1",
+        "class-utils": "^0.3.5",
+        "component-emitter": "^1.2.1",
+        "define-property": "^1.0.0",
+        "isobject": "^3.0.1",
+        "mixin-deep": "^1.2.0",
+        "pascalcase": "^0.1.1"
+      },
+      "dependencies": {
+        "define-property": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/define-property-1.0.0-769ebaaf3.tar",
+          "integrity": "sha1-9v9/8nAJjjYLgII/Mi7WpZVK7vU= sha1-dp66rz9KY6rTr56NMEybvnm/sOY=",
+          "dev": true,
+          "requires": {
+            "is-descriptor": "^1.0.0"
+          }
+        },
+        "is-accessor-descriptor": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/is-accessor-descriptor-1.0.0-9b98671d3.tar",
+          "integrity": "sha512-bURwOnDk+LAlJg0PeET8fsTQS6BYAr327Sa01oqVn1nrQNmhTcegwyu+y6TXFQqJ4Hj3T5FJQeTvqepPFpFeCQ== sha512-m5hnHTkcVsPfqx3AKlyttIPb7J+XykHvJP2B9bZDjlhLIoEq4XoK64Vg7boZlVWYK6LUY94dYPEE7Lh0ZkZKcQ==",
+          "dev": true,
+          "requires": {
+            "kind-of": "^6.0.0"
+          }
+        },
+        "is-data-descriptor": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/is-data-descriptor-1.0.0-8db457cb5.tar",
+          "integrity": "sha512-2vzl0fsNdiqcmXKbpTdidQEpEPwNivCFR+kwAPwGE8naWuhFLsugNx/8uf1253t0D9UkDHUZe68Gras4wFnwEg== sha512-jbRXy1FmtAoCjQkVmIVYwuuqDFUbaOeDjmed1tOGPrsMhtJA4rD9tkgA0F1qJ3gRFRXcHYVkdeaP50Q5rE/jLQ==",
+          "dev": true,
+          "requires": {
+            "kind-of": "^6.0.0"
+          }
+        },
+        "is-descriptor": {
+          "version": "1.0.2",
+          "resolved": "file:archived-packages/is-descriptor-1.0.2-d9e8ace56.tar",
+          "integrity": "sha512-BugoxA33jgkurwRmAD8nUBQQWmXurZWs52c5tjCpQRjTzEJE9W9g21sfNeFmRoUo1BM0pQCRDkQKSDsUZ2EmFw== sha512-2eis5WqQGV7peooDyLmNEPUrps9+SXX5c9pL3xEB+4e9HnGuDa7mB7kHxHw4CbqS9k1T2hOH3miL8n8WtiYVtg==",
+          "dev": true,
+          "requires": {
+            "is-accessor-descriptor": "^1.0.0",
+            "is-data-descriptor": "^1.0.0",
+            "kind-of": "^6.0.2"
+          }
+        }
+      }
+    },
     "base64-js": {
-      "version": "1.3.0",
-      "resolved": "file:archived-packages/base64-js-1.3.0-71c6afff2.tar",
-      "integrity": "sha512-CpJNbJWoNQKpqLyF710wBrc8wUceF4CJro2nGSbriScS0aWxAewo6kdE1TDT/Xhukj1/CUNO91q9x0XZey3Jyw== sha512-ccav/yGvoa80BQDljCxsmmQ3Xvx60/UpBIij5QN21W3wBi/hhIC9OoO+KLpu9IJTS9j4DRVJ3aDDF9cMSoa2lw==",
+      "version": "1.3.1",
+      "resolved": "file:archived-packages/base64-js-1.3.1-98b4388b6.tar",
+      "integrity": "sha512-hsw4PaV+I3QdWId9Bd1f+xKqd4sdIPeHxtDOK9+0PR4v2ibQkp4h77nSy8OYDRFTeju2Rz9LALUOLkpCFZezeg== sha512-mLQ4i2QO1ytvGWFWmcngKO//JXAQueZvwEKtjgQFM4jIK0kU+ytMfplL8j+n5mspOfjHwoAg+9yhb7BwAHm36g==",
       "dev": true
     },
     "bluebird": {
@@ -393,15 +434,9 @@
       "dev": true
     },
     "bn.js": {
-      "version": "4.11.8",
-      "resolved": "file:archived-packages/bn.js-4.11.8-22d7d87cf.tar",
-      "integrity": "sha512-9DuV7Tq1WXJveiKu1SmU02G7cBuhW84uzGmHMSpth1MglMxoUMsz3BziRUfnGC70vrg8oEFSj3MtQbvmN+Y0rg== sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==",
-      "dev": true
-    },
-    "bootstrap": {
-      "version": "3.3.6",
-      "resolved": "file:archived-packages/bootstrap-3.3.6-8de8f749d.tar",
-      "integrity": "sha1-6lm/z6wuCQXvtXRsvPE/EHGdDeM= sha1-jej3SdyKdD8qxbUQ2Yg3Hj2qZYk=",
+      "version": "5.1.2",
+      "resolved": "file:archived-packages/bn.js-5.1.2-e34ad969f.tar",
+      "integrity": "sha512-pZPLqo1iUy+iR7MvCFWZZySMjpyRTR6UZRIdF3Pljr5mdg4ql25VkNHGsWtXOqonYLEQRIR993CuCRZZ/WtjWQ== sha512-40rZaf3bUNKTVYu9sIeeEGOg7g14Yvnj9kH7b50EiwX0Q7A6umbvfI5tvHaOERH0XigqKkfLkFQxzb4e6CIXnA==",
       "dev": true
     },
     "boxen": {
@@ -498,14 +533,32 @@
       }
     },
     "braces": {
-      "version": "1.8.5",
-      "resolved": "file:archived-packages/braces-1.8.5-ba77962e1.tar",
-      "integrity": "sha1-sXZzDOu9n/YvHXPaSOzkif/LJJU= sha1-uneWLhLf+WnWt2cR6RS3N4V79qc=",
+      "version": "2.3.2",
+      "resolved": "file:archived-packages/braces-2.3.2-68d75b9e3.tar",
+      "integrity": "sha512-iS7oGDWngvMDbrh0MlF0hhc26iMPJELv00aCFSGPIn1+3Bcz2mjPiow2HwTXQ9fMTvruCiP7QWB6Adh0qHD8Sg== sha512-aNdbnj9P8PjdXU4ybaWLK2IF3jc/EoDYbC7AazW6to3TRsfXxscC9UXOB5iDiEQrkyIbWp2SLQda4+QAa7nc3w==",
       "dev": true,
       "requires": {
-        "expand-range": "^1.8.1",
-        "preserve": "^0.2.0",
-        "repeat-element": "^1.1.2"
+        "arr-flatten": "^1.1.0",
+        "array-unique": "^0.3.2",
+        "extend-shallow": "^2.0.1",
+        "fill-range": "^4.0.0",
+        "isobject": "^3.0.1",
+        "repeat-element": "^1.1.2",
+        "snapdragon": "^0.8.1",
+        "snapdragon-node": "^2.0.1",
+        "split-string": "^3.0.2",
+        "to-regex": "^3.0.1"
+      },
+      "dependencies": {
+        "extend-shallow": {
+          "version": "2.0.1",
+          "resolved": "file:archived-packages/extend-shallow-2.0.1-51af7d614.tar",
+          "integrity": "sha1-o9H3W9VTUT9Pbjss86GPVes9cK8= sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8=",
+          "dev": true,
+          "requires": {
+            "is-extendable": "^0.1.0"
+          }
+        }
       }
     },
     "brorand": {
@@ -546,35 +599,37 @@
       }
     },
     "browserify": {
-      "version": "13.1.0",
-      "resolved": "file:archived-packages/browserify-13.1.0-d81a018e9.tar",
-      "integrity": "sha1-QdgZzTNuBybY6NpMM3Ia5htXwfE= sha1-2BoBjpjdfKcG7AQlPSD4oDsq+K4=",
+      "version": "16.5.1",
+      "resolved": "file:archived-packages/browserify-16.5.1-1105f4879.tar",
+      "integrity": "sha512-lDYgHu2WQXBTy2JoV93CrAYC1sMWWUequep6LUiqH+wKCgsrJOLY3/OALpVTYSXMCh7PhrKtiJwm6VtXbHCbsw== sha512-EQX0h59Pp+0GtSRb5rL6OTfrttlzv+uyaUVlK6GX3w11SQ0jKPKyjC/54RhPR2ib2KmfcELM06e8FxcI5XNU2A==",
       "dev": true,
       "requires": {
         "JSONStream": "^1.0.3",
-        "assert": "~1.3.0",
+        "assert": "^1.4.0",
         "browser-pack": "^6.0.1",
         "browser-resolve": "^1.11.0",
-        "browserify-zlib": "~0.1.2",
-        "buffer": "^4.1.0",
-        "concat-stream": "~1.5.1",
+        "browserify-zlib": "~0.2.0",
+        "buffer": "~5.2.1",
+        "cached-path-relative": "^1.0.0",
+        "concat-stream": "^1.6.0",
         "console-browserify": "^1.1.0",
         "constants-browserify": "~1.0.0",
         "crypto-browserify": "^3.0.0",
         "defined": "^1.0.0",
         "deps-sort": "^2.0.0",
-        "domain-browser": "~1.1.0",
+        "domain-browser": "^1.2.0",
         "duplexer2": "~0.1.2",
-        "events": "~1.1.0",
-        "glob": "^5.0.15",
+        "events": "^2.0.0",
+        "glob": "^7.1.0",
         "has": "^1.0.0",
         "htmlescape": "^1.1.0",
-        "https-browserify": "~0.0.0",
+        "https-browserify": "^1.0.0",
         "inherits": "~2.0.1",
         "insert-module-globals": "^7.0.0",
         "labeled-stream-splicer": "^2.0.0",
-        "module-deps": "^4.0.2",
-        "os-browserify": "~0.1.1",
+        "mkdirp-classic": "^0.5.2",
+        "module-deps": "^6.0.0",
+        "os-browserify": "~0.3.0",
         "parents": "^1.0.1",
         "path-browserify": "~0.0.0",
         "process": "~0.11.0",
@@ -584,19 +639,48 @@
         "readable-stream": "^2.0.2",
         "resolve": "^1.1.4",
         "shasum": "^1.0.0",
-        "shell-quote": "^1.4.3",
+        "shell-quote": "^1.6.1",
         "stream-browserify": "^2.0.0",
-        "stream-http": "^2.0.0",
-        "string_decoder": "~0.10.0",
+        "stream-http": "^3.0.0",
+        "string_decoder": "^1.1.1",
         "subarg": "^1.0.0",
         "syntax-error": "^1.1.1",
         "through2": "^2.0.0",
         "timers-browserify": "^1.0.1",
-        "tty-browserify": "~0.0.0",
+        "tty-browserify": "0.0.1",
         "url": "~0.11.0",
         "util": "~0.10.1",
-        "vm-browserify": "~0.0.1",
+        "vm-browserify": "^1.0.0",
         "xtend": "^4.0.0"
+      },
+      "dependencies": {
+        "concat-stream": {
+          "version": "1.6.2",
+          "resolved": "file:archived-packages/concat-stream-1.6.2-dbb1c1821.tar",
+          "integrity": "sha512-VpbzGb+StPqO5rv/c69g9kY4IhSnGRWhfI7NMlRPiu6g0FTHxQ2PxV3tjhfklZsoQjiz3+rw+0iwdFTektWAWQ== sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==",
+          "dev": true,
+          "requires": {
+            "buffer-from": "^1.0.0",
+            "inherits": "^2.0.3",
+            "readable-stream": "^2.2.2",
+            "typedarray": "^0.0.6"
+          }
+        },
+        "safe-buffer": {
+          "version": "5.2.1",
+          "resolved": "file:archived-packages/safe-buffer-5.2.1-ae9dd2a34.tar",
+          "integrity": "sha512-gbLGDXxRhLUSyR7i1p8L2c2Y5xwp9E4q8bPNkqcEhUfgzGcuwVbFS60AE/bRpAps6+nVsgnLbA8YfwtAxHxBng== sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+          "dev": true
+        },
+        "string_decoder": {
+          "version": "1.3.0",
+          "resolved": "file:archived-packages/string_decoder-1.3.0-864457f14.tar",
+          "integrity": "sha512-UKUjkxfUYTvGWJ1gU0WI/pSsvxjq5OaJSRrpsu4IKcNeXWE/EqsKBvB30VRBzxucubngOqtT5K9tZ9qRitv9Ug== sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
+          "dev": true,
+          "requires": {
+            "safe-buffer": "~5.2.0"
+          }
+        }
       }
     },
     "browserify-aes": {
@@ -625,70 +709,31 @@
       }
     },
     "browserify-css": {
-      "version": "0.9.1",
-      "resolved": "file:archived-packages/browserify-css-0.9.1-1624d1b7b.tar",
-      "integrity": "sha1-WKyy9wx1K4Dgz+F0+anIZPLK2PU= sha1-FiTRt7Klag1Svh7WjqkRF5pcTtM=",
+      "version": "0.15.0",
+      "resolved": "file:archived-packages/browserify-css-0.15.0-6602c7c99.tar",
+      "integrity": "sha512-SPW2kb3+GRuC2/NWoyjCLIPzVsuQcwi/iiKRAWVtHhcpNKqSwnzY3N10pIylqS0bgRX1x7PAN4K3afpoxSQd0g== sha512-ZgLHyZ16PH6P25JlBE+5xNtdobpkc5Egh+ctc8ha3GDtuZqSSQu0ovOxOQvXt0xAmaXixth/DY9iT56HlDOxyg==",
       "dev": true,
       "requires": {
-        "clean-css": "2.2.x",
-        "concat-stream": "1.4.x",
-        "css": "1.6.x",
-        "find-node-modules": "^1.0.1",
-        "lodash": "3.6.x",
-        "through2": "0.6.x"
+        "clean-css": "^4.1.5",
+        "concat-stream": "^1.6.0",
+        "css": "^2.2.1",
+        "find-node-modules": "^2.0.0",
+        "lodash": "^4.17.11",
+        "mime": "^1.3.6",
+        "strip-css-comments": "^3.0.0",
+        "through2": "2.0.x"
       },
       "dependencies": {
         "concat-stream": {
-          "version": "1.4.11",
-          "resolved": "file:archived-packages/concat-stream-1.4.11-5f724c87c.tar",
-          "integrity": "sha512-bv3cxToX3OY2q3XGMSrMFmMnoxkxV8yl7im+UvMnDMNMp0Ggx7X6yScs3MlA4VC6gYvsWHGfEjNVxnmImkJomA== sha512-X3JMh8+4je3U1cQpG87+f9lXHDrqcb2MVLg9L7o8b1UZ0DzhRrUpdn65ttzu10PpJPPI3MQNkis+oha6TSA9Mw==",
+          "version": "1.6.2",
+          "resolved": "file:archived-packages/concat-stream-1.6.2-dbb1c1821.tar",
+          "integrity": "sha512-VpbzGb+StPqO5rv/c69g9kY4IhSnGRWhfI7NMlRPiu6g0FTHxQ2PxV3tjhfklZsoQjiz3+rw+0iwdFTektWAWQ== sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==",
           "dev": true,
           "requires": {
-            "inherits": "~2.0.1",
-            "readable-stream": "~1.1.9",
-            "typedarray": "~0.0.5"
-          }
-        },
-        "isarray": {
-          "version": "0.0.1",
-          "resolved": "file:archived-packages/isarray-0.0.1-8a18acfca.tar",
-          "integrity": "sha1-r9VhrxAdT+iTDCL7DXjk0/rVxgM= sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=",
-          "dev": true
-        },
-        "readable-stream": {
-          "version": "1.1.14",
-          "resolved": "file:archived-packages/readable-stream-1.1.14-7cf4c54ef.tar",
-          "integrity": "sha1-P2232wO4Lddli36tXUDl+fFTfE0= sha1-fPTFTvZI44EwhMY23SB54WbAgdk=",
-          "dev": true,
-          "requires": {
-            "core-util-is": "~1.0.0",
-            "inherits": "~2.0.1",
-            "isarray": "0.0.1",
-            "string_decoder": "~0.10.x"
-          }
-        },
-        "through2": {
-          "version": "0.6.5",
-          "resolved": "file:archived-packages/through2-0.6.5-41ab9c67b.tar",
-          "integrity": "sha1-mUkEUPofvoI3AyJ3EUGAUAs/JTA= sha1-QaucZ7KdVyCQcUEOHXp6lozTrUg=",
-          "dev": true,
-          "requires": {
-            "readable-stream": ">=1.0.33-1 <1.1.0-0",
-            "xtend": ">=4.0.0 <4.1.0-0"
-          },
-          "dependencies": {
-            "readable-stream": {
-              "version": "1.0.34",
-              "resolved": "file:archived-packages/readable-stream-1.0.34-125820e34.tar",
-              "integrity": "sha1-1Lf0mAq23ZgAyVQb8ipl3NVy7PQ= sha1-Elgg40vIQtLyqq+v5MKRbuMsFXw=",
-              "dev": true,
-              "requires": {
-                "core-util-is": "~1.0.0",
-                "inherits": "~2.0.1",
-                "isarray": "0.0.1",
-                "string_decoder": "~0.10.x"
-              }
-            }
+            "buffer-from": "^1.0.0",
+            "inherits": "^2.0.3",
+            "readable-stream": "^2.2.2",
+            "typedarray": "^0.0.6"
           }
         }
       }
@@ -713,41 +758,84 @@
       "requires": {
         "bn.js": "^4.1.0",
         "randombytes": "^2.0.1"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "file:archived-packages/bn.js-4.11.9-13a42862a.tar",
+          "integrity": "sha512-KG9VTNsd+c0aSeTf4ZOOKhZcTX4aR3kJaVXKy5r2xnrYlJUVwhEZcCwJTgA58w6HfgPOfcJlPQZqlVoeIdq6Mw== sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==",
+          "dev": true
+        }
       }
     },
     "browserify-sign": {
-      "version": "4.0.4",
-      "resolved": "file:archived-packages/browserify-sign-4.0.4-aa4eb68e5.tar",
-      "integrity": "sha1-JnEqaCHbPHqtbVUT/3skcHfVXv0= sha1-qk62jl17ZYuqa/alfmMMvXqT0pg=",
+      "version": "4.2.0",
+      "resolved": "file:archived-packages/browserify-sign-4.2.0-844642d4a.tar",
+      "integrity": "sha512-p+zSatOGn772xiIK6JL9ncriVzqkMZPyJT0HHOM9HFTL/DUvWieZD2R1HTVBqZhIb6wM7Fbuh9LpPmK/inF3bg== sha512-hEZC1KEeYuoHRqhGhTy6gWrpJA3ZDjFWv0DE61643ZnOXAKJb3u7yWcrU0mMc9SwAqK1n7myPGndkp0dFG7NFA==",
       "dev": true,
       "requires": {
-        "bn.js": "^4.1.1",
-        "browserify-rsa": "^4.0.0",
-        "create-hash": "^1.1.0",
-        "create-hmac": "^1.1.2",
-        "elliptic": "^6.0.0",
-        "inherits": "^2.0.1",
-        "parse-asn1": "^5.0.0"
+        "bn.js": "^5.1.1",
+        "browserify-rsa": "^4.0.1",
+        "create-hash": "^1.2.0",
+        "create-hmac": "^1.1.7",
+        "elliptic": "^6.5.2",
+        "inherits": "^2.0.4",
+        "parse-asn1": "^5.1.5",
+        "readable-stream": "^3.6.0",
+        "safe-buffer": "^5.2.0"
+      },
+      "dependencies": {
+        "inherits": {
+          "version": "2.0.4",
+          "resolved": "file:archived-packages/inherits-2.0.4-93fbc6697.tar",
+          "integrity": "sha512-x/zUnRAbKaa/OlZ+39zdjzQ8atTjemHBKSd/lb5bEJQpegNuso/w7Nv9ZJSOXrkCNMLpENN+v8nFv/mQ0neo9w== sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+          "dev": true
+        },
+        "readable-stream": {
+          "version": "3.6.0",
+          "resolved": "file:archived-packages/readable-stream-3.6.0-055887cbb.tar",
+          "integrity": "sha512-Zu04U+2fdxJyZbbOVfoJpPN9+rk+eKx2FHDquu7kRtBdk3s9m67EzZNmbFcUTqLyexSaJTE/aNS5UFiPQMJ3lA== sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==",
+          "dev": true,
+          "requires": {
+            "inherits": "^2.0.3",
+            "string_decoder": "^1.1.1",
+            "util-deprecate": "^1.0.1"
+          }
+        },
+        "safe-buffer": {
+          "version": "5.2.1",
+          "resolved": "file:archived-packages/safe-buffer-5.2.1-ae9dd2a34.tar",
+          "integrity": "sha512-gbLGDXxRhLUSyR7i1p8L2c2Y5xwp9E4q8bPNkqcEhUfgzGcuwVbFS60AE/bRpAps6+nVsgnLbA8YfwtAxHxBng== sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+          "dev": true
+        },
+        "string_decoder": {
+          "version": "1.3.0",
+          "resolved": "file:archived-packages/string_decoder-1.3.0-864457f14.tar",
+          "integrity": "sha512-UKUjkxfUYTvGWJ1gU0WI/pSsvxjq5OaJSRrpsu4IKcNeXWE/EqsKBvB30VRBzxucubngOqtT5K9tZ9qRitv9Ug== sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
+          "dev": true,
+          "requires": {
+            "safe-buffer": "~5.2.0"
+          }
+        }
       }
     },
     "browserify-zlib": {
-      "version": "0.1.4",
-      "resolved": "file:archived-packages/browserify-zlib-0.1.4-bb35f8a51.tar",
-      "integrity": "sha1-LdjJfh72q2BVItA5m/ZDjX+r1Jo= sha1-uzX4pRn2AOD6a4SFJByXnQFB+y0=",
+      "version": "0.2.0",
+      "resolved": "file:archived-packages/browserify-zlib-0.2.0-67de36472.tar",
+      "integrity": "sha512-3VVAjdAzEIjZVdEffHWt9hoIOg0bxaGc43AkCUc0Oy0XoY8DfNy4VPfcpmJZIQj5vklPKZE9A+5eM2svQ3vlcg== sha512-Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==",
       "dev": true,
       "requires": {
-        "pako": "~0.2.0"
+        "pako": "~1.0.5"
       }
     },
     "buffer": {
-      "version": "4.9.1",
-      "resolved": "file:archived-packages/buffer-4.9.1-6d1bb601b.tar",
-      "integrity": "sha1-uhg37sjXZDFMnSe767BBIGjtcuY= sha1-bRu2AbB6TvztlwlBMgkwJ8lbwpg=",
+      "version": "5.2.1",
+      "resolved": "file:archived-packages/buffer-5.2.1-73e2a8d25.tar",
+      "integrity": "sha512-AyYgXopNCSieJkl+OjlBOk4g/m19mhketa58Fd1P7SVeFvRbWKosb7Xdg1F3WWR2eiEybXtIRn6ILOcTdMUTQg== sha512-c+Ko0loDaFfuPWiL02ls9Xd3GO3cPVmUobQ6t3rXNUk304u6hGq+8N/kFi+QEIKhzK3uwolVhLzszmfLmMLnqg==",
       "dev": true,
       "requires": {
         "base64-js": "^1.0.2",
-        "ieee754": "^1.1.4",
-        "isarray": "^1.0.0"
+        "ieee754": "^1.1.4"
       }
     },
     "buffer-from": {
@@ -835,6 +923,23 @@
         }
       }
     },
+    "cache-base": {
+      "version": "1.0.1",
+      "resolved": "file:archived-packages/cache-base-1.0.1-00a71d4e7.tar",
+      "integrity": "sha512-I+5fjjWG24/WN6wiTrJAMbpv8J/c2kyoS62fS1dha7kJWK6ORnJpp17L3TELghW61DT65F8x3J50vA95UOl3sw== sha512-AKcdTnFSWATd5/GCPRxr2ChwIJ85CeyrEyjRHlKxQ56d4XJMGym0uAiKn0xbLOGOl3+yRpOTi484dVCEc5AUzQ==",
+      "dev": true,
+      "requires": {
+        "collection-visit": "^1.0.0",
+        "component-emitter": "^1.2.1",
+        "get-value": "^2.0.6",
+        "has-value": "^1.0.0",
+        "isobject": "^3.0.1",
+        "set-value": "^2.0.0",
+        "to-object-path": "^0.3.0",
+        "union-value": "^1.0.0",
+        "unset-value": "^1.0.0"
+      }
+    },
     "cached-path-relative": {
       "version": "1.0.2",
       "resolved": "file:archived-packages/cached-path-relative-1.0.2-e6bd86aac.tar",
@@ -854,12 +959,6 @@
       "version": "0.2.0",
       "resolved": "file:archived-packages/callsites-0.2.0-afab96262.tar",
       "integrity": "sha1-uVkGG81ZB81U1NF6G8xjFwPJUKs= sha1-r6uWJikQp/M8GaV3WCXGnzTjUMo=",
-      "dev": true
-    },
-    "camelcase": {
-      "version": "1.2.1",
-      "resolved": "file:archived-packages/camelcase-1.2.1-9bb5304d2.tar",
-      "integrity": "sha1-eItJifDsYR1O+lXe/pSKaLfTEI4= sha1-m7UwTS4LVmmLLHWLCKPqqdqlijk=",
       "dev": true
     },
     "capture-stack-trace": {
@@ -909,6 +1008,29 @@
       "integrity": "sha512-Qn98LG6HnoQK1bp58DgQo0HhFZUa0WSUVDxI333jlKVnJ/nu8U2aI9xYms7hkrZQOBVs7X5uWsDg7Se0hhjBDg== sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==",
       "dev": true
     },
+    "class-utils": {
+      "version": "0.3.6",
+      "resolved": "file:archived-packages/class-utils-0.3.6-a8e84f6bf.tar",
+      "integrity": "sha512-2S+dZZXSr5ho4pwA3SLbavKflWzAt2T4M+FvO4Uv7Fqo3mDxZZCkAM2LNhmInn/XgFa1IL0w/EQR66eEaBslLw== sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==",
+      "dev": true,
+      "requires": {
+        "arr-union": "^3.1.0",
+        "define-property": "^0.2.5",
+        "isobject": "^3.0.0",
+        "static-extend": "^0.1.1"
+      },
+      "dependencies": {
+        "define-property": {
+          "version": "0.2.5",
+          "resolved": "file:archived-packages/define-property-0.2.5-c35b1ef91.tar",
+          "integrity": "sha1-WmT7c4oSGUyRHwiC8mHyFpdgrDI= sha1-w1se+RjsPJkPmlvFe+BKrOxcgRY=",
+          "dev": true,
+          "requires": {
+            "is-descriptor": "^0.1.0"
+          }
+        }
+      }
+    },
     "classlist-polyfill": {
       "version": "1.2.0",
       "resolved": "file:archived-packages/classlist-polyfill-1.2.0-935bc2dfd.tar",
@@ -916,12 +1038,20 @@
       "dev": true
     },
     "clean-css": {
-      "version": "2.2.23",
-      "resolved": "file:archived-packages/clean-css-2.2.23-0590b5478.tar",
-      "integrity": "sha1-G/YVmYA0YR1PSigIaj43/ZzzdZQ= sha1-BZC1R4tRbEkD7cLYm9P9vdKGMow=",
+      "version": "4.2.3",
+      "resolved": "file:archived-packages/clean-css-4.2.3-55c3160cd.tar",
+      "integrity": "sha512-2i2C9SyIEaSjIs6Hv+ig0HLO2X2PE6w5xuw5nRWbnqEH/B/T7jTKilhCDAMoqtE7WE7ySU7G4DhWOyS5m/vcrw== sha512-VcMWDN54ZN/DS+g58HYL5/n4Zrqe8vHJpGA8KdgUXFU4fuP/aHNw8eld9SyEIyabIMJX/0RaY/fplOo5hYLSFA==",
       "dev": true,
       "requires": {
-        "commander": "2.2.x"
+        "source-map": "~0.6.0"
+      },
+      "dependencies": {
+        "source-map": {
+          "version": "0.6.1",
+          "resolved": "file:archived-packages/source-map-0.6.1-52381aa6e.tar",
+          "integrity": "sha512-2t5nwD7kap1J95IF4mWF9YHar6aRY5yjAlJPScGGpCRRkXGR0fyxn+PzZGMxY5pdtz96gVbJelqONeJjjR4oMw== sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==",
+          "dev": true
+        }
       }
     },
     "cli-boxes": {
@@ -968,6 +1098,16 @@
       "integrity": "sha1-i6lLHlIawKESOgavHc5hDZo/I0U= sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=",
       "dev": true
     },
+    "collection-visit": {
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/collection-visit-1.0.0-4bc0373c1.tar",
+      "integrity": "sha1-aSTARS8oYNvy9GX27xJK8wmNjZc= sha1-S8A3PBZLwykbTTaMgpzxqApZ3KA=",
+      "dev": true,
+      "requires": {
+        "map-visit": "^1.0.0",
+        "object-visit": "^1.0.0"
+      }
+    },
     "color-convert": {
       "version": "1.9.3",
       "resolved": "file:archived-packages/color-convert-1.9.3-41f014b5d.tar",
@@ -996,9 +1136,15 @@
       }
     },
     "commander": {
-      "version": "2.2.0",
-      "resolved": "file:archived-packages/commander-2.2.0-175ad4b93.tar",
-      "integrity": "sha1-E9pDrWZ0WttqVu4pkF4uiyxFNMo= sha1-F1rUuTF/P/YV8gHB5XIk9Vo+kd8=",
+      "version": "2.20.3",
+      "resolved": "file:archived-packages/commander-2.20.3-1a956498c.tar",
+      "integrity": "sha512-JQRacRejIztBHRfvOO/LuE0T0mihAP+YEX/P4hjsAcKZPTBULo1mZ1MiRdkLsPInE7akjhb/zj5kVMnmC7cCmA== sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==",
+      "dev": true
+    },
+    "component-emitter": {
+      "version": "1.3.0",
+      "resolved": "file:archived-packages/component-emitter-1.3.0-45ddec7ba.tar",
+      "integrity": "sha512-GFaBJiQv/7Y32N3hwnj7ItkZIvaTM/53xZSDC+dQKc0GllgO6ktpI5I6Rdh0LTqJ8SnCiWufatrnyGGD6B3ecA== sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==",
       "dev": true
     },
     "concat-map": {
@@ -1055,13 +1201,10 @@
       }
     },
     "console-browserify": {
-      "version": "1.1.0",
-      "resolved": "file:archived-packages/console-browserify-1.1.0-f0241c457.tar",
-      "integrity": "sha1-TxcxAw6GRBQGNaid7qW/Jt2/CCg= sha1-8CQcRXMKn8YyOyBtvzjtx0HQuxA=",
-      "dev": true,
-      "requires": {
-        "date-now": "^0.1.4"
-      }
+      "version": "1.2.0",
+      "resolved": "file:archived-packages/console-browserify-1.2.0-64c9183bf.tar",
+      "integrity": "sha512-JoaxCFIwRaGk7kqB6r/0xMfeQXgg6am/Z9e+Np3nKWgXAOfjHWtnMr8Hzl0A80L5tudpamgcvvKlajrmGW3h7A== sha512-ZMkYO/LkF17QvCPqM0gxw8yUzigAOZOSWSHg91FH6orS7vcEj5dVZTidN2fQ14yBSdg97RqhSNwLUXInd52OTA==",
+      "dev": true
     },
     "console-control-strings": {
       "version": "1.1.0",
@@ -1095,6 +1238,12 @@
         "run-queue": "^1.0.0"
       }
     },
+    "copy-descriptor": {
+      "version": "0.1.1",
+      "resolved": "file:archived-packages/copy-descriptor-0.1.1-676f6eb3c.tar",
+      "integrity": "sha1-YR4TEQyaJBzYhSuCJ4R/nHbnkQU= sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=",
+      "dev": true
+    },
     "core-util-is": {
       "version": "1.0.2",
       "resolved": "file:archived-packages/core-util-is-1.0.2-b5fd54220.tar",
@@ -1109,6 +1258,14 @@
       "requires": {
         "bn.js": "^4.1.0",
         "elliptic": "^6.0.0"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "file:archived-packages/bn.js-4.11.9-13a42862a.tar",
+          "integrity": "sha512-KG9VTNsd+c0aSeTf4ZOOKhZcTX4aR3kJaVXKy5r2xnrYlJUVwhEZcCwJTgA58w6HfgPOfcJlPQZqlVoeIdq6Mw== sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==",
+          "dev": true
+        }
       }
     },
     "create-error-class": {
@@ -1184,38 +1341,22 @@
       "dev": true
     },
     "css": {
-      "version": "1.6.0",
-      "resolved": "file:archived-packages/css-1.6.0-c06fff0af.tar",
-      "integrity": "sha1-iUaC32wedkNf3rwvtbBkUayMHic= sha1-wG//CvuzE/zlvOBw12UxpsjTAKo=",
+      "version": "2.2.4",
+      "resolved": "file:archived-packages/css-2.2.4-a149e3996.tar",
+      "integrity": "sha512-MKY9v8B1c/bRurdXCYXruEkAtlLFUw+2I+LGKoxPeL9vkC2VaNR2C0fnI4kVYQJr3FspJXAhKraoM3MvAFfgpg== sha512-oUnjmWpy0niI3x/mPL8dVEI1l7MnG3+HHyRPHf+YFSbK+svOhXpmSOcDURUh2aOCgl2grzrOPt1nHLuCVFULLw==",
       "dev": true,
       "requires": {
-        "css-parse": "1.7.0",
-        "css-stringify": "1.4.1"
-      }
-    },
-    "css-parse": {
-      "version": "1.7.0",
-      "resolved": "file:archived-packages/css-parse-1.7.0-321f6cf73.tar",
-      "integrity": "sha1-pHDQs3VtX11eLB8CQvL81t7l3E0= sha1-Mh9s9zeCpv91ERE5D8BeLGV9jJs=",
-      "dev": true
-    },
-    "css-stringify": {
-      "version": "1.4.1",
-      "resolved": "file:archived-packages/css-stringify-1.4.1-252ccbf03.tar",
-      "integrity": "sha1-3ftihzplyNKnE1Zm+c5uOFNishs= sha1-JSzL8D9yOgCb3Ydw/n6ydBca/fo=",
-      "dev": true,
-      "requires": {
-        "source-map": "~0.1.31"
+        "inherits": "^2.0.3",
+        "source-map": "^0.6.1",
+        "source-map-resolve": "^0.5.2",
+        "urix": "^0.1.0"
       },
       "dependencies": {
         "source-map": {
-          "version": "0.1.43",
-          "resolved": "file:archived-packages/source-map-0.1.43-c24bc146c.tar",
-          "integrity": "sha1-MsqCRUF8qgM4O9PEqXwvbYb4Uk0= sha1-wkvBRspRfBRx9drL4lcbK3+eM0Y=",
-          "dev": true,
-          "requires": {
-            "amdefine": ">=0.0.4"
-          }
+          "version": "0.6.1",
+          "resolved": "file:archived-packages/source-map-0.6.1-52381aa6e.tar",
+          "integrity": "sha512-2t5nwD7kap1J95IF4mWF9YHar6aRY5yjAlJPScGGpCRRkXGR0fyxn+PzZGMxY5pdtz96gVbJelqONeJjjR4oMw== sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==",
+          "dev": true
         }
       }
     },
@@ -1235,21 +1376,305 @@
       }
     },
     "d3": {
-      "version": "3.5.17",
-      "resolved": "file:archived-packages/d3-3.5.17-bc4674800.tar",
-      "integrity": "sha1-Z/6XFB+gVp/kJOb+vPnjBBHYacg= sha1-vEZ0gAQ3iyGjYMn8fPUjF5B2L7g=",
+      "version": "5.16.0",
+      "resolved": "file:archived-packages/d3-5.16.0-e0f2f9847.tar",
+      "integrity": "sha512-yo7oUfyNL9U846Tm7KvKU0ZlMlmFn9YnUOEDPgi/4+W7mm+CvzXS9mTqNODgS4PXUhmRhbF3ze2r+lIKTc1CDg== sha512-4PL5hHaHwX4m7Zr1UapXW23apo6pexCgdetdJ5kTmADpG/7T9Gkxw0M0tf/pjoB63ezCCm0u5UaFYy2aMt0Mcw==",
+      "dev": true,
+      "requires": {
+        "d3-array": "1",
+        "d3-axis": "1",
+        "d3-brush": "1",
+        "d3-chord": "1",
+        "d3-collection": "1",
+        "d3-color": "1",
+        "d3-contour": "1",
+        "d3-dispatch": "1",
+        "d3-drag": "1",
+        "d3-dsv": "1",
+        "d3-ease": "1",
+        "d3-fetch": "1",
+        "d3-force": "1",
+        "d3-format": "1",
+        "d3-geo": "1",
+        "d3-hierarchy": "1",
+        "d3-interpolate": "1",
+        "d3-path": "1",
+        "d3-polygon": "1",
+        "d3-quadtree": "1",
+        "d3-random": "1",
+        "d3-scale": "2",
+        "d3-scale-chromatic": "1",
+        "d3-selection": "1",
+        "d3-shape": "1",
+        "d3-time": "1",
+        "d3-time-format": "2",
+        "d3-timer": "1",
+        "d3-transition": "1",
+        "d3-voronoi": "1",
+        "d3-zoom": "1"
+      }
+    },
+    "d3-array": {
+      "version": "1.2.4",
+      "resolved": "file:archived-packages/d3-array-1.2.4-2875ba33c.tar",
+      "integrity": "sha512-FQruSzC2z99OuuDL4/SC+c7uflR85vltwLSzEBfEmptGYaBL/Ibhc6WA1rXgaOnnDyxCLNG3x3gfjbGxRbD8/A== sha512-KHW6M86R+FUPYGb3R5XiYjXPq7VzwxZ22buHhAEVG5ztoEcZZMLov530mmccaqA1GghZArjQV46fuc8kUqhhHw==",
       "dev": true
+    },
+    "d3-axis": {
+      "version": "1.0.12",
+      "resolved": "file:archived-packages/d3-axis-1.0.12-7a320d3df.tar",
+      "integrity": "sha512-R/CNEgngkvbeKSNE67IUmqyMSVtIJq/ICcecAuIemZ4FcQXyG3NNrSq5dYUaCjbniKXPvCYDkKLHmmw+5y5HYA== sha512-ejINPfPSNdGFKEOAtnBtdkpr24c4d4jsei6Lg98mxf424ivoDP2956/5HDpIAtmHo85lqT4pruy+zEgvRUBqaQ==",
+      "dev": true
+    },
+    "d3-brush": {
+      "version": "1.1.5",
+      "resolved": "file:archived-packages/d3-brush-1.1.5-ac4689e60.tar",
+      "integrity": "sha512-VpXztuEB8kPMVNTr6c3MJ8fEztfD3Q82Vx1Fvx9DazdhXHgbf78NIyKILww6oSz+XXPQv02U6RCiwgNTehhlOw== sha512-rEaJ5gHlgLxXugWjIkolTA0OyMvw8UWU1imYXy1v642XyyswmI1ybKOv05Ft+ewq+TFmdliD3VuK0pRp1VT/5A==",
+      "dev": true,
+      "requires": {
+        "d3-dispatch": "1",
+        "d3-drag": "1",
+        "d3-interpolate": "1",
+        "d3-selection": "1",
+        "d3-transition": "1"
+      }
+    },
+    "d3-chord": {
+      "version": "1.0.6",
+      "resolved": "file:archived-packages/d3-chord-1.0.6-2570360eb.tar",
+      "integrity": "sha512-ehlYNzSa7v7xRHMyca1UOtbDxCQw67/IRXRRskLdYSHj1QkSGHY2bw4valBnJy9E87nmSs68OLjQhv9HVAGCdQ== sha512-JXA2Dro1Fxw9rJe33Uv+Ckr5IrAa74TlfDEhE/jfLOaXegMQFQTAgAw9WnZL8+HxVBRXaRGCkrNU7pJeylRIuA==",
+      "dev": true,
+      "requires": {
+        "d3-array": "1",
+        "d3-path": "1"
+      }
+    },
+    "d3-collection": {
+      "version": "1.0.7",
+      "resolved": "file:archived-packages/d3-collection-1.0.7-8a2d3faf9.tar",
+      "integrity": "sha512-BJuBCZ12TyGg+ewe9oTA5p3f4ORLhrGuT/LuaUgy/mDMqWDB0gIqA1MwWWgLY8k8ubMEDe23HQBtl8atjTqzPw== sha512-ii0/r5f4sjKNTfh84Di+DpztYwqKhEyUlKoPrzUFfeSkWxjW49xU2QzO9qrPrNkpdI0XJkfzvmTu8V2Zylln6A==",
+      "dev": true
+    },
+    "d3-color": {
+      "version": "1.4.1",
+      "resolved": "file:archived-packages/d3-color-1.4.1-a76b131d2.tar",
+      "integrity": "sha512-7kIQuQ+1Ep/tHyah74UE3dORLEyN7vMOyxwbpqkDkkNmmWz/0q3tpRD5C+1H3Kh1O/pWaU3wWX3KZGhU9xxfCw== sha512-p2sTHSLCJI2QKunbGb7ocOh7DgTAn8IrLx21QRc/BSnodXM4sv6aLQlnfpvehFMLZEfBc6g9pH9SWQccFYfJ9Q==",
+      "dev": true
+    },
+    "d3-contour": {
+      "version": "1.3.2",
+      "resolved": "file:archived-packages/d3-contour-1.3.2-8683e9e0a.tar",
+      "integrity": "sha512-iorOkukzwvdxU3922Q5O0zfSsTPfNADW9v52wG2Nes4lX1/U9aOVIZDl+yQiexan3OS+IHZ0GjWslO2cNCnFIw== sha512-hoPp4K/rJCu0ladiH6zmJUEz6+u3lgR+GSm/QdM2BBvDraU39Vr7YdDCicJcxP1z8i9B/2dJLgDC1NcvlF8WCg==",
+      "dev": true,
+      "requires": {
+        "d3-array": "^1.1.1"
+      }
+    },
+    "d3-dispatch": {
+      "version": "1.0.6",
+      "resolved": "file:archived-packages/d3-dispatch-1.0.6-7d58e8125.tar",
+      "integrity": "sha512-hhwN18d6iOcQhGE7IKbJiAgKtc6bNtslUbHsLPGlAUJTMdGJoiLcNK37aElY7rxYxAsYiMeZCz5DpaAixfyC+A== sha512-fVjoElzjhCEy+Hbn8KygnmMS7Or0a9sI2UzGwoB7cCtvI1XpVN9GpoYlnb3xt2YV66oXYb1fLJ8GMvP4hdU1RA==",
+      "dev": true
+    },
+    "d3-drag": {
+      "version": "1.2.5",
+      "resolved": "file:archived-packages/d3-drag-1.2.5-ac3d68865.tar",
+      "integrity": "sha512-FgSF0oPYn12f1aVpfs1a2IIpBul+mgrs0jjk1f9VimkA3HHJn5osS+7EZskRVvmITyTwFo+EM/wspiL4/Ec6xw== sha512-rD1ohlkKQwMZYkQlYVCrSFxsWPzI97+W+PaEIBNTMxRuxz9RF0Hi5nJWHGVJ3Om9d2fRTe1yOBINJyy/ahV95w==",
+      "dev": true,
+      "requires": {
+        "d3-dispatch": "1",
+        "d3-selection": "1"
+      }
+    },
+    "d3-dsv": {
+      "version": "1.2.0",
+      "resolved": "file:archived-packages/d3-dsv-1.2.0-f72565aaf.tar",
+      "integrity": "sha512-8GcxzjuFEjc4Df/PJnPC0v1VF1W/5fWaH04BntPLg3P4QNuU0b09U90Py47mz8lI6fBJYcKFVZkp/odxIn9sPQ== sha512-9yVlqvZcSOMhCYzniHE7EVUws7Fa1zgw+/EAV2BxJoG3ME19V6BQFBwI855XQDsxyOuG7NibqRMTtiF/Qup46g==",
+      "dev": true,
+      "requires": {
+        "commander": "2",
+        "iconv-lite": "0.4",
+        "rw": "1"
+      }
+    },
+    "d3-ease": {
+      "version": "1.0.6",
+      "resolved": "file:archived-packages/d3-ease-1.0.6-499fe5554.tar",
+      "integrity": "sha512-BSkmGh3yNBbe10UwiSabx6DmJGVyl2hOP0ZoAqHKFwexHh79ueuyb7Xs1HQaiWxVX4qd16KG16ZNNaxNWT+TFw== sha512-SZ/lVU7LRXafqp7XtIcBdxnWl8yyLpgOmzAk0mWBI9gXNzLDx5ybZgnRbH9dN/yY5tzVBqCQ9avltSnqVwessQ==",
+      "dev": true
+    },
+    "d3-fetch": {
+      "version": "1.2.0",
+      "resolved": "file:archived-packages/d3-fetch-1.2.0-c82efc341.tar",
+      "integrity": "sha512-GFMWIT/c2QtcoihqnRgCo5DUWqfYbdPyBnwFl/gNM6IkLnlAFMeS3nb+146eabbpghTh7SL5bVFPDl4JxHUwaA== sha512-yC78NBVcd2zFAyR/HnUiBS7Lf6inSCoWcSxFfw8FYL7ydiqe80SazNwoffcqOfs95XaLo7yebsmQqDKSsXUtvA==",
+      "dev": true,
+      "requires": {
+        "d3-dsv": "1"
+      }
+    },
+    "d3-force": {
+      "version": "1.2.1",
+      "resolved": "file:archived-packages/d3-force-1.2.1-1c7bde872.tar",
+      "integrity": "sha512-jfW/YAYsYVrboFNyqbZ0hE/pdQVGmL1mNkQ0S6nnfjvGAe+dvUeFeYYtoGBT8Iwb4CeTrIvus6VD4hDVLK5Jqg== sha512-HHvehyaiUlVo5CxBJ0yF/xny4xoaxFxDnBXNvNcfW9adORGZfyNF1dj6DGLKyk4Yh3brP/1h3rnDzdIAwL08zg==",
+      "dev": true,
+      "requires": {
+        "d3-collection": "1",
+        "d3-dispatch": "1",
+        "d3-quadtree": "1",
+        "d3-timer": "1"
+      }
+    },
+    "d3-format": {
+      "version": "1.4.4",
+      "resolved": "file:archived-packages/d3-format-1.4.4-4d692cdb9.tar",
+      "integrity": "sha512-zpUHdEwXA7++Ge8f5jDFFfNhgeExVZTFBFkIyZeA3FFEgMGnEtFKP+BvWxTuWkkom8DoERFfxYTc63uaug6vEA== sha512-TWks25e7t8/cqctxCmxpUuzZN11QxIA7YrMbram94zMQ0PXjE4LVIMe/f6a4+xxL8HQ3OsAFULOINQi1pE62Aw==",
+      "dev": true
+    },
+    "d3-geo": {
+      "version": "1.12.1",
+      "resolved": "file:archived-packages/d3-geo-1.12.1-5c6e1dd5c.tar",
+      "integrity": "sha512-q2RSluUbVwAuTAekU2/UdfehnaAscpcE9xJ9yZTF1Slcap6bVLHuC6vKQXtig54ZSK9rR5D9VYUaFGoRUJBffQ== sha512-XG4d1c/UJSEX9NfU02KwBL6BYPj8YKHxgBEw5om2ZnTRSbIcego6dhHwcxuSR3clxh0EpE38os1DVPOmnYtTPg==",
+      "dev": true,
+      "requires": {
+        "d3-array": "1"
+      }
+    },
+    "d3-hierarchy": {
+      "version": "1.1.9",
+      "resolved": "file:archived-packages/d3-hierarchy-1.1.9-8fcb4fc65.tar",
+      "integrity": "sha512-AuVgP/qpmvSHTxXWH1xI6JflC7eaqZbKA/Oi2WfEcQz/2SSuHKFM9syXKbJoSM8V1UkxHsWHVB27Wh3+hgEiUw== sha512-j8tPxlqh1srJHAtxfvOUwKNYJkQuBFdM1+JAUfq6xqH5eAqf93L7oG1NVqDa4CpFZNvnNKtCYEUC8KY9yEn9lQ==",
+      "dev": true
+    },
+    "d3-interpolate": {
+      "version": "1.4.0",
+      "resolved": "file:archived-packages/d3-interpolate-1.4.0-57dce72b4.tar",
+      "integrity": "sha512-wbVyZ4I5DrFDc1uvdYEm56DuR6JiaUad8jRFcUTbMIPBOsI1sdq2EVWMJeuQjtdK1419Xjv53A70URNhZddtEg== sha512-V9znK0zc3jOPV4VD2zZn0sDhZU3WAE2bmlxdIwwQPPzPjvyLkd8B3JUVdS1IDUFDkWZ72c9qnv1GK2ZagTZ8EA==",
+      "dev": true,
+      "requires": {
+        "d3-color": "1"
+      }
+    },
+    "d3-path": {
+      "version": "1.0.9",
+      "resolved": "file:archived-packages/d3-path-1.0.9-54b698727.tar",
+      "integrity": "sha512-HIT6ICdrBPMnLiV31ryE30otdrx7jaG4PPaPRbJANYWrL0drTKovorzAHWPJffgTENb5XTryvSFhstFcjLTbAQ== sha512-VLaYcn81dtHVTjEHd8B+pbe9yHWpXKZUC87PzoFmsFrJqgFwDe/qxfp5MlfsfM1V5E/iVt0MmEbWQ7FVIXh/bg==",
+      "dev": true
+    },
+    "d3-polygon": {
+      "version": "1.0.6",
+      "resolved": "file:archived-packages/d3-polygon-1.0.6-93e445ed6.tar",
+      "integrity": "sha512-hASPsQVXLsZ48IlvRtn/k0JLR5oYLBwtxadA2XUnMC6IgC/kfCIpnxbjSqlpzCDEdlvIIaxBY6AiTd76JFn2/g== sha512-k+RF7WvI08PC8reEoXa/w2nSg5AUMTi+peBD9cmFc+0ixHfbs4QmxxkarVal1IkVkgxVuk9JSHhJURHiyHKAuQ==",
+      "dev": true
+    },
+    "d3-quadtree": {
+      "version": "1.0.7",
+      "resolved": "file:archived-packages/d3-quadtree-1.0.7-44a3c0797.tar",
+      "integrity": "sha512-Dlf5n/UfS6/ynDwLfdFqACQ3WUWrNer2OzZcn9tmcGNui+iNMJ/Bac6A+FoBRiuqyLcbkOwQJQfApBeHpWvSqw== sha512-RKPAeXnkC59IDGD0Wu5mANy0Q2V28L+fNe65pOCXVdVuTJS3WPKaJlFHer32Rbh9gIo9qMuJXio8ra4+YmIymA==",
+      "dev": true
+    },
+    "d3-random": {
+      "version": "1.1.2",
+      "resolved": "file:archived-packages/d3-random-1.1.2-e802b904d.tar",
+      "integrity": "sha512-inVuA7HL2nhlKB1XnsJ05DpKbGrOoiLX7AApXQRf9gg2Z8fKwHpg+tJbzwpBVaqvy5B4+aLYyOSH7U8se9rmQA== sha512-6AK5BNpIFqP+cx/sreKzNjWbwZQCSUatxq+pPRmFIQaWuoD+NrbVWw7YWpHiXpCQ/NanKdtGDuB+VQcZDaEmYQ==",
+      "dev": true
+    },
+    "d3-scale": {
+      "version": "2.2.2",
+      "resolved": "file:archived-packages/d3-scale-2.2.2-2db784bc6.tar",
+      "integrity": "sha512-oRyGq/ijhXwIqxTL7uziCqbi3laIE7TLn+jrCWfwAWaOUrP8X+aAKMAl9He27Ihx336OUxJWNqjaB5n6bmVc7A== sha512-LbeEvGgIb8UMcAa0EATLNX0lelKWGYDQiPdHj+gLblGVhGLyNbaCn3EvrJf0A3Y/uOOU5aD6MTh5ZFCdEwGiCw==",
+      "dev": true,
+      "requires": {
+        "d3-array": "^1.2.0",
+        "d3-collection": "1",
+        "d3-format": "1",
+        "d3-interpolate": "1",
+        "d3-time": "1",
+        "d3-time-format": "2"
+      }
+    },
+    "d3-scale-chromatic": {
+      "version": "1.5.0",
+      "resolved": "file:archived-packages/d3-scale-chromatic-1.5.0-00270be3a.tar",
+      "integrity": "sha512-rrUg2hl2iFsiHNRtOkBU+/y93070BcIyFIcY03HzJr9tQi+qIGsHGv4fdRmbM7m5pChZixEtOlbeWHNisP64wg== sha512-ACcL46DYImpRFMBcpk9HhtIyC7bTBR4fNOPxwVSl0LfulDAwyiHyPOTqcDG1+t5d4P9W7t/2NAuWu59aKko/cg==",
+      "dev": true,
+      "requires": {
+        "d3-color": "1",
+        "d3-interpolate": "1"
+      }
+    },
+    "d3-selection": {
+      "version": "1.4.1",
+      "resolved": "file:archived-packages/d3-selection-1.4.1-05321b463.tar",
+      "integrity": "sha512-QEh4uiRbFoAQJNnQ44Piu7jvS1/5kFGIX0ltRQ9e2mplusclER6AGXPNkelrd7+h0CBpdN7eodQJTgEqWzlrNQ== sha512-BTIbRjv/m5rcVTfBs4AMBLKs4x8XaaLkwm28KWu9S2vKNqXkXt2AH2Qf0sdPZHjFxcWg/YL53zcqAz+3g4/7PA==",
+      "dev": true
+    },
+    "d3-shape": {
+      "version": "1.3.7",
+      "resolved": "file:archived-packages/d3-shape-1.3.7-11492f2a3.tar",
+      "integrity": "sha512-kt/t0x8cRIYO8bCu/7vysTSmWTFTfeEjjsTuuug1KZ1x5SlXbn8irXjp1n24ylhdHFlhxTQo0kvuBLEFG4aXPw== sha512-EUkvKjqPFUAZyOlhY5gzCxCeI0Aep04LwIRpsZ/mLFelJiUfnK56jo5JMDSE7yyP2kLSb6LtF+S5chMk7uqPqw==",
+      "dev": true,
+      "requires": {
+        "d3-path": "1"
+      }
+    },
+    "d3-time": {
+      "version": "1.1.0",
+      "resolved": "file:archived-packages/d3-time-1.1.0-5e1d22b2b.tar",
+      "integrity": "sha512-W71N6R1wR8+JGeqnM+lvb4XUxhnrTkTlb7xE/Ynt788o3GRyKnKkkPsxvdKGRfUndE24skQBVlI67SiZi/HHug== sha512-Xh0isrZ5rPYYdqhAVk8VLnMEidhz5aP7htAADH6MfzgmmicPkTo8LhkLxci61/lCB7n7UmE3bN0leRt+qvkLxA==",
+      "dev": true
+    },
+    "d3-time-format": {
+      "version": "2.2.3",
+      "resolved": "file:archived-packages/d3-time-format-2.2.3-4401cd9c3.tar",
+      "integrity": "sha512-W0Fspo0TfvAWU0C+8oQgnGahHD6f1AXU8JCoWpH8l4QYFMvbvpH96SHWgdviX/FteGMOOJPTIEbCQKvcKo/vGw== sha512-RAHNnD8+XvC4Zc4d2A56Uw0yJoM7bsvOlJR33bclxq399Rak/b9bhvu/InjxdWhPtkgU53JJcleJTGkNRnN6IA==",
+      "dev": true,
+      "requires": {
+        "d3-time": "1"
+      }
+    },
+    "d3-timer": {
+      "version": "1.0.10",
+      "resolved": "file:archived-packages/d3-timer-1.0.10-0752439b4.tar",
+      "integrity": "sha512-HW3SlKfxwD3VA4jl/gNztGsJoYMuObKM7dofp/hHjT7gqWmdEN/FAHIVGg46zZdpYXCY1GUFttACAdrUh6+HLQ== sha512-B1JDm0XDaQC+uvo4DT79H0XmBskgS3l6Ve+1SBCfxgmtIb1AVrPIoqd+nPSv+loMX8szQ0sVUhGngL7D5QPiXw==",
+      "dev": true
+    },
+    "d3-transition": {
+      "version": "1.3.2",
+      "resolved": "file:archived-packages/d3-transition-1.3.2-b1cd20454.tar",
+      "integrity": "sha512-NmrtsmWhFWILQIs/JkCTlRoRngqRI0/l2ZmpT+ny8D6KkaK2L3RJaWkEBFXqJ5NQ2QpS9jz2BUXBLOFVyXgOYw== sha512-sc0gRU4PFqZ47lPVHloMn9tlPcv8jxgOQg+0zjhfZXMQuvppjG6YuwdMBE0TuqCZjeJkLecku/l9R0JPcRhaDA==",
+      "dev": true,
+      "requires": {
+        "d3-color": "1",
+        "d3-dispatch": "1",
+        "d3-ease": "1",
+        "d3-interpolate": "1",
+        "d3-selection": "^1.1.0",
+        "d3-timer": "1"
+      }
+    },
+    "d3-voronoi": {
+      "version": "1.1.4",
+      "resolved": "file:archived-packages/d3-voronoi-1.1.4-740ac9df6.tar",
+      "integrity": "sha512-YYSxxpx7HcWFSMdDklRMT/oH3QaZHdl/1o17okoTpDFVyTS5Kepjle8RvIlWt2kF/UZjc3koyJQxFyZ0e3gmrA== sha512-dArJ32hchFsrQ8uMiTBLq256MpnZjeuBtdHpaDlYuQyjU0CVzCJl/BVW+SkszaAeH95D/8gxqAhgx0ouAWAfRg==",
+      "dev": true
+    },
+    "d3-zoom": {
+      "version": "1.8.3",
+      "resolved": "file:archived-packages/d3-zoom-1.8.3-5682d74ca.tar",
+      "integrity": "sha512-3eVYg8UQjqpQSWNVIeaVH6prhve5BF1FbuRmUGs26N5VEnPrwdQH7QeeK3WTinRGx2C0HlNH7W1zC6ofyI7frw== sha512-VoLXTK4wvy1a0JpH2Il+F2CiOhVu7VRXWF5M/LroMIh3/zBAC3WAt7QoIvPibOavVo20hN6/37vwAsdBejLyKQ==",
+      "dev": true,
+      "requires": {
+        "d3-dispatch": "1",
+        "d3-drag": "1",
+        "d3-interpolate": "1",
+        "d3-selection": "1",
+        "d3-transition": "1"
+      }
     },
     "dash-ast": {
       "version": "1.0.0",
       "resolved": "file:archived-packages/dash-ast-1.0.0-572e1dc7b.tar",
       "integrity": "sha512-d8bBXiFdF34WqFFflWNkwMPJiqrIXg8vJnSb7C/Zkggc/LWCL7edvcfxHRrRZzDlbb6+NnusxkuJD+dik2YF7Q== sha512-Vy4dx7gquTeMcQR/hDkYLGUnwVil6vk4FOOct+djUnHOUWt+zJPJAaRIXaAFkPXtJjvlY7o3rfRu0/3hpnwoUA==",
-      "dev": true
-    },
-    "date-now": {
-      "version": "0.1.4",
-      "resolved": "file:archived-packages/date-now-0.1.4-eaf439fd4.tar",
-      "integrity": "sha1-mGlTART/ZNUq0qSCabCbZDPmbUg= sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=",
       "dev": true
     },
     "debug": {
@@ -1265,6 +1690,12 @@
       "version": "1.2.0",
       "resolved": "file:archived-packages/decamelize-1.2.0-f6534d151.tar",
       "integrity": "sha1-BlWgVulwfEJcsYB2kZj6kY+kU3I= sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=",
+      "dev": true
+    },
+    "decode-uri-component": {
+      "version": "0.2.0",
+      "resolved": "file:archived-packages/decode-uri-component-0.2.0-eb3913333.tar",
+      "integrity": "sha1-ftQo1o+nATO6Zrn1VssMZhBTGQs= sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=",
       "dev": true
     },
     "deep-clone-simple": {
@@ -1285,6 +1716,47 @@
       "integrity": "sha1-GpXTyjAEMqArCMbhAWEwFgmbHEo= sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=",
       "dev": true
     },
+    "define-property": {
+      "version": "2.0.2",
+      "resolved": "file:archived-packages/define-property-2.0.2-8f02b6515.tar",
+      "integrity": "sha512-gqbVNKk4AOihzGBitypl5FFEY5a0TgpmeUtLtuCOZEm/AIL6dFFXbta5yHvIhjKW0sEnWokboA99FSgxlXAIgg== sha512-jwK2UV4cnPpbcG7+VRARKTZPUWowwXA8bzH5NP6ud0oeAxyYPuGZUAC7hMugpCdz4BeSZl2Dl9k66CHJ/46ZYQ==",
+      "dev": true,
+      "requires": {
+        "is-descriptor": "^1.0.2",
+        "isobject": "^3.0.1"
+      },
+      "dependencies": {
+        "is-accessor-descriptor": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/is-accessor-descriptor-1.0.0-9b98671d3.tar",
+          "integrity": "sha512-bURwOnDk+LAlJg0PeET8fsTQS6BYAr327Sa01oqVn1nrQNmhTcegwyu+y6TXFQqJ4Hj3T5FJQeTvqepPFpFeCQ== sha512-m5hnHTkcVsPfqx3AKlyttIPb7J+XykHvJP2B9bZDjlhLIoEq4XoK64Vg7boZlVWYK6LUY94dYPEE7Lh0ZkZKcQ==",
+          "dev": true,
+          "requires": {
+            "kind-of": "^6.0.0"
+          }
+        },
+        "is-data-descriptor": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/is-data-descriptor-1.0.0-8db457cb5.tar",
+          "integrity": "sha512-2vzl0fsNdiqcmXKbpTdidQEpEPwNivCFR+kwAPwGE8naWuhFLsugNx/8uf1253t0D9UkDHUZe68Gras4wFnwEg== sha512-jbRXy1FmtAoCjQkVmIVYwuuqDFUbaOeDjmed1tOGPrsMhtJA4rD9tkgA0F1qJ3gRFRXcHYVkdeaP50Q5rE/jLQ==",
+          "dev": true,
+          "requires": {
+            "kind-of": "^6.0.0"
+          }
+        },
+        "is-descriptor": {
+          "version": "1.0.2",
+          "resolved": "file:archived-packages/is-descriptor-1.0.2-d9e8ace56.tar",
+          "integrity": "sha512-BugoxA33jgkurwRmAD8nUBQQWmXurZWs52c5tjCpQRjTzEJE9W9g21sfNeFmRoUo1BM0pQCRDkQKSDsUZ2EmFw== sha512-2eis5WqQGV7peooDyLmNEPUrps9+SXX5c9pL3xEB+4e9HnGuDa7mB7kHxHw4CbqS9k1T2hOH3miL8n8WtiYVtg==",
+          "dev": true,
+          "requires": {
+            "is-accessor-descriptor": "^1.0.0",
+            "is-data-descriptor": "^1.0.0",
+            "kind-of": "^6.0.2"
+          }
+        }
+      }
+    },
     "defined": {
       "version": "1.0.0",
       "resolved": "file:archived-packages/defined-1.0.0-c98d9bcef.tar",
@@ -1298,21 +1770,21 @@
       "dev": true
     },
     "deps-sort": {
-      "version": "2.0.0",
-      "resolved": "file:archived-packages/deps-sort-2.0.0-091724902.tar",
-      "integrity": "sha1-0ZL2VZb4E+SgemBDO+nOr3wtWkc= sha1-CRckkC6EZYJg65EHSMzNGvbiH7U=",
+      "version": "2.0.1",
+      "resolved": "file:archived-packages/deps-sort-2.0.1-d68aea5d0.tar",
+      "integrity": "sha512-W+Aid7kBgTvup0AzWyYrLVDKdImDkzZK8si680EOrnp/FzPeb2acShEgG0YkOQZ/0sWGHOnY1lk2v/kUiIqzHA== sha512-1orqXQr5po+3KI6kQb9A4jnXT1PBwggGl2d7Sq2xsnOeI9GPcE/tGcF9UiSZtZBM7MukY4cAh7MemS6tZYipfw==",
       "dev": true,
       "requires": {
         "JSONStream": "^1.0.3",
-        "shasum": "^1.0.0",
+        "shasum-object": "^1.0.0",
         "subarg": "^1.0.0",
         "through2": "^2.0.0"
       }
     },
     "des.js": {
-      "version": "1.0.0",
-      "resolved": "file:archived-packages/des.js-1.0.0-c074d2e2a.tar",
-      "integrity": "sha1-+/ilFbzo5z9hSE71XdS8IQ7J3G8= sha1-wHTS4qpqipoH29YfmhXCzYPsjsw=",
+      "version": "1.0.1",
+      "resolved": "file:archived-packages/des.js-1.0.1-434238a5f.tar",
+      "integrity": "sha512-75QLItzxFX87bDyWKxdkKgZNWLStcUxoWzi8f2u9Psj0oh9BzNkPVjg5MglbomiLLUYTUO3IO3Xnq6qnswPflw== sha512-Q0I4pfFrv2VPd34/vfLrFOoRmlYj3OV50i7fskps1jZWK1kApMWWT9G6RRUeYedLcBDIhnSDaUvJMb3AhUlaEA==",
       "dev": true,
       "requires": {
         "inherits": "^2.0.1",
@@ -1320,13 +1792,10 @@
       }
     },
     "detect-file": {
-      "version": "0.1.0",
-      "resolved": "file:archived-packages/detect-file-0.1.0-4935dedfd.tar",
-      "integrity": "sha1-9oUWBYCrq7XwxiPWcDrNk4UEEfs= sha1-STXe39lIhkjgBrASlWbpOGcR6mM=",
-      "dev": true,
-      "requires": {
-        "fs-exists-sync": "^0.1.0"
-      }
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/detect-file-1.0.0-f0d66d036.tar",
+      "integrity": "sha1-fT28cUqPAl8BOw77rt91y41KiaM= sha1-8NZtA2cqglyxtzvbP+YjEMjlUrc=",
+      "dev": true
     },
     "detect-indent": {
       "version": "5.0.0",
@@ -1341,21 +1810,14 @@
       "dev": true
     },
     "detective": {
-      "version": "4.7.1",
-      "resolved": "file:archived-packages/detective-4.7.1-1fa3e679e.tar",
-      "integrity": "sha512-zDf8iBD5M3KkIU1CUTjdScP1qwQ59JmqHVSIcoQdRwVx2XhD0mjqidalZR8SkL+6GDtDAQNOJbyzbflTsIb5uA== sha512-H6PmeeUcZloWtdt4DAkFyzFL94arpHr3NOwwmVILFiy+9Qd4JTxxXrzfyGk/lmct2qVGBwTSwSXagqu2BxmWig==",
+      "version": "5.2.0",
+      "resolved": "file:archived-packages/detective-5.2.0-e92b08c7e.tar",
+      "integrity": "sha512-2dc0SWZkN7lfiJ8j1Q1rF0LS30ActwxYG0PzoQ8K3YYgzVOAam5zO4JKgTuL3E6AkWy88yiuPcazkIMuZruFmw== sha512-6SsIx+nUUbuK0EthKjv0zrdnajCCXVYGmbYYiYjFVpzcjwEs/JMDZ8tPRG29J/HhN56t3GJp2cGSWDRjjot8Pg==",
       "dev": true,
       "requires": {
-        "acorn": "^5.2.1",
-        "defined": "^1.0.0"
-      },
-      "dependencies": {
-        "acorn": {
-          "version": "5.7.3",
-          "resolved": "file:archived-packages/acorn-5.7.3-4ffcefcd8.tar",
-          "integrity": "sha512-v6nv8jVXm8ttBDZeExCZmknOiqnl9zNgYaYRYmuMoqj+9zp//oX3KD4gudUlGbdEjFvLT2y57/lkED5GRzKvlw== sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==",
-          "dev": true
-        }
+        "acorn-node": "^1.6.1",
+        "defined": "^1.0.0",
+        "minimist": "^1.1.1"
       }
     },
     "diffie-hellman": {
@@ -1367,6 +1829,14 @@
         "bn.js": "^4.1.0",
         "miller-rabin": "^4.0.0",
         "randombytes": "^2.0.0"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "file:archived-packages/bn.js-4.11.9-13a42862a.tar",
+          "integrity": "sha512-KG9VTNsd+c0aSeTf4ZOOKhZcTX4aR3kJaVXKy5r2xnrYlJUVwhEZcCwJTgA58w6HfgPOfcJlPQZqlVoeIdq6Mw== sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==",
+          "dev": true
+        }
       }
     },
     "doctrine": {
@@ -1380,9 +1850,9 @@
       }
     },
     "domain-browser": {
-      "version": "1.1.7",
-      "resolved": "file:archived-packages/domain-browser-1.1.7-867aa4b09.tar",
-      "integrity": "sha1-rKXDyBpqaFFTQtsNO4eYIZUp/Mo= sha1-hnqksJP6oF8d4IwG9NeyH9+GmLw=",
+      "version": "1.2.0",
+      "resolved": "file:archived-packages/domain-browser-1.2.0-8e78f288c.tar",
+      "integrity": "sha512-MAJ8DDfJn512IfRUiXHMX2DW0rrZrTnpg1j9bsfI1yY+YTqVZ6cMhpdYoSyR78JHlRkrXVwfHlzwsJIZEY2REQ== sha512-jnjyiM6eRyZl2H+W8Q/zLMA481hzi0eszAaBUzIVnmYVDBbnLxVNnfu1HgEBvCbL+71FrxMl3E6lpKH7Ge3OXA==",
       "dev": true
     },
     "domify": {
@@ -1428,9 +1898,9 @@
       }
     },
     "elliptic": {
-      "version": "6.4.1",
-      "resolved": "file:archived-packages/elliptic-6.4.1-06c5cbcf9.tar",
-      "integrity": "sha512-NysZQYtRGhca2V2AdQhhU2UHGMqlhoxn3Vmlmb84hPZP4NYCyK4RA2NX9bxJ7B+VH1+wexXwKOwAtFRG/5B5IA== sha512-BsXLz5sqX8OHcsh7CqBMztyXARmGQ3LWPtGjJi6DiJHq5C/qvi9P3OqgswKSDftbu8+IoI/QDTAm2fFnQ9SZSQ==",
+      "version": "6.5.2",
+      "resolved": "file:archived-packages/elliptic-6.5.2-7f8c7bd28.tar",
+      "integrity": "sha512-FDWAxqBZ0zfxn8cd4FqOVdaOkYd5rthhiSYZywD2AXlACoNhCruRjT5aKDGlqqLkXmq0i8neyGYqkrcQImfCSg== sha512-f4x70okzZbIQl/NSRLkI/+tteV/9WqL98zx+SQ69KbXxmVrmjwsNUPn/gYJJ0sHvEak24cZgHIPegRePAtA/xw==",
       "dev": true,
       "requires": {
         "bn.js": "^4.4.0",
@@ -1440,6 +1910,14 @@
         "inherits": "^2.0.1",
         "minimalistic-assert": "^1.0.0",
         "minimalistic-crypto-utils": "^1.0.0"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "file:archived-packages/bn.js-4.11.9-13a42862a.tar",
+          "integrity": "sha512-KG9VTNsd+c0aSeTf4ZOOKhZcTX4aR3kJaVXKy5r2xnrYlJUVwhEZcCwJTgA58w6HfgPOfcJlPQZqlVoeIdq6Mw== sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==",
+          "dev": true
+        }
       }
     },
     "encoding": {
@@ -1650,9 +2128,9 @@
           }
         },
         "lodash": {
-          "version": "4.17.11",
-          "resolved": "file:archived-packages/lodash-4.17.11-7102a1f22.tar",
-          "integrity": "sha512-6UhDtXrYsK/670VwWHqigNhs0jM35R3nlkn/PfKu1ppWPuoPjz/tRbyyReXzgoEFmMEsTJOOXTaqm6vQKUg0jA== sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==",
+          "version": "4.17.15",
+          "resolved": "file:archived-packages/lodash-4.17.15-f3139c447.tar",
+          "integrity": "sha512-2gks6u//IXIMJXVv0d7nenOpR+zeUPxWpsdnbnEFzCpvd5YzCrAcXDTnof8U1dFvnbyCdkr0BfZe/ZtGqmocZg== sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==",
           "dev": true
         }
       }
@@ -1668,9 +2146,9 @@
       },
       "dependencies": {
         "acorn": {
-          "version": "5.7.3",
-          "resolved": "file:archived-packages/acorn-5.7.3-4ffcefcd8.tar",
-          "integrity": "sha512-v6nv8jVXm8ttBDZeExCZmknOiqnl9zNgYaYRYmuMoqj+9zp//oX3KD4gudUlGbdEjFvLT2y57/lkED5GRzKvlw== sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==",
+          "version": "5.7.4",
+          "resolved": "file:archived-packages/acorn-5.7.4-d43fbe546.tar",
+          "integrity": "sha512-B/TyVNfh+GGl5dswNehlUiNwjc8fEiL3XEPezhsGnP3jBLt4cOVE1385qsUL1nTfYT596wvkJ4RLeNsiu1kDnA== sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==",
           "dev": true
         }
       }
@@ -1713,9 +2191,9 @@
       }
     },
     "events": {
-      "version": "1.1.1",
-      "resolved": "file:archived-packages/events-1.1.1-9ebdb7635.tar",
-      "integrity": "sha1-7+bAJgk1GJmdx/rErGXcRgQhX1E= sha1-nr23Y1rQmccNzEwqH1AEKI6L2SQ=",
+      "version": "2.1.0",
+      "resolved": "file:archived-packages/events-2.1.0-dd99a2a1b.tar",
+      "integrity": "sha512-pt953n4AIVdC2MZy4Pn8FVlud08+KT5pADokEY6ojTvKo78s921jMn3ZfB016thVor6BIGqKdZJGu+iRzDpvZA== sha512-3Zmiobend8P9DjmKAty0Era4jV8oJ0yGYe2nJJAxgymF9+N8F2m0hhZiMoWtcfepExzNKZumFU3ksdQbInGWCg==",
       "dev": true
     },
     "evp_bytestokey": {
@@ -1749,71 +2227,146 @@
       "integrity": "sha1-rroQK/3RJ8uYRrdweLHTRGlIH2s= sha1-8FyiM7SMBdVP/wd2XfhQfpXAL/g=",
       "dev": true
     },
-    "exorcist": {
-      "version": "0.4.0",
-      "resolved": "file:archived-packages/exorcist-0.4.0-1230ffded.tar",
-      "integrity": "sha1-YN1JIIwCmp0woRL3IvlyWCOJRCc= sha1-EjD/3t2SSPQvvM+LSkTUyrKePGQ=",
+    "expand-brackets": {
+      "version": "2.1.4",
+      "resolved": "file:archived-packages/expand-brackets-2.1.4-b77735e31.tar",
+      "integrity": "sha1-Mme8Ej9/RwMoJqt+Lmn1zooLEo8= sha1-t3c14xXOMPa27/D4OwQVGiJEliI=",
       "dev": true,
       "requires": {
-        "minimist": "0.0.5",
-        "mold-source-map": "~0.4.0",
-        "nave": "~0.5.1"
+        "debug": "^2.3.3",
+        "define-property": "^0.2.5",
+        "extend-shallow": "^2.0.1",
+        "posix-character-classes": "^0.1.0",
+        "regex-not": "^1.0.0",
+        "snapdragon": "^0.8.1",
+        "to-regex": "^3.0.1"
       },
       "dependencies": {
-        "minimist": {
-          "version": "0.0.5",
-          "resolved": "file:archived-packages/minimist-0.0.5-d7aa327bc.tar",
-          "integrity": "sha1-MvcMcccrZrvj0uuR5FbRHkFkekQ= sha1-16oye87PUY+RBqxrjwA/o7zqhWY=",
-          "dev": true
+        "define-property": {
+          "version": "0.2.5",
+          "resolved": "file:archived-packages/define-property-0.2.5-c35b1ef91.tar",
+          "integrity": "sha1-WmT7c4oSGUyRHwiC8mHyFpdgrDI= sha1-w1se+RjsPJkPmlvFe+BKrOxcgRY=",
+          "dev": true,
+          "requires": {
+            "is-descriptor": "^0.1.0"
+          }
+        },
+        "extend-shallow": {
+          "version": "2.0.1",
+          "resolved": "file:archived-packages/extend-shallow-2.0.1-51af7d614.tar",
+          "integrity": "sha1-o9H3W9VTUT9Pbjss86GPVes9cK8= sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8=",
+          "dev": true,
+          "requires": {
+            "is-extendable": "^0.1.0"
+          }
         }
       }
     },
-    "expand-brackets": {
-      "version": "0.1.5",
-      "resolved": "file:archived-packages/expand-brackets-0.1.5-df07284e3.tar",
-      "integrity": "sha1-kGWIs3ZZ3DWmOnWSQWreG/mokgc= sha1-3wcoTjQqgHzXM6xa9yQR5YHRF3s=",
-      "dev": true,
-      "requires": {
-        "is-posix-bracket": "^0.1.0"
-      }
-    },
-    "expand-range": {
-      "version": "1.8.2",
-      "resolved": "file:archived-packages/expand-range-1.8.2-a299effd3.tar",
-      "integrity": "sha1-z0jSR5mpX6q3XdkncnR6Li6uf2Y= sha1-opnv/TNf4nIeuujiV+x5ZE/IUzc=",
-      "dev": true,
-      "requires": {
-        "fill-range": "^2.1.0"
-      }
-    },
     "expand-tilde": {
-      "version": "1.2.2",
-      "resolved": "file:archived-packages/expand-tilde-1.2.2-0b81eba89.tar",
-      "integrity": "sha1-MAKhx8R0k4JavgGz/I4VhHA0igw= sha1-C4HrqJflo9MdHD0QL48BRB5VlEk=",
+      "version": "2.0.2",
+      "resolved": "file:archived-packages/expand-tilde-2.0.2-97e801aa0.tar",
+      "integrity": "sha1-rmve7weLvJ/XAGRiIs64PpZu0A4= sha1-l+gBqgUt8CRU3kawK/YhZCzchQI=",
       "dev": true,
       "requires": {
-        "os-homedir": "^1.0.1"
+        "homedir-polyfill": "^1.0.1"
       }
     },
-    "extend": {
-      "version": "1.3.0",
-      "resolved": "file:archived-packages/extend-1.3.0-d1516fb0f.tar",
-      "integrity": "sha1-UrmHQzYJV9GDfqmdszvtsbZ7DEw= sha1-0VFvsP9WJNLr+RI+odrFoZlABPg=",
-      "dev": true
+    "extend-shallow": {
+      "version": "3.0.2",
+      "resolved": "file:archived-packages/extend-shallow-3.0.2-26a71aaf0.tar",
+      "integrity": "sha1-52hbdgqeaxeDQcWciLEICjZ5/y0= sha1-Jqcarwc7OfshJxcnRhMcJwQCjbg=",
+      "dev": true,
+      "requires": {
+        "assign-symbols": "^1.0.0",
+        "is-extendable": "^1.0.1"
+      },
+      "dependencies": {
+        "is-extendable": {
+          "version": "1.0.1",
+          "resolved": "file:archived-packages/is-extendable-1.0.1-6ab9d7331.tar",
+          "integrity": "sha512-gZFzak1hF9oHYsTInoYrpFtqPtZk36fFVcu46SwIm1DkBda5r8bqmFfL6ISerc0gfuNuUkUOOtkXJCKp3wpq3A== sha512-arnXMxT1hhoKo9k1LZdmlNyJdDDfy2v0fXjFlmok4+i8ul/6WlbVge9bhM74OpNPQPMGUToDtz+KXa1PneJxOA==",
+          "dev": true,
+          "requires": {
+            "is-plain-object": "^2.0.4"
+          }
+        }
+      }
     },
     "extglob": {
-      "version": "0.3.2",
-      "resolved": "file:archived-packages/extglob-0.3.2-2e18ff3d2.tar",
-      "integrity": "sha1-4RCvOoiA6fayfP/FjoceSeC9Tl0= sha1-Lhj/PS9JqydlzskCPwEdqo2DSaE=",
+      "version": "2.0.4",
+      "resolved": "file:archived-packages/extglob-2.0.4-3666fa417.tar",
+      "integrity": "sha512-jX2Oq3E7J/3qcR1ac3RFcy19Ipc5MNx1DP7LJXAcY91tc9+M3rPvs7F4pdp0xarkvtUI4qQPeXhZb0t3jBZTxQ== sha512-Nmb6QXkELsuBr24CJSkilo6UHHgbekK5UiZgfE6UHD3Eb27YC6oD+bhcT+tJ6cl8dmsgdQxnWlcry8ksBIBLpw==",
       "dev": true,
       "requires": {
-        "is-extglob": "^1.0.0"
+        "array-unique": "^0.3.2",
+        "define-property": "^1.0.0",
+        "expand-brackets": "^2.1.4",
+        "extend-shallow": "^2.0.1",
+        "fragment-cache": "^0.2.1",
+        "regex-not": "^1.0.0",
+        "snapdragon": "^0.8.1",
+        "to-regex": "^3.0.1"
+      },
+      "dependencies": {
+        "define-property": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/define-property-1.0.0-769ebaaf3.tar",
+          "integrity": "sha1-9v9/8nAJjjYLgII/Mi7WpZVK7vU= sha1-dp66rz9KY6rTr56NMEybvnm/sOY=",
+          "dev": true,
+          "requires": {
+            "is-descriptor": "^1.0.0"
+          }
+        },
+        "extend-shallow": {
+          "version": "2.0.1",
+          "resolved": "file:archived-packages/extend-shallow-2.0.1-51af7d614.tar",
+          "integrity": "sha1-o9H3W9VTUT9Pbjss86GPVes9cK8= sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8=",
+          "dev": true,
+          "requires": {
+            "is-extendable": "^0.1.0"
+          }
+        },
+        "is-accessor-descriptor": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/is-accessor-descriptor-1.0.0-9b98671d3.tar",
+          "integrity": "sha512-bURwOnDk+LAlJg0PeET8fsTQS6BYAr327Sa01oqVn1nrQNmhTcegwyu+y6TXFQqJ4Hj3T5FJQeTvqepPFpFeCQ== sha512-m5hnHTkcVsPfqx3AKlyttIPb7J+XykHvJP2B9bZDjlhLIoEq4XoK64Vg7boZlVWYK6LUY94dYPEE7Lh0ZkZKcQ==",
+          "dev": true,
+          "requires": {
+            "kind-of": "^6.0.0"
+          }
+        },
+        "is-data-descriptor": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/is-data-descriptor-1.0.0-8db457cb5.tar",
+          "integrity": "sha512-2vzl0fsNdiqcmXKbpTdidQEpEPwNivCFR+kwAPwGE8naWuhFLsugNx/8uf1253t0D9UkDHUZe68Gras4wFnwEg== sha512-jbRXy1FmtAoCjQkVmIVYwuuqDFUbaOeDjmed1tOGPrsMhtJA4rD9tkgA0F1qJ3gRFRXcHYVkdeaP50Q5rE/jLQ==",
+          "dev": true,
+          "requires": {
+            "kind-of": "^6.0.0"
+          }
+        },
+        "is-descriptor": {
+          "version": "1.0.2",
+          "resolved": "file:archived-packages/is-descriptor-1.0.2-d9e8ace56.tar",
+          "integrity": "sha512-BugoxA33jgkurwRmAD8nUBQQWmXurZWs52c5tjCpQRjTzEJE9W9g21sfNeFmRoUo1BM0pQCRDkQKSDsUZ2EmFw== sha512-2eis5WqQGV7peooDyLmNEPUrps9+SXX5c9pL3xEB+4e9HnGuDa7mB7kHxHw4CbqS9k1T2hOH3miL8n8WtiYVtg==",
+          "dev": true,
+          "requires": {
+            "is-accessor-descriptor": "^1.0.0",
+            "is-data-descriptor": "^1.0.0",
+            "kind-of": "^6.0.2"
+          }
+        }
       }
     },
     "fast-levenshtein": {
       "version": "2.0.6",
       "resolved": "file:archived-packages/fast-levenshtein-2.0.6-3d8a5c668.tar",
       "integrity": "sha1-CRSJ4+9MpwgwUZz4zRQ91jdg2NY= sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=",
+      "dev": true
+    },
+    "fast-safe-stringify": {
+      "version": "2.0.7",
+      "resolved": "file:archived-packages/fast-safe-stringify-2.0.7-52d9ba09d.tar",
+      "integrity": "sha512-9cyf54k1H/5sgm4S6Z9ocQ+EzG5yciVmqZ2+7mpIbssNEDQhQxZm/sZuMlaF+WgkkU9JwIjhmfZrxvee/IKhlQ== sha512-Utm6CdzT+6xsDk2m8S6uL8VHxNwI6Jub+e9NYTcAms28T84pTa25GJQV9j0CY0N1rM8hK4x6grpF2BQf+2qwVA==",
       "dev": true
     },
     "figgy-pudding": {
@@ -1842,33 +2395,37 @@
         "object-assign": "^4.0.1"
       }
     },
-    "filename-regex": {
-      "version": "2.0.1",
-      "resolved": "file:archived-packages/filename-regex-2.0.1-c1c4b9bee.tar",
-      "integrity": "sha1-IK1MRQedfA/zcs/fW7KhXa+F+9A= sha1-wcS5vuPglyXdsQa3XB4wH+LxiyY=",
-      "dev": true
-    },
     "fill-range": {
-      "version": "2.2.4",
-      "resolved": "file:archived-packages/fill-range-2.2.4-727adc09b.tar",
-      "integrity": "sha512-sy22QL3Agg96HMdPtnB/RtW7xCpYIM3aFPbYNT3I9+MuGcCB5Yn9W+PMxn7Os8hS7ebxH0cYE76nj+kgo5nnnw== sha512-cnrcCbj01+j2gTG921VZPnHbjmdAf8oQV/iGeV2kZxGSyfYjjTyY79ErsK1WJWMpw6DaApEX72binqJE+/d+5Q==",
+      "version": "4.0.0",
+      "resolved": "file:archived-packages/fill-range-4.0.0-d544811d4.tar",
+      "integrity": "sha1-dX5Hw+mGg3nmAAUucWoHjyx2fVE= sha1-1USBHUKPmOsGpj3EAtJAPDKMOPc=",
       "dev": true,
       "requires": {
-        "is-number": "^2.1.0",
-        "isobject": "^2.0.0",
-        "randomatic": "^3.0.0",
-        "repeat-element": "^1.1.2",
-        "repeat-string": "^1.5.2"
+        "extend-shallow": "^2.0.1",
+        "is-number": "^3.0.0",
+        "repeat-string": "^1.6.1",
+        "to-regex-range": "^2.1.0"
+      },
+      "dependencies": {
+        "extend-shallow": {
+          "version": "2.0.1",
+          "resolved": "file:archived-packages/extend-shallow-2.0.1-51af7d614.tar",
+          "integrity": "sha1-o9H3W9VTUT9Pbjss86GPVes9cK8= sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8=",
+          "dev": true,
+          "requires": {
+            "is-extendable": "^0.1.0"
+          }
+        }
       }
     },
     "find-node-modules": {
-      "version": "1.0.4",
-      "resolved": "file:archived-packages/find-node-modules-1.0.4-b6deb3ccc.tar",
-      "integrity": "sha1-2SKeR8ufln0+BWmg8OFcYsq67/A= sha1-tt6zzMtpnIcDdne87eLF9YYrJVA=",
+      "version": "2.0.0",
+      "resolved": "file:archived-packages/find-node-modules-2.0.0-f0c588051.tar",
+      "integrity": "sha512-1dhW+1jw1ydgCvVCWow8h8vN7kit9TBD8OO9HJiTPE+VASeG17FKzqNXGfXul4d6XY7ChxaoiXoG51Vgiel68A== sha512-8MWIBRgJi/WpjjfVXumjPKCtmQ10B+fjx6zmSA+770GMJirLhWIzg8l763rhjl9xaeaHbnxPNRQKq2mgMhr+aw==",
       "dev": true,
       "requires": {
-        "findup-sync": "0.4.2",
-        "merge": "^1.2.0"
+        "findup-sync": "^3.0.0",
+        "merge": "^1.2.1"
       }
     },
     "find-npm-prefix": {
@@ -1887,15 +2444,15 @@
       }
     },
     "findup-sync": {
-      "version": "0.4.2",
-      "resolved": "file:archived-packages/findup-sync-0.4.2-a8117d0f7.tar",
-      "integrity": "sha1-/JN+t0p3FtRu5RDZaFl2bJfBjcQ= sha1-qBF9D3MST1pFRoOVef5S1xKfteU=",
+      "version": "3.0.0",
+      "resolved": "file:archived-packages/findup-sync-3.0.0-61b7df6ab.tar",
+      "integrity": "sha512-HnmnmVbSZOFxFIQue6/lcwVm3/RFOODzYfiw2aa22c8pUMfFVwgJg5TmIdvryQZMIY08KLNSkRLD1px34MKtBw== sha512-YbffarhcicEhOrm4CtrwdKBdCuz576RLdhJDsIfvNtxUuhdRet1qZcsMjqbePtAseKdAnDyM/IyXbu7PRPRLYg==",
       "dev": true,
       "requires": {
-        "detect-file": "^0.1.0",
-        "is-glob": "^2.0.1",
-        "micromatch": "^2.3.7",
-        "resolve-dir": "^0.1.0"
+        "detect-file": "^1.0.0",
+        "is-glob": "^4.0.0",
+        "micromatch": "^3.0.4",
+        "resolve-dir": "^1.0.1"
       }
     },
     "flat-cache": {
@@ -1926,20 +2483,20 @@
       "integrity": "sha1-QRxfr/8RXIWOFezbStom4XknNYE= sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=",
       "dev": true
     },
-    "for-own": {
-      "version": "0.1.5",
-      "resolved": "file:archived-packages/for-own-0.1.5-5265c681a.tar",
-      "integrity": "sha1-UEu0qytpGsmvZ4Wt+iaAgDFUp1g= sha1-UmXGgaTylNq78XyVCbZ2OqhFEM4=",
-      "dev": true,
-      "requires": {
-        "for-in": "^1.0.1"
-      }
-    },
     "form-serialize": {
       "version": "0.7.1",
       "resolved": "file:archived-packages/form-serialize-0.7.1-48f74e37d.tar",
       "integrity": "sha1-l99vimbtX6SdjLD2ypeo23XmsqA= sha1-SPdON9BB3k99FA3SxUs3//jS6EM=",
       "dev": true
+    },
+    "fragment-cache": {
+      "version": "0.2.1",
+      "resolved": "file:archived-packages/fragment-cache-0.2.1-4290fad27.tar",
+      "integrity": "sha1-dWToipYY3jiEBodqa7NVMOcm3Hc= sha1-QpD60n8T6Jvn8zeZxrxaCr//DRk=",
+      "dev": true,
+      "requires": {
+        "map-cache": "^0.2.2"
+      }
     },
     "from2": {
       "version": "2.3.0",
@@ -1950,12 +2507,6 @@
         "inherits": "^2.0.1",
         "readable-stream": "^2.0.0"
       }
-    },
-    "fs-exists-sync": {
-      "version": "0.1.0",
-      "resolved": "file:archived-packages/fs-exists-sync-0.1.0-982d6893a.tar",
-      "integrity": "sha1-JLk86xijFUjAkDXU7DVbaCWaBJQ= sha1-mC1ok6+RjnLQjeyehnP/K1qNat0=",
-      "dev": true
     },
     "fs-minipass": {
       "version": "1.2.7",
@@ -2048,36 +2599,24 @@
       "integrity": "sha1-pjbepAyHxpzLove2fI86Tmh50fQ= sha1-jpQ9E1jcN1VQVOy+LtsFqhdO3hQ=",
       "dev": true
     },
+    "get-value": {
+      "version": "2.0.6",
+      "resolved": "file:archived-packages/get-value-2.0.6-dc15ca1c6.tar",
+      "integrity": "sha1-mgz0Odo5r2V5kgxGxreFbp8+y3Y= sha1-3BXKHGcjh8p2vTesCjlbogQqLCg=",
+      "dev": true
+    },
     "glob": {
-      "version": "5.0.15",
-      "resolved": "file:archived-packages/glob-5.0.15-1bc936b9e.tar",
-      "integrity": "sha1-WYovpO3OAU0UfT+D1TIAaquqcS4= sha1-G8k2ueAvSmA/zCIuz3Yz0wuLk7E=",
+      "version": "7.1.6",
+      "resolved": "file:archived-packages/glob-7.1.6-2f06b1c32.tar",
+      "integrity": "sha512-r0Yv1Z/3ZACv9tEf7aFHYq3EOEDpFaC9kNbNV7ofWkUAoXi3R8vKvq7uMPxmHzdiIZexkZslaFV/kUEJ0purbQ== sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==",
       "dev": true,
       "requires": {
+        "fs.realpath": "^1.0.0",
         "inflight": "^1.0.4",
         "inherits": "2",
-        "minimatch": "2 || 3",
+        "minimatch": "^3.0.4",
         "once": "^1.3.0",
         "path-is-absolute": "^1.0.0"
-      }
-    },
-    "glob-base": {
-      "version": "0.3.0",
-      "resolved": "file:archived-packages/glob-base-0.3.0-dbb164f62.tar",
-      "integrity": "sha1-YcfKmfqGdyZn5yg1qKSI47aNJHg= sha1-27Fk9iIbHAscz4Kuoyi0l98Oo8Q=",
-      "dev": true,
-      "requires": {
-        "glob-parent": "^2.0.0",
-        "is-glob": "^2.0.0"
-      }
-    },
-    "glob-parent": {
-      "version": "2.0.0",
-      "resolved": "file:archived-packages/glob-parent-2.0.0-81383d72d.tar",
-      "integrity": "sha1-wBToT6sI6JZqhGWFPXgPMznRd40= sha1-gTg9ctsFT8zPUzbaqQLxgvbtuyg=",
-      "dev": true,
-      "requires": {
-        "is-glob": "^2.0.0"
       }
     },
     "global-dirs": {
@@ -2090,25 +2629,27 @@
       }
     },
     "global-modules": {
-      "version": "0.2.3",
-      "resolved": "file:archived-packages/global-modules-0.2.3-ea5a3bed4.tar",
-      "integrity": "sha1-C1XueQthE81FpjBxUPkXyFmtjp4= sha1-6lo77ULG1s6ZWk+KEmm12uIjgo0=",
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/global-modules-1.0.0-b0ace9124.tar",
+      "integrity": "sha512-5etOK913hZsGjVzg6Vu8vZmBQB/sr/s6SWJjA0INMaVf6GnCZz4rFtXGjCmYf4OTDZCB5G5XTnopS4RcPyBgGw== sha512-sKzpEkf11GpOFuw0Zzjzmt4B4UZwjOcG757PPvrfhxcLFbq0wpsgpOqxpxtxFiCG4DtG93M6XRVbF2oGdev7bg==",
       "dev": true,
       "requires": {
-        "global-prefix": "^0.1.4",
-        "is-windows": "^0.2.0"
+        "global-prefix": "^1.0.1",
+        "is-windows": "^1.0.1",
+        "resolve-dir": "^1.0.0"
       }
     },
     "global-prefix": {
-      "version": "0.1.5",
-      "resolved": "file:archived-packages/global-prefix-0.1.5-8d3bc6b8d.tar",
-      "integrity": "sha1-GawDvnSNmO1dJc5S1JV2nnb60rw= sha1-jTvGuNo8qBEqFg2NSW/wRiv+948=",
+      "version": "1.0.2",
+      "resolved": "file:archived-packages/global-prefix-1.0.2-dbf743c6c.tar",
+      "integrity": "sha1-pS7xlHmCFeIvOybwJ0tNgWUi4nM= sha1-2/dDxsFJklk8ZVVoy2btMsASLr4=",
       "dev": true,
       "requires": {
-        "homedir-polyfill": "^1.0.0",
+        "expand-tilde": "^2.0.2",
+        "homedir-polyfill": "^1.0.1",
         "ini": "^1.3.4",
-        "is-windows": "^0.2.0",
-        "which": "^1.2.12"
+        "is-windows": "^1.0.1",
+        "which": "^1.2.14"
       }
     },
     "globals": {
@@ -2178,14 +2719,81 @@
       "integrity": "sha1-xZT1zO4HoV9AHitusmAt4Jrx3cY= sha1-4Ob+aijPUROIVeCG0Wkedx3iqLk=",
       "dev": true
     },
-    "hash-base": {
-      "version": "3.0.4",
-      "resolved": "file:archived-packages/hash-base-3.0.4-5fc868684.tar",
-      "integrity": "sha1-GJUQ2os5pWgkQwg4v1fcpR43KDk= sha1-X8hoaEfs1zSZQDMZprCj8/auSRg=",
+    "has-value": {
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/has-value-1.0.0-18b281da5.tar",
+      "integrity": "sha1-8aeyKyrp68EkymHnyE3/UG+61QE= sha1-GLKB2lhbHFxR3vJMkw7SmgvmsXc=",
       "dev": true,
       "requires": {
-        "inherits": "^2.0.1",
-        "safe-buffer": "^5.0.1"
+        "get-value": "^2.0.6",
+        "has-values": "^1.0.0",
+        "isobject": "^3.0.0"
+      }
+    },
+    "has-values": {
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/has-values-1.0.0-95b0b63fe.tar",
+      "integrity": "sha1-zsOhypXX4532M9OfIHdK8Il/+dc= sha1-lbC2P+whRmGab+V/51Yo1aOe/k8=",
+      "dev": true,
+      "requires": {
+        "is-number": "^3.0.0",
+        "kind-of": "^4.0.0"
+      },
+      "dependencies": {
+        "kind-of": {
+          "version": "4.0.0",
+          "resolved": "file:archived-packages/kind-of-4.0.0-20813df3d.tar",
+          "integrity": "sha1-WaQjzjRKLwj0hVse86Q9FPE64UM= sha1-IIE989cSkosgc3hpGkUGb65y3Vc=",
+          "dev": true,
+          "requires": {
+            "is-buffer": "^1.1.5"
+          }
+        }
+      }
+    },
+    "hash-base": {
+      "version": "3.1.0",
+      "resolved": "file:archived-packages/hash-base-3.1.0-d67998a7f.tar",
+      "integrity": "sha512-+RWZ5tQ4+ltKZ9+ezMtU2B2+AnkIgPbyl9VPWkKqHcP09d0mqYGKclXoNS+l6j4RTTpGAe8rC3XqJf9JH00pew== sha512-1nmYp/rhMDiE7AYkDw+lLwlAzz0AntGIe51F3RfFfEqyQ3feY2eI/NcwC6umIQVOASPMsWJLJScWKSSvzL9IVA==",
+      "dev": true,
+      "requires": {
+        "inherits": "^2.0.4",
+        "readable-stream": "^3.6.0",
+        "safe-buffer": "^5.2.0"
+      },
+      "dependencies": {
+        "inherits": {
+          "version": "2.0.4",
+          "resolved": "file:archived-packages/inherits-2.0.4-93fbc6697.tar",
+          "integrity": "sha512-x/zUnRAbKaa/OlZ+39zdjzQ8atTjemHBKSd/lb5bEJQpegNuso/w7Nv9ZJSOXrkCNMLpENN+v8nFv/mQ0neo9w== sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+          "dev": true
+        },
+        "readable-stream": {
+          "version": "3.6.0",
+          "resolved": "file:archived-packages/readable-stream-3.6.0-055887cbb.tar",
+          "integrity": "sha512-Zu04U+2fdxJyZbbOVfoJpPN9+rk+eKx2FHDquu7kRtBdk3s9m67EzZNmbFcUTqLyexSaJTE/aNS5UFiPQMJ3lA== sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==",
+          "dev": true,
+          "requires": {
+            "inherits": "^2.0.3",
+            "string_decoder": "^1.1.1",
+            "util-deprecate": "^1.0.1"
+          }
+        },
+        "safe-buffer": {
+          "version": "5.2.1",
+          "resolved": "file:archived-packages/safe-buffer-5.2.1-ae9dd2a34.tar",
+          "integrity": "sha512-gbLGDXxRhLUSyR7i1p8L2c2Y5xwp9E4q8bPNkqcEhUfgzGcuwVbFS60AE/bRpAps6+nVsgnLbA8YfwtAxHxBng== sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+          "dev": true
+        },
+        "string_decoder": {
+          "version": "1.3.0",
+          "resolved": "file:archived-packages/string_decoder-1.3.0-864457f14.tar",
+          "integrity": "sha512-UKUjkxfUYTvGWJ1gU0WI/pSsvxjq5OaJSRrpsu4IKcNeXWE/EqsKBvB30VRBzxucubngOqtT5K9tZ9qRitv9Ug== sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
+          "dev": true,
+          "requires": {
+            "safe-buffer": "~5.2.0"
+          }
+        }
       }
     },
     "hash.js": {
@@ -2258,9 +2866,9 @@
       }
     },
     "https-browserify": {
-      "version": "0.0.1",
-      "resolved": "file:archived-packages/https-browserify-0.0.1-3f91365ca.tar",
-      "integrity": "sha1-6P7JyQokcPgG8+afM2ENLJtBx6Y= sha1-P5E2XKvmC3ftDruiS0VOPgnZWoI=",
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/https-browserify-1.0.0-ec06c10e0.tar",
+      "integrity": "sha1-UCOxXMWkvipfo+EkLcpXZN4p3tI= sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=",
       "dev": true
     },
     "https-proxy-agent": {
@@ -2309,9 +2917,9 @@
       }
     },
     "ieee754": {
-      "version": "1.1.12",
-      "resolved": "file:archived-packages/ieee754-1.1.12-1a0b8ff83.tar",
-      "integrity": "sha512-cig0A1sCQrfcxlyLpEgRMp1+0G/SPLTohF5GCByJ0+Bsq/ElK6i/+UDo7Ru4aNSESXyDu7epnxXEqVkVNLGueg== sha512-GguP+DRY+pJ3soyIiGPTvdiVXjZ+DbXOxGpXn3eMvNW4x4irjqXm4wHKscC+TfxSJ0yw/S1F24tqdMNsMZTiLA==",
+      "version": "1.1.13",
+      "resolved": "file:archived-packages/ieee754-1.1.13-e2f7fb236.tar",
+      "integrity": "sha512-xgC9sO5+I3aNPGRPTviwfqsr1M3lMTbGt+6l+BNrfjYaEKrjnTxSsWdb1Xki0LruC4c0ZuNtgVxlOX0E3kgGsg== sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==",
       "dev": true
     },
     "iferr": {
@@ -2345,12 +2953,6 @@
       "version": "0.1.4",
       "resolved": "file:archived-packages/imurmurhash-0.1.4-9218b9b2b.tar",
       "integrity": "sha1-NTsh0xYm0CK5DeVo724KtMfmLmM= sha1-khi5srkoojixPcT7a21XbyMUU+o=",
-      "dev": true
-    },
-    "indexof": {
-      "version": "0.0.1",
-      "resolved": "file:archived-packages/indexof-0.0.1-82dc336d2.tar",
-      "integrity": "sha1-55suJ26GgvHmXwHOGuXeD4RbjtU= sha1-gtwzbSMrkGIXnQWrMpOmYFn9Q10=",
       "dev": true
     },
     "inflight": {
@@ -2406,9 +3008,9 @@
       },
       "dependencies": {
         "lodash": {
-          "version": "4.17.11",
-          "resolved": "file:archived-packages/lodash-4.17.11-7102a1f22.tar",
-          "integrity": "sha512-6UhDtXrYsK/670VwWHqigNhs0jM35R3nlkn/PfKu1ppWPuoPjz/tRbyyReXzgoEFmMEsTJOOXTaqm6vQKUg0jA== sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==",
+          "version": "4.17.15",
+          "resolved": "file:archived-packages/lodash-4.17.15-f3139c447.tar",
+          "integrity": "sha512-2gks6u//IXIMJXVv0d7nenOpR+zeUPxWpsdnbnEFzCpvd5YzCrAcXDTnof8U1dFvnbyCdkr0BfZe/ZtGqmocZg== sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==",
           "dev": true
         }
       }
@@ -2457,6 +3059,26 @@
       "integrity": "sha1-rAlrPmvnquo0tCN2Xp7AwSlbpCA= sha1-vd7XARQpCCjAoDnnLvJfWq7ENUo=",
       "dev": true
     },
+    "is-accessor-descriptor": {
+      "version": "0.1.6",
+      "resolved": "file:archived-packages/is-accessor-descriptor-0.1.6-a9e12cb3a.tar",
+      "integrity": "sha1-WYbNWcEWs2Sswc54r0yGcEm+2Hg= sha1-qeEss66Nh2cn7u84Q/igiXtcmNY=",
+      "dev": true,
+      "requires": {
+        "kind-of": "^3.0.2"
+      },
+      "dependencies": {
+        "kind-of": {
+          "version": "3.2.2",
+          "resolved": "file:archived-packages/kind-of-3.2.2-31ea21a73.tar",
+          "integrity": "sha1-6LN3PTm42UjKNYsDu2zJuI1qO78= sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ=",
+          "dev": true,
+          "requires": {
+            "is-buffer": "^1.1.5"
+          }
+        }
+      }
+    },
     "is-arrayish": {
       "version": "0.2.1",
       "resolved": "file:archived-packages/is-arrayish-0.2.1-77c998405.tar",
@@ -2478,19 +3100,43 @@
         "ci-info": "^1.5.0"
       }
     },
-    "is-dotfile": {
-      "version": "1.0.3",
-      "resolved": "file:archived-packages/is-dotfile-1.0.3-a6a2f32ff.tar",
-      "integrity": "sha1-9T8oB07n/CgmMuAmo4k7zNjAmXQ= sha1-pqLzL/0t+wT1yiXs0Pa4PPeYoeE=",
-      "dev": true
-    },
-    "is-equal-shallow": {
-      "version": "0.1.3",
-      "resolved": "file:archived-packages/is-equal-shallow-0.1.3-2238098fc.tar",
-      "integrity": "sha1-AixahoDAIj6UZXuiohW810LZk3o= sha1-IjgJj8Ih3gvPpdnqxMRdY4qhxTQ=",
+    "is-data-descriptor": {
+      "version": "0.1.4",
+      "resolved": "file:archived-packages/is-data-descriptor-0.1.4-0b5ee6483.tar",
+      "integrity": "sha1-L7IsFBY9wtlboi6ePY92zDyvjtU= sha1-C17mSDiOLIYCgueT8YVv7D8wG1Y=",
       "dev": true,
       "requires": {
-        "is-primitive": "^2.0.0"
+        "kind-of": "^3.0.2"
+      },
+      "dependencies": {
+        "kind-of": {
+          "version": "3.2.2",
+          "resolved": "file:archived-packages/kind-of-3.2.2-31ea21a73.tar",
+          "integrity": "sha1-6LN3PTm42UjKNYsDu2zJuI1qO78= sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ=",
+          "dev": true,
+          "requires": {
+            "is-buffer": "^1.1.5"
+          }
+        }
+      }
+    },
+    "is-descriptor": {
+      "version": "0.1.6",
+      "resolved": "file:archived-packages/is-descriptor-0.1.6-6af0d8af4.tar",
+      "integrity": "sha512-eVYcAYZbFoOW+oEAhonQtFH5yTgJRpjHc2rnfACvdFHNCakDOr9+BO0TtB0ak6O8hAozLea9+aRgRwcjKcCJ4g== sha512-avDYr0SB3DwO9zsMov0gKCESFYqCnE4hq/4z3TdUlukEy5t9C0YRq7HLrsN52NAcqXKaepeCD0n+B0arnVG3Hg==",
+      "dev": true,
+      "requires": {
+        "is-accessor-descriptor": "^0.1.6",
+        "is-data-descriptor": "^0.1.4",
+        "kind-of": "^5.0.0"
+      },
+      "dependencies": {
+        "kind-of": {
+          "version": "5.1.0",
+          "resolved": "file:archived-packages/kind-of-5.1.0-346104ae7.tar",
+          "integrity": "sha512-8TkvswupDjhUQSJQdNZoqjjE3IuvRbOzCBhK8UN+QDahF5wWbjN/pihZ1OotdqVno0cjH7L254MhwBZJIDylqA== sha512-NGEErnH6F2vUuXDh+OlbcKW7/wOcfdRHaZ7VWtqCztfHri/++YKmP51OdWeGPuqCOba6kk2OTe5d02VmTB80Pw==",
+          "dev": true
+        }
       }
     },
     "is-extendable": {
@@ -2500,9 +3146,9 @@
       "dev": true
     },
     "is-extglob": {
-      "version": "1.0.0",
-      "resolved": "file:archived-packages/is-extglob-1.0.0-ac468177c.tar",
-      "integrity": "sha1-nw5Y0Z1kDpd95KZpjGiF1Fj/upg= sha1-rEaBd8SUNAWgkvyPKXYMb/xiBsA=",
+      "version": "2.1.1",
+      "resolved": "file:archived-packages/is-extglob-2.1.1-a88c02535.tar",
+      "integrity": "sha1-GhKjnowS7jhzV8IF+ioTnekvxDM= sha1-qIwCU1eR8C7TfHahueqXc8gz+MI=",
       "dev": true
     },
     "is-fullwidth-code-point": {
@@ -2515,12 +3161,12 @@
       }
     },
     "is-glob": {
-      "version": "2.0.1",
-      "resolved": "file:archived-packages/is-glob-2.0.1-d096f926a.tar",
-      "integrity": "sha1-EMNo0WRfKFgqxBqthYLcTxC83ag= sha1-0Jb5JqPe1WAPP9/ZEZjLCIjC2GM=",
+      "version": "4.0.1",
+      "resolved": "file:archived-packages/is-glob-4.0.1-e46d2d2ad.tar",
+      "integrity": "sha512-IMErtkrwBvY6UmC8O6rmRfbzBSp9rE7CfAPS9hyYd2Jmq8U8JvccatrFt3D5FKbkidyp1EUTNWCe7iM7aM6pGQ== sha512-5G0tKtBTFImOqDnLB2hG6Bp2qcKEFduo4tZu9MT/H6NQv/ghhy30o55ufafxJ/LdH79LLs2Kfrn85TLKyA7BUg==",
       "dev": true,
       "requires": {
-        "is-extglob": "^1.0.0"
+        "is-extglob": "^2.1.1"
       }
     },
     "is-installed-globally": {
@@ -2559,12 +3205,23 @@
       "dev": true
     },
     "is-number": {
-      "version": "2.1.0",
-      "resolved": "file:archived-packages/is-number-2.1.0-01fcbbb39.tar",
-      "integrity": "sha1-ohb6/+0omzgv9Ef8oKzTYHjYHsM= sha1-Afy7s5NGOlSPL0ZszhbezknbkI8=",
+      "version": "3.0.0",
+      "resolved": "file:archived-packages/is-number-3.0.0-24fd6201a.tar",
+      "integrity": "sha1-7dRqDEODxhGktGEfqI+E7TZGm7I= sha1-JP1iAaR4LPUFYcgQJ2r8fRLXEZU=",
       "dev": true,
       "requires": {
         "kind-of": "^3.0.2"
+      },
+      "dependencies": {
+        "kind-of": {
+          "version": "3.2.2",
+          "resolved": "file:archived-packages/kind-of-3.2.2-31ea21a73.tar",
+          "integrity": "sha1-6LN3PTm42UjKNYsDu2zJuI1qO78= sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ=",
+          "dev": true,
+          "requires": {
+            "is-buffer": "^1.1.5"
+          }
+        }
       }
     },
     "is-obj": {
@@ -2582,17 +3239,14 @@
         "path-is-inside": "^1.0.1"
       }
     },
-    "is-posix-bracket": {
-      "version": "0.1.1",
-      "resolved": "file:archived-packages/is-posix-bracket-0.1.1-3334dc797.tar",
-      "integrity": "sha1-wkvnxsSinoBupM27c4l4KM+H70k= sha1-MzTceXdDaOkvAW5vvAqI9c1ua8Q=",
-      "dev": true
-    },
-    "is-primitive": {
-      "version": "2.0.0",
-      "resolved": "file:archived-packages/is-primitive-2.0.0-207bab916.tar",
-      "integrity": "sha1-v7GQHw7YAKjoCPKmGHT3RyqiSCY= sha1-IHurkWOEmcB7Kt8kCkGochADRXU=",
-      "dev": true
+    "is-plain-object": {
+      "version": "2.0.4",
+      "resolved": "file:archived-packages/is-plain-object-2.0.4-8793e9817.tar",
+      "integrity": "sha512-Rln0VIF3uH3VWSAPsNlTq3FI/YXVoA/esh/cpl040r1+bvEct7L3eSHJkPLJaYcj0UimUNlkNE8xp1BI+FSJTg== sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==",
+      "dev": true,
+      "requires": {
+        "isobject": "^3.0.1"
+      }
     },
     "is-property": {
       "version": "1.0.2",
@@ -2604,6 +3258,12 @@
       "version": "1.0.0",
       "resolved": "file:archived-packages/is-redirect-1.0.0-1d03dded5.tar",
       "integrity": "sha1-z9LImZM8QQZMUueBzTLE9X7WbUo= sha1-HQPd7VO9jbDzDCbk+V02/HyH3CQ=",
+      "dev": true
+    },
+    "is-regexp": {
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/is-regexp-1.0.0-fd2d88354.tar",
+      "integrity": "sha1-K6ZICAzKkJ0H/fZEqE8Aq4hCPIo= sha1-/S2INUXEa6xaYz57mgnof6LLUGk=",
       "dev": true
     },
     "is-resolvable": {
@@ -2625,9 +3285,9 @@
       "dev": true
     },
     "is-windows": {
-      "version": "0.2.0",
-      "resolved": "file:archived-packages/is-windows-0.2.0-de1aa6d63.tar",
-      "integrity": "sha1-8YOtAbjZ81EXwCjjvJdwvlwLUfA= sha1-3hqm1j6indJIc3tp8f+LgALSEIw=",
+      "version": "1.0.2",
+      "resolved": "file:archived-packages/is-windows-1.0.2-7972b5508.tar",
+      "integrity": "sha512-9/4LWSJexRl79hhV7TF+0uj6WZgfXWEK0Dk4L32pcDfAVriN3bpcnmBmaioKa8WfcsQbI1SeXBRrLMBswFjHog== sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==",
       "dev": true
     },
     "isarray": {
@@ -2643,42 +3303,42 @@
       "dev": true
     },
     "isobject": {
-      "version": "2.1.0",
-      "resolved": "file:archived-packages/isobject-2.1.0-f06556109.tar",
-      "integrity": "sha1-n8GIo4TmcuxVDTKxzCvExnEJJ7E= sha1-8GVWEJaj8dou9GJy+BXIQNh+DIk=",
-      "dev": true,
-      "requires": {
-        "isarray": "1.0.0"
-      }
+      "version": "3.0.1",
+      "resolved": "file:archived-packages/isobject-3.0.1-4e431e92b.tar",
+      "integrity": "sha1-DDO7IHXLiwhxszFBcmHuD9B8QG0= sha1-TkMekrEalzFjaqH5yNHMvP2reN8=",
+      "dev": true
     },
     "jquery": {
-      "version": "2.2.4",
-      "resolved": "file:archived-packages/jquery-2.2.4-2c89d6889.tar",
-      "integrity": "sha1-8nB41TapbUhxn+NzIV+RVEy9ZFY= sha1-LInWiJterFIqfuoywUUhVZxsvwI=",
+      "version": "3.5.1",
+      "resolved": "file:archived-packages/jquery-3.5.1-5f02013ea.tar",
+      "integrity": "sha512-LXqrcuY/5t4rcVj9M8PQAfTjB5Lb/su/Nu+f/hlI8Te6JwEKW13tlz2ly7IPojcMkyxsmBoIRRLHUgGMS11Zqg== sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==",
       "dev": true
     },
     "jquery-contextmenu": {
-      "version": "2.2.3",
-      "resolved": "file:archived-packages/jquery-contextmenu-2.2.3-a9800f7d7.tar",
-      "integrity": "sha1-D67Wkex94rN8HWTmzCAdRE0Ffxo= sha1-qYAPfXL5ZDcetDw+LwucHzD4mmw=",
-      "dev": true
+      "version": "2.9.2",
+      "resolved": "file:archived-packages/jquery-contextmenu-2.9.2-e92eac1ff.tar",
+      "integrity": "sha512-Q8UyogH3KwAk0+KjF6U9cHhbSQygdetI2qR38L5oobvZdM21qYLIMgFBrMSWHXxRF8n5EpjfN0KVETHsmWfb1g== sha512-6S6sH/08owDStC/7zNwcN366yR0ydX6PmMB0RnjLRQOp7Nc/rqwEHglshfHrrw2kdTev97GXwRXrayDUmToIOw==",
+      "dev": true,
+      "requires": {
+        "jquery": "^3.5.0"
+      }
     },
     "jquery-mousewheel": {
-      "version": "3.1.3",
-      "resolved": "file:archived-packages/jquery-mousewheel-3.1.3-344fbe84e.tar",
-      "integrity": "sha1-hXAho3nUanz0r/33DkfzMnlpZ1A= sha1-NE++hOqfSuK6cRXU8N0P1o9DLEI=",
+      "version": "3.1.13",
+      "resolved": "file:archived-packages/jquery-mousewheel-3.1.13-06f0335f1.tar",
+      "integrity": "sha1-7rxfT2P8A0LndW8XGMAdtsKEXHw= sha1-BvAzXxbjU6aV5yBr9QUDy1I6buU=",
       "dev": true
     },
-    "jquery-ui": {
-      "version": "1.10.5",
-      "resolved": "file:archived-packages/jquery-ui-1.10.5-826aed3dd.tar",
-      "integrity": "sha1-c5JW7j2s3tP06Za/T4EPcHK4caw= sha1-gmrtPdH4jTKudddN9IZD3EMaWBU=",
+    "jquery-ui-dist": {
+      "version": "1.12.1",
+      "resolved": "file:archived-packages/jquery-ui-dist-1.12.1-5c0815d3c.tar",
+      "integrity": "sha1-M0ybUq7HFM4Y/GQUG6kA0E0bOWg= sha1-XAgV08xvkP9fqvWyaKbiO0ypBPo=",
       "dev": true
     },
     "js-yaml": {
-      "version": "3.12.2",
-      "resolved": "file:archived-packages/js-yaml-3.12.2-4079ff2e1.tar",
-      "integrity": "sha512-4jWmL/PXErDTqPofoC5KCPPpygLAOtEeDnY8HJUusCayhmbmG0VTT1Q7edY9K4YVbdbVMB6TBgyjtxX1T1kEVQ== sha512-QHn/Lh/7HhZ/Twc7vJYQTkjuCa0kaCcDcjK5Zlk2rvnUpy7DxMJ23+Jc2dcyvltwQVg1nygAVlB2oRDFHoRS5Q==",
+      "version": "3.14.0",
+      "resolved": "file:archived-packages/js-yaml-3.14.0-ff821b21e.tar",
+      "integrity": "sha512-1ncAOdWa8cL8PgUqu8BVJEfzHu3UEZqejO8J3kO2/VlhtCx76YNuESn6L0JZuIWmwAFFsLJ6jgFxrToVYHkwSQ== sha512-/4IbIeHcD9VMHFqDR/gQ7EdZdLimOvW2DdcxFjdyyZ9NsbS+ccrXqVWDtab/lRl5AlUqmpBx8EhPaWR+OtY17A==",
       "dev": true,
       "requires": {
         "argparse": "^1.0.7",
@@ -2725,13 +3385,10 @@
       "dev": true
     },
     "kind-of": {
-      "version": "3.2.2",
-      "resolved": "file:archived-packages/kind-of-3.2.2-31ea21a73.tar",
-      "integrity": "sha1-6LN3PTm42UjKNYsDu2zJuI1qO78= sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ=",
-      "dev": true,
-      "requires": {
-        "is-buffer": "^1.1.5"
-      }
+      "version": "6.0.3",
+      "resolved": "file:archived-packages/kind-of-6.0.3-75c4b5ba5.tar",
+      "integrity": "sha512-76/jLsJhv27WbVOGx99IFOfHmYWVV+VKIPGddwx/EkYAAs8GYksad8Q+bo0GGWo63svN8pkE4iglNit4u/Ajow== sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==",
+      "dev": true
     },
     "l10n-for-node": {
       "version": "0.0.1",
@@ -2740,22 +3397,13 @@
       "dev": true
     },
     "labeled-stream-splicer": {
-      "version": "2.0.1",
-      "resolved": "file:archived-packages/labeled-stream-splicer-2.0.1-302f78987.tar",
-      "integrity": "sha512-KOOnX5ZIj7g680FBG8yT6NlpvmWiMe1bJC1CPX2gxV3WNqJRCRhaZUim77FS6LH+T3TFeKna714Alsj27iGLPw== sha512-MC94mHZRvJ3LfykJlTUipBqenZz1pacOZEMhhQ8dMGcDHs0SBE5GbsavUXV7YtP3icBW17W0Zy1I0lfASmo9Pg==",
+      "version": "2.0.2",
+      "resolved": "file:archived-packages/labeled-stream-splicer-2.0.2-09ae0b497.tar",
+      "integrity": "sha512-2N99yKiZTmEQ06NDNftl+SUNh3Y44UhtyeP6LlUzuWsOGx+luvIvG8sM8GxHHfwnbSCWc09RRqnIhuxGGPZEgQ== sha512-Ca4LSXFFZUjPScRaqOcFxneA0VpKZr4MMYCljyQr4LIewTLb3Y0IUTIsnBBsVubIeEfxeSZpSjSsRM8APEQaAw==",
       "dev": true,
       "requires": {
         "inherits": "^2.0.1",
-        "isarray": "^2.0.4",
         "stream-splicer": "^2.0.0"
-      },
-      "dependencies": {
-        "isarray": {
-          "version": "2.0.4",
-          "resolved": "file:archived-packages/isarray-2.0.4-18cc573a2.tar",
-          "integrity": "sha512-pBQOD7eZqt1tTjKEUt3w2ptDwLAyGkrV9wDTTYvEoE5qJY6OMeaarJ7G6zdd1S+HpfSVW+9EKfqt9xt6W0/L7Q== sha512-GMxXOiUirWg1xTKRipM0Ek07rX+ubx4nNVElTJdNLYmNO/2YrDkgJGw9CljXn+r4EWiDQg/8lsRdHyg2PJuUaA==",
-          "dev": true
-        }
       }
     },
     "latest-version": {
@@ -2849,9 +3497,9 @@
       }
     },
     "lodash": {
-      "version": "3.6.0",
-      "resolved": "file:archived-packages/lodash-3.6.0-5266a8f49.tar",
-      "integrity": "sha1-GJIfDSfRWri3Uc8/adutOfC2qh4= sha1-Umao9J3Zib5Pn2gbbyoMVShdDZo=",
+      "version": "4.17.15",
+      "resolved": "file:archived-packages/lodash-4.17.15-f3139c447.tar",
+      "integrity": "sha512-2gks6u//IXIMJXVv0d7nenOpR+zeUPxWpsdnbnEFzCpvd5YzCrAcXDTnof8U1dFvnbyCdkr0BfZe/ZtGqmocZg== sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==",
       "dev": true
     },
     "lodash.memoize": {
@@ -2934,11 +3582,20 @@
         }
       }
     },
-    "math-random": {
-      "version": "1.0.4",
-      "resolved": "file:archived-packages/math-random-1.0.4-ad4c63cac.tar",
-      "integrity": "sha512-Z4nMwzj2MCNwYH1ygQ1SVude9OWqsrk8ZwUVY6CTRqVvRAKBOP4eroYHQ0p8ZcbJjGOBIhrn9DClZ2s6dY+jRA== sha512-rUxjysqif/BZQH2yhd5Aaq7vXMSx9NdEsQcyA07uEzIvxgI7zIr33gGsh+RU0/XjmQpCW7RsVof1vlkvQVCK5A==",
+    "map-cache": {
+      "version": "0.2.2",
+      "resolved": "file:archived-packages/map-cache-0.2.2-c32abd0bd.tar",
+      "integrity": "sha1-ebZJpaG9hvliX2ZkV18uUoYvaH8= sha1-wyq9C9ZSXZsFFkW7TyasXcmKDb8=",
       "dev": true
+    },
+    "map-visit": {
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/map-visit-1.0.0-ecdca8f13.tar",
+      "integrity": "sha1-JIv78zZ3qhYAZ058AxwC02I3zKk= sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=",
+      "dev": true,
+      "requires": {
+        "object-visit": "^1.0.0"
+      }
     },
     "md5.js": {
       "version": "1.3.5",
@@ -2967,24 +3624,24 @@
       "dev": true
     },
     "micromatch": {
-      "version": "2.3.11",
-      "resolved": "file:archived-packages/micromatch-2.3.11-86677c97d.tar",
-      "integrity": "sha1-Bk0KIs6vNyVCqHrh6hkcgFe7MRY= sha1-hmd8l9FyCzY0MdBNDRUpO9OMFWU=",
+      "version": "3.1.10",
+      "resolved": "file:archived-packages/micromatch-3.1.10-3168a4825.tar",
+      "integrity": "sha512-ejfbLmrZ7v6wjenh43ml+Cf8aT//sMfvCDOEjQW1dgrXduSwLRlbI1zneq8slirdR6LEr9p/1zryuDS6RE39AQ== sha512-MWikgl9n9M3w+bpsY3He8L+w9eF9338xRl8IAO5viDizwSzziFEyUzo2xrrloB64ADbTf8uA8vRqqttDTOmccg==",
       "dev": true,
       "requires": {
-        "arr-diff": "^2.0.0",
-        "array-unique": "^0.2.1",
-        "braces": "^1.8.2",
-        "expand-brackets": "^0.1.4",
-        "extglob": "^0.3.1",
-        "filename-regex": "^2.0.0",
-        "is-extglob": "^1.0.0",
-        "is-glob": "^2.0.1",
-        "kind-of": "^3.0.2",
-        "normalize-path": "^2.0.1",
-        "object.omit": "^2.0.0",
-        "parse-glob": "^3.0.4",
-        "regex-cache": "^0.4.2"
+        "arr-diff": "^4.0.0",
+        "array-unique": "^0.3.2",
+        "braces": "^2.3.1",
+        "define-property": "^2.0.2",
+        "extend-shallow": "^3.0.2",
+        "extglob": "^2.0.4",
+        "fragment-cache": "^0.2.1",
+        "kind-of": "^6.0.2",
+        "nanomatch": "^1.2.9",
+        "object.pick": "^1.3.0",
+        "regex-not": "^1.0.0",
+        "snapdragon": "^0.8.1",
+        "to-regex": "^3.0.2"
       }
     },
     "miller-rabin": {
@@ -2995,7 +3652,21 @@
       "requires": {
         "bn.js": "^4.0.0",
         "brorand": "^1.0.1"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "file:archived-packages/bn.js-4.11.9-13a42862a.tar",
+          "integrity": "sha512-KG9VTNsd+c0aSeTf4ZOOKhZcTX4aR3kJaVXKy5r2xnrYlJUVwhEZcCwJTgA58w6HfgPOfcJlPQZqlVoeIdq6Mw== sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==",
+          "dev": true
+        }
       }
+    },
+    "mime": {
+      "version": "1.6.0",
+      "resolved": "file:archived-packages/mime-1.6.0-c74567f2c.tar",
+      "integrity": "sha512-WLkEff6Xor9Wb2wM6BHIs6w4FdP7RpW++kqRk1KS2zafuf2OLfiv9OXDfzMb2TOVLMRuzhAu3o4zcOjpwNI/IQ== sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==",
+      "dev": true
     },
     "mimic-fn": {
       "version": "1.2.0",
@@ -3025,9 +3696,9 @@
       }
     },
     "minimist": {
-      "version": "1.2.0",
-      "resolved": "file:archived-packages/minimist-1.2.0-a35008b20.tar",
-      "integrity": "sha1-4O2GlH9oaWknqTDRF0cxceqaBjs= sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=",
+      "version": "1.2.5",
+      "resolved": "file:archived-packages/minimist-1.2.5-14cf67354.tar",
+      "integrity": "sha512-84yZZjWPJDDLJlAV5zJ21v2WlmwPWsR5iTQHE1X2iC6w3Mh8HOQ93TcNKHHbhNr/EkR58TfElkonWtcPYmiUxg== sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==",
       "dev": true
     },
     "minipass": {
@@ -3087,61 +3758,76 @@
         }
       }
     },
-    "mkdirp": {
-      "version": "0.5.1",
-      "resolved": "file:archived-packages/mkdirp-0.5.1-30057438e.tar",
-      "integrity": "sha1-ARpMlCIKpdbVt3BUnNzAjEI7E9I= sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=",
+    "mixin-deep": {
+      "version": "1.3.2",
+      "resolved": "file:archived-packages/mixin-deep-1.3.2-591a039ff.tar",
+      "integrity": "sha512-0dGa6H6dMLjbkM9mTiP1vBgCGNwtHAJmfbbjNIo43jCN0rmY9ZcVpo16tDiibcl7tZiJuE7ubW3CVW69Azv5Jg== sha512-WRoDn//mXBiJ1H40rqa3vH0toePwSsGb45iInWlTySa+Uu4k3tYUSxa2v1KqAiLtvlrSzaExqS1gtk96A9zvEA==",
       "dev": true,
       "requires": {
-        "minimist": "0.0.8"
+        "for-in": "^1.0.2",
+        "is-extendable": "^1.0.1"
       },
       "dependencies": {
-        "minimist": {
-          "version": "0.0.8",
-          "resolved": "file:archived-packages/minimist-0.0.8-857fcabfc.tar",
-          "integrity": "sha1-w2tu4dqRVmB18BlVGewlKKXzs8M= sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=",
-          "dev": true
+        "is-extendable": {
+          "version": "1.0.1",
+          "resolved": "file:archived-packages/is-extendable-1.0.1-6ab9d7331.tar",
+          "integrity": "sha512-gZFzak1hF9oHYsTInoYrpFtqPtZk36fFVcu46SwIm1DkBda5r8bqmFfL6ISerc0gfuNuUkUOOtkXJCKp3wpq3A== sha512-arnXMxT1hhoKo9k1LZdmlNyJdDDfy2v0fXjFlmok4+i8ul/6WlbVge9bhM74OpNPQPMGUToDtz+KXa1PneJxOA==",
+          "dev": true,
+          "requires": {
+            "is-plain-object": "^2.0.4"
+          }
         }
       }
     },
+    "mkdirp": {
+      "version": "0.5.5",
+      "resolved": "file:archived-packages/mkdirp-0.5.5-34a980944.tar",
+      "integrity": "sha512-0lqiJHgOgNiFhf6G3aYePqzAz4Qr8yhJzAHJN5ouvRNXe8HYvZUEVKPeKA9aAuph5TQTJ4xCLyBMk5AvcE1n3g== sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==",
+      "dev": true,
+      "requires": {
+        "minimist": "^1.2.5"
+      }
+    },
+    "mkdirp-classic": {
+      "version": "0.5.3",
+      "resolved": "file:archived-packages/mkdirp-classic-0.5.3-80a2dc444.tar",
+      "integrity": "sha512-i/TYmT9tuFGBV7FKpZDWRQCGOOYsSYwlWe/cNE+UxuEPHyILOCLIBT5/+8G7u8P47gAFTkIarmKckIsUnCOgGw== sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==",
+      "dev": true
+    },
     "module-deps": {
-      "version": "4.1.1",
-      "resolved": "file:archived-packages/module-deps-4.1.1-23215833f.tar",
-      "integrity": "sha1-v/jiT5rW9EQnqA1g+gQ/wvH4fBw= sha1-IyFYM/HaE/1gbMuAh7RIUty4If0=",
+      "version": "6.2.2",
+      "resolved": "file:archived-packages/module-deps-6.2.2-6bdcbac83.tar",
+      "integrity": "sha512-cvB1I6uiAxIMRW7iPckngyncvf+79Thvzl8FO6p8uryceOsw8MbUVZYcLkMNusAvWqq9hSC/LWtQshKXmL7rGg== sha512-a9y6yDv5u5I4A+IPHTnqFxcaKr4p50/zxTjcQJaX2ws9tN/W6J6YXnEKhqRyPhl494dkcxx951onSKVezmI+3w==",
       "dev": true,
       "requires": {
         "JSONStream": "^1.0.3",
         "browser-resolve": "^1.7.0",
-        "cached-path-relative": "^1.0.0",
-        "concat-stream": "~1.5.0",
+        "cached-path-relative": "^1.0.2",
+        "concat-stream": "~1.6.0",
         "defined": "^1.0.0",
-        "detective": "^4.0.0",
+        "detective": "^5.2.0",
         "duplexer2": "^0.1.2",
         "inherits": "^2.0.1",
         "parents": "^1.0.0",
         "readable-stream": "^2.0.2",
-        "resolve": "^1.1.3",
+        "resolve": "^1.4.0",
         "stream-combiner2": "^1.1.1",
         "subarg": "^1.0.0",
         "through2": "^2.0.0",
         "xtend": "^4.0.0"
-      }
-    },
-    "mold-source-map": {
-      "version": "0.4.0",
-      "resolved": "file:archived-packages/mold-source-map-0.4.0-cf67e0b31.tar",
-      "integrity": "sha1-ESPuUDNHztUIWjMFSOpYp63q6Nc= sha1-z2fgsxxHq5uttcnCVlGGISe7gxc=",
-      "dev": true,
-      "requires": {
-        "convert-source-map": "^1.1.0",
-        "through": "~2.2.7"
       },
       "dependencies": {
-        "through": {
-          "version": "2.2.7",
-          "resolved": "file:archived-packages/through-2.2.7-6e8e21200.tar",
-          "integrity": "sha1-Eq1sH6gavxhOgm4bt2BSGcz8glA= sha1-bo4hIAGR1OtqmfbwEN9Gqhxusr0=",
-          "dev": true
+        "concat-stream": {
+          "version": "1.6.2",
+          "resolved": "file:archived-packages/concat-stream-1.6.2-dbb1c1821.tar",
+          "integrity": "sha512-VpbzGb+StPqO5rv/c69g9kY4IhSnGRWhfI7NMlRPiu6g0FTHxQ2PxV3tjhfklZsoQjiz3+rw+0iwdFTektWAWQ== sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==",
+          "dev": true,
+          "requires": {
+            "buffer-from": "^1.0.0",
+            "inherits": "^2.0.3",
+            "readable-stream": "^2.2.2",
+            "typedarray": "^0.0.6"
+          }
         }
       }
     },
@@ -3171,11 +3857,24 @@
       "integrity": "sha1-Qnt6RtN1O0vOQoljSOFy//7MAg0= sha1-j7+rsKmKJT0xhDMfno3rc3L6xsA=",
       "dev": true
     },
-    "nave": {
-      "version": "0.5.3",
-      "resolved": "file:archived-packages/nave-0.5.3-5acec7237.tar",
-      "integrity": "sha1-X2CxeK5cj9WcVJryF7Kg6AsuBGM= sha1-Ws7HI3WFblx2yDvSGmjXE+tfG6Q=",
-      "dev": true
+    "nanomatch": {
+      "version": "1.2.13",
+      "resolved": "file:archived-packages/nanomatch-1.2.13-7e9a1ed93.tar",
+      "integrity": "sha512-7WXKRs3aY2JkFi0Hkcb87Dd3CFsw5bZtkLkdAYYh/vYNVYu7YD1RZ5q39uG1K8nWAbjgD64mHWEU3u3IRI8hfA== sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==",
+      "dev": true,
+      "requires": {
+        "arr-diff": "^4.0.0",
+        "array-unique": "^0.3.2",
+        "define-property": "^2.0.2",
+        "extend-shallow": "^3.0.2",
+        "fragment-cache": "^0.2.1",
+        "is-windows": "^1.0.2",
+        "kind-of": "^6.0.2",
+        "object.pick": "^1.3.0",
+        "regex-not": "^1.0.0",
+        "snapdragon": "^0.8.1",
+        "to-regex": "^3.0.1"
+      }
     },
     "next-tick": {
       "version": "1.0.0",
@@ -3204,15 +3903,6 @@
         "resolve": "^1.10.0",
         "semver": "2 || 3 || 4 || 5",
         "validate-npm-package-license": "^3.0.1"
-      }
-    },
-    "normalize-path": {
-      "version": "2.1.1",
-      "resolved": "file:archived-packages/normalize-path-2.1.1-1ab28b556.tar",
-      "integrity": "sha1-sDPn5mwHG8zEpdnyYnOd9J+qOgw= sha1-GrKLVW4Zg2Oowab35vogE3/mrtk=",
-      "dev": true,
-      "requires": {
-        "remove-trailing-separator": "^1.0.1"
       }
     },
     "npm-bundled": {
@@ -3303,14 +3993,53 @@
       "integrity": "sha1-EZyEj18QO58X0E4gXy8AY3h2mSE= sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=",
       "dev": true
     },
-    "object.omit": {
-      "version": "2.0.1",
-      "resolved": "file:archived-packages/object.omit-2.0.1-1a9c74482.tar",
-      "integrity": "sha1-Kd7jQiMuB/bS+DxCoYienvOBf00= sha1-Gpx0SCnznbuFjHbKNXmuKlTr0fo=",
+    "object-copy": {
+      "version": "0.1.0",
+      "resolved": "file:archived-packages/object-copy-0.1.0-7e7d858b7.tar",
+      "integrity": "sha1-iwu0HMFoUwzRAx45QqTIPeBMxyY= sha1-fn2Fi3gb18mRpBupde04EnVOmYw=",
       "dev": true,
       "requires": {
-        "for-own": "^0.1.4",
-        "is-extendable": "^0.1.1"
+        "copy-descriptor": "^0.1.0",
+        "define-property": "^0.2.5",
+        "kind-of": "^3.0.3"
+      },
+      "dependencies": {
+        "define-property": {
+          "version": "0.2.5",
+          "resolved": "file:archived-packages/define-property-0.2.5-c35b1ef91.tar",
+          "integrity": "sha1-WmT7c4oSGUyRHwiC8mHyFpdgrDI= sha1-w1se+RjsPJkPmlvFe+BKrOxcgRY=",
+          "dev": true,
+          "requires": {
+            "is-descriptor": "^0.1.0"
+          }
+        },
+        "kind-of": {
+          "version": "3.2.2",
+          "resolved": "file:archived-packages/kind-of-3.2.2-31ea21a73.tar",
+          "integrity": "sha1-6LN3PTm42UjKNYsDu2zJuI1qO78= sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ=",
+          "dev": true,
+          "requires": {
+            "is-buffer": "^1.1.5"
+          }
+        }
+      }
+    },
+    "object-visit": {
+      "version": "1.0.1",
+      "resolved": "file:archived-packages/object-visit-1.0.1-f79c4493a.tar",
+      "integrity": "sha1-bPrO48bpKKj3XNfhHyTSAeIw8mc= sha1-95xEk68MU3e1n+OdOV5BBC3QRbs=",
+      "dev": true,
+      "requires": {
+        "isobject": "^3.0.0"
+      }
+    },
+    "object.pick": {
+      "version": "1.3.0",
+      "resolved": "file:archived-packages/object.pick-1.3.0-87a10ac4c.tar",
+      "integrity": "sha1-b+M9FPUBIDHl+J2qilCVKZlQOyw= sha1-h6EKxMFpS9Lhy/U1kaZhQftd10c=",
+      "dev": true,
+      "requires": {
+        "isobject": "^3.0.1"
       }
     },
     "once": {
@@ -3343,9 +4072,9 @@
       }
     },
     "os-browserify": {
-      "version": "0.1.2",
-      "resolved": "file:archived-packages/os-browserify-0.1.2-49ca0293e.tar",
-      "integrity": "sha1-KoCCbiyo7lo7fGnS4Rb+66VpzqA= sha1-ScoCk+CxlZCl9d4Qx/JlphfY/lQ=",
+      "version": "0.3.0",
+      "resolved": "file:archived-packages/os-browserify-0.3.0-854373c7f.tar",
+      "integrity": "sha1-wH5uC+5GymW2UUmqfqxUGcyl2Uc= sha1-hUNzx/XCMVkU/Jv8a9gjj92h7Cc=",
       "dev": true
     },
     "os-homedir": {
@@ -3472,9 +4201,9 @@
       }
     },
     "pako": {
-      "version": "0.2.9",
-      "resolved": "file:archived-packages/pako-0.2.9-f3f7522f4.tar",
-      "integrity": "sha1-eSaZetLOGvXP1Ga/UJpLhEcUnMQ= sha1-8/dSL073gjSNqBYbrZ7P1Rv4OnU=",
+      "version": "1.0.11",
+      "resolved": "file:archived-packages/pako-1.0.11-e212c1f0f.tar",
+      "integrity": "sha512-/s1xWnlW4QCR4hSQU10c2WN5IRNMEkl0rF1xPZAnvmvoQtO4ILN52ybyVw03u4BIqZsnPug340e1BAYnySQiXA== sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==",
       "dev": true
     },
     "parallel-transform": {
@@ -3498,9 +4227,9 @@
       }
     },
     "parse-asn1": {
-      "version": "5.1.4",
-      "resolved": "file:archived-packages/parse-asn1-5.1.4-42ce5db89.tar",
-      "integrity": "sha512-WxgOwh9YI9OF+8HW4mb00iC8bu4sK80npH5tlUjJN+9Sn7m9pbVxNNZsf43HMAt9R1KCh7H5YlH2Iilvl73opg== sha512-Qs5duJcuvNExRfFZ99HDD3z4mAi3r9Wl/FOjEOijlxwCZs7E7mW2vjTpgQ4J8LpTF8x5v+1Vn5UQFejmWT11aw==",
+      "version": "5.1.5",
+      "resolved": "file:archived-packages/parse-asn1-5.1.5-8e43189f5.tar",
+      "integrity": "sha512-tc88c1Vp+AqCLgKE6ZdkUQBmbBoEdP04LyWLoUDkfo6iVq5BesJnmAJVNH+FuldAHNxSfF70uzxJ/jpt7c8yIw== sha512-jkMYn1dcJqF6d5CpU689bq7w/b5ALS9ROVSpQDPrZsqqesUJii9qutvoT5ltGedNXMO2e16YUWIghG9KxaViTQ==",
       "dev": true,
       "requires": {
         "asn1.js": "^4.0.0",
@@ -3509,18 +4238,6 @@
         "evp_bytestokey": "^1.0.0",
         "pbkdf2": "^3.0.3",
         "safe-buffer": "^5.1.1"
-      }
-    },
-    "parse-glob": {
-      "version": "3.0.4",
-      "resolved": "file:archived-packages/parse-glob-3.0.4-b2c376cfb.tar",
-      "integrity": "sha1-SXPUaq0NRvQpAWSIihkmcTROGnA= sha1-ssN2z7EfNVE7rdFz7wu246OIORw=",
-      "dev": true,
-      "requires": {
-        "glob-base": "^0.3.0",
-        "is-dotfile": "^1.0.0",
-        "is-extglob": "^1.0.0",
-        "is-glob": "^2.0.0"
       }
     },
     "parse-json": {
@@ -3536,6 +4253,12 @@
       "version": "1.0.0",
       "resolved": "file:archived-packages/parse-passwd-1.0.0-6d5b934a4.tar",
       "integrity": "sha1-wgawktustwgxMKDFTGL1v85hI7c= sha1-bVuTSkVpk7I9N/QKOC1vFmao5cY=",
+      "dev": true
+    },
+    "pascalcase": {
+      "version": "0.1.1",
+      "resolved": "file:archived-packages/pascalcase-0.1.1-b363e55e8.tar",
+      "integrity": "sha1-qbUlbNDQCJkYn8F4nm/k04oJbvg= sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=",
       "dev": true
     },
     "path-browserify": {
@@ -3598,9 +4321,9 @@
       }
     },
     "pbkdf2": {
-      "version": "3.0.17",
-      "resolved": "file:archived-packages/pbkdf2-3.0.17-53f8a5e4c.tar",
-      "integrity": "sha512-MaRno9C4zSRvmDe8zwdxbt1uHGAOQfahCoD8eW1S9jpBWoSOIE7va0YczGX/i3/bErYRHJH+KfnERJfBPYGgkA== sha512-U/il5MsrZp7mGg3mSQfn742na2T+1/vHDCG5/iTI3X9MKUuYUZVLQhyRsg06mCgDBTd57TxzgZt7P+fYfjRLtA==",
+      "version": "3.1.1",
+      "resolved": "file:archived-packages/pbkdf2-3.1.1-e048f2d4e.tar",
+      "integrity": "sha512-LJK7/dGEogOZ2tJFbu3aXuFN9x5oXOaDqVMDMPtFxBfGHwFHff/AQEPWaNUyW9dXjrijznGFDGd25HFZaotilw== sha512-4Ejy1OPxi9f2tt1rRV7Go7zmfDQ+ZectEQz3VGUQhgq62HtIRPDyG/JtnwIxs6x3uNMwo2V7q1fMvKjb+Tnpqg==",
       "dev": true,
       "requires": {
         "create-hash": "^1.1.2",
@@ -3622,6 +4345,12 @@
       "integrity": "sha1-QKNPIYaPRhjOyRp6n96ms3KSHSA= sha1-0aIUg/0iu0HlihL6NCGCMUCJfEU=",
       "dev": true
     },
+    "posix-character-classes": {
+      "version": "0.1.1",
+      "resolved": "file:archived-packages/posix-character-classes-0.1.1-01eac0fe3.tar",
+      "integrity": "sha1-LbfhBw5PD6UzE5MBX4zRNqg18kg= sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=",
+      "dev": true
+    },
     "prelude-ls": {
       "version": "1.1.2",
       "resolved": "file:archived-packages/prelude-ls-1.1.2-21932a549.tar",
@@ -3632,12 +4361,6 @@
       "version": "1.0.4",
       "resolved": "file:archived-packages/prepend-http-1.0.4-d4f4562b0.tar",
       "integrity": "sha1-dQkgzvCMxXSReX/jVG9RZuCtVl4= sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=",
-      "dev": true
-    },
-    "preserve": {
-      "version": "0.2.0",
-      "resolved": "file:archived-packages/preserve-0.2.0-815ed1f6e.tar",
-      "integrity": "sha1-iJY5l4c4JovrPN8NjBSIJPDQ6Mo= sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=",
       "dev": true
     },
     "process": {
@@ -3701,6 +4424,14 @@
         "parse-asn1": "^5.0.0",
         "randombytes": "^2.0.1",
         "safe-buffer": "^5.1.2"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "file:archived-packages/bn.js-4.11.9-13a42862a.tar",
+          "integrity": "sha512-KG9VTNsd+c0aSeTf4ZOOKhZcTX4aR3kJaVXKy5r2xnrYlJUVwhEZcCwJTgA58w6HfgPOfcJlPQZqlVoeIdq6Mw== sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==",
+          "dev": true
+        }
       }
     },
     "pump": {
@@ -3741,31 +4472,6 @@
       "resolved": "file:archived-packages/querystring-es3-0.2.1-9ec61f790.tar",
       "integrity": "sha1-Lnai1x2Bw0GZc3gnuUy/ufw+/do= sha1-nsYfeQSYdXB9aUFFlv2Qek1xHnM=",
       "dev": true
-    },
-    "randomatic": {
-      "version": "3.1.1",
-      "resolved": "file:archived-packages/randomatic-3.1.1-4ee0c4e4a.tar",
-      "integrity": "sha512-Ktte92ig8bjMUvnX73Z0ST4T7MNE2Vt+6P7IR3Bo+uJJ+8TFVPQxFceKptCkos6RgMgy0nppRwSEi8XAnS6X+g== sha512-TuDE5KxZ0J461RVjrJZCJc+J+zCkTb1MbH9AQUq68sMhOMcy9jLcb3BrZKgp9q9Ncltdg4QVqWrH02W2EFFVYw==",
-      "dev": true,
-      "requires": {
-        "is-number": "^4.0.0",
-        "kind-of": "^6.0.0",
-        "math-random": "^1.0.1"
-      },
-      "dependencies": {
-        "is-number": {
-          "version": "4.0.0",
-          "resolved": "file:archived-packages/is-number-4.0.0-ad2925700.tar",
-          "integrity": "sha512-zurk5cNwLJi+wnawPF969Q4wXwhDTod+uONgx/CNi+5faLxsCdVLEjksA1NESFkxhQf6p/D4g2waZbAFQrXQSA== sha512-rSklcAIlf1OmFdyAqbnWTLVelsQ58uvZ66S/ZyawjWqIviTWCjg2PzVGw8WUA+nNuPTqb4wgA+NszrJ+08LlgQ==",
-          "dev": true
-        },
-        "kind-of": {
-          "version": "6.0.2",
-          "resolved": "file:archived-packages/kind-of-6.0.2-b3990b39c.tar",
-          "integrity": "sha512-/GvIq4igSGgHnLk7hZxHlzT17uQVe1A/kiseJ1pDCbY49TPASrTB24sKElR5zQL5OiC2FXP9NCIaEi/s5bk9dQ== sha512-s5kLOcnH0XqDO+FvuaLX8DDjZ18CGFk7VygH40QoKPUQhW4e2rvM0rwUq0t8IQDOwYSeLK01U90OjzBTme2QqA==",
-          "dev": true
-        }
-      }
     },
     "randombytes": {
       "version": "2.1.0",
@@ -3873,13 +4579,14 @@
         "mute-stream": "0.0.5"
       }
     },
-    "regex-cache": {
-      "version": "0.4.4",
-      "resolved": "file:archived-packages/regex-cache-0.4.4-9d5219c2d.tar",
-      "integrity": "sha512-2IVwJU1FkSsUMw0jj1sc41AwWqHFf2zj2bf1GfhltnHnzZqJl8AnIW9YX8o+c6q5qr4F5Rhus/lYO3Y9MxMb2w== sha512-nVIZwtCjkC9YgvWkpM55B5rBhBYRZhAaJbgcFYXXsHnbZ9UZI9nnVWYZpBlCqv9ho2eZryPnWrZGsOdPwVWXWQ==",
+    "regex-not": {
+      "version": "1.0.2",
+      "resolved": "file:archived-packages/regex-not-1.0.2-27a4838d4.tar",
+      "integrity": "sha512-bqXvT3r2BVRnRWtC7PLQGqD1uslnB4pAgz6WIZXo6eWLbBYwReKEvr80sEfFtmRYcYb12guc7fkM7JqWhtGpzg== sha512-J6SDjUgDxQj5NusnOtdFxDwN/+HWykR8GELwctJ7mdqhcyy1xEc4SRFHUXvxTp661YaVKAjfRLZ9cCqS6tn32A==",
       "dev": true,
       "requires": {
-        "is-equal-shallow": "^0.1.3"
+        "extend-shallow": "^3.0.2",
+        "safe-regex": "^1.1.0"
       }
     },
     "registry-auth-token": {
@@ -3900,12 +4607,6 @@
       "requires": {
         "rc": "^1.0.1"
       }
-    },
-    "remove-trailing-separator": {
-      "version": "1.1.0",
-      "resolved": "file:archived-packages/remove-trailing-separator-1.1.0-c24bce2a2.tar",
-      "integrity": "sha1-pdpBjfF+lhM0FguOVGvnvGaw0yg= sha1-wkvOKig62tW8P1jg1IJJuSN52O8=",
-      "dev": true
     },
     "repeat-element": {
       "version": "1.1.3",
@@ -3951,19 +4652,25 @@
       }
     },
     "resolve-dir": {
-      "version": "0.1.1",
-      "resolved": "file:archived-packages/resolve-dir-0.1.1-b219259a5.tar",
-      "integrity": "sha1-6FBzCgL1OJAG+aOWvMtd0SjqB34= sha1-shklmlYC+sXFxJatiUpujMQwJh4=",
+      "version": "1.0.1",
+      "resolved": "file:archived-packages/resolve-dir-1.0.1-79a40644c.tar",
+      "integrity": "sha1-7S6EHtf0DPIS+jesiVnpwN2R5nM= sha1-eaQGRMNivoLybv/nOcm7U4IEb0M=",
       "dev": true,
       "requires": {
-        "expand-tilde": "^1.2.2",
-        "global-modules": "^0.2.3"
+        "expand-tilde": "^2.0.0",
+        "global-modules": "^1.0.0"
       }
     },
     "resolve-from": {
       "version": "1.0.1",
       "resolved": "file:archived-packages/resolve-from-1.0.1-26cbfe935.tar",
       "integrity": "sha1-OSfAAUOAEQfkrS9zvGg8DtiNC8Q= sha1-Jsv+k10a7uq7Kbw/5a6wHpPUQiY=",
+      "dev": true
+    },
+    "resolve-url": {
+      "version": "0.2.1",
+      "resolved": "file:archived-packages/resolve-url-0.2.1-2c637fe77.tar",
+      "integrity": "sha1-VFFNCKxlZn+t6ldvDDyBaMKxYUY= sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=",
       "dev": true
     },
     "restore-cursor": {
@@ -3975,6 +4682,12 @@
         "exit-hook": "^1.0.0",
         "onetime": "^1.0.0"
       }
+    },
+    "ret": {
+      "version": "0.1.15",
+      "resolved": "file:archived-packages/ret-0.1.15-4d3958a5a.tar",
+      "integrity": "sha512-9lbEXRD3XXh43ZxuCapBpGbOHWjwIhXjvl9g2NzrMK0yqL4cnKBUKerVIQPGcS5wFLuTFZ8M7nXWSvjqbrSM7A== sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==",
+      "dev": true
     },
     "retry": {
       "version": "0.10.1",
@@ -4035,6 +4748,12 @@
         "aproba": "^1.1.1"
       }
     },
+    "rw": {
+      "version": "1.3.3",
+      "resolved": "file:archived-packages/rw-1.3.3-3f862dfa9.tar",
+      "integrity": "sha1-fggM03mskQMS4FPiWHuzD5zfGC4= sha1-P4Yt+pGrdmsUiF700BEkv9oHT7Q=",
+      "dev": true
+    },
     "rx-lite": {
       "version": "3.1.2",
       "resolved": "file:archived-packages/rx-lite-3.1.2-19ce502ca.tar",
@@ -4047,6 +4766,15 @@
       "integrity": "sha512-w9V13VbD2SdZDYeUtEukPwpu8OXimbxwOqgsdke6l/HGpyoO7wKR7T646Zm4yMHMhQ9aeRSyWtHV2jta2fXAhw== sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==",
       "dev": true
     },
+    "safe-regex": {
+      "version": "1.1.0",
+      "resolved": "file:archived-packages/safe-regex-1.1.0-40a3669f3.tar",
+      "integrity": "sha1-asWg4JdG7O9AtQOa0XiHLY1BWqQ= sha1-QKNmnzsHfR6UPURinhV91IAjvy4=",
+      "dev": true,
+      "requires": {
+        "ret": "~0.1.10"
+      }
+    },
     "safer-buffer": {
       "version": "2.1.2",
       "resolved": "file:archived-packages/safer-buffer-2.1.2-619a372bc.tar",
@@ -4054,22 +4782,10 @@
       "dev": true
     },
     "select2": {
-      "version": "4.0.1",
-      "resolved": "file:archived-packages/select2-4.0.1-2bf5706d4.tar",
-      "integrity": "sha1-o080FqRELF93feH4zfLZ/wdiRiE= sha1-K/VwbU0rQkFzg9C5e7pgqB/nH1E=",
-      "dev": true,
-      "requires": {
-        "almond": "~0.3.1",
-        "jquery-mousewheel": "~3.1.13"
-      },
-      "dependencies": {
-        "jquery-mousewheel": {
-          "version": "3.1.13",
-          "resolved": "file:archived-packages/jquery-mousewheel-3.1.13-06f0335f1.tar",
-          "integrity": "sha1-7rxfT2P8A0LndW8XGMAdtsKEXHw= sha1-BvAzXxbjU6aV5yBr9QUDy1I6buU=",
-          "dev": true
-        }
-      }
+      "version": "4.0.13",
+      "resolved": "file:archived-packages/select2-4.0.13-d49781f3b.tar",
+      "integrity": "sha512-che59hB75VcmkUTTeGko9dlOxpYmx2T0f8efrZLMYDfkCFZsyJd0fmHgIrKwBT6RrtqvzFU3Ow+uCliKyYKrlA== sha512-1JeB87s6oN/TDxQQYCvS5EFoQyvV6eYMZZ0AeA4tdFDYWN3BAGZ8npr17UBFddU0lgAt3H0yjX3X6/ekOj1yjw==",
+      "dev": true
     },
     "semver": {
       "version": "5.7.1",
@@ -4092,6 +4808,29 @@
       "integrity": "sha1-cqg5KRCa2ZRUxsnekzcaFjmioQ0= sha1-BF+XgtARrppoA93TgrJDkrPYkPc=",
       "dev": true
     },
+    "set-value": {
+      "version": "2.0.1",
+      "resolved": "file:archived-packages/set-value-2.0.1-2711dcd70.tar",
+      "integrity": "sha512-8M3M3QSDKJs/n/0mOlRIfteigviPBXm/3p485evjJpyqzep7S6l3HAKNSZeYtKNwslAWaqEjWfU7ORLka3DawA== sha512-JxHc1weCN68wRY0fhCoXpyK55m/XPHafOmK4UWD7m2CI14GMcFypt4w/0+NV5f/ZMby2F6S2wwA7fgynh9gWSw==",
+      "dev": true,
+      "requires": {
+        "extend-shallow": "^2.0.1",
+        "is-extendable": "^0.1.1",
+        "is-plain-object": "^2.0.3",
+        "split-string": "^3.0.1"
+      },
+      "dependencies": {
+        "extend-shallow": {
+          "version": "2.0.1",
+          "resolved": "file:archived-packages/extend-shallow-2.0.1-51af7d614.tar",
+          "integrity": "sha1-o9H3W9VTUT9Pbjss86GPVes9cK8= sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8=",
+          "dev": true,
+          "requires": {
+            "is-extendable": "^0.1.0"
+          }
+        }
+      }
+    },
     "sha.js": {
       "version": "2.4.11",
       "resolved": "file:archived-packages/sha.js-2.4.11-40c129e41.tar",
@@ -4112,6 +4851,15 @@
         "sha.js": "~2.4.4"
       }
     },
+    "shasum-object": {
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/shasum-object-1.0.0-22aa39ae9.tar",
+      "integrity": "sha512-w9xqMaUmDAjd21lqweOHNIWSVLjzI3AMstF8fjY/pzu6oa9r/VJO1AMHyU9hH3CRthPTjs5J8EMEHyCLxqvcdA== sha512-Iqo5rp/3xVi6M4YheapzZhhGPVs0yZwHj7wvwQ1B9z8H6zk+FEnI7y3Teq7qwnekfEhu8WmG2z0z4iWZaxLWVg==",
+      "dev": true,
+      "requires": {
+        "fast-safe-stringify": "^2.0.7"
+      }
+    },
     "shebang-command": {
       "version": "1.2.0",
       "resolved": "file:archived-packages/shebang-command-1.2.0-44aac65b6.tar",
@@ -4128,16 +4876,10 @@
       "dev": true
     },
     "shell-quote": {
-      "version": "1.6.1",
-      "resolved": "file:archived-packages/shell-quote-1.6.1-f4781949c.tar",
-      "integrity": "sha1-p0pas0tiRsCWV4klrkfFB68TPio= sha1-9HgZSczkAmlxJ0MOo7PFR29IF2c=",
-      "dev": true,
-      "requires": {
-        "array-filter": "~0.0.0",
-        "array-map": "~0.0.0",
-        "array-reduce": "~0.0.0",
-        "jsonify": "~0.0.0"
-      }
+      "version": "1.7.2",
+      "resolved": "file:archived-packages/shell-quote-1.7.2-991cff9bf.tar",
+      "integrity": "sha512-Oe0DC/inFCEm8fPxhESRwHmcQz3JIVrwRMKvv0N9l2GTxeuqrmYYXV04OAKlDRshkW2TB8cIvUmPHyBF7tYtuQ== sha512-mRz/m/JVscCrkMyPqHc/bczi3OQHkLTqXHEFu0zDhK/qfv3UcOA4SVmRCLmos4bhjr9ekVQubj/R7waKapmiQg==",
+      "dev": true
     },
     "shelljs": {
       "version": "0.6.1",
@@ -4227,6 +4969,113 @@
         "jquery": ">=1.4.4"
       }
     },
+    "snapdragon": {
+      "version": "0.8.2",
+      "resolved": "file:archived-packages/snapdragon-0.8.2-16dc8e9d6.tar",
+      "integrity": "sha512-9mxhAfQGE0c0nd6LmgVDOIB0LfUSAUzAwJhG9Dcuw6PGbBDHOKfpbRxZUvigTWpjfKx3e1RtR0OYXS8BBv9MFw== sha512-FtyOnWN/wCHTVXOMwvSv26d+ko5vWlIDD6zoUJ7LW8vh+ZBC8QdljveRP+crNrtBwioEUWy/4dMtbBjA4ioNlg==",
+      "dev": true,
+      "requires": {
+        "base": "^0.11.1",
+        "debug": "^2.2.0",
+        "define-property": "^0.2.5",
+        "extend-shallow": "^2.0.1",
+        "map-cache": "^0.2.2",
+        "source-map": "^0.5.6",
+        "source-map-resolve": "^0.5.0",
+        "use": "^3.1.0"
+      },
+      "dependencies": {
+        "define-property": {
+          "version": "0.2.5",
+          "resolved": "file:archived-packages/define-property-0.2.5-c35b1ef91.tar",
+          "integrity": "sha1-WmT7c4oSGUyRHwiC8mHyFpdgrDI= sha1-w1se+RjsPJkPmlvFe+BKrOxcgRY=",
+          "dev": true,
+          "requires": {
+            "is-descriptor": "^0.1.0"
+          }
+        },
+        "extend-shallow": {
+          "version": "2.0.1",
+          "resolved": "file:archived-packages/extend-shallow-2.0.1-51af7d614.tar",
+          "integrity": "sha1-o9H3W9VTUT9Pbjss86GPVes9cK8= sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8=",
+          "dev": true,
+          "requires": {
+            "is-extendable": "^0.1.0"
+          }
+        }
+      }
+    },
+    "snapdragon-node": {
+      "version": "2.1.1",
+      "resolved": "file:archived-packages/snapdragon-node-2.1.1-3b6ee5e31.tar",
+      "integrity": "sha512-KayY5mUfG1dzhh8boroDxLBpArF30vqeoJ6uT75xpYG3RS3JY2yUGwP3RTgfUSxBrnQ+WFhRl7FT16o0Mtzwhw== sha512-O27l4xaMYt/RSQ5TR3vpWCAB5Kb/czIcqUFOM/C4fYcLnbZUc1PkjTAMjof2pBWaSTwOUd6qUHcFGVGj7aIwnw==",
+      "dev": true,
+      "requires": {
+        "define-property": "^1.0.0",
+        "isobject": "^3.0.0",
+        "snapdragon-util": "^3.0.1"
+      },
+      "dependencies": {
+        "define-property": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/define-property-1.0.0-769ebaaf3.tar",
+          "integrity": "sha1-9v9/8nAJjjYLgII/Mi7WpZVK7vU= sha1-dp66rz9KY6rTr56NMEybvnm/sOY=",
+          "dev": true,
+          "requires": {
+            "is-descriptor": "^1.0.0"
+          }
+        },
+        "is-accessor-descriptor": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/is-accessor-descriptor-1.0.0-9b98671d3.tar",
+          "integrity": "sha512-bURwOnDk+LAlJg0PeET8fsTQS6BYAr327Sa01oqVn1nrQNmhTcegwyu+y6TXFQqJ4Hj3T5FJQeTvqepPFpFeCQ== sha512-m5hnHTkcVsPfqx3AKlyttIPb7J+XykHvJP2B9bZDjlhLIoEq4XoK64Vg7boZlVWYK6LUY94dYPEE7Lh0ZkZKcQ==",
+          "dev": true,
+          "requires": {
+            "kind-of": "^6.0.0"
+          }
+        },
+        "is-data-descriptor": {
+          "version": "1.0.0",
+          "resolved": "file:archived-packages/is-data-descriptor-1.0.0-8db457cb5.tar",
+          "integrity": "sha512-2vzl0fsNdiqcmXKbpTdidQEpEPwNivCFR+kwAPwGE8naWuhFLsugNx/8uf1253t0D9UkDHUZe68Gras4wFnwEg== sha512-jbRXy1FmtAoCjQkVmIVYwuuqDFUbaOeDjmed1tOGPrsMhtJA4rD9tkgA0F1qJ3gRFRXcHYVkdeaP50Q5rE/jLQ==",
+          "dev": true,
+          "requires": {
+            "kind-of": "^6.0.0"
+          }
+        },
+        "is-descriptor": {
+          "version": "1.0.2",
+          "resolved": "file:archived-packages/is-descriptor-1.0.2-d9e8ace56.tar",
+          "integrity": "sha512-BugoxA33jgkurwRmAD8nUBQQWmXurZWs52c5tjCpQRjTzEJE9W9g21sfNeFmRoUo1BM0pQCRDkQKSDsUZ2EmFw== sha512-2eis5WqQGV7peooDyLmNEPUrps9+SXX5c9pL3xEB+4e9HnGuDa7mB7kHxHw4CbqS9k1T2hOH3miL8n8WtiYVtg==",
+          "dev": true,
+          "requires": {
+            "is-accessor-descriptor": "^1.0.0",
+            "is-data-descriptor": "^1.0.0",
+            "kind-of": "^6.0.2"
+          }
+        }
+      }
+    },
+    "snapdragon-util": {
+      "version": "3.0.1",
+      "resolved": "file:archived-packages/snapdragon-util-3.0.1-99b2a431d.tar",
+      "integrity": "sha512-I0uvGy5laFsPF56mBW6FhEsJvDKL0pcK8IK/i7OUFw6i12F1h2D2a3ZN5zDU3BXw9ZS+9TQjZB9Zf5Kqed9Etg== sha512-mbKkMdQKsjX4BAL4bRYTj21edOf8cN7XHdYUJEe+Zn99hVEYcMvKPct1IqNe7+AZPirn8BCDOQBHQZknqmKlZQ==",
+      "dev": true,
+      "requires": {
+        "kind-of": "^3.2.0"
+      },
+      "dependencies": {
+        "kind-of": {
+          "version": "3.2.2",
+          "resolved": "file:archived-packages/kind-of-3.2.2-31ea21a73.tar",
+          "integrity": "sha1-6LN3PTm42UjKNYsDu2zJuI1qO78= sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ=",
+          "dev": true,
+          "requires": {
+            "is-buffer": "^1.1.5"
+          }
+        }
+      }
+    },
     "socks": {
       "version": "1.1.10",
       "resolved": "file:archived-packages/socks-1.1.10-5b8b7fc7c.tar",
@@ -4251,6 +5100,43 @@
       "version": "0.5.7",
       "resolved": "file:archived-packages/source-map-0.5.7-8a039d2d1.tar",
       "integrity": "sha1-z0T7XWk7QUltddGRJOGoTz3KL6E= sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=",
+      "dev": true
+    },
+    "source-map-resolve": {
+      "version": "0.5.3",
+      "resolved": "file:archived-packages/source-map-resolve-0.5.3-1edcfe467.tar",
+      "integrity": "sha512-Yv6noO6235vcCVX8DMV0op4G1ioWHrUoeg5i9SzRPUZEyrAxt5xZQxgldZUGC6iozpbKpfmwF1MkFo8l/GGCqw== sha512-Htz+RnsXWk5+P2slx5Jh3Q66vhQj1Cllm0zvnaY98+NFx+Dv2CF/f5O/t8x+KaNdrdIAsruNzoh/KpialbqAnw==",
+      "dev": true,
+      "requires": {
+        "atob": "^2.1.2",
+        "decode-uri-component": "^0.2.0",
+        "resolve-url": "^0.2.1",
+        "source-map-url": "^0.4.0",
+        "urix": "^0.1.0"
+      }
+    },
+    "source-map-support": {
+      "version": "0.5.19",
+      "resolved": "file:archived-packages/source-map-support-0.5.19-5a89e6ef3.tar",
+      "integrity": "sha512-yNIbRiYkeRrEzhKY0LwrgXjvU/Sl9zymUGahdNUCgEcYiPfl6mB45pNZafPe9QsgXhIaNGt3qAUo3nYMBFcDSg== sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==",
+      "dev": true,
+      "requires": {
+        "buffer-from": "^1.0.0",
+        "source-map": "^0.6.0"
+      },
+      "dependencies": {
+        "source-map": {
+          "version": "0.6.1",
+          "resolved": "file:archived-packages/source-map-0.6.1-52381aa6e.tar",
+          "integrity": "sha512-2t5nwD7kap1J95IF4mWF9YHar6aRY5yjAlJPScGGpCRRkXGR0fyxn+PzZGMxY5pdtz96gVbJelqONeJjjR4oMw== sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==",
+          "dev": true
+        }
+      }
+    },
+    "source-map-url": {
+      "version": "0.4.0",
+      "resolved": "file:archived-packages/source-map-url-0.4.0-3e935d7dd.tar",
+      "integrity": "sha1-q4D9d/mXbMpxRWrbGE5tPAUTutg= sha1-PpNdfd1zYxuXZZlW1VEo6HtQhKM=",
       "dev": true
     },
     "spdx-correct": {
@@ -4285,6 +5171,15 @@
       "integrity": "sha512-0fw5BwgLzRym9bgqfxtIRvclNFIgr7BwkraGVqZlZfH620gM3/CwyYv14vYtEkZBfYi63+FaR2tVPBBdaKpEIg== sha512-J+FWzZoynJEXGphVIS+XEh3kFSjZX/1i9gFBaWQcB+/tmpe2qUsSBABpcxqxnAxFdiUFEgAX1bjYGQvIZmoz9Q==",
       "dev": true
     },
+    "split-string": {
+      "version": "3.1.0",
+      "resolved": "file:archived-packages/split-string-3.1.0-373355849.tar",
+      "integrity": "sha512-stvFfPqLa+ZQk/SaFb0Kud7MMJKGp+89yvC+YyXoitM3+tTua0VfkcyFeNIGqEkegxtxj7yQ8RGvspSG/mlhPg== sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw==",
+      "dev": true,
+      "requires": {
+        "extend-shallow": "^3.0.0"
+      }
+    },
     "sprintf-js": {
       "version": "1.0.3",
       "resolved": "file:archived-packages/sprintf-js-1.0.3-04e6926f6.tar",
@@ -4298,6 +5193,27 @@
       "dev": true,
       "requires": {
         "safe-buffer": "^5.1.1"
+      }
+    },
+    "static-extend": {
+      "version": "0.1.2",
+      "resolved": "file:archived-packages/static-extend-0.1.2-60809c39c.tar",
+      "integrity": "sha1-6LMBmO4v+TJulwYw2yYmhlmSJ1M= sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=",
+      "dev": true,
+      "requires": {
+        "define-property": "^0.2.5",
+        "object-copy": "^0.1.0"
+      },
+      "dependencies": {
+        "define-property": {
+          "version": "0.2.5",
+          "resolved": "file:archived-packages/define-property-0.2.5-c35b1ef91.tar",
+          "integrity": "sha1-WmT7c4oSGUyRHwiC8mHyFpdgrDI= sha1-w1se+RjsPJkPmlvFe+BKrOxcgRY=",
+          "dev": true,
+          "requires": {
+            "is-descriptor": "^0.1.0"
+          }
+        }
       }
     },
     "stream-browserify": {
@@ -4331,16 +5247,55 @@
       }
     },
     "stream-http": {
-      "version": "2.8.3",
-      "resolved": "file:archived-packages/stream-http-2.8.3-f934a47c8.tar",
-      "integrity": "sha512-AtYVYofqHs/JGO1u7F4Bcu+pQqHIdzUxFTmXlKpbjQ5ButagNuZoa3AtQD8ReXhF5jVALsJewy3myetk7LszBA== sha512-+TSkfINHDo4J+ZobQLWiMouQYB+UVYFttRA94FpEzzJ7ZdqcL4uUUQ7WkdkI4DSozGmgBUE/a47L+38PenXhUw==",
+      "version": "3.1.1",
+      "resolved": "file:archived-packages/stream-http-3.1.1-4bb3aa698.tar",
+      "integrity": "sha512-OlEu7zSam6CaSnJ5bLJrdMrfvsiCOtcP34qdYJtlaV65GeAOgoVNGWLpMfqyeSluvP3qXLlyfI//Gsqy/TJyTw== sha512-S7OqaYu0EkFpgeGFb/NPOoPLxFko7TPqtEeFg5DXPB4v/KETHG0Ln6fRFrNezoelpaDKmycEmmZ81cC9DAwgYg==",
       "dev": true,
       "requires": {
         "builtin-status-codes": "^3.0.0",
-        "inherits": "^2.0.1",
-        "readable-stream": "^2.3.6",
-        "to-arraybuffer": "^1.0.0",
-        "xtend": "^4.0.0"
+        "inherits": "^2.0.4",
+        "readable-stream": "^3.6.0",
+        "xtend": "^4.0.2"
+      },
+      "dependencies": {
+        "inherits": {
+          "version": "2.0.4",
+          "resolved": "file:archived-packages/inherits-2.0.4-93fbc6697.tar",
+          "integrity": "sha512-x/zUnRAbKaa/OlZ+39zdjzQ8atTjemHBKSd/lb5bEJQpegNuso/w7Nv9ZJSOXrkCNMLpENN+v8nFv/mQ0neo9w== sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+          "dev": true
+        },
+        "readable-stream": {
+          "version": "3.6.0",
+          "resolved": "file:archived-packages/readable-stream-3.6.0-055887cbb.tar",
+          "integrity": "sha512-Zu04U+2fdxJyZbbOVfoJpPN9+rk+eKx2FHDquu7kRtBdk3s9m67EzZNmbFcUTqLyexSaJTE/aNS5UFiPQMJ3lA== sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==",
+          "dev": true,
+          "requires": {
+            "inherits": "^2.0.3",
+            "string_decoder": "^1.1.1",
+            "util-deprecate": "^1.0.1"
+          }
+        },
+        "safe-buffer": {
+          "version": "5.2.1",
+          "resolved": "file:archived-packages/safe-buffer-5.2.1-ae9dd2a34.tar",
+          "integrity": "sha512-gbLGDXxRhLUSyR7i1p8L2c2Y5xwp9E4q8bPNkqcEhUfgzGcuwVbFS60AE/bRpAps6+nVsgnLbA8YfwtAxHxBng== sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+          "dev": true
+        },
+        "string_decoder": {
+          "version": "1.3.0",
+          "resolved": "file:archived-packages/string_decoder-1.3.0-864457f14.tar",
+          "integrity": "sha512-UKUjkxfUYTvGWJ1gU0WI/pSsvxjq5OaJSRrpsu4IKcNeXWE/EqsKBvB30VRBzxucubngOqtT5K9tZ9qRitv9Ug== sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
+          "dev": true,
+          "requires": {
+            "safe-buffer": "~5.2.0"
+          }
+        },
+        "xtend": {
+          "version": "4.0.2",
+          "resolved": "file:archived-packages/xtend-4.0.2-2ca614d62.tar",
+          "integrity": "sha512-eKdZ9fnwYKY7adPcwWpWV8XbpwtbBlL9d6L4gnuWV8SsdKLDDHXgyVCKr9kjCeyPKym/Fkjxnx30yAMpN/XP/Q== sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==",
+          "dev": true
+        }
       }
     },
     "stream-shift": {
@@ -4350,9 +5305,9 @@
       "dev": true
     },
     "stream-splicer": {
-      "version": "2.0.0",
-      "resolved": "file:archived-packages/stream-splicer-2.0.0-1b63be438.tar",
-      "integrity": "sha1-tPtoPmXIwGAWziUZWFfl6Ju3MiI= sha1-G2O+Q4oTPktnHMGTUZdgAXWRDYM=",
+      "version": "2.0.1",
+      "resolved": "file:archived-packages/stream-splicer-2.0.1-5e2ce1e3f.tar",
+      "integrity": "sha512-q+g4sZb+EnNsuNhg8uSXqUkaFqLHsaQDKV0IlkcvjGQFfrcl6l7xhXBmn1+2QxyGQyRaVOzE47gz/3RMHCAgMw== sha512-Xizh4/NPuYSyAXyT7g8IvdJ9HJpxIGL9PjyhtywCZvvP0OPIdqyrr4dMikeuvY8xahpdKEBlBTySe583totajg==",
       "dev": true,
       "requires": {
         "inherits": "^2.0.1",
@@ -4390,6 +5345,15 @@
       "resolved": "file:archived-packages/strip-bom-3.0.0-2334c18e9.tar",
       "integrity": "sha1-RJGxhchVyiHUvtF1mrX021hAVmo= sha1-IzTBjpx1n3vdVv3vfprj1YjmjtM=",
       "dev": true
+    },
+    "strip-css-comments": {
+      "version": "3.0.0",
+      "resolved": "file:archived-packages/strip-css-comments-3.0.0-7a5625eff.tar",
+      "integrity": "sha1-bQzIJS2ZDpwLBseOlqd/IGbyqyQ= sha1-elYl7/iisibPiUehElTaluE9rok=",
+      "dev": true,
+      "requires": {
+        "is-regexp": "^1.0.0"
+      }
     },
     "strip-eof": {
       "version": "1.0.0",
@@ -4454,9 +5418,9 @@
           "dev": true
         },
         "lodash": {
-          "version": "4.17.11",
-          "resolved": "file:archived-packages/lodash-4.17.11-7102a1f22.tar",
-          "integrity": "sha512-6UhDtXrYsK/670VwWHqigNhs0jM35R3nlkn/PfKu1ppWPuoPjz/tRbyyReXzgoEFmMEsTJOOXTaqm6vQKUg0jA== sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==",
+          "version": "4.17.15",
+          "resolved": "file:archived-packages/lodash-4.17.15-f3139c447.tar",
+          "integrity": "sha512-2gks6u//IXIMJXVv0d7nenOpR+zeUPxWpsdnbnEFzCpvd5YzCrAcXDTnof8U1dFvnbyCdkr0BfZe/ZtGqmocZg== sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==",
           "dev": true
         },
         "string-width": {
@@ -4512,6 +5476,25 @@
         "execa": "^0.7.0"
       }
     },
+    "terser": {
+      "version": "3.17.0",
+      "resolved": "file:archived-packages/terser-3.17.0-fc5433ccf.tar",
+      "integrity": "sha512-QIWIFbDV/d4XWCuWeAUk7F+WrvfBKLdOeoNviBiFFtNa19kjcLwO+Di6Pq/D9cN5izBsgjrdR64P+Y626bc7MA== sha512-/FQzzPJmCpjAH9Xvk2paiWrFq+5M6aVOf+2KRbwhByISDX/EujxsK+BAvrhb6H+2rtrLCHK9N01wO014vrIwVQ==",
+      "dev": true,
+      "requires": {
+        "commander": "^2.19.0",
+        "source-map": "~0.6.1",
+        "source-map-support": "~0.5.10"
+      },
+      "dependencies": {
+        "source-map": {
+          "version": "0.6.1",
+          "resolved": "file:archived-packages/source-map-0.6.1-52381aa6e.tar",
+          "integrity": "sha512-2t5nwD7kap1J95IF4mWF9YHar6aRY5yjAlJPScGGpCRRkXGR0fyxn+PzZGMxY5pdtz96gVbJelqONeJjjR4oMw== sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==",
+          "dev": true
+        }
+      }
+    },
     "text-table": {
       "version": "0.2.0",
       "resolved": "file:archived-packages/text-table-0.2.0-7f5ee823a.tar",
@@ -4549,10 +5532,52 @@
         "process": "~0.11.0"
       }
     },
-    "to-arraybuffer": {
-      "version": "1.0.1",
-      "resolved": "file:archived-packages/to-arraybuffer-1.0.1-7d229b1fc.tar",
-      "integrity": "sha1-QL1lBCf8AceGUmkFU506bwyNBeQ= sha1-fSKbH8xjfkZsoIEYCDanqr/4P0M=",
+    "to-object-path": {
+      "version": "0.3.0",
+      "resolved": "file:archived-packages/to-object-path-0.3.0-297588b7b.tar",
+      "integrity": "sha1-QGNbZVOlPxWLPcMvAsHfoPcoSYc= sha1-KXWIt7Dn4KwI4E5nL4XB9JmeF68=",
+      "dev": true,
+      "requires": {
+        "kind-of": "^3.0.2"
+      },
+      "dependencies": {
+        "kind-of": {
+          "version": "3.2.2",
+          "resolved": "file:archived-packages/kind-of-3.2.2-31ea21a73.tar",
+          "integrity": "sha1-6LN3PTm42UjKNYsDu2zJuI1qO78= sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ=",
+          "dev": true,
+          "requires": {
+            "is-buffer": "^1.1.5"
+          }
+        }
+      }
+    },
+    "to-regex": {
+      "version": "3.0.2",
+      "resolved": "file:archived-packages/to-regex-3.0.2-156b6578d.tar",
+      "integrity": "sha512-CChV9NX5gfWy8lzO/LCzwjlDO3OOeRV1fZ6xQ3m/GfTIUTT5wMsqvCp+6ck8UK7cWBhNrflkPtVXeyGHJDvf0g== sha512-FWtleNAtZ/Ki2qtqej2CXTOayOH9bHDQF+Q48VpWyDXjbYxA4Yz8iDB31zXOBUlOHHKidDbqGVrTUvQMPmBGBw==",
+      "dev": true,
+      "requires": {
+        "define-property": "^2.0.2",
+        "extend-shallow": "^3.0.2",
+        "regex-not": "^1.0.2",
+        "safe-regex": "^1.1.0"
+      }
+    },
+    "to-regex-range": {
+      "version": "2.1.1",
+      "resolved": "file:archived-packages/to-regex-range-2.1.1-7c80c17b9.tar",
+      "integrity": "sha1-gQ7KkQMX9Vb7FNtSTDp4qlDwyXs= sha1-fIDBe53+vlmeJzZ+DU3VWQFB2zg=",
+      "dev": true,
+      "requires": {
+        "is-number": "^3.0.0",
+        "repeat-string": "^1.6.1"
+      }
+    },
+    "tslib": {
+      "version": "1.13.0",
+      "resolved": "file:archived-packages/tslib-1.13.0-8bfe83423.tar",
+      "integrity": "sha512-3bcVwJYWXW1CebD+HQm7Ui4RFOMd+NFZRaiCnro/c+w/h1ARoVxho+swv2VeVG/LkZRFoWI8HjwwGZYW85FXiQ== sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==",
       "dev": true
     },
     "tty-browserify": {
@@ -4576,63 +5601,38 @@
       "integrity": "sha1-IlL9GjFoiImldlOATyCmmJZsUh4= sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=",
       "dev": true
     },
-    "uglify-js": {
-      "version": "2.4.24",
-      "resolved": "file:archived-packages/uglify-js-2.4.24-fad5755c1.tar",
-      "integrity": "sha1-SsaYpLXRffK8OFxt0MjPGSuYm+Q= sha1-+tV1XB4Vd2WLsG/5q25UjJW+vW4=",
-      "dev": true,
-      "requires": {
-        "async": "~0.2.6",
-        "source-map": "0.1.34",
-        "uglify-to-browserify": "~1.0.0",
-        "yargs": "~3.5.4"
-      },
-      "dependencies": {
-        "source-map": {
-          "version": "0.1.34",
-          "resolved": "file:archived-packages/source-map-0.1.34-a7cfe89ae.tar",
-          "integrity": "sha1-p3wt6rqfpfTO4JGcGjcZU+oWPnI= sha1-p8/omux7FoLDsZjQrPtH19CQVms=",
-          "dev": true,
-          "requires": {
-            "amdefine": ">=0.0.4"
-          }
-        }
-      }
-    },
-    "uglify-to-browserify": {
-      "version": "1.0.2",
-      "resolved": "file:archived-packages/uglify-to-browserify-1.0.2-6e0924d6b.tar",
-      "integrity": "sha1-Izqx7FmB9RQBK60lvuehgWjyWc0= sha1-bgkk1r2mta/jSeOabWMoUKD4grc=",
+    "typescript": {
+      "version": "3.9.5",
+      "resolved": "file:archived-packages/typescript-3.9.5-8520227d5.tar",
+      "integrity": "sha512-5odH3NpAC1VSfbG2q9eYxAFMHi/ddP13gU/QzkFGggiSIbZlDj1vjf9rOTkRKRubSsbgWhepdo+TgaL3lU4wzg== sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==",
       "dev": true
     },
+    "uglify-js": {
+      "version": "3.9.4",
+      "resolved": "file:archived-packages/uglify-js-3.9.4-f1164126a.tar",
+      "integrity": "sha512-rVeX4sCugWKnyDc49B3wyxN2IvIrwCqi49InbKJYFKf8q8jOIYa4npv1LWA/nIM4DTwf5c7oWvL/SDIzvgMrDw== sha512-8RZBJq5smLOa7KslsNsVcSH+KOXf1uDU8yqLeNuVKwmT0T3FA0ZoXlinQfRad7SDcbZZRZE4ov+2v71EnxNyCA==",
+      "dev": true,
+      "requires": {
+        "commander": "~2.20.3"
+      }
+    },
     "uglifycss": {
-      "version": "0.0.27",
-      "resolved": "file:archived-packages/uglifycss-0.0.27-53553b811.tar",
-      "integrity": "sha1-xwXMRPJbCxntB9vCTHIFP5H78AI= sha1-U1U7gRXeJtzle0K6CzTojdgNDN4=",
+      "version": "0.0.29",
+      "resolved": "file:archived-packages/uglifycss-0.0.29-276490d90.tar",
+      "integrity": "sha512-HwoXK3PSlMXyV64ecwL6kTu596mVsnRBSn+LdGf0U6IvZb0r65Xy/o4oFrEEqrVTioKQLv9FeRDlZF+5rKO/Yw== sha512-J2SQ2QLjiknNGbNdScaNZsXgmMGI0kYNrXaDlr4obnPW9ni1jljb1NeEVWAiTgZ8z+EBWP2ozfT9vpy03rjlMQ==",
       "dev": true
     },
     "uglifyify": {
-      "version": "3.0.2",
-      "resolved": "file:archived-packages/uglifyify-3.0.2-ed2f75e00.tar",
-      "integrity": "sha1-BTNhH2Jmn+nACi00Am73UWgsEl8= sha1-7S914AN9loOYo1+SnAZ3pGBOFPg=",
+      "version": "5.0.2",
+      "resolved": "file:archived-packages/uglifyify-5.0.2-35c4a4ea9.tar",
+      "integrity": "sha512-tTmmYRq5kPS4a2tIQP9UjDE8N0ykcxEce5pLuDEgz5TmkyQYNnosc5gWZNDHK99YtrnIjA0sR9POOIdwwU55ww== sha512-NcSk6pgoC+IgwZZ2tVLVHq+VNKSvLPlLkF5oUiHPVOJI0s/OlSVYEGXG9PCAH0hcyFZLyvt4KBdPAQBRlVDn1Q==",
       "dev": true,
       "requires": {
         "convert-source-map": "~1.1.0",
-        "extend": "^1.2.1",
-        "minimatch": "^2.0.7",
+        "minimatch": "^3.0.2",
+        "terser": "^3.7.5",
         "through": "~2.3.4",
-        "uglify-js": "2.x.x"
-      },
-      "dependencies": {
-        "minimatch": {
-          "version": "2.0.10",
-          "resolved": "file:archived-packages/minimatch-2.0.10-8d087c39c.tar",
-          "integrity": "sha1-ZSdg5NWiDJsLv62O8xH63ls8XSo= sha1-jQh8OcazjAAbl/ynzm0OHoCvusc=",
-          "dev": true,
-          "requires": {
-            "brace-expansion": "^1.0.0"
-          }
-        }
+        "xtend": "^4.0.1"
       }
     },
     "umd": {
@@ -4652,6 +5652,18 @@
         "get-assigned-identifiers": "^1.2.0",
         "simple-concat": "^1.0.0",
         "xtend": "^4.0.1"
+      }
+    },
+    "union-value": {
+      "version": "1.0.1",
+      "resolved": "file:archived-packages/union-value-1.0.1-b497d79b1.tar",
+      "integrity": "sha512-CI3PZ1bAUX36Wh+o51qkDhi5qPwiOjYQn9TYEO7JYvGccPgltxCYLFB9KnZAwFYzQsn2hF8U1FuqyGio+4iu8A== sha512-tJfXmxMeWYnczCVs7XAEvIV7ieppALdyepWMkHkwciRpZraG/xwT+s2JN8+pr1+8jCRf80FFzvr+MpQeeoF4Xg==",
+      "dev": true,
+      "requires": {
+        "arr-union": "^3.1.0",
+        "get-value": "^2.0.6",
+        "is-extendable": "^0.1.1",
+        "set-value": "^2.0.1"
       }
     },
     "unique-filename": {
@@ -4679,6 +5691,46 @@
       "dev": true,
       "requires": {
         "crypto-random-string": "^1.0.0"
+      }
+    },
+    "unset-value": {
+      "version": "1.0.0",
+      "resolved": "file:archived-packages/unset-value-1.0.0-8376873f7.tar",
+      "integrity": "sha1-oiByrlGU4OCZPZ426evawLsjHbQ= sha1-g3aHP30jNRef+x5vw6jtDfyKtVk=",
+      "dev": true,
+      "requires": {
+        "has-value": "^0.3.1",
+        "isobject": "^3.0.0"
+      },
+      "dependencies": {
+        "has-value": {
+          "version": "0.3.1",
+          "resolved": "file:archived-packages/has-value-0.3.1-7b1f58bad.tar",
+          "integrity": "sha1-C0C8TmWs2BJpMiZzsj5+IO2ohlk= sha1-ex9YutpiyoJ+wKIHgCVlSEWZXh8=",
+          "dev": true,
+          "requires": {
+            "get-value": "^2.0.3",
+            "has-values": "^0.1.4",
+            "isobject": "^2.0.0"
+          },
+          "dependencies": {
+            "isobject": {
+              "version": "2.1.0",
+              "resolved": "file:archived-packages/isobject-2.1.0-f06556109.tar",
+              "integrity": "sha1-n8GIo4TmcuxVDTKxzCvExnEJJ7E= sha1-8GVWEJaj8dou9GJy+BXIQNh+DIk=",
+              "dev": true,
+              "requires": {
+                "isarray": "1.0.0"
+              }
+            }
+          }
+        },
+        "has-values": {
+          "version": "0.1.4",
+          "resolved": "file:archived-packages/has-values-0.1.4-6d61de95d.tar",
+          "integrity": "sha1-8sUEzbTDHQM5k6ookrhwzFrObDc= sha1-bWHeldkd/Km5oCCJrThL/49it3E=",
+          "dev": true
+        }
       }
     },
     "unzip-response": {
@@ -4736,6 +5788,12 @@
         }
       }
     },
+    "urix": {
+      "version": "0.1.0",
+      "resolved": "file:archived-packages/urix-0.1.0-da937f7a6.tar",
+      "integrity": "sha1-RhdZfX8n+hrkPh8simMlP4Hg0CU= sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=",
+      "dev": true
+    },
     "url": {
       "version": "0.11.0",
       "resolved": "file:archived-packages/url-0.11.0-3838e97cf.tar",
@@ -4762,6 +5820,12 @@
       "requires": {
         "prepend-http": "^1.0.1"
       }
+    },
+    "use": {
+      "version": "3.1.1",
+      "resolved": "file:archived-packages/use-3.1.1-730112557.tar",
+      "integrity": "sha512-dKAURjc1WQNRcH6V2FkS8rHBFkDMkhzDvn7NGnxdLCG5/XKs8ouW1ELkrvvVIborwVl88mU9nuTZd6+hWh2LZw== sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==",
+      "dev": true
     },
     "user-home": {
       "version": "2.0.0",
@@ -4830,13 +5894,10 @@
       }
     },
     "vm-browserify": {
-      "version": "0.0.4",
-      "resolved": "file:archived-packages/vm-browserify-0.0.4-5d7ea45bb.tar",
-      "integrity": "sha1-VIM1Zn2OqLRsxFm4mSIMQc8C0GI= sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=",
-      "dev": true,
-      "requires": {
-        "indexof": "0.0.1"
-      }
+      "version": "1.1.2",
+      "resolved": "file:archived-packages/vm-browserify-1.1.2-da16a6f17.tar",
+      "integrity": "sha512-+Eqn1to8nzm60RHJTqv+OgN9BaeOS7wNSYue4jIq855Qwnz/uAuKrpLNuBLFOtH4s8SQWViHcxgfi9W8JYK6YA== sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==",
+      "dev": true
     },
     "which": {
       "version": "1.3.1",
@@ -4904,12 +5965,6 @@
         }
       }
     },
-    "window-size": {
-      "version": "0.1.0",
-      "resolved": "file:archived-packages/window-size-0.1.0-5438cd2ea.tar",
-      "integrity": "sha1-dTEhZvAvDp1NPFEkPQa7mQYIuNI= sha1-VDjNLqk7IC76Ohn+iIeu58lPnJ0=",
-      "dev": true
-    },
     "wordwrap": {
       "version": "1.0.0",
       "resolved": "file:archived-packages/wordwrap-1.0.0-275848108.tar",
@@ -4975,26 +6030,6 @@
       "resolved": "file:archived-packages/yallist-2.1.2-1c11f9218.tar",
       "integrity": "sha1-7SRAOJMqhSnlySXoAVy+Fe+ABHo= sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=",
       "dev": true
-    },
-    "yargs": {
-      "version": "3.5.4",
-      "resolved": "file:archived-packages/yargs-3.5.4-d8aff8f66.tar",
-      "integrity": "sha1-HNOlTrZFaaloeQSNX0uQ36ggatk= sha1-2K/49mXpTDS9JZvevRv68N3TU2E=",
-      "dev": true,
-      "requires": {
-        "camelcase": "^1.0.2",
-        "decamelize": "^1.0.0",
-        "window-size": "0.1.0",
-        "wordwrap": "0.0.2"
-      },
-      "dependencies": {
-        "wordwrap": {
-          "version": "0.0.2",
-          "resolved": "file:archived-packages/wordwrap-0.0.2-b79669bb4.tar",
-          "integrity": "sha1-8vTsMCJnjPY1rX8OM+HK1SB7ECM= sha1-t5Zpu0LstAn4PVg8rVLKF+qhZD8=",
-          "dev": true
-        }
-      }
     },
     "yargs-parser": {
       "version": "7.0.0",
