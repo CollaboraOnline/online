@@ -18,6 +18,7 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Net/HTTPClientSession.h>
+#include <Poco/JSON/Object.h>
 
 #include "Auth.hpp"
 #include "LOOLWSD.hpp"
@@ -366,6 +367,7 @@ public:
 
     class WOPIFileInfo
     {
+        void init();
     public:
         enum class TriState
         {
@@ -374,127 +376,40 @@ public:
             Unset
         };
 
-        WOPIFileInfo(const std::string& userid,
-                     const std::string& obfuscatedUserId,
-                     const std::string& username,
-                     const std::string& userExtraInfo,
-                     const std::string& watermarkText,
-                     const std::string& templateSaveAs,
-                     const std::string& templateSource,
-                     const bool userCanWrite,
-                     const std::string& postMessageOrigin,
-                     const bool hidePrintOption,
-                     const bool hideSaveOption,
-                     const bool hideExportOption,
-                     const bool enableOwnerTermination,
-                     const bool disablePrint,
-                     const bool disableExport,
-                     const bool disableCopy,
-                     const bool disableInactiveMessages,
-                     const bool downloadAsPostMessage,
-                     const bool userCanNotWriteRelative,
-                     const bool enableInsertRemoteImage,
-                     const bool enableShare,
-                     const std::string& hideUserList,
-                     const TriState disableChangeTrackingShow,
-                     const TriState disableChangeTrackingRecord,
-                     const TriState hideChangeTrackingControls,
-                     const bool supportsLocks,
-                     const bool supportsRename,
-                     const bool userCanRename,
-                     const std::chrono::duration<double> callDuration)
-            : _userId(userid),
-              _obfuscatedUserId(obfuscatedUserId),
-              _username(username),
-              _watermarkText(watermarkText),
-              _templateSaveAs(templateSaveAs),
-              _templateSource(templateSource),
-              _userCanWrite(userCanWrite),
-              _postMessageOrigin(postMessageOrigin),
-              _hidePrintOption(hidePrintOption),
-              _hideSaveOption(hideSaveOption),
-              _hideExportOption(hideExportOption),
-              _enableOwnerTermination(enableOwnerTermination),
-              _disablePrint(disablePrint),
-              _disableExport(disableExport),
-              _disableCopy(disableCopy),
-              _disableInactiveMessages(disableInactiveMessages),
-              _downloadAsPostMessage(downloadAsPostMessage),
-              _userCanNotWriteRelative(userCanNotWriteRelative),
-              _enableInsertRemoteImage(enableInsertRemoteImage),
-              _enableShare(enableShare),
-              _hideUserList(hideUserList),
-              _disableChangeTrackingShow(disableChangeTrackingShow),
-              _disableChangeTrackingRecord(disableChangeTrackingRecord),
-              _hideChangeTrackingControls(hideChangeTrackingControls),
-              _supportsLocks(supportsLocks),
-              _supportsRename(supportsRename),
-              _userCanRename(userCanRename),
-              _callDuration(callDuration)
-            {
-                _userExtraInfo = userExtraInfo;
-            }
+        /// warning - removes items from object.
+        WOPIFileInfo(const FileInfo &fileInfo, std::chrono::duration<double> callDuration,
+                     Poco::JSON::Object::Ptr &object);
 
         const std::string& getUserId() const { return _userId; }
-
         const std::string& getUsername() const { return _username; }
-
         const std::string& getUserExtraInfo() const { return _userExtraInfo; }
-
         const std::string& getWatermarkText() const { return _watermarkText; }
-
         const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
-
         const std::string& getTemplateSource() const { return _templateSource; }
-
         bool getUserCanWrite() const { return _userCanWrite; }
-
         std::string& getPostMessageOrigin() { return _postMessageOrigin; }
-
         void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
-
         bool getHidePrintOption() const { return _hidePrintOption; }
-
         bool getHideSaveOption() const { return _hideSaveOption; }
-
         void setHideExportOption(bool hideExportOption) { _hideExportOption = hideExportOption; }
-
         bool getHideExportOption() const { return _hideExportOption; }
-
         bool getEnableOwnerTermination() const { return _enableOwnerTermination; }
-
         bool getDisablePrint() const { return _disablePrint; }
-
         bool getDisableExport() const { return _disableExport; }
-
         bool getDisableCopy() const { return _disableCopy; }
-
         bool getDisableInactiveMessages() const { return _disableInactiveMessages; }
-
         bool getDownloadAsPostMessage() const { return _downloadAsPostMessage; }
-
         bool getUserCanNotWriteRelative() const { return _userCanNotWriteRelative; }
-
         bool getEnableInsertRemoteImage() const { return _enableInsertRemoteImage; }
-
         bool getEnableShare() const { return _enableShare; }
-
         bool getSupportsRename() const { return _supportsRename; }
-
         bool getSupportsLocks() const { return _supportsLocks; }
-
         bool getUserCanRename() const { return _userCanRename; }
-
         std::string& getHideUserList() { return _hideUserList; }
-
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
-
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
-
         TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
-
         std::chrono::duration<double> getCallDuration() const { return _callDuration; }
-
     private:
         /// User id of the user accessing the file
         std::string _userId;

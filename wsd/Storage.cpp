@@ -12,6 +12,7 @@
 #include "Storage.hpp"
 
 #include <algorithm>
+#include <memory>
 #include <cassert>
 #include <errno.h>
 #include <fstream>
@@ -602,40 +603,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         LOG_ERR("Cannot get file info from WOPI storage uri [" << uriAnonym << "]. Error:  Failed HTPP request authorization");
     }
 
-    // Parse the response.
-    std::string filename;
-    size_t size = 0;
-    std::string ownerId;
-    std::string userId;
-    std::string userName;
-    std::string obfuscatedUserId;
-    std::string userExtraInfo;
-    std::string watermarkText;
-    std::string templateSaveAs;
-    std::string templateSource;
-    bool canWrite = false;
-    bool enableOwnerTermination = false;
-    std::string postMessageOrigin;
-    bool hidePrintOption = false;
-    bool hideSaveOption = false;
-    bool hideExportOption = false;
-    bool disablePrint = false;
-    bool disableExport = false;
-    bool disableCopy = false;
-    bool disableInactiveMessages = false;
-    bool downloadAsPostMessage = false;
-    std::string lastModifiedTime;
-    bool userCanNotWriteRelative = true;
-    bool enableInsertRemoteImage = false;
-    bool enableShare = false;
-    bool supportsLocks = false;
-    bool supportsRename = false;
-    bool userCanRename = false;
-    std::string hideUserList("false");
-    WOPIFileInfo::TriState disableChangeTrackingRecord = WOPIFileInfo::TriState::Unset;
-    WOPIFileInfo::TriState disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
-    WOPIFileInfo::TriState hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
-
     Poco::JSON::Object::Ptr object;
     if (JsonUtil::parseJSON(wopiResponse, object))
     {
@@ -644,88 +611,26 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         else
             LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
 
-        JsonUtil::findJSONValue(object, "BaseFileName", filename);
-        JsonUtil::findJSONValue(object, "OwnerId", ownerId);
-        JsonUtil::findJSONValue(object, "UserId", userId);
-        JsonUtil::findJSONValue(object, "UserFriendlyName", userName);
-        JsonUtil::findJSONValue(object, "TemplateSaveAs", templateSaveAs);
-        JsonUtil::findJSONValue(object, "TemplateSource", templateSource);
-
-        // Anonymize key values.
-        if (LOOLWSD::AnonymizeUserData)
-        {
-            Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(getUri().toString()));
-
-            JsonUtil::findJSONValue(object, "ObfuscatedUserId", obfuscatedUserId, false);
-            if (!obfuscatedUserId.empty())
-            {
-                Util::mapAnonymized(ownerId, obfuscatedUserId);
-                Util::mapAnonymized(userId, obfuscatedUserId);
-                Util::mapAnonymized(userName, obfuscatedUserId);
-            }
-
-            // Set anonymized version of the above fields before logging.
-            // Note: anonymization caches the result, so we don't need to store here.
-            if (LOOLWSD::AnonymizeUserData)
-                object->set("BaseFileName", LOOLWSD::anonymizeUrl(filename));
-
-            // If obfuscatedUserId is provided, then don't log the originals and use it.
-            if (LOOLWSD::AnonymizeUserData && obfuscatedUserId.empty())
-            {
-                object->set("OwnerId", LOOLWSD::anonymizeUsername(ownerId));
-                object->set("UserId", LOOLWSD::anonymizeUsername(userId));
-                object->set("UserFriendlyName", LOOLWSD::anonymizeUsername(userName));
-            }
-
-            std::ostringstream oss;
-            object->stringify(oss);
-            wopiResponse = oss.str();
-
-            // Remove them for performance reasons; they aren't needed anymore.
-            object->remove("ObfuscatedUserId");
-
-            if (LOOLWSD::AnonymizeUserData)
-            {
-                object->remove("BaseFileName");
-                object->remove("TemplateSaveAs");
-                object->remove("TemplateSource");
-                object->remove("OwnerId");
-                object->remove("UserId");
-                object->remove("UserFriendlyName");
-            }
-
-            LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse);
-        }
+        size_t size = 0;
+        std::string filename, ownerId, lastModifiedTime;
 
         JsonUtil::findJSONValue(object, "Size", size);
-        JsonUtil::findJSONValue(object, "UserExtraInfo", userExtraInfo);
-        JsonUtil::findJSONValue(object, "WatermarkText", watermarkText);
-        JsonUtil::findJSONValue(object, "UserCanWrite", canWrite);
-        JsonUtil::findJSONValue(object, "PostMessageOrigin", postMessageOrigin);
-        JsonUtil::findJSONValue(object, "HidePrintOption", hidePrintOption);
-        JsonUtil::findJSONValue(object, "HideSaveOption", hideSaveOption);
-        JsonUtil::findJSONValue(object, "HideExportOption", hideExportOption);
-        JsonUtil::findJSONValue(object, "EnableOwnerTermination", enableOwnerTermination);
-        JsonUtil::findJSONValue(object, "DisablePrint", disablePrint);
-        JsonUtil::findJSONValue(object, "DisableExport", disableExport);
-        JsonUtil::findJSONValue(object, "DisableCopy", disableCopy);
-        JsonUtil::findJSONValue(object, "DisableInactiveMessages", disableInactiveMessages);
-        JsonUtil::findJSONValue(object, "DownloadAsPostMessage", downloadAsPostMessage);
+        JsonUtil::findJSONValue(object, "OwnerId", ownerId);
+        JsonUtil::findJSONValue(object, "BaseFileName", filename);
         JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
-        JsonUtil::findJSONValue(object, "UserCanNotWriteRelative", userCanNotWriteRelative);
-        JsonUtil::findJSONValue(object, "EnableInsertRemoteImage", enableInsertRemoteImage);
-        JsonUtil::findJSONValue(object, "EnableShare", enableShare);
-        JsonUtil::findJSONValue(object, "HideUserList", hideUserList);
-        JsonUtil::findJSONValue(object, "SupportsLocks", supportsLocks);
-        JsonUtil::findJSONValue(object, "SupportsRename", supportsRename);
-        JsonUtil::findJSONValue(object, "UserCanRename", userCanRename);
-        bool booleanFlag = false;
-        if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
-            disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
-        if (JsonUtil::findJSONValue(object, "DisableChangeTrackingShow", booleanFlag))
-            disableChangeTrackingShow = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
-        if (JsonUtil::findJSONValue(object, "HideChangeTrackingControls", booleanFlag))
-            hideChangeTrackingControls = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
+
+        const std::chrono::system_clock::time_point modifiedTime = Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
+        FileInfo fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
+        setFileInfo(fileInfo);
+
+        if (LOOLWSD::AnonymizeUserData)
+            Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(getUri().toString()));
+
+        auto wopiInfo = std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(fileInfo, callDuration, object));
+        if (wopiInfo->getSupportsLocks())
+            lockCtx.initSupportsLocks();
+
+        return wopiInfo;
     }
     else
     {
@@ -738,25 +643,111 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
         throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriAnonym);
     }
+}
 
-    const std::chrono::system_clock::time_point modifiedTime = Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
-    setFileInfo(FileInfo({filename, ownerId, modifiedTime, size}));
+void WopiStorage::WOPIFileInfo::init()
+{
+    _userCanWrite = false;
+    _enableOwnerTermination = false;
+    _hidePrintOption = false;
+    _hideSaveOption = false;
+    _hideExportOption = false;
+    _disablePrint = false;
+    _disableExport = false;
+    _disableCopy = false;
+    _disableInactiveMessages = false;
+    _downloadAsPostMessage = false;
+    _userCanNotWriteRelative = true;
+    _enableInsertRemoteImage = false;
+    _enableShare = false;
+    _supportsLocks = false;
+    _supportsRename = false;
+    _userCanRename = false;
+    _hideUserList = "false";
+    _disableChangeTrackingRecord = WOPIFileInfo::TriState::Unset;
+    _disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
+    _hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
+}
 
-    if (supportsLocks)
-        lockCtx.initSupportsLocks();
+WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
+                                        std::chrono::duration<double> callDuration,
+                                        Poco::JSON::Object::Ptr &object)
+{
+    init();
+
+    const std::string &filename = fileInfo.getFilename();
+    const std::string &ownerId = fileInfo.getOwnerId();
+
+    JsonUtil::findJSONValue(object, "UserId", _userId);
+    JsonUtil::findJSONValue(object, "UserFriendlyName", _username);
+    JsonUtil::findJSONValue(object, "TemplateSaveAs", _templateSaveAs);
+    JsonUtil::findJSONValue(object, "TemplateSource", _templateSource);
+
+    std::ostringstream wopiResponse;
+
+    // Anonymize key values.
+    if (LOOLWSD::AnonymizeUserData)
+    {
+        JsonUtil::findJSONValue(object, "ObfuscatedUserId", _obfuscatedUserId, false);
+        if (!_obfuscatedUserId.empty())
+        {
+            Util::mapAnonymized(ownerId, _obfuscatedUserId);
+            Util::mapAnonymized(_userId, _obfuscatedUserId);
+            Util::mapAnonymized(_username, _obfuscatedUserId);
+        }
+
+        Poco::JSON::Object::Ptr anonObject(object);
+
+        // Set anonymized version of the above fields before logging.
+        // Note: anonymization caches the result, so we don't need to store here.
+        if (LOOLWSD::AnonymizeUserData)
+            anonObject->set("BaseFileName", LOOLWSD::anonymizeUrl(filename));
+
+        // If obfuscatedUserId is provided, then don't log the originals and use it.
+        if (LOOLWSD::AnonymizeUserData && _obfuscatedUserId.empty())
+        {
+            anonObject->set("OwnerId", LOOLWSD::anonymizeUsername(ownerId));
+            anonObject->set("UserId", LOOLWSD::anonymizeUsername(_userId));
+            anonObject->set("UserFriendlyName", LOOLWSD::anonymizeUsername(_username));
+        }
+        anonObject->stringify(wopiResponse);
+    }
+    else
+        object->stringify(wopiResponse);
+
+    LOG_DBG("WOPI::CheckFileInfo (" << callDuration.count() * 1000. << " ms): " << wopiResponse.str());
+
+    JsonUtil::findJSONValue(object, "UserExtraInfo", _userExtraInfo);
+    JsonUtil::findJSONValue(object, "WatermarkText", _watermarkText);
+    JsonUtil::findJSONValue(object, "UserCanWrite", _userCanWrite);
+    JsonUtil::findJSONValue(object, "PostMessageOrigin", _postMessageOrigin);
+    JsonUtil::findJSONValue(object, "HidePrintOption", _hidePrintOption);
+    JsonUtil::findJSONValue(object, "HideSaveOption", _hideSaveOption);
+    JsonUtil::findJSONValue(object, "HideExportOption", _hideExportOption);
+    JsonUtil::findJSONValue(object, "EnableOwnerTermination", _enableOwnerTermination);
+    JsonUtil::findJSONValue(object, "DisablePrint", _disablePrint);
+    JsonUtil::findJSONValue(object, "DisableExport", _disableExport);
+    JsonUtil::findJSONValue(object, "DisableCopy", _disableCopy);
+    JsonUtil::findJSONValue(object, "DisableInactiveMessages", _disableInactiveMessages);
+    JsonUtil::findJSONValue(object, "DownloadAsPostMessage", _downloadAsPostMessage);
+    JsonUtil::findJSONValue(object, "UserCanNotWriteRelative", _userCanNotWriteRelative);
+    JsonUtil::findJSONValue(object, "EnableInsertRemoteImage", _enableInsertRemoteImage);
+    JsonUtil::findJSONValue(object, "EnableShare", _enableShare);
+    JsonUtil::findJSONValue(object, "HideUserList", _hideUserList);
+    JsonUtil::findJSONValue(object, "SupportsLocks", _supportsLocks);
+    JsonUtil::findJSONValue(object, "SupportsRename", _supportsRename);
+    JsonUtil::findJSONValue(object, "UserCanRename", _userCanRename);
+    bool booleanFlag = false;
+    if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
+        _disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
+    if (JsonUtil::findJSONValue(object, "DisableChangeTrackingShow", booleanFlag))
+        _disableChangeTrackingShow = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
+    if (JsonUtil::findJSONValue(object, "HideChangeTrackingControls", booleanFlag))
+        _hideChangeTrackingControls = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
 
     std::string overrideWatermarks = LOOLWSD::getConfigValue<std::string>("watermark.text", "");
     if (!overrideWatermarks.empty())
-        watermarkText = overrideWatermarks;
-
-    return std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(
-        {userId, obfuscatedUserId, userName, userExtraInfo, watermarkText, templateSaveAs, templateSource,
-         canWrite, postMessageOrigin, hidePrintOption, hideSaveOption, hideExportOption,
-         enableOwnerTermination, disablePrint, disableExport, disableCopy,
-         disableInactiveMessages, downloadAsPostMessage, userCanNotWriteRelative, enableInsertRemoteImage, enableShare,
-         hideUserList, disableChangeTrackingShow, disableChangeTrackingRecord,
-         hideChangeTrackingControls, supportsLocks, supportsRename,
-         userCanRename, callDuration}));
+        _watermarkText = overrideWatermarks;
 }
 
 bool WopiStorage::updateLockState(const Authorization& auth, const std::string& cookies,
