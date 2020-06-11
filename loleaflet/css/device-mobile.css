@@ -584,14 +584,14 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 /* Related to slidesorter */
 /* Show slidesorter beyond 768px only */
 #presentation-controls-wrapper {
-	top: initial;
+	top: 41px;
 	left: initial;
 	bottom: 33px;
 	max-width: initial;
 }
 
 #presentation-controls-wrapper.readonly {
-	top: initial;
+	top: 41px;
 	bottom: 0px;
 }
 
@@ -691,7 +691,6 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 .preview-img-portrait {
 	min-width: 37px;
 	max-width: 60px;
-	max-height: 45px;
 	margin: 0px;
 }
 
@@ -715,6 +714,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 #document-container.landscape.parts-preview-document {
+	top: 41px;
 	left: 66px !important;
 	bottom: 33px;
 }

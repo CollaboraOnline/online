@@ -12,8 +12,8 @@ L.Control.PartsPreview = L.Control.extend({
 		frameClass: '',
 		axis: '',
 		allowOrientation: true,
-		maxWidth: (window.mode.isMobile() || window.mode.isTablet()) ? 60 : 180,
-		maxHeight: (window.mode.isMobile() || window.mode.isTablet()) ? 60 : 180
+		maxWidth: !window.mode.isDesktop() ? 60 : 180,
+		maxHeight: !window.mode.isDesktop() ? 60 : 180
 	},
 	partsFocused: false,
 
@@ -118,7 +118,7 @@ L.Control.PartsPreview = L.Control.extend({
 				this._addDnDHandlers(frame);
 				frame.setAttribute('draggable', false);
 
-				if (!window.mode.isMobile()) {
+				if (window.mode.isDesktop()) {
 					L.DomUtil.setStyle(frame, 'height', '20px');
 					L.DomUtil.setStyle(frame, 'margin', '0em');
 				}
@@ -204,7 +204,7 @@ L.Control.PartsPreview = L.Control.extend({
 		img.hash = hashCode;
 		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
 		img.fetched = false;
-		if (window.mode.isMobile() || window.mode.isTablet()) {
+		if (!window.mode.isDesktop()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
 			.on('press', L.bind(function () {
 				if (this._map._permission === 'edit') {
@@ -290,7 +290,7 @@ L.Control.PartsPreview = L.Control.extend({
 			var previewImgMinWidth = Math.round(parseFloat(L.DomUtil.getStyle(img, 'min-width')));
 			var imgHeight = imgSize.height;
 			var imgWidth = imgSize.width;
-			if (imgSize.width < previewImgMinWidth)
+			if (imgSize.width < previewImgMinWidth && window.mode.isDesktop())
 				imgHeight = Math.round(imgHeight * previewImgMinWidth / imgSize.width);
 			var previewFrameBB = img.parentElement.getBoundingClientRect();
 			if (this._direction === 'x') {
@@ -302,6 +302,11 @@ L.Control.PartsPreview = L.Control.extend({
 				this._previewImgHeight = imgHeight;
 				this._previewFrameHeight = imgHeight + 2 * previewImgBorder;
 			}
+		}
+
+		if (!window.mode.isDesktop() && imgSize) {
+			L.DomUtil.setStyle(img, 'width', imgSize.width + 'px');
+			L.DomUtil.setStyle(img, 'height', imgSize.height + 'px');
 		}
 	},
 
