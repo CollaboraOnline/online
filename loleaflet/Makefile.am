@@ -394,6 +394,7 @@ endif
 
 compilets:
 	$(srcdir)/node_modules/typescript/bin/tsc
+	@touch $@
 
 build-loleaflet: compilets \
 	$(LOLEAFLET_L10N_DST) \
@@ -422,13 +423,13 @@ $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
 	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(IS_DEBUG),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
 
-$(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_ALL)
+$(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_ALL) compilets
 	@mkdir -p $(dir $@)
 	@echo "Checking for admin JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet) compilets
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@echo "Checking for loleaflet JS errors..."
