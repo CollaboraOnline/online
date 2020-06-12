@@ -755,15 +755,22 @@ std::string LocalServerSocket::bind()
 {
     int rc;
     struct sockaddr_un addrunix;
+
+    // snap needs a specific socket name
+    std::string socketAbstractUnixName(SOCKET_ABSTRACT_UNIX_NAME);
+    const char* snapInstanceName = std::getenv("SNAP_INSTANCE_NAME");
+    if (snapInstanceName && snapInstanceName[0])
+        socketAbstractUnixName = std::string("0snap.") + snapInstanceName + ".loolwsd-";
+
     do
     {
         std::memset(&addrunix, 0, sizeof(addrunix));
         addrunix.sun_family = AF_UNIX;
-        std::memcpy(addrunix.sun_path, SOCKET_ABSTRACT_UNIX_NAME, sizeof(SOCKET_ABSTRACT_UNIX_NAME));
+        std::memcpy(addrunix.sun_path, socketAbstractUnixName.c_str(), socketAbstractUnixName.length());
         addrunix.sun_path[0] = '\0'; // abstract name
 
         std::string rand = Util::rng::getFilename(8);
-        memcpy(addrunix.sun_path + sizeof(SOCKET_ABSTRACT_UNIX_NAME) - 1, rand.c_str(), 8);
+        memcpy(addrunix.sun_path + socketAbstractUnixName.length(), rand.c_str(), 8);
 
         rc = ::bind(getFD(), (const sockaddr *)&addrunix, sizeof(struct sockaddr_un));
         LOG_TRC("Bind to location " << std::string(&addrunix.sun_path[1]) <<
