@@ -33,10 +33,15 @@ describe('Insert objects via insertion wizard.', function() {
 	it('Insert local image.', function() {
 		mobileHelper.openInsertionWizard();
 
-		// We check whether the entry is there
+		// We can't use the menu item directly, because it would open file picker.
 		cy.contains('.menu-entry-with-icon', 'Local Image...')
 			.should('be.visible');
-		// We not not test the insertion, it might depend on the system.
+
+		cy.get('#insertgraphic[type=file]')
+			.attachFile('/mobile/impress/image_to_insert.png');
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
+			.should('exist');
 	});
 
 	it('Insert comment.', function() {

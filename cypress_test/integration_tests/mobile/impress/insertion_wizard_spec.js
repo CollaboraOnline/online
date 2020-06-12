@@ -52,14 +52,18 @@ describe('Impress insertion wizard.', function() {
 			.should('exist');
 	}
 
-	it('Check existence of image insertion items.', function() {
+	it('Insert local image.', function() {
 		mobileHelper.openInsertionWizard();
 
+		// We can't use the menu item directly, because it would open file picker.
 		cy.contains('.menu-entry-with-icon', 'Local Image...')
 			.should('be.visible');
 
-		cy.contains('.menu-entry-with-icon', 'Image...')
-			.should('be.visible');
+		cy.get('#insertgraphic[type=file]')
+			.attachFile('/mobile/writer/image_to_insert.png');
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+			.should('exist');
 	});
 
 	it('Insert comment.', function() {

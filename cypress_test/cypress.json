@@ -4,5 +4,6 @@
     "pluginsFile" : "plugins/index.js",
     "defaultCommandTimeout" : 6000,
     "ignoreTestFiles" : "*helper.js",
-    "modifyObstructiveCode": false
+    "modifyObstructiveCode": false,
+    "fixturesFolder" : "data"
 }

@@ -6,6 +6,7 @@
   "dependencies": {
     "cypress": "4.5.0",
     "cypress-failed-log": "2.6.2",
+    "cypress-file-upload": "4.0.7",
     "cypress-select-tests": "1.5.7",
     "eslint": "6.8.0",
     "eslint-plugin-cypress-rules": "file:eslint_plugin",

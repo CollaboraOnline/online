@@ -26,12 +26,30 @@ describe('Calc insertion wizard.', function() {
 		helper.afterAll(testFileName);
 	});
 
-	it('Check existence of image insertion items.', function() {
+	it('Inset local image.', function() {
+		// We can't use the menu item directly, because it would open file picker.
 		cy.contains('.menu-entry-with-icon', 'Local Image...')
 			.should('be.visible');
 
-		cy.contains('.menu-entry-with-icon', 'Image...')
-			.should('be.visible');
+		cy.get('#insertgraphic[type=file]')
+			.attachFile('/mobile/calc/image_to_insert.png');
+
+		// Could not find a good indicator here, because the inserted image
+		// is not selected after insertion.
+		cy.wait(1000);
+
+		// Select image
+		cy.get('.spreadsheet-cell-resize-marker:nth-of-type(2)')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(1);
+				var XPos = items[0].getBoundingClientRect().right + 10;
+				var YPos = items[0].getBoundingClientRect().top;
+				cy.get('body')
+					.click(XPos, YPos);
+			});
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
+			.should('exist');
 	});
 
 	it('Insert chart.', function() {
