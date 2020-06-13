@@ -38,7 +38,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('be.visible');
 
 		cy.get('#insertgraphic[type=file]')
-			.attachFile('/mobile/impress/image_to_insert.png');
+			.attachFile('/mobile/writer/image_to_insert.png');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
 			.should('exist');

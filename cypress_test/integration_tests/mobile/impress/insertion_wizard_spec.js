@@ -60,7 +60,7 @@ describe('Impress insertion wizard.', function() {
 			.should('be.visible');
 
 		cy.get('#insertgraphic[type=file]')
-			.attachFile('/mobile/writer/image_to_insert.png');
+			.attachFile('/mobile/impress/image_to_insert.png');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
