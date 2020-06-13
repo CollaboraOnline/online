@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require afterEach expect */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -12,15 +12,255 @@ describe('Trigger hamburger menu options.', function() {
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
-
-		mobileHelper.openHamburgerMenu();
 	});
 
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
 
+	it('Enable track changes recording.', function() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Record')
+			.click();
+
+		// Insert some text and check whether it's tracked.
+		cy.get('textarea.clipboard')
+			.type('{q}');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Previous')
+			.click();
+
+		cy.get('.leaflet-marker-icon')
+			.should('exist');
+
+		// We should have 'q' selected.
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\nq');
+
+		// Then disable recording.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Record')
+			.click();
+
+		cy.get('textarea.clipboard')
+			.type('{rightArrow}w');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Previous')
+			.click();
+
+		cy.get('.leaflet-marker-icon')
+			.should('exist');
+
+		// We should have 'q' selected.
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\nq');
+	});
+
+	it('Show track changes.', function() {
+		mobileHelper.openHamburgerMenu();
+
+		// First start recording.
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Record')
+			.click();
+
+		// Remove text content.
+		cy.get('#document-container')
+			.click();
+
+		helper.clearAllText();
+
+		// By default track changed are shown.
+		writerMobileHelper.selectAllMobile();
+
+		// We have selection markers.
+		cy.get('.leaflet-marker-icon')
+			.should('exist');
+
+		// No actual text sent from core because of the removal.
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\n\n\n');
+
+		// Remove text selection.
+		cy.get('textarea.clipboard')
+			.type('{leftArrow}');
+
+		// Hide track changes.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Show')
+			.click();
+
+		// Trigger select all
+		cy.get('textarea.clipboard')
+			.type('{ctrl}a');
+
+		// Both selection markers should be in the same line
+		cy.get('.leaflet-marker-icon:nth-of-type(1)')
+			.then(function(firstMarker) {
+				cy.get('.leaflet-marker-icon:nth-of-type(2)')
+					.then(function(secondMarker) {
+						expect(firstMarker.offset().top).to.be.equal(secondMarker.offset().top);
+						expect(firstMarker.offset().bottom).to.be.equal(secondMarker.offset().bottom);
+					});
+			});
+	});
+
+	it('Accept all changes.', function() {
+		mobileHelper.openHamburgerMenu();
+
+		// First start recording.
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Record')
+			.click();
+
+		// Remove text content.
+		cy.get('#document-container')
+			.click();
+
+		helper.clearAllText();
+
+		// Accept removal.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Accept All')
+			.click();
+
+		// Check that we dont have the removed content
+		cy.get('textarea.clipboard')
+			.type('{ctrl}a');
+
+		cy.wait(1000);
+
+		// No selection
+		cy.get('.leaflet-marker-icon')
+			.should('not.exist');
+	});
+
+	it('Reject all changes.', function() {
+		mobileHelper.openHamburgerMenu();
+
+		// First start recording.
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Record')
+			.click();
+
+		// Remove text content.
+		cy.get('#document-container')
+			.click();
+
+		helper.clearAllText();
+
+		writerMobileHelper.selectAllMobile();
+
+		// We dont have actual text content.
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\n\n\n');
+
+		// Reject removal.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Reject All')
+			.click();
+
+		writerMobileHelper.selectAllMobile();
+
+		// We get back the content.
+		cy.contains('#copy-paste-container p', 'xxxxxxx')
+			.should('exist');
+	});
+
+	it('Go to next/prev change.', function() {
+		mobileHelper.openHamburgerMenu();
+
+		// First start recording.
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Record')
+			.click();
+
+		// First change
+		cy.get('textarea.clipboard')
+			.type('q');
+
+		// Second change
+		cy.get('textarea.clipboard')
+			.type('{rightArrow}w');
+
+		// Find second change using prev.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Previous')
+			.click();
+
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\nw');
+
+		// Find first change using prev.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Previous')
+			.click();
+
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\nq');
+
+		// Find second change using next.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Track Changes')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Next')
+			.click();
+
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\nw');
+	});
+
 	it('Search some word.', function() {
+		mobileHelper.openHamburgerMenu();
+
 		cy.contains('.menu-entry-with-icon', 'Search')
 			.click();
 
@@ -81,8 +321,6 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Check word counts.', function() {
-		mobileHelper.closeHamburgerMenu();
-
 		writerMobileHelper.selectAllMobile();
 
 		mobileHelper.openHamburgerMenu();
@@ -118,6 +356,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Check version information.', function() {
+		mobileHelper.openHamburgerMenu();
+
 		// Open about dialog
 		cy.contains('.menu-entry-with-icon', 'About')
 			.click();
