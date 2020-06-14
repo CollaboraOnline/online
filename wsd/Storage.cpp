@@ -529,6 +529,23 @@ void LockContext::dumpState(std::ostream& os) const
 
 #if !MOBILEAPP
 
+void WopiStorage::initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
+                                  const Authorization& auth, const std::string& cookies) const
+{
+    request.set("User-Agent", WOPI_AGENT_STRING);
+
+    auth.authorizeRequest(request);
+
+    addStorageDebugCookie(request);
+
+    // TODO: Avoid repeated parsing.
+    std::map<std::string, std::string> params = GetQueryParams(uri);
+    addWopiProof(request, uri, params["access_token"]);
+
+    if (_reuseCookies)
+        addStorageReuseCookie(request, cookies);
+}
+
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth,
                                                                         const std::string& cookies,
                                                                         LockContext& lockCtx)
@@ -537,7 +554,6 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
-    std::map<std::string, std::string> params = GetQueryParams(uriObject);
 
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << "].");
 
@@ -545,13 +561,11 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     std::chrono::duration<double> callDuration(0);
     try
     {
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-        request.set("User-Agent", WOPI_AGENT_STRING);
-        auth.authorizeRequest(request);
-        addStorageDebugCookie(request);
-        if (_reuseCookies)
-            addStorageReuseCookie(request, cookies);
-        addWopiProof(request, uriObject, params["access_token"]);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET,
+                                       uriObject.getPathAndQuery(),
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        initHttpRequest(request, uriObject, auth, cookies);
+
         const auto startTime = std::chrono::steady_clock::now();
 
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
@@ -760,8 +774,6 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
     Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
 
-    std::map<std::string, std::string> params = GetQueryParams(uriObject);
-
     Poco::URI uriObjectAnonym(getUri());
     uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()));
     const std::string uriAnonym = uriObjectAnonym.toString();
@@ -773,18 +785,15 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
     {
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-        request.set("User-Agent", WOPI_AGENT_STRING);
-        auth.authorizeRequest(request);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST,
+                                       uriObject.getPathAndQuery(),
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        initHttpRequest(request, uriObject, auth, cookies);
 
         request.set("X-WOPI-Override", lock ? "LOCK" : "UNLOCK");
         request.set("X-WOPI-Lock", lockCtx._lockToken);
         if (!getExtendedData().empty())
             request.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
-        addStorageDebugCookie(request);
-        if (_reuseCookies)
-            addStorageReuseCookie(request, cookies);
-        addWopiProof(request, uriObject, params["access_token"]);
 
         psession->sendRequest(request);
         Poco::Net::HTTPResponse response;
@@ -833,8 +842,6 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
     uriObject.setPath(uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
-    std::map<std::string, std::string> params = GetQueryParams(uriObject);
-
     Poco::URI uriObjectAnonym(getUri());
     uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
     const std::string uriAnonym = uriObjectAnonym.toString();
@@ -857,13 +864,11 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
     {
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-        request.set("User-Agent", WOPI_AGENT_STRING);
-        auth.authorizeRequest(request);
-        addStorageDebugCookie(request);
-        if (_reuseCookies)
-            addStorageReuseCookie(request, cookies);
-        addWopiProof(request, uriObject, params["access_token"]);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET,
+                                       uriObject.getPathAndQuery(),
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        initHttpRequest(request, uriObject, auth, cookies);
+
         psession->sendRequest(request);
 
         Poco::Net::HTTPResponse response;
@@ -939,8 +944,6 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     uriObject.setPath(isSaveAs || isRename? uriObject.getPath(): uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
-    std::map<std::string, std::string> params = GetQueryParams(uriObject);
-
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
 
     LOG_INF("Uploading URI via WOPI [" << uriAnonym << "] from [" << filePathAnonym + "].");
@@ -951,9 +954,10 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     {
         std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
-        request.set("User-Agent", WOPI_AGENT_STRING);
-        auth.authorizeRequest(request);
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST,
+                                       uriObject.getPathAndQuery(),
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        initHttpRequest(request, uriObject, auth, cookies);
 
         if (!isSaveAs && !isRename)
         {
@@ -1022,10 +1026,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
 
         request.setContentType("application/octet-stream");
         request.setContentLength(size);
-        addStorageDebugCookie(request);
-        if (_reuseCookies)
-            addStorageReuseCookie(request, cookies);
-        addWopiProof(request, uriObject, params["access_token"]);
+
         std::ostream& os = psession->sendRequest(request);
 
         std::ifstream ifs(filePath);
