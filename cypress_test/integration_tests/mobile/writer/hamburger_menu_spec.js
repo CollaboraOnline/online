@@ -18,6 +18,90 @@ describe('Trigger hamburger menu options.', function() {
 		helper.afterAll(testFileName);
 	});
 
+	it('Download as PDF', function() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Download as')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'PDF Document (.pdf)')
+			.click();
+
+		cy.get('iframe')
+			.should('have.attr', 'data-src')
+			.should('contain', 'document.pdf');
+	});
+
+	it('Download as ODT', function() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Download as')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'ODF text document (.odt)')
+			.click();
+
+		cy.get('iframe')
+			.should('have.attr', 'data-src')
+			.should('contain', 'document.odt');
+	});
+
+	it('Download as DOC', function() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Download as')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Word 2003 Document (.doc)')
+			.click();
+
+		cy.get('iframe')
+			.should('have.attr', 'data-src')
+			.should('contain', 'document.doc');
+	});
+
+	it('Download as DOCX', function() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Download as')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Word Document (.docx)')
+			.click();
+
+		cy.get('iframe')
+			.should('have.attr', 'data-src')
+			.should('contain', 'document.docx');
+	});
+
+	it('Download as RTF', function() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Download as')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Rich Text (.rtf)')
+			.click();
+
+		cy.get('iframe')
+			.should('have.attr', 'data-src')
+			.should('contain', 'document.rtf');
+	});
+
+	it('Download as EPUB', function() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Download as')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'EPUB (.epub)')
+			.click();
+
+		cy.get('iframe')
+			.should('have.attr', 'data-src')
+			.should('contain', 'document.epub');
+	});
+
 	it('Undo/redo.', function() {
 		// Type a new character
 		cy.get('textarea.clipboard')
