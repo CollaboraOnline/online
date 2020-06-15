@@ -21,32 +21,8 @@ describe('Changing slide properties.', function() {
 	});
 
 	function previewShouldBeFullWhite(fullWhite = true, slideNumber = 1) {
-		cy.get('.preview-frame:nth-of-type(' + (slideNumber + 1).toString() + ') img')
-			.should(function(preview) {
-				var img = preview[0];
-
-				// Create an offscreen canvas to check the preview's pixels
-				var canvas = document.createElement('canvas');
-				canvas.width = img.width;
-				canvas.height = img.height;
-				canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
-				var context = canvas.getContext('2d');
-
-				// There is a border around the preview, ignore that
-				var ignoredPixels = 2;
-				var pixelData = context.getImageData(ignoredPixels, ignoredPixels,
-					img.width - 2 * ignoredPixels,
-					img.height - 2 * ignoredPixels).data;
-
-				var allIsWhite = true;
-				for (var i = 0; i < pixelData.length; ++i) {
-					allIsWhite = allIsWhite && pixelData[i] == 255;
-				}
-				if (fullWhite)
-					expect(allIsWhite).to.be.true;
-				else
-					expect(allIsWhite).to.be.false;
-			});
+		var selector = '.preview-frame:nth-of-type(' + (slideNumber + 1).toString() + ') img';
+		helper.imageShouldBeFullWhiteOrNot(selector, fullWhite);
 	}
 
 	function switchToMasterView() {

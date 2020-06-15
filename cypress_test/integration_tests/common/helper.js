@@ -1,4 +1,4 @@
-/* global cy Cypress*/
+/* global cy Cypress expect */
 
 function loadTestDoc(fileName, subFolder, mobile) {
 	cy.log('Loading test document - start.');
@@ -242,6 +242,35 @@ function getLOVersion() {
 	return 'master';
 }
 
+function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
+	cy.get(selector)
+		.should(function(images) {
+			var img = images[0];
+
+			// Create an offscreen canvas to check the image's pixels
+			var canvas = document.createElement('canvas');
+			canvas.width = img.width;
+			canvas.height = img.height;
+			canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+			var context = canvas.getContext('2d');
+
+			// Ignore a small zone on the edges, to ignore border.
+			var ignoredPixels = 2;
+			var pixelData = context.getImageData(ignoredPixels, ignoredPixels,
+				img.width - 2 * ignoredPixels,
+				img.height - 2 * ignoredPixels).data;
+
+			var allIsWhite = true;
+			for (var i = 0; i < pixelData.length; ++i) {
+				allIsWhite = allIsWhite && pixelData[i] == 255;
+			}
+			if (fullWhite)
+				expect(allIsWhite).to.be.true;
+			else
+				expect(allIsWhite).to.be.false;
+		});
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -259,3 +288,4 @@ module.exports.isWriter = isWriter;
 module.exports.beforeAllDesktop = beforeAllDesktop;
 module.exports.typeText = typeText;
 module.exports.getLOVersion = getLOVersion;
+module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
