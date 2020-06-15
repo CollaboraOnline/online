@@ -97,7 +97,7 @@ public:
     /// Returns the json part of the message, if any.
     std::string jsonString() const
     {
-        if (_tokens.size() > 1 && _tokens[1] == "{")
+        if (_tokens.size() > 1 && _tokens[1].size() && _tokens[1][0] == '{')
         {
             const size_t firstTokenSize = _tokens[0].size();
             return std::string(_data.data() + firstTokenSize, _data.size() - firstTokenSize);
