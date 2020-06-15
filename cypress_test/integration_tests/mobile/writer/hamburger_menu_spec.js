@@ -101,6 +101,16 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\n\n\n');
 
+		// We have a multiline selection
+		cy.get('.leaflet-marker-icon:nth-of-type(1)')
+			.then(function(firstMarker) {
+				cy.get('.leaflet-marker-icon:nth-of-type(2)')
+					.then(function(secondMarker) {
+						expect(firstMarker.offset().top).to.be.lessThan(secondMarker.offset().top);
+						expect(firstMarker.offset().left).to.be.lessThan(secondMarker.offset().left);
+					});
+			});
+
 		// Remove text selection.
 		cy.get('textarea.clipboard')
 			.type('{leftArrow}');
@@ -124,7 +134,7 @@ describe('Trigger hamburger menu options.', function() {
 				cy.get('.leaflet-marker-icon:nth-of-type(2)')
 					.then(function(secondMarker) {
 						expect(firstMarker.offset().top).to.be.equal(secondMarker.offset().top);
-						expect(firstMarker.offset().bottom).to.be.equal(secondMarker.offset().bottom);
+						expect(firstMarker.offset().left).to.be.lessThan(secondMarker.offset().left);
 					});
 			});
 	});
