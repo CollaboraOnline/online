@@ -415,7 +415,9 @@ L.Control.Ruler = L.Control.extend({
 				break;
 			}
 		}
-		var tileContainerXTranslate = parseInt(tileContainer.style.transform.match(/\(([-0-9]*)/)[1]);
+		var tileContainerXTranslate = 0;
+		if (tileContainer.style !== undefined)
+			tileContainerXTranslate = parseInt(tileContainer.style.transform.match(/\(([-0-9]*)/)[1]);
 		var mapPaneXTranslate = parseInt(mapPane.style.transform.match(/\(([-0-9]*)/)[1]);
 
 		var rulerOffset = mapPaneXTranslate + firstTileXTranslate + tileContainerXTranslate + (this.options.tileMargin * scale);
