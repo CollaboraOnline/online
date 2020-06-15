@@ -237,9 +237,9 @@ define error_output_string
 "\n\
 CypressError: a test failed, please do one of the following:\n\n\
 Run the failing test in headless mode:\n\
-\tmake check-$(1) spec=$(2)\n\n\
+\tcd cypress_test && make check-$(1) spec=$(2)\n\n\
 Open the failing test in the interactive test runner:\n\
-\tmake run-$(1) spec=$(2)\n"
+\tcd cypress_test && make run-$(1) spec=$(2)\n"
 endef
 
 NODE_BINS = \
