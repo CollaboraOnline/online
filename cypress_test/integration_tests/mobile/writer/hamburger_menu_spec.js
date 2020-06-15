@@ -18,6 +18,232 @@ describe('Trigger hamburger menu options.', function() {
 		helper.afterAll(testFileName);
 	});
 
+	it('Undo/redo.', function() {
+		// Type a new character
+		cy.get('textarea.clipboard')
+			.type('{q}');
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p')
+			.should('contain.text', 'q');
+
+		// Undo
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Undo')
+			.click();
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p')
+			.should('not.contain.text', 'q');
+
+		// Redo
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Redo')
+			.click();
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p')
+			.should('contain.text', 'q');
+	});
+
+	it('Repair.', function() {
+		// First change
+		cy.get('textarea.clipboard')
+			.type('{q}');
+
+		// Second change
+		cy.get('textarea.clipboard')
+			.type('{w}');
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p')
+			.should('contain.text', 'qw');
+
+		// Undo
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Undo')
+			.click();
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p')
+			.should('not.contain.text', 'w');
+
+		// Revert one undo step via Repair
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Repair')
+			.click();
+
+		cy.get('.leaflet-popup-content')
+			.should('be.visible');
+
+		cy.get('.leaflet-popup-content table tr:nth-of-type(2)')
+			.should('contain.text', 'Redo');
+
+		cy.get('.leaflet-popup-content table tr:nth-of-type(3)')
+			.should('contain.text', 'Undo');
+
+		cy.get('.leaflet-popup-content table tr:nth-of-type(2)')
+			.click();
+
+		cy.get('.leaflet-popup-content input[value=\'Jump to state\']')
+			.click();
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p')
+			.should('contain.text', 'qw');
+
+		// Revert to the initial state via Repair
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Repair')
+			.click();
+
+		cy.get('.leaflet-popup-content')
+			.should('be.visible');
+
+		cy.get('.leaflet-popup-content table tr:nth-of-type(2)')
+			.should('contain.text', 'Undo');
+
+		cy.get('.leaflet-popup-content table tr:nth-of-type(3)')
+			.should('contain.text', 'Undo');
+
+		cy.get('.leaflet-popup-content table tr:nth-of-type(3)')
+			.click();
+
+		cy.get('.leaflet-popup-content input[value=\'Jump to state\']')
+			.click();
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p')
+			.should('not.contain.text', 'q');
+
+		cy.get('#copy-paste-container p')
+			.should('not.contain.text', 'w');
+	});
+
+	it('Cut.', function() {
+		writerMobileHelper.selectAllMobile();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Cut')
+			.click();
+
+		// TODO: cypress does not support clipboard operations
+		// so we get a warning dialog here.
+		cy.get('.vex-dialog-form')
+			.should('be.visible');
+
+		cy.get('.vex-dialog-message')
+			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
+
+		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+			.click();
+
+		cy.get('.vex-dialog-form')
+			.should('not.be.visible');
+	});
+
+	it('Copy.', function() {
+		writerMobileHelper.selectAllMobile();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Copy')
+			.click();
+
+		// TODO: cypress does not support clipboard operations
+		// so we get a warning dialog here.
+		cy.get('.vex-dialog-form')
+			.should('be.visible');
+
+		cy.get('.vex-dialog-message')
+			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
+
+		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+			.click();
+
+		cy.get('.vex-dialog-form')
+			.should('not.be.visible');
+	});
+
+	it('Paste.', function() {
+		writerMobileHelper.selectAllMobile();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Paste')
+			.click();
+
+		// TODO: cypress does not support clipboard operations
+		// so we get a warning dialog here.
+		cy.get('.vex-dialog-form')
+			.should('be.visible');
+
+		cy.get('.vex-dialog-message')
+			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
+
+		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+			.click();
+
+		cy.get('.vex-dialog-form')
+			.should('not.be.visible');
+	});
+
+	it('Select all.', function() {
+		cy.get('#copy-paste-container p')
+			.should('not.contain.text', 'xxxxxx');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Edit')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Select All')
+			.click();
+
+		cy.get('.leaflet-marker-icon')
+			.should('be.visible');
+
+		cy.get('#copy-paste-container p')
+			.should('contain.text', 'xxxxxx');
+	});
+
 	it('Enable track changes recording.', function() {
 		mobileHelper.openHamburgerMenu();
 
