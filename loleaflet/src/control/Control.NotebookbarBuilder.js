@@ -45,6 +45,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Presentation'] = this._startPresentationControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
 
+		this._toolitemHandlers['up'] = this._toolbarItemControl;
+		this._toolitemHandlers['down'] = this._toolbarItemControl;
+
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
 		this._toolitemHandlers['.uno:DesignerDialog'] = function() {};
@@ -372,6 +375,16 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				builder.map._clip.filterExecCopyPaste(data.command);
 			});
 		}
+	},
+
+	_toolbarItemControl: function(parentContainer, data, builder) {
+		builder.options.useInLineLabelsForUnoButtons = false;
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			builder.callback('toolbox', 'click', {id: data.parent.id}, data.command, builder);
+		});
 	},
 
 	_lineSpacingControl: function(parentContainer, data, builder) {
