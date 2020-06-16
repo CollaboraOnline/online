@@ -403,3 +403,38 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 {
 	margin-top: 10px;
 }
+
+/* other */
+
+.ui-drawing-area-container
+{
+	position: relative;
+}
+
+.ui-drawing-area-loader
+{
+	border: 5px solid #f3f3f3;
+	border-top: 5px solid #3498db;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	animation: spin 2s linear infinite;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	top: 25%;
+}
+
+.ui-drawing-area-loader-container
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
