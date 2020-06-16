@@ -18,6 +18,11 @@ L.Control.Notebookbar = L.Control.extend({
 		this.setupResizeHandler();
 
 		this.map.on('contextchange', this.onContextChange, this);
+		this.map.on('notebookbar', this.onNotebookbar, this);
+	},
+
+	onNotebookbar: function(data) {
+		this.loadTab(data);
 	},
 
 	clearNotebookbar: function() {

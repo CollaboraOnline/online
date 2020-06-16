@@ -1004,6 +1004,12 @@ L.TileLayer = L.GridLayer.extend({
 			} else {
 				this._closeMobileWizard();
 			}
+		} else {
+			msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
+			if (msgData.type == 'borderwindow') {
+				window.notebookbarId = msgData.id;
+				this._map.fire('notebookbar', msgData.children[2]);
+			}
 		}
 	},
 
