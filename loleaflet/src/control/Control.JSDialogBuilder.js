@@ -1549,6 +1549,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-drawing-area', parentContainer);
 			image.src = data.image.replace('\\', '');
 			image.id = data.id;
+
+			$(image).click(function () {
+				builder.callback('drawingarea', 'click', image, null, builder);
+			});
 		}
 		return false;
 	},
