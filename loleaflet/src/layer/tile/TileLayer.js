@@ -1305,8 +1305,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onInvalidateViewCursorMsg: function (textMsg) {
-		textMsg = textMsg.substring('invalidateviewcursor:'.length + 1);
-		var obj = JSON.parse(textMsg);
+		var obj = JSON.parse(textMsg.substring('invalidateviewcursor:'.length + 1));
 		var viewId = parseInt(obj.viewId);
 		var docLayer = this._map._docLayer;
 
@@ -1340,6 +1339,10 @@ L.TileLayer = L.GridLayer.extend({
 			else if (this._map.getDocType() === 'spreadsheet') {
 				this.goToCellViewCursor(viewId);
 			}
+		}
+
+		if (this.isCalc()) {
+			this._saveMessageForReplay(textMsg, viewId);
 		}
 	},
 

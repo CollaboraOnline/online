@@ -254,11 +254,15 @@ L.CalcTileLayer = L.TileLayer.extend({
 				'referencemarks',
 				'cellselectionarea',
 				'textselection',
+				'invalidatecursor',
+				'textselectionstart',
+				'textselectionend',
 			];
 
 			var otherViewTypes = [
 				'cellviewcursor',
 				'textviewselection',
+				'invalidateviewcursor',
 			];
 
 			this._printTwipsMessagesForReplay = new L.MessageStore(ownViewTypes, otherViewTypes);
