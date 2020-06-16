@@ -18,6 +18,27 @@ describe('Trigger hamburger menu options.', function() {
 		helper.afterAll(testFileName);
 	});
 
+	function hideText() {
+		// Change text color to white to hide text.
+		writerMobileHelper.selectAllMobile();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#FontColor')
+			.click();
+
+		mobileHelper.selectFromColorPalette(0, 0, 7);
+
+		// End remove spell checking red lines
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'View')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
+			.click();
+	}
+
 	it('Download as PDF', function() {
 		mobileHelper.openHamburgerMenu();
 
@@ -650,29 +671,89 @@ describe('Trigger hamburger menu options.', function() {
 
 		// Selected counts
 		cy.get('#selectwords')
-			.should('have.text', '61');
+			.should('have.text', '106');
 
 		cy.get('#selectchars')
-			.should('have.text', '689');
+			.should('have.text', '1,174');
 
 		cy.get('#selectcharsnospaces')
-			.should('have.text', '629');
+			.should('have.text', '1,069');
 
 		cy.get('#selectcjkchars')
 			.should('have.text', '0');
 
 		// General counts
 		cy.get('#docwords')
-			.should('have.text', '61');
+			.should('have.text', '106');
 
 		cy.get('#docchars')
-			.should('have.text', '689');
+			.should('have.text', '1,174');
 
 		cy.get('#doccharsnospaces')
-			.should('have.text', '629');
+			.should('have.text', '1,069');
 
 		cy.get('#doccjkchars')
 			.should('have.text', '0');
+	});
+
+	it('Show formatting marks.', function() {
+		// Hide text so the center tile is full white.
+		hideText();
+
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 261px;\']';
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+
+		// Enable it first -> spaces will be visible.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'View')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Formatting Marks')
+			.click();
+
+		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+
+		// Then disable it again.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'View')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Formatting Marks')
+			.click();
+
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+	});
+
+	it('Automatic spell checking.', function() {
+		// Hide text so the center tile is full white.
+		hideText();
+
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 261px;\']';
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+
+		// Enable it first.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'View')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
+			.click();
+
+		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+
+		// Then disable it again.
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'View')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
+			.click();
+
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 	});
 
 	it('Check version information.', function() {
