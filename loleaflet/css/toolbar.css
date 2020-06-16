@@ -111,7 +111,7 @@ w2ui-toolbar {
 
 .w2ui-scroll-left,
 .w2ui-scroll-right {
-		z-index: 1000;
+		z-index: 1001;
 }
 
 /* center the toolbar */

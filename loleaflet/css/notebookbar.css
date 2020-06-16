@@ -54,7 +54,7 @@
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
 
 	height: 105px;
-	margin-top: -25px;
+	margin-top: -20px;
 	padding-top: 5px;
 }
 
@@ -67,7 +67,7 @@
 
 div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookbar, #ObjectBackOne.notebookbar, #ObjectForwardOne.notebookbar, #BringToFront.notebookbar, #SetObjectToBackground.notebookbar, #SetObjectToForeground.notebookbar, #FlipVertical.notebookbar, #FlipHorizontal.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar, #StyleApply.notebookbar, #StyleUpdateByExample.notebookbar, #StyleNewByExample.notebookbar, #Shadowed.notebookbar, #Grow.notebookbar, #Shrink.notebookbar, #Spacing.notebookbar, #SuperScript.notebookbar, #SubScript.notebookbar,#AlignLeft.notebookbar, #AlignRight.notebookbar, #AlignHorizontalCenter.notebookbar, #AlignBlock.notebookbar, #ParaRightToLeft.notebookbar, #ParaLeftToRight.notebookbar, #AlignTop.notebookbar, #AlignVCenter.notebookbar, #AlignBottom.notebookbar, #IncrementIndent.notebookbar, #DecrementIndent.notebookbar, #LeftPara.notebookbar, #RightPara.notebookbar, #CenterPara.notebookbar, #JustifyPara.notebookbar, #DefaultBullet.notebookbar, #DefaultNumbering.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #LineSpacing.notebookbar, #HangingIndent.notebookbar, #CellVertTop.notebookbar, #CellVertCenter.notebookbar, #CellVertBottom.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #DeleteTable.notebookbar, #MergeCells.notebookbar{
 	padding: 0px !important;
-	margin: 0px !important;
+	margin: 0px 5px 0px 0px !important;
 }
 
 #buttonbefore.notebookbar, #buttonafter.notebookbar, #buttonoptimal.notebookbar, #buttonparallel.notebookbar, #buttonnone.notebookbar, #buttonthrough.notebookbar, #bottom.notebookbar, #top.notebookbar, #standard.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar{
@@ -75,9 +75,18 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	padding: 0px !important;
 }
 
+.unotoolbutton.notebookbar {
+	margin-right: 5px !important;
+}
+
 .unotoolbutton.notebookbar .unobutton {
 	width: 24px !important;
 	height: 24px !important;
+	margin-right: 0px !important;
+}
+
+.unotoolbutton.notebookbar .unolabel {
+	padding-left: 5px !important;
 }
 
 .unotoolbutton.notebookbar .unobutton.selected {
@@ -124,13 +133,17 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	height: 24px !important;
 }
 
+#table-fontsize .select2.select2-container {
+	width: 60px !important;
+}
+
 #Paste.notebookbar img, #InsertAnnotation.notebookbar img, #SearchDialog.notebookbar img {
 	height: 32px !important;
 	width: 32px !important;
 }
 
 #ControlCodes.notebookbar {
-	padding-left: 30px !important;
+	margin-left: 30px !important;
 }
 
 #fontnamecombobox.notebookbar ~ .select2 {
@@ -145,17 +158,46 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 170px !important;
 }
 
-#table-StyleParagraphSection1.notebookbar, #table-GroupB15.notebookbar, #table-GroupB11.notebookbar {
+#table-StyleParagraphSection1.notebookbar,
+#table-GroupB15.notebookbar,
+#table-GroupB11.notebookbar
+{
 	margin-top: -5px;
 }
 
-#Copy.notebookbar, #clearFormatting.notebookbar, #table-Home-Section-Insert #table-GroupB20.notebookbar {
+#Copy.notebookbar,
+#clearFormatting.notebookbar,
+#table-Home-Section-Insert #table-GroupB20.notebookbar {
 	margin-top: 10px;
+}
+
+#table-GroupB94.notebookbar {
+	margin-top: -5px;
+}
+
+#table-GroupB19 #table-GroupB93.notebookbar {
+	margin-left: -60px;
+	margin-top: 5px;
+}
+
+#table-stylescontainer #style1,
+#table-stylescontainer #style2,
+#table-stylescontainer #style3,
+#table-stylescontainer #style4
+{
+	border: 1px dashed lightgray;
+	cursor: pointer;
 }
 
 /* Insert Tab */
 
-#InsertReferenceField.notebookbar, #InsertSection.notebookbar, #table-shapes6 #BasicShapes.notebookbar {
+#InsertReferenceField.notebookbar,
+#InsertSection.notebookbar,
+#table-Insert {
+	margin-top: 5px;
+}
+
+#table-shapes6 #BasicShapes.notebookbar {
 	margin-top: 10px;
 }
 
@@ -172,6 +214,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 {
 	height: 32px !important;
 	width: 32px !important;
+}
+
+#table-InsertTab.notebookbar #table-GroupB18 #table-SectionBottom32
+{
+	display: none;
 }
 
 /* Layout Tab */
@@ -204,7 +251,9 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* References Tab */
 
-#table-ReferencesBox
+#table-ReferencesBox,
+#table-References,
+#table-GroupB39 #table-LineA18
 {
 	margin-top: 5px;
 }
@@ -226,10 +275,17 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-top: 10px;
 }
 
+#table-Reference-Section-Field.notebookbar
+{
+	display: none;
+}
+
 /* Table Tab */
 
 #table-Table-Container,
-#table-SectionBottom85.notebookbar
+#table-SectionBottom85.notebookbar,
+#table-SectionBottom101.notebookbar,
+#table-GroupB62.notebookbar #SplitTable
 {
 	margin-top: 5px;
 }
@@ -258,8 +314,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #table-SectionBottom40.notebookbar,
 #SplitTable.notebookbar,
 #EntireRow.notebookbar,
-#DeleteTable.notebookbar,
-#table-SectionBottom44.notebookbar
+#DeleteTable.notebookbar
 {
 	margin-top: 10px !important;
 }
@@ -274,7 +329,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Review Tab */
 
-#table-ReviewBox {
+#table-ReviewBox, #table-Review {
        margin-top: 5px;
 }
 
@@ -302,8 +357,9 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Home tab */
 
-#table-HomeBox #table-PasteBox1 #table-SectionBottom10 #SortAscending.notebookbar,
-#table-HomeBox #table-PasteBox1 #table-SectionBottom10 #DataFilterAutoFilter.notebookbar,
+#table-HomeTab #table-PasteBox1 #table-SectionBottom10 #SortAscending.notebookbar,
+#table-HomeTab #table-PasteBox1 #table-SectionBottom10 #DataFilterAutoFilter.notebookbar,
+#table-InsertTab #table-GroupB26 #table-SectionBottom32.notebookbar,
 #table-Home-Section-Find #SearchDialog.notebookbar
 {
 	display: none;
@@ -351,7 +407,8 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-top: 10px;
 }
 
-#table-shapes15 #BasicShapes.notebookbar
+#table-shapes15 #BasicShapes.notebookbar,
+#table-HomeTab #table-SectionBottom10.notebookbar #Presentation
 {
 	display: none;
 }
