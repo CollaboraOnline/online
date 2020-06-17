@@ -6,8 +6,11 @@
 /* global $ */
 L.Control.Notebookbar = L.Control.extend({
 
+	_currentScrollPosition: 0,
+
 	onAdd: function (map) {
 		this.map = map;
+		this._currentScrollPosition = 0;
 
 		this.loadTab(this.getHomeTab());
 
@@ -31,6 +34,8 @@ L.Control.Notebookbar = L.Control.extend({
 		var container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', parent);
 
 		builder.build(container, [tabJSON]);
+
+		this.scrollToLastPositionIfNeeded();
 	},
 
 	setTabs: function(tabs) {
@@ -81,8 +86,19 @@ L.Control.Notebookbar = L.Control.extend({
 		builder.build(shortcutsBar, this.getShortcutsBarData());
 	},
 
-	// required, called by builder, not needed in this container
-	setCurrentScrollPosition: function() {},
+	setCurrentScrollPosition: function() {
+		this._currentScrollPosition = $('.notebookbar-scroll-wrapper').scrollLeft();
+	},
+
+	scrollToLastPositionIfNeeded: function() {
+		var rootContainer = $('.notebookbar-scroll-wrapper table').get(0);
+
+		if (this._currentScrollPosition && $(rootContainer).outerWidth() > $(window).width()) {
+			$('.notebookbar-scroll-wrapper').animate({ scrollLeft: this._currentScrollPosition }, 0);
+		} else {
+			$(window).resize();
+		}
+	},
 
 	createScrollButtons: function() {
 		var parent = $('#toolbar-up').get(0);
