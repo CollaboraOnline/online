@@ -5,22 +5,6 @@
 
 /* global */
 L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
-
-	selectedTab: function(tabText) {
-		switch (tabText) {
-		case 'HomeLabel':
-			this.loadTab(this.getHomeTab());
-			break;
-
-		case 'InsertLabel':
-			this.loadTab(this.getInsertTab());
-			break;
-
-		case 'ReviewLabel':
-			this.loadTab(this.getReviewTab());
-			break;
-		}
-	},
 	
 	getTabs: function() {
 		return [
@@ -1555,14 +1539,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				}
 			]
 		};
-	},
-
-	getInsertTab: function() {
-		return {};
-	},
-
-	getReviewTab: function() {
-		return {};
 	}
 });
 

@@ -6,34 +6,6 @@
 /* global */
 L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
-	selectedTab: function(tabText) {
-		switch (tabText) {
-		case 'HomeLabel':
-			this.loadTab(this.getHomeTab());
-			break;
-
-		case 'InsertLabel':
-			this.loadTab(this.getInsertTab());
-			break;
-
-		case 'LayoutLabel':
-			this.loadTab(this.getLayoutTab());
-			break;
-
-		case 'ReferencesLabel':
-			this.loadTab(this.getReferencesTab());
-			break;
-
-		case 'TableLabel':
-			this.loadTab(this.getTableTab());
-			break;
-
-		case 'ReviewLabel':
-			this.loadTab(this.getReviewTab());
-			break;
-		}
-	},
-
 	getTabs: function() {
 		return [
 			{
@@ -1447,26 +1419,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				}
 			]
 		};
-	},
-
-	getInsertTab: function() {
-		return {};
-	},
-
-	getLayoutTab: function() {
-		return {};
-	},
-
-	getReferencesTab: function() {
-		return {};
-	},
-
-	getTableTab: function() {
-		return {};
-	},
-
-	getReviewTab: function() {
-		return {};
 	}
 });
 

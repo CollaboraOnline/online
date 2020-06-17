@@ -36,26 +36,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			}
 		];
 	},
-
-	selectedTab: function(tabText) {
-		switch (tabText) {
-		case 'HomeLabel':
-			this.loadTab(this.getHomeTab());
-			break;
-
-		case 'InsertLabel':
-			this.loadTab(this.getInsertTab());
-			break;
-
-		case 'ReviewLabel':
-			this.loadTab(this.getReviewTab());
-			break;
-
-		case 'TableLabel':
-			this.loadTab(this.getTableTab());
-			break;
-		}
-	},
 	
 	getTabs: function() {
 		return [
@@ -1464,18 +1444,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				}
 			]
 		};
-	},
-
-	getInsertTab: function() {
-		return {};
-	},
-
-	getReviewTab: function() {
-		return {};
-	},
-
-	getTableTab: function() {
-		return {};
 	}
 });
 
