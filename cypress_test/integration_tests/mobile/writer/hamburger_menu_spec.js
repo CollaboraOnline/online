@@ -39,6 +39,38 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 	}
 
+	it('Save', function() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'File')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Save')
+			.click();
+
+		// TODO: we have no visual indicator of save was done
+		// So just trigger saving to catch any exception / console error
+		cy.wait(500);
+	});
+
+	it('Print', function() {
+		// A new window should be opened with the PDF.
+		cy.window()
+			.then(function(win) {
+				cy.stub(win, 'open');
+			});
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'File')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Print')
+			.click();
+
+		cy.window().its('open').should('be.called');
+	});
+
 	it('Download as PDF', function() {
 		mobileHelper.openHamburgerMenu();
 
