@@ -2022,8 +2022,16 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
             return false;
         }
 
-        // TODO do we need a tempdir here?
-        url = std::string("file://") + JAILED_DOCUMENT_ROOT + pathSegments[pathSegments.size() - 1];
+        std::string jailDoc = JAILED_DOCUMENT_ROOT;
+        if (NoCapsForKit)
+        {
+            jailDoc = Poco::URI(getJailedFilePath()).getPath();
+            jailDoc = jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
+        }
+
+        const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
+        const Poco::Path filenameParam(pathSegments[pathSegments.size() - 1]);
+        url = std::string("file://") + jailDoc + tmpDir + "/" + filenameParam.getFileName();
         wopiFilename = wopiURL.getPath();
     }
 
