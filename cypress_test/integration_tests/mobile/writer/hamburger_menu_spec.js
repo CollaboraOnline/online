@@ -788,6 +788,65 @@ describe('Trigger hamburger menu options.', function() {
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 	});
 
+	it('Resolved comments.', function() {
+		// Insert comment first
+		mobileHelper.openInsertionWizard();
+
+		cy.contains('.menu-entry-with-icon', 'Comment')
+			.click();
+
+		cy.get('.loleaflet-annotation-table')
+			.should('exist');
+
+		cy.get('.loleaflet-annotation-textarea')
+			.type('some text');
+
+		cy.get('.vex-dialog-button-primary')
+			.click();
+
+		cy.get('.loleaflet-annotation:nth-of-type(2)')
+			.should('have.attr', 'style')
+			.should('not.contain', 'visibility: hidden');
+
+		// Resolve comment
+		cy.get('.loleaflet-annotation-menu')
+			.click({force: true});
+
+		cy.contains('.context-menu-link', 'Resolve')
+			.click();
+
+		cy.get('.loleaflet-annotation:nth-of-type(2)')
+			.should('have.attr', 'style')
+			.should('contain', 'visibility: hidden');
+
+		// Show resolved comments
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'View')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Resolved Comments')
+			.click();
+
+		cy.get('.loleaflet-annotation:nth-of-type(2)')
+			.should('have.attr', 'style')
+			.should('not.contain', 'visibility: hidden');
+
+		// Hide resolved comments
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'View')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Resolved Comments')
+			.click();
+
+		// TODO: can't hide resolved comments again.
+		//cy.get('.loleaflet-annotation:nth-of-type(2)')
+		//	.should('have.attr', 'style')
+		//	.should('contain', 'visibility: hidden');
+	});
+
 	it('Check version information.', function() {
 		mobileHelper.openHamburgerMenu();
 
