@@ -19,6 +19,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
 		this._controlHandlers['spinfield'] = function() { return false; };
+		this._controlHandlers['formattedfield'] = function() { return false; };
+		this._controlHandlers['metricfield'] = function() { return false; };
 
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
@@ -106,6 +108,26 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:AnimationEffects'] = function() {};
 		this._toolitemHandlers['.uno:OptimizeTable'] = function() {};
 		this._toolitemHandlers['.uno:TableDesign'] = function() {};
+		this._toolitemHandlers['.uno:ContourDialog'] = function() {};
+		this._toolitemHandlers['.uno:TextWrap'] = function() {};
+		this._toolitemHandlers['.uno:AcceptTrackedChangeToNext'] = function() {};
+		this._toolitemHandlers['.uno:RejectTrackedChangeToNext'] = function() {};
+		this._toolitemHandlers['.uno:RedactDoc'] = function() {};
+		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = function() {};
+		this._toolitemHandlers['.uno:FrameLineColor'] = function() {};
+		this._toolitemHandlers['.uno:ProtectTraceChangeMode'] = function() {};
+		this._toolitemHandlers['.uno:RowOperations'] = function() {};
+		this._toolitemHandlers['.uno:ColumnOperations'] = function() {};
+		this._toolitemHandlers['.uno:Insert'] = function() {};
+		this._toolitemHandlers['.uno:InsertCell'] = function() {};
+		this._toolitemHandlers['.uno:AddName'] = function() {};
+		this._toolitemHandlers['.uno:DefineName'] = function() {};
+		this._toolitemHandlers['.uno:ToolProtectionDocument'] = function() {};
+		this._toolitemHandlers['.uno:Protect'] = function() {};
+		this._toolitemHandlers['.uno:ImportFromFile'] = function() {};
+		this._toolitemHandlers['.uno:PhotoAlbumDialog'] = function() {};
+		this._toolitemHandlers['.uno:AutoFormat'] = function() {};
+
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
