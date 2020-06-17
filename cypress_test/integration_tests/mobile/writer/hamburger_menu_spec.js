@@ -39,6 +39,24 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 	}
 
+	function openPageWizard() {
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Page Setup')
+			.click();
+
+		cy.get('#mobile-wizard-content')
+			.should('not.be.empty');
+	}
+
+	function closePageWizard() {
+		cy.get('#mobile-wizard-back')
+			.click();
+
+		cy.get('#mobile-wizard')
+			.should('not.be.visible');
+	}
+
 	it('Save', function() {
 		mobileHelper.openHamburgerMenu();
 
@@ -726,6 +744,131 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('#doccjkchars')
 			.should('have.text', '0');
+	});
+
+	it('Page setup: change paper size.', function() {
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 517px;\']';
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+
+		openPageWizard();
+
+		cy.get('#papersize')
+			.click();
+
+		cy.contains('.ui-combobox-text', 'C6 Envelope')
+			.click();
+
+		// Smaller paper size makes center tile to contain text too.
+		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+
+		// Check that the page wizard shows the right value after reopen.
+		closePageWizard();
+
+		openPageWizard();
+
+		cy.get('#papersize .ui-header-left')
+			.should('have.text', 'C6 Envelope');
+	});
+
+	it('Page setup: change paper width.', function() {
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 517px;\']';
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+
+		openPageWizard();
+
+		cy.get('#paperwidth .spinfield')
+			.clear()
+			.type('5')
+			.type('{enter}');
+
+		// Smaller paper size makes center tile to contain text too.
+		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+
+		// Check that the page wizard shows the right value after reopen.
+		closePageWizard();
+
+		openPageWizard();
+
+		cy.get('#papersize .ui-header-left')
+			.should('have.text', 'User');
+
+		cy.get('#paperwidth .spinfield')
+			.should('have.attr', 'value', '5');
+	});
+
+	it('Page setup: change paper height.', function() {
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 517px;\']';
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+
+		openPageWizard();
+
+		cy.get('#paperheight .spinfield')
+			.clear()
+			.type('3.0')
+			.type('{enter}');
+
+		// Smaller paper size makes center tile to contain the end of the page.
+		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+
+		// Check that the page wizard shows the right value after reopen.
+		closePageWizard();
+
+		openPageWizard();
+
+		cy.get('#papersize .ui-header-left')
+			.should('have.text', 'User');
+
+		cy.get('#paperheight .spinfield')
+			.should('have.attr', 'value', '3');
+	});
+
+	it('Page setup: change orientation.', function() {
+		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1023px; top: 5px;\']')
+			.should('not.exist');
+
+		openPageWizard();
+
+		cy.get('#paperorientation')
+			.click();
+
+		cy.contains('.ui-combobox-text', 'Landscape')
+			.click();
+
+		// We got some extra tiles horizontally.
+		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1023px; top: 5px;\']')
+			.should('exist');
+
+		// Check that the page wizard shows the right value after reopen.
+		closePageWizard();
+
+		openPageWizard();
+
+		cy.get('#paperorientation .ui-header-left')
+			.should('have.text', 'Landscape');
+	});
+
+	it('Page setup: change margin.', function() {
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 261px;\']';
+		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+
+		openPageWizard();
+
+		cy.get('#marginLB')
+			.click();
+
+		cy.contains('.ui-combobox-text', 'None')
+			.click();
+
+		// Text is moved up by margin removal, so the the center tile will be empty.
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+
+		// Check that the page wizard shows the right value after reopen.
+		closePageWizard();
+
+		openPageWizard();
+
+		cy.get('#marginLB .ui-header-left')
+			.should('have.text', 'None');
 	});
 
 	it('Show formatting marks.', function() {
