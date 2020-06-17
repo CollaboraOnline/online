@@ -90,7 +90,7 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(L.control.formulaBar());
 		}
 
-		if (isDesktop && docType === 'presentation') {
+		if (docType === 'presentation' && (isDesktop || window.mode.isTablet())) {
 			this.map.addControl(L.control.presentationBar());
 		}
 
