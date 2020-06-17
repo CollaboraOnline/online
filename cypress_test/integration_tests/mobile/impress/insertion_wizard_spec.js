@@ -208,7 +208,7 @@ describe('Impress insertion wizard.', function() {
 		helper.expectTextForClipboard('Tap to edit text');
 	});
 
-	it('Insert date field (fixed).', function() {
+	it.skip('Insert date field (fixed).', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
@@ -228,7 +228,7 @@ describe('Impress insertion wizard.', function() {
 		helper.matchClipboardText(regex);
 	});
 
-	it('Insert date field (variable).', function() {
+	it.skip('Insert date field (variable).', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
