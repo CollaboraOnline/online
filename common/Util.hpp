@@ -433,29 +433,12 @@ namespace Util
         return StringVector(s, std::move(tokens));
     }
 
-    inline StringVector tokenize(const std::string& s, const char* delimiter)
-    {
-        if (s.empty())
-            return StringVector();
+    /** Tokenize based on any of the characters in 'delimiters'.
 
-        std::size_t start = 0;
-        std::size_t end = s.find(delimiter, start);
-
-        std::vector<StringToken> tokens;
-        tokens.reserve(16);
-
-        tokens.emplace_back(start, end - start);
-        start = end + std::strlen(delimiter);
-
-        while (end != std::string::npos)
-        {
-            end = s.find(delimiter, start);
-            tokens.emplace_back(start, end - start);
-            start = end + std::strlen(delimiter);
-        }
-
-        return StringVector(s, std::move(tokens));
-    }
+        Ie. when there is '\n\r' in there, any of them means a delimiter.
+        In addition, trim the values so there are no leadiding or trailing spaces.
+    */
+    StringVector tokenizeAnyOf(const std::string& s, const char* delimiters);
 
 #ifdef IOS
 
