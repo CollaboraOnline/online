@@ -2208,14 +2208,17 @@ public:
                 addressToCheck = Util::trim(param);
                 try
                 {
-                    hostToCheck = Poco::Net::DNS::resolve(addressToCheck).name();
-                    allow &= allowPostFrom(addressToCheck) || StorageBase::allowedWopiHost(hostToCheck);
+                    if (!allowPostFrom(addressToCheck))
+                    {
+                        hostToCheck = Poco::Net::DNS::resolve(addressToCheck).name();
+                        allow &= StorageBase::allowedWopiHost(hostToCheck);
+                    }
                 }
                 catch (const Poco::Exception& exc)
                 {
                     LOG_WRN("Poco::Net::DNS::resolve(\"" << addressToCheck << "\") failed: " << exc.displayText());
-                    // We can't find out the hostname, check the IP only
-                    allow &= allowPostFrom(addressToCheck);
+                    // We can't find out the hostname, and it already failed the IP check
+                    allow = false;
                 }
                 if(!allow)
                 {
