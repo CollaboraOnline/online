@@ -27,8 +27,8 @@ describe('Impress insertion wizard.', function() {
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
-			.should('have.class', 'com.sun.star.drawing.TextShape');
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.com\\.sun\\.star\\.drawing\\.TextShape')
+			.should('exist');
 
 		// Check also that the shape is fully visible
 		// TODO: shapes are hungs out of the slide after insertion
@@ -210,7 +210,7 @@ describe('Impress insertion wizard.', function() {
 		helper.expectTextForClipboard('Tap to edit text');
 	});
 
-	it.skip('Insert date field (fixed).', function() {
+	it('Insert date field (fixed).', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
@@ -230,7 +230,7 @@ describe('Impress insertion wizard.', function() {
 		helper.matchClipboardText(regex);
 	});
 
-	it.skip('Insert date field (variable).', function() {
+	it('Insert date field (variable).', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
