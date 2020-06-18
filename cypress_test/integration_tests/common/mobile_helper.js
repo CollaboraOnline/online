@@ -17,6 +17,18 @@ function enableEditingMobile() {
 	cy.get('#tb_actionbar_item_mobile_wizard')
 		.should('not.have.class', 'disabled');
 
+	// Wait until all UI update is finished.
+	cy.get('#toolbar-down')
+		.should('be.visible');
+
+	cy.get('#document-container')
+		.then(function(doc) {
+			if (doc.hasClass('spreadsheet-document')) {
+				cy.get('#formulabar')
+					.should('be.visible');
+			}
+		});
+
 	cy.log('Enabling editing mode - end.');
 }
 
