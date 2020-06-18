@@ -1194,7 +1194,15 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const Stri
 
 #if !MOBILEAPP
         if (type == "graphic" || type == "selectbackground")
-            url = "file://" + std::string(JAILED_DOCUMENT_ROOT) + "insertfile/" + name;
+        {
+            std::string jailDoc = JAILED_DOCUMENT_ROOT;
+            if (NoCapsForKit)
+            {
+                jailDoc = Poco::URI(getJailedFilePath()).getPath();
+                jailDoc = jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
+            }
+            url = "file://" + jailDoc + "insertfile/" + name;
+        }
         else if (type == "graphicurl")
             URI::decode(name, url);
 #else
