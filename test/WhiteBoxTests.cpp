@@ -33,6 +33,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSplitting);
     CPPUNIT_TEST(testMessageAbbreviation);
     CPPUNIT_TEST(testTokenizer);
+    CPPUNIT_TEST(testTokenizerTokenizeAnyOf);
     CPPUNIT_TEST(testReplace);
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
@@ -54,6 +55,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testSplitting();
     void testMessageAbbreviation();
     void testTokenizer();
+    void testTokenizerTokenizeAnyOf();
     void testReplace();
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
@@ -424,6 +426,67 @@ void WhiteBoxTests::testTokenizer()
 
     ints = LOOLProtocol::tokenizeInts(std::string(",,,"));
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), ints.size());
+}
+
+void WhiteBoxTests::testTokenizerTokenizeAnyOf()
+{
+    StringVector tokens;
+    const char delimiters[] = "\n\r"; // any of these delimits; and we trim whitespace
+
+    tokens = Util::tokenizeAnyOf("", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+
+    tokens = Util::tokenizeAnyOf("  ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+
+    tokens = Util::tokenizeAnyOf("A", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = Util::tokenizeAnyOf("  A", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = Util::tokenizeAnyOf("A  ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = Util::tokenizeAnyOf(" A ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
+
+    tokens = Util::tokenizeAnyOf(" A  Z ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
+
+    tokens = Util::tokenizeAnyOf("\n", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+
+    tokens = Util::tokenizeAnyOf("\n\r\r\n", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+
+    tokens = Util::tokenizeAnyOf(" A  \nZ ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
+    LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
+
+    tokens = Util::tokenizeAnyOf(" A  Z\n ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
+
+    tokens = Util::tokenizeAnyOf(" A  Z  \n\r\r\n ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
+
+    tokens = Util::tokenizeAnyOf(" A  \n\r\r\n  \r  \n  Z  \n ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
+    LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
+
+    tokens = Util::tokenizeAnyOf("  \r A  \n  \r  \n  Z  \n ", delimiters);
+    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
+    LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 }
 
 void WhiteBoxTests::testReplace()
