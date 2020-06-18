@@ -52,8 +52,9 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
             // there might be more headers in here; like
             //   Authorization: Basic ....
             //   X-Something-Custom: Huh
-            // Regular expression evaluates and finds "\n\r" and tokenizes accordingly
-            StringVector tokens(Util::tokenize(_data, "\n\r"));
+            // Split based on \n's or \r's and trim, to avoid nonsense in the
+            // headers
+            StringVector tokens(Util::tokenizeAnyOf(_data, "\n\r"));
             for (auto it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::string token = tokens.getParam(*it);
