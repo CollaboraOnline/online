@@ -78,10 +78,15 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         }
 
         // main view should receive response each view
+        if (protocolView == "invalidateviewcursor:" || protocolView == "viewcursorvisible:"
+            || protocolView == "cellviewcursor:" || protocolView == "graphicviewselection:")
+        {
+            return;
+        }
         itView = 0;
         for (const auto& socketView : views)
         {
-            helpers::getResponseString(socket, protocolView, Poco::format(view, itView), timeoutMs);
+            response = helpers::getResponseString(socket, protocolView, Poco::format(view, itView), timeoutMs);
             LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
             ++itView;
             (void)socketView;
