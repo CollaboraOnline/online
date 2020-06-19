@@ -127,6 +127,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ImportFromFile'] = function() {};
 		this._toolitemHandlers['.uno:PhotoAlbumDialog'] = function() {};
 		this._toolitemHandlers['.uno:AutoFormat'] = function() {};
+		this._toolitemHandlers['.uno:Spacing'] = function() {};
 
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
