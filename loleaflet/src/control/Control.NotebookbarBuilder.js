@@ -138,7 +138,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (commandName === '.uno:CharFontName') {
 			$('#fontnamecombobox').val(state).trigger('change');
 		} else if (commandName === '.uno:FontHeight') {
-			$('#fontsizecombobox').val(state).trigger('change');
+			$('#fontsize').val(state).trigger('change');
 		} else if (commandName === '.uno:StyleApply') {
 			$('#applystyle').val(state).trigger('change');
 		}
@@ -157,7 +157,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			var state = items.getItemValue('.uno:CharFontName');
 			$(combobox).val(state).trigger('change');
 		}
-		else if (id === 'fontsizecombobox') {
+		else if (id === 'fontsize') {
 			$(combobox).on('select2:select', function (e) {
 				builder.map.applyFontSize(e.target.value);
 				builder.map.focus();
