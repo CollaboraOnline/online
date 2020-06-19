@@ -1060,6 +1060,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._sendPaintWindowRect(id);
 		} else {
 			this._createSidebar(id, strId, width, height);
+			$('#document-container').removeClass('sidebar-closed');
 		}
 	},
 
@@ -1365,6 +1366,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._map.fire('editorgotfocus');
 			this._map.focus();
 		}
+		$('#document-container').addClass('sidebar-closed');
 	},
 
 	_onCalcInputBarClose: function(dialogId) {
