@@ -328,26 +328,19 @@ describe('Change alignment settings.', function() {
 		// Select the full row
 		calcMobileHelper.selectFirstRow();
 
-		// Even after we get the cell row selection the merge cell options is still disabled
-		// So we open mobile wizard again and again until merge cells get the right state
+		// Despite the selection is there, merge cells needs more time here.
+		cy.wait(1000);
+
 		mobileHelper.openMobileWizard();
-		cy.get('body')
-			.should(function() {
-				mobileHelper.closeMobileWizard();
-				mobileHelper.openMobileWizard();
 
-				cy.get('#ScAlignmentPropertyPanel')
-					.click();
+		cy.get('#ScAlignmentPropertyPanel')
+			.click();
 
-				cy.get('#AlignLeft')
-					.should('be.visible');
+		cy.get('#AlignLeft')
+			.should('be.visible');
 
-				cy.get('input#mergecells')
-					.then(function(items) {
-						expect(items).to.have.lengthOf(1);
-						expect(items[0]).to.not.have.attr('disabled');
-					});
-			});
+		cy.get('input#mergecells')
+			.should('not.have.attr', 'disabled');
 
 		// Click merge cells
 		cy.get('input#mergecells')

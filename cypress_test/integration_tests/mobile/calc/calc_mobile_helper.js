@@ -60,6 +60,9 @@ function selectFirstRow() {
 
 	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(2)')
 		.should('not.be.visible');
+
+	cy.get('input#addressInput')
+		.should('have.prop', 'value', 'A1:AMJ1');
 }
 
 module.exports.removeTextSelection = removeTextSelection;

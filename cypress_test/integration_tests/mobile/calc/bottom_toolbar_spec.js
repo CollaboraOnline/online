@@ -124,6 +124,9 @@ describe('Interact with bottom toolbar.', function() {
 		// Select the full row
 		calcMobileHelper.selectFirstRow();
 
+		// Despite the selection is there, merge cells needs more time here.
+		cy.wait(1000);
+
 		cy.get('.w2ui-tb-image.w2ui-icon.togglemergecells')
 			.click();
 
