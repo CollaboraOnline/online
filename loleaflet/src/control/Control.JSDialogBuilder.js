@@ -648,13 +648,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
 	{
 		return function() {
+			$(tabs[t]).addClass('selected');
 			for (var i = 0; i < tabs.length; i++) {
-				if (tabs[i].number != t)
+				if (i !== t)
 				{
 					$(tabs[i]).removeClass('selected');
 					$(contentDivs[i]).hide();
-				} else {
-					$(tabs[i]).addClass('selected');
 				}
 			}
 			$(contentDivs[t]).show();
@@ -702,10 +701,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					var fn = function(id) {
 						return function() {
 							builder._createTabClick(builder, id, tabs, contentDivs, tabIds)();
-							builder.callback('tabcontrol', 'selecttab', tabsContainer, id, builder);
+							builder.callback('tabcontrol', 'selecttab', tabsContainer, data.tabs[id].id - 1, builder);
 						};
 					};
-					$(tabs[t]).click(fn(data.tabs[t].id - 1));
+					$(tabs[t]).click(fn(t));
 				}
 			} else {
 				console.debug('Builder used outside of mobile wizard: please implement the click handler');
