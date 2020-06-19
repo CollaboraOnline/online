@@ -7,6 +7,10 @@
 	right: 0px;
 	left: 0px;
 }
+#document-container.sidebar-closed {
+	right: 0px !important;
+}
+
 
 #document-container.tablet {
 	top: 36px;
@@ -152,7 +156,6 @@ body {
 }
 
 #sidebar-panel {
-	display: table;
 	padding: 0px;
 	margin: 0px;
 	position: relative;
