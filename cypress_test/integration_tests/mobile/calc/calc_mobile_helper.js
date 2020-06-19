@@ -20,6 +20,9 @@ function removeTextSelection() {
 		cy.get('.spreadsheet-cell-resize-marker')
 			.invoke('attr', 'style')
 			.should('contain', '-8px,');
+
+		cy.get('input#addressInput')
+			.should('have.prop', 'value', 'B1:B1048576');
 	}
 
 	cy.log('Removing text selection - end.');
@@ -40,6 +43,9 @@ function selectAllMobile(removeSelection = true) {
 	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(1)')
 		.invoke('attr', 'style')
 		.should('contain', '(-9px, -8px,');
+
+	cy.get('input#addressInput')
+		.should('have.prop', 'value', 'A1:AMJ1048576');
 
 	cy.log('Selecting all text - end.');
 }
