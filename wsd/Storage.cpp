@@ -587,15 +587,17 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         std::istream& rs = psession->receiveResponse(response);
         callDuration = (std::chrono::steady_clock::now() - startTime);
 
-        if (logger.enabled())
+        Log::StreamLogger logRes = Log::trace();
+        if (logRes.enabled())
         {
-            logger << "WOPI::CheckFileInfo response header for URI [" << uriAnonym << "]:\n";
+            logRes << "WOPI::CheckFileInfo response header for URI [" << uriAnonym
+                   << "]: " << response.getStatus() << '\n';
             for (const auto& pair : response)
             {
-                logger << '\t' << pair.first << ": " << pair.second << " / ";
+                logRes << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-            LOG_END(logger, true);
+            LOG_END(logRes, true);
         }
 
         if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
