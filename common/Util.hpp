@@ -224,6 +224,21 @@ namespace Util
         return os.str();
     }
 
+    /// Dump a string as hex by splitting on multiple lines per width.
+    /// Useful for debugging and logging data that contain non-printables.
+    inline std::string stringifyHexLine(const std::string& s, const std::size_t width = 16)
+    {
+        std::ostringstream oss;
+        for (std::size_t i = 0; i < s.size(); i += width)
+        {
+            const std::size_t rem = std::min(width, s.size() - i);
+            oss << stringifyHexLine(std::vector<char>(s.data(), s.data() + s.size()), i, rem);
+            oss << '\n';
+        }
+
+        return oss.str();
+    }
+
     /// Dump data as hex and chars to stream
     inline void dumpHex (std::ostream &os, const char *legend, const char *prefix,
                          const std::vector<char> &buffer, bool skipDup = true,
@@ -431,6 +446,39 @@ namespace Util
         std::vector<StringToken> tokens;
         tokenize(s.data(), s.size(), delimiter, tokens);
         return StringVector(s, std::move(tokens));
+    }
+
+    /// Tokenize by the delimiter string.
+    inline StringVector tokenize(const std::string& s, const char* delimiter, int len = -1)
+    {
+        if (s.empty() || len == 0 || delimiter == nullptr || *delimiter == '\0')
+            return StringVector();
+
+        if (len < 0)
+            len = std::strlen(delimiter);
+
+        std::size_t start = 0;
+        std::size_t end = s.find(delimiter, start);
+
+        std::vector<StringToken> tokens;
+        tokens.reserve(16);
+
+        tokens.emplace_back(start, end - start);
+        start = end + len;
+
+        while (end != std::string::npos)
+        {
+            end = s.find(delimiter, start);
+            tokens.emplace_back(start, end - start);
+            start = end + len;
+        }
+
+        return StringVector(s, std::move(tokens));
+    }
+
+    inline StringVector tokenize(const std::string& s, const std::string& delimiter)
+    {
+        return tokenize(s, delimiter.data(), delimiter.size());
     }
 
     /** Tokenize based on any of the characters in 'delimiters'.
