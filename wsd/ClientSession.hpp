@@ -117,7 +117,7 @@ public:
     const Poco::URI& getPublicUri() const { return _uriPublic; }
 
     /// The access token of this session.
-    Authorization getAuthorization() const;
+    Authorization getAuthorization() const { return _auth; }
 
     const std::string& getCookies() const { return _cookies; }
 
@@ -225,6 +225,8 @@ private:
 
     /// URI with which client made request to us
     const Poco::URI _uriPublic;
+
+    const Authorization _auth;
 
     /// The cookies we should pass on to the storage on saving.
     std::string _cookies;

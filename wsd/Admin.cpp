@@ -35,7 +35,6 @@
 #include <net/WebSocketHandler.hpp>
 
 #include <common/SigUtil.hpp>
-#include <common/Authorization.hpp>
 
 using namespace LOOLProtocol;
 

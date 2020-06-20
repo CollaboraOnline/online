@@ -28,8 +28,8 @@ public:
     };
 
 private:
-    Type _type;
-    std::string _data;
+    const Type _type;
+    const std::string _data;
 
 public:
     Authorization()
@@ -42,6 +42,12 @@ public:
         , _data(data)
     {
     }
+
+    /// Create an Authorization instance from the URI query parameters.
+    /// Expects access_token (preferred) or access_header.
+    static Authorization create(const Poco::URI::QueryParameters& queryParams);
+    static Authorization create(const Poco::URI& uri) { return create(uri.getQueryParameters()); }
+    static Authorization create(const std::string& uri) { return create(Poco::URI(uri)); }
 
     /// Set the access_token parametr to the given uri.
     void authorizeURI(Poco::URI& uri) const;

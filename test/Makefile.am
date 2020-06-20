@@ -75,7 +75,7 @@ test_base_source = \
 	WopiProofTests.cpp \
 	$(wsd_sources)
 
-unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT
+unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
     $(test_base_source) \
     ../common/Log.cpp \

@@ -722,13 +722,15 @@ void WhiteBoxTests::testAuthorization()
     auth3.authorizeRequest(req3);
     LOK_ASSERT_EQUAL(std::string("Basic huhu=="), req3.get("Authorization"));
 
-    Authorization auth4(Authorization::Type::Header, "  Authorization: Basic blah== \n\r X-Something:   additional  ");
+    Authorization auth4(Authorization::Type::Header, "  Authorization: Basic blah== \n\rX-Something:   additional  ");
     Poco::Net::HTTPRequest req4;
     auth4.authorizeRequest(req4);
+    LOK_ASSERT_MESSAGE("Exected request to have Authorization header", req4.has("Authorization"));
     LOK_ASSERT_EQUAL(std::string("Basic blah=="), req4.get("Authorization"));
+    LOK_ASSERT_MESSAGE("Exected request to have X-Something header", req4.has("X-Something"));
     LOK_ASSERT_EQUAL(std::string("additional"), req4.get("X-Something"));
 
-    Authorization auth5(Authorization::Type::Header, "  Authorization: Basic huh== \n\r X-Something-More:   else  \n\r");
+    Authorization auth5(Authorization::Type::Header, "  Authorization: Basic huh== \n\rX-Something-More:   else  \n\r");
     Poco::Net::HTTPRequest req5;
     auth5.authorizeRequest(req5);
     LOK_ASSERT_EQUAL(std::string("Basic huh=="), req5.get("Authorization"));
@@ -737,6 +739,40 @@ void WhiteBoxTests::testAuthorization()
     Authorization auth6(Authorization::Type::None, "Authorization: basic huh==");
     Poco::Net::HTTPRequest req6;
     CPPUNIT_ASSERT_THROW(auth6.authorizeRequest(req6), BadRequestException);
+
+    {
+        const std::string WorkingDocumentURI
+            = "https://example.com:8443/rest/files/wopi/files/"
+              "8ac75551de4d89e60002?access_header=Authorization%3A%2520Bearer%25201hpoiuytrewq%"
+              "250D%250A%250D%250AX-Requested-With%3A%2520XMLHttpRequest&reuse_cookies=lang%3Den-"
+              "us%3A_xx_%3DGS1.1.%3APublicToken%"
+              "3DeyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4ODkxNzc3NCwiaWF0IjoxNTg4OTE2ODc0LCJqdGkiOiI4OGZhN2"
+              "E3ZC1lMzU5LTQ2OWEtYjg3Zi02NmFhNzI0ZGFkNTcifQ%3AZNPCQ003-32383700%3De9c71c3b%"
+              "3AJSESSIONID%3Dnode019djohorurnaf1eo6f57ejhg0520.node0&permission=edit";
+
+        const std::string AuthorizationParam = "Bearer 1hpoiuytrewq";
+
+        Authorization auth(Authorization::create(WorkingDocumentURI));
+        Poco::Net::HTTPRequest req;
+        auth.authorizeRequest(req);
+        LOK_ASSERT_EQUAL(AuthorizationParam, req.get("Authorization"));
+        LOK_ASSERT_EQUAL(std::string("XMLHttpRequest"), req.get("X-Requested-With"));
+    }
+
+    {
+        const std::string URI
+            = "https://example.com:8443/rest/files/wopi/files/"
+              "24e3f0a17230cca5017230fb6861000c?access_header=Authorization%3A%20Bearer%"
+              "201hpoiuytrewq%0D%0A%0D%0AX-Requested-With%3A%20XMLHttpRequest";
+
+        const std::string AuthorizationParam = "Bearer 1hpoiuytrewq";
+
+        Authorization auth7(Authorization::create(URI));
+        Poco::Net::HTTPRequest req7;
+        auth7.authorizeRequest(req7);
+        LOK_ASSERT_EQUAL(AuthorizationParam, req7.get("Authorization"));
+        LOK_ASSERT_EQUAL(std::string("XMLHttpRequest"), req7.get("X-Requested-With"));
+    }
 }
 
 void WhiteBoxTests::testJson()
@@ -1422,6 +1458,71 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
         LOK_ASSERT(details.equals(0, "lool"));
         LOK_ASSERT_EQUAL(std::string("clipboard"), details[1]);
+
+        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
+        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
+        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+    }
+
+    {
+        static const std::string URI
+        = "/lool/"
+          "https%3A%2F%2Fexample.com%3A8443%2Frest%2Ffiles%2Fwopi%2Ffiles%"
+          "2F8ac75551de4d89e60002%3Faccess_header%3DAuthorization%253A%252520Bearer%"
+          "252520poiuytrewq%25250D%25250A%25250D%25250AX-Requested-"
+          "With%253A%252520XMLHttpRequest%26reuse_cookies%3Dlang%253Den-us%253A_ga_"
+          "LMX4TVJ02K%253DGS1.1%"
+          "253AToken%253DeyJhbGciOiJIUzUxMiJ9.vajknfkfajksdljfiwjek-"
+          "W90fmgVb3C-00-eSkJBDqDNSYA%253APublicToken%"
+          "253Dabc%253AZNPCQ003-32383700%253De9c71c3b%"
+          "253AJSESSIONID%253Dnode0.node0%26permission%3Dedit/"
+          "ws?WOPISrc=https://example.com:8443/rest/files/wopi/files/"
+          "8c74c1deff7dede002&compat=/ws";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        const std::string docUri
+            = "https://example.com:8443/rest/files/wopi/files/"
+              "8ac75551de4d89e60002?access_header=Authorization%3A%2520Bearer%2520poiuytrewq%250D%"
+              "250A%250D%250AX-Requested-With%3A%2520XMLHttpRequest&reuse_cookies=lang%3Den-us%3A_"
+              "ga_LMX4TVJ02K%3DGS1.1%3AToken%3DeyJhbGciOiJIUzUxMiJ9.vajknfkfajksdljfiwjek-"
+              "W90fmgVb3C-00-eSkJBDqDNSYA%3APublicToken%3Dabc%3AZNPCQ003-32383700%3De9c71c3b%"
+              "3AJSESSIONID%3Dnode0.node0&permission=edit";
+
+        // LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI()); // Broken.
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(11), details.size());
+        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
+        LOK_ASSERT(details.equals(0, "lool"));
+
+        const std::string encodedDocUri
+            = "https%3A%2F%2Fexample.com%3A8443%2Frest%2Ffiles%2Fwopi%2Ffiles%"
+              "2F8ac75551de4d89e60002%3Faccess_header%3DAuthorization%253A%252520Bearer%"
+              "252520poiuytrewq%25250D%25250A%25250D%25250AX-Requested-With%253A%"
+              "252520XMLHttpRequest%26reuse_cookies%3Dlang%253Den-us%253A_ga_LMX4TVJ02K%253DGS1.1%"
+              "253AToken%253DeyJhbGciOiJIUzUxMiJ9.vajknfkfajksdljfiwjek-W90fmgVb3C-00-eSkJBDqDNSYA%"
+              "253APublicToken%253Dabc%253AZNPCQ003-32383700%253De9c71c3b%253AJSESSIONID%253Dnode0."
+              "node0%26permission%3Dedit";
+
+        LOK_ASSERT_EQUAL(encodedDocUri, details[1]);
 
         LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));

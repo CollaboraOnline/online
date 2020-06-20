@@ -53,6 +53,7 @@ ClientSession::ClientSession(
     Session(ws, "ToClient-" + id, id, readOnly),
     _docBroker(docBroker),
     _uriPublic(uriPublic),
+    _auth(Authorization::create(uriPublic)),
     _isDocumentOwner(false),
     _state(SessionState::DETACHED),
     _keyEvents(1),
@@ -76,7 +77,7 @@ ClientSession::ClientSession(
         {
             // Cache the cookies to avoid re-parsing the URI again.
             _cookies = param.second;
-            LOG_INF("ClientSession [" << getName() << "] has cookies: " << _cookies);
+            LOG_INF("ClientSession [" << getName() << "] has cookies: [" << _cookies << "].");
             break;
         }
     }
@@ -1569,34 +1570,6 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     {
         traceTileBySend(*tile, sizeBefore == newSize);
     }
-}
-
-Authorization ClientSession::getAuthorization() const
-{
-    Poco::URI::QueryParameters queryParams = _uriPublic.getQueryParameters();
-
-    // prefer the access_token
-    for (auto& param: queryParams)
-    {
-        if (param.first == "access_token")
-        {
-            std::string decodedToken;
-            Poco::URI::decode(param.second, decodedToken);
-            return Authorization(Authorization::Type::Token, decodedToken);
-        }
-    }
-
-    for (auto& param: queryParams)
-    {
-        if (param.first == "access_header")
-        {
-            std::string decodedHeader;
-            Poco::URI::decode(param.second, decodedHeader);
-            return Authorization(Authorization::Type::Header, decodedHeader);
-        }
-    }
-
-    return Authorization();
 }
 
 void ClientSession::addTileOnFly(const TileDesc& tile)

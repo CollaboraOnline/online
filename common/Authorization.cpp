@@ -88,4 +88,26 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
     }
 }
 
+Authorization Authorization::create(const Poco::URI::QueryParameters& queryParams)
+{
+    // prefer the access_token
+    std::string decoded;
+    for (const auto& param : queryParams)
+    {
+        if (param.first == "access_token")
+        {
+            Poco::URI::decode(param.second, decoded);
+            return Authorization(Authorization::Type::Token, decoded);
+        }
+
+        if (param.first == "access_header")
+            Poco::URI::decode(param.second, decoded);
+    }
+
+    if (!decoded.empty())
+        return Authorization(Authorization::Type::Header, decoded);
+
+    return Authorization();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
