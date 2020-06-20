@@ -1509,6 +1509,22 @@ void WhiteBoxTests::testRequestDetails()
         // LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI()); // Broken.
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
+        const std::map<std::string, std::string>& params = details.getDocumentURIParams();
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), params.size());
+        auto it = params.find("access_header");
+        const std::string access_header
+            = "Authorization: Bearer poiuytrewq\r\n\r\nX-Requested-With: XMLHttpRequest";
+        LOK_ASSERT_EQUAL(access_header, it != params.end() ? it->second : "");
+        it = params.find("reuse_cookies");
+        const std::string reuse_cookies
+            = "lang=en-us:_ga_LMX4TVJ02K=GS1.1:Token=eyJhbGciOiJIUzUxMiJ9.vajknfkfajksdljfiwjek-"
+              "W90fmgVb3C-00-eSkJBDqDNSYA:PublicToken=abc:ZNPCQ003-32383700=e9c71c3b:JSESSIONID="
+              "node0.node0";
+        LOK_ASSERT_EQUAL(reuse_cookies, it != params.end() ? it->second : "");
+        it = params.find("permission");
+        const std::string permission = "edit";
+        LOK_ASSERT_EQUAL(permission, it != params.end() ? it->second : "");
+
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(11), details.size());
         LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
         LOK_ASSERT(details.equals(0, "lool"));

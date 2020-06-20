@@ -119,6 +119,7 @@ private:
     StringVector _pathSegs;
     std::map<std::string, std::string> _params;
     std::map<Field, std::string> _fields;
+    std::map<std::string, std::string> _docUriParams;
 
     void processURI();
 
@@ -133,6 +134,8 @@ public:
 
     /// The DocumentURI, decoded. Doesn't contain WOPISrc or any other appendages.
     std::string getDocumentURI() const { return getField(Field::DocumentURI); }
+
+    const std::map<std::string, std::string>& getDocumentURIParams() const { return _docUriParams; }
 
     std::string getURI() const
     {
