@@ -487,6 +487,18 @@ void WhiteBoxTests::testTokenizerTokenizeAnyOf()
     LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
+
+    tokens = Util::tokenizeAnyOf(std::string("A\rB\nC\n\rD\r\nE\r\rF\n\nG\r\r\n\nH"),
+                                 delimiters);
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(8), tokens.size());
+    LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
+    LOK_ASSERT_EQUAL(std::string("B"), tokens[1]);
+    LOK_ASSERT_EQUAL(std::string("C"), tokens[2]);
+    LOK_ASSERT_EQUAL(std::string("D"), tokens[3]);
+    LOK_ASSERT_EQUAL(std::string("E"), tokens[4]);
+    LOK_ASSERT_EQUAL(std::string("F"), tokens[5]);
+    LOK_ASSERT_EQUAL(std::string("G"), tokens[6]);
+    LOK_ASSERT_EQUAL(std::string("H"), tokens[7]);
 }
 
 void WhiteBoxTests::testReplace()

@@ -35,6 +35,7 @@
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <Poco/RegularExpression.h>
+#include <Poco/Net/HTTPRequest.h>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
@@ -1081,6 +1082,12 @@ int main(int argc, char**argv)
 
     /// conversion from steady_clock for debugging / tracing
     std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point &time);
+
+    /// Set the request header by splitting multiple entries by \r or \n.
+    /// Needed to sanitize user-provided http headers, after decoding.
+    /// This is much more tolerant to line breaks than the rfc allows.
+    /// Note: probably should move to a more appropriate home.
+    void setHttpHeaders(Poco::Net::HTTPRequest& request, const std::string& headers);
 
     /// Automatically execute code at end of current scope.
     /// Used for exception-safe code.
