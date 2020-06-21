@@ -1095,8 +1095,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onGraphicViewSelectionMsg: function (textMsg) {
-		textMsg = textMsg.substring('graphicviewselection:'.length + 1);
-		var obj = JSON.parse(textMsg);
+		var obj = JSON.parse(textMsg.substring('graphicviewselection:'.length + 1));
 		var viewId = parseInt(obj.viewId);
 
 		// Ignore if viewid is ours or not in our db
@@ -1122,6 +1121,10 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateGraphicViewSelection(viewId);
+
+		if (this.isCalc()) {
+			this._saveMessageForReplay(textMsg, viewId);
+		}
 	},
 
 	_onCellCursorMsg: function (textMsg) {
