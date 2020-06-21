@@ -3609,8 +3609,20 @@ int LOOLWSD::innerMain()
     initializeSSL();
 
     // Force a uniform UTF-8 locale for ourselves & our children.
-    ::setenv("LC_ALL", "C.UTF-8", 1);
-    setlocale(LC_ALL, "C.UTF-8");
+    char* locale = std::setlocale(LC_ALL, "C.UTF-8");
+    if (!locale)
+    {
+        // rhbz#1590680 - C.UTF-8 is unsupported on RH7
+        LOG_WRN("Could not set locale to C.UTF-8, will try en_US.UTF-8");
+        locale = std::setlocale(LC_ALL, "en_US.UTF-8");
+        if (!locale)
+            LOG_WRN("Could not set locale to en_US.UTF-8. Without UTF-8 support documents with non-ASCII file names cannot be opened.");
+    }
+    if (locale)
+    {
+        LOG_INF("Locale is set to " + std::string(locale));
+        ::setenv("LC_ALL", locale, 1);
+    }
 
 #if !MOBILEAPP
     // We use the same option set for both parent and child loolwsd,
