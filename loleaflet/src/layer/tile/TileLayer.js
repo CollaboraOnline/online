@@ -1044,10 +1044,11 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(msgData[0], msgData[1]);
 			var offset = new L.Point(msgData[2], msgData[3]);
 			var bottomRightTwips = topLeftTwips.add(offset);
-			this._graphicSelectionTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
+			this._graphicSelectionTwips = this._getGraphicSelectionRectangle(
+				new L.Bounds(topLeftTwips, bottomRightTwips));
 			this._graphicSelection = new L.LatLngBounds(
-				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+				this._twipsToLatLng(this._graphicSelectionTwips.getTopLeft(), this._map.getZoom()),
+				this._twipsToLatLng(this._graphicSelectionTwips.getBottomRight(), this._map.getZoom()));
 
 			this._graphicSelectionAngle = (msgData.length > 4) ? msgData[4] : 0;
 
@@ -1110,9 +1111,11 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
+			var boundRectTwips = this._getGraphicSelectionRectangle(
+				new L.Bounds(topLeftTwips, bottomRightTwips));
 			this._graphicViewMarkers[viewId].bounds = new L.LatLngBounds(
-				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+				this._twipsToLatLng(boundRectTwips.getTopLeft(), this._map.getZoom()),
+				this._twipsToLatLng(boundRectTwips.getBottomRight(), this._map.getZoom()));
 		}
 		else {
 			this._graphicViewMarkers[viewId].bounds = L.LatLngBounds.createDefault();
@@ -2503,6 +2506,10 @@ L.TileLayer = L.GridLayer.extend({
 				if (newPos.y < 0)
 					newPos.y = 0;
 
+				if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
+					newPos = this.sheetGeometry.getPrintTwipsPointFromTile(newPos);
+				}
+
 				param = {
 					TransformPosX: {
 						type: 'long',
@@ -2633,6 +2640,10 @@ L.TileLayer = L.GridLayer.extend({
 					newSize.x = Math.round(u / s);
 					newSize.y = Math.round(v / c);
 				}
+			}
+
+			if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
+				newPos = this.sheetGeometry.getPrintTwipsPointFromTile(newPos);
 			}
 
 			// fill params for uno command
@@ -3386,13 +3397,23 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	// convert the area in print-twips to tile-twips by computing the involved cell-range.
+	// converts rectangle in print-twips to tile-twips rectangle of the smallest cell-range that encloses it.
 	_convertToTileTwipsSheetArea: function (rectangle) {
 		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled) {
 			return rectangle;
 		}
 
 		return this.sheetGeometry.getTileTwipsSheetAreaFromPrint(rectangle);
+	},
+
+	_getGraphicSelectionRectangle: function (rectangle) {
+		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled) {
+			return rectangle;
+		}
+
+		var rectSize = rectangle.getSize();
+		var newTopLeft = this.sheetGeometry.getTileTwipsPointFromPrint(rectangle.getTopLeft());
+		return new L.Bounds(newTopLeft, newTopLeft.add(rectSize));
 	},
 
 	_getEditCursorRectangle: function (msgObj) {

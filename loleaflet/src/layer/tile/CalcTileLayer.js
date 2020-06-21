@@ -1075,6 +1075,18 @@ L.SheetGeometry = L.Class.extend({
 				this._rows.getTileTwipsPosFromPrint(point.y));
 	},
 
+	// accepts a point in tile-twips coordinates and returns the equivalent point
+	// in print-twips.
+	getPrintTwipsPointFromTile: function (point) { // (L.Point) -> L.Point
+		if (!(point instanceof L.Point)) {
+			console.error('Bad argument type, expected L.Point');
+			return point;
+		}
+
+		return new L.Point(this._columns.getPrintTwipsPosFromTile(point.x),
+				this._rows.getPrintTwipsPosFromTile(point.y));
+	},
+
 	// accepts a rectangle in print twips coordinates and returns the equivalent rectangle
 	// in tile-twips aligned to the cells.
 	getTileTwipsSheetAreaFromPrint: function (rectangle) { // (L.Bounds) -> L.Bounds
@@ -1370,12 +1382,17 @@ L.SheetDimension = L.Class.extend({
 		});
 	},
 
-	// computes element index from tile-twips position.
-	_getIndexFromTileTwipsPos: function (pos) {
+	// computes element index from tile-twips position and returns
+	// an object with this index and the span data.
+	_getSpanAndIndexFromTileTwipsPos: function (pos) {
+		var result = {};
 		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'postiletwips');
+		result.span = span;
 		if (span === undefined) {
 			// enforce limits.
-			return (pos >= 0) ? this._maxIndex : 0;
+			result.index = (pos >= 0) ? this._maxIndex : 0;
+			result.span = this._visibleSizes.getSpanDataByIndex(result.index);
+			return result;
 		}
 		var elementCount = span.end - span.start + 1;
 		var posStart = ((span.data.posdevpx - span.data.sizedev * elementCount) /
@@ -1386,7 +1403,13 @@ L.SheetDimension = L.Class.extend({
 		// always round down as relativeIndex is zero-based.
 		var relativeIndex = Math.floor((pos - posStart) / sizeOne);
 
-		return span.start + relativeIndex;
+		result.index = span.start + relativeIndex;
+		return result;
+	},
+
+	// computes element index from tile-twips position.
+	_getIndexFromTileTwipsPos: function (pos) {
+		return this._getSpanAndIndexFromTileTwipsPos(pos).index;
 	},
 
 	// computes element index from print twips position and returns
@@ -1475,6 +1498,25 @@ L.SheetDimension = L.Class.extend({
 
 		// Preserve any offset from the matching column/row start position.
 		return elementDataTT.startpos + offset;
+	},
+
+	// Accepts a position in tile twips and returns the corresponding position in print twips.
+	getPrintTwipsPosFromTile: function (posTT) {
+
+		if (typeof posTT !== 'number') {
+			console.error('Wrong argument type');
+			return;
+		}
+
+		var element = this._getSpanAndIndexFromTileTwipsPos(posTT);
+		var elementDataTT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'tiletwips');
+		var elementDataPT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'printtwips');
+
+		var offset = posTT - elementDataTT.startpos;
+		console.assert(offset >= 0, 'offset should not be negative');
+
+		// Preserve any offset from the matching column/row start position.
+		return elementDataPT.startpos + offset;
 	},
 
 	// Accepts a start and end positions in print twips, and returns the
