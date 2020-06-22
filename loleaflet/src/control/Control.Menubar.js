@@ -1310,7 +1310,6 @@ L.Control.Menubar = L.Control.extend({
 			iconClass += ' impress-icon-img';
 		}
 		$('.main-nav').addClass(docType + '-color-indicator');
-		$('#document-container').addClass(docType + '-doctype');
 
 		var liItem = L.DomUtil.create('li', '');
 		liItem.id = 'document-header';
