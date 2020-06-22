@@ -1500,7 +1500,7 @@ L.Control.LokDialog = L.Control.extend({
 				if (that._currentDeck) {
 					var sidebar = L.DomUtil.get(that._currentDeck.strId);
 					if (sidebar) {
-						deckOffset = sidebar.clientWidth + 10; // Allow some margin.
+						deckOffset = sidebar.clientWidth;
 					}
 				}
 				var correctWidth = container.clientWidth - deckOffset;
