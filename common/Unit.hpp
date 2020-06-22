@@ -70,6 +70,22 @@ protected:
         TimedOut
     };
 
+    static const std::string testResultAsString(TestResult res)
+    {
+        switch (res)
+        {
+            case TestResult::Failed:
+                return "Failed";
+            case TestResult::Ok:
+                return "Ok";
+            case TestResult::TimedOut:
+                return "TimedOut";
+        }
+
+        assert(!"Unknown TestResult entry.");
+        return std::to_string(static_cast<int>(res));
+    }
+
     /// Encourages the process to exit with this value (unless hooked)
     void exitTest(TestResult result);
 

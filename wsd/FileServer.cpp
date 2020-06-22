@@ -668,6 +668,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_DBG("Preprocessing file: " << relPath);
     std::string preprocess = *getUncompressedFile(relPath);
 
+    // We need to pass certain parameters from the loleaflet html GET URI
+    // to the embedded document URI. Here we extract those params
+    // from the GET URI and set them in the generated html (see loleaflet.html.m4).
     HTMLForm form(request, message);
     const std::string accessToken = form.get("access_token", "");
     const std::string accessTokenTtl = form.get("access_token_ttl", "");

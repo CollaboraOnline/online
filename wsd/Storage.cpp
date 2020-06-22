@@ -232,7 +232,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
 
     if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
     {
-        LOG_INF("Storage load hooked.");
+        LOG_INF("Storage create hooked.");
         if (storage)
         {
             return storage;

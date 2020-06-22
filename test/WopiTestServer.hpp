@@ -112,7 +112,18 @@ protected:
         Poco::URI uriReq(request.getURI());
         Poco::RegularExpression regInfo("/wopi/files/[0-9]");
         Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-        LOG_INF("Fake wopi host request: " << uriReq.toString());
+
+        Log::StreamLogger logger = Log::info();
+        if (logger.enabled())
+        {
+            logger << "Fake wopi host request URI [" << uriReq.toString() << "]:\n";
+            for (const auto& pair : request)
+            {
+                logger << '\t' << pair.first << ": " << pair.second << " / ";
+            }
+
+            LOG_END(logger, true);
+        }
 
         // CheckFileInfo
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
