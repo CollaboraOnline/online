@@ -124,25 +124,35 @@ function clearAllText() {
 
 // Check that the clipboard text matches with the specified text.
 function expectTextForClipboard(expectedPlainText) {
-	if (isWriter()) {
+	doIfInWriter(function() {
 		cy.get('#copy-paste-container p font')
 			.should('have.text', expectedPlainText);
-	} else {
+	});
+	doIfInCalc(function() {
 		cy.get('#copy-paste-container pre')
 			.should('have.text', expectedPlainText);
-	}
+	});
+	doIfInImpress(function() {
+		cy.get('#copy-paste-container pre')
+			.should('have.text', expectedPlainText);
+	});
 }
 
 // Check that the clipboard text matches with the
 // passed regular expression.
 function matchClipboardText(regexp) {
-	if (isWriter()) {
+	doIfInWriter(function() {
 		cy.contains('#copy-paste-container p font', regexp)
 			.should('exist');
-	} else {
+	});
+	doIfInCalc(function() {
 		cy.contains('#copy-paste-container pre', regexp)
 			.should('exist');
-	}
+	});
+	doIfInImpress(function() {
+		cy.contains('#copy-paste-container pre', regexp)
+			.should('exist');
+	});
 }
 
 function beforeAllDesktop(fileName, subFolder) {
@@ -206,16 +216,31 @@ function initAliasToEmptyString(aliasName) {
 	cy.log('Initializing alias to empty string - end.');
 }
 
-function isCalc() {
-	return Cypress.$('.spreadsheet-header-columns').length != 0;
+function doIfInCalc(callback) {
+	cy.get('#document-container')
+		.then(function(doc) {
+			if (doc.hasClass('spreadsheet-doctype')) {
+				callback();
+			}
+		});
 }
 
-function isImpress() {
-	return Cypress.$('#slide-sorter').length != 0;
+function doIfInImpress(callback) {
+	cy.get('#document-container')
+		.then(function(doc) {
+			if (doc.hasClass('presentation-doctype')) {
+				callback();
+			}
+		});
 }
 
-function isWriter() {
-	return !isCalc() && !isImpress();
+function doIfInWriter(callback) {
+	cy.get('#document-container')
+		.then(function(doc) {
+			if (doc.hasClass('text-doctype')) {
+				callback();
+			}
+		});
 }
 
 // Types text into elem with a delay in between characters.
@@ -282,9 +307,9 @@ module.exports.matchClipboardText = matchClipboardText;
 module.exports.afterAll = afterAll;
 module.exports.initAliasToNegative = initAliasToNegative;
 module.exports.initAliasToEmptyString = initAliasToEmptyString;
-module.exports.isCalc = isCalc;
-module.exports.isImpress = isImpress;
-module.exports.isWriter = isWriter;
+module.exports.doIfInCalc = doIfInCalc;
+module.exports.doIfInImpress = doIfInImpress;
+module.exports.doIfInWriter = doIfInWriter;
 module.exports.beforeAllDesktop = beforeAllDesktop;
 module.exports.typeText = typeText;
 module.exports.getLOVersion = getLOVersion;

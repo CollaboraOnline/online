@@ -21,13 +21,10 @@ function enableEditingMobile() {
 	cy.get('#toolbar-down')
 		.should('be.visible');
 
-	cy.get('#document-container')
-		.then(function(doc) {
-			if (doc.hasClass('spreadsheet-document')) {
-				cy.get('#formulabar')
-					.should('be.visible');
-			}
-		});
+	helper.doIfInCalc(function() {
+		cy.get('#formulabar')
+			.should('be.visible');
+	});
 
 	cy.log('Enabling editing mode - end.');
 }
