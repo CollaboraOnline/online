@@ -243,6 +243,7 @@ std::string Proof::SignProof(const std::vector<unsigned char>& proof) const
 {
     assert(m_pKey);
     static Poco::Crypto::RSADigestEngine digestEngine(*m_pKey, "SHA256");
+    digestEngine.reset();
     digestEngine.update(proof.data(), proof.size());
     return BytesToBase64(digestEngine.signature());
 }
