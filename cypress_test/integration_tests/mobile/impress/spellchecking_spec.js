@@ -28,31 +28,18 @@ describe('Spell checking menu.', function() {
 					.dblclick(XPos, YPos);
 			});
 
-		cy.get('.leaflet-cursor.blinking-cursor')
-			.should('exist');
+		cy.get('textarea.clipboard')
+			.type('{leftArrow}');
 
-		helper.selectAllText(false);
+		cy.get('.leaflet-marker-icon')
+			.should('not.exist');
 
 		// Open context menu
-		cy.get('.leaflet-marker-icon')
-			.then(function(markers) {
-				expect(markers.length).to.have.greaterThan(1);
-				for (var i = 0; i < markers.length; i++) {
-					if (markers[i].classList.contains('leaflet-selection-marker-start')) {
-						var XPos = markers[i].getBoundingClientRect().right + 10;
-					} else if (markers[i].classList.contains('leaflet-selection-marker-end')) {
-						var YPos = markers[i].getBoundingClientRect().top - 10;
-					}
-				}
-
-				cy.get('.leaflet-cursor.blinking-cursor')
-					.should('exist');
-
-				// Remove selection
-				cy.get('body')
-					.type('{leftarrow}');
-				cy.get('.leaflet-marker-icon')
-					.should('not.exist');
+		cy.get('g path.leaflet-interactive')
+			.then(function(shape) {
+				expect(shape.length).to.be.equal(1);
+				var XPos = (shape[0].getBoundingClientRect().left + shape[0].getBoundingClientRect().right) / 2;
+				var YPos = (shape[0].getBoundingClientRect().top + shape[0].getBoundingClientRect().bottom) / 2;
 
 				mobileHelper.longPressOnDocument(XPos, YPos);
 			});
@@ -69,8 +56,7 @@ describe('Spell checking menu.', function() {
 
 		helper.selectAllText(false);
 
-		cy.get('#copy-paste-container pre')
-			.should('contain.text', 'hello');
+		helper.expectTextForClipboard('hello');
 	});
 
 	it('Ignore all.', function() {
