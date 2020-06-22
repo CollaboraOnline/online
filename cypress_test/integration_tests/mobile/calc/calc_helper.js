@@ -35,12 +35,8 @@ function selectAllMobile(removeSelection = true) {
 	cy.get('#spreadsheet-header-corner')
 		.click();
 
-	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(2)')
-		.should('not.be.visible');
-
-	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(1)')
-		.invoke('attr', 'style')
-		.should('contain', '(-9px, -8px,');
+	cy.get('.spreadsheet-cell-resize-marker')
+		.should('be.visible');
 
 	cy.get('input#addressInput')
 		.should('have.prop', 'value', 'A1:AMJ1048576');

@@ -60,16 +60,6 @@ describe('Calc spell checking menu.', function() {
 		cy.contains('.context-menu-link', 'hello')
 			.click();
 
-		// Click outside of the cell
-		cy.get('.leaflet-marker-icon')
-			.then(function(items) {
-				expect(items).to.have.length(2);
-				var XPos = items[0].getBoundingClientRect().right;
-				var YPos = items[0].getBoundingClientRect().bottom + 10;
-				cy.get('body')
-					.click(XPos, YPos);
-			});
-
 		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
@@ -106,9 +96,9 @@ describe('Calc spell checking menu.', function() {
 			.click();
 
 		// Click outside of the cell
-		cy.get('.leaflet-marker-icon')
+		cy.get('.leaflet-selection-marker-end')
 			.then(function(items) {
-				expect(items).to.have.length(2);
+				expect(items).to.have.length(1);
 				var XPos = items[0].getBoundingClientRect().right;
 				var YPos = items[0].getBoundingClientRect().bottom + 10;
 				cy.get('body')
@@ -129,9 +119,9 @@ describe('Calc spell checking menu.', function() {
 			.click();
 
 		// Click outside of the cell
-		cy.get('.leaflet-marker-icon')
+		cy.get('.leaflet-selection-marker-end')
 			.then(function(items) {
-				expect(items).to.have.length(2);
+				expect(items).to.have.length(1);
 				var XPos = items[0].getBoundingClientRect().right;
 				var YPos = items[0].getBoundingClientRect().bottom + 10;
 				cy.get('body')
