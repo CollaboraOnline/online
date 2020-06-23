@@ -94,7 +94,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 					uno: {textCommand: 'LeftPara', objectCommand: 'ObjectAlignLeft'}},
 				{type: 'button', id: 'centerpara', img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true),
 					uno: {textCommand: 'CenterPara', objectCommand: 'AlignCenter'}},
-				{type: 'button', id: 'rightpara', img: 'alignright', hint: _UNO('.uno:RigthPara', '', true),
+				{type: 'button', id: 'rightpara', img: 'alignright', hint: _UNO('.uno:RightPara', '', true),
 					uno: {textCommand: 'RightPara', objectCommand: 'ObjectAlignRight'}},
 				{type: 'button', id: 'justifypara', img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: 'JustifyPara'},
 				{type: 'break'},
