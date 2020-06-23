@@ -1,4 +1,5 @@
 {
+"$1 of $2 records found":"נמצאו $1 מתוך $2 רשומות",
 "3D Objects":"עצמים תלת ממדיים",
 "Addressee":"נמען",
 "Afrikaans (Namibia)":"אפריקאנס (נמיביה)",
@@ -317,6 +318,7 @@
 "Mari, Meadow":"מארי (שדות)",
 "Max":"Max",
 "Mbochi":"מבוצ׳י",
+"Median":"חציוני",
 "Min":"Min",
 "Moksha":"מוקשה",
 "Mongolian Cyrillic":"מונגולית קירילית",
@@ -473,6 +475,7 @@
 "StDev":"StDev",
 "Strong Emphasis":"הדגשה חזקה",
 "Subtitle":"כותרת משנית",
+"Sum":"סכום",
 "Suundi":"סונדי",
 "Swahili (Kenya)":"סוואהילי (קניה)‏",
 "Swahili (Tanzania)":"סווהילי (טנזניה)‏",
