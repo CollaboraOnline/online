@@ -189,6 +189,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 			state = items.getItemValue('.uno:StyleApply');
 			$(combobox).val(state).trigger('change');
+		} else {
+			$(combobox).on('select2:select', function (e) {
+				var value = e.params.data.id + ';' + e.params.data.text;
+				builder.callback('combobox', 'selected', combobox, value, builder);
+			});
 		}
 	},
 
@@ -199,8 +204,16 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var select = L.DomUtil.createWithId('select', data.id, parentContainer);
 		$(select).addClass(builder.options.cssClass);
 
+		var processedData = [];
+
+		data.entries.forEach(function (value, index) {
+			var selected = parseInt(data.selectedEntries[0]) == index;
+			processedData.push({id: index, text: value, selected: selected});
+		});
+		console.log(processedData);
+
 		$(select).select2({
-			data: data.entries.sort(function (a, b) {return a.localeCompare(b);}),
+			data: processedData,
 			placeholder: _(builder._cleanText(data.text))
 		});
 

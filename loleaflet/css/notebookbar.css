@@ -365,6 +365,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	display: none;
 }
 
+#table-numbertype .select2.select2-container {
+	width: 170px !important;
+}
+
 /* Insert Tab */
 
 #table-InsertBox {

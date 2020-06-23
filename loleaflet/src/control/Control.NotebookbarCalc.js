@@ -925,7 +925,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																											'enabled': 'true',
 																											'children': [
 																												{
-																													'id': '',
+																													'id': 'numbertype',
 																													'type': 'listbox',
 																													'text': '',
 																													'enabled': 'true',
