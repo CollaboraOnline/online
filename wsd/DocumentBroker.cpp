@@ -432,10 +432,8 @@ void DocumentBroker::pollThread()
             lastClipboardHashUpdateTime = now;
         }
 
-        if (false)
-            ;
         // Remove idle documents after 1 hour.
-        else if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
+        if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
         {
             // Stop if there is nothing to save.
             LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey() << "] to kill.");
