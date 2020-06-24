@@ -12,7 +12,8 @@ NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
 PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
 ERROR_LOG=$(abs_builddir)/workdir/error.log
 
-SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(abs_srcdir)/support/index.js)
+SUPPORT_FILE_ABS = $(abs_srcdir)/support/index.js
+SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(SUPPORT_FILE_ABS))
 
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
@@ -34,6 +35,8 @@ HEADLESS_BUILD := $(findstring Command failed,$(shell xhost > /dev/null 2>&1 || 
 export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY))
 
 CORE_VERSION := $(shell "@LO_PATH@"/program/soffice.bin --version 2> /dev/null)
+
+COMMA :=,
 
 if ENABLE_DEBUG
 FILTER_DEBUG=cypress:electron,cypress:launcher
@@ -122,6 +125,24 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 			|| true
 	@$(KILL_COMMAND) || true
 
+run-cov: @JAILS_PATH@ $(NODE_BINS)
+	@echo
+	@echo "Setup coverage tools..."
+	@echo
+	rm -rf .nyc_output
+	rm -rf coverage
+	npm install @cypress/code-coverage --no-save
+	@echo "import '@cypress/code-coverage/support';" >> $(SUPPORT_FILE_ABS)
+	@echo "" >> $(SUPPORT_FILE_ABS)
+	cd .. && npx nyc instrument --compact=false loleaflet/dist/src --in-place && cd cypress_test
+	@echo
+	@echo "Run all tests..."
+	@echo
+	$(call start_loolwsd)
+	$(call run_desktop_tests,,COVERAGE_RUN="1")
+	$(call run_mobile_tests,,COVERAGE_RUN="1")
+	@$(KILL_COMMAND) || true
+
 define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
 	@echo
@@ -186,7 +207,7 @@ define run_desktop_tests
 		$(CYPRESS_BINARY) run \
 			--browser $(CHROME) \
 			--headless \
-			$(DESKTOP_CONFIG) \
+			$(DESKTOP_CONFIG)$(if $(2),$(COMMA)$(2),)  \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
@@ -203,7 +224,7 @@ define run_mobile_tests
 		$(CYPRESS_BINARY) run \
 			--browser $(CHROME) \
 			--headless \
-			$(MOBILE_CONFIG) \
+			$(MOBILE_CONFIG)$(if $(2),$(COMMA)$(2),) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
@@ -263,4 +284,6 @@ clean-local:
 	rm -rf workdir
 	rm -rf cypress
 	rm -rf package-lock.json
+	rm -rf .nyc_output
+	rm -rf coverage
 endif

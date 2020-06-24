@@ -128,3 +128,23 @@ is different from the source directory. So to avoid this
 issue with the supportFile, you should build in the source
 directory or you should avoid symlinks in the path of the
 build directory.
+
+Code coverage
+------------
+
+We use nyc to instrument the code and then cypress code coverage
+plugin is used to generate coverage numbers. This workflow
+is called by the following command:
+
+    make run-cov
+
+The output is put under cypress_test/covarage folder.
+Open the cypress_test/covarage/lcov-report/index.html
+file to get the summary report.
+
+The make command above touches the source files under
+loleaflet/dist/src folder, so after testing the coverage
+doing a clean build is a good idea (e.g. make clean).
+
+See also this link:
+https://docs.cypress.io/guides/tooling/code-coverage.html

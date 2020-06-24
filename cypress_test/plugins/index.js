@@ -6,6 +6,8 @@ var blacklists = require('./blacklists');
 var selectTests = require('cypress-select-tests');
 
 function plugin(on, config) {
+	if (config.env.COVERAGE_RUN)
+		require('@cypress/code-coverage/task')(on, config);
 	on('task', {
 		copyFile: tasks.copyFile,
 		failed: require('cypress-failed-log/src/failed')()

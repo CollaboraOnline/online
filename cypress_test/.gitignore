@@ -3,3 +3,5 @@ cypress
 package-lock.json
 workdir
 support/commands.js
+coverage
+.nyc_output
