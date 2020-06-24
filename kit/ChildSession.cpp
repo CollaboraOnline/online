@@ -1435,7 +1435,7 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
 
     getLOKitDocument()->setView(_viewId);
 
-    unsigned nLOKWindowId = std::stoi(tokens[1].c_str());
+    unsigned long long int nLOKWindowId = std::stoull(tokens[1].c_str());
     getLOKitDocument()->sendDialogEvent(nLOKWindowId,
         tokens.cat(' ', 2).c_str());
 
