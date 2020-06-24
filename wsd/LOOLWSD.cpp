@@ -3668,6 +3668,10 @@ int LOOLWSD::innerMain()
 
     initializeSSL();
 
+#ifndef IOS
+    // We can open files with non-ASCII names just fine on iOS without this, and this code is
+    // heavily Linux-specific anyway.
+
     // Force a uniform UTF-8 locale for ourselves & our children.
     char* locale = std::setlocale(LC_ALL, "C.UTF-8");
     if (!locale)
@@ -3683,6 +3687,7 @@ int LOOLWSD::innerMain()
         LOG_INF("Locale is set to " + std::string(locale));
         ::setenv("LC_ALL", locale, 1);
     }
+#endif
 
 #if !MOBILEAPP
     // We use the same option set for both parent and child loolwsd,
