@@ -61,6 +61,8 @@ loleaflet/release
 loleaflet/npm-shrinkwrap.json
 loleaflet/jsconfig.json
 loleaflet/admin/jsconfig.json
+loleaflet/dist
+loleaflet/compilets
 
 connect
 lokitclient
