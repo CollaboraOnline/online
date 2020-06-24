@@ -571,6 +571,28 @@
 	{
 		// re-write relative URLs in CSS - somewhat grim.
 		window.addEventListener('load', function() {
+			var replaceUrls = function(rules, replaceBase) {
+				if (!rules)
+					return;
+
+				for (var r = 0; r < rules.length; ++r) {
+					// check subset of rules like @media or @import
+					if (rules[r] && rules[r].type != 1) {
+						replaceUrls(rules[r].cssRules || rules[r].rules, replaceBase);
+						continue;
+					}
+					if (!rules[r] || !rules[r].style)
+						continue;
+					var img = rules[r].style.backgroundImage;
+					if (img === '' || img === undefined)
+						continue;
+					if (img.startsWith('url("images/'))
+					{
+						rules[r].style.backgroundImage =
+							img.replace('url("images/', replaceBase);
+					}
+				}
+			};
 			var sheets = document.styleSheets;
 			for (var i = 0; i < sheets.length; ++i) {
 				var relBases = sheets[i].href.split('/');
@@ -584,18 +606,7 @@
 					console.log('Missing CSS from ' + sheets[i].href);
 					continue;
 				}
-				for (var r = 0; r < rules.length; ++r) {
-					if (!rules[r] || !rules[r].style)
-						continue;
-					var img = rules[r].style.backgroundImage;
-					if (img === '' || img === undefined)
-						continue;
-					if (img.startsWith('url("images/'))
-					{
-						rules[r].style.backgroundImage =
-							img.replace('url("images/', replaceBase);
-					}
-				}
+				replaceUrls(rules, replaceBase);
 			}
 		}, false);
 	}
