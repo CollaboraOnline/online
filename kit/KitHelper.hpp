@@ -61,7 +61,7 @@ namespace LOKitHelper
             << " height=" << height
             << " viewid=" << loKitDocument->pClass->getView(loKitDocument);
 
-        if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION)
+        if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
         {
             std::ostringstream hposs;
             std::ostringstream sposs;
@@ -108,7 +108,7 @@ namespace LOKitHelper
                 std::free(ptrValue);
             }
 
-            if (type == LOK_DOCTYPE_PRESENTATION)
+            if (type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
             {
                 for (int i = 0; i < parts; ++i)
                 {
