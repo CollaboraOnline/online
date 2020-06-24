@@ -322,7 +322,7 @@ L.Socket = L.Class.extend({
 				this._map._clip.setKey(key);
 		}
 		else if (textMsg.startsWith('perm:')) {
-			var perm = textMsg.substring('perm:'.length);
+			var perm = textMsg.substring('perm:'.length).trim();
 
 			// This message is often received very early before doclayer is initialized
 			// Change options.permission so that when docLayer is initialized, it

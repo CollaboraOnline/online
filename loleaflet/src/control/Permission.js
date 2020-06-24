@@ -62,10 +62,11 @@ L.Map.include({
 
 		this.dragging.enable();
 		// disable all user interaction, will need to add keyboard too
-		this._docLayer._onUpdateCursor();
-		this._docLayer._clearSelections();
-		this._docLayer._onUpdateTextSelection();
-
+		if (this._docLayer) {
+			this._docLayer._onUpdateCursor();
+			this._docLayer._clearSelections();
+			this._docLayer._onUpdateTextSelection();
+		}
 		this.fire('updatepermission', {perm : perm});
 	},
 
