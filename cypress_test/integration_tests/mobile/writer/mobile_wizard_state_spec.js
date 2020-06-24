@@ -73,7 +73,7 @@ describe('Mobile wizard state tests', function() {
 		//	.should('have.class', 'checked');
 	});
 
-	it('Check level visibility in hamburger menu.', function() {
+	it.skip('Check level visibility in hamburger menu.', function() {
 		helper.initAliasToNegative('originalHeight');
 
 		// Click on edit button
