@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect */
+/* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -73,29 +73,34 @@ describe('Mobile wizard state tests', function() {
 		//	.should('have.class', 'checked');
 	});
 
-	it.skip('Check level visibility in hamburger menu.', function() {
-		helper.initAliasToNegative('originalHeight');
-
+	it('Check level visibility in hamburger menu.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
 		mobileHelper.openHamburgerMenu();
 
 		// Get mobile wizard last item vertical pos.
-		cy.contains('.ui-header.level-0.mobile-wizard', 'About')
-			.invoke('offset')
-			.its('top')
-			.as('originalTop');
+		cy.contains('.ui-header.level-0.mobile-wizard', 'File')
+			.should('be.visible');
 
-		cy.get('@originalTop')
-			.should('be.greaterThan', 0);
+		cy.contains('.menu-entry-with-icon', 'Save')
+			.should('not.be.visible');
+
+		cy.contains('.menu-entry-with-icon', 'PDF Document (.pdf)')
+			.should('not.be.visible');
 
 		// Step in and step out the File submenu.
 		cy.contains('.menu-entry-with-icon', 'File')
 			.click();
 
-		cy.contains('.menu-entry-with-icon', 'Print')
+		cy.contains('.ui-header.level-0.mobile-wizard', 'File')
+			.should('not.be.visible');
+
+		cy.contains('.menu-entry-with-icon', 'Save')
 			.should('be.visible');
+
+		cy.contains('.menu-entry-with-icon', 'PDF Document (.pdf)')
+			.should('not.be.visible');
 
 		cy.get('#mobile-wizard-back')
 			.click();
@@ -103,14 +108,14 @@ describe('Mobile wizard state tests', function() {
 		cy.contains('.menu-entry-with-icon', 'File')
 			.should('be.visible');
 
-		cy.get('@originalTop')
-			.then(function(originalTop) {
-				cy.contains('.ui-header.level-0.mobile-wizard', 'About')
-					.should(function(content) {
-						expect(content.offset().top).to.be.lessThan(originalTop + 0.0001);
-						expect(content.offset().top).to.be.greaterThan(originalTop - 0.0001);
-					});
-			});
+		// Here the menu items was merged after a short delay.
+		cy.wait(1000);
+
+		cy.contains('.menu-entry-with-icon', 'Save')
+			.should('not.be.visible');
+
+		cy.contains('.menu-entry-with-icon', 'PDF Document (.pdf)')
+			.should('not.be.visible');
 	});
 });
 
