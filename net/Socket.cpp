@@ -525,8 +525,10 @@ const int WebSocketHandler::PingFrequencyMicroS = 18 * 1000 * 1000;
 
 void WebSocketHandler::dumpState(std::ostream& os)
 {
-    os << (_shuttingDown ? "shutd " : "alive ")
-       << std::setw(5) << _pingTimeUs/1000. << "ms ";
+    os << (_shuttingDown ? "shutd " : "alive ");
+#if !MOBILEAPP
+    os << std::setw(5) << _pingTimeUs/1000. << "ms ";
+#endif
     if (_wsPayload.size() > 0)
         Util::dumpHex(os, "\t\tws queued payload:\n", "\t\t", _wsPayload);
     os << '\n';

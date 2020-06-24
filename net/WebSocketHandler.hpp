@@ -29,16 +29,16 @@ private:
     /// The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
 
+#if !MOBILEAPP
     std::chrono::steady_clock::time_point _lastPingSentTime;
     int _pingTimeUs;
+    bool _isMasking;
+    bool _inFragmentBlock;
+#endif
 
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
     bool _isClient;
-#if !MOBILEAPP
-    bool _isMasking;
-    bool _inFragmentBlock;
-#endif
 
 protected:
     struct WSFrameMask
@@ -60,15 +60,15 @@ public:
     ///                 defragmentation should be handled inside message handler (true) or the message handler
     ///                 should be called after all fragments of a message were received and the message
     ///                 was defragmented (false).
-    WebSocketHandler(bool isClient = false, bool isMasking = true)
-        : _lastPingSentTime(std::chrono::steady_clock::now())
-        , _pingTimeUs(0)
-        , _shuttingDown(false)
-        , _isClient(isClient)
+    WebSocketHandler(bool isClient = false, bool isMasking = true) :
 #if !MOBILEAPP
-        , _isMasking(isClient && isMasking)
-        , _inFragmentBlock(false)
+        _lastPingSentTime(std::chrono::steady_clock::now()),
+        _pingTimeUs(0),
+        _isMasking(isClient && isMasking),
+        _inFragmentBlock(false),
 #endif
+        _shuttingDown(false),
+        _isClient(isClient)
     {
     }
 
@@ -79,16 +79,16 @@ public:
     WebSocketHandler(const std::weak_ptr<StreamSocket>& socket,
                      const Poco::Net::HTTPRequest& request)
         : _socket(socket)
+#if !MOBILEAPP
         , _lastPingSentTime(std::chrono::steady_clock::now() -
                             std::chrono::microseconds(PingFrequencyMicroS) -
                             std::chrono::microseconds(InitialPingDelayMicroS))
         , _pingTimeUs(0)
-        , _shuttingDown(false)
-        , _isClient(false)
-#if !MOBILEAPP
         , _isMasking(false)
         , _inFragmentBlock(false)
 #endif
+        , _shuttingDown(false)
+        , _isClient(false)
     {
         upgradeToWebSocket(request);
     }
@@ -430,12 +430,14 @@ public:
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int64_t & timeoutMaxMicroS) override
     {
+#if !MOBILEAPP
         if (!_isClient)
         {
             const int64_t timeSincePingMicroS =
                 std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime).count();
             timeoutMaxMicroS = std::min(timeoutMaxMicroS, PingFrequencyMicroS - timeSincePingMicroS);
         }
+#endif
         int events = POLLIN;
         if (_msgHandler && _msgHandler->hasQueuedMessages())
             events |= POLLOUT;
@@ -810,10 +812,11 @@ protected:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
             socket->setWebSocket();
-
+#if !MOBILEAPP
         // No need to ping right upon connection/upgrade,
         // but do reset the time to avoid pinging immediately after.
         _lastPingSentTime = std::chrono::steady_clock::now();
+#endif
     }
 };
 
