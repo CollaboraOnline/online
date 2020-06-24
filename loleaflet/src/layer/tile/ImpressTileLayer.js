@@ -405,54 +405,62 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 
 		if (values.comments) {
-			this.clearAnnotations();
-			for (var index in values.comments) {
-				var comment = values.comments[index];
-				if (!this._annotations[comment.parthash]) {
-					this._annotations[comment.parthash] = [];
-				}
-				this._annotations[comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
-			}
-			if (!this._topAnnotation) {
-				this._topAnnotation = [];
-			}
-			this._topAnnotation[this._selectedPart] = 0;
-			if (this.hasAnnotations(this._selectedPart)) {
-				this._map._docLayer._updateMaxBounds(true);
-			}
-			this.layoutAnnotations();
+			this._addCommentsFromCommandValues(values.comments);
 		} else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 
+	_addCommentsFromCommandValues: function (comments) {
+		this.clearAnnotations();
+		for (var index in comments) {
+			var comment = comments[index];
+			if (!this._annotations[comment.parthash]) {
+				this._annotations[comment.parthash] = [];
+			}
+			this._annotations[comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
+		}
+		if (!this._topAnnotation) {
+			this._topAnnotation = [];
+		}
+		this._topAnnotation[this._selectedPart] = 0;
+		if (this.hasAnnotations(this._selectedPart)) {
+			this._map._docLayer._updateMaxBounds(true);
+		}
+		this.layoutAnnotations();
+	},
+
 	_onMessage: function (textMsg, img) {
 		if (textMsg.startsWith('comment:')) {
-			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-			if (obj.comment.action === 'Add') {
-				if (!this._annotations[obj.comment.parthash]) {
-					this._annotations[obj.comment.parthash] = [];
-				}
-				this._annotations[obj.comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), obj.comment).addTo(this._map));
-				this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
-				this.updateDocBounds(1, this.extraSize);
-				this.layoutAnnotations();
-			} else if (obj.comment.action === 'Remove') {
-				this.removeAnnotation(obj.comment.id);
-				this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
-				this.updateDocBounds(0);
-				this.layoutAnnotations();
-			} else if (obj.comment.action === 'Modify') {
-				var modified = this.getAnnotation(obj.comment.id);
-				if (modified) {
-					modified._data = obj.comment;
-					modified.update();
-					this._selectedAnnotation = undefined;
-					this.layoutAnnotations();
-				}
-			}
+			var object = JSON.parse(textMsg.substring('comment:'.length + 1));
+			this._processCommentMessage(object.comment);
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
+		}
+	},
+
+	_processCommentMessage: function (comment) {
+		if (comment.action === 'Add') {
+			if (!this._annotations[comment.parthash]) {
+				this._annotations[comment.parthash] = [];
+			}
+			this._annotations[comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
+			this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
+			this.updateDocBounds(1, this.extraSize);
+			this.layoutAnnotations();
+		} else if (comment.action === 'Remove') {
+			this.removeAnnotation(comment.id);
+			this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
+			this.updateDocBounds(0);
+			this.layoutAnnotations();
+		} else if (comment.action === 'Modify') {
+			var modified = this.getAnnotation(comment.id);
+			if (modified) {
+				modified._data = comment;
+				modified.update();
+				this._selectedAnnotation = undefined;
+				this.layoutAnnotations();
+			}
 		}
 	},
 
