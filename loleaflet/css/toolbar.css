@@ -154,7 +154,7 @@ w2ui-toolbar {
 	width: 24px;
 	height: 18px;
 	position: absolute;
-	left: 87%;
+	right: 10px;
 	background: url('images/baseline-edit.svg') right center no-repeat, radial-gradient(circle, #fff 20%, #fff0 100%);
 }
 

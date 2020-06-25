@@ -11,6 +11,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('wopiprops', this.onWopiProps, this);
+		$('#document-title-pencil').addClass('editable');
 	},
 
 	documentNameConfirm: function() {
@@ -100,12 +101,10 @@ L.Control.DocumentNameInput = L.Control.extend({
 		if (e.BaseFileName !== null)
 			// set the document name into the name field
 			$('#document-name-input').val(e.BreadcrumbDocName !== undefined ? e.BreadcrumbDocName : e.BaseFileName);
-
 		if (e.UserCanNotWriteRelative === false) {
 			// Save As allowed
 			$('#document-name-input').prop('disabled', false);
 			$('#document-name-input').addClass('editable');
-			$('#document-title-pencil').addClass('editable');
 			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
 			$('#document-name-input').off('focus', this.onDocumentNameFocus).on('focus', this.onDocumentNameFocus.bind(this));
 			$('#document-name-input').off('blur', this.documentNameCancel).on('blur', this.documentNameCancel.bind(this));
