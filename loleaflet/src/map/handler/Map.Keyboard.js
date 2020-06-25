@@ -308,7 +308,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 		// handle help - F1
 		if (ev.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === 112) {
-			this._map.showHelp();
+			this._map.showHelp('online-help');
 			ev.preventDefault();
 			return;
 		}
