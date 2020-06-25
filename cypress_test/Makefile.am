@@ -134,7 +134,7 @@ run-cov: @JAILS_PATH@ $(NODE_BINS)
 	npm install @cypress/code-coverage --no-save
 	@echo "import '@cypress/code-coverage/support';" >> $(SUPPORT_FILE_ABS)
 	@echo "" >> $(SUPPORT_FILE_ABS)
-	cd .. && npx nyc instrument --compact=false loleaflet/dist/src --in-place && cd cypress_test
+	cd .. && npx nyc instrument --compact=false loleaflet/src loleaflet/dist/src && cd cypress_test
 	@echo
 	@echo "Run all tests..."
 	@echo
