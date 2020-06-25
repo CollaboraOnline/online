@@ -254,6 +254,15 @@ L.Map.include({
 						}
 					} else /* id === 'online-help' */ {
 						document.getElementById('keyboard-shortcuts').style.display='none';
+						if (window.socketProxy) {
+							var helpdiv = document.getElementById('online-help');
+							var imgList = helpdiv.querySelectorAll('img');
+							for (var p = 0; p < imgList.length; p++) {
+								var imgSrc = imgList[p].src;
+								imgSrc = imgSrc.substring(imgSrc.indexOf('/images'));
+								imgList[p].src = window.host + window.serviceRoot + '/loleaflet/dist'+ imgSrc;
+							}
+						}
 						// Display help according to document opened
 						if (map.getDocType() === 'text') {
 							var x = document.getElementsByClassName('text');
