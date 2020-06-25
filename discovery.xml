@@ -254,9 +254,6 @@
         <app name="application/rtf">
             <action name="edit" default="true" ext="rtf"/>
         </app>
-        <app name="text/rtf">
-            <action name="edit" default="true" ext="rtf"/>
-        </app>
         <app name="text/plain">
             <action name="edit" default="true" ext="txt"/>
         </app>
@@ -266,14 +263,8 @@
         <app name="application/clarisworks">
             <action name="view" default="true" ext="cwk"/>
         </app>
-        <app name="application/vnd.corel-draw">
-            <action name="view" default="true" ext="cdr"/>
-        </app>
         <app name="image/x-wpg">
             <action name="view" default="true" ext="wpg"/>
-        </app>
-        <app name="application/prs.plucker">
-            <action name="view" default="true" ext="pdb"/>
         </app>
         <app name="application/x-iwork-pages-sffpages">
             <action name="view" default="true" ext="pages"/>
@@ -290,20 +281,11 @@
         <app name="image/x-freehand">
             <action name="view" default="true" ext="fh"/>
         </app>
-        <app name="application/vnd.palm">
-            <action name="view" default="true" ext="pdb"/>
-        </app>
         <app name="application/vnd.sun.xml.chart">
             <action name="view" default="true" ext="sxs"/>
         </app>
-        <app name="application/vnd.sun.xml.writer.web">
-            <action name="view" default="true" ext="stw"/>
-        </app>
         <app name="application/x-t602">
             <action name="view" default="true" ext="602"/>
-        </app>
-        <app name="application/vnd.sun.xml.report.chart">
-            <action name="edit" default="true" ext="odc"/>
         </app>
         <app name="image/bmp">
             <action name="view" ext="bmp"/>
