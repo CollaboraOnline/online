@@ -1295,7 +1295,7 @@ L.Control.Menubar = L.Control.extend({
 
 		// handle help - F1
 		if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && e.keyCode == 112) {
-			self._map.showHelp();
+			self._map.showHelp('online-help');
 		}
 	},
 
