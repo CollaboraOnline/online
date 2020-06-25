@@ -372,7 +372,7 @@ body {
 	box-sizing: border-box;
 	width: 32px; /* Width of new image */
 	height: 32px; /* Height of new image */
-	background: url(images/user.png) center 3px no-repeat;
+	background: url(images/user.svg) center 3px no-repeat;
 }
 
 .leaflet-container .leaflet-pane.leaflet-calc-background-pane {

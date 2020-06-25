@@ -1,0 +1,24 @@
+<svg width="8.4667mm" height="8.4667mm" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient1524" x1="291.71" x2="318.78" y1="742.23" y2="742.23" gradientTransform="matrix(1.1429 0 0 1 -43.674 0)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#aaa" stop-opacity=".084" offset="0"/>
+   <stop stop-color="#aaa" offset=".2389"/>
+   <stop stop-color="#aaa" offset=".49998"/>
+   <stop stop-color="#aaa" offset=".75984"/>
+   <stop stop-color="#aaa" stop-opacity=".044" offset="1"/>
+  </linearGradient>
+  <radialGradient id="radialGradient1558" cx="16" cy="28.281" r="13" gradientTransform="matrix(1.2308 0 0 .69231 -3.6923 9.4209)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#afafaf" offset="0"/>
+   <stop stop-color="#a0a0a0" offset="1"/>
+  </radialGradient>
+  <radialGradient id="radialGradient1584" cx="305.95" cy="719.11" r="4.9469" gradientTransform="matrix(1.1156 0 0 .80618 -35.51 137.9)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#c7c7c7" offset="0"/>
+   <stop stop-color="#c7c7c7" stop-opacity="0" offset="1"/>
+  </radialGradient>
+ </defs>
+ <g transform="translate(-289.71 -712.23)">
+  <path d="m292.71 741.23h-3l3 1-1 1h27v-1l3-1h-3z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="url(#linearGradient1524)" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  <path transform="translate(289.71 712.23)" d="m16 2.9492c-2.9083 0-5.606 1.7356-5.5 4.0508-0.44134 1.2582 0.59978 4.2841 0 4 0 0-0.44452 0.66615 0 2l2 2.5s0.1368 3.3681 0 3.5c-0.49282 2.3328-8.375 4.4464-9 6.5v4h25v-4c-0.625-2.0536-8.5072-4.1672-9-6.5-0.1368-0.13194 0-3.5 0-3.5l2-2.5c0.44452-1.3339 0-2 0-2-0.59978 0.2841 0.44134-2.7418 0-4-0.48901-2.3471-2.5917-4.0508-5.5-4.0508z" fill="url(#radialGradient1558)" stroke="#868686" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".98431" style="paint-order:normal"/>
+  <path d="m310.16 719.13c-0.39519-1.686-2.0945-2.9097-4.4448-2.9097v0c-2.3503 0-4.5305 1.2467-4.4449 2.9097" fill="none" stroke="url(#radialGradient1584)" stroke-linecap="round" stroke-linejoin="round" stroke-opacity=".98431" style="paint-order:normal"/>
+ </g>
+</svg>
