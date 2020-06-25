@@ -63,6 +63,7 @@ loleaflet/jsconfig.json
 loleaflet/admin/jsconfig.json
 loleaflet/dist
 loleaflet/compilets
+loleaflet/typescript_js
 
 connect
 lokitclient
