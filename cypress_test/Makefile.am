@@ -234,7 +234,7 @@ define run_mobile_tests
 	)
 endef
 
-ERROR_MATCHER = "Error:\|Command failed:\|Timed out retrying"
+ERROR_MATCHER = "Error:\|Command failed:\|Timed out retrying\|The error was:"
 
 define execute_run_parallel
 	@mkdir -p $(dir $(2)) && touch $(2) && \
