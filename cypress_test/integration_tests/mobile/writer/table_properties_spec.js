@@ -5,7 +5,7 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerMobileHelper = require('./writer_mobile_helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
-	var testFileName = 'spellchecking.odt';
+	var testFileName = '';
 
 	function before(testFile) {
 		testFileName = testFile;
