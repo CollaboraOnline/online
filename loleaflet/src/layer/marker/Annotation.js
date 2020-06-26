@@ -19,6 +19,7 @@ L.Annotation = L.Layer.extend({
 		this._latlng = L.latLng(latlng);
 		this._data = data;
 		this._skipCheckBounds = false;
+		this._annotationMarker = null;
 	},
 
 	onAdd: function (map) {
@@ -51,6 +52,7 @@ L.Annotation = L.Layer.extend({
 		this._updateContent();
 		this._updateLayout();
 		this._updatePosition();
+		this._updateAnnotationMarker();
 	},
 
 	setData: function (data) {
@@ -89,6 +91,9 @@ L.Annotation = L.Layer.extend({
 		if (this._data.textSelected && this._map.hasLayer && !this._map.hasLayer(this._data.textSelected)) {
 			this._map.addLayer(this._data.textSelected);
 		}
+		if (this._annotationMarker != null) {
+			this._map.addLayer(this._annotationMarker);
+		}
 	},
 
 	hide: function () {
@@ -98,6 +103,9 @@ L.Annotation = L.Layer.extend({
 		this._nodeReply.style.display = 'none';
 		if (this._data.textSelected && this._map.hasLayer(this._data.textSelected)) {
 			this._map.removeLayer(this._data.textSelected);
+		}
+		if (this._annotationMarker != null) {
+			this._map.removeLayer(this._annotationMarker);
 		}
 	},
 
@@ -441,6 +449,30 @@ L.Annotation = L.Layer.extend({
 		var authorImageHeight = Math.round(this.options.imgSize.y * scaleFactor);
 		this._authorAvatarImg.setAttribute('width', authorImageWidth);
 		this._authorAvatarImg.setAttribute('height', authorImageHeight);
+	},
+
+	_updateAnnotationMarker: function () {
+		if (this._data == null)
+			return;
+
+		if (this._annotationMarker == null) {
+			this._annotationMarker = L.marker(new L.LatLng(0, 0), {
+				icon: L.divIcon({
+					className: 'annotation-marker',
+					iconSize: null
+				}),
+				draggable: true
+			});
+			this._map.addLayer(this._annotationMarker);
+		}
+		var stringTwips = this._data.rectangle.match(/\d+/g);
+		var topLeftTwips = new L.Point(parseInt(stringTwips[0]), parseInt(stringTwips[1]));
+		var offset = new L.Point(parseInt(stringTwips[2]), parseInt(stringTwips[3]));
+		var bottomRightTwips = topLeftTwips.add(offset);
+		var bounds = new L.LatLngBounds(
+			this._map._docLayer._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+			this._map._docLayer._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+		this._annotationMarker.setLatLng(bounds.getSouthWest());
 	}
 });
 

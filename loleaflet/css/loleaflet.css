@@ -236,6 +236,17 @@ body {
 	margin-right: 10px;
 }
 
+.annotation-marker {
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 24px;
+	height: 24px;
+	background-image: url('images/note.svg');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	outline: none;
+}
+
 .loleaflet-scrolled {
 	overflow: auto;
 }
