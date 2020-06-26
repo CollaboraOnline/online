@@ -259,8 +259,8 @@ L.Map = L.Evented.extend({
 		// This becomes true if document was ever modified by the user
 		this._everModified = false;
 
-		// This becomes new file name if document is renamed which used later on uno:Save result
-		this._RenameFile = '';
+		// This is the new file name, if the document is renamed, which is used on uno:Save's result.
+		this._renameFilename = '';
 
 		// Document is completely loaded or not
 		this._docLoaded = false;

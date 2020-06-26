@@ -924,9 +924,10 @@ function onCommandResult(e) {
 			map._everModified = true;
 
 			// document is saved for rename
-			if (map._RenameFile) {
-				map.renameFile(map._RenameFile);
-				map._RenameFile = '';
+			if (map._renameFilename) {
+				var renameFilename = map._renameFilename;
+				map._renameFilename = '';
+				map.renameFile(renameFilename);
 			}
 		}
 		var postMessageObj = {
