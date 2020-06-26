@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-05 23:08+0200\n"
-"PO-Revision-Date: 2020-06-06 16:02+0000\n"
+"PO-Revision-Date: 2020-06-15 04:33+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -167,7 +167,7 @@ msgstr ""
 
 #: admin/admin.strings.js:42
 msgid "Refresh"
-msgstr ""
+msgstr "Anovar"
 
 #: admin/admin.strings.js:43
 msgid "Shutdown Server"
@@ -1314,7 +1314,7 @@ msgstr ""
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmación"
 
 #~ msgid "Color"
 #~ msgstr "Color"

@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-06-08 06:47+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
+"PO-Revision-Date: 2020-06-21 14:29+0000\n"
+"Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -1623,11 +1623,11 @@ msgstr "El color assignat als canvis depèn de l'usuari que ha canviat el docume
 
 #: html/loleaflet-help.html%2Bdiv.div.p:500-5
 msgid "To display or hide track changes choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. Beware that if track changes are enabled but hidden, you still record changes and may inadvertently leave unwanted text available in the document."
-msgstr ""
+msgstr "Per a mostrar o amagar els canvis, trieu <span class=\"ui\">Edita</span> ▸ <span class=\"ui\">Seguiment dels canvis</span> ▸ <span class=\"ui\">Mostra</span>. Tingueu en compte que, si el seguiment està habilitat però ocult, encara s'enregistren els canvis i podeu deixar, sense voler-ho, text disponible en el document."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
-msgstr ""
+msgstr "Els canvis es poden acceptar o rebutjar. Per a acceptar o rebutjar canvis, feu clic en les icones corresponents en el quadre de comentaris de la dreta del document. Alternativament, trieu <span class=\"ui\">Edita</span> ▸ <span class=\"ui\">Seguiment de canvis</span> ▸ <span class=\"ui\">Accepta</span> o <span class=\"ui\">Rebutja</span>. A més a més, si voleu filtrar els canvis abans d'acceptar-los o rebutjar-los, trieu <span class=\"ui\">Edita</span> ▸ <span class=\"ui\">Seguiment de canvis</span> ▸ <span class=\"ui\">Gestiona</span>. Es mostra una llista de tots els canvis  seguits. Useu els botons del diàleg corresponents."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
 msgid "How do I set the margins of the document?"
@@ -1716,7 +1716,7 @@ msgstr "El text que acabo d'escriure ha canviat automàticament. Per què? Com p
 
 #: html/loleaflet-help.html%2Bdiv.div.p:533-5
 msgid "You have the AutoCorrection enabled. AutoCorrection changes the text just typed into an internal table of corresponding text. In most cases, AutoCorrection fixes typos while you are typing. If AutoCorrection is not necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
-msgstr ""
+msgstr "Teniu la correcció automàtica activada. Els canvis de correcció automàtica canvia el text acabat d'escriure pel text corresponent d'una taula interna. En la majoria de casos, la correcció automàtica corregeix errors mentre escriviu. Si la correcció automàtica no és necessària, desactiveu-la a <span class=\"ui\">Eines</span> ▸ <span class=\"ui\">Correcció automàtica</span> ▸ <span class=\"ui\">En teclejar</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:538-5
 msgid "How can I select data to print?"
@@ -1772,7 +1772,7 @@ msgstr "Quina funció té el botó «Neteja la formatació directa»?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:559-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
-msgstr ""
+msgstr "La formatació directa és la formatació aplicada directament en el contingut seleccionat d'un paràgraf o cel·la de full de càlcul, i se superposa a la formatació de l'estil aplicat. Per a restablir la formatació a l'estil aplicat, seleccioneu el text o cel·la de full de càlcul i trieu <span class=\"ui\">Format</span> ▸ <span class=\"ui\">Neteja la formatació directa</span> o utilitzeu el botó de la barra d'eines."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:560-5
 msgid "How do I rename a sheet?"
@@ -1800,7 +1800,7 @@ msgstr "Com pot canviar la línia, l'àrea i la posició d'una forma a una diapo
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:573-11
 msgid "Select the shape in your slide. A set of handles shows."
-msgstr ""
+msgstr "Seleccioneu la forma de la diapositiva. Es mostra un conjunt d'anses."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-9
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or <span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</span>). A dialog opens."

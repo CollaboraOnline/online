@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-05 23:08+0200\n"
-"PO-Revision-Date: 2020-06-06 16:02+0000\n"
+"PO-Revision-Date: 2020-06-12 10:54+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/eu/>\n"
 "Language: eu\n"
@@ -1310,7 +1310,7 @@ msgstr "Kopia sortzen..."
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Berrespena"
 
 #~ msgid "Color"
 #~ msgstr "Kolorea"

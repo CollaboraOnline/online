@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-05 23:08+0200\n"
-"PO-Revision-Date: 2020-05-06 21:12+0000\n"
+"PO-Revision-Date: 2020-06-17 14:02+0000\n"
 "Last-Translator: Stuart Swales <stuart.swales.croftnuisk@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/en_GB/>\n"
 "Language: en_GB\n"
@@ -45,10 +45,8 @@ msgid "History"
 msgstr "History"
 
 #: admin/admin.strings.js:12
-#, fuzzy
-#| msgid "Login"
 msgid "Log"
-msgstr "Login"
+msgstr "Log"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -180,18 +178,16 @@ msgid "Server uptime"
 msgstr "Server uptime"
 
 #: admin/admin.strings.js:45
-#, fuzzy
-#| msgid "Refresh"
 msgid "Refresh Log"
-msgstr "Refresh"
+msgstr "Refresh Log"
 
 #: admin/admin.strings.js:46
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Set Log Levels"
 
 #: admin/admin.strings.js:47
 msgid "Log Levels"
-msgstr ""
+msgstr "Log Levels"
 
 #: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
 #: src/control/Signing.js:608
@@ -200,7 +196,7 @@ msgstr "Close"
 
 #: admin/admin.strings.js:49
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Update Log Levels"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -240,11 +236,11 @@ msgstr "Documents"
 
 #: admin/src/AdminSocketOverview.js:401
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "Failed to set jwt authentication cookie over insecure connection"
 
 #: admin/src/AdminSocketOverview.js:405
 msgid "Failed to authenticate this session over protocol %0"
-msgstr ""
+msgstr "Failed to authenticate this session over protocol %0"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
@@ -268,23 +264,23 @@ msgstr "TB"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:14
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:14
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -420,10 +416,8 @@ msgid "To"
 msgstr "To"
 
 #: src/control/Control.JSDialogBuilder.js:1299
-#, fuzzy
-#| msgid "Reject change"
 msgid "Select range"
-msgstr "Reject change"
+msgstr "Select range"
 
 #: src/control/Control.JSDialogBuilder.js:1328
 msgid "Font Name"
@@ -861,10 +855,8 @@ msgid "Insert tabstop"
 msgstr "Insert tabstop"
 
 #: src/control/Ruler.js:644
-#, fuzzy
-#| msgid "Insert tabstop"
 msgid "Delete tabstop"
-msgstr "Insert tabstop"
+msgstr "Delete tabstop"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1016,7 +1008,7 @@ msgstr "This version of %productName is powered by"
 
 #: src/control/Toolbar.js:505
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"Slow Proxy\""
 
 #: src/control/Toolbar.js:590
 msgid "Insert hyperlink"
@@ -1318,7 +1310,7 @@ msgstr "Creating copy..."
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmation"
 
 #~ msgid "Color"
 #~ msgstr "Colour"

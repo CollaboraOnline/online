@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-04-14 06:54+0000\n"
-"Last-Translator: Євген Кондратюк <lachend@gmail.com>\n"
+"PO-Revision-Date: 2020-06-25 13:56+0000\n"
+"Last-Translator: Roman Vasylyshyn <roman@vasylyshyn.name>\n"
 "Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -1155,7 +1155,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:296-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Неактивний документ"
 
 #: html/loleaflet-help.html%2Bdiv.p:297-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."

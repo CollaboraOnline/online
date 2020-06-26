@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-06-08 06:47+0000\n"
+"PO-Revision-Date: 2020-06-21 14:29+0000\n"
 "Last-Translator: Ming Hua <plateauwolf@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -1191,55 +1191,55 @@ msgstr "当您有内部剪切或复制的内容时，可以使用快捷菜单粘
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
-msgstr ""
+msgstr "添加图表"
 
 #: html/loleaflet-help.html%2Bdiv.p:309-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> 支持在文档中插入和展示图表。图表添加方式："
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:311-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
-msgstr ""
+msgstr "选择文本文档中的表格、电子表格中的范围或演示文稿中的表格。"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:313-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
-msgstr ""
+msgstr "选择<span class=\"ui\">插入</span> → <span class=\"ui\">图表</span>。在侧边栏中定制图表："
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:316-11
 msgid "If no table or range was selected, a prototype chart is displayed."
-msgstr ""
+msgstr "如果未选择表格或范围，则显示一张样例图表。"
 
 #: html/loleaflet-help.html%2Bdiv.p:319-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
-msgstr ""
+msgstr "<span class=\"def\">图表编辑：</span>双击选中图表。使用快捷菜单添加标题、坐标轴等图表元素。用<span class=\"ui\">数据范围</span>编辑图表数据，用<span class=\"ui\">图表类型</span>选择图表类型。"
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
-msgstr ""
+msgstr "<span class=\"def\">设置图表格式：</span>同一快捷菜单有图表对应数据表格和选择图表类型的选项。"
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
-msgstr ""
+msgstr "<span class=\"def\">设置数据序列格式：</span>打开快捷菜单并选择<span class=\"ui\">设置数据序列格式</span>。"
 
 #: html/loleaflet-help.html%2Bdiv.h4:322-5
 msgid "Handling images"
-msgstr ""
+msgstr "处理图像"
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> 可以将本地计算机或云存储里的图像插入到文本文档中。插入的图像将会嵌入文档中。"
 
 #: html/loleaflet-help.html%2Bdiv.p:324-5
 msgid "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">Insert image</span> icon allows you to choose an image from the cloud storage's folders and shares."
-msgstr ""
+msgstr "<span class=\"def\">插入图像：</span>点击<span class=\"ui\">插入图像</span>图标可选择云存储及共享文件夹里的图像进行插入。"
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid "<span class=\"def\">Insert local image:</span> opens the browser file picker to upload the image from your local computer and insert it into the document."
-msgstr ""
+msgstr "<span class=\"def\">插入本地图像：</span>打开浏览器的文件选择对话框，上传本地计算机中的图像并插入到文档中。"
 
 #: html/loleaflet-help.html%2Bdiv.p:326-5
 msgid "Images can be resized, rotated and anchored. Text can be wrapped around the image. Select the image and open the context menu. Use the images handles to resize the image with the mouse."
-msgstr ""
+msgstr "对于图像可调整尺寸、旋转及锚定。文本可围绕在图像周围。选中图像并打开快捷菜单进行这些操作。用鼠标拖动图像控制点调整图像尺寸。"
 
 #: html/loleaflet-help.html%2Bdiv.h4:327-5
 msgid "Comments in documents"
@@ -1247,31 +1247,31 @@ msgstr "文档中的批注"
 
 #: html/loleaflet-help.html%2Bdiv.p:328-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
-msgstr ""
+msgstr "用 <span class=\"productname\">%productName</span> 可以在需要查阅者特别注意的地方插入批注。批注将显示在右侧，并带有批注者姓名和日期。"
 
 #: html/loleaflet-help.html%2Bdiv.p.img:330-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."
-msgstr ""
+msgstr "点击子菜单（<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">）图标可回复、移动或删除批注。"
 
 #: html/loleaflet-help.html%2Bdiv.h4:331-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "拼写检查"
 
 #: html/loleaflet-help.html%2Bdiv.p:332-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> 可检查文本文档、电子表格及演示文稿内的拼写。拼写错误的单词用下划红色波浪线标注。在其上右键点击可打开带有拼写错误纠正建议的快捷菜单。"
 
 #: html/loleaflet-help.html%2Bdiv.p:334-5
 msgid "To systematically spell-check the whole document use the <span class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
-msgstr ""
+msgstr "要系统性检查整个文档的拼写，请使用<span class=\"ui\">工具</span>菜单下的<span class=\"ui\">拼写检查</span>选项。"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:340-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr ""
+msgstr "您可以像在桌面应用程序中编辑电子表格一样在线编辑电子表格。输入数据和选择行、列、区域这些操作都是相同的。对电子表格的操作可以使用键盘、菜单或工具栏进行。拖动单元格内容以向其它单元格中填充数据的操作也是支持的。快捷菜单中有复制、剪切和粘贴命令。在一个单元格输入数据完毕之后，按 <span class=\"kbd\">Tab</span>（制表键）会将光标移动至右侧相邻单元格，而 <span class=\"kbd\">Enter</span>（回车键）会将光标移动到下方相邻单元格，方便输入下一条数据。"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:343-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "在公式栏内输入公式。以半角等号“=”开头。"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:344-5
 msgid "All spreadsheets functions and mathematical rules applies."
@@ -1279,7 +1279,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:346-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
-msgstr ""
+msgstr "公式语言是电子表格用户都很熟悉的格式，详见 <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula 规范</a>。"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:349-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."

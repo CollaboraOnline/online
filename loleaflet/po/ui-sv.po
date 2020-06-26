@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-05 23:08+0200\n"
-"PO-Revision-Date: 2020-05-21 10:24+0000\n"
+"PO-Revision-Date: 2020-06-11 10:42+0000\n"
 "Last-Translator: Andreas Pettersson <az@kth.se>\n"
 "Language-Team: Swedish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sv/>\n"
 "Language: sv\n"
@@ -45,10 +45,8 @@ msgid "History"
 msgstr "Historik"
 
 #: admin/admin.strings.js:12
-#, fuzzy
-#| msgid "Login"
 msgid "Log"
-msgstr "Logga in"
+msgstr "Logg"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -180,18 +178,16 @@ msgid "Server uptime"
 msgstr "Serverns drifttid"
 
 #: admin/admin.strings.js:45
-#, fuzzy
-#| msgid "Refresh"
 msgid "Refresh Log"
-msgstr "Uppdatera"
+msgstr "Uppdatera logg"
 
 #: admin/admin.strings.js:46
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Ange loggnivåer"
 
 #: admin/admin.strings.js:47
 msgid "Log Levels"
-msgstr ""
+msgstr "Loggnivåer"
 
 #: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
 #: src/control/Signing.js:608
@@ -200,7 +196,7 @@ msgstr "Stäng"
 
 #: admin/admin.strings.js:49
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Uppdatera loggnivåer"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -859,10 +855,8 @@ msgid "Insert tabstop"
 msgstr "Infoga tabbstopp"
 
 #: src/control/Ruler.js:644
-#, fuzzy
-#| msgid "Insert tabstop"
 msgid "Delete tabstop"
-msgstr "Infoga tabbstopp"
+msgstr "Ta bort tabbstopp"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1316,7 +1310,7 @@ msgstr "Skapar kopia"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Bekräftelse"
 
 #~ msgid "Color"
 #~ msgstr "Färg"

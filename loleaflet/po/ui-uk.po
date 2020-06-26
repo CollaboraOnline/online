@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-05 23:08+0200\n"
-"PO-Revision-Date: 2020-04-03 07:18+0000\n"
-"Last-Translator: Євген Кондратюк <lachend@gmail.com>\n"
+"PO-Revision-Date: 2020-06-25 13:56+0000\n"
+"Last-Translator: Roman Vasylyshyn <roman@vasylyshyn.name>\n"
 "Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "Журнал"
 #, fuzzy
 #| msgid "Login"
 msgid "Log"
-msgstr "Увійти"
+msgstr "Журнал"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -183,15 +183,17 @@ msgstr "Час неперервної роботи сервера"
 #, fuzzy
 #| msgid "Refresh"
 msgid "Refresh Log"
-msgstr "Оновити"
+msgstr "Оновити журнал"
 
 #: admin/admin.strings.js:46
+#, fuzzy
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Встановити рівні журналювання"
 
 #: admin/admin.strings.js:47
+#, fuzzy
 msgid "Log Levels"
-msgstr ""
+msgstr "Рівні журналювання"
 
 #: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
 #: src/control/Signing.js:608
@@ -199,8 +201,9 @@ msgid "Close"
 msgstr "Закрити"
 
 #: admin/admin.strings.js:49
+#, fuzzy
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Оновити рівні журналювання"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -239,12 +242,13 @@ msgid "Documents"
 msgstr "Документи"
 
 #: admin/src/AdminSocketOverview.js:401
+#, fuzzy
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "Не вдалося встановити автентифікаційний jwt кукі через ненадійне з'єднання"
 
 #: admin/src/AdminSocketOverview.js:405
 msgid "Failed to authenticate this session over protocol %0"
-msgstr ""
+msgstr "Не вдалося автентифікувати цю сесію за допомогою протоколу %0"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
@@ -268,23 +272,23 @@ msgstr "ТБ"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "ПБ"
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "ЕБ"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ЗБ"
 
 #: admin/src/Util.js:14
 msgid "YB"
-msgstr ""
+msgstr "ЙБ"
 
 #: admin/src/Util.js:14
 msgid "BB"
-msgstr ""
+msgstr "ББ"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -420,10 +424,8 @@ msgid "To"
 msgstr "До"
 
 #: src/control/Control.JSDialogBuilder.js:1299
-#, fuzzy
-#| msgid "Reject change"
 msgid "Select range"
-msgstr "Відкинути зміну"
+msgstr "Обрати діапазон"
 
 #: src/control/Control.JSDialogBuilder.js:1328
 msgid "Font Name"
@@ -439,19 +441,15 @@ msgstr "Краї комірки"
 
 #: src/control/Control.JSDialogBuilder.js:1875
 msgid "Background Color"
-msgstr ""
+msgstr "Колір фону"
 
 #: src/control/Control.JSDialogBuilder.js:1877
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Градієнт"
+msgstr "Початок градієнту"
 
 #: src/control/Control.JSDialogBuilder.js:1879
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Градієнт"
+msgstr "Кінець градієнту"
 
 #: src/control/Control.JSDialogBuilder.js:2055
 msgid "Rows"
@@ -586,7 +584,7 @@ msgstr "Повідомити про проблему"
 #: src/control/Control.Menubar.js:476 src/control/Control.Menubar.js:527
 #: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:638
 msgid "Latest Updates"
-msgstr ""
+msgstr "Останні зміни"
 
 #: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:360
 #: src/control/Control.Menubar.js:477 src/control/Control.Menubar.js:528
@@ -864,13 +862,13 @@ msgstr "Праве поле"
 #, fuzzy
 #| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Вставити таблицю"
+msgstr "Вставити табулятор"
 
 #: src/control/Ruler.js:644
 #, fuzzy
 #| msgid "Insert table"
 msgid "Delete tabstop"
-msgstr "Вставити таблицю"
+msgstr "Видалити табулятор"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1010,7 +1008,7 @@ msgstr "Перейменування..."
 
 #: src/control/Toolbar.js:389
 msgid "I understand the risks"
-msgstr ""
+msgstr "Я розумію ризики"
 
 #: src/control/Toolbar.js:451
 msgid "We are sorry, the information about the latest updates is not available."
@@ -1021,8 +1019,9 @@ msgid "This version of %productName is powered by"
 msgstr "Ця версія %productName працює на"
 
 #: src/control/Toolbar.js:505
+#, fuzzy
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"Повільний проксі\""
 
 #: src/control/Toolbar.js:590
 msgid "Insert hyperlink"

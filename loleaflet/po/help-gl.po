@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-04-24 10:48+0000\n"
-"Last-Translator: Xosé <xosecalvo@gmail.com>\n"
+"PO-Revision-Date: 2020-06-17 14:02+0000\n"
+"Last-Translator: sophie <gautier.sophie@gmail.com>\n"
 "Language-Team: Galician <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/gl/>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
@@ -1499,7 +1499,7 @@ msgstr "Gárdase unha copia do documento co novo nome no mesmo cartafol."
 
 #: html/loleaflet-help.html%2Bdiv.h4:456-5
 msgid "How can I quit <span class=\"productname\">%productName</span> without saving my edits?"
-msgstr "Como saio do <span class=\"productname\">%productName</span> sen gardar as edicións feitas?<span class=\"productname\">"
+msgstr "Como saio do <span class=\"productname\">%productName</span> sen gardar as edicións feitas?"
 
 #: html/loleaflet-help.html%2Bdiv.p:457-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."

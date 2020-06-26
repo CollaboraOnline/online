@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-04-24 10:48+0000\n"
+"PO-Revision-Date: 2020-06-18 18:53+0000\n"
 "Last-Translator: Xosé <xosecalvo@gmail.com>\n"
 "Language-Team: Galician <https://weblate.documentfoundation.org/projects/libo_online/ios/gl/>\n"
 "Language: gl\n"
@@ -23,11 +23,11 @@ msgstr "Información sobre a versión"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Identificador da versión no repositorio «git» na rede"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Identificador da versión no repositorio «git» «core»"
 
 #: Settings
 msgid "Settings"

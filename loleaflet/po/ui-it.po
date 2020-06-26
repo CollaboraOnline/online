@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-05 23:08+0200\n"
-"PO-Revision-Date: 2020-05-22 08:24+0000\n"
+"PO-Revision-Date: 2020-06-11 18:45+0000\n"
 "Last-Translator: Valter Mura <valtermura@gmail.com>\n"
 "Language-Team: Italian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/it/>\n"
 "Language: it\n"
@@ -45,10 +45,8 @@ msgid "History"
 msgstr "Cronologia"
 
 #: admin/admin.strings.js:12
-#, fuzzy
-#| msgid "Login"
 msgid "Log"
-msgstr "Accedi"
+msgstr "Registro"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -180,18 +178,16 @@ msgid "Server uptime"
 msgstr "Tempo di attività del server"
 
 #: admin/admin.strings.js:45
-#, fuzzy
-#| msgid "Refresh"
 msgid "Refresh Log"
-msgstr "Aggiorna"
+msgstr "Aggiorna registro"
 
 #: admin/admin.strings.js:46
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Imposta livelli del registro"
 
 #: admin/admin.strings.js:47
 msgid "Log Levels"
-msgstr ""
+msgstr "Livelli del registro"
 
 #: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
 #: src/control/Signing.js:608
@@ -200,7 +196,7 @@ msgstr "Chiudi"
 
 #: admin/admin.strings.js:49
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Aggiorna livelli del registro"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -859,10 +855,8 @@ msgid "Insert tabstop"
 msgstr "Inserisci tabulazione"
 
 #: src/control/Ruler.js:644
-#, fuzzy
-#| msgid "Insert tabstop"
 msgid "Delete tabstop"
-msgstr "Inserisci tabulazione"
+msgstr "Elimina tabulazione"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1317,7 +1311,7 @@ msgstr "Creazione della copia..."
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Conferma"
 
 #~ msgid "Color"
 #~ msgstr "Colore"

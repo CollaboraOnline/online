@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-05 23:08+0200\n"
-"PO-Revision-Date: 2020-04-24 10:48+0000\n"
+"PO-Revision-Date: 2020-06-18 18:53+0000\n"
 "Last-Translator: Xosé <xosecalvo@gmail.com>\n"
 "Language-Team: Galician <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/gl/>\n"
 "Language: gl\n"
@@ -45,10 +45,8 @@ msgid "History"
 msgstr "Historial"
 
 #: admin/admin.strings.js:12
-#, fuzzy
-#| msgid "Login"
 msgid "Log"
-msgstr "Inicio de sesión"
+msgstr "Rexistro"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -180,18 +178,16 @@ msgid "Server uptime"
 msgstr "Tempo desde o acendido do servidor"
 
 #: admin/admin.strings.js:45
-#, fuzzy
-#| msgid "Refresh"
 msgid "Refresh Log"
-msgstr "Actualizar"
+msgstr "Actualizar rexistro"
 
 #: admin/admin.strings.js:46
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Definir niveis de rexistro"
 
 #: admin/admin.strings.js:47
 msgid "Log Levels"
-msgstr ""
+msgstr "Niveis de rexistro"
 
 #: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
 #: src/control/Signing.js:608
@@ -200,7 +196,7 @@ msgstr "Pechar"
 
 #: admin/admin.strings.js:49
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Actualizar niveis de rexistro"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -240,11 +236,11 @@ msgstr "Documentos"
 
 #: admin/src/AdminSocketOverview.js:401
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "Non foi posíbel estabelecer a cookie de autenticación jwt a través dunha conexión insegura."
 
 #: admin/src/AdminSocketOverview.js:405
 msgid "Failed to authenticate this session over protocol %0"
-msgstr ""
+msgstr "Non foi posíbel autenticar esta sesión a través do protocolo %0"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Are you sure you want to shut down the server?"
@@ -420,10 +416,8 @@ msgid "To"
 msgstr "Até"
 
 #: src/control/Control.JSDialogBuilder.js:1299
-#, fuzzy
-#| msgid "Reject change"
 msgid "Select range"
-msgstr "Rexeitar o cambio"
+msgstr "Seleccionar intervalo"
 
 #: src/control/Control.JSDialogBuilder.js:1328
 msgid "Font Name"
@@ -439,19 +433,15 @@ msgstr "Bordos de cela"
 
 #: src/control/Control.JSDialogBuilder.js:1875
 msgid "Background Color"
-msgstr ""
+msgstr "Cor do fondo"
 
 #: src/control/Control.JSDialogBuilder.js:1877
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Gradación"
+msgstr "Inicio da gradación"
 
 #: src/control/Control.JSDialogBuilder.js:1879
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Gradación"
+msgstr "Final da gradación"
 
 #: src/control/Control.JSDialogBuilder.js:2055
 msgid "Rows"
@@ -865,10 +855,8 @@ msgid "Insert tabstop"
 msgstr "Inserir tabulación"
 
 #: src/control/Ruler.js:644
-#, fuzzy
-#| msgid "Insert tabstop"
 msgid "Delete tabstop"
-msgstr "Inserir tabulación"
+msgstr "Eliminar tabulación"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1020,7 +1008,7 @@ msgstr "Esta versión do %productName funciona grazas a"
 
 #: src/control/Toolbar.js:505
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "«Proxy lento»"
 
 #: src/control/Toolbar.js:590
 msgid "Insert hyperlink"
@@ -1322,7 +1310,7 @@ msgstr "A crear unha copia..."
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmación"
 
 #~ msgid "Color"
 #~ msgstr "Cor"
