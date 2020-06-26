@@ -74,6 +74,10 @@ void sendLastModificationTime(const std::shared_ptr<Session>& session,
     if (!session)
         return;
 
+    if (documentLastModifiedTime == std::chrono::system_clock::time_point())
+        // No time from the storage (e.g., SharePoint 2013 and 2016) -> don't send
+        return;
+
     std::stringstream stream;
     stream << "lastmodtime: " << documentLastModifiedTime;
     const std::string message = stream.str();

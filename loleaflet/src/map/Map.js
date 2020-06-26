@@ -386,6 +386,11 @@ L.Map = L.Evented.extend({
 		if (lastModButton !== null && lastModButton !== undefined
 			&& lastModButton.firstChild.innerHTML !== null
 			&& lastModButton.firstChild.childElementCount == 0) {
+			if (this._lastmodtime == null) {
+				// No modification time -> hide the indicator
+				lastModButton.innerHTML = '';
+				return;
+			}
 			var mainSpan = document.createElement('span');
 			var label = document.createTextNode(_('Last modification'));
 			var separator = document.createTextNode(': ');
