@@ -1002,9 +1002,13 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     const std::string newFilename = Util::getFilenameFromURL(uri);
     const std::string fileId = Util::getFilenameFromURL(_docKey);
     if (LOOLWSD::AnonymizeUserData)
-        LOG_DBG("New filename [" << LOOLWSD::anonymizeUrl(newFilename) << "] will be known by its fileId [" << fileId << ']');
+    {
+        LOG_DBG("New filename [" << LOOLWSD::anonymizeUrl(newFilename)
+                                 << "] will be known by its fileId [" << fileId << ']');
 
-    Util::mapAnonymized(newFilename, fileId);
+        Util::mapAnonymized(newFilename, fileId);
+    }
+
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uri);
 
     // If the file timestamp hasn't changed, skip saving.
