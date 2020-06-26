@@ -107,7 +107,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain', 'document.xlsx');
 	});
 
-	it.skip('Undo/redo.', function() {
+	it('Undo/redo.', function() {
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
 
@@ -128,6 +128,9 @@ describe('Trigger hamburger menu options.', function() {
 		cy.contains('.menu-entry-with-icon', 'Undo')
 			.click();
 
+		cy.get('input#addressInput')
+			.should('have.prop', 'value', 'A1');
+
 		calcMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
@@ -141,6 +144,9 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.contains('.menu-entry-with-icon', 'Redo')
 			.click();
+
+		cy.get('input#addressInput')
+			.should('have.prop', 'value', 'A1');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -179,6 +185,9 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('.leaflet-popup-content input[value=\'Jump to state\']')
 			.click();
+
+		cy.get('input#addressInput')
+			.should('have.prop', 'value', 'A1');
 
 		calcMobileHelper.selectAllMobile();
 

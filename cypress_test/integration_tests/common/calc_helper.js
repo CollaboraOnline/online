@@ -50,6 +50,9 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 		cy.get('.leaflet-cursor.blinking-cursor')
 			.should('be.visible');
 
+	cy.get('input#addressInput')
+		.should('have.prop', 'value', 'A1');
+
 	cy.log('Clicking on first cell - end.');
 }
 
