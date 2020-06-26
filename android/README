@@ -65,6 +65,43 @@ build the native parts on Windows.
   # install
   PATH="$PATH":~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin make -j8 ANDROID_ABI=arm64-v8a CC=aarch64-linux-android21-clang CXX=aarch64-linux-android21-clang++ SYSLIBS=-static-libstdc++ install INSTALLDIR=/opt/poco-android-64bit
 
+* Poco for x86_64 (if you want to add the support for that into the APK too):
+
+  # checkout the 1.10.1 in yet another location
+  git clone https://github.com/pocoproject/poco poco-android-x86-64
+  cd poco-android-x86-64
+  git checkout -b poco-1.10.1 origin/poco-1.10.1
+
+  # and apply the following patch:
+  diff --git a/build/config/Android b/build/config/Android
+  index 9227a3352..1abf6df7c 100644
+  --- a/build/config/Android
+  +++ b/build/config/Android
+  @@ -25,10 +25,14 @@ ifeq ($(ANDROID_ABI),x86)
+   TOOL      = i686-linux-android
+   ARCHFLAGS = -march=i686 -msse3 -mstackrealign -mfpmath=sse
+   else
+  +ifeq ($(ANDROID_ABI),x86_64)
+  +TOOL      = x86_64-linux-android
+  +else
+   $(error Invalid ABI specified in ANDROID_ABI)
+   endif
+   endif
+   endif
+  +endif
+   
+   #
+   # Define Tools
+
+  # configure
+  ./configure --config=Android --no-samples --no-tests --omit=Crypto,NetSSL_OpenSSL,Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,JWT
+
+  # build
+  PATH="$PATH":~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin make -j8 ANDROID_ABI=x86_64 CC=x86_64-linux-android21-clang CXX=x86_64-linux-android21-clang++ SYSLIBS=-static-libstdc++
+
+  # install
+  PATH="$PATH":~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin make -j8 ANDROID_ABI=x86_64 CC=x86_64-linux-android21-clang CXX=x86_64-linux-android21-clang++ SYSLIBS=-static-libstdc++ install INSTALLDIR=/opt/poco-android-x86-64
+
 * Configure the online.git (eg. in online-android folder)
 
   Don't forget to change --with-lo-builddir in the following:
