@@ -166,6 +166,16 @@ AC_ARG_WITH(android-package-versioncode,
                            [Set the versionCode for the Android package.]),
 ,)
 
+AC_ARG_WITH(android-abi,
+            AS_HELP_STRING([--with-android-abi=x86_64],
+                           [Allows specification of a concrete ABI that is to be built for.  By default, builds for all the 3
+                            supported ABIs at the same time: armeabi-v7a, arm64-v8a and x86_64.
+                            Please note that you need to specify the parameters for --with-lo-builddir,
+                            --with-poco-includes and --with-poco-libs in the order of armeabi-v7a:arm64-v8a:x86_64.  For
+                            example, when you use --with-android-abi=x86_64,
+                            you have to specify --with-lo-builddir=::/path/to/x86-64/builddir]),
+,)
+
 AC_ARG_WITH([app-name],
               AS_HELP_STRING([--with-app-name=<name>],
                              [Set the user-visible name of the app you build.]))
@@ -356,17 +366,28 @@ fi
 # to the Mac.
 # Android: We need these to setup the CMakeLists.txt properly.
 LOBUILDDIR=
-if test -z "$ANDROID_ABI"; then
-  ANDROID_ABI="armeabi-v7a"
-fi
+ANDROID_ABI=
 LOBUILDDIR_ARM64_V8A=
+LOBUILDDIR_X86_64=
 POCOINCLUDE=
 POCOINCLUDE_ARM64_V8A=
+POCOINCLUDE_X86_64=
 POCOLIB=
 POCOLIB_ARM64_V8A=
+POCOLIB_X86_64=
 POCODEBUG=
 CORE_VERSION_HASH=""
 if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \); then
+   if test "$enable_androidapp" = "yes" ; then
+      AC_MSG_CHECKING([for Android ABI to build for])
+      if test -z "$with_android_abi" ; then
+         ANDROID_ABI="armeabi-v7a arm64-v8a x86_64"
+      else
+         ANDROID_ABI=`echo $with_android_abi | sed 's/:/ /g'`
+      fi
+      AC_MSG_RESULT([$ANDROID_ABI])
+   fi
+
    AC_MSG_CHECKING([for LibreOffice build tree to build against])
    if test -z "$with_lo_builddir"; then
       AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the mobile app build tree.])
@@ -374,28 +395,11 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    LOBUILDDIR="$with_lo_builddir"
    if test "$enable_androidapp" = "yes" ; then
-       if echo "$LOBUILDDIR" | grep -qs ':' ; then
-           ANDROID_ABI="armeabi-v7a arm64-v8a"
-           LOBUILDDIR=`echo $with_lo_builddir | sed 's/:.*//'`
-           LOBUILDDIR_ARM64_V8A=`echo $with_lo_builddir | sed 's/^.*://'`
-       fi
-
-       # Sanity check, just a random object file in the LibreOffice build tree - 64bit
-       if test "$ANDROID_ABI" = "x86_64" ; then
-           if test -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
-               AC_MSG_RESULT([$LOBUILDDIR])
-           else
-               AC_MSG_ERROR([This is not a LibreOffice 64bit core build directory: $LOBUILDDIR])
-           fi
-       else
-       if test "$ANDROID_ABI" != "armeabi-v7a" ; then
-           if test -f "$LOBUILDDIR_ARM64_V8A/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
-               AC_MSG_RESULT([$LOBUILDDIR_ARM64_V8A])
-           else
-               AC_MSG_ERROR([This is not a LibreOffice 64bit core build directory: $LOBUILDDIR_ARM64_V8A])
-           fi
-       fi
-       fi
+      if echo "$LOBUILDDIR" | grep -qs ':' ; then
+         LOBUILDDIR=`echo $with_lo_builddir | cut -d: -f1`
+         LOBUILDDIR_ARM64_V8A=`echo $with_lo_builddir | cut -d: -f2`
+         LOBUILDDIR_X86_64=`echo $with_lo_builddir | cut -d: -f3`
+      fi
    fi
 
    # Get the git hash of the core build
@@ -408,6 +412,22 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
        AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
    fi
 
+   if test -n "$LOBUILDDIR_ARM64_V8A" ; then
+      if test -f "$LOBUILDDIR_ARM64_V8A/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
+         AC_MSG_RESULT([$LOBUILDDIR_ARM64_V8A])
+      else
+         AC_MSG_ERROR([This is not a LibreOffice ARM64 core build directory: $LOBUILDDIR_ARM64_V8A])
+      fi
+   fi
+
+   if test -n "$LOBUILDDIR_X86_64" ; then
+      if test -f "$LOBUILDDIR_X86_64/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
+         AC_MSG_RESULT([$LOBUILDDIR_X86_64])
+      else
+         AC_MSG_ERROR([This is not a LibreOffice x86-64 core build directory: $LOBUILDDIR_X86_64])
+      fi
+   fi
+
    AC_MSG_CHECKING([for Poco include directory to build against])
    if test -z "$with_poco_includes"; then
       AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the mobile app build tree.])
@@ -415,27 +435,11 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    POCOINCLUDE="$with_poco_includes"
    if test "$enable_androidapp" = "yes" ; then
-       if echo "$POCOINCLUDE" | grep -qs ':' ; then
-           POCOINCLUDE=`echo $with_poco_includes | sed 's/:.*//'`
-           POCOINCLUDE_ARM64_V8A=`echo $with_poco_includes | sed 's/^.*://'`
-       fi
-
-       # Sanity check - 64bit
-       if test "$ANDROID_ABI" = "x86_64" ; then
-           if test -f "$POCOINCLUDE/Poco/Poco.h"; then
-               AC_MSG_RESULT([$POCOINCLUDE])
-           else
-               AC_MSG_ERROR([This is not a Poco 64bit include directory: $POCOINCLUDE])
-           fi
-       else
-       if test "$ANDROID_ABI" != "armeabi-v7a" ; then
-           if test -f "$POCOINCLUDE_ARM64_V8A/Poco/Poco.h"; then
-               AC_MSG_RESULT([$POCOINCLUDE_ARM64_V8A])
-           else
-               AC_MSG_ERROR([This is not a Poco 64bit include directory: $POCOINCLUDE_ARM64_V8A])
-           fi
-       fi
-       fi
+      if echo "$POCOINCLUDE" | grep -qs ':' ; then
+         POCOINCLUDE=`echo $with_poco_includes | cut -d: -f1`
+         POCOINCLUDE_ARM64_V8A=`echo $with_poco_includes | cut -d: -f2`
+         POCOINCLUDE_X86_64=`echo $with_poco_includes | cut -d: -f3`
+      fi
    fi
 
    # Sanity check
@@ -445,6 +449,22 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
        AC_MSG_ERROR([This is not a Poco include directory: $POCOINCLUDE])
    fi
 
+   if test -n "$POCOINCLUDE_ARM64_V8A" ; then
+      if test -f "$POCOINCLUDE_ARM64_V8A/Poco/Poco.h"; then
+         AC_MSG_RESULT([$POCOINCLUDE_ARM64_V8A])
+      else
+         AC_MSG_ERROR([This is not a Poco ARM64 include directory: $POCOINCLUDE_ARM64_V8A])
+      fi
+   fi
+
+   if test -n "$POCOINCLUDE_X86_64" ; then
+      if test -f "$POCOINCLUDE_X86_64/Poco/Poco.h"; then
+         AC_MSG_RESULT([$POCOINCLUDE_X86_64])
+      else
+         AC_MSG_ERROR([This is not a Poco x86-64 include directory: $POCOINCLUDE_X86_64])
+      fi
+   fi
+
    AC_MSG_CHECKING([for Poco lib directory to build against])
    if test -z "$with_poco_libs"; then
       AC_MSG_ERROR([You MUST use the --with-poco-libs option when configuring the mobile app build tree.])
@@ -452,27 +472,11 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    POCOLIB="$with_poco_libs"
    if test "$enable_androidapp" = "yes" ; then
-       if echo "$POCOLIB" | grep -qs ':' ; then
-           POCOLIB=`echo $with_poco_libs | sed 's/:.*//'`
-           POCOLIB_ARM64_V8A=`echo $with_poco_libs | sed 's/^.*://'`
-       fi
-
-       # Sanity check - 64bit
-       if test "$ANDROID_ABI" = "x86_64" ; then
-           if test -f "$POCOLIB/libPocoFoundation.a"; then
-               AC_MSG_RESULT([$POCOLIB])
-           else
-               AC_MSG_ERROR([This is not a Poco 64bit lib directory: $POCOLIB])
-           fi
-       else
-       if test "$ANDROID_ABI" != "armeabi-v7a" ; then
-           if test -f "$POCOLIB_ARM64_V8A/libPocoFoundation.a"; then
-               AC_MSG_RESULT([$POCOLIB_ARM64_V8A])
-           else
-               AC_MSG_ERROR([This is not a Poco 64bit lib directory: $POCOLIB_ARM64_V8A])
-           fi
-       fi
-       fi
+      if echo "$POCOLIB" | grep -qs ':' ; then
+         POCOLIB=`echo $with_poco_libs | cut -d: -f1`
+         POCOLIB_ARM64_V8A=`echo $with_poco_libs | cut -d: -f2`
+         POCOLIB_X86_64=`echo $with_poco_libs | cut -d: -f3`
+      fi
    fi
 
    # Sanity check
@@ -482,6 +486,22 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
        AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
    fi
 
+   if test -n "$POCOLIB_ARM64_V8A" ; then
+      if test -f "$POCOLIB_ARM64_V8A/libPocoFoundation.a"; then
+         AC_MSG_RESULT([$POCOLIB_ARM64_V8A])
+      else
+         AC_MSG_ERROR([This is not a Poco ARM64 lib directory: $POCOLIB_ARM64_V8A])
+      fi
+   fi
+
+   if test -n "$POCOLIB_X86_64" ; then
+      if test -f "$POCOLIB_X86_64/libPocoFoundation.a"; then
+         AC_MSG_RESULT([$POCOLIB_X86_64])
+      else
+         AC_MSG_ERROR([This is not a Poco x86-64 lib directory: $POCOLIB_X86_64])
+      fi
+   fi
+
    if test "$ENABLE_DEBUG" = "true" ; then
        POCODEBUG=d
    fi
@@ -489,10 +509,13 @@ fi
 AC_SUBST(LOBUILDDIR)
 AC_SUBST(ANDROID_ABI)
 AC_SUBST(LOBUILDDIR_ARM64_V8A)
+AC_SUBST(LOBUILDDIR_X86_64)
 AC_SUBST(POCOINCLUDE)
 AC_SUBST(POCOINCLUDE_ARM64_V8A)
+AC_SUBST(POCOINCLUDE_X86_64)
 AC_SUBST(POCOLIB)
 AC_SUBST(POCOLIB_ARM64_V8A)
+AC_SUBST(POCOLIB_X86_64)
 AC_SUBST(POCODEBUG)
 AC_SUBST([CORE_VERSION_HASH])
 
