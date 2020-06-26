@@ -139,8 +139,8 @@ run-cov: @JAILS_PATH@ $(NODE_BINS)
 	@echo "Run all tests..."
 	@echo
 	$(call start_loolwsd)
-	$(call run_desktop_tests,,COVERAGE_RUN="1")
-	$(call run_mobile_tests,,COVERAGE_RUN="1")
+	$(call run_desktop_tests,,,COVERAGE_RUN="1")
+	$(call run_mobile_tests,,,COVERAGE_RUN="1")
 	@$(KILL_COMMAND) || true
 
 define run_JS_error_check
@@ -207,7 +207,7 @@ define run_desktop_tests
 		$(CYPRESS_BINARY) run \
 			--browser $(CHROME) \
 			--headless \
-			$(DESKTOP_CONFIG)$(if $(2),$(COMMA)$(2),)  \
+			$(DESKTOP_CONFIG)$(if $(3),$(COMMA)$(3))  \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
@@ -224,7 +224,7 @@ define run_mobile_tests
 		$(CYPRESS_BINARY) run \
 			--browser $(CHROME) \
 			--headless \
-			$(MOBILE_CONFIG)$(if $(2),$(COMMA)$(2),) \
+			$(MOBILE_CONFIG)$(if $(3),$(COMMA)$(3)) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
 			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
 	$(if $(PARALLEL_BUILD),\
