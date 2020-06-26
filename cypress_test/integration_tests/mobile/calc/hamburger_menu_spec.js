@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy require afterEach */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -6,20 +6,23 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Trigger hamburger menu options.', function() {
-	var testFileName = 'hamburger_menu.ods';
+	var testFileName = '';
 
-	beforeEach(function() {
+	function before(testFile) {
+		testFileName = testFile;
 		mobileHelper.beforeAllMobile(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
-	});
+	}
 
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
 
 	it('Save', function() {
+		before('hamburger_menu.ods');
+
 		mobileHelper.openHamburgerMenu();
 
 		cy.contains('.menu-entry-with-icon', 'File')
@@ -34,6 +37,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Print', function() {
+		before('hamburger_menu.ods');
+
 		// A new window should be opened with the PDF.
 		cy.window()
 			.then(function(win) {
@@ -52,6 +57,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as PDF', function() {
+		before('hamburger_menu.ods');
+
 		mobileHelper.openHamburgerMenu();
 
 		cy.contains('.menu-entry-with-icon', 'Download as')
@@ -66,6 +73,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as ODS', function() {
+		before('hamburger_menu.ods');
+
 		mobileHelper.openHamburgerMenu();
 
 		cy.contains('.menu-entry-with-icon', 'Download as')
@@ -80,6 +89,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as XLS', function() {
+		before('hamburger_menu.ods');
+
 		mobileHelper.openHamburgerMenu();
 
 		cy.contains('.menu-entry-with-icon', 'Download as')
@@ -94,6 +105,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as XLSX', function() {
+		before('hamburger_menu.ods');
+
 		mobileHelper.openHamburgerMenu();
 
 		cy.contains('.menu-entry-with-icon', 'Download as')
@@ -108,6 +121,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Undo/redo.', function() {
+		before('hamburger_menu.ods');
+
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
 
@@ -155,6 +170,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Repair.', function() {
+		before('hamburger_menu.ods');
+
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
 		cy.get('textarea.clipboard')
@@ -196,6 +213,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Cut.', function() {
+		before('hamburger_menu.ods');
+
 		calcMobileHelper.selectAllMobile();
 
 		mobileHelper.openHamburgerMenu();
@@ -222,6 +241,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Copy.', function() {
+		before('hamburger_menu.ods');
+
 		calcMobileHelper.selectAllMobile();
 
 		mobileHelper.openHamburgerMenu();
@@ -248,6 +269,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Paste.', function() {
+		before('hamburger_menu.ods');
+
 		calcMobileHelper.selectAllMobile();
 
 		mobileHelper.openHamburgerMenu();
@@ -274,6 +297,8 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Select all.', function() {
+		before('hamburger_menu.ods');
+
 		cy.get('#copy-paste-container table td')
 			.should('not.contain.text', 'Text');
 
@@ -290,5 +315,62 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'Text');
+	});
+
+	it.only('Search some word.', function() {
+		before('hamburger_menu_search.ods');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Search')
+			.click();
+
+		// Search bar become visible
+		cy.get('#toolbar-search')
+			.should('be.visible');
+
+		// Search for some word
+		cy.get('#search-input')
+			.type('a');
+
+		cy.get('.w2ui-tb-image.w2ui-icon.next')
+			.click();
+
+		// First cell should be selected
+		cy.get('input#addressInput')
+			.should('have.prop', 'value', 'A1');
+
+		// Go for the second match
+		cy.get('.w2ui-tb-image.w2ui-icon.next')
+			.click();
+
+		//Second cell should be selected
+		cy.get('input#addressInput')
+			.should('have.prop', 'value', 'B1');
+
+		// Go back to the first match
+		cy.get('.w2ui-tb-image.w2ui-icon.prev')
+			.click();
+
+		// First cell should be selected
+		cy.get('input#addressInput')
+			.should('have.prop', 'value', 'A1');
+
+		// Remove search word
+		cy.get('#search-input')
+			.should('have.prop', 'value', 'a');
+
+		cy.get('#tb_searchbar_item_cancelsearch')
+			.click();
+
+		cy.get('#search-input')
+			.should('have.prop', 'value', '');
+
+		// Close search toolbar
+		cy.get('.w2ui-tb-image.w2ui-icon.unfold')
+			.click();
+
+		cy.get('#toolbar-search')
+			.should('not.be.visible');
 	});
 });
