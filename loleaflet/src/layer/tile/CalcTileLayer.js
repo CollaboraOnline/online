@@ -1116,6 +1116,17 @@ L.SheetGeometry = L.Class.extend({
 			this._rows.getSize(unit));
 	},
 
+	// Returns the CSS pixel position/size of the requested cell at a specified zoom.
+	getCellRect: function (columnIndex, rowIndex, zoomScale) {
+		var horizPosSize = this._columns.getElementData(columnIndex, false /* devicePixels */, zoomScale);
+		var vertPosSize  = this._rows.getElementData(rowIndex, false /* devicePixels */, zoomScale);
+
+		var topLeft = new L.Point(horizPosSize.startpos, vertPosSize.startpos);
+		var size = new L.Point(horizPosSize.size, vertPosSize.size);
+
+		return new L.Bounds(topLeft, topLeft.add(size));
+	},
+
 	_testValidity: function (sheetGeomJSON, checkCompleteness) {
 
 		if (!sheetGeomJSON.hasOwnProperty('commandName')) {
@@ -1307,7 +1318,29 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	// returns the element pos/size in css pixels by default.
-	getElementData: function (index, useDevicePixels) {
+	getElementData: function (index, useDevicePixels, zoomScale) {
+		if (zoomScale !== undefined) {
+			var startpos = 0;
+			var size = 0;
+			this._visibleSizes.forEachSpanInRange(0, index, function (spanData) {
+				var count = spanData.end - spanData.start + 1;
+				var sizeOneCSSPx = Math.floor(spanData.size * zoomScale / 15.0);
+				if (index > spanData.end) {
+					startpos += (sizeOneCSSPx * count);
+				}
+				else if (index >= spanData.start && index <= spanData.end) {
+					// final span
+					startpos += (sizeOneCSSPx * (index - spanData.start));
+					size = sizeOneCSSPx;
+				}
+			});
+
+			return {
+				startpos: startpos,
+				size: size
+			};
+		}
+
 		var span = this._visibleSizes.getSpanDataByIndex(index);
 		if (span === undefined) {
 			return undefined;

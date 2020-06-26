@@ -468,6 +468,17 @@ L.Map = L.Evented.extend({
 			// for spreadsheets, when the document is smaller than the viewing area
 			// we want it to be glued to the row/column headers instead of being centered
 			this._docLayer._checkSpreadSheetBounds(zoom);
+			var calcLayer = this._docLayer;
+			if (calcLayer.options.sheetGeometryDataEnabled && calcLayer.sheetGeometry) {
+				var sheetGeom = calcLayer.sheetGeometry;
+				var cellRange = sheetGeom.getViewCellRange();
+				var col = cellRange.columnrange.start, row = cellRange.rowrange.start;
+				var zoomScaleAbs = Math.pow(1.2, (zoom - this.options.zoom));
+				var newTopLeftPx = sheetGeom.getCellRect(col, row, zoomScaleAbs).getTopLeft();
+				var newCenterPx = newTopLeftPx.add(this.getSize().divideBy(2)._floor());
+				var newCenterLatLng = this.unproject(newCenterPx, zoom);
+				return this.setView(newCenterLatLng, zoom, {zoom: options});
+			}
 		}
 		var curCenter = this.getCenter();
 		if (this._docLayer && this._docLayer._visibleCursor && this.getBounds().contains(this._docLayer._visibleCursor.getCenter())) {
