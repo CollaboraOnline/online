@@ -185,7 +185,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     if (!trace)
         trace = strdup("warning");
 
-    setupKitEnvironment();
+    setupKitEnvironment("");
 
     Log::initialize("Mobile", trace, false, false, {});
     Util::setThreadName("main");

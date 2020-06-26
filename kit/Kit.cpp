@@ -2505,7 +2505,7 @@ void wakeCallback(void* pData)
 #endif
 }
 
-void setupKitEnvironment()
+void setupKitEnvironment(const std::string& userInterface)
 {
     // Setup & check environment
     const std::string layers(
@@ -2536,6 +2536,10 @@ void setupKitEnvironment()
     if (Log::logger().trace())
         options += ":profile_events";
 #endif
+
+    if (userInterface == "notebookbar")
+        options += ":notebookbar";
+
 //    options += ":sc_no_grid_bg"; // leave this disabled for now, merged-cells needs more work.
     ::setenv("SAL_LOK_OPTIONS", options.c_str(), 0);
 }
@@ -2555,6 +2559,7 @@ void lokit_main(
                 bool displayVersion,
 #else
                 int docBrokerSocket,
+                const std::string& userInterface,
 #endif
                 size_t numericIdentifier
                 )
@@ -2818,7 +2823,7 @@ void lokit_main(
 #ifndef IOS
         // Was not done by the preload.
         // For iOS we call it in -[AppDelegate application: didFinishLaunchingWithOptions:]
-        setupKitEnvironment();
+        setupKitEnvironment(userInterface);
 #endif
 
 #if defined(__linux) && !defined(__ANDROID__)

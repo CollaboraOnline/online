@@ -52,6 +52,8 @@ static bool SingleKit = false;
 #endif
 #endif
 
+static std::string UserInterface;
+
 static bool DisplayVersion = false;
 static std::string UnitTestLibrary;
 static std::string LogLevel;
@@ -539,6 +541,12 @@ int main(int argc, char** argv)
             LOG_ERR("Security: Running without the ability to filter system calls is ill advised.");
             NoSeccomp = true;
         }
+
+        else if (std::strstr(cmd, "--ui") == cmd)
+        {
+            eq = std::strchr(cmd, '=');
+            UserInterface = std::string(eq+1);
+        }
     }
 
     if (loSubPath.empty() || sysTemplate.empty() ||
@@ -555,7 +563,7 @@ int main(int argc, char** argv)
         return EX_USAGE;
     }
 
-    setupKitEnvironment();
+    setupKitEnvironment(UserInterface);
 
     if (!std::getenv("LD_BIND_NOW")) // must be set by parent.
         LOG_INF("Note: LD_BIND_NOW is not set.");
