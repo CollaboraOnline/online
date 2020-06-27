@@ -415,14 +415,12 @@ Admin::~Admin()
 
 void Admin::pollingThread()
 {
-    std::chrono::steady_clock::time_point lastCPU, lastMem, lastNet, lastCleanup;
-
     _model.setThreadOwner(std::this_thread::get_id());
 
-    lastCPU = std::chrono::steady_clock::now();
-    lastMem = lastCPU;
-    lastNet = lastCPU;
-    lastCleanup = lastCPU;
+    std::chrono::steady_clock::time_point lastCPU = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point lastMem = lastCPU;
+    std::chrono::steady_clock::time_point lastNet = lastCPU;
+    std::chrono::steady_clock::time_point lastCleanup = lastCPU;
 
     while (!isStop() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
     {
@@ -484,14 +482,15 @@ void Admin::pollingThread()
             lastNet = now;
         }
 
-        int cleanupWait = _cleanupIntervalMs -
-                std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCleanup).count();
-        if (cleanupWait <= MinStatsIntervalMs / 2) // Close enough
+        int cleanupWait = _cleanupIntervalMs;
+        if (_defDocProcSettings.getCleanupSettings().getEnable())
         {
-            if (_defDocProcSettings.getCleanupSettings().getEnable())
+            cleanupWait
+                -= std::chrono::duration_cast<std::chrono::milliseconds>(now - lastCleanup).count();
+            if (cleanupWait <= MinStatsIntervalMs / 2) // Close enough
             {
                 cleanupResourceConsumingDocs();
-                
+
                 cleanupWait += _cleanupIntervalMs;
                 lastCleanup = now;
             }
@@ -509,7 +508,8 @@ void Admin::pollingThread()
         }
 
         // Handle websockets & other work.
-        const int timeout = capAndRoundInterval(std::min(std::min(std::min(cpuWait, memWait), netWait), cleanupWait));
+        const int timeout = capAndRoundInterval(
+            std::min(std::min(std::min(cpuWait, memWait), netWait), cleanupWait));
         LOG_TRC("Admin poll for " << timeout << "ms.");
         poll(timeout * 1000); // continue with ms for admin, settings etc.
     }
