@@ -1140,7 +1140,7 @@ if test "$enable_androidapp" = "yes"; then
                  $srcdir/android/lib/src/main/cpp/CMakeLists.txt:android/lib/src/main/cpp/CMakeLists.txt.in])
 fi
 
-AC_CONFIG_FILES([test/run_unit.sh:test/run_unit.sh.in],[chmod +x test/run_unit.sh])
+AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
 
 AC_OUTPUT
 

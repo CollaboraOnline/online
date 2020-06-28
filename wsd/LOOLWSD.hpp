@@ -245,6 +245,7 @@ public:
     static std::string LogLevel;
     static bool AnonymizeUserData;
     static bool CheckLoolUser;
+    static bool CleanupOnly;
     static bool IsProxyPrefixEnabled;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;

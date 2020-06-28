@@ -321,6 +321,8 @@ EXTRA_DIST = discovery.xml \
              scripts/unocommands.py \
              $(man_MANS)
 
+CLEANUP_COMMAND=if test -s ./loolwsd; then echo "Cleaning up..." && ./loolwsd --cleanup --o:logging.level=trace; fi
+
 if HAVE_LO_PATH
 
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -328,13 +330,16 @@ CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
 
 $(SYSTEM_STAMP) : ${top_srcdir}/loolwsd-systemplate-setup
+	if test -s ./loolwsd; then ./loolwsd --cleanup; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@
 
 @JAILS_PATH@ :
 	mkdir -p $@
+	$(CLEANUP_COMMAND)
 
 clean-local:
+	$(CLEANUP_COMMAND)
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	rm -f $(abs_srcdir)/compile_commands.json
@@ -457,14 +462,18 @@ endif
 # installing. When building for packaging, no need for this, as the
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
+.PHONY: caps_bins
 
-all-local: loolforkit loolmount @JAILS_PATH@ $(SYSTEM_STAMP)
+caps_bins: loolforkit loolmount
 if ENABLE_SETCAP
 	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit
 	    sudo @SETCAP@ cap_sys_admin=ep loolmount
 else
 	    echo "Skipping capability setting"
 endif
+
+all-local: loolwsd caps_bins @JAILS_PATH@ $(SYSTEM_STAMP)
+	$(CLEANUP_COMMAND)
 
 # just run the build without any tests
 build-nocheck: all-am

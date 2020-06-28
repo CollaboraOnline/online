@@ -74,7 +74,6 @@ echo "Running $tst | $tst_log ...";
 if ${trace} \
        ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
        --o:child_root_path="$jails_path" \
-       --o:mount_jail_tree=false \
                                    --o:storage.filesystem[@allow]=true \
                                    --o:logging.level=trace \
                                    --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
@@ -91,7 +90,6 @@ else
         echo "Test failed on unit: $tst re-run with:"
         echo "   $ gdb --args ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
         echo "         --o:child_root_path=\"$jails_path\" \\"
-        echo "         --o:mount_jail_tree=false \\"
         echo "         --o:storage.filesystem[@allow]=true \\"
         echo "         --o:storage.ssl.enable=false \\"
         echo "         --o:logging.level=trace \\"

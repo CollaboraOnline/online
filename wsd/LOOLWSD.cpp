@@ -731,6 +731,7 @@ std::string LOOLWSD::LogLevel = "trace";
 std::string LOOLWSD::UserInterface = "classic";
 bool LOOLWSD::AnonymizeUserData = false;
 bool LOOLWSD::CheckLoolUser = true;
+bool LOOLWSD::CleanupOnly = false; //< If we should cleanup and exit.
 bool LOOLWSD::IsProxyPrefixEnabled = false;
 #if ENABLE_SSL
 Util::RuntimeConstant<bool> LOOLWSD::SSLEnabled;
@@ -1188,6 +1189,13 @@ void LOOLWSD::initialize(Application& self)
     }
     else
     {
+        if (CleanupOnly)
+        {
+            // Cleanup and exit.
+            JailUtil::cleanupJails(ChildRoot);
+            std::exit(EX_OK);
+        }
+
         if (ChildRoot[ChildRoot.size() - 1] != '/')
             ChildRoot += '/';
 
@@ -1475,11 +1483,15 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
-    optionSet.addOption(Option("version-hash", "", "Display product version-hash information.")
+    optionSet.addOption(Option("version-hash", "", "Display product version-hash information and exit.")
                         .required(false)
                         .repeatable(false));
 
     optionSet.addOption(Option("version", "", "Display version and hash information.")
+                        .required(false)
+                        .repeatable(false));
+
+    optionSet.addOption(Option("cleanup", "", "Cleanup jails and other temporary data and exit.")
                         .required(false)
                         .repeatable(false));
 
@@ -1565,6 +1577,8 @@ void LOOLWSD::handleOption(const std::string& optionName,
     }
     else if (optionName == "version")
         DisplayVersion = true;
+    else if (optionName == "cleanup")
+        CleanupOnly = true; // Flag for later as we need the config.
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
     else if (optionName == "disable-ssl")

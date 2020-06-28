@@ -189,8 +189,11 @@ else
 SYSTEM_STAMP =
 endif
 
+CLEANUP_COMMAND=if test -s ../loolwsd; then echo "Cleaning up..." && ../loolwsd --cleanup --o:logging.level=trace; fi
+
 if HAVE_LO_PATH
 check-local:
+	$(CLEANUP_COMMAND)
 	./fakesockettest
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 
@@ -228,70 +231,56 @@ TESTS = \
 
 # Start forced grouping of tests using stamp files
 
-# unit-base.log
-unit-tiletest.log : unit-base.log
-unit-integration.log : unit-base.log
-unit-httpws.log : unit-base.log
-unit-crash.log : unit-base.log
-
-group1.log: unit-httpws.log unit-crash.log unit-tiletest.log unit-integration.log
-	touch $@
-
-unit-typing.log     : group1.log
-unit-convert.log    : group1.log
-unit-tilecache.log  : group1.log
-unit-timeout.log    : group1.log
-
-group1a.log: unit-typing.log unit-convert.log unit-tilecache.log unit-timeout.log
-	touch $@
-
 # isolate this one - it's not a happy test.
-unit-copy-paste.log : group1a.log
-
-group2.log: unit-copy-paste.log
+group0.log: unit-copy-paste.log
 	touch $@
 
-unit-prefork.log : group2.log
-unit-oauth.log : group2.log
-unit-wopi.log : group2.log
-unit-wopi-saveas.log : group2.log
-unit-wopi-ownertermination.log : group2.log
-unit-wopi-versionrestore.log : group2.log
-unit-wopi-documentconflict.log : group2.log
-unit_wopi_renamefile.log : group2.log
-unit_wopi_watermark.log : group2.log
+# group1.log
+unit-crash.log : group0.log
+unit-tiletest.log : group0.log
+unit-insert-delete.log : group0.log
+unit-each-view.log : group0.log
+unit-httpws.log : group0.log
+unit-close.log : group0.log
+unit-wopi-documentconflict.log : group0.log
+unit-prefork.log : group0.log
+unit-wopi-versionrestore.log : group0.log
+unit-wopi-temp.log : group0.log
+unit_wopi_renamefile.log : group0.log
+unit_wopi_watermark.log : group0.log
+unit-wopi.log : group0.log
+unit-wopi-ownertermination.log : group0.log
+unit-load-torture.log : group0.log
 
-group3.log: unit-oauth.log unit-wopi.log unit-wopi-saveas.log unit-wopi-ownertermination.log unit-wopi-versionrestore.log unit-wopi-documentconflict.log unit_wopi_renamefile.log unit_wopi_watermark.log
+unit-wopi-saveas.log : group0.log
+unit-password-protected.log : group0.log
+unit-http.log : group0.log
+unit-tiff-load.log : group0.log
+unit-render-shape.log : group0.log
+unit-oauth.log : group0.log
+unit-large-paste.log : group0.log
+unit-paste.log : group0.log
+unit-rendering-options.log : group0.log
+
+unit-session.log : group0.log
+unit-uno-command.log : group0.log
+unit-load.log : group0.log
+unit-cursor.log : group0.log
+unit-calc.log : group0.log
+unit-bad-doc-load.log : group0.log
+unit-hosting.log : group0.log
+unit-wopi-loadencoded.log : group0.log
+
+unit-integration.log : group0.log
+unit-convert.log : group0.log
+unit-typing.log : group0.log
+unit-tilecache.log : group0.log
+unit-timeout.log : group0.log
+unit-base.log: group0.log
+
+group1.log: unit-crash.log unit-tiletest.log unit-insert-delete.log unit-each-view.log unit-httpws.log unit-close.log unit-wopi-documentconflict.log unit-prefork.log unit-wopi-versionrestore.log unit-wopi-temp.log unit_wopi_renamefile.log unit_wopi_watermark.log unit-wopi.log unit-wopi-ownertermination.log unit-load-torture.log unit-wopi-saveas.log unit-password-protected.log unit-http.log unit-tiff-load.log unit-render-shape.log unit-oauth.log unit-large-paste.log unit-paste.log unit-rendering-options.log unit-session.log unit-uno-command.log unit-load.log unit-cursor.log unit-calc.log unit-bad-doc-load.log unit-hosting.log unit-wopi-loadencoded.log unit-integration.log unit-convert.log unit-typing.log unit-tilecache.log unit-timeout.log unit-base.log
+	$(CLEANUP_COMMAND)
 	touch $@
-
-unit-http.log : group3.log
-unit-tiff-load.log : group3.log
-unit-large-paste.log : group3.log
-unit-paste.log : group3.log
-unit-load-torture.log : group3.log
-unit-rendering-options.log : group3.log
-unit-password-protected.log : group3.log
-unit-render-shape.log : group3.log
-unit-each-view.log : group3.log
-
-group4.log: unit-http.log unit-tiff-load.log unit-large-paste.log unit-paste.log unit-load-torture.log unit-rendering-options.log unit-password-protected.log unit-render-shape.log unit-each-view.log
-	touch $@
-
-unit-session.log : group4.log
-unit-uno-command.log : group4.log
-unit-load.log : group4.log
-unit-cursor.log : group4.log
-unit-calc.log : group4.log
-unit-insert-delete.log : group4.log
-
-group5.log: unit-session.log unit-uno-command.log unit-load.log unit-cursor.log unit-calc.log unit-insert-delete.log
-	touch $@
-
-unit-close.log : group5.log
-unit-bad-doc-load.log : group5.log
-unit-hosting.log : group5.log
-unit-wopi-loadencoded.log : group5.log
-unit-wopi-temp.log : group5.log
 
 # end forced grouping
 
