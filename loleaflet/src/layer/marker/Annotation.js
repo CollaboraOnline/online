@@ -465,15 +465,17 @@ L.Annotation = L.Layer.extend({
 			});
 			this._map.addLayer(this._annotationMarker);
 		}
-		var stringTwips = this._data.rectangle.match(/\d+/g);
-		var topLeftTwips = new L.Point(parseInt(stringTwips[0]), parseInt(stringTwips[1]));
-		var offset = new L.Point(parseInt(stringTwips[2]), parseInt(stringTwips[3]));
-		var bottomRightTwips = topLeftTwips.add(offset);
-		var bounds = new L.LatLngBounds(
-			this._map._docLayer._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-			this._map._docLayer._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
-		this._annotationMarker.setLatLng(bounds.getSouthWest());
-		this._annotationMarker.on('dragstart drag dragend', this._onMarkerDrag, this);
+		if (this._data.rectangle != null) {
+			var stringTwips = this._data.rectangle.match(/\d+/g);
+			var topLeftTwips = new L.Point(parseInt(stringTwips[0]), parseInt(stringTwips[1]));
+			var offset = new L.Point(parseInt(stringTwips[2]), parseInt(stringTwips[3]));
+			var bottomRightTwips = topLeftTwips.add(offset);
+			var bounds = new L.LatLngBounds(
+				this._map._docLayer._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+				this._map._docLayer._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+			this._annotationMarker.setLatLng(bounds.getSouthWest());
+			this._annotationMarker.on('dragstart drag dragend', this._onMarkerDrag, this);
+		}
 	},
 	_onMarkerDrag: function(event) {
 		if (this._annotationMarker == null)
