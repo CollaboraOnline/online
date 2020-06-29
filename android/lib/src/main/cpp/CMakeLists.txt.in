@@ -42,6 +42,8 @@ else()
     MESSAGE(FATAL_ERROR "Cannot build for ABI ${ANDROID_ABI}, please add support for that.")
 endif()
 
+set(LIBLO_NATIVE_CODE ${LOBUILDDIR_ABI}/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so)
+
 target_include_directories(androidapp PRIVATE
                            .                     # path to androidapp.h
                            ../../../../..        # path to config.h
@@ -92,8 +94,8 @@ add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/liblo-
                    COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/instdir/program/libssl3.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
                    DEPENDS ${LOBUILDDIR_ABI}/instdir/program/libssl3.so
 
-                   COMMAND ${CMAKE_COMMAND} -E copy ${LOBUILDDIR_ABI}/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
-                   DEPENDS ${LOBUILDDIR_ABI}/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LIBLO_NATIVE_CODE} "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}"
+                   DEPENDS ${LIBLO_NATIVE_CODE}
 
                    COMMENT "Copied liblo-native-code.so and its dependencies to the tree."
 )
