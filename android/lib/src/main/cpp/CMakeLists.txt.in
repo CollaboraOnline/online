@@ -42,7 +42,7 @@ else()
     MESSAGE(FATAL_ERROR "Cannot build for ABI ${ANDROID_ABI}, please add support for that.")
 endif()
 
-set(LIBLO_NATIVE_CODE ${LOBUILDDIR_ABI}/android/source/jniLibs/${ANDROID_ABI}/liblo-native-code.so)
+set(LIBLO_NATIVE_CODE ${LOBUILDDIR_ABI}/android/jniLibs/${ANDROID_ABI}/liblo-native-code.so)
 
 target_include_directories(androidapp PRIVATE
                            .                     # path to androidapp.h
