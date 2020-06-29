@@ -152,11 +152,10 @@ w2ui-toolbar {
 #document-title-pencil.editable {
 	visibility: visible;
 	width: 24px;
-	height: 22px;
+	height: 18px;
 	position: absolute;
 	left: 87%;
 	background: url('images/baseline-edit.svg') right center no-repeat, radial-gradient(circle, #fff 20%, #fff0 100%);
-	border-top: solid 3px white;
 }
 
 #document-title-pencil:not(.editable){
