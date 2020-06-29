@@ -2158,7 +2158,7 @@ std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly()
 
 #endif
 
-class KitSocketPoll : public SocketPoll
+class KitSocketPoll final : public SocketPoll
 {
     std::chrono::steady_clock::time_point _pollEnd;
     std::shared_ptr<Document> _document;
