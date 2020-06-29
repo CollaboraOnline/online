@@ -67,7 +67,7 @@ span#main-menu-btn-icon {
 	border-radius: 100px;
 }
 
-.no-color-selected {
+.no-color-selected, .auto-color-selected {
 	text-align: center;
 	font-size: 30pt;
 	line-height: 32px;
@@ -106,7 +106,7 @@ span#main-menu-btn-icon {
 	padding: 0 4%;
 }
 
-.colors-container-no-color-row {
+.colors-container-no-color-row, .colors-container-auto-color-row{
 	display: flex;
 	justify-content: space-between;
 	height: 50px;
@@ -120,19 +120,19 @@ span#main-menu-btn-icon {
 	padding-bottom: 0px;
 }
 
-.no-color-control-label {
+.no-color-control-label, .auto-color-control-label {
 	display:table-cell;
 	padding-left: 4px;
 	vertical-align: middle;
 }
 
-.no-color-control-mark {
+.no-color-control-mark, .auto-color-control-mark {
 	color: #0b87e7 !important;
 	font-size: larger;
 	line-height: 0;
 }
 
-.no-color-control-icon {
+.no-color-control-icon, .auto-color-control-icon {
 	display: table-cell;
 	height: 32px !important;
 	width: 32px !important;

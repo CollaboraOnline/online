@@ -10,6 +10,7 @@ L.ColorPicker = L.Class.extend({
 	options: {
 		selectedColor: '#ff0000',
 		noColorControl: true,
+		autoColorControl: false,
 		selectionCallback: function () {}
 	},
 
@@ -55,10 +56,15 @@ L.ColorPicker = L.Class.extend({
 
 	initialize: function (selectedColorSample, options) {
 		L.setOptions(this, options);
+		if (this.options.noColorControl && this.options.autoColorControl) {
+			this.options.autoColorControl = false;
+			console.warn('L.ColorPicker: requested both no color and auto color control');
+		}
 		this._id = L.ColorPicker.ID++;
 		this._basicColorSampleIdTag = L.ColorPicker.ID_TAG + this._id + '-basic-color-';
 		this._tintSampleIdTag = L.ColorPicker.ID_TAG + this._id + '-tint-';
 		this._noColorControlId = L.ColorPicker.ID_TAG + this._id + '-no-color';
+		this._autoColorControlId = L.ColorPicker.ID_TAG + this._id + '-auto-color';
 		this._createBasicColorSelectionMark();
 		this._selectedColorElement = selectedColorSample;
 		this._selectedColor = this.options.selectedColor;
@@ -105,26 +111,31 @@ L.ColorPicker = L.Class.extend({
 
 	_createControl: function () {
 		var children = [];
-		if (this.options.noColorControl)
-			children.push(this._createNoColorControl());
+		if (this.options.noColorControl || this.options.autoColorControl)
+			children.push(this._createPseudoColorControl());
 		children.push(this._createBasicColorSamples());
 		children.push(this._createTintSamples());
 		return {type: 'divcontainer', style: 'colors-container', children: children};
 	},
 
-	_createNoColorControl: function () {
+	_createPseudoColorControl: function () {
+		var noColorControl = this.options.noColorControl;
 		var icon = {
 			type: 'fixedtext',
 			text: '',
-			style: 'no-color-control-icon'
+			style: noColorControl ? 'no-color-control-icon' : 'auto-color-control-icon'
 		};
-		var label = {type: 'fixedtext', style: 'no-color-control-label', text: _('No color')};
+		var label =
+			noColorControl ? {type: 'fixedtext', style: 'no-color-control-label', text: _('No color')}
+							: {type: 'fixedtext', style: 'auto-color-control-label', text: _('Automatic color')};
 		var description = {type: 'divcontainer', children: [icon, label]};
-		var checked = {type:'fixedtext', id: this._noColorControlId, style: 'no-color-control-mark', text: ''};
+		var checked =
+			noColorControl ? {type:'fixedtext', id: this._noColorControlId, style: 'no-color-control-mark', text: ''}
+							: {type:'fixedtext', id: this._autoColorControlId, style: 'auto-color-control-mark', text: ''};
 		var container = {
 			type: 'divcontainer',
-			style: 'colors-container-no-color-row',
-			handlers: [{event: 'click', handler: L.bind(this.onClickNoColor, this)}],
+			style: noColorControl ? 'colors-container-no-color-row' : 'colors-container-auto-color-row',
+			handlers: [{event: 'click', handler: L.bind(this.onClickPseudoColor, this)}],
 			children: [description, checked]
 		};
 		return container;
@@ -230,10 +241,11 @@ L.ColorPicker = L.Class.extend({
 		return sampleElem.name;
 	},
 
-	onClickNoColor: function () {
+	onClickPseudoColor: function () {
 		this._selectedColor = '#';
 		this._unselectSample(this._selectedTintIndex, L.ColorPicker.TINT);
-		this._updateNoColorControl(true);
+		this._updatePseudoColorControl(true);
+		// transparent is fine for both no color and automatic color
 		this._selectionCallback('transparent');
 	},
 
@@ -256,7 +268,7 @@ L.ColorPicker = L.Class.extend({
 	_selectTintIndex: function (tintIndex) {
 		this._selectedTintIndex = this._updateSelectedSample(tintIndex, this._selectedTintIndex, L.ColorPicker.TINT);
 		this._selectedColor = '#' + this._getColorCode(this._selectedTintIndex, L.ColorPicker.TINT);
-		this._updateNoColorControl(false);
+		this._updatePseudoColorControl(false);
 		this._updateSelectedColorElement();
 		this._selectionCallback(this._getColorCode(this._selectedTintIndex, L.ColorPicker.TINT));
 	},
@@ -313,6 +325,13 @@ L.ColorPicker = L.Class.extend({
 		}
 	},
 
+	_updatePseudoColorControl: function (checked) {
+		if (this.options.noColorControl)
+			this._updateNoColorControl(checked);
+		else if (this.options.autoColorControl)
+			this._updateAutoColorControl(checked);
+	},
+
 	_updateNoColorControl: function (checked) {
 		var noColorElem = L.DomUtil.get(this._noColorControlId);
 		if (noColorElem) {
@@ -328,6 +347,28 @@ L.ColorPicker = L.Class.extend({
 						noColorElem.innerHTML = '';
 						// update value for the related menu entry
 						L.DomUtil.removeClass(this._selectedColorElement, 'no-color-selected');
+						this._selectedColorElement.innerHTML = '';
+					}
+				}
+			}
+		}
+	},
+
+	_updateAutoColorControl: function (checked) {
+		var autoColorElem = L.DomUtil.get(this._autoColorControlId);
+		if (autoColorElem) {
+			if (autoColorElem.checked !== checked) {
+				autoColorElem.checked = checked;
+				if (this._selectedColorElement) {
+					if (checked) {
+						autoColorElem.innerHTML = '&#10004;';
+						// update value for the related menu entry
+						L.DomUtil.addClass(this._selectedColorElement, 'auto-color-selected');
+						this._selectedColorElement.innerHTML = '\\';
+					} else {
+						autoColorElem.innerHTML = '';
+						// update value for the related menu entry
+						L.DomUtil.removeClass(this._selectedColorElement, 'auto-color-selected');
 						this._selectedColorElement.innerHTML = '';
 					}
 				}
