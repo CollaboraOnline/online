@@ -21,11 +21,11 @@ build the native parts on Windows.
   git clone https://github.com/pocoproject/poco poco-android
   cd poco-android
 
-  # use the 1.9.1 branch
-  git checkout -b poco-1.9.1 origin/poco-1.9.1
+  # use the 1.10.1 branch
+  git checkout -b poco-1.10.1 origin/poco-1.10.1
 
   # configure
-  ./configure --config=Android --no-samples --no-tests --minimal
+  ./configure --config=Android --no-samples --no-tests --omit=Crypto,NetSSL_OpenSSL,Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,JWT
 
   # make it
   PATH="$PATH":~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin make -j8 ANDROID_ABI=armeabi-v7a CC=armv7a-linux-androideabi21-clang CXX=armv7a-linux-androideabi21-clang++ SYSLIBS=-static-libstdc++
@@ -35,7 +35,7 @@ build the native parts on Windows.
 
 * 64bit POCO for Android
 
-  # checkout the 1.9.1 in a different location and apply the following patch:
+  # checkout the 1.10.1 in a different location and apply the following patch:
   --- a/build/config/Android
   +++ b/build/config/Android
   @@ -21,6 +21,11 @@ TOOL      = arm-linux-androideabi
@@ -59,7 +59,10 @@ build the native parts on Windows.
    #
    # Define Tools
 
-  # configure as above and make it:
+  # configure as above:
+  ./configure --config=Android --no-samples --no-tests --omit=Crypto,NetSSL_OpenSSL,Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,JWT
+
+  # and make it:
   PATH="$PATH":~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin make -j8 ANDROID_ABI=arm64-v8a CC=aarch64-linux-android21-clang CXX=aarch64-linux-android21-clang++ SYSLIBS=-static-libstdc++
 
   # install
