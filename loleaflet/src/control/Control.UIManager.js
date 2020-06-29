@@ -8,6 +8,7 @@
 L.Control.UIManager = L.Control.extend({
 	onAdd: function (map) {
 		this.map = map;
+		this.notebookbar = null;
 
 		map.on('updatepermission', this.onUpdatePermission, this);
 	},
@@ -70,22 +71,17 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(L.control.searchBar());
 		} else if (enableNotebookbar) {
 			if (docType === 'spreadsheet') {
-				this.map.addControl(L.control.notebookbarCalc());
+				var notebookbar = L.control.notebookbarCalc();
 			} else if (docType === 'presentation') {
-				this.map.addControl(L.control.notebookbarImpress());
+				notebookbar = L.control.notebookbarImpress();
 			} else {
-				this.map.addControl(L.control.notebookbarWriter());
+				notebookbar = L.control.notebookbarWriter();
 			}
 
-			var additionalOffset = 0;
-			if (docType === 'spreadsheet') {
-				additionalOffset = 56;
-			}
+			this.notebookbar = notebookbar;
+			this.map.addControl(notebookbar);
 
-			this.moveObjectVertically($('#spreadsheet-row-column-frame'), 121);
-			this.moveObjectVertically($('#document-container'), 84 + additionalOffset);
-			this.moveObjectVertically($('#presentation-controls-wrapper'), 84);
-			this.moveObjectVertically($('#sidebar-dock-wrapper'), 43);
+			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
 		if (docType === 'spreadsheet') {
@@ -176,6 +172,32 @@ L.Control.UIManager = L.Control.extend({
 		return $('.loleaflet-ruler').is(':visible');
 	},
 
+	// Notebookbar helpers
+
+	hasNotebookbarShown: function() {
+		return $('#map').hasClass('notebookbar-opened');
+	},
+
+	makeSpaceForNotebookbar: function(docType) {
+		if (this.hasNotebookbarShown())
+			return;
+
+		var additionalOffset = 0;
+		if (docType === 'spreadsheet') {
+			if (window.mode.isTablet())
+				additionalOffset = -7;
+			else
+				additionalOffset = 53;
+		}
+
+		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
+		this.moveObjectVertically($('#document-container'), 43 + additionalOffset);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), 43);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), 43);
+
+		$('#map').addClass('notebookbar-opened');
+	},
+
 	// Event handlers
 
 	onUpdatePermission: function(e) {
@@ -185,6 +207,22 @@ L.Control.UIManager = L.Control.extend({
 			}
 			else {
 				$('#toolbar-down').hide();
+			}
+		}
+
+		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
+		if (enableNotebookbar) {
+			if (e.perm === 'edit') {
+				this.makeSpaceForNotebookbar(this.map._docLayer._docType);
+			} else if (e.perm === 'readonly' && $('#mobile-edit-button').is(':hidden')) {
+				var menubar = L.control.menubar();
+				this.map.menubar = menubar;
+				this.map.addControl(menubar);
+
+				if (this.notebookbar) {
+					this.map.removeControl(this.notebookbar);
+					this.notebookbar = null;
+				}
 			}
 		}
 

@@ -121,6 +121,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	display: none;
 }
 
+/* comboboxes in readonly mode on mobile devices */
+.notebookbar-scroll-wrapper .select2-container {
+	z-index: auto !important;
+}
+
 /* Writer */
 
 /* Home tab */

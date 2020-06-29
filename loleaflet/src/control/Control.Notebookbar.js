@@ -7,6 +7,7 @@
 L.Control.Notebookbar = L.Control.extend({
 
 	_currentScrollPosition: 0,
+	_showNotebookbar: false,
 
 	onAdd: function (map) {
 		this.map = map;
@@ -19,10 +20,35 @@ L.Control.Notebookbar = L.Control.extend({
 
 		this.map.on('contextchange', this.onContextChange, this);
 		this.map.on('notebookbar', this.onNotebookbar, this);
+		this.map.on('updatepermission', this.onUpdatePermission, this);
+	},
+
+	onRemove: function() {
+		this.map.off('contextchange', this.onContextChange, this);
+		this.map.off('updatepermission', this.onUpdatePermission, this);
+		this.map.off('notebookbar');
+		this.clearNotebookbar();
+	},
+
+	onUpdatePermission: function(e) {
+		if (e.perm === 'edit') {
+			this._showNotebookbar = true;
+			this.showTabs();
+		}
 	},
 
 	onNotebookbar: function(data) {
 		this.loadTab(data);
+	},
+
+	showTabs: function() {
+		$('.ui-tabs.notebookbar').show();
+		$('.notebookbar-shortcuts-bar').show();
+	},
+
+	hideTabs: function() {
+		$('.ui-tabs.notebookbar').hide();
+		$('.notebookbar-shortcuts-bar').hide();
 	},
 
 	clearNotebookbar: function() {
@@ -39,6 +65,9 @@ L.Control.Notebookbar = L.Control.extend({
 		var container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', parent);
 
 		builder.build(container, [tabJSON]);
+
+		if (this._showNotebookbar === false)
+			this.hideTabs();
 
 		this.scrollToLastPositionIfNeeded();
 	},
