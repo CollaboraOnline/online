@@ -544,8 +544,11 @@ L.Control.PartsPreview = L.Control.extend({
 		var part = $(this.partsPreview._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
-			this.partsPreview._map.setPart(partId);
-			this.partsPreview._map.selectPart(partId, 1, false); // And select.
+			if (this.partsPreview._map._docLayer && !this.partsPreview._map._docLayer._selectedParts.includes(partId))
+			{
+				this.partsPreview._map.setPart(partId);
+				this.partsPreview._map.selectPart(partId, 1, false); // And select.
+			}
 		}
 		// By default we move when dragging, but can
 		// support duplication with ctrl in the future.
