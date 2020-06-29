@@ -210,7 +210,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			var selected = parseInt(data.selectedEntries[0]) == index;
 			processedData.push({id: index, text: value, selected: selected});
 		});
-		console.log(processedData);
 
 		$(select).select2({
 			data: processedData,
