@@ -473,6 +473,33 @@ L.Annotation = L.Layer.extend({
 			this._map._docLayer._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 			this._map._docLayer._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 		this._annotationMarker.setLatLng(bounds.getSouthWest());
+		this._annotationMarker.on('dragstart drag dragend', this._onMarkerDrag, this);
+	},
+	_onMarkerDrag: function(event) {
+		if (this._annotationMarker == null)
+			return;
+		if (event.type === 'dragend') {
+			var rect = this._annotationMarker._icon.getBoundingClientRect();
+			var pointTwip = this._map._docLayer._pixelsToTwips({x: rect.left, y: rect.top});
+			this._sendAnnotationPositionChange(pointTwip);
+		}
+	},
+	_sendAnnotationPositionChange: function(newPosition) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: this._data.id
+			},
+			PositionX: {
+				type: 'int32',
+				value: newPosition.x
+			},
+			PositionY: {
+				type: 'int32',
+				value: newPosition.y
+			}
+		};
+		this._map.sendUnoCommand('.uno:EditAnnotation', comment);
 	}
 });
 
