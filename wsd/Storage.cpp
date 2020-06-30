@@ -794,6 +794,9 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
             addStorageReuseCookie(request, cookies);
         addWopiProof(request, uriObject, params["access_token"]);
 
+        // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
+        request.setContentLength(0);
+
         psession->sendRequest(request);
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
