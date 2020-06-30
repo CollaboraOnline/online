@@ -678,6 +678,11 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         return true;
     }
 
+    /** True if the App is running under ChromeOS. */
+    private boolean isChromeOS() {
+        return getPackageManager().hasSystemFeature("org.chromium.arc.device_management");
+    }
+
     /** Start an ACTION_OPEN_DOCUMENT Intent to trigger opening a document. */
     private void openDocument() {
         collapseFabMenu();
@@ -689,57 +694,65 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         // NOTE: If updating the list here, also check the AndroidManifest.xml,
         // I didn't find a way how to do it from one central place :-(
         i.setType("*/*");
-        final String[] mimeTypes = new String[] {
-            // ODF
-            "application/vnd.oasis.opendocument.text",
-            "application/vnd.oasis.opendocument.graphics",
-            "application/vnd.oasis.opendocument.presentation",
-            "application/vnd.oasis.opendocument.spreadsheet",
-            "application/vnd.oasis.opendocument.text-flat-xml",
-            "application/vnd.oasis.opendocument.graphics-flat-xml",
-            "application/vnd.oasis.opendocument.presentation-flat-xml",
-            "application/vnd.oasis.opendocument.spreadsheet-flat-xml",
 
-            // ODF templates
-            "application/vnd.oasis.opendocument.text-template",
-            "application/vnd.oasis.opendocument.spreadsheet-template",
-            "application/vnd.oasis.opendocument.graphics-template",
-            "application/vnd.oasis.opendocument.presentation-template",
+        // from some reason, the file picker on ChromeOS is confused when it
+        // gets the EXTRA_MIME_TYPES; to the user it looks like it is
+        // impossible to choose any files, unless they notice the dropdown in
+        // the bottom left and choose "All files".  Interestingly, SVG / SVGZ
+        // are shown there as an option, the other mime types are just blank
+        if (!isChromeOS()) {
+            final String[] mimeTypes = new String[] {
+                // ODF
+                "application/vnd.oasis.opendocument.text",
+                "application/vnd.oasis.opendocument.graphics",
+                "application/vnd.oasis.opendocument.presentation",
+                "application/vnd.oasis.opendocument.spreadsheet",
+                "application/vnd.oasis.opendocument.text-flat-xml",
+                "application/vnd.oasis.opendocument.graphics-flat-xml",
+                "application/vnd.oasis.opendocument.presentation-flat-xml",
+                "application/vnd.oasis.opendocument.spreadsheet-flat-xml",
 
-            // MS
-            "application/rtf",
-            "text/rtf",
-            "application/msword",
-            "application/vnd.ms-powerpoint",
-            "application/vnd.ms-excel",
-            "application/vnd.visio",
-            "application/vnd.visio.xml",
-            "application/x-mspublisher",
+                // ODF templates
+                "application/vnd.oasis.opendocument.text-template",
+                "application/vnd.oasis.opendocument.spreadsheet-template",
+                "application/vnd.oasis.opendocument.graphics-template",
+                "application/vnd.oasis.opendocument.presentation-template",
 
-            // OOXML
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-            "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                // MS
+                "application/rtf",
+                "text/rtf",
+                "application/msword",
+                "application/vnd.ms-powerpoint",
+                "application/vnd.ms-excel",
+                "application/vnd.visio",
+                "application/vnd.visio.xml",
+                "application/x-mspublisher",
 
-            // OOXML templates
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
-            "application/vnd.openxmlformats-officedocument.presentationml.template",
+                // OOXML
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 
-            // other
-            "text/csv",
-            "text/comma-separated-values",
-            "application/vnd.ms-works",
-            "application/vnd.apple.keynote",
-            "application/x-abiword",
-            "application/x-pagemaker",
-            "image/x-emf",
-            "image/x-svm",
-            "image/x-wmf",
-            "image/svg+xml"
-        };
-        i.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                // OOXML templates
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+                "application/vnd.openxmlformats-officedocument.presentationml.template",
+
+                // other
+                "text/csv",
+                "text/comma-separated-values",
+                "application/vnd.ms-works",
+                "application/vnd.apple.keynote",
+                "application/x-abiword",
+                "application/x-pagemaker",
+                "image/x-emf",
+                "image/x-svm",
+                "image/x-wmf",
+                "image/svg+xml"
+            };
+            i.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        }
 
         // TODO remember where the user picked the file the last time
         // TODO and that should default to Context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
