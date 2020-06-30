@@ -255,7 +255,9 @@ void DocumentBroker::pollThread()
     }
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag());
 #else
+#ifdef IOS
     assert(_mobileAppDocId > 0);
+#endif
     _childProcess = getNewChild_Blocks(_mobileAppDocId);
 #endif
 
