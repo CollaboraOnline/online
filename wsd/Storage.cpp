@@ -816,8 +816,11 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
         }
         else
         {
+            std::string sMoreInfo = response.get("X-WOPI-LockFailureReason", "");
+            if (!sMoreInfo.empty())
+                sMoreInfo = ", failure reason: \"" + sMoreInfo + "\"";
             LOG_WRN("Un-successful " << wopiLog << " with status " << response.getStatus() <<
-                    " and response: " << responseString);
+                    sMoreInfo << " and response: " << responseString);
         }
     }
     catch (const Poco::Exception& pexc)
