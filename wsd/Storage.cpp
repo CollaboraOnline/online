@@ -795,6 +795,9 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
         if (!getExtendedData().empty())
             request.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
 
+        // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
+        request.setContentLength(0);
+
         psession->sendRequest(request);
         Poco::Net::HTTPResponse response;
         std::istream& rs = psession->receiveResponse(response);
