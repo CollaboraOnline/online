@@ -145,6 +145,8 @@ namespace FileUtil
                 LOG_WRN("Unusual: file " << anonymizeUrl(fromPath) << " changed size "
                         "during copy from " << st.st_size << " to " << bytesIn);
             }
+            close(from);
+            close(to);
         }
         catch (...)
         {
