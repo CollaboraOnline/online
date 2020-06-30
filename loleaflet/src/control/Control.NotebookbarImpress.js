@@ -3,7 +3,7 @@
  * L.Control.NotebookbarImpress
  */
 
-/* global */
+/* global _ */
 L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
 	getShortcutsBarData: function() {
@@ -14,22 +14,22 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'children': [
 					{
 						'type': 'toolitem',
-						'text': 'Save',
+						'text': _('Save'),
 						'command': '.uno:Save'
 					},
 					{
 						'type': 'toolitem',
-						'text': 'Start Presentation',
+						'text': _('Start Presentation'),
 						'command': '.uno:Presentation'
 					},
 					{
 						'type': 'toolitem',
-						'text': 'Undo',
+						'text': _('Undo'),
 						'command': '.uno:Undo'
 					},
 					{
 						'type': 'toolitem',
-						'text': 'Redo',
+						'text': _('Redo'),
 						'command': '.uno:Redo'
 					}
 				]
@@ -40,23 +40,23 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	getTabs: function() {
 		return [
 			{
-				'text': '~Home',
+				'text': _('~Home'),
 				'id': '2',
 				'name': 'HomeLabel',
 				'context': 'default|DrawText'
 			},
 			{
-				'text': '~Insert',
+				'text': _('~Insert'),
 				'id': '3',
 				'name': 'InsertLabel'
 			},
 			{
-				'text': '~Review',
+				'text': _('~Review'),
 				'id': '6',
 				'name': 'ReviewLabel'
 			},
 			{
-				'text': '~Table',
+				'text': _('~Table'),
 				'id': '8',
 				'name': 'TableLabel',
 				'context': 'Table'

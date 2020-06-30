@@ -3,39 +3,39 @@
  * L.Control.NotebookbarWriter
  */
 
-/* global */
+/* global _ */
 L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 	getTabs: function() {
 		return [
 			{
-				'text': '~Home',
+				'text': _('~Home'),
 				'id': '2',
 				'name': 'HomeLabel',
 				'context': 'default|Text'
 			},
 			{
-				'text': '~Insert',
+				'text': _('~Insert'),
 				'id': '3',
 				'name': 'InsertLabel'
 			},
 			{
-				'text': '~Layout',
+				'text': _('~Layout'),
 				'id': '4',
 				'name': 'LayoutLabel'
 			},
 			{
-				'text': 'Reference~s',
+				'text': _('Reference~s'),
 				'id': '5',
 				'name': 'ReferencesLabel'
 			},
 			{
-				'text': '~Review',
+				'text': _('~Review'),
 				'id': '6',
 				'name': 'ReviewLabel'
 			},
 			{
-				'text': '~Table',
+				'text': _('~Table'),
 				'id': '8',
 				'name': 'TableLabel',
 				'context': 'Table'

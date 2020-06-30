@@ -3,7 +3,7 @@
  * L.Control.Notebookbar
  */
 
-/* global $ */
+/* global $ _ */
 L.Control.Notebookbar = L.Control.extend({
 
 	_currentScrollPosition: 0,
@@ -94,17 +94,17 @@ L.Control.Notebookbar = L.Control.extend({
 				'children': [
 					{
 						'type': 'toolitem',
-						'text': 'Save',
+						'text': _('Save'),
 						'command': '.uno:Save'
 					},
 					{
 						'type': 'toolitem',
-						'text': 'Undo',
+						'text': _('Undo'),
 						'command': '.uno:Undo'
 					},
 					{
 						'type': 'toolitem',
-						'text': 'Redo',
+						'text': _('Redo'),
 						'command': '.uno:Redo'
 					}
 				]
