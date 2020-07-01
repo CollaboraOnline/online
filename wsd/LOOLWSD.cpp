@@ -219,10 +219,6 @@ int LOOLWSD::prisonerServerSocketFD;
 
 #else
 
-/// New LOK child processes ready to host documents.
-//TODO: Move to a more sensible namespace.
-static bool DisplayVersion = false;
-
 /// Funky latency simulation basic delay (ms)
 static int SimulatedLatencyMs = 0;
 
@@ -1576,7 +1572,7 @@ void LOOLWSD::handleOption(const std::string& optionName,
         std::exit(EX_OK);
     }
     else if (optionName == "version")
-        DisplayVersion = true;
+        ; // ignore for compatibility
     else if (optionName == "cleanup")
         CleanupOnly = true; // Flag for later as we need the config.
     else if (optionName == "port")
@@ -1836,8 +1832,7 @@ bool LOOLWSD::createForKit()
     if (UnitWSD::get().hasKitHooks())
         args.push_back("--unitlib=" + UnitTestLibrary);
 
-    if (DisplayVersion)
-        args.push_back("--version");
+    args.push_back("--version");
 
     if (NoCapsForKit)
         args.push_back("--nocaps");
@@ -3513,8 +3508,12 @@ public:
         Socket::InhibitThreadChecks = true;
         SocketPoll::InhibitThreadChecks = true;
 
-        os << "LOOLWSDServer:"
+        std::string version, hash;
+        Util::getVersionInfo(version, hash);
+
+        os << "LOOLWSDServer: " << version << " - " << hash
 #if !MOBILEAPP
+           << "\n  Kit version: " << LOOLWSD::LOKitVersion
            << "\n  Ports: server " << ClientPortNumber << " prisoner " << MasterLocation
            << "\n  SSL: " << (LOOLWSD::isSSLEnabled() ? "https" : "http")
            << "\n  SSL-Termination: " << (LOOLWSD::isSSLTermination() ? "yes" : "no")
@@ -3734,19 +3733,17 @@ int LOOLWSD::innerMain()
     SigUtil::setTerminationSignals();
 #endif
 
-#ifdef __linux
+#if !MOBILEAPP
+#  ifdef __linux
     // down-pay all the forkit linking cost once & early.
     setenv("LD_BIND_NOW", "1", 1);
+#  endif
 
-#if !MOBILEAPP
     HostIdentifier = Util::rng::getHexString(8);
-    if (DisplayVersion)
-    {
-        std::string version, hash;
-        Util::getVersionInfo(version, hash);
-        LOG_INF("Loolwsd version details: " << version << " - " << hash << " - id " << HostIdentifier << " - on " << Util::getLinuxVersion());
-    }
-#endif
+
+    std::string version, hash;
+    Util::getVersionInfo(version, hash);
+    LOG_INF("Loolwsd version details: " << version << " - " << hash << " - id " << HostIdentifier << " - on " << Util::getLinuxVersion());
 #endif
 
     initializeSSL();
