@@ -329,14 +329,25 @@ SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
 CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
 
-$(SYSTEM_STAMP) : ${top_srcdir}/loolwsd-systemplate-setup
-	if test -s ./loolwsd; then ./loolwsd --cleanup; fi
+# Add caps to the binaries that need them.
+caps_bins: loolforkit loolmount
+if ENABLE_SETCAP
+	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit
+	    sudo @SETCAP@ cap_sys_admin=ep loolmount
+else
+	    echo "Skipping capability setting"
+endif
+
+# Build loolwsd and loolmount first, so we can cleanup before updating
+# the systemplate directory, which we can't rm if it's mounted.
+$(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup loolwsd caps_bins
+	$(CLEANUP_COMMAND)
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@
 
-@JAILS_PATH@ :
-	mkdir -p $@
+@JAILS_PATH@:
 	$(CLEANUP_COMMAND)
+	mkdir -p $@
 
 clean-local:
 	$(CLEANUP_COMMAND)
@@ -464,16 +475,7 @@ endif
 # installing the RPM or Debian package.
 .PHONY: caps_bins
 
-caps_bins: loolforkit loolmount
-if ENABLE_SETCAP
-	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit
-	    sudo @SETCAP@ cap_sys_admin=ep loolmount
-else
-	    echo "Skipping capability setting"
-endif
-
 all-local: loolwsd caps_bins @JAILS_PATH@ $(SYSTEM_STAMP)
-	$(CLEANUP_COMMAND)
 
 # just run the build without any tests
 build-nocheck: all-am
