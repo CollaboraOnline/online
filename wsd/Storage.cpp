@@ -764,6 +764,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 bool WopiStorage::updateLockState(const Authorization& auth, const std::string& cookies,
                                   LockContext& lockCtx, bool lock)
 {
+    lockCtx._lockFailureReason.clear();
     if (!lockCtx._supportsLocks)
         return true;
 
@@ -820,7 +821,10 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
         {
             std::string sMoreInfo = response.get("X-WOPI-LockFailureReason", "");
             if (!sMoreInfo.empty())
+            {
+                lockCtx._lockFailureReason = sMoreInfo;
                 sMoreInfo = ", failure reason: \"" + sMoreInfo + "\"";
+            }
             LOG_WRN("Un-successful " << wopiLog << " with status " << response.getStatus() <<
                     sMoreInfo << " and response: " << responseString);
         }

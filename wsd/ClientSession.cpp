@@ -991,11 +991,19 @@ bool ClientSession::filterMessage(const std::string& message) const
     return allowed;
 }
 
-void ClientSession::setReadOnly()
+void ClientSession::setReadOnly(bool bVal)
 {
-    Session::setReadOnly();
+    Session::setReadOnly(bVal);
     // Also inform the client
-    sendTextFrame("perm: readonly");
+    const std::string sPerm = bVal ? "readonly" : "edit";
+    sendTextFrame("perm: " + sPerm);
+}
+
+void ClientSession::setLockFailed(const std::string& sReason)
+{
+    _isLockFailed = true;
+    setReadOnly();
+    sendTextFrame("lockfailed:" + sReason);
 }
 
 bool ClientSession::hasQueuedMessages() const

@@ -69,7 +69,7 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
-    virtual void setReadOnly() { _isReadOnly = true; }
+    virtual void setReadOnly(bool bVal = true) { _isReadOnly = bVal; }
     bool isReadOnly() const { return _isReadOnly; }
 
     /// overridden to prepend client ids on messages by the Kit
