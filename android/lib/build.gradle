@@ -117,17 +117,6 @@ task copyUnpackAssets(type: Copy) {
             String line ->
                 line.replaceAll(
                     '@@APPLICATION_ID@@', new String("${liboApplicationId}")
-                ).replaceAll(
-                    // FIXME Avoid the Android system fonts for the moment,
-                    // the huge Noto Sans fonts have terrible impact on the 1st
-                    // start performance.
-                    // The real solution would be to either make fontconfig
-                    // faster, or at least find a way to avoid only the Noto
-                    // Sans, or present a progressbar or something.
-                    // For the moment, we just copy the Roboto font (needed
-                    // for the dialogs; see LOActivity.copyFonts()) and
-                    // remove the system fonts from the config.
-                    '<dir>/system/fonts</dir>', new String("")
                 )
         }
     }
