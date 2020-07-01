@@ -372,6 +372,14 @@ private:
     /// Saves the doc to the storage.
     bool saveToStorageInternal(const std::string& sesionId, bool success, const std::string& result = "", const std::string& saveAsPath = std::string(), const std::string& saveAsFilename = std::string());
 
+    /**
+     * Report back the save result to PostMessage users (Action_Save_Resp)
+     * @param success: Whether saving was successful
+     * @param result: Short message why saving was (not) successful
+     * @param errorMsg: Long error msg (Error message from WOPI host if any)
+     */
+    void broadcastSaveResult(bool success, const std::string& result = "", const std::string& errorMsg = "");
+
     /// True iff a save is in progress (requested but not completed).
     bool isSaving() const { return _lastSaveResponseTime < _lastSaveRequestTime; }
 

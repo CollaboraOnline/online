@@ -783,6 +783,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
         _poll->wakeup();
+        broadcastSaveResult(true, "unmodified");
         return true;
     }
 
@@ -790,6 +791,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     if (it == _sessions.end())
     {
         LOG_ERR("Session with sessionId [" << sessionId << "] not found while saving docKey [" << _docKey << "].");
+        broadcastSaveResult(false, "Session not found");
         return false;
     }
 
@@ -798,6 +800,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     {
         LOG_ERR("Cannot save docKey [" << _docKey << "], the .uno:Save has failed in LOK.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
+        broadcastSaveResult(false, "unmodified");
         return false;
     }
 
@@ -821,6 +824,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << _docKey <<
                 "]. File last modified " << _lastFileModifiedTime.elapsed() / 1000000 << " seconds ago.");
         _poll->wakeup();
+        broadcastSaveResult(true, "unmodified");
         return true;
     }
 
@@ -870,7 +874,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url) <<
                     "] with name [" << filenameAnonym << "] successfully.");
         }
-
+        broadcastSaveResult(true);
         return true;
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::DISKFULL)
@@ -884,18 +888,21 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             sessionIt.second->setReadOnly();
             sessionIt.second->sendTextFrame("error: cmd=storage kind=savediskfull");
         }
+        broadcastSaveResult(false, "Disk full", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::UNAUTHORIZED)
     {
         LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uriAnonym <<
                 "]. Invalid or expired access token. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=saveunauthorized");
+        broadcastSaveResult(false, "Invalid or expired access token", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::FAILED)
     {
         //TODO: Should we notify all clients?
         LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << uriAnonym << "]. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=savefailed");
+        broadcastSaveResult(false, "Save failed", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED)
     {
@@ -906,9 +913,21 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
             message = "error: cmd=storage kind=documentconflict";
 
         broadcastMessage(message);
+        broadcastSaveResult(false, "Conflict: Document changed in storage", storageSaveResult.getErrorMsg());
     }
 
     return false;
+}
+
+void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
+{
+    std::string resultstr = success ? "true" : "false";
+    // Some sane limit, otherwise we get problems transfering this to the client with large strings (can be a whole webpage)
+    std::string errorMsgFormatted = errorMsg.substr(0, 1000);
+    // Replace reserverd characters
+    errorMsgFormatted = Poco::translate(errorMsgFormatted, "\"", "'");
+    broadcastMessage("commandresult: { \"command\": \"save\", \"success\": " + resultstr +
+                     ", \"result\": \"" + result + "\", \"errorMsg\": \"" + errorMsgFormatted  + "\"}");
 }
 
 void DocumentBroker::setLoaded()
