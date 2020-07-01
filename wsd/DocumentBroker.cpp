@@ -785,7 +785,9 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         std::string localPath = _storage->loadStorageFileToLocal(
             session->getAuthorization(), session->getCookies(), *_lockCtx, templateSource);
 
-        if (!_storage->updateLockState(session->getAuthorization(), session->getCookies(), *_lockCtx, true))
+        // Only lock the document on storage for editing sessions
+        if (!session->isReadOnly() &&
+            !_storage->updateLockState(session->getAuthorization(), session->getCookies(), *_lockCtx, true))
             LOG_ERR("Failed to lock!");
 
 #if !MOBILEAPP
