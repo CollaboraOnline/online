@@ -782,9 +782,15 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             session->getAuthorization(), session->getCookies(), *_lockCtx, templateSource);
 
         // Only lock the document on storage for editing sessions
+        // FIXME: why not lock before loadStorageFileToLocal? Would also prevent race conditions
         if (!session->isReadOnly() &&
             !_storage->updateLockState(session->getAuthorization(), session->getCookies(), *_lockCtx, true))
+        {
             LOG_ERR("Failed to lock!");
+            session->setLockFailed(_lockCtx->_lockFailureReason);
+            // TODO: make this "read-only" a special one with a notification (infobar? balloon tip?)
+            //       and a button to unlock
+        }
 
 #if !MOBILEAPP
         // Check if we have a prefilter "plugin" for this document format

@@ -33,7 +33,7 @@ void ClientSession::writeQueuedMessages() {}
 
 void ClientSession::dumpState(std::ostream& /*os*/) {}
 
-void ClientSession::setReadOnly() {}
+void ClientSession::setReadOnly(bool) {}
 
 bool ClientSession::_handleInput(const char* /*buffer*/, int /*length*/) { return false; }
 

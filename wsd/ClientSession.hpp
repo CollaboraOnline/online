@@ -38,7 +38,8 @@ public:
     void construct();
     virtual ~ClientSession();
 
-    void setReadOnly() override;
+    void setReadOnly(bool bVal = true) override;
+    void setLockFailed(const std::string& sReason);
 
     enum SessionState {
         DETACHED,        // initial
@@ -250,6 +251,10 @@ private:
 
     /// Whether this session is the owner of currently opened document
     bool _isDocumentOwner;
+
+    /// If it is allowed to try to switch from read-only to edit mode,
+    /// because it's read-only just because of transient lock failure.
+    bool _isLockFailed = false;
 
     /// The socket to which the converted (saveas) doc is sent.
     std::shared_ptr<StreamSocket> _saveAsSocket;
