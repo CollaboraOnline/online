@@ -142,7 +142,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (commandName === '.uno:CharFontName') {
 			$('#fontnamecombobox').val(state).trigger('change');
 		} else if (commandName === '.uno:FontHeight') {
-			$('#fontsize').val(state).trigger('change');
+			$('#fontsize').val(parseFloat(state)).trigger('change');
 		} else if (commandName === '.uno:StyleApply') {
 			$('#applystyle').val(state).trigger('change');
 		}
@@ -153,7 +153,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		if (id === 'fontnamecombobox') {
 			$(combobox).on('select2:select', function (e) {
-				var font = e.target.value;
+				var font = e.params.data.text;
 				builder.map.applyFont(font);
 				builder.map.focus();
 			});
@@ -163,7 +163,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 		else if (id === 'fontsize') {
 			$(combobox).on('select2:select', function (e) {
-				builder.map.applyFontSize(e.target.value);
+				builder.map.applyFontSize(parseFloat(e.params.data.text));
 				builder.map.focus();
 			});
 
@@ -208,8 +208,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		data.entries.forEach(function (value, index) {
 			var selected = parseInt(data.selectedEntries[0]) == index;
-			processedData.push({id: index, text: value, selected: selected});
+			var id = index;
+			if (data.id === 'fontsize')
+				id = parseFloat(value);
+			if (data.id === 'fontnamecombobox')
+				id = value;
+			processedData.push({id: id, text: value, selected: selected});
 		});
+		console.log(processedData);
 
 		$(select).select2({
 			data: processedData,
