@@ -520,6 +520,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:NextTrackedChange'}
 			]},
 			{name: _('Page Setup'), id: 'pagesetup', type: 'action'},
+			{id: 'watermark', uno: '.uno:Watermark'},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:ControlCodes'},
 				{uno: '.uno:SpellOnline'},
@@ -1354,6 +1355,7 @@ L.Control.Menubar = L.Control.extend({
 			case 'last-mod':
 			case 'save':
 			case 'pagesetup':
+			case 'watermark':
 				return false;
 			}
 		}
