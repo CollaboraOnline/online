@@ -1205,6 +1205,7 @@ void LOOLWSD::initialize(Application& self)
             LOG_INF("Creating childroot: " + ChildRoot);
     }
 
+#if !MOBILEAPP
     // Setup the jails.
     JailUtil::setupJails(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
                          SysTemplate);
@@ -1225,7 +1226,6 @@ void LOOLWSD::initialize(Application& self)
     }
     LOG_INF("NumPreSpawnedChildren set to " << NumPreSpawnedChildren << '.');
 
-#if !MOBILEAPP
     FileUtil::registerFileSystemForDiskSpaceChecks(ChildRoot);
 
     const auto maxConcurrency = getConfigValue<int>(conf, "per_document.max_concurrency", 4);
