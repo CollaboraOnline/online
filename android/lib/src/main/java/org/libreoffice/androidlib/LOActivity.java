@@ -203,54 +203,6 @@ public class LOActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Copies fonts except the NotoSans from the system to our location.
-     * This is necessary because the NotoSans is huge and fontconfig needs
-     * ages to parse them.
-     */
-    private static boolean copyFonts(String fromPath, String targetDir) {
-        try {
-            File target = new File(targetDir);
-            if (!target.exists())
-                target.mkdirs();
-
-            File from = new File(fromPath);
-            File[] files = from.listFiles();
-            for (File fontFile : files) {
-                String fontFileName = fontFile.getName();
-                if (!fontFileName.equals("Roboto-Regular.ttf")) {
-                    Log.i(TAG, "Ignored font file: " + fontFile);
-                    continue;
-                } else {
-                    Log.i(TAG, "Copying font file: " + fontFile);
-                }
-
-                // copy the font file over
-                InputStream in = new FileInputStream(fontFile);
-                try {
-                    OutputStream out = new FileOutputStream(targetDir + "/" + fontFile.getName());
-                    try {
-                        byte[] buffer = new byte[4096];
-                        int len;
-                        while ((len = in.read(buffer)) > 0) {
-                            out.write(buffer, 0, len);
-                        }
-                    } finally {
-                        out.close();
-                    }
-                } finally {
-                    in.close();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(TAG, "copyFonts failed: " + e.getMessage());
-            return false;
-        }
-
-        return true;
-    }
-
     private Handler getMainHandler() {
         if (mMainHandler == null) {
             mMainHandler = new Handler(getMainLooper());
@@ -289,7 +241,7 @@ public class LOActivity extends AppCompatActivity {
             @Override
             protected Void doInBackground(Void... voids) {
                 // copy the new assets
-                if (copyFromAssets(getAssets(), "unpack", getApplicationInfo().dataDir) && copyFonts("/system/fonts", getApplicationInfo().dataDir + "/user/fonts")) {
+                if (copyFromAssets(getAssets(), "unpack", getApplicationInfo().dataDir)) {
                     sPrefs.edit().putString(ASSETS_EXTRACTED_GIT_COMMIT, BuildConfig.GIT_COMMIT).apply();
                 }
                 return null;
