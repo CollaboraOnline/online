@@ -1185,13 +1185,14 @@ void LOOLWSD::initialize(Application& self)
     }
     else
     {
+#if !MOBILEAPP
         if (CleanupOnly)
         {
             // Cleanup and exit.
             JailUtil::cleanupJails(ChildRoot);
             std::exit(EX_OK);
         }
-
+#endif
         if (ChildRoot[ChildRoot.size() - 1] != '/')
             ChildRoot += '/';
 
