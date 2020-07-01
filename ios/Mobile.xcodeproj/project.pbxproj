@@ -62,6 +62,7 @@
 		BEA2835D21498AD400848631 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835C21498AD400848631 /* Socket.cpp */; };
 		BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835F214ACA8500848631 /* FakeSocket.cpp */; };
 		BEA28377214FFD8C00848631 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA28376214FFD8C00848631 /* Unit.cpp */; };
+		BEABFC6824AC94C3004DE339 /* Authorization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEABFC6624AC94C3004DE339 /* Authorization.cpp */; };
 		BEB0E5D921C7CA800085A0CF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEB0E5D821C7CA800085A0CF /* Settings.bundle */; };
 		BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */; };
 		BECD984024336DD400016117 /* device-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983E24336DD400016117 /* device-mobile.css */; };
@@ -996,6 +997,8 @@
 		BEA8CDC32199AC9D009FE17E /* lok.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lok.cxx; path = "../../ios-device/comphelper/source/misc/lok.cxx"; sourceTree = "<group>"; };
 		BEA8CDC52199E621009FE17E /* languagetagicu.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = languagetagicu.cxx; path = "../../ios-device/i18nlangtag/source/languagetag/languagetagicu.cxx"; sourceTree = "<group>"; };
 		BEA8CDC62199E621009FE17E /* languagetag.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = languagetag.cxx; path = "../../ios-device/i18nlangtag/source/languagetag/languagetag.cxx"; sourceTree = "<group>"; };
+		BEABFC6624AC94C3004DE339 /* Authorization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Authorization.cpp; sourceTree = "<group>"; };
+		BEABFC6724AC94C3004DE339 /* Authorization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Authorization.hpp; sourceTree = "<group>"; };
 		BEB0E5D821C7CA800085A0CF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEB0E5DB21CA7C780085A0CF /* graphicfilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicfilter.cxx; path = "../../ios-device/vcl/source/filter/graphicfilter.cxx"; sourceTree = "<group>"; };
 		BEB0E5E021CA9DC00085A0CF /* salbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salbmp.cxx; path = "../../ios-device/vcl/quartz/salbmp.cxx"; sourceTree = "<group>"; };
@@ -1886,6 +1889,8 @@
 		BE5EB5B6213FE21000E0826C /* common */ = {
 			isa = PBXGroup;
 			children = (
+				BEABFC6624AC94C3004DE339 /* Authorization.cpp */,
+				BEABFC6724AC94C3004DE339 /* Authorization.hpp */,
 				BE5EB5C0213FE29900E0826C /* FileUtil.cpp */,
 				BE5EB5B9213FE29900E0826C /* Log.cpp */,
 				BE58E129217F295B00249358 /* Log.hpp */,
@@ -3054,6 +3059,7 @@
 				BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */,
 				BE8D77402136762600AC58EA /* main.m in Sources */,
 				BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */,
+				BEABFC6824AC94C3004DE339 /* Authorization.cpp in Sources */,
 				BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */,
 				BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */,
 				BE8D77352136762500AC58EA /* CODocument.mm in Sources */,
