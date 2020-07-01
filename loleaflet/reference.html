@@ -3040,18 +3040,21 @@ Editor to WOPI host
 		<td><code>
 		    <nobr>success: &lt;boolean&gt;</nobr>
 		    <nobr>result: &lt;string&gt;</nobr>
+		    <nobr>errorMsg: &lt;string&gt;</nobr>
 		</code></td>
 		<td>Acknowledgement when save finishes.<br/>
+		<i>This response is only emitted if <code>Notify</code> parameter
+		is mentioned by <code>Action_Save</code> PostMessage API.</i>
+		<br/>
 		<code>success</code> tells if LOOL was able to save the document
-		successfully. When this is false, then another
-		parameter, <code>result</code> is present which contains the
-		reason that document was not saved.
+		successfully.<br/>
+		<code>result</code> contains the reason the document was not saved.<br/>
 		In case, document was not saved because it was not modified,
 		then this parameter contains the string 'unmodified'. In this
 		case, WOPI hosts can be sure that there are no changes pending
-		in the document to be saved to the storage.
-		This response is only emitted if <code>Notify</code> parameter
-		is mentioned by <code>Action_Save</code> PostMessage API.
+		in the document to be saved to the storage.<br/>
+		<code>errorMsg</code> contains a detailed error message in case saving failed.
+		Probably it will contain the error message returned from the WOPI/Webdav host.
 		</td>
 	</tr>
 	<tr>

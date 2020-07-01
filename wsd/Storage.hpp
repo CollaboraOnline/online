@@ -132,10 +132,21 @@ public:
             return _saveAsUrl;
         }
 
+        void setErrorMsg(const std::string &msg)
+        {
+            _errorMsg = msg;
+        }
+
+        const std::string &getErrorMsg() const
+        {
+            return _errorMsg;
+        }
+
     private:
         Result _result;
         std::string _saveAsName;
         std::string _saveAsUrl;
+        std::string _errorMsg;
     };
 
     enum class LOOLStatusCode

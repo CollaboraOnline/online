@@ -365,7 +365,9 @@ L.Socket = L.Class.extend({
 				}
 
 				var postMessageObj = {
-					success: commandresult['success']
+					success: commandresult['success'],
+					result: commandresult['result'],
+					errorMsg: commandresult['errorMsg']
 				};
 				this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
 			}

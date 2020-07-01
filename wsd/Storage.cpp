@@ -1048,6 +1048,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
         std::ostringstream oss;
         Poco::StreamCopier::copyStream(rs, oss);
         std::string responseString = oss.str();
+        saveResult.setErrorMsg(responseString);
 
         const std::string wopiLog(isSaveAs ? "WOPI::PutRelativeFile" : (isRename ? "WOPI::RenameFile":"WOPI::PutFile"));
 

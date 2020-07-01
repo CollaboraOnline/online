@@ -969,6 +969,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
         _poll->wakeup();
+        broadcastSaveResult(true, "unmodified");
         return true;
     }
 
@@ -978,6 +979,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         LOG_ERR("Session with sessionId ["
                 << sessionId << "] not found while storing document docKey [" << _docKey
                 << "]. The document will not be uploaded to storage at this time.");
+        broadcastSaveResult(false, "Session not found");
         return false;
     }
 
@@ -986,6 +988,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     {
         LOG_ERR("Cannot store docKey [" << _docKey << "] as .uno:Save has failed in LOK.");
         it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
+        broadcastSaveResult(false, "Could not save document in LibreOfficeKit");
         return false;
     }
 
@@ -1021,6 +1024,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << _docKey <<
                 "]. File last modified " << timeInSec.count() << " seconds ago, timestamp unchanged.");
         _poll->wakeup();
+        broadcastSaveResult(true, "unmodified");
         return true;
     }
 
@@ -1103,12 +1107,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         {
             sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savediskfull");
         }
+        broadcastSaveResult(false, "Disk full", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::UNAUTHORIZED)
     {
         LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uriAnonym <<
                 "]. Invalid or expired access token. Notifying client.");
         it->second->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
+        broadcastSaveResult(false, "Invalid or expired access token", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::FAILED)
     {
@@ -1117,6 +1123,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         std::ostringstream oss;
         oss << "error: cmd=storage kind=" << (isRename ? "renamefailed" : "savefailed");
         it->second->sendTextFrame(oss.str());
+        broadcastSaveResult(false, "Save failed", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED
              || storageSaveResult.getResult() == StorageBase::SaveResult::CONFLICT)
@@ -1127,9 +1134,21 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
             = isModified() ? "error: cmd=storage kind=documentconflict" : "close: documentconflict";
 
         broadcastMessage(message);
+        broadcastSaveResult(false, "Conflict: Document changed in storage", storageSaveResult.getErrorMsg());
     }
 
     return false;
+}
+
+void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
+{
+    std::string resultstr = success ? "true" : "false";
+    // Some sane limit, otherwise we get problems transfering this to the client with large strings (can be a whole webpage)
+    std::string errorMsgFormatted = errorMsg.substr(0, 1000);
+    // Replace reserverd characters
+    errorMsgFormatted = Poco::translate(errorMsgFormatted, "\"", "'");
+    broadcastMessage("commandresult: { \"command\": \"save\", \"success\": " + resultstr +
+                     ", \"result\": \"" + result + "\", \"errorMsg\": \"" + errorMsgFormatted  + "\"}");
 }
 
 void DocumentBroker::setLoaded()

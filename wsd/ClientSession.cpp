@@ -553,11 +553,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
             constexpr bool isAutosave = false;
             constexpr bool isExitSave = false;
-            bool result = docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0,
+            docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0,
                                     isAutosave, isExitSave, extendedData);
-            std::string resultstr = result ? "true" : "false";
-            std::string msg = "commandresult: { \"command\": \"save\", \"success\": " + resultstr + " }";
-            docBroker->broadcastMessage(msg);
         }
     }
     else if (tokens.equals(0, "savetostorage"))
@@ -566,10 +563,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (tokens.size() > 1)
             getTokenInteger(tokens[1], "force", force);
 
-        bool result = docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true);
-        std::string resultstr = result ? "true" : "false";
-        std::string msg = "commandresult: { \"command\": \"savetostorage\", \"success\": " + resultstr + " }";
-        docBroker->broadcastMessage(msg);
+        docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true);
     }
     else if (tokens.equals(0, "clientvisiblearea"))
     {
