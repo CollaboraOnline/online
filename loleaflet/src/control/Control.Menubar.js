@@ -257,9 +257,11 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
-					{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
-					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
-					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'}]},
+					{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action', drawing: false},
+					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action', drawing: false},
+					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action', drawing: false},
+					{name: _('ODF Drawing (.odg)'), id: 'downloadas-odg', type: 'action'}
+				]},
 				{type: 'separator'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
@@ -538,9 +540,10 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
 				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
-				{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
-				{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
-				{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'},
+				{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action', drawing: false},
+				{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action', drawing: false},
+				{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action', drawing: false},
+				{name: _('ODF Drawing (.odg)'), id: 'downloadas-odg', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
 				{uno: '.uno:Undo'},
@@ -1382,6 +1385,12 @@ L.Control.Menubar = L.Control.extend({
 			return false;
 
 		if (menuItem.id === 'changesmenu' && this._map['wopi'].HideChangeTrackingControls)
+			return false;
+
+		if (menuItem.drawing === false && this._map.getDocType() === 'drawing')
+			return false;
+
+		if (menuItem.id === 'downloadas-odg' && !this._map['wopi'].BaseFileName.endsWith('.odg'))
 			return false;
 
 		// Keep track of all 'downloadas-' options and register them as
