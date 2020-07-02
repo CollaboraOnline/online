@@ -19,6 +19,7 @@
 #include <Log.hpp>
 #include <LOOLWSD.hpp>
 #include <Protocol.hpp>
+#include <SetupKitEnvironment.hpp>
 #include <Util.hpp>
 
 #include <osl/detail/android-bootstrap.h>

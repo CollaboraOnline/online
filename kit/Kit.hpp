@@ -47,9 +47,6 @@ void lokit_main(
 void runKitLoopInAThread();
 #endif
 
-/// We need to get several env. vars right
-void setupKitEnvironment(const std::string& userInterface);
-
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
 void documentViewCallback(const int type, const char* p, void* data);

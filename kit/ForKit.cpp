@@ -30,6 +30,7 @@
 
 #include <Common.hpp>
 #include "Kit.hpp"
+#include "SetupKitEnvironment.hpp"
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>

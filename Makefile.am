@@ -275,6 +275,7 @@ kit_headers = kit/ChildSession.hpp \
               kit/DummyLibreOfficeKit.hpp \
               kit/Kit.hpp \
               kit/KitHelper.hpp \
+              kit/SetupKitEnvironment.hpp \
               kit/Watermark.hpp
 
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \

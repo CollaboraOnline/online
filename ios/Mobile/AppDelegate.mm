@@ -28,6 +28,7 @@
 #import "Kit.hpp"
 #import "Log.hpp"
 #import "LOOLWSD.hpp"
+#import "SetupKitEnvironment.hpp"
 #import "Util.hpp"
 
 NSString *app_locale;
