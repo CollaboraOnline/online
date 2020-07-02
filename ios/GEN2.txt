@@ -28,8 +28,8 @@ Ideas:
 
 Steps:
 
-- Rename the Objective-C files/classes to have a CO prefix. Reduces
-  risk of confusion with C++ classes.
+- Re-factorings that don't affect any working of current Online or
+  apps, but which will make the iOS app re-plumbing easier.
 
 - ...
 
