@@ -5,7 +5,6 @@ add_library(androidapp SHARED
             androidapp.cpp
             ../../../../../common/Authorization.cpp
             ../../../../../common/FileUtil.cpp
-            ../../../../../common/JailUtil.cpp
             ../../../../../common/Log.cpp
             ../../../../../common/MessageQueue.cpp
             ../../../../../common/Protocol.cpp

@@ -16,7 +16,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 
-/// Class to keep the authorization data.
+/// Class to keep the authorization data, which can be either access_token or access_header.
 class Authorization
 {
 public:

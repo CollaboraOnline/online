@@ -226,6 +226,7 @@ private:
     /// URI with which client made request to us
     const Poco::URI _uriPublic;
 
+    /// Authorization data - either access_token or access_header.
     const Authorization _auth;
 
     /// The cookies we should pass on to the storage on saving.
