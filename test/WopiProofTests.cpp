@@ -137,6 +137,21 @@ void WopiProofTests::testOurProof()
 
     int64_t ticks = std::stoll(timestamp.c_str(), nullptr, 10);
     verifySignature(access_token, uri, ticks, modulus, exponent, proof);
+
+    // tdf#134041: test another data
+
+    access_token = "~!@#$%^&*()_+`1234567890-=";
+    uri = "https://user2@short.com:12345/blah?query_string=bar";
+    pairs = gen.GetProofHeaders(access_token, uri);
+    len = pairs.size();
+    LOK_ASSERT_EQUAL(2, len);
+    LOK_ASSERT_EQUAL(pairs[0].first, std::string("X-WOPI-TimeStamp"));
+    timestamp = pairs[0].second;
+    LOK_ASSERT_EQUAL(pairs[1].first, std::string("X-WOPI-Proof"));
+    proof = pairs[1].second;
+
+    ticks = std::stoll(timestamp.c_str(), nullptr, 10);
+    verifySignature(access_token, uri, ticks, modulus, exponent, proof);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WopiProofTests);
