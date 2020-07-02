@@ -782,8 +782,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
     {
         LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
-        _poll->wakeup();
         broadcastSaveResult(true, "unmodified");
+        _poll->wakeup();
         return true;
     }
 
@@ -895,7 +895,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
         LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uriAnonym <<
                 "]. Invalid or expired access token. Notifying client.");
         it->second->sendTextFrame("error: cmd=storage kind=saveunauthorized");
-        broadcastSaveResult(false, "Invalid or expired access token", storageSaveResult.getErrorMsg());
+        broadcastSaveResult(false, "Invalid or expired access token");
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::FAILED)
     {
@@ -921,9 +921,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
 void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
 {
-    std::string resultstr = success ? "true" : "false";
+    const std::string resultstr = success ? "true" : "false";
     // Some sane limit, otherwise we get problems transfering this to the client with large strings (can be a whole webpage)
-    std::string errorMsgFormatted = errorMsg.substr(0, 1000);
+    std::string errorMsgFormatted = LOOLProtocol::getAbbreviatedMessage(errorMsg);
     // Replace reserverd characters
     errorMsgFormatted = Poco::translate(errorMsgFormatted, "\"", "'");
     broadcastMessage("commandresult: { \"command\": \"save\", \"success\": " + resultstr +
