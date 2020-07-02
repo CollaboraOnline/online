@@ -39,6 +39,7 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('tilepreview', this._updatePreview, this);
 		map.on('insertpage', this._insertPreview, this);
 		map.on('deletepage', this._deletePreview, this);
+		map.on('docsize', this._updateAllPreview, this);
 	},
 
 	createScrollbar: function (axis) {
@@ -174,6 +175,27 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
+	_updateAllPreview: function () {
+		if (this._previewTiles.length === 0) {
+			return;
+		}
+
+		var previewContBB = this._partsPreviewCont.getBoundingClientRect();
+		var bottomBound;
+
+		if (this._direction === 'x') {
+			this._previewContTop = previewContBB.left;
+			bottomBound = previewContBB.right + previewContBB.width / 2;
+		} else {
+			this._previewContTop = previewContBB.top;
+			bottomBound = previewContBB.bottom + previewContBB.height / 2;
+		}
+
+		for (var prev = 0; prev < this._previewTiles.length; prev++) {
+			this._layoutPreview(prev, this._previewTiles[prev], bottomBound);
+		}
+	},
+
 	_createPreview: function (i, hashCode, bottomBound) {
 		var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
 		this._addDnDHandlers(frame);
@@ -203,6 +225,12 @@ L.Control.PartsPreview = L.Control.extend({
 			document.activeElement.blur();
 		}, this);
 
+		this._layoutPreview(i, img, bottomBound);
+
+		return img;
+	},
+
+	_layoutPreview: function (i, img, bottomBound) {
 		var topBound = this._previewContTop;
 		var previewFrameTop = 0;
 		var previewFrameBottom = 0;
@@ -248,7 +276,7 @@ L.Control.PartsPreview = L.Control.extend({
 			var imgWidth = imgSize.width;
 			if (imgSize.width < previewImgMinWidth)
 				imgHeight = Math.round(imgHeight * previewImgMinWidth / imgSize.width);
-			var previewFrameBB = frame.getBoundingClientRect();
+			var previewFrameBB = img.parentElement.getBoundingClientRect();
 			if (this._direction === 'x') {
 				this._previewFrameMargin = previewFrameBB.left - this._previewContTop;
 				this._previewImgHeight = imgWidth;
@@ -259,8 +287,6 @@ L.Control.PartsPreview = L.Control.extend({
 				this._previewFrameHeight = imgHeight + 2 * previewImgBorder;
 			}
 		}
-
-		return img;
 	},
 
 	_setPart: function (e) {
