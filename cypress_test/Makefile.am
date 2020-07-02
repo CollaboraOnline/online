@@ -279,7 +279,6 @@ $(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
 endif
 
 clean-local:
-	$(CYPRESS_BINARY) cache clear || true
 	rm -rf node_modules
 	rm -rf workdir
 	rm -rf cypress
