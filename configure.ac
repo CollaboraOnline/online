@@ -368,7 +368,7 @@ fi
 # to the Mac.
 # Android: We need these to setup the CMakeLists.txt properly.
 LOBUILDDIR=
-ANDROID_ABI=
+ANDROID_ABI="armeabi-v7a"
 LOBUILDDIR_ARM64_V8A=
 LOBUILDDIR_X86=
 LOBUILDDIR_X86_64=
@@ -385,10 +385,12 @@ CORE_VERSION_HASH=""
 if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \); then
    if test "$enable_androidapp" = "yes" ; then
       AC_MSG_CHECKING([for Android ABI to build for])
-      if test -z "$with_android_abi" ; then
-         ANDROID_ABI="armeabi-v7a arm64-v8a x86 x86_64"
-      else
+      if test -n "$with_android_abi" ; then
          ANDROID_ABI=`echo $with_android_abi | sed 's/:/ /g'`
+      else
+         if echo "$with_lo_builddir" | grep -qs ':' ; then
+            ANDROID_ABI="armeabi-v7a arm64-v8a x86 x86_64"
+         fi
       fi
       AC_MSG_RESULT([$ANDROID_ABI])
    fi
