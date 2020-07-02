@@ -349,6 +349,13 @@ $(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup loolwsd caps_bins
 	$(CLEANUP_COMMAND)
 	mkdir -p $@
 
+cleanup:
+	$(CLEANUP_COMMAND)
+
+# Always cleanup before removing the binaries.
+# Note: this can break with -j option!
+clean-am: cleanup clean-binPROGRAMS clean-generic clean-libtool clean-local clean-noinstPROGRAMS mostlyclean-am
+
 clean-local:
 	$(CLEANUP_COMMAND)
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
@@ -473,7 +480,7 @@ endif
 # installing. When building for packaging, no need for this, as the
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
-.PHONY: caps_bins
+.PHONY: caps_bins cleanup
 
 all-local: loolwsd caps_bins @JAILS_PATH@ $(SYSTEM_STAMP)
 
