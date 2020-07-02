@@ -211,7 +211,9 @@ namespace Log
         uint64_t osTid;
         pthread_threadid_np(nullptr, &osTid);
         snprintf(pos, 32, "%#.05llx", osTid);
-        while (*pos++); // Skip to end.
+        // Skip to end.
+        while (*pos)
+            pos++;
 #endif
 
         // YYYY-MM-DD.
