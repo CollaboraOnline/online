@@ -216,7 +216,7 @@ std::string ClientSession::getClipboardURI(bool encode)
 
     std::string meta = _serverURL.getSubURLForEndpoint(
         "/lool/clipboard?WOPISrc=" + encodedFrom +
-        "&ServerId=" + LOOLWSD::HostIdentifier +
+        "&ServerId=" + Util::getProcessIdentifier() +
         "&ViewId=" + std::to_string(getKitViewId()) +
         "&Tag=" + _clipboardKeys[0]);
 
@@ -363,7 +363,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
 
         // Send LOOL version information
-        sendTextFrame("loolserver " + LOOLWSD::getVersionJSON());
+        sendTextFrame("loolserver " + Util::getVersionJSON());
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
 

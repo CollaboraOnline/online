@@ -241,7 +241,6 @@ public:
     static std::string WelcomeFilesRoot; ///< From where we should serve the release notes (or otherwise useful content) that is shown on first install or version update.
     static std::string ServiceRoot; ///< There are installations that need prefixing every page with some path.
     static std::string LOKitVersion;
-    static std::string HostIdentifier; ///< A unique random hash that identifies this server
     static std::string LogLevel;
     static bool AnonymizeUserData;
     static bool CheckLoolUser;
@@ -395,8 +394,6 @@ public:
 
     /// get correct server URL with protocol + port number for this running server
     static std::string getServerURL();
-
-    static std::string getVersionJSON();
 
     int innerMain();
 

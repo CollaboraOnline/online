@@ -176,6 +176,11 @@ namespace Util
     /// Get version information
     void getVersionInfo(std::string& version, std::string& hash);
 
+    ///< A random hash that identifies the current process.
+    std::string getProcessIdentifier();
+
+    std::string getVersionJSON();
+
     /// Return a string that is unique across processes and calls.
     std::string UniqueId();
 

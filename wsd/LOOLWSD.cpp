@@ -720,7 +720,6 @@ std::string LOOLWSD::FileServerRoot;
 std::string LOOLWSD::WelcomeFilesRoot;
 std::string LOOLWSD::ServiceRoot;
 std::string LOOLWSD::LOKitVersion;
-std::string LOOLWSD::HostIdentifier;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
 std::string LOOLWSD::LogLevel = "trace";
@@ -2685,7 +2684,7 @@ private:
             if (it != DocBrokers.end())
                 docBroker = it->second;
         }
-        if (docBroker && serverId == LOOLWSD::HostIdentifier)
+        if (docBroker && serverId == Util::getProcessIdentifier())
         {
             std::shared_ptr<std::string> data;
             DocumentBroker::ClipboardRequest type;
@@ -2729,8 +2728,8 @@ private:
                     " and broker: " << (docBroker ? "" : "not ") << "found");
 
             std::string errMsg;
-            if (serverId != LOOLWSD::HostIdentifier)
-                errMsg = "Cluster configuration error: mis-matching serverid " + serverId + " vs. " + LOOLWSD::HostIdentifier;
+            if (serverId != Util::getProcessIdentifier())
+                errMsg = "Cluster configuration error: mis-matching serverid " + serverId + " vs. " + Util::getProcessIdentifier();
             else
                 errMsg = "Empty clipboard item / session tag " + tag;
 
@@ -3537,7 +3536,7 @@ public:
            << "\n  WelcomeFilesRoot: " << LOOLWSD::WelcomeFilesRoot
            << "\n  ServiceRoot: " << LOOLWSD::ServiceRoot
            << "\n  LOKitVersion: " << LOOLWSD::LOKitVersion
-           << "\n  HostIdentifier: " << LOOLWSD::HostIdentifier
+           << "\n  HostIdentifier: " << Util::getProcessIdentifier()
            << "\n  ConfigFile: " << LOOLWSD::ConfigFile
            << "\n  ConfigDir: " << LOOLWSD::ConfigDir
            << "\n  LogLevel: " << LOOLWSD::LogLevel
@@ -3699,17 +3698,6 @@ private:
     }
 };
 
-std::string LOOLWSD::getVersionJSON()
-{
-    std::string version, hash;
-    Util::getVersionInfo(version, hash);
-    return
-        "{ \"Version\":  \"" + version + "\", "
-        "\"Hash\":     \"" + hash + "\", "
-        "\"Protocol\": \"" + GetProtocolVersion() + "\", "
-        "\"Id\":  \"" + HostIdentifier + "\" }";
-}
-
 static LOOLWSDServer srv;
 
 #if !MOBILEAPP
@@ -3735,11 +3723,9 @@ int LOOLWSD::innerMain()
     setenv("LD_BIND_NOW", "1", 1);
 #  endif
 
-    HostIdentifier = Util::rng::getHexString(8);
-
     std::string version, hash;
     Util::getVersionInfo(version, hash);
-    LOG_INF("Loolwsd version details: " << version << " - " << hash << " - id " << HostIdentifier << " - on " << Util::getLinuxVersion());
+    LOG_INF("Loolwsd version details: " << version << " - " << hash << " - id " << Util::getProcessIdentifier() << " - on " << Util::getLinuxVersion());
 #endif
 
     initializeSSL();

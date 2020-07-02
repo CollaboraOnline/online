@@ -60,6 +60,7 @@
 
 #include "Common.hpp"
 #include "Log.hpp"
+#include "Protocol.hpp"
 #include "Util.hpp"
 
 using std::size_t;
@@ -638,6 +639,24 @@ namespace Util
         version = std::string(LOOLWSD_VERSION);
         hash = std::string(LOOLWSD_VERSION_HASH);
         hash.resize(std::min(8, (int)hash.length()));
+    }
+
+    std::string getProcessIdentifier()
+    {
+        static std::string id = Util::rng::getHexString(8);
+
+        return id;
+    }
+
+    std::string getVersionJSON()
+    {
+        std::string version, hash;
+        Util::getVersionInfo(version, hash);
+        return
+            "{ \"Version\":  \"" + version + "\", "
+            "\"Hash\":     \"" + hash + "\", "
+            "\"Protocol\": \"" + LOOLProtocol::GetProtocolVersion() + "\", "
+            "\"Id\":  \"" + Util::getProcessIdentifier() + "\" }";
     }
 
     std::string UniqueId()
