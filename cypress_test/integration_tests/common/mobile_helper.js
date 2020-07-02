@@ -118,7 +118,7 @@ function openMobileWizard() {
 	// The second request is sent after a 400 ms delay
 	// see _refreshSidebar() method. So let's just wait
 	// until mobile wizard gets it's final state.
-	cy.wait(1000);
+	cy.wait(1500);
 
 	cy.log('Opening mobile wizard - end.');
 }
