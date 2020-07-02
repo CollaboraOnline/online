@@ -768,6 +768,11 @@ L.Socket = L.Class.extend({
 					this._map.options.docParams = {};
 				}
 
+				var reuseCookies = this._getParameterByName(url, 'reuse_cookies');
+				if (reuseCookies !== '') {
+					this._map.options.docParams['reuse_cookies'] = reuseCookies;
+				}
+
 				// setup for loading the new document, and trigger the load
 				var docUrl = url.split('?')[0];
 				this._map.options.doc = docUrl;
