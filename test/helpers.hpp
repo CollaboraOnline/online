@@ -246,6 +246,60 @@ inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
         (Poco::Net::SocketAddress("127.0.0.1", ClientPortNumber));
 }
 
+// Sets read / write timeout for the given file descriptor.
+inline void setSocketTimeOut(int socketFD, int timeMS)
+{
+    struct timeval tv;
+    tv.tv_sec = (float)timeMS / (float)1000;
+    tv.tv_usec = timeMS;
+    setsockopt(socketFD, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+}
+
+// Sets socket's blocking mode. true for blocking, false for non blocking.
+inline void setSocketBlockingMode(int socketFD, bool blocking)
+{
+    ioctl(socketFD, FIONBIO, blocking == true ? 0: 1);
+}
+
+// Creates a socket and connects it to a local server. Returns the file descriptor.
+inline int connectToLocalServer(int portNumber, int socketTimeOutMS, bool blocking)
+{
+    int socketFD = 0;
+    struct sockaddr_in serv_addr;
+
+    if ((socketFD = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    {
+        LOG_ERR("helpers::connectToLocalServer: Server client could not be created.");
+        return -1;
+    }
+    else
+    {
+        serv_addr.sin_family = AF_INET;
+        serv_addr.sin_port = htons(portNumber);
+        if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0)
+        {
+            LOG_ERR("helpers::connectToLocalServer: Invalid address.");
+            close(socketFD);
+            return -1;
+        }
+        else
+        {
+            if (connect(socketFD, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
+            {
+                LOG_ERR("helpers::connectToLocalServer: Connection failed.");
+                close(socketFD);
+                return -1;
+            }
+            else
+            {
+                setSocketTimeOut(socketFD, socketTimeOutMS);
+                setSocketBlockingMode(socketFD, blocking);
+                return socketFD;
+            }
+        }
+    }
+}
+
 inline
 std::string const & getTestServerURI()
 {

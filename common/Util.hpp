@@ -1217,6 +1217,12 @@ int main(int argc, char**argv)
         return pair.second ? pair : std::make_pair(def, false);
     }
 
+    /// Get system_clock now in miliseconds.
+    inline int64_t getNowInMS()
+    {
+        return std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch().count();
+    }
+
 } // end namespace Util
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
