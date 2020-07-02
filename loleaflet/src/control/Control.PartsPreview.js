@@ -86,18 +86,9 @@ L.Control.PartsPreview = L.Control.extend({
 						$('.scroll-container').mCustomScrollbar('update');
 					}, this), 500);
 				}
-				var previewContBB = this._partsPreviewCont.getBoundingClientRect();
-				var bottomBound;
 
 				this.createScrollbar();
-
-				if (this._direction === 'x') {
-					this._previewContTop = previewContBB.left;
-					bottomBound = previewContBB.right + previewContBB.width / 2;
-				} else {
-					this._previewContTop = previewContBB.top;
-					bottomBound = previewContBB.bottom + previewContBB.height / 2;
-				}
+				var bottomBound = this._getBottomBound();
 
 				this._map.on('click', function() {
 					this.partsFocused = false;
@@ -180,17 +171,7 @@ L.Control.PartsPreview = L.Control.extend({
 			return;
 		}
 
-		var previewContBB = this._partsPreviewCont.getBoundingClientRect();
-		var bottomBound;
-
-		if (this._direction === 'x') {
-			this._previewContTop = previewContBB.left;
-			bottomBound = previewContBB.right + previewContBB.width / 2;
-		} else {
-			this._previewContTop = previewContBB.top;
-			bottomBound = previewContBB.bottom + previewContBB.height / 2;
-		}
-
+		var bottomBound = this._getBottomBound();
 		for (var prev = 0; prev < this._previewTiles.length; prev++) {
 			this._layoutPreview(prev, this._previewTiles[prev], bottomBound);
 		}
@@ -228,6 +209,21 @@ L.Control.PartsPreview = L.Control.extend({
 		this._layoutPreview(i, img, bottomBound);
 
 		return img;
+	},
+
+	_getBottomBound: function () {
+		var previewContBB = this._partsPreviewCont.getBoundingClientRect();
+		var bottomBound;
+
+		if (this._direction === 'x') {
+			this._previewContTop = previewContBB.left;
+			bottomBound = previewContBB.right + previewContBB.width / 2;
+		} else {
+			this._previewContTop = previewContBB.top;
+			bottomBound = previewContBB.bottom + previewContBB.height / 2;
+		}
+
+		return bottomBound;
 	},
 
 	_layoutPreview: function (i, img, bottomBound) {
