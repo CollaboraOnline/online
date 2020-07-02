@@ -70,8 +70,25 @@ namespace FileUtil
     bool isEmptyDirectory(const char* path);
     inline bool isEmptyDirectory(const std::string& path) { return isEmptyDirectory(path.c_str()); }
 
+    /// Update the access-time and modified-time metadata for the given file.
+    bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified);
+
+    /// Copy the source file to the target.
+    bool copy(const std::string& fromPath, const std::string& toPath, bool log,
+              bool throw_on_error);
+
+    /// Atomically copy a file and optionally preserve its timestamps.
+    /// The file is copied with a temporary name, and then atomically renamed.
+    /// NOTE: toPath must be a valid filename, not a directory.
+    /// Does not log (except errors), does not throw. Returns true on success.
+    bool copyAtomic(const std::string& fromPath, const std::string& toPath,
+                    bool preserveTimestamps);
+
     /// Copy a file from @fromPath to @toPath, throws on failure.
-    void copyFileTo(const std::string &fromPath, const std::string &toPath);
+    inline void copyFileTo(const std::string& fromPath, const std::string& toPath)
+    {
+        copy(fromPath, toPath, /*log=*/true, /*throw_on_error=*/true);
+    }
 
     /// Make a temp copy of a file, and prepend it with a prefix.
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename,
@@ -100,7 +117,7 @@ namespace FileUtil
     class Stat
     {
     public:
-        /// Stat the given path. Symbolic links are stats when @link is true.
+        /// Stat the given path. Symbolic links are stat'ed when @link is true.
         Stat(const std::string& file, bool link = false)
             : _path(file)
             , _res(link ? lstat(file.c_str(), &_sb) : stat(file.c_str(), &_sb))
@@ -119,8 +136,32 @@ namespace FileUtil
         bool isFile() const { return S_ISREG(_sb.st_mode); }
         bool isLink() const { return S_ISLNK(_sb.st_mode); }
 
-        /// Returns true iff the path exists, regarlesss of access permission.
+        /// Returns the filesize in bytes.
+        size_t size() const { return _sb.st_size; }
+
+        /// Returns the modified time.
+        timespec modifiedTime() const { return _sb.st_mtim; }
+
+        /// Returns true iff the path exists, regardless of access permission.
         bool exists() const { return good() || (_errno != ENOENT && _errno != ENOTDIR); }
+
+        /// Returns true if both files exist and have
+        /// the same size and modified timestamp.
+        bool isUpToDate(const Stat& other) const
+        {
+            if (exists() && other.exists() && !isDirectory() && !other.isDirectory())
+            {
+                // No need to check whether they are linked or not,
+                // since if they are, the following check will match,
+                // and if they aren't, we still need to rely on the following.
+                return (size() == other.size()
+                        && modifiedTime().tv_sec == other.modifiedTime().tv_sec
+                        && (modifiedTime().tv_nsec / 1000000) // Millisecond precision.
+                               == (other.modifiedTime().tv_nsec / 1000000));
+            }
+
+            return false;
+        }
 
     private:
         const std::string _path;

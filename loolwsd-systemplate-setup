@@ -21,16 +21,12 @@ cd / || exit 1
 # into the template tree of system files for the chroot jails.
 
 # First essential files and shared objects
-find etc/hosts etc/nsswitch.conf etc/resolv.conf \
-     etc/passwd etc/group etc/host.conf \
-     etc/ld.so.* \
+find etc/ld.so.* \
      lib/ld-* lib64/ld-* \
      lib/libnss_* lib64/libnss_* lib/*/libnss_* \
      lib/libresolv* lib64/libresolv* lib/*/libresolv* \
      var/cache/fontconfig \
      etc/fonts \
-     etc/timezone \
-     etc/localtime \
      usr/lib/locale/en_US.utf8 \
      usr/lib/locale/C.UTF-8 \
      usr/lib/locale/locale_archive \
@@ -42,9 +38,6 @@ find etc/hosts etc/nsswitch.conf etc/resolv.conf \
 	 -type f 2>/dev/null
 
 find etc/fonts \
-     etc/timezone \
-     etc/localtime \
-     etc/resolv.conf \
      lib/ld-* lib64/ld-* \
      lib/libnss_* lib64/libnss_* lib/*/libnss_* \
      lib/libresolv* lib64/libresolv* lib/*/libresolv* \
@@ -64,6 +57,9 @@ grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's
 # Can't use -l because then symlinks won't be handled well enough.
 # This will now copy the file a symlink points to, but whatever.
 cpio -p -d -L $CHROOT
+
+# Remove the dynamic files, which are linked by loolwsd.
+rm -f $CHROOT/etc/{hosts,nsswitch.conf,resolv.conf,passwd,group,host.conf,timezone,localtime}
 
 mkdir -p $CHROOT/lo
 mkdir -p $CHROOT/dev

@@ -13,6 +13,7 @@
 
 #include <dirent.h>
 #include <ftw.h>
+#include <sys/time.h>
 #ifdef __linux
 #include <sys/vfs.h>
 #elif defined IOS
@@ -85,7 +86,7 @@ namespace FileUtil
         return name;
     }
 
-    void copyFileTo(const std::string &fromPath, const std::string &toPath)
+    bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error)
     {
         int from = -1, to = -1;
         try {
@@ -110,7 +111,10 @@ namespace FileUtil
                 throw;
             }
 
-            LOG_INF("Copying " << st.st_size << " bytes from " << anonymizeUrl(fromPath) << " to " << anonymizeUrl(toPath));
+            // Logging may be redundant and/or noisy.
+            if (log)
+                LOG_INF("Copying " << st.st_size << " bytes from " << anonymizeUrl(fromPath)
+                                   << " to " << anonymizeUrl(toPath));
 
             char buffer[64 * 1024];
 
@@ -150,15 +154,24 @@ namespace FileUtil
             }
             close(from);
             close(to);
+            return true;
         }
         catch (...)
         {
-            LOG_SYS("Failed to copy from " << anonymizeUrl(fromPath) << " to " << anonymizeUrl(toPath));
+            std::ostringstream oss;
+            oss << "Failed to copy from " << anonymizeUrl(fromPath) << " to "
+                << anonymizeUrl(toPath);
+            const std::string err = oss.str();
+
+            LOG_SYS(err);
             close(from);
             close(to);
             unlink(toPath.c_str());
-            throw Poco::Exception("failed to copy");
+            if (throw_on_error)
+                throw Poco::Exception(err);
         }
+
+        return false;
     }
 
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
@@ -250,6 +263,69 @@ namespace FileUtil
 
         LOG_SYS("Failed to get the realpath of [" << path << "]");
         return path;
+    }
+
+    bool isEmptyDirectory(const char* path)
+    {
+        DIR* dir = opendir(path);
+        if (dir == nullptr)
+            return errno != EACCES; // Assume it's not empty when EACCES.
+
+        int count = 0;
+        while (readdir(dir) && ++count < 3)
+            ;
+
+        closedir(dir);
+        return count <= 2; // Discounting . and ..
+    }
+
+    bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified)
+    {
+        // The timestamp is in seconds and microseconds.
+        timeval timestamps[2]{ { tsAccess.tv_sec, tsAccess.tv_nsec / 1000 },
+                               { tsModified.tv_sec, tsModified.tv_nsec / 1000 } };
+        if (utimes(filename.c_str(), timestamps) != 0)
+        {
+            LOG_SYS("Failed to update the timestamp of [" << filename << "]");
+            return false;
+        }
+
+        return true;
+    }
+
+    bool copyAtomic(const std::string& fromPath, const std::string& toPath, bool preserveTimestamps)
+    {
+        const std::string randFilename = toPath + Util::rng::getFilename(12);
+        if (copy(fromPath, randFilename, /*log=*/false, /*throw_on_error=*/false))
+        {
+            if (preserveTimestamps)
+            {
+                const Stat st(fromPath);
+                updateTimestamps(randFilename, st.sb().st_atim, st.sb().st_mtim);
+            }
+
+            // Now rename atomically, replacing any existing files with the same name.
+            if (rename(randFilename.c_str(), toPath.c_str()) == 0)
+                return true;
+
+            LOG_SYS("Failed to copy [" << fromPath << "] -> [" << toPath
+                                       << "] while atomically renaming:");
+            removeFile(randFilename, false); // Cleanup.
+        }
+
+        return false;
+    }
+
+    bool linkOrCopyFile(const char* source, const char* target)
+    {
+        if (link(source, target) == -1)
+        {
+            LOG_INF("link(\"" << source << "\", \"" << target << "\") failed: " << strerror(errno)
+                              << ". Will copy.");
+            return copy(source, target, /*log=*/false, /*throw_on_error=*/false);
+        }
+
+        return true;
     }
 
 } // namespace FileUtil
@@ -404,41 +480,6 @@ namespace FileUtil
     std::string anonymizeUsername(const std::string& username)
     {
         return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
-    }
-
-    bool isEmptyDirectory(const char* path)
-    {
-        DIR* dir = opendir(path);
-        if (dir == nullptr)
-            return errno != EACCES; // Assume it's not empty when EACCES.
-
-        int count = 0;
-        while (readdir(dir) && ++count < 3)
-            ;
-
-        closedir(dir);
-        return count <= 2; // Discounting . and ..
-    }
-
-    bool linkOrCopyFile(const char* source, const char* target)
-    {
-        if (link(source, target) == -1)
-        {
-            LOG_INF("link(\"" << source << "\", \"" << target << "\") failed: " << strerror(errno)
-                              << ". Will copy.");
-            try
-            {
-                Poco::File(source).copyTo(target);
-            }
-            catch (const std::exception& exc)
-            {
-                LOG_ERR("Copying of [" << source << "] to [" << target
-                                       << "] failed: " << exc.what());
-                return false;
-            }
-        }
-
-        return true;
     }
 
 } // namespace FileUtil
