@@ -44,22 +44,6 @@ var testBlackLists = {
 	],
 
 	'cp-6-4': [
-		['mobile/calc/apply_font_spec.js',
-			[
-				'Apply font size.'
-			]
-		],
-		['mobile/writer/apply_font_spec.js',
-			[
-				'Apply font size.'
-			]
-		],
-		['mobile/impress/apply_font_spec.js',
-			[
-				'Change font size of selected text.',
-				'Change font size of text shape.'
-			]
-		],
 		['mobile/writer/table_properties_spec.js',
 			[]
 		],
