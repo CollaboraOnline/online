@@ -135,7 +135,7 @@ body {
 }
 
 #presentation-controls-wrapper.drawing {
-	bottom: 40px; /* Hide the presentation toolbar (insert slide etc.) for doctype = drawing */
+	bottom: 33px; /* Hide the presentation toolbar (insert slide etc.) for doctype = drawing */
 }
 
 #presentation-controls-wrapper.readonly {

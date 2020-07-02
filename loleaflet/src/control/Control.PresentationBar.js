@@ -10,6 +10,9 @@ L.Control.PresentationBar = L.Control.extend({
 	},
 
 	onAdd: function (map) {
+		if (this._map.getDocType() === 'drawing') {
+			return;
+		}
 		this.map = map;
 		this.create();
 
