@@ -1,8 +1,14 @@
+loolwsd (4.2.5-5) unstable; urgency=medium
+
+  * https://cgit.freedesktop.org/libreoffice/online/log/?h=cp-4.2.5-5
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 02 Jul 2020 10:20:00 +0200
+
 loolwsd (4.2.5-4) unstable; urgency=medium
 
   * https://cgit.freedesktop.org/libreoffice/online/log/?h=cp-4.2.5-4
 
- -- Andras Timar <andras.timar@collabora.com>  Mon, 01 Jul 2020 07:20:00 +0200
+ -- Andras Timar <andras.timar@collabora.com>  Wed, 01 Jul 2020 07:20:00 +0200
 
 loolwsd (4.2.5-3) unstable; urgency=medium
 
