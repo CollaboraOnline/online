@@ -211,7 +211,7 @@ body {
 	transform: scale(1.2);
 	transition: transform 0.5s;
 }
-#mobile-edit-button-image:active {
+#mobile-edit-button:active > #mobile-edit-button-image {
 	transform: rotate(45deg);
 	transition: transform 0.5s;
 }
