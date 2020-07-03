@@ -48,7 +48,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		map.on('AnnotationSave', this.onAnnotationSave, this);
 		map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
-		map.on('orientationchange', this.onOrientationChange, this);
 		map.on('resize', this.onResize, this);
 
 		map.uiManager.initializeSpecializedUI('presentation');
@@ -253,35 +252,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 				this.onAnnotationCancel();
 			}
 		}
-	},
-
-	onOrientationChange: function () {
-		var container = L.DomUtil.get('presentation-controls-wrapper');
-		var preview = L.DomUtil.get('slide-sorter');
-
-		if (!container || !preview) {
-			return;
-		}
-
-		// Android change the orientation if the keyboard is visible
-		if (L.Browser.android) {
-			if (window.innerHeight < 2 * screen.height / 3) {
-				L.DomUtil.addClass(this._map.options.documentContainer, 'keyboard');
-				$(preview).hide();
-			} else {
-				L.DomUtil.removeClass(this._map.options.documentContainer, 'keyboard');
-				$(preview).show();
-			}
-		}
-
-		if (L.DomUtil.isPortrait() && $(preview).data('mCS').opt.axis !== 'x') {
-			$(preview).mCustomScrollbar('destroy');
-			this._preview.createScrollbar('x');
-		} else if (L.DomUtil.isLandscape() && $(preview).data('mCS').opt.axis !== 'y') {
-			$(preview).mCustomScrollbar('destroy');
-			this._preview.createScrollbar('y');
-		}
-
 	},
 
 	onUpdatePermission: function (e) {

@@ -42,11 +42,8 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('docsize', this._updateAllPreview, this);
 	},
 
-	createScrollbar: function (axis) {
+	createScrollbar: function () {
 		var control = this;
-		if (axis) {
-			this._direction = axis;
-		}
 
 		$(this._partsPreviewCont).mCustomScrollbar({
 			axis: this._direction,
@@ -163,6 +160,14 @@ L.Control.PartsPreview = L.Control.extend({
 			var previewFrame = $(this._partsPreviewCont).find('.preview-frame');
 			previewFrame.removeClass(removePreviewFrame);
 			previewFrame.addClass(addPreviewFrame);
+
+			// re-create scrollbar with new direction
+			var direction = this._direction;
+			this._direction = !window.mode.isDesktop() && L.DomUtil.isPortrait() ? 'x' : 'y';
+			if (direction !== this._direction) {
+				$(this._partsPreviewCont).mCustomScrollbar('destroy');
+				this.createScrollbar();
+			}
 		}
 	},
 
