@@ -211,7 +211,7 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
-		if (enableNotebookbar) {
+		if (enableNotebookbar && !window.mode.isMobile()) {
 			if (e.perm === 'edit') {
 				this.makeSpaceForNotebookbar(this.map._docLayer._docType);
 			} else if (e.perm === 'readonly' && $('#mobile-edit-button').is(':hidden')) {
