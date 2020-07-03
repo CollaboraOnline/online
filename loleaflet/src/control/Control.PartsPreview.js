@@ -220,6 +220,11 @@ L.Control.PartsPreview = L.Control.extend({
 		var previewContBB = this._partsPreviewCont.getBoundingClientRect();
 		var bottomBound;
 
+		// is not visible yet, assume map bounds
+		if (previewContBB.right === 0 && previewContBB.bottom === 0) {
+			previewContBB = this._map._container.getBoundingClientRect();
+		}
+
 		if (this._direction === 'x') {
 			this._previewContTop = previewContBB.left;
 			bottomBound = previewContBB.right + previewContBB.width / 2;
@@ -258,9 +263,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var imgSize;
 		if (i === 0 || (previewFrameTop >= topBound && previewFrameTop <= bottomBound)
 			|| (previewFrameBottom >= topBound && previewFrameBottom <= bottomBound)) {
-			imgSize = this.options.fetchThumbnail ?
-				this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate}) :
-				{ width: this.options.maxWidth, height: this.options.maxHeight };
+			imgSize = this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate, fetchThumbnail: this.options.fetchThumbnail});
 			img.fetched = true;
 
 			if (this._direction === 'x') {
