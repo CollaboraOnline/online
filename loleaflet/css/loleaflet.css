@@ -193,6 +193,8 @@ body {
 	border-radius: 50%;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	z-index: 1001;
+	transform: scale(1);
+	transition: transform 0.5s;
 }
 
 #mobile-edit-button.impress {
@@ -206,14 +208,14 @@ body {
 	width: 24px;
 	height: 24px;
 	background: url('images/baseline-edit-24px.svg') no-repeat center !important;
+	transform: rotate(0deg);
+	transition: transform 0.5s;
 }
 #mobile-edit-button:active{
 	transform: scale(1.2);
-	transition: transform 0.5s;
 }
 #mobile-edit-button:active > #mobile-edit-button-image {
 	transform: rotate(45deg);
-	transition: transform 0.5s;
 }
 
 .loleaflet-font {
