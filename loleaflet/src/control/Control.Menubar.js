@@ -727,7 +727,7 @@ L.Control.Menubar = L.Control.extend({
 		allowedViewModeActions: [
 			'shareas', 'print', // file menu
 			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', 'downloadas-epub', // file menu
-			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'print', // file menu
+			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'print', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showresolved', // view menu
 			'about', 'keyboard-shortcuts', 'latest-updates', 'online-help', 'report-an-issue' // help menu
