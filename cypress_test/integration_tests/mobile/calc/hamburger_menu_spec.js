@@ -373,4 +373,35 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('#toolbar-search')
 			.should('not.be.visible');
 	});
+
+	it('Check version information.', function() {
+		before('hamburger_menu.ods');
+
+		mobileHelper.openHamburgerMenu();
+
+		// Open about dialog
+		cy.contains('.menu-entry-with-icon', 'About')
+			.click();
+
+		cy.get('.vex-content')
+			.should('exist');
+
+		// Check the version
+		if (helper.getLOVersion() === 'master') {
+			cy.contains('#lokit-version', 'LibreOffice')
+				.should('exist');
+		} else if (helper.getLOVersion() === 'cp-6-2' ||
+				   helper.getLOVersion() === 'cp-6-4')
+		{
+			cy.contains('#lokit-version', 'Collabora Office')
+				.should('exist');
+		}
+
+		// Close about dialog
+		cy.get('.vex-close')
+			.click({force : true});
+
+		cy.get('.vex-content')
+			.should('not.exist');
+	});
 });
