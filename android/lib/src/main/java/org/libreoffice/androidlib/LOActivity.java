@@ -483,7 +483,13 @@ public class LOActivity extends AppCompatActivity {
                 inputStream = new FileInputStream(mTempFile);
 
                 Uri uri = getIntent().getData();
-                outputStream = contentResolver.openOutputStream(uri, "wt");
+                try {
+                    outputStream = contentResolver.openOutputStream(uri, "wt");
+                }
+                catch (FileNotFoundException e) {
+                    Log.i(TAG, "failed with the 'wt' mode, trying without: " + e.getMessage());
+                    outputStream = contentResolver.openOutputStream(uri);
+                }
 
                 byte[] buffer = new byte[1024];
                 int length;
@@ -582,7 +588,13 @@ public class LOActivity extends AppCompatActivity {
                         LOActivity.this.saveAs(tempFile.toURI().toString(), format);
 
                         inputStream = new FileInputStream(tempFile);
-                        outputStream = getContentResolver().openOutputStream(intent.getData(), "wt");
+                        try {
+                            outputStream = getContentResolver().openOutputStream(intent.getData(), "wt");
+                        }
+                        catch (FileNotFoundException e) {
+                            Log.i(TAG, "failed with the 'wt' mode, trying without: " + e.getMessage());
+                            outputStream = getContentResolver().openOutputStream(intent.getData());
+                        }
 
                         byte[] buffer = new byte[4096];
                         int len;
