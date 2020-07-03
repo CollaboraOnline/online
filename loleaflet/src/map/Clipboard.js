@@ -807,7 +807,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_substProductName: function (msg) {
-		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
+		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online Personal';
 		return msg.replace('%productName', productName);
 	},
 

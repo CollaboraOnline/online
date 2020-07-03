@@ -225,7 +225,7 @@ L.Map.include({
 			if (window.ThisIsAMobileApp) {
 				productName = window.MobileAppName;
 			} else {
-				productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
+				productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online Personal';
 			}
 			vex.open({
 				unsafeContent: data,
@@ -489,7 +489,7 @@ L.Map.include({
 		if (window.ThisIsAMobileApp) {
 			productName = window.MobileAppName;
 		} else {
-			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
+			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online Personal';
 		}
 		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://libreoffice.org';
 		content.find('#product-name').text(productName);
@@ -504,6 +504,9 @@ L.Map.include({
 
 		if (window.socketProxy)
 			content.find('#slow-proxy').text(_('"Slow Proxy"'));
+
+		if (typeof brandProductName === 'undefined')
+			content.find('#personal').text(_('The Personal edition is supported by volunteers and intended for individual use.'));
 
 		var w;
 		var iw = window.innerWidth;

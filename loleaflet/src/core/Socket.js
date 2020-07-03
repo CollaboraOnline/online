@@ -58,7 +58,7 @@ L.Socket = L.Class.extend({
 				if (isIE11)
 					msgHint = _('IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections');
 
-				this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ').replace('LibreOffice Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
+				this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ').replace('LibreOffice Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online Personal')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
 				return;
 			}
 		}
@@ -701,7 +701,7 @@ L.Socket = L.Class.extend({
 				textMsg = textMsg.replace(/{docs}/g, command.params[0]);
 				textMsg = textMsg.replace(/{connections}/g, command.params[1]);
 				textMsg = textMsg.replace(/{productname}/g, (typeof brandProductName !== 'undefined' ?
-						brandProductName : 'LibreOffice Online'));
+						brandProductName : 'LibreOffice Online Personal'));
 				var brandFAQURL = (typeof brandProductFAQURL !== 'undefined') ?
 						brandProductFAQURL : 'https://hub.libreoffice.org/professional-online-support';
 				this._map.fire('infobar',
