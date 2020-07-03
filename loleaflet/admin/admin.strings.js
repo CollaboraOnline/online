@@ -2,7 +2,7 @@
 /* Stringtable for Admin Console User Interface */
 var l10nstrings = {};
 
-l10nstrings.strProductName = 'LibreOffice Online';
+l10nstrings.strProductName = 'LibreOffice Online Personal';
 l10nstrings.strAdminConsole = _('Admin console');
 l10nstrings.strSettings = _('Settings');
 l10nstrings.strOverview = _('Overview');

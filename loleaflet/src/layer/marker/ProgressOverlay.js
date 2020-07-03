@@ -53,7 +53,7 @@ L.ProgressOverlay = L.Layer.extend({
 		this._spinner = L.DomUtil.create('div', 'leaflet-progress-spinner', this._container);
 		this._spinnerCanvas = L.DomUtil.create('canvas', 'leaflet-progress-spinner-canvas', this._spinner);
 
-		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online';
+		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online Personal';
 		this._brandLabel = L.DomUtil.create('div', 'leaflet-progress-label', this._container);
 		this._brandLabel.innerHTML = productName;
 
