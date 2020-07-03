@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach */
+/* global describe it cy require afterEach expect */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -372,6 +372,64 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('#toolbar-search')
 			.should('not.be.visible');
+	});
+
+	it('Data: sort ascending.', function() {
+		before('hamburger_menu_sort.ods');
+
+		// Sort the first column's data
+		calcMobileHelper.selectFirstColumn();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Sort Ascending')
+			.click();
+
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table tr')
+			.should('have.length', 4);
+
+		cy.get('#copy-paste-container table td')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(4);
+				expect(cells[0]).to.have.text('1');
+				expect(cells[1]).to.have.text('2');
+				expect(cells[2]).to.have.text('3');
+				expect(cells[3]).to.have.text('4');
+			});
+	});
+
+	it('Data: sort descending.', function() {
+		before('hamburger_menu_sort.ods');
+
+		// Sort the first column's data
+		calcMobileHelper.selectFirstColumn();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Sort Descending')
+			.click();
+
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table tr')
+			.should('have.length', 4);
+
+		cy.get('#copy-paste-container table td')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(4);
+				expect(cells[0]).to.have.text('4');
+				expect(cells[1]).to.have.text('3');
+				expect(cells[2]).to.have.text('2');
+				expect(cells[3]).to.have.text('1');
+			});
 	});
 
 	it('Check version information.', function() {
