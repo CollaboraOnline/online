@@ -624,8 +624,6 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
 				{type: 'separator'},
-				{uno: '.uno:DataFilterAutoFilter'},
-				{type: 'separator'},
 				{name: _UNO('.uno:GroupOutlineMenu', 'spreadsheet'), id: 'groupoutlinemenu', type: 'menu', menu: [
 					{uno: '.uno:Group'},
 					{uno: '.uno:Ungroup'},
