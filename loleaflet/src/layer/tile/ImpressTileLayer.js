@@ -59,7 +59,13 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			var container = L.DomUtil.createWithId('div', 'mobile-wizard-header', mobileWizard);
 			var preview = L.DomUtil.createWithId('div', 'mobile-slide-sorter', container);
 			L.DomUtil.toBack(container);
-			map.addControl(L.control.partsPreview(container, preview, {fetchThumbnail: false}));
+			map.addControl(L.control.partsPreview(container, preview, {
+				fetchThumbnail: false,
+				allowOrientation: false,
+				axis: 'x',
+				imageClass: 'preview-img-portrait',
+				frameClass: 'preview-frame-portrait'
+			}));
 			L.DomUtil.addClass(mobileWizardContent, 'with-slide-sorter-above');
 		}
 	},
@@ -99,7 +105,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 			this._map.setView(this._map.getCenter(), this._map.getZoom(), {reset: true});
 		}
 
-		L.DomUtil.updateElementsOrientation(['presentation-controls-wrapper', 'document-container', 'slide-sorter', 'mobile-wizard-header', 'mobile-wizard-content']);
+		L.DomUtil.updateElementsOrientation(['presentation-controls-wrapper', 'document-container', 'slide-sorter']);
 
 		// update parts
 		var visible = L.DomUtil.getStyle(L.DomUtil.get('presentation-controls-wrapper'), 'display');
