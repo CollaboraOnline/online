@@ -1032,7 +1032,7 @@ public:
         auto duration = std::chrono::system_clock::now() - start;
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
         double totalTime = elapsed/1000.;
-        LOG_DBG("paintTile (combined) at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
+        LOG_DBG("paintPartTile at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
                 " rendered in " << totalTime << " ms (" << area / elapsed << " MP/s).");
         const auto mode = static_cast<LibreOfficeKitTileMode>(_loKitDocument->getTileMode());
@@ -1175,9 +1175,9 @@ public:
         duration = std::chrono::system_clock::now() - start;
         elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
         totalTime = elapsed/1000.;
-        LOG_DBG("renderCombinedTiles at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
+        LOG_DBG("renderTiles at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
                 renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
-                " took " << totalTime << " ms (including the paintTile).");
+                " took " << totalTime << " ms (including the paintPartTile).");
 
         if (tileIndex == 0)
         {
