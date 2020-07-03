@@ -155,12 +155,6 @@ L.Map = L.Evented.extend({
 		this._textInput = L.textInput();
 		this.addLayer(this._textInput);
 
-		if (window.mode.isMobile()) {
-			L.DomEvent.on(window, 'resize', function(e) {
-				this.fire('orientationchange', e);
-			}, this);
-		}
-
 		// When all these conditions are met, fire statusindicator:initializationcomplete
 		this.initConditions = {
 			'doclayerinit': false,
