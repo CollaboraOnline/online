@@ -350,7 +350,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'},
 				{type: 'separator', id: 'fullscreen-presentation-separator'},
-				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'}]
+				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
+				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellDialog'},
@@ -1189,6 +1190,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.uiManager.toggleRuler();
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
 			this._map.fire('fullscreen');
+		} else if (id === 'presentation-currentslide' && this._map.getDocType() === 'presentation') {
+			this._map.fire('fullscreen', {startSlideNumber: this._map.getCurrentPartNumber()});
 		} else if (id === 'insertpage') {
 			this._map.insertPage();
 		} else if (id === 'insertshape') {
