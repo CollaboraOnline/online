@@ -317,7 +317,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'Text');
 	});
 
-	it.only('Search some word.', function() {
+	it('Search some word.', function() {
 		before('hamburger_menu_search.ods');
 
 		mobileHelper.openHamburgerMenu();
