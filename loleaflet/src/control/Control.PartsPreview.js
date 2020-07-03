@@ -8,6 +8,10 @@ L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
 		autoUpdate: true,
+		imageClass: '',
+		frameClass: '',
+		axis: '',
+		allowOrientation: true,
 		maxWidth: (window.mode.isMobile() || window.mode.isTablet()) ? 60 : 180,
 		maxHeight: (window.mode.isMobile() || window.mode.isTablet()) ? 60 : 180
 	},
@@ -31,7 +35,9 @@ L.Control.PartsPreview = L.Control.extend({
 	onAdd: function (map) {
 		this._previewInitialized = false;
 		this._previewTiles = [];
-		this._direction = window.mode.isMobile() && L.DomUtil.isPortrait() ? 'x' : 'y';
+		this._direction = this.options.allowOrientation ?
+			(!window.mode.isDesktop() && L.DomUtil.isPortrait() ? 'x' : 'y') :
+			this.options.axis;
 		this._scrollY = 0;
 
 		map.on('updateparts', this._updateDisabled, this);
@@ -107,7 +113,8 @@ L.Control.PartsPreview = L.Control.extend({
 				this._scrollContainer = $(this._partsPreviewCont).find('.mCSB_container').get(0);
 
 				// Add a special frame just as a drop-site for reordering.
-				var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
+				var frameClass = 'preview-frame ' + this.options.frameClass;
+				var frame = L.DomUtil.create('div', frameClass, this._scrollContainer);
 				this._addDnDHandlers(frame);
 				frame.setAttribute('draggable', false);
 
@@ -138,6 +145,10 @@ L.Control.PartsPreview = L.Control.extend({
 					else if (selectedParts.indexOf(j) >= 0)
 						L.DomUtil.addClass(this._previewTiles[j], 'preview-img-selectedpart');
 				}
+			}
+
+			if (!this.options.allowOrientation) {
+				return;
 			}
 
 			// update portrait / landscape
@@ -183,11 +194,12 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_createPreview: function (i, hashCode, bottomBound) {
-		var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
+		var frameClass = 'preview-frame ' + this.options.frameClass;
+		var frame = L.DomUtil.create('div', frameClass, this._scrollContainer);
 		this._addDnDHandlers(frame);
 		L.DomUtil.create('span', 'preview-helper', frame);
 
-		var imgClassName = 'preview-img';
+		var imgClassName = 'preview-img ' + this.options.imageClass;
 		var img = L.DomUtil.create('img', imgClassName, frame);
 		img.hash = hashCode;
 		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
