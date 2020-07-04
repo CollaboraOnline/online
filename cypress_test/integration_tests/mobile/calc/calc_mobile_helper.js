@@ -35,7 +35,11 @@ function selectAllMobile(removeSelection = true) {
 		removeTextSelection();
 
 	cy.get('#spreadsheet-header-corner')
-		.click();
+		.then(function(corner) {
+			var yPos = corner.height() - 10;
+			cy.get('#spreadsheet-header-corner')
+				.click(0, yPos);
+		});
 
 	cy.get('.spreadsheet-cell-resize-marker')
 		.should('be.visible');

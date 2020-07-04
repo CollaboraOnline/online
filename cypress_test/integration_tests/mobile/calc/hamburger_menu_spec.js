@@ -432,6 +432,255 @@ describe('Trigger hamburger menu options.', function() {
 			});
 	});
 
+	it('Data: grouping / ungrouping.', function() {
+		before('hamburger_menu.ods');
+
+		// Use columns header height as indicator
+		helper.initAliasToNegative('origHeaderHeight');
+
+		cy.get('.spreadsheet-header-columns')
+			.invoke('height')
+			.as('origHeaderHeight');
+
+		cy.get('@origHeaderHeight')
+			.should('be.greaterThan', 0);
+
+		// Group first
+		calcMobileHelper.selectFirstColumn();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group and Outline')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group...')
+			.click();
+
+		cy.get('@origHeaderHeight')
+			.then(function(origHeaderHeight) {
+				cy.get('.spreadsheet-header-columns')
+					.should(function(header) {
+						expect(header.height()).to.be.greaterThan(origHeaderHeight);
+					});
+			});
+
+		// Then ungroup
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group and Outline')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Ungroup...')
+			.click();
+
+		cy.get('@origHeaderHeight')
+			.then(function(origHeaderHeight) {
+				cy.get('.spreadsheet-header-columns')
+					.should(function(header) {
+						expect(header.height()).to.be.at.most(origHeaderHeight);
+					});
+			});
+	});
+
+	it('Data: remove grouping outline.', function() {
+		before('hamburger_menu.ods');
+
+		// Use columns header height as indicator
+		helper.initAliasToNegative('origHeaderHeight');
+
+		cy.get('.spreadsheet-header-columns')
+			.invoke('height')
+			.as('origHeaderHeight');
+
+		cy.get('@origHeaderHeight')
+			.should('be.greaterThan', 0);
+
+		// Group first
+		calcMobileHelper.selectFirstColumn();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group and Outline')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group...')
+			.click();
+
+		cy.get('@origHeaderHeight')
+			.then(function(origHeaderHeight) {
+				cy.get('.spreadsheet-header-columns')
+					.should(function(header) {
+						expect(header.height()).to.be.greaterThan(origHeaderHeight);
+					});
+			});
+
+		// Then remove outline
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group and Outline')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Remove Outline')
+			.click();
+
+		cy.get('@origHeaderHeight')
+			.then(function(origHeaderHeight) {
+				cy.get('.spreadsheet-header-columns')
+					.should(function(header) {
+						expect(header.height()).to.be.at.most(origHeaderHeight);
+					});
+			});
+	});
+
+	it('Data: show / hide grouping details.', function() {
+		before('hamburger_menu.ods');
+
+		// Use columns header height as indicator
+		helper.initAliasToNegative('origHeaderHeight');
+
+		cy.get('.spreadsheet-header-columns')
+			.invoke('height')
+			.as('origHeaderHeight');
+
+		cy.get('@origHeaderHeight')
+			.should('be.greaterThan', 0);
+
+		// Group first
+		calcMobileHelper.selectFirstColumn();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group and Outline')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group...')
+			.click();
+
+		cy.get('@origHeaderHeight')
+			.then(function(origHeaderHeight) {
+				cy.get('.spreadsheet-header-columns')
+					.should(function(header) {
+						expect(header.height()).to.be.greaterThan(origHeaderHeight);
+					});
+			});
+
+		// Use selected content as indicator
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table')
+			.should('exist');
+
+		// Hide details
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group and Outline')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Hide Details')
+			.click();
+
+		// Frist column is hidden -> no content
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table')
+			.should('not.exist');
+
+		// Show details
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Data')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Group and Outline')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Show Details')
+			.click();
+
+		// Frist column is visible again -> we have content again
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table')
+			.should('exist');
+	});
+
+	it('Automatic spell checking.', function() {
+		before('hamburger_menu.ods');
+
+		// Make everything white on tile
+		calcMobileHelper.selectAllMobile(false);
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#ScCellAppearancePropertyPanel')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Background Color')
+			.should('be.visible');
+
+		cy.get('#border-12')
+			.click();
+
+		cy.get('#FrameLineColor')
+			.click();
+
+		mobileHelper.selectFromColorPalette(2, 0, 7);
+
+		mobileHelper.closeMobileWizard();
+
+		mobileHelper.openMobileWizard();
+
+		cy.get('#TextPropertyPanel')
+			.click();
+
+		cy.get('#Bold')
+			.should('be.visible');
+
+		cy.get('#Color')
+			.click();
+
+		mobileHelper.selectFromColorPalette(0, 0, 7);
+
+		var firstTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: -1px; top: 5px;\']';
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 5px;\']';
+		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
+
+		// Disable automatic spell checking
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
+			.click();
+
+		helper.imageShouldBeFullWhiteOrNot(firstTile, true);
+
+		// Enable automatic spell checking again
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
+			.click();
+
+		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
+	});
+
 	it('Check version information.', function() {
 		before('hamburger_menu.ods');
 
