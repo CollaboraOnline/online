@@ -273,7 +273,7 @@ describe('Changing slide properties.', function() {
 			.should('have.text', '50 Percent');
 	});
 
-	it('Remove slide fill.', function() {
+	it.skip('Remove slide fill.', function() {
 		// Apply color fill first
 		cy.get('#fillstyle')
 			.click();
