@@ -374,6 +374,270 @@ describe('Trigger hamburger menu options.', function() {
 			.should('not.be.visible');
 	});
 
+	it('Sheet: insert row before.', function() {
+		before('hamburger_menu_sheet.ods');
+
+		calcHelper.clickOnFirstCell();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Insert Rows')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Rows Above')
+			.click();
+
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table tr')
+			.should('have.length', 3);
+
+		cy.get('#copy-paste-container table tr td:nth-of-type(1)')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(3);
+				expect(cells[0]).to.have.text('');
+				expect(cells[1]).to.have.text('1');
+				expect(cells[2]).to.have.text('3');
+			});
+	});
+
+	it('Sheet: insert row after.', function() {
+		before('hamburger_menu_sheet.ods');
+
+		calcHelper.clickOnFirstCell();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Insert Rows')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Rows Below')
+			.click();
+
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table tr')
+			.should('have.length', 3);
+
+		cy.get('#copy-paste-container table tr td:nth-of-type(1)')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(3);
+				expect(cells[0]).to.have.text('1');
+				expect(cells[1]).to.have.text('');
+				expect(cells[2]).to.have.text('3');
+			});
+	});
+
+	it('Sheet: insert column before.', function() {
+		before('hamburger_menu_sheet.ods');
+
+		calcHelper.clickOnFirstCell();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Insert Columns')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Columns Before')
+			.click();
+
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table tr')
+			.should('have.length', 2);
+
+		cy.get('#copy-paste-container table tr:nth-of-type(1) td')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(3);
+				expect(cells[0]).to.have.text('');
+				expect(cells[1]).to.have.text('1');
+				expect(cells[2]).to.have.text('2');
+			});
+	});
+
+	it('Sheet: insert column after.', function() {
+		before('hamburger_menu_sheet.ods');
+
+		calcHelper.clickOnFirstCell();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Insert Columns')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Columns After')
+			.click();
+
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table tr')
+			.should('have.length', 2);
+
+		cy.get('#copy-paste-container table tr:nth-of-type(1) td')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(3);
+				expect(cells[0]).to.have.text('1');
+				expect(cells[1]).to.have.text('');
+				expect(cells[2]).to.have.text('2');
+			});
+	});
+
+	it('Sheet: delete rows.', function() {
+		before('hamburger_menu_sheet.ods');
+
+		calcHelper.clickOnFirstCell();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Rows')
+			.click();
+
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table tr')
+			.should('have.length', 1);
+
+		cy.get('#copy-paste-container table tr:nth-of-type(1) td')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(2);
+				expect(cells[0]).to.have.text('3');
+			});
+	});
+
+	it('Sheet: delete columns.', function() {
+		before('hamburger_menu_sheet.ods');
+
+		calcHelper.clickOnFirstCell();
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Columns')
+			.click();
+
+		calcMobileHelper.selectAllMobile(false);
+
+		cy.get('#copy-paste-container table tr')
+			.should('have.length', 2);
+
+		cy.get('#copy-paste-container table tr:nth-of-type(1) td')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(1);
+				expect(cells[0]).to.have.text('2');
+			});
+	});
+
+	it('Sheet: insert / delete row break.', function() {
+		before('hamburger_menu_sheet.ods');
+
+		// Select B2 cell
+		calcHelper.clickOnFirstCell();
+
+		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(76px, 11px, 0px); z-index: 11;\']')
+			.then(function(marker) {
+				expect(marker).to.have.lengthOf(1);
+				var XPos = marker[0].getBoundingClientRect().right + 2;
+				var YPos = marker[0].getBoundingClientRect().bottom + 2;
+				cy.get('body')
+					.click(XPos, YPos);
+
+				cy.get('input#addressInput')
+					.should('have.prop', 'value', 'B2');
+			});
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Insert Page Break')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Row Break')
+			.click();
+
+		// TODO: no visual indicator here
+		cy.wait(500);
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Remove Row Break')
+			.click();
+
+		// TODO: no visual indicator here
+		cy.wait(500);
+	});
+
+	it('Sheet: insert / delete column break.', function() {
+		before('hamburger_menu_sheet.ods');
+
+		// Select B2 cell
+		calcHelper.clickOnFirstCell();
+
+		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(76px, 11px, 0px); z-index: 11;\']')
+			.then(function(marker) {
+				expect(marker).to.have.lengthOf(1);
+				var XPos = marker[0].getBoundingClientRect().right + 2;
+				var YPos = marker[0].getBoundingClientRect().bottom + 2;
+				cy.get('body')
+					.click(XPos, YPos);
+
+				cy.get('input#addressInput')
+					.should('have.prop', 'value', 'B2');
+			});
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Insert Page Break')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Column Break')
+			.click();
+
+		// TODO: no visual indicator here
+		cy.wait(500);
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Remove Column Break')
+			.click();
+
+		// TODO: no visual indicator here
+		cy.wait(500);
+	});
+
 	it('Data: sort ascending.', function() {
 		before('hamburger_menu_sort.ods');
 
