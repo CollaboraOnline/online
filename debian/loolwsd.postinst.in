@@ -27,7 +27,7 @@ case "$1" in
 	loolwsd-generate-proof-key >/dev/null 2>&1
     cat << EOF > /etc/apt/apt.conf.d/25loolwsd
 // Rebuild systemplate of @APP_NAME@
-DPkg::Post-Invoke { "echo Updating loolwsd systemplate;su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /opt/lool/systemplate @LO_PATH@ >/dev/null 2>&1'"; };
+DPkg::Post-Invoke { "echo Updating loolwsd systemplate;loolwsd-systemplate-setup /opt/lool/systemplate @LO_PATH@ >/dev/null 2>&1"; };
 EOF
 	;;
 
