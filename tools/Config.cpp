@@ -364,7 +364,7 @@ int Config::main(const std::vector<std::string>& args)
     }
     else if (args[0] == "update-system-template")
     {
-        const char command[] = "su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /opt/lool/systemplate " LO_PATH " >/dev/null 2>&1'";
+        const char command[] = "loolwsd-systemplate-setup /opt/lool/systemplate " LO_PATH " >/dev/null 2>&1";
         std::cout << "Running the following command:" << std::endl
                   << command << std::endl;
 
