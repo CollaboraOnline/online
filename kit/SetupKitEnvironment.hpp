@@ -50,6 +50,9 @@ inline void setupKitEnvironment(const std::string& userInterface)
         options += ":notebookbar";
 
 //    options += ":sc_no_grid_bg"; // leave this disabled for now, merged-cells needs more work.
+
+    options += ":sc_print_twips_msgs";
+
     ::setenv("SAL_LOK_OPTIONS", options.c_str(), 0);
 }
 

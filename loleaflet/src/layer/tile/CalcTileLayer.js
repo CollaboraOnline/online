@@ -7,8 +7,8 @@
 L.CalcTileLayer = L.TileLayer.extend({
 	options: {
 		// TODO: sync these automatically from SAL_LOK_OPTIONS
-		sheetGeometryDataEnabled: false,
-		printTwipsMsgsEnabled: false
+		sheetGeometryDataEnabled: true,
+		printTwipsMsgsEnabled: true
 	},
 
 	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
