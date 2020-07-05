@@ -338,13 +338,12 @@ namespace
                     const Path& destination,
                     LinkOrCopyType type)
     {
-        char* resolved = realpath(source.c_str(), nullptr);
-        if (resolved && resolved != source)
+        std::string resolved = FileUtil::realpath(source);
+        if (resolved != source)
         {
             LOG_DBG("linkOrCopy: Using real path [" << resolved << "] instead of original link ["
                                                     << source << "].");
-            source = resolved;
-            free(resolved);
+            source = std::move(resolved);
         }
 
         LOG_INF("linkOrCopy " << linkOrCopyTypeString(type) << " from [" << source << "] to ["

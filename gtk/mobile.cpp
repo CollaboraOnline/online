@@ -324,7 +324,7 @@ int main(int argc, char* argv[])
 
     gtk_container_add(GTK_CONTAINER(mainWindow), GTK_WIDGET(webView));
 
-    fileURL = "file://" + std::string(realpath(argv[1], nullptr));
+    fileURL = "file://" + FileUtil::realpath(argv[1]);
 
     std::string urlAndQuery =
         "file://" TOPSRCDIR "/loleaflet/dist/loleaflet.html"

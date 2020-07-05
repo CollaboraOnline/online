@@ -238,6 +238,20 @@ namespace FileUtil
 #endif
     }
 
+    std::string realpath(const char* path)
+    {
+        char* resolved = ::realpath(path, nullptr);
+        if (resolved)
+        {
+            std::string real = resolved;
+            free(resolved);
+            return real;
+        }
+
+        LOG_SYS("Failed to get the realpath of [" << path << "]");
+        return path;
+    }
+
 } // namespace FileUtil
 
 namespace

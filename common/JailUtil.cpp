@@ -312,13 +312,9 @@ void setupLoSymlink(const std::string& sysTemplate, const std::string& loTemplat
     symlinkPathToJail(sysTemplate, loTemplate, loSubPath);
 
     // Font paths can end up as realpaths so match that too.
-    char* resolved = realpath(loTemplate.c_str(), nullptr);
-    if (resolved)
-    {
-        if (strcmp(loTemplate.c_str(), resolved) != 0)
-            symlinkPathToJail(sysTemplate, std::string(resolved), loSubPath);
-        free(resolved);
-    }
+    const std::string resolved = FileUtil::realpath(loTemplate);
+    if (loTemplate != resolved)
+        symlinkPathToJail(sysTemplate, resolved, loSubPath);
 }
 
 void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& name)
