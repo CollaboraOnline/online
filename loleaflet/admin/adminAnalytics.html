@@ -43,6 +43,8 @@
   document.getElementById('a-analytics-mobile').classList.add('is-active');
   document.getElementById('a-analytics-tablet').classList.add('is-active');
 
+  window.location.href += '#memview';
+
   // Switching tabs is done by css rules. We will set "is-active" classes here.
   document.getElementById('button-memview').onclick = function() {
     document.getElementById('button-memview').parentNode.className = 'is-active';

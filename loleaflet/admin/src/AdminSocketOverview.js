@@ -2,9 +2,25 @@
 /*
 	Socket to be intialized on opening the overview page in Admin console
 */
-/* global _ vex $ Util AdminSocketBase Admin */
+/* global DlgYesNo _ vex $ Util AdminSocketBase Admin */
 
-function appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified) {
+function appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified, socket) {
+	var $sessionCloseCell = $(document.createElement('td')).text('✖'); // This cell will open "Do you want to kill this session?" dialog.
+	$rowContainer.append($sessionCloseCell);
+	$sessionCloseCell.addClass('has-text-centered');
+	$sessionCloseCell.css('cursor', 'pointer');
+	$sessionCloseCell.click(function() {
+		var dialog = (new DlgYesNo())
+		.title(_('Confirmation'))
+		.text(_('Are you sure you want to terminate this session?'))
+		.yesButtonText(_('OK'))
+		.noButtonText(_('Cancel'))
+		.type('warning')
+		.yesFunction(function() {
+			socket.send('kill ' + sPid);
+		});
+		dialog.open();
+	});
 
 	var $pid = $(document.createElement('td')).text(sPid);
 	$pid.append($userContainer);
@@ -116,13 +132,6 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				}
 			});
 		});
-
-		$('.view-opt-button').on('click', function() {
-			$('#docview-btn').toggleClass('selected-view-opt');
-			$('#userview-btn').toggleClass('selected-view-opt');
-			$('#docview').toggle();
-			$('#userview').toggle();
-		});
 	},
 
 	onSocketMessage: function(e) {
@@ -215,7 +224,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				}
 				$userContainer.append($listContainer);
 
-				appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified);
+				appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified, this.socket);
 
 				$('#doclist').append($rowContainer);
 			}
@@ -249,7 +258,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				$listContainer.append($listLabel);
 				$userContainer.append($listContainer);
 
-				appendDocRow(document, $rowContainer, $userContainer, sPid, sName, '0', sMem, '0', '0', '');
+				appendDocRow(document, $rowContainer, $userContainer, sPid, sName, '0', sMem, '0', '0', '', this.socket);
 
 				$('#doclist').append($rowContainer);
 
