@@ -143,6 +143,9 @@ run-cov: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
 	@$(KILL_COMMAND) || true
 
+@JAILS_PATH@:
+	mkdir -p $@
+
 define run_JS_error_check
 	@echo "Checking for JS errors in test code..."
 	@echo
