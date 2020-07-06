@@ -322,7 +322,7 @@ EXTRA_DIST = discovery.xml \
              scripts/unocommands.py \
              $(man_MANS)
 
-CLEANUP_COMMAND=if test -s ./loolwsd; then echo "Cleaning up..." && ./loolwsd --cleanup --o:logging.level=trace; fi
+CLEANUP_COMMAND=if test -s ./loolwsd; then echo "Cleaning up..." && ./loolwsd --disable-lool-user-checking --cleanup --o:logging.level=trace; fi
 
 if HAVE_LO_PATH
 
