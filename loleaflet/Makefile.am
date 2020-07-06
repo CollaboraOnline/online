@@ -89,7 +89,6 @@ LOLEAFLET_ADMIN_TS =\
 LOLEAFLET_ADMIN_TS_JS = $(patsubst %.ts,$(TYPESCRIPT_JS_DIR)/%.js,$(LOLEAFLET_ADMIN_TS))
 
 LOLEAFLET_ADMIN_JS =\
-	$(LOLEAFLET_ADMIN_TS_JS) \
 	admin/src/Base.js \
 	admin/src/Admin.js \
 	admin/src/AdminSocketBase.js \
@@ -403,7 +402,7 @@ endif
 
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
-	$(srcdir)/node_modules/typescript/bin/tsc --outFile $@ $<
+	$(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
 
 build-loleaflet: \
 	$(LOLEAFLET_L10N_DST) \
@@ -432,11 +431,11 @@ $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
 	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(IS_DEBUG),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
 
-$(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_JS)
+$(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 	@mkdir -p $(dir $@)
 	@echo "Checking for admin JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
-	@awk 'FNR == 1 {print ""} 1' $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
+	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
 $(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet)
 	@mkdir -p $(dir $@)
