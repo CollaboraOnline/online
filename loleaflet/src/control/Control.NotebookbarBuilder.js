@@ -16,6 +16,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['combobox'] = this._comboboxControlHandler;
 		this._controlHandlers['listbox'] = this._comboboxControlHandler;
 		this._controlHandlers['tabcontrol'] = this._overridenTabsControlHandler;
+		this._controlHandlers['menubartoolitem'] = this._menubarToolItemHandler;
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
 		this._controlHandlers['spinfield'] = function() { return false; };
@@ -238,6 +239,22 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_overridenTabsControlHandler: function(parentContainer, data, builder) {
 		data.tabs = builder.wizard.getTabs();
 		return builder._tabsControlHandler(parentContainer, data, builder);
+	},
+
+	_menubarToolItemHandler: function(parentContainer, data, builder) {
+		var originalInLineState = builder.options.useInLineLabelsForUnoButtons;
+		builder.options.useInLineLabelsForUnoButtons = true;
+
+		data.command = data.id;
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		builder.options.useInLineLabelsForUnoButtons = originalInLineState;
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			console.log(builder.options.map);
+			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
+		});
 	},
 
 	_colorControl: function(parentContainer, data, builder) {

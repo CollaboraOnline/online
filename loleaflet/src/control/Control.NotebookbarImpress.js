@@ -3,7 +3,7 @@
  * L.Control.NotebookbarImpress
  */
 
-/* global _ */
+/* global _ _UNO */
 L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
 	getShortcutsBarData: function() {
@@ -31,14 +31,24 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolitem',
 						'text': _('Redo'),
 						'command': '.uno:Redo'
+					},
+					{
+						'text': _('~Help'),
+						'id': '-2',
+						'name': 'Help',
 					}
 				]
 			}
 		];
 	},
-	
+
 	getTabs: function() {
 		return [
+			{
+				'text': _('~File'),
+				'id': '-1',
+				'name': 'File',
+			},
 			{
 				'text': _('~Home'),
 				'id': '2',
@@ -62,6 +72,305 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'context': 'Table'
 			}
 		];
+	},
+
+	getFileTab: function() {
+		var hasRevisionHistory = L.Params.revHistoryEnabled;
+		var hasPrint = !this._map['wopi'].HidePrintOption;
+		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
+		var hasShare = this._map['wopi'].EnableShare;
+
+		return {
+			'id': '',
+			'type': 'control',
+			'text': '',
+			'enabled': 'true',
+			'children': [
+				{
+					'id': '',
+					'type': 'container',
+					'text': '',
+					'enabled': 'true',
+					'children': [
+						{
+							'id': 'NotebookBar',
+							'type': 'grid',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'box',
+									'type': 'container',
+									'text': '',
+									'enabled': 'true',
+									'children': [
+										{
+											'id': 'ContextContainer',
+											'type': 'tabcontrol',
+											'text': '',
+											'enabled': 'true',
+											'selected': '-1',
+											'children': [
+												{
+													'id': '',
+													'type': 'tabpage',
+													'text': '',
+													'enabled': 'true',
+													'children': [
+														{
+															'id': 'File Tab',
+															'type': 'container',
+															'text': '',
+															'enabled': 'true',
+															'children': [
+																{
+																	'id': 'File',
+																	'type': 'container',
+																	'text': '',
+																	'enabled': 'true',
+																	'children': [
+																		{
+																			'id': 'File-Section',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				hasSaveAs ?
+																					{
+																						'id': 'Section2',
+																						'type': 'toolbox',
+																						'text': '',
+																						'enabled': 'true',
+																						'children': [
+																							{
+																								'id': 'saveas',
+																								'type': 'menubartoolitem',
+																								'text': _UNO('.uno:SaveAs', 'presentation'),
+																								'command': ''
+																							}
+																						]
+																					} : {},
+																				hasShare ?
+																					{
+																						'id': 'Section3',
+																						'type': 'toolbox',
+																						'text': '',
+																						'enabled': 'true',
+																						'children': [
+																							{
+																								'id': 'shareas',
+																								'type': 'menubartoolitem',
+																								'text': _('Share...'),
+																								'command': ''
+																							}
+																						]
+																					} : {},
+																				hasPrint ?
+																					{
+																						'id': 'Section4',
+																						'type': 'toolbox',
+																						'text': '',
+																						'enabled': 'true',
+																						'children': [
+																							{
+																								'id': 'print',
+																								'type': 'menubartoolitem',
+																								'text': _UNO('.uno:Print', 'presentation'),
+																								'command': ''
+																							}
+																						]
+																					} : {},
+																				hasRevisionHistory ?
+																					{
+																						'id': 'Section5',
+																						'type': 'toolbox',
+																						'text': '',
+																						'enabled': 'true',
+																						'children': [
+																							{
+																								'id': 'rev-history',
+																								'type': 'menubartoolitem',
+																								'text': _('See revision history'),
+																								'command': ''
+																							}
+																						]
+																					} : {},
+																				{
+																					'id': 'saveas-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'saveas-Section1',
+																							'type': 'container',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'id': 'Section7',
+																									'type': 'toolbox',
+																									'text': '',
+																									'enabled': 'true',
+																									'children': [
+																										{
+																											'id': 'downloadas-odp',
+																											'type': 'menubartoolitem',
+																											'text': _('ODF presentation (.odp)'),
+																											'command': ''
+																										}
+																									]
+																								}
+																							]
+																						},
+																						{
+																							'id': 'saveas-Section2',
+																							'type': 'container',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'id': 'Section10',
+																									'type': 'toolbox',
+																									'text': '',
+																									'enabled': 'true',
+																									'children': [
+																										{
+																											'id': 'downloadas-odg',
+																											'type': 'menubartoolitem',
+																											'text': _('ODF Drawing (.odg)'),
+																											'command': ''
+																										}
+																									]
+																								}
+																							]
+																						}
+																					]
+																				},
+																				{
+																					'id': 'saveas-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'saveas-Section1',
+																							'type': 'container',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'id': 'Section8',
+																									'type': 'toolbox',
+																									'text': '',
+																									'enabled': 'true',
+																									'children': [
+																										{
+																											'id': 'downloadas-ppt',
+																											'type': 'menubartoolitem',
+																											'text': _('PowerPoint 2003 Presentation (.ppt)'),
+																											'command': ''
+																										}
+																									]
+																								}
+																							]
+																						},
+																						{
+																							'id': 'saveas-Section2',
+																							'type': 'container',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'id': 'Section9',
+																									'type': 'toolbox',
+																									'text': '',
+																									'enabled': 'true',
+																									'children': [
+																										{
+																											'id': 'downloadas-pptx',
+																											'type': 'menubartoolitem',
+																											'text': _('PowerPoint Presentation (.pptx)'),
+																											'command': ''
+																										}
+																									]
+																								}
+																							]
+																						}
+																					]
+																				},
+																				{
+																					'id': 'saveas-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'saveas-Section1',
+																							'type': 'container',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'id': 'Section6',
+																									'type': 'toolbox',
+																									'text': '',
+																									'enabled': 'true',
+																									'children': [
+																										{
+																											'id': 'downloadas-pdf',
+																											'type': 'menubartoolitem',
+																											'text': _('PDF Document (.pdf)'),
+																											'command': ''
+																										}
+																									]
+																								}
+																							]
+																						},
+																						{
+																							'id': 'saveas-Section2',
+																							'type': 'container',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'id': 'Section11',
+																									'type': 'toolbox',
+																									'text': '',
+																									'enabled': 'true',
+																									'children': [
+																										{
+																											'type': 'menubartoolitem',
+																											'text': '',
+																											'command': ''
+																										}
+																									]
+																								}
+																							]
+																						}
+																					]
+																				}
+																			]
+																		}
+																	]
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		};
 	},
 
 	getHomeTab: function() {

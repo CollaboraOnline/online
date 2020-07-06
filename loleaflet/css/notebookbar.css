@@ -358,6 +358,16 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
        margin-top: 10px !important;
 }
 
+/* Help tab */
+#table-Help-Section {
+	margin-top: 40px;
+}
+
+/* File tab */
+#table-File-Section {
+	margin-top: 20px;
+}
+
 /* Calc */
 
 /* Home tab */
