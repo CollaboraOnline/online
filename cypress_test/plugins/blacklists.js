@@ -44,9 +44,6 @@ var testBlackLists = {
 	],
 
 	'cp-6-4': [
-		['mobile/writer/table_properties_spec.js',
-			[]
-		],
 	],
 
 	'cp-6-2': [
