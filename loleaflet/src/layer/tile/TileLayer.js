@@ -1872,6 +1872,9 @@ L.TileLayer = L.GridLayer.extend({
 					this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
 					this._twipsToLatLng(boundsTwips.getBottomRight(), this._map.getZoom()));
 
+			if (this._cellCursor === null) {
+				this._cellCursor = L.LatLngBounds.createDefault();
+			}
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 		} else {
 			this._cellSelectionArea = null;
