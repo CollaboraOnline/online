@@ -361,7 +361,6 @@ clean-local:
 	$(CLEANUP_COMMAND)
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
-	rm -f $(abs_srcdir)/compile_commands.json
 
 run: all @JAILS_PATH@
 	@echo "Launching loolwsd"
