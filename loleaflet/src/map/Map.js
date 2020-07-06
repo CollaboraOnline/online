@@ -445,7 +445,7 @@ L.Map = L.Evented.extend({
 	},
 
 	showBusy: function(label, bar) {
-		if (window.ThisIsTheAndroidApp || window.ThisIsTheiOSApp)
+		if (window.ThisIsTheAndroidApp)
 			return;
 
 		// If document is already loaded, ask the toolbar widget to show busy

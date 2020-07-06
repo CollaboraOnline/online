@@ -43,7 +43,8 @@ m4_ifelse(MOBILEAPP,[true],
    window.open = function (url, windowName, windowFeatures) {
      window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */
    }
-   window.MobileAppName='MOBILEAPPNAME';],
+   window.MobileAppName='MOBILEAPPNAME';
+   brandProductName='MOBILEAPPNAME';],
   [   window.ThisIsAMobileApp = false;]
 )
 m4_ifelse(IOSAPP,[true],
