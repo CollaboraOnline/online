@@ -47,15 +47,6 @@ var testBlackLists = {
 		['mobile/writer/table_properties_spec.js',
 			[]
 		],
-		['mobile/writer/hamburger_menu_spec.js',
-			[
-				'Page setup: change paper size.',
-				'Page setup: change paper width.',
-				'Page setup: change paper height.',
-				'Page setup: change orientation.',
-				'Page setup: change margin.'
-			]
-		],
 	],
 
 	'cp-6-2': [
