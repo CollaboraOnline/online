@@ -931,7 +931,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		return this._twipsToPixels(this._cellCursorTwips.getTopLeft());
 	},
 
-	_calculateScrollForNewCursor: function () {
+	_calculateScrollForNewCellCursor: function () {
 
 		var scroll = new L.LatLng(0, 0);
 
@@ -940,28 +940,10 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 
 		var map = this._map;
-		var paneRects = this._splitPanesContext ?
-			this._splitPanesContext.getPxBoundList() : undefined;
+		var paneRectsInLatLng = this.getPaneLatLngRectangles();
 
-		console.assert(paneRects === undefined || paneRects.length, 'number of panes cannot be zero!');
-
-		var paneRectsInLatLng = paneRects ? paneRects.map(function (pxBound) {
-			return new L.LatLngBounds(
-				map.unproject(pxBound.getTopLeft()),
-				map.unproject(pxBound.getBottomRight())
-			);
-		}) : [ map.getBounds() ];
-
-		var scrollNeeded = true;
-		for (var i = 0; i < paneRectsInLatLng.length; ++i) {
-			if (paneRectsInLatLng[i].contains(this._cellCursor)) {
-				scrollNeeded = false;
-				break;
-			}
-		}
-
-		if (!scrollNeeded) {
-			return scroll; // zero scroll.
+		if (this._cellCursor.isInAny(paneRectsInLatLng)) {
+			return scroll; // no scroll needed.
 		}
 
 		var freePaneBounds = paneRectsInLatLng[paneRectsInLatLng.length - 1];

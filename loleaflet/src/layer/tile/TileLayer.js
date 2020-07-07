@@ -2250,18 +2250,22 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (!zoom
 		&& scroll !== false
-		&& !this._map.getBounds().contains(this._visibleCursor)
 		&& this._map._isCursorVisible
 		&& (!this._map._clip || this._map._clip._selectionType !== 'complex')) {
 
-			var center = this._map.project(cursorPos);
-			center = center.subtract(this._map.getSize().divideBy(2));
-			center.x = Math.round(center.x < 0 ? 0 : center.x);
-			center.y = Math.round(center.y < 0 ? 0 : center.y);
-			if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
-				!(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
-				!(docLayer._followEditor || docLayer._followUser)) {
-				this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
+			var paneRectsInLatLng = this.getPaneLatLngRectangles();
+
+			if (!this._visibleCursor.isInAny(paneRectsInLatLng)) {
+				var center = this._map.project(cursorPos);
+				center = center.subtract(this._map.getSize().divideBy(2));
+				center.x = Math.round(center.x < 0 ? 0 : center.x);
+				center.y = Math.round(center.y < 0 ? 0 : center.y);
+
+				if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
+					!(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
+					!(docLayer._followEditor || docLayer._followUser)) {
+					this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
+				}
 			}
 		}
 
@@ -2963,8 +2967,8 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			var mapBounds = this._map.getBounds();
 			if (!this._cellCursorXY.equals(this._prevCellCursorXY)) {
-				var scroll = this._calculateScrollForNewCursor();
-				console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCursor returned wrong type');
+				var scroll = this._calculateScrollForNewCellCursor();
+				console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCellCursor returned wrong type');
 				if (scroll.lng !== 0 || scroll.lat !== 0) {
 					var newCenter = mapBounds.getCenter();
 					newCenter.lng += scroll.lng;
@@ -3420,6 +3424,24 @@ L.TileLayer = L.GridLayer.extend({
 	getCursorPos: function () {
 		console.error('No implementations available for getCursorPos!');
 		return new L.Point(0, 0);
+	},
+
+	getPaneLatLngRectangles: function () {
+		var map = this._map;
+
+		if (!this._splitPanesContext) {
+			return [ map.getBounds() ];
+		}
+
+		var paneRects = this._splitPanesContext.getPxBoundList();
+		console.assert(paneRects.length, 'number of panes cannot be zero!');
+
+		return paneRects.map(function (pxBound) {
+			return new L.LatLngBounds(
+				map.unproject(pxBound.getTopLeft()),
+				map.unproject(pxBound.getBottomRight())
+			);
+		});
 	},
 
 	_debugGetTimeArray: function() {

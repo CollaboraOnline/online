@@ -189,7 +189,20 @@ L.LatLngBounds.prototype = {
 
 	isValid: function () {
 		return !!(this._southWest && this._northEast);
-	}
+	},
+
+	isInAny: function (latLngBoundsArray) {
+		console.assert(Array.isArray(latLngBoundsArray), 'invalid argument type');
+
+		for (var i = 0; i < latLngBoundsArray.length; ++i) {
+			if (latLngBoundsArray[i].contains(this)) {
+				return true;
+			}
+		}
+
+		return false;
+	},
+
 };
 
 L.LatLngBounds.createDefault = function() {
