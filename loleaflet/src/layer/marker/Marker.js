@@ -40,6 +40,7 @@ L.Marker = L.Layer.extend({
 	},
 
 	onAdd: function (map) {
+		this._splitPanesContext = map.getSplitPanesContext();
 		this._zoomAnimated = this._zoomAnimated && map.options.markerZoomAnimation;
 
 		this._initIcon();
@@ -64,7 +65,11 @@ L.Marker = L.Layer.extend({
 	getEvents: function () {
 		var events = {viewreset: this.update};
 
-		if (this._zoomAnimated) {
+		if (this._splitPanesContext) {
+			events.moveend = this.update;
+		}
+
+		if (this._zoomAnimated && !this._splitPanesContext) {
 			events.zoomanim = this._animateZoom;
 		}
 
@@ -103,13 +108,79 @@ L.Marker = L.Layer.extend({
 		return this;
 	},
 
-	update: function () {
+	_updateIconPosition: function () {
 
-		if (this._icon) {
-			var pos = this._map.latLngToLayerPoint(this._latlng).round();
-			this._setPos(pos);
+		if (!this._icon) {
+			return;
 		}
 
+		if (!this._splitPanesContext) {
+			this._setPos(this._map.latLngToLayerPoint(this._latlng).round());
+			return;
+		}
+
+		var splitPos = this._splitPanesContext.getSplitPos();
+		var docPos = this._map.project(this._latlng);
+		var pixelOrigin = this._map.getPixelOrigin();
+		var mapPanePos = this._map._getMapPanePos();
+		var layerSplitPos = splitPos.subtract(mapPanePos);
+
+		var makeHidden = false;
+
+		if (splitPos.x) {
+			layerSplitPos.x += 1;
+		}
+
+		if (splitPos.y) {
+			layerSplitPos.y += 1;
+		}
+
+		var layerPos = new L.Point(0, 0);
+		var iconRect = this._icon.getBoundingClientRect();
+		var eps = new L.Point(iconRect.width, iconRect.height);
+
+		if (docPos.x <= splitPos.x) {
+			// fixed region.
+			layerPos.x = docPos.x - mapPanePos.x;
+			if (splitPos.x - docPos.x <= eps.x) {
+				// Hide the marker if it is close to the split *and* the non-fixed region has moved away from the fixed.
+				makeHidden = (mapPanePos.x !== pixelOrigin.x);
+			}
+		}
+		else {
+			layerPos.x = docPos.x - pixelOrigin.x;
+			if (layerPos.x < layerSplitPos.x) {
+				// do not encroach the fixed region.
+				makeHidden = true;
+			}
+		}
+
+		if (docPos.y <= splitPos.y) {
+			// fixed region.
+			layerPos.y = docPos.y - mapPanePos.y;
+			if (splitPos.y - docPos.y <= eps.y) {
+				// Hide the marker if it is close to the split *and* the non-fixed region has moved away from the fixed.
+				makeHidden = (mapPanePos.y !== pixelOrigin.y);
+			}
+		}
+		else {
+			layerPos.y = docPos.y - pixelOrigin.y;
+			if (layerPos.y < layerSplitPos.y) {
+				// do not encroach the fixed region.
+				makeHidden = true;
+			}
+		}
+
+		var newVisibility = makeHidden ? 'hidden' : 'visible';
+		if (this._icon.style.visibility != newVisibility) {
+			this._icon.style.visibility = newVisibility;
+		}
+
+		this._setPos(layerPos);
+	},
+
+	update: function () {
+		this._updateIconPosition();
 		return this;
 	},
 
