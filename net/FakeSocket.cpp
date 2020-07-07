@@ -125,7 +125,9 @@ static int fakeSocketAllocate()
 
     // We always allocate a new FakeSocketPair struct. Let's not bother with potential issues with
     // reusing them. It isn't like we would be allocating thousands anyway during the typical
-    // lifetime of an app.
+    // lifetime of an app. Also, not reusing FakeSocket fd numbers means that it is easier to set a
+    // conditional breakpoint on an operation on a specific fd when debugging some problematic
+    // scenario.
 
     const int i = fds.size();
     fds.resize(i + 1);
