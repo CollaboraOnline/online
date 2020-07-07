@@ -91,7 +91,8 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
             break;
         }
         default:
-            assert(false);
+            return;
+            //assert(false);
     }
 }
 
