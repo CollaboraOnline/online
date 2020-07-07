@@ -8,6 +8,7 @@
     "cypress-failed-log": "2.7.0",
     "cypress-file-upload": "4.0.7",
     "cypress-select-tests": "1.5.7",
+    "cypress-wait-until": "1.7.1",
     "eslint": "6.8.0",
     "eslint-plugin-cypress-rules": "file:eslint_plugin",
     "get-port-cli": "2.0.0",

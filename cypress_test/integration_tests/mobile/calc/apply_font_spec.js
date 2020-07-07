@@ -23,8 +23,7 @@ describe('Apply font changes.', function() {
 		mobileHelper.openMobileWizard();
 
 		// Open character properties
-		cy.get('#TextPropertyPanel')
-			.click();
+		helper.clickOnIdle('#TextPropertyPanel');
 
 		cy.get('#Bold')
 			.should('be.visible');
@@ -35,8 +34,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply bold.', function() {
-		cy.get('#Bold')
-			.click();
+		helper.clickOnIdle('#Bold');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -45,8 +43,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply italic.', function() {
-		cy.get('#Italic')
-			.click();
+		helper.clickOnIdle('#Italic');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -55,8 +52,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply underline.', function() {
-		cy.get('#Underline')
-			.click();
+		helper.clickOnIdle('#Underline');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -65,8 +61,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply strikeout.', function() {
-		cy.get('#Strikeout')
-			.click();
+		helper.clickOnIdle('#Strikeout');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -75,8 +70,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply shadowed.', function() {
-		cy.get('#Shadowed')
-			.click();
+		helper.clickOnIdle('#Shadowed');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -85,17 +79,14 @@ describe('Apply font changes.', function() {
 
 	it('Apply font name.', function() {
 		// Change font name
-		cy.get('#fontnamecombobox')
-			.click();
+		helper.clickOnIdle('#fontnamecombobox');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G')
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', 'Linux Libertine G');
 
 		cy.get('.level-1[title="Font Name"] .mobile-wizard.ui-combobox-text.selected')
 			.should('have.text', 'Linux Libertine G');
 
-		cy.get('#mobile-wizard-back')
-			.click();
+		helper.clickOnIdle('#mobile-wizard-back');
 
 		// Combobox entry contains the selected font name
 		cy.get('#fontnamecombobox .ui-header-right .entry-value')
@@ -109,11 +100,9 @@ describe('Apply font changes.', function() {
 
 	it('Apply font size.', function() {
 		// Change font size
-		cy.get('#fontsizecombobox')
-			.click();
+		helper.clickOnIdle('#fontsizecombobox');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', '14')
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', '14');
 
 		if (helper.getLOVersion() === 'master')
 			cy.get('.level-1[title="Font Size"] .mobile-wizard.ui-combobox-text.selected')
@@ -122,8 +111,7 @@ describe('Apply font changes.', function() {
 			cy.get('.level-1[title="Font Size"] .mobile-wizard.ui-combobox-text.selected')
 				.should('have.text', '14');
 
-		cy.get('#mobile-wizard-back')
-			.click();
+		helper.clickOnIdle('#mobile-wizard-back');
 
 		// Combobox entry contains the selected font name
 		cy.get('#fontsizecombobox .ui-header-right .entry-value')
@@ -136,9 +124,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply grow.', function() {
-		// Push grow
-		cy.get('#Grow')
-			.click();
+		helper.clickOnIdle('#Grow');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -147,9 +133,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply shrink.', function() {
-		// Push shrink
-		cy.get('#Shrink')
-			.click();
+		helper.clickOnIdle('#Shrink');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -158,9 +142,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font color.', function() {
-		// Change font color
-		cy.get('#Color')
-			.click();
+		helper.clickOnIdle('#Color');
 
 		mobileHelper.selectFromColorPalette(0, 5);
 

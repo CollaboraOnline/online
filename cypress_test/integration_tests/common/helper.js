@@ -1,4 +1,6 @@
-/* global cy Cypress expect */
+/* global cy Cypress expect require */
+
+require('cypress-wait-until');
 
 function loadTestDoc(fileName, subFolder, mobile) {
 	cy.log('Loading test document - start.');
@@ -296,6 +298,94 @@ function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 		});
 }
 
+function waitUntilIdle(selector, content) {
+	cy.log('Waiting item to be idle - start.');
+
+	var item;
+	var waitingTime = 1000;
+	if (content) {
+		cy.contains(selector, content, { log: false })
+			.then(function(itemToIdle) {
+				item = itemToIdle;
+			});
+
+		cy.waitUntil(function() {
+			cy.wait(waitingTime);
+
+			return cy.contains(selector, content, { log: false })
+				.then(function(itemToIdle) {
+					if (Cypress.dom.isDetached(item[0])) {
+						cy.log('Item is detached.');
+						item = itemToIdle;
+						return false;
+					} else {
+						return true;
+					}
+				});
+		});
+	} else {
+		cy.get(selector, { log: false })
+			.then(function(itemToIdle) {
+				item = itemToIdle;
+			});
+
+		cy.waitUntil(function() {
+			cy.wait(waitingTime);
+
+			return cy.get(selector, { log: false })
+				.then(function(itemToIdle) {
+					if (Cypress.dom.isDetached(item[0])) {
+						cy.log('Item is detached.');
+						item = itemToIdle;
+						return false;
+					} else {
+						return true;
+					}
+				});
+		});
+	}
+
+	cy.log('Waiting item to be idle - end.');
+}
+
+// This is a workaround for avoid 'item detached from DOM'
+// failures caused by GUI flickering.
+// GUI flickering might mean bad design, but
+// until it's fixed we can use this method.
+// Known GUI flickering:
+// * mobile wizard
+// IMPORTANT: don't use this if there is no
+// flickering. Use simple click() instead. This method
+// is much slower.
+function clickOnIdle(selector, content) {
+	cy.log('Clicking on item when idle - start.');
+
+	waitUntilIdle(selector, content);
+	if (content) {
+		cy.contains(selector, content)
+			.click();
+	} else {
+		cy.get(selector)
+			.click();
+	}
+
+	cy.log('Clicking on item when idle - end.');
+}
+
+// See comments at clickOnIdle() method.
+function inputOnIdle(selector, input) {
+	cy.log('Type into an input item when idle - start.');
+
+	waitUntilIdle(selector);
+
+	cy.get(selector)
+		.clear()
+		.type(input)
+		.type('{enter}');
+
+	cy.log('Type into an input item when idle - end.');
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -314,3 +404,5 @@ module.exports.beforeAllDesktop = beforeAllDesktop;
 module.exports.typeText = typeText;
 module.exports.getLOVersion = getLOVersion;
 module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
+module.exports.clickOnIdle = clickOnIdle;
+module.exports.inputOnIdle = inputOnIdle;

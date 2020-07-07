@@ -29,15 +29,12 @@ describe('Apply font changes.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		// Change font name
-		cy.get('#applystyle')
-			.click();
+		helper.clickOnIdle('#applystyle');
 
 		cy.get('#mobile-wizard-back')
 			.should('be.visible');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', styleName)
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', styleName);
 
 		// Combobox entry contains the selected font name
 		if (styleName !== 'Clear formatting') {
@@ -49,18 +46,14 @@ describe('Apply font changes.', function() {
 	}
 
 	it('Apply font name.', function() {
-		// Change font name
-		cy.get('#fontnamecombobox')
-			.click();
+		helper.clickOnIdle('#fontnamecombobox');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G')
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', 'Linux Libertine G');
 
 		cy.get('.level-1[title="Font Name"] .mobile-wizard.ui-combobox-text.selected')
 			.should('have.text', 'Linux Libertine G');
 
-		cy.get('#mobile-wizard-back')
-			.click();
+		helper.clickOnIdle('#mobile-wizard-back');
 
 		// Combobox entry contains the selected font name
 		cy.get('#fontnamecombobox .ui-header-right .entry-value')
@@ -74,11 +67,9 @@ describe('Apply font changes.', function() {
 
 	it('Apply font size.', function() {
 		// Change font size
-		cy.get('#fontsizecombobox')
-			.click();
+		helper.clickOnIdle('#fontsizecombobox');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', '36')
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', '36');
 
 		if (helper.getLOVersion() === 'master')
 			cy.get('.level-1[title="Font Size"] .mobile-wizard.ui-combobox-text.selected')
@@ -87,8 +78,7 @@ describe('Apply font changes.', function() {
 			cy.get('.level-1[title="Font Size"] .mobile-wizard.ui-combobox-text.selected')
 				.should('have.text', '36');
 
-		cy.get('#mobile-wizard-back')
-			.click();
+		helper.clickOnIdle('#mobile-wizard-back');
 
 		// Combobox entry contains the selected font name
 		cy.get('#fontsizecombobox .ui-header-right .entry-value')
@@ -101,9 +91,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply bold font.', function() {
-		// Apply bold
-		cy.get('#Bold')
-			.click();
+		helper.clickOnIdle('#Bold');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -112,9 +100,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply italic font.', function() {
-		// Apply italic
-		cy.get('#Italic')
-			.click();
+		helper.clickOnIdle('#Italic');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -123,9 +109,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply underline.', function() {
-		// Change underline
-		cy.get('#Underlineimg')
-			.click();
+		helper.clickOnIdle('#Underline');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -134,9 +118,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply strikeout.', function() {
-		// Change strikeout
-		cy.get('#Strikeoutimg')
-			.click();
+		helper.clickOnIdle('#Strikeout');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -145,9 +127,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply shadowed.', function() {
-		// Apply shadowed
-		cy.get('#Shadowedimg')
-			.click();
+		helper.clickOnIdle('#Shadowed');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -155,9 +135,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply grow.', function() {
-		// Push grow
-		cy.get('#Growimg')
-			.click();
+		helper.clickOnIdle('#Grow');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -166,9 +144,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply shrink.', function() {
-		// Push shrink
-		cy.get('#Shrinkimg')
-			.click();
+		helper.clickOnIdle('#Shrink');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -177,9 +153,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font color.', function() {
-		// Change font color
-		cy.get('#FontColor')
-			.click();
+		helper.clickOnIdle('#FontColor');
 
 		mobileHelper.selectFromColorPalette(0, 5, 2);
 
@@ -190,9 +164,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply highlight color.', function() {
-		// Change highlight color
-		cy.get('#BackColor')
-			.click();
+		helper.clickOnIdle('#BackColor');
 
 		mobileHelper.selectFromColorPalette(1, 5, 4);
 
@@ -203,9 +175,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply superscript.', function() {
-		// Apply superscript
-		cy.get('#SuperScriptimg')
-			.click();
+		helper.clickOnIdle('#SuperScript');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -214,9 +184,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply subscript.', function() {
-		// Apply superscript
-		cy.get('#SubScriptimg')
-			.click();
+		helper.clickOnIdle('#SubScript');
 
 		writerMobileHelper.selectAllMobile();
 

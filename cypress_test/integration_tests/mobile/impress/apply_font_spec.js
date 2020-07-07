@@ -26,8 +26,7 @@ describe('Apply font on text and on text shape.', function() {
 	function openTextPropertiesPanel() {
 		mobileHelper.openMobileWizard();
 
-		cy.get('#TextPropertyPanel')
-			.click();
+		helper.clickOnIdle('#TextPropertyPanel');
 
 		cy.get('.ui-content.level-0.mobile-wizard')
 			.should('be.visible');
@@ -36,8 +35,7 @@ describe('Apply font on text and on text shape.', function() {
 	it('Apply bold on text shape.', function() {
 		openTextPropertiesPanel();
 
-		cy.get('#Bold')
-			.click();
+		helper.clickOnIdle('#Bold');
 
 		triggerNewSVG();
 
@@ -48,8 +46,7 @@ describe('Apply font on text and on text shape.', function() {
 	it('Apply italic on text shape.', function() {
 		openTextPropertiesPanel();
 
-		cy.get('#Italic')
-			.click();
+		helper.clickOnIdle('#Italic');
 
 		triggerNewSVG();
 
@@ -60,8 +57,7 @@ describe('Apply font on text and on text shape.', function() {
 	it('Apply underline on text shape.', function() {
 		openTextPropertiesPanel();
 
-		cy.get('#Underline')
-			.click();
+		helper.clickOnIdle('#Underline');
 
 		triggerNewSVG();
 
@@ -72,8 +68,7 @@ describe('Apply font on text and on text shape.', function() {
 	it('Apply strikeout on text shape.', function() {
 		openTextPropertiesPanel();
 
-		cy.get('#Strikeout')
-			.click();
+		helper.clickOnIdle('#Strikeout');
 
 		triggerNewSVG();
 
@@ -84,8 +79,7 @@ describe('Apply font on text and on text shape.', function() {
 	it('Apply shadowed on text shape.', function() {
 		openTextPropertiesPanel();
 
-		cy.get('#Shadowed')
-			.click();
+		helper.clickOnIdle('#Shadowed');
 
 		triggerNewSVG();
 
@@ -96,14 +90,11 @@ describe('Apply font on text and on text shape.', function() {
 	it('Change font name of text shape.', function() {
 		openTextPropertiesPanel();
 
-		cy.get('#fontnamecombobox')
-			.click();
+		helper.clickOnIdle('#fontnamecombobox');
 
-		cy.contains('.ui-combobox-text', 'Linux Libertine G')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Linux Libertine G');
 
-		cy.get('#mobile-wizard-back')
-			.click();
+		helper.clickOnIdle('#mobile-wizard-back');
 
 		cy.get('#fontnamecombobox .ui-header-right .entry-value')
 			.should('have.text', 'Linux Libertine G');
@@ -120,14 +111,11 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#fontsizecombobox')
-			.click();
+		helper.clickOnIdle('#fontsizecombobox');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', '24')
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', '24');
 
-		cy.get('#mobile-wizard-back')
-			.click();
+		helper.clickOnIdle('#mobile-wizard-back');
 
 		cy.get('#fontsizecombobox .ui-header-right .entry-value')
 			.should('have.text', '24');
@@ -144,8 +132,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#Grow')
-			.click();
+		helper.clickOnIdle('#Grow');
 
 		triggerNewSVG();
 
@@ -159,8 +146,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#Shrink')
-			.click();
+		helper.clickOnIdle('#Shrink');
 
 		triggerNewSVG();
 
@@ -177,8 +163,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('not.have.attr', 'font-color');
 
-		cy.get('#Color')
-			.click();
+		helper.clickOnIdle('#Color');
 
 		mobileHelper.selectFromColorPalette(0, 5, 2);
 
@@ -194,8 +179,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('not.have.attr', 'font-color');
 
-		cy.get('#CharBackColor')
-			.click();
+		helper.clickOnIdle('#CharBackColor');
 
 		mobileHelper.selectFromColorPalette(1, 2, 2);
 
@@ -220,8 +204,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#SuperScript')
-			.click();
+		helper.clickOnIdle('#SuperScript');
 
 		triggerNewSVG();
 
@@ -239,8 +222,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#SubScript')
-			.click();
+		helper.clickOnIdle('#SubScript');
 
 		triggerNewSVG();
 
@@ -257,8 +239,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#Grow')
-			.click();
+		helper.clickOnIdle('#Grow');
 
 		triggerNewSVG();
 
@@ -268,8 +249,7 @@ describe('Apply font on text and on text shape.', function() {
 		// Remove direct formatting
 		openTextPropertiesPanel();
 
-		cy.get('#clearFormatting')
-			.click();
+		helper.clickOnIdle('#clearFormatting');
 
 		triggerNewSVG();
 
@@ -282,8 +262,7 @@ describe('Apply font on text and on text shape.', function() {
 
 		openTextPropertiesPanel();
 
-		cy.get('#Bold')
-			.click();
+		helper.clickOnIdle('#Bold');
 
 		triggerNewSVG();
 
@@ -296,8 +275,7 @@ describe('Apply font on text and on text shape.', function() {
 
 		openTextPropertiesPanel();
 
-		cy.get('#Italic')
-			.click();
+		helper.clickOnIdle('#Italic');
 
 		triggerNewSVG();
 
@@ -310,8 +288,7 @@ describe('Apply font on text and on text shape.', function() {
 
 		openTextPropertiesPanel();
 
-		cy.get('#Underline')
-			.click();
+		helper.clickOnIdle('#Underline');
 
 		triggerNewSVG();
 
@@ -324,8 +301,7 @@ describe('Apply font on text and on text shape.', function() {
 
 		openTextPropertiesPanel();
 
-		cy.get('#Strikeout')
-			.click();
+		helper.clickOnIdle('#Strikeout');
 
 		triggerNewSVG();
 
@@ -338,8 +314,7 @@ describe('Apply font on text and on text shape.', function() {
 
 		openTextPropertiesPanel();
 
-		cy.get('#Shadowed')
-			.click();
+		helper.clickOnIdle('#Shadowed');
 
 		triggerNewSVG();
 
@@ -352,14 +327,11 @@ describe('Apply font on text and on text shape.', function() {
 
 		openTextPropertiesPanel();
 
-		cy.get('#fontnamecombobox')
-			.click();
+		helper.clickOnIdle('#fontnamecombobox');
 
-		cy.contains('.ui-combobox-text', 'Linux Libertine G')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Linux Libertine G');
 
-		cy.get('#mobile-wizard-back')
-			.click();
+		helper.clickOnIdle('#mobile-wizard-back');
 
 		cy.get('#fontnamecombobox .ui-header-right .entry-value')
 			.should('have.text', 'Linux Libertine G');
@@ -378,14 +350,11 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#fontsizecombobox')
-			.click();
+		helper.clickOnIdle('#fontsizecombobox');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', '24')
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', '24');
 
-		cy.get('#mobile-wizard-back')
-			.click();
+		helper.clickOnIdle('#mobile-wizard-back');
 
 		cy.get('#fontsizecombobox .ui-header-right .entry-value')
 			.should('have.text', '24');
@@ -404,8 +373,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#Grow')
-			.click();
+		helper.clickOnIdle('#Grow');
 
 		triggerNewSVG();
 
@@ -421,8 +389,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#Shrink')
-			.click();
+		helper.clickOnIdle('#Shrink');
 
 		triggerNewSVG();
 
@@ -441,8 +408,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('not.have.attr', 'font-color');
 
-		cy.get('#Color')
-			.click();
+		helper.clickOnIdle('#Color');
 
 		mobileHelper.selectFromColorPalette(0, 5, 2);
 
@@ -457,8 +423,7 @@ describe('Apply font on text and on text shape.', function() {
 
 		openTextPropertiesPanel();
 
-		cy.get('#CharBackColor')
-			.click();
+		helper.clickOnIdle('#CharBackColor');
 
 		mobileHelper.selectFromColorPalette(1, 2, 2);
 
@@ -488,8 +453,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#SuperScript')
-			.click();
+		helper.clickOnIdle('#SuperScript');
 
 		triggerNewSVG();
 
@@ -509,8 +473,7 @@ describe('Apply font on text and on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.get('#SubScript')
-			.click();
+		helper.clickOnIdle('#SubScript');
 
 		triggerNewSVG();
 

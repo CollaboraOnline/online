@@ -88,12 +88,12 @@ describe('Focus tests', function() {
 		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
-		cy.get('#Paragraph')
-			.click();
+		helper.clickOnIdle('#Paragraph');
 
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0')
-			.click();
+			.should('have.attr', 'value', '0');
+
+		helper.clickOnIdle('#aboveparaspacing .spinfield');
 
 		// The spinfield should have the focus now.
 		cy.document().its('activeElement.className')
@@ -226,8 +226,7 @@ describe('Focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// Apply bold
-		cy.get('#Bold')
-			.click();
+		helper.clickOnIdle('#Bold');
 
 		cy.get('#Boldimg')
 			.should('have.class', 'selected');

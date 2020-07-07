@@ -20,9 +20,6 @@ function removeTextSelection() {
 		cy.get('.spreadsheet-cell-resize-marker')
 			.invoke('attr', 'style')
 			.should('contain', '-8px,');
-
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'B1:B1048576');
 	}
 
 	cy.log('Removing text selection - end.');

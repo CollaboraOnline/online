@@ -47,8 +47,9 @@ describe('Change shape properties via mobile wizard.', function() {
 		openPosSizePanel();
 
 		cy.get('#selectwidth .plus')
-			.should('be.visible')
-			.click();
+			.should('be.visible');
+
+		helper.clickOnIdle('#selectwidth .plus');
 
 		mobileHelper.closeMobileWizard();
 	}
@@ -56,20 +57,18 @@ describe('Change shape properties via mobile wizard.', function() {
 	function openPosSizePanel() {
 		mobileHelper.openMobileWizard();
 
-		cy.get('#PosSizePropertyPanel')
-			.click();
+		helper.clickOnIdle('#PosSizePropertyPanel');
 
-		cy.get('.ui-content.level-0.mobile-wizard')
+		cy.get('#selectwidth')
 			.should('be.visible');
 	}
 
 	function openLinePropertyPanel() {
 		mobileHelper.openMobileWizard();
 
-		cy.get('#LinePropertyPanel')
-			.click();
+		helper.clickOnIdle('#LinePropertyPanel');
 
-		cy.get('.ui-content.level-0.mobile-wizard')
+		cy.get('#linestyle')
 			.should('be.visible');
 	}
 
@@ -118,8 +117,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		openPosSizePanel();
 
 		// Enable keep ratio
-		cy.get('#ratio #ratio')
-			.click();
+		helper.clickOnIdle('#ratio #ratio');
 
 		cy.get('#ratio #ratio')
 			.should('have.prop', 'checked', true);
@@ -143,8 +141,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Vertical mirroring', function() {
 		openPosSizePanel();
 
-		cy.get('#FlipVertical')
-			.click();
+		helper.clickOnIdle('#FlipVertical');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('not.have.attr', 'd', defaultGeometry);
@@ -156,8 +153,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Horizontal mirroring', function() {
 		openPosSizePanel();
 
-		cy.get('#FlipHorizontal')
-			.click();
+		helper.clickOnIdle('#FlipHorizontal');
 
 		triggerNewSVG();
 
@@ -173,30 +169,25 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		// We can't test the result, so we just trigger
 		// the events to catch crashes, consoler errors.
-		cy.get('#BringToFront')
-			.click();
+		helper.clickOnIdle('#BringToFront');
 		cy.wait(300);
 
-		cy.get('#ObjectForwardOne')
-			.click();
+		helper.clickOnIdle('#ObjectForwardOne');
 		cy.wait(300);
 
-		cy.get('#ObjectBackOne')
-			.click();
+		helper.clickOnIdle('#ObjectBackOne');
 		cy.wait(300);
 
-		cy.get('#SendToBack')
-			.click();
+		helper.clickOnIdle('#SendToBack');
+		cy.wait(300);
 	});
 
 	it('Change line color', function() {
 		openLinePropertyPanel();
 
-		cy.get('#XLineColor')
-			.click();
+		helper.clickOnIdle('#XLineColor');
 
-		cy.get('.ui-content[title="Line Color"] .color-sample-small[style="background-color: rgb(152, 0, 0);"]')
-			.click();
+		helper.clickOnIdle('.ui-content[title="Line Color"] .color-sample-small[style="background-color: rgb(152, 0, 0);"]');
 
 		triggerNewSVG();
 
@@ -207,11 +198,9 @@ describe('Change shape properties via mobile wizard.', function() {
 	it.skip('Change line style', function() {
 		openLinePropertyPanel();
 
-		cy.get('#linestyle')
-			.click();
+		helper.clickOnIdle('#linestyle');
 
-		cy.contains('.ui-combobox-text', 'Dashed')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Dashed');
 
 		triggerNewSVG();
 
@@ -225,8 +214,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#linewidth .spinfield')
 			.should('have.attr', 'readonly', 'readonly');
 
-		cy.get('#linewidth .plus')
-			.click();
+		helper.clickOnIdle('#linewidth .plus');
 
 		triggerNewSVG();
 
@@ -235,8 +223,7 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		openLinePropertyPanel();
 
-		cy.get('#linewidth .minus')
-			.click();
+		helper.clickOnIdle('#linewidth .minus');
 
 		triggerNewSVG();
 

@@ -26,8 +26,7 @@ describe('Changing slide properties.', function() {
 	}
 
 	function switchToMasterView() {
-		cy.get('#masterslidebutton')
-			.click();
+		helper.clickOnIdle('#masterslidebutton');
 
 		cy.get('#closemasterslide')
 			.should('exist');
@@ -37,11 +36,9 @@ describe('Changing slide properties.', function() {
 
 	it('Apply solid color background.', function() {
 		// Change fill style
-		cy.get('#fillstyle')
-			.click();
+		helper.clickOnIdle('#fillstyle');
 
-		cy.contains('.ui-combobox-text', 'Color')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Color');
 
 		cy.get('#fillstyle .ui-header-left')
 			.should('have.text', 'Color');
@@ -51,8 +48,7 @@ describe('Changing slide properties.', function() {
 			.should('have.attr', 'style', 'background-color: rgb(114, 159, 207);');
 
 		// Change the color
-		cy.get('#fillattr')
-			.click();
+		helper.clickOnIdle('#fillattr');
 
 		mobileHelper.selectFromColorPalette(0, 5);
 
@@ -74,11 +70,9 @@ describe('Changing slide properties.', function() {
 
 	it('Apply gradient fill.', function() {
 		// Change fill style
-		cy.get('#fillstyle')
-			.click();
+		helper.clickOnIdle('#fillstyle');
 
-		cy.contains('.ui-combobox-text', 'Gradient')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Gradient');
 
 		cy.get('#fillstyle .ui-header-left')
 			.should('have.text', 'Gradient');
@@ -91,13 +85,11 @@ describe('Changing slide properties.', function() {
 			.should('have.attr', 'style', 'background-color: rgb(255, 215, 215);');
 
 		// Change the colors
-		cy.get('#fillattr2')
-			.click();
+		helper.clickOnIdle('#fillattr2');
 
 		mobileHelper.selectFromColorPalette(0, 2);
 
-		cy.get('#fillattr3')
-			.click();
+		helper.clickOnIdle('#fillattr3');
 
 		mobileHelper.selectFromColorPalette(1, 4);
 
@@ -125,11 +117,9 @@ describe('Changing slide properties.', function() {
 
 	it('Apply hatching fill.', function() {
 		// Change fill style
-		cy.get('#fillstyle')
-			.click();
+		helper.clickOnIdle('#fillstyle');
 
-		cy.contains('.ui-combobox-text', 'Hatching')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Hatching');
 
 		cy.get('#fillstyle .ui-header-left')
 			.should('have.text', 'Hatching');
@@ -139,11 +129,9 @@ describe('Changing slide properties.', function() {
 			.should('have.text', 'Black 0 Degrees');
 
 		// Change the hatching
-		cy.get('#fillattr1')
-			.click();
+		helper.clickOnIdle('#fillattr1');
 
-		cy.contains('.ui-combobox-text', 'Blue Triple 90 Degrees')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Blue Triple 90 Degrees');
 
 		cy.get('#fillattr1 .ui-header-left')
 			.should('have.text', 'Blue Triple 90 Degrees');
@@ -163,11 +151,9 @@ describe('Changing slide properties.', function() {
 
 	it('Apply bitmap fill.', function() {
 		// Change fill style
-		cy.get('#fillstyle')
-			.click();
+		helper.clickOnIdle('#fillstyle');
 
-		cy.contains('.ui-combobox-text', 'Bitmap')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Bitmap');
 
 		cy.get('#fillstyle .ui-header-left')
 			.should('have.text', 'Bitmap');
@@ -177,11 +163,9 @@ describe('Changing slide properties.', function() {
 			.should('have.text', 'Painted White');
 
 		// Change the value
-		cy.get('#fillattr1')
-			.click();
+		helper.clickOnIdle('#fillattr1');
 
-		cy.contains('.ui-combobox-text', 'Wooden Board')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Wooden Board');
 
 		cy.get('#fillattr1 .ui-header-left')
 			.should('have.text', 'Wooden Board');
@@ -201,11 +185,9 @@ describe('Changing slide properties.', function() {
 
 	it('Apply pattern fill.', function() {
 		// Change fill style
-		cy.get('#fillstyle')
-			.click();
+		helper.clickOnIdle('#fillstyle');
 
-		cy.contains('.ui-combobox-text', 'Pattern')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Pattern');
 
 		cy.get('#fillstyle .ui-header-left')
 			.should('have.text', 'Pattern');
@@ -215,11 +197,9 @@ describe('Changing slide properties.', function() {
 			.should('have.text', '5 Percent');
 
 		// Change the value
-		cy.get('#fillattr1')
-			.click();
+		helper.clickOnIdle('#fillattr1');
 
-		cy.contains('.ui-combobox-text', '50 Percent')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', '50 Percent');
 
 		cy.get('#fillattr1 .ui-header-left')
 			.should('have.text', '50 Percent');
@@ -239,11 +219,9 @@ describe('Changing slide properties.', function() {
 
 	it('Remove slide fill.', function() {
 		// Apply color fill first
-		cy.get('#fillstyle')
-			.click();
+		helper.clickOnIdle('#fillstyle');
 
-		cy.contains('.ui-combobox-text', 'Color')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Color');
 
 		cy.get('#fillstyle .ui-header-left')
 			.should('have.text', 'Color');
@@ -258,11 +236,9 @@ describe('Changing slide properties.', function() {
 			.should('have.text', 'Color');
 
 		// Remove fill
-		cy.get('#fillstyle')
-			.click();
+		helper.clickOnIdle('#fillstyle');
 
-		cy.contains('.ui-combobox-text', 'None')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'None');
 
 		cy.get('#fillstyle .ui-header-left')
 			.should('have.text', 'None');
@@ -280,11 +256,9 @@ describe('Changing slide properties.', function() {
 	it('Change master background.', function() {
 		// The default master slide does not have background
 		// So switch to a different master slide first
-		cy.get('#masterslide')
-			.click();
+		helper.clickOnIdle('#masterslide');
 
-		cy.contains('.ui-combobox-text', 'Colored')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Colored');
 
 		cy.get('#masterslide .ui-header-left')
 			.should('have.text', 'Colored');
@@ -298,8 +272,7 @@ describe('Changing slide properties.', function() {
 		cy.get('input#displaymasterbackground')
 			.should('have.prop', 'checked', true);
 
-		cy.get('input#displaymasterbackground')
-			.click();
+		helper.clickOnIdle('input#displaymasterbackground');
 
 		cy.get('input#displaymasterbackground')
 			.should('not.have.prop', 'checked', true);
@@ -313,8 +286,7 @@ describe('Changing slide properties.', function() {
 		cy.get('input#displaymasterbackground')
 			.should('not.have.prop', 'checked', true);
 
-		cy.get('input#displaymasterbackground')
-			.click();
+		helper.clickOnIdle('input#displaymasterbackground');
 
 		cy.get('input#displaymasterbackground')
 			.should('have.prop', 'checked', true);
@@ -327,8 +299,7 @@ describe('Changing slide properties.', function() {
 		cy.get('input#displaymasterobjects')
 			.should('not.have.prop', 'checked', true);
 
-		cy.get('input#displaymasterobjects')
-			.click();
+		helper.clickOnIdle('input#displaymasterobjects');
 
 		cy.get('input#displaymasterobjects')
 			.should('have.prop', 'checked', true);
@@ -343,8 +314,7 @@ describe('Changing slide properties.', function() {
 		cy.get('input#displaymasterobjects')
 			.should('have.prop', 'checked', true);
 
-		cy.get('input#displaymasterobjects')
-			.click();
+		helper.clickOnIdle('input#displaymasterobjects');
 
 		cy.get('input#displaymasterobjects')
 			.should('not.have.prop', 'checked', true);
@@ -366,11 +336,9 @@ describe('Changing slide properties.', function() {
 				expect(sizeRatio).to.be.lessThan(16 / 9 + EPS);
 			});
 
-		cy.get('#paperformat')
-			.click();
+		helper.clickOnIdle('#paperformat');
 
-		cy.contains('.ui-combobox-text', 'Screen 4:3')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Screen 4:3');
 
 		cy.get('#paperformat .ui-header-left')
 			.should('have.text', 'Screen 4:3');
@@ -400,11 +368,9 @@ describe('Changing slide properties.', function() {
 		cy.get('#orientation .ui-header-left')
 			.should('have.text', 'Landscape');
 
-		cy.get('#orientation')
-			.click();
+		helper.clickOnIdle('#orientation');
 
-		cy.contains('.ui-combobox-text', 'Portrait')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Portrait');
 
 		cy.get('#orientation .ui-header-left')
 			.should('have.text', 'Portrait');
@@ -428,11 +394,9 @@ describe('Changing slide properties.', function() {
 		cy.get('#masterslide .ui-header-left')
 			.should('have.text', 'Default');
 
-		cy.get('#masterslide')
-			.click();
+		helper.clickOnIdle('#masterslide');
 
-		cy.contains('.ui-combobox-text', 'Colored')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Colored');
 
 		cy.get('#masterslide .ui-header-left')
 			.should('have.text', 'Colored');
@@ -449,8 +413,7 @@ describe('Changing slide properties.', function() {
 
 	it('Apply layout.', function() {
 		// Apply title / subtitle layout
-		cy.get('#Layouts')
-			.click();
+		helper.clickOnIdle('#Layouts');
 
 		// Blank is the default
 		// TODO: wring item is selected by default
@@ -458,8 +421,7 @@ describe('Changing slide properties.', function() {
 		//	.should('have.class', 'loleaflet-context-down');
 
 		// Select layout with title and content shape
-		cy.get('.layout:nth-of-type(3)')
-			.click();
+		helper.clickOnIdle('.layout:nth-of-type(3)');
 
 		previewShouldBeFullWhite(false);
 
@@ -467,8 +429,7 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#Layouts')
-			.click();
+		helper.clickOnIdle('#Layouts');
 
 		cy.get('.layout:nth-of-type(3)')
 			.should('have.class', 'loleaflet-context-down');
@@ -490,11 +451,9 @@ describe('Changing slide properties.', function() {
 				expect(sizeRatio).to.be.lessThan(16 / 9 + EPS);
 			});
 
-		cy.get('#paperformat')
-			.click();
+		helper.clickOnIdle('#paperformat');
 
-		cy.contains('.ui-combobox-text', 'Screen 4:3')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Screen 4:3');
 
 		cy.get('#paperformat .ui-header-left')
 			.should('have.text', 'Screen 4:3');
@@ -526,11 +485,9 @@ describe('Changing slide properties.', function() {
 		cy.get('#orientation .ui-header-left')
 			.should('have.text', 'Landscape');
 
-		cy.get('#orientation')
-			.click();
+		helper.clickOnIdle('#orientation');
 
-		cy.contains('.ui-combobox-text', 'Portrait')
-			.click();
+		helper.clickOnIdle('.ui-combobox-text', 'Portrait');
 
 		cy.get('#orientation .ui-header-left')
 			.should('have.text', 'Portrait');
@@ -577,8 +534,7 @@ describe('Changing slide properties.', function() {
 			.should('have.class', 'disabled');
 
 		// Switch back to normal mode
-		cy.get('#closemasterslide')
-			.click();
+		helper.clickOnIdle('#closemasterslide');
 
 		cy.get('#masterslidebutton')
 			.should('exist');

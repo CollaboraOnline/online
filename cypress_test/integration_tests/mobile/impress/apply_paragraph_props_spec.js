@@ -26,20 +26,18 @@ describe('Apply paragraph properties.', function() {
 	function openParagraphPropertiesPanel() {
 		mobileHelper.openMobileWizard();
 
-		cy.get('#ParaPropertyPanel')
-			.click();
+		helper.clickOnIdle('#ParaPropertyPanel');
 
-		cy.get('.ui-content.level-0.mobile-wizard')
+		cy.get('#ParaLeftToRight')
 			.should('be.visible');
 	}
 
 	function openListsPropertiesPanel() {
 		mobileHelper.openMobileWizard();
 
-		cy.get('#ListsPropertyPanel')
-			.click();
+		helper.clickOnIdle('#ListsPropertyPanel');
 
-		cy.get('.ui-content.level-0.mobile-wizard')
+		cy.get('#DefaultBullet')
 			.should('be.visible');
 	}
 
@@ -50,8 +48,7 @@ describe('Apply paragraph properties.', function() {
 		// Set right alignment first
 		openParagraphPropertiesPanel();
 
-		cy.get('#RightPara')
-			.click();
+		helper.clickOnIdle('#RightPara');
 
 		triggerNewSVG();
 
@@ -61,8 +58,7 @@ describe('Apply paragraph properties.', function() {
 		// Set left alignment
 		openParagraphPropertiesPanel();
 
-		cy.get('#LeftPara')
-			.click();
+		helper.clickOnIdle('#LeftPara');
 
 		triggerNewSVG();
 
@@ -76,8 +72,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#CenterPara')
-			.click();
+		helper.clickOnIdle('#CenterPara');
 
 		triggerNewSVG();
 
@@ -92,8 +87,7 @@ describe('Apply paragraph properties.', function() {
 		// Set right alignment first
 		openParagraphPropertiesPanel();
 
-		cy.get('#RightPara')
-			.click();
+		helper.clickOnIdle('#RightPara');
 
 		triggerNewSVG();
 
@@ -103,8 +97,7 @@ describe('Apply paragraph properties.', function() {
 		// Then set justified alignment
 		openParagraphPropertiesPanel();
 
-		cy.get('#JustifyPara')
-			.click();
+		helper.clickOnIdle('#JustifyPara');
 
 		triggerNewSVG();
 
@@ -119,8 +112,7 @@ describe('Apply paragraph properties.', function() {
 		// Set bottom alignment first
 		openParagraphPropertiesPanel();
 
-		cy.get('#CellVertBottom')
-			.click();
+		helper.clickOnIdle('#CellVertBottom');
 
 		triggerNewSVG();
 
@@ -130,8 +122,7 @@ describe('Apply paragraph properties.', function() {
 		// Then set top alignment
 		openParagraphPropertiesPanel();
 
-		cy.get('#CellVertTop')
-			.click();
+		helper.clickOnIdle('#CellVertTop');
 
 		triggerNewSVG();
 
@@ -145,8 +136,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#CellVertCenter')
-			.click();
+		helper.clickOnIdle('#CellVertCenter');
 
 		triggerNewSVG();
 
@@ -161,8 +151,7 @@ describe('Apply paragraph properties.', function() {
 
 		openListsPropertiesPanel();
 
-		cy.get('#DefaultBullet')
-			.click();
+		helper.clickOnIdle('#DefaultBullet');
 
 		triggerNewSVG();
 
@@ -177,8 +166,7 @@ describe('Apply paragraph properties.', function() {
 
 		openListsPropertiesPanel();
 
-		cy.get('#DefaultNumbering')
-			.click();
+		helper.clickOnIdle('#DefaultNumbering');
 
 		triggerNewSVG();
 
@@ -233,8 +221,7 @@ describe('Apply paragraph properties.', function() {
 		// Set right alignment first
 		openParagraphPropertiesPanel();
 
-		cy.get('#RightPara')
-			.click();
+		helper.clickOnIdle('#RightPara');
 
 		triggerNewSVG();
 
@@ -246,8 +233,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#LeftPara')
-			.click();
+		helper.clickOnIdle('#LeftPara');
 
 		triggerNewSVG();
 
@@ -263,8 +249,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#CenterPara')
-			.click();
+		helper.clickOnIdle('#CenterPara');
 
 		triggerNewSVG();
 
@@ -281,8 +266,7 @@ describe('Apply paragraph properties.', function() {
 		// Set right alignment first
 		openParagraphPropertiesPanel();
 
-		cy.get('#RightPara')
-			.click();
+		helper.clickOnIdle('#RightPara');
 
 		triggerNewSVG();
 
@@ -294,8 +278,7 @@ describe('Apply paragraph properties.', function() {
 		// Then set justified alignment
 		openParagraphPropertiesPanel();
 
-		cy.get('#JustifyPara')
-			.click();
+		helper.clickOnIdle('#JustifyPara');
 
 		triggerNewSVG();
 
@@ -312,8 +295,7 @@ describe('Apply paragraph properties.', function() {
 		// Set bottom alignment first
 		openParagraphPropertiesPanel();
 
-		cy.get('#CellVertBottom')
-			.click();
+		helper.clickOnIdle('#CellVertBottom');
 
 		triggerNewSVG();
 
@@ -325,8 +307,7 @@ describe('Apply paragraph properties.', function() {
 		// Then set top alignment
 		openParagraphPropertiesPanel();
 
-		cy.get('#CellVertTop')
-			.click();
+		helper.clickOnIdle('#CellVertTop');
 
 		triggerNewSVG();
 
@@ -342,8 +323,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#CellVertCenter')
-			.click();
+		helper.clickOnIdle('#CellVertCenter');
 
 		triggerNewSVG();
 
@@ -360,8 +340,7 @@ describe('Apply paragraph properties.', function() {
 
 		openListsPropertiesPanel();
 
-		cy.get('#DefaultBullet')
-			.click();
+		helper.clickOnIdle('#DefaultBullet');
 
 		triggerNewSVG();
 
@@ -378,8 +357,7 @@ describe('Apply paragraph properties.', function() {
 
 		openListsPropertiesPanel();
 
-		cy.get('#DefaultNumbering')
-			.click();
+		helper.clickOnIdle('#DefaultNumbering');
 
 		triggerNewSVG();
 
@@ -437,8 +415,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#ParaspaceIncrease')
-			.click();
+		helper.clickOnIdle('#ParaspaceIncrease');
 
 		triggerNewSVG();
 
@@ -449,8 +426,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#ParaspaceDecrease')
-			.click();
+		helper.clickOnIdle('#ParaspaceDecrease');
 
 		triggerNewSVG();
 
@@ -467,8 +443,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#ParaRightToLeft')
-			.click();
+		helper.clickOnIdle('#ParaRightToLeft');
 
 		triggerNewSVG();
 
@@ -480,8 +455,7 @@ describe('Apply paragraph properties.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#ParaLeftToRight')
-			.click();
+		helper.clickOnIdle('#ParaLeftToRight');
 
 		triggerNewSVG();
 
@@ -499,8 +473,7 @@ describe('Apply paragraph properties.', function() {
 
 		openListsPropertiesPanel();
 
-		cy.get('#DefaultBullet')
-			.click();
+		helper.clickOnIdle('#DefaultBullet');
 
 		triggerNewSVG();
 
@@ -514,8 +487,7 @@ describe('Apply paragraph properties.', function() {
 
 		openListsPropertiesPanel();
 
-		cy.get('#OutlineRight')
-			.click();
+		helper.clickOnIdle('#OutlineRight');
 
 		triggerNewSVG();
 
@@ -527,8 +499,7 @@ describe('Apply paragraph properties.', function() {
 
 		openListsPropertiesPanel();
 
-		cy.get('#OutlineLeft')
-			.click();
+		helper.clickOnIdle('#OutlineLeft');
 
 		triggerNewSVG();
 

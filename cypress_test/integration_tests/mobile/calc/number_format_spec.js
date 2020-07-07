@@ -21,9 +21,7 @@ describe('Apply number formatting.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		// Open character properties
-		cy.get('#ScNumberFormatPropertyPanel')
-			.click();
+		helper.clickOnIdle('#ScNumberFormatPropertyPanel');
 
 		cy.get('#numberformatcombobox')
 			.should('be.visible');
@@ -35,11 +33,9 @@ describe('Apply number formatting.', function() {
 
 	function selectFormatting(formattingString) {
 		// Select formatting list
-		cy.get('#numberformatcombobox')
-			.click();
+		helper.clickOnIdle('#numberformatcombobox');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', formattingString)
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', formattingString);
 
 		// Combobox entry contains the selected format
 		cy.get('#numberformatcombobox .ui-header-left')
@@ -69,9 +65,7 @@ describe('Apply number formatting.', function() {
 	});
 
 	it('Push percent button.', function() {
-		// Change to percent
-		cy.get('#NumberFormatPercent')
-			.click();
+		helper.clickOnIdle('#NumberFormatPercent');
 
 		cy.get('#NumberFormatPercentimg')
 			.should('have.class', 'selected');
@@ -118,9 +112,7 @@ describe('Apply number formatting.', function() {
 	});
 
 	it('Push currency button.', function() {
-		// Change to currency
-		cy.get('#NumberFormatCurrency')
-			.click();
+		helper.clickOnIdle('#NumberFormatCurrency');
 
 		cy.get('#NumberFormatCurrencyimg')
 			.should('have.class', 'selected');
@@ -146,8 +138,7 @@ describe('Apply number formatting.', function() {
 
 	it('Push number button.', function() {
 		// Change to currency first
-		cy.get('#NumberFormatCurrency')
-			.click();
+		helper.clickOnIdle('#NumberFormatCurrency');
 
 		cy.get('#NumberFormatCurrencyimg')
 			.should('have.class', 'selected');
@@ -171,16 +162,13 @@ describe('Apply number formatting.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		// Open character properties
-		cy.get('#ScNumberFormatPropertyPanel')
-			.click();
+		helper.clickOnIdle('#ScNumberFormatPropertyPanel');
 
 		cy.get('#NumberFormatDecimal')
 			.should('be.visible');
 
 		// Change to number formatting
-		cy.get('#NumberFormatDecimal')
-			.click();
+		helper.clickOnIdle('#NumberFormatDecimal');
 
 		cy.get('#NumberFormatDecimalimg')
 			.should('have.class', 'selected');
@@ -195,12 +183,9 @@ describe('Apply number formatting.', function() {
 	});
 
 	it('Select date format from list.', function() {
-		// Change to date
-		cy.get('#numberformatcombobox')
-			.click();
+		helper.clickOnIdle('#numberformatcombobox');
 
-		cy.contains('.mobile-wizard.ui-combobox-text', 'Date')
-			.click();
+		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', 'Date');
 
 		// Combobox entry contains the selected format
 		cy.get('#numberformatcombobox .ui-header-left')
@@ -373,8 +358,7 @@ describe('Apply number formatting.', function() {
 			.should('not.have.prop', 'checked', true);
 
 		// Change the option
-		cy.get('#negativenumbersred input')
-			.click();
+		helper.clickOnIdle('#negativenumbersred input');
 
 		cy.get('#negativenumbersred input')
 			.should('have.prop', 'checked', true);
@@ -394,8 +378,7 @@ describe('Apply number formatting.', function() {
 			.should('not.have.prop', 'checked', true);
 
 		// Change the option
-		cy.get('#thousandseparator input')
-			.click();
+		helper.clickOnIdle('#thousandseparator input');
 
 		cy.get('#thousandseparator input')
 			.should('have.prop', 'checked', true);

@@ -19,11 +19,13 @@ describe('Apply paragraph properties.', function() {
 		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
-		cy.get('#Paragraph')
-			.click();
+		helper.clickOnIdle('#Paragraph');
 
 		cy.get('#Paragraph')
 			.should('have.class', 'selected');
+
+		cy.get('#LeftPara')
+			.should('be.visible');
 	});
 
 	afterEach(function() {
@@ -31,15 +33,12 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply left alignment.', function() {
-		// Change alignment
-		cy.get('#CenterPara')
-			.click();
+		helper.clickOnIdle('#CenterPara');
 
 		cy.get('#CenterParaimg')
 			.should('have.class', 'selected');
 
-		cy.get('#LeftPara')
-			.click();
+		helper.clickOnIdle('#LeftPara');
 
 		cy.get('#LeftParaimg')
 			.should('have.class', 'selected');
@@ -51,9 +50,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply center alignment.', function() {
-		// Change alignment
-		cy.get('#CenterPara')
-			.click();
+		helper.clickOnIdle('#CenterPara');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -62,9 +59,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply right alignment.', function() {
-		// Change alignment
-		cy.get('#RightPara')
-			.click();
+		helper.clickOnIdle('#RightPara');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -73,9 +68,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply justify alignment.', function() {
-		// Change alignment
-		cy.get('#JustifyPara')
-			.click();
+		helper.clickOnIdle('#JustifyPara');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -84,9 +77,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Change writing direction.', function() {
-		// Change writing mode
-		cy.get('#ParaRightToLeft')
-			.click();
+		helper.clickOnIdle('#ParaRightToLeft');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -99,12 +90,10 @@ describe('Apply paragraph properties.', function() {
 		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
-		cy.get('#Paragraph')
-			.click();
+		helper.clickOnIdle('#Paragraph');
 
 		// Change writing mode
-		cy.get('#ParaLeftToRight')
-			.click();
+		helper.clickOnIdle('#ParaLeftToRight');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -113,8 +102,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply default bulleting.', function() {
-		cy.get('#DefaultBullet')
-			.click();
+		helper.clickOnIdle('#DefaultBullet');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -123,8 +111,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply default numbering.', function() {
-		cy.get('#DefaultNumbering')
-			.click();
+		helper.clickOnIdle('#DefaultNumbering');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -133,9 +120,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply background color.', function() {
-		// Change background color
-		cy.get('#BackgroundColor')
-			.click();
+		helper.clickOnIdle('#BackgroundColor');
 
 		mobileHelper.selectFromColorPalette(2, 5, 2);
 
@@ -148,10 +133,9 @@ describe('Apply paragraph properties.', function() {
 
 	it('Increase / decrease para spacing.', function() {
 		// Increase para spacing
-		cy.get('#ParaspaceIncrease')
-			.click();
-		cy.get('#ParaspaceIncrease')
-			.click();
+		helper.clickOnIdle('#ParaspaceIncrease');
+
+		helper.clickOnIdle('#ParaspaceIncrease');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -169,12 +153,10 @@ describe('Apply paragraph properties.', function() {
 		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
-		cy.get('#Paragraph')
-			.click();
+		helper.clickOnIdle('#Paragraph');
 
 		// Decrease para spacing
-		cy.get('#ParaspaceDecrease')
-			.click();
+		helper.clickOnIdle('#ParaspaceDecrease');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -195,21 +177,19 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'value', '0');
 
 		// Change spacing
-		cy.get('#aboveparaspacing .spinfieldcontrols .plus')
-			.click();
+		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
-		cy.get('#aboveparaspacing .spinfieldcontrols .plus')
-			.click();
+
+		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.04');
-		cy.get('#aboveparaspacing .spinfieldcontrols .plus')
-			.click();
+
+		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.06');
 
-		cy.get('#belowparaspacing .spinfieldcontrols .plus')
-			.click();
+		helper.clickOnIdle('#belowparaspacing .plus');
 		cy.get('#belowparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
 
@@ -226,10 +206,8 @@ describe('Apply paragraph properties.', function() {
 
 	it('Increase / decrease indent.', function() {
 		// Increase indent
-		cy.get('#IncrementIndent')
-			.click();
-		cy.get('#IncrementIndent')
-			.click();
+		helper.clickOnIdle('#IncrementIndent');
+		helper.clickOnIdle('#IncrementIndent');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -243,12 +221,10 @@ describe('Apply paragraph properties.', function() {
 		mobileHelper.openMobileWizard();
 
 		// Open paragraph properties
-		cy.get('#Paragraph')
-			.click();
+		helper.clickOnIdle('#Paragraph');
 
 		// Decrease indent
-		cy.get('#DecrementIndent')
-			.click();
+		helper.clickOnIdle('#DecrementIndent');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -259,12 +235,11 @@ describe('Apply paragraph properties.', function() {
 
 	it('Apply before text indent.', function() {
 		// Change indent
-		cy.get('#beforetextindent .spinfieldcontrols .plus')
-			.click();
+		helper.clickOnIdle('#beforetextindent .plus');
 		cy.get('#beforetextindent .spinfield')
 			.should('have.attr', 'value', '0.02');
-		cy.get('#beforetextindent .spinfieldcontrols .plus')
-			.click();
+
+		helper.clickOnIdle('#beforetextindent .plus');
 		cy.get('#beforetextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
@@ -277,12 +252,11 @@ describe('Apply paragraph properties.', function() {
 
 	it('Apply after text indent.', function() {
 		// Change indent
-		cy.get('#aftertextindent .spinfieldcontrols .plus')
-			.click();
+		helper.clickOnIdle('#aftertextindent .plus');
 		cy.get('#aftertextindent .spinfield')
 			.should('have.attr', 'value', '0.02');
-		cy.get('#aftertextindent .spinfieldcontrols .plus')
-			.click();
+
+		helper.clickOnIdle('#aftertextindent .plus');
 		cy.get('#aftertextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
@@ -295,12 +269,11 @@ describe('Apply paragraph properties.', function() {
 
 	it('Apply first line indent.', function() {
 		// Increase firstline indent
-		cy.get('#firstlineindent .spinfieldcontrols .plus')
-			.click();
+		helper.clickOnIdle('#firstlineindent .plus');
 		cy.get('#firstlineindent .spinfield')
 			.should('have.attr', 'value', '0.02');
-		cy.get('#firstlineindent .spinfieldcontrols .plus')
-			.click();
+
+		helper.clickOnIdle('#firstlineindent .plus');
 		cy.get('#firstlineindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 

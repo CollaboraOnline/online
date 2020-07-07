@@ -22,8 +22,7 @@ describe('Change cell appearance.', function() {
 	function openAppearencePanel() {
 		mobileHelper.openMobileWizard();
 
-		cy.get('#ScCellAppearancePropertyPanel')
-			.click();
+		helper.clickOnIdle('#ScCellAppearancePropertyPanel');
 
 		cy.contains('.menu-entry-with-icon', 'Background Color')
 			.should('be.visible');
@@ -44,9 +43,7 @@ describe('Change cell appearance.', function() {
 	it('Apply background color', function() {
 		openAppearencePanelOnFirtsCell();
 
-		// Select a new color
-		cy.get('#BackgroundColor')
-			.click();
+		helper.clickOnIdle('#BackgroundColor');
 
 		mobileHelper.selectFromColorPalette(1, 2);
 
@@ -63,8 +60,7 @@ describe('Change cell appearance.', function() {
 	it('Apply left border', function() {
 		openAppearencePanelOnFirtsCell();
 
-		cy.get('#border-2')
-			.click();
+		helper.clickOnIdle('#border-2');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -76,8 +72,7 @@ describe('Change cell appearance.', function() {
 		openAppearencePanelOnFirtsCell();
 
 		// First add left border
-		cy.get('#border-2')
-			.click();
+		helper.clickOnIdle('#border-2');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -87,8 +82,7 @@ describe('Change cell appearance.', function() {
 		// Then remove it
 		openAppearencePanelOnFirtsCell();
 
-		cy.get('#border-1')
-			.click();
+		helper.clickOnIdle('#border-1');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -99,8 +93,7 @@ describe('Change cell appearance.', function() {
 	it('Apply right border', function() {
 		openAppearencePanelOnFirtsCell();
 
-		cy.get('#border-3')
-			.click();
+		helper.clickOnIdle('#border-3');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -111,8 +104,7 @@ describe('Change cell appearance.', function() {
 	it('Apply left and right border', function() {
 		openAppearencePanelOnFirtsCell();
 
-		cy.get('#border-4')
-			.click();
+		helper.clickOnIdle('#border-4');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -123,8 +115,7 @@ describe('Change cell appearance.', function() {
 	it('Apply top border', function() {
 		openAppearencePanelOnFirtsCell();
 
-		cy.get('#border-5')
-			.click();
+		helper.clickOnIdle('#border-5');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -135,8 +126,7 @@ describe('Change cell appearance.', function() {
 	it('Apply bottom border', function() {
 		openAppearencePanelOnFirtsCell();
 
-		cy.get('#border-6')
-			.click();
+		helper.clickOnIdle('#border-6');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -147,8 +137,7 @@ describe('Change cell appearance.', function() {
 	it('Apply top and bottom border', function() {
 		openAppearencePanelOnFirtsCell();
 
-		cy.get('#border-7')
-			.click();
+		helper.clickOnIdle('#border-7');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -159,8 +148,7 @@ describe('Change cell appearance.', function() {
 	it('Apply border for all sides', function() {
 		openAppearencePanelOnFirtsCell();
 
-		cy.get('#border-8')
-			.click();
+		helper.clickOnIdle('#border-8');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -171,8 +159,7 @@ describe('Change cell appearance.', function() {
 	it('Apply horizontal borders for multiple cells', function() {
 		openAppearencePanelOnAllCells();
 
-		cy.get('#border-9')
-			.click();
+		helper.clickOnIdle('#border-9');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -188,8 +175,7 @@ describe('Change cell appearance.', function() {
 	it('Apply horizontal inner borders and vertical outer borders', function() {
 		openAppearencePanelOnAllCells();
 
-		cy.get('#border-10')
-			.click();
+		helper.clickOnIdle('#border-10');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -212,8 +198,7 @@ describe('Change cell appearance.', function() {
 	it('Apply vertical inner borders and horizontal outer borders', function() {
 		openAppearencePanelOnAllCells();
 
-		cy.get('#border-11')
-			.click();
+		helper.clickOnIdle('#border-11');
 
 		// TODO
 		cy.wait(200);
@@ -239,8 +224,7 @@ describe('Change cell appearance.', function() {
 	it('Apply all inner and outer borders', function() {
 		openAppearencePanelOnAllCells();
 
-		cy.get('#border-12')
-			.click();
+		helper.clickOnIdle('#border-12');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -264,12 +248,10 @@ describe('Change cell appearance.', function() {
 		openAppearencePanelOnFirtsCell();
 
 		// Apply left border first
-		cy.get('#border-2')
-			.click();
+		helper.clickOnIdle('#border-2');
 
 		// Then apply border color
-		cy.get('#FrameLineColor')
-			.click();
+		helper.clickOnIdle('#FrameLineColor');
 
 		mobileHelper.selectFromColorPalette(2, 3);
 

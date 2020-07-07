@@ -44,8 +44,7 @@ describe('Change alignment settings.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		cy.get('#ScAlignmentPropertyPanel')
-			.click();
+		helper.clickOnIdle('#ScAlignmentPropertyPanel');
 
 		cy.get('#AlignLeft')
 			.should('be.visible');
@@ -55,8 +54,7 @@ describe('Change alignment settings.', function() {
 		openAlignmentPaneForFirstCell();
 
 		// Set right aligment first
-		cy.get('#AlignRight')
-			.click();
+		helper.clickOnIdle('#AlignRight');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -68,11 +66,9 @@ describe('Change alignment settings.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		cy.get('#ScAlignmentPropertyPanel')
-			.click();
+		helper.clickOnIdle('#ScAlignmentPropertyPanel');
 
-		cy.get('#AlignLeft')
-			.click();
+		helper.clickOnIdle('#AlignLeft');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -83,8 +79,7 @@ describe('Change alignment settings.', function() {
 	it('Align to center horizontally.', function() {
 		openAlignmentPaneForFirstCell();
 
-		cy.get('#AlignHorizontalCenter')
-			.click();
+		helper.clickOnIdle('#AlignHorizontalCenter');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -95,8 +90,7 @@ describe('Change alignment settings.', function() {
 	it('Change to block alignment.', function() {
 		openAlignmentPaneForFirstCell();
 
-		cy.get('#AlignBlock')
-			.click();
+		helper.clickOnIdle('#AlignBlock');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -107,16 +101,13 @@ describe('Change alignment settings.', function() {
 	it('Right-to-left and left-to-right writing mode.', function() {
 		openAlignmentPaneForFirstCell();
 
-		cy.get('#ParaRightToLeft')
-			.click();
+		helper.clickOnIdle('#ParaRightToLeft');
 
 		// TODO: we don't have a way of testing this
 		// copy container doesn't have info about this
 		cy.wait(500);
 
-		// Set right aligment first
-		cy.get('#ParaLeftToRight')
-			.click();
+		helper.clickOnIdle('#ParaLeftToRight');
 
 		cy.wait(500);
 	});
@@ -124,8 +115,7 @@ describe('Change alignment settings.', function() {
 	it('Align to the top and to bottom.', function() {
 		openAlignmentPaneForFirstCell();
 
-		cy.get('#AlignTop')
-			.click();
+		helper.clickOnIdle('#AlignTop');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -137,11 +127,9 @@ describe('Change alignment settings.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		cy.get('#ScAlignmentPropertyPanel')
-			.click();
+		helper.clickOnIdle('#ScAlignmentPropertyPanel');
 
-		cy.get('#AlignBottom')
-			.click();
+		helper.clickOnIdle('#AlignBottom');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -152,8 +140,7 @@ describe('Change alignment settings.', function() {
 	it('Align to center vertically.', function() {
 		openAlignmentPaneForFirstCell();
 
-		cy.get('#AlignVCenter')
-			.click();
+		helper.clickOnIdle('#AlignVCenter');
 
 		calcMobileHelper.selectAllMobile();
 
@@ -175,8 +162,7 @@ describe('Change alignment settings.', function() {
 		openAlignmentPaneForFirstCell();
 
 		// Increase indent
-		cy.get('#IncrementIndent')
-			.click();
+		helper.clickOnIdle('#IncrementIndent');
 
 		// We use the text position as indicator
 		cy.get('body')
@@ -203,8 +189,7 @@ describe('Change alignment settings.', function() {
 		// Decrease indent
 		openAlignmentPaneForFirstCell();
 
-		cy.get('#DecrementIndent')
-			.click();
+		helper.clickOnIdle('#DecrementIndent');
 
 		// We use the text position as indicator
 		cy.get('body')
@@ -235,13 +220,11 @@ describe('Change alignment settings.', function() {
 		openAlignmentPaneForFirstCell();
 
 		// TODO: First we need to increase indent to make the input enabled
-		cy.get('#IncrementIndent')
-			.click();
+		helper.clickOnIdle('#IncrementIndent');
 
 		cy.wait(300);
 
-		cy.get('#IncrementIndent')
-			.click();
+		helper.clickOnIdle('#IncrementIndent');
 
 		calcMobileHelper.removeTextSelection();
 
@@ -285,8 +268,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#wraptext')
 			.should('not.have.prop', 'checked', true);
 
-		cy.get('input#wraptext')
-			.click();
+		helper.clickOnIdle('input#wraptext');
 
 		cy.get('input#wraptext')
 			.should('have.prop', 'checked', true);
@@ -312,8 +294,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#stacked')
 			.should('not.have.prop', 'checked', true);
 
-		cy.get('input#stacked')
-			.click();
+		helper.clickOnIdle('input#stacked');
 
 		cy.get('input#stacked')
 			.should('have.prop', 'checked', true);
@@ -333,8 +314,7 @@ describe('Change alignment settings.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		cy.get('#ScAlignmentPropertyPanel')
-			.click();
+		helper.clickOnIdle('#ScAlignmentPropertyPanel');
 
 		cy.get('#AlignLeft')
 			.should('be.visible');
@@ -346,8 +326,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#mergecells')
 			.should('not.have.prop', 'checked', true);
 
-		cy.get('input#mergecells')
-			.click();
+		helper.clickOnIdle('input#mergecells');
 
 		cy.get('input#mergecells')
 			.should('have.prop', 'checked', true);

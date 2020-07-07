@@ -22,14 +22,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	function openTablePanel() {
 		mobileHelper.openMobileWizard();
 
-		// Open table panel
-		cy.get('#TableEditPanel')
-			.click();
+		helper.clickOnIdle('#TableEditPanel');
 
 		cy.get('#InsertRowsBefore')
 			.should('be.visible');
-
-		cy.wait(500);
 	}
 
 	function moveCursorToFirstCell() {
@@ -57,8 +53,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#InsertRowsBefore')
-			.click();
+		helper.clickOnIdle('#InsertRowsBefore');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
@@ -81,8 +76,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#InsertRowsAfter')
-			.click();
+		helper.clickOnIdle('#InsertRowsAfter');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
@@ -105,8 +99,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#InsertColumnsBefore')
-			.click();
+		helper.clickOnIdle('#InsertColumnsBefore');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
@@ -129,8 +122,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#InsertColumnsAfter')
-			.click();
+		helper.clickOnIdle('#InsertColumnsAfter');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
@@ -153,8 +145,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#DeleteRows')
-			.click();
+		helper.clickOnIdle('#DeleteRows');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
@@ -178,8 +169,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		// Insert column first
 		openTablePanel();
 
-		cy.get('#InsertColumnsBefore')
-			.click();
+		helper.clickOnIdle('#InsertColumnsBefore');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
@@ -188,8 +178,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		mobileHelper.closeMobileWizard();
 		openTablePanel();
 
-		cy.get('#DeleteColumns')
-			.click();
+		helper.clickOnIdle('#DeleteColumns');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
@@ -200,8 +189,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#DeleteTable')
-			.click();
+		helper.clickOnIdle('#DeleteTable');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
@@ -228,10 +216,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#MergeCells')
-			.scrollIntoView();
-		cy.get('#MergeCells')
-			.click();
+		helper.clickOnIdle('#MergeCells');
 
 		selectFullTable();
 
@@ -295,8 +280,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#SetMinimalRowHeight')
-			.click();
+		helper.clickOnIdle('#SetMinimalRowHeight');
 
 		selectFullTable();
 
@@ -314,8 +298,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#SetOptimalRowHeight')
-			.click();
+		helper.clickOnIdle('#SetOptimalRowHeight');
 
 		selectFullTable();
 
@@ -343,8 +326,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#DistributeRows')
-			.click();
+		helper.clickOnIdle('#DistributeRows');
 
 		selectFullTable();
 
@@ -372,8 +354,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#SetMinimalColumnWidth')
-			.click();
+		helper.clickOnIdle('#SetMinimalColumnWidth');
 
 		selectFullTable();
 
@@ -390,8 +371,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#SetOptimalColumnWidth')
-			.click();
+		helper.clickOnIdle('#SetOptimalColumnWidth');
 
 		selectFullTable();
 
@@ -410,8 +390,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#DistributeColumns')
-			.click();
+		helper.clickOnIdle('#DistributeColumns');
 
 		selectFullTable();
 
