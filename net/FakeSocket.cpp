@@ -654,6 +654,8 @@ int fakeSocketShutdown(int fd)
     pair.shutdown[K] = true;
     pair.readable[K] = true;
 
+    theCV.notify_all();
+
     FAKESOCKET_LOG(1, "FakeSocket Shutdown #" << fd << flush());
 
     return 0;
