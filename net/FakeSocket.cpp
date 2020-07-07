@@ -571,8 +571,6 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
     else if (pair.buffer[K].size() == 0)
         pair.readable[K] = false;
 
-    theCV.notify_all();
-
     FAKESOCKET_LOG(2, "FakeSocket Read from #" << fd << " got " << result << (result == 1 ? " byte" : " bytes") << flush());
 
     return result;
