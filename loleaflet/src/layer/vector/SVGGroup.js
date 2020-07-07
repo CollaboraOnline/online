@@ -12,8 +12,10 @@ L.SVGGroup = L.Layer.extend({
 
 	initialize: function (bounds, options) {
 		L.setOptions(this, options);
+		this._pathNodeCollection = new L.Path.PathNodeCollection();
 		this._bounds = bounds;
 		this._rect = L.rectangle(bounds, this.options);
+		this._hasSVGNode = false;
 		if (L.Browser.touch && !L.Browser.pointer) {
 			this.options.manualDrag = true;
 		}
@@ -23,20 +25,28 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	setVisible: function (visible) {
-		if (this._svg != null) {
+		this._forEachSVGNode(function (svgNode) {
+			svgNode.setAttribute('opacity', 0);
 			if (visible)
-				this._svg.setAttribute('visibility', 'visible');
+				svgNode.setAttribute('visibility', 'visible');
 			else
-				this._svg.setAttribute('visibility', 'hidden');
-		}
+				svgNode.setAttribute('visibility', 'hidden');
+		});
 	},
 
 	sizeSVG: function () {
+
+		if (!this._hasSVGNode) {
+			return;
+		}
+
 		var size = L.bounds(this._map.latLngToLayerPoint(this._bounds.getNorthWest()),
 			this._map.latLngToLayerPoint(this._bounds.getSouthEast())).getSize();
 
-		this._svg.setAttribute('width', size.x);
-		this._svg.setAttribute('height', size.y);
+		this._forEachSVGNode(function (svgNode) {
+			svgNode.setAttribute('width', size.x);
+			svgNode.setAttribute('height', size.y);
+		});
 	},
 
 	parseSVG: function (svgString) {
@@ -45,30 +55,41 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	addEmbeddedSVG: function (svgString) {
-		var doc = this.parseSVG(svgString);
+		var svgDoc = this.parseSVG(svgString);
 
-		if (doc.lastChild.localName !== 'svg')
+		if (svgDoc.lastChild.localName !== 'svg')
 			return;
 
-		this._svg = this._path.insertBefore(doc.lastChild, this._rect._path);
-		this._dragShape = this._rect._path;
-		this._svg.setAttribute('pointer-events', 'none');
-		this._svg.setAttribute('opacity', this._dragStarted ? 1 : 0);
+		var svgLastChild = svgDoc.lastChild;
+		var thisObj = this;
+		this._forEachGroupNode(function (groupNode, rectNode, nodeData) {
+			var svgNode = groupNode.insertBefore(svgLastChild, rectNode);
+			nodeData.setCustomField('svg', svgNode);
+			nodeData.setCustomField('dragShape', rectNode);
+			thisObj._dragShapePresent = true;
+			svgNode.setAttribute('pointer-events', 'none');
+			svgNode.setAttribute('opacity', thisObj._dragStarted ? 1 : 0);
+		});
+
+		this._hasSVGNode = true;
+
 		this.sizeSVG();
 		this._update();
 	},
 
 	_onDragStart: function(evt) {
-		if (!this._map || !this._dragShape || !this.dragging)
+		if (!this._map || !this._dragShapePresent || !this.dragging)
 			return;
 		this._dragStarted = true;
 		this._moved = false;
 
 		if (!this.options.manualDrag) {
-			L.DomEvent.on(this._dragShape, 'mousemove', this._onDrag, this);
-			L.DomEvent.on(this._dragShape, 'mouseup', this._onDragEnd, this);
-			if (this.dragging.constraint)
-				L.DomEvent.on(this._dragShape, 'mouseout', this._onDragEnd, this);
+			this._forEachDragShape(function (dragShape) {
+				L.DomEvent.on(dragShape, 'mousemove', this._onDrag, this);
+				L.DomEvent.on(dragShape, 'mouseup', this._onDragEnd, this);
+				if (this.dragging.constraint)
+					L.DomEvent.on(dragShape, 'mouseout', this._onDragEnd, this);
+			}.bind(this));
 		}
 
 		var data = {
@@ -82,7 +103,7 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	_onDrag: function(evt) {
-		if (!this._map || !this._dragShape || !this.dragging)
+		if (!this._map || !this._dragShapePresent || !this.dragging)
 			return;
 
 		if (!this._moved) {
@@ -94,14 +115,16 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	_onDragEnd: function(evt) {
-		if (!this._map || !this._dragShape || !this.dragging)
+		if (!this._map || !this._dragShapePresent || !this.dragging)
 			return;
 
 		if (!this.options.manualDrag) {
-			L.DomEvent.off(this._dragShape, 'mousemove', this._onDrag, this);
-			L.DomEvent.off(this._dragShape, 'mouseup', this._onDragEnd, this);
-			if (this.dragging.constraint)
-				L.DomEvent.off(this._dragShape, 'mouseout', this._onDragEnd, this);
+			this._forEachDragShape(function (dragShape) {
+				L.DomEvent.off(dragShape, 'mousemove', this._onDrag, this);
+				L.DomEvent.off(dragShape, 'mouseup', this._onDragEnd, this);
+				if (this.dragging.constraint)
+					L.DomEvent.off(dragShape, 'mouseout', this._onDragEnd, this);
+			}.bind(this));
 		}
 
 		this._moved = false;
@@ -146,53 +169,78 @@ L.SVGGroup = L.Layer.extend({
 		this._renderer._initPath(this._rect);
 		this._renderer._addGroup(this);
 
-		if (this._path && this._rect._path) {
+		this._forEachGroupNode(function (groupNode, rectNode, nodeData) {
+
+			if (!groupNode || !rectNode) {
+				return;
+			}
+
 			this._rect._map = this._map;
 			this._rect._renderer = this._renderer;
-			L.DomUtil.addClass(this._path, 'leaflet-control-buttons-disabled');
+			L.DomUtil.addClass(groupNode, 'leaflet-control-buttons-disabled');
 
 			if (this.options.svg) {
 				var doc = this.parseSVG(this.options.svg);
 				if (doc && doc.lastChild.localName === 'svg') {
-					this._svg = this._path.appendChild(doc.lastChild);
-					this._svg.setAttribute('opacity', 0);
-					this._svg.setAttribute('pointer-events', 'none');
-					this.sizeSVG();
+					this._hasSVGNode = true;
+					var svgNode = groupNode.appendChild(doc.lastChild);
+					nodeData.setCustomField('svg', svgNode);
+					svgNode.setAttribute('opacity', 0);
+					svgNode.setAttribute('pointer-events', 'none');
 				}
 				delete this.options.svg;
 			}
 
-			this._path.appendChild(this._rect._path);
-			this._dragShape = this._rect._path;
+			groupNode.appendChild(rectNode);
+			nodeData.setCustomField('dragShape', rectNode);
+			this._dragShapePresent = true;
 
 			if (!this.options.manualDrag) {
-				L.DomEvent.on(this._rect._path, 'mousedown', this._onDragStart, this);
+				L.DomEvent.on(rectNode, 'mousedown', this._onDragStart, this);
 			}
-		}
+		}.bind(this));
+
+		this.sizeSVG();
+
 		this._update();
 	},
 
 	onRemove: function () {
 		this._rect._map = this._rect._renderer = null;
-		this.removeInteractiveTarget(this._rect._path);
-		L.DomUtil.remove(this._rect._path);
+		this._pathNodeCollection.forEachNode(function (nodeData) {
+
+			var actualRenderer = nodeData.getActualRenderer();
+			var rectNode = this._rect.getPathNode(actualRenderer);
+
+			this.removeInteractiveTarget(rectNode);
+			L.DomUtil.remove(rectNode);
+
+		}.bind(this));
+
 		this.removeEmbeddedSVG();
 		this._renderer._removeGroup(this);
 	},
 
 	removeEmbeddedSVG: function () {
-		if (this._svg) {
-			this._dragShape = null;
-			L.DomUtil.remove(this._svg);
-			delete this._svg;
-			this._update();
+		if (!this._hasSVGNode) {
+			return;
 		}
+
+		this._pathNodeCollection.forEachNode(function (nodeData) {
+			var svgNode = nodeData.getCustomField('svg');
+			L.DomUtil.remove(svgNode);
+			nodeData.clearCustomField('svg');
+		});
+
+		this._dragShapePresent = false;
+		this._hasSVGNode = false;
+		this._update();
 	},
 
 	_hideEmbeddedSVG: function () {
-		if (this._svg) {
-			this._svg.setAttribute('opacity', 0);
-		}
+		this._forEachSVGNode(function (svgNode) {
+			svgNode.setAttribute('opacity', 0);
+		});
 	},
 
 	_transform: function(matrix) {
@@ -216,23 +264,95 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	_showEmbeddedSVG: function () {
-		if (this._svg) {
-			this._svg.setAttribute('opacity', 1);
-		}
+		this._forEachSVGNode(function (svgNode) {
+			svgNode.setAttribute('opacity', 1);
+		});
 	},
 
 	_update: function () {
 		this._rect.setBounds(this._bounds);
-		if (this._svg) {
-			var point = this._map.latLngToLayerPoint(this._bounds.getNorthWest());
-			this._svg.setAttribute('x', point.x);
-			this._svg.setAttribute('y', point.y);
-		}
+		var point = this._map.latLngToLayerPoint(this._bounds.getNorthWest());
+
+		this._forEachSVGNode(function (svgNode) {
+			svgNode.setAttribute('x', point.x);
+			svgNode.setAttribute('y', point.y);
+		}.bind(this));
 	},
 
 	_updatePath: function () {
 		this._update();
-	}
+	},
+
+	addPathNode: function (pathNode, actualRenderer) {
+
+		this._path = undefined;
+
+		if (!this._pathNodeCollection) {
+			this._pathNodeCollection = new L.Path.PathNodeCollection();
+		}
+
+		this._pathNodeCollection.add(new L.Path.PathNodeData(pathNode, actualRenderer));
+	},
+
+	getPathNode: function (actualRenderer) {
+
+		console.assert(this._pathNodeCollection, 'missing _pathNodeCollection member!');
+		return this._pathNodeCollection.getPathNode(actualRenderer);
+	},
+
+	addClass: function (className) {
+		this._pathNodeCollection.addOrRemoveClass(className, true /* add */);
+	},
+
+	removeClass: function (className) {
+		this._pathNodeCollection.addOrRemoveClass(className, false /* add */);
+	},
+
+	_forEachGroupNode: function (callback) {
+
+		var that = this;
+		this._pathNodeCollection.forEachNode(function (nodeData) {
+
+			var actualRenderer = nodeData.getActualRenderer();
+			var groupNode = nodeData.getNode();
+			var rectNode = that._rect.getPathNode(actualRenderer);
+
+			callback(groupNode, rectNode, nodeData);
+
+		});
+
+		return true;
+	},
+
+	_forEachSVGNode: function (callback) {
+		if (!this._hasSVGNode) {
+			return false;
+		}
+
+		this._pathNodeCollection.forEachNode(function (nodeData) {
+			var svgNode = nodeData.getCustomField('svg');
+			if (svgNode) {
+				callback(svgNode);
+			}
+		});
+
+		return true;
+	},
+
+	_forEachDragShape: function (callback) {
+		if (!this._dragShapePresent) {
+			return false;
+		}
+
+		this._pathNodeCollection.forEachNode(function (nodeData) {
+			var dragShape = nodeData.getCustomField('dragShape');
+			if (dragShape) {
+				callback(dragShape);
+			}
+		});
+
+		return true;
+	},
 
 });
 

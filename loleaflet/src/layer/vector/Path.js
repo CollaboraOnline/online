@@ -21,10 +21,12 @@ L.Path = L.Layer.extend({
 		fillRule: 'evenodd',
 
 		// className: ''
-		interactive: true
+		interactive: true,
+		fixed: false,
 	},
 
 	onAdd: function () {
+		this._pathNodeCollection = new L.Path.PathNodeCollection();
 		this._renderer = this._map.getRenderer(this);
 		this._renderer._initPath(this);
 		this._reset();
@@ -33,6 +35,7 @@ L.Path = L.Layer.extend({
 
 	onRemove: function () {
 		this._renderer._removePath(this);
+		this._pathNodeCollection.clear();
 	},
 
 	getEvents: function () {
@@ -80,5 +83,135 @@ L.Path = L.Layer.extend({
 	_clickTolerance: function () {
 		// used when doing hit detection for Canvas layers
 		return (this.options.stroke ? this.options.weight / 2 : 0) + (L.Browser.touch ? 10 : 0);
-	}
+	},
+
+	addPathNode: function (pathNode, actualRenderer) {
+
+		this._path = undefined;
+
+		if (!this._pathNodeCollection) {
+			this._pathNodeCollection = new L.Path.PathNodeCollection();
+		}
+
+		this._pathNodeCollection.add(new L.Path.PathNodeData(pathNode, actualRenderer));
+	},
+
+	getPathNode: function (actualRenderer) {
+		return this._pathNodeCollection.getPathNode(actualRenderer);
+	},
+
+	addClass: function (className) {
+		this._pathNodeCollection.addOrRemoveClass(className, true /* add */);
+	},
+
+	removeClass: function (className) {
+		this._pathNodeCollection.addOrRemoveClass(className, false /* add */);
+	},
+
+});
+
+L.Path.PathNodeData = L.Class.extend({
+
+	initialize: function (pathNode, actualRenderer) {
+
+		console.assert(pathNode, 'invalid pathNode argument!');
+		console.assert(actualRenderer, 'invalid actualRenderer argument!');
+
+		if (!(pathNode instanceof Node)) {
+			console.error('Not a node instance!');
+		}
+
+		this._pathNode = pathNode;
+		this._actualRenderer = actualRenderer;
+		this._data = {};
+	},
+
+	key: function () {
+		return L.Path.PathNodeData.key(this._actualRenderer);
+	},
+
+	getNode: function () {
+		if (!(this._pathNode instanceof Node)) {
+			console.error('Not a node instance!');
+		}
+		return this._pathNode;
+	},
+
+	getActualRenderer: function () {
+		return this._actualRenderer;
+	},
+
+	setCustomField: function (fieldName, value) {
+		console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
+		this._data[fieldName] = value;
+	},
+
+	getCustomField: function (fieldName) {
+		console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
+		return this._data[fieldName];
+	},
+
+	clearCustomField: function (fieldName) {
+		console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
+		delete this._data[fieldName];
+	},
+
+	addOrRemoveClass: function (className, add) {
+		if (add) {
+			L.DomUtil.addClass(this._pathNode, className);
+		}
+		else {
+			L.DomUtil.removeClass(this._pathNode, className);
+		}
+	},
+
+});
+
+L.Path.PathNodeData.key = function (layer) {
+	return L.stamp(layer);
+};
+
+L.Path.PathNodeCollection = L.Class.extend({
+
+	initialize: function () {
+		this.clear();
+	},
+
+	add: function (pathNodeData) {
+
+		console.assert(pathNodeData instanceof L.Path.PathNodeData,
+			'invalid pathNodeData argument!');
+
+		this._collection[pathNodeData.key()] = pathNodeData;
+	},
+
+	clear: function () {
+		this._collection = {};
+	},
+
+	getPathNode: function (actualRenderer) {
+
+		console.assert(actualRenderer, 'invalid actualRenderer argument!');
+		var key = L.Path.PathNodeData.key(actualRenderer);
+		var nodeData = this._collection[key];
+
+		console.assert(nodeData, 'cannot find path node!');
+
+		return nodeData.getNode();
+	},
+
+	forEachNode: function (callback) {
+		var that = this;
+		Object.keys(this._collection).forEach(function (key) {
+			callback(that._collection[key]);
+		});
+	},
+
+	addOrRemoveClass: function (className, add) {
+		console.assert(className, 'className not provided!');
+		this.forEachNode(function (nodeData) {
+			nodeData.addOrRemoveClass(className, add);
+		});
+	},
+
 });

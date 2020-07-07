@@ -72,9 +72,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 			(this._path.options.className + ' ' + L.Handler.PathDrag.DRAGGING_CLS) :
 			 L.Handler.PathDrag.DRAGGING_CLS;
 
-		if (this._path._path) {
-			L.DomUtil.addClass(this._path._path, L.Handler.PathDrag.DRAGGING_CLS);
-		}
+		this._path.addClass(L.Handler.PathDrag.DRAGGING_CLS);
 	},
 
 	/**
@@ -85,9 +83,8 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 		this._path.options.className = this._path.options.className
 			.replace(new RegExp('\\s+' + L.Handler.PathDrag.DRAGGING_CLS), '');
-		if (this._path._path) {
-			L.DomUtil.removeClass(this._path._path, L.Handler.PathDrag.DRAGGING_CLS);
-		}
+
+		this._path.removeClass(L.Handler.PathDrag.DRAGGING_CLS);
 
 		if (!this._path.options.manualDrag) {
 			L.DomEvent.off(document, 'mousemove touchmove', this._onDrag,    this);
@@ -119,7 +116,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		this._matrix = [1, 0, 0, 1, 0, 0];
 		L.DomEvent.stop(evt.originalEvent);
 
-		L.DomUtil.addClass(this._path._renderer._container, 'leaflet-interactive');
+		this._path._renderer.addContainerClass('leaflet-interactive');
 
 		if (!this._path.options.manualDrag) {
 			L.DomEvent

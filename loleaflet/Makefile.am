@@ -234,6 +234,8 @@ LOLEAFLET_JS =\
 	src/layer/vector/CircleMarker.js \
 	src/layer/vector/Circle.js \
 	src/layer/vector/SVG.js \
+	src/layer/vector/SplitPanesRenderer.js \
+	src/layer/vector/SplitPanesSVG.js \
 	src/layer/vector/Path.Transform.SVG.js \
 	src/core/Handler.js \
 	src/layer/vector/SVGGroup.js \

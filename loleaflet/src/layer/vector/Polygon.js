@@ -42,7 +42,9 @@ L.Polygon = L.Polyline.extend({
 	},
 
 	_clipPoints: function () {
-		if (this.options.noClip) {
+		if (this.options.noClip || this._renderer instanceof L.SplitPanesSVG) {
+			// TODO: need some work to get this right and performant, especially in the case of
+			// a poly* spread across multiple split-panes.
 			this._parts = this._rings;
 			return;
 		}

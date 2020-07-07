@@ -17,6 +17,11 @@ L.Renderer = L.Layer.extend({
 		L.stamp(this);
 	},
 
+	setParentRenderer: function (parent) {
+		console.assert(parent !== this, 'self reference');
+		this._parentRenderer = parent;
+	},
+
 	onAdd: function () {
 		if (!this._container) {
 			this._initContainer(); // defined by renderer implementations
@@ -26,7 +31,13 @@ L.Renderer = L.Layer.extend({
 			}
 		}
 
-		this.getPane().appendChild(this._container);
+		if (this._parentRenderer) {
+			this._parentRenderer.getContainer().appendChild(this._container);
+		}
+		else {
+			this.getPane().appendChild(this._container);
+		}
+
 		this._update();
 	},
 
@@ -53,12 +64,41 @@ L.Renderer = L.Layer.extend({
 
 	_update: function () {
 		// update pixel bounds of renderer container (for positioning/sizing/clipping later)
+		if (this._parentRenderer) {
+			var posBounds = this._parentRenderer.getChildPosBounds(this);
+			this._position = posBounds.position;
+			this._bounds = posBounds.bounds;
+			return;
+		}
+
 		var p = this.options.padding,
 		    size = this._map.getSize(),
-		    min = this._map.containerPointToLayerPoint(size.multiplyBy(-p)).round();
+		    min = this._map.containerPointToLayerPointIgnoreSplits(size.multiplyBy(-p)).round();
 
 		this._bounds = new L.Bounds(min, min.add(size.multiplyBy(1 + p * 2)).round());
-	}
+		this._position = this._bounds.min;
+	},
+
+	getContainer: function () {
+		return this._container;
+	},
+
+	getBounds: function () {
+		return this._bounds;
+	},
+
+	intersectsBounds: function (pxBounds) {
+		return this._bounds.intersects(pxBounds);
+	},
+
+	addContainerClass: function (className) {
+		L.DomUtil.addClass(this._container, className);
+	},
+
+	removeContainerClass: function (className) {
+		L.DomUtil.removeClass(this._container, className);
+	},
+
 });
 
 
@@ -68,8 +108,16 @@ L.Map.include({
 		var renderer = layer.options.renderer || this._getPaneRenderer(layer.options.pane) || this.options.renderer || this._renderer;
 
 		if (!renderer) {
-			renderer = this._renderer = (L.SVG && L.svg()) || (L.Canvas && L.canvas());
+			if (this._splitPanesContext) {
+				renderer = this._renderer = (L.SVG && L.SplitPanesSVG && L.splitPanesSVG()) ||
+					(L.Canvas && L.SplitPanesCanvas && L.splitPanesCanvas());
+			}
+			else {
+				renderer = this._renderer = (L.SVG && L.svg()) || (L.Canvas && L.canvas());
+			}
 		}
+
+		console.assert(renderer, 'Could create a renderer!');
 
 		if (!this.hasLayer(renderer)) {
 			this.addLayer(renderer);
@@ -84,9 +132,18 @@ L.Map.include({
 
 		var renderer = this._paneRenderers[name];
 		if (renderer === undefined) {
-			renderer = (L.SVG && L.svg({pane: name})) || (L.Canvas && L.canvas({pane: name}));
+			if (this._splitPanesContext) {
+				renderer = (L.SVG && L.SplitPanesSVG && L.splitPanesSVG({pane: name})) ||
+					(L.Canvas && L.SplitPanesCanvas && L.splitPanesCanvas({pane: name}));
+			}
+			else {
+				renderer = (L.SVG && L.svg({pane: name})) || (L.Canvas && L.canvas({pane: name}));
+			}
+
+			console.assert(renderer, 'Could create a renderer!');
 			this._paneRenderers[name] = renderer;
 		}
+
 		return renderer;
 	}
 });

@@ -17,11 +17,12 @@ L.SVG = L.Renderer.extend({
 
 		L.Renderer.prototype._update.call(this);
 
-		var b = this._bounds,
-		    size = b.getSize(),
-		    container = this._container;
+		var b = this._bounds;
+		var size = b.getSize();
+		var position = this._position;
+		var container = this._container;
 
-		L.DomUtil.setPosition(container, b.min);
+		L.DomUtil.setPosition(container, position);
 
 		// set size of svg-container if changed
 		if (!this._svgSize || !this._svgSize.equals(size)) {
@@ -31,14 +32,15 @@ L.SVG = L.Renderer.extend({
 		}
 
 		// movement: update container viewBox so that we don't have to change coordinates of individual layers
-		L.DomUtil.setPosition(container, b.min);
+		L.DomUtil.setPosition(container, position);
 		container.setAttribute('viewBox', [b.min.x, b.min.y, size.x, size.y].join(' '));
 	},
 
 	// methods below are called by vector layers implementations
 
 	_initPath: function (layer) {
-		var path = layer._path = L.SVG.create('path');
+		var path = L.SVG.create('path');
+		layer.addPathNode(path, this);
 
 		if (layer.options.className) {
 			L.DomUtil.addClass(path, layer.options.className);
@@ -57,7 +59,7 @@ L.SVG = L.Renderer.extend({
 	},
 
 	_initGroup: function (layer) {
-		layer._path = L.SVG.create('g');
+		layer.addPathNode(L.SVG.create('g'), this);
 	},
 
 	_fireMouseEvent: function (e) {
@@ -77,21 +79,21 @@ L.SVG = L.Renderer.extend({
 	},
 
 	_addGroup: function (layer) {
-		this._container.appendChild(layer._path);
+		this._container.appendChild(layer.getPathNode(this));
 	},
 
 	_addPath: function (layer) {
-		this._container.appendChild(layer._path);
-		layer.addInteractiveTarget(layer._path);
+		this._container.appendChild(layer.getPathNode(this));
+		layer.addInteractiveTarget(layer.getPathNode(this));
 	},
 
 	_removeGroup: function (layer) {
-		L.DomUtil.remove(layer._path);
+		L.DomUtil.remove(layer.getPathNode(this));
 	},
 
 	_removePath: function (layer) {
-		L.DomUtil.remove(layer._path);
-		layer.removeInteractiveTarget(layer._path);
+		L.DomUtil.remove(layer.getPathNode(this));
+		layer.removeInteractiveTarget(layer.getPathNode(this));
 	},
 
 	_updatePath: function (layer) {
@@ -100,7 +102,7 @@ L.SVG = L.Renderer.extend({
 	},
 
 	_updateStyle: function (layer) {
-		var path = layer._path,
+		var path = layer.getPathNode(this),
 		    options = layer.options;
 
 		if (!path) { return; }
@@ -158,16 +160,16 @@ L.SVG = L.Renderer.extend({
 	},
 
 	_setPath: function (layer, path) {
-		layer._path.setAttribute('d', path);
+		layer.getPathNode(this).setAttribute('d', path);
 	},
 
 	// SVG does not have the concept of zIndex so we resort to changing the DOM order of elements
 	_bringToFront: function (layer) {
-		L.DomUtil.toFront(layer._path);
+		L.DomUtil.toFront(layer.getPathNode(this));
 	},
 
 	_bringToBack: function (layer) {
-		L.DomUtil.toBack(layer._path);
+		L.DomUtil.toBack(layer.getPathNode(this));
 	}
 });
 
