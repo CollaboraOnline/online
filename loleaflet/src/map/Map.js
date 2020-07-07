@@ -504,10 +504,10 @@ L.Map = L.Evented.extend({
 	setZoomAround: function (latlng, zoom, options) {
 		var scale = this.getZoomScale(zoom),
 		    viewHalf = this.getSize().divideBy(2),
-		    containerPoint = latlng instanceof L.Point ? latlng : this.latLngToContainerPoint(latlng),
+		    containerPoint = latlng instanceof L.Point ? latlng : this.latLngToContainerPointIgnoreSplits(latlng),
 
 		    centerOffset = containerPoint.subtract(viewHalf).multiplyBy(1 - 1 / scale),
-		    newCenter = this.containerPointToLatLng(viewHalf.add(centerOffset));
+		    newCenter = this.containerPointToLatLngIgnoreSplits(viewHalf.add(centerOffset));
 
 		return this.setView(newCenter, zoom, {zoom: options});
 	},
@@ -913,16 +913,72 @@ L.Map = L.Evented.extend({
 	},
 
 	containerPointToLayerPoint: function (point) { // (Point)
+		if (!this._splitPanesContext) {
+			return this.containerPointToLayerPointIgnoreSplits(point);
+		}
+		var splitPos = this._splitPanesContext.getSplitPos();
+		var pixelOrigin = this.getPixelOrigin();
+		var mapPanePos = this._getMapPanePos();
+		var result = L.point(point);
+		if (point.x <= splitPos.x) {
+			result.x -= pixelOrigin.x;
+		}
+		else {
+			result.x -= mapPanePos.x;
+		}
+
+		if (point.y <= splitPos.y) {
+			result.y -= pixelOrigin.y;
+		}
+		else {
+			result.y -= mapPanePos.y;
+		}
+
+		return result;
+	},
+
+	containerPointToLayerPointIgnoreSplits: function (point) { // (Point)
 		return L.point(point).subtract(this._getMapPanePos());
 	},
 
 	layerPointToContainerPoint: function (point) { // (Point)
+
+		if (!this._splitPanesContext) {
+			return this.layerPointToContainerPointIgnoreSplits(point);
+		}
+
+		var splitPos = this._splitPanesContext.getSplitPos();
+		var pixelOrigin = this.getPixelOrigin();
+		var mapPanePos = this._getMapPanePos();
+		var result = L.point(point)._add(pixelOrigin);
+
+		if (result.x > splitPos.x) {
+			result.x -= (pixelOrigin.x - mapPanePos.x);
+		}
+
+		if (result.y > splitPos.y) {
+			result.y -= (pixelOrigin.y - mapPanePos.y);
+		}
+
+		return result;
+	},
+
+	layerPointToContainerPointIgnoreSplits: function (point) { // (Point)
 		return L.point(point).add(this._getMapPanePos());
 	},
 
 	containerPointToLatLng: function (point) {
 		var layerPoint = this.containerPointToLayerPoint(L.point(point));
 		return this.layerPointToLatLng(layerPoint);
+	},
+
+	containerPointToLatLngIgnoreSplits: function (point) {
+		var layerPoint = this.containerPointToLayerPointIgnoreSplits(L.point(point));
+		return this.layerPointToLatLng(layerPoint);
+	},
+
+	latLngToContainerPointIgnoreSplits: function (latlng) {
+		return this.layerPointToContainerPointIgnoreSplits(this.latLngToLayerPoint(L.latLng(latlng)));
 	},
 
 	latLngToContainerPoint: function (latlng) {
@@ -1624,7 +1680,7 @@ L.Map = L.Evented.extend({
 
 	// layer point of the current center
 	_getCenterLayerPoint: function () {
-		return this.containerPointToLayerPoint(this.getSize()._divideBy(2));
+		return this.containerPointToLayerPointIgnoreSplits(this.getSize()._divideBy(2));
 	},
 
 	// offset of the specified place to the current center in pixels
