@@ -189,7 +189,7 @@ L.Control.Notebookbar = L.Control.extend({
 				var contexts = tabs[tab].context.split('|');
 				for (var context in contexts) {
 					if (contexts[context] === event.context) {
-						this.selectedTab(tabs[tab].name);
+						$('#' + tabs[tab].name).click();
 					}
 				}
 			}
