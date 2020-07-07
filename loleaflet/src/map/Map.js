@@ -41,7 +41,8 @@ L.Map = L.Evented.extend({
 		tileHeightTwips: window.tileSize * 15,
 		urlPrefix: 'lool',
 		wopiSrc: '',
-		cursorURL: L.LOUtil.getURL('cursors')
+		cursorURL: L.LOUtil.getURL('cursors'),
+		backgroundLayerEnabled: true,
 	},
 
 	// Control.UIManager instance, set in main.js

@@ -952,8 +952,11 @@ L.Socket = L.Class.extend({
 					tileHeightTwips: tileHeightTwips,
 					docType: command.type
 				});
-				if (!this._map.options.backgroundLayer) {
-					this._map.options.backgroundLayer = new L.CalcBackground().addTo(this._map);
+
+				this._map.options.backgroundLayerEnabled = !(docLayer instanceof L.CanvasTileLayer);
+
+				if (this._map.options.backgroundLayerEnabled) {
+					docLayer.backgroundLayer = new L.CalcBackground().addTo(this._map);
 					(new L.CalcGridLines()).addTo(this._map);
 				}
 			}
