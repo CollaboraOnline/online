@@ -1001,3 +1001,22 @@ input.clipboard {
 	top: 0;
 	z-index: 9;
 	}
+
+.leaflet-pane-splitter {
+	cursor:grab;
+	stroke: #e0e0e0;
+	fill: #e0e0e0;
+	opacity: 1;
+	}
+
+.splitter-hidden {
+	opacity: 0.6;
+	stroke: #eeeeee;
+	fill: #eeeeee;
+	}
+
+path.leaflet-pane-splitter:hover {
+	opacity: 1 !important;
+	stroke: #cdcdcd;
+	fill: #cdcdcd;
+	}

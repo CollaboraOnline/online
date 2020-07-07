@@ -231,6 +231,7 @@ LOLEAFLET_JS =\
 	src/geometry/PolyUtil.js \
 	src/layer/vector/Polygon.js \
 	src/layer/vector/Rectangle.js \
+	src/layer/vector/SplitterLine.js \
 	src/layer/vector/CircleMarker.js \
 	src/layer/vector/Circle.js \
 	src/layer/vector/SVG.js \

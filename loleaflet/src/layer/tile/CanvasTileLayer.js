@@ -1329,4 +1329,34 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._map._socket.sendMessage('tileprocessed tile=' + tileID);
 	},
 
+	updateHorizPaneSplitter: function () {
+
+		var map = this._map;
+
+		if (!this._xSplitter) {
+			this._xSplitter = new L.SplitterLine(
+				map, { isHoriz: true });
+
+			map.addLayer(this._xSplitter);
+		}
+		else {
+			this._xSplitter.update();
+		}
+	},
+
+	updateVertPaneSplitter: function () {
+
+		var map = this._map;
+
+		if (!this._ySplitter) {
+			this._ySplitter = new L.SplitterLine(
+				map, { isHoriz: false });
+
+			map.addLayer(this._ySplitter);
+		}
+		else {
+			this._ySplitter.update();
+		}
+	},
+
 });
