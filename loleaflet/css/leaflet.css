@@ -7,6 +7,7 @@
 .leaflet-tile-container,
 .leaflet-map-pane svg,
 .leaflet-map-pane canvas,
+.leaflet-canvas-container canvas
 .leaflet-zoom-box,
 .leaflet-image-layer,
 .leaflet-layer {
@@ -992,4 +993,11 @@ input.clipboard {
 	border-radius: 2px;
 	top: 24px;
 	color: white;
+	}
+
+.leaflet-canvas-container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 9;
 	}

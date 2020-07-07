@@ -201,6 +201,7 @@ LOLEAFLET_JS =\
 	src/layer/Layer.js \
 	src/layer/tile/GridLayer.js \
 	src/layer/tile/TileLayer.js \
+	src/layer/tile/CanvasTileLayer.js \
 	src/layer/SplitPanesContext.js \
 	src/layer/tile/TileLayer.TableOverlay.js \
 	src/layer/ObjectFocusDarkOverlay.js \
