@@ -72,23 +72,17 @@ L.CalcGridLines = L.LayerGroup.extend({
 	// Redraw col/row lines whenever new information about them is available.
 	// One websocket message might have info about cols, rows, or both
 	onUpdate: function onUpdate(ev) {
-		var ticks;
+		var headerInfo, pos;
 
-		// Aux stuff to scale twips from the websocket message
-		// into map coordinate units
+		// Aux stuff to convert css pixels to map coordinate units
 		var pixelToMapUnitRatio = this._map.options.crs.scale(this._map.getZoom());
 
-		var colDataInEvent = ev.data && ev.data.columns && ev.data.columns.length;
-		var rowDataInEvent = ev.data && ev.data.rows && ev.data.rows.length;
-
-		if (colDataInEvent || ev.updatecolumns) {
-			var columnsData = colDataInEvent ? ev.data.columns : undefined;
-			var columnsGeometry = colDataInEvent ? undefined : this._map._docLayer.sheetGeometry.getColumnsGeometry();
-			ticks = new L.Control.Header.GapTickMap(this._map, columnsData, columnsGeometry);
+		if (ev.updatecolumns) {
+			headerInfo = new L.Control.Header.HeaderInfo(this._map, true /* isCol */);
 			this._colLines.clearLayers();
 
-			ticks.forEachTick(function(idx, pos) {
-				pos /= pixelToMapUnitRatio;
+			headerInfo.forEachElement(function(columnData) {
+				pos = headerInfo.headerToDocPos(columnData.pos) / pixelToMapUnitRatio;
 				this._colLines.addLayer(
 					L.polyline([[[ L.Util.MIN_SAFE_INTEGER, pos ],[ L.Util.MAX_SAFE_INTEGER, pos ]]],
 						this.options
@@ -97,14 +91,12 @@ L.CalcGridLines = L.LayerGroup.extend({
 			}.bind(this));
 		}
 
-		if (rowDataInEvent || ev.updaterows) {
-			var rowsData = rowDataInEvent ? ev.data.rows : undefined;
-			var rowsGeometry = rowDataInEvent ? undefined : this._map._docLayer.sheetGeometry.getRowsGeometry();
-			ticks = new L.Control.Header.GapTickMap(this._map, rowsData, rowsGeometry);
+		if (ev.updaterows) {
+			headerInfo = new L.Control.Header.HeaderInfo(this._map, false /* isCol */);
 			this._rowLines.clearLayers();
 
-			ticks.forEachTick(function(idx, pos) {
-				pos /= pixelToMapUnitRatio;
+			headerInfo.forEachElement(function(rowData) {
+				pos = headerInfo.headerToDocPos(rowData.pos) / pixelToMapUnitRatio;
 				this._rowLines.addLayer(
 					// Note that y-coordinates are inverted: Leaflet's CRS.Simple assumes
 					// down = negative latlngs, whereas loolkit assumes down = positive twips

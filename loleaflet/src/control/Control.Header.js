@@ -172,17 +172,17 @@ L.Control.Header = L.Control.extend({
 	clearSelection: function () {
 		if (this._selection.start === -1 && this._selection.end === -1)
 			return;
-		var start = (this._selection.start < 1) ? 1 : this._selection.start;
-		var end = this._selection.end + 1;
+		var start = (this._selection.start < 1) ? 0 : this._selection.start;
+		var end = this._headerInfo.getNextIndex(this._selection.end);
 
-		for (var i=start; i<end; i++) {
+		for (var i = start; i < end; i = this._headerInfo.getNextIndex(i)) {
 			if (i === this._current) {
 				// after clearing selection, we need to select the header entry for the current cursor position,
 				// since we can't be sure that the selection clearing is due to click on a cell
 				// different from the one where the cursor is already placed
-				this.select(this._tickMap.getGap(i), true);
+				this.select(this._headerInfo.getElementData(i), true);
 			} else {
-				this.unselect(this._tickMap.getGap(i));
+				this.unselect(this._headerInfo.getElementData(i));
 			}
 		}
 
@@ -193,8 +193,11 @@ L.Control.Header = L.Control.extend({
 	// selects the new set of rows/cols.
 	// Start and end are given in pixels absolute to the document
 	updateSelection: function(start, end) {
-		if (!this._tickMap)
+		if (!this._headerInfo)
 			return;
+
+		start = this._headerInfo.docToHeaderPos(start);
+		end = this._headerInfo.docToHeaderPos(end);
 
 		var x0 = 0, x1 = 0;
 		var itStart = -1, itEnd = -1;
@@ -202,16 +205,16 @@ L.Control.Header = L.Control.extend({
 		// if the start selection position is above/on the left of the first header entry,
 		// but the end selection position is below/on the right of it
 		// then we set the start selected entry to the first header entry.
-		var entry = this._tickMap.getGap(this._tickMap.getMinTickIdx() + 1);
+		var entry = this._headerInfo.getElementData(this._headerInfo.getMinIndex());
 		if (entry) {
 			x0 = entry.pos - entry.size;
 			if (start < x0 && end > x0) {
-				itStart = 1;
+				itStart = 0;
 			}
 		}
 
-		this._tickMap.forEachGap((function(entry) {
-			x0 = entry.start;
+		this._headerInfo.forEachElement((function(entry) {
+			x0 = entry.pos - entry.size;
 			x1 = entry.pos;
 			if (start < x1 && end > x0) {
 				this.select(entry, false);
@@ -221,7 +224,7 @@ L.Control.Header = L.Control.extend({
 			} else {
 				this.unselect(entry);
 				if (itStart !== -1 && itEnd === -1) {
-					itEnd = entry.index - 1;
+					itEnd = this._headerInfo.getPreviousIndex(entry.index);
 				}
 			}
 		}).bind(this));
@@ -229,7 +232,7 @@ L.Control.Header = L.Control.extend({
 		// if end is greater than the last fetched header position set itEnd to the max possible value
 		// without this hack selecting a whole row and then a whole column (or viceversa) leads to an incorrect selection
 		if (itStart !== -1 && itEnd === -1) {
-			itEnd = this._tickMap.getMaxTickIdx() - 1;
+			itEnd = this._headerInfo.getMaxIndex();
 		}
 
 		this._selection.start = itStart;
@@ -240,24 +243,24 @@ L.Control.Header = L.Control.extend({
 	// Called whenever the cell cursor is in a cell corresponding to the cursorPos-th
 	// column/row.
 	updateCurrent: function (cursorPos, slim) {
-		if (!this._tickMap) {return;}
+		if (!this._headerInfo) {return;}
 
 		if (cursorPos < 0) {
-			this.unselect(this._tickMap.getGap(this._current));
+			this.unselect(this._headerInfo.getElementData(this._current));
 			this._current = -1;
 			return;
 		}
 
-		var prevEntry = cursorPos > 0 ? this._tickMap.getGap(cursorPos - 1) : null;
+		var prevEntry = cursorPos > 0 ? this._headerInfo.getPreviousIndex(cursorPos) : null;
 		var zeroSizeEntry = slim && prevEntry && prevEntry.size === 0;
 
-		var entry = this._tickMap.getGap(cursorPos);
+		var entry = this._headerInfo.getElementData(cursorPos);
 		if (this._selection.start === -1 && this._selection.end === -1) {
 			// when a whole row (column) is selected the cell cursor is moved to the first column (row)
 			// but this action should not cause to select/unselect anything, on the contrary we end up
 			// with all column (row) header entries selected but the one where the cell cursor was
 			// previously placed
-			this.unselect(this._tickMap.getGap(this._current));
+			this.unselect(this._headerInfo.getElementData(this._current));
 			// no selection when the cell cursor is slim
 			if (entry && !zeroSizeEntry)
 				this.select(entry, true);
@@ -280,22 +283,23 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_entryAtPoint: function(point) {
-		if (!this._tickMap)
+		if (!this._headerInfo)
 			return false;
 
 		var position = this._getParallelPos(point);
-		position = position - this._position;
 
 		var that = this;
 		var result = null;
-		this._tickMap.forEachGap(function(gap) {
-			if (position >= gap.start && position < gap.end) {
-				var resizeAreaStart = Math.max(gap.start, gap.end - 3);
-				if (that.isHeaderSelected(gap.index)) {
-					resizeAreaStart = gap.end - that._resizeHandleSize;
+		this._headerInfo.forEachElement(function(entry) {
+			var end = entry.pos;
+			var start = end - entry.size;
+			if (position >= start && position < end) {
+				var resizeAreaStart = Math.max(start, end - 3);
+				if (that.isHeaderSelected(entry.index)) {
+					resizeAreaStart = end - that._resizeHandleSize;
 				}
 				var isMouseOverResizeArea = (position > resizeAreaStart);
-				result = {entry: gap, hit: isMouseOverResizeArea};
+				result = {entry: entry, hit: isMouseOverResizeArea};
 				return true;
 			}
 		});
@@ -325,6 +329,7 @@ L.Control.Header = L.Control.extend({
 		this._start = new L.Point(rectangle.left, rectangle.top);
 		this._offset = new L.Point(rectangle.right - event.center.x, rectangle.bottom - event.center.y);
 		this._item = target;
+		this._dragEntry = result.entry;
 		this.onDragStart(this._item, this._start, this._offset, {clientX: event.center.x, clientY: event.center.y});
 	},
 
@@ -337,6 +342,7 @@ L.Control.Header = L.Control.extend({
 		L.DomUtil.enableTextSelection();
 
 		this.onDragEnd(this._item, this._start, this._offset, {clientX: event.center.x, clientY: event.center.y});
+		this._dragEntry = null;
 
 		this._mouseOverEntry = null;
 		this._item = this._start = this._offset = null;
@@ -402,7 +408,7 @@ L.Control.Header = L.Control.extend({
 			entry = result.entry;
 		}
 
-		if (mouseOverIndex && (!this._mouseOverEntry || mouseOverIndex !== this._mouseOverEntry.index)) {
+		if (typeof mouseOverIndex === 'number' && (!this._mouseOverEntry || mouseOverIndex !== this._mouseOverEntry.index)) {
 			var mouseOverIsCurrent = false;
 			if (this._mouseOverEntry != null) {
 				mouseOverIsCurrent = (this._mouseOverEntry.index == this._current);
@@ -456,8 +462,8 @@ L.Control.Header = L.Control.extend({
 		if (!group)
 			return false;
 
-		var pos = this._getParallelPos(this._mouseEventToCanvasPos(this._canvas, e));
-		pos = pos - this._position;
+		var pos = this._headerInfo.headerToDocPos(
+			this._getParallelPos(this._mouseEventToCanvasPos(this._canvas, e)));
 		if (group.startPos < pos && pos < group.startPos + this._groupHeadSize) {
 			this._updateOutlineState(/*isColumnOutline: */ this._isColumn, group);
 			return true;
@@ -474,8 +480,8 @@ L.Control.Header = L.Control.extend({
 		if (!group && !group.hidden)
 			return false;
 
-		var pos = this._getParallelPos(this._mouseEventToCanvasPos(this._canvas, e));
-		pos = pos - this._position;
+		var pos = this._headerInfo.headerToDocPos(
+			this._getParallelPos(this._mouseEventToCanvasPos(this._canvas, e)));
 		if (group.startPos + this._groupHeadSize < pos && pos < group.endPos) {
 			this._updateOutlineState(/*isColumnOutline: */ this._isColumn, group);
 			return true;
@@ -525,6 +531,7 @@ L.Control.Header = L.Control.extend({
 		this._start = new L.Point(rect.left, rect.top);
 		this._offset = new L.Point(rect.right - e.clientX, rect.bottom - e.clientY);
 		this._item = target;
+		this._dragEntry = this._mouseOverEntry;
 
 		this.onDragStart(this._item, this._start, this._offset, e);
 	},
@@ -561,6 +568,7 @@ L.Control.Header = L.Control.extend({
 
 		this._item = this._start = this._offset = null;
 		this._dragging = false;
+		this._dragEntry = null;
 	},
 
 	_twipsToPixels: function (twips) {
@@ -771,165 +779,208 @@ L.Control.Header = L.Control.extend({
 L.Control.Header.rowHeaderWidth = undefined;
 L.Control.Header.colHeaderHeight = undefined;
 
-/*
- * GapTickMap is a data structure for handling the dimensions of each
- * column/row in the column/row header.
- *
- * A "tick" is the position of the boundary between two cols/rows, a "gap" is
- * the space between two ticks - the position and width/height of a col/row.
- *
- * Data about ticks is 0-indexed: the first tick (top of row 1 / left of column A) is 0.
- *
- * Data about gaps is 1-indexed: The 1st gap (row 1 / column A) is 1, and spans
- * from tick 0 to tick 1.
- *
- * A GapTickMap is fed data coming from a 'viewrowcolumnheaders' UNO message.
- * That contains the position of some of the ticks. The rest of the tick positions
- * is extrapolated as follows:
- * - The first two ticks are assumed to be consecutive. This sets the size of
- *   the first gap.
- * - If the position of n-th tick is not explicit, then its position is the (n-1)-th tick plus
- *   the size of the last known gap.
- * - When a new tick position is defined, it resets the size of the last known gap
- *
- * All inputs received are given in tile pixels, and stored as such.
- * outputs are returned in CSS pixels.
- *
- * **NB.** CSS pixels are scaled (down) from the tile pixels by the a factor
- * from TileLayer - 2x for retina, 1x for non-retina.
- *
- * **NB.** twip to pixel mapping is made non-obvious by the need to ensure that
- * there are no cumulative rounding errors from TWIP heights to pixels. We have to
- * match the core here, so we just use pixels.
- */
-L.Control.Header.GapTickMap = L.Class.extend({
+L.Control.Header.HeaderInfo = L.Class.extend({
 
-	initialize: function (map, ticks, dimensionGeometry) {
-
-		if (dimensionGeometry) {
-			// Until .uno:ViewRowColumnHeaders is not phased out, we need to live with
-			// GapTickMap datastructure to avoid an invasive refactoring.
-			// L.SheetGeometry and L.SheetDimension datastructures can directly provide
-			// position/size of any row/column intuitively without using unnecessary
-			// terminologies like (1-based) Gap and (0-based) Tick.
-			var dimrange = dimensionGeometry.getViewElementRange();
-			var start = Math.max(0, dimrange.start - 2);
-			var startData = dimensionGeometry.getElementData(start);
-			var startText = start ? start + 1 : 0;
-			var endText = Math.min(dimensionGeometry.getMaxIndex(), dimrange.end + 2) + 1;
-
-			this._minTickIdx = startText;
-			this._maxTickIdx = endText;
-			this._startOffset = start ? startData.startpos + startData.size : 0;
-			this._tilePixelScale = 1; // We already have everything in css px.
-
-			ticks = start ? [] : [0];
-			dimensionGeometry.forEachInRange(start,
-				this._maxTickIdx - 1, function (idx, data) {
-					ticks[idx + 1] = data.startpos + data.size;
-				});
-
-			this._ticks = ticks;
-
-			return;
-		}
-
-		var gapSize;
-		this._ticks = [];
-
-		// Sanitize input
-		var knownTicks = [];
-		for (var i in ticks) {
-			// The field in the input data struct is called "text" but it's the
-			// column/row index, as a string.
-			// Idem for "size": it's the tick position in pixels, as a string
-			knownTicks[ parseInt(ticks[i].text) ] = parseInt(ticks[i].size);
-		}
-
-		// This *assumes* the input is ordered - i.e. tick indexes only grow
-		this._minTickIdx = parseInt(ticks[0].text);
-		this._maxTickIdx = knownTicks.length - 1;
-		this._startOffset = parseInt(ticks[0].size);
-		this._tilePixelScale = map._docLayer._tilePixelScale;
-
-		for (var idx=this._minTickIdx; idx <= this._maxTickIdx; idx++) {
-
-			if (idx in knownTicks) {
-				this._ticks[idx] = knownTicks[idx];
-				gapSize = this._ticks[idx] - this._ticks[idx - 1];
-			} else {
-				if (isNaN(gapSize) || gapSize < 0) {
-					// This should never happen, unless data from the UNO message
-					// is not in strictly increasing order, or the first two ticks
-					// are not consecutive.
-					throw new Error('Malformed data for column/row sizes.');
-				}
-				this._ticks[idx] = this._ticks[idx - 1] + gapSize;
-			}
-		}
+	initialize: function (map, isCol) {
+		console.assert(map && isCol !== undefined, 'map and isCol required');
+		this._map = map;
+		this._isCol = isCol;
+		console.assert(this._map._docLayer.sheetGeometry, 'no sheet geometry data-structure found!');
+		var sheetGeom = this._map._docLayer.sheetGeometry;
+		this._dimGeom = this._isCol ? sheetGeom.getColumnsGeometry() : sheetGeom.getRowsGeometry();
+		this.update();
 	},
 
-	// Gets the position of the i-th tick (or `undefined` if the index falls outside).
-	getTick: function getTick(i) {
-		// to get CSS pixels we need to adjust for DPI scale
-		// since we render at full native pixel resolution &
-		// account in those units.
-		return this._ticks[i] / this._tilePixelScale;
+	update: function () {
+		var bounds = this._map.getPixelBounds();
+		var startPx = this._isCol ? bounds.getTopLeft().x : bounds.getTopLeft().y;
+		this._docVisStart = startPx;
+		var endPx = this._isCol ? bounds.getBottomRight().x : bounds.getBottomRight().y;
+		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'csspixels');
+		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'csspixels');
+		this._elements = [];
+
+		var splitPosContext = this._map.getSplitPanesContext();
+
+		this._hasSplits = false;
+		this._splitIndex = 0;
+		var splitPos = 0;
+
+		if (splitPosContext) {
+
+			splitPos = this._isCol ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y;
+			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'csspixels');
+
+			if (splitIndex) {
+				// Make sure splitPos is aligned to the cell boundary.
+				splitPos = this._dimGeom.getElementData(splitIndex).startpos;
+				this._splitPos = splitPos;
+				this._dimGeom.forEachInRange(0, splitIndex - 1,
+					function (idx, data) {
+						this._elements[idx] = {
+							index: idx,
+							pos: data.startpos + data.size, // end position on the header canvas
+							size: data.size,
+							origsize: data.size,
+						};
+					}.bind(this)
+				);
+
+				this._hasSplits = true;
+				this._splitIndex = splitIndex;
+
+				var freeStartPos = startPx + splitPos + 1;
+				var freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'csspixels');
+
+				startIdx = freeStartIndex;
+			}
+		}
+
+		// first free index
+		var dataFirstFree = this._dimGeom.getElementData(startIdx);
+		var firstFreeEnd = dataFirstFree.startpos + dataFirstFree.size - startPx;
+		var firstFreeStart = splitPos;
+		var firstFreeSize = Math.max(0, firstFreeEnd - firstFreeStart);
+		this._elements[startIdx] = {
+			index: startIdx,
+			pos: firstFreeEnd, // end position on the header canvas
+			size: firstFreeSize,
+			origsize: dataFirstFree.size,
+		};
+
+		this._dimGeom.forEachInRange(startIdx + 1,
+			endIdx, function (idx, data) {
+				var startpos = data.startpos - startPx;
+				var endpos = startpos + data.size;
+				var size = endpos - startpos;
+				this._elements[idx] = {
+					index: idx,
+					pos: endpos, // end position on the header canvas
+					size: size,
+					origsize: size,
+				};
+			}.bind(this));
+
+		this._startIndex = startIdx;
+		this._endIndex = endIdx;
+	},
+
+	docToHeaderPos: function (docPos) {
+
+		if (!this._hasSplits) {
+			return docPos - this._docVisStart;
+		}
+
+		if (docPos <= this._splitPos) {
+			return docPos;
+		}
+
+		// max here is to prevent encroachment of the fixed pane-area.
+		return Math.max(docPos - this._docVisStart, this._splitPos);
+	},
+
+	headerToDocPos: function (hdrPos) {
+		if (!this._hasSplits) {
+			return hdrPos + this._docVisStart;
+		}
+
+		if (hdrPos <= this._splitPos) {
+			return hdrPos;
+		}
+
+		return hdrPos + this._docVisStart;
 	},
 
 	getStartOffset: function() {
-		return this._startOffset / this._tilePixelScale;
+		return 0;
 	},
 
-	getMinTickIdx: function() {
-		return this._minTickIdx;
-	},
-	getMaxTickIdx: function() {
-		return this._maxTickIdx;
+	isZeroSize: function (i) {
+		var elem = this._elements[i];
+		console.assert(elem, 'queried a non existent row/col in the header : ' + i);
+		return elem.size === 0;
 	},
 
-	// Gets the start and size of the i-th gap.
-	// returns an Object of the form {index: i, pos: start, size: width/height },
-	// or `undefined` if the index falls outside.
-	getGap: function getGap(i) {
-		var start = this.getTick(i-1);
-		var end = this.getTick(i);
+	hasSplits: function () {
+		return this._hasSplits;
+	},
 
-		if (start === undefined || end === undefined || isNaN(start) || isNaN(end)) {
-			return undefined;
+	// Index after the split.
+	getSplitIndex: function () {
+		return this._splitIndex;
+	},
+
+	getStartIndex: function () {
+		return this._startIndex;
+	},
+
+	getEndIndex: function () {
+		return this._endIndex;
+	},
+
+	getMinIndex: function () {
+		return this._hasSplits ? 0 : this._startIndex;
+	},
+
+	getMaxIndex: function () {
+		return this._endIndex;
+	},
+
+	getElementData: function (index) {
+		return this._elements[index];
+	},
+
+	getRowData: function (index) {
+		console.assert(!this._isCol, 'this is a column header instance!');
+		return this.getElementData(index);
+	},
+
+	getColData: function (index) {
+		console.assert(this._isCol, 'this is a row header instance!');
+		return this.getElementData(index);
+	},
+
+	getPreviousIndex: function (index) {
+
+		var prevIndex;
+		if (this._splitIndex && index === this._startIndex) {
+			prevIndex = this._splitIndex - 1;
+		}
+		else {
+			prevIndex = index - 1;
 		}
 
-		return {
-			index: i,
-			start: start,
-			end: end,
-			size: end - start,
-			pos: end,
-		};
+		return prevIndex;
 	},
 
-	// Returns true when the i-th gap has zero size.
-	isZeroSize: function isZeroSize(i) {
-		return this.getGap(i).size === 0;
-	},
+	getNextIndex: function (index) {
 
-	// Runs the given callback function for each tick
-	// The callback function receives two parameters: the tick index and the
-	// (interpolated) tick position
-	forEachTick: function forEachTick(callback) {
-		for (var idx=this._minTickIdx; idx <= this._maxTickIdx; idx++) {
-			if (callback(idx, this.getTick(idx)))
-				break;
+		var nextIndex;
+		if (this._splitIndex && index === (this._splitIndex - 1)) {
+			nextIndex = this._startIndex;
 		}
+		else {
+			nextIndex = index + 1;
+		}
+
+		return nextIndex;
 	},
 
-	// Runs the given callback function for each gap
-	// The callback receives one parameter, in the same format as the return value
-	// of getGap()
-	forEachGap: function forEachGap(callback) {
-		for (var idx=this._minTickIdx; idx < this._maxTickIdx; idx++) {
-			if (callback(this.getGap(idx+1)))
-				break;
+	forEachElement: function (callback) {
+		var idx;
+		if (this._hasSplits) {
+			for (idx = 0; idx < this._splitIndex; ++idx) {
+				console.assert(this._elements[idx], 'forEachElement failed');
+				if (callback(this._elements[idx])) {
+					return;
+				}
+			}
+		}
+		for (idx = this._startIndex; idx <= this._endIndex; ++idx) {
+			console.assert(this._elements[idx], 'forEachElement failed');
+			if (callback(this._elements[idx])) {
+				return;
+			}
 		}
 	},
 

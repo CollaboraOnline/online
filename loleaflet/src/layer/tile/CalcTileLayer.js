@@ -449,6 +449,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 		this._restrictDocumentSize();
 		this._replayPrintTwipsMsgs();
+		this._map.fire('zoomchanged');
 		this.refreshViewData();
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
@@ -719,6 +720,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 			this._pixelsToTwips(this._map.getSize()));
 		this._updateHeadersGridLines(undefined, true /* updateCols */,
 			true /* updateRows */);
+
+		this._map.fire('sheetgeometrychanged');
 	},
 
 	_onCommandValuesMsg: function (textMsg) {

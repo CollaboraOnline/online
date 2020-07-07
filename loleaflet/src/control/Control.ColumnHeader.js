@@ -11,6 +11,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
+		map.on('moveend zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
 		this._initialized = false;
 	},
 
@@ -159,6 +160,13 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._updateColumnHeader();
 	},
 
+	_updateCanvas: function () {
+		if (this._headerInfo) {
+			this._headerInfo.update();
+			this._redrawHeaders();
+		}
+	},
+
 	setScrollPosition: function (e) {
 		var position = -e.x;
 		this._position = Math.min(0, position);
@@ -186,7 +194,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_onUpdateCurrentColumn: function (e) {
-		var x = e.curX;
+		var x = e.curX - 1; // 1-based to 0-based.
 		var w = this._twipsToPixels(e.width);
 		var slim = w <= 1;
 		this.updateCurrent(x, slim);
@@ -201,10 +209,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		var ctx = this._canvasContext;
-		var content = this._colIndexToAlpha(entry.index);
+		var content = this._colIndexToAlpha(entry.index + 1);
 		var startOrt = this._canvasHeight - this._headerHeight;
-		var startPar = entry.pos - entry.size - this._startOffset;
-		var endPar = entry.pos - this._startOffset;
+		var startPar = entry.pos - entry.size;
+		var endPar = entry.pos;
 		var width = endPar - startPar;
 		var height = this._headerHeight;
 
@@ -218,7 +226,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		ctx.save();
 		var scale = L.getDpiScaleFactor();
 		ctx.scale(scale, scale);
-		ctx.translate(this._position + this._startOffset, 0);
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
@@ -279,14 +286,13 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var level = group.level;
 
 		var startOrt = spacing + (headSize + spacing) * level;
-		var startPar = group.startPos - this._startOffset;
+		var startPar = this._headerInfo.docToHeaderPos(group.startPos);
 		var height = group.endPos - group.startPos;
 
 		ctx.save();
 		var scale = L.getDpiScaleFactor();
 		ctx.scale(scale, scale);
 
-		ctx.translate(this._position + this._startOffset, 0);
 		// clip mask
 		ctx.beginPath();
 		ctx.rect(startPar, startOrt, height, headSize);
@@ -357,7 +363,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	getHeaderEntryBoundingClientRect: function (index) {
 		var entry = this._mouseOverEntry;
 		if (index) {
-			entry = this._tickMap.getGap(index);
+			entry = this._headerInfo.getColData(index);
 		}
 
 		if (!entry)
@@ -365,8 +371,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		var rect = this._canvas.getBoundingClientRect();
 
-		var colStart = entry.pos - entry.size + this._position;
-		var colEnd = entry.pos + this._position;
+		var colStart = entry.pos - entry.size;
+		var colEnd = entry.pos;
 
 		var left = rect.left + colStart;
 		var right = rect.left + colEnd;
@@ -408,11 +414,12 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 
 		var sheetGeometry = this._map._docLayer.sheetGeometry;
-		var columnsGeometry = sheetGeometry ? sheetGeometry.getColumnsGeometry() : undefined;
 
-		// create data structure for column widths
-		this._tickMap = new L.Control.Header.GapTickMap(this._map, columns, columnsGeometry);
-		this._startOffset = this._tickMap.getStartOffset();
+		if (!this._headerInfo) {
+			// create data structure for column widths
+			this._headerInfo = new L.Control.Header.HeaderInfo(this._map, true /* isCol */);
+			this._map._colHdr = this._headerInfo;
+		}
 
 		// setup conversion routine
 		this.converter = L.Util.bind(converter, context);
@@ -437,19 +444,23 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this.resize(this._headerHeight);
 		}
 
-		// Initial draw
-		this._tickMap.forEachGap(function(gap) {
-			this.drawHeaderEntry(gap, false);
-		}.bind(this));
-
-		// draw group controls
-		this.drawOutline();
+		this._redrawHeaders();
 
 		this.mouseInit(canvas);
 
 		if ($('.spreadsheet-header-columns').length > 0) {
 			$('.spreadsheet-header-columns').contextMenu(this._map._permission === 'edit');
 		}
+	},
+
+	_redrawHeaders: function () {
+		this._canvasContext.clearRect(0, 0, this._canvas.width, this._canvas.height);
+		this._headerInfo.forEachElement(function(elemData) {
+			this.drawHeaderEntry(elemData, false);
+		}.bind(this));
+
+		// draw group controls
+		this.drawOutline();
 	},
 
 	_colAlphaToNumber: function(alpha) {
@@ -482,7 +493,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var command = {
 			Col: {
 				type: 'unsigned short',
-				value: colNumber - 1
+				value: colNumber
 			},
 			Modifier: {
 				type: 'unsigned short',
@@ -549,11 +560,18 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_getVertLatLng: function (start, offset, e) {
-		var limit = this._map.mouseEventToContainerPoint({clientX: start.x, clientY: start.y});
+		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
+		var entryStart = this._dragEntry.pos - this._dragEntry.size;
+		var xdocpos = this._headerInfo.headerToDocPos(Math.max(drag.x, entryStart));
+		var ymin = this._map.getPixelBounds().min.y;
+		var ymax = ymin + size.y;
+		if (this._headerInfo.hasSplits()) {
+			ymin = 0;
+		}
 		return [
-			this._map.containerPointToLatLng(new L.Point(Math.max(limit.x, drag.x + offset.x), 0)),
-			this._map.containerPointToLatLng(new L.Point(Math.max(limit.x, drag.x + offset.x), this._map.getSize().y))
+			this._map.unproject(new L.Point(xdocpos, ymin)),
+			this._map.unproject(new L.Point(xdocpos, ymax)),
 		];
 	},
 
@@ -583,8 +601,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			var width = clickedColumn.size;
 			var column = clickedColumn.index;
 
-			if (this._tickMap.isZeroSize(clickedColumn.index + 1)) {
-				column += 1;
+			var nextCol = this._headerInfo.getNextIndex(clickedColumn.index);
+			if (this._headerInfo.isZeroSize(nextCol)) {
+				column = nextCol;
 				width = 0;
 			}
 
@@ -596,7 +615,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 					},
 					Column: {
 						type: 'unsigned short',
-						value: column
+						value: column + 1 // core expects 1-based index.
 					}
 				};
 
@@ -619,7 +638,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			var command = {
 				Col: {
 					type: 'unsigned short',
-					value: column - 1
+					value: column
 				},
 				Modifier: {
 					type: 'unsigned short',

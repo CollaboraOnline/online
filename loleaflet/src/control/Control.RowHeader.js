@@ -11,6 +11,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
+		map.on('moveend zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
 		this._initialized = false;
 	},
 
@@ -152,6 +153,13 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._map.sendUnoCommand('.uno:ShowRow');
 	},
 
+	_updateCanvas: function () {
+		if (this._headerInfo) {
+			this._headerInfo.update();
+			this._redrawHeaders();
+		}
+	},
+
 	setScrollPosition: function (e) {
 		var position = -e.y;
 		this._position = Math.min(0, position);
@@ -179,7 +187,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	_onUpdateCurrentRow: function (e) {
-		var y = e.curY;
+		var y = e.curY - 1; // 1-based to 0-based.
 		var h = this._twipsToPixels(e.height);
 		var slim = h <= 1;
 		this.updateCurrent(y, slim);
@@ -194,10 +202,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 			return;
 
 		var ctx = this._canvasContext;
-		var content = entry.index;
+		var content = entry.index + 1;
 		var startOrt = this._canvasWidth - this._headerWidth;
-		var startPar = entry.pos - entry.size - this._startOffset;
-		var endPar = entry.pos - this._startOffset;
+		var startPar = entry.pos - entry.size;
+		var endPar = entry.pos;
 		var height = endPar - startPar;
 		var width = this._headerWidth;
 
@@ -211,7 +219,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		ctx.save();
 		var scale = L.getDpiScaleFactor();
 		ctx.scale(scale, scale);
-		ctx.translate(0, this._position + this._startOffset);
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
@@ -268,14 +275,13 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var level = group.level;
 
 		var startOrt = spacing + (headSize + spacing) * level;
-		var startPar = group.startPos - this._startOffset;
+		var startPar = this._headerInfo.docToHeaderPos(group.startPos);
 		var height = group.endPos - group.startPos;
 
 		ctx.save();
 		var scale = L.getDpiScaleFactor();
 		ctx.scale(scale, scale);
 
-		ctx.translate(0, this._position + this._startOffset);
 		// clip mask
 		ctx.beginPath();
 		ctx.rect(startOrt, startPar, headSize, height);
@@ -347,15 +353,15 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var entry = this._mouseOverEntry;
 
 		if (index)
-			entry = this._tickMap.getGap(index);
+			entry = this._headerInfo.getRowData(index);
 
 		if (!entry)
 			return;
 
 		var rect = this._canvas.getBoundingClientRect();
 
-		var rowStart = entry.pos - entry.size + this._position;
-		var rowEnd = entry.pos + this._position;
+		var rowStart = entry.pos - entry.size;
+		var rowEnd = entry.pos;
 
 		var left = rect.left;
 		var right = rect.right;
@@ -397,11 +403,12 @@ L.Control.RowHeader = L.Control.Header.extend({
 		}
 
 		var sheetGeometry = this._map._docLayer.sheetGeometry;
-		var rowsGeometry = sheetGeometry ? sheetGeometry.getRowsGeometry() : undefined;
 
-		// create data structure for row heights
-		this._tickMap = new L.Control.Header.GapTickMap(this._map, rows, rowsGeometry);
-		this._startOffset = this._tickMap.getStartOffset();
+		if (!this._headerInfo) {
+			// create data structure for row heights
+			this._headerInfo = new L.Control.Header.HeaderInfo(this._map, false /* isCol */);
+			this._map._rowHdr = this._headerInfo;
+		}
 
 		// setup conversion routine
 		this.converter = L.Util.bind(converter, context);
@@ -426,13 +433,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this.resize(this._headerWidth);
 		}
 
-		// Initial draw
-		this._tickMap.forEachGap(function(gap) {
-			this.drawHeaderEntry(gap, false);
-		}.bind(this));
-
-		// draw group controls
-		this.drawOutline();
+		this._redrawHeaders();
 
 		this.mouseInit(canvas);
 
@@ -441,11 +442,21 @@ L.Control.RowHeader = L.Control.Header.extend({
 		}
 	},
 
+	_redrawHeaders: function () {
+		this._canvasContext.clearRect(0, 0, this._canvas.width, this._canvas.height);
+		this._headerInfo.forEachElement(function(elemData) {
+			this.drawHeaderEntry(elemData, false);
+		}.bind(this));
+
+		// draw group controls
+		this.drawOutline();
+	},
+
 	_selectRow: function(row, modifier) {
 		var command = {
 			Row: {
 				type: 'long',
-				value: row - 1
+				value: row
 			},
 			Modifier: {
 				type: 'unsigned short',
@@ -505,11 +516,18 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	_getHorzLatLng: function (start, offset, e) {
-		var limit = this._map.mouseEventToContainerPoint({clientX: start.x, clientY: start.y});
+		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
+		var entryStart = this._dragEntry.pos - this._dragEntry.size;
+		var ydocpos = this._headerInfo.headerToDocPos(Math.max(drag.y, entryStart));
+		var xmin = this._map.getPixelBounds().min.x;
+		var xmax = xmin + size.x;
+		if (this._headerInfo.hasSplits()) {
+			xmin = 0;
+		}
 		return [
-			this._map.containerPointToLatLng(new L.Point(0, Math.max(limit.y, drag.y + offset.y))),
-			this._map.containerPointToLatLng(new L.Point(this._map.getSize().x, Math.max(limit.y, drag.y + offset.y)))
+			this._map.unproject(new L.Point(xmin, ydocpos)),
+			this._map.unproject(new L.Point(xmax, ydocpos)),
 		];
 	},
 
@@ -539,8 +557,9 @@ L.Control.RowHeader = L.Control.Header.extend({
 			var height = clickedRow.size;
 			var row = clickedRow.index;
 
-			if (this._tickMap.isZeroSize(clickedRow.index + 1)) {
-				row += 1;
+			var nextRow = this._headerInfo.getNextIndex(clickedRow.index);
+			if (this._headerInfo.isZeroSize(nextRow)) {
+				row = nextRow;
 				height = 0;
 			}
 
@@ -552,7 +571,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 					},
 					Row: {
 						type: 'long',
-						value: row
+						value: row + 1 // core expects 1-based index.
 					}
 				};
 
@@ -574,7 +593,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			var command = {
 				Row: {
 					type: 'long',
-					value: row - 1
+					value: row
 				},
 				Modifier: {
 					type: 'unsigned short',
