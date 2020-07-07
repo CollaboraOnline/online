@@ -770,10 +770,13 @@ L.Clipboard = L.Class.extend({
 
 	_userAlreadyWarned: function (warning) {
 		var itemKey = warning;
-		if (!localStorage.getItem(itemKey)) {
-			localStorage.setItem(itemKey, '1');
+		var storage = localStorage;
+		if (storage && !storage.getItem(itemKey)) {
+			storage.setItem(itemKey, '1');
 			return false;
-		}
+		} else if (!storage)
+			return false;
+
 		return true;
 	},
 
