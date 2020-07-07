@@ -2962,40 +2962,13 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.dialog._updateTextSelection(inputBarId);
 			}
 			var mapBounds = this._map.getBounds();
-			if (!mapBounds.contains(this._cellCursor) && !this._cellCursorXY.equals(this._prevCellCursorXY)) {
-				var scrollX = 0, scrollY = 0;
-				if (onPgUpDn) {
-					var mapHalfHeight = (mapBounds.getNorth() - mapBounds.getSouth()) / 2;
-					var cellCursorOnPgUpDn = (this._cellCursorOnPgUp) ? this._cellCursorOnPgUp : this._cellCursorOnPgDn;
-
-					scrollY = this._cellCursor.getNorth() - cellCursorOnPgUpDn.getNorth();
-					if (this._cellCursor.getNorth() > mapBounds.getNorth() + scrollY) {
-						scrollY = (this._cellCursor.getNorth() - mapBounds.getNorth()) + mapHalfHeight;
-					} else if (this._cellCursor.getSouth() < mapBounds.getSouth() + scrollY) {
-						scrollY = (this._cellCursor.getNorth() - mapBounds.getNorth()) + mapHalfHeight;
-					}
-				}
-				else if (horizontalDirection !== 0 || verticalDirection != 0) {
-					var mapX = Math.abs(mapBounds.getEast() - mapBounds.getWest());
-					var cursorX = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest());
-					var spacingX = cursorX / 4.0;
-					var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
-
-					if (this._cellCursor.getWest() < mapBounds.getWest()) {
-						scrollX = this._cellCursor.getWest() - mapBounds.getWest() - spacingX;
-					} else if (cursorX < mapX && this._cellCursor.getEast() > mapBounds.getEast()) {
-						scrollX = this._cellCursor.getEast() - mapBounds.getEast() + spacingX;
-					}
-					if (this._cellCursor.getNorth() > mapBounds.getNorth()) {
-						scrollY = this._cellCursor.getNorth() - mapBounds.getNorth() + spacingY;
-					} else if (this._cellCursor.getSouth() < mapBounds.getSouth()) {
-						scrollY = this._cellCursor.getSouth() - mapBounds.getSouth() - spacingY;
-					}
-				}
-				if (scrollX !== 0 || scrollY !== 0) {
+			if (!this._cellCursorXY.equals(this._prevCellCursorXY)) {
+				var scroll = this._calculateScrollForNewCursor();
+				console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCursor returned wrong type');
+				if (scroll.lng !== 0 || scroll.lat !== 0) {
 					var newCenter = mapBounds.getCenter();
-					newCenter.lng += scrollX;
-					newCenter.lat += scrollY;
+					newCenter.lng += scroll.lng;
+					newCenter.lat += scroll.lat;
 					var center = this._map.project(newCenter);
 					center = center.subtract(this._map.getSize().divideBy(2));
 					center.x = Math.round(center.x < 0 ? 0 : center.x);

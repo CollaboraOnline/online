@@ -56,6 +56,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		map.on('AnnotationReply', this._onAnnotationReply, this);
 		map.on('AnnotationSave', this._onAnnotationSave, this);
+		map.on('splitposchanged', this._calcSplitCell, this);
 
 		map.uiManager.initializeSpecializedUI('spreadsheet');
 	},
@@ -68,6 +69,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	onAdd: function (map) {
+		this._switchSplitPanesContext();
 		map.addControl(L.control.tabs());
 		map.addControl(L.control.columnHeader());
 		map.addControl(L.control.rowHeader());
@@ -437,6 +439,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (!this.isHiddenPart(part)) {
 			this._clearMsgReplayStore();
+			this._switchSplitPanesContext();
 			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
 		}
 	},
@@ -449,6 +452,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 		}
 		this._restrictDocumentSize();
 		this._replayPrintTwipsMsgs();
+		this._updateSplitPos();
 		this._map.fire('zoomchanged');
 		this.refreshViewData();
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
@@ -721,7 +725,53 @@ L.CalcTileLayer = L.TileLayer.extend({
 		this._updateHeadersGridLines(undefined, true /* updateCols */,
 			true /* updateRows */);
 
+		this._updateSplitPos();
+
 		this._map.fire('sheetgeometrychanged');
+	},
+
+	_updateSplitPos: function () {
+		if (this._splitPanesContext) {
+			if (this._splitPanesContext._splitCell) {
+				var splitCell = this._splitPanesContext._splitCell;
+				var newSplitPos = this.sheetGeometry.getCellRect(splitCell.x, splitCell.y).min;
+				this._splitPanesContext.setSplitPos(newSplitPos.x, newSplitPos.y); // will update the splitters.
+			}
+			else {
+				// Can happen only on load.
+				this._splitPanesContext.alignSplitPos();
+				this._calcSplitCell();
+			}
+		}
+	},
+
+	_calcSplitCell: function () {
+
+		if (!this.sheetGeometry || !this._splitPanesContext) {
+			return;
+		}
+
+		this._splitPanesContext._splitCell =
+			this.sheetGeometry.getCellFromPos(this._splitPanesContext.getSplitPos(), 'csspixels');
+	},
+
+	_switchSplitPanesContext: function () {
+
+		if (!this.hasSplitPanesSupport()) {
+			return;
+		}
+
+		if (!this._splitPaneCache) {
+			this._splitPaneCache = {};
+		}
+
+		var spContext = this._splitPaneCache[this._selectedPart];
+		if (!spContext) {
+			spContext = new L.SplitPanesContext(this);
+		}
+
+		this._splitPanesContext = spContext;
+		this._map._splitPanesContext = spContext;
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -881,6 +931,69 @@ L.CalcTileLayer = L.TileLayer.extend({
 		return this._twipsToPixels(this._cellCursorTwips.getTopLeft());
 	},
 
+	_calculateScrollForNewCursor: function () {
+
+		var scroll = new L.LatLng(0, 0);
+
+		if (!this._cellCursor || this._isEmptyRectangle(this._cellCursor)) {
+			return scroll;
+		}
+
+		var map = this._map;
+		var paneRects = this._splitPanesContext ?
+			this._splitPanesContext.getPxBoundList() : undefined;
+
+		console.assert(paneRects === undefined || paneRects.length, 'number of panes cannot be zero!');
+
+		var paneRectsInLatLng = paneRects ? paneRects.map(function (pxBound) {
+			return new L.LatLngBounds(
+				map.unproject(pxBound.getTopLeft()),
+				map.unproject(pxBound.getBottomRight())
+			);
+		}) : [ map.getBounds() ];
+
+		var scrollNeeded = true;
+		for (var i = 0; i < paneRectsInLatLng.length; ++i) {
+			if (paneRectsInLatLng[i].contains(this._cellCursor)) {
+				scrollNeeded = false;
+				break;
+			}
+		}
+
+		if (!scrollNeeded) {
+			return scroll; // zero scroll.
+		}
+
+		var freePaneBounds = paneRectsInLatLng[paneRectsInLatLng.length - 1];
+		var splitPoint = map.unproject(this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0));
+
+		if (this._cellCursor.getEast() > splitPoint.lng) {
+
+			var freePaneWidth = Math.abs(freePaneBounds.getEast() - freePaneBounds.getWest());
+			var cursorWidth = Math.abs(this._cellCursor.getEast() - this._cellCursor.getWest());
+			var spacingX = cursorWidth / 4.0;
+
+			if (this._cellCursor.getWest() < freePaneBounds.getWest()) {
+				scroll.lng = this._cellCursor.getWest() - freePaneBounds.getWest() - spacingX;
+			}
+			else if (cursorWidth < freePaneWidth && this._cellCursor.getEast() > freePaneBounds.getEast()) {
+				scroll.lng = this._cellCursor.getEast() - freePaneBounds.getEast() + spacingX;
+			}
+		}
+
+		if (this._cellCursor.getSouth() < splitPoint.lat) {
+
+			var spacingY = Math.abs((this._cellCursor.getSouth() - this._cellCursor.getNorth())) / 4.0;
+			if (this._cellCursor.getNorth() > freePaneBounds.getNorth()) {
+				scroll.lat = this._cellCursor.getNorth() - freePaneBounds.getNorth() + spacingY;
+			}
+			else if (this._cellCursor.getSouth() < freePaneBounds.getSouth()) {
+				scroll.lat = this._cellCursor.getSouth() - freePaneBounds.getSouth() - spacingY;
+			}
+		}
+
+		return scroll;
+	},
 });
 
 L.MessageStore = L.Class.extend({
