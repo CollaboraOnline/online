@@ -139,6 +139,16 @@ L.Clipboard = L.Class.extend({
 		));
 	},
 
+	// put in the clipboard if copy is disabled
+	_getCopyDisabledHtml: function() {
+		var lang = 'en_US'; // FIXME: l10n
+		return this._substProductName(this._originWrapBody(
+		    '  <body lang="' + lang + '" dir="ltr">\n' +
+		    '    <p></p>\n' +
+		    '  </body>\n', true
+		));
+	},
+
 	_getMetaOrigin: function (html) {
 		var match = '<meta name="origin" content="';
 		var start = html.indexOf(match);
@@ -340,6 +350,9 @@ L.Clipboard = L.Class.extend({
 			return;
 		}
 
+		if (this._map['wopi'].DisableCopy)
+			return;
+
 		// Do we have a remote Online we can suck rich data from ?
 		if (meta !== '')
 		{
@@ -427,6 +440,9 @@ L.Clipboard = L.Class.extend({
 
 	_getHtmlForClipboard: function() {
 		var text;
+		if (this._map['wopi'].DisableCopy)
+			return this._getCopyDisabledHtml();
+
 		if (this._selectionType === 'complex' ||
 		    this._map._docLayer.hasGraphicSelection()) {
 			console.log('Copy/Cut with complex/graphical selection');
