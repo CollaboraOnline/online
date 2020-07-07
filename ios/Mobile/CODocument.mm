@@ -56,7 +56,14 @@ static std::atomic<unsigned> appDocIdCounter(1);
 
     fakeClientFd = fakeSocketSocket();
 
-    copyFileURL = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:[[[self fileURL] path] lastPathComponent]];
+    appDocId = appDocIdCounter++;
+    NSURL *copyFileDirectory = [[NSFileManager.defaultManager temporaryDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%d", appDocId]];
+    if (![NSFileManager.defaultManager createDirectoryAtURL:copyFileDirectory withIntermediateDirectories:YES attributes:nil error:nil]) {
+        LOG_ERR("Could not create directory " << [[copyFileDirectory path] UTF8String]);
+        return NO;
+    }
+
+    copyFileURL = [copyFileDirectory URLByAppendingPathComponent:[[[self fileURL] path] lastPathComponent]];
 
     NSError *error;
     [[NSFileManager defaultManager] removeItemAtURL:copyFileURL error:nil];
@@ -66,7 +73,6 @@ static std::atomic<unsigned> appDocIdCounter(1);
 
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-    appDocId = appDocIdCounter++;
     allocateDocumentDataForMobileAppDocId(appDocId).coDocument = self;
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[copyFileURL absoluteString]],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
