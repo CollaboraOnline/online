@@ -62,7 +62,8 @@ L.Cursor = L.Layer.extend({
 
 	update: function () {
 		if (this._container && this._map) {
-			var pos = this._map.latLngToLayerPoint(this._latlng).round();
+			var pos = this._map.latLngToContainerPoint(this._latlng).round();
+			pos = this._map.containerPointToLayerPointIgnoreSplits(pos);
 			this._setSize();
 			this._setPos(pos);
 		}
