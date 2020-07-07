@@ -2257,7 +2257,7 @@ void DocumentBroker::broadcastMessage(const std::string& message)
 {
     assertCorrectThread();
 
-    LOG_DBG("Broadcasting message [" << message << "] to all sessions.");
+    LOG_DBG("Broadcasting message [" << message << "] to all " << _sessions.size() <<  " sessions.");
     for (const auto& sessionIt : _sessions)
     {
         sessionIt.second->sendTextFrame(message);
