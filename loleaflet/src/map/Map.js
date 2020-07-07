@@ -1764,6 +1764,19 @@ L.Map = L.Evented.extend({
 			this.removeLayer(this.focusLayer);
 			this.focusLayer = null;
 		}
+	},
+
+	getSplitPanesContext: function () {
+		if (this._splitPanesContext) {
+			return this._splitPanesContext;
+		}
+
+		var docLayer = this._docLayer;
+		if (docLayer && typeof docLayer.getSplitPanesContext === 'function') {
+			this._splitPanesContext = docLayer.getSplitPanesContext();
+		}
+
+		return this._splitPanesContext;
 	}
 });
 

@@ -835,7 +835,49 @@ L.CalcTileLayer = L.TileLayer.extend({
 		});
 
 		return rectArray;
-	}
+	},
+
+	getSnapDocPosX: function (docPosX, unit) {
+		if (!this.options.sheetGeometryDataEnabled) {
+			return docPosX;
+		}
+
+		unit = unit || 'csspixels';
+
+		return this.sheetGeometry.getSnapDocPosX(docPosX, unit);
+	},
+
+	getSnapDocPosY: function (docPosY, unit) {
+		if (!this.options.sheetGeometryDataEnabled) {
+			return docPosY;
+		}
+
+		unit = unit || 'csspixels';
+
+		return this.sheetGeometry.getSnapDocPosY(docPosY, unit);
+	},
+
+	getSplitPanesContext: function () {
+		if (!this.hasSplitPanesSupport()) {
+			return undefined;
+		}
+
+		return this._splitPanesContext;
+	},
+
+	getMaxDocSize: function () {
+
+		if (this.sheetGeometry) {
+			return this.sheetGeometry.getSize('csspixels');
+		}
+
+		return this._twipsToPixels(new L.Point(this._docWidthTwips, this._docHeightTwips));
+	},
+
+	getCursorPos: function () {
+		return this._twipsToPixels(this._cellCursorTwips.getTopLeft());
+	},
+
 });
 
 L.MessageStore = L.Class.extend({
@@ -1125,6 +1167,26 @@ L.SheetGeometry = L.Class.extend({
 		var size = new L.Point(horizPosSize.size, vertPosSize.size);
 
 		return new L.Bounds(topLeft, topLeft.add(size));
+	},
+
+	getCellFromPos: function (pos, unit) {
+		console.assert(pos instanceof L.Point);
+		return new L.Point(
+			this._columns.getIndexFromPos(pos.x, unit),
+			this._rows.getIndexFromPos(pos.y, unit)
+		);
+	},
+
+	// Returns the start position of the column containing posX in the specified unit.
+	// unit must be one of 'csspixels', 'devpixels', 'tiletwips', 'printtwips'
+	getSnapDocPosX: function (posX, unit) {
+		return this._columns.getSnapPos(posX, unit);
+	},
+
+	// Returns the start position of the row containing posY in the specified unit.
+	// unit must be one of 'csspixels', 'devpixels', 'tiletwips', 'printtwips'
+	getSnapDocPosY: function (posY, unit) {
+		return this._rows.getSnapPos(posY, unit);
 	},
 
 	_testValidity: function (sheetGeomJSON, checkCompleteness) {
@@ -1592,6 +1654,60 @@ L.SheetDimension = L.Class.extend({
 
 		return posSize.startpos + posSize.size;
 	},
+
+	isUnitSupported: function (unitName) {
+		return (
+			unitName === 'csspixels' ||
+			unitName === 'devpixels' ||
+			unitName === 'tiletwips' ||
+			unitName === 'printtwips'
+		);
+	},
+
+	getSnapPos: function (pos, unit) {
+		console.assert(typeof pos === 'number', 'pos is not a number');
+		console.assert(this.isUnitSupported(unit), 'unit: ' + unit + ' is not supported');
+
+		var origUnit = unit;
+
+		if (unit === 'devpixels') {
+			pos = (pos * this._twipsPerCSSPixel) / this._devPixelsPerCssPixel;
+			unit = 'tiletwips';
+		}
+		else if (unit === 'csspixels') {
+			pos = pos * this._twipsPerCSSPixel;
+			unit = 'tiletwips';
+		}
+
+		console.assert(unit === 'tiletwips' || unit === 'printtwips', 'wrong unit assumption');
+		var result = (unit === 'tiletwips') ?
+			this._getSpanAndIndexFromTileTwipsPos(pos) :
+			this._getSpanAndIndexFromPrintTwipsPos(pos);
+
+		return this._getElementDataAnyFromSpanByIndex(result.index, result.span, origUnit).startpos;
+	},
+
+	getIndexFromPos: function (pos, unit) {
+		console.assert(typeof pos === 'number', 'pos is not a number');
+		console.assert(this.isUnitSupported(unit), 'unit: ' + unit + ' is not supported');
+
+		if (unit === 'devpixels') {
+			pos = (pos * this._twipsPerCSSPixel) / this._devPixelsPerCssPixel;
+			unit = 'tiletwips';
+		}
+		else if (unit === 'csspixels') {
+			pos = pos * this._twipsPerCSSPixel;
+			unit = 'tiletwips';
+		}
+
+		console.assert(unit === 'tiletwips' || unit === 'printtwips', 'wrong unit assumption');
+		var result = (unit === 'tiletwips') ?
+			this._getSpanAndIndexFromTileTwipsPos(pos) :
+			this._getSpanAndIndexFromPrintTwipsPos(pos);
+
+		return result.index;
+	},
+
 });
 
 L.SpanList = L.Class.extend({

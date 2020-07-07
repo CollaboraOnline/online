@@ -1303,7 +1303,33 @@ L.GridLayer = L.Layer.extend({
 			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), interval);
 			this._prefetchIdle = undefined;
 		}, this), idleTime);
-	}
+	},
+
+	getMaxDocSize: function () {
+		return undefined;
+	},
+
+	getSnapDocPosX: function (docPosPixX) {
+		return docPosPixX;
+	},
+
+	getSnapDocPosY: function (docPosPixY) {
+		return docPosPixY;
+	},
+
+	hasSplitPanesSupport: function () {
+		return false;
+	},
+
+	getSplitPanesContext: function () {
+		return undefined;
+	},
+
+	updateHorizPaneSplitter: function () {
+	},
+
+	updateVertPaneSplitter: function () {
+	},
 });
 
 L.gridLayer = function (options) {

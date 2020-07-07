@@ -3442,6 +3442,13 @@ L.TileLayer = L.GridLayer.extend({
 		return L.Bounds.parseArray(textMsg);
 	},
 
+	// Needed for the split-panes feature to determine the active split-pane.
+	// Needs to be implemented by the app specific TileLayer.
+	getCursorPos: function () {
+		console.error('No implementations available for getCursorPos!');
+		return new L.Point(0, 0);
+	},
+
 	_debugGetTimeArray: function() {
 		return {count: 0, ms: 0, best: Number.MAX_SAFE_INTEGER, worst: 0, date: 0};
 	},
