@@ -898,8 +898,11 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
 
         if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
         {
-            LOG_ERR("WOPI::GetFile failed with " << response.getStatus() << ' ' << response.getReason());
-            throw StorageConnectionException("WOPI::GetFile failed");
+            std::ostringstream oss;
+            Poco::StreamCopier::copyStream(rs, oss);
+            std::string responseString = oss.str();
+            LOG_ERR("WOPI::GetFile failed with " << response.getStatus() << ' ' << responseString);
+            throw StorageConnectionException("WOPI::GetFile failed: " + responseString);
         }
         else // Successful
         {

@@ -370,6 +370,13 @@ L.Socket = L.Class.extend({
 					errorMsg: commandresult['errorMsg']
 				};
 				this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
+			} else if (commandresult['command'] === 'load') {
+				postMessageObj = {
+					success: commandresult['success'],
+					result: commandresult['result'],
+					errorMsg: commandresult['errorMsg']
+				};
+				this._map.fire('postMessage', {msgId: 'Action_Load_Resp', args: postMessageObj});
 			}
 			return;
 		}

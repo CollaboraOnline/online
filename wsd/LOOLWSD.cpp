@@ -690,6 +690,20 @@ inline std::string getServiceURI(const std::string &sub, bool asAdmin = false)
 
 #endif
 
+void sendLoadResult(std::shared_ptr<ClientSession> clientSession, bool success,
+                    const std::string &errorMsg)
+{
+    const std::string result = success ? "" : "Error while loading document";
+    const std::string resultstr = success ? "true" : "false";
+    // Some sane limit, otherwise we get problems transfering this
+    // to the client with large strings (can be a whole webpage)
+    // Replace reserved characters
+    std::string errorMsgFormatted = LOOLProtocol::getAbbreviatedMessage(errorMsg);
+    errorMsgFormatted = Poco::translate(errorMsg, "\"", "'");
+    clientSession->sendMessage("commandresult: { \"command\": \"load\", \"success\": " + resultstr +
+                    ", \"result\": \"" + result + "\", \"errorMsg\": \"" + errorMsgFormatted  + "\"}");
+}
+
 } // anonymous namespace
 
 #endif // MOBILEAPP
@@ -3235,15 +3249,19 @@ private:
                                 // Users of development versions get just an info
                                 // when reaching max documents or connections
                                 LOOLWSD::checkSessionLimitsAndWarnClients();
+
+                                sendLoadResult(clientSession, true, "");
                             }
                             catch (const UnauthorizedRequestException& exc)
                             {
                                 LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
+                                sendLoadResult(clientSession, false, "Unauthorized Request");
                                 const std::string msg = "error: cmd=internal kind=unauthorized";
                                 clientSession->sendMessage(msg);
                             }
                             catch (const StorageConnectionException& exc)
                             {
+                                sendLoadResult(clientSession, false, exc.what());
                                 // Alert user about failed load
                                 const std::string msg = "error: cmd=storage kind=loadfailed";
                                 clientSession->sendMessage(msg);
@@ -3255,6 +3273,7 @@ private:
                                 // Alert user about failed load
                                 const std::string msg = "error: cmd=storage kind=loadfailed";
                                 clientSession->sendMessage(msg);
+                                sendLoadResult(clientSession, false, exc.what());
                             }
                         });
                     });

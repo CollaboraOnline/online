@@ -3036,6 +3036,22 @@ Editor to WOPI host
 		<th>Description</th>
 	</tr>
 	<tr>
+		<td><code><b>Action_Load_Resp</b></code></td>
+		<td><code>
+			<nobr>success: &lt;boolean&gt;</nobr>
+			<nobr>result: &lt;string&gt;</nobr>
+			<nobr>errorMsg: &lt;string&gt;</nobr>
+		</code></td>
+		<td>Acknowledgement when load finishes.<br/>
+		<code>success</code> tells if LOOL was able to load the document
+		successfully.<br/>
+		<code>result</code> contains the reason the document was not loaded.<br/>
+		<code>errorMsg</code> contains a detailed error message in case loading failed.
+		Probably it will contain the error message returned from the WOPI/Webdav host.
+		</td>
+	</tr>
+
+	<tr>
 		<td><code><b>Action_Save_Resp</b></code></td>
 		<td><code>
 		    <nobr>success: &lt;boolean&gt;</nobr>
