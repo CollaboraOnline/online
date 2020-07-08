@@ -155,11 +155,6 @@ public:
     {
     }
 
-    bool continuePolling() override
-    {
-        return TerminatingPoll::continuePolling();
-    }
-
     void pollingThread() override
     {
         // Delegate to the docBroker.
