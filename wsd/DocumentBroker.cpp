@@ -1436,6 +1436,27 @@ size_t DocumentBroker::removeSession(const std::string& id)
                 << ", LastEditableSession: " << lastEditableSession << ", DontSaveIfUnmodified: "
                 << dontSaveIfUnmodified << ", IsPossiblyModified: " << isPossiblyModified());
 
+        // In theory, we almost could do this here:
+
+        // #if MOBILEAPP
+        // There is always just one "session" in a mobile app, and the same one process continues
+        // running, so no need to delay the disconnectSessionInternal() call. Doing it like this
+        // will also get rid of the docbroker and lokit_main thread for the document quicker.
+
+        // But, in reality it has unintended side effects on iOS because if you have done changes to
+        // the document, it does get saved, but that is only to the temporary copy. It is only in
+        // the document callback handler for LOK_CALLBACK_UNO_COMMAND_RESULT that we then call the
+        // system API to save that copy back to where it came from. See the
+        // LOK_CALLBACK_UNO_COMMAND_RESULT case in ChildSession::loKitCallback() in
+        // ChildSession.cpp. If we did use the below code snippet here, the document callback would
+        // get unregistered right away in Document::onUnload in Kit.cpp.
+
+        // autoSave(isPossiblyModified(), dontSaveIfUnmodified);
+        // disconnectSessionInternal(id);
+        // stop("stopped");
+
+        // So just go down the same code path as for normal Online:
+
         // If last editable, save and don't remove until after uploading to storage.
         if (!lastEditableSession || !autoSave(isPossiblyModified(), dontSaveIfUnmodified))
             disconnectSessionInternal(id);
