@@ -1415,7 +1415,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.id === 'fontnamecombobox' ||
 			data.id === 'fontsizecombobox' ||
 			data.id === 'fontsize' ||
-			data.id === 'FontBox') {
+			data.id === 'FontBox' ||
+			data.id === 'rotation') {
 			builder._listboxControl(parentContainer, data, builder);
 		} else if (data.id === 'searchterm' ||
 			data.id === 'replaceterm') {
