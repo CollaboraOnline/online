@@ -138,6 +138,20 @@ public:
     /// Visible area can have negative value as position, but we have tiles only in the positive range
     Util::Rectangle getNormalizedVisibleArea() const;
 
+    /// The client's visible area can be divided into a maximum of 4 panes.
+    enum SplitPaneName {
+        TOPLEFT_PANE,
+        TOPRIGHT_PANE,
+        BOTTOMLEFT_PANE,
+        BOTTOMRIGHT_PANE
+    };
+
+    /// Returns true if the given split-pane is currently valid.
+    bool isSplitPane(const SplitPaneName) const;
+
+    /// Returns the normalized visible area of a given split-pane.
+    Util::Rectangle getNormalizedVisiblePaneArea(const SplitPaneName) const;
+
     int getTileWidthInTwips() const { return _tileWidthTwips; }
     int getTileHeightInTwips() const { return _tileHeightTwips; }
 
@@ -220,6 +234,8 @@ private:
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
+    bool isTileInsideVisibleArea(const TileDesc& tile) const;
+
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
@@ -254,6 +270,10 @@ private:
 
     /// Visible area of the client
     Util::Rectangle _clientVisibleArea;
+
+    /// Split position that defines the current split panes
+    int _splitX;
+    int _splitY;
 
     /// Selected part of the document viewed by the client (no parts in Writer)
     int _clientSelectedPart;

@@ -850,7 +850,7 @@ bool ChildSession::clientVisibleArea(const char* /*buffer*/, int /*length*/, con
     int width;
     int height;
 
-    if (tokens.size() != 5 ||
+    if ((tokens.size() != 5 && tokens.size() != 7) ||
         !getTokenInteger(tokens[1], "x", x) ||
         !getTokenInteger(tokens[2], "y", y) ||
         !getTokenInteger(tokens[3], "width", width) ||

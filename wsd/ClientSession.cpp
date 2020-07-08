@@ -58,6 +58,8 @@ ClientSession::ClientSession(
     _state(SessionState::DETACHED),
     _keyEvents(1),
     _clientVisibleArea(0, 0, 0, 0),
+    _splitX(0),
+    _splitY(0),
     _clientSelectedPart(-1),
     _tileWidthPixel(0),
     _tileHeightPixel(0),
@@ -571,7 +573,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         int y;
         int width;
         int height;
-        if (tokens.size() != 5 ||
+        if ((tokens.size() != 5 && tokens.size() != 7) ||
             !getTokenInteger(tokens[1], "x", x) ||
             !getTokenInteger(tokens[2], "y", y) ||
             !getTokenInteger(tokens[3], "width", width) ||
@@ -584,6 +586,20 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
         else
         {
+            if (tokens.size() == 7)
+            {
+                int splitX, splitY;
+                if (!getTokenInteger(tokens[5], "splitx", splitX) ||
+                    !getTokenInteger(tokens[6], "splity", splitY))
+                {
+                    LOG_WRN("Invalid syntax for '" << tokens[0] << "' message: [" << firstLine << "].");
+                    return true;
+                }
+
+                _splitX = splitX;
+                _splitY = splitY;
+            }
+
             _clientVisibleArea = Util::Rectangle(x, y, width, height);
             resetWireIdMap();
             return forwardToChild(std::string(buffer, length), docBroker);
@@ -1732,15 +1748,31 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         return;
     }
 
-    // Visible area can have negative value as position, but we have tiles only in the positive range
-    Util::Rectangle normalizedVisArea = getNormalizedVisibleArea();
-
     std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
     int part = result.first;
     Util::Rectangle& invalidateRect = result.second;
 
-    // We can ignore the invalidation if it's outside of the visible area
-    if(!normalizedVisArea.intersects(invalidateRect))
+    constexpr SplitPaneName panes[4] = {
+        TOPLEFT_PANE,
+        TOPRIGHT_PANE,
+        BOTTOMLEFT_PANE,
+        BOTTOMRIGHT_PANE
+    };
+    Util::Rectangle paneRects[4];
+    int numPanes = 0;
+    for(int i = 0; i < 4; ++i)
+    {
+        if(!isSplitPane(panes[i]))
+            continue;
+
+        Util::Rectangle rect = getNormalizedVisiblePaneArea(panes[i]);
+        if (rect.intersects(invalidateRect)) {
+            paneRects[numPanes++] = rect;
+        }
+    }
+
+    // We can ignore the invalidation if it's outside of all split-panes.
+    if(!numPanes)
         return;
 
     if( part == -1 ) // If no part is specified we use the part used by the client
@@ -1751,26 +1783,30 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     std::vector<TileDesc> invalidTiles;
     if(part == _clientSelectedPart || _isTextDocument)
     {
-        // Iterate through visible tiles
-        for(int i = std::ceil(normalizedVisArea.getTop() / _tileHeightTwips);
-                    i <= std::ceil(normalizedVisArea.getBottom() / _tileHeightTwips); ++i)
+        for(int paneIdx = 0; paneIdx < numPanes; ++paneIdx)
         {
-            for(int j = std::ceil(normalizedVisArea.getLeft() / _tileWidthTwips);
-                j <= std::ceil(normalizedVisArea.getRight() / _tileWidthTwips); ++j)
+            const Util::Rectangle& normalizedVisArea = paneRects[paneIdx];
+            // Iterate through visible tiles
+            for(int i = std::ceil(normalizedVisArea.getTop() / _tileHeightTwips);
+                        i <= std::ceil(normalizedVisArea.getBottom() / _tileHeightTwips); ++i)
             {
-                // Find tiles affected by invalidation
-                Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
-                if(invalidateRect.intersects(tileRect))
+                for(int j = std::ceil(normalizedVisArea.getLeft() / _tileWidthTwips);
+                    j <= std::ceil(normalizedVisArea.getRight() / _tileWidthTwips); ++j)
                 {
-                    invalidTiles.emplace_back(normalizedViewId, part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
+                    // Find tiles affected by invalidation
+                    Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
+                    if(invalidateRect.intersects(tileRect))
+                    {
+                        invalidTiles.emplace_back(normalizedViewId, part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
 
-                    TileWireId oldWireId = 0;
-                    auto iter = _oldWireIds.find(invalidTiles.back().generateID());
-                    if(iter != _oldWireIds.end())
-                        oldWireId = iter->second;
+                        TileWireId oldWireId = 0;
+                        auto iter = _oldWireIds.find(invalidTiles.back().generateID());
+                        if(iter != _oldWireIds.end())
+                            oldWireId = iter->second;
 
-                    invalidTiles.back().setOldWireId(oldWireId);
-                    invalidTiles.back().setWireId(0);
+                        invalidTiles.back().setOldWireId(oldWireId);
+                        invalidTiles.back().setWireId(0);
+                    }
                 }
             }
         }
@@ -1782,6 +1818,80 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         tileCombined.setNormalizedViewId(normalizedViewId);
         docBroker->handleTileCombinedRequest(tileCombined, client_from_this());
     }
+}
+
+bool ClientSession::isSplitPane(const SplitPaneName paneName) const
+{
+    if (paneName == BOTTOMRIGHT_PANE)
+        return true;
+
+    if (paneName == TOPLEFT_PANE)
+        return (_splitX && _splitY);
+
+    if (paneName == TOPRIGHT_PANE)
+        return _splitY;
+
+    if (paneName == BOTTOMLEFT_PANE)
+        return _splitX;
+
+    return false;
+}
+
+Util::Rectangle ClientSession::getNormalizedVisiblePaneArea(const SplitPaneName paneName) const
+{
+    Util::Rectangle normalizedVisArea = getNormalizedVisibleArea();
+    if (!_splitX && !_splitY)
+        return paneName == BOTTOMRIGHT_PANE ? normalizedVisArea : Util::Rectangle();
+
+    int freeStartX = normalizedVisArea.getLeft() + _splitX;
+    int freeStartY = normalizedVisArea.getTop()  + _splitY;
+    int freeWidth = normalizedVisArea.getWidth() - _splitX;
+    int freeHeight = normalizedVisArea.getHeight() - _splitY;
+
+    switch (paneName)
+    {
+    case BOTTOMRIGHT_PANE:
+        return Util::Rectangle(freeStartX, freeStartY, freeWidth, freeHeight);
+    case TOPLEFT_PANE:
+        return (_splitX && _splitY) ? Util::Rectangle(0, 0, _splitX, _splitY) : Util::Rectangle();
+    case TOPRIGHT_PANE:
+        return _splitY ? Util::Rectangle(freeStartX, 0, freeWidth, _splitY) : Util::Rectangle();
+    case BOTTOMLEFT_PANE:
+        return _splitX ? Util::Rectangle(0, freeStartY, _splitX, freeHeight) : Util::Rectangle();
+    default:
+        assert(false && "Unknown split-pane name");
+    }
+
+    return Util::Rectangle();
+}
+
+bool ClientSession::isTileInsideVisibleArea(const TileDesc& tile) const
+{
+    if (!_splitX && !_splitY)
+    {
+        return (tile.getTilePosX() >= _clientVisibleArea.getLeft() && tile.getTilePosX() <= _clientVisibleArea.getRight() &&
+            tile.getTilePosY() >= _clientVisibleArea.getTop() && tile.getTilePosY() <= _clientVisibleArea.getBottom());
+    }
+
+    constexpr SplitPaneName panes[4] = {
+        TOPLEFT_PANE,
+        TOPRIGHT_PANE,
+        BOTTOMLEFT_PANE,
+        BOTTOMRIGHT_PANE
+    };
+
+    for (int i = 0; i < 4; ++i)
+    {
+        if (!isSplitPane(panes[i]))
+            continue;
+
+        Util::Rectangle paneRect = getNormalizedVisiblePaneArea(panes[i]);
+        if (tile.getTilePosX() >= paneRect.getLeft() && tile.getTilePosX() <= paneRect.getRight() &&
+            tile.getTilePosY() >= paneRect.getTop() && tile.getTilePosY() <= paneRect.getBottom())
+            return true;
+    }
+
+    return false;
 }
 
 void ClientSession::resetWireIdMap()
@@ -1802,9 +1912,7 @@ void ClientSession::traceTileBySend(const TileDesc& tile, bool deduplicated)
     else
     {
         // Track only tile inside the visible area
-        if(_clientVisibleArea.hasSurface() &&
-           tile.getTilePosX() >= _clientVisibleArea.getLeft() && tile.getTilePosX() <= _clientVisibleArea.getRight() &&
-           tile.getTilePosY() >= _clientVisibleArea.getTop() && tile.getTilePosY() <= _clientVisibleArea.getBottom())
+        if(_clientVisibleArea.hasSurface() && isTileInsideVisibleArea(tile))
         {
             _oldWireIds.insert(std::pair<std::string, TileWireId>(tileID, tile.getWireId()));
         }
