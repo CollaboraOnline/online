@@ -181,7 +181,16 @@ L.Control.MobileWizard = L.Control.extend({
 		else
 			$(titles).hide();
 
-		$(contentToShow).siblings().hide();
+		$('#mobile-wizard .ui-effects-placeholder').hide();
+
+		var nodesToHide = $(contentToShow).siblings();
+
+		var duration = 10;
+		if (animate)
+			$(nodesToHide).hide('slide', { direction: 'left' }, duration);
+		else
+			$(nodesToHide).hide();
+
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('hideHelpBG');
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('showHelpBG');
 
