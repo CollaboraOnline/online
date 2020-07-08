@@ -123,7 +123,9 @@
     "xh": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/ui-xh.json",
     "zh-cn": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/ui-zh_CN.json",
     "zh-CN": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/ui-zh_CN.json",
+    "zh-Hans": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/ui-zh_CN.json",
     "zh-tw": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/ui-zh_TW.json",
     "zh-TW": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/ui-zh_TW.json",
+    "zh-Hant": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/ui-zh_TW.json",
     "zu": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/ui-zu.json"
 }
