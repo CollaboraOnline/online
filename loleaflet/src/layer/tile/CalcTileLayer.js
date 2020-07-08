@@ -373,10 +373,17 @@ L.CalcTileLayer = L.TileLayer.extend({
 		if (this._debug) {
 			this._debugAddInvalidationRectangle(topLeftTwips, bottomRightTwips, textMsg);
 		}
+
 		var invalidBounds = new L.Bounds(topLeftTwips, bottomRightTwips);
-		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
-		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
-		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
+		var visibleArea, visiblePaneAreas;
+		if (this._splitPanesContext) {
+			visiblePaneAreas = this._splitPanesContext.getTwipsBoundList();
+		}
+		else {
+			var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
+			var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
+			visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
+		}
 
 		var needsNewTiles = false;
 		for (var key in this._tiles) {
@@ -391,7 +398,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 				else {
 					this._tiles[key]._invalidCount = 1;
 				}
-				if (visibleArea.intersects(bounds)) {
+				var intersectsVisible = visibleArea ? visibleArea.intersects(bounds) : bounds.intersectsAny(visiblePaneAreas);
+				if (intersectsVisible) {
 					needsNewTiles = true;
 					if (this._debug) {
 						this._debugAddInvalidationData(this._tiles[key]);

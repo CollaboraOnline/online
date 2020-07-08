@@ -174,6 +174,17 @@ L.SplitPanesContext = L.Class.extend({
 		return boundList;
 	},
 
+	getTwipsBoundList: function (pxBounds) {
+		var bounds = this.getPxBoundList(pxBounds);
+		var docLayer = this._docLayer;
+		return bounds.map(function (bound) {
+			return new L.Bounds(
+				docLayer._pixelsToTwips(bound.min),
+				docLayer._pixelsToTwips(bound.max)
+			);
+		});
+	},
+
 	getClientVisibleArea: function () {
 		var pixelBounds = this._map.getPixelBounds();
 		var fullSize = pixelBounds.getSize();

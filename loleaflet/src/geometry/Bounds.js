@@ -165,6 +165,16 @@ L.Bounds.prototype = {
 
 	isValid: function () {
 		return !!(this.min && this.max);
+	},
+
+	intersectsAny: function (boundsArray) {
+		for (var i = 0; i < boundsArray.length; ++i) {
+			if (boundsArray[i].intersects(this)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 };
 
