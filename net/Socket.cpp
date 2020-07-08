@@ -288,6 +288,11 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     }
 
     // This should only happen when we're stopping.
+
+    // FIXME: A few dozen lines above we have potentially inserted new elements in _pollSockets, so
+    // clearly its size can now be larger than what it was when we came to this function, which got
+    // saved in the size variable.
+
     if (_pollSockets.size() != size)
         return rc;
 
