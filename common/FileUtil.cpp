@@ -282,8 +282,23 @@ namespace FileUtil
     bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified)
     {
         // The timestamp is in seconds and microseconds.
-        timeval timestamps[2]{ { tsAccess.tv_sec, tsAccess.tv_nsec / 1000 },
-                               { tsModified.tv_sec, tsModified.tv_nsec / 1000 } };
+        timeval timestamps[2]
+                          {
+                              {
+                                  tsAccess.tv_sec,
+#ifdef IOS
+                                  (__darwin_suseconds_t)
+#endif
+                                  (tsAccess.tv_nsec / 1000)
+                              },
+                              {
+                                  tsModified.tv_sec,
+#ifdef IOS
+                                  (__darwin_suseconds_t)
+#endif
+                                  (tsModified.tv_nsec / 1000)
+                              }
+                          };
         if (utimes(filename.c_str(), timestamps) != 0)
         {
             LOG_SYS("Failed to update the timestamp of [" << filename << "]");
@@ -301,7 +316,13 @@ namespace FileUtil
             if (preserveTimestamps)
             {
                 const Stat st(fromPath);
-                updateTimestamps(randFilename, st.sb().st_atim, st.sb().st_mtim);
+                updateTimestamps(randFilename,
+#ifdef IOS
+                                 st.sb().st_atimespec, st.sb().st_mtimespec
+#else
+                                 st.sb().st_atim, st.sb().st_mtim
+#endif
+                                 );
             }
 
             // Now rename atomically, replacing any existing files with the same name.

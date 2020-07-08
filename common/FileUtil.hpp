@@ -140,7 +140,14 @@ namespace FileUtil
         size_t size() const { return _sb.st_size; }
 
         /// Returns the modified time.
-        timespec modifiedTime() const { return _sb.st_mtim; }
+        timespec modifiedTime() const
+        {
+#ifdef IOS
+            return _sb.st_mtimespec;
+#else
+            return _sb.st_mtim;
+#endif
+        }
 
         /// Returns true iff the path exists, regardless of access permission.
         bool exists() const { return good() || (_errno != ENOENT && _errno != ENOTDIR); }
