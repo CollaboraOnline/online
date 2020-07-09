@@ -69,7 +69,6 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 	},
 
 	onAdd: function (map) {
-		this._switchSplitPanesContext();
 		map.addControl(L.control.tabs());
 		map.addControl(L.control.columnHeader());
 		map.addControl(L.control.rowHeader());
@@ -539,6 +538,7 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 	_onStatusMsg: function (textMsg) {
 		var command = this._map._socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
+			var firstSelectedPart = (typeof this._selectedPart !== 'number');
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
 			this._docType = command.type;
@@ -575,6 +575,9 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 			});
 			this._resetPreFetching(true);
 			this._update();
+			if (firstSelectedPart) {
+				this._switchSplitPanesContext();
+			}
 		}
 	},
 
@@ -773,13 +776,18 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 			this._splitPaneCache = {};
 		}
 
+		console.assert(typeof this._selectedPart === 'number', 'invalid selectedPart');
+
 		var spContext = this._splitPaneCache[this._selectedPart];
 		if (!spContext) {
 			spContext = new L.SplitPanesContext(this);
+			this._splitPaneCache[this._selectedPart] = spContext;
 		}
 
 		this._splitPanesContext = spContext;
-		this._map._splitPanesContext = spContext;
+		if (this.sheetGeometry) {
+			this._updateSplitPos();
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {

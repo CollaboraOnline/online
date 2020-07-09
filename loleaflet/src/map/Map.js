@@ -914,10 +914,11 @@ L.Map = L.Evented.extend({
 	},
 
 	containerPointToLayerPoint: function (point) { // (Point)
-		if (!this._splitPanesContext) {
+		var splitPanesContext = this.getSplitPanesContext();
+		if (!splitPanesContext) {
 			return this.containerPointToLayerPointIgnoreSplits(point);
 		}
-		var splitPos = this._splitPanesContext.getSplitPos();
+		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
 		var result = L.point(point);
@@ -943,12 +944,12 @@ L.Map = L.Evented.extend({
 	},
 
 	layerPointToContainerPoint: function (point) { // (Point)
-
-		if (!this._splitPanesContext) {
+		var splitPanesContext = this.getSplitPanesContext();
+		if (!splitPanesContext) {
 			return this.layerPointToContainerPointIgnoreSplits(point);
 		}
 
-		var splitPos = this._splitPanesContext.getSplitPos();
+		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
 		var result = L.point(point)._add(pixelOrigin);
@@ -1824,16 +1825,12 @@ L.Map = L.Evented.extend({
 	},
 
 	getSplitPanesContext: function () {
-		if (this._splitPanesContext) {
-			return this._splitPanesContext;
-		}
-
 		var docLayer = this._docLayer;
-		if (docLayer && typeof docLayer.getSplitPanesContext === 'function') {
-			this._splitPanesContext = docLayer.getSplitPanesContext();
+		if (docLayer) {
+			return docLayer.getSplitPanesContext();
 		}
 
-		return this._splitPanesContext;
+		return undefined;
 	}
 });
 

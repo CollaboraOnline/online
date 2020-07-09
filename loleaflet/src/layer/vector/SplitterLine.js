@@ -29,12 +29,12 @@ L.SplitterLine = L.Rectangle.extend({
 
 	_calculateLatLngBounds: function (map) {
 		map = map || this._map;
-		this._splitPanesContext = this._splitPanesContext || map.getSplitPanesContext();
-		console.assert(this._splitPanesContext, 'no _splitPanesContext!');
+		var splitPanesContext = map.getSplitPanesContext();
+		console.assert(splitPanesContext, 'no splitPanesContext!');
 
 		var size = map._docLayer.getMaxDocSize();
 		var isHoriz = this.options.isHoriz;
-		var splitPos = this._splitPanesContext.getSplitPos();
+		var splitPos = splitPanesContext.getSplitPos();
 
 		this._lastPos = isHoriz ? splitPos.x : splitPos.y;
 
@@ -134,17 +134,18 @@ L.SplitterLine = L.Rectangle.extend({
 		this._dragStarted = false;
 
 		if (this._curPos !== undefined) {
+			var splitPanesContext = this._map.getSplitPanesContext();
 			if (this.options.isHoriz) {
-				this._splitPanesContext.setHorizSplitPos(this._curPos);
+				splitPanesContext.setHorizSplitPos(this._curPos);
 			}
 			else {
-				this._splitPanesContext.setVertSplitPos(this._curPos);
+				splitPanesContext.setVertSplitPos(this._curPos);
 			}
 
-			var newPoint = this._splitPanesContext.getSplitPos();
+			var newPoint = splitPanesContext.getSplitPos();
 			var newPos = this.options.isHoriz ? newPoint.x : newPoint.y;
 			if (newPos == this._lastPos) {
-				this._splitPanesContext.updateSplitters();
+				splitPanesContext.updateSplitters();
 			}
 		}
 

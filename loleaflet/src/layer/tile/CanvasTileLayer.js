@@ -43,7 +43,6 @@ L.CanvasTilePainter = L.Class.extend({
 	initialize: function (layer, dpiScale, enableImageSmoothing) {
 		this._layer = layer;
 		this._canvas = this._layer._canvas;
-		this._splitPanesContext = this._layer.getSplitPanesContext();
 
 		if (dpiScale === 1 || dpiScale === 2) {
 			enableImageSmoothing = (enableImageSmoothing === true);
@@ -60,8 +59,9 @@ L.CanvasTilePainter = L.Class.extend({
 		this._topLeft = undefined;
 		this._lastZoom = undefined;
 		this._lastPart = undefined;
-		this._splitPos = this._splitPanesContext ?
-			this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
+		var splitPanesContext = this._layer.getSplitPanesContext();
+		this._splitPos = splitPanesContext ?
+			splitPanesContext.getSplitPos() : new L.Point(0, 0);
 
 		this._tileSizeCSSPx = undefined;
 		this._updatesRunning = false;
@@ -139,9 +139,10 @@ L.CanvasTilePainter = L.Class.extend({
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(tileSize));
 
 		viewBounds = viewBounds || this._map.getPixelBounds();
+		var splitPanesContext = this._layer.getSplitPanesContext();
 		paneBoundsList = paneBoundsList || (
-			this._splitPanesContext ?
-			this._splitPanesContext.getPxBoundList(viewBounds) :
+			splitPanesContext ?
+			splitPanesContext.getPxBoundList(viewBounds) :
 			[viewBounds]
 		);
 
@@ -182,10 +183,11 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	_drawSplits: function () {
-		if (!this._splitPanesContext) {
+		var splitPanesContext = this._layer.getSplitPanesContext();
+		if (!splitPanesContext) {
 			return;
 		}
-		var splitPos = this._splitPanesContext.getSplitPos();
+		var splitPos = splitPanesContext.getSplitPos();
 		this._canvasCtx.save();
 		this._canvasCtx.scale(this._dpiScale, this._dpiScale);
 		this._canvasCtx.strokeStyle = 'red';
@@ -201,13 +203,14 @@ L.CanvasTilePainter = L.Class.extend({
 
 	update: function () {
 
+		var splitPanesContext = this._layer.getSplitPanesContext();
 		var zoom = Math.round(this._map.getZoom());
 		var pixelBounds = this._map.getPixelBounds();
 		var newSize = pixelBounds.getSize();
 		var newTopLeft = pixelBounds.getTopLeft();
 		var part = this._layer._selectedPart;
-		var newSplitPos = this._splitPanesContext ?
-			this._splitPanesContext.getSplitPos(): this._splitPos;
+		var newSplitPos = splitPanesContext ?
+			splitPanesContext.getSplitPos(): this._splitPos;
 
 		var zoomChanged = (zoom !== this._lastZoom);
 		var partChanged = (part !== this._lastPart);
@@ -259,7 +262,7 @@ L.CanvasTilePainter = L.Class.extend({
 
 	_shiftAndPaint: function (newTopLeft) {
 
-		console.assert(!this._splitPanesContext, '_shiftAndPaint is broken for split-panes.');
+		console.assert(!this._layer.getSplitPanesContext(), '_shiftAndPaint is broken for split-panes.');
 		var offset = new L.Point(this._width - 1, this._height - 1);
 
 		var dx = newTopLeft.x - this._topLeft.x;
@@ -359,9 +362,10 @@ L.CanvasTilePainter = L.Class.extend({
 		var viewSize = new L.Point(this._width, this._height);
 		var viewBounds = new L.Bounds(this._topLeft, this._topLeft.add(viewSize));
 
+		var splitPanesContext = this._layer.getSplitPanesContext();
 		// Calculate all this here intead of doing it per tile.
-		var paneBoundsList = this._splitPanesContext ?
-			this._splitPanesContext.getPxBoundList(viewBounds) : [viewBounds];
+		var paneBoundsList = splitPanesContext ?
+			splitPanesContext.getPxBoundList(viewBounds) : [viewBounds];
 		var tileRanges = paneBoundsList.map(this._layer._pxBoundsToTileRange, this._layer);
 
 		var tileSize = this._tileSizeCSSPx || this._layer._getTileSize();

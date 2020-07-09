@@ -108,7 +108,7 @@ L.Map.include({
 		var renderer = layer.options.renderer || this._getPaneRenderer(layer.options.pane) || this.options.renderer || this._renderer;
 
 		if (!renderer) {
-			if (this._splitPanesContext) {
+			if (this.getSplitPanesContext()) {
 				renderer = this._renderer = (L.SVG && L.SplitPanesSVG && L.splitPanesSVG()) ||
 					(L.Canvas && L.SplitPanesCanvas && L.splitPanesCanvas());
 			}
@@ -132,7 +132,7 @@ L.Map.include({
 
 		var renderer = this._paneRenderers[name];
 		if (renderer === undefined) {
-			if (this._splitPanesContext) {
+			if (this.getSplitPanesContext()) {
 				renderer = (L.SVG && L.SplitPanesSVG && L.splitPanesSVG({pane: name})) ||
 					(L.Canvas && L.SplitPanesCanvas && L.splitPanesCanvas({pane: name}));
 			}

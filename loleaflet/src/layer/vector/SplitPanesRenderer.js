@@ -18,9 +18,7 @@ L.SplitPanesRenderer = L.Layer.extend({
 	},
 
 	onAdd: function () {
-
-		this._splitPanesContext = this._map.getSplitPanesContext();
-		console.assert(this._splitPanesContext, 'no split-panes context object!');
+		console.assert(this._map.getSplitPanesContext(), 'no split-panes context object!');
 
 		if (!this._container) {
 			this._initContainer(); // defined by renderer implementations

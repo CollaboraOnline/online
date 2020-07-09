@@ -40,7 +40,6 @@ L.Marker = L.Layer.extend({
 	},
 
 	onAdd: function (map) {
-		this._splitPanesContext = map.getSplitPanesContext();
 		this._zoomAnimated = this._zoomAnimated && map.options.markerZoomAnimation;
 
 		this._initIcon();
@@ -65,12 +64,13 @@ L.Marker = L.Layer.extend({
 	getEvents: function () {
 		var events = {viewreset: this.update};
 
-		if (this._splitPanesContext) {
+		var splitPanesPossible = this._map._docLayer.hasSplitPanesSupport();
+		if (splitPanesPossible) {
 			events.moveend = this.update;
 			events.splitposchanged = this.update;
 		}
 
-		if (this._zoomAnimated && !this._splitPanesContext) {
+		if (this._zoomAnimated && !splitPanesPossible) {
 			events.zoomanim = this._animateZoom;
 		}
 
@@ -115,12 +115,14 @@ L.Marker = L.Layer.extend({
 			return;
 		}
 
-		if (!this._splitPanesContext) {
+		var splitPanesContext = this._map.getSplitPanesContext();
+
+		if (!splitPanesContext) {
 			this._setPos(this._map.latLngToLayerPoint(this._latlng).round());
 			return;
 		}
 
-		var splitPos = this._splitPanesContext.getSplitPos();
+		var splitPos = splitPanesContext.getSplitPos();
 		var docPos = this._map.project(this._latlng);
 		var pixelOrigin = this._map.getPixelOrigin();
 		var mapPanePos = this._map._getMapPanePos();
