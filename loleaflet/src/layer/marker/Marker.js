@@ -67,6 +67,7 @@ L.Marker = L.Layer.extend({
 
 		if (this._splitPanesContext) {
 			events.moveend = this.update;
+			events.splitposchanged = this.update;
 		}
 
 		if (this._zoomAnimated && !this._splitPanesContext) {

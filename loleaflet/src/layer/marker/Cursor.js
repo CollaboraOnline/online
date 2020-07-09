@@ -30,9 +30,11 @@ L.Cursor = L.Layer.extend({
 
 		this.update();
 		this.getPane().appendChild(this._container);
+		this._map.on('splitposchanged', this.update, this);
 	},
 
 	onRemove: function () {
+		this._map.off('splitposchanged', this.update, this);
 		if (this._container) {
 			this.getPane().removeChild(this._container);
 		}
