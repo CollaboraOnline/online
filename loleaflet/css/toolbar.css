@@ -230,7 +230,6 @@ td[id^=tb_editbar_item_sidebar]{
 }
 
 .closebuttonimage {
-		display: none;
 		background: url('images/closedoc.svg') no-repeat center !important;
 }
 

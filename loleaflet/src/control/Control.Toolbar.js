@@ -1060,11 +1060,12 @@ function setupToolbar(e) {
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
 
-	if (!L.Params.closeButtonEnabled) {
+	if (map.options.wopi && L.Params.closeButtonEnabled) {
+		$('#closebuttonwrapper').show();
+	} else if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
 	} else if (L.Params.closeButtonEnabled && !window.mode.isMobile()) {
 		$('#closebuttonwrapper').show();
-		$('.closebuttonimage').show();
 	}
 
 	$('#closebutton').click(function() {
