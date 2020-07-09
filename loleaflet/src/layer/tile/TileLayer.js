@@ -178,7 +178,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._cellAutofillMarker = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
 				className: 'spreadsheet-cell-autofill-marker',
-				iconSize: null
+				iconSize: window.mode.isDesktop() ? [8, 8] : [16, 16]
 			}),
 			draggable: true
 		});
@@ -3079,7 +3079,12 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onUpdateCellResizeMarkers: function () {
-		if (this._selections.getLayers().length !== 0 || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor))) {
+		var singleCellOnDesktop = window.mode.isDesktop()
+									&& !this._cellSelectionArea
+									&& (this._cellCursor && !this._isEmptyRectangle(this._cellCursor));
+
+		if (!singleCellOnDesktop &&
+			(this._selections.getLayers().length !== 0 || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
 			if (this._isEmptyRectangle(this._cellSelectionArea) && this._isEmptyRectangle(this._cellCursor)) {
 				return;
 			}
@@ -3107,10 +3112,6 @@ L.TileLayer = L.GridLayer.extend({
 					this._map.addLayer(this._cellAutofillMarker);
 					var cellAutoFillMarkerPoisition = cellRectangle.getCenter();
 					cellAutoFillMarkerPoisition.lat = cellRectangle.getSouth();
-					cellAutoFillMarkerPoisition = this._map.project(cellAutoFillMarkerPoisition);
-					var sizeAutoFill = this._cellAutofillMarker._icon.getBoundingClientRect();
-					cellAutoFillMarkerPoisition = cellAutoFillMarkerPoisition.subtract(new L.Point(sizeAutoFill.width / 2, sizeAutoFill.height / 2));
-					cellAutoFillMarkerPoisition = this._map.unproject(cellAutoFillMarkerPoisition);
 					this._cellAutofillMarker.setLatLng(cellAutoFillMarkerPoisition);
 				}
 				else if (this._cellAutofillMarker) {
@@ -3118,7 +3119,20 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		}
-		else {
+		else if (singleCellOnDesktop) {
+			cellRectangle = this._cellSelectionArea ? this._cellSelectionArea : this._cellCursor;
+
+			if (this._cellAutoFillArea) {
+				if (!this._cellAutofillMarker.isDragged) {
+					this._map.addLayer(this._cellAutofillMarker);
+					cellAutoFillMarkerPoisition = L.latLng(cellRectangle.getSouth(), cellRectangle.getEast());
+					this._cellAutofillMarker.setLatLng(cellAutoFillMarkerPoisition);
+				}
+			}
+
+			this._map.removeLayer(this._cellResizeMarkerStart);
+			this._map.removeLayer(this._cellResizeMarkerEnd);
+		} else {
 			this._map.removeLayer(this._cellResizeMarkerStart);
 			this._map.removeLayer(this._cellResizeMarkerEnd);
 			this._map.removeLayer(this._cellAutofillMarker);
