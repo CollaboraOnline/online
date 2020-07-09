@@ -138,8 +138,8 @@ L.Polyline = L.Path.extend({
 
 		if (this._latlngs.length) {
 			this._pxBounds = new L.Bounds(
-				this._map.latLngToLayerPoint(this._bounds.getSouthWest())._subtract(p),
-				this._map.latLngToLayerPoint(this._bounds.getNorthEast())._add(p));
+				this._latLngToPoint(this._bounds.getSouthWest())._subtract(p),
+				this._latLngToPoint(this._bounds.getNorthEast())._add(p));
 		}
 	},
 
@@ -153,7 +153,7 @@ L.Polyline = L.Path.extend({
 		if (flat) {
 			ring = [];
 			for (i = 0; i < len; i++) {
-				ring[i] = this._map.latLngToLayerPoint(latlngs[i]);
+				ring[i] = this._latLngToPoint(latlngs[i]);
 			}
 			result.push(ring);
 		} else {
@@ -161,6 +161,14 @@ L.Polyline = L.Path.extend({
 				this._projectLatlngs(latlngs[i], result);
 			}
 		}
+	},
+
+	_latLngToPoint: function (latlng) {
+		if (this.options.fixed) {
+			return this._map.project(latlng);
+		}
+
+		return this._map.latLngToLayerPoint(latlng);
 	},
 
 	// clip polyline by renderer bounds so that we have less to render for performance

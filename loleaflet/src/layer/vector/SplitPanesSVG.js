@@ -92,7 +92,9 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 			// is always glued to (0, 0) of the document.
 			// The size is always the map's view size.
 			pos = this._map.containerPointToLayerPointIgnoreSplits(topLeft).round();
-			boundPos = topLeft.subtract(pixelOrigin);
+			// All paths in this should set their DOM node positions in document coordinates rather than in layer coordinates.
+			// This is taken care of if the paths are derived from L.Polyline
+			boundPos = topLeft;
 		}
 		else if (rendererId === 'bottomright') {
 			// this is the default splitPane where are no visible splits (splitPos = (0, 0)).

@@ -519,21 +519,16 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
 		var entryStart = this._dragEntry.pos - this._dragEntry.size;
-		var ydocpos = this._headerInfo.headerToDocPos(Math.max(drag.y, entryStart));
-		var xmin = this._map.getPixelBounds().min.x;
-		var xmax = xmin + size.x;
-		if (this._headerInfo.hasSplits()) {
-			xmin = 0;
-		}
+		var ypos = Math.max(drag.y, entryStart);
 		return [
-			this._map.unproject(new L.Point(xmin, ydocpos)),
-			this._map.unproject(new L.Point(xmax, ydocpos)),
+			this._map.unproject(new L.Point(0, ypos)),
+			this._map.unproject(new L.Point(size.x, ypos)),
 		];
 	},
 
 	onDragStart: function (item, start, offset, e) {
 		if (!this._horzLine) {
-			this._horzLine = L.polyline(this._getHorzLatLng(start, offset, e), {color: 'darkblue', weight: 1});
+			this._horzLine = L.polyline(this._getHorzLatLng(start, offset, e), {color: 'darkblue', weight: 1, fixed: true});
 		}
 		else {
 			this._horzLine.setLatLngs(this._getHorzLatLng(start, offset, e));

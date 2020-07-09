@@ -563,21 +563,16 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
 		var entryStart = this._dragEntry.pos - this._dragEntry.size;
-		var xdocpos = this._headerInfo.headerToDocPos(Math.max(drag.x, entryStart));
-		var ymin = this._map.getPixelBounds().min.y;
-		var ymax = ymin + size.y;
-		if (this._headerInfo.hasSplits()) {
-			ymin = 0;
-		}
+		var xpos = Math.max(drag.x, entryStart);
 		return [
-			this._map.unproject(new L.Point(xdocpos, ymin)),
-			this._map.unproject(new L.Point(xdocpos, ymax)),
+			this._map.unproject(new L.Point(xpos, 0)),
+			this._map.unproject(new L.Point(xpos, size.y)),
 		];
 	},
 
 	onDragStart: function (item, start, offset, e) {
 		if (!this._vertLine) {
-			this._vertLine = L.polyline(this._getVertLatLng(start, offset, e), {color: 'darkblue', weight: 1});
+			this._vertLine = L.polyline(this._getVertLatLng(start, offset, e), {color: 'darkblue', weight: 1, fixed: true});
 		}
 		else {
 			this._vertLine.setLatLngs(this._getVertLatLng(start, offset, e));
