@@ -53,7 +53,7 @@ if (false) {
     window.LOCALIZATIONS = " . insert('de') . ";
 } else if (onlylang == 'el') {
     window.LOCALIZATIONS = " . insert('el') . ";
-} else if (window.LANG == 'en_GB') {
+} else if (window.LANG == 'en-GB' || window.LANG == 'en_GB') {
     window.LOCALIZATIONS = " . insert('en_GB') . ";
 } else if (onlylang == 'es') {
     window.LOCALIZATIONS = " . insert('es') . ";
@@ -77,7 +77,7 @@ if (false) {
     window.LOCALIZATIONS = " . insert('nn') . ";
 } else if (onlylang == 'pl') {
     window.LOCALIZATIONS = " . insert('pl') . ";
-} else if (window.LANG == 'pt_BR') {
+} else if (window.LANG == 'pt-BR' || window.LANG == 'pt_BR') {
     window.LOCALIZATIONS = " . insert('pt_BR') . ";
 } else if (onlylang == 'pt') {
     window.LOCALIZATIONS = " . insert('pt') . ";
@@ -91,7 +91,9 @@ if (false) {
     window.LOCALIZATIONS = " . insert('tr') . ";
 } else if (onlylang == 'uk') {
     window.LOCALIZATIONS = " . insert('uk') . ";
-} else if (window.LANG == 'zh_TW') {
+} else if (window.LANG == 'zh-CN' || window.LANG == 'zh-Hans-CN' || window.LANG == 'zh_CN' || window.LANG == 'zh_Hans_CN'  ) {
+    window.LOCALIZATIONS = " . insert('zh_CN') . ";
+} else if (window.LANG == 'zh-TW' || window.LANG == 'zh-Hant-TW' || window.LANG == 'zh_TW' || window.LANG == 'zh_Hant_TW') {
     window.LOCALIZATIONS = " . insert('zh_TW') . ";
 } else {
     window.LOCALIZATIONS = {};
