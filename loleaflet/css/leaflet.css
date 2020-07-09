@@ -185,10 +185,7 @@
 /* cursors */
 
 .leaflet-interactive {
-	cursor: pointer;
-	}
-.leaflet-container {
-	cursor: text;
+	cursor: move;
 	}
 .leaflet-crosshair,
 .leaflet-crosshair .leaflet-interactive {

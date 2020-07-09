@@ -838,6 +838,12 @@ function onCommandStateChanged(e) {
 			toolbar.disable('repair');
 		}
 	}
+	else if (commandName === '.uno:FormatPaintbrush') {
+		if (state === 'true')
+			$('.leaflet-pane.leaflet-map-pane').addClass('bucket-cursor');
+		else
+			$('.leaflet-pane.leaflet-map-pane').removeClass('bucket-cursor');
+	}
 
 	var id = unoCmdToToolbarId(commandName);
 	// id is set to '' by unoCmdToToolbarId() if the statechange message should be ignored.
