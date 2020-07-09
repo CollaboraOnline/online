@@ -1360,7 +1360,7 @@ L.Control.Menubar = L.Control.extend({
 
 		if (menuItem.type === 'action') {
 			if ((menuItem.id === 'rev-history' && !L.Params.revHistoryEnabled) ||
-				(menuItem.id === 'closedocument' && !window.closebutton) ||
+				(menuItem.id === 'closedocument' && !L.Params.closeButtonEnabled) ||
 				(menuItem.id === 'latest-updates' && !window.enableWelcomeMessage)) {
 				return false;
 			}
