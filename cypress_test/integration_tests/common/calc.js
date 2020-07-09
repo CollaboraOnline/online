@@ -44,7 +44,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 		});
 
 	if (firstClick && !dblClick)
-		cy.get('.spreadsheet-cell-resize-marker')
+		cy.get('.spreadsheet-cell-autofill-marker')
 			.should('be.visible');
 	else
 		cy.get('.leaflet-cursor.blinking-cursor')

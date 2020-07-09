@@ -217,8 +217,6 @@
 .spreadsheet-cell-autofill-marker {
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 16px;
-	height: 16px;
 	background-image: url('images/cell-autofill-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
