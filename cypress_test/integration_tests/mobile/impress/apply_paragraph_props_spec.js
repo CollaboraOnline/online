@@ -20,6 +20,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	function triggerNewSVG() {
+		mobileHelper.closeMobileWizard();
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 	}
 

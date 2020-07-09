@@ -20,6 +20,7 @@ describe('Apply font on text and on text shape.', function() {
 	});
 
 	function triggerNewSVG() {
+		mobileHelper.closeMobileWizard();
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 	}
 

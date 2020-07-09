@@ -1,7 +1,6 @@
 /* globals cy expect require */
 
 var helper = require('../../common/helper');
-var mobileHelper = require('../../common/mobile_helper');
 
 function selectTextShapeInTheCenter() {
 	// Click on the center of the slide to select the text shape there
@@ -42,8 +41,6 @@ function selectTextOfShape() {
 }
 
 function triggerNewSVGForShapeInTheCenter() {
-	mobileHelper.closeMobileWizard();
-
 	// Remove selection first with clicking next to the rotate handler
 	cy.get('.transform-handler--rotate')
 		.then(function(items) {
