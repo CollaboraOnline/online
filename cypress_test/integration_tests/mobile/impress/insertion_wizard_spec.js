@@ -33,7 +33,7 @@ describe('Impress insertion wizard.', function() {
 		helper.selectAllText(false);
 	}
 
-	function selectionShouldBeTextShape() {
+	function selectionShouldBeTextShape(checkTextShape = true) {
 		// Check that the shape is there
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
 			.should(function(svg) {
@@ -41,8 +41,9 @@ describe('Impress insertion wizard.', function() {
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
-			.should('have.class', 'com.sun.star.drawing.TextShape');
+		if (checkTextShape)
+			cy.get('.leaflet-pane.leaflet-overlay-pane svg g.com\\.sun\\.star\\.drawing\\.TextShape')
+				.should('exist');
 
 		// Check also that the shape is fully visible
 		// TODO: shapes are hungs out of the slide after insertion
@@ -272,7 +273,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check that the shape is there
-		selectionShouldBeTextShape();
+		selectionShouldBeTextShape(false);
 
 		// Check the text
 		selectTextOfShape();
@@ -293,7 +294,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check that the shape is there
-		selectionShouldBeTextShape();
+		selectionShouldBeTextShape(false);
 
 		// Check the text
 		selectTextOfShape();
