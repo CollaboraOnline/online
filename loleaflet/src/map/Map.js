@@ -203,16 +203,6 @@ L.Map = L.Evented.extend({
 				var interactiveRuler = this._permission === 'edit' ? true : false;
 				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
 			}
-			if (this._docLayer._docType === 'text') {
-				L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
-				L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
-				L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
-			} else if (this._docLayer._docType === 'presentation') {
-				L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
-				L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
-			} else if (this._docLayer._docType === 'spreadsheet') {
-				L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
-			}
 
 			// We need core's knowledge of whether it is a mobile phone
 			// or not to be in sync with the test in _onJSDialogMsg in TileLayer.js.

@@ -87,6 +87,22 @@ L.Control.UIManager = L.Control.extend({
 		if (docType === 'spreadsheet') {
 			this.map.addControl(L.control.sheetsBar({shownavigation: isDesktop || window.mode.isTablet()}));
 			this.map.addControl(L.control.formulaBar());
+
+			// remove unused elements
+			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
+		}
+
+		if (docType === 'presentation') {
+			// remove unused elements
+			L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
+			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
+		}
+
+		if (docType === 'text') {
+			// remove unused elements
+			L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
+			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
+			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 		}
 
 		if (docType === 'presentation' && (isDesktop || window.mode.isTablet())) {
