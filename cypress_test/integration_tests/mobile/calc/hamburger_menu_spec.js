@@ -329,17 +329,13 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.empty');
 
-		cy.wait(1500);
-
 		// Search for some word
-		cy.get('#searchterm')
-			.type('a{enter}');
+		helper.inputOnIdle('#searchterm', 'a');
 
 		cy.get('#search')
 			.should('not.have.attr', 'disabled');
 
-		cy.get('#search')
-			.click();
+		helper.clickOnIdle('#search');
 
 		// First cell should be selected
 		cy.get('input#addressInput')
