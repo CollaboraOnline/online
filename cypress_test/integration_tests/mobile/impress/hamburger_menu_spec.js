@@ -360,4 +360,111 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.leaflet-selection-marker-start')
 			.should('be.visible');
 	});
+
+	it('Full Screen.', function() {
+		before('hamburger_menu.odp');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Full Screen')
+			.click();
+
+		// TODO: We can't hit the actual full screen from cypress
+		cy.wait(500);
+	});
+
+	it('Automatic spell checking.', function() {
+		before('hamburger_menu.odp');
+
+		// Add a spelling error to the shape
+		impressMobileHelper.selectTextShapeInTheCenter();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.text', 'X');
+
+		// Type a new character
+		dblclickOnShape();
+
+		cy.get('textarea.clipboard')
+			.type('qqqqqq');
+
+		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.text', 'Xqqqqqq');
+
+		// Make everything white on tile
+		impressMobileHelper.selectTextOfShape();
+
+		mobileHelper.openMobileWizard();
+
+		helper.clickOnIdle('#TextPropertyPanel');
+
+		cy.get('#Bold')
+			.should('be.visible');
+
+		helper.clickOnIdle('#Color');
+
+		mobileHelper.selectFromColorPalette(0, 0, 7);
+
+		mobileHelper.closeMobileWizard();
+
+		impressMobileHelper.removeShapeSelection();
+
+		var preiew = '.preview-frame:nth-of-type(2) img';
+		helper.imageShouldBeFullWhiteOrNot(preiew, false);
+
+		// Disable automatic spell checking
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
+			.click();
+
+		helper.imageShouldBeFullWhiteOrNot(preiew, true);
+	});
+
+	it('Fullscreen presentation.', function() {
+		before('hamburger_menu.odp');
+
+		cy.get('iframe.leaflet-slideshow')
+			.should('not.exist');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Fullscreen presentation')
+			.click();
+
+		cy.get('iframe.leaflet-slideshow')
+			.should('exist');
+	});
+
+	it('Check version information.', function() {
+		before('hamburger_menu.odp');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'About')
+			.click();
+
+		cy.get('.vex-content')
+			.should('exist');
+
+		// Check the version
+		if (helper.getLOVersion() === 'master') {
+			cy.contains('#lokit-version', 'LibreOffice')
+				.should('exist');
+		} else if (helper.getLOVersion() === 'cp-6-2' ||
+				   helper.getLOVersion() === 'cp-6-4')
+		{
+			cy.contains('#lokit-version', 'Collabora Office')
+				.should('exist');
+		}
+
+		// Close about dialog
+		cy.get('.vex-close')
+			.click({force : true});
+
+		cy.get('.vex-content')
+			.should('not.exist');
+	});
 });

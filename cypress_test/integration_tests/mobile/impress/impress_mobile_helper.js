@@ -40,7 +40,7 @@ function selectTextOfShape() {
 	helper.selectAllText(false);
 }
 
-function triggerNewSVGForShapeInTheCenter() {
+function removeShapeSelection() {
 	// Remove selection first with clicking next to the rotate handler
 	cy.get('.transform-handler--rotate')
 		.then(function(items) {
@@ -57,6 +57,10 @@ function triggerNewSVGForShapeInTheCenter() {
 
 	cy.get('.leaflet-drag-transform-marker')
 		.should('not.exist');
+}
+
+function triggerNewSVGForShapeInTheCenter() {
+	removeShapeSelection();
 
 	// If we click too fast on the shape again
 	// then it steps into edit mode, might be a bug
@@ -69,3 +73,4 @@ function triggerNewSVGForShapeInTheCenter() {
 module.exports.selectTextShapeInTheCenter = selectTextShapeInTheCenter;
 module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCenter;
 module.exports.selectTextOfShape = selectTextOfShape;
+module.exports.removeShapeSelection = removeShapeSelection;
