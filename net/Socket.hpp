@@ -370,6 +370,10 @@ public:
     /// Will be called exactly once.
     virtual void onConnect(const std::shared_ptr<StreamSocket>& socket) = 0;
 
+    /// Enable/disable processing of incoming data at socket level.
+    virtual void enableProcessInput(bool /*enable*/){};
+    virtual bool processInputEnabled(){ return true; };
+
     /// Called after successful socket reads.
     virtual void handleIncomingMessage(SocketDisposition &disposition) = 0;
 
@@ -467,6 +471,32 @@ public:
     virtual void onDisconnect() = 0;
     /// Append pretty printed internal state to a line
     virtual void dumpState(std::ostream& os) = 0;
+};
+
+class InputProcessingManager
+{
+public:
+    InputProcessingManager(const std::shared_ptr<ProtocolHandlerInterface> &protocol, bool inputProcess)
+    : _protocol(protocol)
+    {
+        if (_protocol)
+        {
+            // Save previous state to be restored in destructor
+            _prevInputProcess = _protocol->processInputEnabled();
+            protocol->enableProcessInput(inputProcess);
+        }
+    }
+
+    ~InputProcessingManager()
+    {
+        // Restore previous state
+        if (_protocol)
+            _protocol->enableProcessInput(_prevInputProcess);
+    }
+
+private:
+    std::shared_ptr<ProtocolHandlerInterface> _protocol;
+    bool _prevInputProcess;
 };
 
 /// Handles non-blocking socket event polling.
@@ -782,7 +812,8 @@ public:
         _sentHTTPContinue(false),
         _shutdownSignalled(false),
         _incomingFD(-1),
-        _readType(readType)
+        _readType(readType),
+        _inputProcessingEnabled(true)
     {
         LOG_DBG("StreamSocket ctor #" << fd);
 
@@ -1032,6 +1063,9 @@ public:
         return _incomingFD;
     }
 
+    bool processInputEnabled(){ return _inputProcessingEnabled; }
+    void enableProcessInput(bool enable = true){ _inputProcessingEnabled = enable; }
+
 protected:
 
     std::vector<std::pair<size_t, size_t>> findChunks(Poco::Net::HTTPRequest &request);
@@ -1046,7 +1080,7 @@ protected:
 
         _socketHandler->checkTimeout(now);
 
-        if (!events)
+        if (!events && _inBuffer.empty())
             return;
 
         // FIXME: need to close input, but not output (?)
@@ -1066,7 +1100,7 @@ protected:
 
         // If we have data, allow the app to consume.
         size_t oldSize = 0;
-        while (!_inBuffer.empty() && oldSize != _inBuffer.size())
+        while (!_inBuffer.empty() && oldSize != _inBuffer.size() && processInputEnabled())
         {
             oldSize = _inBuffer.size();
             _socketHandler->handleIncomingMessage(disposition);
@@ -1259,6 +1293,7 @@ protected:
     bool _shutdownSignalled;
     int _incomingFD;
     ReadType _readType;
+    std::atomic_bool _inputProcessingEnabled;
 };
 
 enum class WSOpCode : unsigned char {

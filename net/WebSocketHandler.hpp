@@ -815,6 +815,22 @@ protected:
         // but do reset the time to avoid pinging immediately after.
         _lastPingSentTime = std::chrono::steady_clock::now();
     }
+
+    virtual void enableProcessInput(bool enable = true) override
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            socket->enableProcessInput(enable);
+    }
+
+    virtual bool processInputEnabled() override
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            return socket->processInputEnabled();
+
+        return false;
+    }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
