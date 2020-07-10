@@ -42,7 +42,6 @@ L.Control.Tabs = L.Control.extend({
 		var map = this._map;
 		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
-		this._tabsCont.id = 'spreadsheet-tabs-container-id';
 
 		this._menuItem = {
 			'insertsheetbefore': {name: _('Insert sheet before this'),
