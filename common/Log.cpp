@@ -189,14 +189,15 @@ namespace Log
         // Don't bother with the "Source" which would be just "Mobile" always and non-informative as
         // there is just one process in the app anyway.
         char *pos = buffer;
+
+        // Don't bother with the thread identifier either. We output the thread name which is much
+        // more useful anyway.
 #else
         // Note that snprintf is deemed signal-safe in most common implementations.
         char* pos = strcopy((Source.getInited() ? Source.getId().c_str() : "<shutdown>"), buffer);
         *pos++ = '-';
-#endif
 
         // Thread ID.
-#ifdef __linux
         const long osTid = Util::getThreadId();
         if (osTid > 99999)
         {
@@ -213,17 +214,10 @@ namespace Log
             to_ascii_fixed<5>(pos, osTid);
             pos += 5;
         }
-#elif defined IOS
-        uint64_t osTid;
-        pthread_threadid_np(nullptr, &osTid);
-        snprintf(pos, 32, "%#.05llx", osTid);
-        // Skip to end.
-        while (*pos)
-            pos++;
+        *pos++ = ' ';
 #endif
 
         // YYYY-MM-DD.
-        *pos++ = ' ';
         to_ascii_fixed<4>(pos, time.year());
         pos[4] = '-';
         pos += 5;
