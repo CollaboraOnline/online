@@ -302,7 +302,7 @@ function waitUntilIdle(selector, content) {
 	cy.log('Waiting item to be idle - start.');
 
 	var item;
-	var waitingTime = 1000;
+	var waitingTime = 2000;
 	if (content) {
 		cy.contains(selector, content, { log: false })
 			.then(function(itemToIdle) {
