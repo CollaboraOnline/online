@@ -196,6 +196,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:ResetAttributes'] = this._clearFormattingControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._clearFormattingControl;
 
+		this._toolitemHandlers['.uno:InsertFormula'] = function () {};
+		this._toolitemHandlers['.uno:SetBorderStyle'] = function () {};
+		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = function () {};
+
 		this._currentDepth = 0;
 	},
 
