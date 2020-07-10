@@ -82,7 +82,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:SelectObject'] = function() {};
 		this._toolitemHandlers['.uno:BibliographyComponent'] = function() {};
 		this._toolitemHandlers['.uno:ViewDataSourceBrowser'] = function() {};
-		this._toolitemHandlers['.uno:FormatArea'] = function() {};
 		this._toolitemHandlers['.uno:SetBorderStyle'] = function() {};
 		this._toolitemHandlers['.uno:LineStyle'] = function() {};
 		this._toolitemHandlers['.uno:InsertFormula'] = function() {};
@@ -132,6 +131,19 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:PhotoAlbumDialog'] = function() {};
 		this._toolitemHandlers['.uno:AutoFormat'] = function() {};
 		this._toolitemHandlers['.uno:Spacing'] = function() {};
+		this._toolitemHandlers['.uno:ToggleObjectRotateMode'] = function() {};
+		this._toolitemHandlers['.uno:RotateRight'] = function() {};
+		this._toolitemHandlers['.uno:ToggleObjectBezierMode'] = function() {};
+		this._toolitemHandlers['.uno:AnchorMenu'] = function() {};
+		this._toolitemHandlers['.uno:ExtrusionToggle'] = function() {};
+		this._toolitemHandlers['.uno:ExtrusionDepthFloater'] = function() {};
+		this._toolitemHandlers['.uno:ExtrusionDirectionFloater'] = function() {};
+		this._toolitemHandlers['.uno:Extrusion3DColor'] = function() {};
+		this._toolitemHandlers['.uno:ExtrusionSurfaceFloater'] = function() {};
+		this._toolitemHandlers['.uno:FontworkShapeType'] = function() {};
+		this._toolitemHandlers['.uno:FontworkSameLetterHeights'] = function() {};
+		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function() {};
+		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function() {};
 
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},

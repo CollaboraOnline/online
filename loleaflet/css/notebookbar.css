@@ -376,6 +376,12 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-top: 20px;
 }
 
+/* Draw tab */
+#table-Draw #table-box16 #table-first16.notebookbar,
+#table-DrawTab #table-GroupB74 #table-SectionBottom48.notebookbar {
+	display: none;
+}
+
 /* Calc */
 
 /* Home tab */
