@@ -1628,7 +1628,7 @@ L.Control.LokDialog = L.Control.extend({
 			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
 
 		this._resizeCalcInputBar(deckOffset);
-		this._adjustTabsBar(width);
+
 	},
 
 	_resizeCalcInputBar: function(offset) {
@@ -1647,29 +1647,6 @@ L.Control.LokDialog = L.Control.extend({
 				}
 			}
 		}
-	},
-
-	_adjustTabsBar: function(deckNewWidth) {
-
-		if (this._map.getDocType() !== 'spreadsheet') {
-			return;
-		}
-
-		// This is called only if sidebar is made visible or hidden, so no need of
-		// special-casing for mobile where that never happens.
-		// In the case of tablets, when sidebar is made visible/hidden the below adjustments
-		// will work correctly like in desktop-online (verified with chrome-tablet emulator).
-
-		var tabsContainer = L.DomUtil.get('spreadsheet-tabs-container-id');
-		if (!tabsContainer) {
-			return;
-		}
-
-		var docWidth = L.DomUtil.get('spreadsheet-toolbar').getBoundingClientRect().width;
-		var tabsContainerLeft = tabsContainer.getBoundingClientRect().left;
-		var deckMargin = (deckNewWidth === 0) ? 0 : 10;
-
-		tabsContainer.style.width = (docWidth - tabsContainerLeft - deckNewWidth - deckMargin) + 'px';
 	},
 
 	_onDialogChildClose: function(dialogId) {

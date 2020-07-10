@@ -2,7 +2,7 @@
 				border-top: 1px solid #B6B6B6;
 				top: 137px;
 				left: 50px;
-				bottom: 65px;
+				bottom: 75px;
 }
 
 #document-container.spreadsheet-document.readonly {
@@ -13,7 +13,7 @@
 	border-top: 1px solid #B6B6B6;
 	top: 100px;
 	left: 50px;
-	bottom: 68px;
+	bottom: 78px;
 }
 
 .spreadsheet-tabs-container {
@@ -36,14 +36,12 @@
 	height: 100%;
 	overflow: auto;
 	padding-bottom: 20px; /* to hide the horizontal scrollbar */
-	padding-right: 5px; /* to hide the vertical scrollbar */
-
 	margin-left: 6px;
 	}
 
 .spreadsheet-tab {
 	margin: 0px;
-	margin-top: 2px;
+	margin-top: 4px;
 	margin-right: 3px;
 	padding-left: 9px;
 	padding-right: 9px;
