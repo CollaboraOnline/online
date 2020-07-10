@@ -182,6 +182,7 @@ w2ui-toolbar {
 		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb;
 		background-color: white;
 		background-image: none;
+		outline: none;
 }
 
 #document-name-input.editable:hover:not(:focus) {
