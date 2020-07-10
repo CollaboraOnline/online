@@ -701,6 +701,12 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 	padding-right: 1em;
 }
 
+.preview-frame-portrait.preview-img-dropsite {
+    padding-right: 0px;
+	border-right: 20px solid #b6b6b6;
+	border-bottom: none;
+}
+
 /* Slidesorter in landscape mode */
 #presentation-controls-wrapper.landscape {
 	top: 41px;
@@ -746,8 +752,8 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 /* Highlight where a slide can be dropped when reordering by drag-and-drop. */
-.preview-img-dropsite {
-    border-bottom: 3px solid #b6b6b6;
+.preview-frame-landscape.preview-img-dropsite {
+    border-bottom: 10px solid #b6b6b6;
 }
 
 /* Related to mobilewizard.cxx */

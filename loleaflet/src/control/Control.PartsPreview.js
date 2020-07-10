@@ -118,6 +118,7 @@ L.Control.PartsPreview = L.Control.extend({
 				var frame = L.DomUtil.create('div', frameClass, this._scrollContainer);
 				this._addDnDHandlers(frame);
 				frame.setAttribute('draggable', false);
+				frame.setAttribute('id', 'first-drop-site');
 
 				if (window.mode.isDesktop()) {
 					L.DomUtil.setStyle(frame, 'height', '20px');
@@ -207,21 +208,31 @@ L.Control.PartsPreview = L.Control.extend({
 		img.fetched = false;
 		if (!window.mode.isDesktop()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
-			.on('press', L.bind(function () {
+			.on('press', function (e) {
 				if (this._map.isPermissionEdit()) {
-					setTimeout(function () {
-						w2ui['actionbar'].click('mobile_wizard');
-					}, 0);
+					this._addDnDTouchHandlers(e);
 				}
-			}, this));
+			}.bind(this));
 		}
 		L.DomEvent.on(img, 'click', function (e) {
 			L.DomEvent.stopPropagation(e);
 			L.DomEvent.stop(e);
-			this._setPart(e);
-			this._map.focus();
-			this.partsFocused = true;
-			document.activeElement.blur();
+			var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+			if (part !== null)
+				var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
+			if (!window.mode.isDesktop() && partId === this._map._docLayer._selectedPart) {
+				// if mobile or tab then second tap will open the mobile wizard
+				if (this._map._permission === 'edit') {
+					setTimeout(function () {
+						w2ui['actionbar'].click('mobile_wizard');
+					}, 0);
+				}
+			} else {
+				this._setPart(e);
+				this._map.focus();
+				this.partsFocused = true;
+				document.activeElement.blur();
+			}
 		}, this);
 
 		this._layoutPreview(i, img, bottomBound);
@@ -536,6 +547,89 @@ L.Control.PartsPreview = L.Control.extend({
 			elem.addEventListener('dragend', this._handleDragEnd, false);
 			elem.partsPreview = this;
 		}
+	},
+
+	_addDnDTouchHandlers: function (e) {
+		$(e.target).bind('touchmove', this._handleTouchMove.bind(this));
+		$(e.target).bind('touchcancel', this._handleTouchCancel.bind(this));
+		$(e.target).bind('touchend', this._handleTouchEnd.bind(this));
+
+		// To avoid having to add a new message to move an arbitrary part, let's select the
+		// slide that is being dragged.
+		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+		if (part !== null) {
+			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
+			this._map.setPart(partId);
+			this._map.selectPart(partId, 1, false); // And select.
+		}
+		this.draggedSlide = L.DomUtil.create('img', '', document.body);
+		this.draggedSlide.setAttribute('src', e.target.currentSrc);
+		$(this.draggedSlide).css('position', 'absolute');
+		$(this.draggedSlide).css('height', e.target.height);
+		$(this.draggedSlide).css('width', e.target.width);
+		$(this.draggedSlide).css('left', e.center.x - (e.target.width/2));
+		$(this.draggedSlide).css('top', e.center.y - e.target.height);
+		$(this.draggedSlide).css('z-index', '10');
+		$(this.draggedSlide).css('opacity', '75%');
+		$(this.draggedSlide).css('pointer-events', 'none');
+		$('.preview-img').css('pointer-events', 'none');
+
+		this.currentNode = null;
+		this.previousNode = null;
+	},
+
+	_removeDnDTouchHandlers: function (e) {
+		$(e.target).unbind('touchmove');
+		$(e.target).unbind('touchcancel');
+		$(e.target).unbind('touchend');
+		$('.preview-img').css('pointer-events', '');
+	},
+
+	_handleTouchMove: function (e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		}
+
+		this.currentNode = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+
+		if (this.currentNode !== this.previousNode && this.previousNode !== null) {
+			$('.preview-frame').removeClass('preview-img-dropsite');
+		}
+
+		if (this.currentNode.draggable || this.currentNode.id === 'first-drop-site') {
+			this.currentNode.classList.add('preview-img-dropsite');
+		}
+
+		this.previousNode = this.currentNode;
+
+		$(this.draggedSlide).css('left', e.touches[0].clientX - (e.target.width/2));
+		$(this.draggedSlide).css('top', e.touches[0].clientY - e.target.height);
+		return false;
+	},
+
+	_handleTouchCancel: function(e) {
+		$('.preview-frame').removeClass('preview-img-dropsite');
+		$(this.draggedSlide).remove();
+		this._removeDnDTouchHandlers(e);
+	},
+
+	_handleTouchEnd: function (e) {
+		if (e.stopPropagation) {
+			e.stopPropagation();
+		}
+		if (this.currentNode) {
+			var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(this.currentNode);
+			if (part !== null) {
+				var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
+				if (partId < 0)
+					partId = -1; // First item is -1.
+				this._map._socket.sendMessage('moveselectedclientparts position=' + partId);
+			}
+		}
+		$('.preview-frame').removeClass('preview-img-dropsite');
+		$(this.draggedSlide).remove();
+		this._removeDnDTouchHandlers(e);
+		return false;
 	},
 
 	_handleDragStart: function (e) {
