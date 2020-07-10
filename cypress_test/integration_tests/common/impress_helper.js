@@ -56,6 +56,13 @@ function typeTextAndVerify(text, expected) {
 
 	helper.expectTextForClipboard(expected);
 }
+
+function assertNumberOfSlidePreviews(slides) {
+	cy.get('#slide-sorter .preview-frame')
+		.should('have.length', slides + 1);
+}
+
 module.exports.assertNotInTextEditMode = assertNotInTextEditMode;
 module.exports.assertInTextEditMode = assertInTextEditMode;
 module.exports.typeTextAndVerify = typeTextAndVerify;
+module.exports.assertNumberOfSlidePreviews = assertNumberOfSlidePreviews;

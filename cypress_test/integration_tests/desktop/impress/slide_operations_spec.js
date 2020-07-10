@@ -1,6 +1,7 @@
 /* global describe it cy require afterEach beforeEach*/
 
 var helper = require('../../common/helper');
+var impressHelper = require('../../common/impress_helper');
 
 describe('Slide operations', function() {
 	var testFileName = 'slide_operations.odp';
@@ -13,17 +14,12 @@ describe('Slide operations', function() {
 		helper.afterAll(testFileName);
 	});
 
-	function assertNumberOfSlides(slides) {
-		cy.get('.preview-frame')
-			.should('have.length', slides + 1);
-	}
-
 	it('Add slides', function() {
 		cy.get('#tb_presentation-toolbar_item_insertpage')
 			.should('not.have.class', 'disabled')
 			.click();
 
-		assertNumberOfSlides(2);
+		impressHelper.assertNumberOfSlidePreviews(2);
 	});
 
 	it('Remove slides', function() {
@@ -32,7 +28,7 @@ describe('Slide operations', function() {
 			.should('not.have.class', 'disabled')
 			.click();
 
-		assertNumberOfSlides(2);
+		impressHelper.assertNumberOfSlidePreviews(2);
 
 		// Remove Slides
 		cy.get('#tb_presentation-toolbar_item_deletepage')
@@ -44,7 +40,7 @@ describe('Slide operations', function() {
 		cy.get('#tb_presentation-toolbar_item_deletepage')
 			.should('have.class', 'disabled');
 
-		assertNumberOfSlides(1);
+		impressHelper.assertNumberOfSlidePreviews(1);
 
 	});
 
@@ -53,7 +49,7 @@ describe('Slide operations', function() {
 			.should('not.have.class', 'disabled')
 			.click();
 
-		assertNumberOfSlides(2);
+		impressHelper.assertNumberOfSlidePreviews(2);
 
 	});
 });

@@ -1,6 +1,7 @@
 /* global describe it cy require afterEach expect */
 
 var helper = require('../../common/helper');
+var impressHelper = require('../../common/impress_helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressMobileHelper = require('./impress_mobile_helper');
 
@@ -359,6 +360,73 @@ describe('Trigger hamburger menu options.', function() {
 			.should('be.visible');
 		cy.get('.leaflet-selection-marker-start')
 			.should('be.visible');
+	});
+
+	it('Slide: New Slide.', function() {
+		before('hamburger_menu.odp');
+
+		impressHelper.assertNumberOfSlidePreviews(1);
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Slide')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'New Slide')
+			.click();
+
+		impressHelper.assertNumberOfSlidePreviews(2);
+	});
+
+	it('Slide: Duplicate Slide.', function() {
+		before('hamburger_menu.odp');
+
+		impressHelper.assertNumberOfSlidePreviews(1);
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Slide')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Duplicate Slide')
+			.click();
+
+		impressHelper.assertNumberOfSlidePreviews(2);
+	});
+
+	it('Slide: Delete Slide.', function() {
+		before('hamburger_menu.odp');
+
+		impressHelper.assertNumberOfSlidePreviews(1);
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Slide')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'New Slide')
+			.click();
+
+		impressHelper.assertNumberOfSlidePreviews(2);
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Slide')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Slide')
+			.click();
+
+		cy.get('.vex-content')
+			.should('exist');
+
+		cy.get('.vex-dialog-button-primary')
+			.click();
+
+		cy.get('.vex-content')
+			.should('not.exist');
+
+		impressHelper.assertNumberOfSlidePreviews(1);
 	});
 
 	it('Full Screen.', function() {
