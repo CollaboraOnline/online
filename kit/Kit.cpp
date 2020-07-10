@@ -1939,6 +1939,16 @@ protected:
         }
     }
 
+    virtual void enableProcessInput(bool enable = true) override
+    {
+        WebSocketHandler::enableProcessInput(enable);
+        // Wake up poll to process data from socket input buffer
+        if (enable && _ksPoll)
+        {
+            _ksPoll->wakeup();
+        }
+    }
+
     void onDisconnect() override
     {
 #if !MOBILEAPP

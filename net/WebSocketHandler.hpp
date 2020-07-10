@@ -818,6 +818,22 @@ protected:
         _lastPingSentTime = std::chrono::steady_clock::now();
 #endif
     }
+
+    virtual void enableProcessInput(bool enable = true) override
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            socket->enableProcessInput(enable);
+    }
+
+    virtual bool processInputEnabled() override
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            return socket->processInputEnabled();
+
+        return false;
+    }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
