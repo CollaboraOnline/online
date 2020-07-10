@@ -1668,6 +1668,7 @@ L.TileLayer = L.GridLayer.extend({
 				weight: 2,
 				opacity: 0.25});
 			this._selections.addLayer(selection);
+			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
 			if (this._selectionContentRequest) {
 				clearTimeout(this._selectionContentRequest);
 			}
