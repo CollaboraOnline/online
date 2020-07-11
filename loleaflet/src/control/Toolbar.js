@@ -157,7 +157,14 @@ L.Map.include({
 	},
 
 	sendUnoCommand: function (command, json) {
-		var isAllowedInReadOnly = command == '.uno:WordCountDialog';
+		var isAllowedInReadOnly = false;
+		var allowedCommands = ['.uno:WordCountDialog', '.uno:EditAnnotation'];
+		for (var i in allowedCommands) {
+			if (allowedCommands[i] === command) {
+				isAllowedInReadOnly = true;
+				break;
+			}
+		}
 		if (this._permission === 'edit' || isAllowedInReadOnly) {
 			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
