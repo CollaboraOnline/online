@@ -17,7 +17,8 @@ AM_CPPFLAGS = -pthread \
 
 AM_LDFLAGS = -pthread ${WEBKIT_LIBS} -ldl
 
-common_sources = ../common/Unit.cpp \
+common_sources = \
+                 ../common/Authorization.cpp \
                  ../common/FileUtil.cpp \
                  ../common/Log.cpp \
                  ../common/MessageQueue.cpp \
@@ -25,6 +26,8 @@ common_sources = ../common/Unit.cpp \
                  ../common/Session.cpp \
                  ../common/SigUtil.cpp \
                  ../common/SpookyV2.cpp \
+                 ../common/StringVector.cpp \
+                 ../common/Unit.cpp \
                  ../common/Util.cpp
 
 kit_sources = ../kit/ChildSession.cpp \
@@ -36,6 +39,7 @@ net_sources = ../net/FakeSocket.cpp \
 wsd_sources = ../wsd/ClientSession.cpp \
               ../wsd/DocumentBroker.cpp \
               ../wsd/LOOLWSD.cpp \
+              ../wsd/RequestDetails.cpp \
               ../wsd/Storage.cpp \
               ../wsd/TileCache.cpp
 

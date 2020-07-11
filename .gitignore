@@ -110,6 +110,9 @@ BUNDLE-VERSION
 /android/lib/src/main/assets/hello-world.od*
 /android/lib/src/main/cpp/CMakeLists.txt
 
+# gtk fake mobile app
+gtk/mobile
+
 # backup and temporary editor files: the only convenience rules allowed here.
 *~
 .*sw?
