@@ -915,7 +915,7 @@ mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
 AC_MSG_CHECKING([Is this a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp"; then
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes"; then
      AC_MSG_RESULT([Yes])
      mobile_app=true;
      MOBILEAPP=1
@@ -933,7 +933,11 @@ if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then
    ENABLE_SSL=true
    AC_DEFINE([ENABLE_SSL],1,[Whether to enable SSL])
 else
-   ssl_msg="insecure: ssl disabled"
+   if test "$mobile_app" != "true"; then
+     ssl_msg="insecure: ssl disabled"
+   else
+     ssl_msg="invalid for mobile apps (disabled)"
+   fi
    ENABLE_SSL=false
    AC_DEFINE([ENABLE_SSL],0,[Whether to enable SSL])
 fi
