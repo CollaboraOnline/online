@@ -6266,6 +6266,7 @@ w2utils.event = {
         },
 
         tooltipShow: function (id, event, forceRefresh) {
+            if (window.mode.isMobile()) { return; }
             if (window.ThisIsTheiOSApp) return;
             if (this.tooltip == null) return;
             var $el  = $(this.box).find('#tb_'+ this.name + '_item_'+ w2utils.escapeId(id));
