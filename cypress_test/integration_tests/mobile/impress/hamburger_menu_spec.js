@@ -441,7 +441,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.wait(500);
 	});
 
-	it('Automatic spell checking.', function() {
+	it.skip('Automatic spell checking.', function() {
 		before('hamburger_menu.odp');
 
 		// Add a spelling error to the shape
