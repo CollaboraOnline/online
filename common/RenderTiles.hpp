@@ -348,17 +348,6 @@ namespace RenderTiles
         unsigned char *data() { return _data; }
     };
 
-    class WatermarkBlender
-    {
-    public:
-        virtual void blendWatermark(TileCombined &tileCombined,
-                                    unsigned char *data,
-                                    int offsetX, int offsetY,
-                                    size_t pixmapWidth, size_t pixmapHeight,
-                                    int pixelWidth, int pixelHeight,
-                                    LibreOfficeKitTileMode mode) = 0;
-    };
-
     static void pushRendered(std::vector<TileDesc> &renderedTiles,
                              const TileDesc &desc, TileWireId wireId, size_t imgSize)
     {
@@ -369,12 +358,15 @@ namespace RenderTiles
 
     bool doRender(std::shared_ptr<lok::Document> document,
                   TileCombined &tileCombined,
-                  WatermarkBlender &watermarkBlender,
-                  std::unique_ptr<char[]> &response,
-                  size_t &responseSize,
                   PngCache &pngCache,
                   ThreadPool &pngPool,
-                  bool combined)
+                  bool combined,
+                  const std::function<void (unsigned char *data,
+                                            int offsetX, int offsetY,
+                                            size_t pixmapWidth, size_t pixmapHeight,
+                                            int pixelWidth, int pixelHeight,
+                                            LibreOfficeKitTileMode mode)>& blendWatermark,
+                  const std::function<void (const char *buffer, size_t length)>& outputMessage)
     {
         auto& tiles = tileCombined.getTiles();
 
@@ -453,11 +445,10 @@ namespace RenderTiles
 
             const int offsetX = positionX * pixelWidth;
             const int offsetY = positionY * pixelHeight;
-            watermarkBlender.blendWatermark(tileCombined,
-                                            pixmap.data(), offsetX, offsetY,
-                                            pixmapWidth, pixmapHeight,
-                                            pixelWidth, pixelHeight,
-                                            mode);
+            blendWatermark(pixmap.data(), offsetX, offsetY,
+                           pixmapWidth, pixmapHeight,
+                           pixelWidth, pixelHeight,
+                           mode);
 
             const uint64_t hash = Png::hashSubBuffer(pixmap.data(), offsetX, offsetY,
                                                      pixelWidth, pixelHeight, pixmapWidth, pixmapHeight);
@@ -572,16 +563,33 @@ namespace RenderTiles
 
         std::string tileMsg;
         if (combined)
+        {
             tileMsg = tileCombined.serialize("tilecombine:", ADD_DEBUG_RENDERID, renderedTiles);
+
+            LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
+
+            std::unique_ptr<char[]> response;
+            const size_t responseSize = tileMsg.size() + output.size();
+            response.reset(new char[responseSize]);
+            std::copy(tileMsg.begin(), tileMsg.end(), response.get());
+            std::copy(output.begin(), output.end(), response.get() + tileMsg.size());
+            outputMessage(response.get(), responseSize);
+        }
         else
-            tileMsg = tiles[0].serialize("tile:", ADD_DEBUG_RENDERID);
-
-        LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
-
-        responseSize = tileMsg.size() + output.size();
-        response.reset(new char[responseSize]);
-        std::copy(tileMsg.begin(), tileMsg.end(), response.get());
-        std::copy(output.begin(), output.end(), response.get() + tileMsg.size());
+        {
+            size_t outputOffset = 0;
+            for (auto &i : renderedTiles)
+            {
+                tileMsg = i.serialize("tile:", ADD_DEBUG_RENDERID);
+                const size_t responseSize = tileMsg.size() + i.getImgSize();
+                std::unique_ptr<char[]> response;
+                response.reset(new char[responseSize]);
+                std::copy(tileMsg.begin(), tileMsg.end(), response.get());
+                std::copy(output.begin() + outputOffset, output.begin() + outputOffset + i.getImgSize(), response.get() + tileMsg.size());
+                outputMessage(response.get(), responseSize);
+                outputOffset += i.getImgSize();
+            }
+        }
 
         return true;
     }

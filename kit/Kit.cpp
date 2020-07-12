@@ -420,7 +420,7 @@ namespace
 /// per process. But for security reasons don't.
 /// However, we could have a loolkit instance
 /// per user or group of users (a trusted circle).
-class Document final : public DocumentManagerInterface, public RenderTiles::WatermarkBlender
+class Document final : public DocumentManagerInterface
 {
 public:
     /// We have two types of password protected documents
@@ -630,20 +630,6 @@ public:
         renderTiles(tileCombined, true);
     }
 
-    void blendWatermark(TileCombined &tileCombined,
-                        unsigned char *data, int offsetX, int offsetY,
-                        size_t pixmapWidth, size_t pixmapHeight,
-                        int pixelWidth, int pixelHeight,
-                        LibreOfficeKitTileMode mode) override
-    {
-        const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
-        if (session->hasWatermark())
-            session->_docWatermark->blending(data, offsetX, offsetY,
-                                             pixmapWidth, pixmapHeight,
-                                             pixelWidth, pixelHeight,
-                                             mode);
-    }
-
     void renderTiles(TileCombined &tileCombined, bool combined)
     {
         // Find a session matching our view / render settings.
@@ -672,15 +658,26 @@ public:
             _loKitDocument->setView(session->getViewId());
 #endif
 
-        std::unique_ptr<char[]> response;
-        size_t responseSize;
-        if (!RenderTiles::doRender(_loKitDocument, tileCombined, *this, response, responseSize, _pngCache, _pngPool, combined))
+        if (!RenderTiles::doRender(_loKitDocument, tileCombined, _pngCache, _pngPool, combined,
+                                   [&](unsigned char *data,
+                                       int offsetX, int offsetY,
+                                       size_t pixmapWidth, size_t pixmapHeight,
+                                       int pixelWidth, int pixelHeight,
+                                       LibreOfficeKitTileMode mode) {
+                                       if (session->hasWatermark())
+                                           session->_docWatermark->blending(data, offsetX, offsetY,
+                                                                            pixmapWidth, pixmapHeight,
+                                                                            pixelWidth, pixelHeight,
+                                                                            mode);
+                                   },
+                                   [&](const char *buffer, size_t length) {
+                                       postMessage(buffer, length, WSOpCode::Binary);
+                                   }
+                                   ))
         {
             LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
             return;
         }
-
-        postMessage(response.get(), responseSize, WSOpCode::Binary);
     }
 
     bool sendTextFrame(const std::string& message)
