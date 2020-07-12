@@ -396,7 +396,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
 			// Save only when not read-only.
-			if (builder.map._permission !== 'readonly') {
+			if (!builder.map.isPermissionReadOnly()) {
 				builder.map.fire('postMessage', {msgId: 'UI_Save'});
 				if (!builder.map._disableDefaultAction['UI_Save']) {
 					builder.map.save(false, false);

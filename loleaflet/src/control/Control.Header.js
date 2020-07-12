@@ -266,7 +266,7 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_onPan: function (event) {
-		if (event.pointerType !== 'touch' || this._map._permission !== 'edit')
+		if (event.pointerType !== 'touch' || !this._map.isPermissionEdit())
 			return;
 
 		if (event.type == 'panstart')

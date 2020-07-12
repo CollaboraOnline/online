@@ -212,7 +212,7 @@ L.Annotation = L.Layer.extend({
 		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
 		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
 
-		if (this._data.trackchange && this._map._permission !== 'readonly') {
+		if (this._data.trackchange && !this._map.isPermissionReadOnly()) {
 			var tdAccept = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
 			var acceptButton = this._acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
 			var tdReject = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);

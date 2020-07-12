@@ -199,7 +199,7 @@ L.Map = L.Evented.extend({
 				this._fireInitComplete('doclayerinit');
 			}
 			if ((window.mode.isTablet() || window.mode.isDesktop()) && this._docLayer._docType == 'text') {
-				var interactiveRuler = this._permission === 'edit' ? true : false;
+				var interactiveRuler = this.isPermissionEdit();
 				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
 			}
 			if (this._docLayer._docType === 'text') {
@@ -1493,7 +1493,7 @@ L.Map = L.Evented.extend({
 		if (type === 'click' || type === 'dblclick' || (type === 'mouseup' &&
 					 typeof this._container._wasSingleTap !== 'undefined' &&
 					 this._container._wasSingleTap)) {
-			if (this._permission === 'edit') {
+			if (this.isPermissionEdit()) {
 				this.fire('editorgotfocus');
 				this.focus();
 			}

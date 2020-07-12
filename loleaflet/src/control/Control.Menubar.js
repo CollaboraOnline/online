@@ -754,7 +754,7 @@ L.Control.Menubar = L.Control.extend({
 
 		var liItem = L.DomUtil.create('li', '');
 		liItem.id = 'menu-' + e.id;
-		if (this._map._permission === 'readonly') {
+		if (this._map.isPermissionReadOnly()) {
 			L.DomUtil.addClass(liItem, 'readonly');
 		}
 		var aItem = L.DomUtil.create('a', '', liItem);
@@ -850,7 +850,7 @@ L.Control.Menubar = L.Control.extend({
 
 		// The _createFileIcon function shows the Collabora logo in the iOS app case, no
 		// need to delay that until the document has been made editable.
-		if (window.ThisIsTheiOSApp || this._map._permission !== 'readonly') {
+		if (window.ThisIsTheiOSApp || !this._map.isPermissionReadOnly()) {
 			this._createFileIcon();
 		}
 	},
@@ -992,7 +992,7 @@ L.Control.Menubar = L.Control.extend({
 			var type = $(aItem).data('type');
 			var id = $(aItem).data('id');
 			var constChecked = 'lo-menu-item-checked';
-			if (self._map._permission === 'edit') {
+			if (self._map.isPermissionEdit()) {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
 					var data, lang, languageAndCode;
 					var constUno = 'uno';
@@ -1135,7 +1135,7 @@ L.Control.Menubar = L.Control.extend({
 
 		if (id === 'save') {
 			// Save only when not read-only.
-			if (this._map._permission !== 'readonly') {
+			if (!this._map.isPermissionReadOnly()) {
 				this._map.fire('postMessage', {msgId: 'UI_Save'});
 				if (!this._map._disableDefaultAction['UI_Save']) {
 					this._map.save(false, false);
@@ -1338,7 +1338,7 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
 			return false;
 		}
-		if (this._map._permission === 'readonly' && menuItem.type === 'menu') {
+		if (this._map.isPermissionReadOnly() && menuItem.type === 'menu') {
 			var found = false;
 			for (var j in this.options.allowedReadonlyMenus) {
 				if (this.options.allowedReadonlyMenus[j] === menuItem.id) {
@@ -1349,7 +1349,7 @@ L.Control.Menubar = L.Control.extend({
 			if (!found)
 				return false;
 		}
-		if (this._map._permission === 'readonly') {
+		if (this._map.isPermissionReadOnly()) {
 			switch (menuItem.id) {
 			case 'last-mod':
 			case 'save':
@@ -1422,7 +1422,7 @@ L.Control.Menubar = L.Control.extend({
 			var liItem = L.DomUtil.create('li', '');
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
-				if (menu[i].id === 'closedocument' && this._map._permission === 'readonly') {
+				if (menu[i].id === 'closedocument' && this._map.isPermissionReadOnly()) {
 					// see corresponding css rule for readonly class usage
 					L.DomUtil.addClass(liItem, 'readonly');
 				}

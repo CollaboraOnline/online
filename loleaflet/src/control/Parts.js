@@ -190,7 +190,7 @@ L.Map.include({
 		else if (typeof (page) === 'number' && page >= 0 && page < docLayer._pages) {
 			docLayer._currentPage = page;
 		}
-		if (this._permission !== 'edit' && docLayer._partPageRectanglesPixels.length > docLayer._currentPage) {
+		if (!this.isPermissionEdit() && docLayer._partPageRectanglesPixels.length > docLayer._currentPage) {
 			// we can scroll to the desired page without having a LOK instance
 			var pageBounds = docLayer._partPageRectanglesPixels[docLayer._currentPage];
 			var pos = new L.Point(

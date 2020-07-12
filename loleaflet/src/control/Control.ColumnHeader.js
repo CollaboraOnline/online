@@ -101,7 +101,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
 			(new Hammer(this._canvas, {recognizers: [[Hammer.Press]]}))
 			.on('press', L.bind(function () {
-				if (this._map._permission === 'edit') {
+				if (this._map.isPermissionEdit()) {
 					window.contextMenuWizard = true;
 					this._map.fire('mobilewizard', menuData);
 				}
@@ -440,7 +440,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this.mouseInit(canvas);
 
 		if ($('.spreadsheet-header-columns').length > 0) {
-			$('.spreadsheet-header-columns').contextMenu(this._map._permission === 'edit');
+			$('.spreadsheet-header-columns').contextMenu(this._map.isPermissionEdit());
 		}
 	},
 

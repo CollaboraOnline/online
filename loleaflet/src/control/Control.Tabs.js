@@ -131,7 +131,7 @@ L.Control.Tabs = L.Control.extend({
 							return function() {
 								this._tabForContextMenu = j;
 								window.contextMenuWizard = true;
-								if (this._map._permission != 'readonly') this._map.fire('mobilewizard', menuData);
+								if (!this._map.isPermissionReadOnly()) this._map.fire('mobilewizard', menuData);
 							};
 						}(i).bind(this));
 					} else {

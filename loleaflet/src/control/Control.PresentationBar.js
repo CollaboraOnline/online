@@ -158,7 +158,7 @@ L.Control.PresentationBar = L.Control.extend({
 		var commandName = e.commandName;
 		var state = e.state;
 
-		if (this.map._permission === 'edit' && (state === 'enabled' || state === 'disabled')) {
+		if (this.map.isPermissionEdit() && (state === 'enabled' || state === 'disabled')) {
 			var id = window.unoCmdToToolbarId(commandName);
 
 			if (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage') {

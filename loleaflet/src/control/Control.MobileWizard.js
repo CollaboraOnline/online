@@ -102,7 +102,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 		$('#mobile-wizard').hide();
 		$('#mobile-wizard-content').empty();
-		if (this.map._permission === 'edit') {
+		if (this.map.isPermissionEdit()) {
 			$('#toolbar-down').show();
 		}
 		if (window.ThisIsTheAndroidApp)
