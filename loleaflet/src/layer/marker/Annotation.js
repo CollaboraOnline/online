@@ -236,7 +236,7 @@ L.Annotation = L.Layer.extend({
 			}, this);
 		}
 
-		if (this.options.noMenu !== true && this._map._permission !== 'readonly') {
+		if (this.options.noMenu !== true && this._map.isPermissionEditForComments()) {
 			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
 			var divMenu = this._menu = L.DomUtil.create(tagDiv, this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 			divMenu.title = _('Open menu');
