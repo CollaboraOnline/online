@@ -180,11 +180,12 @@ public:
 
 void TileCacheTests::testDesc()
 {
-    TileCacheDesc descA = TileDesc(0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1, true);
-    TileCacheDesc descB = TileDesc(0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2, false);
+    TileDesc descA = TileDesc(0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1, true);
+    TileDesc descB = TileDesc(0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2, false);
 
-    LOK_ASSERT_MESSAGE("versions do match", descA.getVersion() != descB.getVersion());
-    LOK_ASSERT_MESSAGE("Compare includes fields it should not", descA == descB);
+    TileDescCacheCompareEq pred;
+    LOK_ASSERT_MESSAGE("TileDesc versions do match", descA.getVersion() != descB.getVersion());
+    LOK_ASSERT_MESSAGE("TileDesc should match, ignoring unimportant fields", pred(descA, descB));
 }
 
 void TileCacheTests::testSimple()

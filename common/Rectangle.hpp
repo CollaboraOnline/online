@@ -51,65 +51,29 @@ public:
             _y2 = rectangle._y2;
     }
 
-    void setLeft(int x1)
-    {
-        _x1 = x1;
-    }
+    void setLeft(int x1) { _x1 = x1; }
 
-    int getLeft() const
-    {
-        return _x1;
-    }
+    int getLeft() const { return _x1; }
 
-    void setRight(int x2)
-    {
-        _x2 = x2;
-    }
+    void setRight(int x2) { _x2 = x2; }
 
-    int getRight() const
-    {
-        return _x2;
-    }
+    int getRight() const { return _x2; }
 
-    void setTop(int y1)
-    {
-        _y1 = y1;
-    }
+    void setTop(int y1) { _y1 = y1; }
 
-    int getTop() const
-    {
-        return _y1;
-    }
+    int getTop() const { return _y1; }
 
-    void setBottom(int y2)
-    {
-        _y2 = y2;
-    }
+    void setBottom(int y2) { _y2 = y2; }
 
-    int getBottom() const
-    {
-        return _y2;
-    }
+    int getBottom() const { return _y2; }
 
-    int getWidth()
-    {
-        return _x2 - _x1;
-    }
+    int getWidth() const { return _x2 - _x1; }
 
-    int getHeight()
-    {
-        return _y2 - _y1;
-    }
+    int getHeight() const { return _y2 - _y1; }
 
-    bool isValid()
-    {
-        return _x1 <= _x2 && _y1 <= _y2;
-    }
+    bool isValid() const { return _x1 <= _x2 && _y1 <= _y2; }
 
-    bool hasSurface()
-    {
-        return _x1 < _x2 && _y1 < _y2;
-    }
+    bool hasSurface() const { return _x1 < _x2 && _y1 < _y2; }
 
     bool intersects(const Rectangle& rOther)
     {

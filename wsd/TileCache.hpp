@@ -11,8 +11,8 @@
 
 #include <iosfwd>
 #include <memory>
-#include <thread>
 #include <string>
+#include <thread>
 #include <unordered_map>
 
 #include <Rectangle.hpp>
@@ -21,39 +21,26 @@
 
 class ClientSession;
 
-class TileCacheDesc : public TileDesc
+// The cache cares about only some properties.
+struct TileDescCacheCompareEq final
 {
-public:
-    TileCacheDesc(const TileDesc &copy)
-        : TileDesc(copy)
+    inline bool operator()(const TileDesc& l, const TileDesc& r) const
     {
-    }
-
-    // The cache cares about only some properties.
-    bool operator==(const TileCacheDesc& other) const
-    {
-        return _part == other._part &&
-               _width == other._width &&
-               _height == other._height &&
-               _tilePosX == other._tilePosX &&
-               _tilePosY == other._tilePosY &&
-               _tileWidth == other._tileWidth &&
-               _tileHeight == other._tileHeight &&
-               _normalizedViewId == other._normalizedViewId;
+        return l.getPart() == r.getPart() &&
+               l.getWidth() == r.getWidth() &&
+               l.getHeight() == r.getHeight() &&
+               l.getTilePosX() == r.getTilePosX() &&
+               l.getTilePosY() == r.getTilePosY() &&
+               l.getTileWidth() == r.getTileWidth() &&
+               l.getTileHeight() == r.getTileHeight() &&
+               l.getNormalizedViewId() == r.getNormalizedViewId();
     }
 };
 
 // The cache cares about only some properties.
-struct TileCacheDescCompareEqual
+struct TileDescCacheHasher final
 {
-    bool operator()(const TileCacheDesc &l, const TileCacheDesc &r) const { return l == r; }
-};
-
-// The cache cares about only some properties.
-struct TileCacheDescHasher
-{
-    size_t
-    operator()(const TileCacheDesc &t) const
+    inline size_t operator()(const TileDesc& t) const
     {
         size_t hash = t.getPart();
 
@@ -74,16 +61,16 @@ class TileCache
 {
     struct TileBeingRendered;
 
-    bool hasTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
     std::shared_ptr<TileBeingRendered> findTileBeingRendered(const TileDesc& tile);
 
 public:
-    typedef std::shared_ptr<std::vector<char>> Tile;
+    using Tile = std::shared_ptr<std::vector<char>>;
 
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
-    TileCache(const std::string& docURL, const std::chrono::system_clock::time_point& modifiedTime, bool dontCache = false);
+    TileCache(std::string docURL, const std::chrono::system_clock::time_point& modifiedTime,
+              bool dontCache = false);
     ~TileCache();
 
     /// Completely clear the cache contents.
@@ -107,7 +94,7 @@ public:
     /// Find the tile with this description
     Tile lookupTile(const TileDesc& tile);
 
-    void saveTileAndNotify(const TileDesc& tile, const char* data, const size_t size);
+    void saveTileAndNotify(const TileDesc& tile, const char* data, size_t size);
 
     enum StreamType {
         Font,
@@ -140,7 +127,11 @@ public:
     double getTileBeingRenderedElapsedTimeMs(const TileDesc &tileDesc) const;
 
     size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session);
-    bool hasTileBeingRendered(const TileDesc& tileDesc);
+    inline bool hasTileBeingRendered(const TileDesc& tileDesc) const
+    {
+        return _tilesBeingRendered.find(tileDesc) != _tilesBeingRendered.end();
+    }
+
     int  getTileBeingRenderedVersion(const TileDesc& tileDesc);
 
     /// Set the high watermark for tilecache size
@@ -176,8 +167,9 @@ private:
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
     static bool intersectsTile(const TileDesc &tileDesc, int part, int x, int y, int width, int height, int normalizedViewId);
 
-    void saveDataToCache(const TileDesc &desc, const char *data, const size_t size);
-    void saveDataToStreamCache(StreamType type, const std::string &fileName, const char *data, const size_t size);
+    void saveDataToCache(const TileDesc& desc, const char* data, size_t size);
+    void saveDataToStreamCache(StreamType type, const std::string& fileName, const char* data,
+                               size_t size);
 
     const std::string _docURL;
 
@@ -192,16 +184,16 @@ private:
     size_t _maxCacheSize;
 
     // FIXME: should we have a tile-desc to WID map instead and a simpler lookup ?
-    std::unordered_map<TileCacheDesc, Tile,
-                       TileCacheDescHasher,
-                       TileCacheDescCompareEqual> _cache;
+    std::unordered_map<TileDesc, Tile,
+                       TileDescCacheHasher,
+                       TileDescCacheCompareEq> _cache;
     // FIXME: TileBeingRendered contains TileDesc too ...
-    std::unordered_map<TileCacheDesc, std::shared_ptr<TileBeingRendered>,
-                       TileCacheDescHasher,
-                       TileCacheDescCompareEqual> _tilesBeingRendered;
+    std::unordered_map<TileDesc, std::shared_ptr<TileBeingRendered>,
+                       TileDescCacheHasher,
+                       TileDescCacheCompareEq> _tilesBeingRendered;
 
     // old-style file-name to data grab-bag.
-    std::map<std::string, Tile> _streamCache[(int)StreamType::Last];
+    std::map<std::string, Tile> _streamCache[static_cast<int>(StreamType::Last)];
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
