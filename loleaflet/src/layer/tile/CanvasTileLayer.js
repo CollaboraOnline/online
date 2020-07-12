@@ -1136,7 +1136,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		var maxBorderWidth = 5;
 		var tileBorderSrcs;
 
-		if (this._map._permission === 'edit') {
+		if (this._map.isPermissionEdit()) {
 			tilesToFetch = 5;
 			maxBorderWidth = 3;
 		}

@@ -39,7 +39,7 @@ L.Map.include({
 	},
 
 	_enterEditMode: function (perm) {
-		if (this._permission == 'readonly' && (window.mode.isMobile() || window.mode.isTablet())) {
+		if (this.isPermissionReadOnly() && (window.mode.isMobile() || window.mode.isTablet())) {
 			this.sendInitUNOCommands();
 		}
 		this._permission = perm;
@@ -70,7 +70,7 @@ L.Map.include({
 	},
 
 	enableSelection: function () {
-		if (this._permission === 'edit') {
+		if (this.isPermissionEdit()) {
 			return;
 		}
 		this._socket.sendMessage('requestloksession');
@@ -78,7 +78,7 @@ L.Map.include({
 	},
 
 	disableSelection: function () {
-		if (this._permission === 'edit') {
+		if (this.isPermissionEdit()) {
 			return;
 		}
 		this.dragging.enable();
@@ -94,5 +94,13 @@ L.Map.include({
 	
 	isPermissionEditForComments: function() {
 		return true;
+	},
+	
+	isPermissionReadOnly: function() {
+		return this._permission === 'readonly';
+	},
+	
+	isPermissionEdit: function() {
+		return this._permission === 'edit';
 	}
 });

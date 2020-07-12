@@ -207,7 +207,7 @@ L.Control.PartsPreview = L.Control.extend({
 		if (!window.mode.isDesktop()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
 			.on('press', L.bind(function () {
-				if (this._map._permission === 'edit') {
+				if (this._map.isPermissionEdit()) {
 					setTimeout(function () {
 						w2ui['actionbar'].click('mobile_wizard');
 					}, 0);

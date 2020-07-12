@@ -213,7 +213,7 @@ L.TileLayer.include({
 		this._updateTableMarkers();
 	},
 	_onTableSelectedMsg: function (textMsg) {
-		if (this._map._permission !== 'edit') {
+		if (!this._map.isPermissionEdit()) {
 			this._clearTableMarkers();
 			return;
 		}

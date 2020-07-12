@@ -993,7 +993,7 @@ L.Control.LokDialog = L.Control.extend({
 	_launchSidebar: function(id, width, height) {
 		console.log('_launchSidebar: start: id: ' + id + ', width: ' + width + ', height: ' + height);
 		if ((window.mode.isMobile() || window.mode.isTablet())
-		    && this._map._permission != 'edit')
+			&& !this._map.isPermissionEdit())
 			return;
 
 		$('#sidebar-dock-wrapper').css('display', 'block');

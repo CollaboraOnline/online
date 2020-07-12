@@ -286,7 +286,7 @@ L.Map.WOPI = L.Handler.extend({
 			if (msg.Values) {
 				if (msg.Values.id && !w2ui['editbar'].get(msg.Values.id)
 				    && msg.Values.imgurl) {
-					if (this._map._permission === 'edit') {
+					if (this._map.isPermissionEdit()) {
 						// add the css rule for the image
 						var style = $('html > head > style');
 						if (style.length == 0)
@@ -316,7 +316,7 @@ L.Map.WOPI = L.Handler.extend({
 							toolbarUpMobileItems.splice(idx, 0, msg.Values.id);
 						}
 					}
-					else if (this._map._permission === 'readonly') {
+					else if (this._map.isPermissionReadOnly()) {
 						// Just add a menu entry for it
 						this._map.fire('addmenu', {id: msg.Values.id, label: msg.Values.hint});
 					}

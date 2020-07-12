@@ -324,7 +324,7 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		if (this._map._permission === 'edit') {
+		if (this._map.isPermissionEdit()) {
 			docLayer._resetPreFetching();
 
 			if (this._ignoreKeyEvent(ev)) {
@@ -519,7 +519,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		case 83: // s
 			// Save only when not read-only.
-			if (this._map._permission !== 'readonly') {
+			if (!this._map.isPermissionReadOnly()) {
 				this._map.fire('postMessage', {msgId: 'UI_Save'});
 				if (!this._map._disableDefaultAction['UI_Save']) {
 					this._map.save(false /* An explicit save should terminate cell edit */,

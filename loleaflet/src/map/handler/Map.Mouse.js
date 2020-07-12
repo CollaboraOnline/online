@@ -141,7 +141,7 @@ L.Map.Mouse = L.Handler.extend({
 				this._clickCount = 1;
 				mousePos = docLayer._latLngToTwips(e.latlng);
 				var timeOut = 250;
-				if (this._map._permission === 'edit') {
+				if (this._map.isPermissionEdit()) {
 					timeOut = 0;
 				}
 				this._mouseEventsQueue.push(L.bind(function() {
