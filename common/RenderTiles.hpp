@@ -10,9 +10,14 @@
 #pragma once
 
 #include <cassert>
+#include <memory>
+#include <queue>
 #include <thread>
+#include <unordered_map>
+#include <vector>
 
 #include "Png.hpp"
+#include "Rectangle.hpp"
 #include "TileDesc.hpp"
 
 #if ENABLE_DEBUG
