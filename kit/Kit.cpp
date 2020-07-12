@@ -65,7 +65,6 @@
 #include <Unit.hpp>
 #include <UserMessages.hpp>
 #include <Util.hpp>
-#include "Delta.hpp"
 #include "Watermark.hpp"
 #include "RenderTiles.hpp"
 #include "SetupKitEnvironment.hpp"

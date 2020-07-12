@@ -74,7 +74,6 @@ private:
     size_t _cacheHits;
     size_t _cacheTests;
     TileWireId _nextId;
-    DeltaGenerator _deltaGen;
 
     std::unordered_map< TileBinaryHash, CacheEntry > _cache;
     // This uses little storage so can be much larger
@@ -504,15 +503,6 @@ namespace RenderTiles
 
                         PngCache::CacheData data(new std::vector< char >() );
                         data->reserve(pixmapWidth * pixmapHeight * 1);
-
-                        /*
-                         * Disable for now - pushed in error.
-                         *
-                         if (_deltaGen.createDelta(pixmap, startX, startY, width, height,
-                                                   bufferWidth, bufferHeight,
-                                                   output, wid, oldWid))
-                         else ...
-                        */
 
                         LOG_DBG("Encode a new png for tile #" << tileIndex);
                         if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
