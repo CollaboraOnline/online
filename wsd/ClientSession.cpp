@@ -971,7 +971,10 @@ bool ClientSession::filterMessage(const std::string& message) const
         }
         else if (tokens.equals(0, "uno"))
         {
-            if (tokens.size() > 1 && (tokens.equals(1, ".uno:ExecuteSearch") || tokens.equals(1, ".uno:EditAnnotation")))
+            if (tokens.size() > 1 && (tokens.equals(1, ".uno:ExecuteSearch")
+                || tokens.equals(1, ".uno:EditAnnotation")
+                || tokens.equals(1, ".uno:InsertAnnotation")
+                || tokens.equals(1, ".uno:DeleteAnnotation")))
             {
                 allowed = true;
             }
