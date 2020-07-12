@@ -238,7 +238,12 @@ public:
         _cursorHeight = h;
     }
 
-    void invalidateTiles(const std::string& tiles, int normalizedViewId);
+    void invalidateTiles(const std::string& tiles, int normalizedViewId)
+    {
+        // Remove from cache.
+        _tileCache->invalidateTiles(tiles, normalizedViewId);
+    }
+
     void handleTileRequest(TileDesc& tile,
                            const std::shared_ptr<ClientSession>& session);
     void handleTileCombinedRequest(TileCombined& tileCombined,

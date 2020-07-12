@@ -282,7 +282,7 @@ private:
     std::string _clipboardKeys[2];
 
     /// TileID's of the sent tiles. Push by sending and pop by tileprocessed message from the client.
-    std::list<std::pair<std::string, std::chrono::steady_clock::time_point>> _tilesOnFly;
+    std::vector<std::pair<std::string, std::chrono::steady_clock::time_point>> _tilesOnFly;
 
     /// Requested tiles are stored in this list, before we can send them to the client
     std::deque<TileDesc> _requestedTiles;

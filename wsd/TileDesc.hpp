@@ -19,8 +19,8 @@
 #include <Protocol.hpp>
 
 #define TILE_WIRE_ID
-typedef uint32_t TileWireId;
-typedef uint64_t TileBinaryHash;
+using TileWireId = uint32_t;
+using TileBinaryHash = uint64_t;
 
 /// Tile Descriptor
 /// Represents a tile's coordinates and dimensions.
@@ -57,6 +57,7 @@ public:
             throw BadArgumentException("Invalid tile descriptor.");
         }
     }
+
     int getNormalizedViewId() const { return _normalizedViewId; }
     void setNormalizedViewId(const int normalizedViewId) { _normalizedViewId = normalizedViewId; }
     int getPart() const { return _part; }
@@ -144,14 +145,12 @@ public:
     {
         if (!onSameRow(other))
             return false;
-        int gridX = getTilePosX() / getTileWidth();
-        int gridXOther = other.getTilePosX() / other.getTileWidth();
-        int delta = gridX - gridXOther;
+
+        const int gridX = getTilePosX() / getTileWidth();
+        const int gridXOther = other.getTilePosX() / other.getTileWidth();
+        const int delta = gridX - gridXOther;
         // a 4k screen - is sixteen 256 pixel wide tiles wide.
-        if (delta < -16 || delta > 16)
-            return false;
-        else
-            return true;
+        return (delta >= -16 && delta <= 16);
     }
 
     /// Serialize this instance into a string.
@@ -546,7 +545,7 @@ public:
     }
 
     /// To support legacy / under-used renderTile
-    TileCombined(const TileDesc &desc)
+    explicit TileCombined(const TileDesc &desc)
     {
         _part = desc.getPart();
         _width = desc.getWidth();

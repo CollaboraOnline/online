@@ -1663,10 +1663,10 @@ void ClientSession::removeOutdatedTilesOnFly()
 size_t ClientSession::countIdenticalTilesOnFly(const TileDesc& tile) const
 {
     size_t count = 0;
-    std::string tileID = tile.generateID();
-    for(auto& tileItem : _tilesOnFly)
+    const std::string tileID = tile.generateID();
+    for (const auto& tileItem : _tilesOnFly)
     {
-        if(tileItem.first == tileID)
+        if (tileItem.first == tileID)
             ++count;
     }
     return count;

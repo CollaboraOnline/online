@@ -1658,12 +1658,6 @@ size_t DocumentBroker::getMemorySize() const
         _sessions.size() * sizeof(ClientSession);
 }
 
-void DocumentBroker::invalidateTiles(const std::string& tiles, int normalizedViewId)
-{
-    // Remove from cache.
-    _tileCache->invalidateTiles(tiles, normalizedViewId);
-}
-
 void DocumentBroker::handleTileRequest(TileDesc& tile,
                                        const std::shared_ptr<ClientSession>& session)
 {
@@ -1879,7 +1873,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
         size_t delayedTiles = 0;
         std::vector<TileDesc> tilesNeedsRendering;
         size_t beingRendered = _tileCache->countTilesBeingRenderedForSession(session);
-        while(session->getTilesOnFlyCount() + beingRendered < tilesOnFlyUpperLimit &&
+        while (session->getTilesOnFlyCount() + beingRendered < tilesOnFlyUpperLimit &&
               !requestedTiles.empty() &&
               // If we delayed all tiles we don't send any tile (we will when next tileprocessed message arrives)
               delayedTiles < requestedTiles.size())
@@ -1893,7 +1887,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                 requestedTiles.push_back(requestedTiles.front());
                 requestedTiles.pop_front();
                 delayedTiles += 1;
-                LOG_INF("Requested tile was delayed!");
+                LOG_DBG("Requested tile " << tile.getWireId() << " was delayed (already sent a version)!");
                 continue;
             }
 
