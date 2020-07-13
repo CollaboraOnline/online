@@ -145,7 +145,7 @@ L.Clipboard = L.Class.extend({
 		return this._substProductName(this._originWrapBody(
 		    '  <body lang="' + lang + '" dir="ltr">\n' +
 		    '    <p></p>\n' +
-		    '  </body>\n', true
+		    '  </body>\n', false
 		));
 	},
 
