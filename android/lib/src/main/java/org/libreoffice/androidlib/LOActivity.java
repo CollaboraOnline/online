@@ -101,7 +101,7 @@ public class LOActivity extends AppCompatActivity {
     private URI documentUri;
 
     private String urlToLoad;
-    private WebView mWebView;
+    private WebView mWebView = null;
     private SharedPreferences sPrefs;
     private Handler mMainHandler = null;
     private RateAppController rateAppController;
@@ -544,6 +544,7 @@ public class LOActivity extends AppCompatActivity {
         if (viewGroup != null)
             viewGroup.removeView(mWebView);
         mWebView.destroy();
+        mWebView = null;
 
         // Most probably the native part has already got a 'BYE' from
         // finishWithProgress(), but it is actually better to send it twice
@@ -780,20 +781,24 @@ public class LOActivity extends AppCompatActivity {
      */
     void callFakeWebsocketOnMessage(final String message) {
         // call from the UI thread
-        mWebView.post(new Runnable() {
-            public void run() {
-                Log.i(TAG, "Forwarding to the WebView: " + message);
+        if (mWebView != null)
+            mWebView.post(new Runnable() {
+                public void run() {
+                    if (mWebView != null)
+                        Log.i(TAG, "Skipped forwarding to the WebView: " + message);
 
-                /* Debug only: in case the message is too long, truncated in the logcat, and you need to see it.
-                final int size = 80;
-                for (int start = 0; start < message.length(); start += size) {
-                    Log.i(TAG, "split: " + message.substring(start, Math.min(message.length(), start + size)));
+                    Log.i(TAG, "Forwarding to the WebView: " + message);
+
+                    /* Debug only: in case the message is too long, truncated in the logcat, and you need to see it.
+                    final int size = 80;
+                    for (int start = 0; start < message.length(); start += size) {
+                        Log.i(TAG, "split: " + message.substring(start, Math.min(message.length(), start + size)));
+                    }
+                    */
+
+                    mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data':" + message + "});");
                 }
-                */
-
-                mWebView.loadUrl("javascript:window.TheFakeWebSocket.onmessage({'data':" + message + "});");
-            }
-        });
+            });
 
         // update progress bar when loading
         if (message.startsWith("'statusindicator") || message.startsWith("'error:")) {
