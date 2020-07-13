@@ -234,6 +234,9 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 
 	_onUpdateParts: function (e) {
 		if (typeof this._prevSelectedPart === 'number' && !e.source) {
+			this._clearMsgReplayStore();
+			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
+			this._switchSplitPanesContext();
 			this.hideAnnotations(this._prevSelectedPart);
 			this.showAnnotations();
 		}
@@ -445,9 +448,7 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (!this.isHiddenPart(part)) {
-			this._clearMsgReplayStore();
-			this._switchSplitPanesContext();
-			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
+			this.refreshViewData(undefined, true /* compatDataSrcOnly */, false /* sheetGeometryChanged */);
 		}
 	},
 
@@ -723,10 +724,10 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 			this._sheetGeomFirstWait = false;
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
 				this._tileWidthTwips, this._tileHeightTwips,
-				this._tileSize, this._tilePixelScale);
+				this._tileSize, this._tilePixelScale, this._selectedPart);
 		}
 		else {
-			this.sheetGeometry.update(jsonMsgObj);
+			this.sheetGeometry.update(jsonMsgObj, /* checkCompleteness */ false, this._selectedPart);
 		}
 
 		this._replayPrintTwipsMsgs();
@@ -1073,17 +1074,19 @@ L.SheetGeometry = L.Class.extend({
 	// all flags (ie 'columns', 'rows', 'sizes', 'hidden', 'filtered',
 	// 'groups') enabled.
 	initialize: function (sheetGeomJSON, tileWidthTwips, tileHeightTwips,
-		tileSizeCSSPixels, dpiScale) {
+		tileSizeCSSPixels, dpiScale, part) {
 
 		if (typeof sheetGeomJSON !== 'object' ||
 			typeof tileWidthTwips !== 'number' ||
 			typeof tileHeightTwips !== 'number' ||
 			typeof tileSizeCSSPixels !== 'number' ||
-			typeof dpiScale !== 'number') {
+			typeof dpiScale !== 'number' ||
+			typeof part !== 'number') {
 			console.error('Incorrect constructor argument types or missing required arguments');
 			return;
 		}
 
+		this._part = -1;
 		this._columns = new L.SheetDimension();
 		this._rows = new L.SheetDimension();
 		this._unoCommand = '.uno:SheetGeometryData';
@@ -1092,10 +1095,10 @@ L.SheetGeometry = L.Class.extend({
 		this.setTileGeometryData(tileWidthTwips, tileHeightTwips, tileSizeCSSPixels,
 			dpiScale, false /* update position info ?*/);
 
-		this.update(sheetGeomJSON, /* checkCompleteness */ true);
+		this.update(sheetGeomJSON, /* checkCompleteness */ true, part);
 	},
 
-	update: function (sheetGeomJSON, checkCompleteness) {
+	update: function (sheetGeomJSON, checkCompleteness, part) {
 
 		if (!this._testValidity(sheetGeomJSON, checkCompleteness)) {
 			return false;
@@ -1116,10 +1119,21 @@ L.SheetGeometry = L.Class.extend({
 			}
 		}
 
+		if (updateOK) {
+			console.assert(typeof part === 'number', 'part must be a number');
+			if (part !== this._part) {
+				this._part = part;
+			}
+		}
+
 		this._columns.setMaxIndex(+sheetGeomJSON.maxtiledcolumn);
 		this._rows.setMaxIndex(+sheetGeomJSON.maxtiledrow);
 
 		return updateOK;
+	},
+
+	getPart: function () {
+		return this._part;
 	},
 
 	setTileGeometryData: function (tileWidthTwips, tileHeightTwips, tileSizeCSSPixels,
