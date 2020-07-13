@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-05-15 08:14+0000\n"
-"Last-Translator: Muhammet Kara <kara@libreoffice.org>\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"PO-Revision-Date: 2020-07-10 07:58+0000\n"
+"Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
 "Language-Team: Turkish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /tr/libo_online/loleaflet-help-tr.po\n"
 "X-Pootle-Revision: 828276\n"
 
@@ -1115,7 +1115,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:283-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
-msgstr ""
+msgstr "Tarayıcınızın özelliklerine bağlı olarak yazdırma penceresi görünür ya da \"PDF olarak dışa aktarılsın mı\" açılır penceresi görünür. İndirdiğiniz PDF dosyasını bilgisayarınızdaki bir PDF görüntüleyiciyle açıp yazdırabilirsiniz."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "When closing a document, it is automatically saved if it has been changed."
@@ -1123,7 +1123,7 @@ msgstr "Belge kapatılırken eğer değişiklik yapılmışsa otomatik olarak ka
 
 #: html/loleaflet-help.html%2Bdiv.p:287-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
-msgstr ""
+msgstr "Daha önce bir ofis programı kullandıysanız belge düzenleme ekranı size tanıdık gelecektir. Daha önce gördüğünüz ekranlardan farklı olarak şunlar sayılabilir:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:288-5
 msgid "Copy and Paste"
@@ -1139,15 +1139,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:291-5
 msgid "Document repair"
-msgstr ""
+msgstr "Belge Kurtarma"
 
 #: html/loleaflet-help.html%2Bdiv.p:292-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
-msgstr ""
+msgstr "Eş zamanlı olarak birden fazla kullanıcı aynı belgeyi düzenlediğinde birden fazla kullanıcının yaptığı değişiklik bazı karışıklıklara sebep olabilir. Belge kurtarma fonksiyonu kullanıcılara diğer yazarların yaptıkları değişiklikleri önceki bir duruma geri alma olanağı verir."
 
 #: html/loleaflet-help.html%2Bdiv.p:293-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
-msgstr ""
+msgstr "Önceki bir duruma geri dönmek için fareyle seçin ve <span class=\"ui\">Duruma dön</span> ü tıklayın."
 
 #: html/loleaflet-help.html%2Bdiv.p:295-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
@@ -1155,7 +1155,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:296-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Kullanımda olmayan belge"
 
 #: html/loleaflet-help.html%2Bdiv.p:297-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
@@ -1167,7 +1167,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:300-5
 msgid "Pasting"
-msgstr ""
+msgstr "Yapıştırmak"
 
 #: html/loleaflet-help.html%2Bdiv.p:301-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
@@ -1191,7 +1191,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:308-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Grafik eklemek"
 
 #: html/loleaflet-help.html%2Bdiv.p:309-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
@@ -1255,7 +1255,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:331-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "İmla denetimi"
 
 #: html/loleaflet-help.html%2Bdiv.p:332-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
@@ -1311,11 +1311,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:365-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"
-msgstr ""
+msgstr "<span class=\"def\">Veri doğrulama: </spam> Her hücre için geçerli olacak girdiler tanımlayabilirsiniz. Bir hücreye yapılacak geçersiz girdiler reddedilecektir. Veri doğrulamayı etkinleştirmek için:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
-msgstr ""
+msgstr "<span class=\"ui\">Veri</span> menüsünden <span class=\"ui\">Geçerlilik</span>i seçin. <span class=\"ui\">Geçerlilik</span> iletişim penceresi açılır."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:371-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."

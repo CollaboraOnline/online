@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-15 22:15+0200\n"
-"PO-Revision-Date: 2020-06-21 14:29+0000\n"
+"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"PO-Revision-Date: 2020-07-08 21:12+0000\n"
 "Last-Translator: Ming Hua <plateauwolf@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-help-zh_CN.po\n"
 "X-Pootle-Revision: 3806428\n"
 
@@ -25,7 +25,7 @@ msgstr "通用快捷键"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
-msgstr "撤销"
+msgstr "撤消"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-49
 msgid "Ctrl + Z"
@@ -33,7 +33,7 @@ msgstr "Ctrl + Z"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Redo"
-msgstr "重做"
+msgstr "恢复"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl + Y"
@@ -994,7 +994,7 @@ msgstr "编辑演示文稿"
 #: html/loleaflet-help.html%2Bdiv.div.p:234-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:424-5
 msgid "Slide show"
-msgstr ""
+msgstr "幻灯片放映"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:235-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:428-5
@@ -1283,27 +1283,27 @@ msgstr "公式语言是电子表格用户都很熟悉的格式，详见 <a href=
 
 #: html/loleaflet-help.html%2Bdiv.div.p:349-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
-msgstr ""
+msgstr "<span class=\"def\">直接格式：</span>您可以使用菜单、工具栏或快捷菜单中的格式设置来直接设置电子表格中单元格、行、列和工作表的格式。直接格式仅应用于当前选中的对象。要设置单元格的格式，可以使用菜单或按  <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span> 组合键。该对话框可设置复杂的自定义数值格式，以及字体、复杂边框、背景、单元格保护等其他选项。"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:353-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."
-msgstr ""
+msgstr "<span class=\"def\">数据排序：</span>您可对一组数值或文本进行升序或降序排列。<span class=\"def\">%productName</span> 会自动检测表头，也会自动检测邻近的列以扩大选中区域。"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:354-5
 msgid "<span class=\"def\">Filtering data:</span> Filters and advanced filters allow you to work on certain filtered rows (records) of a data range. In the spreadsheets in <span class=\"productname\">%productName</span> there are various possibilities for applying filters."
-msgstr ""
+msgstr "<span class=\"def\">筛选数据：</span>筛选和高级筛选让您可以对一个数据范围内符合特定条件的行（记录）进行操作。<span class=\"productname\">%productName</span> 的电子表格提供数种不同的筛选方法。"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:357-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
-msgstr ""
+msgstr "<span class=\"ui\">自动筛选</span>功能的用途之一，是快速筛选并仅显示在某一字段中数据相同的记录。"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:360-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
-msgstr ""
+msgstr "在<span class=\"ui\">标准筛选</span>对话框中，您可以定义特定字段中允许数据取值的范围。您也可以在标准筛选中使用逻辑与 (AND) 或者逻辑或 (OR) 运算符来连接两个条件。"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:361-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
-msgstr ""
+msgstr "<span class=\"ui\">高级筛选</span>允许最多八个筛选条件。在高级筛选时您需要直接在工作表中输入筛选条件。"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:363-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
