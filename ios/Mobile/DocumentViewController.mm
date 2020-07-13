@@ -490,6 +490,15 @@ static IMP standardImpOfInputAccessoryView = nil;
                                  completion:nil];
                 return;
             }
+        } else if ([message.body hasPrefix:@"REMOVE "]) {
+            // Sent from the img element's onload event handler. Remove tile file once it has been loaded.
+            NSArray<NSString*> *messageBodyItems = [message.body componentsSeparatedByString:@" "];
+            assert([messageBodyItems count] == 2);
+            NSURL *tile = [NSURL URLWithString:messageBodyItems[1]];
+            if (unlink([[tile path] UTF8String]) == -1) {
+                LOG_SYS("Could not unlink tile " << [[tile path] UTF8String]);
+            }
+            return;
         }
 
         const char *buf = [message.body UTF8String];

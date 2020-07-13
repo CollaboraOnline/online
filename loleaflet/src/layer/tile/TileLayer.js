@@ -2066,6 +2066,9 @@ L.TileLayer = L.GridLayer.extend({
 
 	_tileOnLoad: function (done, tile) {
 		done(null, tile);
+		if (window.ThisIsTheiOSApp) {
+			window.webkit.messageHandlers.lool.postMessage('REMOVE ' + tile.src, '*');
+		}
 	},
 
 	_tileOnError: function (done, tile, e) {

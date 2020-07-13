@@ -794,7 +794,7 @@ L.Socket = L.Class.extend({
 			}
 		}
 		else if (window.ThisIsTheiOSApp) {
-			// In the iOS app, the native code sends us the PNG tile already as a data: URL after the newline
+			// In the iOS app, the native code sends us the URL of the BMP for the tile after the newline
 			var newlineIndex = textMsg.indexOf('\n');
 			if (newlineIndex > 0) {
 				img = textMsg.substring(newlineIndex+1);
