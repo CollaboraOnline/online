@@ -3075,11 +3075,11 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onUpdateCellResizeMarkers: function () {
-		var singleCellOnDesktop = window.mode.isDesktop()
-									&& !this._cellSelectionArea
-									&& (this._cellCursor && !this._isEmptyRectangle(this._cellCursor));
+		var selectionOnDesktop = window.mode.isDesktop()
+									&& (this._cellSelectionArea
+									|| (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)));
 
-		if (!singleCellOnDesktop &&
+		if (!selectionOnDesktop &&
 			(this._selections.getLayers().length !== 0 || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
 			if (this._isEmptyRectangle(this._cellSelectionArea) && this._isEmptyRectangle(this._cellCursor)) {
 				return;
@@ -3115,7 +3115,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		}
-		else if (singleCellOnDesktop) {
+		else if (selectionOnDesktop) {
 			cellRectangle = this._cellSelectionArea ? this._cellSelectionArea : this._cellCursor;
 
 			if (this._cellAutoFillArea) {
