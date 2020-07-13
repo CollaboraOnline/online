@@ -44,10 +44,10 @@ L.SplitPanesContext = L.Class.extend({
 		return this._docLayer.getSnapDocPosY(rawMax);
 	},
 
-	setSplitPos: function (splitX, splitY) {
+	setSplitPos: function (splitX, splitY, forceUpdate) {
 
-		this.setHorizSplitPos(splitX);
-		this.setVertSplitPos(splitY);
+		this.setHorizSplitPos(splitX, forceUpdate);
+		this.setVertSplitPos(splitY, forceUpdate);
 	},
 
 	alignSplitPos: function () {
@@ -81,11 +81,14 @@ L.SplitPanesContext = L.Class.extend({
 			this._docLayer.getSnapDocPosY(split);
 	},
 
-	setHorizSplitPos: function (splitX) {
+	setHorizSplitPos: function (splitX, forceUpdate) {
 
 		console.assert(typeof splitX === 'number', 'splitX must be a number');
 
 		if (this._splitPos.x === splitX) {
+			if (forceUpdate) {
+				this._updateXSplitter();
+			}
 			return;
 		}
 
@@ -95,11 +98,14 @@ L.SplitPanesContext = L.Class.extend({
 		this._map.fire('splitposchanged');
 	},
 
-	setVertSplitPos: function (splitY) {
+	setVertSplitPos: function (splitY, forceUpdate) {
 
 		console.assert(typeof splitY === 'number', 'splitY must be a number');
 
 		if (this._splitPos.y === splitY) {
+			if (forceUpdate) {
+				this._updateYSplitter();
+			}
 			return;
 		}
 

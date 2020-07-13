@@ -742,12 +742,12 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		this._map.fire('sheetgeometrychanged');
 	},
 
-	_updateSplitPos: function () {
+	_updateSplitPos: function (force) {
 		if (this._splitPanesContext) {
 			if (this._splitPanesContext._splitCell) {
 				var splitCell = this._splitPanesContext._splitCell;
 				var newSplitPos = this.sheetGeometry.getCellRect(splitCell.x, splitCell.y).min;
-				this._splitPanesContext.setSplitPos(newSplitPos.x, newSplitPos.y); // will update the splitters.
+				this._splitPanesContext.setSplitPos(newSplitPos.x, newSplitPos.y, force); // will update the splitters.
 			}
 			else {
 				// Can happen only on load.
@@ -787,7 +787,8 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 
 		this._splitPanesContext = spContext;
 		if (this.sheetGeometry) {
-			this._updateSplitPos();
+			// Force update of the splitter lines.
+			this._updateSplitPos(true);
 		}
 	},
 
