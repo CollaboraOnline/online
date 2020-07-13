@@ -175,6 +175,8 @@ w2ui-toolbar {
 	background-repeat: no-repeat;
 	padding-right: 24px;
 	max-width: 100%;
+	overflow: hidden;
+	text-overflow:ellipsis;
 }
 
 #document-name-input.editable:focus {
