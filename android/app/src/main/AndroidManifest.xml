@@ -116,6 +116,53 @@
                 <data android:mimeType="image/x-wmf" />
                 <data android:mimeType="image/svg+xml" />
             </intent-filter>
+            <!-- HACK to support ODF files on Chrome OS, inspired by
+                 https://stackoverflow.com/questions/1733195/android-intent-filter-for-a-particular-file-extension
+
+                 Seems like the ODF mime types are not available on Chrome OS,
+                 so we have to explicitly match the extension.  But the ".*" is
+                 not greedy, so the matching stops at the first "\\.", so we
+                 have to list several variants to handle files like "blah.ugh.odt".
+
+                 Additionally, this must not be in the above intent-filter
+                 section, because the android:mimeType="*/*" would make it
+                 make problems there. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:host="*" />
+                <data android:mimeType="*/*" />
+
+                <data android:pathPattern=".*\\.odt" />
+                <data android:pathPattern=".*\\..*\\.odt" />
+                <data android:pathPattern=".*\\..*\\..*\\.odt" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.odt" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.odt" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.odt" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\.odt" />
+
+                <data android:pathPattern=".*\\.ods" />
+                <data android:pathPattern=".*\\..*\\.ods" />
+                <data android:pathPattern=".*\\..*\\..*\\.ods" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.ods" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.ods" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.ods" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\.ods" />
+
+                <data android:pathPattern=".*\\.odp" />
+                <data android:pathPattern=".*\\..*\\.odp" />
+                <data android:pathPattern=".*\\..*\\..*\\.odp" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.odp" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.odp" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.odp" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\.odp" />
+            </intent-filter>
         </activity>
 
         <!-- The Activity to show license or notice -->
