@@ -13,24 +13,22 @@ L.Map.include({
 
 				var that = this;
 				button.on('click', function () {
-					button.hide();
-					that._enterEditMode('edit');
-					that.fire('editorgotfocus');
-					// In the iOS/android app, just clicking the mobile-edit-button is
-					// not reason enough to pop up the on-screen keyboard.
-					if (!(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp))
-						that.focus();
+					that._switchToEditMode();
 				});
 
 				// temporarily, before the user touches the floating action button
 				this._enterReadOnlyMode('readonly');
+			}
+			else if (this.options.canTryLock) {
+				// This is a success response to an attempt to lock using mobile-edit-button
+				this._switchToEditMode();
 			}
 			else {
 				this._enterEditMode(perm);
 			}
 		}
 		else if (perm === 'view' || perm === 'readonly') {
-			if (window.mode.isMobile() || window.mode.isTablet()) {
+			if (!this.options.canTryLock && (window.mode.isMobile() || window.mode.isTablet())) {
 				$('#mobile-edit-button').hide();
 			}
 
@@ -39,13 +37,50 @@ L.Map.include({
 	},
 
 	onLockFailed: function(reason) {
-		var alertMsg = _('The document could not be locked, and is opened in read-only mode.');
-		if (reason) {
-			alertMsg += _('\nServer returned this reason: "') + reason + '"';
-		}
+		if (this.options.canTryLock === undefined) {
+			// This is the initial notification. This status is not permanent.
+			// Allow to try to lock the file for edit again.
+			this.options.canTryLock = true;
 
-		vex.dialog.alert({ message: alertMsg });
-		this.options.canTryLock = true;
+			var alertMsg = _('The document could not be locked, and is opened in read-only mode.');
+			if (reason) {
+				alertMsg += _('\nServer returned this reason: "') + reason + '"';
+			}
+			vex.dialog.alert({ message: alertMsg });
+
+			var button = $('#mobile-edit-button');
+			// TODO: modify the icon here
+			button.show();
+			button.off('click');
+
+			var that = this;
+			button.on('click', function () {
+				that._socket.sendMessage('attemptlock');
+			});
+		}
+		else if (this.options.canTryLock) {
+			// This is a failed response to an attempt to lock using mobile-edit-button
+			alertMsg = _('The document could not be locked.');
+			if (reason) {
+				alertMsg += _('\nServer returned this reason: "') + reason + '"';
+			}
+			vex.dialog.alert({ message: alertMsg });
+		}
+		// do nothing if this.options.canTryLock is defined and is false
+	},
+
+	// from read-only to edit mode
+	_switchToEditMode: function () {
+		this.options.canTryLock = false; // don't respond to lockfailed anymore
+		$('#mobile-edit-button').hide();
+		this._enterEditMode('edit');
+		if (window.mode.isMobile() || window.mode.isTablet()) {
+			this.fire('editorgotfocus');
+			// In the iOS/android app, just clicking the mobile-edit-button is
+			// not reason enough to pop up the on-screen keyboard.
+			if (!(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp))
+				this.focus();
+		}
 	},
 
 	_enterEditMode: function (perm) {

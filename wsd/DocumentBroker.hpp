@@ -170,6 +170,9 @@ public:
     /// Notify that the load has completed
     virtual void setLoaded();
 
+    /// If not yet locked, try to lock
+    bool attemptLock(const ClientSession& session, std::string& failReason);
+
     bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
 
     /// Save the document to Storage if it needs persisting.

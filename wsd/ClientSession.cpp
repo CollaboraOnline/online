@@ -736,6 +736,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return true;
         }
     }
+    else if (tokens.equals(0, "attemptlock"))
+    {
+        return attemptLock(docBroker);
+    }
     else
     {
         LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
@@ -990,6 +994,24 @@ void ClientSession::setLockFailed(const std::string& sReason)
     _isLockFailed = true;
     setReadOnly();
     sendTextFrame("lockfailed:" + sReason);
+}
+
+bool ClientSession::attemptLock(const std::shared_ptr<DocumentBroker>& docBroker)
+{
+    if (!isReadOnly())
+        return true;
+    // We are only allowed to change into edit mode if the read-only mode is because of failed lock
+    if (!_isLockFailed)
+        return false;
+
+    std::string failReason;
+    const bool bResult = docBroker->attemptLock(*this, failReason);
+    if (bResult)
+        setReadOnly(false);
+    else
+        sendTextFrame("lockfailed:" + failReason);
+
+    return bResult;
 }
 
 bool ClientSession::hasQueuedMessages() const
