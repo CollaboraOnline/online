@@ -334,6 +334,10 @@ L.Socket = L.Class.extend({
 
 			return;
 		}
+		else if (textMsg.startsWith('lockfailed:')) {
+			this._map.onLockFailed(textMsg.substring('lockfailed:'.length).trim());
+			return;
+		}
 		else if (textMsg.startsWith('wopi: ')) {
 			// Handle WOPI related messages
 			var wopiInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));

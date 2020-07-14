@@ -2,7 +2,7 @@
 /*
  * Document permission handler
  */
-/* global $ */
+/* global $ _ vex */
 L.Map.include({
 	setPermission: function (perm) {
 		if (perm === 'edit') {
@@ -36,6 +36,16 @@ L.Map.include({
 
 			this._enterReadOnlyMode(perm);
 		}
+	},
+
+	onLockFailed: function(reason) {
+		var alertMsg = _('The document could not be locked, and is opened in read-only mode.');
+		if (reason) {
+			alertMsg += _('\nServer returned this reason: "') + reason + '"';
+		}
+
+		vex.dialog.alert({ message: alertMsg });
+		this.options.canTryLock = true;
 	},
 
 	_enterEditMode: function (perm) {

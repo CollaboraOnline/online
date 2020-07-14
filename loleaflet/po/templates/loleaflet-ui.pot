@@ -898,6 +898,16 @@ msgstr ""
 msgid "Start Presentation"
 msgstr ""
 
+#: src/control/Permission.js:42
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr ""
+
+#: src/control/Permission.js:44
+msgid ""
+"\n"
+"Server returned this reason: \""
+msgstr ""
+
 #: src/control/Ruler.js:366
 msgid "Left Margin"
 msgstr ""
