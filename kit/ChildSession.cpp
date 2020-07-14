@@ -36,6 +36,10 @@
 #import "DocumentViewController.h"
 #endif
 
+#ifdef __ANDROID__
+#include <androidapp.hpp>
+#endif
+
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Authorization.hpp>
@@ -2471,7 +2475,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_UNO_COMMAND_RESULT:
         sendTextFrame("unocommandresult: " + payload);
-#ifdef IOS
+#if MOBILEAPP
         {
             // After the document has been saved (into the temporary copy that we set up in
             // -[CODocument loadFromContents:ofType:error:]), save it also using the system API so
@@ -2486,6 +2490,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 
             if (!commandName.isEmpty() && commandName.toString() == ".uno:Save" && !success.isEmpty() && success.toString() == "true")
             {
+#ifdef IOS
                 CODocument *document = [[DocumentViewController singleton] document];
 
                 [document saveToURL:[document fileURL]
@@ -2493,6 +2498,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                  completionHandler:^(BOOL success) {
                         LOG_TRC("ChildSession::loKitCallback() save completion handler gets " << (success?"YES":"NO"));
                     }];
+#endif
+#ifdef __ANDROID__
+                postDirectMessage("SAVE " + payload);
+#endif
             }
         }
 #endif
