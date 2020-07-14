@@ -21,6 +21,8 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('contextchange', this.onContextChange, this);
 		this.map.on('notebookbar', this.onNotebookbar, this);
 		this.map.on('updatepermission', this.onUpdatePermission, this);
+
+		$('.main-nav').addClass('hasnotebookbar');
 	},
 
 	onRemove: function() {
