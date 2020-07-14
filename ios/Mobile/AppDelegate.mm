@@ -249,7 +249,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
 
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
-                                     LOG_INF(line);
+                                     LOG_INF_NOFILE(line);
                                  });
 
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
