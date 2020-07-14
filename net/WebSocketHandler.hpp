@@ -389,7 +389,7 @@ public:
         {
             _inFragmentBlock = true;
             // If is not final fragment then wait for next fragment.
-            return false;
+            return true;
         }
 #else
         handleMessage(_wsPayload);
