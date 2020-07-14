@@ -799,6 +799,7 @@ public:
         {
             assertCorrectThread();
             _socketHandler->onDisconnect();
+            _socketHandler.reset();
         }
 
         if (!_shutdownSignalled)

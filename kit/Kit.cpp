@@ -1623,19 +1623,7 @@ class KitSocketPoll final : public SocketPoll
 public:
     ~KitSocketPoll()
     {
-#ifdef IOS
-        std::unique_lock<std::mutex> lock(KSPollsMutex);
-        std::shared_ptr<KitSocketPoll> p;
-        auto i = KSPolls.begin();
-        for (; i != KSPolls.end(); ++i)
-        {
-            p = i->lock();
-            if (p && p.get() == this)
-                break;
-        }
-        assert(i != KSPolls.end());
-        KSPolls.erase(i);
-#endif
+        // Just to make it easier to set a breakpoint
     }
 
     static std::shared_ptr<KitSocketPoll> create()
@@ -1645,7 +1633,6 @@ public:
 #ifdef IOS
         std::unique_lock<std::mutex> lock(KSPollsMutex);
         KSPolls.push_back(result);
-        // KSPollsCV.notify_one();
 #endif
         return result;
     }
@@ -1760,6 +1747,11 @@ public:
         _ksPoll(ksPoll),
         _mobileAppDocId(mobileAppDocId)
     {
+    }
+
+    ~KitWebSocketHandler()
+    {
+        // Just to make it easier to set a breakpoint
     }
 
 protected:
@@ -1881,10 +1873,13 @@ protected:
         SigUtil::setTerminationFlag();
 #endif
 #ifdef IOS
-        std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
-        _ksPoll->terminationFlag = true;
-        _ksPoll->terminationCV.notify_all();
+        {
+            std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
+            _ksPoll->terminationFlag = true;
+            _ksPoll->terminationCV.notify_all();
+        }
 #endif
+        _ksPoll.reset();
     }
 };
 
@@ -1903,22 +1898,20 @@ int pollCallback(void* pData, int timeoutUs)
         return reinterpret_cast<KitSocketPoll*>(pData)->kitPoll(timeoutUs);
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
-    if (KitSocketPoll::KSPolls.size() == 0)
+    std::vector<std::shared_ptr<KitSocketPoll>> v;
+    for (const auto &i : KitSocketPoll::KSPolls)
     {
-        // KitSocketPoll::KSPollsCV.wait(lock);
-        lock.unlock();
+        auto p = i.lock();
+        if (p)
+            v.push_back(p);
+    }
+    lock.unlock();
+    if (v.size() == 0)
+    {
         std::this_thread::sleep_for(std::chrono::microseconds(timeoutUs));
     }
     else
     {
-        std::vector<std::shared_ptr<KitSocketPoll>> v;
-        for (const auto &i : KitSocketPoll::KSPolls)
-        {
-            auto p = i.lock();
-            if (p)
-                v.push_back(p);
-        }
-        lock.unlock();
         for (const auto &p : v)
             p->kitPoll(timeoutUs);
     }
