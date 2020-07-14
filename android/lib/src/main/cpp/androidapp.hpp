@@ -9,4 +9,7 @@
 
 extern int loolwsd_server_socket_fd;
 
+/** Equivalent of postMobileMessage(), but called directly from the native code. */
+void postDirectMessage(std::string message);
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
