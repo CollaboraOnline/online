@@ -269,7 +269,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 #mobile-wizard-content *{
-	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+	font-family: var(--mobile-font);
 	color: #212121;
 }
 

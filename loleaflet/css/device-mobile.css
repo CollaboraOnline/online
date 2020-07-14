@@ -324,7 +324,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 .vex-dialog-message {
 	text-align: center;
-	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif !important;
+	font-family: var(--vex-font) !important;
 	font-size: 1em !important;
 	font-weight: 600 !important;
 }
@@ -347,7 +347,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	color: #000 !important;
 }
 .vex-dialog-input {
-	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif !important;
+	font-family: var(--vex-font) !important;
 	font-size: 0.8em;
 }
 .vex.vex-theme-plain .vex-content {

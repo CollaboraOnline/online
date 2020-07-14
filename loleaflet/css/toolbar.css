@@ -70,7 +70,7 @@ w2ui-toolbar {
 		overflow: visible !important;
 }
 #toolbar-down .ToolbarStatusInactive {
-	color: #696969;
+	color: var(--gray-light-txt--color);
 	box-shadow: inset 0px 0px 0px 10px #f2f2f2, 0px 0px 0px 2px #f2f2f2, 4px 0px 0px 1px #fff, -4px 0px 0px 1px #fff, 0px 0px 0px 5px #fff;
 }
 #spreadsheet-toolbar {
@@ -167,9 +167,9 @@ w2ui-toolbar {
 }
 
 #document-name-input {
-		font-size: 16px;
-		border: 1px solid transparent;
-		background-color: transparent;
+	font-size: 16px;
+	border: 1px solid transparent;
+	background-color: transparent;
 }
 
 #document-name-input.editable {
@@ -180,6 +180,11 @@ w2ui-toolbar {
 	overflow: hidden;
 	text-overflow:ellipsis;
 	height: 18px;
+}
+
+.hasnotebookbar #document-name-input.editable{
+	background: #f9f9f9;
+	box-shadow: 0 0 0.1px 1px #dfdfdf, 0 0 2px 1px #f0f0f0;
 }
 
 #document-name-input.editable:focus {
@@ -340,13 +345,13 @@ button.leaflet-control-search-next
 /* select box */
 .select2-results__option {
 		padding: 5px;
-		font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+		font-family: var(--loleaflet-font);
 		font-size: 12px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 }
 .select2-selection__rendered {
-		font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+		font-family: var(--loleaflet-font);
 		font-size: 12px;
 }
 .styles-select {

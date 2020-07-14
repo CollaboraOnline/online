@@ -871,19 +871,10 @@ button.ui-button::-moz-focus-inner {
 	padding: 1em 1.4em;
 	background: none;
 }
-.ui-tooltip {
-	padding: 8px;
-	position: absolute;
-	z-index: 9999;
-	max-width: 300px;
-}
-body .ui-tooltip {
-	border-width: 2px;
-}
 /* Component containers
 ----------------------------------*/
 .ui-widget {
-	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+	font-family: var(--jquery-ui-font);
 	font-size: 1.1em;
 }
 .ui-widget .ui-widget {
@@ -893,7 +884,7 @@ body .ui-tooltip {
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+	font-family: var(--jquery-ui-font);
 	font-size: 1em;
 }
 .ui-widget.ui-widget-content {
@@ -915,6 +906,24 @@ body .ui-tooltip {
 }
 .ui-widget-header a {
 	color: #ffffff;
+}
+
+/*Tooltips
+----------------------------------*/
+.ui-tooltip {
+	padding: 7px 9px;
+	position: absolute;
+	z-index: 9999;
+	max-width: 300px;
+	background: #2a2a2a;
+}
+body .ui-tooltip {
+	border-width: 2px;
+}
+.ui-tooltip-content {
+	font-size: 0.8em;
+	color: #fff;
+	background: #2a2a2a;
 }
 
 /* Interaction states
@@ -1306,6 +1315,6 @@ a.ui-button:active,
 	filter: Alpha(Opacity=50); /* support: IE8 */
 }
 .ui-widget-shadow {
-	-webkit-box-shadow: -5px -5px 5px #000000;
-	box-shadow: -5px -5px 5px #000000;
+	-webkit-box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.15);
+	box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.15);
 }

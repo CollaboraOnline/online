@@ -1,3 +1,24 @@
+:root {
+	/*All used fonts (except w2ui)
+	----------------------------------*/
+	--loleaflet-font: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+	/*investigate what are the drawback in consisntly use --loleaflet-fonts
+	for vex, jquery-ui and perhaps mobile*/
+	--mobile-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+	--vex-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+	--jquery-ui-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+
+	--docs-font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	--docs--pre-font: 'Consolas', 'Menlo', 'Lucida Console', 'Courier New', monospace;
+
+	/*LibreOffice Colors: https://wiki.documentfoundation.org/Marketing/Branding#Colors
+	----------------------------------[to do]*/
+	--blue1-txt-primary-color: #0369A3;
+	--green0-txt-primary-color: #106802; /*green1 lacks contrast against white*/
+	--orange1-txt-primary-color: #A33E03;
+	
+	--gray-light-txt--color: #696969;
+}
 #document-container {
 	border-top: 1px solid #B6B6B6;
 	background: #DFDFDF;
@@ -171,7 +192,7 @@ body {
 	table-layout: fixed;
 	border-collapse: collapse;
 	width: 100%;
-	border-top: 1px solid #bbbbbb;
+	border-top: none;
 }
 
 #toolbar-logo {
@@ -219,7 +240,7 @@ body {
 }
 
 .loleaflet-font {
-	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+	font-family: var(--loleaflet-font) !important;
 	font-size: 12px !important;
 	font-weight: normal !important;
 }
@@ -274,7 +295,7 @@ body {
 /* Important to override context-menu-icon's font-family here otherwise, jquery-contextmenu.css
  * will try to load its own font file which is not available in dist/ */
 .context-menu-icon::before {
-	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+	font-family: var(--loleaflet-font) !important;
 	content: '\2713';
 	color: #000 !important;
 }
@@ -299,7 +320,7 @@ body {
 
 .loleaflet-annotation-content-wrapper, .loleaflet-annotation-redline-content-wrapper {
 	padding: 8px;
-	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+	font-family: var(--loleaflet-font) !important;
 	font-size: 13px;
 	text-align: left;
 	background-color: #efefef;
@@ -346,7 +367,7 @@ body {
 }
 
 .loleaflet-annotation-textarea {
-	font-family: "Segoe UI", Tahoma, Arial, Helvetica, sans-serif !important;
+	font-family: var(--loleaflet-font) !important;
 	font-size: 13px;
 	border: 1px solid #c8c8c8;
 	background-color: white;

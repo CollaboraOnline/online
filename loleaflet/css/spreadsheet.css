@@ -48,7 +48,7 @@
 	padding-top: 8px;
 	padding-bottom: 5px;
 
-	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+	font: 12px/1.5 var(--loleaflet-font);
 	display: inline-block;
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
@@ -110,7 +110,7 @@
 
 .spreadsheet-header-corner-styles {
 	border: 1px solid darkgray;
-	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+	font: 12px/1.5 var(--loleaflet-font);
 	color: black;
 	background-color: #f1f4f7;
 	cursor: pointer;
@@ -142,7 +142,7 @@
 
 .spreadsheet-header-column {
 	border: 1px solid darkgray;
-	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+	font: 12px/1.5 var(--loleaflet-font);
 	color: black;
 	background-color: #f1f4f7;
 	cursor: pointer;
@@ -183,7 +183,7 @@
 
 .spreadsheet-header-row {
 	border: 1px solid darkgray;
-	font: 12px/1.5 "Segoe UI", Tahoma, Arial, Helvetica, sans-serif;
+	font: 12px/1.5 var(--loleaflet-font);
 	color: black;
 	background-color: #f1f4f7;
 	cursor: pointer;

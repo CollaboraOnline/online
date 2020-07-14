@@ -3,7 +3,7 @@
 
 html, body, input, select, button, textarea, table {
 	font-size: 100%;
-	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-family: var(--docs-font);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
@@ -230,7 +230,7 @@ h3.tagline {
 /* content */
 
 .container code, .container pre code {
-	font-family: "Consolas", "Menlo", "Lucida Console", "Courier New", monospace;
+	font-family: var(--docs--pre-font);
 	-webkit-font-smoothing: subpixel-antialiased;
 }
 .container pre code {
@@ -1074,4 +1074,3 @@ iframe[src*='youtube.com'] {
 #disqus_thread {
 	margin-top: 3em;
 }
-

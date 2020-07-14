@@ -23,6 +23,14 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('updatepermission', this.onUpdatePermission, this);
 
 		$('.main-nav').addClass('hasnotebookbar');
+		$('.main-nav').addClass(this._map.getDocType() + '-color-indicator');
+
+		var docLogoHeader = L.DomUtil.create('div', '');
+		docLogoHeader.id = 'document-header';
+		var docLogo = L.DomUtil.create('div', 'document-logo', docLogoHeader);
+		$(docLogo).data('id', 'document-logo');
+		$(docLogo).data('type', 'action');
+		$('.main-nav').prepend(docLogoHeader);
 	},
 
 	onRemove: function() {
@@ -82,7 +90,7 @@ L.Control.Notebookbar = L.Control.extend({
 	selectedTab: function() {
 		// implement in child classes
 	},
-	
+
 	getTabs: function() {
 		// implement in child classes
 		return [];
@@ -117,7 +125,6 @@ L.Control.Notebookbar = L.Control.extend({
 	createShortcutsBar: function() {
 		var shortcutsBar = L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
 		$('nav').prepend(shortcutsBar);
-
 		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
 		builder.build(shortcutsBar, this.getShortcutsBarData());
 	},
