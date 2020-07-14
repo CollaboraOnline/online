@@ -221,6 +221,9 @@ private:
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
+    /// If this session is read-only because of failed lock, try to unlock and make it read-write.
+    bool attemptLock(const std::shared_ptr<DocumentBroker>& docBroker);
+
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 

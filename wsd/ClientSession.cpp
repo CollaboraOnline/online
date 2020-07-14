@@ -446,7 +446,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] != "removetextcontext" &&
              tokens[0] != "dialogevent" &&
              tokens[0] != "completefunction" &&
-             tokens[0] != "formfieldevent")
+             tokens[0] != "formfieldevent" &&
+             tokens[0] != "attemptlock")
     {
         LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=unknown");
@@ -735,6 +736,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return forwardToChild(firstLine, docBroker);
     }
+    else if (tokens.equals(0, "attemptlock"))
+    {
+        return attemptLock(docBroker);
+    }
     else
     {
         if (tokens.equals(0, "key"))
@@ -1004,6 +1009,24 @@ void ClientSession::setLockFailed(const std::string& sReason)
     _isLockFailed = true;
     setReadOnly();
     sendTextFrame("lockfailed:" + sReason);
+}
+
+bool ClientSession::attemptLock(const std::shared_ptr<DocumentBroker>& docBroker)
+{
+    if (!isReadOnly())
+        return true;
+    // We are only allowed to change into edit mode if the read-only mode is because of failed lock
+    if (!_isLockFailed)
+        return false;
+
+    std::string failReason;
+    const bool bResult = docBroker->attemptLock(*this, failReason);
+    if (bResult)
+        setReadOnly(false);
+    else
+        sendTextFrame("lockfailed:" + failReason);
+
+    return bResult;
 }
 
 bool ClientSession::hasQueuedMessages() const

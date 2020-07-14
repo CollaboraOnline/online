@@ -916,6 +916,15 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     return true;
 }
 
+bool DocumentBroker::attemptLock(const ClientSession& session, std::string& failReason)
+{
+    const bool bResult = _storage->updateLockState(session.getAuthorization(), session.getCookies(),
+                                                  *_lockCtx, true);
+    if (!bResult)
+        failReason = _lockCtx->_lockFailureReason;
+    return bResult;
+}
+
 bool DocumentBroker::saveToStorage(const std::string& sessionId,
                                    bool success, const std::string& result, bool force)
 {
