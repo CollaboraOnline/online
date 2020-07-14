@@ -175,7 +175,7 @@ private:
 
     std::thread::id _owner;
 
-    bool _dontCache;
+    const bool _dontCache;
 
     /// Approximate size of tilecache in bytes
     size_t _cacheSize;
