@@ -69,7 +69,6 @@ std::string MasterLocation;
 
 extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
 
-#if !MOBILEAPP
 void dump_forkit_state()
 {
     std::ostringstream oss;
@@ -92,7 +91,6 @@ void dump_forkit_state()
     fprintf(stderr, "%s", msg.c_str());
     LOG_TRC(msg);
 }
-#endif
 
 class ServerWSHandler;
 
