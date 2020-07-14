@@ -298,11 +298,12 @@ function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 		});
 }
 
-function waitUntilIdle(selector, content) {
+function waitUntilIdle(selector, content, waitingTime = 1000) {
 	cy.log('Waiting item to be idle - start.');
 
 	var item;
-	var waitingTime = 2000;
+	var waitOnce = 250;
+	var idleSince = 0;
 	if (content) {
 		cy.contains(selector, content, { log: false })
 			.then(function(itemToIdle) {
@@ -310,17 +311,18 @@ function waitUntilIdle(selector, content) {
 			});
 
 		cy.waitUntil(function() {
-			cy.wait(waitingTime);
+			cy.wait(waitOnce, { log: false });
 
 			return cy.contains(selector, content, { log: false })
 				.then(function(itemToIdle) {
 					if (Cypress.dom.isDetached(item[0])) {
-						cy.log('Item is detached.');
+						cy.log('Item is detached after ' + (idleSince + waitOnce).toString() + ' ms.');
 						item = itemToIdle;
-						return false;
+						idleSince = 0;
 					} else {
-						return true;
+						idleSince += waitOnce;
 					}
+					return idleSince > waitingTime;
 				});
 		});
 	} else {
@@ -330,17 +332,18 @@ function waitUntilIdle(selector, content) {
 			});
 
 		cy.waitUntil(function() {
-			cy.wait(waitingTime);
+			cy.wait(waitOnce, { log: false });
 
 			return cy.get(selector, { log: false })
 				.then(function(itemToIdle) {
 					if (Cypress.dom.isDetached(item[0])) {
-						cy.log('Item is detached.');
+						cy.log('Item is detached after ' + (idleSince + waitOnce).toString() + ' ms.');
 						item = itemToIdle;
-						return false;
+						idleSince = 0;
 					} else {
-						return true;
+						idleSince += waitOnce;
 					}
+					return idleSince > waitingTime;
 				});
 		});
 	}
@@ -357,10 +360,10 @@ function waitUntilIdle(selector, content) {
 // IMPORTANT: don't use this if there is no
 // flickering. Use simple click() instead. This method
 // is much slower.
-function clickOnIdle(selector, content) {
+function clickOnIdle(selector, content, waitingTime = 1000) {
 	cy.log('Clicking on item when idle - start.');
 
-	waitUntilIdle(selector, content);
+	waitUntilIdle(selector, content, waitingTime);
 	if (content) {
 		cy.contains(selector, content)
 			.click();
@@ -373,10 +376,10 @@ function clickOnIdle(selector, content) {
 }
 
 // See comments at clickOnIdle() method.
-function inputOnIdle(selector, input) {
+function inputOnIdle(selector, input, waitingTime = 1000) {
 	cy.log('Type into an input item when idle - start.');
 
-	waitUntilIdle(selector);
+	waitUntilIdle(selector, undefined, waitingTime);
 
 	cy.get(selector)
 		.clear()
