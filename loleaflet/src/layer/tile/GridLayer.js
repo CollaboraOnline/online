@@ -1305,6 +1305,28 @@ L.GridLayer = L.Layer.extend({
 		}, this), idleTime);
 	},
 
+	_coordsToPixBounds: function (coords) {
+		// coords.x and coords.y are the grid indices of the tile.
+		var topLeft = new L.Point(coords.x, coords.y)._multiplyBy(this._tileSize);
+		var bottomRight = topLeft.add(new L.Point(this._tileSize, this._tileSize));
+		return new L.Bounds(topLeft, bottomRight);
+	},
+
+	_coordsToTwipsBoundsAtZoom: function (coords, zoom) {
+		console.assert(typeof zoom === 'number', 'invalid zoom');
+		// FIXME: this is highly inaccurate for tiles near the bottom/right when zoom != coords.z.
+		// Use sheet geometry data instead (but will need to pre-compute tiletwips positions in
+		// L.SheetDimension for at least the recently used zoom levels to avoid a linear scan of its spans.)
+		var scale = this._map.getZoomScale(coords.z, zoom);
+		var pxBounds = this._coordsToPixBounds(coords);
+		pxBounds.min._divideBy(scale);
+		pxBounds.max._divideBy(scale);
+
+		var topLeftTwips = this._pixelsToTwips(pxBounds.min);
+		var bottomRightTwips = this._pixelsToTwips(pxBounds.max);
+		return new L.Bounds(topLeftTwips, bottomRightTwips);
+	},
+
 	getMaxDocSize: function () {
 		return undefined;
 	},

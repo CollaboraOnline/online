@@ -1333,6 +1333,13 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._map._socket.sendMessage('tileprocessed tile=' + tileID);
 	},
 
+	_coordsToPixBounds: function (coords) {
+		// coords.x and coords.y are the pixel coordinates of the top-left corner of the tile.
+		var topLeft = new L.Point(coords.x, coords.y);
+		var bottomRight = topLeft.add(new L.Point(this._tileSize, this._tileSize));
+		return new L.Bounds(topLeft, bottomRight);
+	},
+
 	updateHorizPaneSplitter: function () {
 
 		var map = this._map;

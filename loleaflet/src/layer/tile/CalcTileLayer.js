@@ -426,14 +426,8 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 			if (coords.part !== command.part) {
 				continue;
 			}
-			var scale = this._map.getZoomScale(coords.z);
-			topLeftTwips = new L.Point(
-					this.options.tileWidthTwips / scale * coords.x,
-					this.options.tileHeightTwips / scale * coords.y);
-			bottomRightTwips = topLeftTwips.add(new L.Point(
-					this.options.tileWidthTwips / scale,
-					this.options.tileHeightTwips / scale));
-			bounds = new L.Bounds(topLeftTwips, bottomRightTwips);
+
+			bounds = this._coordsToTwipsBoundsAtZoom(coords, this._map.getZoom());
 			if (invalidBounds.intersects(bounds)) {
 				delete this._tileCache[key];
 			}
