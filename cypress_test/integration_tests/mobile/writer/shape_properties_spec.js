@@ -43,32 +43,15 @@ describe('Change shape properties via mobile wizard.', function() {
 	function triggerNewSVG() {
 		mobileHelper.closeMobileWizard();
 
-		// Remove selection first with clicking next to handler
-		cy.get('.leaflet-drag-transform-marker.drag-marker--0')
-			.then(function(items) {
-				var XPos = items[0].getBoundingClientRect().left;
-				var YPos = items[0].getBoundingClientRect().top;
-				// Sometimes selection is persistent, so click more times
-				// to achive actual deselection.
-				cy.get('body')
-					.click(XPos - 10, YPos);
+		// Change width
+		openPosSizePanel();
 
-				cy.get('body')
-					.dblclick(XPos - 10, YPos);
+		cy.get('#selectwidth .plus')
+			.should('be.visible');
 
-				cy.get('.leaflet-drag-transform-marker')
-					.should('not.exist');
+		helper.clickOnIdle('#selectwidth .plus');
 
-				// Reselect the shape
-				cy.get('body')
-					.click(XPos + 20, YPos);
-
-				cy.get('body')
-					.click(XPos + 20, YPos);
-
-				cy.get('.leaflet-drag-transform-marker')
-					.should('exist');
-			});
+		mobileHelper.closeMobileWizard();
 	}
 
 	function openPosSizePanel() {
@@ -99,6 +82,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change shape width.', function() {
+
 		openPosSizePanel();
 
 		cy.get('#selectwidth .spinfield')
@@ -114,6 +98,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	it('Change shape height.', function() {
+
 		openPosSizePanel();
 
 		cy.get('#selectheight .spinfield')
@@ -170,7 +155,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('not.have.attr', 'd', defaultGeometry);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('have.attr', 'd', 'M 7955,4863 L 1963,10855 7955,10855 7955,4863 7955,4863 Z');
+			.should('have.attr', 'd', 'M 8010,4863 L 1963,10855 8010,10855 8010,4863 8010,4863 Z');
 	});
 
 	it('Trigger moving backward / forward', function() {
@@ -217,7 +202,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.length.greaterThan', 12);
 	});
 
-	it('Change line width', function() {
+	it.skip('Change line width', function() {
 		openLinePropertyPanel();
 
 		cy.get('#linewidth .spinfield')
@@ -229,6 +214,15 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
 			.should('have.attr', 'stroke-width', '141');
+
+		openLinePropertyPanel();
+
+		helper.clickOnIdle('#linewidth .minus');
+
+		triggerNewSVG();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path[fill="none"]')
+			.should('have.attr', 'stroke-width', '88');
 	});
 
 	it('Change line transparency', function() {
