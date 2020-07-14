@@ -67,6 +67,31 @@ int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 std::string MasterLocation;
 #endif
 
+extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
+
+void dump_forkit_state()
+{
+    std::ostringstream oss;
+
+    oss << "Forkit: " << ForkCounter << " forks\n"
+        << "  loglevel: " << LogLevel << "\n"
+        << "  unit test: " << UnitTestLibrary << "\n"
+#ifndef KIT_IN_PROCESS
+        << "  NoCapsForKit: " << NoCapsForKit << "\n"
+        << "  NoSeccomp: " << NoSeccomp << "\n"
+#  if ENABLE_DEBUG
+        << "  SingleKit: " << SingleKit << "\n"
+#  endif
+#endif
+        << "  ClientPortNumber: " << ClientPortNumber << "\n"
+        << "  MasterLocation: " << MasterLocation
+        << "\n";
+
+    const std::string msg = oss.str();
+    fprintf(stderr, "%s", msg.c_str());
+    LOG_TRC(msg);
+}
+
 class ServerWSHandler;
 
 // We have a single thread and a single connection so we won't bother with

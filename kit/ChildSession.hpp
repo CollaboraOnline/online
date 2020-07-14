@@ -313,6 +313,13 @@ private:
         return ret;
     }
 
+public:
+    void dumpState(std::ostream& oss) override
+    {
+        Session::dumpState(oss);
+        // TODO: the rest ...
+    }
+
 private:
     const std::string _jailId;
     DocumentManagerInterface* _docManager;

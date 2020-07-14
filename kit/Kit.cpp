@@ -102,6 +102,8 @@ using Poco::Path;
 using namespace LOOLProtocol;
 using std::size_t;
 
+extern "C" { void dump_kit_state(void); /* easy for gdb */ }
+
 // We only host a single document in our lifetime.
 class Document;
 #ifndef BUILDING_TESTS
@@ -2095,6 +2097,43 @@ private:
         sendTextFrame(msg);
     }
 
+public:
+    void dumpState(std::ostream& oss)
+    {
+        oss << "Kit Document:\n"
+            << "\n\tstop: " << _stop
+            << "\n\tisLoading: " << _stop
+            << "\n\tjailId: " << _jailId
+            << "\n\tdocKey: " << _docKey
+            << "\n\tdocId: " << _docId
+            << "\n\turl: " << _url
+            << "\n\tobfuscatedFileId: " << _obfuscatedFileId
+            << "\n\tjailedUrl: " << _jailedUrl
+            << "\n\trenderOpts: " << _renderOpts
+            << "\n\thaveDocPassword: " << _haveDocPassword // not the pwd itself
+            << "\n\tisDocPasswordProtected: " << _isDocPasswordProtected
+            << "\n\tdocPasswordType: " << (int)_docPasswordType
+            << "\n\teditorId: " << _editorId
+            << "\n\teditorChangeWarning: " << _editorChangeWarning
+            << "\n";
+
+        // dumpState:
+        // TODO: _websocketHandler - but this is an odd one.
+        // TODO: std::shared_ptr<TileQueue> _tileQueue;
+        // TODO: PngCache _pngCache;
+        // TODO: std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
+        // ThreadPool _pngPool;
+
+        _sessions.dumpState(oss);
+
+        // TODO: std::map<int, std::chrono::steady_clock::time_point> _lastUpdatedAt;
+        // TODO: std::map<int, int> _speedCount;
+
+        /// For showing disconnected user info in the doc repair dialog.
+        // TODO: std::map<int, UserInfo> _sessionUserInfo;
+        // TODO: std::chrono::steady_clock::time_point _lastMemStatsTime;
+    }
+
 private:
     std::shared_ptr<lok::Office> _loKit;
     const std::string _jailId;
@@ -2164,15 +2203,42 @@ class KitSocketPoll : public SocketPoll
     std::chrono::steady_clock::time_point _pollEnd;
     std::shared_ptr<Document> _document;
 
+    static KitSocketPoll *mainPoll;
+
 public:
     KitSocketPoll() :
         SocketPoll("kit")
     {
+        mainPoll = this;
+    }
+
+    ~KitSocketPoll()
+    {
+        // Just to make it easier to set a breakpoint
+        mainPoll = nullptr;
+    }
+
+    static void dumpGlobalState(std::ostream &oss)
+    {
+        if (mainPoll)
+        {
+            if (!mainPoll->_document)
+                oss << "KitSocketPoll: no doc\n";
+            else
+            {
+                mainPoll->_document->dumpState(oss);
+                mainPoll->dumpState(oss);
+            }
+        }
+        else
+            oss << "KitSocketPoll: none\n";
     }
 
     // process pending message-queue events.
     void drainQueue(const std::chrono::steady_clock::time_point &now)
     {
+//      SigUtil::checkDumpGlobalState(dump_kit_state); - disable for now.
+
         if (_document)
             _document->drainQueue(now);
     }
@@ -2196,7 +2262,6 @@ public:
         // The maximum number of extra events to process beyond the first.
         int maxExtraEvents = 15;
         int eventsSignalled = 0;
-
 
         if (timeoutMicroS < 0)
         {
@@ -2244,6 +2309,8 @@ public:
         _document = std::move(document);
     }
 };
+
+KitSocketPoll *KitSocketPoll::mainPoll = nullptr;
 
 class KitWebSocketHandler final : public WebSocketHandler
 {
@@ -2923,5 +2990,15 @@ std::string anonymizeUsername(const std::string& username)
 }
 
 #endif // !MOBILEAPP
+
+void dump_kit_state()
+{
+    std::ostringstream oss;
+    KitSocketPoll::dumpGlobalState(oss);
+
+    const std::string msg = oss.str();
+    fprintf(stderr, "%s", msg.c_str());
+    LOG_TRC(msg);
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
