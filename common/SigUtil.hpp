@@ -46,12 +46,11 @@ namespace SigUtil
     }
 #endif
 
-#if !MOBILEAPP
-    /// Get the flag to dump internal state.
-    bool getDumpGlobalState();
-    /// Reset the flag to dump internal state.
-    void resetDumpGlobalState();
+    extern "C" { typedef void (*GlobalDumpStateFn)(void); }
 
+    void checkDumpGlobalState(GlobalDumpStateFn dumpState);
+
+#if !MOBILEAPP
     /// Wait for the signal handler, if any,
     /// and prevent _Exit while collecting backtrace.
     void waitSigHandlerTrap();

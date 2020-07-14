@@ -3599,13 +3599,7 @@ private:
 
         void wakeupHook() override
         {
-#if !MOBILEAPP
-            if (SigUtil::getDumpGlobalState())
-            {
-                dump_state();
-                SigUtil::resetDumpGlobalState();
-            }
-#endif
+            SigUtil::checkDumpGlobalState(dump_state);
         }
     };
     /// This thread & poll accepts incoming connections.

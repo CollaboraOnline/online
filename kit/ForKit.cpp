@@ -67,6 +67,33 @@ int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 std::string MasterLocation;
 #endif
 
+extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
+
+#if !MOBILEAPP
+void dump_forkit_state()
+{
+    std::ostringstream oss;
+
+    oss << "Forkit: " << ForkCounter << " forks\n"
+        << "  loglevel: " << LogLevel << "\n"
+        << "  unit test: " << UnitTestLibrary << "\n"
+#ifndef KIT_IN_PROCESS
+        << "  NoCapsForKit: " << NoCapsForKit << "\n"
+        << "  NoSeccomp: " << NoSeccomp << "\n"
+#  if ENABLE_DEBUG
+        << "  SingleKit: " << SingleKit << "\n"
+#  endif
+#endif
+        << "  ClientPortNumber: " << ClientPortNumber << "\n"
+        << "  MasterLocation: " << MasterLocation
+        << "\n";
+
+    const std::string msg = oss.str();
+    fprintf(stderr, "%s", msg.c_str());
+    LOG_TRC(msg);
+}
+#endif
+
 class ServerWSHandler;
 
 // We have a single thread and a single connection so we won't bother with
@@ -627,6 +654,8 @@ int main(int argc, char** argv)
     mainPoll.insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler);
 #endif
 
+    SigUtil::setUserSignals();
+
     LOG_INF("ForKit process is ready.");
 
     while (!SigUtil::getTerminationFlag())
@@ -634,6 +663,8 @@ int main(int argc, char** argv)
         UnitKit::get().invokeForKitTest();
 
         mainPoll.poll(POLL_TIMEOUT_MICRO_S);
+
+        SigUtil::checkDumpGlobalState(dump_forkit_state);
 
 #if ENABLE_DEBUG
         if (!SingleKit)

@@ -66,17 +66,18 @@ namespace SigUtil
     }
 #endif
 
+    void checkDumpGlobalState(GlobalDumpStateFn dumpState)
+    {
 #if !MOBILEAPP
-    bool getDumpGlobalState()
-    {
-        return DumpGlobalState;
+        if (DumpGlobalState)
+        {
+            dumpState();
+            DumpGlobalState = false;
+        }
+#endif
     }
 
-    void resetDumpGlobalState()
-    {
-        DumpGlobalState = false;
-    }
-
+#if !MOBILEAPP
     /// This traps the signal-handler so we don't _Exit
     /// while dumping stack trace. It's re-entrant.
     /// Used to safely increment and decrement the signal-handler trap.
