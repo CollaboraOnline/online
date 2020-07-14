@@ -784,8 +784,10 @@ public class LOActivity extends AppCompatActivity {
         if (mWebView != null)
             mWebView.post(new Runnable() {
                 public void run() {
-                    if (mWebView != null)
+                    if (mWebView == null) {
                         Log.i(TAG, "Skipped forwarding to the WebView: " + message);
+                        return;
+                    }
 
                     Log.i(TAG, "Forwarding to the WebView: " + message);
 
