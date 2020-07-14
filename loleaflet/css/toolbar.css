@@ -156,6 +156,10 @@ w2ui-toolbar {
 	position: absolute;
 	right: 10px;
 	background: url('images/baseline-edit.svg') right center no-repeat, radial-gradient(circle, #fff 20%, #fff0 100%);
+	top: 5px;
+	padding: 1px 0px;
+	margin: 0px;
+	border: none;
 }
 
 #document-title-pencil:not(.editable){
@@ -171,12 +175,11 @@ w2ui-toolbar {
 #document-name-input.editable {
 	border: none;
 	box-shadow: 0 0 0.1px 1px #ebebeb, 0 0 2px 1px #f0f0f0;
-	background-position: right;
-	background-repeat: no-repeat;
 	padding-right: 24px;
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow:ellipsis;
+	height: 18px;
 }
 
 #document-name-input.editable:focus {
