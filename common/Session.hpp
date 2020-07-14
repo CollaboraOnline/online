@@ -53,11 +53,18 @@ public:
     }
     std::shared_ptr<T> findByCanonicalId(int id)
     {
-        for (auto &it : *this) {
+        for (const auto &it : *this) {
             if (it.second->getCanonicalViewId() == id)
                 return it.second;
         }
         return std::shared_ptr<T>();
+    }
+    void dumpState(std::ostream& oss)
+    {
+        for (const auto &it : *this) {
+            oss << "\tsession '" << it.first << "'\n";
+            it.second->dumpState(oss);
+        }
     }
 };
 
