@@ -339,6 +339,16 @@ namespace Log
         }                                                                                          \
     } while (false)
 
+#define LOG_INF_NOFILE(X)                                                                          \
+    do                                                                                             \
+    {                                                                                              \
+        auto& log_ = Log::logger();                                                                \
+        if (log_.information() && !Log::isShutdownCalled())                                        \
+        {                                                                                          \
+            LOG_BODY_(log_, INFORMATION, "INF", X, false);                                         \
+        }                                                                                          \
+    } while (false)
+
 #define LOG_WRN(X)                                                                                 \
     do                                                                                             \
     {                                                                                              \
