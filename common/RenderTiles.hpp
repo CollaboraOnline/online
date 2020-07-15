@@ -354,6 +354,7 @@ namespace RenderTiles
         unsigned char *data() { return _data; }
     };
 
+#ifndef IOS
     static void pushRendered(std::vector<TileDesc> &renderedTiles,
                              const TileDesc &desc, TileWireId wireId, size_t imgSize)
     {
@@ -361,6 +362,7 @@ namespace RenderTiles
         renderedTiles.back().setWireId(wireId);
         renderedTiles.back().setImgSize(imgSize);
     }
+#endif
 
 #ifdef IOS
 
@@ -516,8 +518,6 @@ namespace RenderTiles
 
         RenderTiles::Buffer pixmap(pixmapWidth, pixmapHeight);
 
-        const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
-
         // Render the whole area
         const double area = pixmapWidth * pixmapHeight;
         auto start = std::chrono::system_clock::now();
@@ -602,6 +602,7 @@ namespace RenderTiles
 
         const auto mode = static_cast<LibreOfficeKitTileMode>(document->getTileMode());
 
+        const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<char> output;
         output.reserve(pixmapSize);
 
