@@ -327,8 +327,7 @@ L.Control.LokDialog = L.Control.extend({
 				this._dialogs[parentId].childid = e.id;
 				this._dialogs[parentId].childwidth = width;
 				this._dialogs[parentId].childheight = height;
-				this._dialogs[parentId].childx = left;
-				this._dialogs[parentId].childy = top;
+
 				if (e.winType === 'tooltip')
 					this._dialogs[parentId].childistooltip = true;
 				else
@@ -338,13 +337,12 @@ L.Control.LokDialog = L.Control.extend({
 			}
 		}
 
-		// All other callbacks doen't make sense without an active dialog.
+		// All other callbacks don't make sense without an active dialog.
 		if (!(this._isOpen(e.id) || this._getParentId(e.id))) {
 			if (e.action == 'close' && window.mobileDialogId == e.id) {
 				window.mobileDialogId = undefined;
 				this._map.fire('closemobilewizard');
 			}
-
 			return;
 		}
 
@@ -1551,13 +1549,11 @@ L.Control.LokDialog = L.Control.extend({
 
 		// Make sure the child is not trimmed on the right.
 		var width = this._dialogs[parentId].childwidth;
-		var left = this._dialogs[parentId].childx;
-		var dialogContainer = L.DomUtil.get(strId).parentNode;
-		if (left + width > dialogContainer.clientWidth) {
-			// Align the right of the child to the right of the parent.
-			left -= Math.max(0, (left + width) - dialogContainer.clientWidth);
-			this._dialogs[parentId].childx = left;
-			L.DomUtil.setStyle(canvas, 'left', left + 'px');
+		var left = parseInt(canvas.style.left);
+		var leftPos = left + width;
+		if (leftPos > window.innerWidth) {
+			var newLeft = window.innerWidth - width - 20;
+			L.DomUtil.setStyle(canvas, 'left', newLeft + 'px');
 		}
 
 		// The image is rendered per the HiDPI scale we used
@@ -1673,26 +1669,43 @@ L.Control.LokDialog = L.Control.extend({
 
 	_createDialogChild: function(childId, parentId, top, left) {
 		var strId = this._toStrId(parentId);
-		var dialogContainer = L.DomUtil.get(strId).parentNode;
+		var dialogContainer = L.DomUtil.get(strId);
 		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', dialogContainer);
 		$(floatingCanvas).hide(); // Hide to avoid flickering while we set the dimensions.
 
-		// Since child windows are now top-level, their 'top' offset
-		// needs adjusting. If we are in a dialog, our top is from the
-		// dialog body, not the title bar, which is a separate div.
-		// This doesn't apply for context menus, which don't have titles.
-		var dialogTitle = $('.lokdialog_notitle');
-		if (dialogTitle != null && dialogTitle.length == 0) {
-			var dialogTitleBar = $('.ui-dialog-titlebar');
-			top += dialogTitleBar.outerHeight();
-		}
-
 		floatingCanvas.id = strId + '-floating';
-		L.DomUtil.setStyle(floatingCanvas, 'position', 'absolute');
-		L.DomUtil.setStyle(floatingCanvas, 'left', (left - 1) + 'px'); // Align drop-down list with parent.
-		L.DomUtil.setStyle(floatingCanvas, 'top', top + 'px');
+		L.DomUtil.setStyle(floatingCanvas, 'position', 'fixed');
+		L.DomUtil.setStyle(floatingCanvas, 'z-index', '11');
 		L.DomUtil.setStyle(floatingCanvas, 'width', '0px');
 		L.DomUtil.setStyle(floatingCanvas, 'height', '0px');
+
+		/*
+			Some notes:
+				* Sidebar windows' child positions are relative to their container (sidebar itself).
+				* Modal windows' child positions are relative to page borders.
+				* So this code adapts to it.
+		*/
+		var containerTop = dialogContainer.getBoundingClientRect().top + dialogContainer.ownerDocument.defaultView.pageYOffset;
+		var containerLeft = dialogContainer.getBoundingClientRect().left + dialogContainer.ownerDocument.defaultView.pageXOffset;
+		var grandParentID = dialogContainer.parentNode.id;
+		if (grandParentID.includes('sidebar-panel'))
+		{
+			// This is a sidebar.
+			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
+			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + top) + 'px');
+		}
+		else if (grandParentID.includes('calc-inputbar')) {
+			// This is the calculator input bar.
+			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
+			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + top - 20) + 'px');
+		}
+		else
+		{
+			// Add header height..
+			var addition = 40;
+			L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px');
+			L.DomUtil.setStyle(floatingCanvas, 'top', (top + addition) + 'px');
+		}
 
 		// attach events
 		this._setupChildEvents(childId, floatingCanvas);
