@@ -16,6 +16,7 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -208,6 +209,11 @@ public class LOActivity extends AppCompatActivity {
             mMainHandler = new Handler(getMainLooper());
         }
         return mMainHandler;
+    }
+
+    /** True if the App is running under ChromeOS. */
+    public static boolean isChromeOS(Context context) {
+        return context.getPackageManager().hasSystemFeature("org.chromium.arc.device_management");
     }
 
     @Override
@@ -774,6 +780,15 @@ public class LOActivity extends AppCompatActivity {
     public void postMobileDebug(String message) {
         // TODO handle this
         Log.d(TAG, "postMobileDebug: " + message);
+    }
+
+    /**
+     * Provide the info that this app is actually running under ChromeOS - so
+     * has to mostly look like on desktop.
+     */
+    @JavascriptInterface
+    public boolean isChromeOS() {
+        return isChromeOS(this);
     }
 
     /**

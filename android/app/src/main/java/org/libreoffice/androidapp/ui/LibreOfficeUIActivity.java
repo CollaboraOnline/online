@@ -678,11 +678,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         return true;
     }
 
-    /** True if the App is running under ChromeOS. */
-    private boolean isChromeOS() {
-        return getPackageManager().hasSystemFeature("org.chromium.arc.device_management");
-    }
-
     /** Start an ACTION_OPEN_DOCUMENT Intent to trigger opening a document. */
     private void openDocument() {
         collapseFabMenu();
@@ -700,7 +695,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         // impossible to choose any files, unless they notice the dropdown in
         // the bottom left and choose "All files".  Interestingly, SVG / SVGZ
         // are shown there as an option, the other mime types are just blank
-        if (!isChromeOS()) {
+        if (!LOActivity.isChromeOS(this)) {
             final String[] mimeTypes = new String[] {
                 // ODF
                 "application/vnd.oasis.opendocument.text",
