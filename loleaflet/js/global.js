@@ -143,9 +143,18 @@
 	};
 
 	global.mode = {
+		isChromebook: function() {
+			if (!window.ThisIsTheAndroidApp)
+				return false;
+
+			return window.LOOLMessageHandler.isChromeOS();
+		},
 		// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
 		// requirement.
 		isMobile: function() {
+			if (global.mode.isChromebook())
+				return false;
+
 			if (L.Browser.mobile && L.Browser.cypressTest) {
 				return true;
 			}
@@ -154,9 +163,15 @@
 		},
 		// Mobile device with big screen size.
 		isTablet: function() {
+			if (global.mode.isChromebook())
+				return false;
+
 			return L.Browser.mobile && !window.mode.isMobile();
 		},
 		isDesktop: function() {
+			if (global.mode.isChromebook())
+				return true;
+
 			return !L.Browser.mobile;
 		},
 		getDeviceFormFactor: function() {
