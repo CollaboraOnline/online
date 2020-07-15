@@ -690,6 +690,13 @@ inline std::string getServiceURI(const std::string &sub, bool asAdmin = false)
 
 #endif
 
+} // anonymous namespace
+
+#endif // MOBILEAPP
+
+namespace
+{
+
 void sendLoadResult(std::shared_ptr<ClientSession> clientSession, bool success,
                     const std::string &errorMsg)
 {
@@ -705,8 +712,6 @@ void sendLoadResult(std::shared_ptr<ClientSession> clientSession, bool success,
 }
 
 } // anonymous namespace
-
-#endif // MOBILEAPP
 
 std::atomic<uint64_t> LOOLWSD::NextConnectionId(1);
 
