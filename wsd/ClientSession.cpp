@@ -395,66 +395,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return loadDocument(buffer, length, tokens, docBroker);
     }
-    else if (tokens[0] != "canceltiles" &&
-             tokens[0] != "tileprocessed" &&
-             tokens[0] != "clientzoom" &&
-             tokens[0] != "clientvisiblearea" &&
-             tokens[0] != "outlinestate" &&
-             tokens[0] != "commandvalues" &&
-             tokens[0] != "closedocument" &&
-             tokens[0] != "versionrestore" &&
-             tokens[0] != "downloadas" &&
-             tokens[0] != "getchildid" &&
-             tokens[0] != "gettextselection" &&
-             tokens[0] != "paste" &&
-             tokens[0] != "insertfile" &&
-             tokens[0] != "key" &&
-             tokens[0] != "textinput" &&
-             tokens[0] != "windowkey" &&
-             tokens[0] != "mouse" &&
-             tokens[0] != "windowmouse" &&
-             tokens[0] != "windowgesture" &&
-             tokens[0] != "partpagerectangles" &&
-             tokens[0] != "ping" &&
-             tokens[0] != "renderfont" &&
-             tokens[0] != "requestloksession" &&
-             tokens[0] != "resetselection" &&
-             tokens[0] != "save" &&
-             tokens[0] != "saveas" &&
-             tokens[0] != "savetostorage" &&
-             tokens[0] != "selectgraphic" &&
-             tokens[0] != "selecttext" &&
-             tokens[0] != "windowselecttext" &&
-             tokens[0] != "setclientpart" &&
-             tokens[0] != "selectclientpart" &&
-             tokens[0] != "moveselectedclientparts" &&
-             tokens[0] != "setpage" &&
-             tokens[0] != "status" &&
-             tokens[0] != "statusupdate" &&
-             tokens[0] != "tile" &&
-             tokens[0] != "tilecombine" &&
-             tokens[0] != "uno" &&
-             tokens[0] != "useractive" &&
-             tokens[0] != "userinactive" &&
-             tokens[0] != "paintwindow" &&
-             tokens[0] != "windowcommand" &&
-             tokens[0] != "signdocument" &&
-             tokens[0] != "asksignaturestatus" &&
-             tokens[0] != "uploadsigneddocument" &&
-             tokens[0] != "exportsignanduploaddocument" &&
-             tokens[0] != "rendershapeselection" &&
-             tokens[0] != "removesession" &&
-             tokens[0] != "renamefile" &&
-             tokens[0] != "resizewindow" &&
-             tokens[0] != "removetextcontext" &&
-             tokens[0] != "dialogevent" &&
-             tokens[0] != "completefunction" &&
-             tokens[0] != "formfieldevent")
-    {
-        LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
-        sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=unknown");
-        return false;
-    }
     else if (getDocURL().empty())
     {
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=nodocloaded");
@@ -746,7 +686,37 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return forwardToChild(firstLine, docBroker);
     }
-    else
+    else if (tokens[0] == "outlinestate" ||
+             tokens[0] == "downloadas" ||
+             tokens[0] == "getchildid" ||
+             tokens[0] == "gettextselection" ||
+             tokens[0] == "paste" ||
+             tokens[0] == "insertfile" ||
+             tokens[0] == "key" ||
+             tokens[0] == "textinput" ||
+             tokens[0] == "windowkey" ||
+             tokens[0] == "mouse" ||
+             tokens[0] == "windowmouse" ||
+             tokens[0] == "windowgesture" ||
+             tokens[0] == "requestloksession" ||
+             tokens[0] == "resetselection" ||
+             tokens[0] == "saveas" ||
+             tokens[0] == "selectgraphic" ||
+             tokens[0] == "selecttext" ||
+             tokens[0] == "windowselecttext" ||
+             tokens[0] == "setpage" ||
+             tokens[0] == "uno" ||
+             tokens[0] == "useractive" ||
+             tokens[0] == "userinactive" ||
+             tokens[0] == "paintwindow" ||
+             tokens[0] == "windowcommand" ||
+             tokens[0] == "signdocument" ||
+             tokens[0] == "asksignaturestatus" ||
+             tokens[0] == "uploadsigneddocument" ||
+             tokens[0] == "exportsignanduploaddocument" ||
+             tokens[0] == "rendershapeselection" ||
+             tokens[0] == "resizewindow" ||
+             tokens[0] == "removetextcontext")
     {
         if (tokens.equals(0, "key"))
             _keyEvents++;
@@ -765,6 +735,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             assert(tokens.equals(0, "requestloksession"));
             return true;
         }
+    }
+    else
+    {
+        LOG_ERR("Session [" << getId() << "] got unknown command [" << tokens[0] << "].");
+        sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=unknown");
     }
 
     return false;
