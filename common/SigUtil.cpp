@@ -41,9 +41,11 @@
 static std::atomic<bool> TerminationFlag(false);
 static std::atomic<bool> DumpGlobalState(false);
 static std::atomic<bool> ShutdownRequestFlag(false);
+#endif
 
 namespace SigUtil
 {
+#ifndef IOS
     bool getShutdownRequestFlag()
     {
         return ShutdownRequestFlag;
@@ -65,6 +67,7 @@ namespace SigUtil
         TerminationFlag = false;
     }
 #endif
+#endif // !IOS
 
     void checkDumpGlobalState(GlobalDumpStateFn dumpState)
     {
@@ -380,6 +383,5 @@ namespace SigUtil
 #endif // !MOBILEAPP
 }
 
-#endif // !IOS
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
