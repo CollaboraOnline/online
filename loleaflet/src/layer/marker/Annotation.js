@@ -127,6 +127,7 @@ L.Annotation = L.Layer.extend({
 	},
 
 	focus: function () {
+		$(this._container).addClass('annotation-active');
 		this._nodeModifyText.focus();
 		this._nodeReplyText.focus();
 	},
@@ -295,6 +296,7 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_onLostFocus: function (e) {
+		$(this._container).removeClass('annotation-active');
 		if (this._contentText.origText !== this._nodeModifyText.value) {
 			this._onSaveComment(e);
 		}
