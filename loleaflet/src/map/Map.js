@@ -289,6 +289,16 @@ L.Map = L.Evented.extend({
 					if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
 						map._socket.sendMessage('uno .uno:SidebarShow');
 					}
+					else if (window.mode.isChromebook()) {
+						// HACK - currently the sidebar shows when loaded,
+						// with the exception of mobile phones & tablets - but
+						// there, it does not show only because they start
+						// with read/only mode which hits an early exit in
+						// _launchSidebar() in Control.LokDialog.js
+						// So for the moment, let's just hide it on
+						// Chromebooks early
+						map._socket.sendMessage('uno .uno:SidebarHide');
+					}
 				}, 200);
 			}
 
