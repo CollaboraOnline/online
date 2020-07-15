@@ -6,24 +6,26 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#import <memory>
 #import <string>
 
 #import <UIKit/UIKit.h>
 
-#define LOK_USE_UNSTABLE_API
-#import <LibreOfficeKit/LibreOfficeKit.h>
-
 @class DocumentViewController;
+
+class COAppDocument;
 
 @interface CODocument : UIDocument {
 @public
-    int fakeClientFd;
     NSURL *copyFileURL;
-    unsigned appDocId;
+    std::shared_ptr<COAppDocument> appDocument;
 }
 
 @property (weak) DocumentViewController *viewController;
 
+- (void)handleProtocolMessage:(NSString*)message;
+
+- (void)send2JS:(std::string)string;
 - (void)send2JS:(const char*)buffer length:(int)length;
 
 @end

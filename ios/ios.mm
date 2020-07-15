@@ -17,6 +17,6 @@ extern "C" {
 
 int loolwsd_server_socket_fd = -1;
 
-LibreOfficeKit *lo_kit;
+std::shared_ptr<lok::Office> lo_kit;
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:

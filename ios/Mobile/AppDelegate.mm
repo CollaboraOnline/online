@@ -9,14 +9,14 @@
 #import "config.h"
 
 #import <cassert>
-#import <cstdlib>
-#import <cstring>
+#import <thread>
 
+#define LOK_USE_UNSTABLE_API
 #import <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #define LIBO_INTERNAL_ONLY
-#include <comphelper/lok.hxx>
-#include <i18nlangtag/languagetag.hxx>
+#import <comphelper/lok.hxx>
+#import <i18nlangtag/languagetag.hxx>
 
 #import "ios.h"
 #import "AppDelegate.h"
@@ -24,10 +24,7 @@
 #import "CODocument.h"
 #import "DocumentViewController.h"
 
-#import "FakeSocket.hpp"
-#import "Kit.hpp"
 #import "Log.hpp"
-#import "LOOLWSD.hpp"
 #import "SetupKitEnvironment.hpp"
 #import "Util.hpp"
 
@@ -179,6 +176,44 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     }
 }
 
+static int pollCallback(void* pData, int timeoutUs)
+{
+    std::this_thread::sleep_for(std::chrono::microseconds(timeoutUs));
+
+    return 0;
+}
+
+static void wakeCallback(void* pData)
+{
+}
+
+// We can have several documents open in the app process at the same time, thus
+// several lokit_main() functions running at the same time. We want just one LO main loop, though,
+// so we start it separately in its own thread.
+
+static void runKitLoopInAThread()
+{
+    std::thread([&]
+                {
+                    Util::setThreadName("lokit_runloop");
+
+                    int dummy;
+                    lo_kit->runLoop(pollCallback, wakeCallback, &dummy);
+
+                    // Should never return
+                    assert(false);
+
+                    NSLog(@"LOOLWSD::runLoop() unexpectedly returned");
+
+                    std::abort();
+                }).detach();
+}
+
+static void kitCallback(const int type, const char* p, void* data)
+{
+    NSLog(@"kitCallback: %s %s", lokCallbackTypeToString(type), (p ? p : "(null)"));
+}
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -201,7 +236,9 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     else
         app_locale = [[NSLocale preferredLanguages] firstObject];
 
-    lo_kit = lok_init_2(nullptr, nullptr);
+    lo_kit.reset(lok::lok_cpp_init(nullptr, nullptr));
+
+    lo_kit->registerCallback(kitCallback, NULL);
 
     comphelper::LibreOfficeKit::setLanguageTag(LanguageTag(OUString::fromUtf8(OString([app_locale UTF8String])), true));
 
@@ -247,25 +284,6 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         }
     }
 
-    fakeSocketSetLoggingCallback([](const std::string& line)
-                                 {
-                                     LOG_INF_NOFILE(line);
-                                 });
-
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                   ^{
-                       char *argv[2];
-                       argv[0] = strdup([[NSBundle mainBundle].executablePath UTF8String]);
-                       argv[1] = nullptr;
-                       Util::setThreadName("app");
-                       auto loolwsd = new LOOLWSD();
-                       loolwsd->run(1, argv);
-
-                       // Should never return
-                       assert(false);
-                       NSLog(@"lolwsd->run() unexpectedly returned");
-                       std::abort();
-                   });
     return YES;
 }
 

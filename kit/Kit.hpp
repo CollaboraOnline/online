@@ -43,10 +43,6 @@ void lokit_main(
                 size_t numericIdentifier
                 );
 
-#ifdef IOS
-void runKitLoopInAThread();
-#endif
-
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
 void documentViewCallback(const int type, const char* p, void* data);

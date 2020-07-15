@@ -141,9 +141,8 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
     // Load the template into LibreOffice core, save as the corresponding document type (with the
     // same basename), and then proceed to edit that.
 
-    LibreOfficeKitDocument *doc = lo_kit->pClass->documentLoad(lo_kit, [[selectedTemplate absoluteString] UTF8String]);
-    doc->pClass->saveAs(doc, [[newURL absoluteString] UTF8String], nullptr, nullptr);
-    doc->pClass->destroy(doc);
+    lok::Document *doc = lo_kit->documentLoad([[selectedTemplate absoluteString] UTF8String]);
+    doc->saveAs([[newURL absoluteString] UTF8String], nullptr, nullptr);
 
     self.importHandler(newURL, UIDocumentBrowserImportModeMove);
 

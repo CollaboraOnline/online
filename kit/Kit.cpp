@@ -2316,33 +2316,6 @@ void lokit_main(
 #endif
 }
 
-#ifdef IOS
-
-// In the iOS app we can have several documents open in the app process at the same time, thus
-// several lokit_main() functions running at the same time. We want just one LO main loop, though,
-// so we start it separately in its own thread.
-
-void runKitLoopInAThread()
-{
-    std::thread([&]
-                {
-                    Util::setThreadName("lokit_runloop");
-
-                    std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(lo_kit);
-                    int dummy;
-                    loKit->runLoop(pollCallback, wakeCallback, &dummy);
-
-                    // Should never return
-                    assert(false);
-
-                    NSLog(@"loKit->runLoop() unexpectedly returned");
-
-                    std::abort();
-                }).detach();
-}
-
-#endif // IOS
-
 #endif // !BUILDING_TESTS
 
 std::string anonymizeUrl(const std::string& url)

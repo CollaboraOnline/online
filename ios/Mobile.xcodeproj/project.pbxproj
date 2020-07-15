@@ -17,19 +17,14 @@
 		BE18C7DE226DE09A001AD27E /* Branding in Resources */ = {isa = PBXBuildFile; fileRef = BE18C7DD226DE09A001AD27E /* Branding */; };
 		BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5B9213FE29900E0826C /* Log.cpp */; };
 		BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */; };
-		BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BB213FE29900E0826C /* Session.cpp */; };
 		BE5EB5C4213FE29900E0826C /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BC213FE29900E0826C /* Util.cpp */; };
 		BE5EB5C5213FE29900E0826C /* MessageQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BD213FE29900E0826C /* MessageQueue.cpp */; };
 		BE5EB5C6213FE29900E0826C /* SigUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BE213FE29900E0826C /* SigUtil.cpp */; };
 		BE5EB5C7213FE29900E0826C /* Protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BF213FE29900E0826C /* Protocol.cpp */; };
-		BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5C0213FE29900E0826C /* FileUtil.cpp */; };
-		BE5EB5CF213FE2D000E0826C /* ClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */; };
-		BE5EB5D0213FE2D000E0826C /* TileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5CD213FE2D000E0826C /* TileCache.cpp */; };
-		BE5EB5D22140039100E0826C /* LOOLWSD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D12140039100E0826C /* LOOLWSD.cpp */; };
-		BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */; };
-		BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D521401E0F00E0826C /* Storage.cpp */; };
 		BE5EB5DA2140363100E0826C /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D92140363100E0826C /* ios.mm */; };
 		BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* ICU.dat */; };
+		BE62A58724BEE1F600AFFD77 /* AppDocument.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE62A58624BEE1F500AFFD77 /* AppDocument.cpp */; };
+		BE62A58A24BEE55200AFFD77 /* COAppDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE62A58924BEE55100AFFD77 /* COAppDocument.mm */; };
 		BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* MobileCoreServices.framework */; };
 		BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE7228E02417BC9F000ADABD /* StringVector.cpp */; };
 		BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */; };
@@ -56,15 +51,8 @@
 		BE8D85D4214055F3009F1860 /* fundamentalrc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C6214055F3009F1860 /* fundamentalrc */; };
 		BE8D85D5214055F3009F1860 /* unorc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C7214055F3009F1860 /* unorc */; };
 		BE8D85D6214055F3009F1860 /* rc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C8214055F3009F1860 /* rc */; };
-		BEA2835621467FDD00848631 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835521467FDD00848631 /* Kit.cpp */; };
-		BEA283582146945500848631 /* ChildSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA283572146945500848631 /* ChildSession.cpp */; };
 		BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2835921470A1C00848631 /* WebKit.framework */; };
-		BEA2835D21498AD400848631 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835C21498AD400848631 /* Socket.cpp */; };
-		BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835F214ACA8500848631 /* FakeSocket.cpp */; };
-		BEA28377214FFD8C00848631 /* Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA28376214FFD8C00848631 /* Unit.cpp */; };
-		BEABFC6824AC94C3004DE339 /* Authorization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEABFC6624AC94C3004DE339 /* Authorization.cpp */; };
 		BEB0E5D921C7CA800085A0CF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEB0E5D821C7CA800085A0CF /* Settings.bundle */; };
-		BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */; };
 		BECD984024336DD400016117 /* device-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983E24336DD400016117 /* device-mobile.css */; };
 		BECD984124336DD400016117 /* device-tablet.css in Resources */ = {isa = PBXBuildFile; fileRef = BECD983F24336DD400016117 /* device-tablet.css */; };
 		BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEDCC84C2452F82800FB02BD /* MobileApp.cpp */; };
@@ -80,6 +68,8 @@
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BE04F4DA24B86E8E0079A1FB /* KitHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KitHelper.hpp; sourceTree = "<group>"; };
+		BE04F4DB24B895780079A1FB /* TileDesc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TileDesc.hpp; sourceTree = "<group>"; };
 		BE18C7DD226DE09A001AD27E /* Branding */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Branding; path = Mobile/Branding; sourceTree = SOURCE_ROOT; };
 		BE28F880228CE04600C00C48 /* langselect.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = langselect.hxx; path = "../../ios-device/desktop/source/app/langselect.hxx"; sourceTree = "<group>"; };
 		BE28F881228CE04600C00C48 /* officeipcthread.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = officeipcthread.hxx; path = "../../ios-device/desktop/source/app/officeipcthread.hxx"; sourceTree = "<group>"; };
@@ -477,7 +467,6 @@
 		BE484B6E228CF36E001EE76C /* configvaluecontainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configvaluecontainer.cxx; path = "../../ios-device/unotools/source/config/configvaluecontainer.cxx"; sourceTree = "<group>"; };
 		BE484B6F228CF36E001EE76C /* bootstrap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bootstrap.cxx; path = "../../ios-device/unotools/source/config/bootstrap.cxx"; sourceTree = "<group>"; };
 		BE484B70228CF36E001EE76C /* saveopt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = saveopt.cxx; path = "../../ios-device/unotools/source/config/saveopt.cxx"; sourceTree = "<group>"; };
-		BE484B71228D8622001EE76C /* DocumentBroker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DocumentBroker.hpp; sourceTree = "<group>"; };
 		BE484B732292AF96001EE76C /* frmload.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frmload.cxx; path = "../../ios-device/sfx2/source/view/frmload.cxx"; sourceTree = "<group>"; };
 		BE484B742292AF96001EE76C /* sfxbasecontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sfxbasecontroller.cxx; path = "../../ios-device/sfx2/source/view/sfxbasecontroller.cxx"; sourceTree = "<group>"; };
 		BE484B752292AF96001EE76C /* frame.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cxx; path = "../../ios-device/sfx2/source/view/frame.cxx"; sourceTree = "<group>"; };
@@ -503,7 +492,6 @@
 		BE58E12C217F295B00249358 /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
 		BE58E12D217F295B00249358 /* MessageQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MessageQueue.hpp; sourceTree = "<group>"; };
 		BE58E12E217F295B00249358 /* Protocol.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Protocol.hpp; sourceTree = "<group>"; };
-		BE58E12F217F295B00249358 /* Session.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Session.hpp; sourceTree = "<group>"; };
 		BE58E13021874A2E00249358 /* Mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mobile.entitlements; sourceTree = "<group>"; };
 		BE58E132218793B500249358 /* svpbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpbmp.cxx; path = "../../ios-device/vcl/headless/svpbmp.cxx"; sourceTree = "<group>"; };
 		BE58E133218793B500249358 /* svpglyphcache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpglyphcache.cxx; path = "../../ios-device/vcl/headless/svpglyphcache.cxx"; sourceTree = "<group>"; };
@@ -519,20 +507,16 @@
 		BE58E13D218793B600249358 /* svpframe.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svpframe.cxx; path = "../../ios-device/vcl/headless/svpframe.cxx"; sourceTree = "<group>"; };
 		BE5EB5B9213FE29900E0826C /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpookyV2.cpp; sourceTree = "<group>"; };
-		BE5EB5BB213FE29900E0826C /* Session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
 		BE5EB5BC213FE29900E0826C /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		BE5EB5BD213FE29900E0826C /* MessageQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageQueue.cpp; sourceTree = "<group>"; };
 		BE5EB5BE213FE29900E0826C /* SigUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SigUtil.cpp; sourceTree = "<group>"; };
 		BE5EB5BF213FE29900E0826C /* Protocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Protocol.cpp; sourceTree = "<group>"; };
-		BE5EB5C0213FE29900E0826C /* FileUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtil.cpp; sourceTree = "<group>"; };
-		BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientSession.cpp; sourceTree = "<group>"; };
-		BE5EB5CD213FE2D000E0826C /* TileCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileCache.cpp; sourceTree = "<group>"; };
-		BE5EB5D12140039100E0826C /* LOOLWSD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LOOLWSD.cpp; sourceTree = "<group>"; };
-		BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentBroker.cpp; sourceTree = "<group>"; };
-		BE5EB5D521401E0F00E0826C /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
 		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
 		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
-		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
+		BE62A58524BEE1F500AFFD77 /* AppDocument.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AppDocument.hpp; sourceTree = "<group>"; };
+		BE62A58624BEE1F500AFFD77 /* AppDocument.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDocument.cpp; sourceTree = "<group>"; };
+		BE62A58824BEE55100AFFD77 /* COAppDocument.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = COAppDocument.hpp; sourceTree = "<group>"; };
+		BE62A58924BEE55100AFFD77 /* COAppDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = COAppDocument.mm; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BE7228E02417BC9F000ADABD /* StringVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringVector.cpp; sourceTree = "<group>"; };
 		BE7228E12417BC9F000ADABD /* StringVector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringVector.hpp; sourceTree = "<group>"; };
@@ -779,7 +763,7 @@
 		BE8C03C32242BA680048B7EA /* appdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = appdata.cxx; path = "../../ios-device/sfx2/source/appl/appdata.cxx"; sourceTree = "<group>"; };
 		BE8C03C42242BA680048B7EA /* shellimpl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = shellimpl.cxx; path = "../../ios-device/sfx2/source/appl/shellimpl.cxx"; sourceTree = "<group>"; };
 		BE8C03C52242BA680048B7EA /* panelist.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = panelist.hxx; path = "../../ios-device/sfx2/source/appl/panelist.hxx"; sourceTree = "<group>"; };
-		BE8D77272136762500AC58EA /* Mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE8D77272136762500AC58EA /* Collabora Office2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collabora Office2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8D772A2136762500AC58EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE8D772B2136762500AC58EA /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		BE8D772D2136762500AC58EA /* DocumentBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocumentBrowserViewController.h; sourceTree = "<group>"; };
@@ -975,14 +959,7 @@
 		BE93D46A216D5582007A39F4 /* watermarkitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = watermarkitem.cxx; path = "../../ios-device/sfx2/source/doc/watermarkitem.cxx"; sourceTree = "<group>"; };
 		BE93D46B216D5582007A39F4 /* new.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = new.cxx; path = "../../ios-device/sfx2/source/doc/new.cxx"; sourceTree = "<group>"; };
 		BE93D46C216D5582007A39F4 /* objembed.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objembed.cxx; path = "../../ios-device/sfx2/source/doc/objembed.cxx"; sourceTree = "<group>"; };
-		BEA2835521467FDD00848631 /* Kit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kit.cpp; sourceTree = "<group>"; };
-		BEA283572146945500848631 /* ChildSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChildSession.cpp; sourceTree = "<group>"; };
 		BEA2835921470A1C00848631 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		BEA2835C21498AD400848631 /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = ../net/Socket.cpp; sourceTree = "<group>"; };
-		BEA2835E214A8E2000848631 /* Socket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Socket.hpp; sourceTree = "<group>"; };
-		BEA2835F214ACA8500848631 /* FakeSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FakeSocket.cpp; sourceTree = "<group>"; };
-		BEA28376214FFD8C00848631 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
-		BEA283782150172600848631 /* Unit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Unit.hpp; sourceTree = "<group>"; };
 		BEA8CD7421959342009FE17E /* caserotate.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = caserotate.cxx; path = "../../ios-device/unotools/source/i18n/caserotate.cxx"; sourceTree = "<group>"; };
 		BEA8CD7521959342009FE17E /* intlwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = intlwrapper.cxx; path = "../../ios-device/unotools/source/i18n/intlwrapper.cxx"; sourceTree = "<group>"; };
 		BEA8CD7621959342009FE17E /* transliterationwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transliterationwrapper.cxx; path = "../../ios-device/unotools/source/i18n/transliterationwrapper.cxx"; sourceTree = "<group>"; };
@@ -997,8 +974,6 @@
 		BEA8CDC32199AC9D009FE17E /* lok.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lok.cxx; path = "../../ios-device/comphelper/source/misc/lok.cxx"; sourceTree = "<group>"; };
 		BEA8CDC52199E621009FE17E /* languagetagicu.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = languagetagicu.cxx; path = "../../ios-device/i18nlangtag/source/languagetag/languagetagicu.cxx"; sourceTree = "<group>"; };
 		BEA8CDC62199E621009FE17E /* languagetag.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = languagetag.cxx; path = "../../ios-device/i18nlangtag/source/languagetag/languagetag.cxx"; sourceTree = "<group>"; };
-		BEABFC6624AC94C3004DE339 /* Authorization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Authorization.cpp; sourceTree = "<group>"; };
-		BEABFC6724AC94C3004DE339 /* Authorization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Authorization.hpp; sourceTree = "<group>"; };
 		BEB0E5D821C7CA800085A0CF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEB0E5DB21CA7C780085A0CF /* graphicfilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicfilter.cxx; path = "../../ios-device/vcl/source/filter/graphicfilter.cxx"; sourceTree = "<group>"; };
 		BEB0E5E021CA9DC00085A0CF /* salbmp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salbmp.cxx; path = "../../ios-device/vcl/quartz/salbmp.cxx"; sourceTree = "<group>"; };
@@ -1060,8 +1035,6 @@
 		BEB6524E216FD0CA00B8C09A /* stream.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stream.cxx; path = "../../ios-device/tools/source/stream/stream.cxx"; sourceTree = "<group>"; };
 		BEB6524F216FD0CA00B8C09A /* strmwnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmwnt.cxx; path = "../../ios-device/tools/source/stream/strmwnt.cxx"; sourceTree = "<group>"; };
 		BEB65250216FD0CA00B8C09A /* strmunx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmunx.cxx; path = "../../ios-device/tools/source/stream/strmunx.cxx"; sourceTree = "<group>"; };
-		BEBF3EAE246EB1C800415E87 /* RequestDetails.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RequestDetails.hpp; sourceTree = "<group>"; };
-		BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestDetails.cpp; sourceTree = "<group>"; };
 		BECBD30323D7152900DA5582 /* SlsFramePainter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsFramePainter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.cxx"; sourceTree = "<group>"; };
 		BECBD30423D7152900DA5582 /* SlideSorterView.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideSorterView.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlideSorterView.cxx"; sourceTree = "<group>"; };
 		BECBD30523D7152900DA5582 /* SlsFramePainter.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlsFramePainter.hxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.hxx"; sourceTree = "<group>"; };
@@ -1889,9 +1862,8 @@
 		BE5EB5B6213FE21000E0826C /* common */ = {
 			isa = PBXGroup;
 			children = (
-				BEABFC6624AC94C3004DE339 /* Authorization.cpp */,
-				BEABFC6724AC94C3004DE339 /* Authorization.hpp */,
-				BE5EB5C0213FE29900E0826C /* FileUtil.cpp */,
+				BE62A58624BEE1F500AFFD77 /* AppDocument.cpp */,
+				BE62A58524BEE1F500AFFD77 /* AppDocument.hpp */,
 				BE5EB5B9213FE29900E0826C /* Log.cpp */,
 				BE58E129217F295B00249358 /* Log.hpp */,
 				BE5EB5BD213FE29900E0826C /* MessageQueue.cpp */,
@@ -1901,15 +1873,11 @@
 				BE58E12A217F295B00249358 /* Png.hpp */,
 				BE5EB5BF213FE29900E0826C /* Protocol.cpp */,
 				BE58E12E217F295B00249358 /* Protocol.hpp */,
-				BE5EB5BB213FE29900E0826C /* Session.cpp */,
-				BE58E12F217F295B00249358 /* Session.hpp */,
 				BE5EB5BE213FE29900E0826C /* SigUtil.cpp */,
 				BE58E12B217F295B00249358 /* SigUtil.hpp */,
 				BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */,
 				BE7228E02417BC9F000ADABD /* StringVector.cpp */,
 				BE7228E12417BC9F000ADABD /* StringVector.hpp */,
-				BEA28376214FFD8C00848631 /* Unit.cpp */,
-				BEA283782150172600848631 /* Unit.hpp */,
 				BE5EB5BC213FE29900E0826C /* Util.cpp */,
 				BE58E12C217F295B00249358 /* Util.hpp */,
 			);
@@ -1919,14 +1887,7 @@
 		BE5EB5B7213FE21600E0826C /* wsd */ = {
 			isa = PBXGroup;
 			children = (
-				BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */,
-				BEBF3EAE246EB1C800415E87 /* RequestDetails.hpp */,
-				BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */,
-				BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */,
-				BE484B71228D8622001EE76C /* DocumentBroker.hpp */,
-				BE5EB5D12140039100E0826C /* LOOLWSD.cpp */,
-				BE5EB5D521401E0F00E0826C /* Storage.cpp */,
-				BE5EB5CD213FE2D000E0826C /* TileCache.cpp */,
+				BE04F4DB24B895780079A1FB /* TileDesc.hpp */,
 			);
 			name = wsd;
 			path = ../wsd;
@@ -2268,7 +2229,7 @@
 		BE8D77282136762500AC58EA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BE8D77272136762500AC58EA /* Mobile.app */,
+				BE8D77272136762500AC58EA /* Collabora Office2.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2276,6 +2237,8 @@
 		BE8D77292136762500AC58EA /* Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				BE62A58824BEE55100AFFD77 /* COAppDocument.hpp */,
+				BE62A58924BEE55100AFFD77 /* COAppDocument.mm */,
 				BE58E13021874A2E00249358 /* Mobile.entitlements */,
 				BE5EB5D92140363100E0826C /* ios.mm */,
 				BE00F8922139494E001CE2D4 /* Resources */,
@@ -2538,8 +2501,7 @@
 		BEA2835421467F8200848631 /* kit */ = {
 			isa = PBXGroup;
 			children = (
-				BEA283572146945500848631 /* ChildSession.cpp */,
-				BEA2835521467FDD00848631 /* Kit.cpp */,
+				BE04F4DA24B86E8E0079A1FB /* KitHelper.hpp */,
 			);
 			name = kit;
 			path = ../kit;
@@ -2548,10 +2510,6 @@
 		BEA2835B21498ABF00848631 /* net */ = {
 			isa = PBXGroup;
 			children = (
-				BEA2835F214ACA8500848631 /* FakeSocket.cpp */,
-				BEA2835C21498AD400848631 /* Socket.cpp */,
-				BEA2835E214A8E2000848631 /* Socket.hpp */,
-				BE636210215101D000F4237E /* WebSocketHandler.hpp */,
 			);
 			name = net;
 			path = ../net;
@@ -2957,7 +2915,7 @@
 			);
 			name = Mobile;
 			productName = Mobile;
-			productReference = BE8D77272136762500AC58EA /* Mobile.app */;
+			productReference = BE8D77272136762500AC58EA /* Collabora Office2.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -3040,36 +2998,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEA2835D21498AD400848631 /* Socket.cpp in Sources */,
 				BE5EB5C4213FE29900E0826C /* Util.cpp in Sources */,
-				BEA283582146945500848631 /* ChildSession.cpp in Sources */,
 				BE80E45E21B6CEF200859C97 /* TemplateSectionHeaderView.m in Sources */,
-				BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */,
-				BE5EB5D22140039100E0826C /* LOOLWSD.cpp in Sources */,
 				BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */,
 				BEDCC8992456FFAD00FB02BD /* SceneDelegate.m in Sources */,
 				BE5EB5C6213FE29900E0826C /* SigUtil.cpp in Sources */,
 				BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */,
 				BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */,
 				BE5EB5DA2140363100E0826C /* ios.mm in Sources */,
-				BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */,
-				BEA28377214FFD8C00848631 /* Unit.cpp in Sources */,
-				BE5EB5CF213FE2D000E0826C /* ClientSession.cpp in Sources */,
-				BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */,
 				BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */,
 				BE8D77402136762600AC58EA /* main.m in Sources */,
-				BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */,
-				BEABFC6824AC94C3004DE339 /* Authorization.cpp in Sources */,
-				BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */,
+				BE62A58724BEE1F600AFFD77 /* AppDocument.cpp in Sources */,
 				BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */,
 				BE8D77352136762500AC58EA /* CODocument.mm in Sources */,
 				BE5EB5C7213FE29900E0826C /* Protocol.cpp in Sources */,
 				BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */,
-				BE5EB5D0213FE2D000E0826C /* TileCache.cpp in Sources */,
 				BE5EB5C5213FE29900E0826C /* MessageQueue.cpp in Sources */,
+				BE62A58A24BEE55200AFFD77 /* COAppDocument.mm in Sources */,
 				BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */,
-				BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */,
-				BEA2835621467FDD00848631 /* Kit.cpp in Sources */,
 				BE8D77322136762500AC58EA /* DocumentViewController.mm in Sources */,
 				BE8D772C2136762500AC58EA /* AppDelegate.mm in Sources */,
 			);
@@ -3265,8 +3211,8 @@
 					"-lPocoJSONd",
 					"-lPocoNetd",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.office.Mobile;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.office.Mobile2;
+				PRODUCT_NAME = "Collabora Office2";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3324,8 +3270,8 @@
 					"-lPocoJSONd",
 					"-lPocoNetd",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.office.Mobile;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.office.Mobile2;
+				PRODUCT_NAME = "Collabora Office2";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -15,12 +15,10 @@
 #import <objc/message.h>
 #import <objc/runtime.h>
 
-#import <poll.h>
 #import <sys/stat.h>
 
 #import "ios.h"
-#import "FakeSocket.hpp"
-#import "LOOLWSD.hpp"
+#import "COAppDocument.hpp"
 #import "Log.hpp"
 #import "MobileApp.hpp"
 #import "SigUtil.hpp"
@@ -180,10 +178,6 @@ static IMP standardImpOfInputAccessoryView = nil;
     // removed. After the photo is taken it is then added back to the hierarchy. Our Document object
     // is still there intact, however, so no need to re-open the document when we re-appear.
 
-    // Check whether the Document object is an already initialised one.
-    if (self.document->fakeClientFd >= 0)
-        return;
-
     [self.document openWithCompletionHandler:^(BOOL success) {
         if (success) {
             // Display the content of the document
@@ -268,9 +262,6 @@ static IMP standardImpOfInputAccessoryView = nil;
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    int rc;
-    struct pollfd p;
-
     if ([message.name isEqualToString:@"error"]) {
         LOG_ERR("Error from WebView: " << [message.body UTF8String]);
     } else if ([message.name isEqualToString:@"debug"]) {
@@ -280,82 +271,14 @@ static IMP standardImpOfInputAccessoryView = nil;
         if (subBody.length < ((NSString*)message.body).length)
             subBody = [subBody stringByAppendingString:@"..."];
 
-        LOG_TRC("To Online: " << [subBody UTF8String]);
+        LOG_ERR("From JS: " << [subBody UTF8String]);
 
         if ([message.body isEqualToString:@"HULLO"]) {
             // Now we know that the JS has started completely
-
-            // Contact the permanently (during app lifetime) listening LOOLWSD server
-            // "public" socket
-            assert(loolwsd_server_socket_fd != -1);
-            rc = fakeSocketConnect(self.document->fakeClientFd, loolwsd_server_socket_fd);
-            assert(rc != -1);
-
-            // Create a socket pair to notify the below thread when the document has been closed
-            fakeSocketPipe2(closeNotificationPipeForForwardingThread);
-
-            // Start another thread to read responses and forward them to the JavaScript
-            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                           ^{
-                               Util::setThreadName("app2js");
-                               while (true) {
-                                   struct pollfd p[2];
-                                   p[0].fd = self.document->fakeClientFd;
-                                   p[0].events = POLLIN;
-                                   p[1].fd = self->closeNotificationPipeForForwardingThread[1];
-                                   p[1].events = POLLIN;
-                                   if (fakeSocketPoll(p, 2, -1) > 0) {
-                                       if (p[1].revents == POLLIN) {
-                                           // The code below handling the "BYE" fake Websocket
-                                           // message has closed the other end of the
-                                           // closeNotificationPipeForForwardingThread. Let's close
-                                           // the other end too just for cleanliness, even if a
-                                           // FakeSocket as such is not a system resource so nothing
-                                           // is saved by closing it.
-                                           fakeSocketClose(self->closeNotificationPipeForForwardingThread[1]);
-
-                                           // Close our end of the fake socket connection to the
-                                           // ClientSession thread, so that it terminates
-                                           fakeSocketClose(self.document->fakeClientFd);
-
-                                           return;
-                                       }
-                                       if (p[0].revents == POLLIN) {
-                                           int n = fakeSocketAvailableDataLength(self.document->fakeClientFd);
-                                           // I don't want to check for n being -1 here, even if
-                                           // that will lead to a crash (std::length_error from the
-                                           // below std::vector constructor), as n being -1 is a
-                                           // sign of something being wrong elsewhere anyway, and I
-                                           // prefer to fix the root cause. Let's see how well this
-                                           // works out. See tdf#122543 for such a case.
-                                           if (n == 0)
-                                               return;
-                                           std::vector<char> buf(n);
-                                           n = fakeSocketRead(self.document->fakeClientFd, buf.data(), n);
-                                           [self.document send2JS:buf.data() length:n];
-                                       }
-                                   }
-                                   else
-                                       break;
-                               }
-                               assert(false);
-                           });
-
-            // First we simply send the Online C++ parts the URL and the appDocId. This corresponds
-            // to the GET request with Upgrade to WebSocket.
-            std::string url([[self.document->copyFileURL absoluteString] UTF8String]);
-            p.fd = self.document->fakeClientFd;
-            p.events = POLLOUT;
-            fakeSocketPoll(&p, 1, -1);
-            std::string message(url + " " + std::to_string(self.document->appDocId));
-            fakeSocketWrite(self.document->fakeClientFd, message.c_str(), message.size());
-
-            return;
         } else if ([message.body isEqualToString:@"BYE"]) {
             LOG_TRC("Document window terminating on JavaScript side. Closing our end of the socket.");
 
             [self bye];
-            return;
         } else if ([message.body isEqualToString:@"SLIDESHOW"]) {
 
             // Create the SVG for the slideshow.
@@ -363,7 +286,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             self.slideshowFile = Util::createRandomTmpDir() + "/slideshow.svg";
             self.slideshowURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:self.slideshowFile.c_str()] isDirectory:NO];
 
-            getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
+            getDocumentDataForMobileAppDocId(self.document->appDocument->getAppDocId()).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
 
             // Add a new full-screen WebView displaying the slideshow.
 
@@ -400,8 +323,6 @@ static IMP standardImpOfInputAccessoryView = nil;
                                                                               metrics:nil
                                                                                 views:views]];
             [self.slideshowWebView loadRequest:[NSURLRequest requestWithURL:self.slideshowURL]];
-
-            return;
         } else if ([message.body isEqualToString:@"EXITSLIDESHOW"]) {
 
             std::remove(self.slideshowFile.c_str());
@@ -409,15 +330,13 @@ static IMP standardImpOfInputAccessoryView = nil;
             [self.slideshowWebView removeFromSuperview];
             self.slideshowWebView = nil;
             self.webView.hidden = false;
-
-            return;
         } else if ([message.body isEqualToString:@"PRINT"]) {
 
             // Create the PDF to print.
 
             std::string printFile = Util::createRandomTmpDir() + "/print.pdf";
             NSURL *printURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:printFile.c_str()] isDirectory:NO];
-            getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
+            getDocumentDataForMobileAppDocId(self.document->appDocument->getAppDocId()).loKitDocument->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
 
             UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
             UIPrintInfo *printInfo = [UIPrintInfo printInfo];
@@ -435,15 +354,12 @@ static IMP standardImpOfInputAccessoryView = nil;
                     LOG_TRC("print completion handler gets " << (completed?"YES":"NO"));
                     std::remove(printFile.c_str());
                 }];
-
-            return;
         } else if ([message.body hasPrefix:@"HYPERLINK"]) {
             NSArray *messageBodyItems = [message.body componentsSeparatedByString:@" "];
             if ([messageBodyItems count] >= 2) {
                 NSURL *url = [[NSURL alloc] initWithString:messageBodyItems[1]];
                 UIApplication *application = [UIApplication sharedApplication];
                 [application openURL:url options:@{} completionHandler:nil];
-                return;
             }
         } else if ([message.body hasPrefix:@"downloadas "]) {
             NSArray<NSString*> *messageBodyItems = [message.body componentsSeparatedByString:@" "];
@@ -470,7 +386,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
                 std::remove([[downloadAsTmpURL path] UTF8String]);
 
-                getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
+                getDocumentDataForMobileAppDocId(self.document->appDocument->getAppDocId()).loKitDocument->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
 
                 // Then verify that it indeed was saved, and then use an
                 // UIDocumentPickerViewController to ask the user where to store the exported
@@ -499,13 +415,9 @@ static IMP standardImpOfInputAccessoryView = nil;
                 LOG_SYS("Could not unlink tile " << [[tile path] UTF8String]);
             }
             return;
+        } else {
+            [self.document handleProtocolMessage:message.body];
         }
-
-        const char *buf = [message.body UTF8String];
-        p.fd = self.document->fakeClientFd;
-        p.events = POLLOUT;
-        fakeSocketPoll(&p, 1, -1);
-        fakeSocketWrite(self.document->fakeClientFd, buf, strlen(buf));
     } else {
         LOG_ERR("Unrecognized kind of message received from WebView: " << [message.name UTF8String] << ":" << [message.body UTF8String]);
     }
@@ -526,9 +438,6 @@ static IMP standardImpOfInputAccessoryView = nil;
 }
 
 - (void)bye {
-    // Close one end of the socket pair, that will wake up the forwarding thread above
-    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
-
     // deallocateDocumentDataForMobileAppDocId(self.document->appDocId);
 
     [[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil];

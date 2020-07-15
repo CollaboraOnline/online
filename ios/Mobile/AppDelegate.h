@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import <LibreOfficeKit/LibreOfficeKit.h>
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

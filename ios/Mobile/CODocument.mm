@@ -8,30 +8,16 @@
 
 #import "config.h"
 
-#import <algorithm>
+#import <cstring>
 
-// This is not "external" code in the UNO-based extensions sense. To be able to include
-// <comphelper/lok.hxx>, we must #define LIBO_INTERNAL_ONLY.
-
-#define LIBO_INTERNAL_ONLY
 #include <sal/config.h>
-#include <sal/log.hxx>
-#include <rtl/ustring.hxx>
-#include <comphelper/lok.hxx>
-#include <i18nlangtag/languagetag.hxx>
 
 #import "ios.h"
 #import "AppDelegate.h"
+#import "COAppDocument.hpp"
 #import "CODocument.h"
 #import "DocumentViewController.h"
-
-#import "ClientSession.hpp"
-#import "DocumentBroker.hpp"
-#import "FakeSocket.hpp"
-#import "Kit.hpp"
-#import "KitHelper.hpp"
 #import "Log.hpp"
-#import "LOOLWSD.hpp"
 #import "MobileApp.hpp"
 #import "Protocol.hpp"
 
@@ -45,19 +31,11 @@
 // DocBrokerId in DocumentBroker due to potential parallelism when opening multiple documents in
 // quick succession.
 
-static std::atomic<unsigned> appDocIdCounter(1);
-
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError **)errorPtr {
 
-    // If this method is called a second time on the same CODocument object, just ignore it. This
-    // seems to happen occasionally when the device is awakened after sleep. See tdf#122543.
-    if (fakeClientFd >= 0)
-        return YES;
+    appDocument = std::make_shared<COAppDocument>(lo_kit, self);
 
-    fakeClientFd = fakeSocketSocket();
-
-    appDocId = appDocIdCounter++;
-    NSURL *copyFileDirectory = [[NSFileManager.defaultManager temporaryDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%d", appDocId]];
+    NSURL *copyFileDirectory = [[NSFileManager.defaultManager temporaryDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%d", appDocument->getAppDocId()]];
     if (![NSFileManager.defaultManager createDirectoryAtURL:copyFileDirectory withIntermediateDirectories:YES attributes:nil error:nil]) {
         LOG_ERR("Could not create directory " << [[copyFileDirectory path] UTF8String]);
         return NO;
@@ -73,12 +51,12 @@ static std::atomic<unsigned> appDocIdCounter(1);
 
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-    allocateDocumentDataForMobileAppDocId(appDocId).coDocument = self;
+    allocateDocumentDataForMobileAppDocId(appDocument->getAppDocId()).coDocument = self;
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[copyFileURL absoluteString]],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
                                [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
                                [NSURLQueryItem queryItemWithName:@"lang" value:app_locale],
-                               [NSURLQueryItem queryItemWithName:@"appdocid" value:[NSString stringWithFormat:@"%u", appDocId]],
+                                 [NSURLQueryItem queryItemWithName:@"appdocid" value:[NSString stringWithFormat:@"%u", appDocument->getAppDocId()]],
                              ];
 
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];
@@ -87,8 +65,19 @@ static std::atomic<unsigned> appDocIdCounter(1);
     return YES;
 }
 
+- (void)handleProtocolMessage:(NSString*)message {
+    const char *buffer = [message UTF8String];
+    int length = strlen(buffer);
+
+    appDocument->handleProtocolMessage(buffer, length);
+}
+
+- (void)send2JS:(std::string)string {
+    [self send2JS:string.c_str() length:string.size()];
+}
+
 - (void)send2JS:(const char *)buffer length:(int)length {
-    LOG_TRC("To JS: " << LOOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
+    LOG_ERR("To JS: " << LOOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
     NSString *js;
 
@@ -113,8 +102,6 @@ static std::atomic<unsigned> appDocIdCounter(1);
     NSString *subjs = [js substringToIndex:std::min(100ul, js.length)];
     if (subjs.length < js.length)
         subjs = [subjs stringByAppendingString:@"..."];
-
-    // LOG_TRC("Evaluating JavaScript: " << [subjs UTF8String]);
 
     dispatch_async(dispatch_get_main_queue(), ^{
             [self.viewController.webView evaluateJavaScript:js
