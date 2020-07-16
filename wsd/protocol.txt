@@ -29,6 +29,13 @@ code here and there that assumes that parameters are in a specific
 order anyway, thus losing the benefits of the named parameters. Oh
 well.
 
+When the document is password protected, it already implies that the
+document didn't load, and that with the proper password we should try
+again. Similarly for when the password given is wrong. However, if
+loading fails and it isn't a password-related failure,
+faileddocloading error is returned and in this case the client handles
+it as a final error (that requires reloading to retry).
+
 client -> server
 ================
 

@@ -1743,8 +1743,10 @@ private:
                         LOG_INF("Wrong password for password-protected document [" << uriAnonym << "].");
                         session->sendTextFrameAndLogError("error: cmd=load kind=wrongpassword");
                     }
+                    return nullptr;
                 }
 
+                session->sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
                 return nullptr;
             }
 
