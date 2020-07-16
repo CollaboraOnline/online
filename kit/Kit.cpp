@@ -1928,11 +1928,16 @@ private:
     }
 
 public:
+    bool hasQueueItems() const
+    {
+        return _tileQueue && !_tileQueue->isEmpty();
+    }
+
     void drainQueue(const std::chrono::steady_clock::time_point &/*now*/)
     {
         try
         {
-            while (!_tileQueue->isEmpty())
+            while (hasQueueItems())
             {
                 if (_stop || SigUtil::getTerminationFlag())
                 {
@@ -2201,7 +2206,10 @@ public:
             _pollEnd = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutMicroS);
             do
             {
-                if (poll(timeoutMicroS) <= 0)
+                int realTimeout = timeoutMicroS;
+                if (_document && _document->hasQueueItems())
+                    realTimeout = 0;
+                if (poll(realTimeout) <= 0)
                     break;
 
                 const auto now = std::chrono::steady_clock::now();
