@@ -781,6 +781,10 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_isEditFormula: function () {
+		return this._lastFormula && this._map._isCursorVisible;
+	},
+
 	_onCellAddressMsg: function (textMsg) {
 		// When the user moves the focus to a different cell, a 'cellformula'
 		// message is received from lowsd, *then* a 'celladdress' message.
@@ -2235,7 +2239,8 @@ L.TileLayer = L.GridLayer.extend({
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
 			if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
 				!(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
-				!(docLayer._followEditor || docLayer._followUser)) {
+				!(docLayer._followEditor || docLayer._followUser) &&
+				!this._isEditFormula()) {
 				this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
 			}
 		}
@@ -2929,7 +2934,8 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.dialog._updateTextSelection(inputBarId);
 			}
 			var mapBounds = this._map.getBounds();
-			if (!mapBounds.contains(this._cellCursor) && !this._cellCursorXY.equals(this._prevCellCursorXY)) {
+			if (!mapBounds.contains(this._cellCursor) && !this._cellCursorXY.equals(this._prevCellCursorXY) &&
+				!this._isEditFormula()) {
 				var scrollX = 0, scrollY = 0;
 				if (onPgUpDn) {
 					var mapHalfHeight = (mapBounds.getNorth() - mapBounds.getSouth()) / 2;
