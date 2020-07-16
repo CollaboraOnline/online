@@ -221,7 +221,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check that the shape is there
-		selectionShouldBeTextShape();
+		selectionShouldBeTextShape(false);
 
 		// Check the text
 		impressMobileHelper.selectTextOfShape();
@@ -241,7 +241,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check that the shape is there
-		selectionShouldBeTextShape();
+		selectionShouldBeTextShape(false);
 
 		// Check the text
 		impressMobileHelper.selectTextOfShape();
