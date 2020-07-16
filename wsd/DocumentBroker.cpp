@@ -1907,10 +1907,10 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             // until we get a tileprocessed message for this specific tile.
             if (session->countIdenticalTilesOnFly(tile) >= 2)
             {
+                LOG_DBG("Requested tile " << tile.getWireId() << " was delayed (already sent a version)!");
                 requestedTiles.push_back(requestedTiles.front());
                 requestedTiles.pop_front();
                 delayedTiles += 1;
-                LOG_DBG("Requested tile " << tile.getWireId() << " was delayed (already sent a version)!");
                 continue;
             }
 
