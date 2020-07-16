@@ -336,7 +336,7 @@ L.Clipboard = L.Class.extend({
 		{
 			// Home from home: short-circuit internally.
 			console.log('short-circuit, internal paste');
-			this._map._socket.sendMessage('uno .uno:Paste');
+			this._doInternalPaste(this._map, usePasteKeyEvent);
 			return;
 		}
 
