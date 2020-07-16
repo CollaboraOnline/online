@@ -169,7 +169,7 @@ L.Control.StatusBar = L.Control.extend({
 					}
 				};
 				this.map.sendUnoCommand('.uno:StatusBarFunc', command);
-			});
+			}.bind(this));
 		}
 		else if (id === 'userlist') {
 			this.map.fire('openuserlist');
