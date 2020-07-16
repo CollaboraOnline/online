@@ -139,16 +139,6 @@ L.Clipboard = L.Class.extend({
 		));
 	},
 
-	// put in the clipboard if copy is disabled
-	_getCopyDisabledHtml: function() {
-		var lang = 'en_US'; // FIXME: l10n
-		return this._substProductName(this._originWrapBody(
-		    '  <body lang="' + lang + '" dir="ltr">\n' +
-		    '    <p></p>\n' +
-		    '  </body>\n', false
-		));
-	},
-
 	_getMetaOrigin: function (html) {
 		var match = '<meta name="origin" content="';
 		var start = html.indexOf(match);
@@ -416,14 +406,7 @@ L.Clipboard = L.Class.extend({
 			this._doAsyncDownload('POST', this.getMetaURL(), formData,
 							function() {
 								console.log('Posted ' + content.size + ' bytes successfully');
-								if (usePasteKeyEvent) {
-									// paste into dialog
-									var KEY_PASTE = 1299;
-									that._map._textInput._sendKeyEvent(0, KEY_PASTE);
-								} else {
-									// paste into document
-									that._map._socket.sendMessage('uno .uno:Paste');
-								}
+								that._doInternalPaste(that._map, usePasteKeyEvent);
 							},
 							function(progress) { return progress; }
 					    );
@@ -440,8 +423,6 @@ L.Clipboard = L.Class.extend({
 
 	_getHtmlForClipboard: function() {
 		var text;
-		if (this._map['wopi'].DisableCopy)
-			return this._getCopyDisabledHtml();
 
 		if (this._selectionType === 'complex' ||
 		    this._map._docLayer.hasGraphicSelection()) {
@@ -641,6 +622,21 @@ L.Clipboard = L.Class.extend({
 			return false;
 		}
 
+		if (this._map['wopi'].DisableCopy) {
+			// perform internal operations
+
+			if (cmd === '.uno:Copy' || cmd === '.uno:Cut') {
+				this._map._socket.sendMessage('uno ' + cmd);
+			} else if (cmd === '.uno:Paste') {
+				var dummyEvent = {preventDefault: function() {}};
+				this.paste(dummyEvent);
+			} else {
+				return false;
+			}
+
+			return true;
+		}
+
 		if (cmd === '.uno:Copy') {
 			this._execCopyCutPaste('copy');
 		} else if (cmd === '.uno:Cut') {
@@ -656,11 +652,22 @@ L.Clipboard = L.Class.extend({
 
 	_doCopyCut: function(ev, unoName) {
 		console.log(unoName);
-		var preventDefault = this.populateClipboard(ev);
+		var preventDefault = this._map['wopi'].DisableCopy === true ? true : this.populateClipboard(ev);
 		this._map._socket.sendMessage('uno .uno:' + unoName);
 		if (preventDefault) {
 			ev.preventDefault();
 			return false;
+		}
+	},
+
+	_doInternalPaste: function(map, usePasteKeyEvent) {
+		if (usePasteKeyEvent) {
+			// paste into dialog
+			var KEY_PASTE = 1299;
+			map._textInput._sendKeyEvent(0, KEY_PASTE);
+		} else {
+			// paste into document
+			map._socket.sendMessage('uno .uno:Paste');
 		}
 	},
 
@@ -680,6 +687,14 @@ L.Clipboard = L.Class.extend({
 
 		if (this._map._activeDialog)
 			ev.usePasteKeyEvent = true;
+
+		if (this._map['wopi'].DisableCopy)
+		{
+			ev.preventDefault();
+			this._doInternalPaste(this._map, ev.usePasteKeyEvent);
+
+			return false;
+		}
 
 		var that = this;
 		if (L.Browser.isInternetExplorer)
