@@ -323,7 +323,11 @@ EXTRA_DIST = discovery.xml \
              scripts/unocommands.py \
              $(man_MANS)
 
+if ENABLE_LIBFUZZER
+CLEANUP_COMMAND=true
+else
 CLEANUP_COMMAND=if test -s ./loolwsd; then echo "Cleaning up..." && ./loolwsd --disable-lool-user-checking --cleanup --o:logging.level=trace; fi
+endif
 
 if HAVE_LO_PATH
 
@@ -340,9 +344,15 @@ else
 	    echo "Skipping capability setting"
 endif
 
+if ENABLE_LIBFUZZER
+CLEANUP_DEPS=
+else
+CLEANUP_DEPS=loolwsd
+endif
+
 # Build loolwsd and loolmount first, so we can cleanup before updating
 # the systemplate directory, which we can't rm if it's mounted.
-$(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup loolwsd caps_bins
+$(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup $(CLEANUP_DEPS) caps_bins
 	$(CLEANUP_COMMAND)
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@
@@ -483,7 +493,13 @@ endif
 # installing the RPM or Debian package.
 .PHONY: caps_bins cleanup
 
-all-local: loolwsd caps_bins @JAILS_PATH@ $(SYSTEM_STAMP)
+if ENABLE_LIBFUZZER
+ALL_LOCAL_DEPS=
+else
+ALL_LOCAL_DEPS=loolwsd
+endif
+
+all-local: $(ALL_LOCAL_DEPS) caps_bins @JAILS_PATH@ $(SYSTEM_STAMP)
 
 # just run the build without any tests
 build-nocheck: all-am
