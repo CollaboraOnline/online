@@ -2555,7 +2555,17 @@ private:
         // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
         char *space = strchr(socket->getInBuffer().data(), ' ');
         assert(space != nullptr);
-        unsigned appDocId = std::strtoul(space + 1, nullptr, 10);
+
+        // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
+        // its end, it might be followed in memory by more digits. Is there really no better way to
+        // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
+        // buffer?
+        const size_t appDocIdLen = (socket->getInBuffer().data() + socket->getInBuffer().size()) - (space + 1);
+        char *appDocIdBuffer = (char *)malloc(appDocIdLen + 1);
+        memcpy(appDocIdBuffer, space + 1, appDocIdLen);
+        appDocIdBuffer[appDocIdLen] = '\0';
+        unsigned appDocId = std::strtoul(appDocIdBuffer, nullptr, 10);
+        free(appDocIdBuffer);
 
         handleClientWsUpgrade(
             request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
