@@ -928,6 +928,7 @@ void LOOLWSD::initialize(Application& self)
             { "loleaflet_html", "loleaflet.html" },
             { "loleaflet_logging", "false" },
             { "mount_jail_tree", "true" },
+            { "net.connection_timeout_secs", "30" },
             { "net.listen", "any" },
             { "net.proto", "all" },
             { "net.service_root", "" },

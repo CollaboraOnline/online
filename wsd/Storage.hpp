@@ -17,7 +17,6 @@
 
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
-#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/JSON/Object.h>
 
 #include "Auth.hpp"
@@ -25,6 +24,15 @@
 #include "Log.hpp"
 #include "Util.hpp"
 #include <common/Authorization.hpp>
+
+namespace Poco
+{
+namespace Net
+{
+class HTTPClientSession;
+}
+
+} // namespace Poco
 
 /// Represents whether the underlying file is locked
 /// and with what token.

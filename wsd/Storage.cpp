@@ -422,10 +422,16 @@ Poco::Net::HTTPClientSession* StorageBase::getHTTPClientSession(const Poco::URI&
     // We decoupled the Wopi communication from client communication because
     // the Wopi communication must have an independent policy.
     // So, we will use here only Storage settings.
-    return useSSL
+    Poco::Net::HTTPClientSession* session = useSSL
         ? new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort(),
                                             Poco::Net::SSLManager::instance().defaultClientContext())
         : new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+
+    // Set the timeout to the configured value.
+    static int timeoutSec = LOOLWSD::getConfigValue<int>("net.connection_timeout_secs", 30);
+    session->setTimeout(Poco::Timespan(timeoutSec, 0));
+
+    return session;
 }
 
 namespace
