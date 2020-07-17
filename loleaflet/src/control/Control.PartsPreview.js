@@ -116,6 +116,7 @@ L.Control.PartsPreview = L.Control.extend({
 				}, this);
 
 				this._scrollContainer = $(this._partsPreviewCont).find('.mCSB_container').get(0);
+				$(this._scrollContainer).css('display', 'inline-table');
 
 				// Add a special frame just as a drop-site for reordering.
 				var frame = L.DomUtil.create('div', 'preview-frame', this._scrollContainer);
