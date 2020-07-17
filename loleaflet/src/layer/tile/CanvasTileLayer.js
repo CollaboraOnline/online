@@ -1370,4 +1370,12 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	hasXSplitter: function () {
+		return !!(this._xSplitter);
+	},
+
+	hasYSplitter: function () {
+		return !!(this._ySplitter);
+	},
+
 });

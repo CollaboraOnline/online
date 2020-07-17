@@ -125,6 +125,30 @@ L.Point.prototype = {
 		       Math.abs(point.y) <= Math.abs(this.y);
 	},
 
+	assign: function (point) {
+		var xChanged = this.setX(point.x);
+		var yChanged = this.setY(point.y);
+		return xChanged || yChanged;
+	},
+
+	setX: function (x) {
+		if (x === this.x) {
+			return false;
+		}
+
+		this.x = x;
+		return true;
+	},
+
+	setY: function (y) {
+		if (y === this.y) {
+			return false;
+		}
+
+		this.y = y;
+		return true;
+	},
+
 	toString: function () {
 		return 'Point(' +
 		        L.Util.formatNum(this.x) + ', ' +

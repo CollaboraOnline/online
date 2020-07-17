@@ -86,7 +86,7 @@ L.SplitPanesContext = L.Class.extend({
 		console.assert(typeof splitX === 'number', 'splitX must be a number');
 
 		if (this._splitPos.x === splitX) {
-			if (forceUpdate) {
+			if (forceUpdate || !this._docLayer.hasXSplitter()) {
 				this._updateXSplitter();
 			}
 			return;
@@ -103,7 +103,7 @@ L.SplitPanesContext = L.Class.extend({
 		console.assert(typeof splitY === 'number', 'splitY must be a number');
 
 		if (this._splitPos.y === splitY) {
-			if (forceUpdate) {
+			if (forceUpdate || !this._docLayer.hasYSplitter()) {
 				this._updateYSplitter();
 			}
 			return;

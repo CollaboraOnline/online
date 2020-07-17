@@ -56,8 +56,8 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		map.on('AnnotationCancel', this._onAnnotationCancel, this);
 		map.on('AnnotationReply', this._onAnnotationReply, this);
 		map.on('AnnotationSave', this._onAnnotationSave, this);
-		map.on('splitposchanged', this._calcSplitCell, this);
-
+		map.on('splitposchanged', this.setSplitCellFromPos, this);
+		map.on('commandstatechanged', this._onCommandStateChanged, this);
 		map.uiManager.initializeSpecializedUI('spreadsheet');
 	},
 
@@ -460,7 +460,7 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		}
 		this._restrictDocumentSize();
 		this._replayPrintTwipsMsgs();
-		this._updateSplitPos();
+		this.setSplitPosFromCell();
 		this._map.fire('zoomchanged');
 		this.refreshViewData();
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
@@ -737,34 +737,28 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		this._updateHeadersGridLines(undefined, true /* updateCols */,
 			true /* updateRows */);
 
-		this._updateSplitPos();
+		this.setSplitPosFromCell();
 
 		this._map.fire('sheetgeometrychanged');
 	},
 
-	_updateSplitPos: function (force) {
-		if (this._splitPanesContext) {
-			if (this._splitPanesContext._splitCell) {
-				var splitCell = this._splitPanesContext._splitCell;
-				var newSplitPos = this.sheetGeometry.getCellRect(splitCell.x, splitCell.y).min;
-				this._splitPanesContext.setSplitPos(newSplitPos.x, newSplitPos.y, force); // will update the splitters.
-			}
-			else {
-				// Can happen only on load.
-				this._splitPanesContext.alignSplitPos();
-				this._calcSplitCell();
-			}
+	// Calculates the split position in (css-pixels) from the split-cell.
+	setSplitPosFromCell: function (forceSplittersUpdate) {
+		if (!this.sheetGeometry || !this._splitPanesContext) {
+			return;
 		}
+
+		this._splitPanesContext.setSplitPosFromCell(forceSplittersUpdate);
 	},
 
-	_calcSplitCell: function () {
+	// Calculates the split-cell from the split position in (css-pixels).
+	setSplitCellFromPos: function () {
 
 		if (!this.sheetGeometry || !this._splitPanesContext) {
 			return;
 		}
 
-		this._splitPanesContext._splitCell =
-			this.sheetGeometry.getCellFromPos(this._splitPanesContext.getSplitPos(), 'csspixels');
+		this._splitPanesContext.setSplitCellFromPos();
 	},
 
 	_switchSplitPanesContext: function () {
@@ -781,15 +775,77 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 
 		var spContext = this._splitPaneCache[this._selectedPart];
 		if (!spContext) {
-			spContext = new L.SplitPanesContext(this);
+			spContext = new L.CalcSplitPanesContext(this);
 			this._splitPaneCache[this._selectedPart] = spContext;
 		}
 
 		this._splitPanesContext = spContext;
 		if (this.sheetGeometry) {
 			// Force update of the splitter lines.
-			this._updateSplitPos(true);
+			this.setSplitPosFromCell(true);
 		}
+	},
+
+	_onCommandStateChanged: function (e) {
+
+		if (e.commandName === '.uno:FreezePanesColumn') {
+			this._onSplitStateChanged(e, true /* isSplitCol */);
+		}
+		else if (e.commandName === '.uno:FreezePanesRow') {
+			this._onSplitStateChanged(e, false /* isSplitCol */);
+		}
+	},
+
+	_onSplitStateChanged: function (e, isSplitCol) {
+		if (!this._splitPanesContext) {
+			return;
+		}
+
+		if (!this._splitCellState) {
+			this._splitCellState = new L.Point(-1, -1);
+		}
+
+		var newSplitIndex = Math.floor(parseInt(e.state));
+		console.assert(!isNaN(newSplitIndex) && newSplitIndex >= 0, 'invalid argument for ' + e.commandName);
+
+		// This stores the current split-cell state of core, so this should not be modified.
+		this._splitCellState[isSplitCol ? 'x' : 'y'] = newSplitIndex;
+
+		var changed = isSplitCol ? this._splitPanesContext.setSplitCol(newSplitIndex) :
+			this._splitPanesContext.setSplitRow(newSplitIndex);
+
+		if (changed) {
+			this.setSplitPosFromCell();
+		}
+	},
+
+	sendSplitIndex: function (newSplitIndex, isSplitCol) {
+
+		if (!this._map.isPermissionEdit() || !this._splitCellState) {
+			return false;
+		}
+
+		var splitColState = this._splitCellState.x;
+		var splitRowState = this._splitCellState.y;
+		if (splitColState === -1 || splitRowState === -1) {
+			// Did not get the 'first' FreezePanesColumn/FreezePanesRow messages from core yet.
+			return false;
+		}
+
+		var currentState = isSplitCol ? splitColState : splitRowState;
+		if (currentState === newSplitIndex) {
+			return false;
+		}
+
+		var unoName = isSplitCol ? 'FreezePanesColumn' : 'FreezePanesRow';
+		var command = {};
+		command[unoName] = {
+			type: 'int32',
+			value: newSplitIndex
+		};
+
+		this._map.sendUnoCommand('.uno:' + unoName, command);
+		return true;
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -993,6 +1049,72 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		}
 
 		return scroll;
+	},
+
+	getSelectedPart: function () {
+		return this._selectedPart;
+	},
+
+});
+
+L.CalcSplitPanesContext = L.SplitPanesContext.extend({
+
+	_setDefaults: function () {
+		this._part = this._docLayer.getSelectedPart();
+		this._splitPos = new L.Point(0, 0);
+		this._splitCell = new L.Point(0, 0);
+	},
+
+	setSplitCell: function (splitCell) {
+		console.assert(splitCell instanceof L.Point, 'invalid argument type');
+		 return this._splitCell.assign(splitCell);
+	},
+
+	setSplitCol: function (splitCol) {
+		console.assert(typeof splitCol === 'number', 'invalid argument type');
+		return this._splitCell.setX(splitCol);
+	},
+
+	setSplitRow: function (splitRow) {
+		console.assert(typeof splitRow === 'number', 'invalid argument type');
+		return this._splitCell.setY(splitRow);
+	},
+
+	getSplitCell: function () {
+		return this._splitCell.clone();
+	},
+
+	getSplitCol: function () {
+		return this._splitCell.x;
+	},
+
+	getSplitRow: function () {
+		return this._splitCell.y;
+	},
+
+	// Calculates the split position in (css-pixels) from the split-cell.
+	setSplitPosFromCell: function (forceSplittersUpdate) {
+		var newSplitPos = this._docLayer.sheetGeometry.getCellRect(this._splitCell.x, this._splitCell.y).min;
+
+		// setSplitPos limits the split position based on the screen size and it fires 'splitposchanged' (if there is any change).
+		// setSplitCellFromPos gets invoked on 'splitposchanged' to sync the split-cell with the position change if any.
+		this.setSplitPos(newSplitPos.x, newSplitPos.y, forceSplittersUpdate);
+
+		// It is possible that the split-position did not change due to screen size limits, so no 'splitposchanged' but
+		// we still need to sync the split-cell.
+		this.setSplitCellFromPos();
+	},
+
+	// Calculates the split-cell from the split position in (css-pixels).
+	setSplitCellFromPos: function () {
+
+		// This should not call setSplitPosFromCell() directly/indirectly.
+
+		var newSplitCell = this._docLayer.sheetGeometry.getCellFromPos(this._splitPos, 'csspixels');
+
+		// Send new state via uno commands if there is any change.
+		this.setSplitCol(newSplitCell.x) && this._docLayer.sendSplitIndex(newSplitCell.x, true /*  isSplitCol */);
+		this.setSplitRow(newSplitCell.y) && this._docLayer.sendSplitIndex(newSplitCell.y, false /* isSplitCol */);
 	},
 });
 
