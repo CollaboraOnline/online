@@ -267,15 +267,23 @@ public class LOActivity extends AppCompatActivity {
         if (getIntent().getData() != null) {
 
             if (getIntent().getData().getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-                isDocEditable = (getIntent().getFlags() & Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != 0;
+                isDocEditable = true;
+
+                // is it read-only?
+                if ((getIntent().getFlags() & Intent.FLAG_GRANT_WRITE_URI_PERMISSION) == 0) {
+                    isDocEditable = false;
+                    Toast.makeText(this, getResources().getString(R.string.temp_file_saving_disabled), Toast.LENGTH_SHORT).show();
+                }
 
                 // turns out that on ChromeOS, it is not possible to save back
                 // to Google Drive; detect it already here to avoid disappointment
-                if (getIntent().getData().toString().startsWith("content://org.chromium.arc.chromecontentprovider/externalfile"))
+                // also the volumeprovider does not work for saving back,
+                // which is much more serious :-(
+                if (isDocEditable && (getIntent().getData().toString().startsWith("content://org.chromium.arc.chromecontentprovider/externalfile") ||
+                                      getIntent().getData().toString().startsWith("content://org.chromium.arc.volumeprovider/"))) {
                     isDocEditable = false;
-
-                if (!isDocEditable)
-                    Toast.makeText(this, getResources().getString(R.string.temp_file_saving_disabled), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.file_chromeos_read_only), Toast.LENGTH_LONG).show();
+                }
 
                 if (copyFileToTemp() && mTempFile != null) {
                     documentUri = mTempFile.toURI();
