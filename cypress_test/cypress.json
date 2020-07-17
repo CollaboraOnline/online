@@ -3,7 +3,7 @@
     "video" : false,
     "pluginsFile" : "plugins/index.js",
     "defaultCommandTimeout" : 6000,
-    "ignoreTestFiles" : "*helper.js",
+    "testFiles" : "**/*_spec.js",
     "modifyObstructiveCode": false,
     "fixturesFolder" : "data"
 }
