@@ -409,3 +409,4 @@ module.exports.getLOVersion = getLOVersion;
 module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
 module.exports.clickOnIdle = clickOnIdle;
 module.exports.inputOnIdle = inputOnIdle;
+module.exports.waitUntilIdle = waitUntilIdle;

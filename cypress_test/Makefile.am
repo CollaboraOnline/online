@@ -27,6 +27,11 @@ MOBILE_DATA_FOLDER = $(abs_srcdir)/data/mobile/
 MOBILE_WORKDIR = $(abs_builddir)/workdir/mobile/
 MOBILE_TRACK_FOLDER=$(abs_builddir)/workdir/track/mobile
 
+MULTIUSER_TEST_FOLDER = $(abs_srcdir)/integration_tests/multiuser
+MULTIUSER_DATA_FOLDER = $(abs_srcdir)/data/multiuser/
+MULTIUSER_WORKDIR = $(abs_builddir)/workdir/multiuser/
+MULTIUSER_TRACK_FOLDER=$(abs_builddir)/workdir/track/multiuser
+
 ALLOWED_PORTS = $(shell seq 9900 1 9980)
 KILL_COMMAND=pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)
 PARALLEL_BUILD = $(findstring -j,$(MAKEFLAGS))
@@ -53,16 +58,22 @@ MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDE
 
 DEKSTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
+MULTIUSER_TEST_FILES= $(subst $(MULTIUSER_TEST_FOLDER)/,,$(wildcard $(MULTIUSER_TEST_FOLDER)/*_spec.js) $(wildcard $(MULTIUSER_TEST_FOLDER)/*/*_spec.js))
+
+
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
 
 DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DEKSTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
+MULTIUSER_TEST_FILES_DONE= \
+	$(foreach test_file,$(MULTIUSER_TEST_FILES),$(MULTIUSER_TRACK_FOLDER)/$(test_file).done)
+
 check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
-do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE)
+do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TEST_FILES_DONE)
 	@$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
@@ -92,6 +103,13 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 		,\
 		@$(foreach done_file,$(DESKTOP_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
 	)
+
+# Multi-user tests are run only during parallel build.
+$(MULTIUSER_TRACK_FOLDER)/userlist_user%_spec.js.done: $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
+	$(if $(PARALLEL_BUILD),\
+		$(call run_multiuser_tests,$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log)\
+		,)
+	@mkdir -p $(dir $@) && touch $@
 
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
@@ -189,6 +207,10 @@ MOBILE_CONFIG = \
 	--config integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT) \
 	--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
 
+MULTIUSER_CONFIG = \
+	--config integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000 \
+	--env DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
+
 define run_interactive_test
 	$(if $(2),\
 		$(CYPRESS_BINARY) run \
@@ -237,6 +259,19 @@ define run_mobile_tests
 	)
 endef
 
+define run_multiuser_tests
+	@echo "Running cypress multi-user test: $(1)"
+	@echo
+	$(eval RUN_COMMAND = \
+		$(CYPRESS_BINARY) run \
+			--browser $(CHROME) \
+			--headless \
+			$(MULTIUSER_CONFIG)$(if $(3),$(COMMA)$(3)) \
+			$(if $(1), --spec=$(abs_dir)/integration_tests/multiuser/$(1)) \
+			)
+	$(call execute_run_parallel_no_second_chance,$(RUN_COMMAND),$(2),desktop,$(1))
+endef
+
 ERROR_MATCHER = "Error:\|Command failed:\|Timed out retrying\|The error was:"
 
 define execute_run_parallel
@@ -252,6 +287,16 @@ define execute_run_parallel
 			else cat $(2) >> $(ERROR_LOG) && \
 			     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
 		     fi;\
+		else cat $(2) >> $(ERROR_LOG) && \
+		     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
+	fi;
+endef
+
+define execute_run_parallel_no_second_chance
+	@mkdir -p $(dir $(2)) && touch $(2) && \
+	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
+	if [ -z `grep -o -m 1 $(ERROR_MATCHER) $(2)` ];\
+		then cat $(2);\
 		else cat $(2) >> $(ERROR_LOG) && \
 		     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
 	fi;
