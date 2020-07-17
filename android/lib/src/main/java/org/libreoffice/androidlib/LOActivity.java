@@ -272,6 +272,7 @@ public class LOActivity extends AppCompatActivity {
                 // is it read-only?
                 if ((getIntent().getFlags() & Intent.FLAG_GRANT_WRITE_URI_PERMISSION) == 0) {
                     isDocEditable = false;
+                    Log.d(TAG, "Disabled editing: Read-only");
                     Toast.makeText(this, getResources().getString(R.string.temp_file_saving_disabled), Toast.LENGTH_SHORT).show();
                 }
 
@@ -282,6 +283,7 @@ public class LOActivity extends AppCompatActivity {
                 if (isDocEditable && (getIntent().getData().toString().startsWith("content://org.chromium.arc.chromecontentprovider/externalfile") ||
                                       getIntent().getData().toString().startsWith("content://org.chromium.arc.volumeprovider/"))) {
                     isDocEditable = false;
+                    Log.d(TAG, "Disabled editing: Chrome OS unsupported content providers");
                     Toast.makeText(this, getResources().getString(R.string.file_chromeos_read_only), Toast.LENGTH_LONG).show();
                 }
 
