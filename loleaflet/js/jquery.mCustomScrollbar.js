@@ -1564,10 +1564,6 @@ and dependencies (minified).
 				return _canAccessIFrameCache[cacheKey];
 			}
 			if(!iframe){
-				try{
-					var doc=top.document;
-					html=doc.body.innerHTML;
-				}catch(err){/* do nothing */}
 				result=(html!==null);
 			}else{
 				try{
