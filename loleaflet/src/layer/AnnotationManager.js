@@ -5,7 +5,7 @@
 
 /* global $ */
 
-L.AnnotationManager = L.Class.extend({
+L.AnnotationManager = L.AnnotationManagerBase.extend({
 	options: {
 		marginX: 40,
 		marginY: 10,
@@ -13,8 +13,7 @@ L.AnnotationManager = L.Class.extend({
 		extraSize: L.point(290, 0)
 	},
 
-	initialize: function (map, options) {
-		this._map = map;
+	_initializeSpecific: function (options) {
 		this._items = [];
 		this._hiddenItems = 0;
 		this._selected = null;
