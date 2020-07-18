@@ -4,12 +4,94 @@
 */
 /* global DlgYesNo _ vex $ Util AdminSocketBase Admin */
 
-function appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified, socket) {
-	var $sessionCloseCell = $(document.createElement('td')).text('✖'); // This cell will open "Do you want to kill this session?" dialog.
-	$rowContainer.append($sessionCloseCell);
-	$sessionCloseCell.addClass('has-text-centered');
-	$sessionCloseCell.css('cursor', 'pointer');
-	$sessionCloseCell.click(function() {
+
+function getCollapsibleClass(id) {
+	var container = document.getElementById(id);
+	var label = container.children[0];
+	var checkBox = container.children[1];
+	var list = container.children[2];
+	return {
+		'addItem': function(itemId, text) {
+			var listItem = document.createElement('li');
+			listItem.id = itemId;
+			listItem.innerText = text;
+			list.appendChild(listItem);
+		},
+		'toggle': function() {
+			checkBox.checked = !checkBox.checked;
+		},
+		'expand': function() {
+			checkBox.checked = true;
+		},
+		'collapse': function() {
+			checkBox.checked = false;
+		},
+		'setText': function(text) {
+			label.innerText = text;
+		},
+		'getText': function() {
+			return label.innerText;
+		},
+		'checkbox': checkBox,
+		'label': label,
+		'list': list
+	};
+}
+
+// Creates collapsable section with its elements. Requires mcollapsable CSS class. Once created, collapsable element runs without javascript.
+function createCollapsable(parentNode, id, text) {
+	var div  = document.createElement('div'); // One div to hold them all.
+	div.id = id;
+	// Let's make some magic with CSS.
+	// This is our checkbox, but it looks like a label.
+	var checkBox = document.createElement('input');
+	checkBox.type = 'checkbox';
+	checkBox.className = 'title is-4 mcollapsable'; // Class names come from Bulma.css (except for mcollapsable). We use that library for Admin console.
+	checkBox.checked = false;
+	checkBox.style.visibility = 'hidden';
+	checkBox.id = id + 'check';
+
+	var label = document.createElement('label');
+	label.innerText = text;
+	label.className = 'field-label is-5';
+	label.setAttribute('for', id + 'check');
+	label.style.cursor = 'pointer';
+	label.style.textDecoration = 'underline';
+
+	var list = document.createElement('ul');
+
+	div.appendChild(label);
+	div.appendChild(checkBox);
+	div.appendChild(list);
+
+	parentNode.appendChild(div);
+	return getCollapsibleClass(id);
+}
+
+// This function takes the list of the users viewing a specific document. Creates an HTML element holding the list.
+function createDocumentUserListElement(cell, doc) {
+	var collapsable = createCollapsable(cell, 'ucontainer' + doc['pid'], String(doc['views'].length) + _(' user(s).'));
+	for (var i = 0; i < doc['views'].length; i++) {
+		collapsable.addItem('user' + doc['views'][i]['sessionid'], doc['views'][i]['userName']);
+	}
+}
+
+function upsertDocsTable(doc, sName, socket) {
+	var add = false;
+	var row = document.getElementById('doc' + doc['pid']);
+	if (row === undefined || row === null) {
+		row = document.createElement('tr');
+		row.id = 'doc' + doc['pid'];
+		document.getElementById('doclist').appendChild(row);
+		add = true;
+	}
+
+	var sessionCloseCell = document.createElement('td'); // This cell will open "Do you want to kill this session?" dialog.
+	sessionCloseCell.innerText = '✖';
+	sessionCloseCell.className = 'has-text-centered';
+	sessionCloseCell.style.cursor = 'pointer';
+	if (add === true) { row.appendChild(sessionCloseCell); } else { row.cells[0] = sessionCloseCell; }
+	sessionCloseCell.onclick = function() {
 		var dialog = (new DlgYesNo())
 		.title(_('Confirmation'))
 		.text(_('Are you sure you want to terminate this session?'))
@@ -17,39 +99,93 @@ function appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sVie
 		.noButtonText(_('Cancel'))
 		.type('warning')
 		.yesFunction(function() {
-			socket.send('kill ' + sPid);
+			socket.send('kill ' + doc['pid']);
 		});
 		dialog.open();
-	});
+	};
 
-	var $pid = $(document.createElement('td')).text(sPid);
-	$pid.append($userContainer);
-	$rowContainer.append($pid);
+	if (add === true) {
+		var userInfoCell = document.createElement('td');
+		userInfoCell.className = 'has-text-left';
+		if (add === true) { row.appendChild(userInfoCell); } else { row.cells[1] = userInfoCell; }
+		createDocumentUserListElement(userInfoCell, doc);
+	}
+	else {
+		var collapsable = getCollapsibleClass('ucontainer' + doc['pid']);
+		collapsable.addItem('user' + doc['views'][0]['sessionid'], doc['views'][0]['userName']);
+		collapsable.setText(String(parseInt(collapsable.getText().split(' ')[0]) + 1) + _(' user(s).'));
+	}
 
-	var $name = $(document.createElement('td')).text(sName);
-	$rowContainer.append($name);
+	var pidCell = document.createElement('td');
+	pidCell.innerText = doc['pid'];
+	if (add === true) { row.appendChild(pidCell); } else { row.cells[0] = pidCell; }
+	pidCell.className = 'has-text-centered';
 
-	var $views = $(document.createElement('td')).attr('id', 'docview' + sPid)
-									.text(sViews);
-	$rowContainer.append($views);
+	var nameCell = document.createElement('td');
+	nameCell.innerText = sName;
+	if (add === true) { row.appendChild(nameCell); } else { row.cells[0] = nameCell; }
+	nameCell.className = 'has-text-left';
 
-	var $mem = $(document.createElement('td')).attr('id', 'docmem' + sPid)
-	.text(Util.humanizeMem(parseInt(sMem)));
-	$rowContainer.append($mem);
+	var memoryCell = document.createElement('td');
+	memoryCell.id = 'docmem' + doc['pid'];
+	memoryCell.innerText = Util.humanizeMem(parseInt(doc['memory']));
+	if (add === true) { row.appendChild(memoryCell); } else { row.cells[0] = memoryCell; }
+	memoryCell.className = 'has-text-centered';
 
-	var $docTime = $(document.createElement('td')).addClass('elapsed_time')
-	.val(parseInt(sDocTime))
-	.text(Util.humanizeSecs(sDocTime));
-	$rowContainer.append($docTime);
+	var eTimeCell = document.createElement('td');
+	eTimeCell.innerText = Util.humanizeSecs(doc['elapsedTime']);
+	if (add === true) { row.appendChild(eTimeCell); } else { row.cells[0] = eTimeCell; }
+	eTimeCell.className = 'has-text-centered';
 
-	var $docIdle = $(document.createElement('td')).attr('id', 'docidle' + sPid)
-	.addClass('idle_time')
-	.val(parseInt(sDocIdle))
-	.text(Util.humanizeSecs(sDocIdle));
-	$rowContainer.append($docIdle);
+	var idleCell = document.createElement('td');
+	idleCell.id = 'docidle' + doc['pid'];
+	idleCell.innerText = Util.humanizeSecs(doc['idleTime']);
+	if (add === true) { row.appendChild(idleCell); } else { row.cells[0] = idleCell; }
+	idleCell.className = 'has-text-centered';
 
-	var $mod = $(document.createElement('td')).attr('id', 'mod' + sPid).text(modified);
-	$rowContainer.append($mod);
+	var isModifiedCell = document.createElement('td');
+	isModifiedCell.id = 'mod' + doc['pid'];
+	isModifiedCell.innerText = doc['modified'];
+	if (add === true) { row.appendChild(isModifiedCell); } else { row.cells[0] = isModifiedCell; }
+	isModifiedCell.className = 'has-text-centered';
+
+	// TODO: Is activeViews always the same with viewer count? We will hide this for now. If they are not same, this will be added to Users column like: 1/2 active/user(s).
+	if (add === true) {
+		var viewsCell = document.createElement('td');
+		viewsCell.id = 'docview' + doc['pid'];
+		viewsCell.innerText = doc['activeViews'];
+		//row.appendChild(viewsCell);
+	}
+	else {
+		//document.getElementById('docview' + doc['pid']).innerText = String(parseInt(document.getElementById('docview' + doc['pid'])) + 1);
+	}
+}
+
+function upsertUsersTable(docPid, sName, userList) {
+	for (var i = 0; i < userList.length; i++) {
+		var encodedUId = encodeURI(userList[i]['userId']);
+		var row = document.getElementById('usr' + encodedUId);
+		var collapsable;
+		if (row === undefined || row === null) {
+			row = document.createElement('tr');
+			row.id = 'usr' + encodedUId;
+			document.getElementById('userlist').appendChild(row);
+
+			var userNameCell = document.createElement('td');
+			userNameCell.innerText = userList[i]['userName'];
+			row.appendChild(userNameCell);
+
+			var docInfoCell = document.createElement('td');
+			row.appendChild(docInfoCell);
+			collapsable = createCollapsable(docInfoCell, 'docListContainer_' + encodedUId, '1' + ' document(s) open.');
+			collapsable.addItem(userList[i]['sessionid'] + '_' + docPid, sName);
+		}
+		else {
+			collapsable = getCollapsibleClass('docListContainer_' + encodedUId);
+			collapsable.setText(String(parseInt(collapsable.getText()) + 1) + _(' document(s) open.'));
+			collapsable.addItem(userList[i]['sessionid'] + '_' + docPid, sName);
+		}
+	}
 }
 
 var AdminSocketOverview = AdminSocketBase.extend({
@@ -100,38 +236,6 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 		// Dialog uses <a href='#' - which triggers popstate
 		vex.defaultOptions.closeAllOnPopState = false;
-
-		// Allow table rows to have a context menu for terminating sessions
-		$('body').on('contextmenu', '#docview tr', function(ev) {
-			$('#rowContextMenu').css({
-				display: 'block',
-				left: ev.pageX,
-				top: ev.pageY
-			})
-			.data('rowToKill', ev.target.parentElement.id);
-
-			return false;
-		})
-		.click(function() {
-			$('#rowContextMenu').hide();
-		});
-
-		$('body').on('click', '#rowContextMenu a', function() {
-			vex.dialog.confirm({
-				message: _('Are you sure you want to terminate this session?'),
-				buttons: [
-					$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
-				],
-				callback: function(value) {
-					if (value) {
-						var killPid = ($('#rowContextMenu').data('rowToKill')).substring('doc'.length);
-						socketOverview.socket.send('kill ' + killPid);
-					}
-					$('#rowContextMenu').hide();
-				}
-			});
-		});
 	},
 
 	onSocketMessage: function(e) {
@@ -143,186 +247,45 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = '';
 		}
 
-		var $doc, $a, $rowContainer;
-		var nViews, nTotalViews;
-		var docProps, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified, userListJson;
+		var $doc, $a;
+		var nTotalViews;
+		var docProps, sPid, sName;
 		if (textMsg.startsWith('documents')) {
 			var jsonStart = textMsg.indexOf('{');
-			var jsonMsg = JSON.parse(textMsg.substr(jsonStart).trim());
-			var docList = jsonMsg['documents'];
+			var docList = JSON.parse(textMsg.substr(jsonStart).trim())['documents'];
+
 			for (var i = 0; i < docList.length; i++) {
-
-				docProps = docList[i];
-				sPid = docProps['pid'];
-				sName = decodeURI(docProps['fileName']);
-				sViews = docProps['activeViews'];
-				sMem = docProps['memory'];
-				sDocTime = docProps['elapsedTime'];
-				sDocIdle = docProps['idleTime'];
-				modified = docProps['modified'];
-				userListJson = docProps['views'];
-
-				$doc = $('#doc' + sPid);
-				$rowContainer = $(document.createElement('tr')).attr('id', 'doc' + sPid);
-				var $userContainer = $(document.createElement('div')).attr('id', 'ucontainer' + sPid)
-										  .addClass('userContainer dropdown');
-				var $listContainer = $(document.createElement('ul')).addClass('dropdown-menu');
-				var $listLabel = $(document.createElement('li')).addClass('dropdown-header')
-															.text('Users');
-				$listContainer.append($listLabel);
-
-				for (var j = 0; j < userListJson.length; j++) {
-					var $user = $(document.createElement('li')).attr('id', 'user' + userListJson[j]['sessionid']);
-					var $userA = $(document.createElement('a')).text(userListJson[j]['userName']);
-					$user.append($userA);
-					$listContainer.append($user);
-
-					var sessionid = userListJson[j]['sessionid'];
-					var encodedUId = encodeURI(userListJson[j]['userId']);
-
-					var $userListRow = $(document.getElementById('usr' + encodedUId));
-
-					if ($userListRow.length == 0) {
-
-						$userListRow = $(document.createElement('tr')).attr('id', 'usr' + encodedUId);
-
-						var $uName = $(document.createElement('td')).text(userListJson[j]['userName']);
-						$userListRow.append($uName);
-
-						$number = $(document.createElement('div')).addClass('doc_number').attr('id', 'num' + encodedUId).text(1);
-						var $noOfDocuments = $(document.createElement('td')).append($number);
-						// Document List
-						var $docListContainer = $(document.createElement('div')).addClass('dropdown docContainer');
-						var $docDropDown = $(document.createElement('ul')).addClass('dropdown-menu')
-						    .attr('id', 'docListContainer_' + encodedUId);
-						var $docListHeader = $(document.createElement('li')).addClass('dropdown-header')
-						    .text(_('Documents'));
-						var $name = $(document.createElement('a')).text(sName);
-						var $docentry = $(document.createElement('li')).addClass('docentry')
-						    .attr('id', sessionid + '_' + sPid)
-						    .append($name);
-						$docDropDown.append($docListHeader);
-						$docDropDown.append($docentry);
-						$docListContainer.append($docDropDown);
-						$noOfDocuments.append($docListContainer);
-
-						$userListRow.append($noOfDocuments);
-
-						$('#userlist').append($userListRow);
-					}
-					else {
-						var $number = $(document.getElementById('num' + encodedUId));
-						var docCount = parseInt($number.text());
-						$number.text(docCount + 1);
-						$name = $(document.createElement('a')).text(sName);
-						$docentry = $(document.createElement('li')).addClass('docentry')
-												.attr('id', sessionid + '_' + sPid)
-												.append($name);
-
-						$(document.getElementById('docListContainer_' + encodedUId)).append($docentry);
-					}
-				}
-				$userContainer.append($listContainer);
-
-				appendDocRow(document, $rowContainer, $userContainer, sPid, sName, sViews, sMem, sDocTime, sDocIdle, modified, this.socket);
-
-				$('#doclist').append($rowContainer);
+				sName = decodeURI(docList[i]['fileName']);
+				upsertUsersTable(docList[i]['pid'], sName, docList[i]['views']);
+				upsertDocsTable(docList[i], sName, this.socket);
 			}
 		}
 		else if (textMsg.startsWith('resetidle')) {
 			textMsg = textMsg.substring('resetidle'.length);
-			docProps = textMsg.trim().split(' ');
-			sPid = docProps[0];
-			var $idle = $(document.getElementById('docidle' + sPid));
-			$idle.val(0).text(Util.humanizeSecs(0));
+			sPid = textMsg.trim().split(' ')[0];
+			document.getElementById('docidle' + sPid).innerText = Util.humanizeSecs(0);
 		}
 		else if (textMsg.startsWith('adddoc')) {
 			textMsg = textMsg.substring('adddoc'.length);
 			docProps = textMsg.trim().split(' ');
-			sPid = docProps[0];
-			sName = decodeURI(docProps[1]);
-			sessionid = docProps[2];
-			var uName = decodeURI(docProps[3]);
-			encodedUId = encodeURI(docProps[4]);
-			sMem = docProps[5];
+			docProps = {
+				'pid': docProps[0],
+				'sName': docProps[1],
+				'sessionid': docProps[2],
+				'userName': decodeURI(docProps[3]),
+				'encodedUId': encodeURI(docProps[4]),
+				'userId': docProps[4],
+				'memory': docProps[5],
+				'elapsedTime': '0',
+				'idleTime': '0',
+				'modified': 'No',
+				'views': [{ 'sessionid': docProps[2], 'userName': decodeURI(docProps[3]) }]
+			};
 
-			$doc = $('#doc' + sPid);
-			if ($doc.length === 0) {
-				$rowContainer = $(document.createElement('tr')).attr('id', 'doc' + sPid);
-
-				$userContainer = $(document.createElement('div')).attr('id', 'ucontainer' + sPid)
-										  .addClass('userContainer dropdown');
-				$listContainer = $(document.createElement('ul')).addClass('dropdown-menu');
-				$listLabel = $(document.createElement('li')).addClass('dropdown-header')
-													.text('Users');
-				$listContainer.append($listLabel);
-				$userContainer.append($listContainer);
-
-				appendDocRow(document, $rowContainer, $userContainer, sPid, sName, '0', sMem, '0', '0', '', this.socket);
-
-				$('#doclist').append($rowContainer);
-
-				$a = $(document.getElementById('active_docs_count'));
-				$a.text(parseInt($a.text()) + 1);
-			}
-
-			var $views = $(document.getElementById('docview' + sPid));
-			nViews = parseInt($views.text());
-			$views.text(nViews + 1);
-
-			$userContainer = $(document.getElementById('ucontainer' + sPid));
-			var $list = $('ul', $userContainer);
-			$user = $(document.createElement('li')).attr('id', 'user' + sessionid);
-			$userA = $(document.createElement('a')).text(uName);
-			$user.append($userA);
-			$list.append($user);
-			$userContainer.append($list);
-
-			$a = $(document.getElementById('active_users_count'));
-			nTotalViews = parseInt($a.text());
-			$a.text(nTotalViews + 1);
-
-			$userListRow = $(document.getElementById('usr' + encodedUId));
-			if ($userListRow.length === 0) {
-
-				$userListRow = $(document.createElement('tr')).attr('id', 'usr' + encodedUId);
-
-				$uName = $(document.createElement('td')).text(uName);
-				$userListRow.append($uName);
-
-				$number = $(document.createElement('div')).addClass('doc_number').attr('id', 'num' + encodedUId).text(1);
-				$noOfDocuments = $(document.createElement('td')).append($number);
-
-				// Document List
-				$docListContainer = $(document.createElement('div')).addClass('dropdown docContainer');
-				$docDropDown = $(document.createElement('ul')).addClass('dropdown-menu')
-										.attr('id', 'docListContainer_' + encodedUId);
-				$docListHeader = $(document.createElement('li')).addClass('dropdown-header')
-										.text(_('Documents'));
-				$name = $(document.createElement('a')).text(sName);
-				$docentry = $(document.createElement('li')).addClass('docentry')
-										.attr('id', sessionid + '_' + sPid)
-										.append($name);
-				$docDropDown.append($docListHeader);
-				$docDropDown.append($docentry);
-				$docListContainer.append($docDropDown);
-				$noOfDocuments.append($docListContainer);
-
-				$userListRow.append($noOfDocuments);
-
-				$('#userlist').append($userListRow);
-			}
-			else {
-				$number = $(document.getElementById('num' + encodedUId));
-				docCount = parseInt($number.text());
-				$number.text(docCount + 1);
-				$name = $(document.createElement('a')).text(sName);
-				$docentry = $(document.createElement('li')).addClass('docentry')
-										.attr('id', sessionid + '_' + sPid)
-										.append($name);
-
-				$(document.getElementById('docListContainer_' + encodedUId)).append($docentry);
-			}
+			upsertDocsTable(docProps, docProps['sName'], this.socket);
+			upsertUsersTable(docProps['pid'], docProps['sName'], [docProps]);
+			document.getElementById('active_docs_count').innerText = String(parseInt(document.getElementById('active_docs_count').innerText) + 1);
+			document.getElementById('active_users_count').innerText = String(parseInt(document.getElementById('active_users_count')) + 1);
 		}
 		else if (textMsg.startsWith('mem_consumed') ||
 			textMsg.startsWith('active_docs_count') ||
@@ -349,33 +312,36 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			textMsg = textMsg.substring('rmdoc'.length);
 			docProps = textMsg.trim().split(' ');
 			sPid = docProps[0];
-			sessionid = docProps[1];
+			var sessionid = docProps[1];
 
-			$doc = $('#doc' + sPid);
-			if ($doc.length !== 0) {
-				$user = $(document.getElementById('user' + sessionid));
+			var doc = document.getElementById('doc' + sPid);
+			if (doc !== undefined && doc !== null) {
+				var $user = $(document.getElementById('user' + sessionid));
 				$user.remove();
-				$views = $('#docview' + sPid);
-				nViews = parseInt($views.text()) - 1;
-				$views.text(nViews);
-				if (nViews === 0) {
-					$doc.remove();
+				var collapsable = getCollapsibleClass('ucontainer' + sPid);
+				var viewerCount = parseInt(collapsable.getText().split(' ')[0]) - 1;
+				if (viewerCount === 0) {
+					document.getElementById('docview').deleteRow(doc.rowIndex);
+				}
+				else {
+					collapsable.setText(String(viewerCount) + _(' user(s).'));
 				}
 				$a = $(document.getElementById('active_users_count'));
 				nTotalViews = parseInt($a.text());
 				$a.text(nTotalViews - 1);
 			}
 
-			var $docEntry = $('#' + sessionid + '_' + sPid);
-			$user = $docEntry.parent().parent().parent();
-			var $nDocs = $('.doc_number', $user.parent());
-			docCount = parseInt($nDocs.text());
-			if (docCount == 1) {
-				$user.parent().remove();
-			}
-			else {
-				$docEntry.remove();
-				$nDocs.text(docCount - 1);
+			var docEntry = document.getElementById(sessionid + '_' + sPid);
+			if (docEntry !== null) {
+				var docCount = docEntry.parentNode.children.length;
+				var userDocListCell = docEntry.parentNode.parentNode.parentNode;
+				if (docCount === 1) {
+					document.getElementById('userview').deleteRow(userDocListCell.parentNode.rowIndex);
+				}
+				else {
+					docEntry = null;
+					userDocListCell.children[0].innerText = String(parseInt(userDocListCell.children[0].innerText) - 1);
+				}
 			}
 		}
 		else if (textMsg.startsWith('propchange')) {

@@ -766,7 +766,7 @@ std::string AdminModel::getDocuments() const
         if (!it.second->isExpired())
         {
             std::string encodedFilename;
-            Poco::URI::encode(it.second->getFilename(), " ", encodedFilename);
+            Poco::URI::encode(it.second->getFilename(), " ", encodedFilename); // Is encoded name needed?
             oss << separator1 << '{' << ' '
                 << "\"pid\"" << ':' << it.second->getPid() << ','
                 << "\"docKey\"" << ':' << '"' << it.second->getDocKey() << '"' << ','
