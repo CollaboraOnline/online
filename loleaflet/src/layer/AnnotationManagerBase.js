@@ -8,6 +8,7 @@
 L.AnnotationManagerBase = L.Class.extend({
 	initialize: function (map, options) {
 		this._map = map;
+		this._doclayer = this._map._docLayer;
 		this._initializeSpecific(options);
 	}
 });

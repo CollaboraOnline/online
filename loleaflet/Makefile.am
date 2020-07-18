@@ -322,6 +322,7 @@ LOLEAFLET_JS =\
 	src/map/anim/Map.FlyTo.js \
 	src/layer/AnnotationManagerBase.js \
 	src/layer/AnnotationManager.js \
+	src/layer/AnnotationManagerImpress.js \
 	src/control/Control.Scroll.Annotation.js \
 	src/layer/marker/Annotation.js \
 	src/layer/marker/DivOverlay.js \

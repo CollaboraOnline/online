@@ -6,12 +6,11 @@
 /* global $ L */
 
 L.ImpressTileLayer = L.TileLayer.extend({
-	extraSize: L.point(290, 0),
 
 	initialize: function (url, options) {
 		L.TileLayer.prototype.initialize.call(this, url, options);
 		this._preview = L.control.partsPreview();
-
+		this._partHashes = null;
 		if (window.mode.isMobile()) {
 			this._addButton = L.control.mobileSlide();
 			L.DomUtil.addClass(L.DomUtil.get('mobile-edit-button'), 'impress');
@@ -19,37 +18,17 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	newAnnotation: function (comment) {
-		if (this._draft) {
-			return;
-		}
-		this.onAnnotationCancel();
-
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			this.newAnnotationVex(comment, this.onAnnotationSave);
-		} else {
-			this._draft = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(this._map);
-			this._draft.edit();
-			var mapCenter = this._map.latLngToLayerPoint(this._map.getCenter());
-			var bounds = this._draft.getBounds();
-			var topLeft = mapCenter.subtract(L.point(bounds.max.x - bounds.min.x, (bounds.max.y - bounds.min.y)/2));
-			this._draft.setLatLng(this._map.layerPointToLatLng(topLeft));
-			this.layoutAnnotations();
-			this._draft.focus();
-		}
+		this._annotationManager.newAnnotation(comment);
 	},
 
 	beforeAdd: function (map) {
+		this._map = map;
 		map.addControl(this._preview);
-		map.on('zoomend', this._onAnnotationZoom, this);
 		map.on('updateparts', this.onUpdateParts, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
-		map.on('AnnotationCancel', this.onAnnotationCancel, this);
-		map.on('AnnotationReply', this.onReplyClick, this);
-		map.on('AnnotationSave', this.onAnnotationSave, this);
-		map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
-		map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
 		map.on('resize', this.onResize, this);
 
+		this._annotationManager = L.annotationManagerImpress(map);
 		map.uiManager.initializeSpecializedUI('presentation');
 
 		if (window.mode.isMobile()) {
@@ -71,33 +50,19 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	getAnnotation: function (id) {
-		var annotations = this._annotations[this._partHashes[this._selectedPart]];
-		for (var index in annotations) {
-			if (annotations[index]._data.id === id) {
-				return annotations[index];
-			}
-		}
-		return null;
+		return this._annotationManager.getAnnotation(id);
 	},
 
 	hideAnnotations: function (part) {
-		this._selectedAnnotation = undefined;
-		var annotations = this._annotations[this._partHashes[part]];
-		for (var index in annotations) {
-			annotations[index].hide();
-		}
+		return this._annotationManager.hideAnnotation(part);
 	},
 
 	hasAnnotations: function (part) {
-		var annotations = this._annotations[this._partHashes[part]];
-		return annotations && annotations.length > 0;
+		return this._annotationManager.hasAnnotations(part);
 	},
 
 	updateDocBounds: function (count, extraSize) {
-		var annotations = this._annotations[this._partHashes[this._selectedPart]];
-		if (annotations && annotations.length === count) {
-			this._map._docLayer._updateMaxBounds(true, extraSize);
-		}
+		return this._annotationManager.updateDocBounds(count, extraSize);
 	},
 
 	onResize: function () {
@@ -122,12 +87,6 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	onAdd: function (map) {
 		L.TileLayer.prototype.onAdd.call(this, map);
-		this._annotations = {};
-		this._topAnnotation = [];
-		this._topAnnotation[this._selectedPart] = 0;
-		this._selectedAnnotation = undefined;
-		this._draft = null;
-
 		map.on('updatemaxbounds', this._onUpdateMaxBounds, this);
 	},
 
@@ -137,78 +96,19 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	onAnnotationCancel: function () {
-		if (this._draft) {
-			this._map.removeLayer(this._draft);
-			this._draft = null;
-		}
-		this._map.focus();
-		this._selectedAnnotation = undefined;
-		this.layoutAnnotations();
+		this._annotationManager.onAnnotationCancel();
 	},
 
 	onAnnotationModify: function (annotation) {
-		this.onAnnotationCancel();
-		this._selectedAnnotation = annotation._data.id;
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			this.newAnnotationVex(annotation, this.onAnnotationSave, /* isMod */ true);
-		} else {
-			annotation.edit();
-			this.scrollUntilAnnotationIsVisible(annotation);
-			annotation.focus();
-		}
+		this._annotationManager.onAnnotationModify(annotation);
 	},
 
 	onAnnotationReply: function (annotation) {
-		this.onAnnotationCancel();
-		this._selectedAnnotation = annotation._data.id;
-		annotation.reply();
-		this.scrollUntilAnnotationIsVisible(annotation);
-		annotation.focus();
+		this._annotationManager.onAnnotationReply(annotation);
 	},
 
 	onAnnotationRemove: function (id) {
-		this.onAnnotationCancel();
-		var comment = {
-			Id: {
-				type: 'string',
-				value: id
-			}
-		};
-		this._map.sendUnoCommand('.uno:DeleteAnnotation', comment);
-		this._map.focus();
-	},
-
-	onAnnotationSave: function (e) {
-		var comment;
-		if (this._draft) {
-			comment = {
-				Text: {
-					type: 'string',
-					value: this._draft._data.text
-				}
-			};
-			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
-			this._map.removeLayer(this._draft);
-			this._draft = null;
-		} else {
-			comment = {
-				Id: {
-					type: 'string',
-					value: e.annotation._data.id
-				},
-				Text: {
-					type: 'string',
-					value: e.annotation._data.text
-				}
-			};
-			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
-			this._selectedAnnotation = undefined;
-		}
-		this._map.focus();
-	},
-
-	_onAnnotationZoom: function () {
-		this.onAnnotationCancel();
+		this._annotationManager.onAnnotationRemove(id);
 	},
 
 	_openMobileWizard: function(data) {
@@ -216,47 +116,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		$('mobile-slide-sorter').mCustomScrollbar('update');
 	},
 
-	onReplyClick: function (e) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: e.annotation._data.id
-			},
-			Text: {
-				type: 'string',
-				value: e.annotation._data.reply
-			}
-		};
-		this._map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
-		this._selectedAnnotation = undefined;
-		this._map.focus();
-	},
-
-	onAnnotationScrollDown: function () {
-		this._topAnnotation[this._selectedPart] = Math.min(++this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
-		this.onAnnotationCancel();
-		var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast());
-		this._map.fire('scrollby', {x: topRight.x, y: 0});
-	},
-
-	onAnnotationScrollUp: function () {
-		if (this._topAnnotation[this._selectedPart] === 0) {
-			this._map.fire('scrollby', {x: 0, y: -100});
-		}
-		this._topAnnotation[this._selectedPart] = Math.max(--this._topAnnotation[this._selectedPart], 0);
-		this.onAnnotationCancel();
-	},
-
 	onUpdateParts: function () {
 		if (typeof this._prevSelectedPart === 'number') {
-			this.hideAnnotations(this._prevSelectedPart);
-			if (this.hasAnnotations(this._selectedPart)) {
-				this._map._docLayer._updateMaxBounds(true);
-				if (this._topAnnotation[this._selectedPart] === undefined) {
-					this._topAnnotation[this._selectedPart] = 0;
-				}
-				this.onAnnotationCancel();
-			}
+			this._annotationManager.onPartChange(this._prevSelectedPart);
 		}
 	},
 
@@ -271,101 +133,11 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	clearAnnotations: function () {
-		var annotation;
-		var annotations;
-		for (var key in this._annotations) {
-			annotations = this._annotations[key];
-			while (annotations.length > 0) {
-				annotation = annotations.pop();
-				if (annotation) {
-					this._map.removeLayer(annotation);
-				}
-			}
-		}
-		this._annotations = {};
+		this._annotationManager.clearAnnotations();
 	},
 
 	removeAnnotation: function (id) {
-		var annotations = this._annotations[this._partHashes[this._selectedPart]];
-		for (var index in annotations) {
-			if (annotations[index]._data.id == id) {
-				this._map.removeLayer(annotations[index]);
-				annotations.splice(index, 1);
-				break;
-			}
-		}
-	},
-
-	scrollUntilAnnotationIsVisible: function(annotation) {
-		var bounds = annotation.getBounds();
-		var mapBounds = this._map.getBounds();
-		if (this._map.layerPointToLatLng(bounds.getTopRight()).lat > mapBounds.getNorth()) {
-			this._topAnnotation[this._selectedPart] = Math.max(this._topAnnotation[this._selectedPart] - 2, 0);
-		}
-		else if (this._map.layerPointToLatLng(bounds.getBottomLeft()).lat < mapBounds.getSouth()) {
-			this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart] + 2, this._annotations[this._partHashes[this._selectedPart]].length - 1);
-		}
-		this.layoutAnnotations();
-	},
-
-	layoutAnnotations: function () {
-		var topAnnotation;
-		var annotations = this._annotations[this._partHashes[this._selectedPart]];
-		var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast())
-			.add(L.point((this._selectedAnnotation ? 3 : 2) * this.options.marginX, this.options.marginY));
-		var bounds, annotation;
-		for (var index in annotations) {
-			annotation = annotations[index];
-			if (!this._topAnnotation[this._selectedPart]) {
-				this._topAnnotation[this._selectedPart] = 0;
-			}
-			topAnnotation = this._topAnnotation[this._selectedPart];
-			if (topAnnotation > 0 && parseInt(index) === topAnnotation - 1) {
-				// if the top annotation is not the first one, show a bit of the bottom of the previous annotation
-				// so that the user gets aware that there are more annotations above.
-
-				// get annotation bounds
-				annotation.setLatLng(this._map.layerPointToLatLng(L.point(0, -100000))); // placed where it's not visible
-				annotation.show(); // if it's hidden the bounds are wrong
-				bounds = annotation.getBounds();
-				annotation.hide();
-				var topLeft = topRight.subtract(L.point(0, bounds.max.y-bounds.min.y));
-				annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
-				annotation.show();
-				bounds = annotation.getBounds();
-				bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
-
-			} else if (index >= topAnnotation) { // visible annotations
-				if (annotation._data.id === this._selectedAnnotation) {
-					if (bounds) {
-						bounds.extend(L.point(bounds.max.x, bounds.max.y + 2 * this.options.marginY));
-					}
-					var offsetX = L.point(2 * this.options.marginX, 0);
-					topLeft = (bounds ? bounds.getBottomLeft() : topRight).subtract(offsetX);
-					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
-					bounds = annotation.getBounds();
-					bounds = L.bounds(bounds.getBottomLeft().add(offsetX), bounds.getTopRight().add(offsetX));
-					bounds.extend(L.point(bounds.max.x, bounds.max.y + 3 * this.options.marginY));
-				} else {
-					topLeft = bounds ? bounds.getBottomLeft() : topRight;
-					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
-					annotation.show();
-					bounds = annotation.getBounds();
-					bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
-				}
-			} else {
-				annotation.hide();
-			}
-		}
-		if (bounds) {
-			if (!this._scrollAnnotation) {
-				this._scrollAnnotation = L.control.scroll.annotation();
-				this._scrollAnnotation.addTo(this._map);
-			}
-		} else if (this._scrollAnnotation) {
-			this._map.removeControl(this._scrollAnnotation);
-			this._scrollAnnotation = null;
-		}
+		this._annotationManager.removeAnnotation(id);
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -381,62 +153,18 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		}
 
 		if (values.comments) {
-			this._addCommentsFromCommandValues(values.comments);
+			this._annotationManager.addCommentsFromCommandValues(values.comments);
 		} else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 
-	_addCommentsFromCommandValues: function (comments) {
-		this.clearAnnotations();
-		for (var index in comments) {
-			var comment = comments[index];
-			if (!this._annotations[comment.parthash]) {
-				this._annotations[comment.parthash] = [];
-			}
-			this._annotations[comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
-		}
-		if (!this._topAnnotation) {
-			this._topAnnotation = [];
-		}
-		this._topAnnotation[this._selectedPart] = 0;
-		if (this.hasAnnotations(this._selectedPart)) {
-			this._map._docLayer._updateMaxBounds(true);
-		}
-		this.layoutAnnotations();
-	},
-
 	_onMessage: function (textMsg, img) {
 		if (textMsg.startsWith('comment:')) {
 			var object = JSON.parse(textMsg.substring('comment:'.length + 1));
-			this._processCommentMessage(object.comment);
+			this._annotationManager.processCommentMessage(object.comment);
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
-		}
-	},
-
-	_processCommentMessage: function (comment) {
-		if (comment.action === 'Add') {
-			if (!this._annotations[comment.parthash]) {
-				this._annotations[comment.parthash] = [];
-			}
-			this._annotations[comment.parthash].push(L.annotation(this._map.options.maxBounds.getSouthEast(), comment).addTo(this._map));
-			this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
-			this.updateDocBounds(1, this.extraSize);
-			this.layoutAnnotations();
-		} else if (comment.action === 'Remove') {
-			this.removeAnnotation(comment.id);
-			this._topAnnotation[this._selectedPart] = Math.min(this._topAnnotation[this._selectedPart], this._annotations[this._partHashes[this._selectedPart]].length - 1);
-			this.updateDocBounds(0);
-			this.layoutAnnotations();
-		} else if (comment.action === 'Modify') {
-			var modified = this.getAnnotation(comment.id);
-			if (modified) {
-				modified._data = comment;
-				modified.update();
-				this._selectedAnnotation = undefined;
-				this.layoutAnnotations();
-			}
 		}
 	},
 
@@ -570,9 +298,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 
 	_updateMaxBounds: function (sizeChanged, extraSize) {
 		if (!extraSize) {
-			var annotations = this._annotations && this._partHashes && this._selectedPart !== undefined ?
-				this._annotations[this._partHashes[this._selectedPart]] : [];
-			extraSize = annotations && annotations.length > 0 ? this.extraSize : null;
+			extraSize = this._annotationManager.allocateExtraSize();
 		}
 		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, extraSize, {panInside: false});
 	},
