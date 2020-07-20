@@ -136,6 +136,14 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		this._annotationManager.clearAnnotations();
 	},
 
+	layoutAnnotations: function () {
+		this._annotationManager.layoutAnnotations();
+	},
+
+	unselectAnnotations: function () {
+		this._annotationManager.unselectAnnotations();
+	},
+
 	removeAnnotation: function (id) {
 		this._annotationManager.removeAnnotation(id);
 	},

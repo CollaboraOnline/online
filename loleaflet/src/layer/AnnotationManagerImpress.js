@@ -85,6 +85,10 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 			this._map._docLayer._updateMaxBounds(true, extraSize);
 		}
 	},
+	unselectAnnotations: function() {
+		this._selection = null;
+		this.onAnnotationCancel();
+	},
 	_onAnnotationZoom: function () {
 		this.onAnnotationCancel();
 	},

@@ -68,6 +68,12 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		this._annotations = {};
 	},
 
+	layoutAnnotations: function () {
+	},
+
+	unselectAnnotations: function () {
+	},
+
 	onAdd: function (map) {
 		map.addControl(L.control.tabs());
 		map.addControl(L.control.columnHeader());

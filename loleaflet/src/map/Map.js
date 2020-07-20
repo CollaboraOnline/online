@@ -1560,8 +1560,8 @@ L.Map = L.Evented.extend({
 			}
 
 			// unselect if anything is selected already
-			if (this._docLayer && this._docLayer._annotations && this._docLayer._annotations.unselect) {
-				this._docLayer._annotations.unselect();
+			if (this._docLayer) {
+				this._docLayer.unselectAnnotations();
 			}
 		}
 

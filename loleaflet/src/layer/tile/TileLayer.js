@@ -463,6 +463,14 @@ L.TileLayer = L.GridLayer.extend({
 		console.debug('Implemented in child  classes');
 	},
 
+	layoutAnnotations: function () {
+		console.debug('Implemented in child  classes');
+	},
+
+	unselectAnnotations: function () {
+		console.debug('Implemented in child  classes');
+	},
+
 	getEvents: function () {
 		var events = {
 			viewreset: this._viewReset,

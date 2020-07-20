@@ -58,6 +58,16 @@ L.WriterTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	layoutAnnotations: function () {
+		this._annotations.layout();
+	},
+
+	unselectAnnotations: function () {
+		if (this._annotations) {
+			this._annotations.unselect();
+		}
+	},
+
 	onAnnotationRemove: function (id) {
 		this._annotations.remove(id);
 	},
