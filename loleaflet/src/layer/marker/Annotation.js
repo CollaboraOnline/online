@@ -475,6 +475,7 @@ L.Annotation = L.Layer.extend({
 				this._map._docLayer._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 			this._annotationMarker.setLatLng(bounds.getNorthWest());
 			this._annotationMarker.on('dragstart drag dragend', this._onMarkerDrag, this);
+			this._annotationMarker.on('click', this._onMarkerClick, this);
 		}
 	},
 	_onMarkerDrag: function(event) {
@@ -484,6 +485,9 @@ L.Annotation = L.Layer.extend({
 			var pointTwip = this._map._docLayer._latLngToTwips(this._annotationMarker.getLatLng());
 			this._sendAnnotationPositionChange(pointTwip);
 		}
+	},
+	_onMarkerClick: function() {
+		this._map.fire('AnnotationSelect', {annotation: this});
 	},
 	_sendAnnotationPositionChange: function(newPosition) {
 		var comment = {

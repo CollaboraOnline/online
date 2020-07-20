@@ -10,10 +10,13 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		marginX: 40,
 		marginY: 10,
 		offset: 5,
-		extraSize: L.point(290, 0)
+		extraSize: L.point(290, 0),
+		popupOffset: 10,
+		showInline: false
 	},
 	_initializeSpecific: function () {
 		this._map.on('zoomend', this._onAnnotationZoom, this);
+		this._map.on('AnnotationSelect', this._onAnnotationSelect, this);
 		this._map.on('AnnotationCancel', this.onAnnotationCancel, this);
 		this._map.on('AnnotationClick', this.onAnnotationClick, this);
 		this._map.on('AnnotationSave', this.onAnnotationSave, this);
@@ -24,6 +27,8 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		this._topAnnotation = [];
 		this._topAnnotation[this.getSelectedPart()] = 0;
 		this._selectedAnnotation = undefined;
+		this._selectedForPopup = null;
+		this._selectionLine = L.polyline([], {color: 'darkblue', weight: 1.2});
 		this._draft = null;
 	},
 	getPartHashes: function() {
@@ -86,10 +91,15 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		}
 	},
 	unselectAnnotations: function() {
-		this._selection = null;
+		this._selectedForPopup = null;
+		this._map.removeLayer(this._selectionLine);
 		this.onAnnotationCancel();
 	},
 	_onAnnotationZoom: function () {
+		this.onAnnotationCancel();
+	},
+	_onAnnotationSelect: function (event) {
+		this._selectedForPopup = event.annotation;
 		this.onAnnotationCancel();
 	},
 	onAnnotationCancel: function () {
@@ -239,11 +249,11 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 	layoutAnnotations: function () {
 		var topAnnotation;
 		var annotations = this._annotations[this.getSelectedPartHash()];
-		var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast())
-			.add(L.point((this._selectedAnnotation ? 3 : 2) * this.options.marginX, this.options.marginY));
-		var bounds, annotation;
+		var diffPoint = L.point((this._selectedAnnotation ? 3 : 2) * this.options.marginX, this.options.marginY);
+		var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast()).add(diffPoint);
+		var bounds = null;
 		for (var index in annotations) {
-			annotation = annotations[index];
+			var annotation = annotations[index];
 			if (!this._topAnnotation[this.getSelectedPart()]) {
 				this._topAnnotation[this.getSelectedPart()] = 0;
 			}
@@ -262,19 +272,54 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 				annotation.show();
 				bounds = annotation.getBounds();
 				bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
-
-			} else if (index >= topAnnotation) { // visible annotations
+			}
+			else if (index >= topAnnotation) { // visible annotations
+				var offsetX;
 				if (annotation._data.id === this._selectedAnnotation) {
 					if (bounds) {
 						bounds.extend(L.point(bounds.max.x, bounds.max.y + 2 * this.options.marginY));
 					}
-					var offsetX = L.point(2 * this.options.marginX, 0);
+					offsetX = L.point(2 * this.options.marginX, 0);
 					topLeft = (bounds ? bounds.getBottomLeft() : topRight).subtract(offsetX);
 					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
 					bounds = annotation.getBounds();
 					bounds = L.bounds(bounds.getBottomLeft().add(offsetX), bounds.getTopRight().add(offsetX));
 					bounds.extend(L.point(bounds.max.x, bounds.max.y + 3 * this.options.marginY));
-				} else {
+				}
+				else if (this._selectedForPopup && annotation._data.id === this._selectedForPopup._data.id) {
+					var marker = this._selectedForPopup._annotationMarker;
+					var latlng = marker.getLatLng();
+					var point = this._map.latLngToLayerPoint(latlng);
+					var rect = marker._icon.getBoundingClientRect();
+
+					if (this.options.showInline) {
+						point = point.add(L.point(0, rect.height + this.options.popupOffset));
+						annotation.setLatLng(this._map.layerPointToLatLng(point));
+					}
+					else {
+						topLeft = bounds ? bounds.getBottomLeft() : topRight;
+						annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
+						annotation.show();
+						bounds = annotation.getBounds();
+						bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
+
+						var marginY = this.options.marginY;
+
+						var annotationMarkerRightCenter = point.add(L.point(rect.width, rect.height / 2));
+						var annotationLeftCenter = topLeft.add(L.point(0, bounds.getSize().y / 2));
+						var connectionPoint1 = L.point(annotationLeftCenter.x - marginY, annotationMarkerRightCenter.y);
+						var connectionPoint2 = L.point(annotationLeftCenter.x - marginY, annotationLeftCenter.y);
+
+						this._selectionLine.setLatLngs([
+							this._map.layerPointToLatLng(annotationMarkerRightCenter),
+							this._map.layerPointToLatLng(connectionPoint1),
+							this._map.layerPointToLatLng(connectionPoint2),
+							this._map.layerPointToLatLng(annotationLeftCenter)
+						]);
+						this._map.addLayer(this._selectionLine);
+					}
+				}
+				else {
 					topLeft = bounds ? bounds.getBottomLeft() : topRight;
 					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
 					annotation.show();
