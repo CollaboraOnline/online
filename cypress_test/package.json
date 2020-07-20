@@ -7,6 +7,7 @@
     "cypress": "4.9.0",
     "cypress-failed-log": "2.7.0",
     "cypress-file-upload": "4.0.7",
+    "cypress-log-to-output": "1.0.8",
     "cypress-select-tests": "1.5.7",
     "cypress-wait-until": "1.7.1",
     "eslint": "6.8.0",
