@@ -43,6 +43,8 @@ L.Annotation = L.Layer.extend({
 			this._data.textSelected.removeEventParent(map);
 			map.removeLayer(this._data.textSelected);
 		}
+		this.hideMarker();
+		this._annotationMarker = null;
 		this._map = null;
 	},
 
@@ -91,9 +93,7 @@ L.Annotation = L.Layer.extend({
 		if (this._data.textSelected && this._map.hasLayer && !this._map.hasLayer(this._data.textSelected)) {
 			this._map.addLayer(this._data.textSelected);
 		}
-		if (this._annotationMarker != null) {
-			this._map.addLayer(this._annotationMarker);
-		}
+		this.showMarker();
 	},
 
 	hide: function () {
@@ -104,6 +104,16 @@ L.Annotation = L.Layer.extend({
 		if (this._data.textSelected && this._map.hasLayer(this._data.textSelected)) {
 			this._map.removeLayer(this._data.textSelected);
 		}
+		this.hideMarker();
+	},
+
+	showMarker: function () {
+		if (this._annotationMarker != null) {
+			this._map.addLayer(this._annotationMarker);
+		}
+	},
+
+	hideMarker: function () {
 		if (this._annotationMarker != null) {
 			this._map.removeLayer(this._annotationMarker);
 		}

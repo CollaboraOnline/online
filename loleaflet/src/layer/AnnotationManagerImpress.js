@@ -91,8 +91,6 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		}
 	},
 	unselectAnnotations: function() {
-		this._selectedForPopup = null;
-		this._map.removeLayer(this._selectionLine);
 		this.onAnnotationCancel();
 	},
 	_onAnnotationZoom: function () {
@@ -100,15 +98,20 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 	},
 	_onAnnotationSelect: function (event) {
 		this._selectedForPopup = event.annotation;
-		this.onAnnotationCancel();
+		this._map.focus();
+		this.layoutAnnotations();
 	},
 	onAnnotationCancel: function () {
 		if (this._draft) {
 			this._map.removeLayer(this._draft);
 			this._draft = null;
 		}
-		this._map.focus();
 		this._selectedAnnotation = undefined;
+		if (this._selectedForPopup) {
+			this._map.removeLayer(this._selectionLine);
+			this._selectedForPopup = null;
+		}
+		this._map.focus();
 		this.layoutAnnotations();
 	},
 	onAnnotationModify: function (annotation) {
