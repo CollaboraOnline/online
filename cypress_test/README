@@ -1,9 +1,9 @@
 Cypress based test framework for LibreOffice Online
-====================================================
+===================================================
 
 
 Installation
-------------------
+------------
 
 You need to have run configure with the --enable-cypress option.
 
@@ -17,7 +17,7 @@ https://docs.cypress.io/guides/guides/continuous-integration.html#Dependencies
 
 
 Running tests
-------------------
+-------------
 
 All tests are part of the make check build. So you can
 just execute it from the root folder or under the
@@ -57,7 +57,7 @@ cypress_test/integration_tests/mobile/:
 
 
 Running one specific test
-------------------
+-------------------------
 
 To run one test case of a test suite you can use Mocha's
 'only' feature. Just replace the it(...) function with
@@ -79,7 +79,7 @@ Or open the test suite in the interactive test runner:
     make run-mobile spec=writer/apply_font_spec.js
 
 Openning interactive test runner
-----------------------------------
+--------------------------------
 
 Cypress has an interactive test runner application which
 runs the test in the browser. So you can see the result of
@@ -130,7 +130,7 @@ directory or you should avoid symlinks in the path of the
 build directory.
 
 Code coverage
-------------
+-------------
 
 We use nyc to instrument the code and then cypress code coverage
 plugin is used to generate coverage numbers. This workflow
@@ -148,3 +148,45 @@ doing a clean build is a good idea (e.g. make clean).
 
 See also this link:
 https://docs.cypress.io/guides/tooling/code-coverage.html
+
+Used Packages
+-------------
+
+- cypress:
+    Cypress integration test framework.
+
+- cypress-failed-log:
+    This package makes cypress to dump test logs to the command line
+    when a test fails. You can write things to this log by calling
+    cy.log() in the test code.
+
+- cypress-log-to-output:
+    This one can be used to dump console.error() messages to the command
+    line. To enable this functionality you need to set ENABLE_CONSOLE_LOG
+    environment variable. e.g. `ENABLE_CONSOLE_LOG="1" make check-mobile`.
+
+- cypress-select-tests:
+    We can filter out tests or test suites before execution using this
+    package. Now, it is used to filter out tests based on the core's version.
+    See plugins/blacklists.js.
+
+- cypress-wait-until:
+    Introduces cy.waitUntil() command which can be used as a while loop.
+    We can't write loops in a cypress test otherwise. It's useful when
+    the cypress tools can't be used to wait on something.
+
+- eslint:
+    A JS linter tool for identifying patterns in JavaScript code. We use this
+    to make sure code conventions are met. Run by make check and make run-*.
+
+- eslint-plugin-cypress-rules:
+    This is our own eslint plugin to catch cypress specific patterns in the
+    test code.
+
+- get-port-cli:
+    Used by the build system to find an available port to use as loolwsd's
+    communication port.
+
+- wait-on:
+    Used by the build system to wait on loolwsd server to start before
+    tests are started.
