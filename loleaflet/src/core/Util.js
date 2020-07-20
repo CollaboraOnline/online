@@ -199,6 +199,14 @@ L.Util = {
 
 	mm100thToInch: function(mm) {
 		return mm / 2540;
+	},
+
+	getTextWidth: function(text, font) {
+		var canvas = L.Util.getTextWidth._canvas || (L.Util.getTextWidth._canvas = document.createElement('canvas'));
+		var context = canvas.getContext('2d');
+		context.font = font;
+		var metrics = context.measureText(text);
+		return Math.floor(metrics.width);
 	}
 };
 
@@ -261,3 +269,4 @@ L.getDpiScaleFactor = L.Util.getDpiScaleFactor;
 L.toggleFullScreen = L.Util.toggleFullScreen;
 L.isEmpty = L.Util.isEmpty;
 L.mm100thToInch = L.Util.mm100thToInch;
+L.getTextWidth = L.Util.getTextWidth;

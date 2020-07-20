@@ -11,6 +11,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('wopiprops', this.onWopiProps, this);
+		map.on('resize', this.onResize, this);
 		$('#document-title-pencil').addClass('editable');
 	},
 
@@ -42,11 +43,13 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 	documentNameCancel: function() {
 		$('#document-name-input').val(this.map['wopi'].BreadcrumbDocName);
+		this._setNameInputWidth();
 		this.map._onGotFocus();
 	},
 
 	onDocumentNameKeyPress: function(e) {
-		$('#document-name-input').css('width',(($('#document-name-input').val().length + 1) * 10) + 'px');
+		var tail = (e.keyCode !== 13 && e.keyCode !== 27) ? 'X' : null;
+		this._setNameInputWidth(tail);
 		if (e.keyCode === 13) { // Enter key
 			this.documentNameConfirm();
 		} else if (e.keyCode === 27) { // Escape key
@@ -66,13 +69,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 	},
 
 	onDocLayerInit: function() {
-		var value = $('#document-name-input').val();
-		if (value.length < 27) {
-			$('#document-name-input').attr('size', value.length);
-		}
-		else {
-			$('#document-name-input').attr('size', '25');
-		}
+		this._setNameInputWidth();
 
 		// FIXME: Android app would display a temporary filename, not the actual filename
 		if (window.ThisIsTheAndroidApp) {
@@ -114,6 +111,29 @@ L.Control.DocumentNameInput = L.Control.extend({
 			$('#document-title-pencil').removeClass('editable');
 			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress);
 		}
+	},
+
+	onResize: function() {
+		this._setNameInputWidth();
+	},
+
+	_getMaxAvailableWidth: function() {
+		var x = $('#document-titlebar').prop('offsetLeft') + $('.document-title').prop('offsetLeft') + $('#document-name-input').prop('offsetLeft');
+		var containerWidth = parseInt($('.main-nav').css('width'));
+		var maxWidth = Math.max(containerWidth - x - 30, 0);
+		maxWidth = Math.max(maxWidth, 300); // input field at least 300px
+		return maxWidth;
+	},
+
+	_setNameInputWidth: function(tail) {
+		var documentNameInput = $('#document-name-input');
+		var content = (typeof tail === 'string') ? documentNameInput.val() + tail : documentNameInput.val();
+		var font = documentNameInput.css('font');
+		var textWidth = L.getTextWidth(content, font) + 10;
+		var maxWidth = this._getMaxAvailableWidth();
+		//console.log('_setNameInputWidth: textWidth: ' + textWidth + ', maxWidth: ' + maxWidth);
+		textWidth = Math.min(textWidth, maxWidth);
+		documentNameInput.css('width', textWidth + 'px');
 	}
 });
 
