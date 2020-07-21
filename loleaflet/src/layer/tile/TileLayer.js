@@ -1810,6 +1810,7 @@ L.TileLayer = L.GridLayer.extend({
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 
 			this._updateScrollOnCellSelection(oldSelection, this._textSelectionEnd);
+			this._updateMarkers();
 		}
 		else {
 			this._textSelectionEnd = null;
@@ -3133,44 +3134,7 @@ L.TileLayer = L.GridLayer.extend({
 					this._isEmptyRectangle(this._textSelectionEnd)) {
 				return;
 			}
-
-			var startPos = this._map.project(this._textSelectionStart.getSouthWest());
-			var endPos = this._map.project(this._textSelectionEnd.getSouthWest());
-			var startMarkerPos = this._map.project(startMarker.getLatLng());
-			if (startMarkerPos.distanceTo(endPos) < startMarkerPos.distanceTo(startPos) && startMarker._icon && endMarker._icon) {
-				// if the start marker is actually closer to the end of the selection
-				// reverse icons and markers
-				L.DomUtil.removeClass(startMarker._icon, 'leaflet-selection-marker-start');
-				L.DomUtil.removeClass(endMarker._icon, 'leaflet-selection-marker-end');
-				L.DomUtil.addClass(startMarker._icon, 'leaflet-selection-marker-end');
-				L.DomUtil.addClass(endMarker._icon, 'leaflet-selection-marker-start');
-				var tmp = startMarker;
-				startMarker = endMarker;
-				endMarker = tmp;
-			}
-			else if (startMarker._icon && endMarker._icon) {
-				// normal markers and normal icons
-				L.DomUtil.removeClass(startMarker._icon, 'leaflet-selection-marker-end');
-				L.DomUtil.removeClass(endMarker._icon, 'leaflet-selection-marker-start');
-				L.DomUtil.addClass(startMarker._icon, 'leaflet-selection-marker-start');
-				L.DomUtil.addClass(endMarker._icon, 'leaflet-selection-marker-end');
-			}
-
-			if (!startMarker.isDragged) {
-				var pos = this._map.project(this._textSelectionStart.getSouthWest());
-				pos = pos.subtract(new L.Point(0, 2));
-				pos = this._map.unproject(pos);
-				startMarker.setLatLng(pos);
-				this._map.addLayer(startMarker);
-			}
-
-			if (!endMarker.isDragged) {
-				pos = this._map.project(this._textSelectionEnd.getSouthEast());
-				pos = pos.subtract(new L.Point(0, 2));
-				pos = this._map.unproject(pos);
-				endMarker.setLatLng(pos);
-				this._map.addLayer(endMarker);
-			}
+			this._updateMarkers();
 		}
 		else {
 			this._textSelectionStart = null;
@@ -3180,6 +3144,54 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.removeLayer(this._selectionHandles[key]);
 				this._selectionHandles[key].isDragged = false;
 			}
+		}
+	},
+
+	_updateMarkers: function() {
+		var startMarker, endMarker;
+		for (var key in this._selectionHandles) {
+			if (key === 'start') {
+				startMarker = this._selectionHandles[key];
+			}
+			else if (key === 'end') {
+				endMarker = this._selectionHandles[key];
+			}
+		}
+
+		var startPos = this._map.project(this._textSelectionStart.getSouthWest());
+		var endPos = this._map.project(this._textSelectionEnd.getSouthWest());
+		var startMarkerPos = this._map.project(startMarker.getLatLng());
+		if (startMarkerPos.distanceTo(endPos) < startMarkerPos.distanceTo(startPos) && startMarker._icon && endMarker._icon) {
+			// if the start marker is actually closer to the end of the selection
+			// reverse icons and markers
+			L.DomUtil.removeClass(startMarker._icon, 'leaflet-selection-marker-start');
+			L.DomUtil.removeClass(endMarker._icon, 'leaflet-selection-marker-end');
+			L.DomUtil.addClass(startMarker._icon, 'leaflet-selection-marker-end');
+			L.DomUtil.addClass(endMarker._icon, 'leaflet-selection-marker-start');
+			var tmp = startMarker;
+			startMarker = endMarker;
+			endMarker = tmp;
+		}
+		else if (startMarker._icon && endMarker._icon) {
+			// normal markers and normal icons
+			L.DomUtil.removeClass(startMarker._icon, 'leaflet-selection-marker-end');
+			L.DomUtil.removeClass(endMarker._icon, 'leaflet-selection-marker-start');
+			L.DomUtil.addClass(startMarker._icon, 'leaflet-selection-marker-start');
+			L.DomUtil.addClass(endMarker._icon, 'leaflet-selection-marker-end');
+		}
+
+		if (!startMarker.isDragged) {
+			var pos = this._map.project(this._textSelectionStart.getSouthWest());
+			pos = this._map.unproject(pos);
+			startMarker.setLatLng(pos);
+			this._map.addLayer(startMarker);
+		}
+
+		if (!endMarker.isDragged) {
+			pos = this._map.project(this._textSelectionEnd.getSouthEast());
+			pos = this._map.unproject(pos);
+			endMarker.setLatLng(pos);
+			this._map.addLayer(endMarker);
 		}
 	},
 
