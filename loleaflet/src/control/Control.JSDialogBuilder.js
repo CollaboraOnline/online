@@ -653,6 +653,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
 	{
 		return function() {
+			if ($(tabs[t]).hasClass('selected') && !$('#document-container').hasClass('tabs-collapsed')) {
+				$('#document-container').css('top', '38px');
+				$('#document-container').addClass('tabs-collapsed');
+			}
+			else if ($(tabs[t]).hasClass('selected') && $('#document-container').hasClass('tabs-collapsed')) {
+				$('#document-container').css('top', '120px');
+				$('#document-container').removeClass('tabs-collapsed');
+			}
 			$(tabs[t]).addClass('selected');
 			for (var i = 0; i < tabs.length; i++) {
 				if (i !== t)
