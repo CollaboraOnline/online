@@ -179,7 +179,7 @@ L.Map = L.Evented.extend({
 
 			if (e.perm === 'readonly') {
 				L.DomUtil.addClass(this._container.parentElement, 'readonly');
-				if (window.mode.isDesktop()) {
+				if (window.mode.isDesktop() || window.mode.isTablet()) {
 					L.DomUtil.addClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
 				}
 				L.DomUtil.addClass(L.DomUtil.get('main-menu'), 'readonly');
@@ -187,7 +187,7 @@ L.Map = L.Evented.extend({
 				L.DomUtil.addClass(L.DomUtil.get('spreadsheet-row-column-frame'), 'readonly');
 			} else {
 				L.DomUtil.removeClass(this._container.parentElement, 'readonly');
-				if (window.mode.isDesktop()) {
+				if (window.mode.isDesktop() || window.mode.isTablet()) {
 					L.DomUtil.removeClass(L.DomUtil.get('toolbar-wrapper'), 'readonly');
 				}
 				L.DomUtil.removeClass(L.DomUtil.get('main-menu'), 'readonly');

@@ -9,11 +9,8 @@
 	top: 56px;
 }
 
-#document-container.spreadsheet-document.tablet {
-	border-top: 1px solid #B6B6B6;
-	top: 100px;
-	left: 50px;
-	bottom: 78px;
+#document-container.spreadsheet-document.tablet.readonly {
+	top: 52px;
 }
 
 .spreadsheet-tabs-container {
@@ -79,8 +76,8 @@
 		bottom: 0px;
 }
 
-#spreadsheet-row-column-frame.tablet {
-	top: 80px;
+#spreadsheet-row-column-frame.tablet.readonly {
+	top: 32px;
 }
 
 #spreadsheet-header-corner-container {
@@ -229,3 +226,11 @@
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	}
+
+#toolbar-wrapper.spreadsheet.tablet {
+	z-index: auto;
+}
+
+#toolbar-wrapper.spreadsheet.tablet.readonly {
+	z-index: -1;
+}
