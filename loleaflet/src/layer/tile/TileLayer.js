@@ -3154,15 +3154,8 @@ L.TileLayer = L.GridLayer.extend({
 	_onUpdateTextSelection: function () {
 		this._onUpdateCellResizeMarkers();
 
-		var startMarker, endMarker;
-		for (var key in this._selectionHandles) {
-			if (key === 'start') {
-				startMarker = this._selectionHandles[key];
-			}
-			else if (key === 'end') {
-				endMarker = this._selectionHandles[key];
-			}
-		}
+		var startMarker = this._selectionHandles['start'];
+		var endMarker = this._selectionHandles['end'];
 
 		if (this._map.editorHasFocus() && (this._selections.getLayers().length !== 0 || startMarker.isDragged || endMarker.isDragged)) {
 			if (!startMarker || !endMarker ||
@@ -3176,7 +3169,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._textSelectionStart = null;
 			this._textSelectionEnd = null;
 			this._selectedTextContent = '';
-			for (key in this._selectionHandles) {
+			for (var key in this._selectionHandles) {
 				this._map.removeLayer(this._selectionHandles[key]);
 				this._selectionHandles[key].isDragged = false;
 			}
@@ -3184,15 +3177,8 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_updateMarkers: function() {
-		var startMarker, endMarker;
-		for (var key in this._selectionHandles) {
-			if (key === 'start') {
-				startMarker = this._selectionHandles[key];
-			}
-			else if (key === 'end') {
-				endMarker = this._selectionHandles[key];
-			}
-		}
+		var startMarker = this._selectionHandles['start'];
+		var endMarker = this._selectionHandles['end'];
 
 		var startPos = this._map.project(this._textSelectionStart.getSouthWest());
 		var endPos = this._map.project(this._textSelectionEnd.getSouthWest());
