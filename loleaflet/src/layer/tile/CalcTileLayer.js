@@ -857,7 +857,7 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 
 	_getEditCursorRectangle: function (msgObj) {
 
-		if (!this.options.printTwipsMsgsEnabled ||
+		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry ||
 			!msgObj.hasOwnProperty('relrect') || !msgObj.hasOwnProperty('refpoint')) {
 			// 1) non-print-twips messaging mode OR
 			// 2) the edit-cursor belongs to draw/chart objects.
@@ -877,7 +877,7 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 
 	_getTextSelectionRectangles: function (textMsg) {
 
-		if (!this.options.printTwipsMsgsEnabled) {
+		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
 			return L.TileLayer.prototype._getTextSelectionRectangles.call(this, textMsg);
 		}
 
