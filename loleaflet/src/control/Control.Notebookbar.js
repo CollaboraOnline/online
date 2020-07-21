@@ -6,7 +6,6 @@
 /* global $ _ _UNO */
 L.Control.Notebookbar = L.Control.extend({
 
-	_optionsSectionWidth: 50,
 	_currentScrollPosition: 0,
 	_showNotebookbar: false,
 
@@ -23,6 +22,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('notebookbar', this.onNotebookbar, this);
 		this.map.on('updatepermission', this.onUpdatePermission, this);
 
+		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
 		$('.main-nav').addClass(this._map.getDocType() + '-color-indicator');
 
@@ -155,8 +155,6 @@ L.Control.Notebookbar = L.Control.extend({
 
 		$(left).css({'height': '80px'});
 		$(right).css({'height': '80px'});
-		if (window.mode.isDesktop())
-			$(right).css({'right':  this._optionsSectionWidth + 'px'});
 
 		$(left).click(function () {
 			var scroll = $('.notebookbar-scroll-wrapper').scrollLeft() - 300;
@@ -239,12 +237,13 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	createOptionsSection: function() {
-		$('.notebookbar-options-td').remove();
-		var optionsTd = L.DomUtil.create('td', 'notebookbar-options-td');
-		$(optionsTd).css('width', this._optionsSectionWidth + 'px');
+		$('.notebookbar-options-section').remove();
 
-		var optionsSection = L.DomUtil.create('div', 'notebookbar-options-section', optionsTd);
-		$('#toolbar-up').parent().append(optionsTd);
+		var optionsSection = L.DomUtil.create('div', 'notebookbar-options-section');
+		$('#document-titlebar').parent().append(optionsSection);
+
+		if (L.Params.closeButtonEnabled && !window.mode.isTablet())
+			$(optionsSection).css('right', '30px');
 
 		var builderOptions = {
 			mobileWizard: this,
