@@ -3,9 +3,10 @@
  * L.Control.Notebookbar
  */
 
-/* global $ _ */
+/* global $ _ _UNO */
 L.Control.Notebookbar = L.Control.extend({
 
+	_optionsSectionWidth: 50,
 	_currentScrollPosition: 0,
 	_showNotebookbar: false,
 
@@ -79,6 +80,9 @@ L.Control.Notebookbar = L.Control.extend({
 		if (this._showNotebookbar === false)
 			this.hideTabs();
 
+		if (window.mode.isDesktop())
+			this.createOptionsSection();
+
 		this.scrollToLastPositionIfNeeded();
 	},
 
@@ -151,6 +155,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 		$(left).css({'height': '80px'});
 		$(right).css({'height': '80px'});
+		if (window.mode.isDesktop())
+			$(right).css({'right':  this._optionsSectionWidth + 'px'});
 
 		$(left).click(function () {
 			var scroll = $('.notebookbar-scroll-wrapper').scrollLeft() - 300;
@@ -203,5 +209,50 @@ L.Control.Notebookbar = L.Control.extend({
 				}
 			}
 		}
-	}
+	},
+
+	getOptionsSectionData: function() {
+		return [
+			{
+				'id': 'optionscontainer',
+				'type': 'container',
+				'vertical': 'true',
+				'children': [
+					{
+						'id': 'optionstoolboxdown',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Sidebar', '', true),
+								'command': '.uno:Sidebar'
+							},
+							{
+								'type': 'toolitem',
+								// dummy node to avoid creating labels
+							}
+						]
+					}
+				]
+			}
+		];
+	},
+
+	createOptionsSection: function() {
+		$('.notebookbar-options-td').remove();
+		var optionsTd = L.DomUtil.create('td', 'notebookbar-options-td');
+		$(optionsTd).css('width', this._optionsSectionWidth + 'px');
+
+		var optionsSection = L.DomUtil.create('div', 'notebookbar-options-section', optionsTd);
+		$('#toolbar-up').parent().append(optionsTd);
+
+		var builderOptions = {
+			mobileWizard: this,
+			map: this.map,
+			cssClass: 'notebookbar',
+		};
+
+		var builder = new L.control.notebookbarBuilder(builderOptions);
+		builder.build(optionsSection, this.getOptionsSectionData());
+	},
 });

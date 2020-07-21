@@ -68,6 +68,11 @@
 	margin-bottom: 3px;
 }
 
+/* options section */
+.notebookbar-options-section {
+	margin-left: 10px;
+}
+
 /* root container */
 
 .notebookbar-scroll-wrapper {
