@@ -397,7 +397,11 @@ L.Socket = L.Class.extend({
 				postMsgData['Reason'] = 'OwnerTermination';
 			}
 			else if (textMsg === 'idle' || textMsg === 'oom') {
-				msg = _('Idle document - please click to reload and resume editing');
+				if (window.mode.isDesktop()) {
+					msg = _('Idle document - please click to reload and resume editing');
+				} else {
+					msg = _('Idle document - please tap to reload and resume editing');
+				}
 				this._map._documentIdle = true;
 				postMsgData['Reason'] = 'DocumentIdle';
 				if (textMsg === 'oom')
