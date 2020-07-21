@@ -1556,7 +1556,7 @@ public:
     {
         oss << "Kit Document:\n"
             << "\n\tstop: " << _stop
-            << "\n\tisLoading: " << _stop
+            << "\n\tisLoading: " << _isLoading
             << "\n\tjailId: " << _jailId
             << "\n\tdocKey: " << _docKey
             << "\n\tdocId: " << _docId
