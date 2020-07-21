@@ -26,7 +26,7 @@ L.Renderer = L.Layer.extend({
 		if (!this._container) {
 			this._initContainer(); // defined by renderer implementations
 
-			if (this._zoomAnimated) {
+			if (this._zoomAnimated && this.rendererId !== 'fixed') {
 				L.DomUtil.addClass(this._container, 'leaflet-zoom-animated');
 			}
 		}
@@ -49,7 +49,7 @@ L.Renderer = L.Layer.extend({
 		var events = {
 			moveend: this._update
 		};
-		if (this._zoomAnimated) {
+		if (this._zoomAnimated && this.rendererId !== 'fixed') {
 			events.zoomanim = this._animateZoom;
 		}
 		return events;
