@@ -145,6 +145,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:FontworkSameLetterHeights'] = function() {};
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function() {};
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function() {};
+		this._toolitemHandlers['.uno:Paste'] = function() {};
 
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
