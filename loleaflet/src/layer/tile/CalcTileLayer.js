@@ -8,7 +8,8 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 	options: {
 		// TODO: sync these automatically from SAL_LOK_OPTIONS
 		sheetGeometryDataEnabled: true,
-		printTwipsMsgsEnabled: true
+		printTwipsMsgsEnabled: true,
+		syncSplits: true, // if false, the splits/freezes are not synced with other users viewing the same sheet.
 	},
 
 	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
@@ -811,6 +812,10 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		// This stores the current split-cell state of core, so this should not be modified.
 		this._splitCellState[isSplitCol ? 'x' : 'y'] = newSplitIndex;
 
+		if (!this.options.syncSplits) {
+			return;
+		}
+
 		var changed = isSplitCol ? this._splitPanesContext.setSplitCol(newSplitIndex) :
 			this._splitPanesContext.setSplitRow(newSplitIndex);
 
@@ -821,7 +826,7 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 
 	sendSplitIndex: function (newSplitIndex, isSplitCol) {
 
-		if (!this._map.isPermissionEdit() || !this._splitCellState) {
+		if (!this._map.isPermissionEdit() || !this._splitCellState || !this.options.syncSplits) {
 			return false;
 		}
 
