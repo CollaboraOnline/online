@@ -903,9 +903,7 @@ msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
-msgid ""
-"\n"
-"Server returned this reason: \""
+msgid "Server returned this reason:"
 msgstr ""
 
 #: src/control/Permission.js:63
