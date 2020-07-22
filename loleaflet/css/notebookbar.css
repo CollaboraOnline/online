@@ -73,6 +73,7 @@
 	display: inline;
 	position: fixed;
 	right: 0px;
+	z-index: 1000;
 }
 
 /* root container */

@@ -214,6 +214,32 @@ L.Control.UIManager = L.Control.extend({
 		$('#map').addClass('notebookbar-opened');
 	},
 
+	collapseNotebookbar: function() {
+		this.moveObjectVertically($('#spreadsheet-row-column-frame'), -85);
+		this.moveObjectVertically($('#document-container'), -85);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), -85);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), -85);
+		this.moveObjectVertically($('#formulabar'), -1);
+		$('#toolbar-up').css('display', 'none');
+
+		$('#document-container').addClass('tabs-collapsed');
+	},
+
+	extendNotebookbar: function() {
+		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 85);
+		this.moveObjectVertically($('#document-container'), 85);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), 85);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), 85);
+		this.moveObjectVertically($('#formulabar'), 1);
+		$('#toolbar-up').css('display', '');
+
+		$('#document-container').removeClass('tabs-collapsed');
+	},
+
+	isNotebookbarCollapsed: function() {
+		return $('#document-container').hasClass('tabs-collapsed');
+	},
+
 	// Event handlers
 
 	onUpdatePermission: function(e) {

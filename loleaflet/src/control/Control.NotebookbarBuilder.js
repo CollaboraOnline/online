@@ -250,6 +250,31 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		return builder._comboboxControl(parentContainer, data, builder);
 	},
 
+	// overriden
+	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
+	{
+		return function() {
+			var tabIsSelected = $(tabs[t]).hasClass('selected');
+			var notebookbarIsCollapsed = builder.wizard.isCollapsed();
+
+			if (tabIsSelected && !notebookbarIsCollapsed) {
+				builder.wizard.collapse();
+			} else if (tabIsSelected && notebookbarIsCollapsed) {
+				builder.wizard.extend();
+			}
+
+			$(tabs[t]).addClass('selected');
+			for (var i = 0; i < tabs.length; i++) {
+				if (i !== t) {
+					$(tabs[i]).removeClass('selected');
+					$(contentDivs[i]).hide();
+				}
+			}
+			$(contentDivs[t]).show();
+			builder.wizard.selectedTab(tabIds[t]);
+		};
+	},
+
 	_overridenTabsControlHandler: function(parentContainer, data, builder) {
 		data.tabs = builder.wizard.getTabs();
 		return builder._tabsControlHandler(parentContainer, data, builder);

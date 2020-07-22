@@ -62,6 +62,18 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.notebookbar-shortcuts-bar').hide();
 	},
 
+	collapse: function() {
+		this.map.uiManager.collapseNotebookbar();
+	},
+
+	extend: function() {
+		this.map.uiManager.extendNotebookbar();
+	},
+
+	isCollapsed: function() {
+		return this.map.uiManager.isNotebookbarCollapsed();
+	},
+
 	clearNotebookbar: function() {
 		$('.root-container.notebookbar').remove();
 		$('.ui-tabs.notebookbar').remove();
