@@ -31,8 +31,8 @@ static int countLoolKitProcesses(const int expected)
     // The shorter the better (the quicker the test runs).
     const int sleepMs = 50;
 
-    // This has to cause waiting for at least COMMAND_TIMEOUT_MS. Add one second for safety.
-    const size_t repeat = ((COMMAND_TIMEOUT_MS + 1000) / sleepMs);
+    // This has to cause waiting for at least COMMAND_TIMEOUT_MS. Tolerate more for safety.
+    const size_t repeat = ((COMMAND_TIMEOUT_MS * 8) / sleepMs);
     int count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {
