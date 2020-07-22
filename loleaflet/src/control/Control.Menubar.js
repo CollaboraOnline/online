@@ -524,7 +524,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:ControlCodes'},
 				{uno: '.uno:SpellOnline'},
-				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
+				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action', uno: '.uno:ShowResolvedAnnotations'},
 			]
 			},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
@@ -1594,7 +1594,11 @@ L.Control.Menubar = L.Control.extend({
 			if (state && state[style]) {
 				menuStructure['checked'] = true;
 			}
-		} else if (item.uno === '.uno:TrackChanges' || item.uno === '.uno:ShowTrackedChanges') {
+		} else if (item.uno === '.uno:TrackChanges' ||
+			item.uno === '.uno:ShowTrackedChanges' ||
+			item.uno === '.uno:ControlCodes' ||
+			item.uno === '.uno:SpellOnline' ||
+			item.uno === '.uno:ShowResolvedAnnotations') {
 			if (this._map['stateChangeHandler'].getItemValue(item.uno) === 'true') {
 				menuStructure['checked'] = true;
 			}
