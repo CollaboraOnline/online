@@ -44,7 +44,7 @@ L.Map.include({
 
 			var alertMsg = _('The document could not be locked, and is opened in read-only mode.');
 			if (reason) {
-				alertMsg += _('\nServer returned this reason: "') + reason + '"';
+				alertMsg += '\n' + _('Server returned this reason:') + '\n"' + reason + '"';
 			}
 			vex.dialog.alert({ message: alertMsg });
 
@@ -62,7 +62,7 @@ L.Map.include({
 			// This is a failed response to an attempt to lock using mobile-edit-button
 			alertMsg = _('The document could not be locked.');
 			if (reason) {
-				alertMsg += _('\nServer returned this reason: "') + reason + '"';
+				alertMsg += '\n' + _('Server returned this reason:') + '\n"' + reason + '"';
 			}
 			vex.dialog.alert({ message: alertMsg });
 		}
