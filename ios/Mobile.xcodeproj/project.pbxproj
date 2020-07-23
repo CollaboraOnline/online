@@ -532,6 +532,17 @@
 		BE5EB5D521401E0F00E0826C /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
 		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
 		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
+		BE62A58C24BF873D00AFFD77 /* pngwrite.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pngwrite.cxx; path = "../../ios-device/vcl/source/filter/png/pngwrite.cxx"; sourceTree = "<group>"; };
+		BE62A58D24BF873D00AFFD77 /* PngImageReader.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PngImageReader.cxx; path = "../../ios-device/vcl/source/filter/png/PngImageReader.cxx"; sourceTree = "<group>"; };
+		BE62A58E24BF873D00AFFD77 /* pngread.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pngread.cxx; path = "../../ios-device/vcl/source/filter/png/pngread.cxx"; sourceTree = "<group>"; };
+		BE62A58F24BF875700AFFD77 /* GraphicNativeTransform.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicNativeTransform.cxx; path = "../../ios-device/vcl/source/filter/GraphicNativeTransform.cxx"; sourceTree = "<group>"; };
+		BE62A59024BF875700AFFD77 /* graphicfilter_internal.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = graphicfilter_internal.hxx; path = "../../ios-device/vcl/source/filter/graphicfilter_internal.hxx"; sourceTree = "<group>"; };
+		BE62A59124BF875700AFFD77 /* graphicfilter2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicfilter2.cxx; path = "../../ios-device/vcl/source/filter/graphicfilter2.cxx"; sourceTree = "<group>"; };
+		BE62A59224BF875700AFFD77 /* FilterConfigCache.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FilterConfigCache.hxx; path = "../../ios-device/vcl/source/filter/FilterConfigCache.hxx"; sourceTree = "<group>"; };
+		BE62A59324BF875700AFFD77 /* FilterConfigCache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FilterConfigCache.cxx; path = "../../ios-device/vcl/source/filter/FilterConfigCache.cxx"; sourceTree = "<group>"; };
+		BE62A59424BF875700AFFD77 /* GraphicNativeMetadata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicNativeMetadata.cxx; path = "../../ios-device/vcl/source/filter/GraphicNativeMetadata.cxx"; sourceTree = "<group>"; };
+		BE62A59524BF875700AFFD77 /* GraphicFormatDetector.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicFormatDetector.cxx; path = "../../ios-device/vcl/source/filter/GraphicFormatDetector.cxx"; sourceTree = "<group>"; };
+		BE62A59624BF875700AFFD77 /* FilterConfigItem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FilterConfigItem.cxx; path = "../../ios-device/vcl/source/filter/FilterConfigItem.cxx"; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BE7228E02417BC9F000ADABD /* StringVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringVector.cpp; sourceTree = "<group>"; };
@@ -975,6 +986,37 @@
 		BE93D46A216D5582007A39F4 /* watermarkitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = watermarkitem.cxx; path = "../../ios-device/sfx2/source/doc/watermarkitem.cxx"; sourceTree = "<group>"; };
 		BE93D46B216D5582007A39F4 /* new.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = new.cxx; path = "../../ios-device/sfx2/source/doc/new.cxx"; sourceTree = "<group>"; };
 		BE93D46C216D5582007A39F4 /* objembed.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objembed.cxx; path = "../../ios-device/sfx2/source/doc/objembed.cxx"; sourceTree = "<group>"; };
+		BEA1201A24C587D500332049 /* BitmapMedianFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapMedianFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapMedianFilter.cxx"; sourceTree = "<group>"; };
+		BEA1201B24C587D500332049 /* BitmapColorQuantizationFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapColorQuantizationFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapColorQuantizationFilter.cxx"; sourceTree = "<group>"; };
+		BEA1201C24C587D500332049 /* BitmapDisabledImageFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapDisabledImageFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapDisabledImageFilter.cxx"; sourceTree = "<group>"; };
+		BEA1201D24C587D500332049 /* BitmapMonochromeMatrixFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapMonochromeMatrixFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapMonochromeMatrixFilter.cxx"; sourceTree = "<group>"; };
+		BEA1201E24C587D500332049 /* BitmapAlphaClampFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapAlphaClampFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapAlphaClampFilter.cxx"; sourceTree = "<group>"; };
+		BEA1201F24C587D500332049 /* BitmapSepiaFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSepiaFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapSepiaFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202024C587D500332049 /* BitmapTools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapTools.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapTools.cxx"; sourceTree = "<group>"; };
+		BEA1202124C587D500332049 /* BitmapGaussianSeparableBlurFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapGaussianSeparableBlurFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapGaussianSeparableBlurFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202224C587D500332049 /* BitmapInterpolateScaleFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapInterpolateScaleFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapInterpolateScaleFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202324C587D500332049 /* BitmapMosaicFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapMosaicFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapMosaicFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202424C587D500332049 /* checksum.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = checksum.cxx; path = "../../ios-device/vcl/source/bitmap/checksum.cxx"; sourceTree = "<group>"; };
+		BEA1202524C587D500332049 /* BitmapPopArtFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapPopArtFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapPopArtFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202624C587D600332049 /* BitmapLightenFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapLightenFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapLightenFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202724C587D600332049 /* BitmapMonochromeFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapMonochromeFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapMonochromeFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202824C587D600332049 /* BitmapScaleConvolutionFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapScaleConvolutionFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapScaleConvolutionFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202924C587D600332049 /* bitmappaint.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmappaint.cxx; path = "../../ios-device/vcl/source/bitmap/bitmappaint.cxx"; sourceTree = "<group>"; };
+		BEA1202A24C587D600332049 /* BitmapSymmetryCheck.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSymmetryCheck.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapSymmetryCheck.cxx"; sourceTree = "<group>"; };
+		BEA1202B24C587D600332049 /* BitmapScaleSuperFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapScaleSuperFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapScaleSuperFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202C24C587D600332049 /* BitmapSeparableUnsharpenFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSeparableUnsharpenFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapSeparableUnsharpenFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202D24C587D600332049 /* BitmapSobelGreyFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSobelGreyFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapSobelGreyFilter.cxx"; sourceTree = "<group>"; };
+		BEA1202E24C587D600332049 /* bitmap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmap.cxx; path = "../../ios-device/vcl/source/bitmap/bitmap.cxx"; sourceTree = "<group>"; };
+		BEA1202F24C587D600332049 /* Octree.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Octree.cxx; path = "../../ios-device/vcl/source/bitmap/Octree.cxx"; sourceTree = "<group>"; };
+		BEA1203024C587D600332049 /* BitmapEmbossGreyFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapEmbossGreyFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapEmbossGreyFilter.cxx"; sourceTree = "<group>"; };
+		BEA1203124C587D600332049 /* BitmapFastScaleFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapFastScaleFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapFastScaleFilter.cxx"; sourceTree = "<group>"; };
+		BEA1203224C587D600332049 /* BitmapSimpleColorQuantizationFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSimpleColorQuantizationFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapSimpleColorQuantizationFilter.cxx"; sourceTree = "<group>"; };
+		BEA1203324C587D600332049 /* bitmapfilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmapfilter.cxx; path = "../../ios-device/vcl/source/bitmap/bitmapfilter.cxx"; sourceTree = "<group>"; };
+		BEA1203424C587D600332049 /* BitmapSmoothenFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSmoothenFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapSmoothenFilter.cxx"; sourceTree = "<group>"; };
+		BEA1203524C587D600332049 /* BitmapColorizeFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapColorizeFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapColorizeFilter.cxx"; sourceTree = "<group>"; };
+		BEA1203624C587D600332049 /* BitmapDuoToneFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapDuoToneFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapDuoToneFilter.cxx"; sourceTree = "<group>"; };
+		BEA1203724C587D600332049 /* BitmapConvolutionMatrixFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapConvolutionMatrixFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapConvolutionMatrixFilter.cxx"; sourceTree = "<group>"; };
+		BEA1203824C587D600332049 /* BitmapSolarizeFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapSolarizeFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapSolarizeFilter.cxx"; sourceTree = "<group>"; };
 		BEA2835521467FDD00848631 /* Kit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kit.cpp; sourceTree = "<group>"; };
 		BEA283572146945500848631 /* ChildSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChildSession.cpp; sourceTree = "<group>"; };
 		BEA2835921470A1C00848631 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -1198,6 +1240,68 @@
 		BEDCC94D246175E200FB02BD /* frame.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = frame.cxx; path = "../../ios-device/framework/source/services/frame.cxx"; sourceTree = "<group>"; };
 		BEDCC94E246175E200FB02BD /* taskcreatorsrv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = taskcreatorsrv.cxx; path = "../../ios-device/framework/source/services/taskcreatorsrv.cxx"; sourceTree = "<group>"; };
 		BEDCC94F246175E200FB02BD /* uriabbreviation.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uriabbreviation.cxx; path = "../../ios-device/framework/source/services/uriabbreviation.cxx"; sourceTree = "<group>"; };
+		BEE5C05324C1D9BB001D794C /* CommonSalLayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommonSalLayout.cxx; path = "../../ios-device/vcl/source/gdi/CommonSalLayout.cxx"; sourceTree = "<group>"; };
+		BEE5C05424C1D9BC001D794C /* sallayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sallayout.cxx; path = "../../ios-device/vcl/source/gdi/sallayout.cxx"; sourceTree = "<group>"; };
+		BEE5C05524C1D9BC001D794C /* pdfobjectcopier.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfobjectcopier.cxx; path = "../../ios-device/vcl/source/gdi/pdfobjectcopier.cxx"; sourceTree = "<group>"; };
+		BEE5C05624C1D9BC001D794C /* impgraph.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impgraph.cxx; path = "../../ios-device/vcl/source/gdi/impgraph.cxx"; sourceTree = "<group>"; };
+		BEE5C05724C1D9BC001D794C /* impvect.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = impvect.hxx; path = "../../ios-device/vcl/source/gdi/impvect.hxx"; sourceTree = "<group>"; };
+		BEE5C05824C1D9BC001D794C /* TypeSerializer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TypeSerializer.cxx; path = "../../ios-device/vcl/source/gdi/TypeSerializer.cxx"; sourceTree = "<group>"; };
+		BEE5C05924C1D9BC001D794C /* lineinfo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lineinfo.cxx; path = "../../ios-device/vcl/source/gdi/lineinfo.cxx"; sourceTree = "<group>"; };
+		BEE5C05A24C1D9BC001D794C /* gfxlink.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gfxlink.cxx; path = "../../ios-device/vcl/source/gdi/gfxlink.cxx"; sourceTree = "<group>"; };
+		BEE5C05B24C1D9BC001D794C /* salmisc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salmisc.cxx; path = "../../ios-device/vcl/source/gdi/salmisc.cxx"; sourceTree = "<group>"; };
+		BEE5C05C24C1D9BC001D794C /* jobset.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = jobset.cxx; path = "../../ios-device/vcl/source/gdi/jobset.cxx"; sourceTree = "<group>"; };
+		BEE5C05D24C1D9BC001D794C /* pdfbuildin_fonts.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfbuildin_fonts.cxx; path = "../../ios-device/vcl/source/gdi/pdfbuildin_fonts.cxx"; sourceTree = "<group>"; };
+		BEE5C05E24C1D9BC001D794C /* configsettings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = configsettings.cxx; path = "../../ios-device/vcl/source/gdi/configsettings.cxx"; sourceTree = "<group>"; };
+		BEE5C05F24C1D9BC001D794C /* impvect.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impvect.cxx; path = "../../ios-device/vcl/source/gdi/impvect.cxx"; sourceTree = "<group>"; };
+		BEE5C06024C1D9BC001D794C /* impanmvw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impanmvw.cxx; path = "../../ios-device/vcl/source/gdi/impanmvw.cxx"; sourceTree = "<group>"; };
+		BEE5C06124C1D9BC001D794C /* svmconverter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svmconverter.cxx; path = "../../ios-device/vcl/source/gdi/svmconverter.cxx"; sourceTree = "<group>"; };
+		BEE5C06224C1D9BC001D794C /* vectorgraphicdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vectorgraphicdata.cxx; path = "../../ios-device/vcl/source/gdi/vectorgraphicdata.cxx"; sourceTree = "<group>"; };
+		BEE5C06324C1D9BC001D794C /* print3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = print3.cxx; path = "../../ios-device/vcl/source/gdi/print3.cxx"; sourceTree = "<group>"; };
+		BEE5C06424C1D9BC001D794C /* VerticalOrientationData.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VerticalOrientationData.cxx; path = "../../ios-device/vcl/source/gdi/VerticalOrientationData.cxx"; sourceTree = "<group>"; };
+		BEE5C06524C1D9BC001D794C /* wall.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wall.cxx; path = "../../ios-device/vcl/source/gdi/wall.cxx"; sourceTree = "<group>"; };
+		BEE5C06624C1D9BD001D794C /* regionband.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = regionband.cxx; path = "../../ios-device/vcl/source/gdi/regionband.cxx"; sourceTree = "<group>"; };
+		BEE5C06724C1D9BD001D794C /* pdfwriter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfwriter.cxx; path = "../../ios-device/vcl/source/gdi/pdfwriter.cxx"; sourceTree = "<group>"; };
+		BEE5C06824C1D9BD001D794C /* region.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = region.cxx; path = "../../ios-device/vcl/source/gdi/region.cxx"; sourceTree = "<group>"; };
+		BEE5C06924C1D9BD001D794C /* gradient.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gradient.cxx; path = "../../ios-device/vcl/source/gdi/gradient.cxx"; sourceTree = "<group>"; };
+		BEE5C06A24C1D9BD001D794C /* bitmapex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmapex.cxx; path = "../../ios-device/vcl/source/gdi/bitmapex.cxx"; sourceTree = "<group>"; };
+		BEE5C06B24C1D9BD001D794C /* gdimetafiletools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gdimetafiletools.cxx; path = "../../ios-device/vcl/source/gdi/gdimetafiletools.cxx"; sourceTree = "<group>"; };
+		BEE5C06C24C1D9BD001D794C /* bitmap3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bitmap3.cxx; path = "../../ios-device/vcl/source/gdi/bitmap3.cxx"; sourceTree = "<group>"; };
+		BEE5C06D24C1D9BD001D794C /* graphictools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphictools.cxx; path = "../../ios-device/vcl/source/gdi/graphictools.cxx"; sourceTree = "<group>"; };
+		BEE5C06E24C1D9BD001D794C /* salgdiimpl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdiimpl.cxx; path = "../../ios-device/vcl/source/gdi/salgdiimpl.cxx"; sourceTree = "<group>"; };
+		BEE5C06F24C1D9BD001D794C /* pdfwriter_impl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = pdfwriter_impl.hxx; path = "../../ios-device/vcl/source/gdi/pdfwriter_impl.hxx"; sourceTree = "<group>"; };
+		BEE5C07024C1D9BD001D794C /* dibtools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dibtools.cxx; path = "../../ios-device/vcl/source/gdi/dibtools.cxx"; sourceTree = "<group>"; };
+		BEE5C07124C1D9BD001D794C /* pdffontcache.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdffontcache.cxx; path = "../../ios-device/vcl/source/gdi/pdffontcache.cxx"; sourceTree = "<group>"; };
+		BEE5C07224C1D9BD001D794C /* pdfwriter_impl2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfwriter_impl2.cxx; path = "../../ios-device/vcl/source/gdi/pdfwriter_impl2.cxx"; sourceTree = "<group>"; };
+		BEE5C07324C1D9BD001D794C /* print.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = print.cxx; path = "../../ios-device/vcl/source/gdi/print.cxx"; sourceTree = "<group>"; };
+		BEE5C07424C1D9BD001D794C /* FileDefinitionWidgetDraw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FileDefinitionWidgetDraw.cxx; path = "../../ios-device/vcl/source/gdi/FileDefinitionWidgetDraw.cxx"; sourceTree = "<group>"; };
+		BEE5C07524C1D9BE001D794C /* bmpacc2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bmpacc2.cxx; path = "../../ios-device/vcl/source/gdi/bmpacc2.cxx"; sourceTree = "<group>"; };
+		BEE5C07624C1D9BE001D794C /* oldprintadaptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = oldprintadaptor.cxx; path = "../../ios-device/vcl/source/gdi/oldprintadaptor.cxx"; sourceTree = "<group>"; };
+		BEE5C07724C1D9BE001D794C /* mapmod.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mapmod.cxx; path = "../../ios-device/vcl/source/gdi/mapmod.cxx"; sourceTree = "<group>"; };
+		BEE5C07824C1D9BE001D794C /* pdfbuildin_fonts.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = pdfbuildin_fonts.hxx; path = "../../ios-device/vcl/source/gdi/pdfbuildin_fonts.hxx"; sourceTree = "<group>"; };
+		BEE5C07924C1D9BE001D794C /* metaact.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = metaact.cxx; path = "../../ios-device/vcl/source/gdi/metaact.cxx"; sourceTree = "<group>"; };
+		BEE5C07A24C1D9BE001D794C /* pdffontcache.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = pdffontcache.hxx; path = "../../ios-device/vcl/source/gdi/pdffontcache.hxx"; sourceTree = "<group>"; };
+		BEE5C07B24C1D9BE001D794C /* pdfextoutdevdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfextoutdevdata.cxx; path = "../../ios-device/vcl/source/gdi/pdfextoutdevdata.cxx"; sourceTree = "<group>"; };
+		BEE5C07C24C1D9BE001D794C /* bmpacc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bmpacc.cxx; path = "../../ios-device/vcl/source/gdi/bmpacc.cxx"; sourceTree = "<group>"; };
+		BEE5C07D24C1D9BE001D794C /* virdev.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = virdev.cxx; path = "../../ios-device/vcl/source/gdi/virdev.cxx"; sourceTree = "<group>"; };
+		BEE5C07E24C1D9BE001D794C /* bmpfast.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bmpfast.cxx; path = "../../ios-device/vcl/source/gdi/bmpfast.cxx"; sourceTree = "<group>"; };
+		BEE5C07F24C1D9BE001D794C /* graph.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graph.cxx; path = "../../ios-device/vcl/source/gdi/graph.cxx"; sourceTree = "<group>"; };
+		BEE5C08024C1D9BE001D794C /* salgdilayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salgdilayout.cxx; path = "../../ios-device/vcl/source/gdi/salgdilayout.cxx"; sourceTree = "<group>"; };
+		BEE5C08124C1D9BF001D794C /* mtfxmldump.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mtfxmldump.cxx; path = "../../ios-device/vcl/source/gdi/mtfxmldump.cxx"; sourceTree = "<group>"; };
+		BEE5C08224C1D9BF001D794C /* hatch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = hatch.cxx; path = "../../ios-device/vcl/source/gdi/hatch.cxx"; sourceTree = "<group>"; };
+		BEE5C08324C1D9BF001D794C /* gdimtf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = gdimtf.cxx; path = "../../ios-device/vcl/source/gdi/gdimtf.cxx"; sourceTree = "<group>"; };
+		BEE5C08424C1D9BF001D794C /* pdfwriter_impl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pdfwriter_impl.cxx; path = "../../ios-device/vcl/source/gdi/pdfwriter_impl.cxx"; sourceTree = "<group>"; };
+		BEE5C08524C1D9BF001D794C /* WidgetDefinition.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WidgetDefinition.cxx; path = "../../ios-device/vcl/source/gdi/WidgetDefinition.cxx"; sourceTree = "<group>"; };
+		BEE5C08624C1D9BF001D794C /* alpha.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = alpha.cxx; path = "../../ios-device/vcl/source/gdi/alpha.cxx"; sourceTree = "<group>"; };
+		BEE5C08724C1D9BF001D794C /* WidgetDefinitionReader.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WidgetDefinitionReader.cxx; path = "../../ios-device/vcl/source/gdi/WidgetDefinitionReader.cxx"; sourceTree = "<group>"; };
+		BEE5C08824C1D9BF001D794C /* extoutdevdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = extoutdevdata.cxx; path = "../../ios-device/vcl/source/gdi/extoutdevdata.cxx"; sourceTree = "<group>"; };
+		BEE5C08924C1D9BF001D794C /* cvtgrf.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cvtgrf.cxx; path = "../../ios-device/vcl/source/gdi/cvtgrf.cxx"; sourceTree = "<group>"; };
+		BEE5C08A24C1D9BF001D794C /* bmpacc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = bmpacc3.cxx; path = "../../ios-device/vcl/source/gdi/bmpacc3.cxx"; sourceTree = "<group>"; };
+		BEE5C08B24C1D9BF001D794C /* regband.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = regband.cxx; path = "../../ios-device/vcl/source/gdi/regband.cxx"; sourceTree = "<group>"; };
+		BEE5C08C24C1D9BF001D794C /* textlayout.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textlayout.cxx; path = "../../ios-device/vcl/source/gdi/textlayout.cxx"; sourceTree = "<group>"; };
+		BEE5C08D24C1D9BF001D794C /* print2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = print2.cxx; path = "../../ios-device/vcl/source/gdi/print2.cxx"; sourceTree = "<group>"; };
+		BEE5C08E24C1D9BF001D794C /* impglyphitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impglyphitem.cxx; path = "../../ios-device/vcl/source/gdi/impglyphitem.cxx"; sourceTree = "<group>"; };
+		BEE5C08F24C1D9BF001D794C /* scrptrun.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scrptrun.cxx; path = "../../ios-device/vcl/source/gdi/scrptrun.cxx"; sourceTree = "<group>"; };
+		BEE5C09024C1D9C0001D794C /* embeddedfontshelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = embeddedfontshelper.cxx; path = "../../ios-device/vcl/source/gdi/embeddedfontshelper.cxx"; sourceTree = "<group>"; };
 		BEF755A723E8200A008A4BB2 /* drawdoc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc.cxx; path = "../../ios-device/sd/source/core/drawdoc.cxx"; sourceTree = "<group>"; };
 		BEF755A823E8200A008A4BB2 /* drawdoc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc3.cxx; path = "../../ios-device/sd/source/core/drawdoc3.cxx"; sourceTree = "<group>"; };
 		BEF755A923E8200A008A4BB2 /* sdiocmpt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdiocmpt.cxx; path = "../../ios-device/sd/source/core/sdiocmpt.cxx"; sourceTree = "<group>"; };
@@ -1223,6 +1327,49 @@
 		BEF755BD23E8200B008A4BB2 /* pglink.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pglink.cxx; path = "../../ios-device/sd/source/core/pglink.cxx"; sourceTree = "<group>"; };
 		BEF755BE23E8200B008A4BB2 /* sdpage_animations.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdpage_animations.cxx; path = "../../ios-device/sd/source/core/sdpage_animations.cxx"; sourceTree = "<group>"; };
 		BEF755BF23E8200B008A4BB2 /* EffectMigration.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EffectMigration.cxx; path = "../../ios-device/sd/source/core/EffectMigration.cxx"; sourceTree = "<group>"; };
+		BEF7895324C887980013A906 /* strhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strhelper.cxx; path = "../../ios-device/vcl/source/helper/strhelper.cxx"; sourceTree = "<group>"; };
+		BEF7895424C887980013A906 /* commandinfoprovider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = commandinfoprovider.cxx; path = "../../ios-device/vcl/source/helper/commandinfoprovider.cxx"; sourceTree = "<group>"; };
+		BEF7895524C887980013A906 /* svtaccessiblefactory.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svtaccessiblefactory.cxx; path = "../../ios-device/vcl/source/helper/svtaccessiblefactory.cxx"; sourceTree = "<group>"; };
+		BEF7895624C887980013A906 /* evntpost.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = evntpost.cxx; path = "../../ios-device/vcl/source/helper/evntpost.cxx"; sourceTree = "<group>"; };
+		BEF7895724C887980013A906 /* threadex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = threadex.cxx; path = "../../ios-device/vcl/source/helper/threadex.cxx"; sourceTree = "<group>"; };
+		BEF7895824C887980013A906 /* displayconnectiondispatch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = displayconnectiondispatch.cxx; path = "../../ios-device/vcl/source/helper/displayconnectiondispatch.cxx"; sourceTree = "<group>"; };
+		BEF7895924C887980013A906 /* lazydelete.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lazydelete.cxx; path = "../../ios-device/vcl/source/helper/lazydelete.cxx"; sourceTree = "<group>"; };
+		BEF7895A24C887980013A906 /* errcode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = errcode.cxx; path = "../../ios-device/vcl/source/helper/errcode.cxx"; sourceTree = "<group>"; };
+		BEF7895B24C887980013A906 /* canvastools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = canvastools.cxx; path = "../../ios-device/vcl/source/helper/canvastools.cxx"; sourceTree = "<group>"; };
+		BEF7895C24C887980013A906 /* canvasbitmap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = canvasbitmap.cxx; path = "../../ios-device/vcl/source/helper/canvasbitmap.cxx"; sourceTree = "<group>"; };
+		BEF7895E24C88A540013A906 /* uicategorydescription.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uicategorydescription.cxx; path = "../../ios-device/framework/source/uiconfiguration/uicategorydescription.cxx"; sourceTree = "<group>"; };
+		BEF7895F24C88A540013A906 /* ImageList.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ImageList.cxx; path = "../../ios-device/framework/source/uiconfiguration/ImageList.cxx"; sourceTree = "<group>"; };
+		BEF7896024C88A540013A906 /* globalsettings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = globalsettings.cxx; path = "../../ios-device/framework/source/uiconfiguration/globalsettings.cxx"; sourceTree = "<group>"; };
+		BEF7896124C88A540013A906 /* graphicnameaccess.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = graphicnameaccess.cxx; path = "../../ios-device/framework/source/uiconfiguration/graphicnameaccess.cxx"; sourceTree = "<group>"; };
+		BEF7896224C88A540013A906 /* moduleuicfgsupplier.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moduleuicfgsupplier.cxx; path = "../../ios-device/framework/source/uiconfiguration/moduleuicfgsupplier.cxx"; sourceTree = "<group>"; };
+		BEF7896324C88A540013A906 /* imagemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imagemanager.cxx; path = "../../ios-device/framework/source/uiconfiguration/imagemanager.cxx"; sourceTree = "<group>"; };
+		BEF7896424C88A550013A906 /* imagemanagerimpl.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = imagemanagerimpl.hxx; path = "../../ios-device/framework/source/uiconfiguration/imagemanagerimpl.hxx"; sourceTree = "<group>"; };
+		BEF7896524C88A550013A906 /* uiconfigurationmanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uiconfigurationmanager.cxx; path = "../../ios-device/framework/source/uiconfiguration/uiconfigurationmanager.cxx"; sourceTree = "<group>"; };
+		BEF7896624C88A550013A906 /* ImageList.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ImageList.hxx; path = "../../ios-device/framework/source/uiconfiguration/ImageList.hxx"; sourceTree = "<group>"; };
+		BEF7896724C88A550013A906 /* CommandImageResolver.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CommandImageResolver.hxx; path = "../../ios-device/framework/source/uiconfiguration/CommandImageResolver.hxx"; sourceTree = "<group>"; };
+		BEF7896824C88A550013A906 /* CommandImageResolver.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandImageResolver.cxx; path = "../../ios-device/framework/source/uiconfiguration/CommandImageResolver.cxx"; sourceTree = "<group>"; };
+		BEF7896924C88A550013A906 /* windowstateconfiguration.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = windowstateconfiguration.cxx; path = "../../ios-device/framework/source/uiconfiguration/windowstateconfiguration.cxx"; sourceTree = "<group>"; };
+		BEF7896A24C88A550013A906 /* imagemanagerimpl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imagemanagerimpl.cxx; path = "../../ios-device/framework/source/uiconfiguration/imagemanagerimpl.cxx"; sourceTree = "<group>"; };
+		BEF7896B24C88A550013A906 /* moduleimagemanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moduleimagemanager.cxx; path = "../../ios-device/framework/source/uiconfiguration/moduleimagemanager.cxx"; sourceTree = "<group>"; };
+		BEF7896C24C88A550013A906 /* moduleuiconfigurationmanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moduleuiconfigurationmanager.cxx; path = "../../ios-device/framework/source/uiconfiguration/moduleuiconfigurationmanager.cxx"; sourceTree = "<group>"; };
+		BEF7896E24C8CF960013A906 /* GraphicID.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicID.cxx; path = "../../ios-device/vcl/source/graphic/GraphicID.cxx"; sourceTree = "<group>"; };
+		BEF7896F24C8CF960013A906 /* UnoGraphicProvider.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoGraphicProvider.cxx; path = "../../ios-device/vcl/source/graphic/UnoGraphicProvider.cxx"; sourceTree = "<group>"; };
+		BEF7897024C8CF960013A906 /* grfattr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grfattr.cxx; path = "../../ios-device/vcl/source/graphic/grfattr.cxx"; sourceTree = "<group>"; };
+		BEF7897124C8CF960013A906 /* GraphicReader.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicReader.cxx; path = "../../ios-device/vcl/source/graphic/GraphicReader.cxx"; sourceTree = "<group>"; };
+		BEF7897224C8CF960013A906 /* GraphicLoader.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicLoader.cxx; path = "../../ios-device/vcl/source/graphic/GraphicLoader.cxx"; sourceTree = "<group>"; };
+		BEF7897324C8CF960013A906 /* UnoGraphicDescriptor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoGraphicDescriptor.cxx; path = "../../ios-device/vcl/source/graphic/UnoGraphicDescriptor.cxx"; sourceTree = "<group>"; };
+		BEF7897424C8CF960013A906 /* Manager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Manager.cxx; path = "../../ios-device/vcl/source/graphic/Manager.cxx"; sourceTree = "<group>"; };
+		BEF7897524C8CF960013A906 /* GraphicObject.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicObject.cxx; path = "../../ios-device/vcl/source/graphic/GraphicObject.cxx"; sourceTree = "<group>"; };
+		BEF7897624C8CF960013A906 /* UnoGraphic.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoGraphic.cxx; path = "../../ios-device/vcl/source/graphic/UnoGraphic.cxx"; sourceTree = "<group>"; };
+		BEF7897724C8CF970013A906 /* VectorGraphicSearch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VectorGraphicSearch.cxx; path = "../../ios-device/vcl/source/graphic/VectorGraphicSearch.cxx"; sourceTree = "<group>"; };
+		BEF7897824C8CF970013A906 /* UnoGraphicTransformer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoGraphicTransformer.cxx; path = "../../ios-device/vcl/source/graphic/UnoGraphicTransformer.cxx"; sourceTree = "<group>"; };
+		BEF7897924C8CF970013A906 /* GraphicObject2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicObject2.cxx; path = "../../ios-device/vcl/source/graphic/GraphicObject2.cxx"; sourceTree = "<group>"; };
+		BEF7897A24C8CF970013A906 /* UnoGraphicObject.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UnoGraphicObject.cxx; path = "../../ios-device/vcl/source/graphic/UnoGraphicObject.cxx"; sourceTree = "<group>"; };
+		BEF7897C24C8D9D60013A906 /* ImplImageTree.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ImplImageTree.cxx; path = "../../ios-device/vcl/source/image/ImplImageTree.cxx"; sourceTree = "<group>"; };
+		BEF7897D24C8D9F50013A906 /* Image.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cxx; path = "../../ios-device/vcl/source/image/Image.cxx"; sourceTree = "<group>"; };
+		BEF7897E24C8D9F50013A906 /* ImplImage.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ImplImage.cxx; path = "../../ios-device/vcl/source/image/ImplImage.cxx"; sourceTree = "<group>"; };
+		BEF7897F24C8D9F50013A906 /* ImageTree.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ImageTree.cxx; path = "../../ios-device/vcl/source/image/ImageTree.cxx"; sourceTree = "<group>"; };
+		BEF7898024C8D9F50013A906 /* ImageRepository.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ImageRepository.cxx; path = "../../ios-device/vcl/source/image/ImageRepository.cxx"; sourceTree = "<group>"; };
 		BEFB1EDF21C29CC70081D757 /* L10n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L10n.h; sourceTree = "<group>"; };
 		BEFB1EE021C29CC70081D757 /* L10n.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = L10n.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1932,6 +2079,16 @@
 			path = ../wsd;
 			sourceTree = SOURCE_ROOT;
 		};
+		BE62A58B24BF870C00AFFD77 /* png */ = {
+			isa = PBXGroup;
+			children = (
+				BE62A58D24BF873D00AFFD77 /* PngImageReader.cxx */,
+				BE62A58E24BF873D00AFFD77 /* pngread.cxx */,
+				BE62A58C24BF873D00AFFD77 /* pngwrite.cxx */,
+			);
+			name = png;
+			sourceTree = "<group>";
+		};
 		BE6362BE2153A79200F4237E /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -2427,8 +2584,13 @@
 			isa = PBXGroup;
 			children = (
 				BE93D421216CAA59007A39F4 /* app */,
+				BEA1201924C587A800332049 /* bitmap */,
 				BEB0E5DA21CA7C330085A0CF /* filter */,
+				BEE5C05224C1D991001D794C /* gdi */,
+				BEF7896D24C8CF720013A906 /* graphic */,
 				BE58E1312187938700249358 /* headless */,
+				BEF7895224C887760013A906 /* helper */,
+				BEF7897B24C8D9B20013A906 /* image */,
 				BE7E6806229D371B00DE73C8 /* ios */,
 				BEB0E5E721D642420085A0CF /* outdev */,
 				BEB0E5DF21CA9DA20085A0CF /* quartz */,
@@ -2535,6 +2697,44 @@
 			name = doc;
 			sourceTree = "<group>";
 		};
+		BEA1201924C587A800332049 /* bitmap */ = {
+			isa = PBXGroup;
+			children = (
+				BEA1202E24C587D600332049 /* bitmap.cxx */,
+				BEA1201E24C587D500332049 /* BitmapAlphaClampFilter.cxx */,
+				BEA1203524C587D600332049 /* BitmapColorizeFilter.cxx */,
+				BEA1201B24C587D500332049 /* BitmapColorQuantizationFilter.cxx */,
+				BEA1203724C587D600332049 /* BitmapConvolutionMatrixFilter.cxx */,
+				BEA1201C24C587D500332049 /* BitmapDisabledImageFilter.cxx */,
+				BEA1203624C587D600332049 /* BitmapDuoToneFilter.cxx */,
+				BEA1203024C587D600332049 /* BitmapEmbossGreyFilter.cxx */,
+				BEA1203124C587D600332049 /* BitmapFastScaleFilter.cxx */,
+				BEA1203324C587D600332049 /* bitmapfilter.cxx */,
+				BEA1202124C587D500332049 /* BitmapGaussianSeparableBlurFilter.cxx */,
+				BEA1202224C587D500332049 /* BitmapInterpolateScaleFilter.cxx */,
+				BEA1202624C587D600332049 /* BitmapLightenFilter.cxx */,
+				BEA1201A24C587D500332049 /* BitmapMedianFilter.cxx */,
+				BEA1202724C587D600332049 /* BitmapMonochromeFilter.cxx */,
+				BEA1201D24C587D500332049 /* BitmapMonochromeMatrixFilter.cxx */,
+				BEA1202324C587D500332049 /* BitmapMosaicFilter.cxx */,
+				BEA1202924C587D600332049 /* bitmappaint.cxx */,
+				BEA1202524C587D500332049 /* BitmapPopArtFilter.cxx */,
+				BEA1202824C587D600332049 /* BitmapScaleConvolutionFilter.cxx */,
+				BEA1202B24C587D600332049 /* BitmapScaleSuperFilter.cxx */,
+				BEA1202C24C587D600332049 /* BitmapSeparableUnsharpenFilter.cxx */,
+				BEA1201F24C587D500332049 /* BitmapSepiaFilter.cxx */,
+				BEA1203224C587D600332049 /* BitmapSimpleColorQuantizationFilter.cxx */,
+				BEA1203424C587D600332049 /* BitmapSmoothenFilter.cxx */,
+				BEA1202D24C587D600332049 /* BitmapSobelGreyFilter.cxx */,
+				BEA1203824C587D600332049 /* BitmapSolarizeFilter.cxx */,
+				BEA1202A24C587D600332049 /* BitmapSymmetryCheck.cxx */,
+				BEA1202024C587D500332049 /* BitmapTools.cxx */,
+				BEA1202424C587D500332049 /* checksum.cxx */,
+				BEA1202F24C587D600332049 /* Octree.cxx */,
+			);
+			name = bitmap;
+			sourceTree = "<group>";
+		};
 		BEA2835421467F8200848631 /* kit */ = {
 			isa = PBXGroup;
 			children = (
@@ -2612,6 +2812,15 @@
 		BEB0E5DA21CA7C330085A0CF /* filter */ = {
 			isa = PBXGroup;
 			children = (
+				BE62A58B24BF870C00AFFD77 /* png */,
+				BE62A59324BF875700AFFD77 /* FilterConfigCache.cxx */,
+				BE62A59224BF875700AFFD77 /* FilterConfigCache.hxx */,
+				BE62A59624BF875700AFFD77 /* FilterConfigItem.cxx */,
+				BE62A59024BF875700AFFD77 /* graphicfilter_internal.hxx */,
+				BE62A59124BF875700AFFD77 /* graphicfilter2.cxx */,
+				BE62A59524BF875700AFFD77 /* GraphicFormatDetector.cxx */,
+				BE62A59424BF875700AFFD77 /* GraphicNativeMetadata.cxx */,
+				BE62A58F24BF875700AFFD77 /* GraphicNativeTransform.cxx */,
 				BEB0E5DB21CA7C780085A0CF /* graphicfilter.cxx */,
 			);
 			name = filter;
@@ -2884,6 +3093,7 @@
 			isa = PBXGroup;
 			children = (
 				BEDCC942246175C300FB02BD /* services */,
+				BEF7895D24C88A270013A906 /* uiconfiguration */,
 			);
 			name = framework;
 			sourceTree = "<group>";
@@ -2906,6 +3116,75 @@
 				BEDCC946246175E100FB02BD /* urltransformer.cxx */,
 			);
 			name = services;
+			sourceTree = "<group>";
+		};
+		BEE5C05224C1D991001D794C /* gdi */ = {
+			isa = PBXGroup;
+			children = (
+				BEE5C08624C1D9BF001D794C /* alpha.cxx */,
+				BEE5C06C24C1D9BD001D794C /* bitmap3.cxx */,
+				BEE5C06A24C1D9BD001D794C /* bitmapex.cxx */,
+				BEE5C07C24C1D9BE001D794C /* bmpacc.cxx */,
+				BEE5C07524C1D9BE001D794C /* bmpacc2.cxx */,
+				BEE5C08A24C1D9BF001D794C /* bmpacc3.cxx */,
+				BEE5C07E24C1D9BE001D794C /* bmpfast.cxx */,
+				BEE5C05324C1D9BB001D794C /* CommonSalLayout.cxx */,
+				BEE5C05E24C1D9BC001D794C /* configsettings.cxx */,
+				BEE5C08924C1D9BF001D794C /* cvtgrf.cxx */,
+				BEE5C07024C1D9BD001D794C /* dibtools.cxx */,
+				BEE5C09024C1D9C0001D794C /* embeddedfontshelper.cxx */,
+				BEE5C08824C1D9BF001D794C /* extoutdevdata.cxx */,
+				BEE5C07424C1D9BD001D794C /* FileDefinitionWidgetDraw.cxx */,
+				BEE5C06B24C1D9BD001D794C /* gdimetafiletools.cxx */,
+				BEE5C08324C1D9BF001D794C /* gdimtf.cxx */,
+				BEE5C05A24C1D9BC001D794C /* gfxlink.cxx */,
+				BEE5C06924C1D9BD001D794C /* gradient.cxx */,
+				BEE5C07F24C1D9BE001D794C /* graph.cxx */,
+				BEE5C06D24C1D9BD001D794C /* graphictools.cxx */,
+				BEE5C08224C1D9BF001D794C /* hatch.cxx */,
+				BEE5C06024C1D9BC001D794C /* impanmvw.cxx */,
+				BEE5C08E24C1D9BF001D794C /* impglyphitem.cxx */,
+				BEE5C05624C1D9BC001D794C /* impgraph.cxx */,
+				BEE5C05F24C1D9BC001D794C /* impvect.cxx */,
+				BEE5C05724C1D9BC001D794C /* impvect.hxx */,
+				BEE5C05C24C1D9BC001D794C /* jobset.cxx */,
+				BEE5C05924C1D9BC001D794C /* lineinfo.cxx */,
+				BEE5C07724C1D9BE001D794C /* mapmod.cxx */,
+				BEE5C07924C1D9BE001D794C /* metaact.cxx */,
+				BEE5C08124C1D9BF001D794C /* mtfxmldump.cxx */,
+				BEE5C07624C1D9BE001D794C /* oldprintadaptor.cxx */,
+				BEE5C05D24C1D9BC001D794C /* pdfbuildin_fonts.cxx */,
+				BEE5C07824C1D9BE001D794C /* pdfbuildin_fonts.hxx */,
+				BEE5C07B24C1D9BE001D794C /* pdfextoutdevdata.cxx */,
+				BEE5C07124C1D9BD001D794C /* pdffontcache.cxx */,
+				BEE5C07A24C1D9BE001D794C /* pdffontcache.hxx */,
+				BEE5C05524C1D9BC001D794C /* pdfobjectcopier.cxx */,
+				BEE5C08424C1D9BF001D794C /* pdfwriter_impl.cxx */,
+				BEE5C06F24C1D9BD001D794C /* pdfwriter_impl.hxx */,
+				BEE5C07224C1D9BD001D794C /* pdfwriter_impl2.cxx */,
+				BEE5C06724C1D9BD001D794C /* pdfwriter.cxx */,
+				BEE5C07324C1D9BD001D794C /* print.cxx */,
+				BEE5C08D24C1D9BF001D794C /* print2.cxx */,
+				BEE5C06324C1D9BC001D794C /* print3.cxx */,
+				BEE5C08B24C1D9BF001D794C /* regband.cxx */,
+				BEE5C06824C1D9BD001D794C /* region.cxx */,
+				BEE5C06624C1D9BD001D794C /* regionband.cxx */,
+				BEE5C06E24C1D9BD001D794C /* salgdiimpl.cxx */,
+				BEE5C08024C1D9BE001D794C /* salgdilayout.cxx */,
+				BEE5C05424C1D9BC001D794C /* sallayout.cxx */,
+				BEE5C05B24C1D9BC001D794C /* salmisc.cxx */,
+				BEE5C08F24C1D9BF001D794C /* scrptrun.cxx */,
+				BEE5C06124C1D9BC001D794C /* svmconverter.cxx */,
+				BEE5C08C24C1D9BF001D794C /* textlayout.cxx */,
+				BEE5C05824C1D9BC001D794C /* TypeSerializer.cxx */,
+				BEE5C06224C1D9BC001D794C /* vectorgraphicdata.cxx */,
+				BEE5C06424C1D9BC001D794C /* VerticalOrientationData.cxx */,
+				BEE5C07D24C1D9BE001D794C /* virdev.cxx */,
+				BEE5C06524C1D9BC001D794C /* wall.cxx */,
+				BEE5C08524C1D9BF001D794C /* WidgetDefinition.cxx */,
+				BEE5C08724C1D9BF001D794C /* WidgetDefinitionReader.cxx */,
+			);
+			name = gdi;
 			sourceTree = "<group>";
 		};
 		BEF755A623E81FEB008A4BB2 /* core */ = {
@@ -2938,6 +3217,77 @@
 				BEF755BA23E8200B008A4BB2 /* undoanim.cxx */,
 			);
 			name = core;
+			sourceTree = "<group>";
+		};
+		BEF7895224C887760013A906 /* helper */ = {
+			isa = PBXGroup;
+			children = (
+				BEF7895C24C887980013A906 /* canvasbitmap.cxx */,
+				BEF7895B24C887980013A906 /* canvastools.cxx */,
+				BEF7895424C887980013A906 /* commandinfoprovider.cxx */,
+				BEF7895824C887980013A906 /* displayconnectiondispatch.cxx */,
+				BEF7895A24C887980013A906 /* errcode.cxx */,
+				BEF7895624C887980013A906 /* evntpost.cxx */,
+				BEF7895924C887980013A906 /* lazydelete.cxx */,
+				BEF7895324C887980013A906 /* strhelper.cxx */,
+				BEF7895524C887980013A906 /* svtaccessiblefactory.cxx */,
+				BEF7895724C887980013A906 /* threadex.cxx */,
+			);
+			name = helper;
+			sourceTree = "<group>";
+		};
+		BEF7895D24C88A270013A906 /* uiconfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				BEF7896824C88A550013A906 /* CommandImageResolver.cxx */,
+				BEF7896724C88A550013A906 /* CommandImageResolver.hxx */,
+				BEF7896024C88A540013A906 /* globalsettings.cxx */,
+				BEF7896124C88A540013A906 /* graphicnameaccess.cxx */,
+				BEF7895F24C88A540013A906 /* ImageList.cxx */,
+				BEF7896624C88A550013A906 /* ImageList.hxx */,
+				BEF7896324C88A540013A906 /* imagemanager.cxx */,
+				BEF7896A24C88A550013A906 /* imagemanagerimpl.cxx */,
+				BEF7896424C88A550013A906 /* imagemanagerimpl.hxx */,
+				BEF7896B24C88A550013A906 /* moduleimagemanager.cxx */,
+				BEF7896224C88A540013A906 /* moduleuicfgsupplier.cxx */,
+				BEF7896C24C88A550013A906 /* moduleuiconfigurationmanager.cxx */,
+				BEF7895E24C88A540013A906 /* uicategorydescription.cxx */,
+				BEF7896524C88A550013A906 /* uiconfigurationmanager.cxx */,
+				BEF7896924C88A550013A906 /* windowstateconfiguration.cxx */,
+			);
+			name = uiconfiguration;
+			sourceTree = "<group>";
+		};
+		BEF7896D24C8CF720013A906 /* graphic */ = {
+			isa = PBXGroup;
+			children = (
+				BEF7896E24C8CF960013A906 /* GraphicID.cxx */,
+				BEF7897224C8CF960013A906 /* GraphicLoader.cxx */,
+				BEF7897524C8CF960013A906 /* GraphicObject.cxx */,
+				BEF7897924C8CF970013A906 /* GraphicObject2.cxx */,
+				BEF7897124C8CF960013A906 /* GraphicReader.cxx */,
+				BEF7897024C8CF960013A906 /* grfattr.cxx */,
+				BEF7897424C8CF960013A906 /* Manager.cxx */,
+				BEF7897624C8CF960013A906 /* UnoGraphic.cxx */,
+				BEF7897324C8CF960013A906 /* UnoGraphicDescriptor.cxx */,
+				BEF7897A24C8CF970013A906 /* UnoGraphicObject.cxx */,
+				BEF7896F24C8CF960013A906 /* UnoGraphicProvider.cxx */,
+				BEF7897824C8CF970013A906 /* UnoGraphicTransformer.cxx */,
+				BEF7897724C8CF970013A906 /* VectorGraphicSearch.cxx */,
+			);
+			name = graphic;
+			sourceTree = "<group>";
+		};
+		BEF7897B24C8D9B20013A906 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				BEF7897D24C8D9F50013A906 /* Image.cxx */,
+				BEF7898024C8D9F50013A906 /* ImageRepository.cxx */,
+				BEF7897F24C8D9F50013A906 /* ImageTree.cxx */,
+				BEF7897E24C8D9F50013A906 /* ImplImage.cxx */,
+				BEF7897C24C8D9D60013A906 /* ImplImageTree.cxx */,
+			);
+			name = image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
