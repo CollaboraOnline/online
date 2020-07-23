@@ -1070,10 +1070,6 @@ AC_SUBST(LOOLWSD_CONFIGDIR)
 LOOLWSD_DATADIR=${datadir}/${PACKAGE}
 AC_SUBST(LOOLWSD_DATADIR)
 
-AS_IF([test "$enable_setcap" != "no"],
-      [AC_DEFINE([ENABLE_SETCAP],1,[Whether to enable setting of capabilities])],
-      [AC_DEFINE([ENABLE_SETCAP],0,[Whether to enable setting of capabilities])])
-
 AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no"])
 
 ENABLE_SETCAP=

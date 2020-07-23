@@ -13,9 +13,6 @@
    security pieces */
 #define ENABLE_DEBUG 0
 
-/* Whether to enable setting of capabilities */
-#define ENABLE_SETCAP 0
-
 /* Whether to enable SSL */
 #define ENABLE_SSL 0
 
