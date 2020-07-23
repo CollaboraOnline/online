@@ -916,6 +916,20 @@ msgstr ""
 msgid "Start Presentation"
 msgstr "Snúningur texta"
 
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr ""
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+msgid "Server returned this reason:"
+msgstr ""
+
+#: src/control/Permission.js:63
+#, fuzzy
+#| msgid "Document cannot be saved."
+msgid "The document could not be locked."
+msgstr "Ekki er hægt að vista skjal."
+
 #: src/control/Ruler.js:366
 msgid "Left Margin"
 msgstr "Vinstri spássía"

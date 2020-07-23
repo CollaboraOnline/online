@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-03-29 05:16+0000\n"
-"Last-Translator: Imanuel Ronaldo <imanuelronaldo@gmail.com>\n"
+"PO-Revision-Date: 2020-07-21 11:30+0000\n"
+"Last-Translator: Budi Aryo <venera.android.phone@gmail.com>\n"
 "Language-Team: Indonesian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-ui-id.po\n"
 "X-Pootle-Revision: 3937880\n"
 
@@ -45,10 +45,8 @@ msgid "History"
 msgstr "Riwayat"
 
 #: admin/admin.strings.js:12
-#, fuzzy
-#| msgid "Login"
 msgid "Log"
-msgstr "Log Masuk"
+msgstr "Log"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -166,7 +164,7 @@ msgstr "Dokumen:"
 
 #: admin/admin.strings.js:41
 msgid "Expired:"
-msgstr "Kadar Luarsa:"
+msgstr "Kedaluwarsa:"
 
 #: admin/admin.strings.js:42
 msgid "Refresh"
@@ -178,21 +176,19 @@ msgstr "Matikan Server"
 
 #: admin/admin.strings.js:44
 msgid "Server uptime"
-msgstr "Waktu nyala peladen"
+msgstr "Lama nyala peladen"
 
 #: admin/admin.strings.js:45
-#, fuzzy
-#| msgid "Refresh"
 msgid "Refresh Log"
-msgstr "Perbarui"
+msgstr "Segarkan Log"
 
 #: admin/admin.strings.js:46
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Atur Aras Log"
 
 #: admin/admin.strings.js:47
 msgid "Log Levels"
-msgstr ""
+msgstr "Aras Log"
 
 #: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
 #: src/control/Signing.js:608
@@ -201,7 +197,7 @@ msgstr "Tutup"
 
 #: admin/admin.strings.js:49
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Perbarui Aras Log"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -241,15 +237,15 @@ msgstr "Dokumen"
 
 #: admin/src/AdminSocketOverview.js:401
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "Gagal mengatur cookie autentikasi jwt melalui koneksi yang tidak aman"
 
 #: admin/src/AdminSocketOverview.js:405
 msgid "Failed to authenticate this session over protocol %0"
-msgstr ""
+msgstr "Gagal mengautentikasi sesi ini lewat protokol %0"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Konfirmasi"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -273,23 +269,23 @@ msgstr "TB"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:14
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:14
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -308,10 +304,8 @@ msgid "No color"
 msgstr "Tanpa warna"
 
 #: src/control/ColorPicker.js:130
-#, fuzzy
-#| msgid "No color"
 msgid "Automatic color"
-msgstr "Tanpa warna"
+msgstr "Warna otomatis"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
@@ -379,7 +373,7 @@ msgstr "Mulai unggah"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
-msgstr "Mulai salin / tempel silang"
+msgstr "Mulai salin/tempel silang"
 
 #: src/control/Control.FormulaBar.js:35
 msgid "Function Wizard"
@@ -392,16 +386,15 @@ msgstr "Nihil"
 
 #: src/control/Control.JSDialogBuilder.js:286
 msgid "Solid"
-msgstr ""
+msgstr "Padat"
 
 #: src/control/Control.JSDialogBuilder.js:289
 msgid "Linear"
 msgstr "Linier"
 
 #: src/control/Control.JSDialogBuilder.js:292
-#, fuzzy
 msgid "Axial"
-msgstr "Axial"
+msgstr "Aksial"
 
 #: src/control/Control.JSDialogBuilder.js:295
 msgid "Radial"
@@ -432,10 +425,8 @@ msgid "To"
 msgstr "Ke"
 
 #: src/control/Control.JSDialogBuilder.js:1320
-#, fuzzy
-#| msgid "Reject change"
 msgid "Select range"
-msgstr "Tolak Perubahan"
+msgstr "Pilih rentang"
 
 #: src/control/Control.JSDialogBuilder.js:1349
 msgid "Font Name"
@@ -446,26 +437,20 @@ msgid "Font Size"
 msgstr "Ukuran Fonta"
 
 #: src/control/Control.JSDialogBuilder.js:1884
-#, fuzzy
-#| msgid "Borders"
 msgid "Cell borders"
-msgstr "Bingkai"
+msgstr "Tepi sel"
 
 #: src/control/Control.JSDialogBuilder.js:1907
 msgid "Background Color"
-msgstr ""
+msgstr "Warna Latar"
 
 #: src/control/Control.JSDialogBuilder.js:1909
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient Start"
-msgstr "Gradien"
+msgstr "Awal Gradien"
 
 #: src/control/Control.JSDialogBuilder.js:1911
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gradient End"
-msgstr "Gradien"
+msgstr "Akhir Gradien"
 
 #: src/control/Control.JSDialogBuilder.js:2089
 msgid "Rows"
@@ -555,7 +540,7 @@ msgstr "Tutup dokumen"
 #: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:504
 #: src/control/Control.Menubar.js:551 src/control/Control.Menubar.js:598
 msgid "Repair"
-msgstr "Repair"
+msgstr "Perbaiki"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:285
 #: src/control/Control.StatusBar.js:205
@@ -564,7 +549,7 @@ msgstr "Reset zum"
 
 #: src/control/Control.Menubar.js:66
 msgid "Show Ruler"
-msgstr "Tampil penggaris"
+msgstr "Tampilkan Penggaris"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:297
 #: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:648
@@ -600,7 +585,7 @@ msgstr "Laporkan isu"
 #: src/control/Control.Menubar.js:478 src/control/Control.Menubar.js:529
 #: src/control/Control.Menubar.js:577 src/control/Control.Menubar.js:641
 msgid "Latest Updates"
-msgstr ""
+msgstr "Pembaruan Terakhir"
 
 #: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:362
 #: src/control/Control.Menubar.js:479 src/control/Control.Menubar.js:530
@@ -619,17 +604,15 @@ msgstr "Presentasi ODF (.odp)"
 
 #: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:544
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr "PowerPoint 2003 Presentation (.ppt)"
+msgstr "Presentasi PowerPoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:545
 msgid "PowerPoint Presentation (.pptx)"
-msgstr "PowerPoint Presentation (.pptx)"
+msgstr "Presentasi PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:546
-#, fuzzy
-#| msgid "ODF presentation (.odp)"
 msgid "ODF Drawing (.odg)"
-msgstr "Presentasi ODF (.odp)"
+msgstr "Gambar ODF (.odg)"
 
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:576
 #: src/control/Control.PresentationBar.js:34
@@ -642,11 +625,11 @@ msgstr "Lembar kerja ODF (.ods)"
 
 #: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:592
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr "Excel 2003 Spreadsheet (.xls)"
+msgstr "Lembar Kerja Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:593
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr "Excel Spreadsheet (.xlsx)"
+msgstr "Lembar Kerja Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:511 src/control/Control.Menubar.js:558
 #: src/control/Control.Menubar.js:605 src/control/Control.StatusBar.js:190
@@ -875,53 +858,65 @@ msgstr "Saat Ini"
 #: src/control/Control.Notebookbar.js:102
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Undo"
-msgstr ""
+msgstr "Tak Jadi"
 
 #: src/control/Control.Notebookbar.js:107
 #: src/control/Control.NotebookbarImpress.js:32
 msgid "Redo"
-msgstr ""
+msgstr "Jadi Lagi"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:43
 msgid "~Home"
-msgstr ""
+msgstr "~Beranda"
 
 #: src/control/Control.NotebookbarWriter.js:18
 #: src/control/Control.NotebookbarCalc.js:18
 #: src/control/Control.NotebookbarImpress.js:49
-#, fuzzy
-#| msgid "Insert table"
 msgid "~Insert"
-msgstr "Sisip tabel"
+msgstr "S~isip"
 
 #: src/control/Control.NotebookbarWriter.js:23
 msgid "~Layout"
-msgstr ""
+msgstr "Tata ~Letak"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "Reference~s"
-msgstr ""
+msgstr "~Acuan"
 
 #: src/control/Control.NotebookbarWriter.js:33
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:54
-#, fuzzy
-#| msgid "Overview"
 msgid "~Review"
-msgstr "Ringkasan"
+msgstr "~Tinjauan"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarImpress.js:59
 msgid "~Table"
-msgstr ""
+msgstr "~Tabel"
 
 #: src/control/Control.NotebookbarImpress.js:22
-#, fuzzy
-#| msgid "Text orientation"
 msgid "Start Presentation"
-msgstr "Orientasi Teks"
+msgstr "Mulai Presentasi"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr "Dokumen tidak bisa dikunci, dan dibuka dalam mode hanya baca."
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Server returned this reason: \""
+msgid "Server returned this reason:"
+msgstr ""
+"\n"
+"Server mengembalikan alasan ini: \""
+
+#: src/control/Permission.js:63
+msgid "The document could not be locked."
+msgstr "Dokumen tidak dapat dikunci."
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"
@@ -932,16 +927,12 @@ msgid "Right Margin"
 msgstr "Margin Kanan"
 
 #: src/control/Ruler.js:642
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
-msgstr "Sisip tabel"
+msgstr "Sisip posisi tab"
 
 #: src/control/Ruler.js:649
-#, fuzzy
-#| msgid "Insert table"
 msgid "Delete tabstop"
-msgstr "Sisip tabel"
+msgstr "Hapus posisi tab"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1001,15 +992,15 @@ msgstr "Pulihkan dari email"
 
 #: src/control/Signing.js:598
 msgid "Select passport"
-msgstr "PIlih Passport"
+msgstr "PIlih paspor"
 
 #: src/control/Signing.js:599
 msgid "Passport: N/A"
-msgstr "Passport: N/A"
+msgstr "Paspor: T/T"
 
 #: src/control/Signing.js:601
 msgid "Sign"
-msgstr "Tanda"
+msgstr "Tandatangan"
 
 #: src/control/Signing.js:603
 msgid "Status:"
@@ -1025,7 +1016,7 @@ msgstr "Log Masuk"
 
 #: src/control/Signing.js:616
 msgid "Not Signed"
-msgstr "Tidak ditandai"
+msgstr "Tidak Ditandatangani"
 
 #: src/control/Signing.js:619
 msgid "This document is digitally signed and the signature is valid."
@@ -1081,11 +1072,11 @@ msgstr "Mengganti nama..."
 
 #: src/control/Toolbar.js:399
 msgid "I understand the risks"
-msgstr ""
+msgstr "Saya mengerti risikonya"
 
 #: src/control/Toolbar.js:451
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "Mohon maaf, informasi tentang pembaruan terakhir tidak tersedia."
 
 #: src/control/Toolbar.js:496
 msgid "This version of %productName is powered by"
@@ -1093,11 +1084,11 @@ msgstr "Versi %productName ini ditenagai oleh"
 
 #: src/control/Toolbar.js:506
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"Proksi Lambat\""
 
 #: src/control/Toolbar.js:509
 msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr ""
+msgstr "Edisi Personal didukung oleh sukarelawan dan ditujukan untuk penggunaan individu."
 
 #: src/control/Toolbar.js:594
 msgid "Insert hyperlink"
@@ -1331,7 +1322,7 @@ msgstr "Selesaikan"
 
 #: src/map/Clipboard.js:137
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "Untuk tempel diluar %productName, silakan klik dulu tombol 'unduh'"
+msgstr "Untuk menempel di luar %productName, silakan klik dulu tombol 'unduh'"
 
 #: src/map/Clipboard.js:282
 msgid "Failed to download clipboard, please re-copy"
@@ -1347,7 +1338,7 @@ msgstr "<p>Peramban Anda memiliki akses yang sangat terbatas ke papan klip, jadi
 
 #: src/map/Clipboard.js:819
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr ""
+msgstr "<p>Jika Anda ingin berbagi elemen yang lebih besar dari dokumen Anda dengan aplikasi lain, Anda perlu mengunduhnya terlebih dahulu ke perangkat Anda. Untuk melakukan itu tekan tombol \"Mulai unduh\" di bawah, dan ketika selesai klik \"Konfirmasikan salin ke papan klip\". </p><p>Jika Anda menyalin dan menempel di antara dokumen di dalam %productName, tidak perlu melakukan pengunduhan.</p>"
 
 #: src/map/Clipboard.js:835
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"

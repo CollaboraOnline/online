@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-06-30 08:59+0000\n"
+"PO-Revision-Date: 2020-07-23 07:29+0000\n"
 "Last-Translator: Dimitris Spingos <dmtrs32@gmail.com>\n"
 "Language-Team: Greek <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/el/>\n"
 "Language: el\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
 "X-Pootle-Revision: 3940107\n"
 
@@ -611,10 +611,8 @@ msgid "PowerPoint Presentation (.pptx)"
 msgstr "Παρουσίαση PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:546
-#, fuzzy
-#| msgid "ODF presentation (.odp)"
 msgid "ODF Drawing (.odg)"
-msgstr "Παρουσίαση ODF (.odp)"
+msgstr "Σχέδιο ODF (.odp)"
 
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:576
 #: src/control/Control.PresentationBar.js:34
@@ -860,53 +858,63 @@ msgstr "Τρέχουσα"
 #: src/control/Control.Notebookbar.js:102
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Undo"
-msgstr ""
+msgstr "Αναίρεση"
 
 #: src/control/Control.Notebookbar.js:107
 #: src/control/Control.NotebookbarImpress.js:32
 msgid "Redo"
-msgstr ""
+msgstr "Ακύρωση αναίρεσης"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:43
 msgid "~Home"
-msgstr ""
+msgstr "Αρ~χή"
 
 #: src/control/Control.NotebookbarWriter.js:18
 #: src/control/Control.NotebookbarCalc.js:18
 #: src/control/Control.NotebookbarImpress.js:49
-#, fuzzy
-#| msgid "Insert table"
 msgid "~Insert"
-msgstr "Εισαγωγή πίνακα"
+msgstr "Ε~ισαγωγή"
 
 #: src/control/Control.NotebookbarWriter.js:23
 msgid "~Layout"
-msgstr ""
+msgstr "~Διάταξη"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "Reference~s"
-msgstr ""
+msgstr "~Παραπομπές"
 
 #: src/control/Control.NotebookbarWriter.js:33
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:54
-#, fuzzy
-#| msgid "Overview"
 msgid "~Review"
-msgstr "Επισκόπηση"
+msgstr "Ε~πιθεώρηση"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarImpress.js:59
 msgid "~Table"
-msgstr ""
+msgstr "~Πίνακας"
 
 #: src/control/Control.NotebookbarImpress.js:22
-#, fuzzy
-#| msgid "Text orientation"
 msgid "Start Presentation"
-msgstr "Προσανατολισμός κειμένου"
+msgstr "Έναρξη παρουσίασης"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr "Το έγγραφο δεν μπόρεσε να κλειδωθεί και είναι ανοικτό σε κατάσταση μόνο για ανάγνωση."
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+msgid ""
+"\n"
+"Server returned this reason: \""
+msgstr ""
+"\n"
+"Ο διακομιστής επέστρεψε αυτήν την αιτία: \""
+
+#: src/control/Permission.js:63
+msgid "The document could not be locked."
+msgstr "Το έγγραφο δεν μπόρεσε να κλειδωθεί."
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"
@@ -1078,7 +1086,7 @@ msgstr "\"Αργός μεσολαβητής\""
 
 #: src/control/Toolbar.js:509
 msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr ""
+msgstr "Η προσωπική έκδοση υποστηρίζεται από εθελοντές και αποσκοπεί σε ατομική χρήση."
 
 #: src/control/Toolbar.js:594
 msgid "Insert hyperlink"

@@ -13,4 +13,5 @@
     <string name="rate_now">Graddio nawr</string>
     <string name="exiting">Gorffen...</string>
     <string name="rate_our_app_text">Os ydych yn ei hoffi, rhowch 5 seren i ni ar Google Play. Mae eich adolygiadau da yn ein hysbrydoli.</string>
+    <string name="file_chromeos_read_only">Nid oes modd cadw\'r ffeil yn y lleoliad yma. Bydd angen ei symud i\'r fan Chwarae ffeiliau ar gyfer mynediad darllen/ysgrifennu llawn.</string>
 </resources>

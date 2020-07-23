@@ -13,4 +13,5 @@
     <string name="failed_to_insert_image">Malsukcesis enmeti bildon</string>
     <string name="failed_to_load_file">Malsukcesis decidi dosieron ŝargotan</string>
     <string name="storage_permission_required">Permeso bezonata por konservi</string>
+    <string name="file_chromeos_read_only">Ne eblas konservi ĉi tiun dosieron en ĉi tiu loko, malfermas ĝin nurlega. Movu ĝin al la spektaj dosieroj por plena legi/skribi aliro.</string>
 </resources>

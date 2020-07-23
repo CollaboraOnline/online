@@ -900,6 +900,20 @@ msgstr "~Taula"
 msgid "Start Presentation"
 msgstr "Hasi aurkezpena"
 
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr ""
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+msgid "Server returned this reason:"
+msgstr ""
+
+#: src/control/Permission.js:63
+#, fuzzy
+#| msgid "Document cannot be saved."
+msgid "The document could not be locked."
+msgstr "Dokumentua ezin izan da gorde."
+
 #: src/control/Ruler.js:366
 msgid "Left Margin"
 msgstr "Ezkerreko marjina"

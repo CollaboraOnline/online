@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-07-06 08:19+0000\n"
+"PO-Revision-Date: 2020-07-22 05:26+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
@@ -899,6 +899,24 @@ msgstr "~Tabulka"
 #: src/control/Control.NotebookbarImpress.js:22
 msgid "Start Presentation"
 msgstr "Spustit prezentaci"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr "Dokument nelze uzamknout a je otevřen v režimu jen pro čtení."
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Server returned this reason: \""
+msgid "Server returned this reason:"
+msgstr ""
+"\n"
+"Server vrátil tento důvod: \""
+
+#: src/control/Permission.js:63
+msgid "The document could not be locked."
+msgstr "Dokument nelze uzamknout."
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"

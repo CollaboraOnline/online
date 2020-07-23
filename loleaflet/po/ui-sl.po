@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-07-07 13:06+0000\n"
+"PO-Revision-Date: 2020-07-20 20:53+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sl/>\n"
 "Language: sl\n"
@@ -896,6 +896,24 @@ msgstr "~Tabela"
 #: src/control/Control.NotebookbarImpress.js:22
 msgid "Start Presentation"
 msgstr "Zaženi predstavitev"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr "Dokumenta ni mogoče zakleniti, zato je odprt v načinu samo za branje."
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Server returned this reason: \""
+msgid "Server returned this reason:"
+msgstr ""
+"\n"
+"Strežnik je posredoval naslednji razlog: »"
+
+#: src/control/Permission.js:63
+msgid "The document could not be locked."
+msgstr "Dokumenta ni mogoče zakleniti."
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"

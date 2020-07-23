@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-07-08 12:37+0000\n"
+"PO-Revision-Date: 2020-07-21 12:10+0000\n"
 "Last-Translator: Valter Mura <valtermura@gmail.com>\n"
 "Language-Team: Italian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/it/>\n"
 "Language: it\n"
@@ -899,6 +899,24 @@ msgstr "~Tabella"
 #: src/control/Control.NotebookbarImpress.js:22
 msgid "Start Presentation"
 msgstr "Avvia presentazione"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr "Non è stato possibile bloccare il documento e ora è aperto in modalità sola lettura."
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Server returned this reason: \""
+msgid "Server returned this reason:"
+msgstr ""
+"\n"
+"Il server ha restituito il motivo seguente: \""
+
+#: src/control/Permission.js:63
+msgid "The document could not be locked."
+msgstr "Impossibile bloccare il documento."
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"

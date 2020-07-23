@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-05-23 22:47+0000\n"
+"PO-Revision-Date: 2020-07-22 21:02+0000\n"
 "Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca_VALENCIA/>\n"
 "Language: ca-valencia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:6
@@ -43,10 +43,8 @@ msgid "History"
 msgstr "Historial"
 
 #: admin/admin.strings.js:12
-#, fuzzy
-#| msgid "Login"
 msgid "Log"
-msgstr "Inici de sessió"
+msgstr "Registre"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -179,18 +177,16 @@ msgid "Server uptime"
 msgstr "Temps en servei del servidor"
 
 #: admin/admin.strings.js:45
-#, fuzzy
-#| msgid "Refresh"
 msgid "Refresh Log"
-msgstr "Actualitza"
+msgstr "Actualitza el registre"
 
 #: admin/admin.strings.js:46
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Defineix els nivells de registre"
 
 #: admin/admin.strings.js:47
 msgid "Log Levels"
-msgstr ""
+msgstr "Nivells de registre"
 
 #: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
 #: src/control/Signing.js:608
@@ -199,7 +195,7 @@ msgstr "Tanca"
 
 #: admin/admin.strings.js:49
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Actualitza els nivells de registre"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -247,7 +243,7 @@ msgstr "No s'ha pogut autenticar aquesta sessió amb el protocol %0"
 
 #: admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmació"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -306,10 +302,8 @@ msgid "No color"
 msgstr "Cap color"
 
 #: src/control/ColorPicker.js:130
-#, fuzzy
-#| msgid "No color"
 msgid "Automatic color"
-msgstr "Cap color"
+msgstr "Color automàtic"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
@@ -615,10 +609,8 @@ msgid "PowerPoint Presentation (.pptx)"
 msgstr "Presentació del PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:546
-#, fuzzy
-#| msgid "ODF presentation (.odp)"
 msgid "ODF Drawing (.odg)"
-msgstr "Presentació ODF (.odp)"
+msgstr "Dibuix ODF (.odg)"
 
 #: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:576
 #: src/control/Control.PresentationBar.js:34
@@ -864,53 +856,59 @@ msgstr "Actual"
 #: src/control/Control.Notebookbar.js:102
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Undo"
-msgstr ""
+msgstr "Desfés"
 
 #: src/control/Control.Notebookbar.js:107
 #: src/control/Control.NotebookbarImpress.js:32
 msgid "Redo"
-msgstr ""
+msgstr "Refés"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:43
 msgid "~Home"
-msgstr ""
+msgstr "~Inici"
 
 #: src/control/Control.NotebookbarWriter.js:18
 #: src/control/Control.NotebookbarCalc.js:18
 #: src/control/Control.NotebookbarImpress.js:49
-#, fuzzy
-#| msgid "Insert table"
 msgid "~Insert"
-msgstr "Insereix una taula"
+msgstr "I~nsereix"
 
 #: src/control/Control.NotebookbarWriter.js:23
 msgid "~Layout"
-msgstr ""
+msgstr "~Disposició"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "Reference~s"
-msgstr ""
+msgstr "Referèncie~s"
 
 #: src/control/Control.NotebookbarWriter.js:33
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:54
-#, fuzzy
-#| msgid "Overview"
 msgid "~Review"
-msgstr "Resum"
+msgstr "~Revisió"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarImpress.js:59
 msgid "~Table"
-msgstr ""
+msgstr "~Taula"
 
 #: src/control/Control.NotebookbarImpress.js:22
-#, fuzzy
-#| msgid "Text orientation"
 msgid "Start Presentation"
-msgstr "Orientació del text"
+msgstr "Inicia la presentació"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr ""
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+msgid "Server returned this reason:"
+msgstr ""
+
+#: src/control/Permission.js:63
+msgid "The document could not be locked."
+msgstr "No s'ha pogut blocar el document."
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"
@@ -925,10 +923,8 @@ msgid "Insert tabstop"
 msgstr "Insereix una tabulació"
 
 #: src/control/Ruler.js:649
-#, fuzzy
-#| msgid "Insert tabstop"
 msgid "Delete tabstop"
-msgstr "Insereix una tabulació"
+msgstr "Suprimeix la tabulació"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1084,7 +1080,7 @@ msgstr "«Servidor intermediari lent»"
 
 #: src/control/Toolbar.js:509
 msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr ""
+msgstr "L'edició Personal la mantenen voluntaris i està pensada per a un ús individual."
 
 #: src/control/Toolbar.js:594
 msgid "Insert hyperlink"

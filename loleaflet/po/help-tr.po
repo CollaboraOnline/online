@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-07-10 07:58+0000\n"
-"Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
+"PO-Revision-Date: 2020-07-14 17:05+0000\n"
+"Last-Translator: sophie <gautier.sophie@gmail.com>\n"
 "Language-Team: Turkish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -1311,7 +1311,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:365-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"
-msgstr "<span class=\"def\">Veri doğrulama: </spam> Her hücre için geçerli olacak girdiler tanımlayabilirsiniz. Bir hücreye yapılacak geçersiz girdiler reddedilecektir. Veri doğrulamayı etkinleştirmek için:"
+msgstr "<span class=\"def\">Veri doğrulama: </span> Her hücre için geçerli olacak girdiler tanımlayabilirsiniz. Bir hücreye yapılacak geçersiz girdiler reddedilecektir. Veri doğrulamayı etkinleştirmek için:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:368-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."

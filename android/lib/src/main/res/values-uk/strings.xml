@@ -13,4 +13,5 @@
     <string name="rate_our_app_title">Дякуємо за використання %1$s!</string>
     <string name="later">Пізніше</string>
     <string name="rate_now">Оцінити зараз</string>
+    <string name="file_chromeos_read_only">Цей файл неможливо зберегти за вказаним призначенням, відкриваю в режимі читання. Перемістіть його до Play файлів для повного доступу до операцій читання/запису.</string>
 </resources>

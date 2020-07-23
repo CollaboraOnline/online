@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-07-05 14:30+0000\n"
+"PO-Revision-Date: 2020-07-23 11:58+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hsb/>\n"
 "Language: hsb\n"
@@ -899,6 +899,18 @@ msgstr "~Tabela"
 #: src/control/Control.NotebookbarImpress.js:22
 msgid "Start Presentation"
 msgstr "Prezentaciju startować"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr "Dokument njeda so zawrěć a wočinja so w čitanskim modusu."
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+msgid "Server returned this reason:"
+msgstr "Serwer je slědowacu přičinu wróćił:"
+
+#: src/control/Permission.js:63
+msgid "The document could not be locked."
+msgstr "Dokument njeda so zawrěć."
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"

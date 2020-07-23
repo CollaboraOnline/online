@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-07-08 21:12+0000\n"
+"PO-Revision-Date: 2020-07-20 07:35+0000\n"
 "Last-Translator: Ming Hua <plateauwolf@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -524,7 +524,7 @@ msgstr "富文本 (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:499
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "电子出版物 (.epub)"
 
 #: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:491
 #: src/control/Signing.js:601
@@ -899,6 +899,20 @@ msgstr "表格(~T)"
 #: src/control/Control.NotebookbarImpress.js:22
 msgid "Start Presentation"
 msgstr "开始演示"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr ""
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+msgid "Server returned this reason:"
+msgstr ""
+
+#: src/control/Permission.js:63
+#, fuzzy
+#| msgid "Document cannot be saved."
+msgid "The document could not be locked."
+msgstr "无法保存文档。"
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"

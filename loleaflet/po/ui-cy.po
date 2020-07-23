@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-07-07 12:35+0000\n"
+"PO-Revision-Date: 2020-07-22 15:17+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@yahoo.com>\n"
 "Language-Team: Welsh <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cy/>\n"
 "Language: cy\n"
@@ -899,6 +899,24 @@ msgstr "~Tabl"
 #: src/control/Control.NotebookbarImpress.js:22
 msgid "Start Presentation"
 msgstr "Cychwyn Cyflwyniad"
+
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr "Nid oedd modd cloi'r ddogfen, ac mae wedi'i hagor yn y modd darllen yn unig."
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Server returned this reason: \""
+msgid "Server returned this reason:"
+msgstr ""
+"\n"
+"Dychwelodd y gweinydd y rheswm hwn: \""
+
+#: src/control/Permission.js:63
+msgid "The document could not be locked."
+msgstr "Methu cloi'r ddogfen"
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"

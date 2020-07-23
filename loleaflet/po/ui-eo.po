@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-03 12:58+0200\n"
-"PO-Revision-Date: 2020-07-09 07:11+0000\n"
+"PO-Revision-Date: 2020-07-15 07:56+0000\n"
 "Last-Translator: Donald Rogers <donr2648@clear.net.nz>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/eo/>\n"
 "Language: eo\n"
@@ -144,7 +144,7 @@ msgstr "Kaŝmemora grando de ĉefprocesoraj statistikoj"
 
 #: admin/admin.strings.js:36
 msgid "Time interval of CPU statistics (in ms)"
-msgstr "Intervalo de statistikaj statistikoj (en ms) "
+msgstr "Intervalo de statistikaj statistikoj (en ms)"
 
 #: admin/admin.strings.js:37
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -900,6 +900,20 @@ msgstr "Tabelo"
 msgid "Start Presentation"
 msgstr "Startigi prezentaĵon"
 
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr ""
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+msgid "Server returned this reason:"
+msgstr ""
+
+#: src/control/Permission.js:63
+#, fuzzy
+#| msgid "Document cannot be saved."
+msgid "The document could not be locked."
+msgstr "Ne povas konservi la dokumenton."
+
 #: src/control/Ruler.js:366
 msgid "Left Margin"
 msgstr "Maldekstra marĝeno"
@@ -1150,7 +1164,7 @@ msgstr "Pasvorto necesas por vidi dokumenton."
 
 #: src/core/Socket.js:629
 msgid "Document requires password to modify."
-msgstr "Pasvorto necesas por ŝanĝi dokumenton. "
+msgstr "Pasvorto necesas por ŝanĝi dokumenton."
 
 #: src/core/Socket.js:631
 msgid "Hit Cancel to open in view-only mode."

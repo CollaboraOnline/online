@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-07-13 09:23+0000\n"
+"PO-Revision-Date: 2020-07-15 07:56+0000\n"
 "Last-Translator: Donald Rogers <donr2648@clear.net.nz>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/eo/>\n"
 "Language: eo\n"
@@ -627,7 +627,7 @@ msgstr "Stir + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-56
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
-msgstr "Enigas tabon (nur en tabeloj). Depende de la Fenestroadministrilo uzata, Alt + Tab estas uzebla anstataŭe. "
+msgstr "Enigas tabon (nur en tabeloj). Depende de la Fenestroadministrilo uzata, Alt + Tab estas uzebla anstataŭe."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Alt + Arrow Keys"
@@ -684,7 +684,7 @@ msgstr "Se neniu tuta ĉelo estas elektita, foriĝas la teksto ek de la kursoro 
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:107-1
 msgid "If no whole cell is selected and the cursor is at the end of the table, the paragraph following the table will be deleted, unless it is the last paragraph in the document."
-msgstr "Se neniu tuta ĉelo estas elektita, kaj la kursoro estas ĉe la fino de tabelo, foriĝas la alineon post la tabelo, krom se ĝi estas la lasta alineo en la dokumento. "
+msgstr "Se neniu tuta ĉelo estas elektita, kaj la kursoro estas ĉe la fino de tabelo, foriĝas la alineon post la tabelo, krom se ĝi estas la lasta alineo en la dokumento."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:108-1
 msgid "If one or more cells are selected, the whole rows containing the selection will be deleted. If all rows are selected completely or partially, the entire table will be deleted."
@@ -861,7 +861,7 @@ msgstr "Tabo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-18
 msgid "Promote list item (list item has to be selected)"
-msgstr "Listero unu nivelon supren (listero estu elektita) "
+msgstr "Listero unu nivelon supren (listero estu elektita)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-107
@@ -882,7 +882,7 @@ msgstr "Iri kaj elekti tekston al fino de tekstujo"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:201-9
 msgid "Slide / draw page keyboard shortcuts"
-msgstr "Fulmoklavoj por Lumbildo / desegni paĝon "
+msgstr "Fulmoklavoj por Lumbildo / desegni paĝon"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:203-18
 msgid "Escape current mode, i.e. from edit mode switch to object selection mode, from object selection mode switch to view mode."
@@ -898,7 +898,7 @@ msgstr "Elekti objektojn laŭ la ordo laŭ kiu ili kreiĝis"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Elekti objektojn laŭ la ordo inversa al tiu, laŭ kiu ili kreiĝis "
+msgstr "Elekti objektojn laŭ la ordo inversa al tiu, laŭ kiu ili kreiĝis"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
 msgid "Move to next text object on slide / drawing page"
@@ -1435,231 +1435,227 @@ msgstr "Klaku al ajna lumbilda bildeto en la panelo por ŝalti al tiu lumbildo p
 
 #: html/loleaflet-help.html%2Bdiv.div.p:430-5
 msgid "Use the slide pane toolbar in the bottom to start the slideshow, add slide, duplicate or delete the current slide."
-msgstr ""
+msgstr "Uzu la lumbildan panelon ĉe la malsupro por komenci la lumbildan prezentaĵon, aldoni lumbildon, duobligi, aŭ forigi la aktualan lumbildon."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:433-5
 msgid "<span class=\"def\">Slide layouts:</span> <span class=\"productname\">%productName</span> Impress let you change the slide layout. Select the desired slide layout in the drop-down layout list."
-msgstr ""
+msgstr "<span class=\"def\">Lumbildaj aranĝoj:</span><span class=\"productname\">%productName</span> Prezentilo ebligas al vi ŝanĝi la lumbildan aranĝon. Elektu la deziratan lumbildan aranĝon en la aranĝa fallisto."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:435-5
 msgid "<span class=\"def\">Master slide:</span> Select the master slide associated to the current slide. Format and arrange slide elements in the master slide."
-msgstr ""
+msgstr "<span class=\"def\">Ĉefa lumbildo:</span> Elektu la ĉefan lumbildon asociigita al la aktuala lumbildo. Formatu kaj aranĝu lumbildajn elementojn en la ĉefa lumbildo."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:436-5
 msgid "<span class=\"def\">Slide transitions:</span> <span class=\"productname\">%productName</span> Impress provides visual effects when displaying a new slide in the slide show. Slide transitions are property of the slide, use the side bar to set the slide transition when in edit mode."
-msgstr ""
+msgstr "<span class=\"def\">Lumbildaj transiroj:</span><span class=\"productname\">%productName</span> Prezentilo provizas vidajn efektojn kiam ĝi vidigas novan lumbildon en la prezentaĵo. Lumbildaj transiroj estas atributoj de la lumbildo. Uzu la flankan breton por agordi la lumbildan transiron kiam en redakta reĝimo."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:437-5
 msgid "<span class=\"def\">Object animation:</span> Individual object in the slide can have animation. Use the side bar to configure the slide transition for a selected object or set of objects."
-msgstr ""
+msgstr "<span class=\"def\">Animacii objekton:</span> Unuopa objekto en lumbildo povas havi animacion. Uzu la flankan breton por agordi la lumbildan transiron por elektita objekto aŭ objektaro."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:438-5
 msgid "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use the sidebar to select the table theme."
-msgstr ""
+msgstr "<span class=\"def\">Tabeloj:</span> Enmetu tabelojn en la prezentaĵon. Uzu la flankan breton por elekti la tabelan etoson."
 
 #: html/loleaflet-help.html%2Bdiv.h4:442-5
 msgid "What are the documents file formats supported by <span class=\"productname\">%productName</span>?"
-msgstr ""
+msgstr "Kiuj formatoj de dokumentaj dosieroj estas subtenataj de <span class=\"productname\">%productName</span>?"
 
 #: html/loleaflet-help.html%2Bdiv.p:443-5
 msgid "<span class=\"productname\">%productName</span> supports both reading and writing for the following file formats:"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> subtenas kaj legi kaj skribi por la jenaj dosieraj formatoj:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:445-11
 msgid "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr ""
+msgstr "Tekstaj dokumentoj: Microsoft-formatoj DOC, DOCX, RTF. OpenDocument-formato ODT"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:446-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "Kalkultabeloj: Microsoft-formatoj XLS, XLSX, OpenDocument-formato ODS"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:447-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Prezentaĵoj: Microsoft-formatoj PPT, PPTX, OpenDocument-formato ODP"
 
 #: html/loleaflet-help.html%2Bdiv.p:449-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
-msgstr ""
+msgstr "Aldone ĝi povas vidigi formatojn Visio, Keynote, Numbers, kaj Pages."
 
 #: html/loleaflet-help.html%2Bdiv.h4:450-5
 msgid "How do I save a document with another name?"
-msgstr ""
+msgstr "Kiel mi konservu dokumenton kun alia nomo?"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:452-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr ""
+msgstr "Ŝvebigu la muson ĉe la dokumenta nomo en la menua breto."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:453-11
 msgid "Type the new file name in the text box and press <span class=\"kbd\">Enter</span>."
-msgstr ""
+msgstr "Tajpu la novan nomon en la teksta kampo kaj premu je <span class=\"kbd\">Enigi</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:455-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "Kopio de la dokumento konserviĝas kun la nova nomo en la sama dosierujo."
 
 #: html/loleaflet-help.html%2Bdiv.h4:456-5
 msgid "How can I quit <span class=\"productname\">%productName</span> without saving my edits?"
-msgstr ""
+msgstr "Kiel mi eliru el  <span class=\"productname\">%productName</span> sen konservi miajn redaktaĵojn?"
 
 #: html/loleaflet-help.html%2Bdiv.p:457-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> konservas la dokumenton en la fono regule, do vi ne povas fermi ĝin sen konservi ĝin. Por abandoni viajn ŝanĝojn, vi devas aŭ malfari ilin, aŭ uzi la menuon <span class=\"ui\">Dosiero</span> kaj menueron <span class=\"ui\">Historio de versioj</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:458-5
 msgid "Can <span class=\"productname\">%productName</span> open a password-protected document?"
-msgstr ""
+msgstr "Ĉu <span class=\"productname\">%productName</span> povas malfermi pasvorte protektitan dokumenton?"
 
 #: html/loleaflet-help.html%2Bdiv.p:459-5
 msgid "Yes. <span class=\"productname\">%productName</span> opens password-protected documents, but it is necessary to supply the password in the “Enter password” prompt at load time."
-msgstr ""
+msgstr "Jes. <span class=\"productname\">%productName</span> malfermas pasvorte protektitajn dokumentojn, sed necesas enigi la pasvorton en la kampo  “Enigi pasvorton” je ŝargotempo."
 
 #: html/loleaflet-help.html%2Bdiv.h4:460-5
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "Kiel mi kontrolu literumadon en mia lingvo?"
 
 #: html/loleaflet-help.html%2Bdiv.p:461-5
 msgid "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</span> and select the language for the whole document. Optionally you can set languages for the selected text and for the current paragraph."
-msgstr ""
+msgstr "Elektu menuon <span class=\"ui\">Iloj</span> → <span class=\"ui\">Lingvoj</span> kaj elektu la lingvon por la tuta dokumento. Malnepre, vi povas agordi lingvon por elektita teksto kaj por la aktuala alineo."
 
 #: html/loleaflet-help.html%2Bdiv.h4:462-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Kiel mi forigu la ruĝajn, ondajn liniojn en mia dokumento?"
 
 #: html/loleaflet-help.html%2Bdiv.p:463-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
-msgstr ""
+msgstr "Elektu menuon <span class=\"ui\">Iloj</span> kaj malmarku je <span class=\"ui\">Aŭtomate kontroli literumadon</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:464-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "Kio estas la blua onda linio sub iuj vortoj en la teksto?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
-msgstr ""
+msgstr "Gramatikaj eraroj en la teksto markiĝas per la blua onda substreko. Klaku al la substrekita teksto per la dekstra musbutono por malfermi menuon kun proponoj por korekti la gramatikan eraron kaj la ofenditaj gramatikaj reguloj. Elektu la preferatan proponon por ŝanĝi la tekston."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Ĉu ekzistas tezaŭro?"
 
 #: html/loleaflet-help.html%2Bdiv.p:467-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
-msgstr ""
+msgstr "Jes. Klaku al la vorto bezonata kaj elektu je <span class=\"ui\">Iloj</span> → <span class=\"ui\">Tezaŭro</span>. Dialogo malfermiĝas kun multaj proponoj por anstataŭigi."
 
 #: html/loleaflet-help.html%2Bdiv.h4:469-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"
-msgstr ""
+msgstr "Kio estas la blua simbolo <span class=\"blue\">¶</span> kaj kiel mi forigu ĝin el mia dokumento?"
 
 #: html/loleaflet-help.html%2Bdiv.p:470-5
 msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to help text alignment and editing and is not printed. To toggle it in the document display, choose menu <span class=\"ui\">View</span> → <span class=\"ui\">Formatting mark</span>."
-msgstr ""
+msgstr "La simbolo <span class=\"blue\">¶</span> estas formata marko. Ĝi uziĝas por helpi ĝisrandigi kaj redakti, kaj ne presiĝas. Por baskuli ĝin en la dokumenta vido, elektu menuon <span class=\"ui\">Vido</span> → <span class=\"ui\">Formata marko</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:474-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I get a word count of my document?"
-msgstr "Iri al komenco de dokumento"
+msgstr "Kiel mi ekhavu la nombron da vortoj en mia dokumento?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:475-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
-msgstr ""
+msgstr "La nombro da vortoj estas havebla en <span class=\"ui\">Iloj</span> → <span class=\"ui\">Nombro da vortoj</span>. Dialogo vidigas la nombron da vortoj en elektaĵo kaj en la tuta dokumento."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:477-5
 msgid "Word count is also displayed in the status bar. If no text is selected the word count is for the whole document. Otherwise the word count is for the selected text."
-msgstr ""
+msgstr "Nombro da vortoj ankaŭ vidiĝas en la stata breto. Se neniu teksto estas elektita, la Nombro da vortoj rilatas al la tuta dokumento. Alie la Nombro da vortoj estas por la elektita teksto."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:478-5
 msgid "How can I insert a currency, copyright or trademark symbol in the document?"
-msgstr ""
+msgstr "Kiel mi enmetu valutan, kopirajtan aŭ varmarkan simbolon en la dokumenton?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:479-5
 msgid "You can insert these special characters in the document using the <span class=\"ui\">Special Character</span> dialog."
-msgstr ""
+msgstr "Vi povas enigi tiujn specialajn signojn en la dokumenton per la dialogo <span class=\"ui\">Speciala signo</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:481-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Metu la kursoron en la pozicio kie la signo aperu."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."
-msgstr ""
+msgstr "Elektu je <span class=\"ui\">Enmeti</span> → <span class=\"ui\">Specialaj signoj</span> aŭ klaku al la rilata bildsimbolo en la ilobreto. Vidiĝas dialogo."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:486-11
 msgid "You can either browse the characters displayed with the drop lists or type a search key in the <span class=\"ui\">Search</span> box. If you know the Unicode numeric code of the special character, enter in the boxes on the right."
-msgstr ""
+msgstr "Vi povas aŭ trafoliumi la signojn vidigitajn per la fallistoj aŭ tajpu serĉan ŝlosilon en la kampo <span class=\"ui\">Serĉi</span>. Se vi scias la Unikodan numeran kodon de la speciala signo, enigu ĝin en la kampoj dekstre."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:487-11
 msgid "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <span class=\"ui\">Cancel</span>."
-msgstr ""
+msgstr "Premu butonon <span class=\"ui\">Enmeti</span>. Por fermi la dialogon, premu je <span class=\"ui\">Rezigni</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:489-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "Kial mi ne povas forigi tekston? Ĝi akiras trastrekon."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:490-5
 msgid "You have the Track Changes feature enabled for the document. Track Changes records all changes in the text and shows the editions for later revision. Useful for marking changes in text and spreadsheets. Track changes are enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Record</span>."
-msgstr ""
+msgstr "Vi enŝaltis la funkcion Spuri ŝanĝojn, por la dokumento. Spuri ŝanĝojn registras ĉiujn ŝanĝojn en la teksto kaj vidigas la eldonojn por posta historio. Utilas por marki ŝanĝojn en teksto kaj kalkultabeloj. Spuri ŝanĝojn enŝaltiĝas kiam vi elektas je <span class=\"ui\">Redakti</span> → <span class=\"ui\">Spuri ŝanĝojn</span> → <span class=\"ui\">Registri</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "With track changes enabled your document is shown the following manner:"
-msgstr ""
+msgstr "Dum Spuri ŝanĝojn estas aktiva, via dokumento vidiĝas en la jena maniero:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "Forigoj markiĝas per koloraj trastrekaj signoj."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:494-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "Aldonoj markiĝas per koloraj subskribaj signoj."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:495-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "Ĉiuj ŝanĝoj markiĝas per vertikala baro en la dekstra marĝeno."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:496-11
 msgid "Changes are displayed as comment in the right of the document area."
-msgstr ""
+msgstr "Ŝanĝoj vidiĝas kiel komento en la dekstro de la dokumenta zono."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:499-5
 msgid "The color assigned to the changes depends on the user that changes the document."
-msgstr ""
+msgstr "La koloro atribuita al la ŝanĝoj dependas de la uzanto kiu ŝanĝis la dokumenton."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:500-5
 msgid "To display or hide track changes choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. Beware that if track changes are enabled but hidden, you still record changes and may inadvertently leave unwanted text available in the document."
-msgstr ""
+msgstr "Por vidigi aŭ kaŝi ŝanĝojn spuritajn, elektu je <span class=\"ui\">Redakti</span> → <span class=\"ui\">Spuri ŝanĝojn</span> → <span class=\"ui\">Vidigi</span>. Zorgu ke, se Spuri ŝanĝojn estas aktiva sed kaŝita, vi ankoraŭ registras ŝanĝojn kaj eble senintence lasos nedeziratan tekston en la dokumento."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
-msgstr ""
+msgstr "Eblas akcepti aŭ malakcepti ŝanĝojn. Por akcepti aŭ malakcepti ŝanĝojn, klaku al la rilataj bildsimboloj en la komenta kampo ĉe la desktro de la dokumento. Aŭ, elektu je <span class=\"ui\">Redakti</span> → <span class=\"ui\">Spuri ŝanĝojn</span> → <span class=\"ui\">Akcepti</span> aŭ <span class=\"ui\">Malakcepti</span>. Plue, se vi bezonas filtri ŝanĝojn antaŭ ol akcepti aŭ malakcepti ilin, elektu je <span class=\"ui\">Redakti</span> → <span class=\"ui\">Spuri ŝanĝojn</span> → <span class=\"ui\">Mastrumi</span>. Dialogo montras liston de ĉiuj spuritaj ŝanĝoj. Uzu la dialogajn butonojn laŭe."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
-#, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I set the margins of the document?"
-msgstr "Iri al komenco de dokumento"
+msgstr "Kiel mi agordu la marĝenojn de la dokumento?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:504-5
 msgid "Using the ruler drag the leftmost edge of the ruler to adjust the left margin, or the rightmost for the right margin."
-msgstr ""
+msgstr "Per la mezurilo, ŝovu la plej maldekstran eĝon de la mezurilo por adapti la maldekstran marĝenon, aŭ la dekstran eĝon por la plej dekstra marĝeno."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:505-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Uzi la paĝan stilon"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:507-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and select the <span class=\"ui\">Page</span> tab"
-msgstr ""
+msgstr "Elektu je <span class=\"ui\">Formato</span> → <span class=\"ui\">Paĝo</span> kaj elektu la langeton <span class=\"ui\">Paĝo</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:508-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Agordu la paĝajn marĝenojn per la dialogo."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:511-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
+msgstr "Kiel mi ŝanĝu la paĝan orientiĝon al horizontala en mia dokumento?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid "Place the cursor at the place where the page orientation is to change. Add an empty paragraph."
-msgstr ""
+msgstr "Metu la kursoron ĉe la loko kie ŝanĝiĝu la paĝa orientiĝo. Aldoni vakan alineon."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:514-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>, <span class=\"ui\">Text Flow </span> tab"

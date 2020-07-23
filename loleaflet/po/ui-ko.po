@@ -921,6 +921,20 @@ msgstr ""
 msgid "Start Presentation"
 msgstr "텍스트 방향"
 
+#: src/control/Permission.js:45
+msgid "The document could not be locked, and is opened in read-only mode."
+msgstr ""
+
+#: src/control/Permission.js:47 src/control/Permission.js:65
+msgid "Server returned this reason:"
+msgstr ""
+
+#: src/control/Permission.js:63
+#, fuzzy
+#| msgid "Document cannot be saved."
+msgid "The document could not be locked."
+msgstr "문서를 저장할 수 없습니다."
+
 #: src/control/Ruler.js:366
 msgid "Left Margin"
 msgstr "왼쪽 여백"
