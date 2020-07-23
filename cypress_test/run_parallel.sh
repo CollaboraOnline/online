@@ -43,6 +43,7 @@ while test $# -gt 0; do
   esac
   shift
 done
+TEST_ERROR="${TEST_LOG}.error"
 
 TEST_FILE_PATH=
 if [ "${TEST_TYPE}" = "desktop" ]; then
@@ -60,8 +61,6 @@ RUN_COMMAND="${CYPRESS_BINARY} run \
     --env ${TEST_ENV}\
     --spec=${TEST_FILE_PATH}"
 
-ERROR_MATCHER="Error:\|Command failed:\|Timed out retrying\|The error was:"
-
 print_error() {
     echo -e "\n\
     CypressError: a test failed, please do one of the following:\n\n\
@@ -71,15 +70,20 @@ print_error() {
     \tcd cypress_test && make run-${TEST_TYPE} spec=${TEST_FILE}\n" >> ${ERROR_LOG}
 }
 
+run_command() {
+    rm -rf ${TEST_ERROR}
+    echo "`echo ${RUN_COMMAND} && ${RUN_COMMAND} || touch ${TEST_ERROR}`" > ${TEST_LOG} 2>&1
+}
+
 mkdir -p `dirname ${TEST_LOG}`
 touch ${TEST_LOG}
-echo "`echo ${RUN_COMMAND} && ${RUN_COMMAND}`" > ${TEST_LOG} 2>&1
-if [ -z `grep -o -m 1 "${ERROR_MATCHER}" ${TEST_LOG}` ];
+run_command
+if [ ! -f ${TEST_ERROR} ];
     then cat ${TEST_LOG};
     elif [ ${SECOND_CHANCE} = true ];
     then echo "Second chance!" > ${TEST_LOG} && \
-        echo "`echo ${RUN_COMMAND} && ${RUN_COMMAND}`" >> ${TEST_LOG} 2>&1 && \
-        if [ -z `grep -o -m 1 "${ERROR_MATCHER}" ${TEST_LOG}` ];\
+        run_command && \
+        if [ ! -f ${TEST_ERROR} ];\
             then cat ${TEST_LOG};\
             else cat ${TEST_LOG} >> ${ERROR_LOG} && \
                  print_error; \
