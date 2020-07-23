@@ -905,9 +905,11 @@ msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Το έγγραφο δεν μπόρεσε να κλειδωθεί και είναι ανοικτό σε κατάσταση μόνο για ανάγνωση."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
-msgid ""
-"\n"
-"Server returned this reason: \""
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "Server returned this reason: \""
+msgid "Server returned this reason:"
 msgstr ""
 "\n"
 "Ο διακομιστής επέστρεψε αυτήν την αιτία: \""
