@@ -9,6 +9,8 @@ WAIT_ON_BINARY = $(abs_builddir)/node_modules/wait-on/bin/wait-on
 GET_PORT_BINARY = $(abs_builddir)/node_modules/get-port-cli/cli.js
 NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
 
+PARALLEL_SCRIPT = $(abs_srcdir)/run_parallel.sh
+
 PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
 ERROR_LOG=$(abs_builddir)/workdir/error.log
 
@@ -202,16 +204,22 @@ define start_Xvfb
 endef
 
 DESKTOP_CONFIG = \
-	--config integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT) \
-	--env DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
+	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
+
+DESKTOP_ENV = \
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
 
 MOBILE_CONFIG = \
-	--config integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT) \
-	--env DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
+	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
+
+MOBILE_ENV = \
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
 
 MULTIUSER_CONFIG = \
-	--config integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000 \
-	--env DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
+	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
+
+MULTIUSER_ENV = \
+	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
 
 define run_interactive_test
 	$(if $(2),\
@@ -219,98 +227,81 @@ define run_interactive_test
 			--browser $(CHROME) \
 			--headed --no-exit \
 			$(if $(findstring DESKTOP,$(1)),\
-				$(DESKTOP_CONFIG) \
-				--spec=$(abs_dir)/integration_tests/desktop/$(2),\
-				$(MOBILE_CONFIG) \
+				--config $(DESKTOP_CONFIG) \
+				--env $(DESKTOP_ENV) \
+				--spec=$(abs_dir)/integration_tests/desktop/$(2)\
+				,\
+				--config $(MOBILE_CONFIG) \
+				--env $(MOBILE_ENV) \
 				--spec=$(abs_dir)/integration_tests/mobile/$(2)),\
 		$(CYPRESS_BINARY) open \
-			$(if $(findstring DESKTOP,$(1)),$(DESKTOP_CONFIG),$(MOBILE_CONFIG)))
+			$(if $(findstring DESKTOP,$(1)),\
+				--config $(DESKTOP_CONFIG) \
+				--env $(DESKTOP_ENV) \
+				,\
+				--config $(MOBILE_CONFIG) \
+				--env $(MOBILE_ENV) \))
 endef
 
 define run_desktop_tests
 	@echo $(if $(1),"Running cypress desktop test: $(1)","Running cypress desktop tests...")
 	@echo
-	$(eval RUN_COMMAND = \
+	$(if $(PARALLEL_BUILD),\
+		@$(PARALLEL_SCRIPT) \
+			--browser $(CHROME) \
+			--config $(DESKTOP_CONFIG) \
+			--env $(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)) \
+			--spec $(1) \
+			--type desktop \
+			--log-file $(2) \
+			--second-chance \
+		,\
 		$(CYPRESS_BINARY) run \
 			--browser $(CHROME) \
 			--headless \
-			$(DESKTOP_CONFIG)$(if $(3),$(COMMA)$(3))  \
+			--config $(DESKTOP_CONFIG) \
+			--env $(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
-			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
-	$(if $(PARALLEL_BUILD),\
-		$(call execute_run_parallel,$(RUN_COMMAND),$(2),desktop,$(1))\
-	,\
-		$(RUN_COMMAND)\
+			|| ($(KILL_COMMAND) && false) \
 	)
 endef
 
 define run_mobile_tests
 	@echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
 	@echo
-	$(eval RUN_COMMAND = \
+	$(if $(PARALLEL_BUILD),\
+		@$(PARALLEL_SCRIPT) \
+			--browser $(CHROME) \
+			--config $(MOBILE_CONFIG) \
+			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
+			--spec $(1) \
+			--type mobile \
+			--log-file $(2) \
+			--second-chance \
+		,\
 		$(CYPRESS_BINARY) run \
 			--browser $(CHROME) \
 			--headless \
-			$(MOBILE_CONFIG)$(if $(3),$(COMMA)$(3)) \
+			--config $(MOBILE_CONFIG) \
+			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
 			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
-			$(if $(PARALLEL_BUILD),,|| ($(KILL_COMMAND) && false)))
-	$(if $(PARALLEL_BUILD),\
-		$(call execute_run_parallel,$(RUN_COMMAND),$(2),mobile,$(1))\
-	,\
-		$(RUN_COMMAND)\
+			|| ($(KILL_COMMAND) && false) \
 	)
 endef
 
 define run_multiuser_tests
 	@echo "Running cypress multi-user test: $(1)"
 	@echo
-	$(eval RUN_COMMAND = \
-		$(CYPRESS_BINARY) run \
+	$(if $(PARALLEL_BUILD),\
+		@$(PARALLEL_SCRIPT) \
 			--browser $(CHROME) \
-			--headless \
-			$(MULTIUSER_CONFIG)$(if $(3),$(COMMA)$(3)) \
-			$(if $(1), --spec=$(abs_dir)/integration_tests/multiuser/$(1)) \
-			)
-	$(call execute_run_parallel_no_second_chance,$(RUN_COMMAND),$(2),desktop,$(1))
-endef
-
-ERROR_MATCHER = "Error:\|Command failed:\|Timed out retrying\|The error was:"
-
-define execute_run_parallel
-	@mkdir -p $(dir $(2)) && touch $(2) && \
-	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
-	if [ -z `grep -o -m 1 $(ERROR_MATCHER) $(2)` ];\
-		then cat $(2);\
-		elif [ -z $(CYPRESS_NO_SECOND_CHANCE) ]; \
-		then echo "Second chance!" > $(2) && \
-		     echo "`echo $(1) && $(1)`" >> $(2) 2>&1 && \
-		     if [ -z `grep -o -m 1 $(ERROR_MATCHER) $(2)` ];\
-			then cat $(2);\
-			else cat $(2) >> $(ERROR_LOG) && \
-			     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
-		     fi;\
-		else cat $(2) >> $(ERROR_LOG) && \
-		     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
-	fi;
-endef
-
-define execute_run_parallel_no_second_chance
-	@mkdir -p $(dir $(2)) && touch $(2) && \
-	echo "`echo $(1) && $(1)`" > $(2) 2>&1 && \
-	if [ -z `grep -o -m 1 $(ERROR_MATCHER) $(2)` ];\
-		then cat $(2);\
-		else cat $(2) >> $(ERROR_LOG) && \
-		     echo -e $(call error_output_string,$(3),$(4)) >> $(ERROR_LOG); \
-	fi;
-endef
-
-define error_output_string
-"\n\
-CypressError: a test failed, please do one of the following:\n\n\
-Run the failing test in headless mode:\n\
-\tcd cypress_test && make check-$(1) spec=$(2)\n\n\
-Open the failing test in the interactive test runner:\n\
-\tcd cypress_test && make run-$(1) spec=$(2)\n"
+			--config $(MULTIUSER_CONFIG) \
+			--env $(MULTIUSER_ENV)$(if $(3),$(COMMA)$(3)) \
+			--spec $(1) \
+			--type multi-user \
+			--log-file $(2) \
+		,\
+	)
 endef
 
 NODE_BINS = \
