@@ -544,6 +544,7 @@ L.Socket = L.Class.extend({
 			}
 			else if (command.errorKind === 'documentconflict')
 			{
+				var that = this;
 				storageError = errorMessages.storage.documentconflict;
 
 				vex.closeAll();
@@ -572,15 +573,15 @@ L.Socket = L.Class.extend({
 					callback: function(value) {
 						if (value === 'discard') {
 							// They want to refresh the page and load document again for all
-							this.sendMessage('closedocument');
+							that.sendMessage('closedocument');
 						} else if (value === 'overwrite') {
 							// They want to overwrite
-							this.sendMessage('savetostorage force=1');
+							that.sendMessage('savetostorage force=1');
 						} else if (value === 'saveas') {
-							var filename = this._map['wopi'].BaseFileName;
+							var filename = that._map['wopi'].BaseFileName;
 							if (filename) {
 								filename = L.LOUtil.generateNewFileName(filename, '_new');
-								this._map.saveAs(filename);
+								that._map.saveAs(filename);
 							}
 						}
 					},
