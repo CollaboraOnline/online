@@ -191,6 +191,37 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     Log::initialize("Mobile", trace, false, false, {});
     Util::setThreadName("main");
 
+    // Clear the cache directory if it is for another build of the app
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *userDirectory = [paths objectAtIndex:0];
+    NSString *cacheDirectory = [userDirectory stringByAppendingPathComponent:@"cache"];
+
+    NSString *coreVersionHashFile = [cacheDirectory stringByAppendingPathComponent:@"core_version_hash"];
+    NSString *loolwsdVersionHashFile = [cacheDirectory stringByAppendingPathComponent:@"loolwsd_version_hash"];
+
+    NSData *oldCoreVersionHash = [NSData dataWithContentsOfFile:coreVersionHashFile];
+    NSData *oldLoolwsdVersionHash = [NSData dataWithContentsOfFile:loolwsdVersionHashFile];
+
+    NSData *coreVersionHash = [NSData dataWithBytes:CORE_VERSION_HASH length:strlen(CORE_VERSION_HASH)];
+    NSData *loolwsdVersionHash = [NSData dataWithBytes:LOOLWSD_VERSION_HASH length:strlen(LOOLWSD_VERSION_HASH)];
+
+    if (oldCoreVersionHash == nil
+        || ![oldCoreVersionHash isEqualToData:coreVersionHash]
+        || oldLoolwsdVersionHash == nil
+        || ![oldLoolwsdVersionHash isEqualToData:loolwsdVersionHash]) {
+
+        [[NSFileManager defaultManager] removeItemAtPath:cacheDirectory error:nil];
+
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:cacheDirectory withIntermediateDirectories:NO attributes:nil error:nil])
+            NSLog(@"Could not create %@", cacheDirectory);
+
+        if (![[NSFileManager defaultManager] createFileAtPath:coreVersionHashFile contents:coreVersionHash attributes:nil])
+            NSLog(@"Could not create %@", coreVersionHashFile);
+
+        if (![[NSFileManager defaultManager] createFileAtPath:loolwsdVersionHashFile contents:loolwsdVersionHash attributes:nil])
+            NSLog(@"Could not create %@", loolwsdVersionHashFile);
+    }
+
     // Having LANG in the environment is expected to happen only when debugging from Xcode. When
     // testing some language one doesn't know it might be risky to simply set one's iPad to that
     // language, as it might be hard to find the way to set it back to a known language.
