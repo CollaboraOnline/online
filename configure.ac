@@ -339,11 +339,8 @@ AC_SUBST(ENABLE_DEBUG_PROTOCOL)
 ENABLE_BROWSERSYNC=
 browsersync_msg="disabled: copy files to the target directory"
 if test "$enable_browsersync" = "yes"; then
-   AC_DEFINE([ENABLE_BROWSERSYNC],1,[Whether to create symlinks instead of copying files to the target directory to run browsersync])
    ENABLE_BROWSERSYNC=true
    browsersync_msg="enabled: create symlinks in the target directory"
-else
-    AC_DEFINE([ENABLE_BROWSERSYNC],0,[Whether to create symlinks instead of copying files to the target directory to run browsersync])
 fi
 AC_SUBST(ENABLE_BROWSERSYNC)
 
@@ -909,7 +906,6 @@ AS_IF([test "$ENABLE_GTKAPP" = true],
       [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
-AM_CONDITIONAL([ENABLE_BROWSERSYNC], [test "$ENABLE_BROWSERSYNC" = "true"])
 
 mobile_app=
 ENABLE_MOBILEAPP=
