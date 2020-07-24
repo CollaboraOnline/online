@@ -415,7 +415,7 @@ public:
 #endif
         else
         {
-            while (handleTCPStream(socket))
+            while (socket->processInputEnabled() && handleTCPStream(socket))
                 ; // might have multiple messages in the accumulated buffer.
         }
     }

@@ -791,7 +791,8 @@ public:
         _stop(false),
         _isLoading(0),
         _editorId(-1),
-        _editorChangeWarning(false)
+        _editorChangeWarning(false),
+        _inputProcessingEnabled(true)
     {
         LOG_INF("Document ctor for [" << _docKey <<
                 "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
@@ -1946,6 +1947,9 @@ private:
     }
 
 public:
+    void enableProcessInput(bool enable = true){ _inputProcessingEnabled = enable; }
+    bool processInputEnabled() { return _inputProcessingEnabled; }
+
     bool hasQueueItems() const
     {
         return _tileQueue && !_tileQueue->isEmpty();
@@ -1955,7 +1959,7 @@ public:
     {
         try
         {
-            while (hasQueueItems())
+            while (processInputEnabled() && hasQueueItems())
             {
                 if (_stop || SigUtil::getTerminationFlag())
                 {
@@ -2197,6 +2201,8 @@ private:
 #ifdef __ANDROID__
     friend std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
 #endif
+
+    bool _inputProcessingEnabled;
 };
 
 #ifdef __ANDROID__
@@ -2473,6 +2479,9 @@ protected:
     virtual void enableProcessInput(bool enable = true) override
     {
         WebSocketHandler::enableProcessInput(enable);
+        if (_document)
+            _document->enableProcessInput(enable);
+
         // Wake up poll to process data from socket input buffer
         if (enable)
         {
