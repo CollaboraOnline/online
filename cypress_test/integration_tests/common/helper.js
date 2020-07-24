@@ -260,9 +260,9 @@ function typeText(selector, text, delayMs=0) {
 function getLOVersion() {
 	var versionString = Cypress.env('LO_CORE_VERSION');
 	if (versionString.includes('Collabora')) {
-		if (versionString.includes(' 6.2.')) {
+		if (versionString.includes('_6.2.')) {
 			return 'cp-6-2';
-		} else if (versionString.includes(' 6.4.')) {
+		} else if (versionString.includes('_6.4.')) {
 			return 'cp-6-4';
 		}
 	}

@@ -39,9 +39,11 @@ DISPLAY_NUMBER = 100
 HEADLESS_BUILD := $(findstring Command failed,$(shell xhost > /dev/null 2>&1 || echo "Command failed, so we are in a headless environment."))
 export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY))
 
-CORE_VERSION := $(shell "@LO_PATH@"/program/soffice.bin --version 2> /dev/null)
-
 COMMA :=,
+EMPTY :=
+SPACE :=$(EMPTY) $(EMPTY)
+
+CORE_VERSION := $(subst $(SPACE),_,$(shell "@LO_PATH@"/program/soffice.bin --version 2> /dev/null))
 
 if ENABLE_DEBUG
 FILTER_DEBUG=cypress:electron,cypress:launcher
