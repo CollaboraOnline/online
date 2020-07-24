@@ -662,7 +662,7 @@ a.leaflet-control-zoom-in {
 	float:left;
 }
 #MergeCells > span{
-	color: #4d82b8;
+	color: var(--blue1-txt-primary-color);
 	text-align: end;
 	vertical-align: bottom;
 }

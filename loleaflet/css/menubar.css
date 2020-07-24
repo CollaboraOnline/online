@@ -51,7 +51,7 @@
 }
 
 .main-nav.hasnotebookbar{
-	background: #efefef;
+	background: var(--gray-bg-color);
 	margin-top: 0px;
 }
 
@@ -144,7 +144,7 @@
     overflow: hidden;
     padding-top: 0;
     padding-bottom: 0;
-    background-color: #efefef;
+    background-color: var(--gray-bg-color);
 }
 /* lo-menu customizations end */
 

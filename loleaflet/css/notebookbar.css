@@ -16,7 +16,7 @@
 	color: dimgray;
 	height: 24px;
 	padding: 0px 1em;
-	background: #efefef;
+	background: var(--gray-bg-color);
 	padding-top: 7px;
 }
 
@@ -24,7 +24,7 @@
 	border: none;
 	border-radius: 0px;
 	background: #fff;
-	box-shadow: 0 6px 0px 0px white, 0px 0 8px -4px rgba(105, 105, 105, 0.4), -2px 0 15px -4px rgba(77, 130, 184, 0.1);
+	box-shadow: 0 3px 0px 0px #fff, 0px -1px 8px -4px rgba(105, 105, 105, 0.4), -1px -15px 15px -4px rgb(77, 130, 184, 0.1);
 }
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.selected.notebookbar{
 	color: var(--blue1-txt-primary-color);
@@ -164,6 +164,22 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	top: -4px;
 	border: 1px solid silver;
 }
+
+.unotoolbutton.notebookbar .unobutton.selected + .ui-content.unolabel {
+	color: var(--blue1-txt-primary-color) !important;
+}
+
+.unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox), .mobile-wizard-widebutton.disabled {
+	color: silver;
+	border-radius: 4px;
+	background: #c0c0c04a;
+}
+
+.unotoolbutton.notebookbar.disabled img, .mobile-wizard-widebutton.disabled img {
+	-webkit-filter: grayscale(100%) brightness(100%);
+	filter: grayscale(100%) brightness(100%);
+}
+
 
 /* unobuttons with inline labels */
 

@@ -16,8 +16,9 @@
 	--blue1-txt-primary-color: #0369A3;
 	--green0-txt-primary-color: #106802; /*green1 lacks contrast against white*/
 	--orange1-txt-primary-color: #A33E03;
-	
+
 	--gray-light-txt--color: #696969;
+	--gray-bg-color: #EFEFEF;
 }
 #document-container {
 	border-top: 1px solid #B6B6B6;
@@ -323,7 +324,7 @@ body {
 	font-family: var(--loleaflet-font) !important;
 	font-size: 13px;
 	text-align: left;
-	background-color: #efefef;
+	background-color: var(--gray-bg-color);
 	box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
 	color: #222;
 	border: none;

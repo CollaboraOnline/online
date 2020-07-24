@@ -827,7 +827,7 @@ input.clipboard {
 }
 
 .loleaflet-ruler {
-	background-color: #efefef;
+	background-color: var(--gray-bg-color);
 	height: 20px;
 	width: 100vw;
 	margin: 0px;
@@ -942,7 +942,7 @@ input.clipboard {
 
 .loleaflet-ruler-margin {
 	height: 100%;
-	background-color: #efefef;
+	background-color: var(--gray-bg-color);
 	}
 
 .loleaflet-ruler-left {

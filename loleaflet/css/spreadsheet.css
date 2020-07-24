@@ -28,7 +28,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 
-	background-color: #efefef;
+	background-color: var(--gray-bg-color);
 	}
 
 .spreadsheet-tab-scroll {
