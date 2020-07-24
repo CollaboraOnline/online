@@ -22,20 +22,15 @@ describe('Check user list with user-1.', function() {
 		cy.get('#tb_actionbar_item_userlist .w2ui-tb-caption')
 			.should('have.text', '2 users');
 
-		// Leave a comment for user-2, that we finished
-		cy.get('#menu-insert')
+		// Change the paragraph alignment
+		cy.get('#tb_editbar_item_leftpara .w2ui-button')
+			.should('have.class', 'checked');
+
+		cy.get('#tb_editbar_item_centerpara .w2ui-button')
 			.click();
 
-		cy.get('#menu-insertcomment')
-			.click();
-
-		cy.get('.loleaflet-annotation-edit:nth-of-type(2) .loleaflet-annotation-textarea')
-			.type('Done');
-
-		helper.waitUntilIdle('#annotation-save');
-
-		cy.get('#annotation-save')
-			.click({force: true});
+		cy.get('#tb_editbar_item_centerpara .w2ui-button')
+			.should('have.class', 'checked');
 	});
 
 });

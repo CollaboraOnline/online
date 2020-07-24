@@ -25,8 +25,8 @@ describe('Check user list with user-2.', function() {
 		cy.get('#tb_actionbar_item_userlist .w2ui-tb-caption')
 			.should('have.text', '2 users');
 
-		// user-1 adds a comment, so we can close this view
-		cy.get('.loleaflet-annotation-content-wrapper')
-			.should('exist');
+		// user-1 changes the paragraph alignment
+		cy.get('#tb_editbar_item_centerpara .w2ui-button')
+			.should('have.class', 'checked');
 	});
 });
