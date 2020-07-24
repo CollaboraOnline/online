@@ -46,8 +46,10 @@ L.SplitPanesContext = L.Class.extend({
 
 	setSplitPos: function (splitX, splitY, forceUpdate) {
 
-		this.setHorizSplitPos(splitX, forceUpdate);
-		this.setVertSplitPos(splitY, forceUpdate);
+		var xchanged = this.setHorizSplitPos(splitX, forceUpdate, true /* noFire */);
+		var ychanged = this.setVertSplitPos(splitY, forceUpdate, true /* noFire */);
+		if (xchanged || ychanged)
+			this._map.fire('splitposchanged');
 	},
 
 	alignSplitPos: function () {
@@ -81,7 +83,7 @@ L.SplitPanesContext = L.Class.extend({
 			this._docLayer.getSnapDocPosY(split);
 	},
 
-	setHorizSplitPos: function (splitX, forceUpdate) {
+	setHorizSplitPos: function (splitX, forceUpdate, noFire) {
 
 		console.assert(typeof splitX === 'number', 'splitX must be a number');
 
@@ -89,16 +91,25 @@ L.SplitPanesContext = L.Class.extend({
 			if (forceUpdate || !this._docLayer.hasXSplitter()) {
 				this._updateXSplitter();
 			}
-			return;
+			return false;
 		}
 
-		this._splitPos.x = this.justifySplitPos(splitX, true /* isHoriz */);
+		var changed = false;
+		var newX = this.justifySplitPos(splitX, true /* isHoriz */);
+		if (newX !== this._splitPos.x) {
+			this._splitPos.x = newX;
+			changed = true;
+		}
 
 		this._updateXSplitter();
-		this._map.fire('splitposchanged');
+
+		if (!noFire)
+			this._map.fire('splitposchanged');
+
+		return changed;
 	},
 
-	setVertSplitPos: function (splitY, forceUpdate) {
+	setVertSplitPos: function (splitY, forceUpdate, noFire) {
 
 		console.assert(typeof splitY === 'number', 'splitY must be a number');
 
@@ -106,13 +117,22 @@ L.SplitPanesContext = L.Class.extend({
 			if (forceUpdate || !this._docLayer.hasYSplitter()) {
 				this._updateYSplitter();
 			}
-			return;
+			return false;
 		}
 
-		this._splitPos.y = this.justifySplitPos(splitY, false /* isHoriz */);
+		var changed = false;
+		var newY = this.justifySplitPos(splitY, false /* isHoriz */);
+		if (newY !== this._splitPos.y) {
+			this._splitPos.y = newY;
+			changed = true;
+		}
 
 		this._updateYSplitter();
-		this._map.fire('splitposchanged');
+
+		if (!noFire)
+			this._map.fire('splitposchanged');
+
+		return changed;
 	},
 
 	alignHorizSplitPos: function () {
