@@ -2358,9 +2358,9 @@ protected:
     {
         WebSocketHandler::enableProcessInput(enable);
         // Wake up poll to process data from socket input buffer
-        if (enable && _ksPoll)
+        if (enable)
         {
-            _ksPoll->wakeup();
+            _ksPoll.wakeup();
         }
     }
 
