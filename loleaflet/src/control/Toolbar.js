@@ -296,7 +296,7 @@ L.Map.include({
 					for (i = 0, max = translatableContent.length; i < max; i++) {
 						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
 					}
-					translatableContent = $vexContent.find('a'); // TOC
+					translatableContent = $vexContent.find('button'); // TOC
 					for (i = 0, max = translatableContent.length; i < max; i++) {
 						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
 					}
