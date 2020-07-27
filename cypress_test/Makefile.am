@@ -62,8 +62,8 @@ MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDE
 
 DEKSTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
-MULTIUSER_TEST_FILES= $(subst $(MULTIUSER_TEST_FOLDER)/,,$(wildcard $(MULTIUSER_TEST_FOLDER)/*_spec.js) $(wildcard $(MULTIUSER_TEST_FOLDER)/*/*_spec.js))
-
+MULTIUSER_TEST_FILES= \
+	userlist_user1_spec.js,userlist_user2_spec.js
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
@@ -72,7 +72,7 @@ DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DEKSTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
 MULTIUSER_TEST_FILES_DONE= \
-	$(foreach test_file,$(MULTIUSER_TEST_FILES),$(MULTIUSER_TRACK_FOLDER)/$(test_file).done)
+	$(foreach test_file,$(subst $(COMMA),_,$(MULTIUSER_TEST_FILES)),$(MULTIUSER_TRACK_FOLDER)/$(test_file).done)
 
 check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
@@ -108,11 +108,13 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 		@$(foreach done_file,$(DESKTOP_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
 	)
 
-# Multi-user tests are run only during parallel build.
-$(MULTIUSER_TRACK_FOLDER)/userlist_user%_spec.js.done: $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
-	$(if $(PARALLEL_BUILD),\
-		$(call run_multiuser_tests,$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log)\
-		,)
+$(MULTIUSER_TEST_FILES_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
+	$(eval TEST_FILES=$(subst spec.js_,spec.js$(SPACE),$(notdir $@)))
+	$(eval USER1=$(dir $@)$(firstword $(TEST_FILES)))
+	$(eval USER2=$(basename $(dir $@)$(lastword $(TEST_FILES))))
+	$(call run_multiuser_tests,\
+		$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(USER1)),$(USER1).log,\
+		$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(USER2)),$(USER2).log)
 	@mkdir -p $(dir $@) && touch $@
 
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
@@ -290,18 +292,23 @@ define run_mobile_tests
 endef
 
 define run_multiuser_tests
-	@echo "Running cypress multi-user test: $(1)"
+	@echo "Running cypress multi-user test: $(strip $(1)) - $(strip $(3))"
 	@echo
-	$(if $(PARALLEL_BUILD),\
-		@$(PARALLEL_SCRIPT) \
-			--browser $(CHROME) \
-			--config $(MULTIUSER_CONFIG) \
-			--env $(MULTIUSER_ENV)$(if $(3),$(COMMA)$(3)) \
-			--spec $(1) \
-			--type multi-user \
-			--log-file $(2) \
-		,\
-	)
+	@$(PARALLEL_SCRIPT) \
+		--browser $(CHROME) \
+		--config $(MULTIUSER_CONFIG) \
+		--env $(MULTIUSER_ENV) \
+		--spec $(1) \
+		--type multi-user \
+		--log-file $(2) & \
+	$(PARALLEL_SCRIPT) \
+		--browser $(CHROME) \
+		--config $(MULTIUSER_CONFIG) \
+		--env $(MULTIUSER_ENV) \
+		--spec $(3) \
+		--type multi-user \
+		--log-file $(4) && \
+	wait # waits the background process to be finished
 endef
 
 NODE_BINS = \
