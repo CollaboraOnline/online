@@ -14,6 +14,7 @@
 #include <chrono>
 #include <map>
 #include <set>
+#include <unordered_set>
 #include <string>
 #include <utility>
 
@@ -251,7 +252,8 @@ public:
 #if !MOBILEAPP
     static std::unique_ptr<ClipboardCache> SavedClipboards;
 #endif
-    static std::set<std::string> EditFileExtensions;
+    static std::unordered_set<std::string> EditFileExtensions;
+    static std::unordered_set<std::string> ViewWithCommentsFileExtensions;
     static unsigned MaxConnections;
     static unsigned MaxDocuments;
     static std::string OverrideWatermark;
@@ -294,7 +296,7 @@ public:
 #endif
     }
 
-    /// Return true iff extension is marked as view action in discovery.xml.
+    /// Return true if extension is marked as view action in discovery.xml.
     static bool IsViewFileExtension(const std::string& extension)
     {
 #if MOBILEAPP
@@ -304,6 +306,19 @@ public:
         std::string lowerCaseExtension = extension;
         std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
         return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
+#endif
+    }
+
+    /// Return true if extension is marked as view_comment action in discovery.xml.
+    static bool IsViewWithCommentsFileExtension(const std::string& extension)
+    {
+#if MOBILEAPP
+        (void) extension;
+        return false; // mark everything editable on mobile
+#else
+        std::string lowerCaseExtension = extension;
+        std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
+        return ViewWithCommentsFileExtensions.find(lowerCaseExtension) != ViewWithCommentsFileExtensions.end();
 #endif
     }
 

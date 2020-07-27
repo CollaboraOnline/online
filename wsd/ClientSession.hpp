@@ -38,7 +38,8 @@ public:
     void construct();
     virtual ~ClientSession();
 
-    void setReadOnly(bool bVal = true) override;
+    void setReadOnly(bool bValue = true) override;
+
     void setLockFailed(const std::string& sReason);
 
     enum SessionState {

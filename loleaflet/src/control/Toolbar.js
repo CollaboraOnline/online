@@ -158,7 +158,7 @@ L.Map.include({
 
 	sendUnoCommand: function (command, json) {
 		var isAllowedInReadOnly = false;
-		var allowedCommands = ['.uno:WordCountDialog', '.uno:EditAnnotation', '.uno:InsertAnnotation', '.uno:DeleteAnnotation'];
+		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation', '.uno:InsertAnnotation', '.uno:DeleteAnnotation'];
 		for (var i in allowedCommands) {
 			if (allowedCommands[i] === command) {
 				isAllowedInReadOnly = true;

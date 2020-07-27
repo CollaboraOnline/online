@@ -633,6 +633,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         {
             LOG_DBG("Setting the session as readonly");
             session->setReadOnly();
+            if (LOOLWSD::IsViewWithCommentsFileExtension(wopiStorage->getFileExtension()))
+                session->setAllowChangeComments();
         }
 
         // Construct a JSON containing relevant WOPI host properties
@@ -719,6 +721,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             {
                 LOG_DBG("Setting the session as readonly");
                 session->setReadOnly();
+                if (LOOLWSD::IsViewWithCommentsFileExtension(localStorage->getFileExtension()))
+                    session->setAllowChangeComments();
             }
         }
     }

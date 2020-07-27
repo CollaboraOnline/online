@@ -210,7 +210,8 @@ static int careerSpanMs = 0;
 /// The timeout for a child to spawn, initially high, then reset to the default.
 int ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS * 4;
 std::atomic<unsigned> LOOLWSD::NumConnections;
-std::set<std::string> LOOLWSD::EditFileExtensions;
+std::unordered_set<std::string> LOOLWSD::EditFileExtensions;
+std::unordered_set<std::string> LOOLWSD::ViewWithCommentsFileExtensions;
 
 #if MOBILEAPP
 
@@ -3368,6 +3369,10 @@ private:
             // Set the View extensions cache as well.
             if (elem->getAttribute("name") == "edit")
                 LOOLWSD::EditFileExtensions.insert(elem->getAttribute("ext"));
+            else if (elem->getAttribute("name") == "view_comment")
+            {
+                LOOLWSD::ViewWithCommentsFileExtensions.insert(elem->getAttribute("ext"));
+            }
         }
 
         const auto& proofAttribs = GetProofKeyAttributes();

@@ -469,7 +469,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "save"))
     {
-        if (isReadOnly())
+        if (isReadOnly() && !isAllowChangeComments())
         {
             LOG_WRN("The document is read-only, cannot save.");
         }
@@ -971,10 +971,16 @@ bool ClientSession::filterMessage(const std::string& message) const
         }
         else if (tokens.equals(0, "uno"))
         {
-            if (tokens.size() > 1 && (tokens.equals(1, ".uno:ExecuteSearch")
-                || tokens.equals(1, ".uno:EditAnnotation")
-                || tokens.equals(1, ".uno:InsertAnnotation")
-                || tokens.equals(1, ".uno:DeleteAnnotation")))
+            if (tokens.size() > 1 && (tokens.equals(1, ".uno:ExecuteSearch")))
+            {
+                allowed = true;
+            }
+
+            if (isAllowChangeComments()
+                && tokens.size() > 1
+                && (tokens.equals(1, ".uno:EditAnnotation")
+                    || tokens.equals(1, ".uno:InsertAnnotation")
+                    || tokens.equals(1, ".uno:DeleteAnnotation")))
             {
                 allowed = true;
             }

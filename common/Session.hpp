@@ -76,8 +76,14 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
-    virtual void setReadOnly(bool bVal = true) { _isReadOnly = bVal; }
+    virtual void setReadOnly(bool bValue = true) { _isReadOnly = bValue; }
     bool isReadOnly() const { return _isReadOnly; }
+
+    void setAllowChangeComments(bool bValue = true)
+    {
+        _isAllowChangeComments = bValue;
+    }
+    bool isAllowChangeComments() const { return _isAllowChangeComments; }
 
     /// overridden to prepend client ids on messages by the Kit
     virtual bool sendBinaryFrame(const char* buffer, int length);
@@ -248,6 +254,9 @@ private:
 
     /// Whether the session is opened as readonly
     bool _isReadOnly;
+
+    /// If the session is read-only, are comments allowed
+    bool _isAllowChangeComments;
 
     /// The actual URL, also in the child, even if the child never accesses that.
     std::string _docURL;
