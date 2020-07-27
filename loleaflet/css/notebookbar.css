@@ -96,6 +96,7 @@
 
 #toolbar-wrapper.hasnotebookbar {
 	position: fixed;
+	z-index: 11;
 }
 
 /* unobuttons */

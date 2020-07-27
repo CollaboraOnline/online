@@ -1674,7 +1674,7 @@ L.Control.LokDialog = L.Control.extend({
 		else if (grandParentID.includes('calc-inputbar')) {
 			// This is the calculator input bar.
 			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
-			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + top - 20) + 'px');
+			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + 20) + 'px');
 		}
 		else
 		{
