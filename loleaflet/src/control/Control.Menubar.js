@@ -189,6 +189,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:OutlineBullet'},
 				{uno: '.uno:PageDialog'},
 				{uno: '.uno:EditRegion'},
+				{uno: '.uno:TitlePageDialog'},
 				{type: 'separator'},
 				{uno: '.uno:TransformDialog'},
 				{uno: '.uno:FormatLine'},
@@ -234,6 +235,7 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 				]},
 				{uno: '.uno:WordCountDialog'},
+				{uno: '.uno:LineNumberingDialog'},
 				{type: 'separator'},
 				{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:OnlineAutoFormat'}]}
@@ -339,7 +341,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:TableDeleteMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 					{uno: '.uno:DeleteRows'},
 					{uno: '.uno:DeleteColumns'}]},
-				{uno: '.uno:MergeCells'}]
+				{uno: '.uno:MergeCells'},
+				{uno: '.uno:TableDialog'}]
 			},
 			{name: _UNO('.uno:SlideMenu', 'presentation'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
