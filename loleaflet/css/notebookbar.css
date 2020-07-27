@@ -100,7 +100,22 @@
 
 /* unobuttons */
 
-div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookbar, #ObjectBackOne.notebookbar, #ObjectForwardOne.notebookbar, #BringToFront.notebookbar, #SetObjectToBackground.notebookbar, #SetObjectToForeground.notebookbar, #FlipVertical.notebookbar, #FlipHorizontal.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar, #StyleApply.notebookbar, #StyleUpdateByExample.notebookbar, #StyleNewByExample.notebookbar, #Shadowed.notebookbar, #Grow.notebookbar, #Shrink.notebookbar, #Spacing.notebookbar, #SuperScript.notebookbar, #SubScript.notebookbar,#AlignLeft.notebookbar, #AlignRight.notebookbar, #AlignHorizontalCenter.notebookbar, #AlignBlock.notebookbar, #ParaRightToLeft.notebookbar, #ParaLeftToRight.notebookbar, #AlignTop.notebookbar, #AlignVCenter.notebookbar, #AlignBottom.notebookbar, #IncrementIndent.notebookbar, #DecrementIndent.notebookbar, #LeftPara.notebookbar, #RightPara.notebookbar, #CenterPara.notebookbar, #JustifyPara.notebookbar, #DefaultBullet.notebookbar, #DefaultNumbering.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #LineSpacing.notebookbar, #HangingIndent.notebookbar, #CellVertTop.notebookbar, #CellVertCenter.notebookbar, #CellVertBottom.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #DeleteTable.notebookbar, #MergeCells.notebookbar{
+.hasnotebookbar .ui-content .unobutton {
+	width: 32px;
+	height: 32px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+.hasnotebookbar .ui-content.unobutton.selected {
+	-webkit-filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
+	filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
+	box-shadow: 0 0 0px 8px #e6e6e640;
+	border-radius: 0.1px;
+	background-color: #e6e6e640;
+}
+
+div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookbar, #ObjectBackOne.notebookbar, #ObjectForwardOne.notebookbar, #BringToFront.notebookbar, #SetObjectToBackground.notebookbar, #SetObjectToForeground.notebookbar, #FlipVertical.notebookbar, #FlipHorizontal.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar, #StyleApply.notebookbar, #StyleUpdateByExample.notebookbar, #StyleNewByExample.notebookbar, #Shadowed.notebookbar, #Grow.notebookbar, #Shrink.notebookbar, #Spacing.notebookbar, #SuperScript.notebookbar, #SubScript.notebookbar,#AlignLeft.notebookbar, #AlignRight.notebookbar, #AlignHorizontalCenter.notebookbar, #AlignBlock.notebookbar, #ParaRightToLeft.notebookbar, #ParaLeftToRight.notebookbar, #AlignTop.notebookbar, #AlignVCenter.notebookbar, #AlignBottom.notebookbar, #IncrementIndent.notebookbar, #DecrementIndent.notebookbar, #LeftPara.notebookbar, #RightPara.notebookbar, #CenterPara.notebookbar, #JustifyPara.notebookbar, #DefaultBullet.notebookbar, #DefaultNumbering.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #LineSpacing.notebookbar, #HangingIndent.notebookbar, #CellVertTop.notebookbar, #CellVertCenter.notebookbar, #CellVertBottom.notebookbar, #DeleteTable.notebookbar, #MergeCells.notebookbar{
 	padding: 0px !important;
 	margin: 0px 5px 0px 0px !important;
 }
@@ -128,17 +143,18 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 .unotoolbutton.notebookbar .unolabel {
 	font-family:  var(--loleaflet-font);
 	color: var(--gray-light-txt--color);
-	padding-left: 5px !important;
+	padding: 0px 5px !important;
 }
 
 .unotoolbutton.notebookbar .unoarrow {
-	margin-left: 5px;
-	border: solid #555;
-	border-width: 0 3px 3px 0;
+	border: 4px solid transparent;
+	border-top: 5px solid #8D99A7;
 	display: inline-block;
-	padding: 3px;
-	transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
+	margin-left: 3px;
+}
+
+.unotoolbutton.notebookbar:hover .unoarrow {
+	border-top: 5px solid #4c566a;
 }
 
 .unotoolbutton.notebookbar .unobutton.selected {
