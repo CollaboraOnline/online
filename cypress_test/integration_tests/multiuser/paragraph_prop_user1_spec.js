@@ -2,7 +2,7 @@
 
 var helper = require('../common/helper');
 
-describe('Check user list with user-1.', function() {
+describe('Change paragraph properties: user-1.', function() {
 	var testFileName = 'userlist.odt';
 
 	beforeEach(function() {
@@ -13,7 +13,7 @@ describe('Check user list with user-1.', function() {
 		helper.afterAll(testFileName);
 	});
 
-	it('Userlist visibility.', function() {
+	it('Change paragraph alignment.', function() {
 		// user-2 loads the same document
 
 		cy.get('#tb_actionbar_item_userlist')
@@ -29,7 +29,8 @@ describe('Check user list with user-1.', function() {
 		cy.get('#tb_editbar_item_centerpara .w2ui-button')
 			.click();
 
-		cy.get('#tb_editbar_item_centerpara .w2ui-button')
+		// user-2 changes the paragraph alignment
+		cy.get('#tb_editbar_item_rightpara .w2ui-button')
 			.should('have.class', 'checked');
 	});
 
