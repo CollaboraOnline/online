@@ -372,7 +372,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_insertTableControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
+		var options = {hasDropdownArrow: true};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
@@ -388,7 +389,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_shapesControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
+		var options = {hasDropdownArrow: true};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
@@ -404,7 +406,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_conditionalFormatControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
+		var options = {hasDropdownArrow: true};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
@@ -419,7 +422,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_insertGraphicControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
+		var options = {hasDropdownArrow: builder.map['wopi'].EnableInsertRemoteImage};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
@@ -472,7 +476,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_lineSpacingControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
+		var options = {hasDropdownArrow: true};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {

@@ -126,6 +126,16 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	padding-left: 5px !important;
 }
 
+.unotoolbutton.notebookbar .unoarrow {
+	margin-left: 5px;
+	border: solid #555;
+	border-width: 0 3px 3px 0;
+	display: inline-block;
+	padding: 3px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+}
+
 .unotoolbutton.notebookbar .unobutton.selected {
 	box-shadow: 0 0 0px 4px #e6e6e640 !important;
 }
@@ -221,7 +231,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 #ControlCodes.notebookbar {
-	margin-left: 30px !important;
+	margin-left: 35px !important;
 }
 
 #fontnamecombobox.notebookbar ~ .select2 {

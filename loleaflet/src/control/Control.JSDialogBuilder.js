@@ -1614,7 +1614,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			parentContainer);
 	},
 
-	_unoToolButton: function(parentContainer, data, builder) {
+	_unoToolButton: function(parentContainer, data, builder, options) {
 		var button = null;
 
 		var controls = {};
@@ -1681,6 +1681,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.innerHTML = builder._cleanText(data.text);
 			controls['label'] = button;
+		}
+
+		if (options && options.hasDropdownArrow) {
+			var arrow = L.DomUtil.create('i', 'unoarrow', div);
+			controls['arrow'] = arrow;
 		}
 
 		$(div).click(function () {
