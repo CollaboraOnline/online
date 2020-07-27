@@ -2,6 +2,13 @@
 /* global Uint8Array */
 (function (global) {
 
+	global.getParameterByName = function (name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : results[1].replace(/\+/g, ' ');
+	};
+
 	var ua = navigator.userAgent.toLowerCase(),
 	    uv = navigator.vendor.toLowerCase(),
 	    doc = document.documentElement,
@@ -34,6 +41,15 @@
 			navigator.userAgent.toLowerCase().indexOf('trident') != -1);
 
 	global.L = {};
+
+	global.L.Params = {
+		/// Shows close button if non-zero value provided
+		closeButtonEnabled: global.getParameterByName('closebutton'),
+
+		/// Shows revision history file menu option
+		revHistoryEnabled: global.getParameterByName('revisionhistory'),
+	};
+
 	global.L.Browser = {
 
 		// @property ie: Boolean
@@ -673,13 +689,6 @@
 			return false;
 		};
 	}
-
-	global.getParameterByName = function (name) {
-		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-		var results = regex.exec(location.search);
-		return results === null ? '' : results[1].replace(/\+/g, ' ');
-	};
 
 	global._ = function (string) {
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
