@@ -105,6 +105,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin: 0px 5px 0px 0px !important;
 }
 
+/* avoid bug with arrow in new line when window is small */
+#LineSpacing.notebookbar {
+	width: 40px;
+}
+
 #buttonbefore.notebookbar, #buttonafter.notebookbar, #buttonoptimal.notebookbar, #buttonparallel.notebookbar, #buttonnone.notebookbar, #buttonthrough.notebookbar, #bottom.notebookbar, #top.notebookbar, #standard.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar{
 	margin: 0px !important;
 	padding: 0px !important;
