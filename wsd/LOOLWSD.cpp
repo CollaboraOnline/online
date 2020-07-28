@@ -57,6 +57,7 @@
 #include <mutex>
 #include <sstream>
 #include <thread>
+#include <unordered_map>
 
 #if !MOBILEAPP
 
@@ -2828,26 +2829,143 @@ private:
 
     static std::string getContentType(const std::string& fileName)
     {
-        const std::string nodePath = Poco::format("//[@ext='%s']", Poco::Path(fileName).getExtension());
-        std::string discPath = Path(Application::instance().commandPath()).parent().toString() + "discovery.xml";
-        if (!File(discPath).exists())
-        {
-            discPath = LOOLWSD::FileServerRoot + "/discovery.xml";
-        }
+        static std::unordered_map<std::string, std::string> aContentTypes{
+            { "svg", "image/svg+xml" },
+            { "pot", "application/vnd.ms-powerpoint" },
+            { "xla", "application/vnd.ms-excel" },
 
-        InputSource input(discPath);
-        DOMParser domParser;
-        AutoPtr<Poco::XML::Document> doc = domParser.parse(&input);
-        if (doc)
-        {
-            Node* node = doc->getNodeByPath(nodePath);
-            if (node && node->parentNode())
-            {
-                Element* elem = dynamic_cast<Element*>(node->parentNode());
-                if (elem && elem->hasAttributes())
-                    return elem->getAttribute("name");
-            }
-        }
+            // Writer documents
+            { "sxw", "application/vnd.sun.xml.writer" },
+            { "odt", "application/vnd.oasis.opendocument.text" },
+            { "fodt", "application/vnd.oasis.opendocument.text-flat-xml" },
+
+            // Calc documents
+            { "sxc", "application/vnd.sun.xml.calc" },
+            { "ods", "application/vnd.oasis.opendocument.spreadsheet" },
+            { "fods", "application/vnd.oasis.opendocument.spreadsheet-flat-xml" },
+
+            // Impress documents
+            { "sxi", "application/vnd.sun.xml.impress" },
+            { "odp", "application/vnd.oasis.opendocument.presentation" },
+            { "fodp", "application/vnd.oasis.opendocument.presentation-flat-xml" },
+
+            // Draw documents
+            { "sxd", "application/vnd.sun.xml.draw" },
+            { "odg", "application/vnd.oasis.opendocument.graphics" },
+            { "fodg", "application/vnd.oasis.opendocument.graphics-flat-xml" },
+
+            // Chart documents
+            { "odc", "application/vnd.oasis.opendocument.chart" },
+
+            // Text master documents
+            { "sxg", "application/vnd.sun.xml.writer.global" },
+            { "odm", "application/vnd.oasis.opendocument.text-master" },
+
+            // Math documents
+            // In fact Math documents are not supported at all.
+            // See: https://bugs.documentfoundation.org/show_bug.cgi?id=97006
+            { "sxm", "application/vnd.sun.xml.math" },
+            { "odf", "application/vnd.oasis.opendocument.formula" },
+
+            // Text template documents
+            { "stw", "application/vnd.sun.xml.writer.template" },
+            { "ott", "application/vnd.oasis.opendocument.text-template" },
+
+            // Writer master document templates
+            { "otm", "application/vnd.oasis.opendocument.text-master-template" },
+
+            // Spreadsheet template documents
+            { "stc", "application/vnd.sun.xml.calc.template" },
+            { "ots", "application/vnd.oasis.opendocument.spreadsheet-template" },
+
+            // Presentation template documents
+            { "sti", "application/vnd.sun.xml.impress.template" },
+            { "otp", "application/vnd.oasis.opendocument.presentation-template" },
+
+            // Drawing template documents
+            { "std", "application/vnd.sun.xml.draw.template" },
+            { "otg", "application/vnd.oasis.opendocument.graphics-template" },
+
+            // MS Word
+            { "doc", "application/msword" },
+            { "dot", "application/msword" },
+
+            // MS Excel
+            { "xls", "application/vnd.ms-excel" },
+
+            // MS PowerPoint
+            { "ppt", "application/vnd.ms-powerpoint" },
+
+            // OOXML wordprocessing
+            { "docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
+            { "docm", "application/vnd.ms-word.document.macroEnabled.12" },
+            { "dotx", "application/vnd.openxmlformats-officedocument.wordprocessingml.template" },
+            { "dotm", "application/vnd.ms-word.template.macroEnabled.12" },
+
+            // OOXML spreadsheet
+            { "xltx", "application/vnd.openxmlformats-officedocument.spreadsheetml.template" },
+            { "xltm", "application/vnd.ms-excel.template.macroEnabled.12" },
+            { "xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+            { "xlsb", "application/vnd.ms-excel.sheet.binary.macroEnabled.12" },
+            { "xlsm", "application/vnd.ms-excel.sheet.macroEnabled.12" },
+
+            // OOXML presentation
+            { "pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation" },
+            { "pptm", "application/vnd.ms-powerpoint.presentation.macroEnabled.12" },
+            { "potx", "application/vnd.openxmlformats-officedocument.presentationml.template" },
+            { "potm", "application/vnd.ms-powerpoint.template.macroEnabled.12" },
+
+            // Others
+            { "wpd", "application/vnd.wordperfect" },
+            { "pdb", "application/x-aportisdoc" },
+            { "hwp", "application/x-hwp" },
+            { "wps", "application/vnd.ms-works" },
+            { "wri", "application/x-mswrite" },
+            { "dif", "application/x-dif-document" },
+            { "slk", "text/spreadsheet" },
+            { "csv", "text/csv" },
+            { "dbf", "application/x-dbase" },
+            { "wk1", "application/vnd.lotus-1-2-3" },
+            { "cgm", "image/cgm" },
+            { "dxf", "image/vnd.dxf" },
+            { "emf", "image/x-emf" },
+            { "wmf", "image/x-wmf" },
+            { "cdr", "application/coreldraw" },
+            { "vsd", "application/vnd.visio2013" },
+            { "vss", "application/vnd.visio" },
+            { "pub", "application/x-mspublisher" },
+            { "lrf", "application/x-sony-bbeb" },
+            { "gnumeric", "application/x-gnumeric" },
+            { "mw", "application/macwriteii" },
+            { "numbers", "application/x-iwork-numbers-sffnumbers" },
+            { "oth", "application/vnd.oasis.opendocument.text-web" },
+            { "p65", "application/x-pagemaker" },
+            { "rtf", "text/rtf" },
+            { "txt", "text/plain" },
+            { "fb2", "application/x-fictionbook+xml" },
+            { "cwk", "application/clarisworks" },
+            { "wpg", "image/x-wpg" },
+            { "pages", "application/x-iwork-pages-sffpages" },
+            { "ppsx", "application/vnd.openxmlformats-officedocument.presentationml.slideshow" },
+            { "key", "application/x-iwork-keynote-sffkey" },
+            { "abw", "application/x-abiword" },
+            { "fh", "image/x-freehand" },
+            { "sxs", "application/vnd.sun.xml.chart" },
+            { "602", "application/x-t602" },
+            { "bmp", "image/bmp" },
+            { "png", "image/png" },
+            { "gif", "image/gif" },
+            { "tiff", "image/tiff" },
+            { "jpg", "image/jpg" },
+            { "jpeg", "image/jpeg" },
+            { "pdf", "application/pdf" },
+        };
+
+        const std::string sExt = Poco::Path(fileName).getExtension();
+
+        const auto it = aContentTypes.find(sExt);
+        if (it != aContentTypes.end())
+            return it->second;
 
         return "application/octet-stream";
     }
