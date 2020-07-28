@@ -120,6 +120,11 @@ L.Control.Notebookbar = L.Control.extend({
 				'children': [
 					{
 						'type': 'toolitem',
+						'text': _('Menu'),
+						'command': '.uno:Menubar'
+					},
+					{
+						'type': 'toolitem',
 						'text': _('Save'),
 						'command': '.uno:Save'
 					},
@@ -143,6 +148,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$('nav').prepend(shortcutsBar);
 		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
 		builder.build(shortcutsBar, this.getShortcutsBarData());
+		$('#Menubar').html('<span id="shortcuts-menubar-icon"></span>');
 	},
 
 	setCurrentScrollPosition: function() {
