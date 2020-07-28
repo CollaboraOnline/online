@@ -3,7 +3,7 @@
 var helper = require('../common/helper');
 
 describe('Change paragraph properties: user-1.', function() {
-	var testFileName = 'userlist.odt';
+	var testFileName = 'paragraph_prop.odt';
 
 	beforeEach(function() {
 		helper.beforeAllDesktop(testFileName);
