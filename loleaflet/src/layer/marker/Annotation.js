@@ -222,7 +222,7 @@ L.Annotation = L.Layer.extend({
 		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
 		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
-		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.png'));
+		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
 		imgAuthor.setAttribute('width', this.options.imgSize.x);
 		imgAuthor.setAttribute('height', this.options.imgSize.y);
 		this._authorAvatarImg = imgAuthor;
