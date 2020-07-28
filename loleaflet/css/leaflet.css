@@ -814,7 +814,8 @@ input.clipboard {
 
 .leaflet-progress-label {
 	text-align: center;
-	}
+	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
 
 .leaflet-slideshow {
 	background: #FFFFFF;
