@@ -586,13 +586,6 @@ L.Control.PartsPreview = L.Control.extend({
 			if (partId < 0)
 				partId = -1; // First item is -1.
 			this.partsPreview._map._socket.sendMessage('moveselectedclientparts position=' + partId);
-			// Update previews, after a second, since we only get the dragged one invalidated.
-			var that = this.partsPreview;
-			setTimeout(function () {
-				for (var i = 0; i < that._previewTiles.length; ++i) {
-					that._map.getPreview(i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: that.options.autoUpdate, broadcast: true});
-				}
-			}, 1000);
 		}
 
 		this.classList.remove('preview-img-dropsite');
