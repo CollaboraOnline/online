@@ -2116,7 +2116,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
     if (success)
         sendTextFrame("saveas: url=" + encodedURL + " filename=" + encodedWopiFilename);
     else
-        sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
+        sendTextFrameAndLogError("error: cmd=saveas kind=savefailed");
 
     return true;
 }

@@ -511,7 +511,19 @@ L.Socket = L.Class.extend({
 
 			return;
 		}
-		else if (textMsg.startsWith('error:') && command.errorCmd === 'storage') {
+		else if (textMsg.startsWith('error:')
+			&& (command.errorCmd === 'storage' || command.errorCmd === 'saveas')) {
+
+			if (command.errorCmd === 'saveas') {
+				this._map.fire('postMessage', {
+					msgId: 'Action_Save_Resp',
+					args: {
+						success: false,
+						result: command.errorKind
+					}
+				});
+			}
+
 			this._map.hideBusy();
 			var storageError;
 			if (command.errorKind === 'savediskfull') {
@@ -584,16 +596,16 @@ L.Socket = L.Class.extend({
 			}
 
 			// Skip empty errors (and allow for suppressing errors by making them blank).
-			if (storageError != '') {
+			if (storageError && storageError != '') {
 				// Parse the storage url as link
 				var tmpLink = document.createElement('a');
 				tmpLink.href = this._map.options.doc;
 				// Insert the storage server address to be more friendly
 				storageError = storageError.replace('%storageserver', tmpLink.host);
 				this._map.fire('warn', {msg: storageError});
-			}
 
-			return;
+				return;
+			}
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'internal') {
 			this._map.hideBusy();
@@ -612,9 +624,6 @@ L.Socket = L.Class.extend({
 			this.close();
 
 			return;
-		}
-		else if (textMsg.startsWith('error:') && command.errorCmd === 'saveas') {
-			this._map.hideBusy();
 		}
 		else if (textMsg.startsWith('error:') && command.errorCmd === 'load') {
 			this._map.hideBusy();
@@ -754,6 +763,13 @@ L.Socket = L.Class.extend({
 						msgId: 'File_Rename',
 						args: {
 							NewName: command.filename
+						}
+					});
+				} else if (textMsg.startsWith('saveas:')) {
+					this._map.fire('postMessage', {
+						msgId: 'Action_Save_Resp',
+						args: {
+							success: true
 						}
 					});
 				}
