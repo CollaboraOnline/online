@@ -1054,12 +1054,12 @@ function setupToolbar(e) {
 	map.on('commandresult', onCommandResult);
 	map.on('updateparts pagenumberchanged', onUpdateParts);
 
-	if (map.options.wopi && L.Params.closeButtonEnabled) {
-		$('#closebuttonwrapper').show();
+	if (map.options.wopi && L.Params.closeButtonEnabled && !window.mode.isMobile()) {
+		$('#closebuttonwrapper').css('display', 'block');
 	} else if (!L.Params.closeButtonEnabled) {
 		$('#closebuttonwrapper').hide();
 	} else if (L.Params.closeButtonEnabled && !window.mode.isMobile()) {
-		$('#closebuttonwrapper').show();
+		$('#closebuttonwrapper').css('display', 'block');
 	}
 
 	$('#closebutton').click(function() {
