@@ -59,6 +59,16 @@
 	z-index: 10;
 	cursor: auto;
 }
+
+.leaflet-progress-layer
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+}
+
 #document-container.text-doctype > #map{
 	cursor: text;
 }

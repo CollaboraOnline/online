@@ -151,13 +151,7 @@ L.Map = L.Evented.extend({
 		this._addLayers(this.options.layers);
 		this._socket = L.socket(this);
 
-		var center = this.getCenter();
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			var doubledProgressHeight = 200;
-			var size = new L.point(screen.width, screen.height - doubledProgressHeight);
-			center = this.layerPointToLatLng(size._divideBy(2));
-		}
-		this._progressBar = L.progressOverlay(center, new L.point(150, 25));
+		this._progressBar = L.progressOverlay(new L.point(150, 25));
 
 		this._textInput = L.textInput();
 		this.addLayer(this._textInput);

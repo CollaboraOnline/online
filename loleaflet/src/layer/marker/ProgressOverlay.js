@@ -10,8 +10,7 @@ L.ProgressOverlay = L.Layer.extend({
 		spinnerSpeed: 30
 	},
 
-	initialize: function (latlng, size) {
-		this._latlng = L.latLng(latlng);
+	initialize: function (size) {
 		this._size = size;
 		this._percent = 0;
 		this._initLayout();
@@ -19,18 +18,13 @@ L.ProgressOverlay = L.Layer.extend({
 	},
 
 	onAdd: function () {
-		if (this._container) {
-			this.getPane().appendChild(this._container);
-			this.update();
-		}
-
 		this._spinnerInterval = L.LOUtil.startSpinner(this._spinnerCanvas, this.options.spinnerSpeed);
-		this._map.on('moveend', this.update, this);
 	},
 
 	onRemove: function () {
 		if (this._container) {
-			this.getPane().removeChild(this._container);
+			L.DomUtil.get('document-container').removeChild(this._container);
+			this._container = null;
 		}
 
 		if (this._spinnerInterval) {
@@ -38,18 +32,8 @@ L.ProgressOverlay = L.Layer.extend({
 		}
 	},
 
-	update: function () {
-		if (this._container && this._map) {
-			var origin = new L.Point(0, 0);
-			var paneOffset = this._map.layerPointToContainerPoint(origin);
-			var sizeOffset = this._size.divideBy(2, true);
-			var position = this._map.latLngToLayerPoint(this._latlng).round();
-			this._setPos(position.subtract(paneOffset).subtract(sizeOffset));
-		}
-	},
-
 	_initLayout: function () {
-		this._container = L.DomUtil.create('div', 'leaflet-progress-layer');
+		this._container = L.DomUtil.create('div', 'leaflet-progress-layer', L.DomUtil.get('document-container'));
 		this._spinner = L.DomUtil.create('div', 'leaflet-progress-spinner', this._container);
 		this._spinnerCanvas = L.DomUtil.create('canvas', 'leaflet-progress-spinner-canvas', this._spinner);
 
@@ -70,10 +54,6 @@ L.ProgressOverlay = L.Layer.extend({
 		L.DomEvent
 			.disableClickPropagation(this._progress)
 			.disableScrollPropagation(this._container);
-	},
-
-	_setPos: function (pos) {
-		L.DomUtil.setPosition(this._container, pos);
 	},
 
 	shutdownTimer: function() {
@@ -123,6 +103,10 @@ L.ProgressOverlay = L.Layer.extend({
 		if (map.hasLayer(this)) {
 			map.removeLayer(this);
 		}
+		if (this._container) {
+			L.DomUtil.get('document-container').removeChild(this._container);
+			this._container = null;
+		}
 	},
 
 	setLabel: function (label) {
@@ -147,6 +131,6 @@ L.ProgressOverlay = L.Layer.extend({
 	}
 });
 
-L.progressOverlay = function (latlng, size) {
-	return new L.ProgressOverlay(latlng, size);
+L.progressOverlay = function (size) {
+	return new L.ProgressOverlay(size);
 };
