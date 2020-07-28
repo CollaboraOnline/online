@@ -314,7 +314,9 @@ L.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('osinfo ')) {
 			var osInfo = textMsg.replace('osinfo ', '');
-			document.getElementById('os-info').innerText = osInfo;
+			var osInfoElement = document.getElementById('os-info');
+			if (osInfoElement)
+				osInfoElement.innerText = osInfo;
 		}
 		else if (textMsg.startsWith('clipboardkey: ')) {
 			var key = textMsg.substring('clipboardkey: '.length);
