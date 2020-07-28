@@ -118,25 +118,33 @@ void WopiProofTests::testOurProof()
 
     const VecOfStringPairs& discovery = gen.GetProofKeyAttributes();
     int len = discovery.size();
-    LOK_ASSERT_EQUAL(3, len);
+    LOK_ASSERT_EQUAL(6, len);
     LOK_ASSERT_EQUAL(discovery[0].first, std::string("value"));
     LOK_ASSERT_EQUAL(discovery[1].first, std::string("modulus"));
-    std::string modulus = discovery[1].second;
+    const std::string modulus = discovery[1].second;
     LOK_ASSERT_EQUAL(discovery[2].first, std::string("exponent"));
-    std::string exponent = discovery[2].second;
+    const std::string exponent = discovery[2].second;
+    LOK_ASSERT_EQUAL(discovery[3].first, std::string("oldvalue"));
+    LOK_ASSERT_EQUAL(discovery[4].first, std::string("oldmodulus"));
+    const std::string oldmodulus = discovery[4].second;
+    LOK_ASSERT_EQUAL(discovery[5].first, std::string("oldexponent"));
+    const std::string oldexponent = discovery[5].second;
 
     std::string access_token = "!££$%£^$-!---~@@{}OP";
     std::string uri = "https://user@short.com:12345/blah?query_string=foo";
     VecOfStringPairs pairs = gen.GetProofHeaders(access_token, uri);
     len = pairs.size();
-    LOK_ASSERT_EQUAL(2, len);
+    LOK_ASSERT_EQUAL(3, len);
     LOK_ASSERT_EQUAL(pairs[0].first, std::string("X-WOPI-TimeStamp"));
     std::string timestamp = pairs[0].second;
     LOK_ASSERT_EQUAL(pairs[1].first, std::string("X-WOPI-Proof"));
     std::string proof = pairs[1].second;
+    LOK_ASSERT_EQUAL(pairs[2].first, std::string("X-WOPI-ProofOld"));
+    std::string proofOld = pairs[2].second;
 
     int64_t ticks = std::stoll(timestamp.c_str(), nullptr, 10);
     verifySignature(access_token, uri, ticks, modulus, exponent, proof);
+    verifySignature(access_token, uri, ticks, modulus, exponent, proofOld);
 
     // tdf#134041: test another data
 
@@ -144,14 +152,17 @@ void WopiProofTests::testOurProof()
     uri = "https://user2@short.com:12345/blah?query_string=bar";
     pairs = gen.GetProofHeaders(access_token, uri);
     len = pairs.size();
-    LOK_ASSERT_EQUAL(2, len);
+    LOK_ASSERT_EQUAL(3, len);
     LOK_ASSERT_EQUAL(pairs[0].first, std::string("X-WOPI-TimeStamp"));
     timestamp = pairs[0].second;
     LOK_ASSERT_EQUAL(pairs[1].first, std::string("X-WOPI-Proof"));
     proof = pairs[1].second;
+    LOK_ASSERT_EQUAL(pairs[2].first, std::string("X-WOPI-ProofOld"));
+    proofOld = pairs[2].second;
 
     ticks = std::stoll(timestamp.c_str(), nullptr, 10);
     verifySignature(access_token, uri, ticks, modulus, exponent, proof);
+    verifySignature(access_token, uri, ticks, modulus, exponent, proofOld);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WopiProofTests);

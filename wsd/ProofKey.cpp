@@ -115,9 +115,19 @@ void Proof::initialize()
         const auto e = m_pKey->encryptionExponent();
         const auto capiBlob = RSA2CapiBlob(m, e);
 
-        m_aAttribs.emplace_back("value", BytesToBase64(capiBlob));
-        m_aAttribs.emplace_back("modulus", BytesToBase64(m));
-        m_aAttribs.emplace_back("exponent", BytesToBase64(e));
+        const auto sv = BytesToBase64(capiBlob);
+        const auto sm = BytesToBase64(m);
+        const auto se = BytesToBase64(e);
+
+        m_aAttribs.emplace_back("value", sv);
+        m_aAttribs.emplace_back("modulus", sm);
+        m_aAttribs.emplace_back("exponent", se);
+
+        // TODO: implement proper rotation; for now, just duplicate * to old*
+
+        m_aAttribs.emplace_back("oldvalue", sv);
+        m_aAttribs.emplace_back("oldmodulus", sm);
+        m_aAttribs.emplace_back("oldexponent", se);
     }
 
 }
@@ -255,7 +265,10 @@ VecOfStringPairs Proof::GetProofHeaders(const std::string& access_token, const s
     {
         int64_t ticks = DotNetTicks(std::chrono::system_clock::now());
         vec.emplace_back("X-WOPI-TimeStamp", std::to_string(ticks));
-        vec.emplace_back("X-WOPI-Proof", SignProof(GetProof(access_token, uri, ticks)));
+        const auto sProof = SignProof(GetProof(access_token, uri, ticks));
+        vec.emplace_back("X-WOPI-Proof", sProof);
+        // TODO: implement proper rotation; for now, just duplicate X-WOPI-Proof to X-WOPI-ProofOld
+        vec.emplace_back("X-WOPI-ProofOld", sProof);
     }
     return vec;
 }
