@@ -3,7 +3,7 @@
  * L.ProgressOverlay is used to overlay progress images over the map.
  */
 
- /* global brandProductName */
+ /* global brandProductName $ */
 L.ProgressOverlay = L.Layer.extend({
 
 	options: {
@@ -17,8 +17,9 @@ L.ProgressOverlay = L.Layer.extend({
 		this.intervalTimer = undefined;
 	},
 
+	// create layout but don't add to the DOM yet
 	_initLayout: function () {
-		this._container = L.DomUtil.create('div', 'leaflet-progress-layer', L.DomUtil.get('document-container'));
+		this._container = L.DomUtil.create('div', 'leaflet-progress-layer');
 		this._spinner = L.DomUtil.create('div', 'leaflet-progress-spinner', this._container);
 		this._spinnerCanvas = L.DomUtil.create('canvas', 'leaflet-progress-spinner-canvas', this._spinner);
 
@@ -51,6 +52,16 @@ L.ProgressOverlay = L.Layer.extend({
 		this._spinnerInterval = undefined;
 	},
 
+	showSpinner: function() {
+		L.DomUtil.get('document-container').appendChild(this._container);
+		this._spinnerInterval = L.LOUtil.startSpinner(this._spinnerCanvas, this.options.spinnerSpeed);
+	},
+
+	hideSpinner: function() {
+		if (this._container)
+			$(this._container).remove();
+	},
+
 	// Show the progress bar, but only if things seem slow
 	delayedStart: function(map, label, bar) {
 		this.setLabel(label);
@@ -67,7 +78,7 @@ L.ProgressOverlay = L.Layer.extend({
 				switch (self.state) {
 				// 0.5s -> start the spinner
 				case 1:
-					self._spinnerInterval = L.LOUtil.startSpinner(self._spinnerCanvas, self.options.spinnerSpeed);
+					self.showSpinner();
 					break;
 				// 2s -> enable the progress bar if we have one & it's low
 				case 4:
@@ -85,10 +96,7 @@ L.ProgressOverlay = L.Layer.extend({
 	// Hide ourselves if there is anything to hide
 	end: function() {
 		this.shutdownTimer();
-
-		if (this._container)
-			L.DomUtil.get('document-container').removeChild(this._container);
-		this._container = undefined;
+		this.hideSpinner();
 	},
 
 	setLabel: function (label) {
