@@ -591,7 +591,9 @@ L.Map.include({
 			text = this.hyperlinkUnderCursor.text;
 			link = this.hyperlinkUnderCursor.link;
 		} else if (this._clip && this._clip._selectionType == 'text') {
-			text = this.extractContent(this._clip._selectionContent);
+			if (map['stateChangeHandler'].getItemValue('.uno:Copy') === 'enabled') {
+				text = this.extractContent(this._clip._selectionContent);
+			}
 		} else if (this._docLayer._selectedTextContent) {
 			text = this.extractContent(this._docLayer._selectedTextContent);
 		}
@@ -600,8 +602,8 @@ L.Map.include({
 			contentClassName: 'hyperlink-dialog',
 			message: _('Insert hyperlink'),
 			input: [
-				_('Text') + '<input name="text" type="text" value="' + text + '"/>',
-				_('Link') + '<input name="link" type="text" value="' + link + '"/>'
+				_('Text') + '<input name="text" id="hyperlink-text-box" type="text" value="' + text + '"/>',
+				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '"/>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
@@ -625,6 +627,16 @@ L.Map.include({
 				else {
 					map.focus();
 				}
+			},
+			afterOpen: function() {
+				setTimeout(function() {
+					if (document.getElementById('hyperlink-text-box').value.trim() !== '') {
+						document.getElementById('hyperlink-link-box').focus();
+					}
+					else {
+						document.getElementById('hyperlink-text-box').focus();
+					}
+				}, 0);
 			}
 		});
 	}
