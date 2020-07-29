@@ -163,6 +163,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		} else if (commandName === '.uno:StyleApply') {
 			$('#applystyle').val(state).trigger('change');
 		}
+		else if (commandName === '.uno:ModifiedStatus') {
+			if (e.state === 'true') {
+				$('#Saveimg').addClass('savemodified');
+			}
+			else {
+				$('#Saveimg').removeClass('savemodified');
+			}
+		}
 	},
 
 	_setupComboboxSelectionHandler: function(combobox, id, builder) {
