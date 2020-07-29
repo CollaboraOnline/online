@@ -3351,8 +3351,21 @@ Editor to WOPI host
 </table>
 
 <h5><a name="toolbar-button-ids">Finding toolbar button IDs</a></h5>
-<p>Toolbar button IDs are defined in the <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Toolbar.js">Control.Toolbar.js</a>.
+<p>Toolbar button IDs are defined in getToolItems/create functions in:
+<ul>
+	<li>
+		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.TopToolbar.js">Control.TopToolbar.js</a> for the top toolbar on desktop or tablet.
+	</li>
+	<li>
+		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.MobileTopBar.js">Control.MobileTopBar.js</a> for the top toolbar on smartphone.
+	</li>
+	<li>
+		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.MobileBottomBar.js">Control.MobileBottomBar.js</a> for the bottom toolbar on smartphone.
+	</li>
+	<li>
+		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a> for the statusbar on desktop.
+	</li>
+</ul>
 Note that they usually don't change but there is no guarantee that they are stable.</p>
 
 <h5><a name="statusbar-element-ids">Finding statusbar element IDs</a></h5>

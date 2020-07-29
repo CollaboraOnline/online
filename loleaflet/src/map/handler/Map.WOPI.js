@@ -220,19 +220,29 @@ L.Map.WOPI = L.Handler.extend({
 				console.error('Property "Values" not set');
 				return;
 			}
+
 			if (!msg.Values.id) {
 				console.error('Property "Values.id" not set');
 				return;
 			}
-			var toolbar = w2ui['toolbar-up'] ? w2ui['toolbar-up'] : (w2ui['actionbar'] ? w2ui['actionbar'] : w2ui['editbar']);
-			if (!toolbar || !toolbar.get(msg.Values.id)) {
+
+			var toolbars = [w2ui['toolbar-up'], w2ui['actionbar'], w2ui['editbar']];
+			var found = false;
+
+			toolbars.forEach(function(toolbar) {
+				if (toolbar && toolbar.get(msg.Values.id)) {
+					found = true;
+					if (msg.MessageId === 'Show_Button') {
+						toolbar.show(msg.Values.id);
+					} else {
+						toolbar.hide(msg.Values.id);
+					}
+				}
+			});
+
+			if (!found) {
 				console.error('Toolbar button with id "' + msg.Values.id + '" not found.');
 				return;
-			}
-			if (msg.MessageId === 'Show_Button') {
-				toolbar.show(msg.Values.id);
-			} else {
-				toolbar.hide(msg.Values.id);
 			}
 		}
 		else if (msg.MessageId === 'Remove_Statusbar_Element') {
