@@ -249,9 +249,9 @@ function doIfInWriter(callback) {
 // Sometimes cy.type results in random character insertion,
 // this avoids that, which is not clear why it happens.
 function typeText(selector, text, delayMs=0) {
-	var elem= cy.get(selector);
 	for (var i = 0; i < text.length; i++) {
-		elem.type(text.charAt(i));
+		cy.get(selector)
+			.type(text.charAt(i));
 		if (delayMs > 0)
 			cy.wait(delayMs);
 	}

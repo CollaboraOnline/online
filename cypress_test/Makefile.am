@@ -64,7 +64,8 @@ DEKSTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FO
 
 MULTIUSER_TEST_FILES= \
 	paragraph_prop_user1_spec.js,paragraph_prop_user2_spec.js \
-	sidebar_visibility_user1_spec.js,sidebar_visibility_user2_spec.js
+	sidebar_visibility_user1_spec.js,sidebar_visibility_user2_spec.js \
+	simultaneous_typing_user1_spec.js,simultaneous_typing_user2_spec.js
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
