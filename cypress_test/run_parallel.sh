@@ -62,12 +62,22 @@ RUN_COMMAND="${CYPRESS_BINARY} run \
     --spec=${TEST_FILE_PATH}"
 
 print_error() {
+    SPEC=${TEST_FILE}
+    COMMAND=${TEST_TYPE}
+    if [ "${TEST_TYPE}" = "multi-user" ]; then
+        COMMAND="multi"
+        SPEC=${SPEC%"_user1_spec.js"}
+        SPEC=${SPEC%"_user2_spec.js"}
+    fi
     echo -e "\n\
     CypressError: a test failed, please do one of the following:\n\n\
     Run the failing test in headless mode:\n\
-    \tcd cypress_test && make check-${TEST_TYPE} spec=${TEST_FILE}\n\n\
+    \tcd cypress_test && make check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+    if [ "${TEST_TYPE}" != "multi-user" ]; then
+    echo -e "\
     Open the failing test in the interactive test runner:\n\
-    \tcd cypress_test && make run-${TEST_TYPE} spec=${TEST_FILE}\n" >> ${ERROR_LOG}
+    \tcd cypress_test && make run-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+    fi
 }
 
 run_command() {

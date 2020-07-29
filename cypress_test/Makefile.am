@@ -62,10 +62,10 @@ MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDE
 
 DEKSTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
-MULTIUSER_TEST_FILES= \
-	paragraph_prop_user1_spec.js,paragraph_prop_user2_spec.js \
-	sidebar_visibility_user1_spec.js,sidebar_visibility_user2_spec.js \
-	simultaneous_typing_user1_spec.js,simultaneous_typing_user2_spec.js
+MULTIUSER_TESTS= \
+	paragraph_prop \
+	sidebar_visibility \
+	simultaneous_typing
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
@@ -73,13 +73,13 @@ MOBILE_TEST_FILES_DONE= \
 DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DEKSTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
-MULTIUSER_TEST_FILES_DONE= \
-	$(foreach test_file,$(subst $(COMMA),_,$(MULTIUSER_TEST_FILES)),$(MULTIUSER_TRACK_FOLDER)/$(test_file).done)
+MULTIUSER_TESTS_DONE= \
+	$(foreach test,$(MULTIUSER_TESTS),$(MULTIUSER_TRACK_FOLDER)/$(test).done)
 
 check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
-do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TEST_FILES_DONE)
+do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
 	@$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
@@ -110,13 +110,8 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 		@$(foreach done_file,$(DESKTOP_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
 	)
 
-$(MULTIUSER_TEST_FILES_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
-	$(eval TEST_FILES=$(subst spec.js_,spec.js$(SPACE),$(notdir $@)))
-	$(eval USER1=$(dir $@)$(firstword $(TEST_FILES)))
-	$(eval USER2=$(basename $(dir $@)$(lastword $(TEST_FILES))))
-	$(call run_multiuser_tests,\
-		$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(USER1)),$(USER1).log,\
-		$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(USER2)),$(USER2).log)
+$(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
+	$(call run_multiuser_test,$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(basename $@)))
 	@mkdir -p $(dir $@) && touch $@
 
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
@@ -130,6 +125,16 @@ check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call start_loolwsd)
 	$(call run_mobile_tests,$(spec))
 	@$(KILL_COMMAND) || true
+
+check-multi: @JAILS_PATH@ $(NODE_BINS)
+	@rm -f $(ERROR_LOG)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(if $(spec), \
+		$(call run_multiuser_test,$(spec)), \
+		$(call run_all_multiuser_tests))
+	@$(KILL_COMMAND) || true
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
@@ -293,23 +298,31 @@ define run_mobile_tests
 	)
 endef
 
-define run_multiuser_tests
-	@echo "Running cypress multi-user test: $(strip $(1)) - $(strip $(3))"
+define run_all_multiuser_tests
+	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test)))
+endef
+
+define run_multiuser_test
+	$(eval USER1_SPEC=$(strip $(1))_user1_spec.js)
+	$(eval USER2_SPEC=$(strip $(1))_user2_spec.js)
+	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
+	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
+	@echo "Running cypress multi-user test: $(USER1_SPEC) - $(USER2_SPEC)"
 	@echo
 	@$(PARALLEL_SCRIPT) \
 		--browser $(CHROME) \
 		--config $(MULTIUSER_CONFIG) \
 		--env $(MULTIUSER_ENV) \
-		--spec $(1) \
+		--spec $(USER1_SPEC) \
 		--type multi-user \
-		--log-file $(2) & \
+		--log-file $(USER1_LOG) & \
 	$(PARALLEL_SCRIPT) \
 		--browser $(CHROME) \
 		--config $(MULTIUSER_CONFIG) \
 		--env $(MULTIUSER_ENV) \
-		--spec $(3) \
+		--spec $(USER2_SPEC) \
 		--type multi-user \
-		--log-file $(4) && \
+		--log-file $(USER2_LOG) && \
 	wait # waits the background process to be finished
 endef
 
