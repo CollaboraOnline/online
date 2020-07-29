@@ -17,21 +17,6 @@ L.ProgressOverlay = L.Layer.extend({
 		this.intervalTimer = undefined;
 	},
 
-	onAdd: function () {
-		this._spinnerInterval = L.LOUtil.startSpinner(this._spinnerCanvas, this.options.spinnerSpeed);
-	},
-
-	onRemove: function () {
-		if (this._container) {
-			L.DomUtil.get('document-container').removeChild(this._container);
-			this._container = null;
-		}
-
-		if (this._spinnerInterval) {
-			clearInterval(this._spinnerInterval);
-		}
-	},
-
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'leaflet-progress-layer', L.DomUtil.get('document-container'));
 		this._spinner = L.DomUtil.create('div', 'leaflet-progress-spinner', this._container);
@@ -60,6 +45,10 @@ L.ProgressOverlay = L.Layer.extend({
 		if (this.intervalTimer)
 			clearInterval(this.intervalTimer);
 		this.intervalTimer = undefined;
+
+		if (this._spinnerInterval)
+			clearInterval(this._spinnerInterval);
+		this._spinnerInterval = undefined;
 	},
 
 	// Show the progress bar, but only if things seem slow
@@ -78,8 +67,7 @@ L.ProgressOverlay = L.Layer.extend({
 				switch (self.state) {
 				// 0.5s -> start the spinner
 				case 1:
-					if (!map.hasLayer(self))
-						map.addLayer(self);
+					self._spinnerInterval = L.LOUtil.startSpinner(self._spinnerCanvas, self.options.spinnerSpeed);
 					break;
 				// 2s -> enable the progress bar if we have one & it's low
 				case 4:
@@ -91,43 +79,41 @@ L.ProgressOverlay = L.Layer.extend({
 					self.setBar(bar);
 					break;
 				}
-				if (!map.hasLayer(self)) {
-					map.addLayer(self);
-				}
 			}, 500 /* ms */);
 	},
 
 	// Hide ourselves if there is anything to hide
-	end: function(map) {
+	end: function() {
 		this.shutdownTimer();
-		if (map.hasLayer(this)) {
-			map.removeLayer(this);
-		}
-		if (this._container) {
+
+		if (this._container)
 			L.DomUtil.get('document-container').removeChild(this._container);
-			this._container = null;
-		}
+		this._container = undefined;
 	},
 
 	setLabel: function (label) {
-		if (this._label.innerHTML !== label) {
+		if (this._container && this._label.innerHTML !== label) {
 			this._label.innerHTML = label;
 		}
 	},
 
 	setBar: function (bar) {
-		if (bar) {
-			this._progress.style.visibility = '';
-		}
-		else {
-			this._progress.style.visibility = 'hidden';
+		if (this._container) {
+			if (bar) {
+				this._progress.style.visibility = '';
+			}
+			else {
+				this._progress.style.visibility = 'hidden';
+			}
 		}
 	},
 
 	setValue: function (value) {
-		this._percent = value;
-		this._bar.style.width = value + '%';
-		this._value.innerHTML = value + '%';
+		if (this._container) {
+			this._percent = value;
+			this._bar.style.width = value + '%';
+			this._value.innerHTML = value + '%';
+		}
 	}
 });
 
