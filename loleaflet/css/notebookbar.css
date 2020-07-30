@@ -166,6 +166,9 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 .unotoolbutton.notebookbar .unobutton.selected {
 	box-shadow: 0 0 0px 4px #e6e6e640 !important;
 }
+#table-HomeTab {
+	margin-left: -16px;/*force alignment: clipboard elements*/
+}
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
 	border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
