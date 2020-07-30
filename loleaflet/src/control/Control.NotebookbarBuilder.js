@@ -46,6 +46,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:SetDefault'] = this._clearFormattingControl;
 		this._toolitemHandlers['.uno:Presentation'] = this._startPresentationControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
+		this._toolitemHandlers['.uno:Menubar'] = this._menubarControl;
 
 		this._toolitemHandlers['up'] = this._toolbarItemControl;
 		this._toolitemHandlers['down'] = this._toolbarItemControl;
@@ -536,6 +537,93 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				}
 			}
 		});
+	},
+
+	_menubarControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).tooltip({disabled: true});
+		$(control.container).addClass('sm sm-simple lo-menu');
+
+		var menu = {
+			text: [
+				{name: _('Menu'), type: 'menu', menu: [
+					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
+					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
+					{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
+						{uno: '.uno:TrackChanges'},
+						{uno: '.uno:ShowTrackedChanges'},
+						{type: 'separator'},
+						{uno: '.uno:AcceptTrackedChanges'},
+						{uno: '.uno:AcceptAllTrackedChanges'},
+						{uno: '.uno:RejectAllTrackedChanges'},
+						{uno: '.uno:PreviousTrackedChange'},
+						{uno: '.uno:NextTrackedChange'}
+					]},
+					{uno: '.uno:SearchDialog'},
+					{name: _('Repair'), id: 'repair',  type: 'action'},
+					{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
+						{uno: '.uno:SpellingAndGrammarDialog'},
+						{uno: '.uno:SpellOnline'},
+						{uno: '.uno:ThesaurusDialog'},
+						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
+							{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
+							{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
+							{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+						]},
+						{uno: '.uno:WordCountDialog'},
+						{uno: '.uno:LineNumberingDialog'},
+						{type: 'separator'},
+						{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
+							{uno: '.uno:OnlineAutoFormat'}]}
+					]}
+				]}
+			],
+			spreadsheet: [
+				{name: _('Menu'), type: 'menu', menu: [
+					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
+				]}
+			],
+			presentation: [
+				{name: _('Menu'), type: 'menu', menu: [
+					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
+				]}
+			]
+		};
+
+		var menubar = L.control.menubar();
+		menubar._map = builder.map;
+
+		var docType = builder.map.getDocType();
+		var menuHtml = menubar._createMenu(menu[docType]);
+
+		$(control.container).html(menuHtml);
+
+		$(control.container).smartmenus({
+			subMenusSubOffsetX: 1,
+			subMenusSubOffsetY: -8
+		});
+
+		$(menuHtml[0]).children('a').html('<span id="shortcuts-menubar-icon"></span>');
+
+		$(control.container).bind('beforeshow.smapi', {self: menubar}, menubar._beforeShow);
+		$(control.container).bind('click.smapi', {self: menubar}, menubar._onClicked);
+		$(control.container).bind('select.smapi', {self: menubar}, menubar._onItemSelected);
+		$(control.container).bind('mouseenter.smapi', {self: menubar}, menubar._onMouseEnter);
+		$(control.container).bind('mouseleave.smapi', {self: menubar}, menubar._onMouseLeave);
+		$(control.container).bind('keydown', {self: menubar}, menubar._onKeyDown);
+
+		// get languages list
+		var items = builder.map['stateChangeHandler'];
+		var val = items.getItemValue('.uno:LanguageStatus');
+		if (val)
+			menubar._onInitMenu({commandName: '.uno:LanguageStatus', commandValues: [val]});
+		else
+			builder.map.on('commandvalues', menubar._onInitMenu, menubar);
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {

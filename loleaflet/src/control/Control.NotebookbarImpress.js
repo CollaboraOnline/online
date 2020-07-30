@@ -14,6 +14,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'children': [
 					{
 						'type': 'toolitem',
+						'text': _('Menu'),
+						'command': '.uno:Menubar'
+					},
+					{
+						'type': 'toolitem',
 						'text': _('Save'),
 						'command': '.uno:Save'
 					},
