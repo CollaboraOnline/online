@@ -57,6 +57,11 @@
 	z-index: 10000;
 }
 
+.notebookbar-shortcuts-bar > table {
+	display: block;
+	height: 33px;
+}
+
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar {
 	margin-right: 10px;
 }
