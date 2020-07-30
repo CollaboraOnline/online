@@ -1,7 +1,6 @@
 /* global describe it cy beforeEach require afterEach */
 
 var helper = require('../common/helper');
-var desktopHelper = require('../common/desktop_helper');
 
 describe('Sidebar visibility: user-2.', function() {
 	var testFileName = 'sidebar_visibility.odt';
@@ -38,9 +37,6 @@ describe('Sidebar visibility: user-2.', function() {
 		cy.get('#sidebar-panel')
 			.should('be.visible');
 
-		// Hide sidebar
-		desktopHelper.hideSidebar();
-
 		// Change paragraph alignment to trigger user-1 actions
 		cy.get('#tb_editbar_item_rightpara .w2ui-button')
 			.click();
@@ -49,12 +45,9 @@ describe('Sidebar visibility: user-2.', function() {
 		cy.get('#tb_editbar_item_justifypara .w2ui-button')
 			.should('have.class', 'checked');
 
-		// sidebar should be still invisible (user-1 showed his own sidebar)
+		// sidebar should be still visible
 		cy.get('#sidebar-panel')
-			.should('not.be.visible');
-
-		// Show sidebar again
-		desktopHelper.showSidebar();
+			.should('be.visible');
 
 		// Change paragraph alignment to trigger user-1 actions
 		cy.get('#tb_editbar_item_leftpara .w2ui-button')

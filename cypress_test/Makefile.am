@@ -64,6 +64,7 @@ DEKSTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FO
 
 MULTIUSER_TESTS= \
 	paragraph_prop \
+	sidebar_visibility \
 	simultaneous_typing
 
 MOBILE_TEST_FILES_DONE= \
