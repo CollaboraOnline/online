@@ -125,7 +125,13 @@ check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_mobile_tests,$(spec))
 	@$(KILL_COMMAND) || true
 
-check-multi: @JAILS_PATH@ $(NODE_BINS)
+check-multi: do-multi-check-log
+	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
+
+do-multi-check-log: do-multi-check
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
+
+do-multi-check: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(ERROR_LOG)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
@@ -133,7 +139,6 @@ check-multi: @JAILS_PATH@ $(NODE_BINS)
 		$(call run_multiuser_test,$(spec)), \
 		$(call run_all_multiuser_tests))
 	@$(KILL_COMMAND) || true
-	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
