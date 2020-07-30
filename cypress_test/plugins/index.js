@@ -13,6 +13,10 @@ function plugin(on, config) {
 		failed: require('cypress-failed-log/src/failed')()
 	});
 
+	if (process.env.ENABLE_VIDEO_REC) {
+		config.video = true;
+	}
+
 	if (process.env.ENABLE_CONSOLE_LOG) {
 		require('cypress-log-to-output').install(on, function(type, event) {
 			if (event.level === 'error' || event.type === 'error') {
