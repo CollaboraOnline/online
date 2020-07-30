@@ -13,4 +13,5 @@
     <string name="exiting">Излизане...</string>
     <string name="rate_our_app_text">Ако го харесвате, моля, дайте ни 5 звездички в Google Play. Добрите ви рецензии са най-силната ни мотивация.</string>
     <string name="rate_our_app_title">Благодарим ви, че използвате %1$s!</string>
+    <string name="file_chromeos_read_only">Файлът не може да се запише в това местоположение, ще бъде отворен само за четене. Преместете го в папката Play Files за пълен достъп за четене и писане.</string>
 </resources>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="loading">Cargando…</string>
-    <string name="temp_file_saving_disabled">Esti ficheru ye namái de llectura; nun se pue atroxar.</string>
+    <string name="temp_file_saving_disabled">Esti ficheru ye namái de llectura; nun pue guardase.</string>
     <string name="preparing_for_the_first_start_after_an_update">Preparando pal primer aniciu dempués d\'un anovamientu.</string>
     <string name="storage_permission_required">Ríquese permisu d\'almacenamientu</string>
     <string name="later">Sero</string>
     <string name="failed_to_load_file">Nun pudo determinase qué ficheru cargar</string>
     <string name="exiting">Colando…</string>
     <string name="failed_to_insert_image">Nun se pudo inxertar la imaxe</string>
+    <string name="file_chromeos_read_only">Esti ficheru nun se pue abrir nesta ubicación; abrióse nel mou namái de llectura. Muévilu a Ficheros de Play pa un accesu completu de llectura y escritura.</string>
 </resources>
