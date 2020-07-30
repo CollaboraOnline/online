@@ -3469,10 +3469,12 @@ private:
         const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
 
         const std::string action = "action";
+        const std::string favIconUrl = "favIconUrl";
         const std::string urlsrc = "urlsrc";
 
         const std::string rootUriValue = "%SRV_URI%";
-        const std::string uriValue = rootUriValue + "/loleaflet/" LOOLWSD_VERSION_HASH "/" + loleafletHtml + '?';
+        const std::string uriBaseValue = rootUriValue + "/loleaflet/" LOOLWSD_VERSION_HASH "/";
+        const std::string uriValue = uriBaseValue + loleafletHtml + '?';
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;
@@ -3498,6 +3500,18 @@ private:
             else if (elem->getAttribute("name") == "view_comment")
             {
                 LOOLWSD::ViewWithCommentsFileExtensions.insert(elem->getAttribute("ext"));
+            }
+        }
+
+        // turn "images/img.svg" into "http://server.tld/loleaflet/12345abcd/images/img.svg"
+        listNodes = docXML->getElementsByTagName("app");
+        for (unsigned long it = 0; it < listNodes->length(); ++it)
+        {
+            Element* elem = static_cast<Element*>(listNodes->item(it));
+
+            if (elem->hasAttribute(favIconUrl))
+            {
+                elem->setAttribute(favIconUrl, uriBaseValue + elem->getAttribute(favIconUrl));
             }
         }
 
