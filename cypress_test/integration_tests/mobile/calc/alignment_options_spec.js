@@ -324,7 +324,7 @@ describe('Change alignment settings.', function() {
 		// neither the text position nor the clipboard container helps here.
 	});
 
-	it('Merge cells.', function() {
+	it.skip('Merge cells.', function() {
 		// Select the full row
 		calcHelper.selectFirstRow();
 

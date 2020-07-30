@@ -250,7 +250,7 @@ describe('Apply font changes.', function() {
 			.should('not.exist');
 	});
 
-	it('Apply style.', function() {
+	it.skip('Apply style.', function() {
 		// Apply Title style
 		applyStyle('Title');
 
