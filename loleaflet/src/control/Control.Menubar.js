@@ -749,7 +749,7 @@ L.Control.Menubar = L.Control.extend({
 		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('updatepermission', this._onRefresh, this);
 		map.on('addmenu', this._addMenu, this);
-		map.on('commandvalues', this._onInitMenu, this);
+		map.on('commandvalues', this._onInitLanguagesMenu, this);
 		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
 	},
 
@@ -783,7 +783,7 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 
-	_onInitMenu: function (e) {
+	_onInitLanguagesMenu: function (e) {
 		if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
 			var translated, neutral;
 			var constDefa = 'Default_RESET_LANGUAGES';
@@ -808,16 +808,34 @@ L.Control.Menubar = L.Control.extend({
 			var $menuSelection = $('#menu-noneselection').parent();
 			var $menuParagraph = $('#menu-noneparagraph').parent();
 			var $menuDefault = $('#menu-nonelanguage').parent();
+
+			var noneselection = $('#menu-noneselection').detach();
+			var noneparagraph = $('#menu-noneparagraph').detach();
+			var nonelanguage = $('#menu-nonelanguage').detach();
+
+			// clear old entries
+
+			$menuSelection.empty();
+			$menuParagraph.empty();
+			$menuDefault.empty();
+
+			$menuSelection.append(noneselection);
+			$menuParagraph.append(noneparagraph);
+			$menuDefault.append(nonelanguage);
+
 			for (var lang in languages) {
 				translated = languages[lang].translated;
 				neutral = languages[lang].neutral;
+
 				$menuSelection.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Current_' + neutral)));
 				$menuParagraph.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Paragraph_' + neutral)));
 				$menuDefault.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Default_' + neutral)));
 			}
+
 			$menuSelection.append(this._createMenu([{type: 'separator'}]));
 			$menuParagraph.append(this._createMenu([{type: 'separator'}]));
 			$menuDefault.append(this._createMenu([{type: 'separator'}]));
+
 			$menuSelection.append(this._createUnoMenuItem(resetLang, constLang + constCurr));
 			$menuParagraph.append(this._createUnoMenuItem(resetLang, constLang + constPara));
 			$menuDefault.append(this._createUnoMenuItem(resetLang, constLang + constDefa));

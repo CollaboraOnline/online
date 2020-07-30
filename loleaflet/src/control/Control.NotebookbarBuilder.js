@@ -617,13 +617,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).bind('mouseleave.smapi', {self: menubar}, menubar._onMouseLeave);
 		$(control.container).bind('keydown', {self: menubar}, menubar._onKeyDown);
 
-		// get languages list
-		var items = builder.map['stateChangeHandler'];
-		var val = items.getItemValue('.uno:LanguageStatus');
-		if (val)
-			menubar._onInitMenu({commandName: '.uno:LanguageStatus', commandValues: [val]});
-		else
-			builder.map.on('commandvalues', menubar._onInitMenu, menubar);
+		// initialize languages list
+		builder.map.on('commandvalues', menubar._onInitLanguagesMenu, menubar);
+		builder.map._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
