@@ -9,11 +9,13 @@ fi
 
 loop_count=10
 
-if [ $1 = "mobile" ]
+if [ $1 = "mobile" ];
 then
     command="make check-mobile spec="$2
-else
+elif [ $1 = "desktop" ]; then
     command="make check-desktop spec="$2
+else
+    command="make check-multi spec="$2
 fi
 
 i=0
