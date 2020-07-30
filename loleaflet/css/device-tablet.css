@@ -35,3 +35,13 @@
 .main-nav {
     margin: 0;
 }
+.hasnotebookbar{
+	min-width: 808px; /*set a minimum so the logo fits*/
+	overflow: auto hidden;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+.hasnotebookbar::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
