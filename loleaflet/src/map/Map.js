@@ -195,10 +195,6 @@ L.Map = L.Evented.extend({
 			if (!this.initComplete) {
 				this._fireInitComplete('doclayerinit');
 			}
-			if ((window.mode.isTablet() || window.mode.isDesktop()) && this._docLayer._docType == 'text') {
-				var interactiveRuler = this.isPermissionEdit();
-				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this);
-			}
 
 			// We need core's knowledge of whether it is a mobile phone
 			// or not to be in sync with the test in _onJSDialogMsg in TileLayer.js.

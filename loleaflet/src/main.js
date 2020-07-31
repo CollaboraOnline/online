@@ -74,6 +74,8 @@ map.addControl(map.uiManager);
 
 map.uiManager.initializeBasicUI();
 
+L.Map.THIS = map;
+
 map.loadDocument(global.socket);
 
 global.socket = map._socket;
@@ -87,6 +89,5 @@ window.addEventListener('beforeunload', function () {
 
 window.docPermission = permission;
 window.bundlejsLoaded = true;
-L.Map.THIS = map;
 
 }(window));

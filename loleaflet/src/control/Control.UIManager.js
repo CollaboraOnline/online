@@ -103,6 +103,11 @@ L.Control.UIManager = L.Control.extend({
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
+
+			if ((window.mode.isTablet() || window.mode.isDesktop())) {
+				var interactiveRuler = this.map.isPermissionEdit();
+				L.control.ruler({position:'topleft', interactive:interactiveRuler}).addTo(this.map);
+			}
 		}
 
 		if (docType === 'presentation' && (isDesktop || window.mode.isTablet())) {
