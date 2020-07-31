@@ -26,7 +26,7 @@ L.Control.Ruler = L.Control.extend({
 		map.on('rulerupdate', this._updateOptions, this);
 		map.on('tabstoplistupdate', this._updateTabStops, this);
 		map.on('docsize', this._updatePaintTimer, this);
-		map.on('scrolloffset resize', this._fixOffset, this);
+		map.on('moveend', this._fixOffset, this);
 		map.on('updatepermission', this._changeInteractions, this);
 		L.DomUtil.addClass(map.getContainer(), 'hasruler');
 		this._map = map;
