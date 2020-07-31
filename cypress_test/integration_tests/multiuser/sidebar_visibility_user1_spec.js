@@ -7,7 +7,7 @@ describe('Sidebar visibility: user-1.', function() {
 	var testFileName = 'sidebar_visibility.odt';
 
 	beforeEach(function() {
-		helper.beforeAllDesktop(testFileName);
+		helper.beforeAll(testFileName);
 	});
 
 	afterEach(function() {

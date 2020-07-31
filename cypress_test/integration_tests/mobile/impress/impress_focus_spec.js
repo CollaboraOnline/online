@@ -8,7 +8,7 @@ describe('Impress focus tests', function() {
 	var testFileName = 'focus.odp';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'impress');
 	});
 
 	afterEach(function() {

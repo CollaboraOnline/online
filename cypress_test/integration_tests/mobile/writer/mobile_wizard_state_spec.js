@@ -7,7 +7,7 @@ describe('Mobile wizard state tests', function() {
 	var testFileName = 'mobile_wizard_state.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 	});
 
 	afterEach(function() {

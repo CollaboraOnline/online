@@ -8,7 +8,7 @@ describe('Apply font on selected text.', function() {
 	var testFileName = 'apply_font_text.odp';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 

@@ -9,7 +9,7 @@ describe('Change alignment settings.', function() {
 	var testFileName = 'alignment_options.ods';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'calc');
+		helper.beforeAll(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

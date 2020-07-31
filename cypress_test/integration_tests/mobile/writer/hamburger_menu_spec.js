@@ -8,7 +8,7 @@ describe('Trigger hamburger menu options.', function() {
 	var testFileName = 'hamburger_menu.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

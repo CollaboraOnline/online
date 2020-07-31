@@ -6,7 +6,7 @@ describe('Simultaneous typing: user-1.', function() {
 	var testFileName = 'simultaneous_typing.odt';
 
 	beforeEach(function() {
-		helper.beforeAllDesktop(testFileName);
+		helper.beforeAll(testFileName);
 	});
 
 	afterEach(function() {

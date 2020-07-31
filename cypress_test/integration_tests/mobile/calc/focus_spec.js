@@ -8,7 +8,7 @@ describe('Calc focus tests', function() {
 	var testFileName = 'focus.ods';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'calc');
+		helper.beforeAll(testFileName, 'calc');
 
 		// Wait until the Formula-Bar is loaded.
 		cy.get('.inputbar_container', {timeout : 10000});

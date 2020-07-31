@@ -7,7 +7,7 @@ describe('Slide operations', function() {
 	var testFileName = 'slide_operations.odp';
 
 	beforeEach(function() {
-		helper.loadTestDoc(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'impress');
 	});
 
 	afterEach(function() {

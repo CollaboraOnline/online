@@ -8,7 +8,7 @@ describe('Pushing bottom toolbar items.', function() {
 	var testFileName = 'bottom_toolbar.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

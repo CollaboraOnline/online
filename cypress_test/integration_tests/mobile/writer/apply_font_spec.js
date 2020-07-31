@@ -8,7 +8,7 @@ describe('Apply font changes.', function() {
 	var testFileName = 'apply_font.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

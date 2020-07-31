@@ -29,10 +29,6 @@ function enableEditingMobile() {
 	cy.log('Enabling editing mode - end.');
 }
 
-function beforeAllMobile(fileName, subFolder) {
-	helper.loadTestDoc(fileName, subFolder, true);
-}
-
 function longPressOnDocument(posX, posY) {
 	cy.log('Emulating a long press - start.');
 	cy.log('Param - posX: ' + posX);
@@ -208,7 +204,6 @@ function selectFromColorPalette(paletteNum, groupNum, colorNum) {
 }
 
 module.exports.enableEditingMobile = enableEditingMobile;
-module.exports.beforeAllMobile = beforeAllMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
 module.exports.closeHamburgerMenu = closeHamburgerMenu;

@@ -9,7 +9,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	var testFileName = 'shape_properties.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

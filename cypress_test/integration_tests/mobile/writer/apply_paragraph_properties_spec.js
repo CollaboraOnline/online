@@ -8,7 +8,7 @@ describe('Apply paragraph properties.', function() {
 	var testFileName = 'apply_paragraph_properties.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

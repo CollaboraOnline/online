@@ -10,7 +10,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	function before(testFile) {
 		testFileName = testFile;
-		mobileHelper.beforeAllMobile(testFileName, 'calc');
+		helper.beforeAll(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

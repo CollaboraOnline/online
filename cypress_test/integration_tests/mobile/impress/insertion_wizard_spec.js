@@ -10,7 +10,7 @@ describe('Impress insertion wizard.', function() {
 	var testFileName = 'insertion_wizard.odp';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 	});

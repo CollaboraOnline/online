@@ -7,7 +7,7 @@ describe('Toolbar tests', function() {
 	var testFileName = 'toolbar.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 	});
 
 	afterEach(function() {

@@ -7,7 +7,7 @@ describe('Form field button tests.', function() {
 
 	function before(fileName) {
 		testFileName = fileName;
-		helper.loadTestDoc(fileName, 'writer');
+		helper.beforeAll(fileName, 'writer');
 
 		// Wait for the sidebar to change the zoom level by load
 		cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')

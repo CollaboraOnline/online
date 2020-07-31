@@ -7,7 +7,7 @@ describe('Focus tests', function() {
 	var testFileName = 'focus.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 	});
 
 	afterEach(function() {

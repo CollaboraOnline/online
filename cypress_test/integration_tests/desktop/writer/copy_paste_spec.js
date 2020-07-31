@@ -6,7 +6,7 @@ describe('Clipboard operations.', function() {
 	var testFileName = 'copy_paste.odt';
 
 	beforeEach(function() {
-		helper.loadTestDoc(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 	});
 
 	afterEach(function() {

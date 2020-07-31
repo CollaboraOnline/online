@@ -7,7 +7,7 @@ describe('Calc bottom bar tests.', function() {
 	var testFileName = 'BottomBar.ods';
 
 	beforeEach(function() {
-		helper.beforeAllDesktop(testFileName, 'calc');
+		helper.beforeAll(testFileName, 'calc');
 		// Wait until the Formula-Bar is loaded.
 		cy.get('.inputbar_container', {timeout : 10000});
 	});

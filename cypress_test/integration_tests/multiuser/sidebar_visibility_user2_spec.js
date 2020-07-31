@@ -9,7 +9,7 @@ describe('Sidebar visibility: user-2.', function() {
 		// Wait here, before loading the document.
 		// Opening two clients at the same time causes an issue.
 		cy.wait(5000);
-		helper.beforeAllDesktop(testFileName);
+		helper.beforeAll(testFileName);
 	});
 
 	afterEach(function() {

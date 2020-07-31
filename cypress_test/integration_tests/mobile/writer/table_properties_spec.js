@@ -9,7 +9,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 	function before(testFile) {
 		testFileName = testFile;
-		helper.loadTestDoc(testFileName, 'writer', true);
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

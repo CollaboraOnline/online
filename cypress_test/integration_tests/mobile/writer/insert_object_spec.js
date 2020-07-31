@@ -10,7 +10,7 @@ describe('Insert objects via insertion wizard.', function() {
 	var testFileName = 'insert_object.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

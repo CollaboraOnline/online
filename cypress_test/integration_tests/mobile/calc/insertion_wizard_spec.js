@@ -11,7 +11,7 @@ describe('Calc insertion wizard.', function() {
 	var testFileName = 'insertion_wizard.ods';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'calc');
+		helper.beforeAll(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

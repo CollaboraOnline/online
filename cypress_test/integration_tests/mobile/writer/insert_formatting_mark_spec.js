@@ -8,7 +8,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	var testFileName = 'insert_formatting_mark.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

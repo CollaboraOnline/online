@@ -8,7 +8,7 @@ describe('Insert fields via insertion wizard.', function() {
 	var testFileName = 'insert_field.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

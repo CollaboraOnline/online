@@ -6,7 +6,7 @@ describe('Change paragraph properties: user-1.', function() {
 	var testFileName = 'paragraph_prop.odt';
 
 	beforeEach(function() {
-		helper.beforeAllDesktop(testFileName);
+		helper.beforeAll(testFileName);
 	});
 
 	afterEach(function() {

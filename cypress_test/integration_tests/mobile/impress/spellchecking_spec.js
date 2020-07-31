@@ -7,7 +7,7 @@ describe('Spell checking menu.', function() {
 	var testFileName = 'spellchecking.odp';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'impress');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

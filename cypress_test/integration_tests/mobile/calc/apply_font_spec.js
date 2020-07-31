@@ -9,7 +9,7 @@ describe('Apply font changes.', function() {
 	var testFileName = 'apply_font.ods';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'calc');
+		helper.beforeAll(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

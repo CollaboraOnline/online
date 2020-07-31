@@ -8,7 +8,7 @@ describe('Spell checking menu.', function() {
 	var testFileName = 'spellchecking.odt';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

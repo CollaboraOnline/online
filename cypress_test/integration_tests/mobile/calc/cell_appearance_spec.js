@@ -9,7 +9,7 @@ describe('Change cell appearance.', function() {
 	var testFileName = 'cell_appearance.ods';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'calc');
+		helper.beforeAll(testFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

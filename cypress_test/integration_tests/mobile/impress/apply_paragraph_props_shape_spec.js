@@ -8,7 +8,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 	var testFileName = 'apply_paragraph_props_shape.odp';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 

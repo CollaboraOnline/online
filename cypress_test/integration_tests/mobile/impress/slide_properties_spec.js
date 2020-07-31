@@ -7,7 +7,7 @@ describe('Changing slide properties.', function() {
 	var testFileName = 'slide_properties.odp';
 
 	beforeEach(function() {
-		mobileHelper.beforeAllMobile(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 

@@ -2,11 +2,10 @@
 
 require('cypress-wait-until');
 
-function loadTestDoc(fileName, subFolder, mobile) {
+function loadTestDoc(fileName, subFolder) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
-	cy.log('Param - mobile: ' + mobile);
 
 	// Get a clean test document
 	if (subFolder === undefined) {
@@ -23,9 +22,9 @@ function loadTestDoc(fileName, subFolder, mobile) {
 		});
 	}
 
-	if (mobile === true) {
+	doIfOnMobile(function() {
 		cy.viewport('iphone-6');
-	}
+	});
 
 	// Open test document
 	var URI;
@@ -157,9 +156,8 @@ function matchClipboardText(regexp) {
 	});
 }
 
-function beforeAllDesktop(fileName, subFolder) {
-	var mobile = false;
-	loadTestDoc(fileName, subFolder, mobile);
+function beforeAll(fileName, subFolder) {
+	loadTestDoc(fileName, subFolder);
 }
 
 function afterAll(fileName) {
@@ -392,6 +390,25 @@ function inputOnIdle(selector, input, waitingTime = 1000) {
 	cy.log('Type into an input item when idle - end.');
 }
 
+function doIfOnMobile(callback) {
+	cy.window()
+		.then(function(win) {
+			if (win.navigator.userAgent === 'cypress-mobile') {
+				callback();
+			}
+		});
+}
+
+function doIfOnDesktop(callback) {
+	cy.window()
+		.then(function(win) {
+			if (win.navigator.userAgent === 'cypress') {
+				callback();
+			}
+		});
+}
+
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -406,10 +423,12 @@ module.exports.initAliasToEmptyString = initAliasToEmptyString;
 module.exports.doIfInCalc = doIfInCalc;
 module.exports.doIfInImpress = doIfInImpress;
 module.exports.doIfInWriter = doIfInWriter;
-module.exports.beforeAllDesktop = beforeAllDesktop;
+module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
 module.exports.getLOVersion = getLOVersion;
 module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
 module.exports.clickOnIdle = clickOnIdle;
 module.exports.inputOnIdle = inputOnIdle;
 module.exports.waitUntilIdle = waitUntilIdle;
+module.exports.doIfOnMobile = doIfOnMobile;
+module.exports.doIfOnDesktop = doIfOnDesktop;
