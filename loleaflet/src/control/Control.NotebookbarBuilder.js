@@ -604,8 +604,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).html(menuHtml);
 
 		$(control.container).smartmenus({
-			subMenusSubOffsetX: 1,
-			subMenusSubOffsetY: -8
+			hideOnClick: true,
+			showOnClick: true,
+			hideTimeout: 0,
+			hideDuration: 0,
+			showDuration: 0,
+			showTimeout: 0,
+			collapsibleHideDuration: 0,
+			subIndicatorsPos: 'append',
+			subIndicatorsText: '&#8250;'
 		});
 
 		$(menuHtml[0]).children('a').html('<span id="shortcuts-menubar-icon"></span>');
