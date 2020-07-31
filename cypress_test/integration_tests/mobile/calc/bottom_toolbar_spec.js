@@ -15,6 +15,8 @@ describe('Interact with bottom toolbar.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
+		helper.waitUntilIdle('#toolbar-down');
+
 		calcHelper.clickOnFirstCell();
 	}
 

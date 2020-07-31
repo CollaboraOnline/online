@@ -300,6 +300,9 @@ function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 
 function waitUntilIdle(selector, content, waitingTime = 1000) {
 	cy.log('Waiting item to be idle - start.');
+	cy.log('Param - selector: ' + selector);
+	cy.log('Param - content: ' + content);
+	cy.log('Param - waitingTime: ' + waitingTime);
 
 	var item;
 	var waitOnce = 250;
