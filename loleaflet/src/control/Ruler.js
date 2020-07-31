@@ -401,6 +401,9 @@ L.Control.Ruler = L.Control.extend({
 		/// from the tiles that we have already.
 		var tiles = this._map._docLayer._tiles;
 		var firstTileKey = Object.keys(tiles)[0];
+		if (!firstTileKey) {
+			return;
+		}
 		var columnNumber = parseInt(firstTileKey.match(/(\d*):/)[1]);
 		var firstTile = tiles[firstTileKey].el;
 		var firstTileXTranslate = parseInt(firstTile.style.left) - this._map._docLayer._tileWidthPx * columnNumber;
