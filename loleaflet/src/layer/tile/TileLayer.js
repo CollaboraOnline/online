@@ -732,6 +732,7 @@ L.TileLayer = L.GridLayer.extend({
 			var message = textMsg.substring('context:'.length + 1);
 			message = message.split(' ');
 			if (message.length > 1) {
+				this._map.context = {context: message[1]};
 				this._map.fire('contextchange', {context: message[1]});
 			}
 		}

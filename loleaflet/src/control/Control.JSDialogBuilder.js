@@ -683,8 +683,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				tab.id = data.tabs[tabIdx].name;
 				tab.number = data.tabs[tabIdx].id - 1;
+
 				if (data.selected == data.tabs[tabIdx].id)
 					$(tab).addClass('selected');
+
+				var tabContext = data.tabs[tabIdx].context;
+				if (tabContext) {
+					var tabHasCurrentContext = builder.map.context.context !== ''
+											&& tabContext.indexOf(builder.map.context.context) !== -1;
+					var tabHasDefultContext = tabContext.indexOf('default') !== -1;
+
+					if (!tabHasCurrentContext && !tabHasDefultContext) {
+						$(tab).addClass('hidden');
+					}
+				}
+
 				tabs[tabIdx] = tab;
 				tabIds[tabIdx] = tab.id;
 

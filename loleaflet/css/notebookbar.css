@@ -20,6 +20,10 @@
 	padding-top: 7px;
 }
 
+.ui-tab.hidden.notebookbar {
+	display: none;
+}
+
 .ui-tab.selected.notebookbar {
 	border: none;
 	border-radius: 0px;
