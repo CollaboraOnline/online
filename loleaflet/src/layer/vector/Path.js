@@ -107,6 +107,10 @@ L.Path = L.Layer.extend({
 		this._pathNodeCollection.addOrRemoveClass(className, false /* add */);
 	},
 
+	setCursorType: function (cursorType) {
+		this._pathNodeCollection.setCursorType(cursorType);
+	},
+
 });
 
 L.Path.PathNodeData = L.Class.extend({
@@ -164,6 +168,10 @@ L.Path.PathNodeData = L.Class.extend({
 		}
 	},
 
+	setCursorType: function (cursorType) {
+		this._pathNode.style.cursor = cursorType;
+	},
+
 });
 
 L.Path.PathNodeData.key = function (layer) {
@@ -210,6 +218,12 @@ L.Path.PathNodeCollection = L.Class.extend({
 		console.assert(className, 'className not provided!');
 		this.forEachNode(function (nodeData) {
 			nodeData.addOrRemoveClass(className, add);
+		});
+	},
+
+	setCursorType: function (cursorType) {
+		this.forEachNode(function (nodeData) {
+			nodeData.setCursorType(cursorType);
 		});
 	},
 

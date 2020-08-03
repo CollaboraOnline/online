@@ -12,10 +12,10 @@ L.PathTransform.Handle = L.CircleMarker.extend({
 
 	onAdd: function (map) {
 		L.CircleMarker.prototype.onAdd.call(this, map);
-		if (this._path && this.options.setCursor) { // SVG/VML
-			this._path.style.cursor = L.PathTransform.Handle.CursorsByType[
+		if (this.options.setCursor) { // SVG/VML
+			this.setCursorType(L.PathTransform.Handle.CursorsByType[
 				this.options.index
-			];
+			]);
 		}
 	}
 });
@@ -41,7 +41,7 @@ L.PathTransform.RotateHandle = L.PathTransform.Handle.extend({
 	onAdd: function (map) {
 		L.CircleMarker.prototype.onAdd.call(this, map);
 		if (this._path && this.options.setCursor) { // SVG/VML
-			this._path.style.cursor = 'all-scroll';
+			this.setCursorType('all-scroll');
 		}
 	}
 });
