@@ -137,7 +137,6 @@ L.Control.Tabs = L.Control.extend({
 						L.DomEvent.on(tab, 'contextmenu', function(j) {
 							return function() {
 								this._tabForContextMenu = j;
-								$('spreadsheet-tab' + j).contextMenu();
 							};
 						}(i).bind(this));
 					}
