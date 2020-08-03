@@ -611,6 +611,12 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 32px !important;
 }
 
+/* Sheet Tab */
+
+#table-Sheet-Section.notebookbar {
+	margin-top: 10px;
+}
+
 /* Impress */
 
 /* Home Tab */

@@ -5,7 +5,7 @@
 
 /* global _ _UNO */
 L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
-	
+
 	getTabs: function() {
 		return [
 			{
@@ -25,6 +25,16 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'name': 'InsertLabel'
 			},
 			{
+				'text': _('~Sheet'),
+				'id': '-3',
+				'name': 'Sheet'
+			},
+			{
+				'text': _('~Data'),
+				'id': '5',
+				'name': 'DataLabel'
+			},
+			{
 				'text': _('~Review'),
 				'id': '6',
 				'name': 'ReviewLabel'
@@ -35,6 +45,23 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'name': 'Help',
 			}
 		];
+	},
+
+	selectedTab: function(tabName) {
+		switch (tabName) {
+		case 'File':
+			this.loadTab(this.getFileTab());
+			break;
+
+		case 'Help':
+			this.loadTab(this.getHelpTab());
+			break;
+
+		case 'Sheet':
+			this.loadTab(this.getSheetTab());
+			break;
+
+		}
 	},
 
 	getFileTab: function() {
@@ -1794,6 +1821,257 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						}
 					],
 					'vertical': 'true'
+				}
+			]
+		};
+	},
+
+	getSheetTab: function() {
+		return {
+			'id': '',
+			'type': 'control',
+			'text': '',
+			'enabled': 'true',
+			'children': [
+				{
+					'id': '',
+					'type': 'container',
+					'text': '',
+					'enabled': 'true',
+					'children': [
+						{
+							'id': 'NotebookBar',
+							'type': 'grid',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'box',
+									'type': 'container',
+									'text': '',
+									'enabled': 'true',
+									'children': [
+										{
+											'id': 'ContextContainer',
+											'type': 'tabcontrol',
+											'text': '',
+											'enabled': 'true',
+											'selected': '-3',
+											'children': [
+												{
+													'id': '',
+													'type': 'tabpage',
+													'text': '',
+													'enabled': 'true',
+													'children': [
+														{
+															'id': 'Sheet Tab',
+															'type': 'container',
+															'text': '',
+															'enabled': 'true',
+															'children': [
+																{
+																	'id': 'Sheet',
+																	'type': 'container',
+																	'text': '',
+																	'enabled': 'true',
+																	'children': [
+																		{
+																			'id': 'Sheet-Section',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'rows-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'Section7',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Insert Rows Above'),
+																									'command': '.uno:InsertRowsBefore'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'Section10',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Insert Rows Below'),
+																									'command': '.uno:InsertRowsAfter'
+																								}
+																							]
+																						}
+																					]
+																				},
+																				{
+																					'id': 'columns-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'Section8',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Insert Columns Before'),
+																									'command': '.uno:InsertColumnsBefore'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'Section9',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Insert Columns After'),
+																									'command': '.uno:InsertColumnsAfter'
+																								}
+																							]
+																						}
+																					]
+																				},
+																				{
+																					'id': 'break-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'Section7',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Insert Row Break'),
+																									'command': '.uno:InsertRowBreak'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'Section10',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Insert Column Break'),
+																									'command': '.uno:InsertColumnBreak'
+																								}
+																							]
+																						}
+																					]
+																				},
+																				{
+																					'id': 'delete-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'Section7',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Delete Rows'),
+																									'command': '.uno:DeleteRows'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'Section10',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Delete Columns'),
+																									'command': '.uno:DeleteColumns'
+																								}
+																							]
+																						}
+																					]
+																				},
+																				{
+																					'id': 'deletebreak-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'Section7',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Remove Row Break'),
+																									'command': '.uno:DeleteRowbreak'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'Section10',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _('Remove Column Break'),
+																									'command': '.uno:DeleteColumnbreak'
+																								}
+																							]
+																						}
+																					]
+																				},
+																			]
+																		}
+																	]
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
 				}
 			]
 		};

@@ -149,6 +149,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Paste'] = function() {};
 		this._toolitemHandlers['.uno:DataDataPilotRun'] = function() {};
 
+		/*Calc: Data Tab*/
+		this._toolitemHandlers['.uno:DataProvider'] = function() {};
+		this._toolitemHandlers['.uno:ManageXMLSource'] = function() {};
+		this._toolitemHandlers['.uno:DataStreams'] = function() {};
+		this._toolitemHandlers['.uno:InsertExternalDataSource'] = function() {};
+		this._toolitemHandlers['.uno:RecalcPivotTable'] = function() {};
+		this._toolitemHandlers['.uno:DataProviderRefresh'] = function() {};
+		this._toolitemHandlers['.uno:Calculate'] = function() {};
+
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
 
