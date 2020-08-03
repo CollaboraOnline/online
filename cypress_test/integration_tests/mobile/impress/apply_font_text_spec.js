@@ -24,19 +24,10 @@ describe('Apply font on selected text.', function() {
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 	}
 
-	function openTextPropertiesPanel() {
-		mobileHelper.openMobileWizard();
-
-		helper.clickOnIdle('#TextPropertyPanel');
-
-		cy.get('.ui-content.level-0.mobile-wizard')
-			.should('be.visible');
-	}
-
 	it('Apply bold on selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Bold');
 
@@ -49,7 +40,7 @@ describe('Apply font on selected text.', function() {
 	it('Apply italic on selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Italic');
 
@@ -62,7 +53,7 @@ describe('Apply font on selected text.', function() {
 	it('Apply underline on selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Underline');
 
@@ -75,7 +66,7 @@ describe('Apply font on selected text.', function() {
 	it('Apply strikeout on selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Strikeout');
 
@@ -88,7 +79,7 @@ describe('Apply font on selected text.', function() {
 	it('Apply shadowed on selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Shadowed');
 
@@ -101,7 +92,7 @@ describe('Apply font on selected text.', function() {
 	it('Change font name of selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#fontnamecombobox');
 
@@ -121,7 +112,7 @@ describe('Apply font on selected text.', function() {
 	it('Change font size of selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
@@ -144,7 +135,7 @@ describe('Apply font on selected text.', function() {
 	it('Grow font size of selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
@@ -160,7 +151,7 @@ describe('Apply font on selected text.', function() {
 	it('Shrink font size of selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
@@ -179,7 +170,7 @@ describe('Apply font on selected text.', function() {
 
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('not.have.attr', 'font-color');
@@ -197,7 +188,7 @@ describe('Apply font on selected text.', function() {
 	it('Apply highlight on selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#CharBackColor');
 
@@ -213,7 +204,7 @@ describe('Apply font on selected text.', function() {
 		cy.wait(400);
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
@@ -222,7 +213,7 @@ describe('Apply font on selected text.', function() {
 	it('Apply superscript on selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3495');
@@ -242,7 +233,7 @@ describe('Apply font on selected text.', function() {
 	it('Apply subscript on selected text.', function() {
 		impressMobileHelper.selectTextOfShape();
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3495');

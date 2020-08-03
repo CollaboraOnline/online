@@ -203,6 +203,15 @@ function selectFromColorPalette(paletteNum, groupNum, colorNum) {
 	cy.log('Selecting a color from the color palette - end.');
 }
 
+function openTextPropertiesPanel() {
+	openMobileWizard();
+
+	helper.clickOnIdle('#TextPropertyPanel');
+
+	cy.get('#Bold')
+		.should('be.visible');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
@@ -213,3 +222,4 @@ module.exports.executeCopyFromContextMenu = executeCopyFromContextMenu;
 module.exports.openInsertionWizard = openInsertionWizard;
 module.exports.closeInsertionWizard = closeInsertionWizard;
 module.exports.selectFromColorPalette = selectFromColorPalette;
+module.exports.openTextPropertiesPanel = openTextPropertiesPanel;

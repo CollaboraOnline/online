@@ -875,12 +875,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.closeMobileWizard();
 
-		mobileHelper.openMobileWizard();
-
-		helper.clickOnIdle('#TextPropertyPanel');
-
-		cy.get('#Bold')
-			.should('be.visible');
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Color');
 

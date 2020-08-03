@@ -24,17 +24,8 @@ describe('Apply font on selected shape.', function() {
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 	}
 
-	function openTextPropertiesPanel() {
-		mobileHelper.openMobileWizard();
-
-		helper.clickOnIdle('#TextPropertyPanel');
-
-		cy.get('.ui-content.level-0.mobile-wizard')
-			.should('be.visible');
-	}
-
 	it('Apply bold on text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Bold');
 
@@ -45,7 +36,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Apply italic on text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Italic');
 
@@ -56,7 +47,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Apply underline on text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Underline');
 
@@ -67,7 +58,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Apply strikeout on text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Strikeout');
 
@@ -78,7 +69,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Apply shadowed on text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Shadowed');
 
@@ -89,7 +80,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Change font name of text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#fontnamecombobox');
 
@@ -107,7 +98,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Change font size of text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
@@ -128,7 +119,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Grow font size of text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
@@ -142,7 +133,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Shrink font size of text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
@@ -159,7 +150,7 @@ describe('Apply font on selected shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(0,0,0)');
 
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('not.have.attr', 'font-color');
@@ -175,7 +166,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Apply highlight on text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('not.have.attr', 'font-color');
@@ -191,14 +182,14 @@ describe('Apply font on selected shape.', function() {
 
 		// TODO: highlight color is not in the SVG
 		// At least check the mobile wizard's state
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 	});
 
 	it('Apply superscript on text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3495');
@@ -216,7 +207,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Apply subscript on text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3495');
@@ -234,7 +225,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	it('Clear direct formatting of text shape.', function() {
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		// Change the font size first
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -248,7 +239,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '705px');
 
 		// Remove direct formatting
-		openTextPropertiesPanel();
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#clearFormatting');
 

@@ -464,12 +464,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Make everything white on tile
 		impressMobileHelper.selectTextOfShape();
 
-		mobileHelper.openMobileWizard();
-
-		helper.clickOnIdle('#TextPropertyPanel');
-
-		cy.get('#Bold')
-			.should('be.visible');
+		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Color');
 

@@ -19,14 +19,8 @@ describe('Apply font changes.', function() {
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
 
-		// Open mobile wizard
-		mobileHelper.openMobileWizard();
-
 		// Open character properties
-		helper.clickOnIdle('#TextPropertyPanel');
-
-		cy.get('#Bold')
-			.should('be.visible');
+		mobileHelper.openTextPropertiesPanel();
 	});
 
 	afterEach(function() {
