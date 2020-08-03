@@ -66,7 +66,8 @@ MULTIUSER_TESTS= \
 	paragraph_prop \
 	sidebar_visibility \
 	simultaneous_typing \
-	sheet_operations
+	sheet_operations \
+	slide_operations
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
