@@ -551,6 +551,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				{name: _('Menu'), type: 'menu', menu: [
 					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
+					{type: 'separator'},
 					{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 						{uno: '.uno:TrackChanges'},
 						{uno: '.uno:ShowTrackedChanges'},
@@ -562,6 +563,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 						{uno: '.uno:NextTrackedChange'}
 					]},
 					{uno: '.uno:SearchDialog'},
+					{type: 'separator'},
 					{name: _('Repair'), id: 'repair',  type: 'action'},
 					{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
 						{uno: '.uno:SpellingAndGrammarDialog'},
@@ -586,11 +588,84 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			spreadsheet: [
 				{name: _('Menu'), type: 'menu', menu: [
 					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
+					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
+					{type: 'separator'},
+					{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
+						{uno: '.uno:TrackChanges'},
+						{uno: '.uno:ShowTrackedChanges'},
+						{type: 'separator'},
+						{uno: '.uno:AcceptTrackedChanges'},
+						{uno: '.uno:AcceptAllTrackedChanges'},
+						{uno: '.uno:RejectAllTrackedChanges'},
+						{uno: '.uno:PreviousTrackedChange'},
+						{uno: '.uno:NextTrackedChange'}
+					]},
+					{uno: '.uno:SearchDialog'},
+					{type: 'separator'},
+					{name: _('Repair'), id: 'repair',  type: 'action'},
+					{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
+						{uno: '.uno:SpellingAndGrammarDialog'},
+						{uno: '.uno:SpellOnline'},
+						{uno: '.uno:ThesaurusDialog'},
+						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
+							{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
+							{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
+							{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+						]},
+						{uno: '.uno:WordCountDialog'},
+						{uno: '.uno:LineNumberingDialog'},
+						{type: 'separator'},
+						{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
+							{uno: '.uno:OnlineAutoFormat'}]}
+					]}
 				]}
 			],
 			presentation: [
 				{name: _('Menu'), type: 'menu', menu: [
 					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
+					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
+					{type: 'separator'},
+					{uno: '.uno:SlideMasterPage'},
+					{type: 'separator'},
+					{uno: '.uno:ModifyPage'},
+					{uno: '.uno:SlideChangeWindow'},
+					{uno: '.uno:CustomAnimation'},
+					{uno: '.uno:MasterSlidesPanel'},
+					{type: 'separator'},
+					{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
+						{uno: '.uno:TrackChanges'},
+						{uno: '.uno:ShowTrackedChanges'},
+						{type: 'separator'},
+						{uno: '.uno:AcceptTrackedChanges'},
+						{uno: '.uno:AcceptAllTrackedChanges'},
+						{uno: '.uno:RejectAllTrackedChanges'},
+						{uno: '.uno:PreviousTrackedChange'},
+						{uno: '.uno:NextTrackedChange'}
+					]},
+					{uno: '.uno:SearchDialog'},
+					{type: 'separator'},
+					{name: _('Repair'), id: 'repair',  type: 'action'},
+					{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
+						{uno: '.uno:SpellingAndGrammarDialog'},
+						{uno: '.uno:SpellOnline'},
+						{uno: '.uno:ThesaurusDialog'},
+						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
+							{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
+							{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
+							{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
+								{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+						]},
+						{uno: '.uno:WordCountDialog'},
+						{uno: '.uno:LineNumberingDialog'},
+						{type: 'separator'},
+						{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
+							{uno: '.uno:OnlineAutoFormat'}]}
+					]}
 				]}
 			]
 		};
