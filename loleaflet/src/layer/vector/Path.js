@@ -35,7 +35,6 @@ L.Path = L.Layer.extend({
 
 	onRemove: function () {
 		this._renderer._removePath(this);
-		this._pathNodeCollection.clear();
 	},
 
 	getEvents: function () {
