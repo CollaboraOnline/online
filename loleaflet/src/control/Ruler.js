@@ -294,7 +294,9 @@ L.Control.Ruler = L.Control.extend({
 
 		var numCounter = -1 * parseInt(lMargin / 1000);
 
-		$('.loleaflet-ruler-maj').remove();
+		while (this._rBPContainer.hasChildNodes()) {
+			this._rBPContainer.removeChild(this._rBPContainer.lastChild);
+		}
 
 		// this.options.pageWidth is in mm100, so the code here makes one ruler division per
 		// centimetre.
@@ -317,11 +319,9 @@ L.Control.Ruler = L.Control.extend({
 
 		// The tabstops. Only draw user-created ones, with style RULER_TAB_LEFT,
 		// RULER_TAB_RIGHT, RULER_TAB_CENTER, and RULER_TAB_DECIMAL. See <svtools/ruler.hxx>.
-
-		$('.loleaflet-ruler-tabstop-left').remove();
-		$('.loleaflet-ruler-tabstop-right').remove();
-		$('.loleaflet-ruler-tabstop-center').remove();
-		$('.loleaflet-ruler-tabstop-decimal').remove();
+		while (this._rTSContainer.hasChildNodes()) {
+			this._rTSContainer.removeChild(this._rTSContainer.lastChild);
+		}
 
 		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
 		this._rTSContainer.tabStops = [];
