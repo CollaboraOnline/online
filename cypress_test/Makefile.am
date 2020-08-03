@@ -65,7 +65,8 @@ DEKSTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FO
 MULTIUSER_TESTS= \
 	paragraph_prop \
 	sidebar_visibility \
-	simultaneous_typing
+	simultaneous_typing \
+	sheet_operations
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
