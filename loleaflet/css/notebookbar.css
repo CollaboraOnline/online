@@ -680,6 +680,16 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-top: 10px;
 }
 
+/* Draw Tab */
+
+#table-DrawTab #table-box6 #XLineColor.notebookbar {
+	margin-left: -10px;
+}
+
+#table-DrawTab #table-Draw #table-GroupB102.notebookbar {
+	margin-left: -70px;
+}
+
 /* other */
 
 .ui-drawing-area-container

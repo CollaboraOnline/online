@@ -148,6 +148,22 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function() {};
 		this._toolitemHandlers['.uno:Paste'] = function() {};
 		this._toolitemHandlers['.uno:DataDataPilotRun'] = function() {};
+		this._toolitemHandlers['.uno:AdvancedMode'] = function() {};
+		this._toolitemHandlers['.uno:Shear'] = function() {};
+		this._toolitemHandlers['.uno:CrookSlant'] = function() {};
+		this._toolitemHandlers['.uno:LineEndStyle'] = function() {};
+		this._toolitemHandlers['.uno:FillShadow'] = function() {};
+		this._toolitemHandlers['.uno:BezierConvert'] = function() {};
+		this._toolitemHandlers['.uno:BezierSymmetric'] = function() {};
+		this._toolitemHandlers['.uno:BezierClose'] = function() {};
+		this._toolitemHandlers['.uno:BezierEliminatePoints'] = function() {};
+		this._toolitemHandlers['.uno:BezierMove'] = function() {};
+		this._toolitemHandlers['.uno:BezierCutLine'] = function() {};
+		this._toolitemHandlers['.uno:BezierInsert'] = function() {};
+		this._toolitemHandlers['.uno:BezierEdge'] = function() {};
+		this._toolitemHandlers['.uno:BezierDelete'] = function() {};
+		this._toolitemHandlers['.uno:BezierSmooth'] = function() {};
+		this._toolitemHandlers['.uno:GlueEditMode'] = function() {};
 
 		/*Calc: Data Tab*/
 		this._toolitemHandlers['.uno:DataProvider'] = function() {};
