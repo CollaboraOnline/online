@@ -172,7 +172,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:InsertExternalDataSource'] = function() {};
 		this._toolitemHandlers['.uno:RecalcPivotTable'] = function() {};
 		this._toolitemHandlers['.uno:DataProviderRefresh'] = function() {};
-		this._toolitemHandlers['.uno:Calculate'] = function() {};
+		this._toolitemHandlers['.uno:DataSubTotals'] = function() {};
+		this._toolitemHandlers['.uno:DefineDBName'] = function() {};
+		this._toolitemHandlers['.uno:SelectDB'] = function() {};
+		this._toolitemHandlers['.uno:DataAreaRefresh'] = function() {};
+		this._toolitemHandlers['.uno:TextToColumns'] = function() {};
+		this._toolitemHandlers['.uno:DataConsolidate'] = function() {};
 
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
 	},
