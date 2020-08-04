@@ -54,7 +54,7 @@ function loadTestDoc(fileName, subFolder, noFileCopy) {
 		}});
 
 	// Wait for the document to fully load
-	cy.get('.leaflet-tile-loaded', {timeout : 10000});
+	cy.get('.leaflet-tile-loaded', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
 	cy.log('Loading test document - end.');
 }
