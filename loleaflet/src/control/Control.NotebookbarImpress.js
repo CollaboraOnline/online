@@ -36,11 +36,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolitem',
 						'text': _('Redo'),
 						'command': '.uno:Redo'
-					},
-					{
-						'text': _('~Help'),
-						'id': '-2',
-						'name': 'Help',
 					}
 				]
 			}
@@ -113,6 +108,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'id': '8',
 				'name': 'TableLabel',
 				'context': 'Table'
+			},
+			{
+				'text': _('~Help'),
+				'id': '-2',
+				'name': 'Help',
 			}
 		];
 	},
