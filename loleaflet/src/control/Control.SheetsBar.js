@@ -25,10 +25,10 @@ L.Control.SheetsBar = L.Control.extend({
 			tooltip: 'bottom',
 			hidden: true,
 			items: [
-				{type: 'button',  hidden: !this.options.shownavigation, id: 'firstrecord',  img: 'firstrecord', hint: _('First sheet')},
-				{type: 'button',  hidden: !this.options.shownavigation, id: 'prevrecord',  img: 'prevrecord', hint: _('Previous sheet')},
-				{type: 'button',  hidden: !this.options.shownavigation, id: 'nextrecord',  img: 'nextrecord', hint: _('Next sheet')},
-				{type: 'button',  hidden: !this.options.shownavigation, id: 'lastrecord',  img: 'lastrecord', hint: _('Last sheet')},
+				{type: 'button',  hidden: !this.options.shownavigation, id: 'firstrecord',  img: 'firstrecord', hint: _('Scroll to the first sheet')},
+				{type: 'button',  hidden: !this.options.shownavigation, id: 'prevrecord',  img: 'prevrecord', hint: _('Scroll left')},
+				{type: 'button',  hidden: !this.options.shownavigation, id: 'nextrecord',  img: 'nextrecord', hint: _('Scroll right')},
+				{type: 'button',  hidden: !this.options.shownavigation, id: 'lastrecord',  img: 'lastrecord', hint: _('Scroll to the last sheet')},
 				{type: 'button',  id: 'insertsheet', img: 'insertsheet', hint: _('Insert sheet')}
 			],
 			onClick: function (e) {
