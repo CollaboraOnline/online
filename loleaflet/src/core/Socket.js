@@ -283,7 +283,7 @@ L.Socket = L.Class.extend({
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				h = '<a href="javascript:window.open(\'https://hub.libreoffice.org/git-online/' + h + '\');">' + h + '</a>';
+				h = '<a href="javascript:void(window.open(\'https://hub.libreoffice.org/git-online/' + h + '\'));">' + h + '</a>';
 				$('#loolwsd-version').html(this.WSDServer.Version + ' (git hash: ' + h + ')');
 			}
 			else {
@@ -306,7 +306,7 @@ L.Socket = L.Class.extend({
 			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			h = lokitVersionObj.BuildId.substring(0, 7);
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				h = '<a href="javascript:window.open(\'https://hub.libreoffice.org/git-core/' + h + '\');">' + h + '</a>';
+				h = '<a href="javascript:void(window.open(\'https://hub.libreoffice.org/git-core/' + h + '\'));">' + h + '</a>';
 			}
 			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
 			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
