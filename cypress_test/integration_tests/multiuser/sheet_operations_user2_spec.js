@@ -9,7 +9,7 @@ describe('Sheet operations: user-2.', function() {
 		// Wait here, before loading the document.
 		// Opening two clients at the same time causes an issue.
 		cy.wait(5000);
-		helper.beforeAll(testFileName);
+		helper.beforeAll(testFileName, undefined, true);
 	});
 
 	afterEach(function() {

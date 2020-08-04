@@ -2,24 +2,27 @@
 
 require('cypress-wait-until');
 
-function loadTestDoc(fileName, subFolder) {
+function loadTestDoc(fileName, subFolder, noFileCopy) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
+	cy.log('Param - noFileCopy: ' + noFileCopy);
 
 	// Get a clean test document
-	if (subFolder === undefined) {
-		cy.task('copyFile', {
-			sourceDir: Cypress.env('DATA_FOLDER'),
-			destDir: Cypress.env('WORKDIR'),
-			fileName: fileName,
-		});
-	} else {
-		cy.task('copyFile', {
-			sourceDir: Cypress.env('DATA_FOLDER') + subFolder + '/',
-			destDir: Cypress.env('WORKDIR') + subFolder + '/',
-			fileName: fileName,
-		});
+	if (noFileCopy !== true) {
+		if (subFolder === undefined) {
+			cy.task('copyFile', {
+				sourceDir: Cypress.env('DATA_FOLDER'),
+				destDir: Cypress.env('WORKDIR'),
+				fileName: fileName,
+			});
+		} else {
+			cy.task('copyFile', {
+				sourceDir: Cypress.env('DATA_FOLDER') + subFolder + '/',
+				destDir: Cypress.env('WORKDIR') + subFolder + '/',
+				fileName: fileName,
+			});
+		}
 	}
 
 	doIfOnMobile(function() {
@@ -156,8 +159,8 @@ function matchClipboardText(regexp) {
 	});
 }
 
-function beforeAll(fileName, subFolder) {
-	loadTestDoc(fileName, subFolder);
+function beforeAll(fileName, subFolder, noFileCop) {
+	loadTestDoc(fileName, subFolder, noFileCop);
 }
 
 function afterAll(fileName) {
