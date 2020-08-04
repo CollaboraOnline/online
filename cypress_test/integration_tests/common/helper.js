@@ -177,7 +177,7 @@ function afterAll(fileName) {
 	// also on the PID number we can make sure to match on the
 	// whole file name, not on a suffix of a file name.
 	var regex = new RegExp('[0-9]' + fileName);
-	cy.get('#docview')
+	cy.get('#docview', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 		.invoke('text')
 		.should('not.match', regex);
 
