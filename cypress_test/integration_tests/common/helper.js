@@ -411,6 +411,62 @@ function doIfOnDesktop(callback) {
 		});
 }
 
+function moveCursor(direction) {
+	cy.log('Moving text cursor - start.');
+	cy.log('Param - direction: ' + direction);
+
+	initAliasToNegative('origCursorPos');
+
+	cy.get('.blinking-cursor')
+		.should('be.visible');
+
+	if (direction === 'up' || direction === 'down') {
+		cy.get('.blinking-cursor')
+			.invoke('offset')
+			.its('top')
+			.as('origCursorPos');
+	} else if (direction === 'left' || direction === 'right') {
+		cy.get('.blinking-cursor')
+			.invoke('offset')
+			.its('left')
+			.as('origCursorPos');
+	}
+
+	cy.get('@origCursorPos')
+		.should('be.greaterThan', 0);
+
+	var key = '';
+	if (direction === 'up') {
+		key = '{uparrow}';
+	} else if (direction === 'down') {
+		key = '{downarrow}';
+	} else if (direction === 'left') {
+		key = '{leftarrow}';
+	} else if (direction === 'right') {
+		key = '{rightarrow}';
+	}
+	cy.get('textarea.clipboard')
+		.type(key);
+
+	cy.get('@origCursorPos')
+		.then(function(origCursorPos) {
+			cy.get('.blinking-cursor')
+				.should(function(cursor) {
+					if (direction === 'up') {
+						expect(cursor.offset().top).to.be.lessThan(origCursorPos);
+					} else if (direction === 'down') {
+						expect(cursor.offset().top).to.be.greaterThan(origCursorPos);
+					} else if (direction === 'left') {
+						expect(cursor.offset().left).to.be.lessThan(origCursorPos);
+					} else if (direction === 'right') {
+						expect(cursor.offset().left).to.be.greaterThan(origCursorPos);
+					}
+				});
+		});
+
+	cy.log('Moving text cursor - end.');
+}
+
 
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
@@ -435,3 +491,4 @@ module.exports.inputOnIdle = inputOnIdle;
 module.exports.waitUntilIdle = waitUntilIdle;
 module.exports.doIfOnMobile = doIfOnMobile;
 module.exports.doIfOnDesktop = doIfOnDesktop;
+module.exports.moveCursor = moveCursor;

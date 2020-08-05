@@ -23,8 +23,8 @@ describe('Simultaneous typing: user-1.', function() {
 			.should('have.text', '2 users');
 
 		// We have a table in the document, move the cursor into the second row.
-		cy.get('textarea.clipboard')
-			.type('{downarrow}');
+		helper.moveCursor('down');
+
 		// And now type some text, while user-2 does the same.
 		var text = 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq';
 		helper.typeText('textarea.clipboard', text, 100);
@@ -35,11 +35,7 @@ describe('Simultaneous typing: user-1.', function() {
 			.should('contain.text', text);
 
 		// Change paragraph alignment to trigger user-2 actions
-		cy.get('textarea.clipboard')
-			.type('{uparrow}');
-
-		// TODO
-		cy.wait(1000);
+		helper.moveCursor('up');
 
 		cy.get('#tb_editbar_item_centerpara .w2ui-button')
 			.click();

@@ -61,10 +61,10 @@ describe('Calc focus tests', function() {
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 
-		// Move cursor before text2
+		// Move cursor inside text2
 		cy.get('textarea.clipboard').type('{end}');
 		for (var i = 0; i < 6; i++)
-			cy.get('textarea.clipboard').type('{leftarrow}');
+			helper.moveCursor('left');
 
 		var text3 = ' BAZINGA';
 		helper.typeText('textarea.clipboard', text3);
