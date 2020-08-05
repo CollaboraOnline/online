@@ -38,6 +38,9 @@ describe('Simultaneous typing: user-1.', function() {
 		cy.get('textarea.clipboard')
 			.type('{uparrow}');
 
+		// TODO
+		cy.wait(1000);
+
 		cy.get('#tb_editbar_item_centerpara .w2ui-button')
 			.click();
 
