@@ -26,7 +26,6 @@ L.SVGGroup = L.Layer.extend({
 
 	setVisible: function (visible) {
 		this._forEachSVGNode(function (svgNode) {
-			svgNode.setAttribute('opacity', 0);
 			if (visible)
 				svgNode.setAttribute('visibility', 'visible');
 			else
