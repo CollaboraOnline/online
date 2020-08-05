@@ -894,6 +894,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         StringTokenizer stateTokens(tokens[1], "=", StringTokenizer::TOK_IGNORE_EMPTY | StringTokenizer::TOK_TRIM);
         if (stateTokens.count() == 2 && stateTokens[0] == ".uno:ModifiedStatus")
         {
+            // When the document is saved internally, but saving to storage failed,
+            // don't update the client's modified status
+            // (otherwise client thinks document is unmodified b/c saving was successful)
+            if (!docBroker->isLastStorageSaveSuccessful())
+                return false;
+
             docBroker->setModified(stateTokens[1] == "true");
         }
         else

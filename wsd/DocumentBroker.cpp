@@ -153,6 +153,7 @@ DocumentBroker::DocumentBroker(const std::string& uri,
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _cacheRoot(getCachePath(uriPublic.toString())),
     _documentChangedInStorage(false),
+    _lastStorageSaveSuccessful(true),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
     _markToDestroy(false),
@@ -832,6 +833,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
     assert(_storage && _tileCache);
     StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename);
+    _lastStorageSaveSuccessful = storageSaveResult.getResult() == StorageBase::SaveResult::OK;
     if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
         if (!isSaveAs)
