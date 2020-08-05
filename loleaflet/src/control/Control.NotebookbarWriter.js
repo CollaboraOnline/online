@@ -40,6 +40,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name': 'ReviewLabel'
 			},
 			{
+				'text': _('Format'),
+				'id': '-3',
+				'name': 'Format',
+			},
+			{
 				'text': _('~Table'),
 				'id': '8',
 				'name': 'TableLabel',
@@ -67,6 +72,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		case 'Help':
 			this.loadTab(this.getHelpTab());
+			break;
+
+		case 'Format':
+			this.loadTab(this.getFormatTab());
 			break;
 		}
 	},
@@ -1910,6 +1919,160 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						}
 					],
 					'vertical': 'true'
+				}
+			]
+		};
+	},
+
+	getFormatTab: function() {
+		return {
+			'id': '',
+			'type': 'control',
+			'text': '',
+			'enabled': 'true',
+			'children': [
+				{
+					'id': '',
+					'type': 'container',
+					'text': '',
+					'enabled': 'true',
+					'children': [
+						{
+							'id': 'NotebookBar',
+							'type': 'grid',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'box',
+									'type': 'container',
+									'text': '',
+									'enabled': 'true',
+									'children': [
+										{
+											'id': 'ContextContainer',
+											'type': 'tabcontrol',
+											'text': '',
+											'enabled': 'true',
+											'selected': '-3',
+											'children': [
+												{
+													'id': '',
+													'type': 'tabpage',
+													'text': '',
+													'enabled': 'true',
+													'children': [
+														{
+															'id': 'Format Tab',
+															'type': 'container',
+															'text': '',
+															'enabled': 'true',
+															'children': [
+																{
+																	'id': 'Format',
+																	'type': 'container',
+																	'text': '',
+																	'enabled': 'true',
+																	'children': [
+																		{
+																			'id': 'Format-Section',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'Section1',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:FontDialog'),
+																							'command': '.uno:FontDialog'
+																						}
+																					]
+																				},
+																				{
+																					'id': 'Section2',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:ParagraphDialog'),
+																							'command': '.uno:ParagraphDialog'
+																						}
+																					]
+																				},
+																				{
+																					'id': 'Section4',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:TransformDialog'),
+																							'command': '.uno:TransformDialog'
+																						}
+																					]
+																				},
+																				{
+																					'id': 'Section5',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:FormatLine'),
+																							'command': '.uno:FormatLine'
+																						}
+																					]
+																				},
+																				{
+																					'id': 'Section6',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:FormatArea'),
+																							'command': '.uno:FormatArea'
+																						}
+																					]
+																				},
+																				{
+																					'id': 'Section7',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:OutlineBullet'),
+																							'command': '.uno:OutlineBullet'
+																						}
+																					]
+																				},
+																			]
+																		}
+																	]
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
 				}
 			]
 		};

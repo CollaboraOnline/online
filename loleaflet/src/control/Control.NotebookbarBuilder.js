@@ -17,6 +17,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['listbox'] = this._comboboxControlHandler;
 		this._controlHandlers['tabcontrol'] = this._overridenTabsControlHandler;
 		this._controlHandlers['menubartoolitem'] = this._menubarToolItemHandler;
+		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
 		this._controlHandlers['spinfield'] = function() { return false; };
@@ -180,6 +181,17 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:DataConsolidate'] = function() {};
 
 		this._toolitemHandlers['vnd.sun.star.findbar:FocusToFindbar'] = function() {};
+	},
+
+	_bigtoolitemHandler: function(parentContainer, data, builder) {
+		var noLabels = builder.options.noLabelsForUnoButtons;
+		builder.options.noLabelsForUnoButtons = false;
+
+		builder._toolitemHandler(parentContainer, data, builder);
+
+		builder.options.noLabelsForUnoButtons = noLabels;
+
+		return false;
 	},
 
 	onCommandStateChanged: function(e) {

@@ -283,6 +283,18 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	filter: grayscale(100%) brightness(100%);
 }
 
+.unotoolbutton.notebookbar {
+	text-align: center;
+}
+
+.unotoolbutton.notebookbar.has-label {
+	text-align: center;
+}
+
+.unotoolbutton.notebookbar.has-label:not(.inline) img {
+	width: 32px !important;
+	height: 32px !important;
+}
 
 /* unobuttons with inline labels */
 
@@ -471,6 +483,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #table-Reference-Section-Field.notebookbar
 {
 	display: none;
+}
+
+/* Format Tab */
+#table-Format-Section.notebookbar {
+	margin-top: 25px;
 }
 
 /* Table Tab */

@@ -1654,9 +1654,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				label.innerHTML = data.text;
 
 				controls['label'] = label;
+				$(div).addClass('has-label');
 			} else {
 				div.title = data.text;
 				$(div).tooltip();
+				$(div).addClass('no-label');
 			}
 
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
