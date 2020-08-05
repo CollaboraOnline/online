@@ -163,6 +163,29 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 			|| true
 	@$(KILL_COMMAND) || true
 
+run-multi: @JAILS_PATH@ $(NODE_BINS)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	@echo
+	@echo "Running multi-user test in interactive test runner..."
+	@echo
+	$(if $(filter 1,$(user)), \
+		$(eval BACKGROUND_USER_SPEC=$(spec)_user2_spec.js), \
+		$(eval BACKGROUND_USER_SPEC=$(spec)_user1_spec.js))
+	$(if $(filter 1,$(user)), \
+		$(eval INTERACTIVE_USER_SPEC=$(spec)_user1_spec.js), \
+		$(eval INTERACTIVE_USER_SPEC=$(spec)_user2_spec.js))
+	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
+	@$(PARALLEL_SCRIPT) \
+		--browser $(CHROME) \
+		--config $(MULTIUSER_CONFIG) \
+		--env $(MULTIUSER_ENV) \
+		--spec $(BACKGROUND_USER_SPEC) \
+		--type multi-user \
+		--log-file $(BACKGROUND_USER_LOG) &
+	$(call run_interactive_multi,$(INTERACTIVE_USER_SPEC)) || true
+	@$(KILL_COMMAND) || true
+
 run-cov: do-run-cov
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
@@ -262,6 +285,15 @@ define run_interactive_test
 				,\
 				--config $(MOBILE_CONFIG) \
 				--env $(MOBILE_ENV) \))
+endef
+
+define run_interactive_multi
+	$(CYPRESS_BINARY) run \
+		--browser $(CHROME) \
+		--headed --no-exit \
+		--config $(MULTIUSER_CONFIG) \
+		--env $(MULTIUSER_ENV) \
+		--spec=$(abs_dir)/integration_tests/multiuser/$(1)
 endef
 
 define run_desktop_tests
