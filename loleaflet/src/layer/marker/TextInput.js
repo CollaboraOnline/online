@@ -706,9 +706,7 @@ L.TextInput = L.Layer.extend({
 			var encodedText = encodeURIComponent(text);
 			var winId = this._map.getWinId();
 			this._map._socket.sendMessage(
-				'textinput id=' + winId + ' type=input text=' + encodedText);
-			this._map._socket.sendMessage(
-				'textinput id=' + winId + ' type=end text=' + encodedText);
+				'textinput id=' + winId + ' text=' + encodedText);
 		}
 	},
 

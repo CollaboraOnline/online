@@ -1242,15 +1242,25 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const Stri
 bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
                                      const StringVector& tokens)
 {
-    int id, type;
+    int id, type = -1;
     std::string text;
-    if (tokens.size() < 4 ||
-        !getTokenInteger(tokens[1], "id", id) || id < 0 ||
-        !getTokenKeyword(tokens[2], "type",
-                        {{"input", LOK_EXT_TEXTINPUT}, {"end", LOK_EXT_TEXTINPUT_END}},
-                         type) ||
-        !getTokenString(tokens[3], "text", text))
+    bool error = false;
 
+    if (tokens.size() < 3)
+        error = true;
+    else if (!getTokenInteger(tokens[1], "id", id) || id < 0)
+        error = true;
+    else {
+        // back-compat 'type'
+        if (getTokenKeyword(tokens[2], "type",
+                            {{"input", LOK_EXT_TEXTINPUT}, {"end", LOK_EXT_TEXTINPUT_END}},
+                            type))
+            error = !getTokenString(tokens[3], "text", text);
+        else // normal path:
+            error = !getTokenString(tokens[2], "text", text);
+    }
+
+    if (error)
     {
         sendTextFrameAndLogError("error: cmd=" + std::string(tokens[0]) + " kind=syntax");
         return false;
@@ -1260,7 +1270,13 @@ bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
     URI::decode(text, decodedText);
 
     getLOKitDocument()->setView(_viewId);
-    getLOKitDocument()->postWindowExtTextInputEvent(id, type, decodedText.c_str());
+    if (type >= 0)
+        getLOKitDocument()->postWindowExtTextInputEvent(id, type, decodedText.c_str());
+    else
+    {
+        getLOKitDocument()->postWindowExtTextInputEvent(id, LOK_EXT_TEXTINPUT, decodedText.c_str());
+        getLOKitDocument()->postWindowExtTextInputEvent(id, LOK_EXT_TEXTINPUT_END, decodedText.c_str());
+    }
 
     return true;
 }
