@@ -163,7 +163,10 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 			|| true
 	@$(KILL_COMMAND) || true
 
-run-cov: @JAILS_PATH@ $(NODE_BINS)
+run-cov: do-run-cov
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
+
+do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Setup coverage tools..."
 	@echo
@@ -176,9 +179,11 @@ run-cov: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Run all tests..."
 	@echo
+	@rm -f $(ERROR_LOG)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,,,COVERAGE_RUN="1")
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
+	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
 	@$(KILL_COMMAND) || true
 
 @JAILS_PATH@:
@@ -306,7 +311,7 @@ define run_mobile_tests
 endef
 
 define run_all_multiuser_tests
-	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test)))
+	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test),$(1)))
 endef
 
 define run_multiuser_test
@@ -319,14 +324,14 @@ define run_multiuser_test
 	@$(PARALLEL_SCRIPT) \
 		--browser $(CHROME) \
 		--config $(MULTIUSER_CONFIG) \
-		--env $(MULTIUSER_ENV) \
+		--env $(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)) \
 		--spec $(USER1_SPEC) \
 		--type multi-user \
 		--log-file $(USER1_LOG) & \
 	$(PARALLEL_SCRIPT) \
 		--browser $(CHROME) \
 		--config $(MULTIUSER_CONFIG) \
-		--env $(MULTIUSER_ENV) \
+		--env $(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)) \
 		--spec $(USER2_SPEC) \
 		--type multi-user \
 		--log-file $(USER2_LOG) && \
