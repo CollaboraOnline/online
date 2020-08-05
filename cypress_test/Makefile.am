@@ -149,8 +149,7 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Open cypress with desktop tests..."
 	@echo
-	$(call run_interactive_test,DESKTOP,$(spec)) \
-			|| true
+	$(call run_interactive_desktop,$(spec)) || true
 	@$(KILL_COMMAND) || true
 
 run-mobile: @JAILS_PATH@ $(NODE_BINS)
@@ -159,8 +158,7 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Open cypress with mobile tests..."
 	@echo
-	$(call run_interactive_test,MOBILE,$(spec)) \
-			|| true
+	$(call run_interactive_mobile,$(spec)) || true
 	@$(KILL_COMMAND) || true
 
 run-multi: @JAILS_PATH@ $(NODE_BINS)
@@ -265,26 +263,30 @@ MULTIUSER_CONFIG = \
 MULTIUSER_ENV = \
 	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(WSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)"
 
-define run_interactive_test
-	$(if $(2),\
+define run_interactive_desktop
+	$(if $(1),\
 		$(CYPRESS_BINARY) run \
 			--browser $(CHROME) \
 			--headed --no-exit \
-			$(if $(findstring DESKTOP,$(1)),\
-				--config $(DESKTOP_CONFIG) \
-				--env $(DESKTOP_ENV) \
-				--spec=$(abs_dir)/integration_tests/desktop/$(2)\
-				,\
-				--config $(MOBILE_CONFIG) \
-				--env $(MOBILE_ENV) \
-				--spec=$(abs_dir)/integration_tests/mobile/$(2)),\
+			--config $(DESKTOP_CONFIG) \
+			--env $(DESKTOP_ENV) \
+			--spec=$(abs_dir)/integration_tests/desktop/$(1),\
 		$(CYPRESS_BINARY) open \
-			$(if $(findstring DESKTOP,$(1)),\
-				--config $(DESKTOP_CONFIG) \
-				--env $(DESKTOP_ENV) \
-				,\
-				--config $(MOBILE_CONFIG) \
-				--env $(MOBILE_ENV) \))
+			--config $(DESKTOP_CONFIG) \
+			--env $(DESKTOP_ENV))
+endef
+
+define run_interactive_mobile
+	$(if $(1),\
+		$(CYPRESS_BINARY) run \
+			--browser $(CHROME) \
+			--headed --no-exit \
+			--config $(MOBILE_CONFIG) \
+			--env $(MOBILE_ENV) \
+			--spec=$(abs_dir)/integration_tests/mobile/$(1),\
+		$(CYPRESS_BINARY) open \
+			--config $(MOBILE_CONFIG) \
+			--env $(MOBILE_ENV))
 endef
 
 define run_interactive_multi
