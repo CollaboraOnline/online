@@ -190,7 +190,9 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 /* avoid bug with arrow in new line when window is small */
-#LineSpacing.notebookbar, #InsertGraphic.notebookbar, #BasicShapes.notebookbar, #InsertTable.notebookbar {
+#LineSpacing.notebookbar,
+#table-Home-Section-Insert #table-LineB9 #InsertGraphic.notebookbar,
+#table-Home-Section-Insert #table-GroupB20 #InsertTable.notebookbar {
 	width: 50px;
 }
 
@@ -397,13 +399,20 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 /* Insert Tab */
 
 #InsertReferenceField.notebookbar,
-#InsertSection.notebookbar,
-#table-Insert {
+#InsertSection.notebookbar {
 	margin-top: 5px;
 }
 
-#table-shapes6 #BasicShapes.notebookbar {
-	margin-top: 10px;
+#table-Insert {
+	margin-top: 15px;
+}
+
+#table-Insert #InsertTable.notebookbar {
+	width: 130px;
+}
+
+#table-Insert #BasicShapes.notebookbar {
+	width: 170px;
 }
 
 #table-Insert-Section-Pagebreak #InsertPagebreak.notebookbar img,
@@ -412,8 +421,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #table-Insert-Section-Image #InsertGraphic.notebookbar img,
 #HyperlinkDialog.notebookbar img,
 #InsertFieldCtrl.notebookbar img,
-#DrawText.notebookbar img,
-#VerticalText.notebookbar img,
 #BasicShapes.notebookbar img,
 #table-Insert-Section-Symbol #CharmapControl.notebookbar img
 {
@@ -464,8 +471,8 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 #InsertMultiIndex.notebookbar img,
-#InsertFootnote.notebookbar img,
-#InsertReferenceField.notebookbar img,
+#table-Reference-Section-Reference #InsertFootnote.notebookbar img,
+#table-Reference-Section-Reference #InsertReferenceField.notebookbar img,
 #InsertAuthoritiesEntry.notebookbar img,
 #UpdateAll.notebookbar img
 {

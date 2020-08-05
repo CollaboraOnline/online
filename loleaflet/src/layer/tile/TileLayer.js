@@ -1010,6 +1010,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onJSDialogMsg: function (textMsg) {
+		console.log(textMsg);
 		if (window.mode.isMobile()) {
 			var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
 			if (msgData.type == 'borderwindow')
