@@ -159,8 +159,8 @@ function matchClipboardText(regexp) {
 	});
 }
 
-function beforeAll(fileName, subFolder, noFileCop) {
-	loadTestDoc(fileName, subFolder, noFileCop);
+function beforeAll(fileName, subFolder, noFileCopy) {
+	loadTestDoc(fileName, subFolder, noFileCopy);
 }
 
 function afterAll(fileName) {
