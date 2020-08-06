@@ -618,6 +618,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 32px !important;
 }
 
+#table-DataTab #table-ViewMenu3.notebookbar {
+	display: none;
+}
+
 /* Review Tab */
 
 #table-GroupB40 #Hyphenate.notebookbar,
@@ -633,6 +637,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 {
 	height: 32px !important;
 	width: 32px !important;
+}
+
+#table-ReviewTab #table-Review #AcceptChanges.notebookbar {
+	display: none;
 }
 
 /* Sheet Tab */
