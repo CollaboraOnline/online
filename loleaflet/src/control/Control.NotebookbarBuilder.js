@@ -48,6 +48,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Presentation'] = this._startPresentationControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
 		this._toolitemHandlers['.uno:Menubar'] = this._menubarControl;
+		this._toolitemHandlers['.uno:InsertPageHeader'] = this._headerFooterControl;
+		this._toolitemHandlers['.uno:InsertPageFooter'] = this._headerFooterControl;
 
 		this._toolitemHandlers['up'] = this._toolbarItemControl;
 		this._toolitemHandlers['down'] = this._toolbarItemControl;
@@ -419,6 +421,19 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
 			builder.map.showHyperlinkDialog();
+		});
+	},
+
+	_headerFooterControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			if (!$(control.container).hasClass('disabled')) {
+				builder.refreshSidebar = true;
+				var command = data.command + '?On:bool=true';
+				builder.callback('toolbutton', 'click', control.button, command, builder);
+			}
 		});
 	},
 
