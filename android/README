@@ -170,7 +170,7 @@ to setup lldb to actually read & use them.
 
   and rebuild using 'make'.
 
-* Add android/source/obj/local/armeabi-v7a from core.git as a Symbol Directory
+* Add android/obj/local/armeabi-v7a from core.git as a Symbol Directory
 
   In Android Studio, choose Run -> Debug... -> Edit Configurations...
 
@@ -180,7 +180,7 @@ to setup lldb to actually read & use them.
 
   Symbol Directories: here add the full path, like
 
-    /local/libreoffice/master-android/android/source/obj/local/armeabi-v7a
+    /local/libreoffice/master-android/android/obj/local/armeabi-v7a
 
   This path contains the non-stripped version of the liblo-native-code.so, and
   the debugger will read the symbols from that one (even if the APK contains
@@ -190,7 +190,7 @@ to setup lldb to actually read & use them.
   [Alternatively you can add the following to your ~/.lldbinit instead:
 
     settings set target.inline-breakpoint-strategy always
-    settings append target.exec-search-paths /local/libreoffice/master-android/android/source/obj/local/armeabi-v7a
+    settings append target.exec-search-paths /local/libreoffice/master-android/android/obj/local/armeabi-v7a
   ]
 
 * To use pretty printers for types like OUString, add the following to your
