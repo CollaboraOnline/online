@@ -134,7 +134,6 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:visibility="invisible"
                 app:backgroundTint="@color/background_normal"
                 app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -442,7 +442,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         if (isFabMenuOpen)
             return;
 
-        ViewCompat.animate(editFAB).rotation(45f).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(0f)).start();
+        ViewCompat.animate(editFAB).rotation(-45f).withLayer().setDuration(300).setInterpolator(new OvershootInterpolator(0f)).start();
         impressLayout.startAnimation(fabOpenAnimation);
         writerLayout.startAnimation(fabOpenAnimation);
         calcLayout.startAnimation(fabOpenAnimation);
@@ -929,8 +929,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     PERMISSION_WRITE_EXTERNAL_STORAGE);
-        } else {
-            setEditFABVisibility(View.VISIBLE);
         }
         Log.d(LOGTAG, "onStart");
     }
@@ -1038,65 +1036,54 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         }
     }
 
-    private void setEditFABVisibility(final int visibility) {
-        LibreOfficeApplication.getMainHandler().post(new Runnable() {
-            @Override
-            public void run() {
-                editFAB.setVisibility(visibility);
-            }
-        });
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_WRITE_EXTERNAL_STORAGE:
-                if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    setEditFABVisibility(View.VISIBLE);
-                } else {
-                    setEditFABVisibility(View.INVISIBLE);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        boolean showRationale = shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                        androidx.appcompat.app.AlertDialog.Builder rationaleDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this)
-                                .setCancelable(false)
-                                .setTitle(getString(R.string.title_permission_required))
-                                .setMessage(getString(R.string.reason_required_to_read_documents));
-                        if (showRationale) {
-                            rationaleDialogBuilder.setPositiveButton(getString(R.string.positive_ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ActivityCompat.requestPermissions(LibreOfficeUIActivity.this,
-                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                            PERMISSION_WRITE_EXTERNAL_STORAGE);
-                                }
-                            })
-                                    .setNegativeButton(getString(R.string.negative_im_sure), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            LibreOfficeUIActivity.this.finish();
-                                        }
-                                    })
-                                    .create()
-                                    .show();
-                        } else {
-                            rationaleDialogBuilder.setPositiveButton(getString(R.string.positive_ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                    Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                    intent.setData(uri);
-                                    startActivity(intent);
-                                }
-                            })
-                                    .setNegativeButton(R.string.negative_cancel, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            LibreOfficeUIActivity.this.finish();
-                                        }
-                                    })
-                                    .create()
-                                    .show();
-                        }
+                if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    return;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    boolean showRationale = shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    androidx.appcompat.app.AlertDialog.Builder rationaleDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this)
+                            .setCancelable(false)
+                            .setTitle(getString(R.string.title_permission_required))
+                            .setMessage(getString(R.string.reason_required_to_read_documents));
+                    if (showRationale) {
+                        rationaleDialogBuilder.setPositiveButton(getString(R.string.positive_ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(LibreOfficeUIActivity.this,
+                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                        PERMISSION_WRITE_EXTERNAL_STORAGE);
+                            }
+                        })
+                                .setNegativeButton(getString(R.string.negative_im_sure), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        LibreOfficeUIActivity.this.finish();
+                                    }
+                                })
+                                .create()
+                                .show();
+                    } else {
+                        rationaleDialogBuilder.setPositiveButton(getString(R.string.positive_ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                intent.setData(uri);
+                                startActivity(intent);
+                            }
+                        })
+                                .setNegativeButton(R.string.negative_cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        LibreOfficeUIActivity.this.finish();
+                                    }
+                                })
+                                .create()
+                                .show();
                     }
                 }
                 break;
