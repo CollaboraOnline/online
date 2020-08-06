@@ -21,8 +21,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'text': _('~Insert'),
-				'id': '3',
-				'name': 'InsertLabel'
+				'id': '-4',
+				'name': 'Insert'
 			},
 			{
 				'text': _('~Sheet'),
@@ -61,6 +61,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			this.loadTab(this.getSheetTab());
 			break;
 
+		case 'Insert':
+			this.loadTab(this.getInsertTab());
+			break;
 		}
 	},
 
@@ -2072,6 +2075,213 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							]
 						}
 					]
+				}
+			]
+		};
+	},
+
+	getInsertTab: function() {
+		return {
+			'id': '',
+			'type': 'control',
+			'text': '',
+			'enabled': 'true',
+			'children': [
+				{
+					'id': '',
+					'type': 'container',
+					'text': '',
+					'enabled': 'true',
+					'children': [
+						{
+							'id': 'NotebookBar',
+							'type': 'grid',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'box',
+									'type': 'container',
+									'text': '',
+									'enabled': 'true',
+									'children': [
+										{
+											'id': 'ContextContainer',
+											'type': 'tabcontrol',
+											'text': '',
+											'enabled': 'true',
+											'children': [
+												{
+													'id': '',
+													'type': 'tabpage',
+													'text': '',
+													'enabled': 'true',
+													'children': [
+														{
+															'id': 'Insert Tab',
+															'type': 'container',
+															'text': '',
+															'enabled': 'true',
+															'children': [
+																{
+																	'id': 'Insert',
+																	'type': 'container',
+																	'text': '',
+																	'enabled': 'true',
+																	'children': [
+																		{
+																			'id': 'Insert-Section-Image',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'SectionBottom65',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:InsertGraphic'),
+																							'command': '.uno:InsertGraphic'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-Table1',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'LineA11',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:InsertObjectChart'),
+																							'command': '.uno:InsertObjectChart'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-Bookmark',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'SectionBottom14',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:HyperlinkDialog'),
+																							'command': '.uno:HyperlinkDialog'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-Draw2',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'shapes6',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:BasicShapes'),
+																							'command': '.uno:BasicShapes'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-Symbol',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'SectionBottom105',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:CharmapControl'),
+																							'command': '.uno:CharmapControl'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-HeaderFooter',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'SectionHeaderFooter',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:EditHeaderAndFooter', 'spreadsheet'),
+																							'command': '.uno:EditHeaderAndFooter'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		}
+																	],
+																	'vertical': 'false'
+																}
+															],
+															'vertical': 'false'
+														}
+													]
+												}
+											],
+											'tabs': [],
+											'selected': '-4'
+										}
+									],
+									'vertical': 'true',
+									'left': '0',
+									'top': '0'
+								}
+							]
+						}
+					],
+					'vertical': 'true'
 				}
 			]
 		};
