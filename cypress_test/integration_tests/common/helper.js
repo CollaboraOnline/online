@@ -411,14 +411,15 @@ function doIfOnDesktop(callback) {
 		});
 }
 
-function moveCursor(direction) {
+function moveCursor(direction, forceType = false) {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
+	cy.log('Param - forceType: ' + forceType);
 
 	initAliasToNegative('origCursorPos');
 
 	cy.get('.blinking-cursor')
-		.should('be.visible');
+		.should('exist');
 
 	if (direction === 'up' || direction === 'down') {
 		cy.get('.blinking-cursor')
@@ -446,7 +447,7 @@ function moveCursor(direction) {
 		key = '{rightarrow}';
 	}
 	cy.get('textarea.clipboard')
-		.type(key);
+		.type(key, {force : forceType});
 
 	cy.get('@origCursorPos')
 		.then(function(origCursorPos) {

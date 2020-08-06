@@ -12,6 +12,12 @@ describe('Form field button tests.', function() {
 		// Wait for the sidebar to change the zoom level by load
 		cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
 			.should('not.have.text', '100');
+
+		cy.get('#document-container')
+			.click();
+
+		cy.get('textarea.clipboard')
+			.type('{home}');
 	}
 	afterEach(function() {
 		helper.afterAll(testFileName, 'writer');
@@ -58,13 +64,7 @@ describe('Form field button tests.', function() {
 	}
 
 	function moveCursor(direction = 'left') {
-		if (direction == 'left') {
-			cy.get('textarea.clipboard')
-				.type('{leftArrow}', {force : true});
-		} else {
-			cy.get('textarea.clipboard')
-				.type('{rightArrow}', {force : true});
-		}
+		helper.moveCursor(direction, true);
 	}
 
 	function doZoom(zoomIn) {
