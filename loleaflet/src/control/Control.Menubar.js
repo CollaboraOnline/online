@@ -341,7 +341,12 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertColumnsAfter'}]},
 				{name: _UNO('.uno:TableDeleteMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 					{uno: '.uno:DeleteRows'},
-					{uno: '.uno:DeleteColumns'}]},
+					{uno: '.uno:DeleteColumns'},
+					{uno: '.uno:DeleteTable'}]},
+				{name: _UNO('.uno:TableSelectMenu', 'text'), type: 'menu', menu: [
+					{uno: '.uno:SelectTable'},
+					{uno: '.uno:EntireRow'},
+					{uno: '.uno:EntireColumn'}]},
 				{uno: '.uno:MergeCells'},
 				{uno: '.uno:TableDialog'}]
 			},
