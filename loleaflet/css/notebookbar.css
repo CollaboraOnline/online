@@ -664,6 +664,14 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Insert Tab */
 
+.presentation-color-indicator + #toolbar-wrapper #table-Insert #InsertTable.notebookbar {
+	width: 80px;
+}
+
+#table-Insert #HeaderAndFooter.notebookbar {
+	width: 160px;
+}
+
 #table-Insert-Section-DrawText #Text.notebookbar img,
 #table-Insert-Section-Slide #InsertPage.notebookbar img
 {

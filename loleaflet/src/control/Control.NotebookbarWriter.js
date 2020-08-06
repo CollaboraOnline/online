@@ -2299,28 +2299,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																			'vertical': 'false'
 																		},
 																		{
-																			'id': 'Insert-Section-Table1',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'LineA11',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:InsertObjectChart'),
-																							'command': '.uno:InsertObjectChart'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
 																			'id': 'Insert-Section-Image',
 																			'type': 'container',
 																			'text': '',
@@ -2336,6 +2314,28 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																							'type': 'bigtoolitem',
 																							'text': _UNO('.uno:InsertGraphic'),
 																							'command': '.uno:InsertGraphic'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-Table1',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'LineA11',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:InsertObjectChart'),
+																							'command': '.uno:InsertObjectChart'
 																						}
 																					]
 																				}
