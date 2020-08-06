@@ -1242,7 +1242,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const Stri
 bool ChildSession::extTextInputEvent(const char* /*buffer*/, int /*length*/,
                                      const StringVector& tokens)
 {
-    int id, type = -1;
+    int id = -1, type = -1;
     std::string text;
     bool error = false;
 
