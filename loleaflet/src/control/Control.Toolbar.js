@@ -41,6 +41,18 @@ function getUNOCommand(unoData) {
 	return unoData.objectCommand;
 }
 
+function onClose() {
+	if (window.ThisIsAMobileApp) {
+		window.postMobileMessage('BYE');
+	} else {
+		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
+		map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
+	}
+	if (!map._disableDefaultAction['UI_Close']) {
+		map.remove();
+	}
+}
+
 function onClick(e, id, item) {
 	if (w2ui['editbar'].get(id) !== null) {
 		var toolbar = w2ui['editbar'];
@@ -130,15 +142,7 @@ function onClick(e, id, item) {
 		map.uiManager.toggleMenubar();
 	}
 	else if (id === 'close' || id === 'closemobile') {
-		if (window.ThisIsAMobileApp) {
-			window.postMobileMessage('BYE');
-		} else {
-			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-		}
-		if (!map._disableDefaultAction['UI_Close']) {
-			map.remove();
-		}
+		onClose();
 	}
 	else if (id === 'link') {
 		map.showHyperlinkDialog();
@@ -1062,19 +1066,10 @@ function setupToolbar(e) {
 		$('#closebuttonwrapper').css('display', 'block');
 	}
 
-	$('#closebutton').click(function() {
-		if (window.ThisIsAMobileApp) {
-			window.postMobileMessage('BYE');
-		} else {
-			map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
-			map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: map._everModified}});
-			if (!map._disableDefaultAction['UI_Close']) {
-				map.remove();
-			}
-		}
-	});
+	$('#closebutton').click(onClose);
 }
 
+global.onClose = onClose;
 global.setupToolbar = setupToolbar;
 global.onClick = onClick;
 global.hideTooltip = hideTooltip;

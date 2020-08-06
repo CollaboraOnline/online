@@ -6,10 +6,18 @@
 
 /* global $ setupToolbar w2ui w2utils */
 L.Control.UIManager = L.Control.extend({
+	mobileWizard: null,
+
 	onAdd: function (map) {
 		this.map = map;
 
 		map.on('updatepermission', this.onUpdatePermission, this);
+
+		window.addEventListener('popstate', this.onGoBack.bind(this));
+
+		// provide entries in the history we can catch to close the app
+		history.pushState({context: 'app-started'}, 'app-started');
+		history.pushState({context: 'app-started'}, 'app-started');
 	},
 
 	// UI initialization
@@ -37,7 +45,8 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(L.control.documentNameInput());
 		this.map.addControl(L.control.scroll());
 		this.map.addControl(L.control.alertDialog());
-		this.map.addControl(L.control.mobileWizard());
+		this.mobileWizard = L.control.mobileWizard();
+		this.map.addControl(this.mobileWizard);
 		this.map.addControl(L.control.languageDialog());
 		this.map.dialog = L.control.lokDialog();
 		this.map.addControl(this.map.dialog);
@@ -187,6 +196,20 @@ L.Control.UIManager = L.Control.extend({
 
 		// We've resized the document container.
 		this.map.invalidateSize();
+	},
+
+	onGoBack: function(popStateEvent) {
+		if (popStateEvent.state && popStateEvent.state.context) {
+			if (popStateEvent.state.context === 'mobile-wizard' && this.mobileWizard) {
+				if (this.mobileWizard.isOpen()) {
+					this.mobileWizard.goLevelUp(true);
+				} else {
+					window.onClose();
+				}
+			} else if (popStateEvent.state.context === 'app-started') {
+				window.onClose();
+			}
+		}
 	},
 
 	// Helper functions

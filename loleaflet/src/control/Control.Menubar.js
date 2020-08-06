@@ -1218,15 +1218,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
 			this._map.fire('postMessage', {msgId: 'UI_FileVersions'});
 		} else if (id === 'closedocument') {
-			if (window.ThisIsAMobileApp) {
-				window.postMobileMessage('BYE');
-			} else {
-				this._map.fire('postMessage', {msgId: 'close', args: {EverModified: this._map._everModified, Deprecated: true}});
-				this._map.fire('postMessage', {msgId: 'UI_Close', args: {EverModified: this._map._everModified}});
-			}
-			if (!this._map._disableDefaultAction['UI_Close']) {
-				this._map.remove();
-			}
+			window.onClose();
 		} else if (id === 'repair') {
 			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		} else if (id === 'searchdialog') {
