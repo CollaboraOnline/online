@@ -11,7 +11,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
-		map.on('moveend zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
+		map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
 		this._initialized = false;
 	},
 
