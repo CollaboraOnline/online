@@ -2034,7 +2034,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
     try
     {
         const size_t length = payload.size();
-        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+        if (firstLine.size() <= static_cast<std::string::size_type>(length) - 1)
         {
             const TileCombined tileCombined = TileCombined::parse(firstLine);
             const char* buffer = payload.data();

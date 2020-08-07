@@ -638,6 +638,9 @@ namespace RenderTiles
                 // The tile content is identical to what the client already has, so skip it
                 LOG_TRC("Match for tile #" << tileIndex << " at (" << positionX << ',' <<
                         positionY << ") oldhash==hash (" << hash << "), wireId: " << wireId << " skipping");
+                // Push a zero byte image to inform WSD we didn't need that.
+                // This allows WSD side TileCache to free up waiting subscribers.
+                pushRendered(renderedTiles, tiles[tileIndex], wireId, 0);
                 tileIndex++;
                 continue;
             }
@@ -701,13 +704,16 @@ namespace RenderTiles
             tileIndex++;
         }
 
+        // empty ones come first
+        size_t zeroCheckStart = renderedTiles.size();
+
         pngPool.run();
 
-        for (auto &i : renderedTiles)
+        for (size_t i = zeroCheckStart; i < renderedTiles.size(); ++i)
         {
-            if (i.getImgSize() == 0)
+            if (renderedTiles[i].getImgSize() == 0)
             {
-                LOG_ERR("Encoded 0-sized tile!");
+                LOG_TRC("Encoded 0-sized tile in slot !" << i);
                 assert(!"0-sized tile enocded!");
             }
         }
