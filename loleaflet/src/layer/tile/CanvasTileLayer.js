@@ -85,6 +85,7 @@ L.CanvasTilePainter = L.Class.extend({
 		if (this._updatesRunning) {
 			L.Util.cancelAnimFrame(this._canvasRAF);
 			this.update();
+			this._updatesRunning = false;
 			return true;
 		}
 
