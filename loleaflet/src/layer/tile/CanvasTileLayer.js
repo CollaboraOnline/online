@@ -868,6 +868,16 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		tile = this._tiles[key];
 		if (!tile) { return; }
 
+		var emptyTilesCountChanged = false;
+		if (this._emptyTilesCount > 0) {
+			this._emptyTilesCount -= 1;
+			emptyTilesCountChanged = true;
+		}
+
+		if (emptyTilesCountChanged && this._emptyTilesCount === 0) {
+			this._map.fire('statusindicator', { statusType: 'alltilesloaded' });
+		}
+
 		tile.loaded = +new Date();
 		tile.active = true;
 
@@ -1341,12 +1351,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		else if (tile) {
 			if (this._tiles[key]._invalidCount > 0) {
 				this._tiles[key]._invalidCount -= 1;
-			}
-			if (!tile.loaded) {
-				this._emptyTilesCount -= 1;
-				if (this._emptyTilesCount === 0) {
-					this._map.fire('statusindicator', { statusType: 'alltilesloaded' });
-				}
 			}
 			tile.el.src = img;
 		}
