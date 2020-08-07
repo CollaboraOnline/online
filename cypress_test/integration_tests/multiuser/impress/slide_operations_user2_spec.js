@@ -1,7 +1,7 @@
 /* global describe it cy beforeEach require afterEach */
 
-var helper = require('../common/helper');
-var impressHelper = require('../common/impress_helper');
+var helper = require('../../common/helper');
+var impressHelper = require('../../common/impress_helper');
 
 describe('Slide operations: user-2.', function() {
 	var testFileName = 'slide_operations.odp';
@@ -10,7 +10,7 @@ describe('Slide operations: user-2.', function() {
 		// Wait here, before loading the document.
 		// Opening two clients at the same time causes an issue.
 		cy.wait(5000);
-		helper.beforeAll(testFileName, undefined, true);
+		helper.beforeAll(testFileName, 'impress', true);
 	});
 
 	afterEach(function() {

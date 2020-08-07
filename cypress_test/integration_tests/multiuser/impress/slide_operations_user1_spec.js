@@ -1,13 +1,13 @@
 /* global describe it cy beforeEach require afterEach */
 
-var helper = require('../common/helper');
-var impressHelper = require('../common/impress_helper');
+var helper = require('../../common/helper');
+var impressHelper = require('../../common/impress_helper');
 
 describe('Slide operations: user-1.', function() {
 	var testFileName = 'slide_operations.odp';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName);
+		helper.beforeAll(testFileName, 'impress');
 	});
 
 	afterEach(function() {

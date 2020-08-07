@@ -1,12 +1,12 @@
 /* global describe it cy beforeEach require afterEach */
 
-var helper = require('../common/helper');
+var helper = require('../../common/helper');
 
 describe('Change paragraph properties: user-1.', function() {
 	var testFileName = 'paragraph_prop.odt';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName);
+		helper.beforeAll(testFileName, 'writer');
 	});
 
 	afterEach(function() {

@@ -63,11 +63,11 @@ MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDE
 DEKSTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
 MULTIUSER_TESTS= \
-	paragraph_prop \
-	sidebar_visibility \
-	simultaneous_typing \
-	sheet_operations \
-	slide_operations
+	writer/paragraph_prop \
+	writer/sidebar_visibility \
+	writer/simultaneous_typing \
+	calc/sheet_operations \
+	impress/slide_operations
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
