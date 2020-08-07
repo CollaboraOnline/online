@@ -34,8 +34,10 @@
 	    gecko3d = 'MozPerspective' in doc.style,
 	    opera12 = 'OTransition' in doc.style;
 
+	var chromebook = window.ThisIsTheAndroidApp && window.LOOLMessageHandler.isChromeOS();
+
 	var touch = !window.L_NO_TOUCH && (pointer || 'ontouchstart' in window ||
-			(window.DocumentTouch && document instanceof window.DocumentTouch));
+			(window.DocumentTouch && document instanceof window.DocumentTouch)) && !chromebook;
 
 	var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
 			navigator.userAgent.toLowerCase().indexOf('trident') != -1);
@@ -160,10 +162,7 @@
 
 	global.mode = {
 		isChromebook: function() {
-			if (!window.ThisIsTheAndroidApp)
-				return false;
-
-			return window.LOOLMessageHandler.isChromeOS();
+			return chromebook;
 		},
 		// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
 		// requirement.
