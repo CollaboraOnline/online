@@ -77,6 +77,14 @@ print_error() {
     echo -e "\
     Open the failing test in the interactive test runner:\n\
     \tcd cypress_test && make run-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+    elif [[ ${TEST_FILE} == *"user1"* ]]; then
+    echo -e "\
+    Open the failing test in the interactive test runner:\n\
+    \tcd cypress_test && make run-${COMMAND} spec=${SPEC} user=1\n" >> ${ERROR_LOG}
+    else
+    echo -e "\
+    Open the failing test in the interactive test runner:\n\
+    \tcd cypress_test && make run-${COMMAND} spec=${SPEC} user=2\n" >> ${ERROR_LOG}
     fi
 }
 
