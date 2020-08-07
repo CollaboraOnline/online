@@ -2089,14 +2089,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																					'enabled': 'true',
 																					'children': [
 																						{
-																							'type': 'bigtoolitem',
+																							'type': 'toolitem',
 																							'text': _UNO('.uno:InsertTable', 'presentation'),
 																							'command': '.uno:InsertTable'
 																						}
 																					]
 																				}
 																			],
-																			'vertical': 'false'
+																			'vertical': 'true'
 																		},
 																		{
 																			'id': 'Insert-Section-Image',
@@ -2221,14 +2221,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																					'enabled': 'true',
 																					'children': [
 																						{
-																							'type': 'bigtoolitem',
+																							'type': 'toolitem',
 																							'text': _UNO('.uno:BasicShapes'),
 																							'command': '.uno:BasicShapes'
 																						}
 																					]
 																				}
 																			],
-																			'vertical': 'false'
+																			'vertical': 'true'
 																		},
 																		{
 																			'id': 'Insert-Text',
