@@ -26,7 +26,7 @@ android {
     buildTypes {
         debug {
             resValue "string", "app_name", "${liboAppName} Debug"
-            buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
+            buildConfigField "String", "GIT_COMMIT", "\"${liboOVersionHash}\""
             buildConfigField "boolean", "GOOGLE_PLAY_ENABLED", "${liboGooglePlay}"
             ndk {
                 abiFilters = []
@@ -36,7 +36,7 @@ android {
         }
         release {
             resValue "string", "app_name", "${liboAppName}"
-            buildConfigField "String", "GIT_COMMIT", "\"${liboGitFullCommit}\""
+            buildConfigField "String", "GIT_COMMIT", "\"${liboOVersionHash}\""
             buildConfigField "boolean", "GOOGLE_PLAY_ENABLED", "${liboGooglePlay}"
             ndk {
                 abiFilters = []
@@ -278,7 +278,7 @@ UNO_USER_PACKAGES_CACHE=$UNO_USER_PACKAGES/cache
 [Version]
 AllLanguages=en-US
 BuildVersion=
-buildid=''' + "${liboGitFullCommit}" + '''
+buildid=''' + "${liboCoreVersionHash}" + '''
 ReferenceOOoMajorMinor=4.1
 '''.stripIndent()
     }
