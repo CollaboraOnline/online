@@ -81,7 +81,8 @@ public:
 
     /// Subscribes if no subscription exists and returns the version number.
     /// Otherwise returns 0 to signify a subscription exists.
-    void subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber);
+    void subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber,
+                                  const std::chrono::steady_clock::time_point& now);
 
     /// Create the TileBeingRendered object for the given tile indicating that the tile was sent to
     /// the kit for rendering. Note: subscribeToTileRendering calls this internally, so you don't need
@@ -126,13 +127,11 @@ public:
     void forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
     double getTileBeingRenderedElapsedTimeMs(const TileDesc &tileDesc) const;
 
-    size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session);
-    inline bool hasTileBeingRendered(const TileDesc& tileDesc) const
-    {
-        return _tilesBeingRendered.find(tileDesc) != _tilesBeingRendered.end();
-    }
+    size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session,
+                                             const std::chrono::steady_clock::time_point& now);
+    bool hasTileBeingRendered(const TileDesc& tileDesc, const std::chrono::steady_clock::time_point *now = nullptr) const;
 
-    int  getTileBeingRenderedVersion(const TileDesc& tileDesc);
+    int getTileBeingRenderedVersion(const TileDesc& tileDesc);
 
     /// Set the high watermark for tilecache size
     void setMaxCacheSize(size_t cacheSize);

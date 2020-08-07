@@ -70,19 +70,19 @@ void TileCache::clear()
 /// rendering latency.
 struct TileCache::TileBeingRendered
 {
-    explicit TileBeingRendered(const TileDesc& tile)
-        : _startTime(std::chrono::steady_clock::now())
-        , _tile(tile)
-    {
-    }
+    explicit TileBeingRendered(const TileDesc& tile, const std::chrono::steady_clock::time_point &now)
+        : _startTime(now), _tile(tile) { }
 
     const TileDesc& getTile() const { return _tile; }
     int getVersion() const { return _tile.getVersion(); }
     void setVersion(int version) { _tile.setVersion(version); }
 
     std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
-    double getElapsedTimeMs() const { return std::chrono::duration_cast<std::chrono::milliseconds>
-                                              (std::chrono::steady_clock::now() - _startTime).count(); }
+    double getElapsedTimeMs(const std::chrono::steady_clock::time_point *now = nullptr) const
+        { return std::chrono::duration_cast<std::chrono::milliseconds>
+                ((now ? *now : std::chrono::steady_clock::now()) - _startTime).count(); }
+    bool isStale(const std::chrono::steady_clock::time_point *now = nullptr) const
+        { return getElapsedTimeMs(now) > COMMAND_TIMEOUT_MS; }
     std::vector<std::weak_ptr<ClientSession>>& getSubscribers() { return _subscribers; }
 
     void dumpState(std::ostream& os);
@@ -93,11 +93,15 @@ private:
     TileDesc _tile;
 };
 
-size_t TileCache::countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session)
+size_t TileCache::countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session,
+                                                    const std::chrono::steady_clock::time_point &now)
 {
     size_t count = 0;
     for (auto& it : _tilesBeingRendered)
     {
+        if (it.second->isStale(&now))
+            continue;
+
         for (auto& s : it.second->getSubscribers())
         {
             if (s.lock() == session)
@@ -106,6 +110,16 @@ size_t TileCache::countTilesBeingRenderedForSession(const std::shared_ptr<Client
     }
 
     return count;
+}
+
+bool TileCache::hasTileBeingRendered(const TileDesc& tileDesc, const std::chrono::steady_clock::time_point *now) const
+{
+    const auto it = _tilesBeingRendered.find(tileDesc);
+    if (it == _tilesBeingRendered.end())
+        return false;
+
+    /// did we stall ? if so re-issue.
+    return !now ? true : !it->second->isStale(now);
 }
 
 std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(const TileDesc& tileDesc)
@@ -397,47 +411,40 @@ bool TileCache::intersectsTile(const TileDesc &tileDesc, int part, int x, int y,
 }
 
 // FIXME: to be further simplified when we centralize tile messages.
-void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber)
+void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber,
+                                         const std::chrono::steady_clock::time_point &now)
 {
-    std::ostringstream oss;
-    oss << '(' << tile.getNormalizedViewId() << ',' << tile.getPart() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ')';
-    const std::string name = oss.str();
-
     assertCorrectThread();
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
 
     if (tileBeingRendered)
     {
+        if (tileBeingRendered->isStale(&now))
+            LOG_DBG("Painting stalled; need to re-issue on tile " << tile.debugName());
+
         for (const auto &s : tileBeingRendered->getSubscribers())
         {
             if (s.lock().get() == subscriber.get())
             {
-                LOG_DBG("Redundant request to subscribe on tile " << name);
+                LOG_DBG("Redundant request to subscribe on tile " << tile.debugName());
                 tileBeingRendered->setVersion(tile.getVersion());
                 return;
             }
         }
 
-        LOG_DBG("Subscribing " << subscriber->getName() << " to tile " << name << " which has " <<
+        LOG_DBG("Subscribing " << subscriber->getName() << " to tile " << tile.debugName() << " which has " <<
                 tileBeingRendered->getSubscribers().size() << " subscribers already.");
         tileBeingRendered->getSubscribers().push_back(subscriber);
-
-        const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
-        {
-            // Tile painting has stalled. Reissue.
-            tileBeingRendered->setVersion(tile.getVersion());
-        }
     }
     else
     {
-        LOG_DBG("Subscribing " << subscriber->getName() << " to tile " << name <<
+        LOG_DBG("Subscribing " << subscriber->getName() << " to tile " << tile.debugName() <<
                 " ver=" << tile.getVersion() << " which has no subscribers " << tile.serialize());
 
         assert(_tilesBeingRendered.find(tile) == _tilesBeingRendered.end());
 
-        tileBeingRendered = std::make_shared<TileBeingRendered>(tile);
+        tileBeingRendered = std::make_shared<TileBeingRendered>(tile, now);
         tileBeingRendered->getSubscribers().push_back(subscriber);
         _tilesBeingRendered[tile] = tileBeingRendered;
     }
@@ -446,10 +453,10 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
 void TileCache::registerTileBeingRendered(const TileDesc& tile)
 {
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
+    auto now = std::chrono::steady_clock::now();
     if (tileBeingRendered)
     {
-        const auto duration = (std::chrono::steady_clock::now() - tileBeingRendered->getStartTime());
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() > COMMAND_TIMEOUT_MS)
+        if (tileBeingRendered->isStale(&now))
         {
             // Tile painting has stalled. Reissue.
             tileBeingRendered->setVersion(tile.getVersion());
@@ -459,7 +466,7 @@ void TileCache::registerTileBeingRendered(const TileDesc& tile)
     {
         assert(_tilesBeingRendered.find(tile) == _tilesBeingRendered.end());
 
-        tileBeingRendered = std::make_shared<TileBeingRendered>(tile);
+        tileBeingRendered = std::make_shared<TileBeingRendered>(tile, now);
         _tilesBeingRendered[tile] = tileBeingRendered;
     }
 }

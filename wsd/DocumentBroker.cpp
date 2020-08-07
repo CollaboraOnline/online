@@ -1700,6 +1700,7 @@ size_t DocumentBroker::getMemorySize() const
         _sessions.size() * sizeof(ClientSession);
 }
 
+// Expected to be legacy, ~all new requests are tilecombinedRequests
 void DocumentBroker::handleTileRequest(TileDesc& tile,
                                        const std::shared_ptr<ClientSession>& session)
 {
@@ -1718,17 +1719,18 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
         return;
     }
 
+    auto now = std::chrono::steady_clock::now();
     if (tile.getBroadcast())
     {
         for (auto& it: _sessions)
         {
             if (!it.second->inWaitDisconnected())
-                tileCache().subscribeToTileRendering(tile, it.second);
+                tileCache().subscribeToTileRendering(tile, it.second, now);
         }
     }
     else
     {
-        tileCache().subscribeToTileRendering(tile, session);
+        tileCache().subscribeToTileRendering(tile, session, now);
     }
 
     // Forward to child to render.
@@ -1907,6 +1909,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     // Drop tiles which we are waiting for too long
     session->removeOutdatedTilesOnFly();
 
+    auto now = std::chrono::steady_clock::now();
+
     // All tiles were processed on client side that we sent last time, so we can send
     // a new batch of tiles which was invalidated / requested in the meantime
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
@@ -1914,7 +1918,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     {
         size_t delayedTiles = 0;
         std::vector<TileDesc> tilesNeedsRendering;
-        size_t beingRendered = _tileCache->countTilesBeingRenderedForSession(session);
+        size_t beingRendered = _tileCache->countTilesBeingRenderedForSession(session, now);
         while (session->getTilesOnFlyCount() + beingRendered < tilesOnFlyUpperLimit &&
               !requestedTiles.empty() &&
               // If we delayed all tiles we don't send any tile (we will when next tileprocessed message arrives)
@@ -1944,14 +1948,14 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             else
             {
                 // Not cached, needs rendering.
-                if (!tileCache().hasTileBeingRendered(tile) || // There is no in progress rendering of the given tile
+                if (!tileCache().hasTileBeingRendered(tile, &now) || // There is no in progress rendering of the given tile
                     tileCache().getTileBeingRenderedVersion(tile) < tile.getVersion()) // We need a newer version
                 {
                     tile.setVersion(++_tileVersion);
                     tilesNeedsRendering.push_back(tile);
                     _debugRenderedTileCount++;
                 }
-                tileCache().subscribeToTileRendering(tile, session);
+                tileCache().subscribeToTileRendering(tile, session, now);
                 beingRendered++;
             }
             requestedTiles.pop_front();

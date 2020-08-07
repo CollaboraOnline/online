@@ -193,6 +193,14 @@ public:
         return oss.str();
     }
 
+    /// short name for a tile for debugging.
+    std::string debugName() const
+    {
+        std::ostringstream oss;
+        oss << '(' << getNormalizedViewId() << ',' << getPart() << ',' << getTilePosX() << ',' << getTilePosY() << ')';
+        return oss.str();
+    }
+
     /// Deserialize a TileDesc from a tokenized string.
     static TileDesc parse(const StringVector& tokens)
     {
