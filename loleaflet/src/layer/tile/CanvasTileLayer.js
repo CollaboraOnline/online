@@ -482,13 +482,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			viewreset: this._viewReset,
 			movestart: this._moveStart,
 			moveend: this._move,
+			// update tiles on move, but not more often than once per given interval
+			move: L.Util.throttle(this._move, this.options.updateInterval, this),
 			splitposchanged: this._move,
 		};
-
-		if (!this.options.updateWhenIdle) {
-			// update tiles on move, but not more often than once per given interval
-			events.move = L.Util.throttle(this._move, this.options.updateInterval, this);
-		}
 
 		if (this._zoomAnimated) {
 			events.zoomanim = this._animateZoom;
