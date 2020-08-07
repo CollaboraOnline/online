@@ -431,8 +431,18 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._cypressHelperDiv = L.DomUtil.create('div', '', this._container);
 		}
 
-		this._map.on('movestart', this._painter.startUpdates, this._painter);
-		this._map.on('moveend', this._painter.stopUpdates, this._painter);
+		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
+		// Using L.CanvasTilePainter's own requestAnimationFrame loop to do the updates in that case does not perform well.
+		if (window.mode.isMobile() || window.mode.isTablet()) {
+			this._map.on('move', this._painter.update, this._painter);
+			this._map.on('moveend', function () {
+				setTimeout(this.update.bind(this), 200);
+			}, this._painter);
+		}
+		else {
+			this._map.on('movestart', this._painter.startUpdates, this._painter);
+			this._map.on('moveend', this._painter.stopUpdates, this._painter);
+		}
 		this._map.on('zoomend', this._painter.update, this._painter);
 		this._map.on('splitposchanged', this._painter.update, this._painter);
 		this._map.on('move', this._syncTilePanePos, this);
