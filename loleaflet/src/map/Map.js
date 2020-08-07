@@ -913,7 +913,7 @@ L.Map = L.Evented.extend({
 		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
-		var result = L.point(point);
+		var result = L.point(point).clone();
 		if (point.x <= splitPos.x) {
 			result.x -= pixelOrigin.x;
 		}
@@ -944,7 +944,7 @@ L.Map = L.Evented.extend({
 		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
-		var result = L.point(point)._add(pixelOrigin);
+		var result = L.point(point).add(pixelOrigin);
 
 		if (result.x > splitPos.x) {
 			result.x -= (pixelOrigin.x - mapPanePos.x);
