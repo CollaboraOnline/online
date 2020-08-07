@@ -443,7 +443,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._map.on('movestart', this._painter.startUpdates, this._painter);
 			this._map.on('moveend', this._painter.stopUpdates, this._painter);
 		}
-		this._map.on('zoomend', this._painter.update, this._painter);
+		this._map.on('resize zoomend', this._painter.update, this._painter);
 		this._map.on('splitposchanged', this._painter.update, this._painter);
 		this._map.on('move', this._syncTilePanePos, this);
 	},
