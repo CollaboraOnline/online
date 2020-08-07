@@ -67,6 +67,7 @@ L.Marker = L.Layer.extend({
 		var splitPanesPossible = this._map._docLayer.hasSplitPanesSupport();
 		if (splitPanesPossible) {
 			events.moveend = this.update;
+			events.drag = this.update;
 			events.splitposchanged = this.update;
 		}
 
