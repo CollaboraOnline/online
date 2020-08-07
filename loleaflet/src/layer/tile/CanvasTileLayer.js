@@ -119,6 +119,15 @@ L.CanvasTilePainter = L.Class.extend({
 		this._width = parseInt(this._canvas.style.width);
 		this._height = parseInt(this._canvas.style.height);
 		this.clear();
+		this._syncTileContainerSize();
+	},
+
+	_syncTileContainerSize: function () {
+		var tileContainer = this._layer._container;
+		if (tileContainer) {
+			tileContainer.style.width = this._width + 'px';
+			tileContainer.style.height = this._height + 'px';
+		}
 	},
 
 	clear: function () {
@@ -416,11 +425,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		this._canvas = L.DomUtil.create('canvas', '', this._canvasContainer);
 		this._painter = new L.CanvasTilePainter(this, L.getDpiScaleFactor());
-
-		// FIXME: A hack to get the Hammer events from the pane, which does not happen with
-		// no tile img's in it.
-		this._container.style.width = this._canvas.style.width;
-		this._container.style.height = this._canvas.style.height;
 		this._container.style.position = 'absolute';
 
 		if (L.Browser.cypressTest) {
@@ -431,6 +435,15 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._map.on('moveend', this._painter.stopUpdates, this._painter);
 		this._map.on('zoomend', this._painter.update, this._painter);
 		this._map.on('splitposchanged', this._painter.update, this._painter);
+		this._map.on('move', this._syncTilePanePos, this);
+	},
+
+	_syncTilePanePos: function () {
+		var tilePane = this._container.parentElement;
+		if (tilePane) {
+			var mapPanePos = this._map._getMapPanePos();
+			L.DomUtil.setPosition(tilePane, new L.Point(-mapPanePos.x , -mapPanePos.y));
+		}
 	},
 
 	hasSplitPanesSupport: function () {
