@@ -1160,141 +1160,30 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		});
 	},
 
-	_preFetchTiles: function () {
-		if (this._emptyTilesCount > 0 || !this._map) {
-			return;
-		}
-		var center = this._map.getCenter();
-		var zoom = this._map.getZoom();
-		var tilesToFetch = 10;
-		var maxBorderWidth = 5;
-		var tileBorderSrcs;
-
-		if (this._map.isPermissionEdit()) {
-			tilesToFetch = 5;
-			maxBorderWidth = 3;
-		}
-
-		if (!this._preFetchBorders) {
-			var pixelBounds = this._map.getPixelBounds(center, zoom);
-			tileBorderSrcs = this._pxBoundsToTileRanges(pixelBounds);
-			this._preFetchBorders = tileBorderSrcs;
-		}
-		else {
-			tileBorderSrcs = this._preFetchBorders;
-		}
-
-		var queue = [];
-		var finalQueue = [];
-		var visitedTiles = {};
-		var borderWidth = 0;
-		// don't search on a border wider than 5 tiles because it will freeze the UI
-
-		for (var rangeIdx = 0; rangeIdx < tileBorderSrcs.length; ++rangeIdx) {
-			var tileBorder = new L.Bounds(
-				tileBorderSrcs[rangeIdx].min,
-				tileBorderSrcs[rangeIdx].max
-			);
-
-			while ((tileBorder.min.x >= 0 || tileBorder.min.y >= 0 ||
-				tileBorder.max.x * this._tileWidthTwips < this._docWidthTwips ||
-				tileBorder.max.y * this._tileHeightTwips < this._docHeightTwips) &&
-				tilesToFetch > 0 && borderWidth < maxBorderWidth) {
-				// while the bounds do not fully contain the document
-
-				for (var i = tileBorder.min.x; i <= tileBorder.max.x; i++) {
-					// tiles below the visible area
-					var coords = new L.TileCoordData(
-						i * this._tileSize,
-						tileBorder.max.y * this._tileSize);
-					queue.push(coords);
-				}
-				for (i = tileBorder.min.x; i <= tileBorder.max.x; i++) {
-					// tiles above the visible area
-					coords = new L.TileCoordData(
-						i * this._tileSize,
-						tileBorder.min.y * this._tileSize);
-					queue.push(coords);
-				}
-				for (i = tileBorder.min.y; i <= tileBorder.max.y; i++) {
-					// tiles to the right of the visible area
-					coords = new L.TileCoordData(
-						tileBorder.max.x * this._tileSize,
-						i * this._tileSize);
-					queue.push(coords);
-				}
-				for (i = tileBorder.min.y; i <= tileBorder.max.y; i++) {
-					// tiles to the left of the visible area
-					coords = new L.TileCoordData(
-						tileBorder.min.x * this._tileSize,
-						i * this._tileSize);
-					queue.push(coords);
-				}
-
-				for (i = 0; i < queue.length && tilesToFetch > 0; i++) {
-					coords = queue[i];
-					coords.z = zoom;
-					coords.part = this._preFetchPart;
-					var key = this._tileCoordsToKey(coords);
-
-					if (!this._isValidTile(coords) ||
-						this._tiles[key] ||
-						this._tileCache[key] ||
-						visitedTiles[key]) {
-						continue;
-					}
-
-					visitedTiles[key] = true;
-					finalQueue.push(coords);
-					tilesToFetch -= 1;
-				}
-				if (tilesToFetch === 0) {
-					// don't update the border as there are still
-					// some tiles to be fetched
-					continue;
-				}
-				if (tileBorder.min.x >= 0) {
-					tileBorder.min.x -= 1;
-				}
-				if (tileBorder.min.y >= 0) {
-					tileBorder.min.y -= 1;
-				}
-				if (tileBorder.max.x * this._tileWidthTwips <= this._docWidthTwips) {
-					tileBorder.max.x += 1;
-				}
-				if (tileBorder.max.y * this._tileHeightTwips <= this._docHeightTwips) {
-					tileBorder.max.y += 1;
-				}
-				borderWidth += 1;
-			}
-		}
-
-		if (finalQueue.length > 0) {
-			this._addTiles(finalQueue);
-		} else {
-			clearInterval(this._tilesPreFetcher);
-			this._tilesPreFetcher = undefined;
+	_preFetchTiles: function (forceBorderCalc) {
+		if (this._prefetcher) {
+			this._prefetcher.preFetchTiles(forceBorderCalc);
 		}
 	},
 
 	_resetPreFetching: function (resetBorder) {
-		if (!this._map) {
-			return;
+		if (!this._prefetcher) {
+			this._prefetcher = new L.TilesPreFetcher(this, this._map);
 		}
-		if (this._tilesPreFetcher)
-			clearInterval(this._tilesPreFetcher);
-		if (this._preFetchIdle)
-			clearTimeout(this._preFetchIdle);
-		if (resetBorder) {
-			this._preFetchBorders = null;
+
+		this._prefetcher.resetPreFetching(resetBorder);
+	},
+
+	_clearPreFetch: function () {
+		if (this._prefetcher) {
+			this._prefetcher.clearPreFetch();
 		}
-		var interval = 750;
-		var idleTime = 5000;
-		this._preFetchPart = this._selectedPart;
-		this._preFetchIdle = setTimeout(L.bind(function () {
-			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), interval);
-			this._prefetchIdle = undefined;
-		}, this), idleTime);
+	},
+
+	_clearTilesPreFetcher: function () {
+		if (this._prefetcher) {
+			this._prefetcher.clearTilesPreFetcher();
+		}
 	},
 
 	_onTileMsg: function (textMsg, img) {
@@ -1404,6 +1293,323 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 	hasYSplitter: function () {
 		return !!(this._ySplitter);
+	},
+
+});
+
+L.TilesPreFetcher = L.Class.extend({
+
+	initialize: function (docLayer, map) {
+		this._docLayer = docLayer;
+		this._map = map;
+	},
+
+	preFetchTiles: function (forceBorderCalc) {
+
+		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer) {
+			return;
+		}
+
+		var center = this._map.getCenter();
+		var zoom = this._map.getZoom();
+		var part = this._docLayer._selectedPart;
+		var hasEditPerm = this._map.isPermissionEdit();
+
+		if (this._zoom === undefined) {
+			this._zoom = zoom;
+		}
+
+		if (this._preFetchPart === undefined) {
+			this._preFetchPart = part;
+		}
+
+		if (this._hasEditPerm === undefined) {
+			this._hasEditPerm = hasEditPerm;
+		}
+
+		var maxTilesToFetch = 10;
+		// don't search on a border wider than 5 tiles because it will freeze the UI
+		var maxBorderWidth = 5;
+
+		if (hasEditPerm) {
+			maxTilesToFetch = 5;
+			maxBorderWidth = 3;
+		}
+
+		var tileSize = this._docLayer._tileSize;
+		var pixelBounds = this._map.getPixelBounds(center, zoom);
+
+		if (this._pixelBounds === undefined) {
+			this._pixelBounds = pixelBounds;
+		}
+
+		var splitPanesContext = this._docLayer.getSplitPanesContext();
+		var splitPos = splitPanesContext ? splitPanesContext.getSplitPos() : new L.Point(0, 0);
+
+		if (this._splitPos === undefined) {
+			this._splitPos = splitPos;
+		}
+
+		var paneXFixed = false;
+		var paneYFixed = false;
+
+		if (forceBorderCalc ||
+			!this._borders || this._borders.length === 0 ||
+			zoom !== this._zoom ||
+			part !== this._preFetchPart ||
+			hasEditPerm !== this._hasEditPerm ||
+			!pixelBounds.equals(this._pixelBounds) ||
+			!splitPos.equals(this._splitPos)) {
+
+			this._zoom = zoom;
+			this._preFetchPart = part;
+			this._hasEditPerm = hasEditPerm;
+			this._pixelBounds = pixelBounds;
+			this._splitPos = splitPos;
+
+			// Need to compute borders afresh and fetch tiles for them.
+			this._borders = []; // Stores borders for each split-pane.
+			var tileRanges = this._docLayer._pxBoundsToTileRanges(pixelBounds);
+			var paneStatusList = splitPanesContext ? splitPanesContext.getPanesProperties() :
+				[ { xFixed: false, yFixed: false} ];
+
+			console.assert(tileRanges.length === paneStatusList.length, 'tileRanges and paneStatusList should agree on the number of split-panes');
+
+			for (var paneIdx = 0; paneIdx < tileRanges.length; ++paneIdx) {
+				paneXFixed = paneStatusList[paneIdx].xFixed;
+				paneYFixed = paneStatusList[paneIdx].yFixed;
+
+				if (paneXFixed && paneYFixed) {
+					continue;
+				}
+
+				var tileRange = tileRanges[paneIdx];
+				var paneBorder = new L.Bounds(
+					tileRange.min.add(new L.Point(-1, -1)),
+					tileRange.max.add(new L.Point(1, 1))
+				);
+
+				this._borders.push(new L.TilesPreFetcher.PaneBorder(paneBorder, paneXFixed, paneYFixed));
+			}
+
+		}
+
+		var finalQueue = [];
+		var visitedTiles = {};
+
+		var validTileRange = new L.Bounds(
+			new L.Point(0, 0),
+			new L.Point(
+				Math.floor((this._docLayer._docWidthTwips - 1) / this._docLayer._tileWidthTwips),
+				Math.floor((this._docLayer._docHeightTwips - 1) / this._docLayer._tileHeightTwips)
+			)
+		);
+
+		var tilesToFetch = maxTilesToFetch; // total tile limit per call of preFetchTiles()
+		var doneAllPanes = true;
+
+		for (paneIdx = 0; paneIdx < this._borders.length; ++paneIdx) {
+
+			var queue = [];
+			paneBorder = this._borders[paneIdx];
+			var borderBounds = paneBorder.getBorderBounds();
+
+			paneXFixed = paneBorder.isXFixed();
+			paneYFixed = paneBorder.isYFixed();
+
+			while (tilesToFetch > 0 && paneBorder.getBorderIndex() < maxBorderWidth) {
+
+				var clampedBorder = validTileRange.clamp(borderBounds);
+				var fetchTopBorder = !paneYFixed && borderBounds.min.y === clampedBorder.min.y;
+				var fetchBottomBorder = !paneYFixed && borderBounds.max.y === clampedBorder.max.y;
+				var fetchLeftBorder = !paneXFixed && borderBounds.min.x === clampedBorder.min.x;
+				var fetchRightBorder = !paneXFixed && borderBounds.max.x === clampedBorder.max.x;
+
+				if (!fetchLeftBorder && !fetchRightBorder && !fetchTopBorder && !fetchBottomBorder) {
+					break;
+				}
+
+				if (fetchBottomBorder) {
+					for (var i = clampedBorder.min.x; i <= clampedBorder.max.x; i++) {
+						// tiles below the visible area
+						var coords = new L.TileCoordData(
+							i * tileSize,
+							borderBounds.max.y * tileSize);
+						queue.push(coords);
+					}
+				}
+
+				if (fetchTopBorder) {
+					for (i = clampedBorder.min.x; i <= clampedBorder.max.x; i++) {
+						// tiles above the visible area
+						coords = new L.TileCoordData(
+							i * tileSize,
+							borderBounds.min.y * tileSize);
+						queue.push(coords);
+					}
+				}
+
+				if (fetchRightBorder) {
+					for (i = clampedBorder.min.y; i <= clampedBorder.max.y; i++) {
+						// tiles to the right of the visible area
+						coords = new L.TileCoordData(
+							borderBounds.max.x * tileSize,
+							i * tileSize);
+						queue.push(coords);
+					}
+				}
+
+				if (fetchLeftBorder) {
+					for (i = clampedBorder.min.y; i <= clampedBorder.max.y; i++) {
+						// tiles to the left of the visible area
+						coords = new L.TileCoordData(
+							borderBounds.min.x * tileSize,
+							i * tileSize);
+						queue.push(coords);
+					}
+				}
+
+				var tilesPending = false;
+				for (i = 0; i < queue.length; i++) {
+					coords = queue[i];
+					coords.z = zoom;
+					coords.part = this._preFetchPart;
+					var key = this._docLayer._tileCoordsToKey(coords);
+
+					if (!this._docLayer._isValidTile(coords) ||
+						this._docLayer._tiles[key] ||
+						this._docLayer._tileCache[key] ||
+						visitedTiles[key]) {
+						continue;
+					}
+
+					if (tilesToFetch > 0) {
+						visitedTiles[key] = true;
+						finalQueue.push(coords);
+						tilesToFetch -= 1;
+					}
+					else {
+						tilesPending = true;
+					}
+				}
+
+				if (tilesPending) {
+					// don't update the border as there are still
+					// some tiles to be fetched
+					continue;
+				}
+
+				if (!paneXFixed) {
+					if (borderBounds.min.x > 0) {
+						borderBounds.min.x -= 1;
+					}
+					if (borderBounds.max.x < validTileRange.max.x) {
+						borderBounds.max.x += 1;
+					}
+				}
+
+				if (!paneYFixed) {
+					if (borderBounds.min.y > 0) {
+						borderBounds.min.y -= 1;
+					}
+
+					if (borderBounds.max.y < validTileRange.max.y) {
+						borderBounds.max.y += 1;
+					}
+				}
+
+				paneBorder.incBorderIndex();
+
+			} // border width loop end
+
+			if (paneBorder.getBorderIndex() < maxBorderWidth) {
+				doneAllPanes = false;
+			}
+		} // pane loop end
+
+		console.assert(finalQueue.length <= maxTilesToFetch,
+			'finalQueue length(' + finalQueue.length + ') exceeded maxTilesToFetch(' + maxTilesToFetch + ')');
+
+		var tilesRequested = false;
+
+		if (finalQueue.length > 0) {
+			this._cumTileCount += finalQueue.length;
+			this._docLayer._addTiles(finalQueue);
+			tilesRequested = true;
+		}
+
+		if (!tilesRequested || doneAllPanes) {
+			this.clearTilesPreFetcher();
+			this._borders = undefined;
+		}
+	},
+
+	resetPreFetching: function (resetBorder) {
+
+		if (!this._map) {
+			return;
+		}
+
+		this.clearPreFetch();
+
+		if (resetBorder) {
+			this._borders = undefined;
+		}
+
+		var interval = 750;
+		var idleTime = 5000;
+		this._preFetchPart = this._docLayer._selectedPart;
+		this._preFetchIdle = setTimeout(L.bind(function () {
+			this._tilesPreFetcher = setInterval(L.bind(this.preFetchTiles, this), interval);
+			this._preFetchIdle = undefined;
+			this._cumTileCount = 0;
+		}, this), idleTime);
+	},
+
+	clearPreFetch: function () {
+		this.clearTilesPreFetcher();
+		if (this._preFetchIdle !== undefined) {
+			clearTimeout(this._preFetchIdle);
+			this._preFetchIdle = undefined;
+		}
+	},
+
+	clearTilesPreFetcher: function () {
+		if (this._tilesPreFetcher !== undefined) {
+			clearInterval(this._tilesPreFetcher);
+			this._tilesPreFetcher = undefined;
+		}
+	},
+
+});
+
+L.TilesPreFetcher.PaneBorder = L.Class.extend({
+
+	initialize: function(paneBorder, paneXFixed, paneYFixed) {
+		this._border = paneBorder;
+		this._xFixed = paneXFixed;
+		this._yFixed = paneYFixed;
+		this._index = 0;
+	},
+
+	getBorderIndex: function () {
+		return this._index;
+	},
+
+	incBorderIndex: function () {
+		this._index += 1;
+	},
+
+	getBorderBounds: function () {
+		return this._border;
+	},
+
+	isXFixed: function () {
+		return this._xFixed;
+	},
+
+	isYFixed: function () {
+		return this._yFixed;
 	},
 
 });

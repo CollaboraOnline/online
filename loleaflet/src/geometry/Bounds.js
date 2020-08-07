@@ -175,7 +175,44 @@ L.Bounds.prototype = {
 		}
 
 		return false;
-	}
+	},
+
+	clampX: function (x) {
+		return Math.max(this.min.x, Math.min(this.max.x, x));
+	},
+
+	clampY: function (y) {
+		return Math.max(this.min.y, Math.min(this.max.y, y));
+	},
+
+	clamp: function (obj) {  // (Point) -> Point or (Bounds) -> Bounds
+		if (obj instanceof L.Point) {
+			return new L.Point(
+				this.clampX(obj.x),
+				this.clampY(obj.y)
+			);
+		}
+
+		if (obj instanceof L.Bounds) {
+			return new L.Bounds(
+				new L.Point(
+					this.clampX(obj.min.x),
+					this.clampY(obj.min.y)
+				),
+
+				new L.Point(
+					this.clampX(obj.max.x),
+					this.clampY(obj.max.y)
+				)
+			);
+		}
+
+		console.error('invalid argument type');
+	},
+
+	equals: function (bounds) { // (Bounds) -> Boolean
+		return this.min.equals(bounds.min) && this.max.equals(bounds.max);
+	},
 };
 
 L.bounds = function (a, b) { // (Bounds) or (Point, Point) or (Point[])

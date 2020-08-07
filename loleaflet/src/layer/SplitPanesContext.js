@@ -158,6 +158,41 @@ L.SplitPanesContext = L.Class.extend({
 		this._docLayer.updateVertPaneSplitter();
 	},
 
+	getPanesProperties: function () {
+		var paneStatusList = [];
+		if (this._splitPos.x && this._splitPos.y) {
+			// top-left pane
+			paneStatusList.push({
+				xFixed: true,
+				yFixed: true,
+			});
+		}
+
+		if (this._splitPos.y) {
+			// top-right pane or top half pane
+			paneStatusList.push({
+				xFixed: false,
+				yFixed: true,
+			});
+		}
+
+		if (this._splitPos.x) {
+			// bottom-left pane or left half pane
+			paneStatusList.push({
+				xFixed: true,
+				yFixed: false,
+			});
+		}
+
+		// bottom-right/bottom-half/right-half pane or the full pane (when there are no split-panes active)
+		paneStatusList.push({
+			xFixed: false,
+			yFixed: false,
+		});
+
+		return paneStatusList;
+	},
+
 	// returns all the pane rectangles for the provided full-map area (all in CSS pixels).
 	getPxBoundList: function (pxBounds) {
 		if (!pxBounds) {
@@ -191,7 +226,7 @@ L.SplitPanesContext = L.Class.extend({
 			));
 		}
 
-		// bottom-right pane or the full pane (when there are no split-panes active)
+		// bottom-right/bottom-half/right-half pane or the full pane (when there are no split-panes active)
 		boundList.push(new L.Bounds(
 			topLeft.add(this._splitPos).add(new L.Point(1, 1)),
 			bottomRight

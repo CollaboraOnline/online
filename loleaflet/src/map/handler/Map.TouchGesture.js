@@ -661,10 +661,9 @@ L.Map.TouchGesture = L.Handler.extend({
 
 			this._map.dragging._draggable._onMove(e);
 
-			// Updates the tiles
-			clearInterval(this._map._docLayer._tilesPreFetcher);
-			this._map._docLayer._preFetchBorder = null;
-			this._map._docLayer._preFetchTiles();
+			// Prefetch border tiles for the current visible area after cancelling any scheduled calls to the prefetcher.
+			this._map._docLayer._clearPreFetch();
+			this._map._docLayer._preFetchTiles(true /* forceBorderCalc */);
 
 			if (!horizontalEnd || !verticalEnd) {
 				this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);

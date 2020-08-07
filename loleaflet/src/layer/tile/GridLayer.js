@@ -44,9 +44,8 @@ L.GridLayer = L.Layer.extend({
 		map._removeZoomLimit(this);
 		this._container = null;
 		this._tileZoom = null;
-		clearTimeout(this._preFetchIdle);
+		this._clearPreFetch();
 		clearTimeout(this._previewInvalidator);
-		clearInterval(this._tilesPreFetcher);
 
 		if (this._selections) {
 			this._map.removeLayer(this._selections);
@@ -1178,7 +1177,7 @@ L.GridLayer = L.Layer.extend({
 		return true;
 	},
 
-	_preFetchTiles: function () {
+	_preFetchTiles: function (forceBorderCalc) {
 		if (this._emptyTilesCount > 0 || !this._map) {
 			return;
 		}
@@ -1193,7 +1192,7 @@ L.GridLayer = L.Layer.extend({
 			maxBorderWidth = 3;
 		}
 
-		if (!this._preFetchBorder) {
+		if (!this._preFetchBorder || forceBorderCalc) {
 			var pixelBounds = this._map.getPixelBounds(center, zoom);
 			tileBorderSrc = this._pxBoundsToTileRange(pixelBounds);
 			this._preFetchBorder = tileBorderSrc;
@@ -1301,8 +1300,22 @@ L.GridLayer = L.Layer.extend({
 		this._preFetchPart = this._selectedPart;
 		this._preFetchIdle = setTimeout(L.bind(function () {
 			this._tilesPreFetcher = setInterval(L.bind(this._preFetchTiles, this), interval);
-			this._prefetchIdle = undefined;
+			this._preFetchIdle = undefined;
 		}, this), idleTime);
+	},
+
+	_clearPreFetch: function () {
+		if (this._preFetchIdle !== undefined) {
+			clearTimeout(this._preFetchIdle);
+		}
+
+		this._clearTilesPreFetcher();
+	},
+
+	_clearTilesPreFetcher: function () {
+		if (this._tilesPreFetcher !== undefined) {
+			clearInterval(this._tilesPreFetcher);
+		}
 	},
 
 	_coordsToPixBounds: function (coords) {
