@@ -1573,9 +1573,8 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
 {
     const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
-    // If in the correct thread - no need for wakeups.
-    if (docBroker)
-        docBroker->assertCorrectThread();
+    LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
+    docBroker->assertCorrectThread();
 
     const std::string command = data->firstToken();
     std::unique_ptr<TileDesc> tile;
