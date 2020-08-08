@@ -41,6 +41,7 @@
 
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/resource.h>
 
 #include <cassert>
 #include <cerrno>
@@ -1326,6 +1327,13 @@ void LOOLWSD::initialize(Application& self)
         LOG_ERR("MAX_DOCUMENTS cannot be bigger than MAX_CONNECTIONS");
         LOOLWSD::MaxDocuments = LOOLWSD::MaxConnections;
     }
+
+    struct rlimit rlim;
+    ::getrlimit(RLIMIT_NOFILE, &rlim);
+    LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
+    // 4 fds per document are used for client connection, Kit process communication, and
+    // a wakeup pipe with 2 fds. 32 fds (i.e. 8 documents) are reserved.
+    LOG_INF("Maximum number of open documents supported by the system: " << rlim.rlim_cur / 4 - 8);
 
     LOG_INF("Maximum concurrent open Documents limit: " << LOOLWSD::MaxDocuments);
     LOG_INF("Maximum concurrent client Connections limit: " << LOOLWSD::MaxConnections);
