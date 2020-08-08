@@ -156,8 +156,20 @@ L.Map.include({
 		this._socket.sendMessage(msg);
 	},
 
+	messageNeedsToBeRedirected: function(command) {
+		if (command === '.uno:EditHyperlink') {
+			var that = this;
+			setTimeout(function () { that.showHyperlinkDialog(); }, 500);
+			return true;
+		}
+		else {
+			return false;
+		}
+	},
+
 	sendUnoCommand: function (command, json) {
 		var isAllowedInReadOnly = command == '.uno:WordCountDialog';
+
 		var hasOpenedDialog = this.dialog.hasOpenedDialog();
 		if (hasOpenedDialog) {
 			$('.lokdialog_container').addClass('lokblink');
@@ -165,7 +177,8 @@ L.Map.include({
 				$('.lokdialog_container').removeClass('lokblink');
 			}, 600);
 		} else if (this.isPermissionEdit() || isAllowedInReadOnly) {
-			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
+			if (!this.messageNeedsToBeRedirected(command))
+				this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 

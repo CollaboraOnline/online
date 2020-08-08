@@ -22,7 +22,7 @@ L.Control.ContextMenu = L.Control.extend({
 			 */
 			general: ['Cut', 'Copy', 'Paste', 'Delete',
 					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
-					  'OpenHyperlinkOnCursor', 'CopyHyperlinkLocation', 'RemoveHyperlink',
+					  'OpenHyperlinkOnCursor', 'EditHyperlink', 'CopyHyperlinkLocation', 'RemoveHyperlink',
 					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
 					  'SetAnchorToChar', 'SetAnchorToFrame',
 					  'WrapMenu', 'WrapOff', 'WrapOn', 'WrapIdeal', 'WrapLeft', 'WrapRight', 'WrapThrough',
