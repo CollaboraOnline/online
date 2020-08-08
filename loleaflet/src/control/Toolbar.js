@@ -156,17 +156,31 @@ L.Map.include({
 		this._socket.sendMessage(msg);
 	},
 
+	messageNeedsToBeRedirected: function(command) {
+		if (command === '.uno:EditHyperlink') {
+			var that = this;
+			setTimeout(function () { that.showHyperlinkDialog(); }, 500);
+			return true;
+		}
+		else {
+			return false;
+		}
+	},
+
 	sendUnoCommand: function (command, json) {
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation', '.uno:InsertAnnotation', '.uno:DeleteAnnotation'];
+
 		for (var i in allowedCommands) {
 			if (allowedCommands[i] === command) {
 				isAllowedInReadOnly = true;
 				break;
 			}
 		}
+
 		if (this.isPermissionEdit() || isAllowedInReadOnly) {
-			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
+			if (!this.messageNeedsToBeRedirected(command))
+				this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 

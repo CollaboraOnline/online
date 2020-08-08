@@ -68,18 +68,6 @@ L.Control.AlertDialog = L.Control.extend({
 				});
 			}
 
-			if (this._map.getDocType() != 'presentation') {
-				buttonsList.push({
-					text: _('Edit'),
-					type: 'button',
-					className: 'vex-dialog-button-secondary',
-					click: function editClick () {
-						vex.closeAll();
-						e.map.showHyperlinkDialog();
-					}
-				});
-			}
-
 			vex.dialog.open({
 				message: messageText,
 				showCloseButton: true,
