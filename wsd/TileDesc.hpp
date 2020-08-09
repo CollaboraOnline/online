@@ -10,7 +10,7 @@
 #pragma once
 
 #include <cassert>
-#include <map>
+#include <unordered_map>
 #include <sstream>
 #include <string>
 
@@ -24,7 +24,7 @@ using TileBinaryHash = uint64_t;
 
 /// Tile Descriptor
 /// Represents a tile's coordinates and dimensions.
-class TileDesc
+class TileDesc final
 {
 public:
     TileDesc(int normalizedViewId, int part, int width, int height, int tilePosX, int tilePosY, int tileWidth,
@@ -206,7 +206,7 @@ public:
     {
         // We don't expect undocumented fields and
         // assume all values to be int.
-        std::map<std::string, int> pairs;
+        std::unordered_map<std::string, int> pairs(16);
 
         // Optional.
         pairs["ver"] = -1;
@@ -261,7 +261,7 @@ public:
         return tileID.str();
     }
 
-protected:
+private:
     int _normalizedViewId;
     int _part;
     int _width;
@@ -281,7 +281,7 @@ protected:
 /// One or more tile header.
 /// Used to request the rendering of multiple
 /// tiles as well as the header of the response.
-class TileCombined
+class TileCombined final
 {
 private:
     TileCombined(int normalizedViewId, int part, int width, int height,
@@ -465,7 +465,7 @@ public:
     {
         // We don't expect undocumented fields and
         // assume all values to be int.
-        std::map<std::string, int> pairs;
+        std::unordered_map<std::string, int> pairs(16);
 
         std::string tilePositionsX;
         std::string tilePositionsY;

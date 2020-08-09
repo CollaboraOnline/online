@@ -552,7 +552,7 @@ void TileCache::saveDataToCache(const TileDesc &desc, const char *data, const si
 
     TileCache::Tile tile = std::make_shared<std::vector<char>>(size);
     std::memcpy(tile->data(), data, size);
-    auto res = _cache.insert(std::make_pair(desc, tile));
+    auto res = _cache.emplace(desc, tile);
     if (!res.second)
     {
         _cacheSize -= itemCacheSize(res.first->second);
