@@ -1235,11 +1235,40 @@ L.TileLayer = L.GridLayer.extend({
 	_showURLPopUp: function(position, url) {
 		// # for internal links
 		if (!url.startsWith('#')) {
-			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false})
+			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
 			.setContent('<a href="' + url + '" target="_blank">' + url + '</a>')
 			.setLatLng(position)
 			.openOn(this._map);
+			var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
+			var offsetDiffLeft = $('.hyperlink-popup').offset().left - $('#map').offset().left;
+			if (offsetDiffTop < 10) this._movePopUpBelow();
+			if (offsetDiffLeft < 10) this._movePopUpRight();
 		}
+	},
+
+	_movePopUpBelow: function() {
+		var popUp = $('.hyperlink-popup').first();
+		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
+			this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
+		var cursorSize = pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom()));
+		var bottom = cursorSize.y + popUp.height();
+
+		popUp.css({
+			'bottom': bottom ? -bottom + 'px': '',
+			'display': 'flex',
+			'flex-direction': 'column-reverse'
+		});
+		$('.leaflet-popup-tip-container').first().css('transform', 'rotate(180deg)');
+	},
+
+	_movePopUpRight: function() {
+		$('.leaflet-popup-content-wrapper').first().css({
+			'position': 'relative',
+			'left': this._map.hyperlinkPopup._containerLeft * -1
+		});
+		$('.leaflet-popup-tip-container').first().css({
+			'left': '25px'
+		});
 	},
 
 	_closeURLPopUp: function() {
