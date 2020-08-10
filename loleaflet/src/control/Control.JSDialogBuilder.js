@@ -1884,7 +1884,48 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_borderControlItem: function(parentContainer, data, builder, i) {
+	_getCurrentBorderNumber: function(builder) {
+		var outer = builder.map['stateChangeHandler'].getItemValue('.uno:BorderOuter');
+		var inner = builder.map['stateChangeHandler'].getItemValue('.uno:BorderInner');
+
+		if (!outer || !inner)
+			return 0;
+
+		var left = outer.left === 'true';
+		var right = outer.right === 'true';
+		var bottom = outer.bottom === 'true';
+		var top = outer.top === 'true';
+		var horiz = inner.horizontal === 'true';
+		var vert = inner.vertical === 'true';
+
+		if (left && !right && !bottom && !top && !horiz && !vert) {
+			return 2;
+		} else if (!left && right && !bottom && !top && !horiz && !vert) {
+			return 3;
+		} else if (left && right && !bottom && !top && !horiz && !vert) {
+			return 4;
+		} else if (!left && !right && !bottom && top && !horiz && !vert) {
+			return 5;
+		} else if (!left && !right && bottom && !top && !horiz && !vert) {
+			return 6;
+		} else if (!left && !right && bottom && top && !horiz && !vert) {
+			return 7;
+		} else if (left && right && bottom && top && !horiz && !vert) {
+			return 8;
+		} else if (!left && !right && bottom && top && horiz && !vert) {
+			return 9;
+		} else if (left && right && bottom && top && horiz && !vert) {
+			return 10;
+		} else if (left && right && bottom && top && !horiz && vert) {
+			return 11;
+		} else if (left && right && bottom && top && horiz && vert) {
+			return 12;
+		}
+
+		return 1;
+	},
+
+	_borderControlItem: function(parentContainer, data, builder, i, selected) {
 		var button = null;
 
 		var div = this._createIdentifiable('div', 'ui-content unospan', parentContainer, data);
@@ -1893,6 +1934,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		button = L.DomUtil.create('img', 'ui-content borderbutton', div);
 		button.src = L.LOUtil.getImageURL('fr0' + i + '.svg');
 		button.id = buttonId;
+
+		if (selected)
+			$(button).addClass('selected');
 
 		$(div).click(function () {
 			var color = 0;
@@ -1908,8 +1952,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var bordercontrollabel = L.DomUtil.create('p', builder.options.cssClass + ' ui-text', parentContainer);
 		bordercontrollabel.innerHTML = _('Cell borders');
 		bordercontrollabel.id = data.id + 'label';
+		var current = builder._getCurrentBorderNumber(builder);
 		for (var i = 1; i < 13; ++i)
-			builder._borderControlItem(parentContainer, data, builder, i);
+			builder._borderControlItem(parentContainer, data, builder, i, i === current);
+
+		var updateFunction = function() {
+			var current = builder._getCurrentBorderNumber(builder);
+			for (var i = 1; i < 13; ++i) {
+				if (i !== current)
+					$('#border-' + i).removeClass('selected');
+				else
+					$('#border-' + i).addClass('selected');
+			}
+		};
+
+		builder.map.on('commandstatechanged', function(e) {
+			if (e.commandName === '.uno:BorderOuter' || e.commandName === '.uno:BorderInner')
+				updateFunction();
+		}, this);
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
