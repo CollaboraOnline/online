@@ -36,6 +36,7 @@ l10nstrings.strMemoryStatsCachesize = _('Cache size of memory statistics');
 l10nstrings.strMemoryStatsInterval = _('Time interval of memory statistics (in ms)');
 l10nstrings.strCpuStatsCachesize = _('Cache size of CPU statistics');
 l10nstrings.strCpuStatsInterval = _('Time interval of CPU statistics (in ms)');
+l10nstrings.strKillSessionToolTip = _('Kill session.');
 l10nstrings.strLimitVirtMemMb = _('Maximum Document process virtual memory (in MB) - reduce only');
 l10nstrings.strLimitStackMemKb = _('Maximum Document process stack memory (in KB) - reduce only');
 l10nstrings.strLimitFileSizeMb = _('Maximum file size allowed to write to disk (in MB) - reduce only');

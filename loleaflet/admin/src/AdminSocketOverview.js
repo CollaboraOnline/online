@@ -88,6 +88,7 @@ function upsertDocsTable(doc, sName, socket) {
 
 	var sessionCloseCell = document.createElement('td'); // This cell will open "Do you want to kill this session?" dialog.
 	sessionCloseCell.innerText = '✖';
+	sessionCloseCell.title = _('Kill session.');
 	sessionCloseCell.className = 'has-text-centered';
 	sessionCloseCell.style.cursor = 'pointer';
 	if (add === true) { row.appendChild(sessionCloseCell); } else { row.cells[0] = sessionCloseCell; }
