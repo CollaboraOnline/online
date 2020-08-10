@@ -47,6 +47,8 @@ SPACE :=$(EMPTY) $(EMPTY)
 
 CORE_VERSION := $(subst $(SPACE),_,$(shell "@LO_PATH@"/program/soffice.bin --version 2> /dev/null))
 
+BROWSER:=$(CHROME)
+
 if ENABLE_DEBUG
 FILTER_DEBUG=cypress:electron,cypress:launcher
 export DEBUG=$(if $(ENABLE_LOGGING),$(FILTER_DEBUG),)
@@ -171,7 +173,7 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 		$(eval INTERACTIVE_USER_SPEC=$(spec)_user2_spec.js))
 	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
 	@$(PARALLEL_SCRIPT) \
-		--browser $(CHROME) \
+		--browser $(BROWSER) \
 		--config $(MULTIUSER_CONFIG) \
 		--env $(MULTIUSER_ENV) \
 		--spec $(BACKGROUND_USER_SPEC) \
@@ -201,6 +203,22 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_desktop_tests,,,COVERAGE_RUN="1")
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
 	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
+	@$(KILL_COMMAND) || true
+
+
+check-firefox: do-check-firefox
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
+
+do-check-firefox: @JAILS_PATH@ $(NODE_BINS)
+	@echo
+	@echo "Run tests inside Firefox..."
+	@echo
+	@rm -f $(ERROR_LOG)
+	$(eval BROWSER="firefox")
+	$(call start_loolwsd)
+	$(call run_desktop_tests)
+	$(call run_mobile_tests)
+	$(call run_all_multiuser_tests)
 	@$(KILL_COMMAND) || true
 
 @JAILS_PATH@:
@@ -262,7 +280,7 @@ MULTIUSER_ENV = \
 define run_interactive_desktop
 	$(if $(1),\
 		$(CYPRESS_BINARY) run \
-			--browser $(CHROME) \
+			--browser $(BROWSER) \
 			--headed --no-exit \
 			--config $(DESKTOP_CONFIG) \
 			--env $(DESKTOP_ENV) \
@@ -275,7 +293,7 @@ endef
 define run_interactive_mobile
 	$(if $(1),\
 		$(CYPRESS_BINARY) run \
-			--browser $(CHROME) \
+			--browser $(BROWSER) \
 			--headed --no-exit \
 			--config $(MOBILE_CONFIG) \
 			--env $(MOBILE_ENV) \
@@ -287,7 +305,7 @@ endef
 
 define run_interactive_multi
 	$(CYPRESS_BINARY) run \
-		--browser $(CHROME) \
+		--browser $(BROWSER) \
 		--headed --no-exit \
 		--config $(MULTIUSER_CONFIG) \
 		--env $(MULTIUSER_ENV) \
@@ -299,7 +317,7 @@ define run_desktop_tests
 	@echo
 	$(if $(PARALLEL_BUILD),\
 		@$(PARALLEL_SCRIPT) \
-			--browser $(CHROME) \
+			--browser $(BROWSER) \
 			--config $(DESKTOP_CONFIG) \
 			--env $(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)) \
 			--spec $(1) \
@@ -308,7 +326,7 @@ define run_desktop_tests
 			--second-chance \
 		,\
 		$(CYPRESS_BINARY) run \
-			--browser $(CHROME) \
+			--browser $(BROWSER) \
 			--headless \
 			--config $(DESKTOP_CONFIG) \
 			--env $(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)) \
@@ -322,7 +340,7 @@ define run_mobile_tests
 	@echo
 	$(if $(PARALLEL_BUILD),\
 		@$(PARALLEL_SCRIPT) \
-			--browser $(CHROME) \
+			--browser $(BROWSER) \
 			--config $(MOBILE_CONFIG) \
 			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
 			--spec $(1) \
@@ -331,7 +349,7 @@ define run_mobile_tests
 			--second-chance \
 		,\
 		$(CYPRESS_BINARY) run \
-			--browser $(CHROME) \
+			--browser $(BROWSER) \
 			--headless \
 			--config $(MOBILE_CONFIG) \
 			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
@@ -352,14 +370,14 @@ define run_multiuser_test
 	@echo "Running cypress multi-user test: $(USER1_SPEC) - $(USER2_SPEC)"
 	@echo
 	@$(PARALLEL_SCRIPT) \
-		--browser $(CHROME) \
+		--browser $(BROWSER) \
 		--config $(MULTIUSER_CONFIG) \
 		--env $(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)) \
 		--spec $(USER1_SPEC) \
 		--type multi-user \
 		--log-file $(USER1_LOG) & \
 	$(PARALLEL_SCRIPT) \
-		--browser $(CHROME) \
+		--browser $(BROWSER) \
 		--config $(MULTIUSER_CONFIG) \
 		--env $(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)) \
 		--spec $(USER2_SPEC) \
