@@ -465,6 +465,9 @@ L.CalcTileLayer = L.TileLayer.extend({
 			for (var index in values.comments) {
 				comment = values.comments[index];
 				comment.tab = parseInt(comment.tab);
+				if (comment.author in this._map._viewInfoByUserName) {
+					comment.avatar = this._map._viewInfoByUserName[comment.author].userextrainfo.avatar;
+				}
 				comment.cellPos = L.LOUtil.stringToBounds(comment.cellPos);
 				comment.cellPos = L.latLngBounds(this._twipsToLatLng(comment.cellPos.getBottomLeft()),
 					this._twipsToLatLng(comment.cellPos.getTopRight()));
