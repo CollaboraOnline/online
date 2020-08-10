@@ -299,6 +299,10 @@ p.mobile-wizard.ui-combobox-text.selected {
 	-webkit-box-shadow: inset 0px 0px 0px 2px #fff;
 	box-shadow: inset 0px 0px 0px 2px #fff;
 }
+#mobile-wizard-content > #ScCellAppearancePropertyPanel > .ui-content.level-0.mobile-wizard .borderbutton.selected {
+	-webkit-box-shadow: inset 0px 0px 0px 2px #0867af !important;
+	box-shadow: inset 0px 0px 0px 2px #0867af !important;
+}
 .ui-header.mobile-wizard {
 	width: 100%;
 	height: 56px !important;
