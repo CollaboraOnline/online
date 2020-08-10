@@ -1760,6 +1760,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		 return false;
 	},
 
+	parseHexColor: function(color) {
+		if (color === 'transparent')
+			return -1;
+		else
+			return parseInt('0x' + color);
+	},
+
 	_sendColorCommand: function(builder, data, color) {
 		var gradientItem;
 
@@ -1790,7 +1797,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var params = {};
 			params[data.id] = {
 				type : 'long',
-				value : parseInt('0x' + color)
+				value : builder.parseHexColor(color)
 			};
 
 			builder.map['stateChangeHandler'].setItemValue(data.command, params[data.id].value);
@@ -1802,7 +1809,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		// update the item state as we send
 		var items = builder.map['stateChangeHandler'];
-		items.setItemValue(data.command, parseInt('0x' + color));
+		items.setItemValue(data.command, builder.parseHexColor(color));
 
 		builder.map.sendUnoCommand(command);
 	},
