@@ -291,11 +291,11 @@ describe('Apply number formatting.', function() {
 		selectFormatting('Fraction');
 
 		// Decimal and leading zeros are changed.
-		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '1');
+		//cy.get('#decimalplaces input')
+		//	.should('have.attr', 'value', '1');
 
-		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '0');
+		//cy.get('#leadingzeroes input')
+		//	.should('have.attr', 'value', '0');
 
 		calcHelper.selectAllMobile();
 
