@@ -83,6 +83,7 @@ L.Control.AlertDialog = L.Control.extend({
 			vex.dialog.open({
 				message: messageText,
 				showCloseButton: true,
+				contentClassName: 'word-wrap-for-vex-dialog',
 				buttons: buttonsList,
 				callback: function() {},
 				afterClose: function () {

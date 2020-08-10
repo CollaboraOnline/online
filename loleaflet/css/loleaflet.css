@@ -622,3 +622,7 @@ body {
 .drop-down-field-list-item:hover {
 	background: #0b87e7;
 }
+
+.word-wrap-for-vex-dialog {
+	overflow-wrap: break-word;
+}
