@@ -544,6 +544,15 @@ body {
 		-o-user-select: none;
 }
 
+.lokblink {
+    animation: blink 150ms infinite alternate;
+}
+
+@keyframes blink {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+
 .form-field-frame {
 	border: 1px solid;
 	position: absolute;

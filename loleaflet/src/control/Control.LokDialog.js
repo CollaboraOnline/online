@@ -134,6 +134,16 @@ L.Control.LokDialog = L.Control.extend({
 	_currentDeck: null, // The sidebar.
 	_calcInputBar: null, // The Formula-Bar.
 
+	hasOpenedDialog: function() {
+		var nonDialogEntries = 0;
+		for (var index in this._dialogs) {
+			if (this._dialogs[index].isSidebar || this._dialogs[index].isCalcInputBar)
+				nonDialogEntries++;
+		}
+
+		return Object.keys(this._dialogs).length > nonDialogEntries;
+	},
+
 	_docLoaded: function(e) {
 		if (!e.status) {
 			$('.lokdialog_container').remove();

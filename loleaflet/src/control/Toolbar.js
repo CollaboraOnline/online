@@ -158,7 +158,13 @@ L.Map.include({
 
 	sendUnoCommand: function (command, json) {
 		var isAllowedInReadOnly = command == '.uno:WordCountDialog';
-		if (this.isPermissionEdit() || isAllowedInReadOnly) {
+		var hasOpenedDialog = this.dialog.hasOpenedDialog();
+		if (hasOpenedDialog) {
+			$('.lokdialog_container').addClass('lokblink');
+			setTimeout(function () {
+				$('.lokdialog_container').removeClass('lokblink');
+			}, 600);
+		} else if (this.isPermissionEdit() || isAllowedInReadOnly) {
 			this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
