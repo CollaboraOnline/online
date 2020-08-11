@@ -2263,6 +2263,11 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function (scroll, zoom) {
+
+		if (!this._visibleCursor) {
+			return;
+		}
+
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 

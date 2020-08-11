@@ -80,6 +80,13 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		map.addControl(L.control.columnHeader());
 		map.addControl(L.control.rowHeader());
 		L.TileLayer.prototype.onAdd.call(this, map);
+
+		map.on('resize', function () {
+			if (this.isCursorVisible()) {
+				this._onUpdateCursor(true /* scroll */);
+			}
+		}.bind(this));
+
 		this._annotations = {};
 	},
 
