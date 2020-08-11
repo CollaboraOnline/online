@@ -9,11 +9,12 @@ describe('Form field button tests.', function() {
 		testFileName = fileName;
 		helper.beforeAll(fileName, 'writer');
 
-		cy.get('#document-container')
-			.click();
-
+		// Blinking cursor is not visible for some reason.
 		cy.get('textarea.clipboard')
-			.type('{home}');
+			.type('x');
+
+		cy.get('.blinking-cursor')
+			.should('be.visible');
 	}
 	afterEach(function() {
 		helper.afterAll(testFileName, 'writer');
@@ -175,9 +176,11 @@ describe('Form field button tests.', function() {
 		cy.contains('.drop-down-field-list-item', 'January')
 			.click();
 
+		cy.get('.drop-down-field-list-item.selected')
+			.should('have.text', 'January');
+
 		// Move the cursor away and back
-		cy.get('textarea.clipboard')
-			.type('{home}', {force : true});
+		moveCursor('left');
 
 		buttonShouldNotExist();
 
@@ -203,15 +206,6 @@ describe('Form field button tests.', function() {
 
 		cy.contains('.drop-down-field-list-item', 'December')
 			.click();
-
-		moveCursor('right');
-
-		buttonShouldNotExist();
-
-		// Move the cursor back next to the field
-		moveCursor('left');
-
-		buttonShouldExist();
 
 		cy.get('.drop-down-field-list-item.selected')
 			.should('have.text', 'December');
