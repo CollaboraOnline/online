@@ -700,7 +700,7 @@ a.leaflet-control-zoom-in {
 #DecrementIndent + input:disabled{display: none;}
 div#mobile-wizard-content input[type=number]{
 	height: 46px;
-	width: 42%;
+	width: 40%;
 	padding-left: 8%;
 	border: none;
 	-moz-appearance: textfield;
