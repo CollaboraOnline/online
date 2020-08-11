@@ -1434,7 +1434,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.id === 'fontsizecombobox' ||
 			data.id === 'fontsize' ||
 			data.id === 'FontBox' ||
-			data.id === 'rotation') {
+			data.id === 'rotation' ||
+			data.id === 'LB_ANGLE' ||
+			data.id === 'LB_DISTANCE') {
 			builder._listboxControl(parentContainer, data, builder);
 		} else if (data.id === 'searchterm' ||
 			data.id === 'replaceterm') {
@@ -1807,6 +1809,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map['stateChangeHandler'].setItemValue(data.command, params[data.id].value);
 			builder.map.sendUnoCommand(data.command, params);
 			return;
+		} else if (data.id === 'LB_SHADOW_COLOR') {
+			data.command = '.uno:FillShadowColor';
 		}
 
 		var command = data.command + '?Color:string=' + color;
