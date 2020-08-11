@@ -373,6 +373,14 @@ L.Control.TopToolbar = L.Control.extend({
 		if (e.HidePrintOption) {
 			w2ui['editbar'].hide('print');
 		}
+
+		// On desktop we only have Save and Print buttons before the first
+		// splitter/break. Hide the splitter if we hid both save and print.
+		// TODO: Apply the same logic to mobile/tablet to avoid beginning with a splitter.
+		if (window.mode.isDesktop() && e.HideSaveOption && e.HidePrintOption) {
+			w2ui['editbar'].hide('savebreak');
+		}
+
 		if (e.EnableInsertRemoteImage === true && w2ui['editbar']) {
 			w2ui['editbar'].hide('insertgraphic');
 			w2ui['editbar'].show('menugraphic');
