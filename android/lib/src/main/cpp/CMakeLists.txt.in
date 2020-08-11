@@ -52,7 +52,8 @@ set(LIBLO_NATIVE_CODE ${LOBUILDDIR_ABI}/android/jniLibs/${ANDROID_ABI}/liblo-nat
 
 target_include_directories(androidapp PRIVATE
                            .                     # path to androidapp.h
-                           ../../../../..        # path to config.h
+			   @abs_top_builddir@    # path to config.h
+			   @abs_top_srcdir@
                            ../../../../../common # the needed loolwsd includes
                            ../../../../../kit
                            ../../../../../net
