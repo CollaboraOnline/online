@@ -602,3 +602,9 @@ body {
 .word-wrap-for-vex-dialog {
 	overflow-wrap: break-word;
 }
+
+.hyperlink-popup .leaflet-popup-content {
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
