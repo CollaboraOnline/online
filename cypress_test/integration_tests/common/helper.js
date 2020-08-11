@@ -450,7 +450,7 @@ function moveCursor(direction, forceType = false) {
 	}
 
 	cy.get('@origCursorPos')
-		.should('be.greaterThan', 0);
+		.should('be.at.least', 0);
 
 	var key = '';
 	if (direction === 'up') {
