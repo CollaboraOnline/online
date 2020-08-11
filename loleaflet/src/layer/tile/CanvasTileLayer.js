@@ -107,6 +107,7 @@ L.CanvasTilePainter = L.Class.extend({
 		this.setImageSmoothing(enableImageSmoothing);
 		var mapSize = this._map.getPixelBounds().getSize();
 		this._lastSize = mapSize;
+		this._lastMapSize = mapSize;
 		this._setCanvasSize(mapSize.x, mapSize.y);
 	},
 
@@ -216,7 +217,7 @@ L.CanvasTilePainter = L.Class.extend({
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		var zoom = Math.round(this._map.getZoom());
 		var pixelBounds = this._map.getPixelBounds();
-		var newSize = pixelBounds.getSize();
+		var newMapSize = pixelBounds.getSize();
 		var newTopLeft = pixelBounds.getTopLeft();
 		var part = this._layer._selectedPart;
 		var newSplitPos = splitPanesContext ?
@@ -224,24 +225,38 @@ L.CanvasTilePainter = L.Class.extend({
 
 		var zoomChanged = (zoom !== this._lastZoom);
 		var partChanged = (part !== this._lastPart);
-		var sizeChanged = !newSize.equals(this._lastSize);
+
+		var mapSizeChanged = !newMapSize.equals(this._lastMapSize);
+		// To avoid flicker, only resize the canvas element if width or height of the map increases.
+		var newSize = new L.Point(Math.max(newMapSize.x, this._lastSize.x),
+			Math.max(newMapSize.y, this._lastSize.y));
+		var resizeCanvas = !newSize.equals(this._lastSize);
+
+		var topLeftChanged = this._topLeft === undefined || !newTopLeft.equals(this._topLeft);
+
 		var splitPosChanged = !newSplitPos.equals(this._splitPos);
 
 		var skipUpdate = (
-			this._topLeft !== undefined &&
+			!topLeftChanged &&
 			!zoomChanged &&
 			!partChanged &&
-			!sizeChanged &&
-			!splitPosChanged &&
-			newTopLeft.equals(this._topLeft));
+			!resizeCanvas &&
+			!splitPosChanged);
 
 		if (skipUpdate) {
 			return;
 		}
 
-		if (sizeChanged) {
+		if (resizeCanvas) {
 			this._setCanvasSize(newSize.x, newSize.y);
 			this._lastSize = newSize;
+		}
+		else if (mapSizeChanged && topLeftChanged) {
+			this.clear();
+		}
+
+		if (mapSizeChanged) {
+			this._lastMapSize = newMapSize;
 		}
 
 		if (splitPosChanged) {
@@ -250,7 +265,7 @@ L.CanvasTilePainter = L.Class.extend({
 
 		// TODO: fix _shiftAndPaint for high DPI.
 		var shiftPaintDisabled = true;
-		var fullRepaintNeeded = zoomChanged || partChanged || sizeChanged || shiftPaintDisabled;
+		var fullRepaintNeeded = zoomChanged || partChanged || resizeCanvas || shiftPaintDisabled;
 
 		this._lastZoom = zoom;
 		this._lastPart = part;
