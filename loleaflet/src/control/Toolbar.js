@@ -178,7 +178,13 @@ L.Map.include({
 			}
 		}
 
-		if (this.isPermissionEdit() || isAllowedInReadOnly) {
+		var hasOpenedDialog = this.dialog.hasOpenedDialog();
+		if (hasOpenedDialog) {
+			$('.lokdialog_container').addClass('lokblink');
+			setTimeout(function () {
+				$('.lokdialog_container').removeClass('lokblink');
+			}, 600);
+		} else if (this.isPermissionEdit() || isAllowedInReadOnly) {
 			if (!this.messageNeedsToBeRedirected(command))
 				this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
