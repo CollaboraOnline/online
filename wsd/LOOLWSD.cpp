@@ -2892,6 +2892,15 @@ private:
 
             std::string fileName;
             URI::decode(requestDetails[4], fileName);
+            // sanitize if we can
+            auto it = fileName.find_first_of("?&%#!");
+            if (it != std::string::npos)
+            {
+                std::string cleanedName = fileName.substr(0, it);
+                LOG_DBG("Cleaned unexpected parameters from filename: '" << fileName << "' to '" << cleanedName << "'");
+                fileName = cleanedName;
+            }
+
             const Path filePath(LOOLWSD::ChildRoot + requestDetails[2]
                                 + JAILED_DOCUMENT_ROOT + requestDetails[3] + '/' + fileName);
             const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath.toString());
