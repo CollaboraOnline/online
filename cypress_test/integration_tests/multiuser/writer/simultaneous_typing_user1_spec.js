@@ -33,16 +33,6 @@ describe('Simultaneous typing: user-1.', function() {
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', text);
-
-		// Change paragraph alignment to trigger user-2 actions
-		helper.moveCursor('up');
-
-		cy.get('#tb_editbar_item_centerpara .w2ui-button')
-			.click();
-
-		// user-2 changes the paragraph alignment after finished
-		cy.get('#tb_editbar_item_rightpara .w2ui-button')
-			.should('have.class', 'checked');
 	});
 
 });
