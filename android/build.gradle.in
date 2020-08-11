@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildDir = "@builddir@/build"
+buildDir = "@abs_top_builddir@/android/build"
 
 buildscript {
     repositories {
