@@ -481,6 +481,15 @@ function moveCursor(direction) {
 
 function typeIntoDocument(text) {
 	cy.get('textarea.clipboard')
+		.focus();
+
+	cy.document().its('activeElement.tagName')
+		.should('be.eq', 'TEXTAREA');
+
+	cy.document().its('activeElement.className')
+		.should('be.eq', 'clipboard');
+
+	cy.get('textarea.clipboard')
 		.type(text, {force: true});
 }
 
