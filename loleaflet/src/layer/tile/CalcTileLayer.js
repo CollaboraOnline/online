@@ -327,6 +327,9 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
 			obj.comment.tab = parseInt(obj.comment.tab);
 			if (obj.comment.action === 'Add') {
+				if (obj.comment.author in this._map._viewInfoByUserName) {
+					obj.comment.avatar = this._map._viewInfoByUserName[obj.comment.author].userextrainfo.avatar;
+				}
 				var cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
 				obj.comment.cellPos = this._convertToTileTwipsSheetArea(cellPos);
 				obj.comment.cellPos = L.latLngBounds(this._twipsToLatLng(obj.comment.cellPos.getBottomLeft()),
