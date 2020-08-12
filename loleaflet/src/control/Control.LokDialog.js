@@ -144,6 +144,14 @@ L.Control.LokDialog = L.Control.extend({
 		return Object.keys(this._dialogs).length > nonDialogEntries;
 	},
 
+	// method used to warn user about dialog modality
+	blinkOpenDialog: function() {
+		$('.lokdialog_container').addClass('lokblink');
+		setTimeout(function () {
+			$('.lokdialog_container').removeClass('lokblink');
+		}, 600);
+	},
+
 	_docLoaded: function(e) {
 		if (!e.status) {
 			$('.lokdialog_container').remove();
@@ -1164,6 +1172,12 @@ L.Control.LokDialog = L.Control.extend({
 
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stop(e);
+
+			if ((this._isSidebar(id) || this.isCalcInputBar(id)) && this.hasOpenedDialog()) {
+				this.blinkOpenDialog();
+				return;
+			}
+
 			if (this._isSelectionHandleDragged() && e.type === 'mouseup') {
 				this._onSelectionHandleDrag(e);
 				return;
