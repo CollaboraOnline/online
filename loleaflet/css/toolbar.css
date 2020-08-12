@@ -792,21 +792,27 @@ button.leaflet-control-search-next
 .insertshape-grid {
 		box-sizing: border-box;
 		background: rgba(255, 255, 255, 0.5);
-		position: relative;
+		position: static;
 		padding: 2px;
-		display: inline-block;
+		display: block;
 		min-width: 350px;
 		width:  100%;
-		height: 100%;
+		height: auto;
 }
 
 .insertshape-grid .row {
-		height: 30px;
+		height: auto;
+		position: static;
+		text-align: left;
+}
+
+.insertshape-grid .row:last-child {
+		box-sizing: content-box;
+		margin-bottom: 43px;
 }
 
 .insertshape-grid .col {
-		height: 100%;
-		float: left;
+		height: 30px;
 		padding: 2px;
 		width: 30px;
 		border: 1px solid transparent;
