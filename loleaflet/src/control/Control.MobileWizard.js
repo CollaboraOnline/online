@@ -85,6 +85,8 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#toolbar-down').hide();
 		if (window.ThisIsTheAndroidApp)
 			window.postMobileMessage('MOBILEWIZARD show');
+		if (window.mobileMenuWizard)
+			this.map.showSidebar = false;
 	},
 
 	_showWizardSidebar: function() {
