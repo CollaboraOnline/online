@@ -6,10 +6,6 @@ function removeTextSelection() {
 	cy.get('.spreadsheet-header-columns')
 		.click();
 
-	cy.get('.spreadsheet-cell-resize-marker')
-		.invoke('attr', 'style')
-		.should('contain', '-8px,');
-
 	var regex = /[A-Z]1:[A-Z]1048576/;
 	cy.get('input#addressInput')
 		.should('have.prop', 'value')
@@ -71,10 +67,6 @@ function selectFirstColumn() {
 			cy.get('body')
 				.click(XPos, YPos);
 		});
-
-	cy.get('.spreadsheet-cell-resize-marker')
-		.invoke('attr', 'style')
-		.should('contain', '-8px,');
 
 	cy.get('input#addressInput')
 		.should('have.prop', 'value', 'A1:A1048576');
