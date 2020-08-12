@@ -65,8 +65,7 @@ describe('Impress focus tests', function() {
 		impressHelper.typeTextAndVerify('Hello Impress');
 
 		// End editing.
-		cy.get('#document-container')
-			.type('{esc}');
+		helper.typeIntoDocument('{esc}');
 
 		impressHelper.assertNotInTextEditMode();
 
@@ -102,8 +101,7 @@ describe('Impress focus tests', function() {
 				impressHelper.typeTextAndVerify('Hello Impress');
 
 				// End editing.
-				cy.get('#document-container')
-					.type('{esc}');
+				helper.typeIntoDocument('{esc}');
 
 				impressHelper.assertNotInTextEditMode();
 
@@ -123,8 +121,7 @@ describe('Impress focus tests', function() {
 						impressHelper.typeTextAndVerify('Bazinga Impress');
 
 						// End editing.
-						cy.get('#document-container')
-							.type('{esc}');
+						helper.typeIntoDocument('{esc}');
 
 						impressHelper.assertNotInTextEditMode();
 					});

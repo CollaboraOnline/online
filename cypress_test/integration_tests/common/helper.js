@@ -114,8 +114,7 @@ function selectAllText(assertFocus = true) {
 	cy.log('Select all text');
 
 	// Trigger select all
-	cy.get('textarea.clipboard')
-		.type('{ctrl}a');
+	typeIntoDocument('{ctrl}a');
 
 	cy.get('.leaflet-marker-icon')
 		.should('exist');
@@ -128,15 +127,13 @@ function clearAllText() {
 	cy.log('Clear all text');
 
 	// Trigger select all
-	cy.get('textarea.clipboard')
-		.type('{ctrl}a');
+	typeIntoDocument('{ctrl}a');
 
 	cy.get('.leaflet-marker-icon')
 		.should('exist');
 
 	// Then remove
-	cy.get('textarea.clipboard')
-		.type('{del}');
+	typeIntoDocument('{del}');
 
 	cy.get('.leaflet-marker-icon')
 		.should('not.exist');
@@ -427,10 +424,9 @@ function doIfOnDesktop(callback) {
 		});
 }
 
-function moveCursor(direction, forceType = false) {
+function moveCursor(direction) {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
-	cy.log('Param - forceType: ' + forceType);
 
 	initAliasToNegative('origCursorPos');
 
@@ -462,8 +458,7 @@ function moveCursor(direction, forceType = false) {
 	} else if (direction === 'right') {
 		key = '{rightarrow}';
 	}
-	cy.get('textarea.clipboard')
-		.type(key, {force : forceType});
+	typeIntoDocument(key);
 
 	cy.get('@origCursorPos')
 		.then(function(origCursorPos) {
@@ -484,6 +479,10 @@ function moveCursor(direction, forceType = false) {
 	cy.log('Moving text cursor - end.');
 }
 
+function typeIntoDocument(text) {
+	cy.get('textarea.clipboard')
+		.type(text, {force: true});
+}
 
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
@@ -509,3 +508,4 @@ module.exports.waitUntilIdle = waitUntilIdle;
 module.exports.doIfOnMobile = doIfOnMobile;
 module.exports.doIfOnDesktop = doIfOnDesktop;
 module.exports.moveCursor = moveCursor;
+module.exports.typeIntoDocument = typeIntoDocument;

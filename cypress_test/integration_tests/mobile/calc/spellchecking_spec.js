@@ -24,8 +24,7 @@ describe('Calc spell checking menu.', function() {
 		calcHelper.dblClickOnFirstCell();
 
 		// Select text content
-		cy.get('textarea.clipboard')
-			.type('{ctrl}a', {force: true});
+		helper.typeIntoDocument('{ctrl}a');
 
 		// Open context menu
 		cy.get('.leaflet-selection-marker-start,.leaflet-selection-marker-end')

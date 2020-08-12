@@ -247,8 +247,7 @@ describe('Focus tests', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Grab focus to the document
-		cy.get('#document-container')
-			.type('x');
+		helper.typeIntoDocument('x');
 
 		helper.selectAllText();
 
@@ -271,8 +270,7 @@ describe('Focus tests', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Grab focus to the document
-		cy.get('#document-container')
-			.type('x');
+		helper.typeIntoDocument('x');
 
 		helper.selectAllText();
 
@@ -295,8 +293,7 @@ describe('Focus tests', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Grab focus to the document
-		cy.get('#document-container')
-			.type('x');
+		helper.typeIntoDocument('x');
 
 		helper.selectAllText();
 

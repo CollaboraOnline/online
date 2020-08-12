@@ -23,8 +23,7 @@ describe('Change alignment settings.', function() {
 		calcHelper.dblClickOnFirstCell();
 
 		// Select text content
-		cy.get('textarea.clipboard')
-			.type('{ctrl}a', {force: true});
+		helper.typeIntoDocument('{ctrl}a');
 
 		helper.initAliasToNegative('currentTextPos');
 

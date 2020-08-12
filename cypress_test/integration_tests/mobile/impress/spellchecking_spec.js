@@ -28,8 +28,7 @@ describe('Spell checking menu.', function() {
 					.dblclick(XPos, YPos);
 			});
 
-		cy.get('textarea.clipboard')
-			.type('{leftArrow}');
+		helper.typeIntoDocument('{leftArrow}');
 
 		cy.get('.leaflet-marker-icon')
 			.should('not.exist');

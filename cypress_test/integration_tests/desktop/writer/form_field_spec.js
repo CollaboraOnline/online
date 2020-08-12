@@ -60,10 +60,6 @@ describe('Form field button tests.', function() {
 			});
 	}
 
-	function moveCursor(direction = 'left') {
-		helper.moveCursor(direction, true);
-	}
-
 	function doZoom(zoomIn) {
 		helper.initAliasToEmptyString('prevZoom');
 
@@ -98,22 +94,22 @@ describe('Form field button tests.', function() {
 		buttonShouldNotExist();
 
 		// Move the cursor next to the form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor again to the other side of the field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor away
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldNotExist();
 
 		// Move the cursor back next to the field
-		moveCursor('left');
+		helper.moveCursor('left');
 
 		buttonShouldExist();
 	});
@@ -122,7 +118,7 @@ describe('Form field button tests.', function() {
 		before('form_field.odt');
 
 		// Move the cursor next to the form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
@@ -164,7 +160,7 @@ describe('Form field button tests.', function() {
 		before('form_field.odt');
 
 		// Move the cursor next to the form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		// Select a new item
 		cy.get('.form-field-button')
@@ -180,12 +176,12 @@ describe('Form field button tests.', function() {
 			.should('have.text', 'January');
 
 		// Move the cursor away and back
-		moveCursor('left');
+		helper.moveCursor('left');
 
 		buttonShouldNotExist();
 
 		// Move the cursor back next to the field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
@@ -193,7 +189,7 @@ describe('Form field button tests.', function() {
 			.should('have.text', 'January');
 
 		// Do the same from the right side of the field.
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
@@ -218,26 +214,26 @@ describe('Form field button tests.', function() {
 		buttonShouldNotExist();
 
 		// Move the cursor next to the first form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor to the other side of the field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor to the second form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
 		// Move the cursor to the other side of the second field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldNotExist();
 	});
@@ -246,7 +242,7 @@ describe('Form field button tests.', function() {
 		before('drop_down_form_field_noselection.odt');
 
 		// Move the cursor next to the form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
@@ -258,7 +254,7 @@ describe('Form field button tests.', function() {
 		before('drop_down_form_field_noitem.odt');
 
 		// Move the cursor next to the form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
@@ -285,7 +281,7 @@ describe('Form field button tests.', function() {
 		before('form_field.odt');
 
 		// Move the cursor next to the form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 
@@ -303,7 +299,7 @@ describe('Form field button tests.', function() {
 		// anything stupid after the button is removed.
 
 		// Move the cursor away from the field
-		moveCursor('left');
+		helper.moveCursor('left');
 
 		buttonShouldNotExist();
 
@@ -315,7 +311,7 @@ describe('Form field button tests.', function() {
 		before('form_field.odt');
 
 		// Move the cursor next to the form field
-		moveCursor('right');
+		helper.moveCursor('right');
 
 		buttonShouldExist();
 

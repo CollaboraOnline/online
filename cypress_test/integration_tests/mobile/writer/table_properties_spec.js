@@ -28,22 +28,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('be.visible');
 	}
 
-	function moveCursorToFirstCell() {
-		writerMobileHelper.selectAllMobile();
-
-		cy.get('.blinking-cursor')
-			.then(function(cursor) {
-				expect(cursor).to.have.lengthOf(1) ;
-				var posX = cursor[0].getBoundingClientRect().right + 10;
-				var posY = cursor[0].getBoundingClientRect().top + 10;
-				cy.get('body')
-					.click(posX, posY);
-			});
-	}
-
 	function selectFullTable() {
-		cy.get('textarea.clipboard')
-			.type('{downarrow}{downarrow}{downarrow}{downarrow}');
+		helper.typeIntoDocument('{downarrow}{downarrow}{downarrow}{downarrow}');
 
 		writerMobileHelper.selectAllMobile();
 	}
@@ -210,9 +196,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Merge cells.', function() {
 		before('table_properties.odt');
 
-		moveCursorToFirstCell();
-
-		cy.get('body').type('{shift}{downarrow}{rightarrow}');
+		helper.typeIntoDocument('{shift}{downarrow}{rightarrow}');
 
 		openTablePanel();
 
@@ -273,10 +257,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set minimal row height.', function() {
 		before('table_with_text.odt');
 
-		moveCursorToFirstCell();
-
-		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
-
+		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		openTablePanel();
 
@@ -292,9 +273,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set optimal row height.', function() {
 		before('table_with_text.odt');
 
-		moveCursorToFirstCell();
-
-		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		openTablePanel();
 
@@ -320,9 +299,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Distribute rows.', function() {
 		before('table_with_text.odt');
 
-		moveCursorToFirstCell();
-
-		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		openTablePanel();
 
@@ -348,9 +325,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set minimal column width.', function() {
 		before('table_with_text.odt');
 
-		moveCursorToFirstCell();
-
-		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		openTablePanel();
 
@@ -365,9 +340,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set optimal column width.', function() {
 		before('table_with_text.odt');
 
-		moveCursorToFirstCell();
-
-		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		openTablePanel();
 
@@ -384,9 +357,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Distribute columns.', function() {
 		before('table_with_text.odt');
 
-		moveCursorToFirstCell();
-
-		cy.get('body').type('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
 
 		openTablePanel();
 

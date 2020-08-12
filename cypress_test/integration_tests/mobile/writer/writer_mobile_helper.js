@@ -1,14 +1,14 @@
 /* global cy require*/
 
+var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 function selectAllMobile() {
 	cy.log('Select all via hamburger menu - start.');
 
 	// Remove selection if exist
-	cy.get('#document-container')
-		.type('{downarrow}');
-	cy.get('.leaflet-marker-icon')
+	helper.typeIntoDocument('{downarrow}');
+	cy.get('.leaflet-selection-marker-start')
 		.should('not.exist');
 
 	// Open hamburger menu

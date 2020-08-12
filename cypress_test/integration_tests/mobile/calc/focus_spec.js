@@ -100,8 +100,8 @@ describe('Calc focus tests', function() {
 
 		// Type some text.
 		var text1 = 'Hello from Calc';
-		cy.get('textarea.clipboard').type(text1);
-		cy.get('textarea.clipboard').type('{enter}');
+		helper.typeIntoDocument(text1);
+		helper.typeIntoDocument('{enter}');
 
 		helper.assertNoKeyboardInput();
 
@@ -111,11 +111,11 @@ describe('Calc focus tests', function() {
 		// Check the text we typed.
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
-		cy.get('textarea.clipboard').type('{ctrl}a');
+		helper.typeIntoDocument('{ctrl}a');
 		helper.expectTextForClipboard(text1);
 
 		// Accept changes.
-		cy.get('textarea.clipboard').type('{enter}');
+		helper.typeIntoDocument('{enter}');
 		helper.assertNoKeyboardInput();
 
 		// Type some more text, at the end.
@@ -124,12 +124,12 @@ describe('Calc focus tests', function() {
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		var text2 = ', this is a test.';
-		cy.get('textarea.clipboard').type(text2);
+		helper.typeIntoDocument(text2);
 		// Validate.
-		cy.get('textarea.clipboard').type('{ctrl}a');
+		helper.typeIntoDocument('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
-		cy.get('textarea.clipboard').type('{enter}');
+		helper.typeIntoDocument('{enter}');
 		helper.assertNoKeyboardInput();
 
 		// Type some more text, in the middle.
@@ -139,17 +139,17 @@ describe('Calc focus tests', function() {
 		helper.assertCursorAndFocus();
 
 		// Move cursor before text2
-		cy.get('textarea.clipboard').type('{end}');
+		helper.typeIntoDocument('{end}');
 		for (var i = 0; i < text2.length; i++)
 			helper.moveCursor('left');
 
 		var text3 = ', BAZINGA';
 		helper.typeText('textarea.clipboard', text3);
 		// Validate.
-		cy.get('textarea.clipboard').type('{ctrl}a');
+		helper.typeIntoDocument('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text3 + text2);
 		// End editing.
-		cy.get('textarea.clipboard').type('{enter}');
+		helper.typeIntoDocument('{enter}');
 		helper.assertNoKeyboardInput();
 	});
 });

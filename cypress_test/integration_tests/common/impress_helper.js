@@ -46,8 +46,7 @@ function typeTextAndVerify(text, expected) {
 	assertInTextEditMode();
 
 	// Type some text.
-	cy.get('#document-container')
-		.type(text);
+	helper.typeIntoDocument(text);
 
 	// Still in edit mode.
 	assertInTextEditMode();

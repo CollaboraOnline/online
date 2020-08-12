@@ -174,8 +174,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Undo/redo.', function() {
 		// Type a new character
-		cy.get('textarea.clipboard')
-			.type('{q}');
+		helper.typeIntoDocument('q');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -213,12 +212,10 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Repair.', function() {
 		// First change
-		cy.get('textarea.clipboard')
-			.type('{q}');
+		helper.typeIntoDocument('q');
 
 		// Second change
-		cy.get('textarea.clipboard')
-			.type('{w}');
+		helper.typeIntoDocument('w');
 
 		writerMobileHelper.selectAllMobile();
 
@@ -408,8 +405,7 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		// Insert some text and check whether it's tracked.
-		cy.get('textarea.clipboard')
-			.type('{q}');
+		helper.typeIntoDocument('q');
 
 		mobileHelper.openHamburgerMenu();
 
@@ -435,8 +431,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.contains('.menu-entry-with-icon', 'Record')
 			.click();
 
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}w');
+		helper.typeIntoDocument('{rightArrow}w');
 
 		mobileHelper.openHamburgerMenu();
 
@@ -492,8 +487,7 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Remove text selection.
-		cy.get('textarea.clipboard')
-			.type('{leftArrow}');
+		helper.typeIntoDocument('{leftArrow}');
 
 		// Hide track changes.
 		mobileHelper.openHamburgerMenu();
@@ -505,8 +499,7 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		// Trigger select all
-		cy.get('textarea.clipboard')
-			.type('{ctrl}a');
+		helper.typeIntoDocument('{ctrl}a');
 
 		// Both selection markers should be in the same line
 		cy.get('.leaflet-marker-icon:nth-of-type(1)')
@@ -545,8 +538,7 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		// Check that we dont have the removed content
-		cy.get('textarea.clipboard')
-			.type('{ctrl}a');
+		helper.typeIntoDocument('{ctrl}a');
 
 		cy.wait(1000);
 
@@ -604,12 +596,10 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		// First change
-		cy.get('textarea.clipboard')
-			.type('q');
+		helper.typeIntoDocument('q');
 
 		// Second change
-		cy.get('textarea.clipboard')
-			.type('{rightArrow}w');
+		helper.typeIntoDocument('{rightArrow}w');
 
 		// Find second change using prev.
 		mobileHelper.openHamburgerMenu();

@@ -142,8 +142,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Type a new character
 		dblclickOnShape();
 
-		cy.get('textarea.clipboard')
-			.type('q');
+		helper.typeIntoDocument('q');
 
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 
@@ -190,8 +189,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Type a new character
 		dblclickOnShape();
 
-		cy.get('textarea.clipboard')
-			.type('q');
+		helper.typeIntoDocument('q');
 
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 
@@ -453,8 +451,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Type a new character
 		dblclickOnShape();
 
-		cy.get('textarea.clipboard')
-			.type('qqqqqq');
+		helper.typeIntoDocument('qqqqqq');
 
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 

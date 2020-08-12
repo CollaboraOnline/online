@@ -135,7 +135,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert header.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container').type('xxxx');
+		helper.typeIntoDocument('xxxx');
 
 		getCursorPos('left', 'cursorOrigLeft');
 
@@ -166,8 +166,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert footer.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container')
-			.type('xxxx');
+		helper.typeIntoDocument('xxxx');
 
 		getCursorPos('top', 'cursorOrigTop');
 
@@ -199,8 +198,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert footnote.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container')
-			.type('xxxx');
+		helper.typeIntoDocument('xxxx');
 
 		getCursorPos('top', 'cursorOrigTop');
 
@@ -222,8 +220,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert endnote.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container')
-			.type('xxxx');
+		helper.typeIntoDocument('xxxx');
 
 		getCursorPos('top', 'cursorOrigTop');
 
@@ -245,8 +242,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert page break.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container')
-			.type('xxxx');
+		helper.typeIntoDocument('xxxx');
 
 		getCursorPos('top', 'cursorOrigTop');
 
@@ -268,8 +264,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert column break.', function() {
 		// Get the blinking cursor pos
-		cy.get('#document-container')
-			.type('xxxx');
+		helper.typeIntoDocument('xxxx');
 
 		getCursorPos('top', 'cursorOrigTop');
 
