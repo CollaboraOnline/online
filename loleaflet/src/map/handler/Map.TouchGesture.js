@@ -390,6 +390,10 @@ L.Map.TouchGesture = L.Handler.extend({
 
 			// Show keyboard when no graphic selection, or  cursor is visible.
 			var acceptInput = !docLayer.hasGraphicSelection() || docLayer.isCursorVisible();
+
+			if (navigator.platform === 'iPhone' && docLayer._docType === 'presentation')
+				acceptInput = true;
+
 			this._map.focus(acceptInput);
 		}
 	},
