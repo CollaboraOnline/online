@@ -155,6 +155,11 @@ L.TextInput = L.Layer.extend({
 	// @acceptInput (only on "mobile" (= mobile phone) or on iOS and Android in general) true if we want to
 	// accept key input, and show the virtual keyboard.
 	focus: function(acceptInput) {
+		// console.trace('L.TextInput.focus(' + acceptInput + ')');
+
+		// Note that the acceptInput parameter intentionally
+		// is a tri-state boolean: undefined, false, or true.
+
 		// Clicking or otherwise focusing the map should focus on the clipboard
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
@@ -165,23 +170,52 @@ L.TextInput = L.Layer.extend({
 
 		// Trick to avoid showing the software keyboard: Set the textarea
 		// read-only before focus() and reset it again after the blur()
-		if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true)
-			this._textArea.setAttribute('readonly', true);
+		if (navigator.platform !== 'iPhone') {
+			if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true)
+				this._textArea.setAttribute('readonly', true);
+		}
 
-		this._textArea.focus();
+		if (navigator.platform !== 'iPhone') {
+			this._textArea.focus();
+		} else if (acceptInput === true) {
+			// On the iPhone, only call the textarea's focus() when we get an explicit
+			// true parameter. On the other hand, never call the textarea's blur().
 
-		if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true) {
-			this._setAcceptInput(false);
-			this._textArea.blur();
-			this._textArea.removeAttribute('readonly');
-		} else {
+			// Calling blur() leads to so confusing behaviour with the keyboard not
+			// showing up when we want. Better to have it show up a bit too long that
+			// strictly needed.
+
+			// Probably whether the calls to the textarea's focus() and blur() functions
+			// actually do anything or not might depend on whether the call stack
+			// originates in a user input event handler or not, for security reasons.
+
+			// To investigate, uncomment the call to console.trace() at the start of
+			// this function, and check when the topmost slot in the stack trace is
+			// "(anonymous function)" in hammer.js (an event handler), and when it is
+			// _onMessage (the WebSocket message handler in Socket.js).
+
+			this._textArea.focus();
+		}
+
+		if (navigator.platform !== 'iPhone') {
+			if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true) {
+				this._setAcceptInput(false);
+				this._textArea.blur();
+				this._textArea.removeAttribute('readonly');
+			} else {
+				this._setAcceptInput(true);
+			}
+		} else if (acceptInput !== false) {
 			this._setAcceptInput(true);
+		} else {
+			this._setAcceptInput(false);
 		}
 	},
 
 	blur: function() {
 		this._setAcceptInput(false);
-		this._textArea.blur();
+		if (navigator.platform !== 'iPhone')
+			this._textArea.blur();
 	},
 
 	// Returns true if the last focus was to accept input.
