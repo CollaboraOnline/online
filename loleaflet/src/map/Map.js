@@ -1541,11 +1541,7 @@ L.Map = L.Evented.extend({
 		// .focus() method on hidden input within actual 'click' event here
 		// Calling from some other place with no real 'click' event doesn't work.
 
-		// (tml: For me, for this to work with a mobile device, we need to
-		// accept 'mouseup', too, and check the _wasSingleTap flag set over in Map.Tap.js.)
-		if (type === 'click' || type === 'dblclick' || (type === 'mouseup' &&
-					 typeof this._container._wasSingleTap !== 'undefined' &&
-					 this._container._wasSingleTap)) {
+		if (type === 'click' || type === 'dblclick') {
 			if (this.isPermissionEdit()) {
 				this.fire('editorgotfocus');
 				this.focus();
