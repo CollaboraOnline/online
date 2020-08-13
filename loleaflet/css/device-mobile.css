@@ -740,9 +740,9 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 .preview-img-landscape {
-	min-width: 40px;
-	max-width: 40px;
-	margin-left: 8px;
+	min-width: 20px;
+	max-width: 60px;
+	margin-left: 1px;
 }
 
 .preview-frame-landscape {
