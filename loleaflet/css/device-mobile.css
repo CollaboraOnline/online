@@ -313,12 +313,12 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	padding: 0 !important
 }
 .vex-dialog-input > textarea.loleaflet-annotation-textarea {
-	height: 198px;
+	height: 150px;
 	border: 4px solid #f0f0f0 !important;
 	box-shadow: 0 0 1px 1px #dfdfdf;
 }
 .vex-dialog-input > textarea.loleaflet-annotation-textarea:focus {
-	height: 198px;
+	height: 150px;
 	border: 4px solid #f0f0f0 !important;
 	box-shadow: 0 0 1px 1px #0b87e7 !important;
 }
