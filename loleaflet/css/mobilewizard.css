@@ -791,6 +791,46 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	top: -20px;
 	width: 16px;
 }
+
+#mobile-wizard input[type=radio]:disabled{
+	border: 2px solid #ddd;
+	box-shadow: none;
+}
+#mobile-wizard input[type=radio]{
+	border-radius: 50%;
+	appearance: none;
+	width: 24px;
+	height: 24px;
+	margin: 10px 20px 10px 0px !important;
+	float: right;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+	border: 2px solid #aaa;
+	outline: none;
+	box-shadow: #00000015 0px 0px 2px 1px;
+}
+#mobile-wizard input[type=radio]:checked{
+	background: url(images/lc_ok_white.svg) no-repeat center;
+	background-color: #0b87e7;
+	border: 2px solid #0b87e7;
+	outline: none;
+	box-shadow: none;
+}
+#mobile-wizard input[type=radio]:checked:disabled{
+	background-color: #ddd !important;
+	border: 2px solid #ddd !important;
+}
+#mobile-wizard input[type=radio]:before{
+	width: 20px;
+	height: 20px;
+}
+#mobile-wizard input[type=radio]:after{
+	top: -20px;
+	width: 16px;
+}
+
 #enablecontour + label{
 	line-height: 44px;
 	vertical-align: baseline;
