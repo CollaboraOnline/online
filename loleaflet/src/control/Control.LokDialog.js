@@ -380,8 +380,8 @@ L.Control.LokDialog = L.Control.extend({
 				this._launchSidebar(e.id, width, height);
 			} else if (e.winType === 'calc-input-win' || this.isCalcInputBar(e.id)) {
 				lines = parseInt(e.lines);
-				left = left | this._calcInputBar.left;
-				top = top | this._calcInputBar.top;
+				left = left || this._calcInputBar.left;
+				top = top || this._calcInputBar.top;
 				this._launchCalcInputBar(e.id, left, top, width, height, lines);
 			}
 			else {
@@ -839,8 +839,10 @@ L.Control.LokDialog = L.Control.extend({
 	_adjustCalcInputBar: function(id, left, top, width, height, textLines) {
 		if (this._calcInputBar) {
 			var oldHeight = this._calcInputBar.height;
+			var oldX = this._calcInputBar.left;
+			var oldY = this._calcInputBar.top;
 			var delta = height - oldHeight;
-			if (delta !== 0) {
+			if (delta !== 0 || oldX !== left || oldY !== top) {
 				console.log('_adjustCalcInputBar: start: id: ' + id + ', height: ' + oldHeight + ' -> ' + height);
 
 				// Recreate the input-bar.
