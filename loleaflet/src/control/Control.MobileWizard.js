@@ -356,10 +356,12 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._reset();
 
-			var mWizardContentLength;
-			if (data.children[0].type == 'menuitem' || data.children[0].children === undefined)
-				mWizardContentLength = data.children.length;
-			else mWizardContentLength = data.children[0].children.length;
+			var mWizardContentLength = 0;
+			if (data.children.length > 0) {
+				if (data.children[0].type == 'menuitem' || data.children[0].children === undefined)
+					mWizardContentLength = data.children.length;
+				else mWizardContentLength = data.children[0].children.length;
+			}
 
 			this._showWizard(mWizardContentLength);
 			if (!this._map._docLayer.isCalc()) {
