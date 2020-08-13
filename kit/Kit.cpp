@@ -1033,7 +1033,8 @@ private:
             oss << "\"color\":" << color << "},";
         }
 
-        oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+        if (viewCount > 0)
+            oss.seekp(-1, std::ios_base::cur); // Remove last comma.
         oss << ']';
 
         // Broadcast updated viewinfo to all clients.
