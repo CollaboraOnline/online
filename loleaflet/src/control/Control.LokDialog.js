@@ -1562,6 +1562,14 @@ L.Control.LokDialog = L.Control.extend({
 			var newLeft = window.innerWidth - width - 20;
 			L.DomUtil.setStyle(canvas, 'left', newLeft + 'px');
 		}
+		// Also, make sure child is not trimmed on bottom.
+		var top = parseInt(canvas.style.top);
+		var height = this._dialogs[parentId].childheight;
+		var bottomPos = top + height;
+		if (bottomPos > window.innerHeight) {
+			var newTop = top - height - 20;
+			L.DomUtil.setStyle(canvas, 'top', newTop + 'px');
+		}
 
 		// The image is rendered per the HiDPI scale we used
 		// while requesting rendering the image. Here we
@@ -1674,7 +1682,7 @@ L.Control.LokDialog = L.Control.extend({
 		var grandParentID = dialogContainer.parentNode.id;
 		if (grandParentID.includes('sidebar-panel'))
 		{
-			// This is a sidebar.
+			// floatingCanvas is a child window of a sidebar.
 			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
 			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + top) + 'px');
 		}
