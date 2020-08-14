@@ -3,6 +3,8 @@
 var helper = require('../../common/helper');
 
 function selectTextShapeInTheCenter() {
+	cy.log('Selecting text shape - start.');
+
 	// Click on the center of the slide to select the text shape there
 	cy.get('#document-container')
 		.then(function(items) {
@@ -21,9 +23,13 @@ function selectTextShapeInTheCenter() {
 			expect(shape.hasClass('com.sun.star.drawing.TextShape') ||
 				   shape.hasClass('Outline')).to.be.true;
 		});
+
+	cy.log('Selecting text shape - end.');
 }
 
 function selectTextOfShape() {
+	cy.log('Selecting text of shape - start.');
+
 	// Double click onto the selected shape
 	cy.waitUntil(function() {
 		cy.get('svg g .leaflet-interactive')
@@ -47,9 +53,13 @@ function selectTextOfShape() {
 		.should('exist');
 
 	helper.selectAllText(false);
+
+	cy.log('Selecting text of shape - end.');
 }
 
 function removeShapeSelection() {
+	cy.log('Removing shape selection - start.');
+
 	// Remove selection with on the top-left corner of the slide
 	cy.waitUntil(function() {
 		cy.get('.leaflet-tile')
@@ -70,9 +80,13 @@ function removeShapeSelection() {
 
 	cy.get('.leaflet-drag-transform-marker')
 		.should('not.exist');
+
+	cy.log('Removing shape selection - end.');
 }
 
 function triggerNewSVGForShapeInTheCenter() {
+	cy.log('Triggering new SVG for shape - start.');
+
 	removeShapeSelection();
 
 	// If we click too fast on the shape again
@@ -81,6 +95,8 @@ function triggerNewSVGForShapeInTheCenter() {
 
 	// Select text shape again which will retrigger a new SVG from core
 	selectTextShapeInTheCenter();
+
+	cy.log('Triggering new SVG for shape - end.');
 }
 
 module.exports.selectTextShapeInTheCenter = selectTextShapeInTheCenter;
