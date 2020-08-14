@@ -509,17 +509,23 @@ function moveCursor(direction) {
 }
 
 function typeIntoDocument(text) {
-	cy.get('textarea.clipboard')
-		.focus();
+	cy.log('Typing into document - start.');
 
-	cy.document().its('activeElement.tagName')
-		.should('be.eq', 'TEXTAREA');
+	cy.document()
+		.then(function(doc) {
+			if (doc.activeElement.className !== 'clipboard') {
+				cy.get('textarea.clipboard')
+					.focus();
 
-	cy.document().its('activeElement.className')
-		.should('be.eq', 'clipboard');
+				cy.document().its('activeElement.className')
+					.should('be.eq', 'clipboard');
+			}
+		});
 
 	cy.get('textarea.clipboard')
 		.type(text, {force: true});
+
+	cy.log('Typing into document - end.');
 }
 
 module.exports.loadTestDoc = loadTestDoc;
