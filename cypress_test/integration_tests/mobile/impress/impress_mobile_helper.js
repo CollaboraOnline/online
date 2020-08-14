@@ -25,14 +25,23 @@ function selectTextShapeInTheCenter() {
 
 function selectTextOfShape() {
 	// Double click onto the selected shape
-	cy.get('svg g .leaflet-interactive')
-		.then(function(items) {
-			expect(items).to.have.length(1);
-			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-			cy.get('body')
-				.dblclick(XPos, YPos);
-		});
+	cy.waitUntil(function() {
+		cy.get('svg g .leaflet-interactive')
+			.then(function(items) {
+				expect(items).to.have.length(1);
+				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
+				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
+				cy.get('body')
+					.dblclick(XPos, YPos);
+			});
+
+		cy.wait(2000);
+
+		return cy.get('.leaflet-overlay-pane')
+			.then(function(overlay) {
+				return overlay.children('.leaflet-cursor-container').length !== 0;
+			});
+	});
 
 	cy.get('.leaflet-cursor.blinking-cursor')
 		.should('exist');
