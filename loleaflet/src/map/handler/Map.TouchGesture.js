@@ -511,6 +511,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinchStart: function (e) {
+		if (isNaN(e.center.x) || isNaN(e.center.y))
+			return;
+
 		this._pinchStartCenter = {x: e.center.x, y: e.center.y};
 		if (this._map._docLayer.isCursorVisible()) {
 			this._map._docLayer._cursorMarker.setOpacity(0);
@@ -533,7 +536,7 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinch: function (e) {
-		if (!this._pinchStartCenter)
+		if (!this._pinchStartCenter || isNaN(e.center.x) || isNaN(e.center.y))
 			return;
 
 		// we need to invert the offset or the map is moved in the opposite direction
@@ -550,6 +553,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinchEnd: function () {
+		if (!this._pinchStartCenter)
+			return;
+
 		var oldZoom = this._map.getZoom(),
 		    zoomDelta = this._zoom - oldZoom,
 		    finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
