@@ -50,19 +50,23 @@ function selectTextOfShape() {
 }
 
 function removeShapeSelection() {
-	// Remove selection first with clicking next to the rotate handler
-	cy.get('.transform-handler--rotate')
-		.then(function(items) {
-			var XPos = items[0].getBoundingClientRect().left - 10;
-			var YPos = items[0].getBoundingClientRect().top;
-			// Sometimes selection is persistent, so click more times
-			// to achive actual deselection.
-			cy.get('body')
-				.click(XPos, YPos);
+	// Remove selection with on the top-left corner of the slide
+	cy.waitUntil(function() {
+		cy.get('.leaflet-tile')
+			.then(function(items) {
+				var XPos = items[0].getBoundingClientRect().left + 10;
+				var YPos = items[0].getBoundingClientRect().top + 10;
+				cy.get('body')
+					.click(XPos, YPos);
+			});
 
-			cy.get('body')
-				.dblclick(XPos, YPos);
-		});
+		cy.wait(2000);
+
+		return cy.get('.leaflet-zoom-animated')
+			.then(function(overlay) {
+				return overlay.children('g').length === 0;
+			});
+	});
 
 	cy.get('.leaflet-drag-transform-marker')
 		.should('not.exist');
