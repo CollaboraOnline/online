@@ -1606,6 +1606,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var prefixLength = '.uno:'.length;
 		if (name.substr(0, prefixLength) == '.uno:')
 			cleanName = name.substr(prefixLength);
+		cleanName = cleanName.replace(/\?.*$/,''); // remove potential parameters
 		cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
 		return L.LOUtil.getImageURL('lc_' + cleanName.toLowerCase() + '.svg');
 	},
