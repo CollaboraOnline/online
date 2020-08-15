@@ -49,9 +49,9 @@ m4_ifelse(MOBILEAPP,[true],
 )
 m4_ifelse(IOSAPP,[true],
   [   window.ThisIsTheiOSApp = true;
-   window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lool.postMessage(msg, '*'); };
-   window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
-   window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };],
+   window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lool.postMessage(msg); };
+   window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
+   window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };],
   [   window.ThisIsTheiOSApp = false;]
 )
 m4_ifelse(GTKAPP,[true],
