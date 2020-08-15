@@ -207,7 +207,7 @@ void ClientSession::rotateClipboardKey(bool notifyClient)
 std::string ClientSession::getClipboardURI(bool encode)
 {
     if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
-        return "";
+        return std::string();
 
     std::string encodedFrom;
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();

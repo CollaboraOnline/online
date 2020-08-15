@@ -26,7 +26,6 @@ namespace JsonUtil
 // Returns true if parsing successful otherwise false
 inline bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
 {
-    bool success = false;
     const size_t index = json.find_first_of('{');
     if (index != std::string::npos)
     {
@@ -34,10 +33,10 @@ inline bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
         Poco::JSON::Parser parser;
         const Poco::Dynamic::Var result = parser.parse(stringJSON);
         object = result.extract<Poco::JSON::Object::Ptr>();
-        success = true;
+        return true;
     }
 
-    return success;
+    return false;
 }
 
 inline
