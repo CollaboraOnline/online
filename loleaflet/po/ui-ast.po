@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-08-04 07:34+0000\n"
+"PO-Revision-Date: 2020-08-06 06:16+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -1004,16 +1004,12 @@ msgid "Insert Column Break"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2005
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Desaniciar"
+msgstr "Desaniciar fileres"
 
 #: src/control/Control.NotebookbarCalc.js:2018
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Columnes"
+msgstr "Desaniciar columnes"
 
 #: src/control/Control.NotebookbarCalc.js:2040
 msgid "Remove Row Break"

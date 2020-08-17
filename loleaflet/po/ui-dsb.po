@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-07-30 08:57+0000\n"
+"PO-Revision-Date: 2020-08-04 21:18+0000\n"
 "Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
 "Language-Team: Lower Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/dsb/>\n"
 "Language: dsb\n"
@@ -657,7 +657,7 @@ msgstr "Prezentacija połneje wobrazowki"
 
 #: src/control/Control.Menubar.js:354
 msgid "Present current slide"
-msgstr ""
+msgstr "Aktualnu foliju prezentěrowaś"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarCalc.js:211
@@ -727,19 +727,19 @@ msgstr "Pytańsku rědku schowaś"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "K prědnej tabeli kulnuś"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll left"
-msgstr ""
+msgstr "Nalěwo suwaś"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll right"
-msgstr ""
+msgstr "Napšawo suwaś"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "K slědnej tabeli kulnuś"
 
 #: src/control/Control.SheetsBar.js:32
 msgid "Insert sheet"
@@ -965,63 +965,51 @@ msgstr "~Pomoc"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Tabela"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Daty"
 
 #: src/control/Control.NotebookbarCalc.js:1900
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Tabelu zasajźiś"
+msgstr "Smužki nad tym zasajźiś"
 
 #: src/control/Control.NotebookbarCalc.js:1913
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Tabelu zasajźiś"
+msgstr "Smužki pód tym zasajźiś"
 
 #: src/control/Control.NotebookbarCalc.js:1935
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Tabelu pśed tym zasajźiś"
+msgstr "Słupy pśed tym zasajźiś"
 
 #: src/control/Control.NotebookbarCalc.js:1948
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Tabelu za tym zasajźiś"
+msgstr "Słupy za tym zasajźiś"
 
 #: src/control/Control.NotebookbarCalc.js:1970
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Łamanje smužki zasajźiś"
 
 #: src/control/Control.NotebookbarCalc.js:1983
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Łamanje słupa zasajźiś"
 
 #: src/control/Control.NotebookbarCalc.js:2005
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Lašowaś"
+msgstr "Smužki wulašowaś"
 
 #: src/control/Control.NotebookbarCalc.js:2018
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Słupy"
+msgstr "Słupy wulašowaś"
 
 #: src/control/Control.NotebookbarCalc.js:2040
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Łamanje smužki wótwónoźeś"
 
 #: src/control/Control.NotebookbarCalc.js:2053
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Łamanje słupa wótwónoźeś"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"

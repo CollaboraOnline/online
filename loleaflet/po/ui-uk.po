@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-06-25 13:56+0000\n"
-"Last-Translator: Roman Vasylyshyn <roman@vasylyshyn.name>\n"
+"PO-Revision-Date: 2020-08-11 17:17+0000\n"
+"Last-Translator: Євген Кондратюк <lachend@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
 "X-Pootle-Revision: 3938227\n"
 
@@ -45,8 +45,6 @@ msgid "History"
 msgstr "Журнал"
 
 #: admin/admin.strings.js:12
-#, fuzzy
-#| msgid "Login"
 msgid "Log"
 msgstr "Журнал"
 
@@ -181,18 +179,14 @@ msgid "Server uptime"
 msgstr "Час неперервної роботи сервера"
 
 #: admin/admin.strings.js:45
-#, fuzzy
-#| msgid "Refresh"
 msgid "Refresh Log"
 msgstr "Оновити журнал"
 
 #: admin/admin.strings.js:46
-#, fuzzy
 msgid "Set Log Levels"
 msgstr "Встановити рівні журналювання"
 
 #: admin/admin.strings.js:47
-#, fuzzy
 msgid "Log Levels"
 msgstr "Рівні журналювання"
 
@@ -202,7 +196,6 @@ msgid "Close"
 msgstr "Закрити"
 
 #: admin/admin.strings.js:49
-#, fuzzy
 msgid "Update Log Levels"
 msgstr "Оновити рівні журналювання"
 
@@ -220,7 +213,7 @@ msgstr "Помилка з'єднання"
 
 #: admin/src/AdminSocketOverview.js:14 admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Підтвердження"
 
 #: admin/src/AdminSocketOverview.js:15 admin/src/AdminSocketOverview.js:121
 msgid "Are you sure you want to terminate this session?"
@@ -247,7 +240,6 @@ msgid "Documents"
 msgstr "Документи"
 
 #: admin/src/AdminSocketOverview.js:410
-#, fuzzy
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Не вдалося встановити автентифікаційний jwt кукі через ненадійне з'єднання"
 
@@ -312,10 +304,8 @@ msgid "No color"
 msgstr "Безбарвно"
 
 #: src/control/ColorPicker.js:130
-#, fuzzy
-#| msgid "No color"
 msgid "Automatic color"
-msgstr "Безбарвно"
+msgstr "Автоколір"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
@@ -637,10 +627,8 @@ msgid "Last modification"
 msgstr "Остання зміна"
 
 #: src/control/Control.Menubar.js:257
-#, fuzzy
-#| msgid "Comment"
 msgid "Save Comments"
-msgstr "Коментар"
+msgstr "Зберегти коментарі"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:549
 #: src/control/Control.NotebookbarImpress.js:269
@@ -659,10 +647,8 @@ msgstr "Презентація PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.js:266 src/control/Control.Menubar.js:552
 #: src/control/Control.NotebookbarImpress.js:291
-#, fuzzy
-#| msgid "ODF presentation (.odp)"
 msgid "ODF Drawing (.odg)"
-msgstr "ODF презентація (.odp)"
+msgstr "ODF Графіка (.odg)"
 
 #: src/control/Control.Menubar.js:353 src/control/Control.Menubar.js:582
 #: src/control/Control.PresentationBar.js:34
@@ -671,7 +657,7 @@ msgstr "Повноекранна презентація"
 
 #: src/control/Control.Menubar.js:354
 msgid "Present current slide"
-msgstr ""
+msgstr "Показати поточний слайд"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarCalc.js:211
@@ -741,19 +727,19 @@ msgstr "Приховати панель пошуку"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Прокрутити до першого аркуша"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll left"
-msgstr ""
+msgstr "Прокрутити вліво"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll right"
-msgstr ""
+msgstr "Прокрутити вправо"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Прокрутити до останнього аркуша"
 
 #: src/control/Control.SheetsBar.js:32
 msgid "Insert sheet"
@@ -918,148 +904,128 @@ msgstr "Поточний"
 #: src/control/Control.NotebookbarBuilder.js:614
 #: src/control/Control.NotebookbarBuilder.js:630
 msgid "Menu"
-msgstr ""
+msgstr "Меню"
 
 #: src/control/Control.Notebookbar.js:133
 #: src/control/Control.NotebookbarImpress.js:32
 msgid "Undo"
-msgstr ""
+msgstr "Відміна"
 
 #: src/control/Control.Notebookbar.js:138
 #: src/control/Control.NotebookbarImpress.js:37
 msgid "Redo"
-msgstr ""
+msgstr "Повторити"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "~Файл"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarImpress.js:91
 msgid "~Home"
-msgstr ""
+msgstr "~Домівка"
 
 #: src/control/Control.NotebookbarWriter.js:23
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:97
-#, fuzzy
-#| msgid "Insert table"
 msgid "~Insert"
-msgstr "Вставити таблицю"
+msgstr "~Вставити"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
-msgstr ""
+msgstr "~Шаблон"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
-msgstr ""
+msgstr "~Посилання"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarImpress.js:102
-#, fuzzy
-#| msgid "Overview"
 msgid "~Review"
-msgstr "Огляд"
+msgstr "~Огляд"
 
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "~Table"
-msgstr ""
+msgstr "~Таблиця"
 
 #: src/control/Control.NotebookbarWriter.js:49
 msgid "~Draw"
-msgstr ""
+msgstr "~Малюнок"
 
 #: src/control/Control.NotebookbarWriter.js:55
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:119
 msgid "~Help"
-msgstr ""
+msgstr "~Довідка"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Аркуш"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Дані"
 
 #: src/control/Control.NotebookbarCalc.js:1900
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Вставити таблицю"
+msgstr "Вставити рядки зверху"
 
 #: src/control/Control.NotebookbarCalc.js:1913
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Вставити аркуш"
+msgstr "Вставити рядки знизу"
 
 #: src/control/Control.NotebookbarCalc.js:1935
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Вставити аркуш перед"
+msgstr "Вставити стовпці до"
 
 #: src/control/Control.NotebookbarCalc.js:1948
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Вставити аркуш після"
+msgstr "Вставити стовпці після"
 
 #: src/control/Control.NotebookbarCalc.js:1970
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Вставити розділення рядків"
 
 #: src/control/Control.NotebookbarCalc.js:1983
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Вставити розділення стовпців"
 
 #: src/control/Control.NotebookbarCalc.js:2005
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Видалити"
+msgstr "Видалити рядки"
 
 #: src/control/Control.NotebookbarCalc.js:2018
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Стовпчики"
+msgstr "Видалити стовпчики"
 
 #: src/control/Control.NotebookbarCalc.js:2040
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Видалити розділення рядків"
 
 #: src/control/Control.NotebookbarCalc.js:2053
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Видалити розділення стовпчиків"
 
 #: src/control/Control.NotebookbarImpress.js:27
-#, fuzzy
-#| msgid "Text orientation"
 msgid "Start Presentation"
-msgstr "Напрямок тексту"
+msgstr "Почати презентацію"
 
 #: src/control/Permission.js:45
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "Документ неможливо зафіксувати, та відкрито в режимі \"для читання\"."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Сервер вказав таку причину:"
 
 #: src/control/Permission.js:63
-#, fuzzy
-#| msgid "Document cannot be saved."
 msgid "The document could not be locked."
-msgstr "Документ неможливо зберегти."
+msgstr "Документ неможливо зафіксувати."
 
 #: src/control/Ruler.js:366
 msgid "Left Margin"
@@ -1070,14 +1036,10 @@ msgid "Right Margin"
 msgstr "Праве поле"
 
 #: src/control/Ruler.js:645
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert tabstop"
 msgstr "Вставити табулятор"
 
 #: src/control/Ruler.js:652
-#, fuzzy
-#| msgid "Insert table"
 msgid "Delete tabstop"
 msgstr "Видалити табулятор"
 
@@ -1223,20 +1185,19 @@ msgstr "Я розумію ризики"
 
 #: src/control/Toolbar.js:458
 msgid "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "На жаль, інформація про недавні оновлення поки недоступна."
 
 #: src/control/Toolbar.js:503
 msgid "This version of %productName is powered by"
 msgstr "Ця версія %productName працює на"
 
 #: src/control/Toolbar.js:513
-#, fuzzy
 msgid "\"Slow Proxy\""
 msgstr "\"Повільний проксі\""
 
 #: src/control/Toolbar.js:516
 msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr ""
+msgstr "Персональна версія підтримується волонтерами та призначена для індивідуального користування."
 
 #: src/control/Toolbar.js:603
 msgid "Insert hyperlink"
@@ -1275,10 +1236,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "Неактивний документ - клацніть для перезавантаження і відновлення редагування"
 
 #: src/core/Socket.js:403
-#, fuzzy
-#| msgid "Idle document - please click to reload and resume editing"
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Неактивний документ - клацніть для перезавантаження і відновлення редагування"
+msgstr "Неактивний документ - торкніть для перезавантаження і відновлення редагування"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"

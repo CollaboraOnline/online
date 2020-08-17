@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-07-29 09:27+0000\n"
+"PO-Revision-Date: 2020-08-07 00:29+0000\n"
 "Last-Translator: Karl Morten Ramberg <karl.m.ramberg@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/nb_NO/>\n"
 "Language: nb\n"
@@ -657,7 +657,7 @@ msgstr "Fullskjermsvisning"
 
 #: src/control/Control.Menubar.js:354
 msgid "Present current slide"
-msgstr ""
+msgstr "Vis aktivt lysbilde"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarCalc.js:211
@@ -727,19 +727,19 @@ msgstr "Skjul søkefanen"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Rull til det første arket"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll left"
-msgstr ""
+msgstr "Rull venstre"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll right"
-msgstr ""
+msgstr "Rull høyre"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Rull til siste ark"
 
 #: src/control/Control.SheetsBar.js:32
 msgid "Insert sheet"
@@ -965,63 +965,51 @@ msgstr "Hjelp"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "Ark"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "Data"
 
 #: src/control/Control.NotebookbarCalc.js:1900
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Sett inn tabell"
+msgstr "Sett inn rader over"
 
 #: src/control/Control.NotebookbarCalc.js:1913
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Sett inn ark"
+msgstr "Sett inn Rader under"
 
 #: src/control/Control.NotebookbarCalc.js:1935
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Sett inn ark foran dette"
+msgstr "Sett inn Kolonner  før"
 
 #: src/control/Control.NotebookbarCalc.js:1948
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Sett inn ark etter dette"
+msgstr "Sett inn Kolonner etter"
 
 #: src/control/Control.NotebookbarCalc.js:1970
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Sett inn radbrytning"
 
 #: src/control/Control.NotebookbarCalc.js:1983
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Sett inn Kolonnebrytning"
 
 #: src/control/Control.NotebookbarCalc.js:2005
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Slett"
+msgstr "Slett Rader"
 
 #: src/control/Control.NotebookbarCalc.js:2018
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Kolonner"
+msgstr "Slett Kolonner"
 
 #: src/control/Control.NotebookbarCalc.js:2040
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Fjern Radbrytning"
 
 #: src/control/Control.NotebookbarCalc.js:2053
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Fjern Kolonnebrytning"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"

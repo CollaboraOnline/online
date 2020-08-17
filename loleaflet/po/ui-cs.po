@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-08-03 22:26+0000\n"
-"Last-Translator: raal <raal@post.cz>\n"
+"PO-Revision-Date: 2020-08-05 06:58+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -657,7 +657,7 @@ msgstr "Prezentace na celou obrazovku"
 
 #: src/control/Control.Menubar.js:354
 msgid "Present current slide"
-msgstr ""
+msgstr "Prezentovat aktuální snímek"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarCalc.js:211
@@ -727,19 +727,19 @@ msgstr "Skrýt vyhledávací lištu"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Posunout na první list"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll left"
-msgstr ""
+msgstr "Posunout doleva"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll right"
-msgstr ""
+msgstr "Posunout doprava"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Posunout na poslední list"
 
 #: src/control/Control.SheetsBar.js:32
 msgid "Insert sheet"
@@ -955,7 +955,7 @@ msgstr "~Tabulka"
 
 #: src/control/Control.NotebookbarWriter.js:49
 msgid "~Draw"
-msgstr ""
+msgstr "~Kresba"
 
 #: src/control/Control.NotebookbarWriter.js:55
 #: src/control/Control.NotebookbarCalc.js:43
@@ -965,63 +965,51 @@ msgstr "~Nápověda"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~List"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Data"
 
 #: src/control/Control.NotebookbarCalc.js:1900
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Vložit tabulku"
+msgstr "Vložit řádky nad"
 
 #: src/control/Control.NotebookbarCalc.js:1913
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Vložit list"
+msgstr "Vložit řádky pod"
 
 #: src/control/Control.NotebookbarCalc.js:1935
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Vložit list před tento"
+msgstr "Vložit sloupce před"
 
 #: src/control/Control.NotebookbarCalc.js:1948
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Vložit list za tento"
+msgstr "Vložit sloupce za"
 
 #: src/control/Control.NotebookbarCalc.js:1970
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Vložit zalomení řádku"
 
 #: src/control/Control.NotebookbarCalc.js:1983
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Vložit zalomení sloupce"
 
 #: src/control/Control.NotebookbarCalc.js:2005
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Smazat"
+msgstr "Smazat řádky"
 
 #: src/control/Control.NotebookbarCalc.js:2018
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Sloupce"
+msgstr "Smazat sloupce"
 
 #: src/control/Control.NotebookbarCalc.js:2040
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Odstranit zalomení řádku"
 
 #: src/control/Control.NotebookbarCalc.js:2053
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Odstranit zalomení sloupce"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"
@@ -1032,14 +1020,8 @@ msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Dokument nelze uzamknout a je otevřen v režimu jen pro čtení."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "Server returned this reason: \""
 msgid "Server returned this reason:"
-msgstr ""
-"\n"
-"Server vrátil tento důvod: \""
+msgstr "Server vrátil tento důvod:"
 
 #: src/control/Permission.js:63
 msgid "The document could not be locked."
@@ -1254,10 +1236,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "Neaktivní dokument - kliknutím jej znovu načtete a budete moci pokračovat v úpravách"
 
 #: src/core/Socket.js:403
-#, fuzzy
-#| msgid "Idle document - please click to reload and resume editing"
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Neaktivní dokument - kliknutím jej znovu načtete a budete moci pokračovat v úpravách"
+msgstr "Neaktivní dokument - klepnutím jej znovu načtete a budete moci pokračovat v úpravách"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"

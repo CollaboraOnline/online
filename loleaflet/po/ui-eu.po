@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-07-31 10:58+0000\n"
+"PO-Revision-Date: 2020-08-05 10:00+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/eu/>\n"
 "Language: eu\n"
@@ -657,7 +657,7 @@ msgstr "Pantaila osoko aurkezpena"
 
 #: src/control/Control.Menubar.js:354
 msgid "Present current slide"
-msgstr ""
+msgstr "Aurkeztu uneko diapositiba"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarCalc.js:211
@@ -727,19 +727,19 @@ msgstr "Ezkutatu bilaketa-barra"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Korritu lehen orrira"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll left"
-msgstr ""
+msgstr "Korritu ezkerrera"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll right"
-msgstr ""
+msgstr "Korritu eskuinera"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Korritu azken orrira"
 
 #: src/control/Control.SheetsBar.js:32
 msgid "Insert sheet"
@@ -965,63 +965,51 @@ msgstr "~Laguntza"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Orria"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Datuak"
 
 #: src/control/Control.NotebookbarCalc.js:1900
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Txertatu taula"
+msgstr "Txertatu errenkadak gainean"
 
 #: src/control/Control.NotebookbarCalc.js:1913
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Txertatu orria"
+msgstr "Txertatu errenkadak azpian"
 
 #: src/control/Control.NotebookbarCalc.js:1935
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Txertatu orria honen aurretik"
+msgstr "Txertatu zutabeak aurrean"
 
 #: src/control/Control.NotebookbarCalc.js:1948
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Txertatu orria honen atzetik"
+msgstr "Txertatu zutabeak atzean"
 
 #: src/control/Control.NotebookbarCalc.js:1970
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Txertatu errenkada-jauzia"
 
 #: src/control/Control.NotebookbarCalc.js:1983
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Txertatu zutabe-jauzia"
 
 #: src/control/Control.NotebookbarCalc.js:2005
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Ezabatu"
+msgstr "Ezabatu errenkadak"
 
 #: src/control/Control.NotebookbarCalc.js:2018
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Zutabeak"
+msgstr "Ezabatu zutabeak"
 
 #: src/control/Control.NotebookbarCalc.js:2040
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Kendu errenkada-jauzia"
 
 #: src/control/Control.NotebookbarCalc.js:2053
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Kendu zutabe-jauzia"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"

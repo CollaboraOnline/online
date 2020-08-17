@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-07-25 19:23+0000\n"
+"PO-Revision-Date: 2020-08-07 00:29+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sk/>\n"
 "Language: sk\n"
@@ -627,10 +627,8 @@ msgid "Last modification"
 msgstr "Posledná zmena"
 
 #: src/control/Control.Menubar.js:257
-#, fuzzy
-#| msgid "Comment"
 msgid "Save Comments"
-msgstr "Poznámka"
+msgstr "Uložiť poznámky"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:549
 #: src/control/Control.NotebookbarImpress.js:269
@@ -659,7 +657,7 @@ msgstr "Prezentácia na celú obrazovku"
 
 #: src/control/Control.Menubar.js:354
 msgid "Present current slide"
-msgstr ""
+msgstr "Prezentovať aktuálnu snímku"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarCalc.js:211
@@ -729,19 +727,19 @@ msgstr "Skryť vyhľadávaciu lištu"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Posunúť na prvý hárok"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll left"
-msgstr ""
+msgstr "Posunúť doľava"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll right"
-msgstr ""
+msgstr "Posunúť doprava"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Posunúť na posledný hárok"
 
 #: src/control/Control.SheetsBar.js:32
 msgid "Insert sheet"
@@ -906,7 +904,7 @@ msgstr "Aktuálny"
 #: src/control/Control.NotebookbarBuilder.js:614
 #: src/control/Control.NotebookbarBuilder.js:630
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/control/Control.Notebookbar.js:133
 #: src/control/Control.NotebookbarImpress.js:32
@@ -922,7 +920,7 @@ msgstr "Opakovať vrátené"
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "~Súbor"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
@@ -957,73 +955,61 @@ msgstr "~Tabuľka"
 
 #: src/control/Control.NotebookbarWriter.js:49
 msgid "~Draw"
-msgstr ""
+msgstr "~Kresba"
 
 #: src/control/Control.NotebookbarWriter.js:55
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:119
 msgid "~Help"
-msgstr ""
+msgstr "~Pomocník"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Hárok"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Dáta"
 
 #: src/control/Control.NotebookbarCalc.js:1900
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Vložiť tabuľku"
+msgstr "Vložiť riadky nad"
 
 #: src/control/Control.NotebookbarCalc.js:1913
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Vložiť hárok"
+msgstr "Vložiť riadky pod"
 
 #: src/control/Control.NotebookbarCalc.js:1935
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Vložiť hárok pred"
+msgstr "Vložiť stĺpce pred"
 
 #: src/control/Control.NotebookbarCalc.js:1948
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Vložiť hárok za"
+msgstr "Vložiť stĺpce za"
 
 #: src/control/Control.NotebookbarCalc.js:1970
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Vložiť zalomenie riadka"
 
 #: src/control/Control.NotebookbarCalc.js:1983
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Vložiť zalomenie stĺpca"
 
 #: src/control/Control.NotebookbarCalc.js:2005
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Zmazať"
+msgstr "Odstrániť riadky"
 
 #: src/control/Control.NotebookbarCalc.js:2018
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Stĺpce"
+msgstr "Odstrániť stĺpce"
 
 #: src/control/Control.NotebookbarCalc.js:2040
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Odstrániť zalomenie riadka"
 
 #: src/control/Control.NotebookbarCalc.js:2053
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Odstrániť zalomenie stĺpca"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"
@@ -1250,10 +1236,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "Neaktívny dokument - kliknutím myšou dokument opätovne načítať a pokračovať v úprave"
 
 #: src/core/Socket.js:403
-#, fuzzy
-#| msgid "Idle document - please click to reload and resume editing"
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Neaktívny dokument - kliknutím myšou dokument opätovne načítať a pokračovať v úprave"
+msgstr "Neaktívny dokument - kliknutím dokument opätovne načítať a pokračovať v úprave"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"

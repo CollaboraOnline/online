@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-08-04 12:03+0000\n"
+"PO-Revision-Date: 2020-08-06 14:12+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@yahoo.com>\n"
 "Language-Team: Welsh <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/cy/>\n"
 "Language: cy\n"
@@ -657,7 +657,7 @@ msgstr "Cyflwyniad sgrin lawn"
 
 #: src/control/Control.Menubar.js:354
 msgid "Present current slide"
-msgstr ""
+msgstr "Cyflwyno'r sleid gyfredol"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarCalc.js:211
@@ -727,19 +727,19 @@ msgstr "Cuddio'r bar chwilio"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Sgrolio i'r ddalen gyntaf"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll left"
-msgstr ""
+msgstr "Sgrolio i'r chwith"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll right"
-msgstr ""
+msgstr "Sgrolio i'r dde"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Sgrolio i'r ddalen olaf"
 
 #: src/control/Control.SheetsBar.js:32
 msgid "Insert sheet"
@@ -965,63 +965,51 @@ msgstr "~Cymorth"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Dalen"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Data"
 
 #: src/control/Control.NotebookbarCalc.js:1900
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Mewnosod tudalen"
+msgstr "Mewnosod Rhes Uwchlaw"
 
 #: src/control/Control.NotebookbarCalc.js:1913
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Mewnosod dalen"
+msgstr "Mewnosod Rhes Islaw"
 
 #: src/control/Control.NotebookbarCalc.js:1935
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Mewnosod dalen cyn hon"
+msgstr "Mewnosod Colofnau Cyn"
 
 #: src/control/Control.NotebookbarCalc.js:1948
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Mewnosod dalen ar ôl hon"
+msgstr "Mewnosod Colofnau Ar Ôl"
 
 #: src/control/Control.NotebookbarCalc.js:1970
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Mewnosod Toriad Rhes"
 
 #: src/control/Control.NotebookbarCalc.js:1983
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Mewnosod Toriad Colofn"
 
 #: src/control/Control.NotebookbarCalc.js:2005
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Dileu:"
+msgstr "Dileu Rhesi"
 
 #: src/control/Control.NotebookbarCalc.js:2018
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Colofnau"
+msgstr "Dileu Colofnau"
 
 #: src/control/Control.NotebookbarCalc.js:2040
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Tynnu Toriad Rhes"
 
 #: src/control/Control.NotebookbarCalc.js:2053
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Tynnu Toriad Colofn"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"
@@ -1490,12 +1478,12 @@ msgstr "Dogfen anweithredol - cliciwch i ailgychwyn golygu"
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "Nid oes modd llwytho ffeil o fath %0 i weinydd gan nad oes gan y ffeil enw."
+msgstr "Nid oes modd llwytho ffeil o fath: %0 i weinydd gan nad oes gan y ffeil enw."
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Nid oes modd llwytho ffeil o fath %0 i weinydd gan nad oes gan fod y ffeil yn wag"
+msgstr "Nid oes modd llwytho ffeil o fath: %0 i weinydd gan nad oes gan fod y ffeil yn wag"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
