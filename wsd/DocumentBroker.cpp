@@ -176,6 +176,7 @@ DocumentBroker::DocumentBroker(ChildType type,
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _documentChangedInStorage(false),
+    _lastStorageSaveSuccessful(true),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
     _markToDestroy(false),
@@ -1049,6 +1050,11 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     assert(_storage && _tileCache);
     const StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(
         auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
+    // Storage save is considered successful when either storage returns OK or the document on the storage
+    // was changed and it was used to overwrite local changes
+    _lastStorageSaveSuccessful
+        = storageSaveResult.getResult() == StorageBase::SaveResult::OK ||
+        storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED;
     if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
 #if !MOBILEAPP
@@ -2474,6 +2480,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  last saved: " << Util::getSteadyClockAsString(_lastSaveTime);
     os << "\n  last save request: " << Util::getSteadyClockAsString(_lastSaveRequestTime);
     os << "\n  last save response: " << Util::getSteadyClockAsString(_lastSaveResponseTime);
+    os << "\n  last storage save was successful: " << isLastStorageSaveSuccessful();
     os << "\n  last modified: " << Util::getHttpTime(_documentLastModifiedTime);
     os << "\n  file last modified: " << Util::getHttpTime(_lastFileModifiedTime);
     if (_limitLifeSeconds)
