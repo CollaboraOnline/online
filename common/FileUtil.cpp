@@ -12,7 +12,9 @@
 #include "FileUtil.hpp"
 
 #include <dirent.h>
+#include <exception>
 #include <ftw.h>
+#include <stdexcept>
 #include <sys/time.h>
 #ifdef __linux
 #include <sys/vfs.h>
@@ -89,27 +91,19 @@ namespace FileUtil
     bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error)
     {
         int from = -1, to = -1;
-        try {
+        try
+        {
             from = open(fromPath.c_str(), O_RDONLY);
             if (from < 0)
-            {
-                LOG_SYS("Failed to open src " << anonymizeUrl(fromPath));
-                throw;
-            }
+                throw std::runtime_error("Failed to open src " + anonymizeUrl(fromPath));
 
             struct stat st;
             if (fstat(from, &st) != 0)
-            {
-                LOG_SYS("Failed to fstat src " << anonymizeUrl(fromPath));
-                throw;
-            }
+                throw std::runtime_error("Failed to fstat src " + anonymizeUrl(fromPath));
 
             to = open(toPath.c_str(), O_CREAT | O_TRUNC | O_WRONLY, st.st_mode);
             if (to < 0)
-            {
-                LOG_SYS("Failed to fstat dest " << anonymizeUrl(toPath));
-                throw;
-            }
+                throw std::runtime_error("Failed to open dest " + anonymizeUrl(toPath));
 
             // Logging may be redundant and/or noisy.
             if (log)
@@ -120,14 +114,14 @@ namespace FileUtil
 
             int n;
             off_t bytesIn = 0;
-            do {
+            do
+            {
                 while ((n = ::read(from, buffer, sizeof(buffer))) < 0 && errno == EINTR)
                     LOG_TRC("EINTR reading from " << anonymizeUrl(fromPath));
                 if (n < 0)
-                {
-                    LOG_SYS("Failed to read from " << anonymizeUrl(fromPath) << " at " << bytesIn << " bytes in");
-                    throw;
-                }
+                    throw std::runtime_error("Failed to read from " + anonymizeUrl(fromPath)
+                                             + " at " + std::to_string(bytesIn) + " bytes in");
+
                 bytesIn += n;
                 if (n == 0) // EOF
                     break;
@@ -140,13 +134,14 @@ namespace FileUtil
                         LOG_TRC("EINTR writing to " << anonymizeUrl(toPath));
                     if (written < 0)
                     {
-                        LOG_SYS("Failed to write " << n << " bytes to " << anonymizeUrl(toPath) << " at " <<
-                                bytesIn << " bytes into " << anonymizeUrl(fromPath));
-                        throw;
+                        throw std::runtime_error("Failed to write " + std::to_string(n)
+                                                 + " bytes to " + anonymizeUrl(toPath) + " at "
+                                                 + std::to_string(bytesIn) + " bytes into "
+                                                 + anonymizeUrl(fromPath));
                     }
                     j += written;
                 }
-            } while(true);
+            } while (true);
             if (bytesIn != st.st_size)
             {
                 LOG_WRN("Unusual: file " << anonymizeUrl(fromPath) << " changed size "
@@ -156,19 +151,18 @@ namespace FileUtil
             close(to);
             return true;
         }
-        catch (...)
+        catch (const std::exception& ex)
         {
             std::ostringstream oss;
-            oss << "Failed to copy from " << anonymizeUrl(fromPath) << " to "
-                << anonymizeUrl(toPath);
+            oss << "Error while copying from " << anonymizeUrl(fromPath) << " to "
+                << anonymizeUrl(toPath) << ": " << ex.what();
             const std::string err = oss.str();
-
             LOG_SYS(err);
             close(from);
             close(to);
             unlink(toPath.c_str());
             if (throw_on_error)
-                throw Poco::Exception(err);
+                throw std::runtime_error(err);
         }
 
         return false;

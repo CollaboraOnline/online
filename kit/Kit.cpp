@@ -2135,10 +2135,10 @@ void lokit_main(
             if (std::getenv("LOOL_BIND_MOUNT"))
             {
                 const std::string destPath = jailPath.toString();
-                LOG_DBG("Mounting " << sysTemplate << " -> " << destPath);
+                LOG_INF("Mounting " << sysTemplate << " -> " << destPath);
                 if (!JailUtil::bind(sysTemplate, destPath))
                 {
-                    LOG_INF("Failed to mount [" << sysTemplate << "] -> [" << destPath
+                    LOG_WRN("Failed to mount [" << sysTemplate << "] -> [" << destPath
                                                 << "], will link/copy contents.");
                     linkOrCopy(sysTemplate, destPath, LinkOrCopyType::All);
                 }
@@ -2147,11 +2147,11 @@ void lokit_main(
 
                 // Mount lotemplate inside it.
                 const std::string loDestPath = Poco::Path(jailPath, "lo").toString();
-                LOG_DBG("Mounting " << loTemplate << " -> " << loDestPath);
+                LOG_INF("Mounting " << loTemplate << " -> " << loDestPath);
                 Poco::File(loDestPath).createDirectories();
                 if (!JailUtil::bind(loTemplate, loDestPath))
                 {
-                    LOG_INF("Failed to mount [" << loTemplate << "] -> [" << loDestPath
+                    LOG_WRN("Failed to mount [" << loTemplate << "] -> [" << loDestPath
                                                 << "], will link/copy contents.");
                     linkOrCopy(sysTemplate, loDestPath, LinkOrCopyType::LO);
                 }
@@ -2180,6 +2180,13 @@ void lokit_main(
                 linkOrCopy(loTemplate, jailLOInstallation, LinkOrCopyType::LO);
 
                 JailUtil::setupJailDevNodes(Poco::Path(jailPath, "/tmp").toString());
+
+                // Update the dynamic files inside the jail.
+                if (!JailUtil::SysTemplate::updateDynamicFiles(jailPath.toString()))
+                {
+                    LOG_WRN("Failed to update the dynamic files in the jail ["
+                            << jailPath.toString() << "]. Some functionality may be missing.");
+                }
             }
 
             ::setenv("TMPDIR", "/tmp", 1);

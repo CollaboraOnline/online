@@ -247,10 +247,12 @@ namespace SysTemplate
 /// that systemplate will get re-generated after installation.
 static const auto DynamicFilePaths
     = { "/etc/passwd",        "/etc/group",       "/etc/host.conf", "/etc/hosts",
-        "/etc/nsswitch.conf", "/etc/resolv.conf", "etc/timezone",   "etc/localtime" };
+        "/etc/nsswitch.conf", "/etc/resolv.conf", "/etc/timezone",  "/etc/localtime" };
 
 /// Copy (false) by default for KIT_IN_PROCESS.
 static bool LinkDynamicFiles = false;
+
+static bool updateDynamicFilesImpl(const std::string& sysTemplate);
 
 void setupDynamicFiles(const std::string& sysTemplate)
 {
@@ -258,6 +260,25 @@ void setupDynamicFiles(const std::string& sysTemplate)
 
     const std::string etcSysTemplatePath = Poco::Path(sysTemplate, "etc").toString();
     LinkDynamicFiles = true; // Prefer linking, unless it fails.
+
+    if (!updateDynamicFilesImpl(sysTemplate))
+    {
+        // Can't copy!
+        LOG_WRN("Failed to update the dynamic files in ["
+                << sysTemplate
+                << "]. Will disable bind-mounting in this run and clone systemplate into the "
+                   "jails, which is more resource intensive.");
+        unsetenv("LOOL_BIND_MOUNT"); // We can't mount from incomplete systemplate.
+    }
+
+    if (LinkDynamicFiles)
+        LOG_INF("Systemplate dynamic files in ["
+                << sysTemplate << "] are linked and will remain up-to-date.");
+}
+
+bool updateDynamicFilesImpl(const std::string& sysTemplate)
+{
+    LOG_INF("Updating systemplate dynamic files in [" << sysTemplate << "].");
     for (const auto& srcFilename : DynamicFilePaths)
     {
         const Poco::File srcFilePath(srcFilename);
@@ -275,6 +296,7 @@ void setupDynamicFiles(const std::string& sysTemplate)
             continue;
         }
 
+        LOG_INF("File [" << dstFilename << "] needs to be updated.");
         if (LinkDynamicFiles)
         {
             LOG_INF("Linking [" << srcFilename << "] -> [" << dstFilename << "].");
@@ -290,8 +312,12 @@ void setupDynamicFiles(const std::string& sysTemplate)
             const int linkerr = errno;
 
             // With parallel tests, another test might have linked already.
-            if (Poco::File(dstFilename).exists()) // stat again.
+            FileUtil::Stat dstStat2(dstFilename);
+            if (dstStat2.isUpToDate(srcStat))
+            {
+                LOG_INF("File [" << dstFilename << "] now seems to be up-to-date.");
                 continue;
+            }
 
             // Failed to link a file. Disable linking and copy instead.
             LOG_WRN("Failed to link ["
@@ -301,55 +327,27 @@ void setupDynamicFiles(const std::string& sysTemplate)
         }
 
         // Linking failed, just copy.
-        LOG_INF("Copying [" << srcFilename << "] -> [" << dstFilename << "].");
-        if (!FileUtil::copyAtomic(srcFilename, dstFilename, true))
+        if (!LinkDynamicFiles)
         {
-            if (!Poco::File(dstFilename).exists()) // stat again.
-                LOG_ERR("Failed to copy [" << srcFilename << "] -> [" << dstFilename
-                                           << "], some functionality may be missing.");
-        }
-    }
-
-    if (LinkDynamicFiles)
-        LOG_INF("Successfully linked the systemplate dynamic files in ["
-                << sysTemplate << "] and will not need to update them again.");
-}
-
-void updateDynamicFiles(const std::string& sysTemplate)
-{
-    // If the files are linked, they are always up-to-date.
-    if (!LinkDynamicFiles)
-    {
-        LOG_INF("Updating systemplate dynamic files in [" << sysTemplate << "].");
-
-        const std::string etcSysTemplatePath = Poco::Path(sysTemplate, "etc").toString();
-        for (const auto& srcFilename : DynamicFilePaths)
-        {
-            const Poco::File srcFilePath(srcFilename);
-            FileUtil::Stat srcStat(srcFilename);
-            if (!srcStat.exists())
-                continue;
-
-            const std::string dstFilename = Poco::Path(sysTemplate, srcFilename).toString();
-            FileUtil::Stat dstStat(dstFilename);
-
-            // Is it outdated?
-            if (dstStat.isUpToDate(srcStat))
+            LOG_INF("Copying [" << srcFilename << "] -> [" << dstFilename << "].");
+            if (!FileUtil::copyAtomic(srcFilename, dstFilename, true))
             {
-                LOG_INF("File [" << dstFilename << "] is already up-to-date.");
-            }
-            else
-            {
-                LOG_INF("Copying [" << srcFilename << "] -> [" << dstFilename << "].");
-                if (!FileUtil::copyAtomic(srcFilename, dstFilename, true))
+                FileUtil::Stat dstStat2(dstFilename); // Stat again.
+                if (!dstStat2.isUpToDate(srcStat))
                 {
-                    if (!Poco::File(dstFilename).exists()) // stat again.
-                        LOG_ERR("Failed to copy [" << srcFilename << "] -> [" << dstFilename
-                                                   << "], some functionality may be missing.");
+                    return false; // No point in trying the remaining files.
                 }
             }
         }
     }
+
+    return true;
+}
+
+bool updateDynamicFiles(const std::string& sysTemplate)
+{
+    // If the files are linked, they are always up-to-date.
+    return LinkDynamicFiles ? true : updateDynamicFilesImpl(sysTemplate);
 }
 
 void setupLoSymlink(const std::string& sysTemplate, const std::string& loTemplate,

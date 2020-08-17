@@ -61,7 +61,8 @@ void setupRandomDeviceLinks(const std::string& root);
 void setupDynamicFiles(const std::string& sysTemplate);
 
 /// Update the dynamic files within the sysTemplate before each child fork.
-void updateDynamicFiles(const std::string& sysTemplate);
+/// Returns false on failure.
+bool updateDynamicFiles(const std::string& sysTemplate);
 
 } // namespace SysTemplate
 

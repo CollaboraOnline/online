@@ -58,12 +58,17 @@ grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's
 # This will now copy the file a symlink points to, but whatever.
 cpio -p -d -L $CHROOT
 
-# Remove the dynamic files, which are linked by loolwsd.
-rm -f $CHROOT/etc/{hosts,nsswitch.conf,resolv.conf,passwd,group,host.conf,timezone,localtime}
-
 mkdir -p $CHROOT/lo
 mkdir -p $CHROOT/dev
 mkdir -p $CHROOT/tmp/dev
+
+# Link the dynamic files, replacing any existing.
+for file in hosts nsswitch.conf resolv.conf passwd group host.conf timezone localtime
+do
+    #echo "Linking/Copying /etc/$file"
+    # Prefer hard linking, fallback to soft linking, and finally to just copying.
+    ln -f /etc/$file $CHROOT/etc/ 2> /dev/null || ln -f -s /etc/$file $CHROOT/etc/ || cp /etc/$file $CHROOT/etc/ || echo "Failed to link or copy $file"
+done
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved for fontconfig to trust
