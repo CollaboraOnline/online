@@ -110,6 +110,12 @@ L.DomUtil = {
 		}
 	},
 
+	removeChildNodes: function (el) {
+		while (el.hasChildNodes()) {
+			el.removeChild(el.lastChild);
+		}
+	},
+
 	setClass: function (el, name) {
 		if (el.className.baseVal === undefined) {
 			el.className = name;

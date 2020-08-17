@@ -849,9 +849,7 @@ L.Control.Menubar = L.Control.extend({
 
 	_onRefresh: function() {
 		// clear initial menu
-		while (this._menubarCont.hasChildNodes()) {
-			this._menubarCont.removeChild(this._menubarCont.firstChild);
-		}
+		L.DomUtil.removeChildNodes(this._menubarCont);
 
 		// Add document specific menu
 		var docType = this._map.getDocType();

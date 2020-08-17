@@ -294,9 +294,7 @@ L.Control.Ruler = L.Control.extend({
 
 		var numCounter = -1 * parseInt(lMargin / 1000);
 
-		while (this._rBPContainer.hasChildNodes()) {
-			this._rBPContainer.removeChild(this._rBPContainer.lastChild);
-		}
+		L.DomUtil.removeChildNodes(this._rBPContainer);
 
 		// this.options.pageWidth is in mm100, so the code here makes one ruler division per
 		// centimetre.
@@ -319,9 +317,7 @@ L.Control.Ruler = L.Control.extend({
 
 		// The tabstops. Only draw user-created ones, with style RULER_TAB_LEFT,
 		// RULER_TAB_RIGHT, RULER_TAB_CENTER, and RULER_TAB_DECIMAL. See <svtools/ruler.hxx>.
-		while (this._rTSContainer.hasChildNodes()) {
-			this._rTSContainer.removeChild(this._rTSContainer.lastChild);
-		}
+		L.DomUtil.removeChildNodes(this._rTSContainer);
 
 		var pxPerMm100 = this._map._docLayer._docPixelSize.x / (this._map._docLayer._docWidthTwips * 2540/1440);
 		this._rTSContainer.tabStops = [];
