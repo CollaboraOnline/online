@@ -55,9 +55,11 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	clearAnnotations: function () {
-		for (var tab in this._annotations) {
-			this.hideAnnotations(tab);
-		}
+		if (this._map) {
+			for (var tab in this._annotations) {
+				this.hideAnnotations(tab);
+			}
+		} // else during shutdown.
 		this._annotations = {};
 	},
 
