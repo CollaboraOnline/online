@@ -1629,13 +1629,6 @@ L.Control.LokDialog = L.Control.extend({
 
 		this._resizeCalcInputBar(deckOffset);
 		this._adjustTabsBar(width);
-		// If we didn't have the focus, don't steal it form the editor.
-		if ($('#' + this._currentDeck.strId + '-cursor').css('display') === 'none') {
-			if (this._map.editorHasFocus()) {
-				this._map.fire('editorgotfocus');
-				this._map.focus();
-			}
-		}
 	},
 
 	_resizeCalcInputBar: function(offset) {
