@@ -264,8 +264,15 @@ L.Clipboard = L.Class.extend({
 				that._doAsyncDownload(
 					'POST', dest, formData,
 					function() {
-						console.log('up-load done, now paste');
-						that._map._socket.sendMessage('uno .uno:Paste');
+						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
+							vex.close(this.pasteSpecialVex);
+							console.log('up-load done, now paste special');
+							that.map._socket.sendMessage('uno .uno:PasteSpecial');
+						} else {
+							console.log('up-load done, now paste');
+							that._map._socket.sendMessage('uno .uno:Paste');
+						}
+
 					},
 					function(progress) { return 50 + progress/2; }
 				);
@@ -292,8 +299,15 @@ L.Clipboard = L.Class.extend({
 				that._doAsyncDownload(
 					'POST', dest, formData,
 					function() {
-						console.log('up-load of fallback done, now paste');
-						that._map._socket.sendMessage('uno .uno:Paste');
+						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
+							vex.close(this.pasteSpecialVex);
+							console.log('up-load of fallback done, now paste special');
+							that.map._socket.sendMessage('uno .uno:PasteSpecial');
+						} else {
+							console.log('up-load of fallback done, now paste');
+							that._map._socket.sendMessage('uno .uno:Paste');
+						}
+
 					},
 					function(progress) { return 50 + progress/2; },
 					function() {
@@ -665,6 +679,9 @@ L.Clipboard = L.Class.extend({
 			// paste into dialog
 			var KEY_PASTE = 1299;
 			map._textInput._sendKeyEvent(0, KEY_PASTE);
+		} else if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
+			this.pasteSpecialVex.close();
+			map._socket.sendMessage('uno .uno:PasteSpecial');
 		} else {
 			// paste into document
 			map._socket.sendMessage('uno .uno:Paste');
@@ -678,7 +695,7 @@ L.Clipboard = L.Class.extend({
 	paste: function(ev) {
 		console.log('Paste');
 
-		if (isAnyVexDialogActive() && !this._map.hasFocus())
+		if (isAnyVexDialogActive() && !(this.pasteSpecialVex && this.pasteSpecialVex.isOpen))
 			return;
 
 		if ($('.annotation-active').length > 0 && !this._map.hasFocus())
@@ -821,19 +838,7 @@ L.Clipboard = L.Class.extend({
 			msg = _('<p>Please use the copy/paste buttons on your on-screen keyboard.</p>');
 		} else {
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>');
-			if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
-				var ctrl = /Ctrl/g;
-				if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
-					ctrl = /Strg/g;
-				}
-				if (String.locale.startsWith('lt')) {
-					ctrl = /Vald/g;
-				}
-				if (String.locale.startsWith('sl')) {
-					ctrl = /Krmilka/g;
-				}
-				msg = msg.replace(ctrl, '⌘');
-			}
+			msg = L.Util.replaceCtrlInMac(msg);
 		}
 		vex.dialog.alert({
 			unsafeMessage: msg,

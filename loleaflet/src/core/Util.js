@@ -207,6 +207,23 @@ L.Util = {
 		context.font = font;
 		var metrics = context.measureText(text);
 		return Math.floor(metrics.width);
+	},
+
+	replaceCtrlInMac: function(msg) {
+		if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
+			var ctrl = /Ctrl/g;
+			if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
+				ctrl = /Strg/g;
+			}
+			if (String.locale.startsWith('lt')) {
+				ctrl = /Vald/g;
+			}
+			if (String.locale.startsWith('sl')) {
+				ctrl = /Krmilka/g;
+			}
+			return msg.replace(ctrl, '⌘');
+		}
+		return msg;
 	}
 };
 
