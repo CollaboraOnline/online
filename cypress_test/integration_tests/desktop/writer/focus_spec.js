@@ -70,10 +70,10 @@ describe('Focus tests', function() {
 
 		// Search field still has the focus.
 		// We have a focus issue here.
-		//cy.document().its('activeElement.id')
-		//	.should('be.eq', 'search-input');
+		cy.document().its('activeElement.id')
+			.should('be.eq', 'search-input');
 
-		//cy.get('#search-input')
-		//	.should('have.prop', 'value', text);
+		cy.get('#search-input')
+			.should('have.prop', 'value', text);
 	});
 });
