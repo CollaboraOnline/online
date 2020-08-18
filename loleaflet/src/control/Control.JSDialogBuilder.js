@@ -480,7 +480,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (builder.wizard && data.enabled !== 'false') {
 				$(sectionTitle).click(function(event, data) {
 					builder.wizard.goLevelDown(contentDiv, data);
-					if (contentNode.onshow)
+					if (contentNode && contentNode.onshow)
 						contentNode.onshow();
 				});
 			} else {
