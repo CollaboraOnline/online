@@ -7,6 +7,8 @@
  * at TextInput.
  */
 
+ /* global vex _ */
+
 L.Map.mergeOptions({
 	keyboard: true,
 	keyboardPanOffset: 20,
@@ -413,6 +415,29 @@ L.Map.Keyboard = L.Handler.extend({
 		if (e.ctrlKey && e.shiftKey && e.key === '?') {
 			this._map.showHelp('keyboard-shortcuts');
 			e.preventDefault();
+			return true;
+		}
+
+		// Handles paste special
+		if (e.ctrlKey && e.shiftKey && e.altKey && (e.key === 'v' || e.key === 'V')) {
+			var map = this._map;
+			var msg = _('<p>Your browser has very limited access to the clipboard, so now press:</li><li><b>Ctrl+V</b>: To open paste special menu.</li></ul></p><p>Close popup to ignore paste special</p>');
+			msg = L.Util.replaceCtrlInMac(msg);
+			this._map._clip.pasteSpecialVex = vex.open({
+				unsafeContent: msg,
+				showCloseButton: true,
+				escapeButtonCloses: true,
+				overlayClosesOnClick: false,
+				buttons: {},
+				afterOpen: function() {
+					map.focus();
+				}
+			});
+			return true;
+		}
+
+		// Handles unformatted paste
+		if (e.ctrlKey && e.shiftKey && (e.key === 'v' || e.key === 'V')) {
 			return true;
 		}
 
