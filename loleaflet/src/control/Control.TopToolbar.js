@@ -217,6 +217,10 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: window.insertShapes}, html: window.getShapesPopupHtml()},
 			{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog', '', true), disabled: true},
 			{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: 'InsertSymbol'},
+			{type: 'break', id: 'breakobject', hidden: true},
+			{type: 'button', id: 'freezepanes',  img: 'freezepanes', hint: _UNO('.uno:FreezePanes', 'spreadsheet', true), hidden: true, uno:'FreezePanes'},
+			{type: 'button', id: 'freezepanescolumn',img: 'freezepanescolumn', hint: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), uno: 'FreezePanesColumn'},
+			{type: 'button', id: 'freezepanesrow', img: 'freezepanesrow', hint: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), uno: 'FreezePanesRow'},
 			{type: 'spacer'},
 			{type: 'button',  id: 'edit',  img: 'edit'},
 			{type: 'button',  id: 'sidebar', img: 'sidebar_modify_page', hint: _UNO('.uno:Sidebar', '', true), uno: '.uno:Sidebar', hidden: true},
@@ -275,7 +279,7 @@ L.Control.TopToolbar = L.Control.extend({
 		case 'spreadsheet':
 			if (toolbarUp) {
 				toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
-				'numberformatcurrency', 'numberformatpercent',
+				'numberformatcurrency', 'numberformatpercent', 'breakobject', 'freezepanes',
 				'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
 				'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
 				toolbarUp.remove('styles');
