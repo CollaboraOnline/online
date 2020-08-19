@@ -2060,6 +2060,63 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																						}
 																					]
 																				},
+																				{
+																					'id': 'freeze-section1',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'Section7',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:FreezePanes', 'spreadsheet', true),
+																									'command': '.uno:FreezePanes'
+																								}
+																							]
+																						}
+																					]
+																				},
+																				{
+																					'id': 'freeze-section2',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'Section7',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text':_UNO('.uno:FreezePanesColumn', 'spreadsheet', true),
+																									'command': '.uno:FreezePanesColumn'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'Section10',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:FreezePanesRow', 'spreadsheet', true),
+																									'command': '.uno:FreezePanesRow'
+																								}
+																							]
+																						}
+																					]
+																				}
 																			]
 																		}
 																	]
