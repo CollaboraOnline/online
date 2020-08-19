@@ -88,14 +88,16 @@ L.Control.UserList = L.Control.extend({
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 			var img = L.DomUtil.create('img', 'avatar-img', iconTd);
 			img.src = extraInfo.avatar;
+			var altImg = L.LOUtil.getImageURL('user.svg');
+			img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
 			$(img).css({'border-color': color});
 		} else {
 			img = L.DomUtil.create('div', 'user-info', iconTd);
 			$(img).css({'background-color': color});
 		}
-	
+
 		nameTd.innerHTML = userName;
-	
+
 		return content;
 	},
 
@@ -105,7 +107,7 @@ L.Control.UserList = L.Control.extend({
 		if (userlistItem == null) {
 			return;
 		}
-	
+
 		var count = $(userlistItem.html).find('#userlist_table tbody tr').length;
 		if (count > 1) {
 			userlistItem.text = this.options.nUsers.replace('%n', count);
@@ -114,9 +116,9 @@ L.Control.UserList = L.Control.extend({
 		} else {
 			userlistItem.text = this.options.noUser;
 		}
-	
+
 		w2ui['actionbar'].refresh();
-	
+
 		var hideUserList =
 			window.ThisIsAMobileApp ||
 			(this.map['wopi'].HideUserList !== null && this.map['wopi'].HideUserList !== undefined &&
@@ -124,7 +126,7 @@ L.Control.UserList = L.Control.extend({
 				(window.mode.isMobile() && $.inArray('mobile', this.map['wopi'].HideUserList) >= 0) ||
 				(window.mode.isTablet() && $.inArray('tablet', this.map['wopi'].HideUserList) >= 0) ||
 				(window.mode.isDesktop() && $.inArray('desktop', this.map['wopi'].HideUserList) >= 0));
-	
+
 		if (!hideUserList && count > 1) {
 			actionbar.show('userlist');
 			actionbar.show('userlistbreak');
@@ -139,7 +141,7 @@ L.Control.UserList = L.Control.extend({
 		if (userlistItem === null) {
 			return;
 		}
-	
+
 		$('#user-' + e.viewId).removeClass('selected-user');
 	},
 
@@ -169,10 +171,10 @@ L.Control.UserList = L.Control.extend({
 		var userlistItem = w2ui['actionbar'].get('userlist');
 		var username = this.escapeHtml(e.username);
 		var showPopup = false;
-	
+
 		if (userlistItem !== null)
 			showPopup = $(userlistItem.html).find('#userlist_table tbody tr').length > 0;
-	
+
 		if (showPopup) {
 			$('#tb_actionbar_item_userlist')
 				.w2overlay({
@@ -188,18 +190,18 @@ L.Control.UserList = L.Control.extend({
 				that.options.userPopupTimeout = null;
 			}, 3000);
 		}
-	
+
 		var color = L.LOUtil.rgbToHex(this.map.getViewColor(e.viewId));
 		if (e.viewId === this.map._docLayer._viewId) {
 			username = _('You');
 			color = '#000';
 		}
-	
+
 		// Mention readonly sessions in userlist
 		if (e.readonly) {
 			username += ' (' +  _('Readonly') + ')';
 		}
-	
+
 		if (userlistItem !== null) {
 			var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(this.getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
 			userlistItem.html = newhtml;
@@ -221,12 +223,12 @@ L.Control.UserList = L.Control.extend({
 			clearTimeout(that.options.userPopupTimeout);
 			that.options.userPopupTimeout = null;
 		}, 3000);
-	
+
 		if (e.viewId === this.map._docLayer._followThis) {
 			this.map._docLayer._followThis = -1;
 			this.map._docLayer._followUser = false;
 		}
-	
+
 		var userlistItem = w2ui['actionbar'].get('userlist');
 		if (userlistItem !== null) {
 			userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
