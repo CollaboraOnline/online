@@ -800,6 +800,13 @@ button.leaflet-control-search-next
 
 .insertshape-grid .row {
 		height: 30px;
+		height: auto;
+		position: static;
+		text-align: left;
+}
+
+.insertshape-grid .row:last-child {
+	margin-bottom: 70px;
 }
 
 .insertshape-grid .col {
@@ -813,10 +820,11 @@ button.leaflet-control-search-next
 .insertshape-grid .row-header {
 		height: 30px;
 		text-align: center;
-		padding: 5px;
-		padding-top: 10px;
+		padding: 7px;
 		clear: both;
 		background-color: rgba(128, 128, 128, 0.1);
+		position: static;
+		line-height: 30px;
 }
 
 .insertshape-grid .col:hover {
