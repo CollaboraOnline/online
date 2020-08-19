@@ -264,7 +264,8 @@ p.mobile-wizard.ui-combobox-text.selected {
 		bottom: 0px;
 		z-index: 1000;
 		background-color: white;
-		box-shadow: 0px -2px 4px 1px #00000030
+		box-shadow: 0px -2px 4px 1px #00000030;
+		overflow-y: scroll;
 }
 
 #mobile-wizard-content *{
@@ -278,6 +279,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	height: 48px;
 	color: #636363;
 	border-bottom: 1px solid #dddddd !important;
+	position: sticky;
 }
 
 .ui-content.mobile-wizard {

@@ -411,7 +411,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 /* Related to toolbar.css */
 .insertshape-grid {
 	box-sizing: content-box;
-	position: absolute;
+	position: static;
 	padding: 2px 0px 2px 0px;
 	display: inline-block;
 	width: 100%;
