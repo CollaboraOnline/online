@@ -40,10 +40,11 @@ L.CanvasTilePainter = L.Class.extend({
 		debug: false,
 	},
 
-	initialize: function (layer, dpiScale, enableImageSmoothing) {
+	initialize: function (layer, enableImageSmoothing) {
 		this._layer = layer;
 		this._canvas = this._layer._canvas;
 
+		var dpiScale = L.getDpiScaleFactor();
 		if (dpiScale === 1 || dpiScale === 2) {
 			enableImageSmoothing = (enableImageSmoothing === true);
 		}
@@ -221,10 +222,12 @@ L.CanvasTilePainter = L.Class.extend({
 		var newTopLeft = pixelBounds.getTopLeft();
 		var part = this._layer._selectedPart;
 		var newSplitPos = splitPanesContext ?
-			splitPanesContext.getSplitPos(): this._splitPos;
+		    splitPanesContext.getSplitPos(): this._splitPos;
+		var newDpiScale = L.getDpiScaleFactor();
 
 		var zoomChanged = (zoom !== this._lastZoom);
 		var partChanged = (part !== this._lastPart);
+		var scaleChanged = this._dpiScale != newDpiScale;
 
 		var mapSizeChanged = !newMapSize.equals(this._lastMapSize);
 		// To avoid flicker, only resize the canvas element if width or height of the map increases.
@@ -241,13 +244,16 @@ L.CanvasTilePainter = L.Class.extend({
 			!zoomChanged &&
 			!partChanged &&
 			!resizeCanvas &&
-			!splitPosChanged);
+			!splitPosChanged &&
+			!scaleChanged);
 
 		if (skipUpdate) {
 			return;
 		}
+		if (scaleChanged)
+			this._dpiScale = L.getDpiScaleFactor();
 
-		if (resizeCanvas) {
+		if (resizeCanvas || scaleChanged) {
 			this._setCanvasSize(newSize.x, newSize.y);
 			this._lastSize = newSize;
 		}
@@ -265,7 +271,8 @@ L.CanvasTilePainter = L.Class.extend({
 
 		// TODO: fix _shiftAndPaint for high DPI.
 		var shiftPaintDisabled = true;
-		var fullRepaintNeeded = zoomChanged || partChanged || resizeCanvas || shiftPaintDisabled;
+		var fullRepaintNeeded = zoomChanged || partChanged || resizeCanvas ||
+		    shiftPaintDisabled || scaleChanged;
 
 		this._lastZoom = zoom;
 		this._lastPart = part;
@@ -439,7 +446,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 
 		this._canvas = L.DomUtil.create('canvas', '', this._canvasContainer);
-		this._painter = new L.CanvasTilePainter(this, L.getDpiScaleFactor());
+		this._painter = new L.CanvasTilePainter(this);
 		this._container.style.position = 'absolute';
 
 		if (L.Browser.cypressTest) {
