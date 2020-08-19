@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * L.TextInput is the hidden textarea, which handles text input events
  *
@@ -168,6 +168,81 @@ L.TextInput = L.Layer.extend({
 			return;
 		}
 
+		// Are we running in a WebView under an iOS app that uses
+		// CollaboraOnlineWebViewKeyboardManager?
+		if (window.webkit &&
+		    window.webkit.messageHandlers &&
+		    window.webkit.messageHandlers.CollaboraOnlineWebViewKeyboardManager) {
+
+			if (!acceptInput) {
+				window.webkit.messageHandlers.CollaboraOnlineWebViewKeyboardManager.postMessage({command: 'hide'});
+				return;
+			}
+
+			// Define the function that CollaboraOnlineWebViewKeyboardManager will call.
+			// This is a hardcoded name that CollaboraOnlineWebViewKeyboardManager
+			// knows. This is not a problem as we can keep both codebases in sync.
+
+			var that = this;
+			window.COKbdMgrCallback = function(message) {
+				var errorMessage;
+				if (typeof message !== 'object') {
+					errorMessage = 'COKbdMgrCallback called with non-object of type ' + typeof message;
+					console.log(errorMessage);
+					throw errorMessage;
+				}
+
+				if (message.id !== 'COKbdMgr') {
+					errorMessage = 'COKbdMgrCallback called with object with unknown id: ' + message.id;
+					console.log(errorMessage);
+					throw errorMessage;
+				}
+
+				if (message.command === undefined || typeof message.command !== 'string') {
+					errorMessage = 'COKbdMgrCallback called without command';
+					console.log(errorMessage);
+					throw errorMessage;
+				}
+
+				if (message.command === 'replaceText') {
+					if (message.text === undefined || typeof message.text !== 'string') {
+						errorMessage = 'COKbdMgrCallback called for replaceText without text';
+						console.log(errorMessage);
+						throw errorMessage;
+					}
+
+					if (message.location === undefined || typeof message.location !== 'number') {
+						errorMessage = 'COKbdMgrCallback called for replaceText without location';
+						console.log(errorMessage);
+						throw errorMessage;
+					}
+
+					if (message.length === undefined || typeof message.length !== 'number') {
+						errorMessage = 'COKbdMgrCallback called for replaceText without length';
+						console.log(errorMessage);
+						throw errorMessage;
+					}
+
+					if (that._textArea.value.length == 2 && message.length == 0 && message.text.length == 0) {
+						that._removeTextContent(1, 0);
+					} else {
+						that._textArea.value = that._textArea.value.slice(0, message.location + 1) + message.text + that._textArea.value.slice(message.location + 1 + message.length);
+						that._onInput({});
+					}
+				} else {
+					errorMessage = 'COKbdMgrCallback called with unknown command ' + message.command;
+					console.log(errorMessage);
+					throw errorMessage;
+				}
+			};
+
+			// We don't know the seed text to feed CollaboraOnlineWebViewKeyboardManager
+			window.webkit.messageHandlers.CollaboraOnlineWebViewKeyboardManager.postMessage({command: 'display'});
+			this._onFocusBlur({type: 'focus'});
+
+			return;
+		}
+
 		// Trick to avoid showing the software keyboard: Set the textarea
 		// read-only before focus() and reset it again after the blur()
 		if (navigator.platform !== 'iPhone') {
@@ -213,6 +288,16 @@ L.TextInput = L.Layer.extend({
 	},
 
 	blur: function() {
+		// Are we running in a WebView under an iOS app that uses
+		// CollaboraOnlineWebViewKeyboardManager?
+		if (window.webkit &&
+		    window.webkit.messageHandlers &&
+		    window.webkit.messageHandlers.CollaboraOnlineWebViewKeyboardManager) {
+			window.webkit.messageHandlers.CollaboraOnlineWebViewKeyboardManager.postMessage({command: 'hide'});
+			this._onFocusBlur({type: 'blur'});
+			return;
+		}
+
 		this._setAcceptInput(false);
 		if (navigator.platform !== 'iPhone')
 			this._textArea.blur();
