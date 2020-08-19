@@ -85,19 +85,11 @@ L.Control.UserList = L.Control.extend({
 		var iconTd = L.DomUtil.create('td', 'usercolor', content);
 		var nameTd = L.DomUtil.create('td', 'username loleaflet-font', content);
 
-		var hasAvatar = false;
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-			var http = new XMLHttpRequest();
-			http.open('HEAD', extraInfo.avatar, false);
-			http.send();
-			if (http.status != 404) {
-				hasAvatar = true;
-			}
-		}
-
-		if (hasAvatar) {
 			var img = L.DomUtil.create('img', 'avatar-img', iconTd);
 			img.src = extraInfo.avatar;
+			var altImg = L.LOUtil.getImageURL('user.svg');
+			img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
 			$(img).css({'border-color': color});
 		} else {
 			img = L.DomUtil.create('div', 'user-info', iconTd);
