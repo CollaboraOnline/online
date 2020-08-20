@@ -27,6 +27,11 @@ namespace Poco {
 
 class WopiProofTests;
 
+/**
+ * Global singleton - with one-time loaded key data
+ * loaded at startup, and then un-modified & shared
+ * across threads.
+ */
 class Proof {
     friend class WopiProofTests;
     void initialize();
