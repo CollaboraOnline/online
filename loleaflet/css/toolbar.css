@@ -149,14 +149,56 @@ w2ui-toolbar {
 #tb_formulabar_item_formula div table {
 		width: 100%;
 }
+
+@keyframes textPulse {
+	0% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--blue1-txt-primary-color), 0.1);
+	}
+	50% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--blue1-txt-primary-color), 0.2);
+	}
+	100% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--blue1-txt-primary-color), 0.1);
+	}
+}
+@keyframes presentationPulse {
+	0% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--orange1-txt-primary-color), 0.1);
+	}
+	50% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--orange1-txt-primary-color), 0.2);
+	}
+	100% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--orange1-txt-primary-color), 0.1);
+	}
+}
+@keyframes spreadsheetPulse {
+	0% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--green0-txt-primary-color), 0.1);
+	}
+	50% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--green0-txt-primary-color), 0.2);
+	}
+	100% {
+		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb, 0 0 4px rgba(var(--green0-txt-primary-color), 0.1);
+	}
+}
+.text-color-indicator #document-name-input.editable:focus{
+	animation: textPulse 1.5s infinite ease-in-out;
+}
+.presentation-color-indicator #document-name-input.editable:focus{
+	animation: presentationPulse 1.5s infinite ease-in-out;
+}
+.spreadsheet-color-indicator #document-name-input.editable:focus{
+	animation: spreadsheetPulse 1.5s infinite ease-in-out;
+}
 #document-title-pencil.editable {
 	visibility: visible;
 	width: 24px;
 	height: 18px;
-	position: absolute;
-	right: 10px;
+	position: relative;
+	right: 24px;
 	background: url('images/baseline-edit.svg') right center no-repeat, radial-gradient(circle, #fff 20%, #fff0 100%);
-	top: 5px;
 	padding: 1px 0px;
 	margin: 0px;
 	border: none;
@@ -170,6 +212,9 @@ w2ui-toolbar {
 	font-size: 16px;
 	border: 1px solid transparent;
 	background-color: transparent;
+	border-radius: 1px;
+	padding: 0px 2px;
+	transition: 0.5s;
 }
 
 #document-name-input.editable {
@@ -186,13 +231,13 @@ w2ui-toolbar {
 	background: #f9f9f9;
 	box-shadow: 0 0 0.1px 1px #dfdfdf, 0 0 2px 1px #f0f0f0;
 }
-
 #document-name-input.editable:focus {
 		border: none;
 		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb;
 		background-color: white;
 		background-image: none;
 		outline: none;
+		flex: 2;
 }
 
 #document-name-input.editable:hover:not(:focus) {

@@ -21,25 +21,33 @@
 }
 
 .document-logo {
-	position: relative;
-	width: 22px;
-	height: 30px;
+  position: relative;
+  width: 22px;
+  height: 30px;
 }
 
 .document-title {
-    display: table-cell;
-    vertical-align: middle;
     height: 30px;
+    min-width: 84px;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 #document-titlebar {
     position: relative;
-    display: inline-block;
+    display: inline-table; /*new*/
     table-layout: fixed;
-    border-spacing: 5px 0px;
+    border-spacing: 5px 0;
     max-height: 39px;
     z-index: 1000;
+    width: calc(100% - 890px);
+    right: 0px;
+}
+
+.main-nav.hasnotebookbar #document-titlebar {
+	top: -10px;
 }
 
 .main-nav {
@@ -51,8 +59,8 @@
 }
 
 .main-nav.hasnotebookbar{
-	background: var(--gray-bg-color);
-	margin-top: 0px;
+  background: var(--gray-bg-color);
+  margin-top: 0px;
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
@@ -241,24 +249,24 @@
 }
 
 .writer-icon-img {
-	background-image: url('images/x-office-document.svg');
-	background-size: 30px 30px;
-	background-repeat: no-repeat;
-	background-position: bottom;
+  background-image: url('images/x-office-document.svg');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 
 .calc-icon-img {
-	background-image: url('images/x-office-spreadsheet.svg');
-	background-size: 30px 30px;
-	background-repeat: no-repeat;
-	background-position: bottom;
+  background-image: url('images/x-office-spreadsheet.svg');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 
 .impress-icon-img {
-	background-image: url('images/x-office-presentation.svg');
-	background-size: 30px 30px;
-	background-repeat: no-repeat;
-	background-position: bottom;
+  background-image: url('images/x-office-presentation.svg');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 
 #menu-last-mod a {

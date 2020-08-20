@@ -13,9 +13,9 @@
 
 	/*LibreOffice Colors: https://wiki.documentfoundation.org/Marketing/Branding#Colors
 	----------------------------------[to do]*/
-	--blue1-txt-primary-color: #0369A3;
-	--green0-txt-primary-color: #106802; /*green1 lacks contrast against white*/
-	--orange1-txt-primary-color: #A33E03;
+	--blue1-txt-primary-color: 3, 105, 163;
+	--green0-txt-primary-color: 16, 104, 2; /*green1 lacks contrast against white*/
+	--orange1-txt-primary-color: 163, 62, 3;
 
 	--gray-light-txt--color: #696969;
 	--gray-bg-color: #EFEFEF;
