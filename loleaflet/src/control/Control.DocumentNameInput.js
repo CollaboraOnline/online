@@ -129,7 +129,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 		var documentNameInput = $('#document-name-input');
 		var content = (typeof tail === 'string') ? documentNameInput.val() + tail : documentNameInput.val();
 		var font = documentNameInput.css('font');
-		var textWidth = L.getTextWidth(content, font) + 10;
+		var textWidth = L.getTextWidth(content, font) + 24;
 		var maxWidth = this._getMaxAvailableWidth();
 		//console.log('_setNameInputWidth: textWidth: ' + textWidth + ', maxWidth: ' + maxWidth);
 		textWidth = Math.min(textWidth, maxWidth);

@@ -27,19 +27,27 @@
 }
 
 .document-title {
-    display: table-cell;
-    vertical-align: middle;
     height: 30px;
+    min-width: 84px;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 #document-titlebar {
     position: relative;
-    display: inline-block;
+    display: inline-table; /*new*/
     table-layout: fixed;
-    border-spacing: 5px 0px;
+    border-spacing: 5px 0;
     max-height: 39px;
     z-index: 1000;
+    width: calc(100% - 890px);
+    right: 0px;
+}
+
+.main-nav.hasnotebookbar #document-titlebar {
+	top: -10px;
 }
 
 .main-nav {
