@@ -40,22 +40,15 @@ L.CanvasTilePainter = L.Class.extend({
 		debug: true,
 	},
 
-	initialize: function (layer, enableImageSmoothing) {
+	initialize: function (layer) {
 		this._layer = layer;
 		this._canvas = this._layer._canvas;
 
 		var dpiScale = L.getDpiScaleFactor();
-		if (dpiScale === 1 || dpiScale === 2) {
-			enableImageSmoothing = (enableImageSmoothing === true);
-		}
-		else {
-			enableImageSmoothing = (enableImageSmoothing === undefined || enableImageSmoothing);
-		}
-
 		this._dpiScale = dpiScale;
 
 		this._map = this._layer._map;
-		this._setupCanvas(enableImageSmoothing);
+		this._setupCanvas();
 
 		this._topLeft = undefined;
 		this._lastZoom = undefined;
@@ -95,15 +88,11 @@ L.CanvasTilePainter = L.Class.extend({
 		this.stopUpdates();
 	},
 
-	setImageSmoothing: function (enable) {
-		this._canvasCtx.imageSmoothingEnabled = enable;
-		this._canvasCtx.msImageSmoothingEnabled = enable;
-	},
-
-	_setupCanvas: function (enableImageSmoothing) {
+	_setupCanvas: function () {
 		console.assert(this._canvas, 'no canvas element');
 		this._canvasCtx = this._canvas.getContext('2d', { alpha: false });
-		this.setImageSmoothing(enableImageSmoothing);
+		this._canvasCtx.imageSmoothingEnabled = false;
+		this._canvasCtx.msImageSmoothingEnabled = false;
 		var mapSize = this._map.getPixelBounds().getSize();
 		this._lastSize = mapSize;
 		this._lastMapSize = mapSize;
@@ -132,7 +121,7 @@ L.CanvasTilePainter = L.Class.extend({
 
 	clear: function () {
 		this._canvasCtx.save();
-		this._canvasCtx.scale(this._dpiScale, this._dpiScale);
+		this._canvasCtx.scale(1, 1);
 		if (this.options.debug)
 			this._canvasCtx.fillStyle = 'red';
 		else
@@ -177,7 +166,7 @@ L.CanvasTilePainter = L.Class.extend({
 				topLeft.y = ctx.viewBounds.min.y;
 
 			this._canvasCtx.save();
-			this._canvasCtx.scale(this._dpiScale, this._dpiScale);
+			this._canvasCtx.scale(1, 1);
 			this._canvasCtx.translate(-topLeft.x, -topLeft.y);
 
 			// create a clip for the pane/view.
@@ -186,12 +175,11 @@ L.CanvasTilePainter = L.Class.extend({
 			this._canvasCtx.rect(paneBounds.min.x, paneBounds.min.y, paneSize.x + 1, paneSize.y + 1);
 			this._canvasCtx.clip();
 
-			if (this._dpiScale !== 1) {
-				// FIXME: avoid this scaling when possible (dpiScale = 2).
-				this._canvasCtx.drawImage(tile.el, tile.coords.x, tile.coords.y, ctx.tileSize.x, ctx.tileSize.y);
-			}
-			else {
-				this._canvasCtx.drawImage(tile.el, tile.coords.x, tile.coords.y);
+			this._canvasCtx.drawImage(tile.el, tile.coords.x, tile.coords.y);
+			if (this.options.debug)
+			{
+				this._canvasCtx.strokeStyle = 'red';
+				this._canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
 			}
 			this._canvasCtx.restore();
 		}
@@ -204,7 +192,7 @@ L.CanvasTilePainter = L.Class.extend({
 		}
 		var splitPos = splitPanesContext.getSplitPos();
 		this._canvasCtx.save();
-		this._canvasCtx.scale(this._dpiScale, this._dpiScale);
+		this._canvasCtx.scale(1, 1);
 		this._canvasCtx.strokeStyle = 'red';
 		this._canvasCtx.strokeRect(0, 0, splitPos.x, splitPos.y);
 		this._canvasCtx.restore();
@@ -248,6 +236,8 @@ L.CanvasTilePainter = L.Class.extend({
 			!resizeCanvas &&
 			!splitPosChanged &&
 			!scaleChanged);
+
+		console.debug('Tile size: ' + this._layer._getTileSize());
 
 		if (skipUpdate)
 			return;
@@ -296,8 +286,8 @@ L.CanvasTilePainter = L.Class.extend({
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
 				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
 					var coords = new L.TileCoordData(
-						i * ctx.tileSize,
-						j * ctx.tileSize,
+						i * ctx.tileSize.x,
+						j * ctx.tileSize.y,
 						zoom,
 						part);
 
