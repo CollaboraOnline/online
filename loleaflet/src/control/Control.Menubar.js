@@ -404,6 +404,12 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
 				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
+				{name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
+				{name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
+					{name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
+					{name: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), id: 'FreezePanesRow', type: 'action', uno: '.uno:FreezePanesRow'}
+				]},
+				{type: 'separator'},
 				{uno: '.uno:Sidebar'},
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [

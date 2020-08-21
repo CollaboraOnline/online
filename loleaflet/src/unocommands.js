@@ -122,6 +122,7 @@ var unoCommandsArray = {
 	FormatXErrorBars:{global:{menu:_('Format X Error Bars...'),},},
 	FormatYErrorBars:{global:{menu:_('Format Y Error Bars...'),},},
 	FormattingMarkMenu:{global:{menu:_('Formatting Mark'),},},
+	FreezeCellsMenu:{spreadsheet:{menu:_('Freeze ~Cells'),},},
 	FreezePanes:{spreadsheet:{menu:_('Freeze ~Rows and Columns'),},},
 	FreezePanesColumn:{spreadsheet:{menu:_('Freeze First Column'),},},
 	FreezePanesRow:{spreadsheet:{menu:_('Freeze First Row'),},},
