@@ -236,7 +236,6 @@ L.CanvasTilePainter = L.Class.extend({
 		var resizeCanvas = !newSize.equals(this._lastSize);
 
 		var topLeftChanged = this._topLeft === undefined || !newTopLeft.equals(this._topLeft);
-
 		var splitPosChanged = !newSplitPos.equals(this._splitPos);
 
 		var skipUpdate = (
@@ -247,9 +246,9 @@ L.CanvasTilePainter = L.Class.extend({
 			!splitPosChanged &&
 			!scaleChanged);
 
-		if (skipUpdate) {
+		if (skipUpdate)
 			return;
-		}
+
 		if (scaleChanged)
 			this._dpiScale = L.getDpiScaleFactor();
 
@@ -261,130 +260,20 @@ L.CanvasTilePainter = L.Class.extend({
 			this.clear();
 		}
 
-		if (mapSizeChanged) {
+		if (mapSizeChanged)
 			this._lastMapSize = newMapSize;
-		}
 
-		if (splitPosChanged) {
+		if (splitPosChanged)
 			this._splitPos = newSplitPos;
-		}
-
-		// TODO: fix _shiftAndPaint for high DPI.
-		var shiftPaintDisabled = true;
-		var fullRepaintNeeded = zoomChanged || partChanged || resizeCanvas ||
-		    shiftPaintDisabled || scaleChanged;
 
 		this._lastZoom = zoom;
 		this._lastPart = part;
 
-		if (fullRepaintNeeded) {
-
-			this._topLeft = newTopLeft;
-			this._paintWholeCanvas();
-
-			if (this.options.debug) {
-				this._drawSplits();
-			}
-
-			return;
-		}
-
-		this._shiftAndPaint(newTopLeft);
-	},
-
-	_shiftAndPaint: function (newTopLeft) {
-
-		console.assert(!this._layer.getSplitPanesContext(), '_shiftAndPaint is broken for split-panes.');
-		var offset = new L.Point(this._width - 1, this._height - 1);
-
-		var dx = newTopLeft.x - this._topLeft.x;
-		var dy = newTopLeft.y - this._topLeft.y;
-		if (!dx && !dy) {
-			return;
-		}
-
-		// Determine the area that needs to be painted as max. two disjoint rectangles.
-		var rectsToPaint = [];
-		this._inMove = true;
-		var oldTopLeft = this._topLeft;
-		var oldBottomRight = oldTopLeft.add(offset);
-		var newBottomRight = newTopLeft.add(offset);
-
-		if (Math.abs(dx) < this._width && Math.abs(dy) < this._height) {
-
-			this._canvasCtx.save();
-			this._canvasCtx.scale(this._dpiScale, this._dpiScale);
-			this._canvasCtx.globalCompositeOperation = 'copy';
-			this._canvasCtx.drawImage(this._canvas, -dx, -dy);
-			this._canvasCtx.globalCompositeOperation = 'source-over';
-			this._canvasCtx.restore();
-
-			var xstart = newTopLeft.x, xend = newBottomRight.x;
-			var ystart = newTopLeft.y, yend = newBottomRight.y;
-			if (dx) {
-				xstart = dx > 0 ? oldBottomRight.x + 1 : newTopLeft.x;
-				xend   = xstart + Math.abs(dx) - 1;
-			}
-
-			if (dy) {
-				ystart = dy > 0 ? oldBottomRight.y + 1 : newTopLeft.y;
-				yend   = ystart + Math.abs(dy) - 1;
-			}
-
-			// rectangle including the x-range that needs painting with full y-range.
-			// This will take care of simultaneous non-zero dx and dy.
-			if (dx) {
-				rectsToPaint.push(new L.Bounds(
-					new L.Point(xstart, newTopLeft.y),
-					new L.Point(xend,   newBottomRight.y)
-				));
-			}
-
-			// rectangle excluding the x-range that needs painting + needed y-range.
-			if (dy) {
-				rectsToPaint.push(new L.Bounds(
-					new L.Point(dx > 0 ? newTopLeft.x : (dx ? xend + 1 : newTopLeft.x), ystart),
-					new L.Point(dx > 0 ? xstart - 1   : newBottomRight.x,               yend)
-				));
-			}
-
-		}
-		else {
-			rectsToPaint.push(new L.Bounds(newTopLeft, newBottomRight));
-		}
-
 		this._topLeft = newTopLeft;
+		this._paintWholeCanvas();
 
-		this._paintRects(rectsToPaint, newTopLeft);
-	},
-
-	_paintRects: function (rects, topLeft) {
-		for (var i = 0; i < rects.length; ++i) {
-			this._paintRect(rects[i], topLeft);
-		}
-	},
-
-	_paintRect: function (rect) {
-		var zoom = this._lastZoom || Math.round(this._map.getZoom());
-		var part = this._lastPart || this._layer._selectedPart;
-		var tileRange = this._layer._pxBoundsToTileRange(rect);
-		var tileSize = this._tileSizeCSSPx || this._layer._getTileSize();
-		for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
-			for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
-				var coords = new L.TileCoordData(
-					i * tileSize,
-					j * tileSize,
-					zoom,
-					part);
-
-				var key = coords.key();
-				var tile = this._layer._tiles[key];
-				var invalid = tile && tile._invalidCount && tile._invalidCount > 0;
-				if (tile && tile.loaded && !invalid) {
-					this.paint(tile);
-				}
-			}
-		}
+		if (this.options.debug)
+			this._drawSplits();
 	},
 
 	_paintWholeCanvas: function () {
