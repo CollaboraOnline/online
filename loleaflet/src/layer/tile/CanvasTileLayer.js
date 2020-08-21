@@ -37,7 +37,7 @@ L.TileCoordData.parseKey = function (keyString) {
 L.CanvasTilePainter = L.Class.extend({
 
 	options: {
-		debug: false,
+		debug: true,
 	},
 
 	initialize: function (layer, enableImageSmoothing) {
@@ -133,7 +133,10 @@ L.CanvasTilePainter = L.Class.extend({
 	clear: function () {
 		this._canvasCtx.save();
 		this._canvasCtx.scale(this._dpiScale, this._dpiScale);
-		this._canvasCtx.fillStyle = 'white';
+		if (this.options.debug)
+			this._canvasCtx.fillStyle = 'red';
+		else
+			this._canvasCtx.fillStyle = 'white';
 		this._canvasCtx.fillRect(0, 0, this._width, this._height);
 		this._canvasCtx.restore();
 	},
@@ -277,6 +280,10 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	_paintWholeCanvas: function () {
+
+		if (this.options.debug)
+			this.clear();
+
 		var zoom = this._lastZoom || Math.round(this._map.getZoom());
 		var part = this._lastPart || this._layer._selectedPart;
 
