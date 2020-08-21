@@ -132,6 +132,7 @@ var unoCommandsArray = {
 	Hide:{spreadsheet:{menu:_('~Hide Sheet'),},},
 	HideColumn:{spreadsheet:{context:_('H~ide Columns'),menu:_('~Hide'),},},
 	HideDetail:{global:{menu:_('~Hide Details'),},},
+	HideNote:{spreadsheet:{menu:_('Hide Comment'),},},
 	HideRow:{spreadsheet:{context:_('H~ide Rows'),menu:_('H~ide'),},},
 	HyperlinkDialog:{global:{context:_('Insert Hyperlink'),menu:_('~Hyperlink...'),},},
 	IconSetFormatDialog:{spreadsheet:{menu:_('Icon Set...'),},},

@@ -51,7 +51,7 @@ L.Control.ContextMenu = L.Control.extend({
 				   'SpellCheckIgnore'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog',
-				          'ShowNote', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
+				          'ShowNote', 'HideNote', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
 
 			presentation: ['SetDefault'],
 			drawing: []
@@ -78,7 +78,7 @@ L.Control.ContextMenu = L.Control.extend({
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
 			'FormatCellDialog',
-			'ShowNote', 'DeleteNote',
+			'ShowNote', 'HideNote', 'DeleteNote',
 		]
 	},
 
