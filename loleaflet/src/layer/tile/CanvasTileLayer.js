@@ -63,8 +63,6 @@ L.CanvasTilePainter = L.Class.extend({
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		this._splitPos = splitPanesContext ?
 			splitPanesContext.getSplitPos() : new L.Point(0, 0);
-
-		this._tileSizeCSSPx = undefined;
 		this._updatesRunning = false;
 	},
 
@@ -140,38 +138,40 @@ L.CanvasTilePainter = L.Class.extend({
 		this._canvasCtx.restore();
 	},
 
-	paint: function (tile, viewBounds, paneBoundsList) {
+	// Details of tile areas to render
+	_paintContext: function() {
+		var tileSize = new L.Point(this._layer._getTileSize(), this._layer._getTileSize());
 
-		if (this._tileSizeCSSPx === undefined) {
-			this._tileSizeCSSPx = this._layer._getTileSize();
-		}
+		var viewBounds = this._map.getPixelBounds();
+		var splitPanesContext = this._layer.getSplitPanesContext();
+		var paneBoundsList = splitPanesContext ?
+		    splitPanesContext.getPxBoundList(viewBounds) :
+		    [viewBounds];
+
+		return { tileSize: tileSize,
+			 viewBounds: viewBounds,
+			 paneBoundsList: paneBoundsList };
+	},
+
+	paint: function (tile, ctx) {
+
+		if (!ctx)
+			ctx = this._paintContext();
 
 		var tileTopLeft = tile.coords.getPos();
-		var tileSize = new L.Point(this._tileSizeCSSPx, this._tileSizeCSSPx);
-		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(tileSize));
+		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
-		viewBounds = viewBounds || this._map.getPixelBounds();
-		var splitPanesContext = this._layer.getSplitPanesContext();
-		paneBoundsList = paneBoundsList || (
-			splitPanesContext ?
-			splitPanesContext.getPxBoundList(viewBounds) :
-			[viewBounds]
-		);
+		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+			var paneBounds = ctx.paneBoundsList[i];
 
-		for (var i = 0; i < paneBoundsList.length; ++i) {
-			var paneBounds = paneBoundsList[i];
-			if (!paneBounds.intersects(tileBounds)) {
+			if (!paneBounds.intersects(tileBounds))
 				continue;
-			}
 
 			var topLeft = paneBounds.getTopLeft();
-			if (topLeft.x) {
-				topLeft.x = viewBounds.min.x;
-			}
-
-			if (topLeft.y) {
-				topLeft.y = viewBounds.min.y;
-			}
+			if (topLeft.x)
+				topLeft.x = ctx.viewBounds.min.x;
+			if (topLeft.y)
+				topLeft.y = ctx.viewBounds.min.y;
 
 			this._canvasCtx.save();
 			this._canvasCtx.scale(this._dpiScale, this._dpiScale);
@@ -185,7 +185,7 @@ L.CanvasTilePainter = L.Class.extend({
 
 			if (this._dpiScale !== 1) {
 				// FIXME: avoid this scaling when possible (dpiScale = 2).
-				this._canvasCtx.drawImage(tile.el, tile.coords.x, tile.coords.y, this._tileSizeCSSPx, this._tileSizeCSSPx);
+				this._canvasCtx.drawImage(tile.el, tile.coords.x, tile.coords.y, ctx.tileSize.x, ctx.tileSize.y);
 			}
 			else {
 				this._canvasCtx.drawImage(tile.el, tile.coords.x, tile.coords.y);
@@ -280,24 +280,17 @@ L.CanvasTilePainter = L.Class.extend({
 		var zoom = this._lastZoom || Math.round(this._map.getZoom());
 		var part = this._lastPart || this._layer._selectedPart;
 
-		var viewSize = new L.Point(this._width, this._height);
-		var viewBounds = new L.Bounds(this._topLeft, this._topLeft.add(viewSize));
-
-		var splitPanesContext = this._layer.getSplitPanesContext();
 		// Calculate all this here intead of doing it per tile.
-		var paneBoundsList = splitPanesContext ?
-			splitPanesContext.getPxBoundList(viewBounds) : [viewBounds];
-		var tileRanges = paneBoundsList.map(this._layer._pxBoundsToTileRange, this._layer);
-
-		var tileSize = this._tileSizeCSSPx || this._layer._getTileSize();
+		var ctx = this._paintContext();
+		var tileRanges = ctx.paneBoundsList.map(this._layer._pxBoundsToTileRange, this._layer);
 
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
 				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
 					var coords = new L.TileCoordData(
-						i * tileSize,
-						j * tileSize,
+						i * ctx.tileSize,
+						j * ctx.tileSize,
 						zoom,
 						part);
 
@@ -305,7 +298,7 @@ L.CanvasTilePainter = L.Class.extend({
 					var tile = this._layer._tiles[key];
 					var invalid = tile && tile._invalidCount && tile._invalidCount > 0;
 					if (tile && tile.loaded && !invalid) {
-						this.paint(tile, viewBounds, paneBoundsList);
+						this.paint(tile, ctx);
 					}
 				}
 			}
