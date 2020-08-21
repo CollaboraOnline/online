@@ -267,7 +267,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.tileSize = 256;])
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl
 
-<!-- Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css -->
+// Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css 
 var link = document.createElement('link');
 link.setAttribute("rel", "stylesheet");
 link.setAttribute("type", "text/css");
