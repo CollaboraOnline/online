@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: 2020-03-22 00:15+0000\n"
+"PO-Revision-Date: 2020-08-19 17:35+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Spanish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/es/>\n"
 "Language: es\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
 "X-Pootle-Revision: 3713610\n"
 
@@ -1503,7 +1503,7 @@ msgstr "¿Cómo salir del <span class=\"productname\">%productName</span> sin gu
 
 #: html/loleaflet-help.html%2Bdiv.p:457-5
 msgid "<span class=\"productname\">%productName</span> saves the document in the background regularly, you can't just close without saving it. To abandon your changes, you must either undo them, or use the <span class=\"ui\">Revision History </span> in the <span class=\"ui\">File</span> menu."
-msgstr "<span class=\"productname\">%productName</span> guarda el documento regularmente; no puede cerrarlo sin que se guarde. Para abandonar sus modificaciones, puede deshacer o utilizar el historial de revisiones en el menú <span class=\"ui\">Archivo</span>."
+msgstr "<span class=\"productname\">%productName</span> guarda el documento regularmente; no puede cerrarlo sin que se guarde. Para abandonar sus modificaciones, puede deshacer o utilizar el <span class=\"ui\">Historial de revisiones</span> en el menú <span class=\"ui\">Archivo</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:458-5
 msgid "Can <span class=\"productname\">%productName</span> open a password-protected document?"

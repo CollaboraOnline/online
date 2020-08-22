@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-08-07 08:29+0000\n"
-"Last-Translator: Felipe Viggiano <felipeviggiano@gmail.com>\n"
+"PO-Revision-Date: 2020-08-22 04:28+0000\n"
+"Last-Translator: Olivier Hallot <olivier.hallot@libreoffice.org>\n"
 "Language-Team: Portuguese (Brazil) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -656,7 +656,7 @@ msgstr "Apresentação em tela cheia"
 
 #: src/control/Control.Menubar.js:354
 msgid "Present current slide"
-msgstr ""
+msgstr "Apresentar slide atual"
 
 #: src/control/Control.Menubar.js:381 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarCalc.js:211
@@ -726,7 +726,7 @@ msgstr "Ocultar a barra de pesquisa"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Ir para a primeira planilha"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll left"
@@ -738,7 +738,7 @@ msgstr "Rolar para a direita"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Ir para a última planilha"
 
 #: src/control/Control.SheetsBar.js:32
 msgid "Insert sheet"
@@ -1020,7 +1020,7 @@ msgstr "Não foi possível bloquear o documento e está aberto em modo somente l
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "O servidor retornou esta razão:"
 
 #: src/control/Permission.js:63
 msgid "The document could not be locked."
