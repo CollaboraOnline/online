@@ -25,17 +25,14 @@ bool remountReadonly(const std::string& source, const std::string& target);
 /// Unmount a bind-mounted jail directory.
 bool unmount(const std::string& target);
 
-/// Remove the jail directory and all its contents.
-void removeJail(const std::string& path);
+/// Marks a jail as having been copied instead of mounted.
+void markJailCopied(const std::string& root);
 
-/// Remove all the jails given their paths.
-inline void removeJails(const std::vector<std::string>& jails)
-{
-    for (const auto& path : jails)
-    {
-        removeJail(path);
-    }
-}
+/// Returns true iff the jail in question was copied and not mounted.
+bool isJailCopied(const std::string& root);
+
+/// Remove the jail directory and all its contents.
+void removeJail(const std::string& root);
 
 /// Remove all jails.
 void cleanupJails(const std::string& jailRoot);
@@ -46,18 +43,24 @@ void setupJails(bool bindMount, const std::string& jailRoot, const std::string& 
 /// Setup /dev/random and /dev/urandom in the given jail path.
 void setupJailDevNodes(const std::string& root);
 
+/// Enable bind-mounting in this process.
+void enableBindMounting();
+
+/// Disable bind-mounting in this process.
+void disableBindMounting();
+
+/// Returns true iff bind-mounting is enabled in this process.
+bool isBindMountingEnabled();
+
 namespace SysTemplate
 {
-/// Create a symlink inside the jailPath so that the absolute pathname loTemplate, when
-/// interpreted inside a chroot at jailPath, points to loSubPath (relative to the chroot).
-void setupLoSymlink(const std::string& sysTemplate, const std::string& loTemplate,
-                    const std::string& loSubPath);
-
 /// Setup links for /dev/random and /dev/urandom in systemplate.
 void setupRandomDeviceLinks(const std::string& root);
 
-/// Setup of the dynamic files within the sysTemplate by either
+/// Setup the dynamic files within the sysTemplate by either
 /// copying or linking. See updateJail_DynamicFilesInSysTemplate.
+/// If the dynamic files need updating and systemplate is read-only,
+/// this will fail and mark files for copying.
 void setupDynamicFiles(const std::string& sysTemplate);
 
 /// Update the dynamic files within the sysTemplate before each child fork.

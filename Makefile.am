@@ -335,27 +335,26 @@ SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
 CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
 
-# Add caps to the binaries that need them.
-caps_bins: loolforkit loolmount
 if ENABLE_SETCAP
-	    sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit
-	    sudo @SETCAP@ cap_sys_admin=ep loolmount
+SET_CAPS_COMMAND=sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit && sudo @SETCAP@ cap_sys_admin=ep loolmount
 else
-	    echo "Skipping capability setting"
+SET_CAPS_COMMAND=
+echo "Skipping capability setting"
 endif
 
 if ENABLE_LIBFUZZER
 CLEANUP_DEPS=
 else
-CLEANUP_DEPS=loolwsd
+CLEANUP_DEPS=loolwsd loolmount loolforkit
 endif
 
 # Build loolwsd and loolmount first, so we can cleanup before updating
 # the systemplate directory, which we can't rm if it's mounted.
-$(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup $(CLEANUP_DEPS) caps_bins
+$(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup $(CLEANUP_DEPS)
+	$(SET_CAPS_COMMAND)
 	$(CLEANUP_COMMAND)
-	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
-	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@
+	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@" && \
+	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@; fi
 
 @JAILS_PATH@:
 	$(CLEANUP_COMMAND)
@@ -486,12 +485,7 @@ SYSTEM_STAMP =
 
 endif
 
-# After building loolforkit, set its capabilities as required. Do it
-# already after a plain 'make' to allow for testing without
-# installing. When building for packaging, no need for this, as the
-# capabilities won't survive packaging anyway. Instead, handle it when
-# installing the RPM or Debian package.
-.PHONY: caps_bins cleanup
+.PHONY: cleanup
 
 if ENABLE_LIBFUZZER
 ALL_LOCAL_DEPS=
@@ -499,7 +493,13 @@ else
 ALL_LOCAL_DEPS=loolwsd
 endif
 
-all-local: $(ALL_LOCAL_DEPS) caps_bins @JAILS_PATH@ $(SYSTEM_STAMP)
+# After building loolforkit, set its capabilities as required. Do it
+# already after a plain 'make' to allow for testing without
+# installing. When building for packaging, no need for this, as the
+# capabilities won't survive packaging anyway. Instead, handle it when
+# installing the RPM or Debian package.
+all-local: $(ALL_LOCAL_DEPS) @JAILS_PATH@ $(SYSTEM_STAMP)
+	$(SET_CAPS_COMMAND)
 
 # just run the build without any tests
 build-nocheck: all-am

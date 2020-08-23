@@ -54,9 +54,9 @@ bool remountReadonly(const std::string& source, const std::string& target)
     Poco::File(target).createDirectory();
     const bool res = loolmount("-r", source, target);
     if (res)
-        LOG_TRC("Mounted [" << source << "] -> [" << target << "].");
+        LOG_TRC("Mounted [" << source << "] -> [" << target << "] readonly.");
     else
-        LOG_ERR("Failed to mount [" << source << "] -> [" << target << "].");
+        LOG_ERR("Failed to mount [" << source << "] -> [" << target << "] readonly.");
     return res;
 }
 
@@ -71,38 +71,69 @@ bool unmount(const std::string& target)
     return res;
 }
 
+// This file signifies that we copied instead of mounted.
+// NOTE: jail cleanup helpers are called from forkit and
+// loolwsd, and they may have bind-mounting enabled, but the
+// kit could have had it removed when falling back to copying.
+// In such cases, we cannot safely know whether the jail was
+// copied or not, since the bind envar will be present and
+// assuming it was mounted would leak them.
+// Alternatively, we if remove the files when mounted
+// we could destroy systemplate if remounting read-only had
+// failed (and it wasn't owned by root).
+constexpr const char* COPIED_JAIL_MARKER_FILE = "delete.me";
+
+void markJailCopied(const std::string& root)
+{
+    // The reason we should be able to create this file
+    // is because the jail must be writable.
+    // Failing this will cause an exception, signaling an error.
+    Poco::File(root + '/' + COPIED_JAIL_MARKER_FILE).createFile();
+}
+
+bool isJailCopied(const std::string& root)
+{
+    // If the marker file exists, the jail was copied.
+    FileUtil::Stat delFileStat(root + '/' + COPIED_JAIL_MARKER_FILE);
+    return delFileStat.exists();
+}
+
 bool safeRemoveDir(const std::string& path)
 {
+    // Always unmount, just in case.
     unmount(path);
 
-    static const bool bind = std::getenv("LOOL_BIND_MOUNT");
+    // Regardless of the bind flag, check if the jail is marked as copied.
+    const bool copied = isJailCopied(path);
 
     // We must be empty if we had mounted.
-    if (bind && !FileUtil::isEmptyDirectory(path))
+    if (!copied && JailUtil::isBindMountingEnabled() && !FileUtil::isEmptyDirectory(path))
     {
         LOG_WRN("Path [" << path << "] is not empty. Will not remove it.");
         return false;
     }
 
     // Recursively remove if link/copied.
-    FileUtil::removeFile(path, !bind);
+    const bool recursive = copied;
+    FileUtil::removeFile(path, recursive);
     return true;
 }
 
-void removeJail(const std::string& path)
+void removeJail(const std::string& root)
 {
-    LOG_INF("Removing jail [" << path << "].");
+    LOG_INF("Removing jail [" << root << "].");
 
     // Unmount the tmp directory. Don't care if we fail.
-    const std::string tmpPath = Poco::Path(path, "tmp").toString();
-    FileUtil::removeFile(tmpPath, true); // Delete tmp contents with prejeduce.
+    const std::string tmpPath = Poco::Path(root, "tmp").toString();
+    FileUtil::removeFile(tmpPath, true); // Delete tmp contents with prejudice.
     unmount(tmpPath);
 
     // Unmount the loTemplate directory.
-    unmount(Poco::Path(path, "lo").toString());
+    //FIXME: technically, the loTemplate directory may have any name.
+    unmount(Poco::Path(root, "lo").toString());
 
-    // Unmount the jail (sysTemplate).
-    safeRemoveDir(path);
+    // Unmount/delete the jail (sysTemplate).
+    safeRemoveDir(root);
 }
 
 /// This cleans up the jails directories.
@@ -121,6 +152,7 @@ void cleanupJails(const std::string& root)
         return;
     }
 
+    //FIXME: technically, the loTemplate directory may have any name.
     if (FileUtil::Stat(root + "/lo").exists())
     {
         // This is a jail.
@@ -156,7 +188,7 @@ void setupJails(bool bindMount, const std::string& jailRoot, const std::string& 
     cleanupJails(jailRoot);
     Poco::File(jailRoot).createDirectories();
 
-    unsetenv("LOOL_BIND_MOUNT"); // Clear to avoid surprises.
+    disableBindMounting(); // Clear to avoid surprises.
     if (bindMount)
     {
         // Test mounting to verify it actually works,
@@ -164,8 +196,8 @@ void setupJails(bool bindMount, const std::string& jailRoot, const std::string& 
         const std::string target = Poco::Path(jailRoot, "lool_test_mount").toString();
         if (bind(sysTemplate, target))
         {
+            enableBindMounting();
             safeRemoveDir(target);
-            setenv("LOOL_BIND_MOUNT", "1", 1);
             LOG_INF("Enabling Bind-Mounting of jail contents for better performance per "
                     "mount_jail_tree config in loolwsd.xml.");
         }
@@ -176,35 +208,6 @@ void setupJails(bool bindMount, const std::string& jailRoot, const std::string& 
     else
         LOG_INF("Disabling Bind-Mounting of jail contents per "
                 "mount_jail_tree config in loolwsd.xml.");
-}
-
-void symlinkPathToJail(const std::string& sysTemplate, const std::string& loTemplate,
-                       const std::string& loSubPath)
-{
-    std::string symlinkTarget;
-    for (int i = 0; i < Poco::Path(loTemplate).depth(); i++)
-        symlinkTarget += "../";
-    symlinkTarget += loSubPath;
-
-    const Poco::Path symlinkSourcePath(sysTemplate + '/' + loTemplate);
-    const std::string symlinkSource = symlinkSourcePath.toString();
-    Poco::File(symlinkSourcePath.parent()).createDirectories();
-
-    LOG_DBG("Linking symbolically [" << symlinkSource << "] to [" << symlinkTarget << "].");
-
-    const FileUtil::Stat stLink(symlinkSource, true); // The file is a link.
-    if (stLink.exists())
-    {
-        if (!stLink.isLink())
-            LOG_WRN("Link [" << symlinkSource << "] already exists but isn't a link.");
-        else
-            LOG_TRC("Link [" << symlinkSource << "] already exists, skipping linking.");
-
-        return;
-    }
-
-    if (symlink(symlinkTarget.c_str(), symlinkSource.c_str()) == -1)
-        LOG_SYS("Failed to symlink(\"" << symlinkTarget << "\", \"" << symlinkSource << "\")");
 }
 
 // This is the second stage of setting up /dev/[u]random
@@ -239,6 +242,27 @@ void setupJailDevNodes(const std::string& root)
     }
 }
 
+/// The envar name used to control bind-mounting of systemplate/jails.
+constexpr const char* BIND_MOUNTING_ENVAR_NAME = "LOOL_BIND_MOUNT";
+
+void enableBindMounting()
+{
+    // Set the envar to enable.
+    setenv(BIND_MOUNTING_ENVAR_NAME, "1", 1);
+}
+
+void disableBindMounting()
+{
+    // Remove the envar to disable.
+    unsetenv(BIND_MOUNTING_ENVAR_NAME);
+}
+
+bool isBindMountingEnabled()
+{
+    // Check if we have a valid envar set.
+    return std::getenv(BIND_MOUNTING_ENVAR_NAME) != nullptr;
+}
+
 namespace SysTemplate
 {
 /// The network and other system files we need to keep up-to-date in jails.
@@ -268,12 +292,14 @@ void setupDynamicFiles(const std::string& sysTemplate)
                 << sysTemplate
                 << "]. Will disable bind-mounting in this run and clone systemplate into the "
                    "jails, which is more resource intensive.");
-        unsetenv("LOOL_BIND_MOUNT"); // We can't mount from incomplete systemplate.
+        disableBindMounting(); // We can't mount from incomplete systemplate.
+        LinkDynamicFiles = false;
     }
 
-    if (LinkDynamicFiles)
-        LOG_INF("Systemplate dynamic files in ["
-                << sysTemplate << "] are linked and will remain up-to-date.");
+    LOG_INF("Systemplate dynamic files in ["
+            << sysTemplate << "] "
+            << (LinkDynamicFiles ? "are linked and will remain" : "will be copied to keep them")
+            << " up-to-date.");
 }
 
 bool updateDynamicFilesImpl(const std::string& sysTemplate)
@@ -348,17 +374,6 @@ bool updateDynamicFiles(const std::string& sysTemplate)
 {
     // If the files are linked, they are always up-to-date.
     return LinkDynamicFiles ? true : updateDynamicFilesImpl(sysTemplate);
-}
-
-void setupLoSymlink(const std::string& sysTemplate, const std::string& loTemplate,
-                    const std::string& loSubPath)
-{
-    symlinkPathToJail(sysTemplate, loTemplate, loSubPath);
-
-    // Font paths can end up as realpaths so match that too.
-    const std::string resolved = FileUtil::realpath(loTemplate);
-    if (loTemplate != resolved)
-        symlinkPathToJail(sysTemplate, resolved, loSubPath);
 }
 
 void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& name)

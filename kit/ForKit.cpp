@@ -253,7 +253,8 @@ static void cleanupChildren()
 {
     std::vector<std::string> jails;
     pid_t exitedChildPid;
-    int status, segFaultCount = 0;
+    int status = 0;
+    int segFaultCount = 0;
 
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
     while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
@@ -272,7 +273,7 @@ static void cleanupChildren()
 
             if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS))
             {
-                segFaultCount ++;
+                ++segFaultCount;
             }
         }
         else
@@ -306,7 +307,10 @@ static void cleanupChildren()
     }
 
     // Now delete the jails.
-    JailUtil::removeJails(jails);
+    for (const std::string& path : jails)
+    {
+        JailUtil::removeJail(path);
+    }
 }
 
 static int createLibreOfficeKit(const std::string& childRoot,
@@ -613,11 +617,8 @@ int main(int argc, char** argv)
     if (Util::getProcessThreadCount() != 1)
         LOG_ERR("Error: forkit has more than a single thread after pre-init");
 
-    // Link the network and system files in sysTemplate.
+    // Link the network and system files in sysTemplate, if possible.
     JailUtil::SysTemplate::setupDynamicFiles(sysTemplate);
-
-    // Make the real lo path in the chroot point to the chroot lo/.
-    JailUtil::SysTemplate::setupLoSymlink(sysTemplate, loTemplate, loSubPath);
 
     // Make dev/[u]random point to the writable devices in tmp/dev/.
     JailUtil::SysTemplate::setupRandomDeviceLinks(sysTemplate);

@@ -1,4 +1,5 @@
 #!/bin/bash
+#set -x
 
 test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to create> <LO installation directory>"; exit 1; }
 
@@ -11,8 +12,14 @@ test -d "$INSTDIR" || { echo "No such directory: $INSTDIR"; exit 1; }
 
 mkdir -p $CHROOT || exit 1
 
+# Resolve the real paths, in case they are relative and/or symlinked.
+# INSTDIR_LOGICAL will contain the logical path, if there are symlinks,
+# while INSTDIR is the physical one. Both will most likely be the same,
+# except on systems that have symlinks in the path. We must create
+# both paths (if they are different) inside the jail, hence we need both.
 CHROOT=`cd $CHROOT && /bin/pwd`
-INSTDIR=`cd $INSTDIR && /bin/pwd`
+INSTDIR_LOGICAL=`cd $INSTDIR && /bin/pwd -L`
+INSTDIR=`cd $INSTDIR && /bin/pwd -P`
 
 cd / || exit 1
 
@@ -58,16 +65,33 @@ grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's
 # This will now copy the file a symlink points to, but whatever.
 cpio -p -d -L $CHROOT
 
-mkdir -p $CHROOT/lo
-mkdir -p $CHROOT/dev
-mkdir -p $CHROOT/tmp/dev
-
 # Link the dynamic files, replacing any existing.
 for file in hosts nsswitch.conf resolv.conf passwd group host.conf timezone localtime
 do
     #echo "Linking/Copying /etc/$file"
     # Prefer hard linking, fallback to soft linking, and finally to just copying.
     ln -f /etc/$file $CHROOT/etc/ 2> /dev/null || ln -f -s /etc/$file $CHROOT/etc/ || cp /etc/$file $CHROOT/etc/ || echo "Failed to link or copy $file"
+done
+
+# Link dev/random and dev/urandom to ../tmp/dev/.
+# The jail then creates the random device nodes in its /tmp/dev/.
+mkdir -p $CHROOT/dev
+mkdir -p $CHROOT/tmp/dev
+for file in random urandom
+do
+    ln -f ../tmp/dev/$file $CHROOT/dev/ 2> /dev/null || ln -f -s ../tmp/dev/$file $CHROOT/dev/ || echo "Failed to link dev/$file"
+done
+
+# Create a relative symbolic link within systemplate that points from
+# the path of $INSTDIR (as seen from the jail as an absolute path)
+# to the /lo path, where the instdir of LO will really reside.
+mkdir -p $CHROOT/lo
+# In case the original path is different from
+for path in $INSTDIR $INSTDIR_LOGICAL
+do
+    INSTDIR_PARENT="$(dirname "$CHROOT/$path")"
+    mkdir -p $INSTDIR_PARENT
+    ln -f -s `realpath --relative-to=$INSTDIR_PARENT $CHROOT/lo` $CHROOT/$path
 done
 
 # /usr/share/fonts needs to be taken care of separately because the

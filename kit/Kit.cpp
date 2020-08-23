@@ -11,6 +11,7 @@
  * a document editing session.
  */
 
+#include <Poco/File.h>
 #include <config.h>
 
 #include <dlfcn.h>
@@ -2119,9 +2120,10 @@ void lokit_main(
     {
 #if !MOBILEAPP
         const Path jailPath = Path::forDirectory(childRoot + '/' + jailId);
-        LOG_INF("Jail path: " << jailPath.toString());
+        const std::string jailPathStr = jailPath.toString();
+        LOG_INF("Jail path: " << jailPathStr);
         File(jailPath).createDirectories();
-        chmod(jailPath.toString().c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
+        chmod(jailPathStr.c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
 
         if (!ChildSession::NoCapsForKit)
         {
@@ -2131,65 +2133,95 @@ void lokit_main(
             userdir_url = "file:///tmp/user";
             instdir_path = '/' + loSubPath + "/program";
 
-            // Copy (link) LO installation and other necessary files into it from the template.
-            if (std::getenv("LOOL_BIND_MOUNT"))
-            {
-                const std::string destPath = jailPath.toString();
-                LOG_INF("Mounting " << sysTemplate << " -> " << destPath);
-                if (!JailUtil::bind(sysTemplate, destPath))
-                {
-                    LOG_WRN("Failed to mount [" << sysTemplate << "] -> [" << destPath
-                                                << "], will link/copy contents.");
-                    linkOrCopy(sysTemplate, destPath, LinkOrCopyType::All);
-                }
-                else
-                    JailUtil::remountReadonly(sysTemplate, jailPath.toString());
+            Poco::Path jailLOInstallation(jailPath, loSubPath);
+            jailLOInstallation.makeDirectory();
+            const std::string loJailDestPath = jailLOInstallation.toString();
 
-                // Mount lotemplate inside it.
-                const std::string loDestPath = Poco::Path(jailPath, "lo").toString();
-                LOG_INF("Mounting " << loTemplate << " -> " << loDestPath);
-                Poco::File(loDestPath).createDirectories();
-                if (!JailUtil::bind(loTemplate, loDestPath))
+            // The bind-mount implementation: inlined here to mirror
+            // the fallback link/copy version bellow.
+            const auto mountJail = [&]() -> bool {
+                // Mount sysTemplate for the jail directory.
+                LOG_INF("Mounting " << sysTemplate << " -> " << jailPathStr);
+                if (!JailUtil::bind(sysTemplate, jailPathStr)
+                    || !JailUtil::remountReadonly(sysTemplate, jailPathStr))
                 {
-                    LOG_WRN("Failed to mount [" << loTemplate << "] -> [" << loDestPath
+                    LOG_WRN("Failed to mount [" << sysTemplate << "] -> [" << jailPathStr
                                                 << "], will link/copy contents.");
-                    linkOrCopy(sysTemplate, loDestPath, LinkOrCopyType::LO);
+                    return false;
                 }
-                else
-                    JailUtil::remountReadonly(loTemplate, loDestPath);
 
-                // hard-random tmpdir inside the jail / root
+                // Mount loTemplate inside it.
+                LOG_INF("Mounting " << loTemplate << " -> " << loJailDestPath);
+                Poco::File(loJailDestPath).createDirectories();
+                if (!JailUtil::bind(loTemplate, loJailDestPath)
+                    || !JailUtil::remountReadonly(loTemplate, loJailDestPath))
+                {
+                    LOG_WRN("Failed to mount [" << loTemplate << "] -> [" << loJailDestPath
+                                                << "], will link/copy contents.");
+                    return false;
+                }
+
+                // Hard-random tmpdir inside the jail for added sercurity.
                 const std::string tempRoot = Poco::Path(childRoot, "tmp").toString();
                 Poco::File(tempRoot).createDirectories();
                 const std::string tmpSubDir = Util::createRandomTmpDir(tempRoot);
                 const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
+                LOG_INF("Mounting random temp dir " << tmpSubDir << " -> " << jailTmpDir);
                 if (!JailUtil::bind(tmpSubDir, jailTmpDir))
                 {
-                    LOG_ERR("Failed to bind tmp dir in jail.");
+                    LOG_WRN("Failed to mount [" << tmpSubDir << "] -> [" << jailTmpDir
+                                                << "], will link/copy contents.");
+                    return false;
                 }
 
-                JailUtil::setupJailDevNodes(destPath + "/tmp");
-            }
-            else
+                return true;
+            };
+
+            // Copy (link) LO installation and other necessary files into it from the template.
+            bool bindMount = JailUtil::isBindMountingEnabled();
+            if (bindMount)
             {
+                if (!mountJail())
+                {
+                    LOG_INF("Cleaning up jail before linking/copying.");
+                    JailUtil::removeJail(jailPathStr);
+                    bindMount = false;
+                    JailUtil::disableBindMounting();
+                }
+            }
+
+            if (!bindMount)
+            {
+                LOG_INF("Mounting is disabled, will link/copy " << sysTemplate << " -> "
+                                                                << jailPathStr);
+
                 linkOrCopy(sysTemplate, jailPath, LinkOrCopyType::All);
 
-                Poco::Path jailLOInstallation(jailPath, loSubPath);
-                jailLOInstallation.makeDirectory();
-                Poco::File(jailLOInstallation).createDirectory();
-                linkOrCopy(loTemplate, jailLOInstallation, LinkOrCopyType::LO);
-
-                JailUtil::setupJailDevNodes(Poco::Path(jailPath, "/tmp").toString());
+                linkOrCopy(loTemplate, loJailDestPath, LinkOrCopyType::LO);
 
                 // Update the dynamic files inside the jail.
-                if (!JailUtil::SysTemplate::updateDynamicFiles(jailPath.toString()))
+                if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
                 {
-                    LOG_WRN("Failed to update the dynamic files in the jail ["
-                            << jailPath.toString() << "]. Some functionality may be missing.");
+                    LOG_WRN(
+                        "Failed to update the dynamic files in the jail ["
+                        << jailPathStr
+                        << "]. If the systemplate directory is owned by a superuser or is "
+                           "read-only, running the installation scripts with the owner's account "
+                           "should update these files. Some functionality may be missing.");
                 }
+
+                // Create a file to mark this a copied jail.
+                JailUtil::markJailCopied(jailPathStr);
             }
 
+            // Setup the devices inside /tmp and set TMPDIR.
+            JailUtil::setupJailDevNodes(Poco::Path(jailPath, "/tmp").toString());
             ::setenv("TMPDIR", "/tmp", 1);
+
+            // HOME must be writable, so create it in /tmp.
+            constexpr const char* HomePathInJail = "/tmp/home";
+            Poco::File(Poco::Path(jailPath, HomePathInJail)).createDirectories();
+            ::setenv("HOME", HomePathInJail, 1);
 
             const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
                                 std::chrono::steady_clock::now() - jailSetupStartTime)
@@ -2200,10 +2232,10 @@ void lokit_main(
             if (ProcSMapsFile < 0)
                 LOG_SYS("Failed to open /proc/self/smaps. Memory stats will be missing.");
 
-            LOG_INF("chroot(\"" << jailPath.toString() << "\")");
-            if (chroot(jailPath.toString().c_str()) == -1)
+            LOG_INF("chroot(\"" << jailPathStr << "\")");
+            if (chroot(jailPathStr.c_str()) == -1)
             {
-                LOG_SFL("chroot(\"" << jailPath.toString() << "\") failed.");
+                LOG_SFL("chroot(\"" << jailPathStr << "\") failed.");
                 Log::shutdown();
                 std::_Exit(EX_SOFTWARE);
             }
@@ -2223,8 +2255,9 @@ void lokit_main(
         }
         else // noCapabilities set
         {
-            LOG_ERR("Security warning - using template " << loTemplate << " as install subpath - skipping chroot jail setup");
-            userdir_url = "file:///" + jailPath.toString() + "/tmp/user";
+            LOG_ERR("Security warning - using template "
+                    << loTemplate << " as install subpath - skipping chroot jail setup");
+            userdir_url = "file:///" + jailPathStr + "/tmp/user";
             instdir_path = '/' + loTemplate + "/program";
         }
 
@@ -2243,7 +2276,8 @@ void lokit_main(
 #endif
             if (!kit)
             {
-                kit = (initFunction ? initFunction(instdir, userdir) : lok_init_2(instdir, userdir));
+                kit = (initFunction ? initFunction(instdir, userdir)
+                                    : lok_init_2(instdir, userdir));
             }
 
             loKit = std::make_shared<lok::Office>(kit);
