@@ -379,7 +379,8 @@ Z-index values:
 -------------------------------------------
 		menu items
 -------------------------------------------
-1000			main-menu(desktop-only), toolbar-down
+1000			main-menu(desktop-only)
+0			toolbar-down
 1050			closebuttonwrapper (not being used currently)
 -------------------------------------------
 		on the top
