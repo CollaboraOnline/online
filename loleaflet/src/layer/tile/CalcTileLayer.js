@@ -79,6 +79,7 @@ L.CalcTileLayer = BaseTileLayer.extend({
 	},
 
 	onAdd: function (map) {
+		this._useExactDPR = this._hasCanvasRenderer = (this instanceof L.CanvasTileLayer);
 		map.addControl(L.control.tabs());
 		map.addControl(L.control.columnHeader());
 		map.addControl(L.control.rowHeader());
@@ -475,7 +476,7 @@ L.CalcTileLayer = BaseTileLayer.extend({
 		this._sendClientZoom();
 		if (this.sheetGeometry) {
 			this.sheetGeometry.setTileGeometryData(this._tileWidthTwips, this._tileHeightTwips,
-				this._tileSize, this._tilePixelScale);
+				this._tileSize, this._hasCanvasRenderer ? L.getDpiScaleFactor(true /* useExactDPR */) : this._tilePixelScale);
 		}
 		this._restrictDocumentSize();
 		this._replayPrintTwipsMsgs();
@@ -741,9 +742,10 @@ L.CalcTileLayer = BaseTileLayer.extend({
 	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
 		if (!this.sheetGeometry) {
 			this._sheetGeomFirstWait = false;
+			var dpiScale = this._hasCanvasRenderer ? L.getDpiScaleFactor(true /* useExactDPR */) : this._tilePixelScale;
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
 				this._tileWidthTwips, this._tileHeightTwips,
-				this._tileSize, this._tilePixelScale, this._selectedPart);
+				this._tileSize, dpiScale, this._selectedPart);
 		}
 		else {
 			this.sheetGeometry.update(jsonMsgObj, /* checkCompleteness */ false, this._selectedPart);
@@ -1223,12 +1225,12 @@ L.SheetGeometry = L.Class.extend({
 	// all flags (ie 'columns', 'rows', 'sizes', 'hidden', 'filtered',
 	// 'groups') enabled.
 	initialize: function (sheetGeomJSON, tileWidthTwips, tileHeightTwips,
-		tileSizeCSSPixels, dpiScale, part) {
+		tileSizePixels, dpiScale, part) {
 
 		if (typeof sheetGeomJSON !== 'object' ||
 			typeof tileWidthTwips !== 'number' ||
 			typeof tileHeightTwips !== 'number' ||
-			typeof tileSizeCSSPixels !== 'number' ||
+			typeof tileSizePixels !== 'number' ||
 			typeof dpiScale !== 'number' ||
 			typeof part !== 'number') {
 			console.error('Incorrect constructor argument types or missing required arguments');
@@ -1241,7 +1243,7 @@ L.SheetGeometry = L.Class.extend({
 		this._unoCommand = '.uno:SheetGeometryData';
 
 		// Set various unit conversion info early on because on update() call below, these info are needed.
-		this.setTileGeometryData(tileWidthTwips, tileHeightTwips, tileSizeCSSPixels,
+		this.setTileGeometryData(tileWidthTwips, tileHeightTwips, tileSizePixels,
 			dpiScale, false /* update position info ?*/);
 
 		this.update(sheetGeomJSON, /* checkCompleteness */ true, part);
@@ -1285,10 +1287,10 @@ L.SheetGeometry = L.Class.extend({
 		return this._part;
 	},
 
-	setTileGeometryData: function (tileWidthTwips, tileHeightTwips, tileSizeCSSPixels,
+	setTileGeometryData: function (tileWidthTwips, tileHeightTwips, tileSizePixels,
 		dpiScale, updatePositions) {
-		this._columns.setTileGeometryData(tileWidthTwips, tileSizeCSSPixels, dpiScale, updatePositions);
-		this._rows.setTileGeometryData(tileHeightTwips, tileSizeCSSPixels, dpiScale, updatePositions);
+		this._columns.setTileGeometryData(tileWidthTwips, tileSizePixels, dpiScale, updatePositions);
+		this._rows.setTileGeometryData(tileHeightTwips, tileSizePixels, dpiScale, updatePositions);
 	},
 
 	setViewArea: function (topLeftTwipsPoint, sizeTwips) {
@@ -1429,7 +1431,7 @@ L.SheetGeometry = L.Class.extend({
 	},
 
 	// Returns full sheet size as L.Point in the given unit.
-	// unit must be one of 'csspixels', 'devpixels', 'tiletwips', 'printtwips'
+	// unit must be one of 'csspixels', 'corepixels', 'tiletwips', 'printtwips'
 	getSize: function (unit) {
 		return new L.Point(this._columns.getSize(unit),
 			this._rows.getSize(unit));
@@ -1437,8 +1439,8 @@ L.SheetGeometry = L.Class.extend({
 
 	// Returns the CSS pixel position/size of the requested cell at a specified zoom.
 	getCellRect: function (columnIndex, rowIndex, zoomScale) {
-		var horizPosSize = this._columns.getElementData(columnIndex, false /* devicePixels */, zoomScale);
-		var vertPosSize  = this._rows.getElementData(rowIndex, false /* devicePixels */, zoomScale);
+		var horizPosSize = this._columns.getElementData(columnIndex, false /* corePixels */, zoomScale);
+		var vertPosSize  = this._rows.getElementData(rowIndex, false /* corePixels */, zoomScale);
 
 		var topLeft = new L.Point(horizPosSize.startpos, vertPosSize.startpos);
 		var size = new L.Point(horizPosSize.size, vertPosSize.size);
@@ -1455,13 +1457,13 @@ L.SheetGeometry = L.Class.extend({
 	},
 
 	// Returns the start position of the column containing posX in the specified unit.
-	// unit must be one of 'csspixels', 'devpixels', 'tiletwips', 'printtwips'
+	// unit must be one of 'csspixels', 'corepixels', 'tiletwips', 'printtwips'
 	getSnapDocPosX: function (posX, unit) {
 		return this._columns.getSnapPos(posX, unit);
 	},
 
 	// Returns the start position of the row containing posY in the specified unit.
-	// unit must be one of 'csspixels', 'devpixels', 'tiletwips', 'printtwips'
+	// unit must be one of 'csspixels', 'corepixels', 'tiletwips', 'printtwips'
 	getSnapDocPosY: function (posY, unit) {
 		return this._rows.getSnapPos(posY, unit);
 	},
@@ -1593,7 +1595,7 @@ L.SheetDimension = L.Class.extend({
 		this._maxIndex = maxIndex;
 	},
 
-	setTileGeometryData: function (tileSizeTwips, tileSizeCSSPixels, dpiScale, updatePositions) {
+	setTileGeometryData: function (tileSizeTwips, tileSizePixels, dpiScale, updatePositions) {
 
 		if (updatePositions === undefined) {
 			updatePositions = true;
@@ -1601,17 +1603,22 @@ L.SheetDimension = L.Class.extend({
 
 		// Avoid position re-computations if no change in Zoom/dpiScale.
 		if (this._tileSizeTwips === tileSizeTwips &&
-			this._tileSizeCSSPixels === tileSizeCSSPixels &&
+			this._tileSizePixels === tileSizePixels &&
 			this._dpiScale === dpiScale) {
 			return;
 		}
 
 		this._tileSizeTwips = tileSizeTwips;
-		this._tileSizeCSSPixels = tileSizeCSSPixels;
+		this._tileSizePixels = tileSizePixels;
 		this._dpiScale = dpiScale;
 
-		this._twipsPerCSSPixel = tileSizeTwips / tileSizeCSSPixels;
-		this._devPixelsPerCssPixel = dpiScale;
+		// number of core-pixels in the tile is the same as the number of device pixels used to render the tile.
+		// (Note that when not using L.CanvasTileLayer, we do not use the exact window.devicePixelRatio
+		// for dpiScale hence the usage of the term device-pixels is not accurate.)
+		this._coreZoomFactor = this._tileSizePixels * 15.0 / this._tileSizeTwips;
+		this._twipsPerCorePixel = this._tileSizeTwips / this._tileSizePixels;
+
+		this._corePixelsPerCssPixel = this._dpiScale;
 
 		if (updatePositions) {
 			// We need to compute positions data for every zoom change.
@@ -1628,7 +1635,7 @@ L.SheetDimension = L.Class.extend({
 
 	_updatePositions: function() {
 
-		var posDevPx = 0; // position in device pixels.
+		var posCorePx = 0; // position in core pixels.
 		var posPrintTwips = 0;
 		var dimensionObj = this;
 		this._visibleSizes.addCustomDataForEachSpan(function (
@@ -1636,17 +1643,17 @@ L.SheetDimension = L.Class.extend({
 			size, /* size in twips of one element in the span */
 			spanLength /* #elements in the span */) {
 
-			// Important: rounding needs to be done in device pixels exactly like the core.
-			var sizeDevPxOne = Math.floor(size / dimensionObj._twipsPerCSSPixel * dimensionObj._devPixelsPerCssPixel);
-			posDevPx += (sizeDevPxOne * spanLength);
-			var posCssPx = posDevPx / dimensionObj._devPixelsPerCssPixel;
-			// position in device-pixel aligned twips.
-			var posTileTwips = Math.floor(posCssPx * dimensionObj._twipsPerCSSPixel);
+			// Important: rounding needs to be done in core pixels to match core.
+			var sizeCorePxOne = Math.floor(size / dimensionObj._twipsPerCorePixel);
+			posCorePx += (sizeCorePxOne * spanLength);
+			var posCssPx = posCorePx / dimensionObj._corePixelsPerCssPixel;
+			// position in core-pixel aligned twips.
+			var posTileTwips = Math.floor(posCorePx * dimensionObj._twipsPerCorePixel);
 			posPrintTwips += (size * spanLength);
 
 			var customData = {
-				sizedev: sizeDevPxOne,
-				posdevpx: posDevPx,
+				sizecore: sizeCorePxOne,
+				poscorepx: posCorePx,
 				poscsspx: posCssPx,
 				postiletwips: posTileTwips,
 				posprinttwips: posPrintTwips
@@ -1657,22 +1664,28 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	// returns the element pos/size in css pixels by default.
-	getElementData: function (index, useDevicePixels, zoomScale) {
+	getElementData: function (index, useCorePixels, zoomScale) {
 		if (zoomScale !== undefined) {
 			var startpos = 0;
 			var size = 0;
 			this._visibleSizes.forEachSpanInRange(0, index, function (spanData) {
 				var count = spanData.end - spanData.start + 1;
-				var sizeOneCSSPx = Math.floor(spanData.size * zoomScale / 15.0);
+				var sizeOneCorePx = Math.floor(spanData.size * zoomScale / 15.0);
 				if (index > spanData.end) {
-					startpos += (sizeOneCSSPx * count);
+					startpos += (sizeOneCorePx * count);
 				}
 				else if (index >= spanData.start && index <= spanData.end) {
 					// final span
-					startpos += (sizeOneCSSPx * (index - spanData.start));
-					size = sizeOneCSSPx;
+					startpos += (sizeOneCorePx * (index - spanData.start));
+					size = sizeOneCorePx;
 				}
 			});
+
+			if (!useCorePixels) {
+				// startpos and size are now in core pixels, so convert to css pixels.
+				startpos = Math.floor(startpos / this._corePixelsPerCssPixel);
+				size = Math.floor(size / this._corePixelsPerCssPixel);
+			}
 
 			return {
 				startpos: startpos,
@@ -1685,7 +1698,7 @@ L.SheetDimension = L.Class.extend({
 			return undefined;
 		}
 
-		return this._getElementDataFromSpanByIndex(index, span, useDevicePixels);
+		return this._getElementDataFromSpanByIndex(index, span, useCorePixels);
 	},
 
 	getElementDataAny: function (index, unitName) {
@@ -1698,9 +1711,9 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	// returns element pos/size in css pixels by default.
-	_getElementDataFromSpanByIndex: function (index, span, useDevicePixels) {
+	_getElementDataFromSpanByIndex: function (index, span, useCorePixels) {
 		return this._getElementDataAnyFromSpanByIndex(index, span,
-				useDevicePixels ? 'devpixels' : 'csspixels');
+				useCorePixels ? 'corepixels' : 'csspixels');
 	},
 
 	// returns element pos/size in the requested unit.
@@ -1710,20 +1723,20 @@ L.SheetDimension = L.Class.extend({
 			return undefined;
 		}
 
-		if (unitName !== 'csspixels' && unitName !== 'devpixels' &&
+		if (unitName !== 'csspixels' && unitName !== 'corepixels' &&
 				unitName !== 'tiletwips' && unitName !== 'printtwips') {
 			console.error('unsupported unitName: ' + unitName);
 			return undefined;
 		}
 
 		var numSizes = span.end - index + 1;
-		var inPixels = (unitName === 'csspixels' || unitName === 'devpixels');
+		var inPixels = (unitName === 'csspixels' || unitName === 'corepixels');
 		if (inPixels) {
-			var useDevicePixels = (unitName === 'devpixels');
-			var pixelScale = useDevicePixels ? 1 : this._devPixelsPerCssPixel;
+			var useCorePixels = (unitName === 'corepixels');
+			var pixelScale = useCorePixels ? 1 : this._corePixelsPerCssPixel;
 			return {
-				startpos: (span.data.posdevpx - span.data.sizedev * numSizes) / pixelScale,
-				size: span.data.sizedev / pixelScale
+				startpos: (span.data.poscorepx - span.data.sizecore * numSizes) / pixelScale,
+				size: span.data.sizecore / pixelScale
 			};
 		}
 
@@ -1735,12 +1748,12 @@ L.SheetDimension = L.Class.extend({
 		}
 
 		// unitName is 'tiletwips'
-		// It is very important to calculate this from device pixel units to mirror the core calculations.
-		var twipsPerDevPixels = this._twipsPerCSSPixel / this._devPixelsPerCssPixel;
+		// It is very important to calculate this from core pixel units to mirror the core calculations.
+		var twipsPerCorePixel = this._twipsPerCorePixel;
 		return {
 			startpos: Math.floor(
-				(span.data.posdevpx - span.data.sizedev * numSizes) * twipsPerDevPixels),
-			size: Math.floor(span.data.sizedev * twipsPerDevPixels)
+				(span.data.poscorepx - span.data.sizecore * numSizes) * twipsPerCorePixel),
+			size: Math.floor(span.data.sizecore * twipsPerCorePixel)
 		};
 	},
 
@@ -1769,8 +1782,7 @@ L.SheetDimension = L.Class.extend({
 			return result;
 		}
 		var elementCount = span.end - span.start + 1;
-		var posStart = ((span.data.posdevpx - span.data.sizedev * elementCount) /
-			this._devPixelsPerCssPixel * this._twipsPerCSSPixel);
+		var posStart = ((span.data.poscorepx - span.data.sizecore * elementCount) * this._twipsPerCorePixel);
 		var posEnd = span.data.postiletwips;
 		var sizeOne = (posEnd - posStart) / elementCount;
 
@@ -1837,8 +1849,8 @@ L.SheetDimension = L.Class.extend({
 		this._outlines.forEachGroupInRange(this._viewStartIndex, this._viewEndIndex,
 			function (levelIdx, groupIdx, start, end, hidden) {
 
-				var startElementData = dimensionObj.getElementData(start, true /* device pixels */);
-				var endElementData = dimensionObj.getElementData(end, true /* device pixels */);
+				var startElementData = dimensionObj.getElementData(start, true /* core pixels */);
+				var endElementData = dimensionObj.getElementData(end, true /* core pixels */);
 				groupsData.push({
 					level: (levelIdx + 1).toString(),
 					index: groupIdx.toString(),
@@ -1900,9 +1912,9 @@ L.SheetDimension = L.Class.extend({
 		var startData = this._getElementDataAnyFromSpanByIndex(startElement.index, startElement.span, 'tiletwips');
 		if (posStartPT === posEndPT) {
 			// range is hidden, send a minimal sized tile-twips range.
-			// Set the size = twips equivalent of 1 device pixel,
+			// Set the size = twips equivalent of 1 core pixel,
 			// to imitate what core does when it sends cursor/ranges in tile-twips coordinates.
-			var rangeSize = Math.floor(this._twipsPerCSSPixel / this._devPixelsPerCssPixel);
+			var rangeSize = Math.floor(this._twipsPerCorePixel);
 			return {
 				startpos: startData.startpos,
 				endpos: startData.startpos + rangeSize
@@ -1935,7 +1947,7 @@ L.SheetDimension = L.Class.extend({
 	isUnitSupported: function (unitName) {
 		return (
 			unitName === 'csspixels' ||
-			unitName === 'devpixels' ||
+			unitName === 'corepixels' ||
 			unitName === 'tiletwips' ||
 			unitName === 'printtwips'
 		);
@@ -1947,12 +1959,12 @@ L.SheetDimension = L.Class.extend({
 
 		var origUnit = unit;
 
-		if (unit === 'devpixels') {
-			pos = (pos * this._twipsPerCSSPixel) / this._devPixelsPerCssPixel;
+		if (unit === 'corepixels') {
+			pos = pos * this._twipsPerCorePixel;
 			unit = 'tiletwips';
 		}
 		else if (unit === 'csspixels') {
-			pos = pos * this._twipsPerCSSPixel;
+			pos = pos * this._corePixelsPerCssPixel * this._twipsPerCorePixel;
 			unit = 'tiletwips';
 		}
 
@@ -1968,12 +1980,12 @@ L.SheetDimension = L.Class.extend({
 		console.assert(typeof pos === 'number', 'pos is not a number');
 		console.assert(this.isUnitSupported(unit), 'unit: ' + unit + ' is not supported');
 
-		if (unit === 'devpixels') {
-			pos = (pos * this._twipsPerCSSPixel) / this._devPixelsPerCssPixel;
+		if (unit === 'corepixels') {
+			pos = pos * this._twipsPerCorePixel;
 			unit = 'tiletwips';
 		}
 		else if (unit === 'csspixels') {
-			pos = pos * this._twipsPerCSSPixel;
+			pos = pos * this._corePixelsPerCssPixel * this._twipsPerCorePixel;
 			unit = 'tiletwips';
 		}
 
