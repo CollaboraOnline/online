@@ -15,6 +15,7 @@
 		BE00F8B5213ED543001CE2D4 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B4213ED543001CE2D4 /* libiconv.tbd */; };
 		BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B6213ED573001CE2D4 /* libz.tbd */; };
 		BE18C7DE226DE09A001AD27E /* Branding in Resources */ = {isa = PBXBuildFile; fileRef = BE18C7DD226DE09A001AD27E /* Branding */; };
+		BE2FB29E24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2FB29D24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.m */; };
 		BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5B9213FE29900E0826C /* Log.cpp */; };
 		BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */; };
 		BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BB213FE29900E0826C /* Session.cpp */; };
@@ -103,6 +104,8 @@
 		BE28F896228CE04700C00C48 /* langselect.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = langselect.cxx; path = "../../ios-device/desktop/source/app/langselect.cxx"; sourceTree = "<group>"; };
 		BE28F897228CE04700C00C48 /* lockfile2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lockfile2.cxx; path = "../../ios-device/desktop/source/app/lockfile2.cxx"; sourceTree = "<group>"; };
 		BE28F898228CE04700C00C48 /* userinstall.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = userinstall.cxx; path = "../../ios-device/desktop/source/app/userinstall.cxx"; sourceTree = "<group>"; };
+		BE2FB29C24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollaboraOnlineWebViewKeyboardManager.h; path = CollaboraOnlineWebViewKeyboardManager/CollaboraOnlineWebViewKeyboardManager.h; sourceTree = SOURCE_ROOT; };
+		BE2FB29D24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollaboraOnlineWebViewKeyboardManager.m; path = CollaboraOnlineWebViewKeyboardManager/CollaboraOnlineWebViewKeyboardManager.m; sourceTree = SOURCE_ROOT; };
 		BE34D10F218B66B600815297 /* docsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh.cxx; path = "../../ios-device/sw/source/uibase/app/docsh.cxx"; sourceTree = "<group>"; };
 		BE34D110218B66B600815297 /* docstyle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docstyle.cxx; path = "../../ios-device/sw/source/uibase/app/docstyle.cxx"; sourceTree = "<group>"; };
 		BE34D111218B66B600815297 /* docshdrw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docshdrw.cxx; path = "../../ios-device/sw/source/uibase/app/docshdrw.cxx"; sourceTree = "<group>"; };
@@ -2263,6 +2266,8 @@
 		BE8D77292136762500AC58EA /* Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				BE2FB29C24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.h */,
+				BE2FB29D24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.m */,
 				BE58E13021874A2E00249358 /* Mobile.entitlements */,
 				BE5EB5D92140363100E0826C /* ios.mm */,
 				BE00F8922139494E001CE2D4 /* Resources */,
@@ -3048,6 +3053,7 @@
 				BE5EB5C7213FE29900E0826C /* Protocol.cpp in Sources */,
 				BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */,
 				BE5EB5D0213FE2D000E0826C /* TileCache.cpp in Sources */,
+				BE2FB29E24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.m in Sources */,
 				BE5EB5C5213FE29900E0826C /* MessageQueue.cpp in Sources */,
 				BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */,
 				BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */,
