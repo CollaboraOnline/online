@@ -159,8 +159,11 @@ L.Util = {
 	// minimal image URI, set to an image when disposing to flush memory
 	emptyImageUrl: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
 
-	getDpiScaleFactor: function() {
-		var dpiScale = window.devicePixelRatio ? Math.ceil(window.devicePixelRatio) : 1;
+	getDpiScaleFactor: function(useExactDPR) {
+		var dpiScale = window.devicePixelRatio ? window.devicePixelRatio : 1;
+		if (!useExactDPR)
+			dpiScale = Math.ceil(dpiScale);
+
 		if (dpiScale == 1 && L.Browser.retina) {
 			dpiScale = 2;
 		}
