@@ -1879,7 +1879,7 @@ protected:
             URI::decode(docKey, url);
             LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
 #ifndef IOS
-            Util::setThreadName("kit_" + docId);
+            Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif
             if (!_document)
             {

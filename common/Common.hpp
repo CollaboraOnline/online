@@ -40,6 +40,20 @@ constexpr const char FORKIT_URI[] = "/loolws/forkit";
 
 constexpr const char CAPABILITIES_END_POINT[] = "/hosting/capabilities";
 
+/// A shared threadname suffix in both the WSD and Kit processes
+/// is highly helpful for filtering the logs for the same document
+/// by simply grepping for this shared suffix+ID. e.g. 'grep "broker_123" loolwsd.log'
+/// Unfortunately grepping for only "_123" would include more noise than desirable.
+/// This also makes the threadname symmetric and the entries aligned.
+/// The choice of "broker" as the suffix is historic: it implies the controller
+/// of which there are two: one in WSD called DocumentBroker and one in Kit
+/// called Document, which wasn't called DocumentBroker to avoid confusing it
+/// with the one in WSD. No such confusion should be expected in the logs, since
+/// the prefix is "doc" and "kit" respectively, and each log entry has the process
+/// name prefixed. And of course these threads are unrelated to the classes in
+/// the code: they are logical execution unit names.
+#define SHARED_DOC_THREADNAME_SUFFIX "broker_"
+
 /// The HTTP response User-Agent.
 #define HTTP_AGENT_STRING "LOOLWSD HTTP Agent " LOOLWSD_VERSION
 
