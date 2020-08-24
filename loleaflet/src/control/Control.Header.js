@@ -579,6 +579,7 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_setCanvasSizeImpl: function (container, canvas, property, value, isCorner) {
+		var useExactDPR = this._map && (this._map._docLayer instanceof L.CanvasTileLayer);
 		if (!value) {
 			value = parseInt(L.DomUtil.getStyle(container, property));
 		}
@@ -586,7 +587,7 @@ L.Control.Header = L.Control.extend({
 			L.DomUtil.setStyle(container, property, value + 'px');
 		}
 
-		var scale = L.getDpiScaleFactor();
+		var scale = L.getDpiScaleFactor(useExactDPR);
 		if (property === 'width') {
 			canvas.width = value * scale;
 			if (!isCorner)
