@@ -224,7 +224,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		ctx.save();
-		var scale = L.getDpiScaleFactor();
+		var useExactDPR = this._map && (this._map._docLayer instanceof L.CanvasTileLayer);
+		var scale = L.getDpiScaleFactor(useExactDPR);
 		ctx.scale(scale, scale);
 		// background gradient
 		var selectionBackgroundGradient = null;
