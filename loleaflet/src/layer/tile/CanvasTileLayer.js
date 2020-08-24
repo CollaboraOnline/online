@@ -380,6 +380,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._tileHeightPx = this.options.tileSize;
 		this._tilePixelScale = 1;
 
+		// FIXME: workaround for correcting initial zoom with dpiscale included.
+		// The one set during Map constructor is does not include dpiscale because
+		// there we don't have enough info to specialize for calc-canvas
+		map.setZoom(map.getZoom());
+
 		L.TileLayer.prototype.onAdd.call(this, map);
 	},
 

@@ -452,7 +452,22 @@ L.Map = L.Evented.extend({
 		this._progressBar.end(this);
 	},
 
+	// Compute the nearest zoom level corresponding to the effective zoom-scale (ie, with dpiscale included).
+	findNearestProductZoom: function (zoom) {
+		var clientZoomScale = Math.pow(1.2, (zoom - this.options.zoom));
+
+		var zoomScale = clientZoomScale * L.getCanvasScaleFactor();
+		var nearestZoom = Math.round((Math.log(zoomScale) / Math.log(1.2)) + this.options.zoom);
+		nearestZoom = this._limitZoom(nearestZoom);
+
+		return nearestZoom;
+	},
+
 	setZoom: function (zoom, options) {
+
+		if (this._docLayer instanceof L.CanvasTileLayer)
+			zoom = this.findNearestProductZoom(zoom);
+
 		if (!this._loaded) {
 			this._zoom = this._limitZoom(zoom);
 			return this;
