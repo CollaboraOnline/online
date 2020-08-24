@@ -121,6 +121,8 @@ L.Control.MobileWizard = L.Control.extend({
 		if (window.pageMobileWizard === true)
 			window.pageMobilewizard = false;
 
+		if (this.isMobileWizardHeaderVisible)
+			this._removeMobileWizardHeader();
 
 		this._updateToolbarItemStateByClose();
 
@@ -351,8 +353,8 @@ L.Control.MobileWizard = L.Control.extend({
 				window.mobileDialogId = data.id;
 			}
 
-			if (this.map.getDocType() === 'presentation')
-				$('#mobile-wizard-header').show();
+			if (this.map.getDocType() === 'presentation' && this._isSlidePropertyPanel(data))
+				this._addMobileWizardHeader();
 
 			this._isActive = true;
 			var currentPath = null;
@@ -424,6 +426,46 @@ L.Control.MobileWizard = L.Control.extend({
 			this._updateMapSize();
 
 			this._inBuilding = false;
+		}
+	},
+
+	_addMobileWizardHeader: function() {
+		if (!this.isMobileWizardHeaderVisible) {
+			var map = this._map;
+			this.isMobileWizardHeaderVisible = true;
+			L.Control.MobileWizard.mergeOptions({maxHeight: '55%'});
+			var mobileWizard = L.DomUtil.get('mobile-wizard');
+			var mobileWizardContent = L.DomUtil.get('mobile-wizard-content');
+			var container = L.DomUtil.createWithId('div', 'mobile-wizard-header', mobileWizard);
+			var preview = L.DomUtil.createWithId('div', 'mobile-slide-sorter', container);
+			L.DomUtil.toBack(container);
+			map.addControl(L.control.partsPreview(container, preview, {
+				fetchThumbnail: false,
+				allowOrientation: false,
+				axis: 'x',
+				imageClass: 'preview-img-portrait',
+				frameClass: 'preview-frame-portrait'
+			}));
+			L.DomUtil.addClass(mobileWizardContent, 'with-slide-sorter-above');
+		}
+	},
+
+	_removeMobileWizardHeader: function() {
+		if (this.isMobileWizardHeaderVisible) {
+			this.isMobileWizardHeaderVisible = false;
+			L.Control.MobileWizard.mergeOptions({maxHeight: '45%'});
+			$('#mobile-wizard-header').remove();
+			var mobileWizardContent = L.DomUtil.get('mobile-wizard-content');
+			L.DomUtil.removeClass(mobileWizardContent, 'with-slide-sorter-above');
+		}
+	},
+
+	_isSlidePropertyPanel: function(data) {
+		try {
+			var panels = data.children[0].children;
+			return panels[0].id === 'SlideBackgroundPanel' && panels[1].id === 'SdLayoutsPanel';
+		} catch (e) {
+			return false;
 		}
 	},
 
