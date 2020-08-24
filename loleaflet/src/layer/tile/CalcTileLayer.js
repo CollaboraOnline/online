@@ -4,7 +4,8 @@
  */
 
 /* global */
-L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
+var BaseTileLayer = L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer;
+L.CalcTileLayer = BaseTileLayer.extend({
 	options: {
 		// TODO: sync these automatically from SAL_LOK_OPTIONS
 		sheetGeometryDataEnabled: true,
@@ -81,7 +82,7 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		map.addControl(L.control.tabs());
 		map.addControl(L.control.columnHeader());
 		map.addControl(L.control.rowHeader());
-		L.TileLayer.prototype.onAdd.call(this, map);
+		BaseTileLayer.prototype.onAdd.call(this, map);
 
 		map.on('resize', function () {
 			if (this.isCursorVisible()) {
