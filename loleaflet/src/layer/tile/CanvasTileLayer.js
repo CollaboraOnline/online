@@ -373,6 +373,16 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		return false;
 	},
 
+	onAdd: function (map) {
+
+		// Override L.TileLayer._tilePixelScale to 1 (independent of the device).
+		this._tileWidthPx = this.options.tileSize;
+		this._tileHeightPx = this.options.tileSize;
+		this._tilePixelScale = 1;
+
+		L.TileLayer.prototype.onAdd.call(this, map);
+	},
+
 	onRemove: function (map) {
 		this._painter.dispose();
 		L.TileLayer.prototype.onRemove.call(this, map);
