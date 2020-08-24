@@ -16,7 +16,7 @@
 		padding: 0;
 		position: fixed;
 		bottom: 0;
-		z-index: 1000;
+		z-index: 0;
 		border-top: 1px solid #bbbbbb;
 }
 #toolbar-down *{
