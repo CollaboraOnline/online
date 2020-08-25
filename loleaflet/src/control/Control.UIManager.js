@@ -220,6 +220,9 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	collapseNotebookbar: function() {
+		if (this.isNotebookbarCollapsed())
+			return;
+
 		this.moveObjectVertically($('#spreadsheet-row-column-frame'), -85);
 		this.moveObjectVertically($('#document-container'), -85);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), -85);
@@ -231,6 +234,9 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	extendNotebookbar: function() {
+		if (!this.isNotebookbarCollapsed())
+			return;
+
 		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 85);
 		this.moveObjectVertically($('#document-container'), 85);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 85);

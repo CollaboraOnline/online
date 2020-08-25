@@ -316,7 +316,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 			if (tabIsSelected && !notebookbarIsCollapsed) {
 				builder.wizard.collapse();
-			} else if (tabIsSelected && notebookbarIsCollapsed) {
+			} else if (notebookbarIsCollapsed) {
 				builder.wizard.extend();
 			}
 
