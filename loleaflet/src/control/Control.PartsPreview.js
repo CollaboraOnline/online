@@ -12,8 +12,8 @@ L.Control.PartsPreview = L.Control.extend({
 		frameClass: '',
 		axis: '',
 		allowOrientation: true,
-		maxWidth: !window.mode.isDesktop() ? 60 : 180,
-		maxHeight: !window.mode.isDesktop() ? 60 : 180
+		maxWidth: window.mode.isDesktop() ? 180: (window.mode.isTablet() ? 120: 60),
+		maxHeight: window.mode.isDesktop() ? 180: (window.mode.isTablet() ? 120: 60)
 	},
 	partsFocused: false,
 
@@ -129,6 +129,7 @@ L.Control.PartsPreview = L.Control.extend({
 					this._previewTiles.push(this._createPreview(i, e.partNames[i], bottomBound));
 				}
 				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
+				this._onScroll(); // Load previews.
 				this._previewInitialized = true;
 			}
 			else
@@ -313,11 +314,6 @@ L.Control.PartsPreview = L.Control.extend({
 				this._previewImgHeight = imgHeight;
 				this._previewFrameHeight = imgHeight + 2 * previewImgBorder;
 			}
-		}
-
-		if (!window.mode.isDesktop() && imgSize) {
-			L.DomUtil.setStyle(img, 'width', imgSize.width + 'px');
-			L.DomUtil.setStyle(img, 'height', imgSize.height + 'px');
 		}
 	},
 
