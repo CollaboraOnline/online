@@ -50,6 +50,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Menubar'] = this._menubarControl;
 		this._toolitemHandlers['.uno:InsertPageHeader'] = this._headerFooterControl;
 		this._toolitemHandlers['.uno:InsertPageFooter'] = this._headerFooterControl;
+		this._toolitemHandlers['.uno:Text'] = this._insertTextBoxControl;
+		this._toolitemHandlers['.uno:DrawText'] = this._insertTextBoxControl;
+		this._toolitemHandlers['.uno:VerticalText'] = this._insertTextBoxControl;
 
 		this._toolitemHandlers['up'] = this._toolbarItemControl;
 		this._toolitemHandlers['down'] = this._toolbarItemControl;
@@ -434,6 +437,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				var command = data.command + '?On:bool=true';
 				builder.callback('toolbutton', 'click', control.button, command, builder);
 			}
+		});
+	},
+
+	_insertTextBoxControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			builder.map.sendUnoCommand(data.command + '?CreateDirectly:bool=true');
 		});
 	},
 
