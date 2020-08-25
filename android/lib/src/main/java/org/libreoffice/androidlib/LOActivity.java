@@ -577,6 +577,10 @@ public class LOActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (resultCode != RESULT_OK) {
+            if (requestCode == REQUEST_SELECT_IMAGE_FILE) {
+                valueCallback.onReceiveValue(null);
+                valueCallback = null;
+            }
             return;
         }
 
