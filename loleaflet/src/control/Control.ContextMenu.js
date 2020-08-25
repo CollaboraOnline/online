@@ -78,7 +78,6 @@ L.Control.ContextMenu = L.Control.extend({
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
 			'FormatCellDialog',
-			'ShowNote', 'HideNote', 'DeleteNote',
 		]
 	},
 

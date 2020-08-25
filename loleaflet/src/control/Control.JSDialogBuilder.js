@@ -2129,6 +2129,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					     data.command.startsWith('.uno:InsertPageFooter')) &&
 					    data.checked && data.checked === true) {
 						return;
+					} else if (data.command === '.uno:ShowNote') {
+						builder.map._docLayer.showAnnotationFromCurrentCell();
+					} else if (data.command === '.uno:HideNote') {
+						builder.map._docLayer.hideAnnotationFromCurrentCell();
 					}
 					builder.map.sendUnoCommand(data.command);
 				}
