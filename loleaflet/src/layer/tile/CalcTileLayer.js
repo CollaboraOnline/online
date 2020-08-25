@@ -130,7 +130,7 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 		var annotations = this._annotations[this._selectedPart];
 		for (var key in annotations) {
 			var annotation = annotations[key]._annotation;
-			if (this._cellCursor.contains(annotation._data.cellPos)) {
+			if (this._cellCursor.intersects(annotation._data.cellPos)) {
 				this._map.addLayer(annotation);
 				annotation.show();
 			}
