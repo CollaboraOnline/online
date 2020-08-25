@@ -158,16 +158,17 @@ L.CanvasTilePainter = L.Class.extend({
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			var paneBounds = ctx.paneBoundsList[i];
+			var paneBounds = this._layer._cssBoundsToCore(ctx.paneBoundsList[i]);
+			var viewBounds = this._layer._cssBoundsToCore(ctx.viewBounds);
 
 			if (!paneBounds.intersects(tileBounds))
 				continue;
 
 			var topLeft = paneBounds.getTopLeft();
 			if (topLeft.x)
-				topLeft.x = ctx.viewBounds.min.x;
+				topLeft.x = viewBounds.min.x;
 			if (topLeft.y)
-				topLeft.y = ctx.viewBounds.min.y;
+				topLeft.y = viewBounds.min.y;
 
 			this._canvasCtx.save();
 			this._canvasCtx.scale(1, 1);
@@ -194,7 +195,7 @@ L.CanvasTilePainter = L.Class.extend({
 		if (!splitPanesContext) {
 			return;
 		}
-		var splitPos = splitPanesContext.getSplitPos();
+		var splitPos = this._layer._cssPixelsToCore(splitPanesContext.getSplitPos());
 		this._canvasCtx.save();
 		this._canvasCtx.scale(1, 1);
 		this._canvasCtx.strokeStyle = 'red';
@@ -497,8 +498,75 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 	_pxBoundsToTileRange: function (bounds) {
 		return new L.Bounds(
-			bounds.min.divideBy(this._tileSize).floor(),
-			bounds.max.divideBy(this._tileSize).floor());
+			this._cssPixelsToCore(bounds.min)._divideBy(this._tileSize)._floor(),
+			this._cssPixelsToCore(bounds.max)._divideBy(this._tileSize)._floor());
+	},
+
+	_getCoreZoomFactor: function () {
+		return new L.Point(
+			this._tileSize * 15.0 / this._tileWidthTwips,
+			this._tileSize * 15.0 / this._tileHeightTwips);
+	},
+
+	_corePixelsToCss: function (corePixels) {
+		var dpiScale = this.canvasDPIScale();
+		return corePixels.divideBy(dpiScale);
+	},
+
+	_cssPixelsToCore: function (cssPixels) {
+		var dpiScale = this.canvasDPIScale();
+		return cssPixels.multiplyBy(dpiScale);
+	},
+
+	_cssBoundsToCore: function (bounds) {
+		return new L.Bounds(
+			this._cssPixelsToCore(bounds.min),
+			this._cssPixelsToCore(bounds.max)
+		);
+	},
+
+	_twipsToCorePixels: function (twips) {
+		return new L.Point(
+			twips.x / this._tileWidthTwips * this._tileSize,
+			twips.y / this._tileHeightTwips * this._tileSize);
+	},
+
+	_corePixelsToTwips: function (corePixels) {
+		return new L.Point(
+			corePixels.x / this._tileSize * this._tileWidthTwips,
+			corePixels.y / this._tileSize * this._tileHeightTwips);
+	},
+
+	_twipsToCssPixels: function (twips) {
+		var dpiScale = this.canvasDPIScale();
+		return new L.Point(
+			twips.x / this._tileWidthTwips * this._tileSize / dpiScale,
+			twips.y / this._tileHeightTwips * this._tileSize / dpiScale);
+	},
+
+	_cssPixelsToTwips: function (pixels) {
+		var dpiScale = this.canvasDPIScale();
+		return new L.Point(
+			pixels.x * dpiScale / this._tileSize * this._tileWidthTwips,
+			pixels.y * dpiScale / this._tileSize * this._tileHeightTwips);
+	},
+
+	_twipsToLatLng: function (twips, zoom) {
+		var pixels = this._twipsToCssPixels(twips);
+		return this._map.unproject(pixels, zoom);
+	},
+
+	_latLngToTwips: function (latLng, zoom) {
+		var pixels = this._map.project(latLng, zoom);
+		return this._cssPixelsToTwips(pixels);
+	},
+
+	_twipsToPixels: function (twips) { // css pixels
+		return this._twipsToCssPixels(twips);
+	},
+
+	_pixelsToTwips: function (pixels) { // css pixels
+		return this._cssPixelsToTwips(pixels);
 	},
 
 	_twipsToCoords: function (twips) {
@@ -523,6 +591,48 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 		return true;
 	},
+
+	_updateMaxBounds: function (sizeChanged, extraSize, options, zoom) {
+		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
+			return;
+		}
+		if (!zoom) {
+			zoom = this._map.getZoom();
+		}
+
+		var dpiScale = this.canvasDPIScale();
+		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
+			this._docHeightTwips / this.options.tileHeightTwips);
+		// docPixelLimits should be in csspx.
+		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize / dpiScale);
+		var scale = this._map.getZoomScale(zoom, 10);
+		var topLeft = new L.Point(0, 0);
+		topLeft = this._map.unproject(topLeft.multiplyBy(scale));
+		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
+		bottomRight = bottomRight.multiplyBy(scale);
+		if (extraSize) {
+			// extraSize is unscaled.
+			bottomRight = bottomRight.add(extraSize);
+		}
+		bottomRight = this._map.unproject(bottomRight);
+
+		if (this._documentInfo === '' || sizeChanged) {
+			// we just got the first status so we need to center the document
+			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight), options);
+			this._map.setDocBounds(new L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits.multiplyBy(scale))));
+		}
+
+		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
+			this._docHeightTwips / this._tileHeightTwips);
+		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize / dpiScale);
+		if (extraSize) {
+			// extraSize is unscaled.
+			scrollPixelLimits = scrollPixelLimits.add(extraSize);
+		}
+		this._docPixelSize = {x: scrollPixelLimits.x, y: scrollPixelLimits.y};
+		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
+	},
+
 
 	_update: function (center, zoom) {
 		var map = this._map;
@@ -1048,6 +1158,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		var nwPoint = new L.Point(coords.x, coords.y);
 		var sePoint = nwPoint.add([tileSize, tileSize]);
+		nwPoint = this._corePixelsToCss(nwPoint);
+		sePoint = this._corePixelsToCss(sePoint);
 
 		var nw = map.wrapLatLng(map.unproject(nwPoint, coords.z));
 		var se = map.wrapLatLng(map.unproject(sePoint, coords.z));

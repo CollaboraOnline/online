@@ -502,17 +502,16 @@ L.CalcTileLayer = BaseTileLayer.extend({
 			return;
 		}
 
-		var newWidthPx = newDocWidth / this._tileWidthTwips * this._tileSize;
-		var newHeightPx = newDocHeight / this._tileHeightTwips * this._tileSize;
+		var newSizePx = this._twipsToCorePixels(new L.Point(newDocWidth, newDocHeight));
 
 		var topLeft = this._map.unproject(new L.Point(0, 0));
-		var bottomRight = this._map.unproject(new L.Point(newWidthPx, newHeightPx));
+		var bottomRight = this._map.unproject(newSizePx);
 		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 
-		this._docPixelSize = {x: newWidthPx, y: newHeightPx};
+		this._docPixelSize = newSizePx.clone();
 		this._docWidthTwips = newDocWidth;
 		this._docHeightTwips = newDocHeight;
-		this._map.fire('docsize', {x: newWidthPx, y: newHeightPx});
+		this._map.fire('docsize', newSizePx.clone());
 	},
 
 	_onUpdateCurrentHeader: function() {
@@ -566,8 +565,9 @@ L.CalcTileLayer = BaseTileLayer.extend({
 			this._selectedPart = command.selectedPart;
 			this._viewId = parseInt(command.viewid);
 			var mapSize = this._map.getSize();
-			var width = this._docWidthTwips / this._tileWidthTwips * this._tileSize;
-			var height = this._docHeightTwips / this._tileHeightTwips * this._tileSize;
+			var sizePx = this._twipsToPixels(new L.Point(this._docWidthTwips, this._docHeightTwips));
+			var width = sizePx.x;
+			var height = sizePx.y;
 			if (width < mapSize.x || height < mapSize.y) {
 				width = Math.max(width, mapSize.x);
 				height = Math.max(height, mapSize.y);
