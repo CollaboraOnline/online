@@ -720,8 +720,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._amendJSDialogData(data);
 
 		if (hasVerticalParent === undefined) {
-			parent = L.DomUtil.create('table', 'root-container ' + this.options.cssClass, parent);
-			parent = L.DomUtil.create('tr', '', parent);
+			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
+			parent = L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);
 		}
 
 		var containerToInsert = parent;
@@ -737,10 +737,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 			if (parentHasManyChildren) {
 				if (!hasVerticalParent)
-					var td = L.DomUtil.create('td', '', containerToInsert);
+					var td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
 				else {
-					containerToInsert = L.DomUtil.create('tr', '', parent);
-					td = L.DomUtil.create('td', '', containerToInsert);
+					containerToInsert = L.DomUtil.create('div', 'row ' + this.options.cssClass, parent);
+					td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
 				}
 			} else {
 				td = containerToInsert;
@@ -759,9 +759,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			var hasManyChildren = childData.children && childData.children.length > 1;
 			if (hasManyChildren) {
 				var tableId = childData.id ? childData.id.replace(' ', '') : 'undefined';
-				var table = L.DomUtil.createWithId('table', 'table-' + tableId, td);
+				var table = L.DomUtil.createWithId('div', 'table-' + tableId, td);
 				$(table).addClass(this.options.cssClass);
-				var childObject = L.DomUtil.create('tr', '', table);
+				$(table).addClass('vertical');
+				var childObject = L.DomUtil.create('div', 'row ' + this.options.cssClass, table);
 			} else {
 				childObject = td;
 			}

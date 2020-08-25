@@ -152,9 +152,11 @@
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
 
-	height: 94px;
-	margin-top: -20px;
-	padding-top: 5px;
+	height: 84px;
+}
+
+.root-container.notebookbar {
+	display: table;
 }
 
 .notebookbar-scroll-wrapper::-webkit-scrollbar { /* WebKit */
@@ -165,6 +167,20 @@
 #toolbar-wrapper.hasnotebookbar {
 	position: fixed;
 	z-index: 11;
+}
+
+.cell.notebookbar {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 2px;
+}
+
+.row.notebookbar {
+	display: table-row;
+}
+
+.vertical.notebookbar {
+	width: max-content;
 }
 
 /* unobuttons */
@@ -299,6 +315,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 .unotoolbutton.notebookbar.has-label:not(.inline) img {
 	width: 32px !important;
 	height: 32px !important;
+	padding-left: 25%;
 }
 
 /* unobuttons with inline labels */
@@ -356,26 +373,13 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 170px !important;
 }
 
-#table-StyleParagraphSection1.notebookbar,
-#table-GroupB15.notebookbar,
-#table-GroupB11.notebookbar
-{
-	margin-top: -5px;
-}
-
 #Copy.notebookbar,
-#clearFormatting.notebookbar,
-#table-Home-Section-Insert #table-GroupB20.notebookbar {
+#clearFormatting.notebookbar {
 	margin-top: 10px;
-}
-
-#table-GroupB94.notebookbar {
-	margin-top: -5px;
 }
 
 #table-GroupB19 #table-GroupB93.notebookbar {
 	margin-left: -60px;
-	margin-top: 5px;
 }
 
 #table-stylescontainer #style1,
@@ -401,13 +405,8 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Insert Tab */
 
-#InsertReferenceField.notebookbar,
-#InsertSection.notebookbar {
-	margin-top: 5px;
-}
-
 #table-Insert {
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 #table-Insert-Section-Pagebreak #InsertPagebreak.notebookbar img,
@@ -430,10 +429,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Layout Tab */
 
-#table-LayoutBox, #table-Wrap8.notebookbar {
-	margin-top: 5px;
-}
-
 #FormatGroup.notebookbar img,
 #BringToFront.notebookbar img,
 #ObjectForwardOne.notebookbar img,
@@ -449,20 +444,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	display: none;
 }
 
-#InsertBreak.notebookbar,
-#Watermark.notebookbar,
-#LineNumberingDialog.notebookbar
-{
-	margin-top: 10px;
-}
-
 /* References Tab */
 
-#table-ReferencesBox,
-#table-References,
-#table-GroupB39 #table-LineA18
+#table-ReferencesTab
 {
-	margin-top: 5px;
+	margin-top: 10px;
 }
 
 #InsertMultiIndex.notebookbar img,
@@ -475,13 +461,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 32px !important;
 }
 
-#UpdateCurIndex.notebookbar,
-#FootnoteDialog.notebookbar,
-#InsertCaptionDialog.notebookbar
-{
-	margin-top: 10px;
-}
-
 #table-Reference-Section-Field.notebookbar
 {
 	display: none;
@@ -489,18 +468,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Format Tab */
 #table-Format-Section.notebookbar {
-	margin-top: 25px;
+	margin-top: 15px;
 }
 
 /* Table Tab */
-
-#table-Table-Container,
-#table-SectionBottom85.notebookbar,
-#table-SectionBottom101.notebookbar,
-#table-GroupB62.notebookbar #SplitTable
-{
-	margin-top: 5px;
-}
 
 #table-Table-Section-Layout #InsertCaptionDialog.notebookbar img,
 #BorderDialog.notebookbar img,
@@ -523,14 +494,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 24px !important;
 }
 
-#table-SectionBottom40.notebookbar,
-#SplitTable.notebookbar,
-#EntireRow.notebookbar,
-#DeleteTable.notebookbar
-{
-	margin-top: 10px !important;
-}
-
 #NumberFormatPercent.notebookbar {
 	margin-right: 10px;
 }
@@ -541,8 +504,8 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Review Tab */
 
-#table-ReviewBox, #table-Review {
-       margin-top: 5px;
+#table-ReviewTab {
+    margin-top: 10px;
 }
 
 #SpellingAndGrammarDialog.notebookbar img,
@@ -557,22 +520,14 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
        width: 32px !important;
 }
 
-#WordCountDialog.notebookbar,
-#PreviousTrackedChange.notebookbar,
-#RejectTrackedChange.notebookbar,
-#RejectAllTrackedChanges.notebookbar
-{
-       margin-top: 10px !important;
-}
-
 /* Help tab */
 #table-Help-Section {
-	margin-top: 40px;
+	margin-top: 30px;
 }
 
 /* File tab */
 #table-File-Section {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 /* Draw tab */
@@ -597,32 +552,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 170px !important;
 }
 
-/* Insert Tab */
-
-#table-InsertBox {
-	margin-top: 5px;
-}
-
-#DefineName.notebookbar {
-	margin-top: 10px !important;
-}
-
-#DataDataPilotRun.notebookbar img
-{
-	height: 32px !important;
-	width: 32px !important;
-}
-
-#table-DataTab #table-ViewMenu3.notebookbar {
-	display: none;
-}
-
 /* Review Tab */
-
-#table-GroupB40 #Hyphenate.notebookbar,
-#DeleteAllNotes.notebookbar {
-	margin-top: 10px !important;
-}
 
 #SpellDialog.notebookbar img,
 #TraceChangeMode.notebookbar img,
@@ -644,14 +574,19 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-top: 10px;
 }
 
+/* Data Tab */
+
+#table-DataTab {
+	margin-top: 10px;
+}
+
+#table-DataTab #table-ViewMenu3.notebookbar {
+	display: none;
+}
+
 /* Impress */
 
 /* Home Tab */
-
-#table-Home-Section-Slide #table-LineB9.notebookbar
-{
-	margin-top: 10px;
-}
 
 #table-shapes15 #BasicShapes.notebookbar,
 #table-HomeTab #table-SectionBottom10.notebookbar #Presentation
@@ -680,11 +615,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Review Tab */
 
-#table-GroupB40 #Hyphenation.notebookbar
-{
-	margin-top: 10px;
-}
-
 #table-GroupB42 #DeleteAllAnnotation.notebookbar img
 {
 	height: 32px !important;
@@ -704,11 +634,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 {
 	height: 32px !important;
 	width: 32px !important;
-}
-
-#table-Table-Section-Layout #table-SectionBottom57.notebookbar
-{
-	margin-top: 10px;
 }
 
 /* Draw Tab */

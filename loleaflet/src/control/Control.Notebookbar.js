@@ -155,7 +155,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	scrollToLastPositionIfNeeded: function() {
-		var rootContainer = $('.notebookbar-scroll-wrapper table').get(0);
+		var rootContainer = $('.notebookbar-scroll-wrapper div').get(0);
 
 		if (this._currentScrollPosition && $(rootContainer).outerWidth() > $(window).width()) {
 			$('.notebookbar-scroll-wrapper').animate({ scrollLeft: this._currentScrollPosition }, 0);
@@ -189,7 +189,7 @@ L.Control.Notebookbar = L.Control.extend({
 	setupResizeHandler: function() {
 		var handler = function() {
 			var container = $('#toolbar-up').get(0);
-			var rootContainer = $('.notebookbar-scroll-wrapper table').get(0);
+			var rootContainer = $('.notebookbar-scroll-wrapper div').get(0);
 
 			if ($(rootContainer).outerWidth() > $(window).width()) {
 				// we have overflowed content
