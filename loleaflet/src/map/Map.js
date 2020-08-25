@@ -452,12 +452,23 @@ L.Map = L.Evented.extend({
 		this._progressBar.end(this);
 	},
 
+	zoomToFactor: function (zoom) {
+		return Math.pow(1.2, (zoom - this.options.zoom));
+	},
+
+	factorToZoom: function (zoomFactor) {
+		var relzoom = Math.log(zoomFactor) / Math.log(1.2);
+		return Math.round(relzoom) + this.options.zoom;
+	},
+
 	// Compute the nearest zoom level corresponding to the effective zoom-scale (ie, with dpiscale included).
 	findNearestProductZoom: function (zoom) {
-		var clientZoomScale = Math.pow(1.2, (zoom - this.options.zoom));
+		var clientZoomScale = this.zoomToFactor(zoom);
 
-		var zoomScale = clientZoomScale * L.getCanvasScaleFactor();
-		var nearestZoom = Math.round((Math.log(zoomScale) / Math.log(1.2)) + this.options.zoom);
+		var dpiScale = this._docLayer ? this._docLayer.canvasDPIScale() : L.getDpiScaleFactor(true /* useExactDPR */);
+
+		var zoomScale = clientZoomScale * dpiScale;
+		var nearestZoom = this.factorToZoom(zoomScale);
 		nearestZoom = this._limitZoom(nearestZoom);
 
 		return nearestZoom;

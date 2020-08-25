@@ -1352,6 +1352,10 @@ L.GridLayer = L.Layer.extend({
 		return docPosPixY;
 	},
 
+	hasCanvasRenderer: function () {
+		return false;
+	},
+
 	hasSplitPanesSupport: function () {
 		return false;
 	},

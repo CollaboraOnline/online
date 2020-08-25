@@ -578,8 +578,13 @@ L.Control.Header = L.Control.extend({
 		return Math.round(this._getParallelPos(this.converter(point)));
 	},
 
+	canvasDPIScale: function () {
+		var docLayer = this._map && this._map._docLayer;
+		var scale = docLayer && docLayer.canvasDPIScale ? docLayer.canvasDPIScale() : L.getDpiScaleFactor();
+		return scale;
+	},
+
 	_setCanvasSizeImpl: function (container, canvas, property, value, isCorner) {
-		var useExactDPR = this._map && (this._map._docLayer instanceof L.CanvasTileLayer);
 		if (!value) {
 			value = parseInt(L.DomUtil.getStyle(container, property));
 		}
@@ -587,15 +592,15 @@ L.Control.Header = L.Control.extend({
 			L.DomUtil.setStyle(container, property, value + 'px');
 		}
 
-		var scale = L.getDpiScaleFactor(useExactDPR);
+		var scale = this.canvasDPIScale();
 		if (property === 'width') {
-			canvas.width = value * scale;
+			canvas.width = Math.floor(value * scale);
 			if (!isCorner)
 				this._canvasWidth = value;
 //			console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
-			canvas.height = value * scale;
+			canvas.height = Math.floor(value * scale);
 			if (!isCorner)
 				this._canvasHeight = value;
 //			console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
@@ -718,7 +723,7 @@ L.Control.Header = L.Control.extend({
 			return;
 
 		ctx.save();
-		var scale = L.getDpiScaleFactor();
+		var scale = this.canvasDPIScale();
 		ctx.scale(scale, scale);
 
 		ctx.fillStyle = this._borderColor;

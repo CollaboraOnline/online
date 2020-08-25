@@ -79,7 +79,6 @@ L.CalcTileLayer = BaseTileLayer.extend({
 	},
 
 	onAdd: function (map) {
-		this._useExactDPR = this._hasCanvasRenderer = (this instanceof L.CanvasTileLayer);
 		map.addControl(L.control.tabs());
 		map.addControl(L.control.columnHeader());
 		map.addControl(L.control.rowHeader());
@@ -476,7 +475,7 @@ L.CalcTileLayer = BaseTileLayer.extend({
 		this._sendClientZoom();
 		if (this.sheetGeometry) {
 			this.sheetGeometry.setTileGeometryData(this._tileWidthTwips, this._tileHeightTwips,
-				this._tileSize, this._hasCanvasRenderer ? L.getDpiScaleFactor(true /* useExactDPR */) : this._tilePixelScale);
+				this._tileSize, this.hasCanvasRenderer() ? this.canvasDPIScale() : this._tilePixelScale);
 		}
 		this._restrictDocumentSize();
 		this._replayPrintTwipsMsgs();
@@ -742,7 +741,7 @@ L.CalcTileLayer = BaseTileLayer.extend({
 	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
 		if (!this.sheetGeometry) {
 			this._sheetGeomFirstWait = false;
-			var dpiScale = this._hasCanvasRenderer ? L.getDpiScaleFactor(true /* useExactDPR */) : this._tilePixelScale;
+			var dpiScale = this.hasCanvasRenderer() ? this.canvasDPIScale() : this._tilePixelScale;
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
 				this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, dpiScale, this._selectedPart);
