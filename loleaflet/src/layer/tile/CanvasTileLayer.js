@@ -210,6 +210,14 @@ L.CanvasTilePainter = L.Class.extend({
 
 	update: function () {
 
+		var newDpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
+		var scaleChanged = this._dpiScale != newDpiScale;
+
+		if (scaleChanged) {
+			this._dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
+			this._map.setZoom();
+		}
+
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		var zoom = Math.round(this._map.getZoom());
 		var pixelBounds = this._map.getPixelBounds();
@@ -218,11 +226,9 @@ L.CanvasTilePainter = L.Class.extend({
 		var part = this._layer._selectedPart;
 		var newSplitPos = splitPanesContext ?
 		    splitPanesContext.getSplitPos(): this._splitPos;
-		var newDpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
 
 		var zoomChanged = (zoom !== this._lastZoom);
 		var partChanged = (part !== this._lastPart);
-		var scaleChanged = this._dpiScale != newDpiScale;
 
 		var mapSizeChanged = !newMapSize.equals(this._lastMapSize);
 		// To avoid flicker, only resize the canvas element if width or height of the map increases.
@@ -245,11 +251,6 @@ L.CanvasTilePainter = L.Class.extend({
 
 		if (skipUpdate)
 			return;
-
-		if (scaleChanged) {
-			this._dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
-			console.log('DEBUG: scaleChanged : this._dpiScale = ' + this._dpiScale);
-		}
 
 		if (resizeCanvas || scaleChanged) {
 			this._setCanvasSize(newSize.x, newSize.y);
@@ -384,12 +385,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._tileHeightPx = this.options.tileSize;
 		this._tilePixelScale = 1;
 
-		// FIXME: workaround for correcting initial zoom with dpiscale included.
-		// The one set during Map constructor is does not include dpiscale because
-		// there we don't have enough info to specialize for calc-canvas
-		map.setZoom(map.getZoom());
-
 		L.TileLayer.prototype.onAdd.call(this, map);
+		map.setZoom();
 	},
 
 	onRemove: function (map) {
