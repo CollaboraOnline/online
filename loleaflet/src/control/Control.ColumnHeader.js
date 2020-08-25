@@ -39,7 +39,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._setCanvasHeight();
 		this._canvasBaseHeight = this._canvasHeight;
 
-		var scale = L.getDpiScaleFactor();
+		var scale = this.canvasDPIScale();
 		this._canvasContext.scale(scale, scale);
 
 		this._headerHeight = this._canvasHeight;
@@ -224,8 +224,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		ctx.save();
-		var useExactDPR = this._map && (this._map._docLayer instanceof L.CanvasTileLayer);
-		var scale = L.getDpiScaleFactor(useExactDPR);
+		var scale = this.canvasDPIScale();
 		ctx.scale(scale, scale);
 		// background gradient
 		var selectionBackgroundGradient = null;
@@ -291,7 +290,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var height = group.endPos - group.startPos;
 
 		ctx.save();
-		var scale = L.getDpiScaleFactor();
+		var scale = this.canvasDPIScale();
 		ctx.scale(scale, scale);
 
 		// clip mask
@@ -340,7 +339,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var ctx = this._cornerCanvasContext;
 		var ctrlHeadSize = this._groupHeadSize;
 		var levelSpacing = this._levelSpacing;
-		var scale = L.getDpiScaleFactor();
+		var scale = this.canvasDPIScale();
 
 		var startOrt = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 		var startPar = this._cornerCanvas.width / scale - (ctrlHeadSize + (L.Control.Header.rowHeaderWidth - ctrlHeadSize) / 2);
@@ -533,7 +532,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 		}
 
-		var scale = L.getDpiScaleFactor();
+		var scale = this.canvasDPIScale();
 		var rowOutlineWidth = this._cornerCanvas.width / scale - L.Control.Header.rowHeaderWidth - this._borderWidth;
 		if (pos.x <= rowOutlineWidth) {
 			// empty rectangle on the left select all
