@@ -476,8 +476,14 @@ L.Map = L.Evented.extend({
 
 	setZoom: function (zoom, options) {
 
-		if (this._docLayer instanceof L.CanvasTileLayer)
+		if (this._docLayer instanceof L.CanvasTileLayer) {
+			if (!zoom)
+				zoom = this._clientZoom || this.options.zoom;
+			else
+				this._clientZoom = zoom;
+
 			zoom = this.findNearestProductZoom(zoom);
+		}
 
 		if (!this._loaded) {
 			this._zoom = this._limitZoom(zoom);
