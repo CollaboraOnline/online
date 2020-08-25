@@ -247,9 +247,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 .unotoolbutton.notebookbar .unobutton.selected {
 	box-shadow: 0 0 0px 4px #e6e6e640 !important;
 }
-#table-HomeTab {
-	margin-left: -16px;/*force alignment: clipboard elements*/
-}
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
 	border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
@@ -339,6 +336,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 /* Writer */
 
 /* Home tab */
+#table-HomeTab {	
+	margin-left: -16px;/*force alignment: clipboard elements*/
+	margin-top: -5px;
+}
+
 #clearFormatting.notebookbar div img {
 	width: 24px !important;
 	height: 24px !important;
