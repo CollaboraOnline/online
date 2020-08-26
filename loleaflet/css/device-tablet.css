@@ -35,3 +35,6 @@
 .main-nav {
     margin: 0;
 }
+.vex-content .loleaflet-annotation-img {
+	box-sizing: content-box !important;
+}
