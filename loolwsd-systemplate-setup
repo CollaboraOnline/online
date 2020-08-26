@@ -69,8 +69,8 @@ cpio -p -d -L $CHROOT
 for file in hosts nsswitch.conf resolv.conf passwd group host.conf timezone localtime
 do
     #echo "Linking/Copying /etc/$file"
-    # Prefer hard linking, fallback to soft linking, and finally to just copying.
-    ln -f /etc/$file $CHROOT/etc/ 2> /dev/null || ln -f -s /etc/$file $CHROOT/etc/ || cp /etc/$file $CHROOT/etc/ || echo "Failed to link or copy $file"
+    # Prefer hard-linking, fallback to just copying (do *not* use soft-linking because that would be relative to the jail).
+    ln -f /etc/$file $CHROOT/etc/ 2> /dev/null || cp /etc/$file $CHROOT/etc/ || echo "Failed to link or copy $file"
 done
 
 # Link dev/random and dev/urandom to ../tmp/dev/.
@@ -79,6 +79,7 @@ mkdir -p $CHROOT/dev
 mkdir -p $CHROOT/tmp/dev
 for file in random urandom
 do
+    # This link is relative anyway, so can be soft.
     ln -f ../tmp/dev/$file $CHROOT/dev/ 2> /dev/null || ln -f -s ../tmp/dev/$file $CHROOT/dev/ || echo "Failed to link dev/$file"
 done
 
@@ -89,6 +90,7 @@ mkdir -p $CHROOT/lo
 # In case the original path is different from
 for path in $INSTDIR $INSTDIR_LOGICAL
 do
+    # Create a soft-link, as it's a relative directory path (can't be a hard-link).
     INSTDIR_PARENT="$(dirname "$CHROOT/$path")"
     mkdir -p $INSTDIR_PARENT
     ln -f -s `realpath --relative-to=$INSTDIR_PARENT $CHROOT/lo` $CHROOT/$path
