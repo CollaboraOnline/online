@@ -31,15 +31,21 @@
 	box-shadow: 0 3px 0px 0px #fff, 0px -1px 8px -4px rgba(105, 105, 105, 0.4), -1px -15px 15px -4px rgb(77, 130, 184, 0.1);
 }
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.selected.notebookbar{
+	color: rgb(3, 105, 163);
 	color: var(rgb(--blue1-txt-primary-color));
+	text-shadow: 0px 0px 0.2px rgb(3, 105, 163);
 	text-shadow: 0px 0px 0.2px var(rgb(--blue1-txt-primary-color));
 }
 .main-nav.hasnotebookbar.spreadsheet-color-indicator .ui-tab.selected.notebookbar{
+	color: rgb(16, 104, 2);
 	color: var(rgb(--green0-txt-primary-color));
+	text-shadow: 0px 0px 0.2px rgb(16, 104, 2);
 	text-shadow: 0px 0px 0.2px var(rgb(--green0-txt-primary-color));
 }
 .main-nav.hasnotebookbar.presentation-color-indicator .ui-tab.selected.notebookbar{
+	color: rgb(163, 62, 3);
 	color: var(rgb(--orange1-txt-primary-color));
+	text-shadow: 0px 0px 0.2px rgb(163, 62, 3);
 	text-shadow: 0px 0px 0.2px var(rgb(--orange1-txt-primary-color));
 }
 .ui-tab.notebookbar:hover:not(.selected) {
@@ -81,16 +87,19 @@
 .hasnotebookbar.text-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.text-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.text-color-indicator #shortcuts-menubar-icon:after {
+	background: rgb(3, 105, 163);
 	background: var(rgb(--blue1-txt-primary-color));
 }
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:after {
+	background: rgb(163, 62, 3);
 	background: var(rgb(--orange1-txt-primary-color));
 }
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:after {
+	background: rgb(16, 104, 2);
 	background: var(rgb(--green0-txt-primary-color));
 }
 
@@ -195,9 +204,9 @@
 .hasnotebookbar .ui-content.unobutton.selected {
 	-webkit-filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
 	filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
-	box-shadow: 0 0 0px 8px #e6e6e640;
+	box-shadow: 0 0 0px 8px rgba(230, 230, 230, 0.24);
 	border-radius: 0.1px;
-	background-color: #e6e6e640;
+	background-color: rgba(230, 230, 230, 0.24);
 }
 
 div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookbar, #ObjectBackOne.notebookbar, #ObjectForwardOne.notebookbar, #BringToFront.notebookbar, #SetObjectToBackground.notebookbar, #SetObjectToForeground.notebookbar, #FlipVertical.notebookbar, #FlipHorizontal.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar, #StyleApply.notebookbar, #StyleUpdateByExample.notebookbar, #StyleNewByExample.notebookbar, #Shadowed.notebookbar, #Grow.notebookbar, #Shrink.notebookbar, #Spacing.notebookbar, #SuperScript.notebookbar, #SubScript.notebookbar,#AlignLeft.notebookbar, #AlignRight.notebookbar, #AlignHorizontalCenter.notebookbar, #AlignBlock.notebookbar, #ParaRightToLeft.notebookbar, #ParaLeftToRight.notebookbar, #AlignTop.notebookbar, #AlignVCenter.notebookbar, #AlignBottom.notebookbar, #IncrementIndent.notebookbar, #DecrementIndent.notebookbar, #LeftPara.notebookbar, #RightPara.notebookbar, #CenterPara.notebookbar, #JustifyPara.notebookbar, #DefaultBullet.notebookbar, #DefaultNumbering.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #LineSpacing.notebookbar, #HangingIndent.notebookbar, #CellVertTop.notebookbar, #CellVertCenter.notebookbar, #CellVertBottom.notebookbar, #DeleteTable.notebookbar, #MergeCells.notebookbar{
@@ -229,6 +238,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 .unotoolbutton.notebookbar .unolabel {
 	font-family:  var(--loleaflet-font);
+	color: #696969;
 	color: var(--gray-light-txt--color);
 	padding: 0px 5px !important;
 }
@@ -245,7 +255,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 .unotoolbutton.notebookbar .unobutton.selected {
-	box-shadow: 0 0 0px 4px #e6e6e640 !important;
+	box-shadow: 0 0 0px 4px rgba(230, 230, 230, 0.24) !important;
 }
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
 	border-top-left-radius: 12px;
@@ -284,6 +294,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 .unotoolbutton.notebookbar .unobutton.selected + .ui-content.unolabel {
+	color: rgb(3, 105, 163) !important;
 	color: var(--blue1-txt-primary-color) !important;
 }
 
@@ -320,6 +331,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 .inline.notebookbar {
 	float: left;
 	width: max-content;
+	white-space: nowrap;
 	display: inline-table;
 }
 
