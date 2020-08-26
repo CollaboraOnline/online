@@ -2146,7 +2146,7 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const S
 
     getLOKitDocument()->setView(_viewId);
 
-    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT && part != getLOKitDocument()->getPart())
+    if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
     {
         getLOKitDocument()->setPart(part);
     }
