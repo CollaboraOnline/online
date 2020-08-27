@@ -93,8 +93,13 @@ L.CalcTileLayer = (L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer).extend({
 	},
 
 	onAnnotationModify: function (annotation) {
-		annotation.edit();
-		annotation.focus();
+		if (window.mode.isMobile() || window.mode.isTablet()) {
+			var that = this;
+			this.newAnnotationVex(annotation, function(annotation) { that._onAnnotationSave(annotation); }, /* isMod */ true);
+		} else {
+			annotation.edit();
+			annotation.focus();
+		}
 	},
 
 	onAnnotationRemove: function (id) {
