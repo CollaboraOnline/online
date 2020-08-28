@@ -62,6 +62,9 @@ L.Control.PartsPreview = L.Control.extend({
 				}
 			}
 		});
+
+		var scrollContainer = $(this._partsPreviewCont).find('.mCSB_container').get(0);
+		scrollContainer.style.whiteSpace = 'nowrap';
 	},
 
 	_updateDisabled: function (e) {
