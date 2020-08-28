@@ -16,6 +16,7 @@
 
 @interface _COWVKMKeyInputControl : UITextView<UITextViewDelegate> {
     WKWebView *webView;
+    BOOL lastWasNewline;
 }
 
 - (instancetype)initForWebView:(nonnull WKWebView *)webView;
@@ -28,6 +29,7 @@
     self = [super init];
 
     self->webView = webView;
+    self->lastWasNewline = NO;
     self.delegate = self;
 
     return self;
@@ -70,8 +72,10 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    NSLog(@"COKbdMgr: shouldChangeTextInRange({%lu, %lu}, '%@')", (unsigned long)range.location, (unsigned long)range.length, text);
-    NSLog(@"self.text is now length %lu '%@'", self.text.length, self.text);
+    NSLog(@"COKbdMgr: shouldChange({%lu, %lu}, '%@'), self.text:%lu:'%@' selectedRange:{%lu, %lu}",
+          (unsigned long)range.location, (unsigned long)range.length,
+          text, self.text.length, self.text,
+          (unsigned long)self.selectedRange.location, (unsigned long)self.selectedRange.length);
 
     NSMutableString *quotedText = [NSMutableString string];
 
@@ -95,7 +99,21 @@
 
     [self postMessage:message];
 
+    self->lastWasNewline = (range.length == 0 && [text isEqualToString:@"\n"]);
+
     return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    NSLog(@"COKbdMgr: didChange: self.text is now:%lu:'%@'", self.text.length, self.text);
+
+    // Hack to match the logic in loleaflet's manipulation of the _textArea.value in TextInput.js.
+    // Probably means that the local testbed here (COKbdMgrTest's test.html) doesn't necessarily
+    // handle adding newlines properly. Oh well.
+    if (self->lastWasNewline) {
+        self.text = @"";
+        NSLog(@"          Made self.text empty to match TextInput.js");
+    }
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -109,6 +127,7 @@
 @interface CollaboraOnlineWebViewKeyboardManager () <WKScriptMessageHandler> {
     WKWebView *webView;
     _COWVKMKeyInputControl *control;
+    BOOL lastCommandIsHide;
 }
 
 @end
@@ -144,6 +163,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidHide:)
                                                  name:UIKeyboardDidHideNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
                                                object:nil];
 
     return self;
@@ -188,51 +212,73 @@
         control.text = text;
         control.selectedRange = NSMakeRange(location, 0);
 
+        lastCommandIsHide = NO;
+
         [self->webView addSubview:control];
-        // NSLog(@"COKbdMgr: added _COWVKMKeyInputControl to webView");
+        NSLog(@"COKbdMgr: Added _COWVKMKeyInputControl to webView");
         [control becomeFirstResponder];
     }
 }
 
 - (void)hideKeyboard {
-    if (control != nil) {
-        [control removeFromSuperview];
-        // NSLog(@"COKbdMgr: removed _COWVKMKeyInputControl from webView");
-        control = nil;
-    }
+    // At least for spreadsheet documents, loleaflet calls us to hide the keyboard like crazy even
+    // if it immediately then calls us to show it again. That used to mess things up very badly. Try
+    // to make some sense out of it by not trusting a hide request until we see that it hasn't been
+    // folllowed by a display request within 100 ms.
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100000000ll), dispatch_get_main_queue(), ^{
+            if (!lastCommandIsHide) {
+                NSLog(@"COKbdMgr: Ignoring hide command that was quickly followed by a display command");
+                return;
+            }
+            if (control != nil) {
+                [control removeFromSuperview];
+                NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
+                control = nil;
+            }
+        });
 }
 
 - (void)userContentController:(nonnull WKUserContentController *)userContentController
       didReceiveScriptMessage:(nonnull WKScriptMessage *)message {
     if (![message.name isEqualToString:@"CollaboraOnlineWebViewKeyboardManager"]) {
-        NSLog(@"Received unrecognized script message name: %@ %@", message.name, message.body);
+        NSLog(@"COKbdMgr: Received unrecognized script message name: %@ %@", message.name, message.body);
         return;
     }
 
     if ([message.body isKindOfClass:[NSDictionary class]]) {
         NSString *stringCommand = message.body[@"command"];
+        lastCommandIsHide = NO;
         if ([stringCommand isEqualToString:@"display"]) {
             NSString *type = message.body[@"type"];
             NSString *text = message.body[@"text"];
             NSNumber *location = message.body[@"location"];
+            NSLog(@"COKbdMgr: command=display type=%@ text=%@ location=%@", type, text, location);
             [self displayKeyboardOfType:type withText:text at:(location != nil ? [location unsignedIntegerValue] : UINT_MAX)];
         } else if ([stringCommand isEqualToString:@"hide"]) {
+            lastCommandIsHide = YES;
+            NSLog(@"COKbdMgr: command=hide");
             [self hideKeyboard];
         } else if (stringCommand == nil) {
-            NSLog(@"No 'command' in %@", message.body);
+            NSLog(@"COKbdMgr: No 'command' in %@", message.body);
         } else {
-            NSLog(@"Received unrecognized command:%@", stringCommand);
+            NSLog(@"COKbdMgr: Received unrecognized command:%@", stringCommand);
         }
     } else {
-        NSLog(@"Received unrecognized message body of type %@: %@, should be a dictionary (JS object)", [message.body class], message.body);
+        NSLog(@"COKbdMgr: Received unrecognized message body of type %@: %@, should be a dictionary (JS object)", [message.body class], message.body);
     }
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification {
+    NSLog(@"COKbdMgr: didHide");
     if (control != nil) {
         [control removeFromSuperview];
+        NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
         control = nil;
     }
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification {
+    NSLog(@"COKbdMgr: didShow");
 }
 
 @end
