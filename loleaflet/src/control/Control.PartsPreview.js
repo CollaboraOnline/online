@@ -179,7 +179,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 			// re-create scrollbar with new direction
 			var direction = this._direction;
-			this._direction = !window.mode.isDesktop() && L.DomUtil.isPortrait() ? 'x' : 'y';
+			this._direction = !window.mode.isDesktop() && !window.mode.isTablet() && L.DomUtil.isPortrait() ? 'x' : 'y';
 			if (direction !== this._direction) {
 				$(this._partsPreviewCont).mCustomScrollbar('destroy');
 				this.createScrollbar();
