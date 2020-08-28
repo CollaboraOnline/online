@@ -796,7 +796,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onCellAddressMsg: function (textMsg) {
 		// When the user moves the focus to a different cell, a 'cellformula'
-		// message is received from lowsd, *then* a 'celladdress' message.
+		// message is received from loolwsd, *then* a 'celladdress' message.
 		var address = textMsg.substring(13);
 		if (this._map._clip && !this._map['wopi'].DisableCopy) {
 			this._map._clip.setTextSelectionText(this._lastFormula);
@@ -805,10 +805,10 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCellFormulaMsg: function (textMsg) {
-		// When a 'cellformula' message from lowsd is received,
+		// When a 'cellformula' message from loolwsd is received,
 		// store the text contents of the cell, but don't push
 		// them to the clipboard container (yet).
-		// This is done because lowsd will send several 'cellformula'
+		// This is done because loolwsd will send several 'cellformula'
 		// messages during text composition, and resetting the contents
 		// of the clipboard container mid-composition will easily break it.
 		var formula = textMsg.substring(13);
@@ -2166,14 +2166,14 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	// Given a character code and a UNO keycode, send a "key" message to lowsd.
+	// Given a character code and a UNO keycode, send a "key" message to loolwsd.
 	//
 	// "type" is either "input" for key presses (akin to the DOM "keypress"
 	// / "beforeinput" events) and "up" for key releases (akin to the DOM
 	// "keyup" event).
 	//
 	// PageUp/PageDown are handled as special cases for spreadsheets - in
-	// addition of sending messages to lowsd, they move the cell cursor around.
+	// addition of sending messages to loolwsd, they move the cell cursor around.
 	postKeyboardEvent: function(type, charCode, unoKeyCode) {
 		var winId = this._map.getWinId();
 		if (

@@ -660,10 +660,10 @@ L.TextInput = L.Layer.extend({
 			this._emptyArea();
 	},
 
-	// Sends the given (UTF-8) string of text to lowsd, as IME (text composition)
+	// Sends the given (UTF-8) string of text to loolwsd, as IME (text composition)
 	// messages
 	_sendText: function _sendText(text) {
-		this._fancyLog('send-text-to-lowsd', text);
+		this._fancyLog('send-text-to-loolwsd', text);
 
 		// MSIE/Edge cannot compare a string to "\n" for whatever reason,
 		// so compare charcode as well
@@ -792,7 +792,7 @@ L.TextInput = L.Layer.extend({
 	_removeTextContent: function _removeTextContent(before, after) {
 		console.log('Remove ' + before + ' before, and ' + after + ' after');
 
-		/// TODO: rename the event to 'removetextcontent' as soon as lowsd supports it
+		/// TODO: rename the event to 'removetextcontent' as soon as loolwsd supports it
 		/// TODO: Ask Marco about it
 		this._map._socket.sendMessage(
 			'removetextcontext id=' +
@@ -805,7 +805,7 @@ L.TextInput = L.Layer.extend({
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
 	// sends a pair of "input" for a composition update paird with an "end"
 	_sendCompositionEvent: function _sendCompositionEvent(text) {
-		console.log('sending to lowsd: ', text);
+		console.log('sending to loolwsd: ', text);
 
 		// We want to trigger auto-correction, but not if we may
 		// have to delete a count of characters in the future,

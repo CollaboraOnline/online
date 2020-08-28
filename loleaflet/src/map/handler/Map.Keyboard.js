@@ -243,7 +243,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	// _handleKeyEvent - checks if the given keyboard event shall trigger
-	// a message to lowsd, and calls the given keyEventFn(type, charcode, keycode)
+	// a message to loolwsd, and calls the given keyEventFn(type, charcode, keycode)
 	// callback if so.
 	// Called from private _onKeyDown
 	_handleKeyEvent: function (ev, keyEventFn) {
@@ -391,7 +391,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	// Given a DOM keyboard event that happened while the Control key was depressed,
-	// triggers the appropriate action or lowsd message.
+	// triggers the appropriate action or loolwsd message.
 	_handleCtrlCommand: function (e) {
 		// Control
 		if (e.keyCode == 17)
