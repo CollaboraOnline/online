@@ -1117,6 +1117,8 @@ L.Control.Menubar = L.Control.extend({
 							break;
 						}
 					}
+					if (id === 'insertcomment' && self._map.getDocType() !== 'drawing')
+						found = false;
 					if (!found) {
 						$(aItem).addClass('disabled');
 					} else {
