@@ -36,10 +36,6 @@ L.TileCoordData.parseKey = function (keyString) {
 
 L.CanvasTilePainter = L.Class.extend({
 
-	options: {
-		debug: true,
-	},
-
 	initialize: function (layer) {
 		this._layer = layer;
 		this._canvas = this._layer._canvas;
@@ -126,8 +122,8 @@ L.CanvasTilePainter = L.Class.extend({
 	clear: function () {
 		this._canvasCtx.save();
 		this._canvasCtx.scale(1, 1);
-		if (this.options.debug)
-			this._canvasCtx.fillStyle = 'red';
+		if (this._layer._debug)
+			this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 		else
 			this._canvasCtx.fillStyle = 'white';
 		this._canvasCtx.fillRect(0, 0, this._width, this._height);
@@ -181,9 +177,9 @@ L.CanvasTilePainter = L.Class.extend({
 			this._canvasCtx.clip();
 
 			this._canvasCtx.drawImage(tile.el, tile.coords.x, tile.coords.y);
-			if (this.options.debug)
+			if (this._layer._debug)
 			{
-				this._canvasCtx.strokeStyle = 'red';
+				this._canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
 				this._canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
 			}
 			this._canvasCtx.restore();
@@ -273,13 +269,13 @@ L.CanvasTilePainter = L.Class.extend({
 		this._topLeft = newTopLeft;
 		this._paintWholeCanvas();
 
-		if (this.options.debug)
+		if (this._layer._debug)
 			this._drawSplits();
 	},
 
 	_paintWholeCanvas: function () {
 
-		if (this.options.debug)
+		if (this._layer._debug)
 			this.clear();
 
 		var zoom = this._lastZoom || Math.round(this._map.getZoom());
