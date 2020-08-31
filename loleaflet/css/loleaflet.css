@@ -578,10 +578,10 @@ body {
 }
 
 .lokblink {
-    animation: blink 150ms infinite alternate;
+    animation: lokblink 150ms infinite alternate;
 }
 
-@keyframes blink {
+@keyframes lokblink {
     from { opacity:1; }
     to { opacity:0; }
 }
