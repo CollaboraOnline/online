@@ -474,6 +474,8 @@ L.Map = L.Evented.extend({
 			this._zoom = this._limitZoom(zoom);
 			return this;
 		}
+
+		var curCenter = this.getCenter();
 		if (this._docLayer && this._docLayer._docType === 'spreadsheet') {
 			// for spreadsheets, when the document is smaller than the viewing area
 			// we want it to be glued to the row/column headers instead of being centered
@@ -483,14 +485,18 @@ L.Map = L.Evented.extend({
 				var sheetGeom = calcLayer.sheetGeometry;
 				var cellRange = sheetGeom.getViewCellRange();
 				var col = cellRange.columnrange.start, row = cellRange.rowrange.start;
-				var zoomScaleAbs = Math.pow(1.2, (zoom - this.options.zoom));
+				var zoomScaleAbs = this.zoomToFactor(zoom);
+
 				var newTopLeftPx = sheetGeom.getCellRect(col, row, zoomScaleAbs).getTopLeft();
-				var newCenterPx = newTopLeftPx.add(this.getSize().divideBy(2)._floor());
-				var newCenterLatLng = this.unproject(newCenterPx, zoom);
+				var moveByPoint = this._getTopLeftPoint(curCenter, zoom).subtract(newTopLeftPx);
+
+				// move the center (which is in LatLng) by the computed amount of pixels
+				var newCenterLatLng = this.unproject(this.project(curCenter, zoom).subtract(moveByPoint), zoom);
+
 				return this.setView(newCenterLatLng, zoom, {zoom: options});
 			}
 		}
-		var curCenter = this.getCenter();
+
 		if (this._docLayer && this._docLayer._visibleCursor && this.getBounds().contains(this._docLayer._visibleCursor.getCenter())) {
 			// Calculate new center after zoom. The intent is that the caret
 			// position stays the same.
@@ -1671,13 +1677,13 @@ L.Map = L.Evented.extend({
 		var pixelOrigin = center && zoom !== undefined ?
 			this._getNewPixelOrigin(center, zoom) :
 			this.getPixelOrigin();
+
 		return pixelOrigin.subtract(this._getMapPanePos());
 	},
 
 	_getNewPixelOrigin: function (center, zoom) {
 		var viewHalf = this.getSize()._divideBy(2);
-		// TODO round on display, not calculation to increase precision?
-		return this.project(center, zoom)._subtract(viewHalf)._add(this._getMapPanePos())._round();
+		return this.project(center, zoom)._subtract(viewHalf)._add(this._getMapPanePos())._floor();
 	},
 
 	_latLngToNewLayerPoint: function (latlng, zoom, center) {
