@@ -3,6 +3,7 @@
  * L.Cursor blinking cursor.
  */
 
+ /* global $ */
 L.Cursor = L.Layer.extend({
 
 	options: {
@@ -22,7 +23,7 @@ L.Cursor = L.Layer.extend({
 		if (!this._container) {
 			this._initLayout();
 		}
-
+		$('.leaflet-pane.leaflet-map-pane').css('cursor', 'text');
 		this._zoomAnimated = this._zoomAnimated && this.options.zoomAnimation;
 		if (this._zoomAnimated) {
 			L.DomUtil.addClass(this._container, 'leaflet-zoom-animated');
@@ -33,6 +34,7 @@ L.Cursor = L.Layer.extend({
 	},
 
 	onRemove: function () {
+		$('.leaflet-pane.leaflet-map-pane').css('cursor', '');
 		if (this._container) {
 			this.getPane().removeChild(this._container);
 		}
