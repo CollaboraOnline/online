@@ -47,7 +47,7 @@ SPACE :=$(EMPTY) $(EMPTY)
 
 CORE_VERSION := $(subst $(SPACE),_,$(shell "@LO_PATH@"/program/soffice.bin --version 2> /dev/null))
 
-BROWSER:=$(if $(shell echo $$CYPRESS_BROWSER),$(shell echo $$CYPRESS_BROWSER),$(CHROME))
+BROWSER:=$(if $(CYPRESS_BROWSER),$(CYPRESS_BROWSER),$(CHROME))
 
 if ENABLE_DEBUG
 FILTER_DEBUG=cypress:electron,cypress:launcher
