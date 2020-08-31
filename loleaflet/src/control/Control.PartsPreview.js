@@ -585,7 +585,7 @@ L.Control.PartsPreview = L.Control.extend({
 			e.preventDefault();
 		}
 
-		this.currentNode = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+		this.currentNode = document.elementFromPoint(e.originalEvent.touches[0].clientX, e.originalEvent.touches[0].clientY);
 
 		if (this.currentNode !== this.previousNode && this.previousNode !== null) {
 			$('.preview-frame').removeClass('preview-img-dropsite');
@@ -597,8 +597,8 @@ L.Control.PartsPreview = L.Control.extend({
 
 		this.previousNode = this.currentNode;
 
-		$(this.draggedSlide).css('left', e.touches[0].clientX - (e.target.width/2));
-		$(this.draggedSlide).css('top', e.touches[0].clientY - e.target.height);
+		$(this.draggedSlide).css('left', e.originalEvent.touches[0].clientX - (e.target.width/2));
+		$(this.draggedSlide).css('top', e.originalEvent.touches[0].clientY - e.target.height);
 		return false;
 	},
 
