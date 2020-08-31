@@ -47,7 +47,7 @@ SPACE :=$(EMPTY) $(EMPTY)
 
 CORE_VERSION := $(subst $(SPACE),_,$(shell "@LO_PATH@"/program/soffice.bin --version 2> /dev/null))
 
-BROWSER:=$(CHROME)
+BROWSER:=$(if $(shell echo $$CYPRESS_BROWSER),$(shell echo $$CYPRESS_BROWSER),$(CHROME))
 
 if ENABLE_DEBUG
 FILTER_DEBUG=cypress:electron,cypress:launcher
@@ -203,22 +203,6 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_desktop_tests,,,COVERAGE_RUN="1")
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
 	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
-	@$(KILL_COMMAND) || true
-
-
-check-firefox: do-check-firefox
-	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
-
-do-check-firefox: @JAILS_PATH@ $(NODE_BINS)
-	@echo
-	@echo "Run tests inside Firefox..."
-	@echo
-	@rm -f $(ERROR_LOG)
-	$(eval BROWSER="firefox")
-	$(call start_loolwsd)
-	$(call run_desktop_tests)
-	$(call run_mobile_tests)
-	$(call run_all_multiuser_tests)
 	@$(KILL_COMMAND) || true
 
 @JAILS_PATH@:

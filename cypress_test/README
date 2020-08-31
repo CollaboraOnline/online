@@ -115,6 +115,19 @@ mobile and desktop tests, that's why there are two separate commands
 for them and there is no option to open all the tests in the
 test runner.
 
+Running tests in different browsers
+-----------------------------------
+
+By default, the tests are run with chrome / chromium. If you need to
+run the tests with a different browser, you can use the CYPRESS_BROWSER
+variable:
+
+CYPRESS_BROWSER="firefox" make check
+
+This variable can be set to any value which is accepted by cypress
+--browser command line argument:
+https://docs.cypress.io/guides/guides/command-line.html#cypress-run-browser-lt-browser-name-or-path-gt
+
 Known issues
 ------------
 
