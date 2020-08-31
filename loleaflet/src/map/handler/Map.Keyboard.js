@@ -229,8 +229,8 @@ L.Map.Keyboard = L.Handler.extend({
 		return this.keymap[keyCode] || keyCode;
 	},
 
-	// Private onKeyDown - called only as a DOM event handler
-	// Calls the public onKeyDown(), but only if the event doesn't have
+	// _onKeyDown - called only as a DOM event handler
+	// Calls _handleKeyEvent(), but only if the event doesn't have
 	// a charCode property (set to something different than 0) - that ignores
 	// any 'beforeinput', 'keypress' and 'input' events that would add
 	// printable characters. Those are handled by TextInput.js.
@@ -245,7 +245,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// _handleKeyEvent - checks if the given keyboard event shall trigger
 	// a message to loolwsd, and calls the given keyEventFn(type, charcode, keycode)
 	// callback if so.
-	// Called from private _onKeyDown
+	// Called from _onKeyDown
 	_handleKeyEvent: function (ev, keyEventFn) {
 		this._map.notifyActive();
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
