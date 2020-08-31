@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="exiting">Afslutter…</string>
+    <string name="loading">Indlæser…</string>
+    <string name="rate_our_app_text">Hvis du kan lide den, giv os venligst 5 stjerner i Google Play. Dine gode anmeldelser er vores bedste motivation.</string>
+    <string name="rate_our_app_title">Tak, fordi du bruger %1$s!</string>
+    <string name="later">Senere</string>
+    <string name="rate_now">Vurdér nu</string>
+    <string name="preparing_for_the_first_start_after_an_update">Forbereder den første åbning efter en opdatering.</string>
+    <string name="cannot_open_file_chooser">Kan ikke åbne filvælgeren</string>
+    <string name="failed_to_insert_image">Kunne ikke indsætte billede</string>
+    <string name="failed_to_load_file">Kunne ikke bestemme, hvilken fil der skal indlæses</string>
+    <string name="storage_permission_required">Lagringstilladelse er nødvendig.</string>
+    <string name="file_chromeos_read_only">Denne fil kan ikke gemmes her og er skrivebeskyttet. Flyt den til Play-filerne og få fulde læse-/skrive-adgang.</string>
+    <string name="temp_file_saving_disabled">Denne fil er skrivebeskyttet. Lagring er deaktiveret.</string>
+</resources>

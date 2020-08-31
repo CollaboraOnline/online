@@ -5,28 +5,29 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-31 22:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2020-08-31 22:23+0000\n"
+"Last-Translator: SteenRønnow <steen.roennow@mail.dk>\n"
+"Language-Team: Danish <https://weblate.documentfoundation.org/projects/libo_online/ios/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.4.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /da/libo_online/ios-da.po\n"
 "X-Pootle-Revision: 3937725\n"
 
 #: Version+information
 msgid "Version information"
-msgstr ""
+msgstr "Versionsinformation"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Online git hash"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Kerne git-hash"
 
 #: Settings
 msgid "Settings"
