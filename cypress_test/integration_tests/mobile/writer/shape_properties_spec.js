@@ -195,7 +195,7 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		helper.clickOnIdle('#linestyle');
 
-		helper.clickOnIdle('.ui-combobox-text', 'Dashed');
+		helper.clickOnIdle('.ui-combobox-text', 'Ultrafine Dashed');
 
 		triggerNewSVG();
 
