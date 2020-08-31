@@ -465,9 +465,11 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_updateAnnotationMarker: function () {
+		// Make sure to place the markers only for presentations and draw documents
+		if (this._map._docLayer._docType !== 'presentation') 
+			return;
 		if (this._data == null)
 			return;
-
 		if (this._annotationMarker == null) {
 			this._annotationMarker = L.marker(new L.LatLng(0, 0), {
 				icon: L.divIcon({
