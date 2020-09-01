@@ -96,11 +96,20 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	_setCanvasSize: function (widthCSSPx, heightCSSPx) {
-		this._canvas.style.width = widthCSSPx + 'px';
-		this._canvas.style.height = heightCSSPx + 'px';
-		this._canvas.width = Math.floor(widthCSSPx * this._dpiScale);
-		this._canvas.height = Math.floor(heightCSSPx * this._dpiScale);
+		var pixWidth = Math.floor(widthCSSPx * this._dpiScale);
+		var pixHeight = Math.floor(heightCSSPx * this._dpiScale);
 
+		// real pixels have to be integral
+		this._canvas.width = pixWidth;
+		this._canvas.height = pixHeight;
+
+		// CSS pixels can be fractional, but need to round to the same real pixels
+		var cssWidth = pixWidth / this._dpiScale; // NB. beware
+		var cssHeight = pixHeight / this._dpiScale;
+		this._canvas.style.width = cssWidth.toFixed(4) + 'px';
+		this._canvas.style.height = cssHeight.toFixed(4) + 'px';
+
+		// FIXME: is this a good idea ? :
 		this._width = parseInt(this._canvas.style.width);
 		this._height = parseInt(this._canvas.style.height);
 		this.clear();
