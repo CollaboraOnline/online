@@ -697,9 +697,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			}
 		}
 
-		this._sendClientVisibleArea(true);
-
-		this._sendClientZoom(true);
+		this._sendClientVisibleArea();
+		this._sendClientZoom();
 
 		if (queue.length !== 0) {
 			if (cancelTiles) {
