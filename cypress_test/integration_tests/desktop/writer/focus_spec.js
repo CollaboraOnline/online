@@ -75,4 +75,24 @@ describe('Focus tests', function() {
 		cy.get('#search-input')
 			.should('have.prop', 'value', text);
 	});
+
+	it('Search with fast typing.', function() {
+		// Move focus to the search field
+		cy.get('#search-input')
+			.click();
+
+		cy.document().its('activeElement.id')
+			.should('be.eq', 'search-input');
+
+		var text = 'qqqqqqqqqqqqqqqqqqqq';
+		cy.get('body')
+			.type(text);
+
+		// Search field still has the focus.
+		cy.document().its('activeElement.id')
+			.should('be.eq', 'search-input');
+
+		cy.get('#search-input')
+			.should('have.prop', 'value', text);
+	});
 });
