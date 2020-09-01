@@ -228,7 +228,6 @@ TESTS = \
 	unit-load.la \
 	unit-cursor.la \
 	unit-calc.la \
-	unit-php-proxy.la \
 	unit-insert-delete.la \
 	unit-close.la \
 	unit-bad-doc-load.la \

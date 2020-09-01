@@ -248,7 +248,7 @@ public:
 
             lastRequestMS = Util::getNowInMS();
             int64_t diff = 0;
-            while (diff < 15000)
+            while (diff < 600000)
             {
                 auto nowMS = Util::getNowInMS();
                 diff = nowMS - lastRequestMS;

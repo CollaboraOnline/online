@@ -188,17 +188,21 @@ function afterAll(fileName) {
 			Cypress.env('SERVER_PORT') +
 			'/loleaflet/dist/admin/admin.html');
 
-	cy.get('#uptime')
-		.should('not.have.text', '0');
+	if (Cypress.env('SERVER_PORT') === 9979) {
+		cy.wait(5000);
+	} else {
+		cy.get('#uptime')
+			.should('not.have.text', '0');
 
-	// We have all lines of document infos as one long string.
-	// We have PID number before the file names, with matching
-	// also on the PID number we can make sure to match on the
-	// whole file name, not on a suffix of a file name.
-	var regex = new RegExp('[0-9]' + fileName);
-	cy.get('#docview', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
-		.invoke('text')
-		.should('not.match', regex);
+		// We have all lines of document infos as one long string.
+		// We have PID number before the file names, with matching
+		// also on the PID number we can make sure to match on the
+		// whole file name, not on a suffix of a file name.
+		var regex = new RegExp('[0-9]' + fileName);
+		cy.get('#docview', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
+			.invoke('text')
+			.should('not.match', regex);
+	}
 
 	cy.log('Waiting for closing the document - end.');
 }
