@@ -3,5 +3,5 @@ host=gerrit.libreoffice.org
 port=29418
 project=online
 defaultremote=logerrit
-defaultbranch=libreofiice-7-0
+defaultbranch=libreoffice-7-0
 
