@@ -177,12 +177,9 @@ w2ui-toolbar {
 	box-shadow: 0 0 0.1px 1px #ebebeb, 0 0 2px 1px #f0f0f0;
 	padding-right: 24px;
 	max-width: 100%;
-<<<<<<< HEAD   (dcbaeb loleaflet: Slides preview section improvements.)
-=======
 	overflow: hidden;
 	text-overflow:ellipsis;
 	height: 18px;
->>>>>>> CHANGE (c1730c Desktop: Document name input and pencil: remove unused style)
 }
 
 #document-name-input.editable:focus {
