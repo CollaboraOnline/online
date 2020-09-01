@@ -103,10 +103,15 @@
 	background: var(rgb(--green0-txt-primary-color));
 }
 
+.hasnotebookbar .notebookbar-shortcuts-bar #Menubar,
+.hasnotebookbar .notebookbar-shortcuts-bar #Menubar li,
+.hasnotebookbar .notebookbar-shortcuts-bar #Menubar a {
+	background-color: transparent;
+}
+
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar > li > a {
-    cursor: pointer;
-    border: none;
-	background: var(--gray-bg-color);
+	cursor: pointer;
+	border: none;
 	height: 20px;
 }
 
