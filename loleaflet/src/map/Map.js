@@ -838,7 +838,7 @@ L.Map = L.Evented.extend({
 	// We have one global winId that controls what window (dialog, sidebar, or
 	// the main document) has the actual focus.  0 means the document.
 	setWinId: function (id) {
-		console.log('winId set to: ' + id);
+		// console.log('winId set to: ' + id);
 		if (typeof id === 'string')
 			id = parseInt(id);
 		this._winId = id;
@@ -1253,7 +1253,7 @@ L.Map = L.Evented.extend({
 	},
 
 	makeActive: function() {
-		console.log('Force active');
+		// console.log('Force active');
 		this.lastActiveTime = Date.now();
 		return this._activate();
 	},
@@ -1263,13 +1263,13 @@ L.Map = L.Evented.extend({
 			return false;
 		}
 
-		console.debug('_activate:');
+		// console.debug('_activate:');
 		clearTimeout(vex.timer);
 
 		if (!this._active) {
 			// Only activate when we are connected.
 			if (this._socket.connected()) {
-				console.debug('sending useractive');
+				// console.debug('sending useractive');
 				this._socket.sendMessage('useractive');
 				this._active = true;
 				if (this._docLayer) {
@@ -1322,7 +1322,7 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		console.debug('_dim:');
+		// console.debug('_dim:');
 		if (!this._socket.connected() || isAnyVexDialogActive()) {
 			return;
 		}
@@ -1339,13 +1339,13 @@ L.Map = L.Evented.extend({
 		var multiplier = 1;
 		if (!this.documentHidden(true))
 		{
-			console.debug('document visible');
+			// console.debug('document visible');
 			multiplier = 4; // quadruple the grace period
 		}
 		if (inactiveMs <= this.options.outOfFocusTimeoutSecs * 1000 * multiplier) {
-			console.debug('had activity ' + inactiveMs + 'ms ago vs. threshold ' +
-				      (this.options.outOfFocusTimeoutSecs * 1000 * multiplier) +
-				      ' - so fending off the dim');
+			// console.debug('had activity ' + inactiveMs + 'ms ago vs. threshold ' +
+			//	      (this.options.outOfFocusTimeoutSecs * 1000 * multiplier) +
+			//	      ' - so fending off the dim');
 			vex.timer = setTimeout(function() {
 				map._dim();
 			}, map.options.outOfFocusTimeoutSecs * 1000);
@@ -1365,7 +1365,7 @@ L.Map = L.Evented.extend({
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				$vexContent.bind('click.vex', function() {
-					console.debug('_dim: click.vex function');
+					// console.debug('_dim: click.vex function');
 					return map._activate();
 				});
 			},
@@ -1373,7 +1373,7 @@ L.Map = L.Evented.extend({
 		});
 		$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
-		console.debug('_dim: sending userinactive');
+		// console.debug('_dim: sending userinactive');
 		map.fire('postMessage', {msgId: 'User_Idle'});
 		this._socket.sendMessage('userinactive');
 	},
@@ -1386,7 +1386,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_dimIfInactive: function () {
-		console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
+		// console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
 		if (this._docLoaded && // don't dim if document hasn't been loaded yet
 		    (Date.now() - this.lastActiveTime) >= this.options.idleTimeoutSecs * 1000) {
 			this._dim();
@@ -1400,7 +1400,7 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		console.debug('_startInactiveTimer:');
+		// console.debug('_startInactiveTimer:');
 		clearTimeout(vex.timer);
 		var map = this;
 		vex.timer = setTimeout(function() {
@@ -1413,7 +1413,7 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		console.debug('_deactivate:');
+		// console.debug('_deactivate:');
 		clearTimeout(vex.timer);
 
 		if (!this._active || isAnyVexDialogActive()) {
@@ -1422,7 +1422,7 @@ L.Map = L.Evented.extend({
 			this._active = false;
 			this._docLayer && this._docLayer._onMessage('textselection:', null);
 			if (this._socket.connected()) {
-				console.debug('_deactivate: sending userinactive');
+				// console.debug('_deactivate: sending userinactive');
 				this._socket.sendMessage('userinactive');
 			}
 
