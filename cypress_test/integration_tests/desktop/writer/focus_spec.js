@@ -69,7 +69,6 @@ describe('Focus tests', function() {
 		helper.typeText('body', text, 200);
 
 		// Search field still has the focus.
-		// We have a focus issue here.
 		cy.document().its('activeElement.id')
 			.should('be.eq', 'search-input');
 
