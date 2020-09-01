@@ -79,6 +79,18 @@
 
     NSMutableString *quotedText = [NSMutableString string];
 
+    int location = range.location;
+
+    if (location < self.text.length && location + range.length == self.text.length) {
+        // To guard against possible mismatch between our self.text and the _textArea.value in
+        // TextInput.js, we indicate deletion or replacement from the end with negative location.
+        location = location - self.text.length;
+    }
+    else if (range.location == 0 && range.length == 0 && text.length == 0) {
+        // Backspace without anything known about preceding text
+        location = -1;
+    }
+
     for (unsigned i = 0; i < text.length; i++) {
         const unichar c = [text characterAtIndex:i];
         if (c == '\'' || c == '\\') {
@@ -93,7 +105,7 @@
 
     NSMutableString *message = [NSMutableString string];
 
-    [message appendFormat:@"{id: 'COKbdMgr', command: 'replaceText', location: %lu, length: %lu, text: '", range.location, range.length];
+    [message appendFormat:@"{id: 'COKbdMgr', command: 'replaceText', location: %d, length: %lu, text: '", location, range.length];
     [message appendString:quotedText];
     [message appendString:@"'}"];
 
@@ -209,15 +221,15 @@
         // will be added.
         control.autocapitalizationType = UITextAutocapitalizationTypeNone;
 
-        control.text = text;
-        control.selectedRange = NSMakeRange(location, 0);
-
         lastCommandIsHide = NO;
 
         [self->webView addSubview:control];
         NSLog(@"COKbdMgr: Added _COWVKMKeyInputControl to webView");
         [control becomeFirstResponder];
     }
+    control.text = text;
+    control.selectedRange = NSMakeRange(location, 0);
+
 }
 
 - (void)hideKeyboard {
@@ -253,6 +265,8 @@
             NSString *text = message.body[@"text"];
             NSNumber *location = message.body[@"location"];
             NSLog(@"COKbdMgr: command=display type=%@ text=%@ location=%@", type, text, location);
+            if (text == nil)
+                text = @"";
             [self displayKeyboardOfType:type withText:text at:(location != nil ? [location unsignedIntegerValue] : UINT_MAX)];
         } else if ([stringCommand isEqualToString:@"hide"]) {
             lastCommandIsHide = YES;

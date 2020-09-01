@@ -105,8 +105,10 @@ static IMP standardImpOfInputAccessoryView = nil;
     // contents is handled fully in JavaScript, the WebView has no knowledge of that.)
     self.webView.scrollView.delegate = self;
 
-    keyboardManager =
-        [[CollaboraOnlineWebViewKeyboardManager alloc] initForWebView:self.webView];
+    if (!isExternalKeyboardAttached()) {
+        keyboardManager =
+            [[CollaboraOnlineWebViewKeyboardManager alloc] initForWebView:self.webView];
+    }
 
     [self.view addSubview:self.webView];
 
@@ -446,6 +448,27 @@ static IMP standardImpOfInputAccessoryView = nil;
                     LOG_TRC("print completion handler gets " << (completed?"YES":"NO"));
                     std::remove(printFile.c_str());
                 }];
+
+            return;
+        } else if ([message.body isEqualToString:@"FOCUSIFHWKBD"]) {
+            if (isExternalKeyboardAttached()) {
+                NSString *hwKeyboardMagic = @"{"
+                    "    if (window.MagicToGetHWKeyboardWorking) {"
+                    "        window.MagicToGetHWKeyboardWorking();"
+                    "    }"
+                    "}";
+                [self.webView evaluateJavaScript:hwKeyboardMagic
+                               completionHandler:^(id _Nullable obj, NSError * _Nullable error)
+                     {
+                         if (error) {
+                             LOG_ERR("Error after " << [hwKeyboardMagic UTF8String] << ": " << [[error localizedDescription] UTF8String]);
+                             NSString *jsException = error.userInfo[@"WKJavaScriptExceptionMessage"];
+                             if (jsException != nil)
+                                 LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
+                         }
+                     }
+                 ];
+            }
 
             return;
         } else if ([message.body hasPrefix:@"HYPERLINK"]) {
