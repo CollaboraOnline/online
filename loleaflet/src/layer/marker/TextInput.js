@@ -99,10 +99,28 @@ L.TextInput = L.Layer.extend({
 			this._onFocusBlur({ type: 'focus' });
 		}
 
+		if (window.ThisIsTheiOSApp) {
+			var that = this;
+			window.MagicToGetHWKeyboardWorking = function() {
+				var that2 = that;
+				window.MagicKeyDownHandler = function(e) {
+					that2._onKeyDown(e);
+				};
+				window.MagicKeyUpHandler = function(e) {
+					that2._onKeyUp(e);
+				};
+			};
+			window.postMobileMessage('FOCUSIFHWKBD');
+		}
+
 		L.DomEvent.on(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
 	},
 
 	onRemove: function() {
+		window.MagicToGetHWKeyboardWorking = null;
+		window.MagicKeyDownHandler = null;
+		window.MagicKeyUpHandler = null;
+
 		if (this._container) {
 			this.getPane().removeChild(this._container);
 		}
@@ -223,10 +241,16 @@ L.TextInput = L.Layer.extend({
 						throw errorMessage;
 					}
 
-					if (that._textArea.value.length == 2 && message.length == 0 && message.text.length == 0) {
-						that._removeTextContent(1, 0);
-					} else {
-						that._textArea.value = that._textArea.value.slice(0, message.location + 1) + message.text + that._textArea.value.slice(message.location + 1 + message.length);
+					if (message.location < 0) {
+						if (that._textArea.value.length > 2) {
+							that._textArea.value = that._textArea.value.slice(0, message.location - 1) + that._textArea.value.slice(-1);
+							that._onInput({});
+						} else {
+							that._removeTextContent(-message.location, 0);
+						}
+					}
+					if (message.text.length > 0) {
+						that._textArea.value = that._textArea.value.slice(0, -1) + message.text + that._textArea.value.slice(-1);
 						that._onInput({});
 					}
 				} else {
@@ -236,8 +260,7 @@ L.TextInput = L.Layer.extend({
 				}
 			};
 
-			// We don't know the seed text to feed CollaboraOnlineWebViewKeyboardManager
-			window.webkit.messageHandlers.CollaboraOnlineWebViewKeyboardManager.postMessage({command: 'display'});
+			window.webkit.messageHandlers.CollaboraOnlineWebViewKeyboardManager.postMessage({command: 'display', text: this._textArea.value.slice(1, -1)});
 			this._onFocusBlur({type: 'focus'});
 
 			return;

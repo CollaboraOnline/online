@@ -70,7 +70,20 @@ m4_ifelse(ANDROIDAPP,[true],
 )
 
 if (window.ThisIsTheiOSApp) {
-  window.addEventListener("keydown", function(e) { e.preventDefault(); });
+  window.addEventListener('keydown', function(e) {
+    if (e.metaKey) {
+      e.preventDefault();
+    }
+    if (window.MagicKeyDownHandler)
+      window.MagicKeyDownHandler(e);
+  });
+  window.addEventListener('keyup', function(e) {
+    if (e.metaKey) {
+      e.preventDefault();
+    }
+    if (window.MagicKeyUpHandler)
+      window.MagicKeyUpHandler(e);
+  });
 }
 
 var Base64ToArrayBuffer = function(base64Str) {
