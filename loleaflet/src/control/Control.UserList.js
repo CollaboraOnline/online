@@ -94,7 +94,7 @@ L.Control.UserList = L.Control.extend({
 			$(img).css({'background-color': color});
 		}
 	
-		nameTd.innerHTML = userName;
+		nameTd.textContent = userName;
 	
 		return content;
 	},
@@ -209,10 +209,11 @@ L.Control.UserList = L.Control.extend({
 
 	onRemoveView: function(e) {
 		var that = this;
+		var username = this.escapeHtml(e.username);
 		$('#tb_actionbar_item_userlist')
 			.w2overlay({
 				class: 'loleaflet-font',
-				html: this.options.userLeftPopupMessage.replace('%user', e.username),
+				html: this.options.userLeftPopupMessage.replace('%user', username),
 				style: 'padding: 5px'
 			});
 		clearTimeout(this.options.userPopupTimeout);
