@@ -12,4 +12,5 @@
     <string name="later">Später</string>
     <string name="rate_now">Jetzt bewerten</string>
     <string name="preparing_for_the_first_start_after_an_update">Vorbereitung auf den ersten Start nach einem Update.</string>
+    <string name="file_chromeos_read_only">Diese Datei kann nicht an diesem Speicherort gespeichert werden und ist schreibgeschützt. Verschieben Sie es in die Wiedergabedateien, um vollen Lese- / Schreibzugriff zu erhalten.</string>
 </resources>

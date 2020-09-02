@@ -1,2 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="directory_not_saved">Vouer is nie gestoor nie.</string>
+    <string name="pref_enable_chrome_debugger">Chrome Foutopsporing</string>
+    <string name="pref_show_debug_info_summary">Aktiveer ontfoutings-informasie in dokument vertoner</string>
+    <string name="pref_show_debug_info">Vertoon Fout-Infomasie</string>
+    <string name="pref_filter_summary">Stel watter lêer filter moet by bestek gebruik word.</string>
+    <string name="pref_filter_title">Verstek Lêer Filter</string>
+    <string name="pref_sort_title">Lêer Volgorde</string>
+    <string name="pref_file_explorer_title">Lêer Beheer uitleg</string>
+    <string name="pref_viewmode_summary">Vertoon lêers as \'n rooster in a lys.</string>
+    <string name="pref_sort_summary">Selekteer hoe lêers georden moet word: A-Z, by grootte of datum.</string>
+    <string name="pref_show_hidden_files_summary">Aktiveer die vertoon van lêers/vouers</string>
+    <string name="pref_show_hidden_files">Verborge Lêers/Vouers</string>
+    <string name="pref_category_editor">Redigeerder Instellings</string>
+    <string name="pref_category_explorer">Lêer beheerinstellings</string>
+    <string name="grid_view">Rooster</string>
+    <string name="list_view">Lys</string>
+    <string name="failed_to_load_file">Faal met die lêer se lading.</string>
+    <string name="storage_permission_required">Skryf bevoegheid is vereis</string>
+    <string name="file_creation_failed">Die lêer se skepping faal</string>
+    <string name="file_exists_warning">\'n Lêer met hierdie naam bestaan alreeds, en sal oorkryf word.</string>
+    <string name="temp_file_saving_disabled">Die lêer is lees-alleen, stoor is gedeaktiveerd.</string>
+    <string name="title_activity_show_html">Meer oor</string>
+    <string name="no_items">Geen items</string>
+    <string name="no_recent_items">Maak \'n lêer oop via die vouer-simbool in die werkbalk.</string>
+    <string name="app_vendor">Hierdie weergawe was voorsien deur $VENDOR.</string>
+    <string name="app_description">$APP_NAME is \'n moderne, maklik--om-te-gebruik, oopbron produktiwiteits suite vir woordverwerking, spreiblaaie, aanbiedings en meer.</string>
+    <string name="app_version_and_hash">Weergawe: %1$s
+\naanlyn git-huts: %2$s
+\nkern git-huts: %3$s</string>
+    <string name="app_name_settings">Instellings</string>
+</resources>

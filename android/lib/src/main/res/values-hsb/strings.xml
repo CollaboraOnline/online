@@ -13,4 +13,5 @@
     <string name="rate_our_app_title">Dźakujemy so, zo sće %1$s wužiwał!</string>
     <string name="later">Pozdźišo</string>
     <string name="rate_now">Nětko pohódnoćić</string>
+    <string name="file_chromeos_read_only">Tuta dataja njeda so na tutym městnje składować, wočinja so jenož přećiwo pisanju škitana. Přesuńće ju do wothrawanskich datajow za połny čitanski/pisanski přistup.</string>
 </resources>
