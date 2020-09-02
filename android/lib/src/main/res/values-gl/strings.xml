@@ -13,4 +13,5 @@
     <string name="rate_our_app_title">Grazas por utilizar %1$s!</string>
     <string name="later">Máis tarde</string>
     <string name="rate_now">Avaliar agora</string>
+    <string name="file_chromeos_read_only">Non é posíbel gardar este ficheiro neste sitio, polo que se abre só para lectura. Móvao para os ficheiros de Play para un acceso de lectura e escritura completo.</string>
 </resources>

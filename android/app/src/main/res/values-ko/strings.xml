@@ -4,4 +4,23 @@
     <string name="app_description">$APP_NAME 은 현대적이며, 사용하기 쉬운 오픈소스 제품군이다. 이 제품군은 워드 프로세서, 스프레드시트, 프레젠테이션 등등이 포함되어 있습니다.</string>
     <string name="app_version">버전: %1$s, 빌드 ID: %2$s</string>
     <string name="app_name_settings">설정</string>
+    <string name="file_creation_failed">파일 생성 실패</string>
+    <string name="file_exists_warning">동일한 이름을 가진 파일이 이미 존재하며, 덮어 씁니다.</string>
+    <string name="temp_file_saving_disabled">이 파일은 읽기 전용이며, 저장이 비활성화됩니다.</string>
+    <string name="no_items">항목 없음</string>
+    <string name="no_recent_items">도구 모음의 폴더 아이콘을 사용하여 파일을 여십시오.</string>
+    <string name="app_version_and_hash">버전 : %1$s
+\n온라인 git-hash : %2$s
+\n핵심 git-hash : %3$s</string>
+    <string name="pref_file_explorer_title">파일 관리자 레이아웃</string>
+    <string name="pref_viewmode_summary">파일을 그리드 또는 리스트로 봅니다.</string>
+    <string name="pref_sort_summary">파일을 불러올 방법을 선택 하십시오 : A-Z, 크기 또는 날짜</string>
+    <string name="pref_show_hidden_files_summary">숨겨진 파일/폴더 표시 가능</string>
+    <string name="pref_show_hidden_files">숨겨진 파일/폴더</string>
+    <string name="pref_category_explorer">파일 관리자 설정</string>
+    <string name="grid_view">그리드</string>
+    <string name="failed_to_load_file">로드할 파일을 결정하지 못하였습니다</string>
+    <string name="storage_permission_required">저장 권한이 필요합니다</string>
+    <string name="pref_category_editor">편집기 설정</string>
+    <string name="list_view">목록</string>
 </resources>

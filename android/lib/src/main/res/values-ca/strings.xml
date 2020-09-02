@@ -13,4 +13,5 @@
     <string name="rate_our_app_text">Si en gaudiu, poseu-li 5 estrelles al Google Play. Les vostres ressenyes positives són la nostra motivació més gran.</string>
     <string name="rate_our_app_title">Gràcies per utilitzar el %1$s!</string>
     <string name="exiting">S\'està sortint…</string>
+    <string name="file_chromeos_read_only">El fitxer no es pot obrir en aquesta ubicació; s\'ha obert en el mode només de lectura. Desplaceu-lo a Fitxers de Play per a obtenir l\'accés complet de lectura i escriptura.</string>
 </resources>
