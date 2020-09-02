@@ -799,7 +799,6 @@ button.leaflet-control-search-next
 }
 
 .insertshape-grid .row {
-		height: 30px;
 		height: auto;
 		position: static;
 		text-align: left;
@@ -810,8 +809,7 @@ button.leaflet-control-search-next
 }
 
 .insertshape-grid .col {
-		height: 100%;
-		float: left;
+		height: 30px;
 		padding: 2px;
 		width: 30px;
 		border: 1px solid transparent;
