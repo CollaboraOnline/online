@@ -2104,7 +2104,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var titleSpan = L.DomUtil.create('span', '', menuEntry);
 		titleSpan.innerHTML = title;
-		var paddingClass = icon ? 'menu-entry-with-icon' : 'menu-entry-no-icon';
+		var paddingClass = icon ? 'menu-entry-with-icon flex-fullwidth' : 'menu-entry-no-icon';
 		L.DomUtil.addClass(titleSpan, paddingClass);
 
 		if (builder.wizard) {
