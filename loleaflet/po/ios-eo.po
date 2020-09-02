@@ -19,15 +19,15 @@ msgstr ""
 
 #: Version+information
 msgid "Version information"
-msgstr ""
+msgstr "Versia informo"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Enreta Git-haketaĵo"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Kerna Git-haketaĵo"
 
 #: Settings
 msgid "Settings"

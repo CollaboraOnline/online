@@ -23,11 +23,11 @@ msgstr "Información sobre a versión"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Identificador da versión no repositorio «git» na rede"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Identificador da versión no repositorio «git» «core»"
 
 #: Settings
 msgid "Settings"
