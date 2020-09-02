@@ -18,15 +18,15 @@ msgstr ""
 
 #: Version+information
 msgid "Version information"
-msgstr ""
+msgstr "Informasi versi"
 
 #: Online+git+hash
 msgid "Online git hash"
-msgstr ""
+msgstr "Hash git daring"
 
 #: Core+git+hash
 msgid "Core git hash"
-msgstr ""
+msgstr "Hash git core"
 
 #: Settings
 msgid "Settings"
