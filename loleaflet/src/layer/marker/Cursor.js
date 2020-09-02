@@ -81,7 +81,7 @@ L.Cursor = L.Layer.extend({
 		if (this.options.header) {
 			this._cursorHeader = L.DomUtil.create('div', 'leaflet-cursor-header', this._container);
 
-			this._cursorHeader.innerHTML = this.options.headerName;
+			this._cursorHeader.textContent = this.options.headerName;
 
 			clearTimeout(this._blinkTimeout);
 			this._blinkTimeout = setTimeout(L.bind(function() {

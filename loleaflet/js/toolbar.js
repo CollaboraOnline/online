@@ -2396,10 +2396,11 @@ function onAddView(e) {
 }
 
 function onRemoveView(e) {
+	var username = escapeHtml(e.username);
 	$('#tb_actionbar_item_userlist')
 		.w2overlay({
 			class: 'loleaflet-font',
-			html: userLeftPopupMessage.replace('%user', e.username),
+			html: userLeftPopupMessage.replace('%user', username),
 			style: 'padding: 5px'
 		});
 	clearTimeout(userPopupTimeout);
