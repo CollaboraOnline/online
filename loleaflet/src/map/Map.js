@@ -485,20 +485,22 @@ L.Map = L.Evented.extend({
 			// for spreadsheets, when the document is smaller than the viewing area
 			// we want it to be glued to the row/column headers instead of being centered
 			this._docLayer._checkSpreadSheetBounds(zoom);
-			var calcLayer = this._docLayer;
-			if (calcLayer.options.sheetGeometryDataEnabled && calcLayer.sheetGeometry) {
-				var sheetGeom = calcLayer.sheetGeometry;
-				var cellRange = sheetGeom.getViewCellRange();
-				var col = cellRange.columnrange.start, row = cellRange.rowrange.start;
-				var zoomScaleAbs = this.zoomToFactor(zoom);
+			if (window.mode.isDesktop()) {
+				var calcLayer = this._docLayer;
+				if (calcLayer.options.sheetGeometryDataEnabled && calcLayer.sheetGeometry) {
+					var sheetGeom = calcLayer.sheetGeometry;
+					var cellRange = sheetGeom.getViewCellRange();
+					var col = cellRange.columnrange.start, row = cellRange.rowrange.start;
+					var zoomScaleAbs = this.zoomToFactor(zoom);
 
-				var newTopLeftPx = sheetGeom.getCellRect(col, row, zoomScaleAbs).getTopLeft();
-				var moveByPoint = this._getTopLeftPoint(curCenter, zoom).subtract(newTopLeftPx);
+					var newTopLeftPx = sheetGeom.getCellRect(col, row, zoomScaleAbs).getTopLeft();
+					var moveByPoint = this._getTopLeftPoint(curCenter, zoom).subtract(newTopLeftPx);
 
-				// move the center (which is in LatLng) by the computed amount of pixels
-				var newCenterLatLng = this.unproject(this.project(curCenter, zoom).subtract(moveByPoint), zoom);
+					// move the center (which is in LatLng) by the computed amount of pixels
+					var newCenterLatLng = this.unproject(this.project(curCenter, zoom).subtract(moveByPoint), zoom);
 
-				return this.setView(newCenterLatLng, zoom, {zoom: options});
+					return this.setView(newCenterLatLng, zoom, {zoom: options});
+				}
 			}
 		}
 
