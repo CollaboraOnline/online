@@ -952,7 +952,8 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
 
     // The file is removed upon downloading.
     const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
-    const std::string url = jailDoc + tmpDir + "/" + filenameParam.getFileName();
+    const std::string urlToSend = tmpDir + "/" + filenameParam.getFileName();
+    const std::string url = jailDoc + urlToSend;
     const std::string urlAnonym = jailDoc + tmpDir + "/" + Poco::Path(nameAnonym).getFileName();
 
     LOG_DBG("Calling LOK's saveAs with: url='" << urlAnonym << "', format='" <<
@@ -963,7 +964,12 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
                                format.empty() ? nullptr : format.c_str(),
                                filterOptions.empty() ? nullptr : filterOptions.c_str());
 
-    sendTextFrame("downloadas: jail=" + _jailId + " dir=" + tmpDir + " name=" + name +
+    // Register download id -> URL mapping in the DocumentBroker
+    std::string docBrokerMessage = "registerdownload: downloadid=" + tmpDir + " url=" + urlToSend;
+    _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
+
+    // Send download id to the client
+    sendTextFrame("downloadas: downloadid=" + tmpDir +
                   " port=" + std::to_string(ClientPortNumber) + " id=" + id);
 #endif
     return true;

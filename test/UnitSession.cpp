@@ -185,22 +185,18 @@ UnitBase::TestResult UnitSession::testSlideShow()
                                !response.empty());
 
         StringVector tokens(LOOLProtocol::tokenize(response.substr(11), ' '));
-        // "downloadas: jail= dir= name=slideshow.svg port= id=slideshow"
-        const std::string jail = tokens[0].substr(std::string("jail=").size());
-        const std::string dir = tokens[1].substr(std::string("dir=").size());
-        const std::string name = tokens[2].substr(std::string("name=").size());
-        const int port = std::stoi(tokens[3].substr(std::string("port=").size()));
-        const std::string id = tokens[4].substr(std::string("id=").size());
-        LOK_ASSERT(!jail.empty());
-        LOK_ASSERT(!dir.empty());
-        LOK_ASSERT_EQUAL(std::string("slideshow.svg"), name);
+        // "downloadas: downloadId= port= id=slideshow"
+        const std::string downloadId = tokens[0].substr(std::string("downloadId=").size());
+        const int port = std::stoi(tokens[1].substr(std::string("port=").size()));
+        const std::string id = tokens[2].substr(std::string("id=").size());
+        LOK_ASSERT(!downloadId.empty());
         LOK_ASSERT_EQUAL(static_cast<int>(Poco::URI(helpers::getTestServerURI()).getPort()),
                              port);
         LOK_ASSERT_EQUAL(std::string("slideshow"), id);
 
         std::string encodedDoc;
         Poco::URI::encode(documentPath, ":/?", encodedDoc);
-        const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name;
+        const std::string path = "/lool/" + encodedDoc + "/download/" + downloadId;
         std::unique_ptr<Poco::Net::HTTPClientSession> session(
             helpers::createSession(Poco::URI(helpers::getTestServerURI())));
         Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
