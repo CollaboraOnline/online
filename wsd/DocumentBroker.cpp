@@ -1605,6 +1605,22 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
     }
 }
 
+std::string DocumentBroker::getDownloadURL(const std::string& downloadId)
+{
+    auto aFound = _registeredDownloadLinks.find(downloadId);
+    if (aFound != _registeredDownloadLinks.end())
+        return aFound->second;
+
+    return "";
+}
+
+void DocumentBroker::unregisterDownloadId(const std::string& downloadId)
+{
+    auto aFound = _registeredDownloadLinks.find(downloadId);
+    if (aFound != _registeredDownloadLinks.end())
+        _registeredDownloadLinks.erase(aFound);
+}
+
 /// Handles input from the prisoner / child kit process
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
@@ -1640,6 +1656,17 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOOLProtocol::getTokenString((*message)[2], "kind", kind);
             LOG_CHECK_RET(kind != "", false);
             Util::alertAllUsers(cmd, kind);
+        }
+        else if (command == "registerdownload:")
+        {
+            LOG_CHECK_RET(message->tokens().size() == 3, false);
+            std::string downloadid, url;
+            LOOLProtocol::getTokenString((*message)[1], "downloadid", downloadid);
+            LOG_CHECK_RET(downloadid != "", false);
+            LOOLProtocol::getTokenString((*message)[2], "url", url);
+            LOG_CHECK_RET(url != "", false);
+
+            _registeredDownloadLinks[downloadid] = url;
         }
         else
         {

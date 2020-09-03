@@ -301,6 +301,12 @@ public:
     /// Estimate memory usage / bytes
     size_t getMemorySize() const;
 
+    /// Get URL for corresponding download id if registered, or empty string otherwise
+    std::string getDownloadURL(const std::string& downloadId);
+
+    /// Remove download id mapping
+    void unregisterDownloadId(const std::string& downloadId);
+
 private:
     /// get the session id of a session that can write the document for save / locking.
     std::string getWriteableSessionId() const;
@@ -447,6 +453,9 @@ private:
 
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
+
+    // Maps download id -> URL
+    std::map<std::string, std::string> _registeredDownloadLinks;
 };
 
 #if !MOBILEAPP

@@ -2859,7 +2859,7 @@ private:
                 }
             }
         }
-        else if (requestDetails.size() >= 5)
+        else if (requestDetails.equals(2, "download"))
         {
             LOG_INF("File download request.");
             // TODO: Check that the user in question has access to this file!
@@ -2875,38 +2875,23 @@ private:
                 throw BadRequestException("DocKey [" + docKey + "] is invalid.");
             }
 
-            // 2. Cross-check if received child id is correct
-            if (docBrokerIt->second->getJailId() != requestDetails[2])
-            {
-                throw BadRequestException("ChildId does not correspond to docKey");
-            }
+            std::string downloadId = requestDetails[3];
+            std::string url = docBrokerIt->second->getDownloadURL(downloadId);
+            docBrokerIt->second->unregisterDownloadId(downloadId);
+            std::string jailId = docBrokerIt->second->getJailId();
 
-            // 3. Don't let user download the file in main doc directory containing
-            // the document being edited otherwise we will end up deleting main directory
-            // after download finishes
-            if (docBrokerIt->second->getJailId() == requestDetails[3])
-            {
-                throw BadRequestException("RandomDir cannot be equal to ChildId");
-            }
             docBrokersLock.unlock();
 
-            std::string fileName;
-            URI::decode(requestDetails[4], fileName);
-            // sanitize if we can
-            auto it = fileName.find_first_of("?&%#!");
-            if (it != std::string::npos)
-            {
-                std::string cleanedName = fileName.substr(0, it);
-                LOG_DBG("Cleaned unexpected parameters from filename: '" << fileName << "' to '" << cleanedName << "'");
-                fileName = cleanedName;
-            }
+            bool foundDownloadId = !url.empty();
 
-            const Path filePath(LOOLWSD::ChildRoot + requestDetails[2]
-                                + JAILED_DOCUMENT_ROOT + requestDetails[3] + '/' + fileName);
+            const Path filePath(LOOLWSD::ChildRoot + jailId + JAILED_DOCUMENT_ROOT + url);
             const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath.toString());
-            LOG_INF("HTTP request for: " << filePathAnonym);
-            if (filePath.isAbsolute() && File(filePath).exists())
+
+            if (foundDownloadId && filePath.isAbsolute() && File(filePath).exists())
             {
+                LOG_INF("HTTP request for: " << filePathAnonym);
+
+                std::string fileName = filePath.getFileName();
                 const Poco::URI postRequestUri(request.getURI());
                 const Poco::URI::QueryParameters postRequestQueryParams = postRequestUri.getQueryParameters();
 
@@ -2940,7 +2925,11 @@ private:
             }
             else
             {
-                LOG_ERR("Download file [" << filePathAnonym << "] not found.");
+                if (foundDownloadId)
+                    LOG_ERR("Download file [" << filePathAnonym << "] not found.");
+                else
+                    LOG_ERR("Download with id [" << downloadId << "] not found.");
+
                 std::ostringstream oss;
                 oss << "HTTP/1.1 404 Not Found\r\n"
                     << "Date: " << Util::getHttpTimeNow() << "\r\n"
