@@ -117,15 +117,15 @@
 }
 
 .hasnotebookbar #shortcuts-menubar-icon {
-    position: absolute;
+	position: absolute;
 	top: 52%;
 	left: 0px;
 	height: 1px;
 	width: 13px;
 	-webkit-transition: all 0.25s;
-    transition: all 0.25s;
+	transition: all 0.25s;
 
-    margin-left: 8px;
+	margin-left: 8px;
 }
 
 .hasnotebookbar #shortcuts-menubar-icon:before,
@@ -164,8 +164,8 @@
 .notebookbar-scroll-wrapper {
 	overflow-x: scroll;
 	overflow-y: hidden;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none;  /* Internet Explorer 10+ */
 
 	height: 84px;
 }
@@ -175,8 +175,8 @@
 }
 
 .notebookbar-scroll-wrapper::-webkit-scrollbar { /* WebKit */
-    width: 0;
-    height: 0;
+	width: 0;
+	height: 0;
 }
 
 #toolbar-wrapper.hasnotebookbar {
@@ -236,10 +236,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #buttonbefore.notebookbar, #buttonafter.notebookbar, #buttonoptimal.notebookbar, #buttonparallel.notebookbar, #buttonnone.notebookbar, #buttonthrough.notebookbar, #bottom.notebookbar, #top.notebookbar, #standard.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar{
 	margin: 0px !important;
 	padding: 0px !important;
-}
-
-.unotoolbutton.notebookbar {
-	margin-right: 5px !important;
 }
 
 .unotoolbutton.notebookbar .unobutton {
@@ -322,6 +318,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 .unotoolbutton.notebookbar {
+	margin-right: 5px !important;
 	text-align: center;
 }
 .unotoolbutton.notebookbar.has-label > *{ /*so they stay side by side*/
@@ -532,7 +529,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 /* Review Tab */
 
 #table-ReviewTab {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 #SpellingAndGrammarDialog.notebookbar img,
@@ -543,8 +540,8 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #EditDoc.notebookbar img,
 #AcceptTrackedChanges.notebookbar img
 {
-       height: 32px !important;
-       width: 32px !important;
+	height: 32px !important;
+	width: 32px !important;
 }
 
 /* Help tab */

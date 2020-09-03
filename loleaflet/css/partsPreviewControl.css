@@ -1,5 +1,5 @@
 #document-container.parts-preview-document {
-        left: 214px;
+	left: 214px;
 }
 
 #slide-sorter {
@@ -15,13 +15,13 @@
 	white-space: nowrap;
 	text-align: center;
 	margin: 1em 0;
-	}
+}
 
 .preview-helper {
 	display: inline-block;
 	height: 100%;
 	vertical-align: middle;
-	}
+}
 
 .preview-img {
 	/* In draw docs, the width of previews are small, but we want a min of 160px to align it with document's left edge */
@@ -31,21 +31,21 @@
 	cursor: pointer;
 	border: 2px solid #dfdfdf;
 	margin-left: 20px;
-	}
+}
 
 /* The current part the user is on. */
 .preview-img-currentpart {
-    border-color: #000000;
-    border-style: solid;
+	border-color: #000000;
+	border-style: solid;
 }
 
 /* One of (potentially many) selected parts, but not the current. */
 .preview-img-selectedpart {
-    border-color: #0b87e780 !important;
-    border-style: solid;
+	border-color: #0b87e780 !important;
+	border-style: solid;
 }
 
 /* Highlight where a slide can be dropped when reordering by drag-and-drop. */
 .preview-img-dropsite {
-    border-bottom: 20px solid #b6b6b6;
+	border-bottom: 20px solid #b6b6b6;
 }

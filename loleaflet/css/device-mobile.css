@@ -33,7 +33,7 @@ input#follow-checkbox {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-  }
+}
 .checkmark {
 	position: absolute;
 	top: 0;
@@ -42,11 +42,9 @@ input#follow-checkbox {
 	width: 25px;
 }
 .checkmark:after {
-	content: "";
+	content: '';
 	position: absolute;
 	display: none;
-}
-.checkmark:after {
 	left: 9px;
 	top: 5px;
 	width: 5px;
@@ -56,7 +54,7 @@ input#follow-checkbox {
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
-  }
+}
 input#follow-checkbox:checked ~ .checkmark:after {
 	display: block;
 }
@@ -102,63 +100,64 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 
 /* Related to menubar.css */
 .document-logo {
-    width: 35px;
-    height: 38px;
+	width: 35px;
+	height: 38px;
 }
 
 #document-titlebar {
-    display: none;
+	display: none;
 }
 
 .document-title {
-    display: none;
+	display: none;
 }
 
 /* hide the menu in mobile view */
 #main-menu-state:not(:checked) ~ #main-menu {
-    display: none;
+	display: none;
 }
 
 .main-menu-btn {
-    display: inline-block;
+	display: inline-block;
 }
 
 .main-nav {
-    position: absolute;
-    height: 0;
-    width: 100%;
-    top: 37px; /*set equal to toolbar up's height*/
-    margin: 0;
-    -webkit-overflow-scrolling: touch;
-    overflow: scroll;
-    z-index: 1010;
-    bottom: 34px !important;
-    background-color: #00000050;
+	position: absolute;
+	height: 0;
+	width: 100%;
+	top: 37px; /*set equal to toolbar up's height*/
+	margin: 0;
+	-webkit-overflow-scrolling: touch;
+	overflow: scroll;
+	z-index: 1010;
+	bottom: 34px !important;
+	background-color: #00000050;
+	display: block !important; /* Show menubar even if folded */
 }
 
 #main-menu {
-   position: relative;
-   top: 0;
-   width: 70%;
-   float: right;
-   background-color: white;
-   height: 100%;
+	position: relative;
+	top: 0;
+	width: 70%;
+	float: right;
+	background-color: white;
+	height: 100%;
 }
 
 .writer-icon-img {
-    background-size: 35px 35px;
+	background-size: 35px 35px;
 }
 
 .calc-icon-img {
-    background-size: 35px 35px;
+	background-size: 35px 35px;
 }
 
 .impress-icon-img {
-    background-size: 35px 35px;
+	background-size: 35px 35px;
 }
 
 #document-name-input {
-    display: none;
+	display: none;
 }
 
 /* Related to scollBar.css */
@@ -224,24 +223,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 		top: 95px !important;
 	}
 }
-#spreadsheet-toolbar {
-	bottom: 0;
-}
-
-.spreadsheet-tabs-container {
-	bottom: 0;
-}
-
-#spreadsheet-row-column-frame.readonly {
-	top: 37px !important;
-}
-#document-container.spreadsheet-document.readonly {
-	top: 57px !important;
-}
-#spreadsheet-row-column-frame {
-	top: 73px;
-	bottom: 36px;
-}
 
 .spreadsheet-tab{
 	background-color: #eaf5ff;
@@ -264,6 +245,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 
 .spreadsheet-tabs-container {
+	bottom: 0;
 	left: 28px;
 }
 
@@ -283,6 +265,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border-top: 1px solid #eceff4;
 }
 #spreadsheet-toolbar{
+	bottom: 0;
 	background-color: #fbfbfb;
 	border-top: 1px solid #eceff4;
 	height: 40px;
@@ -297,9 +280,9 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	margin-bottom: 0px !important;
 }
 #toolbar-down table.w2ui-button.over {
-    border: 1px solid #eee;
-    background-color: #eeeeee;
-    border-radius: 0px;
+	border: 1px solid #eee;
+	background-color: #eeeeee;
+	border-radius: 0px;
 }
 
 /* Related to vex.css */
@@ -309,7 +292,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	color: #fff!important;
 	text-align: center!important;
 }
-.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="date"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="datetime-local"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="email"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="month"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="number"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="password"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="search"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="tel"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="time"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="url"], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="week"]{
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='date'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='datetime'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='datetime-local'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='email'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='month'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='number'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='password'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='search'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='tel'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='text'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='time'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='url'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='week']{
 	padding: 0 !important
 }
 .vex-content .loleaflet-annotation-img {
@@ -331,7 +314,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	font-size: 1em !important;
 	font-weight: 600 !important;
 }
-.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"] {
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='text'] {
 	border-radius: 4px !important;
 	background-color: #fff !important;
 	width: 100%;
@@ -341,12 +324,12 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border: 4px solid #fff !important;
 	box-shadow: 0 0 1px 1px #dfdfdf;
 }
-.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"]:focus {
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='text']:focus {
 	border: 4px solid #fff !important;
 	box-shadow: 0 0 1px 1px #0b87e7 !important;
 	color: #0b87e7 !important;
 }
-.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type="text"]:focus input{
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='text']:focus input{
 	color: #000 !important;
 }
 .vex-dialog-input {
@@ -519,19 +502,19 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 #setgamma input.spinfield, #linewidth input.spinfield, #nolines input.spinfield{
 	width: 140px !important;
 }
-td[id^=tb_spreadsheet-toolbar_item] table.w2ui-button.over {
+td[id^='tb_spreadsheet-toolbar_item'] table.w2ui-button.over {
 	background: none;
 	border-color: #fff;
 }
-td[id^=tb_spreadsheet-toolbar_item] table.w2ui-button{
+td[id^='tb_spreadsheet-toolbar_item'] table.w2ui-button{
 	border: none !important;
 }
-td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button, td[id^=tb_spreadsheet-toolbar_item]:active table.w2ui-button{
+td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button, td[id^='tb_spreadsheet-toolbar_item']:active table.w2ui-button{
 	background-color: #eaf5ff;
 	outline: none;
 	border: none;
 }
-td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id^=tb_spreadsheet-toolbar_item]:active table.w2ui-button div.w2ui-icon{
+td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[id^='tb_spreadsheet-toolbar_item']:active table.w2ui-button div.w2ui-icon{
 	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 }
@@ -639,10 +622,14 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 #spreadsheet-row-column-frame {
-	top: 72px !important;
+	top: 72px;
+	bottom: 36px;
 	bottom: 68px;
 }
 
+#document-container.spreadsheet-document.readonly {
+	top: 57px !important;
+}
 #spreadsheet-row-column-frame.readonly {
 	top: 41px !important;
 	bottom: 35px !important;
@@ -650,10 +637,6 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 
 #closebuttonwrapper {
 	display: none;
-}
-/* Show menubar even if folded */
-.main-nav {
-	display: block !important;
 }
 
 /* Slidesorter in portrait mode */
@@ -708,7 +691,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 .preview-frame-portrait.preview-img-dropsite {
-    padding-right: 0px;
+	padding-right: 0px;
 	border-right: 20px solid #b6b6b6;
 	border-bottom: none;
 }
@@ -759,7 +742,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 
 /* Highlight where a slide can be dropped when reordering by drag-and-drop. */
 .preview-frame-landscape.preview-img-dropsite {
-    border-bottom: 10px solid #b6b6b6;
+	border-bottom: 10px solid #b6b6b6;
 }
 
 /* Related to mobilewizard.cxx */

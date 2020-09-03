@@ -1,23 +1,23 @@
 #toolbar-up.w2ui-toolbar {
-		left: 0;
-		right: 0;
-		padding-left: 9px;
-		padding-right: 0px;
-		text-align: center;
-		z-index: 999;
-		overflow: visible !important;
-		background-color: white;
+	left: 0;
+	right: 0;
+	padding-left: 9px;
+	padding-right: 0px;
+	text-align: center;
+	z-index: 999;
+	overflow: visible !important;
+	background-color: white;
 }
 
 #toolbar-down {
-		left: 0;
-		right: 0;
-		text-align: center;
-		padding: 0;
-		position: fixed;
-		bottom: 0;
-		z-index: 0;
-		border-top: 1px solid #bbbbbb;
+	left: 0;
+	right: 0;
+	text-align: center;
+	padding: 0;
+	position: fixed;
+	bottom: 0;
+	z-index: 0;
+	border-top: 1px solid #bbbbbb;
 }
 #toolbar-down *{
 	max-height: 35px !important;
@@ -35,55 +35,45 @@
 	content: '%';
 }
 #document-signing-bar {
-		background-color: #ef324e;
+	background-color: #ef324e;
 }
 
 #toolbar-search {
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 0;
-    position: fixed;
-    bottom: 0;
-    z-index: 1000;
-    border-top: 1px solid #bbbbbb;
-}
-
-#toolbar-search {
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 0;
-    position: fixed;
-    bottom: 0;
-    z-index: 1000;
-    border-top: 1px solid #bbbbbb;
+	left: 0;
+	right: 0;
+	text-align: center;
+	padding: 0;
+	position: fixed;
+	bottom: 0;
+	z-index: 1000;
+	border-top: 1px solid #bbbbbb;
+	border-top: 1px solid #bbbbbb;
 }
 
 w2ui-toolbar {
-		position: absolute;
-		right: 10px;
-		top: 40px;
-		border: 1px solid darkgrey;
-		z-index: 1000;
-		display: none;
-		overflow: visible !important;
+	position: absolute;
+	right: 10px;
+	top: 40px;
+	border: 1px solid darkgrey;
+	z-index: 1000;
+	display: none;
+	overflow: visible !important;
 }
 #toolbar-down .ToolbarStatusInactive {
 	color: var(--gray-light-txt--color);
 	box-shadow: inset 0px 0px 0px 10px #f2f2f2, 0px 0px 0px 2px #f2f2f2, 4px 0px 0px 1px #fff, -4px 0px 0px 1px #fff, 0px 0px 0px 5px #fff;
 }
 #spreadsheet-toolbar {
-		left: 0;
-		text-align: center;
-		bottom: 35px;
-		padding: 0;
-		position: absolute;
+	left: 0;
+	text-align: center;
+	bottom: 35px;
+	padding: 0;
+	position: absolute;
 }
 
 #formulabar {
-		border-top: 1px solid #bbbbbb;
-		height: 30px;
+	border-top: 1px solid #bbbbbb;
+	height: 30px;
 }
 
 #presentation-toolbar {
@@ -104,31 +94,31 @@ w2ui-toolbar {
  * as a container
  */
 .select2-container {
-		z-index: 1000;
+	z-index: 1000;
 }
 
 .select2-container .select2-selection--single {
-		height: 100%;
+	height: 100%;
 }
 
 .w2ui-scroll-left,
 .w2ui-scroll-right {
-		z-index: 1001;
+	z-index: 1001;
 }
 
 /* center the toolbar */
 #tb_presentation-toolbar_item_left {
-		width: 50%;
+	width: 50%;
 }
 
 #addressInput {
-		height: 29px;
-		width: 100px;
+	height: 29px;
+	width: 100px;
 }
 
 #formulaInput {
-		height: 29px;
-		width: 100%;
+	height: 29px;
+	width: 100%;
 }
 
 #calc-inputbar-wrapper {
@@ -145,11 +135,11 @@ w2ui-toolbar {
 }
 
 #tb_formulabar_item_formula {
-		width: 100%;
+	width: 100%;
 }
 
 #tb_formulabar_item_formula div table {
-		width: 100%;
+	width: 100%;
 }
 
 @keyframes textPulse {
@@ -234,20 +224,20 @@ w2ui-toolbar {
 	box-shadow: 0 0 0.1px 1px #dfdfdf, 0 0 2px 1px #f0f0f0;
 }
 #document-name-input.editable:focus {
-		border: none;
-		box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb;
-		background-color: white;
-		background-image: none;
-		outline: none;
-		flex: 2;
+	border: none;
+	box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb;
+	background-color: white;
+	background-image: none;
+	outline: none;
+	flex: 2;
 }
 
 #document-name-input.editable:hover:not(:focus) {
-		border: none;
-		box-shadow: 0 0 0.1px 1px #d7d7d7, 0 0 3px 2px #f0f0f0;
-		background-color: white;
-		background-position: right;
-		background-repeat: no-repeat;
+	border: none;
+	box-shadow: 0 0 0.1px 1px #d7d7d7, 0 0 3px 2px #f0f0f0;
+	background-color: white;
+	background-position: right;
+	background-repeat: no-repeat;
 }
 #tb_editbar_item_fold table.w2ui-button {
 	margin: 0px 14px 0px 4px !important;
@@ -255,11 +245,11 @@ w2ui-toolbar {
 #tb_editbar_item_fold table.w2ui-button.over {
 	background-color: #fff !important;
 }
-td[id^=tb_editbar_item_sidebar]{
+td[id^='tb_editbar_item_sidebar']{
 	padding: 0px 8px;
 }
 #tb_editbar_item_edit {
-		display: none;
+	display: none;
 }
 
 #closebuttonwrapper {
@@ -283,36 +273,32 @@ td[id^=tb_editbar_item_sidebar]{
 }
 
 #closebutton:hover {
-		border-color: #ccc;
-		background-color: #eee;
+	border-color: #ccc;
+	background-color: #eee;
 }
 
 .closebuttonimage {
-		background: url('images/closedoc.svg') no-repeat center !important;
+	background: url('images/closedoc.svg') no-repeat center !important;
 }
 
 #tb_actionbar_item_left {
-		width: 45%;
+	width: 45%;
 }
 #tb_actionbar_item_right {
-		width: 100%;
+	width: 100%;
 }
 
 #tb_searchbar_item_left {
-    width: 95%;
-}
-
-#tb_searchbar_item_left {
-    width: 95%;
+	width: 95%;
 }
 
 .w2ui-button{
-		margin:0 !important;
+	margin:0 !important;
 }
 
 .w2ui-tb-image {
-		width: 24px !important;
-		height: 24px !important;
+	width: 24px !important;
+	height: 24px !important;
 }
 
 .w2ui-break {
@@ -320,35 +306,35 @@ td[id^=tb_editbar_item_sidebar]{
 }
 
 .leaflet-bar a {
-		float: left;
+	float: left;
 }
 
 div .leaflet-bar a:last-child {
-		border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
 
 .leaflet-control-zoom.leaflet-bar {
-		margin-left: 0.5em;
+	margin-left: 0.5em;
 }
 
 div.leaflet-control-zoom leaflet-bar {
-		width: 53px;
+	width: 53px;
 }
 
-div .leaflet-bar a:first-child {
-		border-radius: 4px 0 0 4px;
+.leaflet-bar a:first-child {
+	border-radius: 4px 0 0 4px;
 }
 
-div .leaflet-bar a:last-child {
-		border-radius: 0 4px 4px 0;
+.leaflet-bar a:last-child {
+	border-radius: 0 4px 4px 0;
 }
 
 label.leaflet-control-editviewswitch {
-		padding: 0.2em 0.4em 0.2em 0em;
+	padding: 0.2em 0.4em 0.2em 0em;
 }
 
 input.leaflet-control-search-bar {
-		padding: 0.3em;
+	padding: 0.3em;
 	max-width: 100px;
 }
 
@@ -362,98 +348,98 @@ select {
 }
 
 button.leaflet-control-search-prev {
-		margin-left: 0.2em;
+	margin-left: 0.2em;
 }
 
 button.leaflet-control-search-next
 , leaflet-control-search-cancel {
-		margin-right: 0.2em;
+	margin-right: 0.2em;
 }
 
 #toolbar label
 , .leaflet-control-search {
-		background-color: #fff;
+	background-color: #fff;
 }
 
 .search-not-found {
-		background-color: red !important;
-		-webkit-transition: background-color 0.8s linear;
-			 -moz-transition: background-color 0.8s linear;
-				 -o-transition: background-color 0.8s linear;
-						transition: background-color 0.8s linear;
+	background-color: red !important;
+	-webkit-transition: background-color 0.8s linear;
+	-moz-transition: background-color 0.8s linear;
+	-o-transition: background-color 0.8s linear;
+	transition: background-color 0.8s linear;
 
 }
 
 #zoomlevel {
-		min-width: 36px;
-		font-size: 12px;
+	min-width: 36px;
+	font-size: 12px;
 }
 
 /* select box */
 .select2-results__option {
-		padding: 5px;
-		font-family: var(--loleaflet-font);
-		font-size: 12px;
-		overflow: hidden;
-		text-overflow: ellipsis;
+	padding: 5px;
+	font-family: var(--loleaflet-font);
+	font-size: 12px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .select2-selection__rendered {
-		font-family: var(--loleaflet-font);
-		font-size: 12px;
+	font-family: var(--loleaflet-font);
+	font-size: 12px;
 }
 .styles-select {
-		width: 180px;
+	width: 180px;
 }
 #tb_editbar_item_fonts .select2-container{
-		width: 150px !important;
+	width: 150px !important;
 }
 .fontsizes-select {
-		width: 55px !important;
+	width: 55px !important;
 }
 .evo-cp-wrap {
-		/* hide the color pick div */
-		width: 1px !important;
+	/* hide the color pick div */
+	width: 1px !important;
 }
 
 .font-color-indicator,
 .back-color-indicator {
-		width: 24px;
-		height: 6px;
-		margin-top: -7px !important;
-		margin-left: 5px !important;
-		position: fixed;
-		background: transparent;
+	width: 24px;
+	height: 6px;
+	margin-top: -7px !important;
+	margin-left: 5px !important;
+	position: fixed;
+	background: transparent;
 }
 
 .back-color-indicator {
-		border-width: 1px;
-		border-style: solid;
+	border-width: 1px;
+	border-style: solid;
 }
 
 #setborderstyle-grid tr td {
-		box-sizing: border-box;
-		background: rgba(255, 255, 255, 0.5);
-		position: relative;
-		padding: 2px;
-		border: 1px solid #ccc;
-		overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
+	box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.5);
+	position: relative;
+	padding: 2px;
+	border: 1px solid #ccc;
+	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
 }
 
 #setborderstyle-grid td:hover {
-		border: 1px solid #888;
+	border: 1px solid #888;
 }
 
 #conditionalformatmenu-grid tr td {
-		box-sizing: border-box;
-		background: rgba(255, 255, 255, 0.5);
-		position: relative;
-		padding: 2px;
-		border: 1px solid #ccc;
-		overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
+	box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.5);
+	position: relative;
+	padding: 2px;
+	border: 1px solid #ccc;
+	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
 }
 
 #conditionalformatmenu-grid td:hover {
-		border: 1px solid #888;
+	border: 1px solid #888;
 }
 
 .w2ui-icon.basicshapes_rectangle { background: url('images/lc_rect.svg') no-repeat center !important; }
@@ -600,94 +586,94 @@ button.leaflet-control-search-next
 #div-frame13 { width: 102px; height: 18px; text-align: center; display: table-cell; vertical-align: middle; cursor: default; }
 
 .w2ui-icon.iconset00 { background: url('images/icon-set-colorarrows-down.svg') no-repeat, url('images/icon-set-colorarrows-same.svg') no-repeat, url('images/icon-set-colorarrows-up.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset01 { background: url('images/icon-set-grayarrows-down.svg') no-repeat, url('images/icon-set-grayarrows-same.svg') no-repeat, url('images/icon-set-grayarrows-up.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset02 { background: url('images/icon-set-flags-red.svg') no-repeat, url('images/icon-set-flags-yellow.svg') no-repeat, url('images/icon-set-flags-green.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset03 { background: url('images/icon-set-circles1-red.svg') no-repeat, url('images/icon-set-circles1-yellow.svg') no-repeat, url('images/icon-set-circles1-green.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset04 { background: url('images/icon-set-trafficlights-red.svg') no-repeat, url('images/icon-set-trafficlights-yellow.svg') no-repeat, url('images/icon-set-trafficlights-green.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset05 { background: url('images/icon-set-shapes-diamond.svg') no-repeat, url('images/icon-set-shapes-triangle.svg') no-repeat, url('images/icon-set-shapes-circle.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset06 { background: url('images/icon-set-symbols1-cross.svg') no-repeat, url('images/icon-set-symbols1-exclamation-mark.svg') no-repeat, url('images/icon-set-symbols1-check.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 /* Avoid the iconset07, the core renders it the same as iconset06, no need to support it in the online.
 .w2ui-icon.iconset07 { background: url('images/icon-set-symbols1-cross.svg') no-repeat, url('images/icon-set-symbols1-exclamation-mark.svg') no-repeat, url('images/icon-set-symbols1-check.svg') no-repeat !important;
 											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
 											 background-position: 2px center, 20px center, 38px center !important;
 																			width: 94px !important; }*/
 .w2ui-icon.iconset08 { background: url('images/icon-set-positive-yellow-smilie.svg') no-repeat, url('images/icon-set-neutral-yellow-smilie.svg') no-repeat, url('images/icon-set-negative-yellow-smilie.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset09 { background: url('images/icon-set-stars-empty.svg') no-repeat, url('images/icon-set-stars-half.svg') no-repeat, url('images/icon-set-stars-full.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset10 { background: url('images/icon-set-triangles-down.svg') no-repeat, url('images/icon-set-triangles-same.svg') no-repeat, url('images/icon-set-triangles-up.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset11 { background: url('images/icon-set-positive-green-smilie.svg') no-repeat, url('images/icon-set-neutral-yellow-smilie.svg') no-repeat, url('images/icon-set-negative-red-smilie.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset12 { background: url('images/icon-set-colorarrows-down.svg') no-repeat, url('images/icon-set-colorarrows-slightly-down.svg') no-repeat, url('images/icon-set-colorarrows-slightly-up.svg') no-repeat, url('images/icon-set-colorarrows-up.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset13 { background: url('images/icon-set-grayarrows-down.svg') no-repeat, url('images/icon-set-grayarrows-slightly-down.svg') no-repeat, url('images/icon-set-grayarrows-slightly-up.svg') no-repeat, url('images/icon-set-grayarrows-up.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset14 { background: url('images/icon-set-circles2-dark-gray.svg') no-repeat, url('images/icon-set-circles2-light-gray.svg') no-repeat, url('images/icon-set-circles2-light-red.svg') no-repeat, url('images/icon-set-circles2-dark-red.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset15 { background: url('images/icon-set-bars-one-quarter.svg') no-repeat, url('images/icon-set-bars-half.svg') no-repeat, url('images/icon-set-bars-three-quarters.svg') no-repeat, url('images/icon-set-bars-full.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset16 { background: url('images/icon-set-circles1-gray.svg') no-repeat, url('images/icon-set-circles1-red.svg') no-repeat, url('images/icon-set-circles1-yellow.svg') no-repeat, url('images/icon-set-circles1-green.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset17 { background: url('images/icon-set-colorarrows-down.svg') no-repeat, url('images/icon-set-colorarrows-slightly-down.svg') no-repeat, url('images/icon-set-colorarrows-same.svg') no-repeat, url('images/icon-set-colorarrows-slightly-up.svg') no-repeat, url('images/icon-set-colorarrows-up.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset18 { background: url('images/icon-set-grayarrows-down.svg') no-repeat, url('images/icon-set-grayarrows-slightly-down.svg') no-repeat, url('images/icon-set-grayarrows-same.svg') no-repeat, url('images/icon-set-grayarrows-slightly-up.svg') no-repeat, url('images/icon-set-grayarrows-up.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset19 { background: url('images/icon-set-bars-empty.svg') no-repeat, url('images/icon-set-bars-one-quarter.svg') no-repeat, url('images/icon-set-bars-half.svg') no-repeat, url('images/icon-set-bars-three-quarters.svg') no-repeat, url('images/icon-set-bars-full.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset20 { background: url('images/icon-set-pies-empty.svg') no-repeat, url('images/icon-set-pies-one-quarter.svg') no-repeat, url('images/icon-set-pies-half.svg') no-repeat, url('images/icon-set-pies-three-quarters.svg') no-repeat, url('images/icon-set-pies-full.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
+	width: 94px !important; }
 .w2ui-icon.iconset21 { background: url('images/icon-set-squares-empty.svg') no-repeat, url('images/icon-set-squares-one-quarter.svg') no-repeat, url('images/icon-set-squares-half.svg') no-repeat, url('images/icon-set-squares-three-quarters.svg') no-repeat, url('images/icon-set-squares-full.svg') no-repeat !important;
-											 background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
-											 background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
-																			width: 94px !important; }
+	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
+	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
+	width: 94px !important; }
 
 .w2ui-icon.print{ background: url('images/lc_print.svg') no-repeat center !important; }
 .w2ui-icon.undo{ background: url('images/lc_undo.svg') no-repeat center !important; }
@@ -781,76 +767,76 @@ button.leaflet-control-search-next
 .w2ui-icon.vereign{ background: url('images/vereign.png') no-repeat center !important; }
 
 .inserttable-pop {
-		z-index: 1000;
-		box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+	z-index: 1000;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 #fontcolor-wrapper {
-		position: relative;
-		right: 200px; /* fontcolor popup has 200px width, place it to the left from its right edge */
+	position: relative;
+	right: 200px; /* fontcolor popup has 200px width, place it to the left from its right edge */
 }
 
 #backcolor-wrapper {
-		position: relative;
-		right: 200px; /* backcolor popup has 200px width, place it to the left from its right edge */
+	position: relative;
+	right: 200px; /* backcolor popup has 200px width, place it to the left from its right edge */
 }
 
 #backcolor-wrapper .evo-pop {
-		z-index: 1000; /* Override default value of 10000 of evo-pop class */
+	z-index: 1000; /* Override default value of 10000 of evo-pop class */
 }
 
 #fontcolor-wrapper .evo-pop {
-		z-index: 1000; /* Override default value of 10000 of evo-pop class */
+	z-index: 1000; /* Override default value of 10000 of evo-pop class */
 }
 
 /* for 10x10 grid 10x20+10*.col.margin */
 .inserttable-grid {
-		box-sizing: border-box;
-		background: rgba(255, 255, 255, 0.5);
-		position: relative;
-		padding: 2px;
-		display: block;
-		width: 243px;
+	box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.5);
+	position: relative;
+	padding: 2px;
+	display: block;
+	width: 243px;
 }
 
 .inserttable-grid .row {
-		height: 20px;
-		margin: 3px;
+	height: 20px;
+	margin: 3px;
 }
 
 .inserttable-grid .col {
-		height: 100%;
-		float: left;
-		padding: 2px;
-		width: 20px;
-		border: 1px;
-		border-style: solid;
-		border-color: rgba(120, 120, 120, 0.5);
-		background: rgba(255, 255, 255, 1);
-		margin: 3px 0 0 3px;
+	height: 100%;
+	float: left;
+	padding: 2px;
+	width: 20px;
+	border: 1px;
+	border-style: solid;
+	border-color: rgba(120, 120, 120, 0.5);
+	background: rgba(255, 255, 255, 1);
+	margin: 3px 0 0 3px;
 }
 
 .inserttable-grid .col.bright {
-		border: 0px;
-		background: rgba(66, 151, 215, 1);
+	border: 0px;
+	background: rgba(66, 151, 215, 1);
 }
 
 /* Insert shape grid - based on inserttable grid */
 .insertshape-grid {
-		box-sizing: border-box;
-		background: rgba(255, 255, 255, 0.5);
-		position: static;
-		padding: 2px;
-		display: block;
-		min-width: 350px;
-		width:  100%;
-		height: auto;
+	box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.5);
+	position: static;
+	padding: 2px;
+	display: block;
+	min-width: 350px;
+	width:  100%;
+	height: auto;
 }
 
 .insertshape-grid .row {
-		height: auto;
-		position: static;
-		text-align: left;
+	height: auto;
+	position: static;
+	text-align: left;
 }
 
 .insertshape-grid .row:last-child {
@@ -858,50 +844,50 @@ button.leaflet-control-search-next
 }
 
 .insertshape-grid .col {
-		height: 30px;
-		padding: 2px;
-		width: 30px;
-		border: 1px solid transparent;
+	height: 30px;
+	padding: 2px;
+	width: 30px;
+	border: 1px solid transparent;
 }
 
 .insertshape-grid .row-header {
-		height: 30px;
-		text-align: center;
-		padding: 7px;
-		clear: both;
-		background-color: rgba(128, 128, 128, 0.1);
-		position: static;
-		line-height: 30px;
+	height: 30px;
+	text-align: center;
+	padding: 7px;
+	clear: both;
+	background-color: rgba(128, 128, 128, 0.1);
+	position: static;
+	line-height: 30px;
 }
 
 .insertshape-grid .col:hover {
-		border: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 
 tr.useritem:hover {
-		cursor: default;
-		background-color: rgba(67, 172, 232, 0.25);
+	cursor: default;
+	background-color: rgba(67, 172, 232, 0.25);
 }
 
 tr.useritem > td {
-		padding: 7px;
+	padding: 7px;
 }
 
 tr.useritem > td.usercolor {
-		display: inline-block;
-		top: 0px;
-		left: 3px;
-		position: relative;
+	display: inline-block;
+	top: 0px;
+	left: 3px;
+	position: relative;
 }
 
 tr.useritem > td > img {
-		border-radius: 100px;
+	border-radius: 100px;
 }
 
 .context-menu-link {
-		text-decoration: none;
-		color: black;
-		width: 100%;
+	text-decoration: none;
+	color: black;
+	width: 100%;
 }
 .menu-entry-icon {
 	width: 32px;

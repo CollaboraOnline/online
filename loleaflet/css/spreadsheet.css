@@ -1,8 +1,8 @@
 #document-container.spreadsheet-document {
-				border-top: 1px solid #B6B6B6;
-				top: 137px;
-				left: 50px;
-				bottom: 75px;
+	border-top: 1px solid #B6B6B6;
+	top: 137px;
+	left: 50px;
+	bottom: 75px;
 }
 
 #document-container.spreadsheet-document.readonly {
@@ -26,7 +26,7 @@
 	white-space: nowrap;
 
 	background-color: var(--gray-bg-color);
-	}
+}
 
 .spreadsheet-tab-scroll {
 	width: 100%;
@@ -34,7 +34,7 @@
 	overflow: auto;
 	padding-bottom: 20px; /* to hide the horizontal scrollbar */
 	margin-left: 6px;
-	}
+}
 
 .spreadsheet-tab {
 	margin: 0px;
@@ -50,7 +50,7 @@
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
 	color: black;
-	}
+}
 
 .spreadsheet-tab-selected {
 	background: white !important;
@@ -61,7 +61,7 @@
 	margin-top: 2px;
 	border: 1px solid #dfdfdf;
 	border-top: 0px;
-	}
+}
 
 #spreadsheet-row-column-frame {
 	position: absolute;
@@ -72,8 +72,8 @@
 }
 
 #spreadsheet-row-column-frame.readonly {
-		top: 36px;
-		bottom: 0px;
+	top: 36px;
+	bottom: 0px;
 }
 
 #spreadsheet-row-column-frame.tablet.readonly {
@@ -92,7 +92,7 @@
 	top: 0;
 	width: 48px;
 	height: 19px;
-	}
+}
 
 #spreadsheet-header-corner {
 	display: inline-block;
@@ -103,7 +103,7 @@
 	position: relative;
 	margin: 0px;
 	padding: 0px;
-	}
+}
 
 .spreadsheet-header-corner-styles {
 	border: 1px solid darkgray;
@@ -111,7 +111,7 @@
 	color: black;
 	background-color: #f1f4f7;
 	cursor: pointer;
-	}
+}
 
 #spreadsheet-header-columns-container {
 	border: 1px solid darkgrey;
@@ -125,7 +125,7 @@
 	right: 0;
 	height: 19px;
 	overflow: hidden;
-	}
+}
 
 .spreadsheet-header-columns {
 	display: inline-block;
@@ -135,7 +135,7 @@
 	position: relative;
 	margin: 0px;
 	padding: 0px;
-	}
+}
 
 .spreadsheet-header-column {
 	border: 1px solid darkgray;
@@ -151,7 +151,7 @@
 
 .spreadsheet-header-column-selected {
 	color: white;
-  background: linear-gradient(#0b87e7, #0b87e7, #0b87e7);
+	background: linear-gradient(#0b87e7, #0b87e7, #0b87e7);
 }
 
 .spreadsheet-header-column-resize {
@@ -168,7 +168,7 @@
 	width: 48px;
 	bottom: 0;
 	overflow: hidden;
-	}
+}
 
 .spreadsheet-header-rows {
 	width: 100%;
@@ -176,7 +176,7 @@
 	position: relative;
 	margin: 0px;
 	padding: 0px;
-	}
+}
 
 .spreadsheet-header-row {
 	border: 1px solid darkgray;
@@ -184,20 +184,20 @@
 	color: black;
 	background-color: #f1f4f7;
 	cursor: pointer;
-	}
+}
 
 .spreadsheet-header-row-hover {
 	background-color: #DDD;
-	}
+}
 
 .spreadsheet-header-row-selected {
 	color: white;
 	background: linear-gradient(#0b87e7, #0b87e7, #0b87e7);
-	}
+}
 
 .spreadsheet-header-row-resize {
 	cursor: row-resize;
-	}
+}
 
 .spreadsheet-cell-resize-marker {
 	margin-left: 0px;
@@ -225,7 +225,7 @@
 	background-image: url('images/drop-down-button.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	}
+}
 
 #toolbar-wrapper.spreadsheet.tablet {
 	z-index: auto;

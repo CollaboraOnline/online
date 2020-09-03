@@ -141,7 +141,7 @@ span#main-menu-btn-icon {
 	line-height: 28px;
 	font-weight: 300;
 	color: #ff0000 !important;
-	background: url(images/lc_square_rounded_unfilled.svg) no-repeat center;
+	background: url('images/lc_square_rounded_unfilled.svg') no-repeat center;
 }
 
 .colors-container-basic-color-mark {
@@ -183,7 +183,7 @@ p.mobile-wizard.ui-combobox-text:not(.selected) {
 }
 
 p.mobile-wizard.ui-combobox-text.selected {
-	background: url(images/lc_listitem-selected.svg) no-repeat right;
+	background: url('images/lc_listitem-selected.svg') no-repeat right;
 	background-position-x: 94%;
 	color: #0867af !important;
 }
@@ -199,7 +199,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background: none !important;
 }
 #mobile-wizard.funcwizard div#mobile-wizard-content.showHelpBG {
-	background: url(images/lc_helpindex_secondary.svg) no-repeat right 16px bottom 88px / 124px !important;
+	background: url('images/lc_helpindex_secondary.svg') no-repeat right 16px bottom 88px / 124px !important;
 }
 #mobile-wizard-content:not(.with-slide-sorter-above), .menuwizard #mobile-wizard-content.with-slide-sorter-above{
 	top: 48px !important;
@@ -213,7 +213,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	flex-wrap: wrap  !important;
 	justify-content: space-around;
 }
-.with-slide-sorter-above > .ui-tabs-content > div[title=Layouts]{
+.with-slide-sorter-above > .ui-tabs-content > div[title='Layouts']{
 	justify-content: center;
 	-ms-box-orient: horizontal  !important;
 	display: -webkit-box;
@@ -250,22 +250,22 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background-position-x: center;
 }
 #mobile-wizard-back {
-		background-image: url('images/lc_closedocmobile.svg');
-		background-repeat: no-repeat;
-		width: 48px;
-		background-position-x: 16px;
-		background-position-y: center;
-		height: 20px;
+	background-image: url('images/lc_closedocmobile.svg');
+	background-repeat: no-repeat;
+	width: 48px;
+	background-position-x: 16px;
+	background-position-y: center;
+	height: 20px;
 }
 
 #mobile-wizard {
-		width: 100%;
-		position: fixed;
-		bottom: 0px;
-		z-index: 1000;
-		background-color: white;
-		box-shadow: 0px -2px 4px 1px #00000030;
-		overflow-y: scroll;
+	width: 100%;
+	position: fixed;
+	bottom: 0px;
+	z-index: 1000;
+	background-color: white;
+	box-shadow: 0px -2px 4px 1px #00000030;
+	overflow-y: scroll;
 }
 
 #mobile-wizard-content *{
@@ -402,7 +402,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	display: table-cell;
 	padding-left: 10px;
 	padding-right: 10px;
-	background: url(images/lc_closedocmobile.svg) no-repeat left / 10px;
+	background: url('images/lc_closedocmobile.svg') no-repeat left / 10px;
 	font-size: 1.5em;
 	font-weight: bold;
 	color: transparent !important;
@@ -412,7 +412,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 
 .func-info-icon {
 	display: block;
-	background: url(images/lc_helpindex.svg) no-repeat center;
+	background: url('images/lc_helpindex.svg') no-repeat center;
 	min-width: 28px;
 	min-height: 28px;
 }
@@ -460,7 +460,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	width: 49%;
 	height: 36px;
 	line-height: 36px;
-    vertical-align: middle;
+	vertical-align: middle;
 	margin: 0px 1%;
 	border-radius: 10px;
 	border: none;
@@ -474,12 +474,12 @@ p.mobile-wizard.ui-combobox-text.selected {
 	border-bottom: solid 1px #0b87e7;
 }
 
-[id|=tb_colorselector] .w2ui-tb-caption > div {
+[id|='tb_colorselector'] .w2ui-tb-caption > div {
 	height: 32px !important;
 	width: 32px !important;
 }
 
-[name|=colorselector] {
+[name|='colorselector'] {
 	width: 80px;
 }
 
@@ -701,7 +701,7 @@ a.leaflet-control-zoom-in {
 }
 
 #DecrementIndent + input:disabled{display: none;}
-div#mobile-wizard-content input[type=number]{
+div#mobile-wizard-content input[type='number']{
 	height: 46px;
 	width: 37%;
 	padding-left: 8%;
@@ -742,28 +742,28 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	box-shadow: 0 0 0px 8px #e5f1ff;
 	border-radius: 0.1px;
 }
-#buttonbefore{background: url(images/sc_wrapleft.svg) no-repeat center;}
-#buttonafter{background: url(images/sc_wrapright.svg) no-repeat center;}
-#buttonoptimal{background: url(images/sc_wrapideal.svg) no-repeat center;}
-#buttonparallel{background: url(images/sc_wrapmenu.svg) no-repeat center;}
-#buttonnone{background: url(images/sc_wrapoff.svg) no-repeat center;}
-#buttonthrough{background: url(images/sc_wrapthrough.svg) no-repeat center;}
-#top{background: url(images/sc_aligntop.svg) no-repeat center;}
-#bottom{background: url(images/sc_alignbottom.svg) no-repeat center;}
-#standard{background: url(images/sc_alignverticalcenter.svg) no-repeat center;}
+#buttonbefore{background: url('images/sc_wrapleft.svg') no-repeat center;}
+#buttonafter{background: url('images/sc_wrapright.svg') no-repeat center;}
+#buttonoptimal{background: url('images/sc_wrapideal.svg') no-repeat center;}
+#buttonparallel{background: url('images/sc_wrapmenu.svg') no-repeat center;}
+#buttonnone{background: url('images/sc_wrapoff.svg') no-repeat center;}
+#buttonthrough{background: url('images/sc_wrapthrough.svg') no-repeat center;}
+#top{background: url('images/sc_aligntop.svg') no-repeat center;}
+#bottom{background: url('images/sc_alignbottom.svg') no-repeat center;}
+#standard{background: url('images/sc_alignverticalcenter.svg') no-repeat center;}
 .checkbutton{
 	clear: both;
 }
 .checkbutton label {
-    line-height: 44px;
-    vertical-align: top;
-    padding-left: 4%;
+	line-height: 44px;
+	vertical-align: top;
+	padding-left: 4%;
 }
-#mobile-wizard input[type=checkbox]:disabled{
+#mobile-wizard input[type='checkbox']:disabled{
 	border: 2px solid #ddd;
 	box-shadow: none;
 }
-#mobile-wizard input[type=checkbox]{
+#mobile-wizard input[type='checkbox']{
 	appearance: none;
 	width: 24px;
 	height: 24px;
@@ -778,28 +778,28 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	outline: none;
 	box-shadow: #00000015 0px 0px 2px 1px;
 }
-#mobile-wizard input[type=checkbox]:checked{
-	background: url(images/lc_ok_white.svg) no-repeat center;
+#mobile-wizard input[type='checkbox']:checked{
+	background: url('images/lc_ok_white.svg') no-repeat center;
 	background-color: #0b87e7;
 	border-radius: 2px;
 	border: 2px solid #0b87e7;
 	outline: none;
 	box-shadow: none;
 }
-#mobile-wizard input[type=checkbox]:before{
+#mobile-wizard input[type='checkbox']:before{
 	width: 20px;
 	height: 20px;
 }
-#mobile-wizard input[type=checkbox]:after{
+#mobile-wizard input[type='checkbox']:after{
 	top: -20px;
 	width: 16px;
 }
 
-#mobile-wizard input[type=radio]:disabled{
+#mobile-wizard input[type='radio']:disabled{
 	border: 2px solid #ddd;
 	box-shadow: none;
 }
-#mobile-wizard input[type=radio]{
+#mobile-wizard input[type='radio']{
 	border-radius: 50%;
 	appearance: none;
 	width: 24px;
@@ -814,22 +814,22 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	outline: none;
 	box-shadow: #00000015 0px 0px 2px 1px;
 }
-#mobile-wizard input[type=radio]:checked{
-	background: url(images/lc_ok_white.svg) no-repeat center;
+#mobile-wizard input[type='radio']:checked{
+	background: url('images/lc_ok_white.svg') no-repeat center;
 	background-color: #0b87e7;
 	border: 2px solid #0b87e7;
 	outline: none;
 	box-shadow: none;
 }
-#mobile-wizard input[type=radio]:checked:disabled{
+#mobile-wizard input[type='radio']:checked:disabled{
 	background-color: #ddd !important;
 	border: 2px solid #ddd !important;
 }
-#mobile-wizard input[type=radio]:before{
+#mobile-wizard input[type='radio']:before{
 	width: 20px;
 	height: 20px;
 }
-#mobile-wizard input[type=radio]:after{
+#mobile-wizard input[type='radio']:after{
 	top: -20px;
 	width: 16px;
 }
@@ -839,11 +839,11 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	vertical-align: baseline;
 	padding-left: 24px;
 }
-#SdTableDesignPanel div[id^=Use]{
+#SdTableDesignPanel div[id^='Use']{
 	width: 92%;
 	padding-right: 4% !important;
 }
-input[type=checkbox]#UseBandingColumnStyle, input[type=checkbox]#UseLastColumnStyle, input[type=checkbox]#UseFirstColumnStyle, input[type=checkbox]#UseBandingRowStyle, input[type=checkbox]#UseLastRowStyle, input[type=checkbox]#UseFirstRowStyle{
+input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColumnStyle, input[type='checkbox']#UseFirstColumnStyle, input[type='checkbox']#UseBandingRowStyle, input[type='checkbox']#UseLastRowStyle, input[type='checkbox']#UseFirstRowStyle{
 	margin-right: 0px !important;
 }
 #mobile-wizard button{
@@ -878,7 +878,7 @@ label.disabled {
 	color: grey !important;
 }
 
-input[type=checkbox][disabled] {
+input[type='checkbox'][disabled] {
 	background-color: grey !important;
 	border-color: grey !important;
 }

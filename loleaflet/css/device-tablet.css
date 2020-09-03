@@ -33,7 +33,7 @@
 
 /* Additions for the main menu. */
 .main-nav {
-    margin: 0;
+	margin: 0;
 }
 .hasnotebookbar{
 	min-width: 808px; /*set a minimum so the logo fits*/

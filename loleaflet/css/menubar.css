@@ -1,49 +1,49 @@
 #main-menu {
-    top: 0;
-    height: 25px;
-    z-index: 1000;
-    outline: none;
-    float: left;
-    background-color: transparent;
-    margin-left: 5px;
-    white-space: nowrap;
-    display: inline;
+	top: 0;
+	height: 25px;
+	z-index: 1000;
+	outline: none;
+	float: left;
+	background-color: transparent;
+	margin-left: 5px;
+	white-space: nowrap;
+	display: inline;
 }
 
 #main-menu.readonly {
-    top: 0px;
+	top: 0px;
 }
 
 #document-header {
-    position: relative;
-    background: #ffffff;
-    margin-right: 5px;
+	position: relative;
+	background: #ffffff;
+	margin-right: 5px;
 }
 
 .document-logo {
-  position: relative;
-  width: 22px;
-  height: 30px;
+	position: relative;
+	width: 22px;
+	height: 30px;
 }
 
 .document-title {
-    height: 30px;
-    min-width: 84px;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+	height: 30px;
+	min-width: 84px;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 #document-titlebar {
-    position: relative;
-    display: inline-table; /*new*/
-    table-layout: fixed;
-    border-spacing: 5px 0;
-    max-height: 39px;
-    z-index: 1000;
-    width: calc(100% - 890px);
-    right: 0px;
+	position: relative;
+	display: inline-table; /*new*/
+	table-layout: fixed;
+	border-spacing: 5px 0;
+	max-height: 39px;
+	z-index: 1000;
+	width: calc(100% - 890px);
+	right: 0px;
 }
 
 .main-nav.hasnotebookbar #document-titlebar {
@@ -51,133 +51,131 @@
 }
 
 .main-nav {
-    height: 32px; /* on mouseover menubar items, border emerges */
-    width: auto;
-    background: #ffffff;
-    margin: 3px;
-    white-space: nowrap;
+	height: 32px; /* on mouseover menubar items, border emerges */
+	width: auto;
+	background: #ffffff;
+	margin: 3px;
+	white-space: nowrap;
 }
 
 .main-nav.hasnotebookbar{
-  background: var(--gray-bg-color);
-  margin-top: 0px;
+	background: var(--gray-bg-color);
+	margin-top: 0px;
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
 .lo-menu {
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+	border: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	background: #ffffff;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;
+	cursor: default;
 }
 
 .lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active {
-    font-family: var(--loleaflet-font);
-    font-size: 12px;
-    line-height: 15px;
+	font-family: var(--loleaflet-font);
+	font-size: 12px;
+	line-height: 15px;
 }
 
 .lo-menu ul a, .lo-menu ul a:hover, .lo-menu ul a:focus, .lo-menu ul a:active {
-    font-size: 12px;
+	font-size: 12px;
 }
 
 .lo-menu a.disabled {
-    cursor: default;
+	cursor: default;
 }
 
 .lo-menu > li > a, .lo-menu > li > a.has-submenu {
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 8px;
-    z-index: 500;
-    border-left: 1px solid #ffffff;
-    border-right: 1px solid #ffffff;
-    border-top: 1px solid transparent;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 8px;
+	z-index: 500;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #ffffff;
+	border-top: 1px solid transparent;
 }
 
-.lo-menu {
-    background: #ffffff;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none;   /* Chrome/Safari/Opera */
-    -khtml-user-select: none;    /* Konqueror */
-    -moz-user-select: none;      /* Firefox */
-    -ms-user-select: none;       /* Internet Explorer/Edge */
-    user-select: none;
-    cursor: default;
-}
 .lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
-    padding: 5px 22px;
-    color: #000;
+	padding: 5px 22px;
+	color: #000;
 }
 .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
-    background: #0b87e7;
-    color: #fff;
+	background: #0b87e7;
+	color: #fff;
 }
 .lo-menu > li, .lo-menu > li > a.disabled {
-    background: #ffffff; /* top-level menus remain greyish */
-    border-left-color: transparent;
+	background: #ffffff; /* top-level menus remain greyish */
+	border-left-color: transparent;
 }
 .lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
-    background: #fff;
-    color: #000;
-    border-color: #bbbbbb;
-    border-bottom: 1px solid #bbb;
+	background: #fff;
+	color: #000;
+	border-color: #bbbbbb;
+	border-bottom: 1px solid #bbb;
 }
 .lo-menu > li > a.highlighted {
-    border-bottom-color: #fff;
+	border-bottom-color: #fff;
 }
 .lo-menu > li > ul {
-    margin-top: -1px !important;
-    z-index: 400;
+	margin-top: -1px !important;
+	z-index: 400;
 }
 .lo-menu > li > a span.sub-arrow {
-    display: none;
+	display: none;
 }
 .lo-menu ul {
-    border: 1px solid #bbbbbb;
-    background: white;
+	border: 1px solid #bbbbbb;
+	background: white;
 }
 .lo-menu ul a span.sub-arrow {
-    right: 0;
-    margin-right: 5px;
-    background: transparent; /* we want them to be transparent always whether mobile or desktop */
+	right: 0;
+	margin-right: 5px;
+	background: transparent; /* we want them to be transparent always whether mobile or desktop */
 }
 .lo-menu ul > li {
-    border-left: 0;
-    border-top: none;
+	border-left: 0;
+	border-top: none;
 }
 .lo-menu a.separator {
-    height: 1px;
-    margin: 4px 0;
-    overflow: hidden;
-    padding-top: 0;
-    padding-bottom: 0;
-    background-color: var(--gray-bg-color);
+	height: 1px;
+	margin: 4px 0;
+	overflow: hidden;
+	padding-top: 0;
+	padding-bottom: 0;
+	background-color: var(--gray-bg-color);
 }
 /* lo-menu customizations end */
 
 .main-nav:after {
-    clear: both;
-    content: "\00a0";
-    display: block;
-    height: 0;
-    font: 0px/0 serif;
-    overflow: hidden;
+	clear: both;
+	content: '\00a0';
+	display: block;
+	height: 0;
+	font: 0px/0 serif;
+	overflow: hidden;
 }
 
 /* Hamburger button */
 
 .main-menu-btn {
-    margin: 2px 10px;
-    position: relative;
-    display: none;
-    width: 17px;
-    height: 21px;
-    text-indent: 17px;
-    white-space: nowrap;
-    overflow: hidden;
-    cursor: pointer;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	margin: 2px 10px;
+	position: relative;
+	display: none;
+	width: 17px;
+	height: 21px;
+	text-indent: 17px;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 /* Hamburger icon */
@@ -185,94 +183,94 @@
 .main-menu-btn-icon,
 .main-menu-btn-icon:before,
 .main-menu-btn-icon:after {
-    position: absolute;
-    top: 50%;
-    left: 1px;
-    height: 2px;
-    width: 17px;
-    background: #555;
-    -webkit-transition: all 0.25s;
-    transition: all 0.25s;
+	position: absolute;
+	top: 50%;
+	left: 1px;
+	height: 2px;
+	width: 17px;
+	background: #555;
+	-webkit-transition: all 0.25s;
+	transition: all 0.25s;
 }
 
 .main-menu-btn-icon:before {
-    content: '';
-    top: -7px;
-    left: 0;
+	content: '';
+	top: -7px;
+	left: 0;
 }
 
 .main-menu-btn-icon:after {
-    content: '';
-    top: 7px;
-    left: 0;
+	content: '';
+	top: 7px;
+	left: 0;
 }
 
 /* hide menu state checkbox (keep it visible to screen readers) */
 
 #main-menu-state {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    border: 0;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
 }
 
 
 /* always show the menu in desktop view */
 #main-menu-state:not(:checked) ~ #main-menu {
-    display: block;
+	display: block;
 }
 
 #main-menu-state:checked ~ #main-menu {
-    display: block;
+	display: block;
 }
 
 .readonly {
-    top: 3px;
+	top: 3px;
 }
 
 /* Some more lo-menu specific customizations */
 
 /* The smartmenus plugin doesn't seem to have support for icons, so implement our own pseudo-elements */
 .lo-menu-item-checked::before {
-    position: absolute;
-    content: '\2713';
-    left: 5px;
-    top: 5px;
+	position: absolute;
+	content: '\2713';
+	left: 5px;
+	top: 5px;
 }
 
 .lo-menu-item-checked:hover::before {
-    color: #fff;
+	color: #fff;
 }
 
 .writer-icon-img {
-  background-image: url('images/x-office-document.svg');
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: bottom;
+	background-image: url('images/x-office-document.svg');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	background-position: bottom;
 }
 
 .calc-icon-img {
-  background-image: url('images/x-office-spreadsheet.svg');
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: bottom;
+	background-image: url('images/x-office-spreadsheet.svg');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	background-position: bottom;
 }
 
 .impress-icon-img {
-  background-image: url('images/x-office-presentation.svg');
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position: bottom;
+	background-image: url('images/x-office-presentation.svg');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	background-position: bottom;
 }
 
 #menu-last-mod a {
-    color: grey;
-    text-decoration: underline;
-    padding: 8px 15px 7px 15px;
-    z-index: 500;
-    border: 1px solid transparent;
+	color: grey;
+	text-decoration: underline;
+	padding: 8px 15px 7px 15px;
+	z-index: 500;
+	border: 1px solid transparent;
 }
