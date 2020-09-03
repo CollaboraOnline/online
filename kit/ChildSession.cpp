@@ -883,7 +883,8 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
     const Poco::Path filenameParam(name);
-    const std::string url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + filenameParam.getFileName();
+    const std::string urlToSend = tmpDir + "/" + filenameParam.getFileName();
+    const std::string url = JAILED_DOCUMENT_ROOT + urlToSend;
     const std::string nameAnonym = anonymizeUrl(name);
     const std::string urlAnonym = JAILED_DOCUMENT_ROOT + tmpDir + "/" + Poco::Path(nameAnonym).getFileName();
 
@@ -899,7 +900,12 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const std:
                                    filterOptions.empty() ? nullptr : filterOptions.c_str());
     }
 
-    sendTextFrame("downloadas: jail=" + _jailId + " dir=" + tmpDir + " name=" + name +
+    // Register download id -> URL mapping in the DocumentBroker
+    std::string docBrokerMessage = "registerdownload: downloadid=" + tmpDir + " url=" + urlToSend;
+    _docManager.sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
+
+    // Send download id to the client
+    sendTextFrame("downloadas: downloadid=" + tmpDir +
                   " port=" + std::to_string(ClientPortNumber) + " id=" + id);
     return true;
 }

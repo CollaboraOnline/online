@@ -956,6 +956,9 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 4) === 'dir=') {
 				command.dir = tokens[i].substring(4);
 			}
+			else if (tokens[i].substring(0, 11) === 'downloadid=') {
+				command.downloadid = tokens[i].substring(11);
+			}
 			else if (tokens[i].substring(0, 5) === 'name=') {
 				command.name = tokens[i].substring(5);
 			}

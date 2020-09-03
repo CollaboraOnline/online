@@ -1298,21 +1298,17 @@ void HTTPWSTest::testSlideShow()
         CPPUNIT_ASSERT_MESSAGE("did not receive a downloadas: message as expected", !response.empty());
 
         Poco::StringTokenizer tokens(response.substr(11), " ", Poco::StringTokenizer::TOK_IGNORE_EMPTY | Poco::StringTokenizer::TOK_TRIM);
-        // "downloadas: jail= dir= name=slideshow.svg port= id=slideshow"
-        const std::string jail = tokens[0].substr(std::string("jail=").size());
-        const std::string dir = tokens[1].substr(std::string("dir=").size());
-        const std::string name = tokens[2].substr(std::string("name=").size());
-        const int port = std::stoi(tokens[3].substr(std::string("port=").size()));
-        const std::string id = tokens[4].substr(std::string("id=").size());
-        CPPUNIT_ASSERT(!jail.empty());
-        CPPUNIT_ASSERT(!dir.empty());
-        CPPUNIT_ASSERT_EQUAL(std::string("slideshow.svg"), name);
+        // "downloadas: downloadid= port= id=slideshow"
+        const std::string downloadId = tokens[0].substr(std::string("downloadid=").size());
+        const int port = std::stoi(tokens[1].substr(std::string("port=").size()));
+        const std::string id = tokens[2].substr(std::string("id=").size());
+        CPPUNIT_ASSERT(!downloadId.empty());
         CPPUNIT_ASSERT_EQUAL(static_cast<int>(_uri.getPort()), port);
         CPPUNIT_ASSERT_EQUAL(std::string("slideshow"), id);
 
         std::string encodedDoc;
         Poco::URI::encode(documentPath, ":/?", encodedDoc);
-        const std::string path = "/lool/" + encodedDoc + "/" + jail + "/" + dir + "/" + name;
+        const std::string path = "/lool/" + encodedDoc + "/download/" + downloadId;
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);
         TST_LOG("Requesting SVG from " << path);
