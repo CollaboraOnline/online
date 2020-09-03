@@ -8,7 +8,7 @@ L.Map.mergeOptions({
 	zoomAnimationThreshold: 4
 });
 
-var zoomAnimated = L.DomUtil.TRANSITION && L.Browser.any3d && !L.Browser.mobileOpera;
+var zoomAnimated = false;//L.DomUtil.TRANSITION && L.Browser.any3d && !L.Browser.mobileOpera && !(this._docLayer instanceof L.CanvasTileLayer);
 
 if (zoomAnimated) {
 
