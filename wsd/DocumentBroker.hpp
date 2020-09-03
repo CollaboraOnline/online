@@ -362,6 +362,12 @@ public:
     /// Sets the initialization flag of a given initial setting.
     void setInitialSetting(const std::string& name);
 
+    /// Get URL for corresponding download id if registered, or empty string otherwise
+    std::string getDownloadURL(const std::string& downloadId);
+
+    /// Remove download id mapping
+    void unregisterDownloadId(const std::string& downloadId);
+
 private:
 
     /// Shutdown all client connections with the given reason.
@@ -484,6 +490,9 @@ private:
 
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
+
+    // Maps download id -> URL
+    std::map<std::string, std::string> _registeredDownloadLinks;
 };
 
 class ConvertToBroker : public DocumentBroker
