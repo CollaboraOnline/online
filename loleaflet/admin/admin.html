@@ -13,7 +13,7 @@
       </div>
       <div class="tile is-parent">
         <div class="tile is-child has-text-centered">
-          <p class="heading"><script>document.write(l10nstrings.strDocumentsOpened)</script></p>
+          <p class="heading"><script>document.write(l10nstrings.strDocumentsOpen)</script></p>
           <p class="title" id="active_docs_count">0</p>
         </div>
       </div>
@@ -45,7 +45,7 @@
 
     <div class="tabs">
       <ul>
-        <li id="tab-documents-opened" class="is-active"><a><script>document.write(l10nstrings.strDocumentsOpened)</script></a></li>
+        <li id="tab-documents-open" class="is-active"><a><script>document.write(l10nstrings.strDocumentsOpen)</script></a></li>
         <li id="tab-users-online"><a><script>document.write(l10nstrings.strUsersOnline)</script></a></li>
       </ul>
     </div>
@@ -86,8 +86,8 @@
   document.getElementById('a-overwiew-mobile').classList.add('is-active');
   document.getElementById('a-overwiew-tablet').classList.add('is-active');
 
-  document.getElementById('tab-documents-opened').onclick = function() {
-    document.getElementById('tab-documents-opened').className = 'is-active';
+  document.getElementById('tab-documents-open').onclick = function() {
+    document.getElementById('tab-documents-open').className = 'is-active';
     document.getElementById('tab-users-online').className = '';
     document.getElementById('tab-content-documents-opened').style.display = 'grid';
     document.getElementById('tab-content-users-online').style.display = 'none';
@@ -95,7 +95,7 @@
 
   document.getElementById('tab-users-online').onclick = function() {
     document.getElementById('tab-users-online').className = 'is-active';
-    document.getElementById('tab-documents-opened').className = '';
+    document.getElementById('tab-documents-open').className = '';
     document.getElementById('tab-content-users-online').style.display = 'grid';
     document.getElementById('tab-content-documents-opened').style.display = 'none';
   }
