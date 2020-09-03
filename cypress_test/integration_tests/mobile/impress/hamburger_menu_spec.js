@@ -80,7 +80,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.pdf');
+			.should('contain', 'download');
 	});
 
 	it('Download as ODP', function() {
@@ -96,7 +96,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.odp');
+			.should('contain', 'download');
 	});
 
 	it('Download as PPT', function() {
@@ -112,7 +112,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.ppt');
+			.should('contain', 'download');
 	});
 
 	it('Download as PPTX', function() {
@@ -128,7 +128,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.pptx');
+			.should('contain', 'download');
 	});
 
 	it('Undo/redo.', function() {

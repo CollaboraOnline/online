@@ -99,7 +99,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.pdf');
+			.should('contain', 'download');
 	});
 
 	it('Download as ODT', function() {
@@ -113,7 +113,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.odt');
+			.should('contain', 'download');
 	});
 
 	it('Download as DOC', function() {
@@ -127,7 +127,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.doc');
+			.should('contain', 'download');
 	});
 
 	it('Download as DOCX', function() {
@@ -141,7 +141,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.docx');
+			.should('contain', 'download');
 	});
 
 	it('Download as RTF', function() {
@@ -155,7 +155,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.rtf');
+			.should('contain', 'download');
 	});
 
 	it('Download as EPUB', function() {
@@ -169,7 +169,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
-			.should('contain', 'document.epub');
+			.should('contain', 'download');
 	});
 
 	it('Undo/redo.', function() {
