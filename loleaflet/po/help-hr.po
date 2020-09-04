@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"POT-Creation-Date: 2020-09-04 12:12+0200\n"
 "PO-Revision-Date: 2020-03-13 09:52+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hr/>\n"
@@ -1535,7 +1535,6 @@ msgstr "Čemu služi plava valovita crta ispod nekih riječi u tekstu?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
 #, fuzzy
-#| msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offending grammar rules. Select the right suggestion to change the text."
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
 msgstr "Gramatičke greške u tekstu podvučene su plavom valovitom crtom. Klikni na podcrtani tekst desnim gumbom miša za otvaranje izbornika s prijedlozima za ispravljanje gramatičkih grešaka. Odaberi pravi prijedlog za promjenu teksta."
 
@@ -1601,7 +1600,6 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 #, fuzzy
-#| msgid "With track changes enabled your document show the following settings:"
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr "S aktiviranim praćenjem promjena u dokumentu prikazuje sljedeće postavke:"
 

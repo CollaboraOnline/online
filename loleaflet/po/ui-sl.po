@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 12:58+0200\n"
+"POT-Creation-Date: 2020-09-04 12:12+0200\n"
 "PO-Revision-Date: 2020-07-20 20:53+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sl/>\n"
@@ -42,165 +42,139 @@ msgid "History"
 msgstr "Zgodovina"
 
 #: admin/admin.strings.js:12
-msgid "Log"
-msgstr "Beleženje v dnevnik"
-
-#: admin/admin.strings.js:13
 msgid "Dashboard"
 msgstr "Nadzorna plošča"
 
-#: admin/admin.strings.js:14
+#: admin/admin.strings.js:13
 msgid "Users online"
 msgstr "povezanih uporabnikov"
 
-#: admin/admin.strings.js:15
+#: admin/admin.strings.js:14
 msgid "User Name"
 msgstr "Uporabniško ime"
 
-#: admin/admin.strings.js:16
+#: admin/admin.strings.js:15
 msgid "Documents opened"
 msgstr "odprtih dokumentov"
 
-#: admin/admin.strings.js:17
+#: admin/admin.strings.js:16
 msgid "Number of Documents"
 msgstr "Število dokumentov"
 
-#: admin/admin.strings.js:18
+#: admin/admin.strings.js:17
 msgid "Memory consumed"
 msgstr "zasedenega pomnilnika"
 
-#: admin/admin.strings.js:19
+#: admin/admin.strings.js:18
 msgid "Bytes sent"
 msgstr "poslanih bajtov"
 
-#: admin/admin.strings.js:20
+#: admin/admin.strings.js:19
 msgid "Bytes received"
 msgstr "prejetih bajtov"
 
-#: admin/admin.strings.js:21
+#: admin/admin.strings.js:20
 msgid "PID"
 msgstr "PID"
 
-#: admin/admin.strings.js:22
+#: admin/admin.strings.js:21
 msgid "Document"
 msgstr "Dokument"
 
-#: admin/admin.strings.js:23
+#: admin/admin.strings.js:22
 msgid "Number of views"
 msgstr "Število ogledov"
 
-#: admin/admin.strings.js:24
+#: admin/admin.strings.js:23
 msgid "Elapsed time"
 msgstr "Pretekli čas"
 
-#: admin/admin.strings.js:25
+#: admin/admin.strings.js:24
 msgid "Idle time"
 msgstr "Čas nedejavnosti"
 
-#: admin/admin.strings.js:26
+#: admin/admin.strings.js:25
 msgid "Modified"
 msgstr "Spremenjeno"
 
-#: admin/admin.strings.js:27
+#: admin/admin.strings.js:26
 msgid "Kill"
 msgstr "Ubij"
 
-#: admin/admin.strings.js:28
+#: admin/admin.strings.js:27
 msgid "Graphs"
 msgstr "Grafikoni"
 
-#: admin/admin.strings.js:29
+#: admin/admin.strings.js:28
 msgid "Memory Graph"
 msgstr "Grafikon rabe pomnilnika"
 
-#: admin/admin.strings.js:30
+#: admin/admin.strings.js:29
 msgid "CPU Graph"
 msgstr "Grafikon rabe CPE"
 
-#: admin/admin.strings.js:31
+#: admin/admin.strings.js:30
 msgid "Network Graph"
 msgstr "Grafikon rabe omrežja"
 
-#: admin/admin.strings.js:32 src/control/Control.Notebookbar.js:97
-#: src/control/Control.NotebookbarImpress.js:17
-#: src/layer/marker/Annotation.js:260 src/layer/tile/TileLayer.js:404
+#: admin/admin.strings.js:31 src/layer/marker/Annotation.js:252
+#: src/layer/tile/TileLayer.js:403
 msgid "Save"
 msgstr "Shrani"
 
-#: admin/admin.strings.js:33
+#: admin/admin.strings.js:32
 msgid "Cache size of memory statistics"
 msgstr "Velikost medpomnilnika za statistiko pomnilnika"
 
-#: admin/admin.strings.js:34
+#: admin/admin.strings.js:33
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Časovni interval za statistiko pomnilnika (v ms)"
 
-#: admin/admin.strings.js:35
+#: admin/admin.strings.js:34
 msgid "Cache size of CPU statistics"
 msgstr "Velikost medpomnilnika za statistiko CPE"
 
-#: admin/admin.strings.js:36
+#: admin/admin.strings.js:35
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Časovni interval za statistiko CPE (v ms)"
 
-#: admin/admin.strings.js:37
+#: admin/admin.strings.js:36
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "Največji navidezni pomnilnik za proces dokumenta (v MB) – zgolj zmanjšajte"
 
-#: admin/admin.strings.js:38
+#: admin/admin.strings.js:37
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr "Največji skladovni pomnilnik za proces dokumenta (v kB) – zgolj zmanjšajte"
 
-#: admin/admin.strings.js:39
+#: admin/admin.strings.js:38
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "Največja dovoljena velikost datoteke za pisanje na disk (v MB) – zgolj zmanjšajte"
 
-#: admin/admin.strings.js:40
+#: admin/admin.strings.js:39
 msgid "Documents:"
 msgstr "Dokumenti:"
 
-#: admin/admin.strings.js:41
+#: admin/admin.strings.js:40
 msgid "Expired:"
 msgstr "Preteklo:"
 
-#: admin/admin.strings.js:42
+#: admin/admin.strings.js:41
 msgid "Refresh"
 msgstr "Osveži"
 
-#: admin/admin.strings.js:43
+#: admin/admin.strings.js:42
 msgid "Shutdown Server"
 msgstr "Zaustavi strežnik"
 
-#: admin/admin.strings.js:44
+#: admin/admin.strings.js:43
 msgid "Server uptime"
 msgstr "Neprekinjeno delovanje strežnika"
 
-#: admin/admin.strings.js:45
-msgid "Refresh Log"
-msgstr "Osveži dnevnik"
-
-#: admin/admin.strings.js:46
-msgid "Set Log Levels"
-msgstr "Nastavi ravni beleženja"
-
-#: admin/admin.strings.js:47
-msgid "Log Levels"
-msgstr "Ravni beleženja"
-
-#: admin/admin.strings.js:48 src/control/Control.AlertDialog.js:25
-#: src/control/Signing.js:608
-msgid "Close"
-msgstr "Zapri"
-
-#: admin/admin.strings.js:49
-msgid "Update Log Levels"
-msgstr "Posodobi ravni beleženja"
-
-#: admin/src/AdminSocketAnalytics.js:205
+#: admin/src/AdminSocketAnalytics.js:212
 msgid "Received"
 msgstr "prejeto"
 
-#: admin/src/AdminSocketAnalytics.js:209
+#: admin/src/AdminSocketAnalytics.js:216
 msgid "Sent"
 msgstr "poslano"
 
@@ -213,18 +187,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Ste prepričani, da želite zaključiti to sejo?"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1191
-#: src/control/Control.PresentationBar.js:85 src/control/Control.Tabs.js:201
-#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:600
+#: src/control/Control.Menubar.js:1188
+#: src/control/Control.PresentationBar.js:82 src/control/Control.Tabs.js:201
+#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:584
 msgid "OK"
 msgstr "V redu"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1192
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1189
 #: src/control/Control.MobileTopBar.js:45
-#: src/control/Control.PresentationBar.js:86 src/control/Control.Tabs.js:202
-#: src/control/Control.Tabs.js:219 src/control/Toolbar.js:601
-#: src/layer/marker/Annotation.js:191 src/layer/tile/TileLayer.js:405
+#: src/control/Control.PresentationBar.js:83 src/control/Control.Tabs.js:202
+#: src/control/Control.Tabs.js:219 src/control/Toolbar.js:585
+#: src/layer/marker/Annotation.js:183 src/layer/tile/TileLayer.js:404
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -241,10 +215,6 @@ msgid "Failed to authenticate this session over protocol %0"
 msgstr "Overitev te seje prek protokola %0 je spodletela"
 
 #: admin/src/AdminSocketSettings.js:34
-msgid "Confirmation"
-msgstr "Potrditev"
-
-#: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
 msgstr "Ali ste prepričani, da želite zaustaviti strežnik?"
 
@@ -296,13 +266,13 @@ msgstr " min"
 msgid " s"
 msgstr " s"
 
-#: src/control/ColorPicker.js:129
+#: src/control/ColorPicker.js:121
 msgid "No color"
 msgstr "Brez barve"
 
-#: src/control/ColorPicker.js:130
-msgid "Automatic color"
-msgstr "Samodejna barva"
+#: src/control/Control.AlertDialog.js:25 src/control/Signing.js:608
+msgid "Close"
+msgstr "Zapri"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
@@ -376,170 +346,170 @@ msgstr "Začni križno kopirati/lepiti"
 msgid "Function Wizard"
 msgstr "Čarovnik za funkcije"
 
-#: src/control/Control.JSDialogBuilder.js:283
+#: src/control/Control.JSDialogBuilder.js:280
 #: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "Brez"
 
-#: src/control/Control.JSDialogBuilder.js:286
+#: src/control/Control.JSDialogBuilder.js:283
 msgid "Solid"
 msgstr "Polno"
 
-#: src/control/Control.JSDialogBuilder.js:289
+#: src/control/Control.JSDialogBuilder.js:286
 msgid "Linear"
 msgstr "Linearno"
 
-#: src/control/Control.JSDialogBuilder.js:292
+#: src/control/Control.JSDialogBuilder.js:289
 msgid "Axial"
 msgstr "Osno"
 
-#: src/control/Control.JSDialogBuilder.js:295
+#: src/control/Control.JSDialogBuilder.js:292
 msgid "Radial"
 msgstr "Radialno"
 
-#: src/control/Control.JSDialogBuilder.js:298
+#: src/control/Control.JSDialogBuilder.js:295
 msgid "Ellipsoid"
 msgstr "Elipsoidno"
 
-#: src/control/Control.JSDialogBuilder.js:302
+#: src/control/Control.JSDialogBuilder.js:299
 msgid "Quadratic"
 msgstr "Pravokotno"
 
-#: src/control/Control.JSDialogBuilder.js:305
+#: src/control/Control.JSDialogBuilder.js:302
 msgid "Square"
 msgstr "Kvadratno"
 
-#: src/control/Control.JSDialogBuilder.js:308
+#: src/control/Control.JSDialogBuilder.js:305
 msgid "Fixed size"
 msgstr "Fiksna velikost"
 
-#: src/control/Control.JSDialogBuilder.js:1192
+#: src/control/Control.JSDialogBuilder.js:1171
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1195
+#: src/control/Control.JSDialogBuilder.js:1174
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1320
+#: src/control/Control.JSDialogBuilder.js:1299
 msgid "Select range"
 msgstr "Izberite obseg"
 
-#: src/control/Control.JSDialogBuilder.js:1349
+#: src/control/Control.JSDialogBuilder.js:1328
 msgid "Font Name"
 msgstr "Ime pisave"
 
-#: src/control/Control.JSDialogBuilder.js:1351
+#: src/control/Control.JSDialogBuilder.js:1330
 msgid "Font Size"
 msgstr "Velikost pisave"
 
-#: src/control/Control.JSDialogBuilder.js:1884
+#: src/control/Control.JSDialogBuilder.js:1842
 msgid "Cell borders"
 msgstr "Obrobe celic"
 
-#: src/control/Control.JSDialogBuilder.js:1907
+#: src/control/Control.JSDialogBuilder.js:1865
 msgid "Background Color"
 msgstr "Barva ozadja"
 
-#: src/control/Control.JSDialogBuilder.js:1909
+#: src/control/Control.JSDialogBuilder.js:1867
 msgid "Gradient Start"
 msgstr "Začetek preliva"
 
-#: src/control/Control.JSDialogBuilder.js:1911
+#: src/control/Control.JSDialogBuilder.js:1869
 msgid "Gradient End"
 msgstr "Konec preliva"
 
-#: src/control/Control.JSDialogBuilder.js:2089
+#: src/control/Control.JSDialogBuilder.js:2045
 msgid "Rows"
 msgstr "Vrstice"
 
-#: src/control/Control.JSDialogBuilder.js:2090
+#: src/control/Control.JSDialogBuilder.js:2046
 msgid "Columns"
 msgstr "Stolpci"
 
-#: src/control/Control.JSDialogBuilder.js:2110
+#: src/control/Control.JSDialogBuilder.js:2066
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "Vstavi tabelo"
 
-#: src/control/Control.JSDialogBuilder.js:2139
+#: src/control/Control.JSDialogBuilder.js:2095
 msgid "Line style:"
 msgstr "Slog črte:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:230
 #: src/control/Control.Menubar.js:232 src/control/Control.Menubar.js:234
-#: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:471
+#: src/control/Control.Menubar.js:353 src/control/Control.Menubar.js:469
 #: src/control/Control.StatusBar.js:498
 msgid "None (Do not check spelling)"
 msgstr "Brez (ne preverjaj črkovanja)"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:255
-#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:488
-#: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:585
+#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:486
+#: src/control/Control.Menubar.js:535 src/control/Control.Menubar.js:582
 msgid "Share..."
 msgstr "Skupna raba ..."
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:257
-#: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:490
-#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:587
+#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:488
+#: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:584
 msgid "See revision history"
 msgstr "Glej zgodovino revizij"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:258
-#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:493
-#: src/control/Control.Menubar.js:541 src/control/Control.Menubar.js:589
+#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:491
+#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:586
 msgid "Download as"
 msgstr "Prenesi kot"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:258
-#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:493
-#: src/control/Control.Menubar.js:541 src/control/Control.Menubar.js:589
+#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:491
+#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:586
 msgid "Export as"
 msgstr "Izvozi kot"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:259
-#: src/control/Control.Menubar.js:375 src/control/Control.Menubar.js:494
-#: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:590
+#: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:492
+#: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:587
 msgid "PDF Document (.pdf)"
 msgstr "Dokument PDF (.pdf)"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:495
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:493
 msgid "ODF text document (.odt)"
 msgstr "Besedilni dokument ODF (.odt)"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:496
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:494
 msgid "Word 2003 Document (.doc)"
 msgstr "Dokument Word 2003 (.doc)"
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:497
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:495
 msgid "Word Document (.docx)"
 msgstr "Dokument Word (.docx)"
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:498
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:496
 msgid "Rich Text (.rtf)"
 msgstr "Obogateno besedilo (.rtf)"
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:499
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:497
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:491
+#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:489
 #: src/control/Signing.js:601
 msgid "Sign document"
 msgstr "Podpiši dokument"
 
-#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:266
-#: src/control/Control.Menubar.js:380
+#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:378
 msgid "Close document"
 msgstr "Zapri dokument"
 
-#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:271
-#: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:504
-#: src/control/Control.Menubar.js:551 src/control/Control.Menubar.js:598
+#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:269
+#: src/control/Control.Menubar.js:383 src/control/Control.Menubar.js:502
+#: src/control/Control.Menubar.js:548 src/control/Control.Menubar.js:595
 msgid "Repair"
 msgstr "Popravi"
 
-#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:285
+#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:283
 #: src/control/Control.StatusBar.js:205
 msgid "Reset zoom"
 msgstr "Ponastavi povečavo"
@@ -548,14 +518,14 @@ msgstr "Ponastavi povečavo"
 msgid "Show Ruler"
 msgstr "Pokaži ravnilo"
 
-#: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:297
-#: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:648
-#: src/control/Control.Menubar.js:688 src/control/Control.Menubar.js:701
+#: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:295
+#: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:645
+#: src/control/Control.Menubar.js:685 src/control/Control.Menubar.js:698
 msgid "Local Image..."
 msgstr "Krajevna slika …"
 
 #: src/control/Control.Menubar.js:93 src/control/Control.Menubar.js:95
-#: src/control/Control.Menubar.js:664 src/control/Control.Menubar.js:666
+#: src/control/Control.Menubar.js:661 src/control/Control.Menubar.js:663
 msgid "All"
 msgstr "Vse"
 
@@ -563,89 +533,85 @@ msgstr "Vse"
 msgid "Text orientation"
 msgstr "Usmerjenost besedila"
 
-#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:358
-#: src/control/Control.Menubar.js:475
+#: src/control/Control.Menubar.js:242 src/control/Control.Menubar.js:356
+#: src/control/Control.Menubar.js:473
 msgid "Online Help"
 msgstr "Spletna pomoč"
 
-#: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:359
-#: src/control/Control.Menubar.js:476
+#: src/control/Control.Menubar.js:243 src/control/Control.Menubar.js:357
+#: src/control/Control.Menubar.js:474
 msgid "Keyboard shortcuts"
 msgstr "Tipke za bližnjice"
 
-#: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:360
-#: src/control/Control.Menubar.js:477
+#: src/control/Control.Menubar.js:244 src/control/Control.Menubar.js:358
+#: src/control/Control.Menubar.js:475
 msgid "Report an issue"
 msgstr "Poročaj o težavi"
 
-#: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:361
-#: src/control/Control.Menubar.js:478 src/control/Control.Menubar.js:529
-#: src/control/Control.Menubar.js:577 src/control/Control.Menubar.js:641
+#: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:359
+#: src/control/Control.Menubar.js:476 src/control/Control.Menubar.js:527
+#: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:638
 msgid "Latest Updates"
 msgstr "Najnovejše posodobitve"
 
-#: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:362
-#: src/control/Control.Menubar.js:479 src/control/Control.Menubar.js:530
-#: src/control/Control.Menubar.js:578 src/control/Control.Menubar.js:642
+#: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:360
+#: src/control/Control.Menubar.js:477 src/control/Control.Menubar.js:528
+#: src/control/Control.Menubar.js:575 src/control/Control.Menubar.js:639
 msgid "About"
 msgstr "O programu"
 
-#: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:364
-#: src/control/Control.Menubar.js:481 src/map/Map.js:395
+#: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:362
+#: src/control/Control.Menubar.js:479 src/map/Map.js:390
 msgid "Last modification"
 msgstr "Zadnja sprememba"
 
-#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:543
+#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:541
 msgid "ODF presentation (.odp)"
 msgstr "Predstavitev ODF (.odp)"
 
-#: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:544
+#: src/control/Control.Menubar.js:261 src/control/Control.Menubar.js:542
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Predstavitev PowerPoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:545
+#: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:543
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Predstavitev PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:546
-msgid "ODF Drawing (.odg)"
-msgstr "Risba ODF (.odg)"
-
-#: src/control/Control.Menubar.js:349 src/control/Control.Menubar.js:576
-#: src/control/Control.PresentationBar.js:34
+#: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:573
+#: src/control/Control.PresentationBar.js:31
 msgid "Fullscreen presentation"
 msgstr "Celozaslonska predstavitev"
 
-#: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:591
+#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:588
 msgid "ODF spreadsheet (.ods)"
 msgstr "Preglednica ODF (.ods)"
 
-#: src/control/Control.Menubar.js:377 src/control/Control.Menubar.js:592
+#: src/control/Control.Menubar.js:375 src/control/Control.Menubar.js:589
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Preglednica Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:593
+#: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:590
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Preglednica Excel (.xslx)"
 
-#: src/control/Control.Menubar.js:511 src/control/Control.Menubar.js:558
-#: src/control/Control.Menubar.js:605 src/control/Control.StatusBar.js:190
+#: src/control/Control.Menubar.js:509 src/control/Control.Menubar.js:555
+#: src/control/Control.Menubar.js:602 src/control/Control.StatusBar.js:190
 msgid "Search"
 msgstr "Išči"
 
-#: src/control/Control.Menubar.js:522
+#: src/control/Control.Menubar.js:520
 msgid "Page Setup"
 msgstr "Priprava strani"
 
-#: src/control/Control.Menubar.js:787 src/control/Control.StatusBar.js:497
+#: src/control/Control.Menubar.js:784 src/control/Control.StatusBar.js:497
 msgid "Reset to Default Language"
 msgstr "Ponastavi na privzeti jezik"
 
-#: src/control/Control.Menubar.js:1107
+#: src/control/Control.Menubar.js:1104
 msgid "Insert Shape"
 msgstr "Vstavi lik"
 
-#: src/control/Control.Menubar.js:1189
+#: src/control/Control.Menubar.js:1186
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ali ste prepričani, da želite izbrisati to prosojnico?"
 
@@ -659,7 +625,7 @@ msgstr "Pokaži iskalno vrstico"
 msgid "Accept"
 msgstr "Sprejmi"
 
-#: src/control/Control.PresentationBar.js:83
+#: src/control/Control.PresentationBar.js:80
 msgid "Are you sure you want to delete this page?"
 msgstr "Ali ste prepričani, da želite izbrisati to stran?"
 
@@ -779,15 +745,15 @@ msgstr "Ali ste prepričani, da želite izbrisati delovni list %sheet%?"
 msgid "Enter new sheet name"
 msgstr "Vnesite ime za nov delovni list"
 
-#: src/control/Control.Toolbar.js:890
+#: src/control/Control.Toolbar.js:889
 msgid "Previous slide"
 msgstr "Prejšnja prosojnica"
 
-#: src/control/Control.Toolbar.js:891
+#: src/control/Control.Toolbar.js:890
 msgid "Next slide"
 msgstr "Naslednja prosojnica"
 
-#: src/control/Control.Toolbar.js:950
+#: src/control/Control.Toolbar.js:948
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Spor razveljavljanja/ponavljanja med več uporabniki. Uporabite popravilo dokumenta za razrešitev težave."
 
@@ -804,7 +770,7 @@ msgid "More..."
 msgstr "Dodatno ..."
 
 #: src/control/Control.TopToolbar.js:213
-#: src/control/Control.NotebookbarBuilder.js:363
+#: src/control/Control.NotebookbarBuilder.js:319
 msgid "Insert Local Image"
 msgstr "Vstavi krajevno sliko"
 
@@ -844,92 +810,25 @@ msgstr "0 uporabnikov"
 msgid "Readonly"
 msgstr "Samo za branje"
 
-#: src/control/Control.UserList.js:247
+#: src/control/Control.UserList.js:248
 msgid "Always follow the editor"
 msgstr "Vedno sledi urejevalcu"
 
-#: src/control/Control.UserList.js:250
+#: src/control/Control.UserList.js:251
 msgid "Current"
 msgstr "Trenutno"
 
-#: src/control/Control.Notebookbar.js:102
-#: src/control/Control.NotebookbarImpress.js:27
-msgid "Undo"
-msgstr "Razveljavi"
-
-#: src/control/Control.Notebookbar.js:107
-#: src/control/Control.NotebookbarImpress.js:32
-msgid "Redo"
-msgstr "Ponovi"
-
-#: src/control/Control.NotebookbarWriter.js:12
-#: src/control/Control.NotebookbarCalc.js:12
-#: src/control/Control.NotebookbarImpress.js:43
-msgid "~Home"
-msgstr "~Osnovno"
-
-#: src/control/Control.NotebookbarWriter.js:18
-#: src/control/Control.NotebookbarCalc.js:18
-#: src/control/Control.NotebookbarImpress.js:49
-msgid "~Insert"
-msgstr "~Vstavi"
-
-#: src/control/Control.NotebookbarWriter.js:23
-msgid "~Layout"
-msgstr "~Postavitev"
-
-#: src/control/Control.NotebookbarWriter.js:28
-msgid "Reference~s"
-msgstr "Skli~ci"
-
-#: src/control/Control.NotebookbarWriter.js:33
-#: src/control/Control.NotebookbarCalc.js:23
-#: src/control/Control.NotebookbarImpress.js:54
-msgid "~Review"
-msgstr "P~regled"
-
-#: src/control/Control.NotebookbarWriter.js:38
-#: src/control/Control.NotebookbarImpress.js:59
-msgid "~Table"
-msgstr "~Tabela"
-
-#: src/control/Control.NotebookbarImpress.js:22
-msgid "Start Presentation"
-msgstr "Zaženi predstavitev"
-
-#: src/control/Permission.js:45
-msgid "The document could not be locked, and is opened in read-only mode."
-msgstr "Dokumenta ni mogoče zakleniti, zato je odprt v načinu samo za branje."
-
-#: src/control/Permission.js:47 src/control/Permission.js:65
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "Server returned this reason: \""
-msgid "Server returned this reason:"
-msgstr ""
-"\n"
-"Strežnik je posredoval naslednji razlog: »"
-
-#: src/control/Permission.js:63
-msgid "The document could not be locked."
-msgstr "Dokumenta ni mogoče zakleniti."
-
-#: src/control/Ruler.js:366
+#: src/control/Ruler.js:368
 msgid "Left Margin"
 msgstr "Levi rob"
 
-#: src/control/Ruler.js:367
+#: src/control/Ruler.js:369
 msgid "Right Margin"
 msgstr "Desni rob"
 
-#: src/control/Ruler.js:642
+#: src/control/Ruler.js:643 src/control/Ruler.js:767
 msgid "Insert tabstop"
 msgstr "Vstavi tabulator"
-
-#: src/control/Ruler.js:649
-msgid "Delete tabstop"
-msgstr "Izbriši tabulator"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1059,7 +958,7 @@ msgstr "Podpisano, vendar vse datoteke niso podpisane"
 msgid "Downloading..."
 msgstr "Prejemanje ..."
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1448
+#: src/control/Toolbar.js:104 src/map/Map.js:1443
 msgid "Saving..."
 msgstr "Shranjevanje ..."
 
@@ -1067,35 +966,31 @@ msgstr "Shranjevanje ..."
 msgid "Renaming..."
 msgstr "Preimenovanje ..."
 
-#: src/control/Toolbar.js:399
+#: src/control/Toolbar.js:385
 msgid "I understand the risks"
 msgstr "Razumem tveganje"
 
-#: src/control/Toolbar.js:451
+#: src/control/Toolbar.js:439
 msgid "We are sorry, the information about the latest updates is not available."
 msgstr "Žal podatki o najnovejših posodobitvah niso na voljo."
 
-#: src/control/Toolbar.js:496
+#: src/control/Toolbar.js:483
 msgid "This version of %productName is powered by"
 msgstr "To različico %productName poganja"
 
-#: src/control/Toolbar.js:506
+#: src/control/Toolbar.js:493
 msgid "\"Slow Proxy\""
 msgstr "»Počasno posredovanje«"
 
-#: src/control/Toolbar.js:509
-msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr "Izdajo skupnosti podpiramo prostovoljci."
-
-#: src/control/Toolbar.js:594
+#: src/control/Toolbar.js:578
 msgid "Insert hyperlink"
 msgstr "Vstavi hiperpovezavo"
 
-#: src/control/Toolbar.js:596
+#: src/control/Toolbar.js:580
 msgid "Text"
 msgstr "Besedilo"
 
-#: src/control/Toolbar.js:597
+#: src/control/Toolbar.js:581
 msgid "Link"
 msgstr "Povezava"
 
@@ -1115,75 +1010,75 @@ msgstr "Streže:"
 msgid "Unsupported server version."
 msgstr "Nepodprta različica strežnika."
 
-#: src/core/Socket.js:383
+#: src/core/Socket.js:381
 msgid "Session terminated by document owner"
 msgstr "Sejo je zaključil lastnik dokumenta"
 
-#: src/core/Socket.js:387
+#: src/core/Socket.js:385
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Neaktivni dokument – kliknite za ponovno nalaganje in nadaljevanje urejanja"
 
-#: src/core/Socket.js:394
+#: src/core/Socket.js:392
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Strežnik se ugaša zaradi vzdrževanja (samodejno shranjevanje)"
 
-#: src/core/Socket.js:398
+#: src/core/Socket.js:396
 msgid "Oops, there is a problem connecting the document"
 msgstr "Pri povezovanju z dokumentom je prišlo do težave."
 
-#: src/core/Socket.js:402
+#: src/core/Socket.js:400
 msgid "Server is recycling and will be available shortly"
 msgstr "Strežnik se ponovno zaganja in bo na voljo v kratkem."
 
-#: src/core/Socket.js:430
+#: src/core/Socket.js:428
 msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
 msgstr "Dokument je bil spremenjen v shrambi. V teku je nalaganje novega dokumenta. Vaša različica bo ohranjena kot revizija."
 
-#: src/core/Socket.js:436
+#: src/core/Socket.js:434
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
 msgstr "Obnavljanje starejše revizije. Vse ne shranjene spremembe bodo na voljo v zgodovini različic."
 
-#: src/core/Socket.js:539
+#: src/core/Socket.js:537
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
 msgstr "Dokument je bil spremenjen v shrambi. Kaj želite storiti z neshranjenimi spremembami?"
 
-#: src/core/Socket.js:543
+#: src/core/Socket.js:541
 msgid "Discard"
 msgstr "Zavrzi"
 
-#: src/core/Socket.js:548
+#: src/core/Socket.js:546
 msgid "Overwrite"
 msgstr "Prepiši"
 
-#: src/core/Socket.js:553
+#: src/core/Socket.js:551
 msgid "Save to new file"
 msgstr "Shrani v novo datoteko"
 
-#: src/core/Socket.js:626
+#: src/core/Socket.js:624
 msgid "Document requires password to view."
 msgstr "Za ogled dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:629
+#: src/core/Socket.js:627
 msgid "Document requires password to modify."
 msgstr "Za spreminjanje dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:631
+#: src/core/Socket.js:629
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pritisnite Prekliči za odpiranje v oglednem načinu."
 
-#: src/core/Socket.js:635
+#: src/core/Socket.js:633
 msgid "Wrong password provided. Please try again."
 msgstr "Vnesli ste napačno geslo. Poskusite znova."
 
-#: src/core/Socket.js:761 src/map/Map.js:1451
+#: src/core/Socket.js:759 src/map/Map.js:1446
 msgid "Loading..."
 msgstr "Nalaganje ..."
 
-#: src/core/Socket.js:761
+#: src/core/Socket.js:759
 msgid "Connecting..."
 msgstr "Povezovanje ..."
 
-#: src/core/Socket.js:1038
+#: src/core/Socket.js:1036
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
@@ -1289,19 +1184,19 @@ msgstr "Nalaganje datoteke na strežnik je spodletelo, datoteke ni mogoče najti
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Nalaganje datoteke na strežnik je spodletelo, datoteka je prevelika."
 
-#: src/layer/marker/Annotation.js:228
+#: src/layer/marker/Annotation.js:220
 msgid "Accept change"
 msgstr "Sprejmi spremembo"
 
-#: src/layer/marker/Annotation.js:233
+#: src/layer/marker/Annotation.js:225
 msgid "Reject change"
 msgstr "Zavrni spremembo"
 
-#: src/layer/marker/Annotation.js:242
+#: src/layer/marker/Annotation.js:234
 msgid "Open menu"
 msgstr "Odpri meni"
 
-#: src/layer/marker/Annotation.js:263 src/layer/tile/TileLayer.js:243
+#: src/layer/marker/Annotation.js:255 src/layer/tile/TileLayer.js:243
 msgid "Reply"
 msgstr "Odgovori"
 
@@ -1345,17 +1240,17 @@ msgstr "<p>Prenos se je zaradi obsežne operacije kopiraj/prilepi že začel. Pr
 msgid "Initializing..."
 msgstr "Inicializacija ..."
 
-#: src/map/Map.js:430
+#: src/map/Map.js:425
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d sekund nazaj"
 
-#: src/map/Map.js:433
+#: src/map/Map.js:428
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d minut nazaj"
 
-#: src/map/Map.js:1302
+#: src/map/Map.js:1297
 msgid "Inactive document - please click to resume editing"
 msgstr "Neaktivni dokument – kliknite za nadaljevanje urejanja"
 
@@ -1377,13 +1272,85 @@ msgstr "Prenašanje na strežnik ..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Nalaganje datoteke na strežnik je spodletelo s stanjem: %0"
 
-#: src/map/handler/Map.WOPI.js:111
+#: src/map/handler/Map.WOPI.js:107
 msgid "Creating new file from template..."
 msgstr "Ustvarjanje nove datoteke iz predloge ..."
 
-#: src/map/handler/Map.WOPI.js:426
+#: src/map/handler/Map.WOPI.js:422
 msgid "Creating copy..."
 msgstr "Ustvarjanje kopije ..."
+
+#~ msgid "Log"
+#~ msgstr "Beleženje v dnevnik"
+
+#~ msgid "Refresh Log"
+#~ msgstr "Osveži dnevnik"
+
+#~ msgid "Set Log Levels"
+#~ msgstr "Nastavi ravni beleženja"
+
+#~ msgid "Log Levels"
+#~ msgstr "Ravni beleženja"
+
+#~ msgid "Update Log Levels"
+#~ msgstr "Posodobi ravni beleženja"
+
+#~ msgid "Confirmation"
+#~ msgstr "Potrditev"
+
+#~ msgid "Automatic color"
+#~ msgstr "Samodejna barva"
+
+#~ msgid "ODF Drawing (.odg)"
+#~ msgstr "Risba ODF (.odg)"
+
+#~ msgid "Undo"
+#~ msgstr "Razveljavi"
+
+#~ msgid "Redo"
+#~ msgstr "Ponovi"
+
+#~ msgid "~Home"
+#~ msgstr "~Osnovno"
+
+#~ msgid "~Insert"
+#~ msgstr "~Vstavi"
+
+#~ msgid "~Layout"
+#~ msgstr "~Postavitev"
+
+#~ msgid "Reference~s"
+#~ msgstr "Skli~ci"
+
+#~ msgid "~Review"
+#~ msgstr "P~regled"
+
+#~ msgid "~Table"
+#~ msgstr "~Tabela"
+
+#~ msgid "Start Presentation"
+#~ msgstr "Zaženi predstavitev"
+
+#~ msgid "The document could not be locked, and is opened in read-only mode."
+#~ msgstr "Dokumenta ni mogoče zakleniti, zato je odprt v načinu samo za branje."
+
+#, fuzzy
+#~| msgid ""
+#~| "\n"
+#~| "Server returned this reason: \""
+#~ msgid "Server returned this reason:"
+#~ msgstr ""
+#~ "\n"
+#~ "Strežnik je posredoval naslednji razlog: »"
+
+#~ msgid "The document could not be locked."
+#~ msgstr "Dokumenta ni mogoče zakleniti."
+
+#~ msgid "Delete tabstop"
+#~ msgstr "Izbriši tabulator"
+
+#~ msgid "The Personal edition is supported by volunteers and intended for individual use."
+#~ msgstr "Izdajo skupnosti podpiramo prostovoljci."
 
 #~ msgid "Color"
 #~ msgstr "Barvno"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"POT-Creation-Date: 2020-09-04 12:12+0200\n"
 "PO-Revision-Date: 2020-04-26 09:09+0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pt/>\n"
@@ -1243,7 +1243,6 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:327-5
 #, fuzzy
-#| msgid "Go to end of document"
 msgid "Comments in documents"
 msgstr "Ir para o fim do documento"
 
@@ -1349,7 +1348,6 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:393-5
 #, fuzzy
-#| msgid "Text formatting"
 msgid "Formatting text"
 msgstr "Formatação de texto"
 
@@ -1559,7 +1557,6 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:474-5
 #, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I get a word count of my document?"
 msgstr "Ir para o início do documento"
 
@@ -1637,7 +1634,6 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
 #, fuzzy
-#| msgid "Go to start of document"
 msgid "How do I set the margins of the document?"
 msgstr "Ir para o início do documento"
 
@@ -1708,7 +1704,6 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:527-5
 #, fuzzy
-#| msgid "Apply Heading 1 paragraph style"
 msgid "Applying a paragraph style:"
 msgstr "Aplicar estilo de parágrafo Título 1"
 

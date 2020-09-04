@@ -1,10 +1,10 @@
 #. /* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
-#. extracted from /home/timar/online/ios/Mobile/Resources/Settings.bundle/en.lproj/Root.strings
+#. extracted from /home/timar/online-libreoffice-7-0/ios/Mobile/Resources/Settings.bundle/en.lproj/Root.strings
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-31 22:32+0200\n"
+"POT-Creation-Date: 2020-09-04 12:12+0200\n"
 "PO-Revision-Date: 2020-03-13 09:52+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://weblate.documentfoundation.org/projects/libo_online/ios/hr/>\n"
