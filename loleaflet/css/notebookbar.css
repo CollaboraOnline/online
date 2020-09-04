@@ -105,9 +105,10 @@
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar,
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar li,
-.hasnotebookbar .notebookbar-shortcuts-bar #Menubar a {
-	background-color: transparent;
+.hasnotebookbar .notebookbar-shortcuts-bar #Menubar > li > a {
+	background-color:transparent;
 }
+
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar > li > a {
 	cursor: pointer;
