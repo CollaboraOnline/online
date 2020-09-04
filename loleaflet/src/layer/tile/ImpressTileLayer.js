@@ -405,6 +405,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	_onMessage: function (textMsg, img) {
 		if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
+			if (obj.comment.author in this._map._viewInfoByUserName) {
+				obj.comment.avatar = this._map._viewInfoByUserName[obj.comment.author].userextrainfo.avatar;
+			}
 			if (obj.comment.action === 'Add') {
 				if (!this._annotations[obj.comment.parthash]) {
 					this._annotations[obj.comment.parthash] = [];
