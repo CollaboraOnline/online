@@ -170,6 +170,9 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	_onMessage: function (textMsg, img) {
 		if (textMsg.startsWith('comment:')) {
 			var object = JSON.parse(textMsg.substring('comment:'.length + 1));
+			if (object.comment.author in this._map._viewInfoByUserName) {
+				object.comment.avatar = this._map._viewInfoByUserName[object.comment.author].userextrainfo.avatar;
+			}
 			this._annotationManager.processCommentMessage(object.comment);
 		} else {
 			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
