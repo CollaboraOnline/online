@@ -190,7 +190,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'stroke', 'rgb(152,0,0)');
 	});
 
-	it('Change line style', function() {
+	it.skip('Change line style', function() {
 		openLinePropertyPanel();
 
 		helper.clickOnIdle('#linestyle');
