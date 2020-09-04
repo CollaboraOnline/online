@@ -36,7 +36,7 @@ Update the translations of unocommands.js before releasing:
     {program} --translate /path/to/online /path/to/translations
 
 """
-    print(message.format(program = os.path.basename(sys.argv[0])))
+    print(message.format(program = sys.argv[0]))
     exit(1)
 
 # Extract uno commands name from lines like "  'Command1', 'Command2',"
