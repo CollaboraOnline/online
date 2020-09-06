@@ -31,4 +31,10 @@
 <!-- Disable GIO UCP we don't want -->
 <item oor:path="/org.openoffice.ucb.Configuration/ContentProviders/Local/SecondaryKeys/Office/ProviderData/Provider999"><prop oor:name="URLTemplate" oor:op="fuse"><value>NeverMatchAnyUrlSuffix</value></prop></item>
 
+<!-- Default font for new documents. Most of the languages use 'en' settings. For those that do not, it's better not to touch their settings, because it's unlikely that Noto Sans is better than current default. -->
+<item oor:path="/org.openoffice.VCL/DefaultFonts/org.openoffice.VCL:LocalizedDefaultFonts['en']"><prop oor:name="LATIN_HEADING" oor:op="fuse" oor:type="xs:string"><value>Noto Sans;Liberation Sans;Albany AMT;Albany;Arial;Arimo;Nimbus Sans L;DejaVu Sans;Helvetica;Lucida;Geneva;Helmet;Arial Unicode MS;Lucida Sans Unicode;Tahoma;SansSerif</value></prop></item>
+<item oor:path="/org.openoffice.VCL/DefaultFonts/org.openoffice.VCL:LocalizedDefaultFonts['en']"><prop oor:name="LATIN_PRESENTATION" oor:op="fuse" oor:type="xs:string"><value>Noto Sans;Liberation Sans;Albany AMT;Albany;Arial;Arimo;Nimbus Sans L;DejaVu Sans;Helvetica;Lucida;Geneva;Helmet;Arial Unicode MS;Lucida Sans Unicode;Tahoma;SansSerif</value></prop></item>
+<item oor:path="/org.openoffice.VCL/DefaultFonts/org.openoffice.VCL:LocalizedDefaultFonts['en']"><prop oor:name="LATIN_SPREADSHEET" oor:op="fuse" oor:type="xs:string"><value>Noto Sans;Liberation Sans;Albany AMT;Albany;Arial;Arimo;Nimbus Sans L;DejaVu Sans;Helvetica;Lucida;Geneva;Helmet;Arial Unicode MS;Lucida Sans Unicode;Tahoma;SansSerif</value></prop></item>
+<item oor:path="/org.openoffice.VCL/DefaultFonts/org.openoffice.VCL:LocalizedDefaultFonts['en']"><prop oor:name="LATIN_TEXT" oor:op="fuse" oor:type="xs:string"><value>Noto Sans;Liberation Sans;Albany AMT;Albany;Arial;Arimo;Nimbus Sans L;DejaVu Sans;Helvetica;Lucida;Geneva;Helmet;Arial Unicode MS;Lucida Sans Unicode;Tahoma;SansSerif</value></prop></item>
+
 </oor:items>
