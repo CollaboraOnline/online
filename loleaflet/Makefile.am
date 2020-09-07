@@ -447,6 +447,8 @@ $(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet)
 
 $(DIST_FOLDER)/bundle.css: $(call prereq_css)
 	@mkdir -p $(dir $@)
+	@echo "Checking for CSS errors..."
+	@$(NODE) node_modules/stylelint/bin/stylelint.js --config $(srcdir)/.stylelintrc.json $(srcdir)/css/*.css
 	$(call bundle_css)
 
 $(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/loleaflet-src.js $(call prereq_all)
