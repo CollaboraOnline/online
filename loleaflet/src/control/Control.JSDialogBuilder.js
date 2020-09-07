@@ -1572,6 +1572,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-drawing-area', container);
 			image.src = data.image.replace('\\', '');
 			image.id = data.id;
+			image.alt = data.text;
+			image.title = data.text;
+			$(image).tooltip();
 
 			if (data.loading && data.loading === 'true') {
 				var loaderContainer = L.DomUtil.create('div', 'ui-drawing-area-loader-container', container);
