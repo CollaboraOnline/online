@@ -674,7 +674,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 #document-container.portrait.readonly.parts-preview-document {
-	bottom: 65px;
+	bottom: 61px;
 }
 
 #document-container.portrait.parts-preview-document {
@@ -686,7 +686,9 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 #document-container.portrait.parts-preview-document.keyboard {
 	bottom: 33px;
 }
-
+#document-container.portrait.parts-preview-document #map {
+	box-shadow: none;
+}
 #slide-sorter.portrait {
 	max-height: 60px;
 }
@@ -726,7 +728,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 #document-container.landscape.parts-preview-document {
 	top: 41px;
 	left: 66px !important;
-	bottom: 33px;
+	bottom: 35px;
 }
 
 #document-container.landscape.readonly.parts-preview-document {
