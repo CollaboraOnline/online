@@ -683,7 +683,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 .ui-drawing-area-loader
 {
 	border: 5px solid #f3f3f3;
-	border-top: 5px solid #3498db;
+	border-top: 5px solid #d6d6d6;
 	border-radius: 50%;
 	width: 20px;
 	height: 20px;
