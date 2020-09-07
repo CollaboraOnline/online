@@ -78,6 +78,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.root-container.notebookbar').remove();
 		$('.ui-tabs.notebookbar').remove();
 		$('.notebookbar-scroll-wrapper').remove();
+		$('.notebookbar-shortcuts-bar').remove();
 	},
 
 	loadTab: function(tabJSON) {
