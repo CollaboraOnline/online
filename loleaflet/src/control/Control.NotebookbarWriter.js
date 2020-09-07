@@ -2365,6 +2365,28 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																			'vertical': 'false'
 																		},
 																		{
+																			'id': 'Insert-Section-InsertAnnotation',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'SectionBottom15',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:InsertAnnotation', 'text'),
+																							'command': '.uno:InsertAnnotation'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
 																			'id': 'Insert-Section-Bookmark1',
 																			'type': 'container',
 																			'text': '',
