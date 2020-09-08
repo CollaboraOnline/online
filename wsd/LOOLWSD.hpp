@@ -351,7 +351,15 @@ public:
     static
     std::string getPathFromConfigWithFallback(const std::string& name, const std::string& fallbackName)
     {
-        std::string value = LOOLWSD::getPathFromConfig(name);
+        std::string value;
+        // the expected path might not exist, in which case Poco throws an exception
+        try
+        {
+            value = LOOLWSD::getPathFromConfig(name);
+        }
+        catch (...)
+        {
+        }
         if (value.empty())
             return LOOLWSD::getPathFromConfig(fallbackName);
         return value;
