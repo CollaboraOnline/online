@@ -833,7 +833,10 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId,
 
     assert(_storage && _tileCache);
     StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(auth, saveAsPath, saveAsFilename);
-    _lastStorageSaveSuccessful = storageSaveResult.getResult() == StorageBase::SaveResult::OK;
+    // Storage save is considered successful when either storage returns OK or the document on the storage
+    // was changed and it was used to overwrite local changes
+    _lastStorageSaveSuccessful = storageSaveResult.getResult() == StorageBase::SaveResult::OK ||
+                                 storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED;
     if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
     {
         if (!isSaveAs)
