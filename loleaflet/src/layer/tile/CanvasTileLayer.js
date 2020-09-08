@@ -94,6 +94,7 @@ L.CanvasTilePainter = L.Class.extend({
 		this._lastSize = mapSize;
 		this._lastMapSize = mapSize;
 		this._setCanvasSize(mapSize.x, mapSize.y);
+		this._canvasCtx.setTransform(1,0,0,1,0,0);
 	},
 
 	_setCanvasSize: function (widthCSSPx, heightCSSPx) {
@@ -130,7 +131,6 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	clear: function () {
-		this._canvasCtx.setTransform(1,0,0,1,0,0);
 		if (this._layer._debug)
 			this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 		else
@@ -172,20 +172,16 @@ L.CanvasTilePainter = L.Class.extend({
 			if (!paneBounds.intersects(tileBounds))
 				continue;
 
-			var topLeft = paneBounds.getTopLeft();
-			if (topLeft.x)
-				topLeft.x = viewBounds.min.x;
-			if (topLeft.y)
-				topLeft.y = viewBounds.min.y;
+			var offset = paneBounds.getTopLeft(); // allocates
+			offset.x = Math.min(offset.x, viewBounds.min.x);
+			offset.y = Math.min(offset.y, viewBounds.min.y);
 
-			this._canvasCtx.setTransform(1,0,
-						     0,1,
-						     -topLeft.x, -topLeft.y);
-			// when using the pinch to zoom, set additional translation based
+			// when using the pinch to zoom, set additional translation based */
 			// on the pinch movement
 			if (this._map._animatingZoom) {
 				var centerOffset = this._map._getCenterOffset(this._map._animateToCenter);
-				this._canvasCtx.translate(-Math.round(centerOffset.x), -Math.round(centerOffset.y));
+				offset.x += Math.round(centerOffset.x);
+				offset.y += Math.round(centerOffset.y);
 			}
 
 			// intersect - to avoid state thrash through clipping
@@ -202,7 +198,8 @@ L.CanvasTilePainter = L.Class.extend({
 						  crop.min.x - tileBounds.min.x,
 						  crop.min.y - tileBounds.min.y,
 						  cropWidth, cropHeight,
-						  crop.min.x, crop.min.y,
+						  crop.min.x - offset.x,
+						  crop.min.y - offset.y,
 						  cropWidth, cropHeight);
 			if (this._layer._debug)
 			{
@@ -218,7 +215,6 @@ L.CanvasTilePainter = L.Class.extend({
 			return;
 		}
 		var splitPos = this._layer._cssPixelsToCore(splitPanesContext.getSplitPos());
-		this._canvasCtx.setTransform(1,0,0,1,0,0);
 		this._canvasCtx.strokeStyle = 'red';
 		this._canvasCtx.strokeRect(0, 0, splitPos.x, splitPos.y);
 	},
