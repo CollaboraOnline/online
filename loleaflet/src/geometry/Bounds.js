@@ -83,6 +83,13 @@ L.Bounds.prototype = {
 		        (this.min.y + this.max.y) / 2, round);
 	},
 
+	round: function() {
+		this.min.x = Math.round(this.min.x);
+		this.min.y = Math.round(this.min.y);
+		this.max.x = Math.round(this.max.x);
+		this.max.y = Math.round(this.max.y);
+	},
+
 	getBottomLeft: function () { // -> Point
 		return new L.Point(this.min.x, this.max.y);
 	},
