@@ -144,20 +144,10 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		this._map.sendUnoCommand('.uno:DeleteAnnotation', comment);
 		this._map.focus();
 	},
-	onAnnotationClick: function (e) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: e.annotation._data.id
-			},
-			Text: {
-				type: 'string',
-				value: e.annotation._data.reply
-			}
-		};
-		this._map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
-		this._selectedAnnotation = undefined;
+	onAnnotationClick: function (event) {
+		this._selectedForPopup = event.annotation;
 		this._map.focus();
+		this.layoutAnnotations();
 	},
 	onAnnotationSave: function (event) {
 		var comment;
