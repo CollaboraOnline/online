@@ -180,6 +180,13 @@ L.CanvasTilePainter = L.Class.extend({
 			this._canvasCtx.scale(1, 1);
 			this._canvasCtx.translate(-topLeft.x, -topLeft.y);
 
+			// when using the pinch to zoom, set additional translation based
+			// on the pinch movement
+			if (this._map._animatingZoom) {
+				var centerOffset = this._map._getCenterOffset(this._map._animateToCenter);
+				this._canvasCtx.translate(-Math.round(centerOffset.x), -Math.round(centerOffset.y));
+			}
+
 			// create a clip for the pane/view.
 			this._canvasCtx.beginPath();
 			var paneSize = paneBounds.getSize();
@@ -475,8 +482,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	_animateZoom: function (e) {
 		var oldAnimatingZoom = this._map._animatingZoom;
 		var oldAnimateToZoom = this._map._animateToZoom;
+		var oldAnimateToCenter = this._map._animateToCenter;
 		this._map._animatingZoom = true;
 		this._map._animateToZoom = e.zoom;
+		this._map._animateToCenter = e.center;
 
 		this._update(e.center, e.zoom);
 		this._resetPreFetching(true);
@@ -485,6 +494,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		this._map._animatingZoom = oldAnimatingZoom;
 		this._map._animateToZoom = oldAnimateToZoom;
+		this._map._animateToCenter = oldAnimateToCenter;
 	},
 
 	_setZoomTransforms: function () {
