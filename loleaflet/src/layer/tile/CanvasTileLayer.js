@@ -164,6 +164,10 @@ L.CanvasTilePainter = L.Class.extend({
 			var paneBounds = this._layer._cssBoundsToCore(ctx.paneBoundsList[i]);
 			var viewBounds = this._layer._cssBoundsToCore(ctx.viewBounds);
 
+			// into real pixel-land ...
+			paneBounds.round();
+			viewBounds.round();
+
 			if (!paneBounds.intersects(tileBounds))
 				continue;
 
