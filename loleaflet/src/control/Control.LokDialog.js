@@ -929,6 +929,24 @@ L.Control.LokDialog = L.Control.extend({
 		}
 	},
 
+	refreshCalcInputBar: function(deckOffset) {
+		if (this._calcInputBar && !this._calcInputBar.isPainting) {
+			var id = this._calcInputBar.id;
+			var calcInputbar = L.DomUtil.get('calc-inputbar');
+			if (calcInputbar) {
+				var calcInputbarContainer = calcInputbar.children[0];
+				if (calcInputbarContainer) {
+					var width = calcInputbarContainer.clientWidth - deckOffset;
+					var height = calcInputbarContainer.clientHeight;
+					if (width > 0 && height > 0) {
+						console.log('_onResize: container width: ' + width + ', container height: ' + height + ', _calcInputBar width: ' + this._calcInputBar.width);
+						this._map._socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
+					}
+				}
+			}
+		}
+	},
+
 	_createCalcInputbar: function(id, left, top, width, height, textLines) {
 		console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		var strId = this._toStrId(id);

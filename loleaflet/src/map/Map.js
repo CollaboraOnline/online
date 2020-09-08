@@ -1260,21 +1260,7 @@ L.Map = L.Evented.extend({
 			}
 		}
 
-		if (this.dialog._calcInputBar && !this.dialog._calcInputBar.isPainting) {
-			var id = this.dialog._calcInputBar.id;
-			var calcInputbar = L.DomUtil.get('calc-inputbar');
-			if (calcInputbar) {
-				var calcInputbarContainer = calcInputbar.children[0];
-				if (calcInputbarContainer) {
-					var width = calcInputbarContainer.clientWidth - deckOffset;
-					var height = calcInputbarContainer.clientHeight;
-					if (width > 0 && height > 0) {
-						console.log('_onResize: container width: ' + width + ', container height: ' + height + ', _calcInputBar width: ' + this.dialog._calcInputBar.width);
-						this._socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
-					}
-				}
-			}
-		}
+		this.dialog.refreshCalcInputBar(deckOffset);
 	},
 
 	makeActive: function() {

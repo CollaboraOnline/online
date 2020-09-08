@@ -93,7 +93,10 @@ L.Control.FormulaBar = L.Control.extend({
 	onDocLayerInit: function() {
 		var docType = this.map.getDocType();
 		if (docType == 'spreadsheet') {
-			$('#formulabar').show();
+			if (window.mode.isMobile())
+				$('#formulabar').hide();
+			else
+				$('#formulabar').show();
 		}
 	},
 
@@ -102,6 +105,10 @@ L.Control.FormulaBar = L.Control.extend({
 		var toolbar = w2ui.formulabar;
 
 		if (e.perm === 'edit') {
+			$('#formulabar').show();
+
+			this.map.dialog.refreshCalcInputBar(0);
+
 			// Enable formula bar
 			$('#addressInput').prop('disabled', false);
 			$('#formulaInput').prop('disabled', false);
@@ -112,6 +119,8 @@ L.Control.FormulaBar = L.Control.extend({
 				});
 			}
 		} else {
+			$('#formulabar').hide();
+
 			// Disable formula bar
 			$('#addressInput').prop('disabled', true);
 			$('#formulaInput').prop('disabled', true);
