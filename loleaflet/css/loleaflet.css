@@ -53,7 +53,7 @@
 }
 
 .bucket-cursor {
-	cursor: url('images/cursors/fill.png'), auto !important;
+	cursor: url('images/cursors/fill.png') 14 29, auto !important;/*setting coordinates to align the tip of the bucket icon */
 }
 .loleaflet-scrollbar-show {
 	opacity: 1 !important;
