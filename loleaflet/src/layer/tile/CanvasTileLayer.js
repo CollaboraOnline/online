@@ -129,14 +129,12 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	clear: function () {
-		this._canvasCtx.save();
-		this._canvasCtx.scale(1, 1);
+		this._canvasCtx.setTransform(1,0,0,1,0,0);
 		if (this._layer._debug)
 			this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 		else
 			this._canvasCtx.fillStyle = 'white';
 		this._canvasCtx.fillRect(0, 0, this._width, this._height);
-		this._canvasCtx.restore();
 	},
 
 	// Details of tile areas to render
@@ -175,9 +173,7 @@ L.CanvasTilePainter = L.Class.extend({
 			if (topLeft.y)
 				topLeft.y = viewBounds.min.y;
 
-			this._canvasCtx.save();
-			this._canvasCtx.scale(1, 1);
-			this._canvasCtx.translate(-topLeft.x, -topLeft.y);
+			this._canvasCtx.setTransform(1,0,0,1,-topLeft.x, -topLeft.y);
 
 			// create a clip for the pane/view.
 			this._canvasCtx.beginPath();
@@ -191,7 +187,6 @@ L.CanvasTilePainter = L.Class.extend({
 				this._canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
 				this._canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
 			}
-			this._canvasCtx.restore();
 		}
 	},
 
@@ -201,11 +196,9 @@ L.CanvasTilePainter = L.Class.extend({
 			return;
 		}
 		var splitPos = this._layer._cssPixelsToCore(splitPanesContext.getSplitPos());
-		this._canvasCtx.save();
-		this._canvasCtx.scale(1, 1);
+		this._canvasCtx.setTransform(1,0,0,1,0,0);
 		this._canvasCtx.strokeStyle = 'red';
 		this._canvasCtx.strokeRect(0, 0, splitPos.x, splitPos.y);
-		this._canvasCtx.restore();
 	},
 
 	_updateWithRAF: function () {
