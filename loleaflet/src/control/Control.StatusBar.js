@@ -183,7 +183,6 @@ L.Control.StatusBar = L.Control.extend({
 		if (!window.mode.isMobile()) {
 			toolbar.w2toolbar({
 				name: 'actionbar',
-				tooltip: 'top',
 				items: [
 					{type: 'html',  id: 'search',
 					html: '<div style="padding: 3px 5px 3px 10px;" class="loleaflet-font">' +
@@ -239,7 +238,7 @@ L.Control.StatusBar = L.Control.extend({
 					window.setupSearchInput();
 				}
 			});
-
+			toolbar.tooltip();
 			toolbar.show();
 		}
 

@@ -19,7 +19,6 @@ L.Control.SigningBar = L.Control.extend({
 			var toolbar = $('#document-signing-bar');
 			toolbar.w2toolbar({
 				name: 'document-signing-bar',
-				tooltip: 'bottom',
 				items: this.map.setupSigningToolbarItems(),
 				onClick: function (e) {
 					that.onClick(e, e.target);
@@ -28,6 +27,8 @@ L.Control.SigningBar = L.Control.extend({
 				onRefresh: function() {
 				}
 			});
+			toolbar.tooltip();
+
 			toolbar.bind('touchstart', function() {
 				w2ui['document-signing-bar'].touchStarted = true;
 			});

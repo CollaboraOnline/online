@@ -6067,7 +6067,7 @@ w2utils.event = {
                     html += '<td width="100%" id="tb_'+ this.name +'_item_'+ it.id +'" align="right"></td>';
                 } else {
                     html += '<td id="tb_'+ this.name + '_item_'+ it.id +'" style="'+ (it.hidden ? 'display: none' : '') +'" '+
-                            '    class="'+ (it.disabled ? 'disabled' : '') +'" valign="middle">'+
+                            '    class="'+ (it.disabled ? 'disabled' : '') +'" valign="middle" title="'+ (it.hint ? it.hint : "") + '">'
                             '</td>';
                 }
             }
@@ -6193,7 +6193,7 @@ w2utils.event = {
             var html = '';
             if (item.caption != null && item.text == null) item.text = item.caption; // for backward compatibility
             if (item.text == null) item.text = '';
-            if (item.tooltip == null && item.hint != null) item.tooltip = item.hint; // for backward compatibility
+
             if (item.tooltip == null) item.tooltip = '';
             var img  = '<td>&#160;</td>';
             var text = item.text;

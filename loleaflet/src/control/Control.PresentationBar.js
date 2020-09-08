@@ -27,7 +27,6 @@ L.Control.PresentationBar = L.Control.extend({
 		var toolbar = $('#presentation-toolbar');
 		toolbar.w2toolbar({
 			name: 'presentation-toolbar',
-			tooltip: 'bottom',
 			hidden: true,
 			items: [
 				{type: 'html',  id: 'left'},
@@ -43,6 +42,8 @@ L.Control.PresentationBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			}
 		});
+		toolbar.tooltip();
+
 		toolbar.bind('touchstart', function() {
 			w2ui['presentation-toolbar'].touchStarted = true;
 		});

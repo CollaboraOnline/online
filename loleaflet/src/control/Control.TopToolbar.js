@@ -235,7 +235,6 @@ L.Control.TopToolbar = L.Control.extend({
 		var toolbar = $('#toolbar-up');
 		toolbar.w2toolbar({
 			name: 'editbar',
-			tooltip: 'bottom',
 			items: this.getToolItems(),
 			onClick: function (e) {
 				window.onClick(e, e.target);
@@ -259,6 +258,7 @@ L.Control.TopToolbar = L.Control.extend({
 					window.insertShapes();
 			}
 		});
+		toolbar.tooltip();
 
 		toolbar.bind('touchstart', function() {
 			w2ui['editbar'].touchStarted = true;
