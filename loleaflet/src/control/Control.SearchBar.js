@@ -16,7 +16,6 @@ L.Control.SearchBar = L.Control.extend({
 		var toolbar = $('#toolbar-search');
 		toolbar.w2toolbar({
 			name: 'searchbar',
-			tooltip: 'top',
 			items: [
 				{
 					type: 'html', id: 'search',
@@ -39,6 +38,7 @@ L.Control.SearchBar = L.Control.extend({
 				window.setupSearchInput();
 			}
 		});
+		toolbar.tooltip();
 
 		toolbar.bind('touchstart', function(e) {
 			w2ui['searchbar'].touchStarted = true;

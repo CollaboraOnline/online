@@ -71,13 +71,13 @@ L.Control.MobileTopBar = L.Control.extend({
 		var toolbar = $('#toolbar-up');
 		toolbar.w2toolbar({
 			name: 'actionbar',
-			tooltip: 'bottom',
 			items: toolItems,
 			onClick: function (e) {
 				that.onClick(e, e.target);
 				window.hideTooltip(this, e.target);
 			}
 		});
+
 		toolbar.bind('touchstart', function(e) {
 			w2ui['actionbar'].touchStarted = true;
 			var touchEvent = e.originalEvent;

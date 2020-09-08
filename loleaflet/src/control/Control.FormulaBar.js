@@ -26,7 +26,6 @@ L.Control.FormulaBar = L.Control.extend({
 		var toolbar = $('#formulabar');
 		toolbar.w2toolbar({
 			name: 'formulabar',
-			tooltip: 'bottom',
 			hidden: true,
 			items: [
 				{type: 'html',  id: 'left'},
@@ -43,6 +42,8 @@ L.Control.FormulaBar = L.Control.extend({
 				$('#addressInput').off('keyup', that.onAddressInput.bind(that)).on('keyup', that.onAddressInput.bind(that));
 			}
 		});
+		toolbar.tooltip();
+
 		toolbar.bind('touchstart', function(e) {
 			w2ui['formulabar'].touchStarted = true;
 			var touchEvent = e.originalEvent;

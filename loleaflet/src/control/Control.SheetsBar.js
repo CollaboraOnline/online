@@ -22,7 +22,6 @@ L.Control.SheetsBar = L.Control.extend({
 		var toolbar = $('#spreadsheet-toolbar');
 		toolbar.w2toolbar({
 			name: 'spreadsheet-toolbar',
-			tooltip: 'bottom',
 			hidden: true,
 			items: [
 				{type: 'button',  hidden: !this.options.shownavigation, id: 'firstrecord',  img: 'firstrecord', hint: _('Scroll to the first sheet')},
@@ -36,6 +35,8 @@ L.Control.SheetsBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			}
 		});
+		toolbar.tooltip();
+
 		toolbar.bind('touchstart', function(e) {
 			w2ui['spreadsheet-toolbar'].touchStarted = true;
 			var touchEvent = e.originalEvent;
