@@ -312,7 +312,7 @@ L.ImpressTileLayer = L.TileLayer.extend({
 		var topAnnotation;
 		var annotations = this._annotations[this._partHashes[this._selectedPart]];
 		var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast())
-			.add(L.point((this._selectedAnnotation ? 3 : 2) * this.options.marginX, this.options.marginY));
+			.add(L.point(5, this.options.marginY));
 		var bounds, annotation;
 		for (var index in annotations) {
 			annotation = annotations[index];
