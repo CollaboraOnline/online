@@ -199,11 +199,14 @@ body {
 }
 
 #toolbar-wrapper {
-	position: relative;
+	position: absolute;
 	table-layout: fixed;
 	border-collapse: collapse;
 	width: 100%;
 	border-top: none;
+	background-color: white;
+	top: 38px;
+	z-index: 11;
 }
 
 #toolbar-logo {

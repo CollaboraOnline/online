@@ -24,6 +24,7 @@
 	height: 39px;
 	overflow: hidden;
 	white-space: nowrap;
+	z-index: 11;
 
 	background-color: var(--gray-bg-color);
 	}

@@ -77,8 +77,9 @@ w2ui-toolbar {
 		left: 0;
 		text-align: center;
 		bottom: 35px;
-		padding: 0;
+		padding: 4px 0px 4px 0px;
 		position: absolute;
+		z-index: 11;
 }
 
 #formulabar {

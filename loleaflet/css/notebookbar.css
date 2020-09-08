@@ -181,6 +181,7 @@
 #toolbar-wrapper.hasnotebookbar {
 	position: fixed;
 	z-index: 11;
+	top: 32px;
 }
 
 .cell.notebookbar {
