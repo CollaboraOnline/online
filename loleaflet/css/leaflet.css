@@ -16,7 +16,6 @@
 	top: 0;
 	}
 .leaflet-container {
-	overflow: hidden;
 	-ms-touch-action: none;
 	}
 .leaflet-tile,
