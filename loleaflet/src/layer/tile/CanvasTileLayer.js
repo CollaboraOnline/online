@@ -8,6 +8,7 @@ L.TileCoordData = L.Class.extend({
 	initialize: function (left, top, zoom, part) {
 		this.x = left;
 		this.y = top;
+		// FIXME console.assert(Number.isInteger(zoom));
 		this.z = zoom;
 		this.part = part;
 	},
@@ -215,7 +216,6 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	update: function () {
-
 		var newDpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
 		var scaleChanged = this._dpiScale != newDpiScale;
 
@@ -225,7 +225,7 @@ L.CanvasTilePainter = L.Class.extend({
 		}
 
 		var splitPanesContext = this._layer.getSplitPanesContext();
-		var zoom = Math.round(this._map.getZoom());
+		var zoom = this._map.getZoom();
 		var pixelBounds = this._map.getPixelBounds();
 		var newMapSize = pixelBounds.getSize();
 		var newTopLeft = pixelBounds.getTopLeft();
@@ -272,7 +272,8 @@ L.CanvasTilePainter = L.Class.extend({
 		if (splitPosChanged)
 			this._splitPos = newSplitPos;
 
-		this._lastZoom = zoom;
+		if (!this._map._animatingZoom)
+			this._lastZoom = Math.round(zoom);
 		this._lastPart = part;
 
 		this._topLeft = newTopLeft;
@@ -412,12 +413,12 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			movestart: this._moveStart,
 			moveend: this._move,
 			// update tiles on move, but not more often than once per given interval
-			move: L.Util.throttle(this._move, this.options.updateInterval, this),
+			move: L.Util.throttle(this._move, this.options.updateInterval, this), // TODO we might want to make the updates more often (?)
 			splitposchanged: this._move,
 		};
 
 		if (this._zoomAnimated) {
-			events.zoomanim = this._animateZoom;
+			events.zoomanim = L.Util.throttle(this._animateZoom, this.options.updateInterval, this); // TODO we might want to make the updates more often (?)
 		}
 
 		return events;
@@ -471,7 +472,19 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 	},
 
-	_animateZoom: function () {
+	_animateZoom: function (e) {
+		var oldAnimatingZoom = this._map._animatingZoom;
+		var oldAnimateToZoom = this._map._animateToZoom;
+		this._map._animatingZoom = true;
+		this._map._animateToZoom = e.zoom;
+
+		this._update(e.center, e.zoom);
+		this._resetPreFetching(true);
+		this._onCurrentPageUpdate();
+		this._painter.update(this._painter);
+
+		this._map._animatingZoom = oldAnimatingZoom;
+		this._map._animateToZoom = oldAnimateToZoom;
 	},
 
 	_setZoomTransforms: function () {
