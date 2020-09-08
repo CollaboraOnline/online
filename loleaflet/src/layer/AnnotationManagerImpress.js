@@ -252,7 +252,9 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 	layoutAnnotations: function () {
 		var topAnnotation;
 		var annotations = this._annotations[this.getSelectedPartHash()];
-		var diffPoint = L.point((this._selectedAnnotation ? 3 : 2) * this.options.marginX, this.options.marginY);
+
+		// Keeping annotations close to slide to avoide being overlapped by controls
+		var diffPoint = L.point(5, this.options.marginY);
 		var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast()).add(diffPoint);
 		var bounds = null;
 		for (var index in annotations) {
