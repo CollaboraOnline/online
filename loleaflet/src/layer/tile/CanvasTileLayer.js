@@ -177,15 +177,26 @@ L.CanvasTilePainter = L.Class.extend({
 			if (topLeft.y)
 				topLeft.y = viewBounds.min.y;
 
-			this._canvasCtx.setTransform(1,0,0,1,-topLeft.x, -topLeft.y);
+			this._canvasCtx.setTransform(1,0,
+						     0,1,
+						     -topLeft.x, -topLeft.y);
 
-			// create a clip for the pane/view.
-			this._canvasCtx.beginPath();
-			var paneSize = paneBounds.getSize();
-			this._canvasCtx.rect(paneBounds.min.x, paneBounds.min.y, paneSize.x + 1, paneSize.y + 1);
-			this._canvasCtx.clip();
+			// intersect - to avoid state thrash through clipping
+			var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+			crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
+			crop.min.y = Math.max(paneBounds.min.y, tileBounds.min.y);
+			crop.max.x = Math.min(paneBounds.max.x, tileBounds.max.x);
+			crop.max.y = Math.min(paneBounds.max.y, tileBounds.max.y);
 
-			this._canvasCtx.drawImage(tile.el, tile.coords.x, tile.coords.y);
+			var cropWidth = crop.max.x - crop.min.x;
+			var cropHeight = crop.max.y - crop.min.y;
+
+			this._canvasCtx.drawImage(tile.el,
+						  crop.min.x - tileBounds.min.x,
+						  crop.min.y - tileBounds.min.y,
+						  cropWidth, cropHeight,
+						  crop.min.x, crop.min.y,
+						  cropWidth, cropHeight);
 			if (this._layer._debug)
 			{
 				this._canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
