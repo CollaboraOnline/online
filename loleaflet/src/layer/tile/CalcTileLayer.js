@@ -735,6 +735,67 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			converter: this._twipsToPixels,
 			context: this
 		});
+		var that = this;
+		this._painter.renderBackground = function(canvas, ctx)
+		{
+			if (this._layer._debug)
+				this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+			else
+				this._canvasCtx.fillStyle = 'white'; // FIXME: sheet bg color
+			this._canvasCtx.fillRect(0, 0, ctx.canvasSize.x, ctx.canvasSize.y);
+
+			if (that._debug)
+				canvas.strokeStyle = 'blue';
+			else // now fr some grid-lines ...
+				canvas.strokeStyle = '#c0c0c0';
+			canvas.lineWidth = 1.0;
+
+			canvas.beginPath();
+			for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+				// FIXME: de-duplicate before firing myself:
+
+				// co-ordinates of this pane in core document pixels
+				var paneBounds = that._cssBoundsToCore(ctx.paneBoundsList[i]);
+				// co-ordinates of the main-(bottom right) pane in core document pixels
+				var viewBounds = that._cssBoundsToCore(ctx.viewBounds);
+				// into real pixel-land ...
+				paneBounds.round();
+				viewBounds.round();
+
+				var paneOffset = paneBounds.getTopLeft(); // allocates
+				// Cute way to detect the in-canvas pixel offset of each pane
+				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
+				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
+
+				// when using the pinch to zoom, set additional translation based */
+				// on the pinch movement
+				if (that._map._animatingZoom) {
+					var centerOffset = this._map._getCenterOffset(this._map._animateToCenter);
+					paneOffset.x += Math.round(centerOffset.x);
+					paneOffset.y += Math.round(centerOffset.y);
+				}
+
+				// URGH -> zooming etc. (!?) ...
+				if (that.sheetGeometry._columns)
+					that.sheetGeometry._columns.forEachInCorePixelRange(
+						paneBounds.min.x, paneBounds.max.x,
+						function(pos) {
+							canvas.moveTo(pos - paneOffset.x - 0.5, paneBounds.min.y - paneOffset.y - 0.5);
+							canvas.lineTo(pos - paneOffset.x - 0.5, paneBounds.max.y - paneOffset.y - 0.5);
+							canvas.stroke();
+						});
+
+				if (that.sheetGeometry._rows)
+					that.sheetGeometry._rows.forEachInCorePixelRange(
+						paneBounds.min.y, paneBounds.max.y,
+						function(pos) {
+							canvas.moveTo(paneBounds.min.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+							canvas.lineTo(paneBounds.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+							canvas.stroke();
+						});
+			}
+			canvas.closePath();
+		};
 	},
 
 	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
@@ -912,12 +973,15 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				comment.tab = parseInt(comment.tab);
 				comment.cellPos = L.LOUtil.stringToBounds(comment.cellPos);
 				comment.cellPos = L.latLngBounds(this._twipsToLatLng(comment.cellPos.getBottomLeft()),
-					this._twipsToLatLng(comment.cellPos.getTopRight()));
-				var annotation = this._annotations[comment.tab][comment.id];
-				if (annotation) {
-					annotation.setLatLngBounds(comment.cellPos);
-					if (annotation.mark) {
-						annotation.mark.setLatLng(comment.cellPos.getNorthEast());
+								 this._twipsToLatLng(comment.cellPos.getTopRight()));
+				if (this._annotations && this._annotations[comment.tab])
+				{
+					var annotation = this._annotations[comment.tab][comment.id];
+					if (annotation) {
+						annotation.setLatLngBounds(comment.cellPos);
+						if (annotation.mark) {
+							annotation.mark.setLatLng(comment.cellPos.getNorthEast());
+						}
 					}
 				}
 			}
@@ -1767,6 +1831,25 @@ L.SheetDimension = L.Class.extend({
 		});
 	},
 
+	// callback with a position for each grid line in this pixel range
+	forEachInCorePixelRange: function(startPix, endPix, callback) {
+		this._visibleSizes.forEachSpan(function (spanData) {
+			// do we overlap ?
+			var spanFirstCorePx = spanData.data.poscorepx -
+			    (spanData.data.sizecore * (spanData.end - spanData.start + 1));
+			if (spanFirstCorePx < endPix && spanData.data.poscorepx > startPix)
+			{
+				var firstCorePx = startPix + spanData.data.sizecore -
+				    ((startPix - spanFirstCorePx) % spanData.data.sizecore);
+				var lastCorePx = Math.min(endPix, spanData.data.poscorepx);
+
+				for (var pos = firstCorePx; pos <= lastCorePx; pos += spanData.data.sizecore) {
+					callback(pos);
+				}
+			}
+		});
+	},
+
 	// computes element index from tile-twips position and returns
 	// an object with this index and the span data.
 	_getSpanAndIndexFromTileTwipsPos: function (pos) {
@@ -2143,6 +2226,12 @@ L.SpanList = L.Class.extend({
 		}
 
 		for (var id = startId; id <= endId; ++id) {
+			callback(this._getSpanData(id));
+		}
+	},
+
+	forEachSpan: function(callback) {
+		for (var id = 0; id < this._spanlist.length; ++id) {
 			callback(this._getSpanData(id));
 		}
 	},
