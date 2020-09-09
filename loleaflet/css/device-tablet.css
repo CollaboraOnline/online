@@ -38,7 +38,6 @@
 }
 .hasnotebookbar{
 	min-width: 808px; /*set a minimum so the logo fits*/
-	overflow: auto hidden;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 }
@@ -60,8 +59,8 @@
 }
 
 #spreadsheet-row-column-frame {
-	top: 105px;
+	top: 109px;
 }
 #document-container.spreadsheet-document {
-	top: 125px;
+	top: 129px;
 }

@@ -28,7 +28,7 @@
 	border: none;
 	border-radius: 0px;
 	background: #fff;
-	box-shadow: 0 3px 0px 0px #fff, 0px -1px 8px -4px rgba(105, 105, 105, 0.4), -1px -15px 15px -4px rgb(77, 130, 184, 0.1);
+	box-shadow: 0 4px 0px 0px #fff, 0px -1px 8px -4px rgba(105, 105, 105, 0.4), -1px -15px 15px -4px rgb(77, 130, 184, 0.1);
 }
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(3, 105, 163);
@@ -53,10 +53,14 @@
 	background-color: #f9f9f9;
 	cursor: pointer;
 	color: #555;
+	padding-bottom: 4px;
 }
 /* Document Logo */
 .main-nav.hasnotebookbar #document-header {
 	float: left;
+}
+.main-nav.hasnotebookbar {
+	padding: 3px !important;
 }
 
 /* shortcuts bar */
@@ -181,7 +185,7 @@
 #toolbar-wrapper.hasnotebookbar {
 	position: fixed;
 	z-index: 11;
-	top: 32px;
+	top: 36px;
 }
 
 .cell.notebookbar {

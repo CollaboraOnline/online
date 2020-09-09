@@ -205,18 +205,24 @@ L.Control.UIManager = L.Control.extend({
 		if (this.hasNotebookbarShown())
 			return;
 
-		var additionalOffset = 0;
+		var additionalOffsetDocument = 0, additionalOffsetHeaders = 0;
 		if (docType === 'spreadsheet') {
-			if (window.mode.isTablet())
-				additionalOffset = -7;
-			else
-				additionalOffset = 53;
+			if (window.mode.isTablet()) {
+				additionalOffsetDocument = 5;
+				additionalOffsetHeaders = 5;
+			} else {
+				additionalOffsetDocument = 60;
+				additionalOffsetHeaders = 0;
+			}
+		} else if (window.mode.isTablet()) {
+			additionalOffsetDocument = 3;
+			additionalOffsetHeaders = 3;
 		}
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
-		this.moveObjectVertically($('#document-container'), 43 + additionalOffset);
-		this.moveObjectVertically($('#presentation-controls-wrapper'), 43);
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), 43);
+		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 47 + additionalOffsetHeaders);
+		this.moveObjectVertically($('#document-container'), 47 + additionalOffsetDocument);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), 47);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), 47);
 
 		$('#map').addClass('notebookbar-opened');
 	},
