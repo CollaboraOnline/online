@@ -69,6 +69,9 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 
 /* Related to loleaflet.css */
+#toolbar-wrapper{
+	top: 0px;
+}
 #toolbar-hamburger {
 	width: 36px;
 	height: 36px;
@@ -128,7 +131,8 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
     height: 0;
     width: 100%;
     top: 37px; /*set equal to toolbar up's height*/
-    margin: 0;
+	margin: 0;
+	padding: 0px !important;
     -webkit-overflow-scrolling: touch;
     overflow: scroll;
     z-index: 1010;

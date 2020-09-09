@@ -54,7 +54,7 @@
     height: 32px; /* on mouseover menubar items, border emerges */
     width: auto;
     background: #ffffff;
-    margin: 3px;
+    padding: 3px;
     white-space: nowrap;
     position: absolute;
     z-index: 12;

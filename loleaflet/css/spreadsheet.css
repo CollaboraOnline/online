@@ -228,10 +228,6 @@
 	background-image: url('images/drop-down-button.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	}
-
-#toolbar-wrapper.spreadsheet.tablet {
-	z-index: auto;
 }
 
 #toolbar-wrapper.spreadsheet.tablet.readonly {

@@ -136,6 +136,7 @@ L.Control.UIManager = L.Control.extend({
 		obj.addClass('w2ui-icon fold');
 
 		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
+		this.moveObjectVertically($('#toolbar-wrapper'), 36);
 		this.moveObjectVertically($('#document-container'), 36);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
@@ -154,6 +155,7 @@ L.Control.UIManager = L.Control.extend({
 		obj.addClass('w2ui-icon unfold');
 
 		this.moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
+		this.moveObjectVertically($('#toolbar-wrapper'), -36);
 		this.moveObjectVertically($('#document-container'), -36);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
