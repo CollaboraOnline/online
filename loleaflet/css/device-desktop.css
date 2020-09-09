@@ -6,9 +6,9 @@
 	background-position-y: top;
 	width: 20px;
 	background-repeat: no-repeat;
-	margin-left:1px !important;
+	margin-left: 1px !important;
 	transform: translateY(-12px);
 }
 #tb_formulabar_item_formula .inputbar_selection_handles .leaflet-selection-marker-start{
-	margin-left:-20px !important;
+	margin-left: -20px !important;
 }

@@ -167,9 +167,9 @@
 .leaflet-zoom-anim .leaflet-zoom-animated {
 	will-change: transform;
 	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
-	-moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
-	-o-transition:      -o-transform 0.25s cubic-bezier(0,0,0.25,1);
-	transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	-moz-transition: -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	-o-transition: -o-transform 0.25s cubic-bezier(0,0,0.25,1);
+	transition: transform 0.25s cubic-bezier(0,0,0.25,1);
 }
 .leaflet-zoom-anim .leaflet-tile,
 .leaflet-pan-anim .leaflet-tile {
@@ -201,7 +201,7 @@
 .leaflet-dragging .leaflet-interactive {
 	cursor: move;
 	cursor: -webkit-grabbing;
-	cursor:    -moz-grabbing;
+	cursor: -moz-grabbing;
 }
 
 /* visual tweaks */
@@ -560,7 +560,7 @@ a.leaflet-control-buttons:hover:first-child {
 }
 
 .debug .leaflet-popup-content {
-	margin: 1px 1px;
+	margin: 1px;
 	font: 9px/8px Tahoma, Verdana, sans-serif;
 	line-height: 1;
 	background: rgba(0, 0, 0, 0);
@@ -984,7 +984,7 @@ input.clipboard {
 }
 
 .leaflet-pane-splitter {
-	cursor:grab;
+	cursor: grab;
 	stroke: #e0e0e0;
 	fill: #e0e0e0;
 	opacity: 1;

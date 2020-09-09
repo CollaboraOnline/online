@@ -19,7 +19,7 @@
 	/* TODO: remove specific z-index from our codebase
 	so that the following line can also be removed */
 	z-index: 2000;
-	background-color:#1c5fa814;
+	background-color: #1c5fa814;
 	min-height: 100%;
 	min-width: 100%;
 	position: absolute;

@@ -47,7 +47,7 @@ span#main-menu-btn-icon {
 	height: 58px;
 	width: 72px;
 	overflow: hidden;
-	margin: 2px 2px !important;
+	margin: 2px !important;
 	display: inline-block;
 	border: 1px solid #fff;
 }
@@ -113,7 +113,7 @@ span#main-menu-btn-icon {
 }
 
 .colors-container-basic-colors-row {
-	padding: 0 0 4% 0;
+	padding: 0 0 4%;
 }
 
 .colors-container-tints {
@@ -121,7 +121,7 @@ span#main-menu-btn-icon {
 }
 
 .no-color-control-label, .auto-color-control-label {
-	display:table-cell;
+	display: table-cell;
 	padding-left: 4px;
 	vertical-align: middle;
 }
@@ -210,12 +210,12 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 #ParaPropertyPanel > .ui-content{
 	display: flex;
-	flex-wrap: wrap  !important;
+	flex-wrap: wrap !important;
 	justify-content: space-around;
 }
 .with-slide-sorter-above > .ui-tabs-content > div[title='Layouts']{
 	justify-content: center;
-	-ms-box-orient: horizontal  !important;
+	-ms-box-orient: horizontal !important;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -224,8 +224,8 @@ p.mobile-wizard.ui-combobox-text.selected {
 	display: flex;
 	align-self: center !important;
 	align-items: center !important;
-	-webkit-flex-wrap: wrap  !important;
-	flex-wrap: wrap  !important;
+	-webkit-flex-wrap: wrap !important;
+	flex-wrap: wrap !important;
 }
 #rotationlabel, #cellbackgroundlabel, #NumberFormatCurrency > .unolabel, #NumberFormatPercent > .unolabel, #NumberFormatDecimal > .unolabel{
 	display: none;
@@ -285,7 +285,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 .ui-content.mobile-wizard {
 	background-color: white !important;
 	border: none !important;
-	padding: 0px 0px 16px 0px;
+	padding: 0px 0px 16px;
 }
 #mobile-wizard-content > #ScCellAppearancePropertyPanel > .ui-content.level-0.mobile-wizard{
 	display: flex;
@@ -504,7 +504,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 .spinfieldunit {
 	color: #777 !important;
 	width: 30px;
-	margin: 0px 10px 0px 10px;
+	margin: 0px 10px;
 }
 
 .plus {
@@ -527,7 +527,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	border-color: #0b87e7;
 	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
-	background-color:#0087ff75;
+	background-color: #0087ff75;
 	font-size: 22px;
 	font-weight: bold
 }
@@ -631,7 +631,7 @@ a.leaflet-control-zoom-in {
 	color: #0b87e7 !important;
 }
 #BackColor .w2ui-tb-caption > div, #FontColor .w2ui-tb-caption > div, #BackgroundColor .w2ui-tb-caption > div, #FrameLineColor div, #Color div{
-	border-radius:100px !important;
+	border-radius: 100px !important;
 }
 #toolbar-down table.w2ui-button.checked .w2ui-tb-image{
 	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
@@ -656,7 +656,7 @@ a.leaflet-control-zoom-in {
 	padding-left: 0;
 }
 #Color > img{
-	border-radius:100px;
+	border-radius: 100px;
 	background-color: #696969;
 }
 #mobile-wizard #SendToBack > span, #mobile-wizard #ObjectBackOne > span, #mobile-wizard  #ObjectForwardOne > span, #mobile-wizard #BringToFront > span, #mobile-wizard #SetObjectToBackground > span, #mobile-wizard #SetObjectToForeground > #mobile-wizard span, #mobile-wizard #FlipVertical > span, #mobile-wizard #FlipHorizontal > span, #mobile-wizard #Bold > span, #mobile-wizard #Italic > span, #mobile-wizard #Underline > span, #mobile-wizard #Strikeout > span, #mobile-wizard #StyleApply > span, #mobile-wizard #StyleUpdateByExample > span, #mobile-wizard #StyleNewByExample > span, #mobile-wizard #Shadowed > span, #mobile-wizard #Grow > span, #mobile-wizard #Shrink > span, #mobile-wizard #Color > span, #mobile-wizard #Spacing > span, #mobile-wizard #SuperScript > span, #mobile-wizard #SubScript > span, #mobile-wizard #AlignLeft > span, #mobile-wizard #AlignRight > span, #mobile-wizard #AlignHorizontalCenter > span, #mobile-wizard #AlignBlock > span, #mobile-wizard #ParaLeftToRight > span, #mobile-wizard #ParaRightToLeft > span, #mobile-wizard #AlignTop > span, #mobile-wizard #AlignVCenter > span, #mobile-wizard #AlignBottom > span, #mobile-wizard #IncrementIndent > span, #mobile-wizard #DecrementIndent > span, #mobile-wizard #LeftPara > span, #mobile-wizard #RightPara > span, #mobile-wizard #CenterPara > span, #mobile-wizard #JustifyPara > span, #mobile-wizard #DefaultBullet > span, #mobile-wizard #DefaultNumbering > span, #mobile-wizard #ParaspaceIncrease > span, #mobile-wizard #ParaspaceDecrease > span, #mobile-wizard #LineSpacing > span, #mobile-wizard #HangingIndent > span, #mobile-wizard #CellVertTop > span, #mobile-wizard #CellVertCenter > span, #mobile-wizard #CellVertBottom > span, #mobile-wizard div[id*='Table'] > span, #mobile-wizard div[id*='Row'] > span,  #mobile-wizard div[id*='Column'] > span, #mobile-wizard div[id*='Cell'] > span, #mobile-wizard div[id^='Outline'] > span, #mobile-wizard #nolines > img{
@@ -665,7 +665,7 @@ a.leaflet-control-zoom-in {
 #mobile-wizard #SendToBack, #mobile-wizard #ObjectBackOne, #mobile-wizard #ObjectForwardOne, #mobile-wizard #BringToFront, #mobile-wizard #SetObjectToBackground, #mobile-wizard #SetObjectToForeground, #mobile-wizard #FlipVertical, #mobile-wizard #FlipHorizontal, #mobile-wizard #Bold, #mobile-wizard #Italic, #mobile-wizard #Underline, #Strikeout, #mobile-wizard #StyleApply, #mobile-wizard #StyleUpdateByExample, #mobile-wizard #StyleNewByExample, #mobile-wizard #Shadowed, #mobile-wizard #Grow, #mobile-wizard #Shrink, #mobile-wizard #Spacing, #mobile-wizard #SuperScript, #mobile-wizard #SubScript, #mobile-wizard #AlignLeft, #mobile-wizard #AlignRight, #mobile-wizard #AlignHorizontalCenter, #mobile-wizard #AlignBlock, #mobile-wizard #ParaRightToLeft, #mobile-wizard #ParaLeftToRight, #mobile-wizard #AlignTop, #mobile-wizard #AlignVCenter, #mobile-wizard #AlignBottom, #mobile-wizard #IncrementIndent, #mobile-wizard #DecrementIndent, #mobile-wizard #LeftPara, #mobile-wizard #RightPara, #mobile-wizard #CenterPara, #mobile-wizard #JustifyPara, #mobile-wizard #DefaultBullet, #mobile-wizard #DefaultNumbering, #mobile-wizard #ParaspaceIncrease, #mobile-wizard #ParaspaceDecrease, #mobile-wizard #LineSpacing, #mobile-wizard #HangingIndent, #mobile-wizard #CellVertTop, #mobile-wizard #CellVertCenter, #mobile-wizard #CellVertBottom, #mobile-wizard div[id*='Row'], #mobile-wizard div[id*='Column'], #mobile-wizard #DeleteTable, #mobile-wizard #MergeCells, #mobile-wizard div[id^='Outline'], #mobile-wizard #EntireCell, #mobile-wizard #SelectTable, #mobile-wizard #EntireColumn, #mobile-wizard #EntireRow, #mobile-wizard #SplitCell, #mobile-wizard #SplitTable{
 	padding: 16px 28px 16px 4% !important;
 	margin: 0px !important;
-	float:left;
+	float: left;
 }
 #MergeCells > span{
 	color: var(rgb(--blue1-txt-primary-color));
@@ -686,10 +686,10 @@ a.leaflet-control-zoom-in {
 .colorcontainer {
 	width: 120px;
 	float: left;
-	padding: 20px 20px 20px 20px !important;
+	padding: 20px !important;
 }
 #belowparaspacing, #spacinglabel, #OutlineRight, #DefaultBullet, #CellVertTop, #rowheight, #columnwidth{float: left;}
-#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel, #spacinglabel, #sizelabel{clear:both;}
+#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel, #spacinglabel, #sizelabel{clear: both;}
 #BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel, .mobile-wizard.ui-text {
 	border-bottom: 1px solid #c2d5ed;
 	color: #b3c5dc !important;
@@ -713,7 +713,7 @@ div#mobile-wizard-content .spinfieldcontainer{
 	height: 48px;
 	width: -moz-available;
 	width: -webkit-fill-available;
-	margin: 0px 4% 8px 4% !important;
+	margin: 0px 4% 8px !important;
 	border: 1px solid #ccc;
 	border-radius: 2px;
 	background-size: 28px;
@@ -729,11 +729,10 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 }
 #buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
 	margin: 0;
-	padding: 0;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	padding: 24px 32px 24px 32px;
+	padding: 24px 32px;
 	background-size: 24px !important;
 }
 #mobile-wizard-content > .unobutton:focus, #mobile-wizard-content .unobutton:active{
@@ -764,7 +763,6 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	box-shadow: none;
 }
 #mobile-wizard input[type='checkbox']{
-	appearance: none;
 	width: 24px;
 	height: 24px;
 	margin: 10px 20px 10px 0px !important;
@@ -801,7 +799,6 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 }
 #mobile-wizard input[type='radio']{
 	border-radius: 50%;
-	appearance: none;
 	width: 24px;
 	height: 24px;
 	margin: 10px 20px 10px 0px !important;
@@ -906,7 +903,7 @@ input[type='checkbox'][disabled] {
 	*/
 	width: -moz-available;
 	width: -webkit-fill-available;
-	margin: 10px 5% 10px 5% !important;
+	margin: 10px 5% !important;
 }
 
 #label9, #documentlabel-mobile {
@@ -930,7 +927,7 @@ input[type='checkbox'][disabled] {
 }
 
 .mobile-wizard.ui-drawing-area {
-	margin: 10px 5% 10px 5% !important;
+	margin: 10px 5% !important;
 	width: 90%;
 }
 

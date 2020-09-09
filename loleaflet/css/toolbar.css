@@ -47,7 +47,6 @@
 	bottom: 0;
 	z-index: 1000;
 	border-top: 1px solid #bbbbbb;
-	border-top: 1px solid #bbbbbb;
 }
 
 w2ui-toolbar {
@@ -130,8 +129,8 @@ w2ui-toolbar {
 	display: block;
 	width: 100%;
 	position: relative;
-	padding:0px;
-	margin: 0px 0px -4px 0px;
+	padding: 0px;
+	margin: 0px 0px -4px;
 }
 
 #tb_formulabar_item_formula {
@@ -215,7 +214,7 @@ w2ui-toolbar {
 	padding-right: 24px;
 	max-width: 100%;
 	overflow: hidden;
-	text-overflow:ellipsis;
+	text-overflow: ellipsis;
 	height: 18px;
 }
 
@@ -293,7 +292,7 @@ td[id^='tb_editbar_item_sidebar']{
 }
 
 .w2ui-button{
-	margin:0 !important;
+	margin: 0 !important;
 }
 
 .w2ui-tb-image {
@@ -302,7 +301,7 @@ td[id^='tb_editbar_item_sidebar']{
 }
 
 .w2ui-break {
-	margin:0 4px !important;
+	margin: 0 4px !important;
 }
 
 .leaflet-bar a {
@@ -829,7 +828,7 @@ button.leaflet-control-search-next
 	padding: 2px;
 	display: block;
 	min-width: 350px;
-	width:  100%;
+	width: 100%;
 	height: auto;
 }
 

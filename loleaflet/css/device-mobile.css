@@ -63,7 +63,7 @@ input#follow-checkbox:checked ~ .checkmark {
 }
 #userlist_table + hr { display: none;}
 div#w2ui-overlay-actionbar.w2ui-overlay{
-	margin-left:-7px;
+	margin-left: -7px;
 }
 
 /* Related to loleaflet.css */
@@ -199,7 +199,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 .inputbar_multiline #tb_formulabar_item_formula > div,
 .inputbar_multiline #tb_formulabar_item_address > div {
-	margin-top:0px;
+	margin-top: 0px;
 }
 .inputbar_multiline #tb_formulabar_item_address{
 	border-right: solid 1px #0000004d !important;
@@ -287,10 +287,10 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 
 /* Related to vex.css */
 .vex-open .loleaflet-user-idle {
-	background: rgba(0, 0, 0, 0)!important;
-	font-size: xx-large!important;
-	color: #fff!important;
-	text-align: center!important;
+	background: rgba(0, 0, 0, 0) !important;
+	font-size: xx-large !important;
+	color: #fff !important;
+	text-align: center !important;
 }
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input select, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input textarea, .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='date'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='datetime'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='datetime-local'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='email'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='month'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='number'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='password'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='search'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='tel'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='text'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='time'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='url'], .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='week']{
 	padding: 0 !important
@@ -395,7 +395,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 .insertshape-grid {
 	box-sizing: content-box;
 	position: static;
-	padding: 2px 0px 2px 0px;
+	padding: 2px 0px;
 	display: inline-block;
 	width: 100%;
 	height: 100%;
@@ -465,7 +465,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	display: block;
 	width: 100%;
 	position: relative;
-	padding:0px;
+	padding: 0px;
 	margin: 0px;
 }
 
@@ -481,19 +481,19 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	background: none !important;
 }
 #toolbar-up .checked .w2ui-tb-image, #toolbar-up .w2ui-tb-image:hover, #toolbar-up .w2ui-tb-image:focus, #toolbar-up .w2ui-tb-image:active, #toolbar-hamburger.menuwizard-closed:active{
-	-webkit-filter:  drop-shadow(0px 0px 4px #0b87e7);
+	-webkit-filter: drop-shadow(0px 0px 4px #0b87e7);
 	filter: drop-shadow(0px 0px 4px #0b87e7);
 }
 #toolbar-up .over{
 	border-color: #fff !important;
 }
 #toolbar-up .over:hover .w2ui-tb-image, #toolbar-up .over:active .w2ui-tb-image{
-	-webkit-filter:  drop-shadow(0px 0px 4px #0b87e7);
+	-webkit-filter: drop-shadow(0px 0px 4px #0b87e7);
 	filter: drop-shadow(0px 0px 4px #0b87e7);
 	border-color: #fff transparent;
 }
 #toolbar-down table.w2ui-button .w2ui-tb-image {
-	margin: 5px 9px 3px 9px!important;
+	margin: 5px 9px 3px !important;
 }
 .w2ui-toolbar .w2ui-break{
 	background-image: none;
@@ -769,5 +769,5 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 
 /* Disable tooltips when on touch devices */
 .w2ui-tag .w2ui-tag-top {
-	display:none !important;
+	display: none !important;
 }

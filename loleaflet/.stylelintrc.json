@@ -2,12 +2,28 @@
 	"rules": {
 		"indentation": "tab",
 		"string-quotes": "single",
+		"no-extra-semicolons": true,
 		"no-duplicate-selectors": true,
 		"selector-combinator-space-after": "always",
+		"selector-combinator-space-before": "always",
 		"selector-attribute-quotes": "always",
 		"selector-attribute-brackets-space-inside": "never",
 		"function-url-quotes": ["always", {
 			"except": ["empty"]
-		}]
+		}],
+		"font-family-no-duplicate-names": true,
+		"declaration-block-no-duplicate-properties": [true, {
+			"ignore": ["consecutive-duplicates-with-different-values"]
+		}],
+		"function-calc-no-invalid": true,
+		"function-linear-gradient-no-nonstandard-direction": true,
+		"selector-pseudo-class-no-unknown": true,
+		"selector-pseudo-element-no-unknown": true,
+		"media-feature-name-no-unknown": true,
+		"comment-no-empty": true,
+		"no-invalid-double-slash-comments": true,
+		"shorthand-property-no-redundant-values": true,
+		"declaration-bang-space-before": "always",
+		"declaration-colon-space-after": "always"
 	}
 }

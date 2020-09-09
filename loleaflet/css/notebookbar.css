@@ -106,7 +106,7 @@
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar,
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar li,
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar > li > a {
-	background-color:transparent;
+	background-color: transparent;
 }
 
 
@@ -245,7 +245,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 .unotoolbutton.notebookbar .unolabel {
-	font-family:  var(--loleaflet-font);
+	font-family: var(--loleaflet-font);
 	color: #696969;
 	color: var(--gray-light-txt--color);
 	padding: 0px 5px !important;

@@ -2,7 +2,7 @@
 
 /* Disable tooltips when on touch devices */
 .w2ui-tag .w2ui-tag-top {
-	display:none !important;
+	display: none !important;
 }
 
 /* Make the upper toolbar scrollable using swipe as on phones. */

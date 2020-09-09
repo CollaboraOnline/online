@@ -1,12 +1,12 @@
 @-moz-document url-prefix() {
 	#formulabar #formulaInput, #formulabar #addressInput{
 		border-radius: 0px;
-		border:1px solid #bbbbbb !important;
+		border: 1px solid #bbbbbb !important;
 	}
 	#toolbar-wrapper{
 		border-top: none;
 	}
 	#toolbar-up{
-		top:-1px;
+		top: -1px;
 	}
 }
