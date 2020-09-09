@@ -23,7 +23,6 @@ L.Marker = L.Layer.extend({
 	initialize: function (latlng, options) {
 		L.setOptions(this, options);
 		this._latlng = L.latLng(latlng);
-		this.on('down', this.onDown);
 	},
 
 	setDraggable: function(val) {
@@ -53,12 +52,6 @@ L.Marker = L.Layer.extend({
 
 		this._removeIcon();
 		this._removeShadow();
-	},
-
-	onDown: function () {
-		if (this._map && this._map.touchGesture) {
-			this._map.touchGesture.disable();
-		}
 	},
 
 	getEvents: function () {
