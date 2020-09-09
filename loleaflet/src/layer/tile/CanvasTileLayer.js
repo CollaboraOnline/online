@@ -90,7 +90,6 @@ L.CanvasTilePainter = L.Class.extend({
 		this._canvasCtx.imageSmoothingEnabled = false;
 		this._canvasCtx.msImageSmoothingEnabled = false;
 		var mapSize = this._map.getPixelBounds().getSize();
-		this._lastSize = mapSize;
 		this._lastMapSize = mapSize;
 		this._setCanvasSize(mapSize.x, mapSize.y);
 		this._canvasCtx.setTransform(1,0,0,1,0,0);
@@ -115,6 +114,8 @@ L.CanvasTilePainter = L.Class.extend({
 		this._height = parseInt(this._canvas.style.height);
 		this.clear();
 		this._syncTileContainerSize();
+
+		this._lastSize = new L.Point(widthCSSPx, heightCSSPx);
 	},
 
 	canvasDPIScale: function () {
@@ -155,7 +156,6 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	paint: function (tile, ctx) {
-
 		if (!ctx)
 			ctx = this._paintContext();
 
@@ -245,9 +245,9 @@ L.CanvasTilePainter = L.Class.extend({
 
 		var mapSizeChanged = !newMapSize.equals(this._lastMapSize);
 		// To avoid flicker, only resize the canvas element if width or height of the map increases.
-		var newSize = new L.Point(Math.max(newMapSize.x, this._lastSize.x),
-			Math.max(newMapSize.y, this._lastSize.y));
-		var resizeCanvas = !newSize.equals(this._lastSize);
+		var newSize = new L.Point(Math.max(newMapSize.x, this._lastSize ? this._lastSize.x : 0),
+					  Math.max(newMapSize.y, this._lastSize ? this._lastSize.y : 0));
+		var resizeCanvas = !this._lastSize || !newSize.equals(this._lastSize);
 
 		var topLeftChanged = this._topLeft === undefined || !newTopLeft.equals(this._topLeft);
 		var splitPosChanged = !newSplitPos.equals(this._splitPos);
@@ -267,7 +267,6 @@ L.CanvasTilePainter = L.Class.extend({
 
 		if (resizeCanvas || scaleChanged) {
 			this._setCanvasSize(newSize.x, newSize.y);
-			this._lastSize = newSize;
 		}
 		else if (mapSizeChanged && topLeftChanged) {
 			this.clear();
@@ -291,14 +290,16 @@ L.CanvasTilePainter = L.Class.extend({
 
 	_paintWholeCanvas: function () {
 
-		if (this._layer._debug)
-			this.clear();
-
 		var zoom = this._lastZoom || Math.round(this._map.getZoom());
 		var part = this._lastPart || this._layer._selectedPart;
 
 		// Calculate all this here intead of doing it per tile.
 		var ctx = this._paintContext();
+
+		// First render the background / sheet grid if we can
+		if (this.renderBackground)
+			this.renderBackground(this._canvasCtx, ctx);
+
 		var tileRanges = ctx.paneBoundsList.map(this._layer._pxBoundsToTileRange, this._layer);
 
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
@@ -324,6 +325,10 @@ L.CanvasTilePainter = L.Class.extend({
 				}
 			}
 		}
+
+		// Render on top to check matchup
+		if (this._layer._debug && this.renderBackground)
+			this.renderBackground(this._canvasCtx, ctx);
 	},
 });
 
