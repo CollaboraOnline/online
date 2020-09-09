@@ -8,7 +8,7 @@ L.Map.mergeOptions({
 	zoomAnimationThreshold: 4
 });
 
-var zoomAnimated = L.DomUtil.TRANSITION && L.Browser.any3d && !L.Browser.mobileOpera && !(this._docLayer instanceof L.CanvasTileLayer);
+var zoomAnimated = L.DomUtil.TRANSITION && L.Browser.any3d && !L.Browser.mobileOpera;
 
 if (zoomAnimated) {
 
@@ -18,7 +18,7 @@ if (zoomAnimated) {
 
 		// zoom transitions run with the same duration for all layers, so if one of transitionend events
 		// happens after starting zoom animation (propagating to the map pane), we know that it ended globally
-		if (this._zoomAnimated) {
+		if (this._zoomAnimated && !(this._docLayer instanceof L.CanvasTileLayer)) {
 
 			this._createAnimProxy();
 
@@ -90,7 +90,7 @@ L.Map.include(!zoomAnimated ? {} : {
 		return true;
 	},
 
-	_animateZoom: function (center, zoom, startAnim, noUpdate) {
+	_animateZoom: function (center, zoom, startAnim, noUpdate, endAnim) {
 		if (startAnim) {
 			this._animatingZoom = true;
 
@@ -99,6 +99,9 @@ L.Map.include(!zoomAnimated ? {} : {
 			this._animateToZoom = zoom;
 
 			L.DomUtil.addClass(this._mapPane, 'leaflet-zoom-anim');
+		} else if (endAnim) {
+			// explicitly end the zoom
+			this._animatingZoom = false;
 		}
 
 		this.fire('zoomanim', {

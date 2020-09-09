@@ -486,21 +486,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_animateZoom: function (e) {
-		var oldAnimatingZoom = this._map._animatingZoom;
-		var oldAnimateToZoom = this._map._animateToZoom;
-		var oldAnimateToCenter = this._map._animateToCenter;
-		this._map._animatingZoom = true;
-		this._map._animateToZoom = e.zoom;
-		this._map._animateToCenter = e.center;
-
 		this._update(e.center, e.zoom);
 		this._resetPreFetching(true);
 		this._onCurrentPageUpdate();
 		this._painter.update(this._painter);
-
-		this._map._animatingZoom = oldAnimatingZoom;
-		this._map._animateToZoom = oldAnimateToZoom;
-		this._map._animateToCenter = oldAnimateToCenter;
 	},
 
 	_setZoomTransforms: function () {

@@ -550,7 +550,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		L.Util.cancelAnimFrame(this._animRequest);
 		this._animRequest = L.Util.requestAnimFrame(function () {
 			console.assert(typeof this._map._animateZoom === 'function');
-			this._map._animateZoom(this._center, this._zoom, false, true);
+			this._map._animateZoom(this._center, this._zoom, /* startAnim = */ true, true);
 		}, this, true, this._map._container);
 	},
 
@@ -575,7 +575,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._center) {
 			L.Util.cancelAnimFrame(this._animRequest);
 			console.assert(typeof this._map._animateZoom === 'function');
-			this._map._animateZoom(this._center, finalZoom, true, true);
+			this._map._animateZoom(this._center, finalZoom, /* startAnim = */ false, true, /* endAnim = */ true);
 		}
 
 		if (this._map._docLayer && this._map._docLayer._annotations) {
