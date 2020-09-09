@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-04 15:38+0200\n"
-"PO-Revision-Date: 2020-08-07 00:29+0000\n"
+"PO-Revision-Date: 2020-09-06 08:35+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sk/>\n"
 "Language: sk\n"
@@ -1073,7 +1073,7 @@ msgstr "Vložte PIN kód z Emailu alebo SMS"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
-msgstr "Prihlásiť sa z e-mailu nebo mobilného čísla"
+msgstr "Prihlásiť sa z e-mailu alebo mobilného čísla"
 
 #: src/control/Signing.js:329
 msgid "Select document type to upload"
