@@ -162,7 +162,9 @@ L.CanvasTilePainter = L.Class.extend({
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+			// co-ordinates of this pane in core document pixels
 			var paneBounds = this._layer._cssBoundsToCore(ctx.paneBoundsList[i]);
+			// co-ordinates of the main-(bottom right) pane in core document pixels
 			var viewBounds = this._layer._cssBoundsToCore(ctx.viewBounds);
 
 			// into real pixel-land ...
@@ -172,16 +174,17 @@ L.CanvasTilePainter = L.Class.extend({
 			if (!paneBounds.intersects(tileBounds))
 				continue;
 
-			var offset = paneBounds.getTopLeft(); // allocates
-			offset.x = Math.min(offset.x, viewBounds.min.x);
-			offset.y = Math.min(offset.y, viewBounds.min.y);
+			var paneOffset = paneBounds.getTopLeft(); // allocates
+			// Cute way to detect the in-canvas pixel offset of each pane
+			paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
+			paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
 			// when using the pinch to zoom, set additional translation based */
 			// on the pinch movement
 			if (this._map._animatingZoom) {
 				var centerOffset = this._map._getCenterOffset(this._map._animateToCenter);
-				offset.x += Math.round(centerOffset.x);
-				offset.y += Math.round(centerOffset.y);
+				paneOffset.x += Math.round(centerOffset.x);
+				paneOffset.y += Math.round(centerOffset.y);
 			}
 
 			// intersect - to avoid state thrash through clipping
@@ -198,8 +201,8 @@ L.CanvasTilePainter = L.Class.extend({
 						  crop.min.x - tileBounds.min.x,
 						  crop.min.y - tileBounds.min.y,
 						  cropWidth, cropHeight,
-						  crop.min.x - offset.x,
-						  crop.min.y - offset.y,
+						  crop.min.x - paneOffset.x,
+						  crop.min.y - paneOffset.y,
 						  cropWidth, cropHeight);
 			if (this._layer._debug)
 			{
