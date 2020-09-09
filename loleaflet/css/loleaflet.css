@@ -23,7 +23,7 @@
 #document-container {
 	border-top: 1px solid #B6B6B6;
 	background: #DFDFDF;
-	position: absolute;
+	position: fixed;
 	top: 77px;
 	bottom: 33px;
 	right: 0px;

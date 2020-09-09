@@ -216,7 +216,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 		top: 75px !important
 	}
 	#document-container.spreadsheet-document {
-		top: 95px !important;
+		top: 97x !important;
 	}
 }
 #spreadsheet-toolbar {
@@ -234,7 +234,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	top: 57px !important;
 }
 #spreadsheet-row-column-frame {
-	top: 73px;
+	top: 77px;
 	bottom: 36px;
 }
 
@@ -623,7 +623,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 #document-container.spreadsheet-document {
-	top: 92px !important;
+	top: 97px !important;
 	bottom: 72px;
 }
 
@@ -634,7 +634,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 #spreadsheet-row-column-frame {
-	top: 72px !important;
+	top: 77px !important;
 	bottom: 68px;
 }
 
