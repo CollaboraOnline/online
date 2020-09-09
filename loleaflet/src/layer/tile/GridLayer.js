@@ -12,7 +12,7 @@ L.GridLayer = L.Layer.extend({
 		opacity: 1,
 
 		updateWhenIdle: (window.mode.isMobile() || window.mode.isTablet()),
-		updateInterval: 200,
+		updateInterval: 50, // 20x per second should be hopefully enough
 
 		attribution: null,
 		zIndex: null,

@@ -100,8 +100,8 @@ L.Map.include(!zoomAnimated ? {} : {
 
 			L.DomUtil.addClass(this._mapPane, 'leaflet-zoom-anim');
 		} else if (endAnim) {
-			// explicitly end the zoom
-			this._animatingZoom = false;
+			// explicitly end the zoom & redraw
+			this._onZoomTransitionEnd();
 		}
 
 		this.fire('zoomanim', {

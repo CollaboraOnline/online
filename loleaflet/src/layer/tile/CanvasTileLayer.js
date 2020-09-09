@@ -182,7 +182,13 @@ L.CanvasTilePainter = L.Class.extend({
 
 			// when using the pinch to zoom, set additional translation based */
 			// on the pinch movement
+			var scale = 1;
 			if (this._map._animatingZoom) {
+				// set the canvas' scale according to the pinch-to-zoom
+				this._canvasCtx.save();
+				scale = this._map.getZoomScale(this._map._animateToZoom, this._lastZoom);
+				this._canvasCtx.scale(scale, scale);
+
 				var centerOffset = this._map._getCenterOffset(this._map._animateToCenter);
 				paneOffset.x += Math.round(centerOffset.x);
 				paneOffset.y += Math.round(centerOffset.y);
@@ -202,13 +208,18 @@ L.CanvasTilePainter = L.Class.extend({
 						  crop.min.x - tileBounds.min.x,
 						  crop.min.y - tileBounds.min.y,
 						  cropWidth, cropHeight,
-						  crop.min.x - paneOffset.x,
-						  crop.min.y - paneOffset.y,
+						  (crop.min.x - paneOffset.x) / scale,
+						  (crop.min.y - paneOffset.y) / scale,
 						  cropWidth, cropHeight);
 			if (this._layer._debug)
 			{
 				this._canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
 				this._canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
+			}
+
+			if (this._map._animatingZoom) {
+				// we have set a scale, restore the state
+				this._canvasCtx.restore();
 			}
 		}
 	},
@@ -432,12 +443,13 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			movestart: this._moveStart,
 			moveend: this._move,
 			// update tiles on move, but not more often than once per given interval
-			move: L.Util.throttle(this._move, this.options.updateInterval, this), // TODO we might want to make the updates more often (?)
+			move: L.Util.throttle(this._move, this.options.updateInterval, this),
 			splitposchanged: this._move,
 		};
 
 		if (this._zoomAnimated) {
-			events.zoomanim = L.Util.throttle(this._animateZoom, this.options.updateInterval, this); // TODO we might want to make the updates more often (?)
+			// update tiles on zoom, but not more often than once per given interval
+			events.zoomanim = L.Util.throttle(this._animateZoom, this.options.updateInterval, this);
 		}
 
 		return events;
