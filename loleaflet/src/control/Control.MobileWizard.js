@@ -181,7 +181,7 @@ L.Control.MobileWizard = L.Control.extend({
 			$('#mobile-wizard-tabs').hide();
 		}
 
-		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
+		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard:visible';
 
 		if (animate)
 			$(titles).hide('slide', { direction: 'left' }, 'fast');
@@ -194,9 +194,9 @@ L.Control.MobileWizard = L.Control.extend({
 
 		var duration = 10;
 		if (animate)
-			$(nodesToHide).hide('slide', { direction: 'left' }, duration);
+			nodesToHide.hide('slide', { direction: 'left' }, duration);
 		else
-			$(nodesToHide).hide();
+			nodesToHide.hide();
 
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('hideHelpBG');
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('showHelpBG');
@@ -239,13 +239,18 @@ L.Control.MobileWizard = L.Control.extend({
 			else
 				this._setTitle(this._mainTitle);
 
-			var content = $('.ui-content.level-' + this._currentDepth + '.mobile-wizard');
+			var headers;
+			if (this._currentDepth === 0) {
+				headers = $('.ui-header.level-' + this._currentDepth + '.mobile-wizard');
+			} else {
+				headers = $('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').siblings()
+					.not('.ui-content.level-' + this._currentDepth + '.mobile-wizard');
+			}
 
-			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide();
-			content.siblings().not(content).show('slide', { direction: 'left', queue: false }, 'fast');
+			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('hideHelpBG');
-			$('.ui-header.level-' + this._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
+			headers.show('slide', { direction: 'left' }, 'fast');
 
 			if (this._currentDepth == 0 || (this._isTabMode && this._currentDepth == 1)) {
 				this._inMainMenu = true;
