@@ -57,8 +57,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';0;0.00%$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;0.00%');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '100000.00%');
@@ -82,8 +84,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';0;0.00%$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;0.00%');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '100000.00%');
@@ -104,8 +108,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';\\[\\$\\$-409]#,##0.00;\\[RED]-\\[\\$\\$-409]#,##0.00$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;[$$-409]#,##0.00;[RED]-[$$-409]#,##0.00');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '$1,000.00');
@@ -129,8 +135,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';\\[\\$\\$-409]#,##0.00;\\[RED]-\\[\\$\\$-409]#,##0.00$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;[$$-409]#,##0.00;[RED]-[$$-409]#,##0.00');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '$1,000.00');
@@ -152,8 +160,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';\\[\\$\\$-409]#,##0.00;\\[RED]-\\[\\$\\$-409]#,##0.00$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;[$$-409]#,##0.00;[RED]-[$$-409]#,##0.00');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '$1,000.00');
@@ -200,8 +210,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';MM/DD/YY$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;MM/DD/YY');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdval', '1000');
@@ -222,8 +234,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';HH:MM:SS AM/PM$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;HH:MM:SS AM/PM');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'sdval', '1000');
@@ -244,8 +258,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';0\\.00E\\+00$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;0.00E+00');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1.00E+03');
@@ -263,8 +279,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';# \\?/\\?$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;# ?/?');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1000    ');
@@ -282,8 +300,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';BOOLEAN$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;BOOLEAN');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', 'TRUE');
@@ -301,8 +321,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';@$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;@');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1000');
@@ -323,8 +345,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';0\\.00$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;0.00');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1000.00');
@@ -345,8 +369,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';000000$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;000000');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '001000');
@@ -365,8 +391,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';0;\\[RED]-0$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;0;[RED]-0');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1000');
@@ -385,8 +413,10 @@ describe('Apply number formatting.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';#,##0$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;#,##0');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1,000');

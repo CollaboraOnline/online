@@ -119,8 +119,10 @@ describe('Calc insertion wizard.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';MM/DD/YY$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;MM/DD/YY');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 	});
 
 	it('Insert time.', function() {
@@ -130,7 +132,9 @@ describe('Calc insertion wizard.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
+		var regex = new RegExp(';HH:MM:SS AM/PM$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;HH:MM:SS AM/PM');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 	});
 });

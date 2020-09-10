@@ -59,8 +59,12 @@ describe('Insert fields via insertion wizard.', function() {
 		writerMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
-			.should('have.attr', 'type', 'DATETIME')
-			.should('have.attr', 'sdnum', '1033;1033;MM/DD/YY');
+			.should('have.attr', 'type', 'DATETIME');
+
+		var regex = new RegExp(';MM/DD/YY$');
+		cy.get('#copy-paste-container p span sdfield')
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 	});
 
 	it('Insert time field.', function() {
@@ -71,8 +75,12 @@ describe('Insert fields via insertion wizard.', function() {
 		writerMobileHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container p span sdfield')
-			.should('have.attr', 'type', 'DATETIME')
-			.should('have.attr', 'sdnum', '1033;1033;HH:MM:SS AM/PM');
+			.should('have.attr', 'type', 'DATETIME');
+
+		var regex = new RegExp(';HH:MM:SS AM/PM$');
+		cy.get('#copy-paste-container p span sdfield')
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 	});
 
 	it('Insert title field.', function() {
