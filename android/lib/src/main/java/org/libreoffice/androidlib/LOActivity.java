@@ -943,6 +943,10 @@ public class LOActivity extends AppCompatActivity {
                 }
                 return false;
             }
+            case "loadwithpassword": {
+                mProgressDialog.determinate(R.string.loading);
+                return true;
+            }
         }
         return true;
     }
