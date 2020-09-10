@@ -180,6 +180,10 @@ public:
 
     bool getHaveDocPassword() const { return _haveDocPassword; }
 
+    void setHaveDocPassword(const bool val) { _haveDocPassword = val; }
+
+    void setDocPassword(const std::string& password) { _docPassword = password; }
+
     const std::string& getDocPassword() const { return _docPassword; }
 
     const std::string& getUserExtraInfo() const { return _userExtraInfo; }

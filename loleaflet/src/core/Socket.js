@@ -683,6 +683,9 @@ L.Socket = L.Class.extend({
 					callback: L.bind(function(data) {
 						if (data) {
 							this._map._docPassword = data.password;
+							if (window.ThisIsAMobileApp) {
+								window.postMobileMessage('loadwithpassword password=' + data.password);
+							}
 							this._map.loadDocument();
 						} else if (passwordType === 'to-modify') {
 							this._map._docPassword = '';

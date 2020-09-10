@@ -392,6 +392,19 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return loadDocument(buffer, length, tokens, docBroker);
     }
+    else if (tokens.equals(0, "loadwithpassword"))
+    {
+        std::string docPassword;
+        if (tokens.size() > 1 && getTokenString(tokens[1], "password", docPassword))
+        {
+            if (!docPassword.empty())
+            {
+                setHaveDocPassword(true);
+                setDocPassword(tokens[1]);
+            }
+        }
+        return loadDocument(buffer, length, tokens, docBroker);
+    }
     else if (tokens[0] != "canceltiles" &&
              tokens[0] != "tileprocessed" &&
              tokens[0] != "clientzoom" &&
