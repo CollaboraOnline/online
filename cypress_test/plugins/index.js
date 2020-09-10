@@ -54,21 +54,31 @@ function getLOVersion(config) {
 	return 'master';
 }
 
-function pickTests(filename, foundTests, config) {
-
-	var coreVersion = getLOVersion(config);
-	var testsToRun = foundTests;
-	if (!(coreVersion in blacklists.testBlackLists))
-		return testsToRun;
-
-	var blackList = blacklists.testBlackLists[coreVersion];
+function removeBlacklistedTest(filename, testsToRun, blackList) {
 	for (var i = 0; i < blackList.length; i++) {
 		if (filename.endsWith(blackList[i][0])) {
 			if (blackList[i][1].length === 0) // skip the whole test suite
 				return [];
-			testsToRun = testsToRun.filter(fullTestName => !blackList[i][1].includes(fullTestName[1]));
+			return testsToRun.filter(fullTestName => !blackList[i][1].includes(fullTestName[1]));
 		}
 	}
+	return testsToRun;
+}
+
+function pickTests(filename, foundTests, config) {
+	var coreVersion = getLOVersion(config);
+	var testsToRun = foundTests;
+	if (!(coreVersion in blacklists.coreBlackLists))
+		return testsToRun;
+
+	var coreblackList = blacklists.coreBlackLists[coreVersion];
+	testsToRun = removeBlacklistedTest(filename, testsToRun, coreblackList);
+
+	if (process.env.CYPRESS_INTEGRATION === 'nextcloud') {
+		var NCblackList = blacklists.nextcloudBlackList;
+		testsToRun = removeBlacklistedTest(filename, testsToRun, NCblackList);
+	}
+
 	return testsToRun;
 }
 

@@ -1,4 +1,4 @@
-var testBlackLists = {
+var coreBlackLists = {
 	'master': [
 		['mobile/writer/table_properties_spec.js',
 			[]
@@ -56,4 +56,28 @@ var testBlackLists = {
 	]
 };
 
-module.exports.testBlackLists = testBlackLists;
+var nextcloudBlackList = [
+	['mobile/writer/focus_spec.js', []],
+	['mobile/calc/focus_spec.js', []],
+	['mobile/impress/impress_focus_spec.js', []],
+	['desktop/writer/focus_spec.js', []],
+	['desktop/calc/focus_spec.js', []],
+	['mobile/calc/hamburger_menu_spec.js',
+		[
+			'Print'
+		]
+	],
+	['mobile/writer/hamburger_menu_spec.js',
+		[
+			'Print'
+		]
+	],
+	['mobile/impress/hamburger_menu_spec.js',
+		[
+			'Print'
+		]
+	],
+];
+
+module.exports.coreBlackLists = coreBlackLists;
+module.exports.nextcloudBlackList = nextcloudBlackList;
