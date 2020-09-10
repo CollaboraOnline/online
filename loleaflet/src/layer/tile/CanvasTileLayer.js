@@ -97,16 +97,16 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	_setCanvasSize: function (widthCSSPx, heightCSSPx) {
-		var pixWidth = Math.floor(widthCSSPx * this._dpiScale);
-		var pixHeight = Math.floor(heightCSSPx * this._dpiScale);
+		this._pixWidth = Math.floor(widthCSSPx * this._dpiScale);
+		this._pixHeight = Math.floor(heightCSSPx * this._dpiScale);
 
 		// real pixels have to be integral
-		this._canvas.width = pixWidth;
-		this._canvas.height = pixHeight;
+		this._canvas.width = this._pixWidth;
+		this._canvas.height = this._pixHeight;
 
 		// CSS pixels can be fractional, but need to round to the same real pixels
-		var cssWidth = pixWidth / this._dpiScale; // NB. beware
-		var cssHeight = pixHeight / this._dpiScale;
+		var cssWidth = this._pixWidth / this._dpiScale; // NB. beware
+		var cssHeight = this._pixHeight / this._dpiScale;
 		this._canvas.style.width = cssWidth.toFixed(4) + 'px';
 		this._canvas.style.height = cssHeight.toFixed(4) + 'px';
 
@@ -148,8 +148,9 @@ L.CanvasTilePainter = L.Class.extend({
 		var paneBoundsList = splitPanesContext ?
 		    splitPanesContext.getPxBoundList(viewBounds) :
 		    [viewBounds];
+		var canvasCorePx = new L.Point(this._pixWidth, this._pixHeight);
 
-		return { canvasSize: this._lastSize,
+		return { canvasSize: canvasCorePx,
 			 tileSize: tileSize,
 			 viewBounds: viewBounds,
 			 paneBoundsList: paneBoundsList };
