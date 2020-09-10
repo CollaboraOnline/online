@@ -233,10 +233,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #document-container.spreadsheet-document.readonly {
 	top: 57px !important;
 }
-#spreadsheet-row-column-frame {
-	top: 77px;
-	bottom: 36px;
-}
 
 .spreadsheet-tab{
 	background-color: #eaf5ff;
@@ -613,7 +609,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 #document-container.readonly.spreadsheet-document {
-	top: 61px !important;
+	top: 58px !important;
 	bottom: 42px;
 }
 
@@ -623,7 +619,7 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 #document-container.spreadsheet-document {
-	top: 97px !important;
+	top: 96px !important;
 	bottom: 72px;
 }
 
@@ -634,12 +630,12 @@ td[id^=tb_spreadsheet-toolbar_item]:focus table.w2ui-button div.w2ui-icon, td[id
 }
 
 #spreadsheet-row-column-frame {
-	top: 77px !important;
+	top: 76px !important;
 	bottom: 68px;
 }
 
 #spreadsheet-row-column-frame.readonly {
-	top: 41px !important;
+	top: 38px !important;
 	bottom: 35px !important;
 }
 
