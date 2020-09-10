@@ -178,7 +178,7 @@ L.Control.MobileWizard = L.Control.extend({
 			$('#mobile-wizard-tabs').hide();
 		}
 
-		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard';
+		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard:visible';
 
 		if (animate)
 			$(titles).hide('slide', { direction: 'left' }, 'fast');
@@ -227,11 +227,18 @@ L.Control.MobileWizard = L.Control.extend({
 			else
 				this._setTitle(this._mainTitle);
 
-			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').siblings().show('slide', { direction: 'left' }, 'fast');
-			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard').hide();
+			var headers;
+			if (this._currentDepth === 0) {
+				headers = $('.ui-header.level-' + this._currentDepth + '.mobile-wizard');
+			} else {
+				headers = $('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').siblings()
+					.not('.ui-content.level-' + this._currentDepth + '.mobile-wizard');
+			}
+
+			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('hideHelpBG');
-			$('.ui-header.level-' + this._currentDepth + '.mobile-wizard').show('slide', { direction: 'left' }, 'fast');
+			headers.show('slide', { direction: 'left' }, 'fast');
 
 			if (this._currentDepth == 0 || (this._isTabMode && this._currentDepth == 1)) {
 				this._inMainMenu = true;
