@@ -68,7 +68,7 @@ L.SplitterLine = L.Rectangle.extend({
 
 		this._pathNodeCollection.forEachNode(function (nodeData) {
 			var node = nodeData.getNode();
-			L.DomEvent.on(node, 'mousedown', this._onDragStart, this);
+			L.DomEvent.on(node, 'mousedown touchstart', this._onDragStart, this);
 		}.bind(this));
 
 		this.addClass('leaflet-pane-splitter');
@@ -89,8 +89,8 @@ L.SplitterLine = L.Rectangle.extend({
 
 		this._pathNodeCollection.forEachNode(function (nodeData) {
 			var node = nodeData.getNode();
-			L.DomEvent.on(node, 'mousemove', this._onDrag, this);
-			L.DomEvent.on(node, 'mouseup', this._onDragEnd, this);
+			L.DomEvent.on(node, 'mousemove touchmove', this._onDrag, this);
+			L.DomEvent.on(node, 'mouseup touchend', this._onDragEnd, this);
 		}.bind(this));
 
 
@@ -132,8 +132,8 @@ L.SplitterLine = L.Rectangle.extend({
 
 		this._pathNodeCollection.forEachNode(function (nodeData) {
 			var node = nodeData.getNode();
-			L.DomEvent.off(node, 'mousemove', this._onDrag, this);
-			L.DomEvent.off(node, 'mouseup', this._onDragEnd, this);
+			L.DomEvent.off(node, 'mousemove touchmove', this._onDrag, this);
+			L.DomEvent.off(node, 'mouseup touchend', this._onDragEnd, this);
 		}.bind(this));
 
 		this._moved = false;
