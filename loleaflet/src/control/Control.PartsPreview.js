@@ -184,14 +184,6 @@ L.Control.PartsPreview = L.Control.extend({
 				$(this._partsPreviewCont).mCustomScrollbar('destroy');
 				this.createScrollbar();
 			}
-
-			// Hide portrait view's previews when layout view is used.
-			if (this._direction === 'x' && window.mode.isMobile()) {
-				document.getElementById('mobile-slide-sorter').style.display = 'block';
-			}
-			else if (this._direction === 'y' && window.mode.isMobile()) {
-				document.getElementById('mobile-slide-sorter').style.display = 'none';
-			}
 		}
 	},
 
