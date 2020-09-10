@@ -84,15 +84,25 @@ function loadTestDocNextcloud(fileName, subFolder) {
 	cy.get('#free_space')
 		.should('not.have.attr', 'value', '');
 
-	// Remove file if exists
+	// Remove all files
 	cy.get('#fileList')
 		.then(function(filelist) {
-			if (filelist.find('tr[data-file=\'' + fileName + '\']').length !== 0) {
-				cy.get('tr[data-file=\'' + fileName + '\'] .action-menu.permanent')
-					.click();
+			if (filelist.find('tr').length !== 0) {
+				cy.waitUntil(function() {
+					cy.get('#fileList tr:nth-of-type(1) .action-menu.permanent')
+						.click();
 
-				cy.get('.menuitem.action.action-delete.permanent')
-					.click();
+					cy.get('.menuitem.action.action-delete.permanent')
+						.click();
+
+					cy.get('#uploadprogressbar')
+						.should('not.be.visible');
+
+					return cy.get('#fileList')
+						.then(function(filelist) {
+							return filelist.find('tr').length === 0;
+						});
+				}, {timeout: 60000});
 			}
 		});
 
