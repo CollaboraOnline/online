@@ -38,7 +38,7 @@ L.SplitterLine = L.Rectangle.extend({
 
 		this._lastPos = isHoriz ? splitPos.x : splitPos.y;
 
-		var thickness = 4;
+		var thickness = 4 * 10 / map._zoom;
 
 		var xmin = isHoriz ? splitPos.x - thickness/2 : -size.x;
 		var xmax = isHoriz ? splitPos.x + thickness/2 : size.x;
@@ -73,6 +73,8 @@ L.SplitterLine = L.Rectangle.extend({
 
 		this.addClass('leaflet-pane-splitter');
 		$('.leaflet-pane-splitter').parent().css('overflow', 'visible');
+
+		this._map.on('zoomlevelschange', this.update, this);
 	},
 
 	_onDragStart: function(evt) {
