@@ -238,7 +238,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 								(window.notebookbarId !== undefined ? window.notebookbarId :
 								(window.sidebarId !== undefined ? window.sidebarId : -1));
 			var message = 'dialogevent ' + windowId
-			    + ' {\"id\":\"' + object.id
+					+ ' {\"id\":\"' + object.id
 				+ '\", \"cmd\": \"' + eventType
 				+ '\", \"data\": \"' + data
 				+ '\", \"type\": \"' + objectType + '\"}';
@@ -415,8 +415,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
 		var titleClass = '';
 		console.debug('sectionTitle.id' + sectionTitle.id);
-		if (sectionTitle.id === 'paperformat' || sectionTitle.id === 'orientation' || sectionTitle.id === 'masterslide' || sectionTitle.id === 'SdTableDesignPanel')
+		switch (sectionTitle.id)
+		{
+		case 'paperformat':
+		case 'orientation':
+		case 'masterslide':
+		case 'SdTableDesignPanel':
+		case 'ChartTypePanel':
 			iconURL = L.LOUtil.getImageURL('lc_'+ sectionTitle.id.toLowerCase() +'.svg');
+			break;
+		}
 		if (iconURL) {
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
 			icon.src = iconURL;
@@ -556,10 +564,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (commandName === 'LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES')
 			return 'paragraphlanugagedefault';
 		if ((this.map.getDocType() === 'spreadsheet' || this.map.getDocType() === 'presentation') &&
-            commandName.indexOf('LanguageStatus?Language:string=Paragraph_') !== -1)
+						commandName.indexOf('LanguageStatus?Language:string=Paragraph_') !== -1)
 			return 'paragraphlanugagesuggestion';
 		if ((this.map.getDocType() === 'spreadsheet' || this.map.getDocType() === 'presentation') &&
-            commandName.indexOf('LanguageStatus?Language:string=Current_') !== -1)
+						commandName.indexOf('LanguageStatus?Language:string=Current_') !== -1)
 			return 'selectionlanugagesuggestion';
 		return commandName.toLowerCase();
 	},
@@ -2170,8 +2178,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				} else if (!builder.map._clip || !builder.map._clip.filterExecCopyPaste(data.command)) {
 					// Header / footer is already inserted.
 					if ((data.command.startsWith('.uno:InsertPageHeader') ||
-					     data.command.startsWith('.uno:InsertPageFooter')) &&
-					    data.checked && data.checked === true) {
+							 data.command.startsWith('.uno:InsertPageFooter')) &&
+							data.checked && data.checked === true) {
 						return;
 					} else if (data.command === '.uno:ShowNote') {
 						builder.map._docLayer.showAnnotationFromCurrentCell();
@@ -2298,9 +2306,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var handler = this._controlHandlers[childType];
 			var twoPanelsAsChildren =
-			    childData.children && childData.children.length == 2
-			    && childData.children[0] && childData.children[0].type == 'panel'
-			    && childData.children[1] && childData.children[1].type == 'panel';
+					childData.children && childData.children.length == 2
+					&& childData.children[0] && childData.children[0].type == 'panel'
+					&& childData.children[1] && childData.children[1].type == 'panel';
 
 			if (childData.children && childData.children.length == 1
 				&& childData.children[0] && childData.children[0].type == 'panel') {
