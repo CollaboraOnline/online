@@ -48,7 +48,10 @@ L.Map.Scroll = L.Handler.extend({
 			this._timer = setTimeout(L.bind(this._performScroll, this), left);
 		}
 		else {
-			this._vertical = 1;
+			if (Math.abs(e.deltaX) > Math.abs(e.deltaY))
+				this._vertical = 0;
+			else
+				this._vertical = 1;
 			this._timer = setTimeout(L.bind(this._performScroll, this), left);
 		}
 
