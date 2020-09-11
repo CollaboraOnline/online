@@ -492,7 +492,7 @@ button.leaflet-control-search-next
 .w2ui-icon.starshapes_concave-star6 { background: url('images/lc_starshapes.concave-star6.svg') no-repeat center !important; }
 .w2ui-icon.starshapes_vertical-scroll { background: url('images/lc_starshapes.vertical-scroll.svg') no-repeat center !important; }
 .w2ui-icon.starshapes_horizontal-scroll { background: url('images/lc_starshapes.horizontal-scroll.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_signet { background: url('images/lc_signature.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_signet { background: url('images/lc_starshapes.signet.svg' ) no-repeat center !important; }
 .w2ui-icon.starshapes_doorplate { background: url('images/lc_starshapes.doorplate.svg') no-repeat center !important; }
 
 .w2ui-icon.calloutshapes_rectangular-callout { background: url('images/lc_calloutshapes.rectangular-callout.svg') no-repeat center !important; }
