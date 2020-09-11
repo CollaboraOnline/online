@@ -232,7 +232,7 @@ public:
         config.setBool("net.proxy_prefix", true);
     }
 
-    void invokeTest()
+    void invokeTest() override
     {
         try
         {
