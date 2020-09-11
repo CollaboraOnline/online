@@ -29,6 +29,9 @@ describe('Trigger hamburger menu options.', function() {
 				cy.get('body')
 					.dblclick(XPos, YPos);
 			});
+
+		cy.get('.leaflet-cursor.blinking-cursor')
+			.should('exist');
 	}
 
 	it('Save', function() {
