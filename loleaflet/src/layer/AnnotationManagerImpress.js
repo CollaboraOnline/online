@@ -22,6 +22,7 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		this._map.on('AnnotationSave', this.onAnnotationSave, this);
 		this._map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		this._map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
+		this._map.on('AnnotationReply', this.onReplyClick, this);
 
 		this._annotations = {};
 		this._topAnnotation = [];
@@ -136,6 +137,21 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 			this.scrollUntilAnnotationIsVisible(annotation);
 			annotation.focus();
 		}
+	},
+	onReplyClick: function (e) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: e.annotation._data.id
+			},
+			Text: {
+				type: 'string',
+				value: e.annotation._data.reply
+			}
+		};
+		this._map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
+		this._selectedAnnotation = undefined;
+		this._map.focus();
 	},
 	onAnnotationRemove: function (id) {
 		this.onAnnotationCancel();
