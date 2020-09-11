@@ -230,9 +230,12 @@ function assertHaveKeyboardInput() {
 function assertCursorAndFocus() {
 	cy.log('Verifying Cursor and Focus.');
 
-	// Active element must be the textarea named clipboard.
-	cy.document().its('activeElement.className')
-		.should('be.eq', 'clipboard');
+
+	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
+		// Active element must be the textarea named clipboard.
+		cy.document().its('activeElement.className')
+			.should('be.eq', 'clipboard');
+	}
 
 	// In edit mode, we should have the blinking cursor.
 	cy.get('.leaflet-cursor.blinking-cursor')
