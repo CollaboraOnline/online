@@ -320,20 +320,27 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 
 		this._map.fire('closepopups');
-		this._map.fire('editorgotfocus');
 
 		var docLayer = this._map._docLayer;
-		// unselect if anything is selected already
-		if (docLayer && docLayer._annotations && docLayer._annotations.unselect) {
-			docLayer._annotations.unselect();
-			var pointPx = docLayer._twipsToPixels(mousePos);
-			var bounds = docLayer._annotations.getBounds();
-			if (bounds && bounds.contains(pointPx)) {
-				// not forward mouse events to core if the user tap on a comment box
-				// for instance on Writer that causes the text cursor to be moved
-				return;
+		if (docLayer && docLayer._annotations) {
+			var annotationClicked = false;
+			if (e.target) {
+				var className = e.target.className;
+				if (className && typeof className === 'string') {
+					if (className.indexOf('annotation') >= 0) {
+						annotationClicked = true;
+						return;
+					}
+				}
+			}
+			// unselect if anything is selected already
+			if (!annotationClicked && docLayer._annotations.unselect) {
+				docLayer._annotations.unselect();
 			}
 		}
+
+		this._map.fire('editorgotfocus');
+
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 
 		var acceptInput = false; // No keyboard by default.
@@ -378,6 +385,24 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		var docLayer = this._map._docLayer;
 		if (docLayer) {
+			if (docLayer._annotations) {
+				var annotationClicked = false;
+				if (e.target) {
+					var className = e.target.className;
+					if (className) {
+						if (className && typeof className === 'string') {
+							if (className.indexOf('annotation') >= 0) {
+								annotationClicked = true;
+								return;
+							}
+						}
+					}
+				}
+				// unselect if anything is selected already
+				if (!annotationClicked && docLayer._annotations.unselect) {
+					docLayer._annotations.unselect();
+				}
+			}
 			if (docLayer._docType === 'spreadsheet' && !docLayer.hasGraphicSelection()) {
 				// Enter cell-edit mode on double-taping a cell.
 				if (this._map.isPermissionEdit()) {

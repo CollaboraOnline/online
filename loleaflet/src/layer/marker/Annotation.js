@@ -203,7 +203,7 @@ L.Annotation = L.Layer.extend({
 		var tr = L.DomUtil.create('tr', empty, tbody);
 		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
-		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+		var imgAuthor = L.DomUtil.create('img', 'avatar-img loleaflet-annotation-avatar-img', tdImg);
 		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
 		imgAuthor.setAttribute('width', this.options.imgSize.x);
 		imgAuthor.setAttribute('height', this.options.imgSize.y);
@@ -238,12 +238,12 @@ L.Annotation = L.Layer.extend({
 		}
 		if (this._data.trackchange) {
 			this._captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
-			this._captionText = L.DomUtil.create(tagDiv, empty, this._captionNode);
+			this._captionText = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption-text', this._captionNode);
 		}
 		this._contentNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content loleaflet-dont-break', wrapper);
 		this._nodeModify = L.DomUtil.create(tagDiv, classEdit, wrapper);
 		this._nodeModifyText = L.DomUtil.create(tagTextArea, classTextArea, this._nodeModify);
-		this._contentText = L.DomUtil.create(tagDiv, empty, this._contentNode);
+		this._contentText = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-text', this._contentNode);
 		this._nodeReply = L.DomUtil.create(tagDiv, classEdit, wrapper);
 		this._nodeReplyText = L.DomUtil.create(tagTextArea, classTextArea, this._nodeReply);
 
