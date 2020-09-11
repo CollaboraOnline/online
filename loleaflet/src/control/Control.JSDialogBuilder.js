@@ -46,6 +46,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder._fixedtextControl(parentContainer, fixedTextData, builder);
 			}
 
+			console.debug('baseSpinField: ' + data.id);
+
 			var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
 			div.id = data.id;
 			controls['container'] = div;
@@ -53,7 +55,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var commandName = data.id ? data.id.substring('.uno:'.length) : data.id;
 			if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 				var image = L.DomUtil.create('img', 'spinfieldimage', div);
-				var icon = builder._createIconURL(data.id);
+				var icon = (data.id === 'Transparency') ? builder._createIconURL('settransparency') : builder._createIconURL(data.id);
 				image.src = icon;
 				icon.alt = '';
 			}
