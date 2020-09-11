@@ -18,11 +18,8 @@ function selectTextShapeInTheCenter() {
 	cy.get('.leaflet-drag-transform-marker')
 		.should('be.visible');
 
-	cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
-		.should(function(shape) {
-			expect(shape.hasClass('com.sun.star.drawing.TextShape') ||
-				   shape.hasClass('Outline')).to.be.true;
-		});
+	cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Page g')
+		.should('be.visible');
 
 	cy.log('Selecting text shape - end.');
 }
