@@ -343,14 +343,21 @@ L.Annotation = L.Layer.extend({
 
 	_onReplyClick: function (e) {
 		L.DomEvent.stopPropagation(e);
-		this._data.reply = this._nodeReplyText.value;
-		// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
-		// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
-		// Better to assign '' here instead of null to keep the behavior same for all
-		this._nodeReplyText.value = '';
-		this.show();
-		this._checkBounds();
-		this._map.fire('AnnotationReply', {annotation: this});
+		if (window.mode.isMobile() || window.mode.isTablet()) {
+			e.annotation._data.reply = e.annotation.text;
+			e.annotation.show();
+			e.annotation._checkBounds();
+			this._map.fire('AnnotationReply', {annotation: e.annotation});
+		} else {
+			this._data.reply = this._nodeReplyText.value;
+			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
+			// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
+			// Better to assign '' here instead of null to keep the behavior same for all
+			this._nodeReplyText.value = '';
+			this.show();
+			this._checkBounds();
+			this._map.fire('AnnotationReply', {annotation: this});
+		}
 	},
 
 	_onResolveClick: function (e) {
