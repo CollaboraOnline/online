@@ -814,7 +814,7 @@ L.TileLayer = L.GridLayer.extend({
 		var data = {
 			id: 'funclist',
 			type: '',
-			text: 'Functions',
+			text: _('Functions'),
 			enabled: true,
 			children: []
 		};
