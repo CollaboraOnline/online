@@ -381,7 +381,7 @@ L.TileLayer = L.GridLayer.extend({
 		return newEvent;
 	},
 
-	newAnnotationVex: function(comment, addCommentFn, isMod) {
+	newAnnotationVex: function(comment, addCommentFn, isMod, displayContent) {
 		var that = this;
 
 		var commentData = null;
@@ -392,7 +392,10 @@ L.TileLayer = L.GridLayer.extend({
 		} else {
 			// Modification
 			commentData = comment._data;
-			content = commentData.text;
+			if (displayContent === undefined)
+				content = commentData.text;
+			else
+				content = displayContent;
 		}
 
 		var dialog = vex.dialog.open({

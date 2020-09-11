@@ -626,9 +626,14 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 	},
 
 	reply: function (annotation) {
-		annotation.reply();
-		this.select(annotation);
-		annotation.focus();
+		if (window.mode.isMobile() || window.mode.isTablet()) {
+			this._doclayer.newAnnotationVex(annotation, annotation._onReplyClick,/* isMod */ true, '');
+		}
+		else {
+			annotation.reply();
+			this.select(annotation);
+			annotation.focus();
+		}
 	},
 
 	resolve: function (annotation) {
