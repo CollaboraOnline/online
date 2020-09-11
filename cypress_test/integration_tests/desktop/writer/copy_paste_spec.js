@@ -35,5 +35,11 @@ describe('Clipboard operations.', function() {
 		// https://github.com/cypress-io/cypress/issues/2851
 		cy.get('.vex-dialog-message p')
 			.should('have.text', 'Your browser has very limited access to the clipboard, so use these keyboard shortcuts:');
+
+		cy.get('.vex-dialog-form button[type=\'submit\']')
+			.click();
+
+		cy.get('.vex-dialog-form')
+			.should('not.be.visible');
 	});
 });
