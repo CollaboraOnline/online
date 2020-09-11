@@ -128,6 +128,23 @@ This variable can be set to any value which is accepted by cypress
 --browser command line argument:
 https://docs.cypress.io/guides/guides/command-line.html#cypress-run-browser-lt-browser-name-or-path-gt
 
+Running tests with nextcloud integration
+----------------------------------------
+
+You can run any test runner command in an NC environment with setting
+CYPRESS_INTEGRATION environment variable. For example:
+
+CYPRESS_INTEGRATION="nextcloud" make check
+
+Prerequisites:
+* Need a local NC installation connected with LibreOffice Online
+* NC should be available at http://localhost/nextcloud/ (no ssl)
+* Need an NC user with 'cypress_test' as user name and password.
+
+Limitations:
+* NC integration uses iframes which makes harder to test with cypress.
+* cy.document() and cy.window() not properly works by now.
+
 Known issues
 ------------
 
