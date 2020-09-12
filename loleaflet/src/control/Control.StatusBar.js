@@ -238,7 +238,8 @@ L.Control.StatusBar = L.Control.extend({
 					window.setupSearchInput();
 				}
 			});
-			toolbar.tooltip();
+			if (window.mode.isDesktop())
+				toolbar.tooltip();
 			toolbar.show();
 		}
 

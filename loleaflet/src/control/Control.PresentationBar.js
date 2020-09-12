@@ -42,7 +42,8 @@ L.Control.PresentationBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			}
 		});
-		toolbar.tooltip();
+		if (window.mode.isDesktop())
+			toolbar.tooltip();
 
 		toolbar.bind('touchstart', function() {
 			w2ui['presentation-toolbar'].touchStarted = true;

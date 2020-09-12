@@ -38,7 +38,8 @@ L.Control.SearchBar = L.Control.extend({
 				window.setupSearchInput();
 			}
 		});
-		toolbar.tooltip();
+		if (window.mode.isDesktop())
+			toolbar.tooltip();
 
 		toolbar.bind('touchstart', function(e) {
 			w2ui['searchbar'].touchStarted = true;
