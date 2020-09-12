@@ -1221,14 +1221,14 @@ L.Control.Menubar = L.Control.extend({
 			this._map.duplicatePage();
 		} else if (id === 'deletepage') {
 			var map = this._map;
-			vex.dialog.confirm({
+			vex.dialog.open({
 				message: _('Are you sure you want to delete this slide?'),
 				buttons: [
 					$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
 					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
 				],
 				callback: function(e) {
-					if (e) {
+					if (e === true) {
 						map.deletePage();
 					}
 				}
