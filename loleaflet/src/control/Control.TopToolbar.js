@@ -258,7 +258,8 @@ L.Control.TopToolbar = L.Control.extend({
 					window.insertShapes();
 			}
 		});
-		toolbar.tooltip();
+		if (window.mode.isDesktop())
+			toolbar.tooltip();
 
 		toolbar.bind('touchstart', function() {
 			w2ui['editbar'].touchStarted = true;

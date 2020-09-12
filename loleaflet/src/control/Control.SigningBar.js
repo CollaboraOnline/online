@@ -27,7 +27,8 @@ L.Control.SigningBar = L.Control.extend({
 				onRefresh: function() {
 				}
 			});
-			toolbar.tooltip();
+			if (window.mode.isDesktop())
+				toolbar.tooltip();
 
 			toolbar.bind('touchstart', function() {
 				w2ui['document-signing-bar'].touchStarted = true;
