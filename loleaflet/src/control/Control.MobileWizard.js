@@ -120,6 +120,8 @@ L.Control.MobileWizard = L.Control.extend({
 		if (window.pageMobileWizard === true)
 			window.pageMobilewizard = false;
 
+		if (this._map.getDocType() === 'presentation')
+			this._hideSlideSorter();
 
 		this._updateToolbarItemStateByClose();
 
@@ -357,8 +359,8 @@ L.Control.MobileWizard = L.Control.extend({
 				this._lastSidebarData = dataString;
 			}
 
-			if (this.map.getDocType() === 'presentation')
-				$('#mobile-wizard-header').show();
+			if (this.map.getDocType() === 'presentation' && this._isSlidePropertyPanel(data))
+				this._showSlideSorter();
 
 			this._isActive = true;
 			var currentPath = null;
@@ -428,6 +430,24 @@ L.Control.MobileWizard = L.Control.extend({
 			this._updateMapSize();
 
 			this._inBuilding = false;
+		}
+	},
+
+	// These 2 functions show/hide mobile-slide-sorter.
+	_showSlideSorter: function() {
+		document.getElementById('mobile-wizard-header').style.display = 'block';
+	},
+
+	_hideSlideSorter: function() {
+		document.getElementById('mobile-wizard-header').style.display = 'none';
+	},
+
+	_isSlidePropertyPanel: function(data) {
+		if (data.children.length > 0 && data.children[0].children && data.children[0].children.length > 1) {
+			var panels = data.children[0].children;
+			return panels[0].id === 'SlideBackgroundPanel' && panels[1].id === 'SdLayoutsPanel';
+		} else {
+			return false;
 		}
 	},
 

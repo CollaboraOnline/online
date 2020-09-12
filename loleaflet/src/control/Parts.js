@@ -237,10 +237,13 @@ L.Map.include({
 
 		var docLayer = this._docLayer;
 
-		this.fire('insertpage', {
-			selectedPart: docLayer._selectedPart,
-			parts:        docLayer._parts
-		});
+		// At least for Impress, we should not fire this. It causes a circular reference.
+		if (this.getDocType() !== 'presentation') {
+			this.fire('insertpage', {
+				selectedPart: docLayer._selectedPart,
+				parts:        docLayer._parts
+			});
+		}
 
 		docLayer._parts++;
 
@@ -260,10 +263,13 @@ L.Map.include({
 		this._socket.sendMessage('uno .uno:DuplicatePage');
 		var docLayer = this._docLayer;
 
-		this.fire('insertpage', {
-			selectedPart: docLayer._selectedPart,
-			parts:        docLayer._parts
-		});
+		// At least for Impress, we should not fire this. It causes a circular reference.
+		if (this.getDocType() !== 'presentation') {
+			this.fire('insertpage', {
+				selectedPart: docLayer._selectedPart,
+				parts:        docLayer._parts
+			});
+		}
 
 		docLayer._parts++;
 		this.setPart('next');
@@ -297,10 +303,13 @@ L.Map.include({
 			return;
 		}
 
-		this.fire('deletepage', {
-			selectedPart: docLayer._selectedPart,
-			parts:        docLayer._parts
-		});
+		// At least for Impress, we should not fire this. It causes a circular reference.
+		if (this.getDocType() !== 'presentation') {
+			this.fire('deletepage', {
+				selectedPart: docLayer._selectedPart,
+				parts:        docLayer._parts
+			});
+		}
 
 		docLayer._parts--;
 		if (docLayer._selectedPart >= docLayer._parts) {
