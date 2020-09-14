@@ -161,7 +161,7 @@ m4_ifelse(MOBILEAPP,[true],
        <div id="document-titlebar">
          <div class="document-title">
            <input id="document-name-input" type="text" disabled="true" style="display: none"/>
-           <div id="document-title-pencil"></div>
+           <div id="document-title-pencil" style="display: none"></div>
          </div>
        </div>
      </nav>
