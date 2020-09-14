@@ -235,7 +235,9 @@ endef
 define start_loolwsd
 	$(if $(findstring nextcloud, $(CYPRESS_INTEGRATION)),\
 		$(eval FREE_PORT:=9980),\
-		$(eval FREE_PORT:=$(shell $(GET_PORT_BINARY) --host=127.0.0.1 $(ALLOWED_PORTS))))
+		$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),
+			$(eval FREE_PORT:=9982),\
+			$(eval FREE_PORT:=$(shell $(GET_PORT_BINARY) --host=127.0.0.1 $(ALLOWED_PORTS)))))
 	@echo "Found available port for testing: $(FREE_PORT)"
 	@echo
 	@echo "Launching loolwsd..."
@@ -248,6 +250,7 @@ define start_loolwsd
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
+			$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),--o:net.proxy_prefix=true) \
 			 > /dev/null 2>&1 &
 	@$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000
 	@echo

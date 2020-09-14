@@ -31,18 +31,20 @@ function loadTestDocLocal(fileName, subFolder, noFileCopy) {
 	});
 
 	// Open test document
-	var URI;
+	var URI = 'http://localhost';
+	if (Cypress.env('INTEGRATION') === 'php-proxy') {
+		URI += '/richproxy/proxy.php?req=';
+	} else {
+		URI += ':' + Cypress.env('SERVER_PORT');
+	}
+
 	if (subFolder === undefined) {
-		URI = 'http://localhost:'+
-			Cypress.env('SERVER_PORT') +
-			'/loleaflet/' +
+		URI += '/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/loleaflet.html?lang=en-US&file_path=file://' +
 			Cypress.env('WORKDIR') + fileName;
 	} else {
-		URI = 'http://localhost:'+
-			Cypress.env('SERVER_PORT') +
-			'/loleaflet/' +
+		URI += '/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/loleaflet.html?lang=en-US&file_path=file://' +
 			Cypress.env('WORKDIR') + subFolder + '/' + fileName;
@@ -191,6 +193,11 @@ function loadTestDoc(fileName, subFolder, noFileCopy) {
 
 	// Wait for the document to fully load
 	cy.get('.leaflet-tile-loaded', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+
+	// The client is irresponsive for some seconds after load, because of the incoming messages.
+	if (Cypress.env('INTEGRATION') === 'php-proxy') {
+		cy.wait(10000);
+	}
 
 	// Wait for the sidebar to open.
 	doIfOnDesktop(function() {
@@ -360,11 +367,16 @@ function afterAll(fileName) {
 				.should('not.exist');
 
 		}
-	} else if (Cypress.env('SERVER_PORT') === 9979) {
+	} else if (Cypress.env('SERVER_PORT') === 9979 || Cypress.env('INTEGRATION') === 'php-proxy') {
 		// Make sure that the document is closed
-		cy.visit('http://admin:admin@localhost:' +
-			Cypress.env('SERVER_PORT') +
-			'/loleaflet/dist/admin/admin.html');
+		if (Cypress.env('INTEGRATION') === 'php-proxy') {
+			cy.visit('http://admin:admin@localhost/richproxy/proxy.php?req=' +
+				'/loleaflet/dist/admin/admin.html');
+		} else {
+			cy.visit('http://admin:admin@localhost:' +
+				Cypress.env('SERVER_PORT') +
+				'/loleaflet/dist/admin/admin.html');
+		}
 
 		cy.wait(5000);
 	} else {
