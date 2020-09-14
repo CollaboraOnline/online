@@ -44,6 +44,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
+		map._isCursorVisible = false;
 		map._addZoomLimit(this);
 		map.on('zoomend', this._onZoomRowColumns, this);
 		map.on('updateparts', this._onUpdateParts, this);
