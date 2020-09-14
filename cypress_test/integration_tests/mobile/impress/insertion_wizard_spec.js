@@ -19,7 +19,7 @@ describe('Impress insertion wizard.', function() {
 		helper.afterAll(testFileName);
 	});
 
-	function selectionShouldBeTextShape() {
+	function selectionShouldBeTextShape(checkShape) {
 		// Check that the shape is there
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
 			.should(function(svg) {
@@ -27,8 +27,10 @@ describe('Impress insertion wizard.', function() {
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Page g')
-			.should('be.visible');
+		if (checkShape) {
+			cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Page g')
+				.should('be.visible');
+		}
 
 		// Check also that the shape is fully visible
 		// TODO: shapes are hungs out of the slide after insertion
@@ -220,7 +222,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check that the shape is there
-		selectionShouldBeTextShape();
+		selectionShouldBeTextShape(false);
 
 		// Check the text
 		impressMobileHelper.selectTextOfShape();
@@ -240,7 +242,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check that the shape is there
-		selectionShouldBeTextShape();
+		selectionShouldBeTextShape(false);
 
 		// Check the text
 		impressMobileHelper.selectTextOfShape();
@@ -260,7 +262,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check that the shape is there
-		selectionShouldBeTextShape();
+		selectionShouldBeTextShape(false);
 
 		// Check the text
 		impressMobileHelper.selectTextOfShape();
@@ -280,7 +282,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check that the shape is there
-		selectionShouldBeTextShape();
+		selectionShouldBeTextShape(false);
 
 		// Check the text
 		impressMobileHelper.selectTextOfShape();
