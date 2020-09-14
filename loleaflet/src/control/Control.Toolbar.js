@@ -332,7 +332,7 @@ var shapes = {
 		{img: 'basicshapes_frame', uno: 'BasicShapes.frame'}
 	],
 
-	'Symbols':  [
+	'Symbol Shapes':  [
 		{img: 'symbolshapes', uno: 'SymbolShapes.smiley'},
 		{img: 'symbolshapes_sun', uno: 'SymbolShapes.sun'},
 		{img: 'symbolshapes_moon', uno: 'SymbolShapes.moon'},
@@ -388,7 +388,7 @@ var shapes = {
 		{img: 'arrowshapes_s-sharped-arrow', uno: 'ArrowShapes.s-sharped-arrow'}
 	],
 
-	'Stars': [
+	'Stars and Banners': [
 		{img: 'starshapes_bang', uno: 'StarShapes.bang'},
 		{img: 'starshapes_star4', uno: 'StarShapes.star4'},
 		{img: 'starshapes_star5', uno: 'StarShapes.star5'},
