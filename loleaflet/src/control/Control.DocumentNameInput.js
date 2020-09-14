@@ -12,7 +12,6 @@ L.Control.DocumentNameInput = L.Control.extend({
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('wopiprops', this.onWopiProps, this);
 		map.on('resize', this.onResize, this);
-		$('#document-title-pencil').addClass('editable');
 	},
 
 	documentNameConfirm: function() {
@@ -76,6 +75,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 			$('#document-name-input').hide();
 		} else {
 			$('#document-name-input').show();
+			$('#document-title-pencil').show();
 		}
 
 		if (window.ThisIsAMobileApp) {
@@ -101,6 +101,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 		if (e.UserCanNotWriteRelative === false) {
 			// Save As allowed
 			$('#document-name-input').prop('disabled', false);
+			$('#document-title-pencil').addClass('editable');
 			$('#document-name-input').addClass('editable');
 			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
 			$('#document-name-input').off('focus', this.onDocumentNameFocus).on('focus', this.onDocumentNameFocus.bind(this));
