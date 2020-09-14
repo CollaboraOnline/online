@@ -256,6 +256,12 @@ L.TileLayer = L.GridLayer.extend({
 					callback: function (key, options) {
 						that.onAnnotationResolve.call(that, options.$trigger.get(0).annotation);
 					}
+				},
+				resolveThread: this._docType !== 'text' ? undefined : {
+					name: _('Resolve Thread'),
+					callback: function (key, options) {
+						that.onAnnotationResolveThread.call(that, options.$trigger.get(0).annotation);
+					}
 				}
 			},
 			events: {

@@ -657,6 +657,16 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 		this._map.sendUnoCommand('.uno:ResolveComment', comment);
 	},
 
+	resolveThread: function (annotation) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: annotation._data.id
+			}
+		};
+		this._map.sendUnoCommand('.uno:ResolveCommentThread', comment);
+	},
+
 	updateResolvedState: function (annotation) {
 		var threadIndexFirst = this.getRootIndexOf(annotation._data.id);
 		if (this._items[threadIndexFirst]._data.resolved !== annotation._data.resolved) {
