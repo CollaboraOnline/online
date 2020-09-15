@@ -4,7 +4,9 @@
  */
 
 /* global */
-var BaseTileLayer = L.Browser.mobile ? L.TileLayer : L.CanvasTileLayer;
+
+var BaseTileLayer = window.mode.useCanvasLayer() ? L.CanvasTileLayer : L.TileLayer;
+
 L.CalcTileLayer = BaseTileLayer.extend({
 	options: {
 		// TODO: sync these automatically from SAL_LOK_OPTIONS
