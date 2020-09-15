@@ -1,15 +1,31 @@
-/* global cy expect */
+/* global cy expect require */
+
+require('cypress-wait-until');
 
 function removeTextSelection() {
 	cy.log('Removing text selection - start.');
 
-	cy.get('.spreadsheet-header-columns')
-		.click();
+	cy.get('.spreadsheet-header-rows')
+		.then(function(header) {
+			var rect = header[0].getBoundingClientRect();
+			var posX = (rect.right + rect.left) / 2.0;
+			var posY = (rect.top + rect.bottom) / 2.0;
 
-	var regex = /[A-Z]1:[A-Z]1048576/;
-	cy.get('input#addressInput')
-		.should('have.prop', 'value')
-		.should('match', regex);
+			var moveY = 0.0;
+			cy.waitUntil(function() {
+				cy.get('body')
+					.click(posX, posY + moveY);
+
+				moveY += 1.0;
+				var regex = /A([0-9]+):AMJ\1$/;
+				return cy.get('input#addressInput')
+					.should('have.prop', 'value')
+					.then(function(value) {
+						return regex.test(value);
+					});
+			});
+		});
+
 
 	cy.log('Removing text selection - end.');
 }
