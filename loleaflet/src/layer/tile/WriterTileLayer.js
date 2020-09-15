@@ -74,6 +74,10 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		this._annotations.remove(id);
 	},
 
+	onAnnotationRemoveThread: function (id) {
+		this._annotations.removeThread(id);
+	},
+
 	onAnnotationReply: function (annotation) {
 		this._annotations.reply(annotation);
 	},
