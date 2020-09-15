@@ -1782,8 +1782,10 @@ L.SheetDimension = L.Class.extend({
 			    (spanData.data.sizecore * (spanData.end - spanData.start + 1));
 			if (spanFirstCorePx < endPix && spanData.data.poscorepx > startPix)
 			{
-				var firstCorePx = startPix + spanData.data.sizecore -
-				    ((startPix - spanFirstCorePx) % spanData.data.sizecore);
+				var firstCorePx = Math.max(
+					spanFirstCorePx,
+					startPix + spanData.data.sizecore -
+						((startPix - spanFirstCorePx) % spanData.data.sizecore));
 				var lastCorePx = Math.min(endPix, spanData.data.poscorepx);
 
 				for (var pos = firstCorePx; pos <= lastCorePx; pos += spanData.data.sizecore) {
