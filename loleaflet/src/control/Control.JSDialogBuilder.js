@@ -424,6 +424,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'masterslide':
 		case 'SdTableDesignPanel':
 		case 'ChartTypePanel':
+		case 'rotation':
 			iconURL = L.LOUtil.getImageURL('lc_'+ sectionTitle.id.toLowerCase() +'.svg');
 			break;
 		}
