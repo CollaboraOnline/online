@@ -251,6 +251,12 @@ L.TileLayer = L.GridLayer.extend({
 						that.onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
 					}
 				},
+				removeThread: {
+					name: _('Remove Thread'),
+					callback: function (key, options) {
+						that.onAnnotationRemoveThread.call(that, options.$trigger.get(0).annotation._data.id);
+					}
+				},
 				resolve: this._docType !== 'text' ? undefined : {
 					name: _('Resolve'),
 					callback: function (key, options) {

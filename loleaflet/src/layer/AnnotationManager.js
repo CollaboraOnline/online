@@ -709,6 +709,18 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 		this._map.focus();
 	},
 
+	removeThread: function (id) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: id
+			}
+		};
+		this._map.sendUnoCommand('.uno:DeleteCommentThread', comment);
+		this.unselect();
+		this._map.focus();
+	},
+
 	_onRedlineAccept: function(e) {
 		var command = {
 			AcceptTrackedChange: {
