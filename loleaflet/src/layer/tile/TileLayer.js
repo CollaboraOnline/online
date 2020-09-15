@@ -232,43 +232,47 @@ L.TileLayer = L.GridLayer.extend({
 			selector: '.loleaflet-annotation-menu',
 			trigger: 'none',
 			className: 'loleaflet-font',
-			items: {
-				modify: {
-					name: _('Modify'),
-					callback: function (key, options) {
-						that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
-					}
-				},
-				reply: (this._docType !== 'text' && this._docType !== 'presentation') ? undefined : {
-					name: _('Reply'),
-					callback: function (key, options) {
-						that.onAnnotationReply.call(that, options.$trigger.get(0).annotation);
-					}
-				},
-				remove: {
-					name: _('Remove'),
-					callback: function (key, options) {
-						that.onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
-					}
-				},
-				removeThread: {
-					name: _('Remove Thread'),
-					callback: function (key, options) {
-						that.onAnnotationRemoveThread.call(that, options.$trigger.get(0).annotation._data.id);
-					}
-				},
-				resolve: this._docType !== 'text' ? undefined : {
-					name: _('Resolve'),
-					callback: function (key, options) {
-						that.onAnnotationResolve.call(that, options.$trigger.get(0).annotation);
-					}
-				},
-				resolveThread: this._docType !== 'text' ? undefined : {
-					name: _('Resolve Thread'),
-					callback: function (key, options) {
-						that.onAnnotationResolveThread.call(that, options.$trigger.get(0).annotation);
-					}
-				}
+			build: function($trigger) {
+				return {
+					items: {
+						modify: {
+							name: _('Modify'),
+							callback: function (key, options) {
+								that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
+							}
+						},
+						reply: (that._docType !== 'text' && that._docType !== 'presentation') ? undefined : {
+							name: _('Reply'),
+							callback: function (key, options) {
+								that.onAnnotationReply.call(that, options.$trigger.get(0).annotation);
+							}
+						},
+						remove: {
+							name: _('Remove'),
+							callback: function (key, options) {
+								that.onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
+							}
+						},
+						removeThread: {
+							name: _('Remove Thread'),
+							callback: function (key, options) {
+								that.onAnnotationRemoveThread.call(that, options.$trigger.get(0).annotation._data.id);
+							}
+						},
+						resolve: that._docType !== 'text' ? undefined : {
+							name: $trigger.get(0).annotation._data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
+							callback: function (key, options) {
+								that.onAnnotationResolve.call(that, options.$trigger.get(0).annotation);
+							}
+						},
+						resolveThread: that._docType !== 'text' ? undefined : {
+							name: that.isThreadResolved($trigger.get(0).annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
+							callback: function (key, options) {
+								that.onAnnotationResolveThread.call(that, options.$trigger.get(0).annotation);
+							}
+						}
+					},
+				};
 			},
 			events: {
 				show: function (options) {
