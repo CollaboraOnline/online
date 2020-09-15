@@ -774,6 +774,13 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1023px; top: 5px;\']')
 			.should('not.exist');
 
+		// Move the cursor to the right side of the document,
+		// so the new tile will be visible and loaded.
+		helper.typeIntoDocument('{end}');
+
+		cy.get('.blinking-cursor')
+			.should('be.visible');
+
 		openPageWizard();
 
 		helper.clickOnIdle('#paperorientation');
