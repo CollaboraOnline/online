@@ -745,6 +745,19 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 		this._map.focus();
 	},
 
+	_isThreadResolved: function(annotation) {
+		var lastChild = this.getLastChildIndexOf(annotation._data.id);
+
+		while (this._items[lastChild]._data.parent !== '0') {
+			if (this._items[lastChild]._data.resolved === 'false')
+				return false;
+			lastChild = this.getIndexOf(this._items[lastChild]._data.parent);
+		}
+		if (this._items[lastChild]._data.resolved === 'false')
+			return false;
+		return true;
+	},
+
 	// Adjust parent-child relationship, if required, after `comment` is added
 	adjustParentAdd: function(comment) {
 		if (comment.parent && comment.parent > '0') {

@@ -90,6 +90,10 @@ L.WriterTileLayer = L.TileLayer.extend({
 		this._annotations.resolveThread(annotation);
 	},
 
+	isThreadResolved: function(annotation) {
+		return this._annotations._isThreadResolved(annotation);
+	},
+
 	onChangeAccept: function(id) {
 		this._annotations.acceptChange(id);
 	},
