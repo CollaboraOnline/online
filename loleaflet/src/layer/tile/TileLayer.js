@@ -704,6 +704,9 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('validitylistbutton:')) {
 			this._onValidityListButtonMsg(textMsg);
 		}
+		else if (textMsg.startsWith('validityinputhelp:')) {
+			this._onValidityInputHelpMsg(textMsg);
+		}
 		else if (textMsg.startsWith('signaturestatus:')) {
 			var signstatus = textMsg.substring('signaturestatus:'.length + 1);
 			this._map.onChangeSignStatus(signstatus);
@@ -1200,6 +1203,16 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateCellCursor(horizontalDirection, verticalDirection, onPgUpDn);
+
+		// Remove input help if there is any:
+		this._removeInputHelpMarker();
+	},
+
+	_removeInputHelpMarker: function() {
+		if (this._inputHelpPopUp) {
+			this._map.removeLayer(this._inputHelpPopUp);
+			this._inputHelpPopUp = null;
+		}
 	},
 
 	_onDocumentRepair: function (textMsg) {
@@ -3106,6 +3119,24 @@ L.TileLayer = L.GridLayer.extend({
 			this._validatedCellXY = null;
 			this._removeDropDownMarker();
 		}
+	},
+
+	_onValidityInputHelpMsg: function(textMsg) {
+		var message = textMsg.replace('validityinputhelp: ', '');
+		message = JSON.parse(message);
+
+		var icon = L.divIcon({
+			html: '<div class="input-help"><h4 id="input-help-title"></h4><p id="input-help-content"></p></div>',
+			iconSize: [0, 0],
+			iconAnchor: [0, 0]
+		});
+
+		this._removeInputHelpMarker();
+		var inputHelpMarker = L.marker(this._cellCursor.getNorthEast(), { icon: icon });
+		inputHelpMarker.addTo(this._map);
+		document.getElementById('input-help-title').innerText = message.title;
+		document.getElementById('input-help-content').innerText = message.content;
+		this._inputHelpPopUp = inputHelpMarker;
 	},
 
 	_addDropDownMarker: function () {

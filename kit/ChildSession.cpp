@@ -2594,6 +2594,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_VALIDITY_LIST_BUTTON:
         sendTextFrame("validitylistbutton: " + payload);
         break;
+    case LOK_CALLBACK_VALIDITY_INPUT_HELP:
+        sendTextFrame("validityinputhelp: " + payload);
+        break;
     case LOK_CALLBACK_CLIPBOARD_CHANGED:
     {
         std::string selection;

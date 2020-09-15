@@ -1001,3 +1001,25 @@ path.leaflet-pane-splitter:hover {
 	stroke: #cdcdcd;
 	fill: #cdcdcd;
 }
+
+.input-help {
+	border-radius: 15px;
+	padding: 5px;
+	box-sizing: content-box;
+	border: 1px solid black;
+	color: black;
+	background-color: wheat;
+	min-width: 200px;
+	text-align: center;
+}
+
+.input-help > h4 {
+	display: block;
+	font-weight: 900;
+}
+
+.input-help > p {
+	display: block;
+	text-indent: 20px;
+	text-align: justify;
+}
