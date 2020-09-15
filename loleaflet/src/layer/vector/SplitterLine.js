@@ -2,7 +2,7 @@
 /*
  * L.SplitterLine is a draggable L.Rectangle to be used as control for split-panes.
  */
-/* global $ */
+
 L.SplitterLine = L.Rectangle.extend({
 
 	options: {
@@ -43,14 +43,20 @@ L.SplitterLine = L.Rectangle.extend({
 		var xmin = isHoriz ? splitPos.x - thickness/2 : -size.x;
 		var xmax = isHoriz ? splitPos.x + thickness/2 : size.x;
 
-		if (!this._dragStarted && splitPos.y == 0 && !isHoriz)
-			xmax = thickness/2;
+		// No split line when it is at the zero position
+		if (!this._dragStarted && splitPos.y == 0 && !isHoriz) {
+			xmin = 0;
+			xmax = 0;
+		}
 
 		var ymin = !isHoriz ? splitPos.y - thickness/2 : -size.y;
 		var ymax = !isHoriz ? splitPos.y + thickness/2 : size.y;
 
-		if (!this._dragStarted && splitPos.x == 0 && isHoriz)
-			ymax = thickness/2;
+		// No split line when it is at the zero position
+		if (!this._dragStarted && splitPos.x == 0 && isHoriz) {
+			ymin = 0;
+			ymax = 0;
+		}
 
 		return new L.LatLngBounds(
 			map.unproject(new L.Point(xmin, ymin)),
@@ -72,7 +78,6 @@ L.SplitterLine = L.Rectangle.extend({
 		}.bind(this));
 
 		this.addClass('leaflet-pane-splitter');
-		$('.leaflet-pane-splitter').parent().css('overflow', 'visible');
 
 		this._map.on('zoomlevelschange', this.update, this);
 	},
