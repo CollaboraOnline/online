@@ -1391,7 +1391,7 @@ private:
 
 public:
     void enableProcessInput(bool enable = true){ _inputProcessingEnabled = enable; }
-    bool processInputEnabled() { return _inputProcessingEnabled; }
+    bool processInputEnabled() const { return _inputProcessingEnabled; }
 
     bool hasQueueItems() const
     {

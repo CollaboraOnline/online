@@ -371,7 +371,7 @@ public:
 
     /// Enable/disable processing of incoming data at socket level.
     virtual void enableProcessInput(bool /*enable*/){};
-    virtual bool processInputEnabled(){ return true; };
+    virtual bool processInputEnabled() const { return true; };
 
     /// Called after successful socket reads.
     virtual void handleIncomingMessage(SocketDisposition &disposition) = 0;
@@ -1063,7 +1063,7 @@ public:
         return _incomingFD;
     }
 
-    bool processInputEnabled(){ return _inputProcessingEnabled; }
+    bool processInputEnabled() const { return _inputProcessingEnabled; }
     void enableProcessInput(bool enable = true){ _inputProcessingEnabled = enable; }
 
 protected:

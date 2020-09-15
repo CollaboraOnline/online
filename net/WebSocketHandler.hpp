@@ -826,7 +826,7 @@ protected:
             socket->enableProcessInput(enable);
     }
 
-    virtual bool processInputEnabled() override
+    virtual bool processInputEnabled() const override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
