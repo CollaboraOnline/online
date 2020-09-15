@@ -5,6 +5,8 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcMobileHelper = require('./calc_mobile_helper');
 
+require('cypress-wait-until');
+
 describe('Change alignment settings.', function() {
 	var testFileName = 'alignment_options.ods';
 
@@ -273,18 +275,17 @@ describe('Change alignment settings.', function() {
 			.should('have.prop', 'checked', true);
 
 		// We use the text position as indicator
-		cy.get('body')
-			.should(function() {
-				getTextPosForFirstCell();
+		cy.waitUntil(function() {
+			getTextPosForFirstCell();
 
-				cy.get('@currentTextPos')
-					.then(function(currentTextPos) {
-						cy.get('@originalTextPos')
-							.then(function(originalTextPos) {
-								expect(originalTextPos).to.be.greaterThan(currentTextPos);
-							});
-					});
-			});
+			return cy.get('@currentTextPos')
+				.then(function(currentTextPos) {
+					return cy.get('@originalTextPos')
+						.then(function(originalTextPos) {
+							return originalTextPos > currentTextPos;
+						});
+				});
+		});
 	});
 
 	it('Apply stacked option.', function() {

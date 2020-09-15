@@ -1,9 +1,11 @@
-/* global describe it cy require expect afterEach */
+/* global describe it cy require afterEach */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcMobileHelper = require('./calc_mobile_helper');
+
+require('cypress-wait-until');
 
 describe('Interact with bottom toolbar.', function() {
 	var testFileName;
@@ -203,18 +205,17 @@ describe('Interact with bottom toolbar.', function() {
 			.click();
 
 		// We use the text position as indicator
-		cy.get('body')
-			.should(function() {
-				getTextPosForFirstCell();
+		cy.waitUntil(function() {
+			getTextPosForFirstCell();
 
-				cy.get('@currentTextPos')
-					.then(function(currentTextPos) {
-						cy.get('@originalTextPos')
-							.then(function(originalTextPos) {
-								expect(originalTextPos).to.be.greaterThan(currentTextPos);
-							});
-					});
-			});
+			return cy.get('@currentTextPos')
+				.then(function(currentTextPos) {
+					return cy.get('@originalTextPos')
+						.then(function(originalTextPos) {
+							return originalTextPos > currentTextPos;
+						});
+				});
+		});
 	});
 
 	it('Insert row after.', function() {
