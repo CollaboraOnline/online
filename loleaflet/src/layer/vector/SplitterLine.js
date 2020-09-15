@@ -68,6 +68,7 @@ L.SplitterLine = L.Rectangle.extend({
 
 		L.Rectangle.prototype.onAdd.call(this);
 
+		/* FIXME No dragging currently, it still needs a lot of polishing.
 		if (!this.dragging) {
 			this.makeDraggable();
 		}
@@ -76,6 +77,7 @@ L.SplitterLine = L.Rectangle.extend({
 			var node = nodeData.getNode();
 			L.DomEvent.on(node, 'mousedown', this._onDragStart, this);
 		}.bind(this));
+		*/
 
 		this.addClass('leaflet-pane-splitter');
 
