@@ -876,3 +876,20 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 .menu-entry-no-icon {
 	padding-left: 42px;
 }
+
+/* jQuery tooltips (back-ported from jquery-ui-lightness.css) */
+.ui-tooltip {
+	padding: 7px 9px !important;
+	position: absolute !important;
+	z-index: 9999 !important;
+	max-width: 300px !important;
+	background: #2a2a2a !important;
+}
+body .ui-tooltip {
+	border-width: 2px !important;
+}
+.ui-tooltip-content {
+	font-size: 0.8em !important;
+	color: #fff !important;
+	background: #2a2a2a !important;
+}
