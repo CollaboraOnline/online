@@ -984,7 +984,9 @@ input.clipboard {
 }
 
 .leaflet-pane-splitter {
-	cursor: grab;
+	/* FIXME when we are able to drag it again:
+	cursor: grab; */
+	cursor: default;
 	stroke: #e0e0e0;
 	fill: #e0e0e0;
 	opacity: 1;
@@ -996,11 +998,13 @@ input.clipboard {
 	fill: #eeeeee;
 }
 
+/* FIXME when we are able to drag it again:
 path.leaflet-pane-splitter:hover {
 	opacity: 1 !important;
 	stroke: #cdcdcd;
 	fill: #cdcdcd;
 }
+*/
 
 .input-help {
 	border-radius: 15px;
