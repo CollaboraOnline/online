@@ -135,7 +135,9 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert header.', function() {
 		// Get the blinking cursor pos
-		helper.typeIntoDocument('xxxx');
+		helper.typeIntoDocument('xx{enter}');
+
+		helper.typeText('body', 'xxxx', 500);
 
 		getCursorPos('left', 'cursorOrigLeft');
 
