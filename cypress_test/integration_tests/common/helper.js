@@ -665,7 +665,8 @@ function moveCursor(direction) {
 			.invoke('offset')
 			.its('top')
 			.as('origCursorPos');
-	} else if (direction === 'left' || direction === 'right') {
+	} else if (direction === 'left' || direction === 'right'
+		|| direction === 'home' || direction === 'end') {
 		cy.get('.blinking-cursor')
 			.invoke('offset')
 			.its('left')
@@ -684,6 +685,10 @@ function moveCursor(direction) {
 		key = '{leftarrow}';
 	} else if (direction === 'right') {
 		key = '{rightarrow}';
+	} else if (direction === 'home') {
+		key = '{home}';
+	} else if (direction === 'end') {
+		key = '{end}';
 	}
 	typeIntoDocument(key);
 
@@ -695,9 +700,9 @@ function moveCursor(direction) {
 						expect(cursor.offset().top).to.be.lessThan(origCursorPos);
 					} else if (direction === 'down') {
 						expect(cursor.offset().top).to.be.greaterThan(origCursorPos);
-					} else if (direction === 'left') {
+					} else if (direction === 'left' || direction === 'home') {
 						expect(cursor.offset().left).to.be.lessThan(origCursorPos);
-					} else if (direction === 'right') {
+					} else if (direction === 'right' || direction === 'end') {
 						expect(cursor.offset().left).to.be.greaterThan(origCursorPos);
 					}
 				});

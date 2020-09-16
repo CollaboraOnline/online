@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require afterEach Cypress */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -13,15 +13,13 @@ describe('Change shape properties via mobile wizard.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		helper.typeIntoDocument('{end}');
+		helper.moveCursor('end');
 
-		cy.get('.blinking-cursor')
-			.should('be.visible');
+		helper.moveCursor('home');
 
-		helper.typeIntoDocument('{home}');
-
-		cy.get('.blinking-cursor')
-			.should('be.visible');
+		if (Cypress.env('INTEGRATION') === 'php-proxy') {
+			cy.wait(1000);
+		}
 
 		mobileHelper.openInsertionWizard();
 
@@ -33,7 +31,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			click();
 
 		// Check that the shape is there
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g', {timeout : 10000})
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 			.should('have.class', 'com.sun.star.drawing.CustomShape');
 	});
 

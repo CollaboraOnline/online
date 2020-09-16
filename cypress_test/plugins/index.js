@@ -37,6 +37,10 @@ function plugin(on, config) {
 		});
 	}
 
+	if (process.env.CYPRESS_INTEGRATION === 'php-proxy') {
+		config.defaultCommandTimeout = 10000;
+	}
+
 	on('file:preprocessor', selectTests(config, pickTests));
 
 	return config;
