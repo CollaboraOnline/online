@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * L.Control.TopToolbar
  */
@@ -237,6 +237,16 @@ L.Control.TopToolbar = L.Control.extend({
 			name: 'editbar',
 			items: this.getToolItems(),
 			onClick: function (e) {
+				if (window.ThisIsTheiOSApp && e.target === 'modifypage' && window.ModifyPageTapped === undefined) {
+					// Horrible hack. I can't figure out why it needs two taps
+					// to display initially, so call this an extra time for the
+					// first tap. And for some reason I need to do it after a
+					// short timeout.
+					setTimeout(function() {
+						window.onClick(e, e.target);
+					}, 100);
+					window.ModifyPageTapped = true;
+				}
 				window.onClick(e, e.target);
 				window.hideTooltip(this, e.target);
 			},
