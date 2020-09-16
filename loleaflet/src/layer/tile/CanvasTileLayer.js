@@ -135,7 +135,7 @@ L.CanvasTilePainter = L.Class.extend({
 			this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 		else
 			this._canvasCtx.fillStyle = 'white';
-		this._canvasCtx.fillRect(0, 0, this._width, this._height);
+		this._canvasCtx.fillRect(0, 0, this._pixWidth, this._pixHeight);
 	},
 
 	// Details of tile areas to render
