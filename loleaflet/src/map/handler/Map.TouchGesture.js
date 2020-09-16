@@ -53,9 +53,20 @@ L.Map.TouchGesture = L.Handler.extend({
 			var tripleTap = new Hammer.Tap({event: 'tripletap', taps: 3, posThreshold: posThreshold });
 			this._hammer.add(tripleTap);
 			tripleTap.recognizeWith([doubleTap, singleTap]);
-
+			var hammer = this._hammer;
 			if (L.Browser.touch) {
-				L.DomEvent.on(this._map._mapPane, 'touchstart touchmove touchend touchcancel', L.DomEvent.preventDefault);
+				L.DomEvent.on(this._map._mapPane, 'touchstart touchmove touchcancel', L.DomEvent.preventDefault);
+				L.DomEvent.on(this._map._mapPane, 'touchend', function(e) {
+					// sometimes inputs get stuck in hammer and further events get mixed with the old ones
+					// this causes to a failure to use all the gestures properly.
+					// This is a workaround until it is fixed by hammer.js
+					if (hammer.input) {
+						if (hammer.input.store)  {
+							hammer.input.store = [];
+						}
+					}
+					L.DomEvent.preventDefault(e);
+				});
 			}
 
 			if (Hammer.prefixed(window, 'PointerEvent') !== undefined) {
