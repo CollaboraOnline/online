@@ -2879,7 +2879,10 @@ private:
 
             bool foundDownloadId = !url.empty();
 
-            const Path filePath(LOOLWSD::ChildRoot + jailId + JAILED_DOCUMENT_ROOT + url);
+            std::string decoded;
+            Poco::URI::decode(url, decoded);
+
+            const Path filePath(LOOLWSD::ChildRoot + jailId + JAILED_DOCUMENT_ROOT + decoded);
             const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath.toString());
 
             if (foundDownloadId && filePath.isAbsolute() && File(filePath).exists())
