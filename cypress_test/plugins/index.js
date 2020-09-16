@@ -79,6 +79,11 @@ function pickTests(filename, foundTests, config) {
 		testsToRun = removeBlacklistedTest(filename, testsToRun, NCblackList);
 	}
 
+	if (process.env.CYPRESS_INTEGRATION === 'php-proxy') {
+		var ProxyblackList = blacklists.phpProxyBlackList;
+		testsToRun = removeBlacklistedTest(filename, testsToRun, ProxyblackList);
+	}
+
 	return testsToRun;
 }
 

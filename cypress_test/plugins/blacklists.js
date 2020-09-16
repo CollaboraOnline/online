@@ -79,5 +79,24 @@ var nextcloudBlackList = [
 	],
 ];
 
+var phpProxyBlackList = [
+	['mobile/calc/insertion_wizard_spec.js',
+		[
+			'Inset local image.'
+		]
+	],
+	['mobile/writer/insert_object_spec.js',
+		[
+			'Insert local image.'
+		]
+	],
+	['mobile/impress/insertion_wizard_spec.js',
+		[
+			'Insert local image.'
+		]
+	],
+];
+
 module.exports.coreBlackLists = coreBlackLists;
 module.exports.nextcloudBlackList = nextcloudBlackList;
+module.exports.phpProxyBlackList = phpProxyBlackList;
