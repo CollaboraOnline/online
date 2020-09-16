@@ -277,7 +277,7 @@ static IMP standardImpOfInputAccessoryView = nil;
     if ([message.name isEqualToString:@"error"]) {
         LOG_ERR("Error from WebView: " << [message.body UTF8String]);
     } else if ([message.name isEqualToString:@"debug"]) {
-        LOG_TRC_NOFILE("==> " << [message.body UTF8String]);
+        std::cerr << "==> " << [message.body UTF8String] << std::endl;
     } else if ([message.name isEqualToString:@"lool"]) {
         NSString *subBody = [message.body substringToIndex:std::min(100ul, ((NSString*)message.body).length)];
         if (subBody.length < ((NSString*)message.body).length)
