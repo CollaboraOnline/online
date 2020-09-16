@@ -834,6 +834,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 			var tilePositionsX = '';
 			var tilePositionsY = '';
+			var tileWids = '';
 
 			for (i = 0; i < queue.length; i++) {
 				coords = queue[i];
@@ -878,6 +879,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				}
 			}
 
+			console.debug('Crass code duplication here in _updateOnChangePart'); // FIXME.
 			if (tilePositionsX !== '' && tilePositionsY !== '') {
 				var message = 'tilecombine ' +
 					'nviewid=0 ' +
@@ -886,8 +888,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					'height=' + this._tileHeightPx + ' ' +
 					'tileposx=' + tilePositionsX + ' ' +
 					'tileposy=' + tilePositionsY + ' ' +
+				        'wid=' + tileWids + ' ' +
 					'tilewidth=' + this._tileWidthTwips + ' ' +
-					'tileheight=' + this._tileHeightTwips;
+				        'tileheight=' + this._tileHeightTwips;
 
 				this._map._socket.sendMessage(message, '');
 			}
@@ -971,6 +974,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					// save tile in cache
 					this._tiles[key] = {
 						el: tile,
+						wid: 0,
 						coords: coords,
 						current: true
 					};
@@ -1062,19 +1066,25 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			rectQueue = rectangles[r];
 			var tilePositionsX = '';
 			var tilePositionsY = '';
+			var tileWids = '';
 			for (i = 0; i < rectQueue.length; i++) {
 				coords = rectQueue[i];
+				key = this._tileCoordsToKey(coords);
+
 				twips = this._coordsToTwips(coords);
 
-				if (tilePositionsX !== '') {
+				if (tilePositionsX !== '')
 					tilePositionsX += ',';
-				}
 				tilePositionsX += twips.x;
 
-				if (tilePositionsY !== '') {
+				if (tilePositionsY !== '')
 					tilePositionsY += ',';
-				}
 				tilePositionsY += twips.y;
+
+				tile = this._tiles[this._tileCoordsToKey(coords)];
+				if (tileWids !== '')
+					tileWids += ',';
+				tileWids += tile && tile.wireId !== undefined ? tile.wireId : 0;
 			}
 
 			twips = this._coordsToTwips(coords);
@@ -1085,6 +1095,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				'height=' + this._tileHeightPx + ' ' +
 				'tileposx=' + tilePositionsX + ' ' +
 				'tileposy=' + tilePositionsY + ' ' +
+				'oldwid=' + tileWids + ' ' +
 				'tilewidth=' + this._tileWidthTwips + ' ' +
 				'tileheight=' + this._tileHeightTwips;
 			this._map._socket.sendMessage(msg, '');
@@ -1295,6 +1306,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				this._tiles[key]._invalidCount -= 1;
 			}
 			tile.el.src = img;
+			tile.wireId = tileMsgObj.wireId;
 		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
