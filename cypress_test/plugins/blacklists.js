@@ -95,6 +95,9 @@ var phpProxyBlackList = [
 			'Insert local image.'
 		]
 	],
+	['mobile/writer/table_properties_spec.js',
+		[]
+	],
 ];
 
 module.exports.coreBlackLists = coreBlackLists;
