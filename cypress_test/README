@@ -145,6 +145,19 @@ Limitations:
 * NC integration uses iframes which makes harder to test with cypress.
 * cy.document() and cy.window() not properly works by now.
 
+Running tests with php-proxy
+----------------------------
+
+You can run any test runner command with php-proxy with setting
+CYPRESS_INTEGRATION environment variable. For example:
+
+CYPRESS_INTEGRATION="php-proxy" make check
+
+Prerequisites:
+* Download php-proxy script:
+https://github.com/CollaboraOnline/richdocumentscode/blob/master/proxy.php
+* Put it under /srv/www/htdocs/richproxy/ folder.
+
 Known issues
 ------------
 
