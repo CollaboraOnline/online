@@ -666,7 +666,7 @@ public:
     {
     }
 
-    unsigned getMobileAppDocId() override
+    unsigned getMobileAppDocId() const override
     {
         return 0;
     }

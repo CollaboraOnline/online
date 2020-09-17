@@ -708,7 +708,7 @@ public:
         alertAllUsers("errortoall: cmd=" + cmd + " kind=" + kind);
     }
 
-    unsigned getMobileAppDocId() override
+    unsigned getMobileAppDocId() const override
     {
         return _mobileAppDocId;
     }

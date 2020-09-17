@@ -72,7 +72,7 @@ public:
 
     virtual void alertAllUsers(const std::string& cmd, const std::string& kind) = 0;
 
-    virtual unsigned getMobileAppDocId() = 0;
+    virtual unsigned getMobileAppDocId() const = 0;
 };
 
 struct RecordedEvent
