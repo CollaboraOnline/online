@@ -692,6 +692,9 @@ function moveCursor(direction) {
 	}
 	typeIntoDocument(key);
 
+	cy.get('.blinking-cursor')
+		.should('be.visible');
+
 	cy.get('@origCursorPos')
 		.then(function(origCursorPos) {
 			cy.get('.blinking-cursor')
