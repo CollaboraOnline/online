@@ -518,7 +518,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Select B2 cell
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(76px, 11px, 0px); z-index: 11;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(77px, 11px, 0px); z-index: 11;\']')
 			.then(function(marker) {
 				expect(marker).to.have.lengthOf(1);
 				var XPos = marker[0].getBoundingClientRect().right + 2;
@@ -565,7 +565,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Select B2 cell
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(76px, 11px, 0px); z-index: 11;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(77px, 11px, 0px); z-index: 11;\']')
 			.then(function(marker) {
 				expect(marker).to.have.lengthOf(1);
 				var XPos = marker[0].getBoundingClientRect().right + 2;
@@ -881,8 +881,8 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectFromColorPalette(0, 0, 7);
 
-		var firstTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: -1px; top: 5px;\']';
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 5px;\']';
+		var firstTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 0px; top: 5px;\']';
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 5px;\']';
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
 

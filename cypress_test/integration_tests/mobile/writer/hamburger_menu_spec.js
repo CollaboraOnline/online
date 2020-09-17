@@ -703,7 +703,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change paper size.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 517px;\']';
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		openPageWizard();
@@ -725,7 +725,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change paper width.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 517px;\']';
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		openPageWizard();
@@ -748,7 +748,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change paper height.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 517px;\']';
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		openPageWizard();
@@ -771,7 +771,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change orientation.', function() {
-		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1023px; top: 5px;\']')
+		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1024px; top: 5px;\']')
 			.should('not.exist');
 
 		// Move the cursor to the right side of the document,
@@ -788,7 +788,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.clickOnIdle('.ui-combobox-text', 'Landscape');
 
 		// We got some extra tiles horizontally.
-		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1023px; top: 5px;\']')
+		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1024px; top: 5px;\']')
 			.should('exist');
 
 		// Check that the page wizard shows the right value after reopen.
@@ -801,7 +801,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change margin.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 261px;\']';
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
 		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
 
 		openPageWizard();
@@ -826,7 +826,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Hide text so the center tile is full white.
 		hideText();
 
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 261px;\']';
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		// Enable it first -> spaces will be visible.
@@ -856,7 +856,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Hide text so the center tile is full white.
 		hideText();
 
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 255px; top: 261px;\']';
+		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		// Enable it first.
