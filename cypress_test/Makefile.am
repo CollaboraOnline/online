@@ -328,7 +328,6 @@ define run_desktop_tests
 			--spec $(1) \
 			--type desktop \
 			--log-file $(2) \
-			--second-chance \
 		,\
 		$(CYPRESS_BINARY) run \
 			--browser $(BROWSER) \
@@ -351,7 +350,6 @@ define run_mobile_tests
 			--spec $(1) \
 			--type mobile \
 			--log-file $(2) \
-			--second-chance \
 		,\
 		$(CYPRESS_BINARY) run \
 			--browser $(BROWSER) \

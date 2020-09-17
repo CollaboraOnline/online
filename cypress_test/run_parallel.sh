@@ -37,7 +37,6 @@ while test $# -gt 0; do
       --env)              TEST_ENV=$2; shift;;
       --type)             TEST_TYPE=$2; shift;;
       --browser)          BROWSER=$2; shift;;
-      --second-chance)    SECOND_CHANCE=true; shift;;
       --help)             print_help ;;
   -*) ;; # ignore
   esac
@@ -88,25 +87,12 @@ print_error() {
     fi
 }
 
-echo_command_run() {
-    echo "`echo ${RUN_COMMAND} && ${RUN_COMMAND} || touch ${TEST_ERROR}`"
-}
-
 mkdir -p `dirname ${TEST_LOG}`
 touch ${TEST_LOG}
 rm -rf ${TEST_ERROR}
-echo_command_run > ${TEST_LOG} 2>&1
+echo "`echo ${RUN_COMMAND} && ${RUN_COMMAND} || touch ${TEST_ERROR}`" > ${TEST_LOG} 2>&1
 if [ ! -f ${TEST_ERROR} ];
     then cat ${TEST_LOG};
-    elif [ ${SECOND_CHANCE} = true ];
-    then echo "Second chance!" > ${TEST_LOG} && \
-        rm -rf ${TEST_ERROR} && \
-        echo_command_run >> ${TEST_LOG} 2>&1 && \
-        if [ ! -f ${TEST_ERROR} ];\
-            then cat ${TEST_LOG};\
-            else cat ${TEST_LOG} >> ${ERROR_LOG} && \
-                 print_error; \
-        fi;
     else cat ${TEST_LOG} >> ${ERROR_LOG} && \
         print_error;
 fi;

@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Change paragraph properties: user-2.', function() {
+describe('Change paragraph properties: user-2.', {retries : 0}, function() {
 	var testFileName = 'paragraph_prop.odt';
 
 	beforeEach(function() {

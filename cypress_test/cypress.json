@@ -6,5 +6,9 @@
     "testFiles" : "**/*_spec.js",
     "modifyObstructiveCode": false,
     "fixturesFolder" : "data",
-    "chromeWebSecurity": false
+    "chromeWebSecurity": false,
+    "retries": {
+        "runMode": 1,
+        "openMode": 0
+    }
 }
