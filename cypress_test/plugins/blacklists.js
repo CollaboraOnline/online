@@ -98,6 +98,9 @@ var phpProxyBlackList = [
 	['mobile/writer/table_properties_spec.js',
 		[]
 	],
+	['desktop/calc/focus_spec.js',
+		[]
+	],
 ];
 
 module.exports.coreBlackLists = coreBlackLists;
