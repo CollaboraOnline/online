@@ -1817,7 +1817,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			gradientItem.endcolor = color;
 			builder.map.sendUnoCommand('.uno:FillPageGradient?FillPageGradientJSON:string=' + JSON.stringify(gradientItem));
 			return;
-		} else if (data.id === 'Color' || data.id === 'CharBackColor') {
+		} else if (data.id === 'Color' || data.id === 'CharBackColor' || data.id === 'FillColor') {
 			var params = {};
 			params[data.id] = {
 				type : 'long',
