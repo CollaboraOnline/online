@@ -287,32 +287,24 @@ public:
             switch (code)
             {
             case WSOpCode::Pong:
-                if (_isClient)
                 {
-                    LOG_ERR('#' << socket->getFD() << ": Servers should not send pongs, only clients");
-                    shutdown(StatusCodes::POLICY_VIOLATION);
-                    return true;
-                }
-                else
-                {
+                    if (_isClient)
+                        LOG_WRN('#' << socket->getFD() << ": Servers should not send pongs, only clients");
+
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
                         (std::chrono::steady_clock::now() - _lastPingSentTime).count();
                     LOG_TRC('#' << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
                 }
                 break;
             case WSOpCode::Ping:
-                if (_isClient)
                 {
-                    auto now = std::chrono::steady_clock::now();
+                    if (!_isClient)
+                        LOG_ERR('#' << socket->getFD() << ": Clients should not send pings, only servers");
+
+                    const auto now = std::chrono::steady_clock::now();
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
                                             (now - _lastPingSentTime).count();
                     sendPong(now, &ctrlPayload[0], payloadLen, socket);
-                }
-                else
-                {
-                    LOG_ERR('#' << socket->getFD() << ": Clients should not send pings, only servers");
-                    shutdown(StatusCodes::POLICY_VIOLATION);
-                    return true;
                 }
                 break;
             case WSOpCode::Close:
