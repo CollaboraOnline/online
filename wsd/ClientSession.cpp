@@ -400,7 +400,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             if (!docPassword.empty())
             {
                 setHaveDocPassword(true);
-                setDocPassword(tokens[1]);
+                setDocPassword(docPassword);
             }
         }
         return loadDocument(buffer, length, tokens, docBroker);
