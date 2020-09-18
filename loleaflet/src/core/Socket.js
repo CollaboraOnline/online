@@ -892,7 +892,7 @@ L.Socket = L.Class.extend({
 		}
 
 		var msgDelayed = false;
-		if (!this._isReady() || this._delayedMessages.length || this._handlingDelayedMessages) {
+		if (!this._isReady() || !this._map._docLayer || this._delayedMessages.length || this._handlingDelayedMessages) {
 			msgDelayed = this._tryToDelayMessage(textMsg);
 		}
 
@@ -919,7 +919,7 @@ L.Socket = L.Class.extend({
 	},
 
 	_handleDelayedMessages: function() {
-		if (!this._isReady() || this._handlingDelayedMessages) {
+		if (!this._isReady() || !this._map._docLayer || this._handlingDelayedMessages) {
 			var that = this;
 			// Retry in a bit.
 			this._delayedMsgHandlerTimeoutId = setTimeout(function() {
