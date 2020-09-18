@@ -2264,7 +2264,7 @@ public:
     }
 
     /// Does this address feature in the allowed hosts list.
-    bool allowPostFrom(const std::string &address)
+    static bool allowPostFrom(const std::string &address)
     {
         static bool init = false;
         static Util::RegexListMatcher hosts;
@@ -2627,7 +2627,7 @@ private:
         LOG_INF("Sent / response successfully.");
     }
 
-    void handleFaviconRequest(const RequestDetails &requestDetails,
+    static void handleFaviconRequest(const RequestDetails &requestDetails,
                               const std::shared_ptr<StreamSocket>& socket)
     {
         assert(socket && "Must have a valid socket");
@@ -2701,7 +2701,7 @@ private:
         LOG_INF("Sent capabilities.json successfully.");
     }
 
-    void handleClipboardRequest(const Poco::Net::HTTPRequest& request,
+    static void handleClipboardRequest(const Poco::Net::HTTPRequest& request,
                                 Poco::MemoryInputStream& message,
                                 SocketDisposition &disposition,
                                 const std::shared_ptr<StreamSocket>& socket)
@@ -2800,7 +2800,7 @@ private:
         }
     }
 
-    void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
+    static void handleRobotsTxtRequest(const Poco::Net::HTTPRequest& request,
                                 const std::shared_ptr<StreamSocket>& socket)
     {
         assert(socket && "Must have a valid socket");
@@ -3442,7 +3442,7 @@ private:
     }
 
     /// Lookup cached file content.
-    const std::string& getFileContent(const std::string& filename)
+    static const std::string& getFileContent(const std::string& filename)
     {
         const auto it = StaticFileContentCache.find(filename);
         if (it == StaticFileContentCache.end())
@@ -3650,7 +3650,7 @@ public:
         PrisonerPoll.insertNewSocket(findPrisonerServerPort());
     }
 
-    void stopPrisoners()
+    static void stopPrisoners()
     {
         PrisonerPoll.joinThread();
     }
@@ -3774,7 +3774,7 @@ private:
 
     /// Create a new server socket - accepted sockets will be added
     /// to the @clientSockets' poll when created with @factory.
-    std::shared_ptr<ServerSocket> getServerSocket(ServerSocket::Type type, int port,
+    static std::shared_ptr<ServerSocket> getServerSocket(ServerSocket::Type type, int port,
                                                   SocketPoll &clientSocket,
                                                   const std::shared_ptr<SocketFactory>& factory)
     {

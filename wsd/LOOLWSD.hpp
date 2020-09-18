@@ -427,7 +427,7 @@ protected:
     int main(const std::vector<std::string>& args) override;
 
     /// Handle various global static destructors.
-    void cleanup();
+    static void cleanup();
 
 private:
 #if ENABLE_SSL
