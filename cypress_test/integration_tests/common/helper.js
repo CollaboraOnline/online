@@ -333,6 +333,12 @@ function afterAll(fileName) {
 			// Close the document
 			doIfOnMobile(function() {
 				cy.get('#tb_actionbar_item_closemobile')
+					.click();
+
+				cy.get('#mobile-edit-button')
+					.should('be.visible');
+
+				cy.get('#tb_actionbar_item_closemobile')
 					.then(function(item) {
 						cy.wrap(item)
 							.click();
