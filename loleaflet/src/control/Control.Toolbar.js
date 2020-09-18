@@ -975,7 +975,9 @@ function onUpdatePermission(e) {
 				if (!keepDisabled || alwaysEnable) {
 					toolbar.enable(items[idx].id);
 				}
+				$('.main-nav').removeClass('readonly');
 			} else if (!alwaysEnable) {
+				$('.main-nav').addClass('readonly');
 				toolbar.disable(items[idx].id);
 			}
 		}

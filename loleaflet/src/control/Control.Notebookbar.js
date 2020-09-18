@@ -45,6 +45,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (e.perm === 'edit') {
 			this._showNotebookbar = true;
 			this.showTabs();
+			$('.main-nav').removeClass('readonly');
 		}
 	},
 
@@ -60,6 +61,7 @@ L.Control.Notebookbar = L.Control.extend({
 	hideTabs: function() {
 		$('.ui-tabs.notebookbar').hide();
 		$('.notebookbar-shortcuts-bar').hide();
+		$('.main-nav').addClass('readonly');
 	},
 
 	collapse: function() {

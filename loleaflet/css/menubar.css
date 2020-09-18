@@ -19,7 +19,10 @@
 	background: #ffffff;
 	margin-right: 5px;
 }
-
+/*avoid multiple document-headers in readonly mode*/
+.main-nav.hasnotebookbar.readonly > #main-menu #document-header {
+	display: none;
+}
 .document-logo {
 	position: relative;
 	width: 22px;
@@ -46,10 +49,12 @@
 	right: 0px;
 }
 
-.main-nav.hasnotebookbar #document-titlebar {
+.main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
 	top: -10px;
 }
-
+.main-nav.readonly #document-titlebar {
+	top: 1px;
+}
 .main-nav {
 	height: 32px; /* on mouseover menubar items, border emerges */
 	width: auto;
@@ -57,8 +62,11 @@
 	margin: 3px;
 	white-space: nowrap;
 }
-
-.main-nav.hasnotebookbar{
+.main-nav.readonly {
+	top: -1px; /*update .main-nav.readonly #document-titlebar*/
+	position: relative;
+}
+.main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--gray-bg-color);
 	margin-top: 0px;
 }
