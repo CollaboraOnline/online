@@ -130,12 +130,22 @@ L.CanvasTilePainter = L.Class.extend({
 		}
 	},
 
-	clear: function () {
-		if (this._layer._debug)
-			this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+	clear: function (ctx) {
+		// First render the background / sheet grid if we can
+		if (this.renderBackground)
+		{
+			if (!ctx)
+				ctx = this._paintContext();
+			this.renderBackground(this._canvasCtx, ctx);
+		}
 		else
-			this._canvasCtx.fillStyle = 'white';
-		this._canvasCtx.fillRect(0, 0, this._pixWidth, this._pixHeight);
+		{
+			if (this._layer._debug)
+				this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+			else
+				this._canvasCtx.fillStyle = 'white';
+			this._canvasCtx.fillRect(0, 0, this._pixWidth, this._pixHeight);
+		}
 	},
 
 	// Details of tile areas to render
@@ -265,11 +275,13 @@ L.CanvasTilePainter = L.Class.extend({
 		if (skipUpdate)
 			return;
 
+		var ctx;
 		if (resizeCanvas || scaleChanged) {
 			this._setCanvasSize(newSize.x, newSize.y);
 		}
 		else if (mapSizeChanged && topLeftChanged) {
-			this.clear();
+			ctx = this._paintContext();
+			this.clear(ctx);
 		}
 
 		if (mapSizeChanged)
@@ -282,24 +294,22 @@ L.CanvasTilePainter = L.Class.extend({
 		this._lastPart = part;
 
 		this._topLeft = newTopLeft;
-		this._paintWholeCanvas();
+		this._paintWholeCanvas(ctx);
 
 		if (this._layer._debug)
 			this._drawSplits();
 	},
 
-	_paintWholeCanvas: function () {
+	_paintWholeCanvas: function(ctx) {
 
 		var zoom = this._lastZoom || Math.round(this._map.getZoom());
 		var part = this._lastPart || this._layer._selectedPart;
 
 		// Calculate all this here intead of doing it per tile.
-		var ctx = this._paintContext();
+		if (!ctx)
+			ctx = this._paintContext();
 
-		// First render the background / sheet grid if we can
-		if (this.renderBackground)
-			this.renderBackground(this._canvasCtx, ctx);
-
+		this.clear(ctx);
 		var tileRanges = ctx.paneBoundsList.map(this._layer._pxBoundsToTileRange, this._layer);
 
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
@@ -451,6 +461,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			}
 			canvas.closePath();
 		};
+		this._painter.clear();
 	},
 
 	hasSplitPanesSupport: function () {
