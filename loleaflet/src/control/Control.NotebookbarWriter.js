@@ -783,7 +783,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																												{
 																													'id': 'fontnamecombobox',
 																													'type': 'combobox',
-																													'text': 'Liberation Serif',
+																													'text': 'Carlito',
 																													'enabled': 'true',
 																													'children': [
 																														{
@@ -795,7 +795,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																														{
 																															'id': '',
 																															'type': 'edit',
-																															'text': 'Liberation Serif',
+																															'text': 'Carlito',
 																															'enabled': 'true'
 																														}
 																													],
