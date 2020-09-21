@@ -21,7 +21,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			break;
 		}
 	},
-	
+
 	getTabs: function() {
 		return [
 			{
