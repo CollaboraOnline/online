@@ -1044,8 +1044,8 @@ AS_IF([test `uname -s` = "Linux"],
            AC_MSG_ERROR([node required to build loleaflet, but not installed])
        else
            NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-           if test "$NODE_VER" -lt 60000; then
-               AC_MSG_ERROR([This node version is old, upgrade to >= 6.0.0])
+           if test "$NODE_VER" -lt 100000; then
+               AC_MSG_ERROR([This node version is old, upgrade to >= 10.0.0])
            fi
        fi
        if test "$enable_cypress" = "yes"; then
