@@ -485,7 +485,8 @@ L.Annotation = L.Layer.extend({
 				}),
 				draggable: true
 			});
-			this._map.addLayer(this._annotationMarker);
+			if (this._map._docLayer._partHashes[this._map._docLayer._selectedPart] == this._data.parthash)
+				this._map.addLayer(this._annotationMarker);
 		}
 		if (this._data.rectangle != null) {
 			var stringTwips = this._data.rectangle.match(/\d+/g);
