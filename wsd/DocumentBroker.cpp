@@ -998,8 +998,11 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         return false;
     }
 
+    // Last internal save could be successfull but storage save failed
+    bool needToFinishSaveToStorage = !_lastStorageSaveSuccessful && result == "unmodified";
+
     // Check that we are actually about to upload a successfully saved document.
-    if (!success && !force)
+    if (!success && !needToFinishSaveToStorage && !force)
     {
         LOG_ERR("Cannot store docKey [" << _docKey << "] as .uno:Save has failed in LOK.");
         it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
