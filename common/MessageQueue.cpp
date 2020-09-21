@@ -324,6 +324,11 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
             if (unoCommand.empty())
                 return std::string();
 
+            // This is needed because otherwise it creates some problems when
+            // a save occurs while a cell is still edited in Calc.
+            if (unoCommand == ".uno:ModifiedStatus")
+                return std::string();
+
             // remove obsolete states of the same .uno: command
             for (std::size_t i = 0; i < getQueue().size(); ++i)
             {
