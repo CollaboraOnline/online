@@ -77,6 +77,36 @@ var nextcloudBlackList = [
 			'Print'
 		]
 	],
+	['multiuser/calc/sheet_operations_user1_spec.js',
+		[]
+	],
+	['multiuser/calc/sheet_operations_user2_spec.js',
+		[]
+	],
+	['multiuser/impress/slide_operations_user1_spec.js',
+		[]
+	],
+	['multiuser/impress/slide_operations_user2_spec.js',
+		[]
+	],
+	['multiuser/writer/paragraph_prop_user1_spec.js',
+		[]
+	],
+	['multiuser/writer/paragraph_prop_user2_spec.js',
+		[]
+	],
+	['multiuser/writer/sidebar_visibility_user1_spec.js',
+		[]
+	],
+	['multiuser/writer/sidebar_visibility_user2_spec.js',
+		[]
+	],
+	['multiuser/writer/simultaneous_typing_user1_spec.js',
+		[]
+	],
+	['multiuser/writer/simultaneous_typing_user2_spec.js',
+		[]
+	],
 ];
 
 var phpProxyBlackList = [
@@ -99,6 +129,36 @@ var phpProxyBlackList = [
 		[]
 	],
 	['desktop/calc/focus_spec.js',
+		[]
+	],
+	['multiuser/calc/sheet_operations_user1_spec.js',
+		[]
+	],
+	['multiuser/calc/sheet_operations_user2_spec.js',
+		[]
+	],
+	['multiuser/impress/slide_operations_user1_spec.js',
+		[]
+	],
+	['multiuser/impress/slide_operations_user2_spec.js',
+		[]
+	],
+	['multiuser/writer/paragraph_prop_user1_spec.js',
+		[]
+	],
+	['multiuser/writer/paragraph_prop_user2_spec.js',
+		[]
+	],
+	['multiuser/writer/sidebar_visibility_user1_spec.js',
+		[]
+	],
+	['multiuser/writer/sidebar_visibility_user2_spec.js',
+		[]
+	],
+	['multiuser/writer/simultaneous_typing_user1_spec.js',
+		[]
+	],
+	['multiuser/writer/simultaneous_typing_user2_spec.js',
 		[]
 	],
 ];
