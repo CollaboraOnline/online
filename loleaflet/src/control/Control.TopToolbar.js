@@ -114,7 +114,7 @@ L.Control.TopToolbar = L.Control.extend({
 					}
 				}, hidden: true, desktop: true, mobile: false, tablet: false},
 			{type: 'html', id: 'fonts',
-				html: '<select class="fonts-select"><option>Liberation Sans</option></select>',
+				html: '<select class="fonts-select"><option>Carlito</option></select>',
 				onRefresh: function (edata) {
 					if (!edata.item.html) {
 						edata.isCancelled = true;

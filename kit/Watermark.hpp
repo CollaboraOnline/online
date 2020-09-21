@@ -26,7 +26,7 @@ public:
               const std::shared_ptr<ChildSession> & session)
         : _loKitDoc(loKitDoc)
         , _text(session->getWatermarkText())
-        , _font("Liberation Sans")
+        , _font("Carlito")
         , _width(0)
         , _height(0)
         , _alphaLevel(session->getWatermarkOpacity())
