@@ -373,6 +373,17 @@ L.Control.LokDialog = L.Control.extend({
 			var parent = this._getParentId(e.id);
 			var rectangle = e.rectangle;
 			if (parent) { // this is a floating window
+				if (e.rectangle && this._dialogs[parent].childistooltip === true) {
+					// resize tooltips on invalidation
+					left = this._dialogs[parent].childx;
+					top = this._dialogs[parent].childy;
+					width = parseInt(e.rectangle.split(',')[2]);
+					height = parseInt(e.rectangle.split(',')[3]);
+					this._dialogs[parent].childwidth = width;
+					this._dialogs[parent].childheight = height;
+					this._createDialogChild(e.id, parent, top, left);
+				}
+
 				rectangle = this._createRectStr(null, 0, 0, this._dialogs[parent].childwidth, this._dialogs[parent].childheight);
 			} else if (rectangle) { // this is the actual dialog
 				if (this._isRectangleValid(rectangle)) {
