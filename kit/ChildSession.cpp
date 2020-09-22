@@ -1527,7 +1527,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
         }
         else
         {
-            if (tokens[1] == ".uno:Copy")
+            if (tokens[1] == ".uno:Copy" || tokens[1] == ".uno:CopyHyperlinkLocation")
                 _copyToClipboard = true;
 
             getLOKitDocument()->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
@@ -2597,14 +2597,15 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_CLIPBOARD_CHANGED:
     {
-        std::string selection;
         if (_copyToClipboard)
         {
             _copyToClipboard = false;
-            selection = getTextSelectionInternal("");
+            if (payload.empty())
+                getTextSelectionInternal("");
+            else
+                sendTextFrame("clipboardchanged: " + payload);
         }
 
-        sendTextFrame("clipboardchanged: " + selection);
         break;
     }
     case LOK_CALLBACK_CONTEXT_CHANGED:
