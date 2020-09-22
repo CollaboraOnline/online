@@ -16,6 +16,7 @@
 		BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B6213ED573001CE2D4 /* libz.tbd */; };
 		BE18C7DE226DE09A001AD27E /* Branding in Resources */ = {isa = PBXBuildFile; fileRef = BE18C7DD226DE09A001AD27E /* Branding */; };
 		BE2FB29E24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2FB29D24F3B146006E18B1 /* CollaboraOnlineWebViewKeyboardManager.m */; };
+		BE512CBA2518DE6E00921C15 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE512CB92518DE6400921C15 /* libsqlite3.tbd */; };
 		BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5B9213FE29900E0826C /* Log.cpp */; };
 		BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BA213FE29900E0826C /* SpookyV2.cpp */; };
 		BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5BB213FE29900E0826C /* Session.cpp */; };
@@ -497,6 +498,7 @@
 		BE484B832292AF97001EE76C /* viewfac.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewfac.cxx; path = "../../ios-device/sfx2/source/view/viewfac.cxx"; sourceTree = "<group>"; };
 		BE484B842292AF97001EE76C /* lokhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lokhelper.cxx; path = "../../ios-device/sfx2/source/view/lokhelper.cxx"; sourceTree = "<group>"; };
 		BE484B852292AF97001EE76C /* classificationhelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = classificationhelper.cxx; path = "../../ios-device/sfx2/source/view/classificationhelper.cxx"; sourceTree = "<group>"; };
+		BE512CB92518DE6400921C15 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
@@ -1226,6 +1228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE512CBA2518DE6E00921C15 /* libsqlite3.tbd in Frameworks */,
 				BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */,
 				BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */,
 				BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */,
@@ -1270,6 +1273,7 @@
 		BE00F8B3213ED542001CE2D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE512CB92518DE6400921C15 /* libsqlite3.tbd */,
 				BE6362C12153B5B500F4237E /* MobileCoreServices.framework */,
 				BEA2835921470A1C00848631 /* WebKit.framework */,
 				BE00F8B6213ED573001CE2D4 /* libz.tbd */,
