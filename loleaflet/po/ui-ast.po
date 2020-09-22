@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-08-06 06:16+0000\n"
+"PO-Revision-Date: 2020-09-22 07:50+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Asturian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ast/>\n"
 "Language: ast\n"
@@ -34,7 +34,7 @@ msgstr "Vista xeneral"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(actual)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
@@ -61,23 +61,17 @@ msgid "User Name"
 msgstr "Nome d'usuariu"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
 msgstr "Documentos abiertos"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "%n users"
 msgid " user(s)."
-msgstr "%n usuarios"
+msgstr " usuariu/os."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "Documentos abiertos"
+msgstr " documentu/os abiertu/os."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"

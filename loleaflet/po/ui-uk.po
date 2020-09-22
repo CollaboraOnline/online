@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-08-11 17:17+0000\n"
+"PO-Revision-Date: 2020-09-22 07:50+0000\n"
 "Last-Translator: Євген Кондратюк <lachend@gmail.com>\n"
 "Language-Team: Ukrainian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/uk/>\n"
 "Language: uk\n"
@@ -61,23 +61,17 @@ msgid "User Name"
 msgstr "Ім'я користувача"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
 msgstr "Відкриті документи"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "0 users"
 msgid " user(s)."
-msgstr "0 користувачів"
+msgstr " користувач(ів)"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "Відкриті документи"
+msgstr " документ(и) відкрито."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -105,7 +99,7 @@ msgstr "Документ"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Переглядів"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -163,7 +157,7 @@ msgstr "Часовий інтервал статистики ЦП (у мс)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Припинити сесію."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -962,7 +956,7 @@ msgstr "~Огляд"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Формат"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -1450,10 +1444,8 @@ msgid "Resolve"
 msgstr "Вирішити"
 
 #: src/layer/tile/TileLayer.js:826
-#, fuzzy
-#| msgid "Function Wizard"
 msgid "Functions"
-msgstr "Майстер функцій"
+msgstr "Функції"
 
 #: src/map/Clipboard.js:137
 msgid "To paste outside %productName, please first click the 'download' button"
