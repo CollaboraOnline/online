@@ -643,6 +643,15 @@ L.TileLayer = L.GridLayer.extend({
 				// hack for ios and android to get selected text into hyperlink insertion dialog
 				this._selectedTextContent = textMsg.substr(22);
 		}
+		else if (textMsg.startsWith('clipboardchanged')) {
+			var jMessage = textMsg.substr(17);
+			jMessage = JSON.parse(jMessage);
+
+			if (jMessage.mimeType === 'text/plain') {
+				this._map._clip.setTextSelectionHTML(jMessage.content);
+				this._map._clip._execCopyCutPaste('copy');
+			}
+		}
 		else if (textMsg.startsWith('textselectionend:')) {
 			this._onTextSelectionEndMsg(textMsg);
 		}
