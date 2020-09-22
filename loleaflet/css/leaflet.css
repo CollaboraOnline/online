@@ -833,7 +833,9 @@ input.clipboard {
 .loleaflet-ruler-breakcontainer {
 	height: 100%;
 	position: absolute;
-	}
+	display: flex;
+	align-items: center;
+}
 
 .loleaflet-ruler-tabstopcontainer {
 	height: 100%;
@@ -894,7 +896,7 @@ input.clipboard {
 	}
 
 .loleaflet-ruler-maj {
-	height: 35%;
+	height: auto;
 	display: inline-block;
 	border-width: 0px .5px;
 	border-style: solid;
