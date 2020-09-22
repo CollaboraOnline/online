@@ -163,6 +163,11 @@ var phpProxyBlackList = [
 	],
 ];
 
+var nextcloudOnlyList = [
+	['mobile/writer/nextcloud_spec.js', []],
+];
+
 module.exports.coreBlackLists = coreBlackLists;
 module.exports.nextcloudBlackList = nextcloudBlackList;
+module.exports.nextcloudOnlyList = nextcloudOnlyList;
 module.exports.phpProxyBlackList = phpProxyBlackList;

@@ -79,8 +79,9 @@ function pickTests(filename, foundTests, config) {
 	testsToRun = removeBlacklistedTest(filename, testsToRun, coreblackList);
 
 	if (process.env.CYPRESS_INTEGRATION === 'nextcloud') {
-		var NCblackList = blacklists.nextcloudBlackList;
-		testsToRun = removeBlacklistedTest(filename, testsToRun, NCblackList);
+		testsToRun = removeBlacklistedTest(filename, testsToRun, blacklists.nextcloudBlackList);
+	} else {
+		testsToRun = removeBlacklistedTest(filename, testsToRun, blacklists.nextcloudOnlyList);
 	}
 
 	if (process.env.CYPRESS_INTEGRATION === 'php-proxy') {
