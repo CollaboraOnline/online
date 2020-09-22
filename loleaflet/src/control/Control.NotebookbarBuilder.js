@@ -348,7 +348,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
-			console.log(builder.options.map);
 			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 		});
 	},
@@ -715,6 +714,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		});
 
 		$(menuHtml[0]).children('a').html('<span id="shortcuts-menubar-icon"></span>');
+		$(menuHtml[0]).children('a').click(function () {
+			$(control.container).smartmenus('menuHideAll');
+		});
 
 		$(control.container).bind('beforeshow.smapi', {self: menubar}, menubar._beforeShow);
 		$(control.container).bind('click.smapi', {self: menubar}, menubar._onClicked);
