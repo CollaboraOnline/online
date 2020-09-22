@@ -59,7 +59,138 @@ function loadTestDocLocal(fileName, subFolder, noFileCopy) {
 	cy.log('Loading test document with a local build - end.');
 }
 
-function loadTestDocNextcloud(fileName, subFolder) {
+function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
+	cy.log('Loading test document with nextcloud - start.');
+	cy.log('Param - fileName: ' + fileName);
+	cy.log('Param - subFolder: ' + subFolder);
+	cy.log('Param - subsequentLoad: ' + subsequentLoad);
+
+	// Open local nextcloud installation
+	cy.visit('http://localhost/nextcloud');
+
+	if (subsequentLoad !== true) {
+		// Log in with cypress test user / password
+		cy.get('input#user')
+			.clear()
+			.type('cypress_test');
+
+		cy.get('input#password')
+			.clear()
+			.type('cypress_test');
+
+		cy.get('input#submit-form')
+			.click();
+
+		cy.get('.button.new')
+			.should('be.visible');
+
+		// Wait for free space calculation before uploading document
+		cy.get('#free_space')
+			.should('not.have.attr', 'value', '');
+
+		// Remove all files
+		cy.get('#fileList')
+			.then(function(filelist) {
+				if (filelist.find('tr').length !== 0) {
+					cy.waitUntil(function() {
+						cy.get('#fileList tr:nth-of-type(1) .action-menu.permanent')
+							.click();
+
+						cy.get('.menuitem.action.action-delete.permanent')
+							.click();
+
+						cy.get('#uploadprogressbar')
+							.should('not.be.visible');
+
+						return cy.get('#fileList')
+							.then(function(filelist) {
+								return filelist.find('tr').length === 0;
+							});
+					}, {timeout: 60000});
+				}
+			});
+	} else {
+		// Wait for free space calculation before uploading document
+		cy.get('#free_space')
+			.should('not.have.attr', 'value', '');
+	}
+
+	cy.get('tr[data-file=\'' + fileName + '\']')
+		.should('not.exist');
+
+	// Upload test document
+	var fileURI = '';
+	if (subFolder === undefined) {
+		fileURI += fileName;
+	} else {
+		fileURI += subFolder + '/' + fileName;
+	}
+	doIfOnDesktop(function() {
+		cy.get('input#file_upload_start')
+			.attachFile({ filePath: 'desktop/' + fileURI, encoding: 'binary' });
+	});
+	doIfOnMobile(function() {
+		cy.get('input#file_upload_start')
+			.attachFile({ filePath: 'mobile/' + fileURI, encoding: 'binary' });
+	});
+
+	cy.get('#uploadprogressbar')
+		.should('not.be.visible');
+
+	// Open test document
+	cy.get('tr[data-file=\'' + fileName + '\']')
+		.click();
+
+	cy.get('iframe#richdocumentsframe')
+		.should('be.visible', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+
+	var getIframeBody = function(originalGet, level) {
+		if (level === 1) {
+			return cy.wrap(originalGet('iframe#richdocumentsframe'))
+				.its('0.contentDocument', {log: false}).should('exist')
+				.its('body', {log: false}).should('not.be.undefined')
+				.then(cy.wrap, {log: false});
+		} else if (level === 2) {
+			return cy.wrap(originalGet('iframe#richdocumentsframe'))
+				.its('0.contentDocument', {log: false}).should('exist')
+				.its('body', {log: false}).should('not.be.undefined')
+				.then(cy.wrap, {log: false})
+				.find('iframe#loleafletframe', {log: false})
+				.its('0.contentDocument', {log: false}).should('exist')
+				.its('body', {log: false}).should('not.be.undefined')
+				.then(cy.wrap, {log: false});
+		}
+	};
+
+	cy.get('iframe#richdocumentsframe')
+		.then(function() {
+			Cypress.env('IFRAME_LEVEL', '2');
+		});
+
+	Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+		var iFrameLevel = Cypress.env('IFRAME_LEVEL');
+		if ((iFrameLevel === '1' || iFrameLevel === '2') && !selector.startsWith('@'))
+			if (selector === 'body')
+				return getIframeBody(originalFn, parseInt(iFrameLevel));
+			else
+				return getIframeBody(originalFn, parseInt(iFrameLevel)).find(selector, options);
+		else
+			return originalFn(selector, options);
+	});
+
+	Cypress.Commands.overwrite('contains', function(originalFn, selector, content, options) {
+		if (Cypress.env('IFRAME_LEVEL') === '2')
+			return cy.get('#document-container').parent().wrap(originalFn(selector, content, options));
+		else
+			return originalFn(selector, content, options);
+	});
+
+	cy.wait(10000);
+
+	cy.log('Loading test document with nextcloud - end.');
+}
+
+function loadFileToNextCloud(fileName, subFolder) {
 	cy.log('Loading test document with nextcloud - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
@@ -86,7 +217,6 @@ function loadTestDocNextcloud(fileName, subFolder) {
 	cy.get('#free_space')
 		.should('not.have.attr', 'value', '');
 
-	// Remove all files
 	cy.get('#fileList')
 		.then(function(filelist) {
 			if (filelist.find('tr').length !== 0) {
@@ -130,52 +260,11 @@ function loadTestDocNextcloud(fileName, subFolder) {
 	cy.get('#uploadprogressbar')
 		.should('not.be.visible');
 
-	// Open test document
 	cy.get('tr[data-file=\'' + fileName + '\']')
-		.click();
-
-	cy.get('iframe#richdocumentsframe')
-		.should('be.visible', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
-
-	var getIframeBody = function(originalGet) {
-		return cy.wrap(originalGet('iframe#richdocumentsframe'))
-			.its('0.contentDocument', {log: false}).should('exist')
-			.its('body', {log: false}).should('not.be.undefined')
-			.then(cy.wrap, {log: false})
-			.find('iframe#loleafletframe', {log: false})
-			.its('0.contentDocument', {log: false}).should('exist')
-			.its('body', {log: false}).should('not.be.undefined')
-			.then(cy.wrap, {log: false});
-	};
-
-	cy.get('iframe#richdocumentsframe')
-		.then(function() {
-			Cypress.env('WITHIN_IFRAME', 'TRUE');
-		});
-
-	Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
-		if (Cypress.env('WITHIN_IFRAME') === 'TRUE' && !selector.startsWith('@'))
-			if (selector === 'body')
-				return getIframeBody(originalFn);
-			else
-				return getIframeBody(originalFn).find(selector, options);
-		else
-			return originalFn(selector, options);
-	});
-
-	Cypress.Commands.overwrite('contains', function(originalFn, selector, content, options) {
-		if (Cypress.env('WITHIN_IFRAME') === 'TRUE')
-			return cy.get('#document-container').parent().wrap(originalFn(selector, content, options));
-		else
-			return originalFn(selector, content, options);
-	});
-	
-	cy.wait(10000);
-
-	cy.log('Loading test document with nextcloud - end.');
+		.should('be.visible');
 }
 
-function loadTestDoc(fileName, subFolder, noFileCopy) {
+function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
@@ -186,7 +275,7 @@ function loadTestDoc(fileName, subFolder, noFileCopy) {
 	});
 
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
-		loadTestDocNextcloud(fileName, subFolder);
+		loadTestDocNextcloud(fileName, subFolder, subsequentLoad);
 	} else {
 		loadTestDocLocal(fileName, subFolder, noFileCopy);
 	}
@@ -321,8 +410,8 @@ function matchClipboardText(regexp) {
 	});
 }
 
-function beforeAll(fileName, subFolder, noFileCopy) {
-	loadTestDoc(fileName, subFolder, noFileCopy);
+function beforeAll(fileName, subFolder, noFileCopy, subsequentLoad) {
+	loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad);
 }
 
 function afterAll(fileName) {
@@ -333,7 +422,7 @@ function afterAll(fileName) {
 		return;
 
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
-		if (Cypress.env('WITHIN_IFRAME') === 'TRUE') {
+		if (Cypress.env('IFRAME_LEVEL') === '2') {
 			// Close the document
 			doIfOnMobile(function() {
 				cy.get('#tb_actionbar_item_closemobile')
@@ -346,7 +435,7 @@ function afterAll(fileName) {
 					.then(function(item) {
 						cy.wrap(item)
 							.click();
-						Cypress.env('WITHIN_IFRAME', '');
+						Cypress.env('IFRAME_LEVEL', '');
 					});
 			});
 			doIfOnDesktop(function() {
@@ -354,7 +443,7 @@ function afterAll(fileName) {
 					.then(function(item) {
 						cy.wrap(item)
 							.click();
-						Cypress.env('WITHIN_IFRAME', '');
+						Cypress.env('IFRAME_LEVEL', '');
 					});
 			});
 
@@ -774,3 +863,4 @@ module.exports.doIfOnMobile = doIfOnMobile;
 module.exports.doIfOnDesktop = doIfOnDesktop;
 module.exports.moveCursor = moveCursor;
 module.exports.typeIntoDocument = typeIntoDocument;
+module.exports.loadFileToNextCloud = loadFileToNextCloud;
