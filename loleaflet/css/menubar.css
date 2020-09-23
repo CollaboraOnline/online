@@ -146,7 +146,13 @@
 .lo-menu ul a span.sub-arrow {
 	right: 0;
 	margin-right: 5px;
-	background: transparent; /* we want them to be transparent always whether mobile or desktop */
+	background: transparent url('images/lc_menu_chevron.svg') no-repeat center right; /* we want them to be transparent always whether mobile or desktop */
+	color: transparent;
+	/*transform: rotate(180deg);*/
+}
+.lo-menu ul a:hover > span.sub-arrow {
+	-webkit-filter: brightness(100);
+	filter: brightness(100);
 }
 .lo-menu ul > li {
 	border-left: 0;
@@ -245,13 +251,17 @@
 /* The smartmenus plugin doesn't seem to have support for icons, so implement our own pseudo-elements */
 .lo-menu-item-checked::before {
 	position: absolute;
-	content: '\2713';
-	left: 5px;
-	top: 5px;
+	content: ' ';
+	left: 2px;
+	background: url('images/lc_listitem-selected.svg') no-repeat left -2px;
+	width: 20px;
+	height: 20px;
 }
 
 .lo-menu-item-checked:hover::before {
 	color: #fff;
+	-webkit-filter: brightness(100);
+	filter: brightness(100);
 }
 
 .writer-icon-img {
