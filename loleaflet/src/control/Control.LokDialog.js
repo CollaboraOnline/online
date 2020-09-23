@@ -345,6 +345,8 @@ L.Control.LokDialog = L.Control.extend({
 				this._dialogs[parentId].childid = e.id;
 				this._dialogs[parentId].childwidth = width;
 				this._dialogs[parentId].childheight = height;
+				this._dialogs[parentId].childx = left;
+				this._dialogs[parentId].childy = top;
 
 				if (e.winType === 'tooltip')
 					this._dialogs[parentId].childistooltip = true;
