@@ -1000,3 +1000,9 @@ input[type='checkbox'][disabled] {
 	flex: 1 44px;
 	text-align: center;
 }
+
+.wizard-comment-box {
+	padding: 5px 10px 10px !important;
+	display: table !important;
+	width: -webkit-fill-available !important
+}
