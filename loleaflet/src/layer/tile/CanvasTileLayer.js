@@ -461,7 +461,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			}
 			canvas.closePath();
 		};
-		this._painter.clear();
+		this._painter.update();
 	},
 
 	hasSplitPanesSupport: function () {
