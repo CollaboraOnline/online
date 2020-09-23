@@ -2,6 +2,9 @@
 /*
  * Document parts switching and selecting handler
  */
+
+/* global vex */
+
 L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
 		var docLayer = this._docLayer;
@@ -345,7 +348,43 @@ L.Map.include({
 
 	showPage: function () {
 		if (this.getDocType() === 'spreadsheet' && this.hasAnyHiddenPart()) {
-			this._socket.sendMessage('uno .uno:Show');
+			var partNames_ = this._docLayer._partNames;
+			var hiddenParts_ = this._docLayer._hiddenParts;
+
+			if (hiddenParts_.length > 0) {
+				var container = document.createElement('div');
+				container.style.maxHeight = '300px';
+				container.style.maxWidth = '200px';
+				for (var i = 0; i < hiddenParts_.length; i++) {
+					var checkbox = document.createElement('input');
+					checkbox.type = 'checkbox';
+					checkbox.id = 'hidden-part-checkbox-' + String(hiddenParts_[i]);
+					var label = document.createElement('label');
+					label.htmlFor = 'hidden-part-checkbox-' + String(hiddenParts_[i]);
+					label.innerText = partNames_[hiddenParts_[i]];
+					var newLine = document.createElement('br');
+					container.appendChild(checkbox);
+					container.appendChild(label);
+					container.appendChild(newLine);
+				}
+			}
+
+			var socket_ = this._socket;
+			vex.dialog.confirm({
+				unsafeMessage: container.outerHTML,
+				callback: function (value) {
+					if (value === true) {
+						var checkboxList = document.querySelectorAll('input[id^="hidden-part-checkbox"]');
+						for (var i = 0; i < checkboxList.length; i++) {
+							if (checkboxList[i].checked === true) {
+								var partName_ = partNames_[parseInt(checkboxList[i].id.replace('hidden-part-checkbox-', ''))];
+								var argument = {aTableName: {type: 'string', value: partName_}};
+								socket_.sendMessage('uno .uno:Show ' + JSON.stringify(argument));
+							}
+						}
+					}
+				}
+			});
 		}
 	},
 
