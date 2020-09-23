@@ -945,3 +945,9 @@ input[type='checkbox'][disabled] {
 #TableEditPanel #misc_label.mobile-wizard {
 	display: none;
 }
+
+.wizard-comment-box {
+	padding: 5px 10px 10px !important;
+	display: table !important;
+	width: -webkit-fill-available !important
+}

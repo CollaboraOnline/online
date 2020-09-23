@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ w2ui _ _UNO */
+/* global $ w2ui _ _UNO L */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
@@ -182,6 +182,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['borderstyle'] = this._borderControl;
 		this._controlHandlers['treelistbox'] = this._treelistboxControl;
 		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
+		this._controlHandlers['rootcomment'] = this._rootCommentControl;
+		this._controlHandlers['comment'] = this._commentControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -1743,6 +1745,128 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.hidden)
 			$(container).hide();
 
+		return false;
+	},
+
+	_createComment: function(container, data, isRoot) {
+
+		//this function is replica of Annotation._initLayout
+		//todo: find way to reuse existing mathod or merge both the methods
+		var tagTd = 'td',
+		    tagDiv = 'div',
+		    empty = '',
+		    click = 'click';
+		if (data.data.trackchange) {
+			var wrapper = data.annotation._wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-redline-content-wrapper wizard-comment-box', container);
+		} else {
+			wrapper = data.annotation._wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-wrapper wizard-comment-box', container);
+		}
+
+		data.annotation._author = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
+		var tbody = L.DomUtil.create('tbody', empty, data.annotation._author);
+		var rowResolved = L.DomUtil.create('tr', empty, tbody);
+		var tdResolved = L.DomUtil.create(tagTd, 'loleaflet-annotation-resolved', rowResolved);
+		var pResolved = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-resolved', tdResolved);
+		data.annotation._resolved = pResolved;
+
+		data.annotation._updateResolvedField(data.annotation._data.resolved);
+
+		var tr = L.DomUtil.create('tr', empty, tbody);
+		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
+		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
+		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+
+		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
+		imgAuthor.setAttribute('width', data.annotation.options.imgSize.x);
+		imgAuthor.setAttribute('height', data.annotation.options.imgSize.y);
+		imgAuthor.onerror = function () { imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
+
+		data.annotation._authorAvatarImg = imgAuthor;
+		data.annotation._authorAvatartdImg = tdImg;
+
+		data.annotation._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
+		data.annotation._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
+
+		if (data.data.trackchange && !this.map.isPermissionReadOnly()) {
+			var tdAccept = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
+			var acceptButton = data.annotation._acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
+			var tdReject = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
+			var rejectButton = data.annotation._rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
+
+			acceptButton.title = _('Accept change');
+			L.DomEvent.on(acceptButton, click, function() {
+				this.map.fire('RedlineAccept', {id: data.data.id});
+			}, data.annotation);
+
+			rejectButton.title = _('Reject change');
+			L.DomEvent.on(rejectButton, click, function() {
+				this.map.fire('RedlineReject', {id: data.data.id});
+			}, data.annotation);
+		}
+
+		if (data.annotation.options.noMenu !== true && this.map.isPermissionEditForComments()) {
+			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
+			var divMenu = data.annotation._menu = L.DomUtil.create(tagDiv, data.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
+			divMenu.title = _('Open menu');
+			divMenu.annotation = data.annotation;
+			if (this.map._docLayer._docType === 'text')
+				divMenu.isRoot = isRoot;
+		}
+		if (data.data.trackchange) {
+			data.annotation._captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
+			data.annotation._captionText = L.DomUtil.create(tagDiv, empty, data.annotation._captionNode);
+		}
+
+		var _contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', wrapper);
+		var _contentText = L.DomUtil.create('div', '', _contentNode);
+		$(_contentText).text(data.text);
+		$(data.annotation._contentAuthor).text(data.data.author);
+
+		var d = new Date(data.data.dateTime.replace(/,.*/, 'Z'));
+		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+		$(data.annotation._contentDate).text(isNaN(d.getTime()) ? data.data.dateTime: d.toLocaleDateString(String.locale, dateOptions));
+
+		divMenu.onclick = function(e) {
+			L.DomEvent.stopPropagation(e);
+			L.DomEvent.preventDefault(e);
+			$(divMenu).contextMenu();
+		};
+	},
+
+	_rootCommentControl: function(parentContainer, data, builder) {
+		var container = L.DomUtil.create('div',  'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
+		container.setAttribute('style', 'padding: 5px 10px 10px !important; display: table !important;width: -webkit-fill-available !important');
+		container.annotation = data.annotation;
+		container.id = data.id;
+		builder._createComment(container, data, true);
+		if (data.children.length > 0)
+		{
+			var childContainer = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+			childContainer.setAttribute('style', 'padding: 5px 10px 10px !important; display: table !important;width: -webkit-fill-available !important');
+			childContainer.title = _('Comment');
+
+			builder._currentDepth++;
+			builder.build(childContainer, data.children);
+			builder._currentDepth--;
+
+			$(childContainer).hide();
+
+			if (builder.wizard)
+				$(container).click(function() {
+					builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
+					builder.wizard.goLevelDown(childContainer);
+				});
+		} else {
+			$(container).click(function() {
+				builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
+			});
+		}
+
+		return false;
+	},
+
+	_commentControl: function(parentContainer, data, builder) {
+		builder._createComment(parentContainer, data, false);
 		return false;
 	},
 
