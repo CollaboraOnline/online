@@ -226,6 +226,10 @@ void DocumentBroker::setupPriorities()
 
 void DocumentBroker::startThread()
 {
+#if MOBILEAPP
+    MobileTerminationFlag = false;
+#endif
+
     _poll->startThread();
 }
 
