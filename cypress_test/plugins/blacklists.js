@@ -165,6 +165,8 @@ var phpProxyBlackList = [
 
 var nextcloudOnlyList = [
 	['mobile/writer/nextcloud_spec.js', []],
+	['mobile/calc/nextcloud_spec.js', []],
+	['mobile/impress/nextcloud_spec.js', []],
 ];
 
 module.exports.coreBlackLists = coreBlackLists;

@@ -4,16 +4,16 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Nextcloud specific tests.', function() {
-	var testFileName = 'nextcloud.odt';
+	var testFileName = 'nextcloud.odp';
 
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
 
 	it('Insert image from storage.', function() {
-		helper.loadFileToNextCloud('image_to_insert.png', 'writer');
+		helper.loadFileToNextCloud('image_to_insert.png', 'impress');
 
-		helper.beforeAll(testFileName, 'writer', undefined, true);
+		helper.beforeAll(testFileName, 'impress', undefined, true);
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -40,12 +40,12 @@ describe('Nextcloud specific tests.', function() {
 					.click();
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
 	});
 
 	it('Save as.', function() {
-		helper.beforeAll(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'impress');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -95,7 +95,7 @@ describe('Nextcloud specific tests.', function() {
 	});
 
 	it('Share.', function() {
-		helper.beforeAll(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'impress');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -128,7 +128,7 @@ describe('Nextcloud specific tests.', function() {
 	});
 
 	it('Revision history.', function() {
-		helper.beforeAll(testFileName, 'writer');
+		helper.beforeAll(testFileName, 'impress');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
