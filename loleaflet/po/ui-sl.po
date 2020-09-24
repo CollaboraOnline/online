@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: LibreOffice Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-08-05 16:46+0000\n"
+"PO-Revision-Date: 2020-09-22 21:49+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sl/>\n"
 "Language: sl\n"
@@ -58,23 +58,17 @@ msgid "User Name"
 msgstr "Uporabniško ime"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
-msgstr "odprtih dokumentov"
+msgstr "Odprti dokumenti"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "0 users"
 msgid " user(s)."
-msgstr "0 uporabnikov"
+msgstr " uporabnik(ov)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "odprtih dokumentov"
+msgstr " odprtih dokumentov."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -102,7 +96,7 @@ msgstr "Dokument"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Pogledi"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -160,7 +154,7 @@ msgstr "Časovni interval za statistiko CPE (v ms)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Ubij sejo."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -959,7 +953,7 @@ msgstr "P~regled"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Oblika"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -1447,10 +1441,8 @@ msgid "Resolve"
 msgstr "Razreši"
 
 #: src/layer/tile/TileLayer.js:826
-#, fuzzy
-#| msgid "Function Wizard"
 msgid "Functions"
-msgstr "Čarovnik za funkcije"
+msgstr "Funkcije"
 
 #: src/map/Clipboard.js:137
 msgid "To paste outside %productName, please first click the 'download' button"
