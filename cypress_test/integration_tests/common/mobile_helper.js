@@ -9,13 +9,24 @@ function enableEditingMobile() {
 	cy.get('#mobile-edit-button')
 		.then(function(button) {
 			if (button.css('display') !== 'none') {
+
+				cy.get('#tb_actionbar_item_closemobile .editmode')
+					.should('not.exist');
+
+				cy.get('#tb_actionbar_item_closemobile .closemobile')
+					.should('be.visible');
+
 				cy.get('#mobile-edit-button')
 					.click();
 			}
 		});
 
-	cy.get('#tb_actionbar_item_mobile_wizard')
-		.should('not.have.class', 'disabled');
+
+	cy.get('#tb_actionbar_item_closemobile .editmode')
+		.should('be.visible');
+
+	cy.get('#tb_actionbar_item_closemobile .closemobile')
+		.should('not.exist');
 
 	// Wait until all UI update is finished.
 	cy.get('#toolbar-down')
