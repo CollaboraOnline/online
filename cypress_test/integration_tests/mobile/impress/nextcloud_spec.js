@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
+var nextcloudHelper = require('../../common/nextcloud_helper');
 
 describe('Nextcloud specific tests.', function() {
 	var testFileName = 'nextcloud.odp';
@@ -15,30 +16,9 @@ describe('Nextcloud specific tests.', function() {
 
 		helper.beforeAll(testFileName, 'impress', undefined, true);
 
-		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		mobileHelper.openInsertionWizard();
-
-		cy.get('.insertgraphicremote')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '');
-				cy.wrap(item)
-					.click();
-			});
-
-		cy.get('.oc-dialog')
-			.should('be.visible');
-
-		cy.get('tr[data-entryname=\'image_to_insert.png\']')
-			.click();
-
-		cy.get('.oc-dialog-buttonrow .primary')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '2');
-				cy.wrap(item)
-					.click();
-			});
+		nextcloudHelper.insertImageFromStorage('image_to_insert.png');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
@@ -50,31 +30,7 @@ describe('Nextcloud specific tests.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Save As...')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '1');
-				cy.wrap(item)
-					.click();
-			});
-
-		cy.get('.oc-dialog')
-			.should('be.visible');
-
-		cy.get('.oc-dialog input')
-			.clear()
-			.type('1' + testFileName);
-
-		cy.get('.oc-dialog-buttonrow .primary')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '2');
-				cy.wrap(item)
-					.click();
-			});
+		nextcloudHelper.saveFileAs('1' + testFileName);
 
 		// Close the document
 		cy.get('#mobile-edit-button')
@@ -97,73 +53,17 @@ describe('Nextcloud specific tests.', function() {
 	it('Share.', function() {
 		helper.beforeAll(testFileName, 'impress');
 
-		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Share...')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '');
-				cy.wrap(item)
-					.click();
-			});
-
-		cy.get('#app-sidebar')
-			.should('be.visible');
-
-		// issue here
-		//cy.get('section#sharing')
-		//	.should('be.visible');
-
-		cy.get('.app-sidebar__close.icon-close')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '2');
-				cy.wrap(item)
-					.click();
-			});
+		nextcloudHelper.checkAndCloseSharing();
 	});
 
 	it('Revision history.', function() {
 		helper.beforeAll(testFileName, 'impress');
 
-		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'See revision history')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '');
-				cy.wrap(item)
-					.click();
-			});
-
-		cy.get('#app-sidebar')
-			.should('be.visible');
-
-		cy.get('section#tab-versionsTabView')
-			.should('be.visible');
-
-		cy.get('.app-sidebar__close.icon-close')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '1');
-				cy.wrap(item)
-					.click();
-			});
-
-		cy.get('#revViewerContainer .icon-close')
-			.then(function(item) {
-				Cypress.env('IFRAME_LEVEL', '2');
-				cy.wrap(item)
-					.click();
-			});
+		nextcloudHelper.checkAndCloseRevisionHistory();
 	});
 });
 
