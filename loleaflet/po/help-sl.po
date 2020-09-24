@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: LibreOffice Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-04-11 11:43+0000\n"
+"PO-Revision-Date: 2020-09-22 21:49+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/sl/>\n"
 "Language: sl\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:19-5
@@ -54,14 +54,12 @@ msgid "Paste as unformatted text"
 msgstr "Prilepi kot neoblikovano besedilo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Krmilka + dvigalka + ?"
+msgstr "Krmilka + dvigalka + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
-msgstr ""
+msgstr "Posebno lepljenje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
 msgid "Ctrl + Alt + Shift + V"
@@ -1186,10 +1184,8 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr "Ko prilepite vsebino iz istega dokumenta, se oblika in elementi ohranijo. Če kopirate iz drugega dokumenta iz drugega zavihka ali okna brskalnika ali izvedn brskalnika, bo prilepljena vsebina ohranila obogateno besedilo."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "Besedilo lahko kot neoblikovano prilepite s tipkami za bližnjico: <span class=\"kbd\">krmilka</span> + <span class=\"kbd\">izmenjalka</span> + <span class=\"kbd\">dvigalka</span> + <span class=\"kbd\">V</span>"
+msgstr "Besedilo lahko kot neoblikovano prilepite s tipkami za bližnjico: <span class=\"kbd\">krmilka</span> + <span class=\"kbd\">dvigalka</span> + <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-04-25 12:58+0000\n"
+"PO-Revision-Date: 2020-09-22 21:49+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/cs/>\n"
 "Language: cs\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-help-cs.po\n"
 "X-Pootle-Revision: 855408\n"
 
@@ -52,14 +52,12 @@ msgid "Paste as unformatted text"
 msgstr "Vložit jako neformátovaný text"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
-msgstr ""
+msgstr "Vložit jinak"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
 msgid "Ctrl + Alt + Shift + V"
@@ -1184,10 +1182,8 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr "Pokud vložíte obsah zkopírovaný v témže dokumentu, zachovají se jeho formát a prvky. Zkopírujete-li jej z dokumentu na jiné kartě či v jiném okně prohlížeče, případně z aplikace mimo prohlížeč, ve vloženém obsahu se zachová formátování textu."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "Neformátovaný text můžete vložit pomocí klávesové zkratky: <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">Alt</span>+<span class=\"kbd\">Shift</span>+<span class=\"kbd\">V</span>"
+msgstr "Neformátovaný text můžete vložit pomocí klávesové zkratky: <span class=\"kbd\">Ctrl</span>+<span class=\"kbd\">Shift</span>+<span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
