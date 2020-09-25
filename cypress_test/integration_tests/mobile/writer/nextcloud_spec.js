@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
+var writerMobileHelper = require('./writer_mobile_helper');
 
 describe('Nextcloud specific tests.', function() {
 	var testFileName = 'nextcloud.odt';
@@ -63,6 +64,40 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.checkAndCloseRevisionHistory();
+	});
+
+	it('Restore previous revision.', function() {
+		helper.beforeAll(testFileName, 'writer');
+
+		mobileHelper.enableEditingMobile();
+
+		// Initially we have "text" text in the document
+		writerMobileHelper.selectAllMobile();
+
+		helper.expectTextForClipboard('text');
+
+		// Change the document content and save it
+		helper.typeIntoDocument('new');
+
+		writerMobileHelper.selectAllMobile();
+
+		helper.expectTextForClipboard('new');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'File')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Save')
+			.click();
+
+		nextcloudHelper.restorePreviousVersion();
+
+		mobileHelper.enableEditingMobile();
+
+		writerMobileHelper.selectAllMobile();
+
+		helper.expectTextForClipboard('text');
 	});
 });
 
