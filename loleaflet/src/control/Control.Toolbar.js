@@ -50,6 +50,9 @@ function onClose() {
 		$('#closebuttonwrapper').hide();
 		$('#main-menu').hide();
 		$('#document-titlebar').hide();
+		$('#sidebar-dock-wrapper').hide();
+		$('#presentation-controls-wrapper').hide();
+		$('#document-container').hide();
 
 		// Then tell the app to delete the web view
 		window.postMobileMessage('BYE');
