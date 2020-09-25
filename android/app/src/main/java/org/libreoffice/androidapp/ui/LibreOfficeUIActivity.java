@@ -662,9 +662,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             }
         }
 
-        if (!joined.isEmpty()) {
-            prefs.edit().putString(RECENT_DOCUMENTS_KEY, joined).apply();
-        }
+        prefs.edit().putString(RECENT_DOCUMENTS_KEY, joined).apply();
 
         recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentUris));
     }
