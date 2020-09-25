@@ -43,6 +43,15 @@ function getUNOCommand(unoData) {
 
 function onClose() {
 	if (window.ThisIsAMobileApp) {
+		// Hide stuff to avoid the user (even accidentally) tapping anything else right
+		// after tapping the closebutton, before the app has torn down the WebView.
+		// This is a silly workaround to avoid one possible way to reproduce tdf#136457.
+		$('#toolbar-wrapper').hide();
+		$('#closebuttonwrapper').hide();
+		$('#main-menu').hide();
+		$('#document-titlebar').hide();
+
+		// Then tell the app to delete the web view
 		window.postMobileMessage('BYE');
 	} else {
 		map.fire('postMessage', {msgId: 'close', args: {EverModified: map._everModified, Deprecated: true}});
