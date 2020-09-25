@@ -79,6 +79,19 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 			comment.textSelected.on('click', function() {
 				this.selectById(comment.id);
 			}, this);
+
+			if (window.mode.isMobile()) {
+				// This would be used to highlight comment when tapped on the comment in wizard
+				comment.wizardHighlight = L.polygon(rectangles, {
+					pointerEvents: 'all',
+					interactive: false,
+					color: '#777777',
+					fillColor: '#777777',
+					fillOpacity: 0.25,
+					weight: 2,
+					opacity: 0.25
+				});
+			}
 		}
 	},
 
@@ -202,6 +215,8 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 	// Returns the last comment id of comment thread containing the given id
 	getLastChildIndexOf: function(id) {
 		var index = this.getIndexOf(id);
+		if (index < 0)
+			return undefined;
 		for (var idx = index + 1;
 		     idx < this._items.length && this._items[idx]._data.parent === this._items[idx - 1]._data.id;
 		     idx++)
@@ -812,6 +827,11 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 			obj.comment.avatar = this._map._viewInfoByUserName[obj.comment.author].userextrainfo.avatar;
 		}
 
+		if (window.mode.isMobile()) {
+			var annotation = this._items[this.getRootIndexOf(obj.comment.id)];
+			if (!annotation)
+				annotation = this._items[this.getRootIndexOf(obj.comment.parent)]; //this is required for reload after reply in writer
+		}
 		if (action === 'Add') {
 			if (changetrack) {
 				if (!this.adjustRedLine(obj.redline)) {
@@ -829,6 +849,16 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 			}
 			this.layout();
 		} else if (action === 'Remove') {
+			if (window.mode.isMobile() && obj.comment.id === annotation._data.id) {
+				var child = this._items[this.getIndexOf(obj.comment.id) + 1];
+				// Need to restore the original layers here becuase once removed they will be inaccessible and will stay there
+				this._map.removeLayer(annotation._data.wizardHighlight);
+				this._map.addLayer(annotation._data.textSelected);
+				if (child && child._data.parent === annotation._data.id)
+					annotation = child;
+				else
+					annotation = undefined;
+			}
 			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
 			var removed = this.getItem(id);
 			if (removed) {
@@ -881,6 +911,8 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 				this.update();
 			}
 		}
+		if (window.mode.isMobile())
+			this._map._docLayer._openCommentWizard(annotation);
 	},
 
 	_onAnnotationCancel: function (e) {
@@ -1078,7 +1110,9 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 		this.update();
 		if (state === false)
 			this.updateDocBounds();
-	}
+	},
+
+	
 });
 
 
