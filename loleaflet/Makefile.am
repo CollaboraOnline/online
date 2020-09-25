@@ -461,6 +461,7 @@ $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 
 $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 	$(LOLEAFLET_HTML_DST) \
+	$(LOLEAFLET_WELCOME_DST) \
 	$(DIST_FOLDER)/bundle.css \
 	$(DIST_FOLDER)/global.js \
 	$(DIST_FOLDER)/bundle.js
