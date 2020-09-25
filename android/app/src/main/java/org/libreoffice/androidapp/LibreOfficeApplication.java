@@ -9,23 +9,9 @@
 
 package org.libreoffice.androidapp;
 
-import android.app.Application;
-import android.content.Context;
-import android.os.Handler;
+import com.google.android.play.core.missingsplits.MissingSplitsDetectingApplication;
 
-public class LibreOfficeApplication extends Application {
-
-    private static Handler mainHandler;
-
-    public LibreOfficeApplication() {
-    }
-
-    public static Handler getMainHandler() {
-        if (mainHandler == null)
-            mainHandler = new Handler();
-
-        return mainHandler;
-    }
+public class LibreOfficeApplication extends MissingSplitsDetectingApplication {
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
