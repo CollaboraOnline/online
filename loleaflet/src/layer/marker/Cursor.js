@@ -23,7 +23,8 @@ L.Cursor = L.Layer.extend({
 		if (!this._container) {
 			this._initLayout();
 		}
-		$('.leaflet-pane.leaflet-map-pane').css('cursor', 'text');
+		if (this._container.querySelector('.blinking-cursor') !== null)
+			$('.leaflet-pane.leaflet-map-pane').css('cursor', 'text');
 		this._zoomAnimated = this._zoomAnimated && this.options.zoomAnimation;
 		if (this._zoomAnimated) {
 			L.DomUtil.addClass(this._container, 'leaflet-zoom-animated');
