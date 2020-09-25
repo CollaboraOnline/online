@@ -3,7 +3,7 @@
  * L.Annotation
  */
 
-/* global $ Autolinker L _ */
+/* global $ Autolinker L _ Hammer */
 
 L.Annotation = L.Layer.extend({
 	options: {
@@ -87,16 +87,19 @@ L.Annotation = L.Layer.extend({
 	},
 
 	show: function () {
+		if (this._data.textSelected && this._map.hasLayer && !this._map.hasLayer(this._data.textSelected)) {
+			this._map.addLayer(this._data.textSelected);
+		}
+		this.showMarker();
+		if (window.mode.isMobile())
+			return;
+
 		this._container.style.visibility = '';
 		this._contentNode.style.display = '';
 		if (this.options.draft === false) {
 			this._nodeModify.style.display = 'none';
 		}
 		this._nodeReply.style.display = 'none';
-		if (this._data.textSelected && this._map.hasLayer && !this._map.hasLayer(this._data.textSelected)) {
-			this._map.addLayer(this._data.textSelected);
-		}
-		this.showMarker();
 	},
 
 	hide: function () {
@@ -514,6 +517,12 @@ L.Annotation = L.Layer.extend({
 			this._annotationMarker.setLatLng(bounds.getNorthWest());
 			this._annotationMarker.on('dragstart drag dragend', this._onMarkerDrag, this);
 			this._annotationMarker.on('click', this._onMarkerClick, this);
+		}
+		if (this._annotationMarker._icon) {
+			(new Hammer(this._annotationMarker._icon, {recognizers: [[Hammer.Tap]]}))
+				.on('tap', function() {
+					this._map._docLayer._openCommentWizard(this);
+				}.bind(this));
 		}
 	},
 	_onMarkerDrag: function(event) {

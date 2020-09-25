@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ isAnyVexDialogActive */
+/* global vex $ L _ isAnyVexDialogActive w2ui */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -235,19 +235,19 @@ L.TileLayer = L.GridLayer.extend({
 			build: function($trigger) {
 				return {
 					items: {
-						modify: {
+						modify: $trigger.get(0).isRoot === true ? undefined : {
 							name: _('Modify'),
 							callback: function (key, options) {
 								that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
 							}
 						},
-						reply: (that._docType !== 'text' && that._docType !== 'presentation') ? undefined : {
+						reply: (that._docType !== 'text' && that._docType !== 'presentation') || $trigger.get(0).isRoot === true ? undefined : {
 							name: _('Reply'),
 							callback: function (key, options) {
 								that.onAnnotationReply.call(that, options.$trigger.get(0).annotation);
 							}
 						},
-						remove: {
+						remove: $trigger.get(0).isRoot === true ? undefined : {
 							name: _('Remove'),
 							callback: function (key, options) {
 								that.onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
@@ -259,7 +259,7 @@ L.TileLayer = L.GridLayer.extend({
 								that.onAnnotationRemoveThread.call(that, options.$trigger.get(0).annotation._data.id);
 							}
 						},
-						resolve: that._docType !== 'text' ? undefined : {
+						resolve: that._docType !== 'text' || $trigger.get(0).isRoot === true ? undefined : {
 							name: $trigger.get(0).annotation._data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
 							callback: function (key, options) {
 								that.onAnnotationResolve.call(that, options.$trigger.get(0).annotation);
@@ -3772,6 +3772,32 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		this._debugLoremPos++;
 		this._debugTypeTimeoutId = setTimeout(L.bind(this._debugTypeTimeout, this), 50);
+	},
+	
+	getCommentWizardStructure: function(menuStructure) {
+		if (menuStructure === undefined) {
+			menuStructure = {
+				id : 'comment',
+				type : 'mainmenu',
+				enabled : true,
+				text : _('Comment'),
+				executionType : 'menu',
+				data : [],
+				children : []
+			};
+		}
+
+		this._map._docLayer._createCommentStructure(menuStructure);
+		return menuStructure;
+	},
+
+	_openCommentWizard: function(annotation) {
+		this._map.fire('closemobilewizard');
+		w2ui['actionbar'].click('comment_wizard');
+		// if annotation is provided we can select perticular comment
+		if (annotation) {
+			$('#comment' + annotation._data.id).click();
+		}
 	}
 
 });
