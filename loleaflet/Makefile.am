@@ -167,7 +167,8 @@ endif
 
 LOLEAFLET_LIBS_JS +=\
 	jquery.mCustomScrollbar.js \
-	w2ui-1.5.rc1.js
+	w2ui-1.5.rc1.js \
+	viamapi-client.js
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
 NODE_MODULES_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(NODE_MODULES_JS))
@@ -179,7 +180,6 @@ LOLEAFLET_JS =\
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
-	src/viamapi-client.js \
 	src/core/Log.js \
 	src/core/Util.js \
 	src/core/LOUtil.js \
