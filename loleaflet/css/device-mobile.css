@@ -780,3 +780,11 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 .w2ui-tag .w2ui-tag-top {
 	display: none !important;
 }
+
+.calc-comment-highlight {
+	background: rgba(119, 119, 119, 0.25);
+}
+
+.impress-comment-highlight {
+	filter: grayscale(1);
+}

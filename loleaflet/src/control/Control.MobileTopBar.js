@@ -31,7 +31,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
+				{type: 'button',  id: 'comment_wizard', img: 'insertcomment'},
 				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
@@ -45,7 +45,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				//{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
+				{type: 'button',  id: 'comment_wizard', img: 'insertcomment'},
 				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
@@ -58,7 +58,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'fullscreen-presentation', img: 'fullscreen-presentation', hint: _UNO('.uno:FullScreen', 'presentation')},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'insertcomment', img: 'insertcomment', disabled: true},
+				{type: 'button',  id: 'comment_wizard', img: 'insertcomment'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		}
@@ -125,8 +125,26 @@ L.Control.MobileTopBar = L.Control.extend({
 			w2ui['actionbar'].hide('acceptformula', 'cancelformula');
 			w2ui['actionbar'].show('undo', 'redo');
 		}
-		else if (id === 'insertcomment') {
-			this.map.insertComment();
+		else if (id === 'comment_wizard') {
+			if (window.commentWizard) {
+				window.commentWizard = false;
+				var map = this._map;
+				$('.ui-header.level-0.mobile-wizard').each(function() {
+					map._docLayer._removeHighlightSelectedWizardComment(this.annotation);
+				});
+				this.map.fire('closemobilewizard');
+				toolbar.uncheck(id);
+			}
+			else {
+				if (window.insertionMobileWizard)
+					this.onClick(null, 'insertion_mobile_wizard');
+				else if (window.mobileWizard)
+					this.onClick(null, 'mobile_wizard');
+				window.commentWizard = true;
+				var menuData =this.map._docLayer.getCommentWizardStructure();
+				this.map.fire('mobilewizard', menuData);
+				toolbar.check(id);
+			}
 		}
 		else if (id === 'closemobile') {
 			// Call global onClick handler
@@ -155,6 +173,8 @@ L.Control.MobileTopBar = L.Control.extend({
 			else {
 				if (window.insertionMobileWizard)
 					this.onClick(null, 'insertion_mobile_wizard');
+				else if (window.commentWizard)
+					this.onClick(null, 'comment_wizard');
 				window.mobileWizard = true;
 				this.map.sendUnoCommand('.uno:SidebarShow');
 				this.map.fire('showwizardsidebar');
@@ -170,8 +190,10 @@ L.Control.MobileTopBar = L.Control.extend({
 			else {
 				if (window.mobileWizard)
 					this.onClick(null, 'mobile_wizard');
+				else if (window.commentWizard)
+					this.onClick(null, 'comment_wizard');
 				window.insertionMobileWizard = true;
-				var menuData = this.map.menubar.generateInsertMenuStructure();
+				menuData = this.map.menubar.generateInsertMenuStructure();
 				this.map.fire('mobilewizard', menuData);
 				toolbar.check(id);
 			}
@@ -183,7 +205,7 @@ L.Control.MobileTopBar = L.Control.extend({
 
 	onUpdatePermission: function(e) {
 		var toolbar;
-		var toolbarDownButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard', 'insertcomment'];
+		var toolbarDownButtons = ['next', 'prev', 'mobile_wizard', 'insertion_mobile_wizard', 'comment_wizard'];
 		if (e.perm === 'edit') {
 			toolbar = w2ui['actionbar'];
 			if (toolbar) {
@@ -198,6 +220,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				toolbarDownButtons.forEach(function(id) {
 					toolbar.disable(id);
 				});
+				toolbar.enable('comment_wizard');
 				toolbar.set('closemobile', {img: 'closemobile'});
 			}
 		}

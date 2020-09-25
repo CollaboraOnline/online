@@ -3,7 +3,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global */
+/* global $ */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -138,8 +138,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		for (var key in annotations) {
 			var annotation = annotations[key]._annotation;
 			if (this._cellCursor.intersects(annotation._data.cellPos)) {
-				this._map.addLayer(annotation);
-				annotation.show();
+				if (window.mode.isMobile()) {
+					this._openCommentWizard(annotation);
+				} else {
+					this._map.addLayer(annotation);
+					annotation.show();
+				}
 			}
 		}
 	},
@@ -349,6 +353,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					this.hideAnnotation(removed);
 					delete this._annotations[obj.comment.tab][obj.comment.id];
 				}
+				if (window.mode.isMobile())
+					this._map._docLayer._openCommentWizard();
 			} else if (obj.comment.action === 'Modify') {
 				var modified = this._annotations[obj.comment.tab][obj.comment.id];
 				cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
@@ -359,6 +365,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					modified._annotation._data = obj.comment;
 					modified.setLatLngBounds(obj.comment.cellPos);
 				}
+				if (window.mode.isMobile())
+					this._map._docLayer._openCommentWizard(modified);
 			}
 		} else if (textMsg.startsWith('invalidateheader: column')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0,
@@ -1085,6 +1093,38 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	getSelectedPart: function () {
 		return this._selectedPart;
 	},
+
+	_createCommentStructure: function (menuStructure) {
+		var rootComment;
+		var annotations = this._annotations[this._selectedPart];
+
+		for (var i in annotations) {
+			rootComment = {
+				id: 'comment' + annotations[i]._annotation._data.id,
+				enable: true,
+				data: annotations[i]._annotation._data,
+				type: 'rootcomment',
+				text: annotations[i]._annotation._data.text,
+				annotation: annotations[i]._annotation,
+				children: []
+			};
+			rootComment.annotation.leafletId = annotations[i]._leaflet_id;	// required to highlight the selected cell
+			menuStructure['children'].push(rootComment);
+		}
+	},
+
+	_addHighlightSelectedWizardComment: function(annotation) {
+		if (this.lastWizardCommentHighlight) {
+			this.lastWizardCommentHighlight.removeClass('calc-comment-highlight');
+		}
+		this.lastWizardCommentHighlight = $(this._map._layers[annotation.leafletId]._container);
+		this.lastWizardCommentHighlight.addClass('calc-comment-highlight');
+	},
+
+	_removeHighlightSelectedWizardComment: function() {
+		if (this.lastWizardCommentHighlight)
+			this.lastWizardCommentHighlight.removeClass('calc-comment-highlight');
+	}
 
 });
 
