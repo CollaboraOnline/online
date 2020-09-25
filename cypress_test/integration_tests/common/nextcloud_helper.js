@@ -2,7 +2,7 @@
 
 var mobileHelper = require('./mobile_helper');
 
-function checkAndCloseRevisionHistory() {
+function openRevisionHistory() {
 	mobileHelper.openHamburgerMenu();
 
 	cy.contains('.menu-entry-with-icon', 'File')
@@ -14,11 +14,17 @@ function checkAndCloseRevisionHistory() {
 			cy.wrap(item)
 				.click();
 		});
+
 	cy.get('#app-sidebar')
 		.should('be.visible');
 
 	cy.get('section#tab-versionsTabView')
 		.should('be.visible');
+
+}
+
+function checkAndCloseRevisionHistory() {
+	openRevisionHistory();
 
 	cy.get('.app-sidebar__close.icon-close')
 		.then(function(item) {
@@ -33,6 +39,22 @@ function checkAndCloseRevisionHistory() {
 			cy.wrap(item)
 				.click();
 		});
+}
+
+function restorePreviousVersion() {
+	openRevisionHistory();
+
+	cy.get('#versionsTabView .versions li:nth-of-type(1) .revertVersion')
+		.click();
+
+	cy.get('.app-sidebar__close.icon-close')
+		.then(function(item) {
+			Cypress.env('IFRAME_LEVEL', '2');
+			cy.wrap(item)
+				.click();
+		});
+
+	cy.wait(10000);
 }
 
 function checkAndCloseSharing() {
@@ -121,3 +143,4 @@ module.exports.checkAndCloseRevisionHistory = checkAndCloseRevisionHistory;
 module.exports.checkAndCloseSharing = checkAndCloseSharing;
 module.exports.insertImageFromStorage = insertImageFromStorage;
 module.exports.saveFileAs = saveFileAs;
+module.exports.restorePreviousVersion = restorePreviousVersion;

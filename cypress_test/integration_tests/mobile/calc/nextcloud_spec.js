@@ -2,7 +2,9 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
+var calcHelper = require('../../common/calc_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
+var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Nextcloud specific tests.', function() {
 	var testFileName = 'nextcloud.ods';
@@ -65,6 +67,47 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.checkAndCloseRevisionHistory();
+	});
+
+	it('Restore previous revision.', function() {
+		helper.beforeAll(testFileName, 'calc');
+
+		mobileHelper.enableEditingMobile();
+
+		// Initially we have "text" text in the document
+		calcMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.text', 'Text');
+
+		// Change the document content and save it
+		calcHelper.clickOnFirstCell(false, true);
+
+		helper.selectAllText();
+
+		helper.typeIntoDocument('new');
+
+		calcMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.text', 'new');
+
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'File')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Save')
+			.click();
+
+		nextcloudHelper.restorePreviousVersion();
+
+		mobileHelper.enableEditingMobile();
+
+		calcMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.text', 'Text');
 	});
 });
 
