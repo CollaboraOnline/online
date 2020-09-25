@@ -3,7 +3,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global L isAnyVexDialogActive */
+/* global L isAnyVexDialogActive $ */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
@@ -308,5 +308,40 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			extraSize = this._annotationManager.allocateExtraSize();
 		}
 		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, {panInside: false, extraSize: extraSize});
+	},
+
+	_onUpdateMaxBounds: function (e) {
+		this._updateMaxBounds(e.sizeChanged, e.extraSize);
+	},
+
+	_createCommentStructure: function (menuStructure) {
+		var rootComment;
+		var annotations = this._annotationManager._annotations[this._partHashes[this._selectedPart]];
+
+		for (var i in annotations) {
+			rootComment = {
+				id: 'comment' + annotations[i]._data.id,
+				enable: true,
+				data: annotations[i]._data,
+				type: 'rootcomment',
+				text: annotations[i]._data.text,
+				annotation: annotations[i],
+				children: []
+			};
+			menuStructure['children'].push(rootComment);
+		}
+	},
+
+	_addHighlightSelectedWizardComment: function(annotation) {
+		if (this.lastWizardCommentHighlight) {
+			this.lastWizardCommentHighlight.removeClass('impress-comment-highlight');
+		}
+		this.lastWizardCommentHighlight = $(this._map._layers[annotation._annotationMarker._leaflet_id]._icon);
+		this.lastWizardCommentHighlight.addClass('impress-comment-highlight');
+	},
+
+	_removeHighlightSelectedWizardComment: function() {
+		if (this.lastWizardCommentHighlight)
+			this.lastWizardCommentHighlight.removeClass('impress-comment-highlight');
 	}
 });
