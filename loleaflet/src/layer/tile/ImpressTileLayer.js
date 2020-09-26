@@ -3,7 +3,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global $ L */
+/* global $ L isAnyVexDialogActive */
 
 L.ImpressTileLayer = L.TileLayer.extend({
 	extraSize: L.point(290, 0),
@@ -250,6 +250,8 @@ L.ImpressTileLayer = L.TileLayer.extend({
 	},
 
 	onUpdateParts: function () {
+		if (isAnyVexDialogActive()) // Need this check else vex loses focus
+			return;
 		if (typeof this._prevSelectedPart === 'number') {
 			this.hideAnnotations(this._prevSelectedPart);
 			if (this.hasAnnotations(this._selectedPart)) {
