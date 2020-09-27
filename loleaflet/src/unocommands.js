@@ -82,7 +82,7 @@ var unoCommandsArray = {
 	DuplicatePage:{presentation:{menu:_('Duplicate Page'),},},
 	DuplicateSlide:{presentation:{menu:_('Duplicate ~Slide'),},},
 	EditHeaderAndFooter:{spreadsheet:{menu:_('~Headers and Footers...'),},},
-	EditHyperlink:{global:{menu:_('Edit Hyperlink'),},},
+	EditHyperlink:{global:{menu:_('Edit Hyperlink...'),},},
 	EditMenu:{global:{menu:_('~Edit'),},},
 	EditRegion:{text:{menu:_('~Sections...'),},},
 	EditStyle:{global:{menu:_('~Edit Style...'),},presentation:{menu:_('E~dit Style...'),},},
