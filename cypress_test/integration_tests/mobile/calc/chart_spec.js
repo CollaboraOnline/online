@@ -6,7 +6,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcMobileHelper = require('./calc_mobile_helper');
 
-describe('Calc insertion wizard.', function() {
+describe('Chart tests.', function() {
 	var testFileName = 'chart.ods';
 
 	beforeEach(function() {
