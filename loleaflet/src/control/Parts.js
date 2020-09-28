@@ -3,7 +3,7 @@
  * Document parts switching and selecting handler
  */
 
-/* global vex */
+/* global vex $ _ */
 
 L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
@@ -370,8 +370,12 @@ L.Map.include({
 			}
 
 			var socket_ = this._socket;
-			vex.dialog.confirm({
+			vex.dialog.open({
 				unsafeMessage: container.outerHTML,
+				buttons: [
+					$.extend({}, vex.dialog.buttons.NO, { text: _('Close') }),
+					$.extend({}, vex.dialog.buttons.YES, { text: _('Show Selected Sheets') })
+				],
 				callback: function (value) {
 					if (value === true) {
 						var checkboxList = document.querySelectorAll('input[id^="hidden-part-checkbox"]');
