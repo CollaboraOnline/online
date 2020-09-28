@@ -1190,7 +1190,10 @@ L.Map = L.Evented.extend({
 				}
 			}
 		}
+		this.showCalcInputBar(deckOffset);
+	},
 
+	showCalcInputBar: function(deckOffset) {
 		if (this.dialog._calcInputBar && !this.dialog._calcInputBar.isPainting) {
 			var id = this.dialog._calcInputBar.id;
 			var calcInputbar = L.DomUtil.get('calc-inputbar');
