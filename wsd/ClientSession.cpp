@@ -687,17 +687,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         docBroker->saveAsToStorage(getId(), "", wopiFilename, true);
         return true;
     }
-    else if (tokens.equals(0, "dialogevent"))
+    else if (tokens.equals(0, "dialogevent") || tokens.equals(0, "formfieldevent"))
     {
         return forwardToChild(firstLine, docBroker);
     }
     else if (tokens.equals(0, "completefunction"))
     {
         return forwardToChild(std::string(buffer, length), docBroker);
-    }
-    else if (tokens.equals(0, "formfieldevent"))
-    {
-        return forwardToChild(firstLine, docBroker);
     }
     else if (tokens[0] == "outlinestate" ||
              tokens[0] == "downloadas" ||
