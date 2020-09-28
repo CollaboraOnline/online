@@ -48,7 +48,7 @@ CheckFileInfo response properties
 A string containing the basename of the file, omitting its path.
 
 ### DisablePrint
-Disables print functionality in libreoffice online backend. Ift rue, HidePrintOption is assumed to be true
+Disables print functionality in libreoffice online backend. If true, HidePrintOption is assumed to be true.
 
 ### OwnerID
 A programmatic string identifier for the owner of the file.
