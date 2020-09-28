@@ -100,6 +100,9 @@ L.Map.include({
 			this.setZoom(10);
 		}
 
+		if (window.ThisIsTheiOSApp && window.mode.isTablet() && this._docLayer._docType === 'spreadsheet')
+			this.showCalcInputBar(0);
+
 		if (window.ThisIsTheAndroidApp)
 			window.postMobileMessage('EDITMODE on');
 	},
