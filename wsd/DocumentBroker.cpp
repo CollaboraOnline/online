@@ -1744,6 +1744,12 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
     const std::string tileMsg = tile.serialize();
     LOG_TRC("Tile request for " << tileMsg);
 
+    if (!hasTileCache())
+    {
+        LOG_WRN("Tile request without a loaded document?");
+        return;
+    }
+
     TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile)
     {
