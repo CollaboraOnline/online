@@ -150,7 +150,6 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 	},
 	onAnnotationClick: function (event) {
 		this._selectedForPopup = event.annotation;
-		this._map.focus();
 		this.layoutAnnotations();
 	},
 	onAnnotationSave: function (event) {
