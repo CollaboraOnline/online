@@ -238,14 +238,14 @@
     // to make some sense out of it by not trusting a hide request until we see that it hasn't been
     // folllowed by a display request within 100 ms.
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100000000ll), dispatch_get_main_queue(), ^{
-            if (!lastCommandIsHide) {
+            if (!self->lastCommandIsHide) {
                 NSLog(@"COKbdMgr: Ignoring hide command that was quickly followed by a display command");
                 return;
             }
-            if (control != nil) {
-                [control removeFromSuperview];
+            if (self->control != nil) {
+                [self->control removeFromSuperview];
                 NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
-                control = nil;
+                self->control = nil;
             }
         });
 }
