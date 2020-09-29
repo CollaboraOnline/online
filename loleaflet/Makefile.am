@@ -335,7 +335,7 @@ SPACE := $(EMPTY) $(EMPTY)
 LOLEAFLET_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
 INTERMEDIATE_DIR ?= $(if $(IS_DEBUG),$(abs_builddir)/debug,$(abs_builddir)/release)
 
-EXTRA_DIST = $(shell find . -type f -not -path './.git/*' | sed 's/.\///')
+EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' | sed 's/.\///')
 
 define bundle_loleaflet
 	$(if $(IS_DEBUG),\
