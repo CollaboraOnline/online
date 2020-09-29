@@ -65,10 +65,10 @@ L.Control.StatusBar = L.Control.extend({
 	_updateVisibilityForToolbar: function(toolbar) {
 		if (!toolbar)
 			return;
-	
+
 		var toShow = [];
 		var toHide = [];
-	
+
 		toolbar.items.forEach(function(item) {
 			if (window.ThisIsTheiOSApp && window.mode.isTablet() && item.iosapptablet === false) {
 				toHide.push(item.id);
@@ -80,10 +80,10 @@ L.Control.StatusBar = L.Control.extend({
 				toShow.push(item.id);
 			}
 		});
-	
+
 		console.log('explicitly hiding: ' + toHide);
 		console.log('explicitly showing: ' + toShow);
-	
+
 		toHide.forEach(function(item) { toolbar.hide(item); });
 		toShow.forEach(function(item) { toolbar.show(item); });
 	},
@@ -287,7 +287,7 @@ L.Control.StatusBar = L.Control.extend({
 		case 'spreadsheet':
 			if (statusbar)
 				statusbar.remove('prev', 'next', 'prevnextbreak');
-			
+
 			if (!window.mode.isMobile()) {
 				statusbar.insert('left', [
 					{type: 'break', id: 'break1'},
@@ -383,7 +383,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false}
 				]);
 			}
-		
+
 		// FALLTHROUGH intended
 		case 'drawing':
 			if (statusbar)
@@ -412,7 +412,7 @@ L.Control.StatusBar = L.Control.extend({
 			// odd, but on mobile we need to invoke it twice
 			toolbar.hide('cancelsearch');
 		}
-	
+
 		this.map._onGotFocus();
 	},
 
@@ -445,7 +445,7 @@ L.Control.StatusBar = L.Control.extend({
 		}
 		else if (commandName === '.uno:InsertMode') {
 			this.updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;Insert mode: inactive&nbsp;</span>').parent().html());
-	
+
 			if (!state && this.map.hyperlinkPopup) {
 				this.map.hyperlinkUnderCursor = null;
 				this.map.closePopup(this.map.hyperlinkPopup);
@@ -498,28 +498,27 @@ L.Control.StatusBar = L.Control.extend({
 			var noneLang = _('None (Do not check spelling)');
 			var languages = [];
 			e.commandValues.forEach(function (language) {
-				languages.push({ translated: _(language), neutral: language });
+				languages.push({ translated: _(language.split(';')[0]), neutral: language });
 			});
 			languages.sort(function (a, b) {
 				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
 			});
-	
+
 			var toolbaritems = [];
 			toolbaritems.push({ text: noneLang,
 			 id: 'nonelanguage',
 			 uno: constLang + constNone });
-	
-	
+
+
 			for (var lang in languages) {
 				translated = languages[lang].translated;
 				neutral = languages[lang].neutral;
-				var splitTranslated = translated.split(';');
 				var splitNeutral = neutral.split(';');
-				toolbaritems.push({ id: neutral, text: splitTranslated[0], uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
+				toolbaritems.push({ id: neutral, text: translated, uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
 			}
-	
+
 			toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
-	
+
 			w2ui['actionbar'].set('LanguageStatus', {items: toolbaritems});
 		}
 	},
