@@ -211,7 +211,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('have.length', 3);
 	});
 
-	it.skip('Change row height.', function() {
+	it('Change row height.', function() {
 		before('table_properties.odt');
 
 		openTablePanel();
@@ -234,7 +234,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('have.attr', 'height', '125');
 	});
 
-	it.skip('Change column width.', function() {
+	it('Change column width.', function() {
 		before('table_properties.odt');
 
 		openTablePanel();
