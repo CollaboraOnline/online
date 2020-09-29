@@ -503,7 +503,7 @@ L.Control.StatusBar = L.Control.extend({
 			var noneLang = _('None (Do not check spelling)');
 			var languages = [];
 			e.commandValues.forEach(function (language) {
-				languages.push({ translated: _(language), neutral: language });
+				languages.push({ translated: _(language.split(';')[0]), neutral: language });
 			});
 			languages.sort(function (a, b) {
 				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
@@ -518,9 +518,8 @@ L.Control.StatusBar = L.Control.extend({
 			for (var lang in languages) {
 				translated = languages[lang].translated;
 				neutral = languages[lang].neutral;
-				var splitTranslated = translated.split(';');
 				var splitNeutral = neutral.split(';');
-				toolbaritems.push({ id: neutral, text: splitTranslated[0], uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
+				toolbaritems.push({ id: neutral, text: translated, uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
 			}
 
 			toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
