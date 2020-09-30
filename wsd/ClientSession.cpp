@@ -1245,8 +1245,9 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         std::string wopiFilename;
         Poco::URI::decode(encodedWopiFilename, wopiFilename);
 
-        // URI constructor implicitly decodes when it gets std::string as param
-        Poco::URI resultURL(encodedURL);
+        std::string decodedURL;
+        Poco::URI::decode(encodedURL, decodedURL);
+        Poco::URI resultURL(decodedURL);
 
         // Prepend the jail path in the normal (non-nocaps) case
         if (resultURL.getScheme() == "file" && !LOOLWSD::NoCapsForKit)
