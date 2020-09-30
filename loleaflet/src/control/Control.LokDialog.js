@@ -377,6 +377,7 @@ L.Control.LokDialog = L.Control.extend({
 			if (parent) { // this is a floating window
 				if (e.rectangle && this._dialogs[parent].childistooltip === true) {
 					// resize tooltips on invalidation
+					this._removeDialogChild(parent);
 					left = this._dialogs[parent].childx;
 					top = this._dialogs[parent].childy;
 					width = parseInt(e.rectangle.split(',')[2]);
@@ -1692,11 +1693,15 @@ L.Control.LokDialog = L.Control.extend({
 			$('#' + dialogId).height(canvasHeight + 'px');
 		}
 		this._dialogs[dialogId].childid = undefined;
+		this._dialogs[dialogId].childx = undefined;
+		this._dialogs[dialogId].childy = undefined;
 	},
 
 	_removeDialogChild: function(id) {
 		$('#' + this._toStrId(id) + '-floating').remove();
 		this._dialogs[id].childid = undefined;
+		this._dialogs[id].childx = undefined;
+		this._dialogs[id].childy = undefined;
 	},
 
 	_createDialogChild: function(childId, parentId, top, left) {
