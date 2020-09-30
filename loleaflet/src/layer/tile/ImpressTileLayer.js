@@ -5,7 +5,7 @@
 
 /* global $ L */
 
-L.ImpressTileLayer = L.TileLayer.extend({
+L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 	initialize: function (url, options) {
 		L.TileLayer.prototype.initialize.call(this, url, options);

@@ -3729,7 +3729,3 @@ L.TileLayer = L.GridLayer.extend({
 	}
 
 });
-
-L.tileLayer = function (url, options) {
-	return new L.TileLayer(url, options);
-};

@@ -479,9 +479,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	onAdd: function (map) {
-		if (!window.mode.useCanvasLayer())
-			return;
-
 		// Override L.TileLayer._tilePixelScale to 1 (independent of the device).
 		this._tileWidthPx = this.options.tileSize;
 		this._tileHeightPx = this.options.tileSize;
