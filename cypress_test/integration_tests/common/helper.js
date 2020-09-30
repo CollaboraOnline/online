@@ -281,7 +281,10 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 	}
 
 	// Wait for the document to fully load
-	cy.get('.leaflet-tile-loaded', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+
+	// Wait until anyting is drawn on tile canvas.
+	canvasShouldBeFullWhiteOrNot('.leaflet-canvas-container canvas', false);
 
 	// The client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -638,6 +641,23 @@ function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 		});
 }
 
+function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
+	cy.get(selector)
+		.should(function(canvas) {
+			var context = canvas[0].getContext('2d');
+			var pixelData = context.getImageData(0, 0, canvas[0].width, canvas[0].height).data;
+
+			var allIsWhite = true;
+			for (var i = 0; i < pixelData.length; ++i) {
+				allIsWhite = allIsWhite && pixelData[i] == 255;
+			}
+			if (fullWhite)
+				expect(allIsWhite).to.be.true;
+			else
+				expect(allIsWhite).to.be.false;
+		});
+}
+
 function waitUntilIdle(selector, content, waitingTime = 1000) {
 	cy.log('Waiting item to be idle - start.');
 	cy.log('Param - selector: ' + selector);
@@ -856,6 +876,7 @@ module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
 module.exports.getLOVersion = getLOVersion;
 module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
+module.exports.canvasShouldBeFullWhiteOrNot = canvasShouldBeFullWhiteOrNot;
 module.exports.clickOnIdle = clickOnIdle;
 module.exports.inputOnIdle = inputOnIdle;
 module.exports.waitUntilIdle = waitUntilIdle;
