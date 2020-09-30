@@ -140,6 +140,7 @@
     WKWebView *webView;
     _COWVKMKeyInputControl *control;
     BOOL lastCommandIsHide;
+    BOOL lastActionIsDisplay;
 }
 
 @end
@@ -222,6 +223,7 @@
         control.autocapitalizationType = UITextAutocapitalizationTypeNone;
 
         lastCommandIsHide = NO;
+        lastActionIsDisplay = YES;
 
         [self->webView addSubview:control];
         NSLog(@"COKbdMgr: Added _COWVKMKeyInputControl to webView");
@@ -242,7 +244,12 @@
                 NSLog(@"COKbdMgr: Ignoring hide command that was quickly followed by a display command");
                 return;
             }
+            if (self->lastActionIsDisplay) {
+                NSLog(@"COKbdMgr: Ignoring hide command that quickly followed a display command");
+                return;
+            }
             if (self->control != nil) {
+                self->lastActionIsDisplay = NO;
                 [self->control removeFromSuperview];
                 NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
                 self->control = nil;
