@@ -367,10 +367,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._painter = new L.CanvasTilePainter(this);
 		this._container.style.position = 'absolute';
 
-		if (L.Browser.cypressTest) {
-			this._cypressHelperDiv = L.DomUtil.create('div', '', this._container);
-		}
-
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
 		// Using L.CanvasTilePainter's own requestAnimationFrame loop to do the updates in that case does not perform well.
 		if (window.mode.isMobile() || window.mode.isTablet()) {
@@ -1010,14 +1006,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		tile.loaded = +new Date();
 		tile.active = true;
-
-		if (this._cypressHelperDiv) {
-			var container = this._cypressHelperDiv;
-			var newIndicator = L.DomUtil.create('div', 'leaflet-tile-loaded', this._cypressHelperDiv);
-			setTimeout(function () {
-				container.removeChild(newIndicator);
-			}, 1000);
-		}
 
 		// paint this tile on canvas.
 		this._painter.paint(tile);
