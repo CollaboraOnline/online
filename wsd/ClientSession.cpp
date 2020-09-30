@@ -1301,16 +1301,14 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             if (!resultURL.getPath().empty())
             {
                 const std::string mimeType = "application/octet-stream";
-                std::string encodedFilePath;
-                Poco::URI::encode(resultURL.getPath(), "", encodedFilePath);
-                LOG_TRC("Sending file: " << encodedFilePath);
+                LOG_TRC("Sending file: " << resultURL.getPath());
 
                 const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
                 Poco::Net::HTTPResponse response;
                 if (!fileName.empty())
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
-                HttpHelper::sendFileAndShutdown(_saveAsSocket, encodedFilePath, mimeType, &response);
+                HttpHelper::sendFileAndShutdown(_saveAsSocket, resultURL.getPath(), mimeType, &response);
             }
 
             // Conversion is done, cleanup this fake session.
