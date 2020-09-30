@@ -102,10 +102,8 @@ static IMP standardImpOfInputAccessoryView = nil;
     // contents is handled fully in JavaScript, the WebView has no knowledge of that.)
     self.webView.scrollView.delegate = self;
 
-    if (!isExternalKeyboardAttached()) {
-        keyboardManager =
-            [[CollaboraOnlineWebViewKeyboardManager alloc] initForWebView:self.webView];
-    }
+    keyboardManager =
+        [[CollaboraOnlineWebViewKeyboardManager alloc] initForWebView:self.webView];
 
     [self.view addSubview:self.webView];
 
