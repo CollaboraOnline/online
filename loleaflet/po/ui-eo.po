@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-08-13 07:38+0000\n"
+"PO-Revision-Date: 2020-09-28 02:35+0000\n"
 "Last-Translator: Donald Rogers <donr2648@clear.net.nz>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/eo/>\n"
 "Language: eo\n"
@@ -61,23 +61,17 @@ msgid "User Name"
 msgstr "Salutnomo"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
 msgstr "Dokumentoj malfermitaj"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "0 users"
 msgid " user(s)."
-msgstr "0 uzantoj"
+msgstr " uzanto(j)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "Dokumentoj malfermitaj"
+msgstr " dokumento(j) malfermita(j)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -105,7 +99,7 @@ msgstr "Dokumento"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Vidoj"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -163,7 +157,7 @@ msgstr "Intervalo de statistikaj statistikoj (en ms)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Ĉesigi seancon."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -210,7 +204,7 @@ msgid "Log Levels"
 msgstr "Protokolaj niveloj"
 
 #: admin/admin.strings.js:51 src/control/Control.AlertDialog.js:25
-#: src/control/Signing.js:608
+#: src/control/Signing.js:608 src/control/Parts.js:376
 msgid "Close"
 msgstr "Fermi"
 
@@ -313,6 +307,10 @@ msgstr " min"
 #: admin/src/Util.js:54
 msgid " s"
 msgstr " s"
+
+#: src/control/Parts.js:377
+msgid "Show Selected Sheets"
+msgstr ""
 
 #: src/control/ColorPicker.js:129
 msgid "No color"
@@ -962,7 +960,7 @@ msgstr "Revidi"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Formato"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -1450,10 +1448,8 @@ msgid "Resolve"
 msgstr "Solvi"
 
 #: src/layer/tile/TileLayer.js:826
-#, fuzzy
-#| msgid "Function Wizard"
 msgid "Functions"
-msgstr "Funkcia asistanto"
+msgstr "Funkcioj"
 
 #: src/map/Clipboard.js:137
 msgid "To paste outside %productName, please first click the 'download' button"

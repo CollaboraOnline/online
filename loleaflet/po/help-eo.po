@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-07-15 07:56+0000\n"
+"PO-Revision-Date: 2020-09-28 02:35+0000\n"
 "Last-Translator: Donald Rogers <donr2648@clear.net.nz>\n"
 "Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/eo/>\n"
 "Language: eo\n"
@@ -52,14 +52,12 @@ msgid "Paste as unformatted text"
 msgstr "Alglui neformatitan tekston"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Stir + Maj + ?"
+msgstr "Stir + Maj + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
-msgstr ""
+msgstr "Alglui speciale"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
 msgid "Ctrl + Alt + Shift + V"
@@ -1184,10 +1182,8 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr "Kiam vi algluas enhavon kopiitan el ene de la sama dokumento, la formato kaj elementoj konserviĝas. Se vi kopias el alia dokumento, en alia langeto aŭ foliumila fenestro, aŭ el ekster la foliumilo, la algluita enhavo konservos riĉan tekston."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "Vi povas alglui kiel neformatitan tekston per la fulmoklavo: <span class=\"kbd\">Stir</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Maj</span> + <span class=\"kbd\">V</span>"
+msgstr "Vi povas alglui kiel neformatitan tekston per la fulmoklavo: <span class=\"kbd\">Stir</span> + <span class=\"kbd\">Maj</span> +  <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."

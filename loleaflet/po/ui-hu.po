@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-11 10:38+0000\n"
+"PO-Revision-Date: 2020-09-30 18:19+0000\n"
 "Last-Translator: Andras Timar <timar74@gmail.com>\n"
 "Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hu/>\n"
 "Language: hu\n"
@@ -204,7 +204,7 @@ msgid "Log Levels"
 msgstr "Naplózási szintek"
 
 #: admin/admin.strings.js:51 src/control/Control.AlertDialog.js:25
-#: src/control/Signing.js:608
+#: src/control/Signing.js:608 src/control/Parts.js:376
 msgid "Close"
 msgstr "Bezárás"
 
@@ -307,6 +307,10 @@ msgstr " perc"
 #: admin/src/Util.js:54
 msgid " s"
 msgstr " s"
+
+#: src/control/Parts.js:377
+msgid "Show Selected Sheets"
+msgstr "Kijelölt munkalapok megjelenítése"
 
 #: src/control/ColorPicker.js:129
 msgid "No color"

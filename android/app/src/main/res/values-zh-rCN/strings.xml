@@ -102,4 +102,9 @@
     <string name="no_recent_items">请点击工具栏中的文件夹图标以打开文件。</string>
     <string name="app_vendor">此版本由 $VENDOR 提供。</string>
     <string name="app_name_settings">设置</string>
+    <string name="theme_light">日间</string>
+    <string name="theme_dark">夜间</string>
+    <string name="theme_system_default">系统默认</string>
+    <string name="choose_theme">选择主题</string>
+    <string name="theme">主题</string>
 </resources>
