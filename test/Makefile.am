@@ -298,7 +298,7 @@ group1.log: unit-crash.log unit-tiletest.log unit-insert-delete.log unit-each-vi
 endif
 
 TEST_EXTENSIONS = .la
-LA_LOG_DRIVER = ${top_srcdir}/test/run_unit.sh
+LA_LOG_DRIVER = ${top_builddir}/test/run_unit.sh
 
 EXTRA_DIST = data/delta-text.png data/delta-text2.png data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh
 
