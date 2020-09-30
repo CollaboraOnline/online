@@ -230,7 +230,7 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_hideSheet: function() {
-		this._map.hidePage();
+		this._map.hidePage(this._tabForContextMenu);
 	}
 });
 
