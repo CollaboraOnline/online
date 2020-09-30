@@ -105,4 +105,9 @@
     <string name="app_version_and_hash">Wersija: %1$s
 \nOnline git-hash: %2$s
 \nJědro git-hash: %3$s</string>
+    <string name="theme_light">Swětły</string>
+    <string name="theme_dark">Śamny</string>
+    <string name="theme_system_default">Standard systema</string>
+    <string name="choose_theme">Drastwu wubraś</string>
+    <string name="theme">Drastwa</string>
 </resources>

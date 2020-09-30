@@ -107,4 +107,9 @@
     <string name="app_version_and_hash">Verzió: %1$s
 \nonline git-hash: %2$s
 \ncore git-hash: %3$s</string>
+    <string name="theme_light">Világos</string>
+    <string name="theme_dark">Sötét</string>
+    <string name="theme_system_default">Alapértelmezett</string>
+    <string name="choose_theme">Témaválasztás</string>
+    <string name="theme">Téma</string>
 </resources>

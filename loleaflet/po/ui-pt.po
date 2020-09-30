@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-07-07 08:18+0000\n"
+"PO-Revision-Date: 2020-09-25 13:37+0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/pt/>\n"
 "Language: pt\n"
@@ -61,23 +61,17 @@ msgid "User Name"
 msgstr "Nome de utilizador"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
 msgstr "Documentos abertos"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "0 users"
 msgid " user(s)."
-msgstr "0 utilizadores"
+msgstr " utilizadores."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "Documentos abertos"
+msgstr " documentos abertos."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -105,7 +99,7 @@ msgstr "Documento"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Vistas"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -163,7 +157,7 @@ msgstr "Intervalo de tempo para estatísticas de CPU (ms)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Terminar sessão."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -210,7 +204,7 @@ msgid "Log Levels"
 msgstr "Níveis de registo"
 
 #: admin/admin.strings.js:51 src/control/Control.AlertDialog.js:25
-#: src/control/Signing.js:608
+#: src/control/Signing.js:608 src/control/Parts.js:376
 msgid "Close"
 msgstr "Fechar"
 
@@ -313,6 +307,10 @@ msgstr " minutos"
 #: admin/src/Util.js:54
 msgid " s"
 msgstr " segundos"
+
+#: src/control/Parts.js:377
+msgid "Show Selected Sheets"
+msgstr ""
 
 #: src/control/ColorPicker.js:129
 msgid "No color"
@@ -638,10 +636,8 @@ msgid "Last modification"
 msgstr "Última modificação"
 
 #: src/control/Control.Menubar.js:257
-#, fuzzy
-#| msgid "Comment"
 msgid "Save Comments"
-msgstr "Comentário"
+msgstr "Guardar comentários"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:554
 #: src/control/Control.NotebookbarImpress.js:294
@@ -670,7 +666,7 @@ msgstr "Apresentação em ecrã completo"
 
 #: src/control/Control.Menubar.js:359
 msgid "Present current slide"
-msgstr ""
+msgstr "Mostrar diapositivo atual"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:602
 #: src/control/Control.NotebookbarCalc.js:214
@@ -740,19 +736,19 @@ msgstr "Ocultar barra de pesquisa"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Ir para a primeira folha"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "Deslocar à esquerda"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "Deslocar à direita"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Ir para a última folha"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
@@ -917,7 +913,7 @@ msgstr "Atual"
 #: src/control/Control.NotebookbarBuilder.js:658
 #: src/control/Control.NotebookbarBuilder.js:674
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/control/Control.Notebookbar.js:134
 #: src/control/Control.NotebookbarImpress.js:32
@@ -933,7 +929,7 @@ msgstr "Refazer"
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "~Ficheiro"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
@@ -964,7 +960,7 @@ msgstr "~Rever"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Formatar"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -973,73 +969,61 @@ msgstr "~Tabela"
 
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
-msgstr ""
+msgstr "~Desenho"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "Aju~da"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Folha"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Dados"
 
 #: src/control/Control.NotebookbarCalc.js:1903
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Inserir tabela"
+msgstr "Inserir linhas acima"
 
 #: src/control/Control.NotebookbarCalc.js:1916
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Inserir folha"
+msgstr "Inserir linhas abaixo"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Inserir folha antes"
+msgstr "Inserir colunas antes"
 
 #: src/control/Control.NotebookbarCalc.js:1951
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Inserir folha após"
+msgstr "Inserir colunas após"
 
 #: src/control/Control.NotebookbarCalc.js:1973
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Inserir quebra de linha"
 
 #: src/control/Control.NotebookbarCalc.js:1986
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Inserir quebra de coluna"
 
 #: src/control/Control.NotebookbarCalc.js:2008
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Eliminar"
+msgstr "Eliminar linhas"
 
 #: src/control/Control.NotebookbarCalc.js:2021
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Colunas"
+msgstr "Eliminar colunas"
 
 #: src/control/Control.NotebookbarCalc.js:2043
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Remover quebra de linha"
 
 #: src/control/Control.NotebookbarCalc.js:2056
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Remover quebra de coluna"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"
@@ -1047,17 +1031,15 @@ msgstr "Iniciar apresentação"
 
 #: src/control/Permission.js:45
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "O documento não pode ser bloqueado pois está aberto no modo de leitura."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Resposta do servidor:"
 
 #: src/control/Permission.js:63
-#, fuzzy
-#| msgid "Document cannot be saved."
 msgid "The document could not be locked."
-msgstr "O documento não pode ser guardado."
+msgstr "Não foi possível bloquear o documento."
 
 #: src/control/Ruler.js:362
 msgid "Left Margin"
@@ -1268,10 +1250,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "Documento inativo - clique para recarregar e continuar a edição"
 
 #: src/core/Socket.js:403
-#, fuzzy
-#| msgid "Idle document - please click to reload and resume editing"
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Documento inativo - clique para recarregar e continuar a edição"
+msgstr "Documento inativo - toque para recarregar e continuar a edição"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1468,10 +1448,8 @@ msgid "Resolve"
 msgstr "Resolver"
 
 #: src/layer/tile/TileLayer.js:826
-#, fuzzy
-#| msgid "Function Wizard"
 msgid "Functions"
-msgstr "Assistente de funções"
+msgstr "Funções"
 
 #: src/map/Clipboard.js:137
 msgid "To paste outside %productName, please first click the 'download' button"

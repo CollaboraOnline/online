@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-07-20 07:35+0000\n"
+"PO-Revision-Date: 2020-09-29 07:57+0000\n"
 "Last-Translator: Ming Hua <plateauwolf@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -68,16 +68,12 @@ msgstr "打开的文档"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "0 users"
 msgid " user(s)."
-msgstr "0 位用户"
+msgstr " 位用户。"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "打开的文档"
+msgstr " 个文档正被打开。"
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -210,7 +206,7 @@ msgid "Log Levels"
 msgstr "日志级别"
 
 #: admin/admin.strings.js:51 src/control/Control.AlertDialog.js:25
-#: src/control/Signing.js:608
+#: src/control/Signing.js:608 src/control/Parts.js:376
 msgid "Close"
 msgstr "关闭"
 
@@ -313,6 +309,10 @@ msgstr " 分钟"
 #: admin/src/Util.js:54
 msgid " s"
 msgstr " 秒"
+
+#: src/control/Parts.js:377
+msgid "Show Selected Sheets"
+msgstr ""
 
 #: src/control/ColorPicker.js:129
 msgid "No color"
@@ -638,10 +638,8 @@ msgid "Last modification"
 msgstr "最后修改"
 
 #: src/control/Control.Menubar.js:257
-#, fuzzy
-#| msgid "Comment"
 msgid "Save Comments"
-msgstr "批注"
+msgstr "保存批注"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:554
 #: src/control/Control.NotebookbarImpress.js:294
@@ -670,7 +668,7 @@ msgstr "全屏演示"
 
 #: src/control/Control.Menubar.js:359
 msgid "Present current slide"
-msgstr ""
+msgstr "从当前幻灯片开始演示"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:602
 #: src/control/Control.NotebookbarCalc.js:214
@@ -740,19 +738,19 @@ msgstr "隐藏搜索栏"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "滚动到第一张工作表"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "向左滚动"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "向右滚动"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "滚动到最后一张工作表"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
@@ -917,7 +915,7 @@ msgstr "当前"
 #: src/control/Control.NotebookbarBuilder.js:658
 #: src/control/Control.NotebookbarBuilder.js:674
 msgid "Menu"
-msgstr ""
+msgstr "菜单"
 
 #: src/control/Control.Notebookbar.js:134
 #: src/control/Control.NotebookbarImpress.js:32
@@ -933,7 +931,7 @@ msgstr "恢复"
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "文件(~F)"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
@@ -964,7 +962,7 @@ msgstr "审阅(~R)"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "格式"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -979,39 +977,31 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "帮助(~H)"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "工作表(~S)"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "数据(~D)"
 
 #: src/control/Control.NotebookbarCalc.js:1903
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "插入表格"
+msgstr "在当前行上方插入"
 
 #: src/control/Control.NotebookbarCalc.js:1916
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "插入工作表"
+msgstr "在当前行下方插入"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "在前面插入工作表"
+msgstr "在当前列左方插入"
 
 #: src/control/Control.NotebookbarCalc.js:1951
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "在后面插入工作表"
+msgstr "在当前列右方插入"
 
 #: src/control/Control.NotebookbarCalc.js:1973
 msgid "Insert Row Break"
@@ -1022,16 +1012,12 @@ msgid "Insert Column Break"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2008
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "删除"
+msgstr "删除行"
 
 #: src/control/Control.NotebookbarCalc.js:2021
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "列"
+msgstr "删除列"
 
 #: src/control/Control.NotebookbarCalc.js:2043
 msgid "Remove Row Break"
@@ -1047,17 +1033,15 @@ msgstr "开始演示"
 
 #: src/control/Permission.js:45
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "无法锁定文档，因此以只读模式打开。"
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "服务器返回的原因为："
 
 #: src/control/Permission.js:63
-#, fuzzy
-#| msgid "Document cannot be saved."
 msgid "The document could not be locked."
-msgstr "无法保存文档。"
+msgstr "无法锁定文档。"
 
 #: src/control/Ruler.js:362
 msgid "Left Margin"
@@ -1268,10 +1252,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "文档已暂停，请单击以重新加载并继续编辑"
 
 #: src/core/Socket.js:403
-#, fuzzy
-#| msgid "Idle document - please click to reload and resume editing"
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "文档已暂停，请单击以重新加载并继续编辑"
+msgstr "文档已暂停，请点击屏幕以重新加载并继续编辑"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1468,10 +1450,8 @@ msgid "Resolve"
 msgstr "解决"
 
 #: src/layer/tile/TileLayer.js:826
-#, fuzzy
-#| msgid "Function Wizard"
 msgid "Functions"
-msgstr "函数向导"
+msgstr "函数"
 
 #: src/map/Clipboard.js:137
 msgid "To paste outside %productName, please first click the 'download' button"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-11 16:49+0000\n"
+"PO-Revision-Date: 2020-09-30 18:19+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
 "Language: ca\n"
@@ -204,7 +204,7 @@ msgid "Log Levels"
 msgstr "Nivells de registre"
 
 #: admin/admin.strings.js:51 src/control/Control.AlertDialog.js:25
-#: src/control/Signing.js:608
+#: src/control/Signing.js:608 src/control/Parts.js:376
 msgid "Close"
 msgstr "Tanca"
 
@@ -307,6 +307,10 @@ msgstr " min"
 #: admin/src/Util.js:54
 msgid " s"
 msgstr " s"
+
+#: src/control/Parts.js:377
+msgid "Show Selected Sheets"
+msgstr "Mostra els fulls seleccionats"
 
 #: src/control/ColorPicker.js:129
 msgid "No color"

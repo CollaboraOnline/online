@@ -105,4 +105,9 @@
     <string name="app_version_and_hash">版本：%1$s
 \nonline git-hash：%2$s
 \ncore git-hash：%3$s</string>
+    <string name="theme_light">淺色</string>
+    <string name="theme_dark">深色</string>
+    <string name="theme_system_default">系統預設</string>
+    <string name="choose_theme">選擇佈景主題</string>
+    <string name="theme">佈景主題</string>
 </resources>

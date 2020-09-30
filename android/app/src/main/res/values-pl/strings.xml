@@ -107,4 +107,9 @@
     <string name="app_version_and_hash">Wersja: %1$s
 \nOnline \'git-hash\': %2$s
 \nGłówny \'git-hash\': %3$s</string>
+    <string name="theme_light">Jasny</string>
+    <string name="theme_dark">Ciemny</string>
+    <string name="theme_system_default">Domyślny systemowy</string>
+    <string name="choose_theme">Wybierz motyw</string>
+    <string name="theme">Motyw</string>
 </resources>

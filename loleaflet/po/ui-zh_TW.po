@@ -210,7 +210,7 @@ msgid "Log Levels"
 msgstr "紀錄層級"
 
 #: admin/admin.strings.js:51 src/control/Control.AlertDialog.js:25
-#: src/control/Signing.js:608
+#: src/control/Signing.js:608 src/control/Parts.js:376
 msgid "Close"
 msgstr "關閉"
 
@@ -313,6 +313,10 @@ msgstr " 分鐘"
 #: admin/src/Util.js:54
 msgid " s"
 msgstr " 秒"
+
+#: src/control/Parts.js:377
+msgid "Show Selected Sheets"
+msgstr ""
 
 #: src/control/ColorPicker.js:129
 msgid "No color"

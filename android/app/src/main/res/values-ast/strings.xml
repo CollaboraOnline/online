@@ -79,4 +79,7 @@
     <string name="app_version_and_hash">Versión: %1$s
 \nRevisión del depósitu Git «online»: %2$s
 \nRevisión del depósitu Git «core»: %3$s</string>
+    <string name="unable_to_go_further">Nun se pue dir más allá.</string>
+    <string name="theme">Tema</string>
+    <string name="theme_system_default">Predetermináu del sistema</string>
 </resources>
