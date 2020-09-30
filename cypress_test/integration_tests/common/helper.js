@@ -290,21 +290,18 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 
 	// Wait for the sidebar to open.
 	doIfOnDesktop(function() {
-		// sometimes sidebar fails to open
-		cy.wait(1000);
-
-		//cy.get('#sidebar-panel')
-		//	.should('be.visible');
+		cy.get('#sidebar-panel')
+			.should('be.visible');
 
 		// Check that the document does not take the whole window width.
-		//cy.window()
-		//	.then(function(win) {
-		//		cy.get('#document-container')
-		//			.should(function(doc) {
-		//				expect(doc).to.have.lengthOf(1);
-		//				expect(doc[0].getBoundingClientRect().right).to.be.lessThan(win.innerWidth * 0.95);
-		//			});
-		//	});
+		cy.window()
+			.then(function(win) {
+				cy.get('#document-container')
+					.should(function(doc) {
+						expect(doc).to.have.lengthOf(1);
+						expect(doc[0].getBoundingClientRect().right).to.be.lessThan(win.innerWidth * 0.95);
+					});
+			});
 	});
 
 	cy.log('Loading test document - end.');
