@@ -4,7 +4,7 @@
  */
 
 /* global */
-L.WriterTileLayer = L.TileLayer.extend({
+L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
 		if (!comment.anchorPos && this._map._isCursorVisible) {
