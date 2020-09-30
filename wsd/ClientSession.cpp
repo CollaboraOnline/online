@@ -1251,7 +1251,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         // Prepend the jail path in the normal (non-nocaps) case
         if (resultURL.getScheme() == "file" && !LOOLWSD::NoCapsForKit)
         {
-            std::string relative(resultURL.getPath());
+            std::string relative;
+            if (isConvertTo)
+                Poco::URI::decode(resultURL.getPath(), relative);
+            else
+                relative = resultURL.getPath();
+
             if (relative.size() > 0 && relative[0] == '/')
                 relative = relative.substr(1);
 
