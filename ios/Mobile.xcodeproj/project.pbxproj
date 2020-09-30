@@ -550,6 +550,30 @@
 		BE62A59624BF875700AFFD77 /* FilterConfigItem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FilterConfigItem.cxx; path = "../../ios-device/vcl/source/filter/FilterConfigItem.cxx"; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
 		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE6C48502524A19B0066A166 /* asynccallback.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = asynccallback.cxx; path = "../../ios-device/toolkit/source/awt/asynccallback.cxx"; sourceTree = "<group>"; };
+		BE6C48512524A19B0066A166 /* vclxtoolkit.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxtoolkit.cxx; path = "../../ios-device/toolkit/source/awt/vclxtoolkit.cxx"; sourceTree = "<group>"; };
+		BE6C48522524A19B0066A166 /* vclxfont.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxfont.cxx; path = "../../ios-device/toolkit/source/awt/vclxfont.cxx"; sourceTree = "<group>"; };
+		BE6C48532524A19B0066A166 /* vclxmenu.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxmenu.cxx; path = "../../ios-device/toolkit/source/awt/vclxmenu.cxx"; sourceTree = "<group>"; };
+		BE6C48542524A19B0066A166 /* vclxbitmap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxbitmap.cxx; path = "../../ios-device/toolkit/source/awt/vclxbitmap.cxx"; sourceTree = "<group>"; };
+		BE6C48552524A19B0066A166 /* vclxgraphics.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxgraphics.cxx; path = "../../ios-device/toolkit/source/awt/vclxgraphics.cxx"; sourceTree = "<group>"; };
+		BE6C48562524A19B0066A166 /* vclxpointer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxpointer.cxx; path = "../../ios-device/toolkit/source/awt/vclxpointer.cxx"; sourceTree = "<group>"; };
+		BE6C48572524A19B0066A166 /* vclxprinter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxprinter.cxx; path = "../../ios-device/toolkit/source/awt/vclxprinter.cxx"; sourceTree = "<group>"; };
+		BE6C48582524A19B0066A166 /* vclxregion.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxregion.cxx; path = "../../ios-device/toolkit/source/awt/vclxregion.cxx"; sourceTree = "<group>"; };
+		BE6C48592524A19B0066A166 /* vclxspinbutton.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxspinbutton.cxx; path = "../../ios-device/toolkit/source/awt/vclxspinbutton.cxx"; sourceTree = "<group>"; };
+		BE6C485A2524A19B0066A166 /* vclxtopwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxtopwindow.cxx; path = "../../ios-device/toolkit/source/awt/vclxtopwindow.cxx"; sourceTree = "<group>"; };
+		BE6C485B2524A19B0066A166 /* vclxsystemdependentwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxsystemdependentwindow.cxx; path = "../../ios-device/toolkit/source/awt/vclxsystemdependentwindow.cxx"; sourceTree = "<group>"; };
+		BE6C485C2524A19B0066A166 /* stylesettings.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stylesettings.cxx; path = "../../ios-device/toolkit/source/awt/stylesettings.cxx"; sourceTree = "<group>"; };
+		BE6C485D2524A19B0066A166 /* scrollabledialog.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scrollabledialog.cxx; path = "../../ios-device/toolkit/source/awt/scrollabledialog.cxx"; sourceTree = "<group>"; };
+		BE6C485E2524A19B0066A166 /* vclxwindow.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxwindow.cxx; path = "../../ios-device/toolkit/source/awt/vclxwindow.cxx"; sourceTree = "<group>"; };
+		BE6C485F2524A19B0066A166 /* vclxcontainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxcontainer.cxx; path = "../../ios-device/toolkit/source/awt/vclxcontainer.cxx"; sourceTree = "<group>"; };
+		BE6C48602524A19B0066A166 /* vclxwindow1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxwindow1.cxx; path = "../../ios-device/toolkit/source/awt/vclxwindow1.cxx"; sourceTree = "<group>"; };
+		BE6C48612524A19B0066A166 /* vclxwindows_internal.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = vclxwindows_internal.hxx; path = "../../ios-device/toolkit/source/awt/vclxwindows_internal.hxx"; sourceTree = "<group>"; };
+		BE6C48622524A19C0066A166 /* vclxaccessiblecomponent.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxaccessiblecomponent.cxx; path = "../../ios-device/toolkit/source/awt/vclxaccessiblecomponent.cxx"; sourceTree = "<group>"; };
+		BE6C48632524A19C0066A166 /* animatedimagespeer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = animatedimagespeer.cxx; path = "../../ios-device/toolkit/source/awt/animatedimagespeer.cxx"; sourceTree = "<group>"; };
+		BE6C48642524A19C0066A166 /* stylesettings.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = stylesettings.hxx; path = "../../ios-device/toolkit/source/awt/stylesettings.hxx"; sourceTree = "<group>"; };
+		BE6C48652524A19C0066A166 /* vclxtabpagecontainer.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxtabpagecontainer.cxx; path = "../../ios-device/toolkit/source/awt/vclxtabpagecontainer.cxx"; sourceTree = "<group>"; };
+		BE6C48662524A19C0066A166 /* vclxwindows.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxwindows.cxx; path = "../../ios-device/toolkit/source/awt/vclxwindows.cxx"; sourceTree = "<group>"; };
+		BE6C48672524A19C0066A166 /* vclxdevice.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxdevice.cxx; path = "../../ios-device/toolkit/source/awt/vclxdevice.cxx"; sourceTree = "<group>"; };
 		BE7228E02417BC9F000ADABD /* StringVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringVector.cpp; sourceTree = "<group>"; };
 		BE7228E12417BC9F000ADABD /* StringVector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringVector.hpp; sourceTree = "<group>"; };
 		BE7D6A2123FA9C2300C2E605 /* winreg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = winreg.cxx; path = "../../ios-device/configmgr/source/winreg.cxx"; sourceTree = "<group>"; };
@@ -2113,11 +2137,51 @@
 				BE7E5B8F23AD192500F9462A /* svtools */,
 				BEB0E5DC21CA93950085A0CF /* svx */,
 				BE34D10C218B667400815297 /* sw */,
+				BE6C484E2524A15A0066A166 /* toolkit */,
 				BEB6524B216FD09400B8C09A /* tools */,
 				BEA8CD7221959315009FE17E /* unotools */,
 				BE93D420216CAA52007A39F4 /* vcl */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		BE6C484E2524A15A0066A166 /* toolkit */ = {
+			isa = PBXGroup;
+			children = (
+				BE6C484F2524A1710066A166 /* awt */,
+			);
+			name = toolkit;
+			sourceTree = "<group>";
+		};
+		BE6C484F2524A1710066A166 /* awt */ = {
+			isa = PBXGroup;
+			children = (
+				BE6C48632524A19C0066A166 /* animatedimagespeer.cxx */,
+				BE6C48502524A19B0066A166 /* asynccallback.cxx */,
+				BE6C485D2524A19B0066A166 /* scrollabledialog.cxx */,
+				BE6C485C2524A19B0066A166 /* stylesettings.cxx */,
+				BE6C48642524A19C0066A166 /* stylesettings.hxx */,
+				BE6C48622524A19C0066A166 /* vclxaccessiblecomponent.cxx */,
+				BE6C48542524A19B0066A166 /* vclxbitmap.cxx */,
+				BE6C485F2524A19B0066A166 /* vclxcontainer.cxx */,
+				BE6C48672524A19C0066A166 /* vclxdevice.cxx */,
+				BE6C48522524A19B0066A166 /* vclxfont.cxx */,
+				BE6C48552524A19B0066A166 /* vclxgraphics.cxx */,
+				BE6C48532524A19B0066A166 /* vclxmenu.cxx */,
+				BE6C48562524A19B0066A166 /* vclxpointer.cxx */,
+				BE6C48572524A19B0066A166 /* vclxprinter.cxx */,
+				BE6C48582524A19B0066A166 /* vclxregion.cxx */,
+				BE6C48592524A19B0066A166 /* vclxspinbutton.cxx */,
+				BE6C485B2524A19B0066A166 /* vclxsystemdependentwindow.cxx */,
+				BE6C48652524A19C0066A166 /* vclxtabpagecontainer.cxx */,
+				BE6C48512524A19B0066A166 /* vclxtoolkit.cxx */,
+				BE6C485A2524A19B0066A166 /* vclxtopwindow.cxx */,
+				BE6C485E2524A19B0066A166 /* vclxwindow.cxx */,
+				BE6C48602524A19B0066A166 /* vclxwindow1.cxx */,
+				BE6C48612524A19B0066A166 /* vclxwindows_internal.hxx */,
+				BE6C48662524A19C0066A166 /* vclxwindows.cxx */,
+			);
+			name = awt;
 			sourceTree = "<group>";
 		};
 		BE7D6A2023FA9BFB00C2E605 /* configmgr */ = {
