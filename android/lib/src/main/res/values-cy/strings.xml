@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">Llwytho...</string>
-    <string name="cannot_open_file_chooser">Methu agor dewisydd ffeiliau</string>
-    <string name="failed_to_insert_image">Methwyd mewnosod delwedd</string>
-    <string name="failed_to_load_file">Methwyd penderfynu pa ffeil i\'w chadw</string>
-    <string name="storage_permission_required">Mae angen caniatâd cadw.</string>
     <string name="temp_file_saving_disabled">Darllen yn unig yw\'r ffeil hon, mae cadw wedi ei analluogi.</string>
-    <string name="saving">Yn cadw...</string>
-    <string name="preparing_for_the_first_start_after_an_update">Paratoi am y cychwyn cyntaf ar ôl diweddariad.</string>
-    <string name="rate_our_app_title">Diolch am ddefnyddio %1$s!</string>
-    <string name="later">Hwyrach</string>
-    <string name="rate_now">Graddio nawr</string>
-    <string name="exiting">Gorffen...</string>
-    <string name="rate_our_app_text">Os ydych yn ei hoffi, rhowch 5 seren i ni ar Google Play. Mae eich adolygiadau da yn ein hysbrydoli.</string>
     <string name="file_chromeos_read_only">Nid oes modd cadw\'r ffeil yn y lleoliad yma. Bydd angen ei symud i\'r fan Chwarae ffeiliau ar gyfer mynediad darllen/ysgrifennu llawn.</string>
+    <string name="storage_permission_required">Mae angen caniatâd cadw.</string>
+    <string name="failed_to_load_file">Methwyd penderfynu pa ffeil i\'w chadw</string>
+    <string name="failed_to_insert_image">Methwyd mewnosod delwedd</string>
+    <string name="cannot_open_file_chooser">Methu agor dewisydd ffeiliau</string>
+    <string name="preparing_for_the_first_start_after_an_update">Paratoi am y cychwyn cyntaf ar ôl diweddariad.</string>
+    <string name="rate_now">Graddio nawr</string>
+    <string name="later">Hwyrach</string>
+    <string name="rate_our_app_title">Diolch am ddefnyddio %1$s!</string>
+    <string name="rate_our_app_text">Os ydych yn ei hoffi, rhowch 5 seren i ni ar Google Play. Mae eich adolygiadau da yn ein hysbrydoli.</string>
+
+    <!-- Loading SlideShow Dialog Strings -->
+    <string name="loading">Llwytho...</string>
+    <string name="exiting">Gorffen...</string>
 </resources>
