@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">Načítanie...</string>
-    <string name="saving">Ukladanie...</string>
-    <string name="cannot_open_file_chooser">Nemožno otvoriť prehliadač súborov</string>
-    <string name="failed_to_insert_image">Vkladanie obrázku zlyhalo</string>
-    <string name="failed_to_load_file">Nepodarilo sa určiť súbor, ktorý sa má načítať</string>
-    <string name="storage_permission_required">Je potrebné povolenie prístupu k úložisku</string>
     <string name="temp_file_saving_disabled">Súbor je len na čítanie, ukladanie je zakázané.</string>
-    <string name="preparing_for_the_first_start_after_an_update">Pripravuje sa prvé spustenie po aktualizácii.</string>
-    <string name="exiting">Ukončovanie...</string>
-    <string name="rate_our_app_text">Ak sa vám táto aplikácia páči, dajte jej v Google Play 5 hviezdičiek. Priaznivé recenzie sú pre nás tou najlepšou motiváciou.</string>
-    <string name="rate_our_app_title">Ďakujeme, že používate %1$s!</string>
-    <string name="later">Neskôr</string>
-    <string name="rate_now">Ohodnotiť teraz</string>
     <string name="file_chromeos_read_only">Súbor sa nedá v tomto umiestnení uložiť, je preto otvorený iba na čítanie. Ak chcete využiť prístup na čítanie aj zápis, presuňte ho medzi súbory Play.</string>
+    <string name="storage_permission_required">Je potrebné povolenie prístupu k úložisku</string>
+    <string name="failed_to_load_file">Nepodarilo sa určiť súbor, ktorý sa má načítať</string>
+    <string name="failed_to_insert_image">Vkladanie obrázku zlyhalo</string>
+    <string name="cannot_open_file_chooser">Nemožno otvoriť prehliadač súborov</string>
+    <string name="preparing_for_the_first_start_after_an_update">Pripravuje sa prvé spustenie po aktualizácii.</string>
+    <string name="rate_now">Ohodnotiť teraz</string>
+    <string name="later">Neskôr</string>
+    <string name="rate_our_app_title">Ďakujeme, že používate %1$s!</string>
+    <string name="rate_our_app_text">Ak sa vám táto aplikácia páči, dajte jej v Google Play 5 hviezdičiek. Priaznivé recenzie sú pre nás tou najlepšou motiváciou.</string>
+
+    <!-- Loading SlideShow Dialog Strings -->
+    <string name="loading">Načítanie...</string>
+    <string name="exiting">Ukončovanie...</string>
 </resources>
