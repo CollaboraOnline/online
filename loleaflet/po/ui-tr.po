@@ -74,7 +74,7 @@ msgstr "kullanıcı(lar)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
-msgstr "açık belge."
+msgstr "açık belge(ler)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
