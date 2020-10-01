@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="temp_file_saving_disabled">Questo file è di sola lettura, il salvataggio è disattivato.</string>
+    <string name="file_chromeos_read_only">Impossibile salvare il file in questa posizione, verrà aperto in modalità di sola lettura. Per avere un accesso completo in lettura e scrittura, spostalo nei file di Play.</string>
     <string name="storage_permission_required">È richiesta autorizzazione per il salvataggio</string>
     <string name="failed_to_load_file">Non è stato possibile determinare il file da caricare</string>
     <string name="failed_to_insert_image">Inserimento dell\'immagine non riuscito</string>
     <string name="cannot_open_file_chooser">Impossibile aprire il navigatore di file</string>
-    <string name="loading">Caricamento in corso...</string>
     <string name="preparing_for_the_first_start_after_an_update">Preparazione del primo avvio dopo un aggiornamento.</string>
-    <string name="saving">Salvataggio...</string>
-    <string name="exiting">Uscita...</string>
-    <string name="rate_our_app_text">Se ti piace, vota 5 stelle in Google Play. La tua recensione positiva è il nostro migliore stimolo.</string>
-    <string name="rate_our_app_title">Grazie per utilizzare %1$s!</string>
-    <string name="later">Più tardi</string>
     <string name="rate_now">Valuta ora</string>
-    <string name="file_chromeos_read_only">Impossibile salvare il file in questa posizione, verrà aperto in modalità di sola lettura. Per avere un accesso completo in lettura e scrittura, spostalo nei file di Play.</string>
+    <string name="later">Più tardi</string>
+    <string name="rate_our_app_title">Grazie per utilizzare %1$s!</string>
+    <string name="rate_our_app_text">Se ti piace, vota 5 stelle in Google Play. La tua recensione positiva è il nostro migliore stimolo.</string>
+
+    <!-- Loading SlideShow Dialog Strings -->
+    <string name="loading">Caricamento in corso...</string>
+    <string name="exiting">Uscita...</string>
 </resources>
