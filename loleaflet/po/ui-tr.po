@@ -2,23 +2,26 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Andras Timar <andras.timar@collabora.com>, 2020
+# Muhammet Kara <muhammetk@gmail.com>, 2020
+# PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-07-08 21:12+0000\n"
-"Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
-"Language-Team: Turkish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/tr/>\n"
-"Language: tr\n"
+"PO-Revision-Date: 2020-10-01 06:41+0000\n"
+"Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020\n"
+"Language-Team: Turkish (https://www.transifex.com/collabora-productivity-ltd/teams/68191/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
-"X-Pootle-Path: /tr/libo_online/loleaflet-ui-tr.po\n"
-"X-Pootle-Revision: 3938207\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -61,23 +64,17 @@ msgid "User Name"
 msgstr "Kullanıcı Adı"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
 msgstr "Açık belgeler"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "0 users"
 msgid " user(s)."
-msgstr "0 kullanıcı"
+msgstr "kullanıcı(lar)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "Açık belgeler"
+msgstr "açık belge."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -105,7 +102,7 @@ msgstr "Belge"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Görünümler"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -163,7 +160,7 @@ msgstr "İşlemci istatistiklerinin zaman aralığı (ms cinsinden)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Oturumları kapat."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -175,7 +172,9 @@ msgstr "En Fazla Belge işlem yığıtı belleği (KB olarak) - yalnızca azalt"
 
 #: admin/admin.strings.js:42
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Diske yazmaya izin verilen en büyük dosya boyutu (MB olarak) - yalnızca azalt"
+msgstr ""
+"Diske yazmaya izin verilen en büyük dosya boyutu (MB olarak) - yalnızca "
+"azalt"
 
 #: admin/admin.strings.js:43
 msgid "Documents:"
@@ -246,8 +245,8 @@ msgid "OK"
 msgstr "Tamam"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1231
-#: src/control/Control.MobileTopBar.js:45
+#: src/control/Control.LanguageDialog.js:86
+#: src/control/Control.Menubar.js:1231 src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:200
 #: src/control/Control.Tabs.js:217 src/control/Toolbar.js:626
 #: src/layer/marker/Annotation.js:202 src/layer/tile/TileLayer.js:405
@@ -316,7 +315,7 @@ msgstr " s"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Seçili Sayfaları Göster"
 
 #: src/control/ColorPicker.js:129
 msgid "No color"
@@ -370,7 +369,8 @@ msgstr "Zaman damgası"
 msgid "Jump to state"
 msgstr "Duruma atla"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:196
+#: src/control/Control.DocumentRepair.js:95
+#: src/control/Control.UserList.js:196
 msgid "You"
 msgstr "Siz"
 
@@ -642,10 +642,8 @@ msgid "Last modification"
 msgstr "Son değişiklik"
 
 #: src/control/Control.Menubar.js:257
-#, fuzzy
-#| msgid "Comment"
 msgid "Save Comments"
-msgstr "Yorum"
+msgstr "Yorumları Kaydet"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:554
 #: src/control/Control.NotebookbarImpress.js:294
@@ -674,7 +672,7 @@ msgstr "Tam ekran sunum"
 
 #: src/control/Control.Menubar.js:359
 msgid "Present current slide"
-msgstr ""
+msgstr "Geçerli slaytı sun"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:602
 #: src/control/Control.NotebookbarCalc.js:214
@@ -744,19 +742,19 @@ msgstr "Arama çubuğunu gizle"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "İlk sayfaya git"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "Sola kaydır"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "Sağa kaydır"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Son sayfaya git"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
@@ -851,8 +849,12 @@ msgid "Next slide"
 msgstr "Sonraki slayt"
 
 #: src/control/Control.Toolbar.js:956
-msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "Birden fazla kullanıcının Geri Al/Yeniden Yap eylemi çakıştı. Bunu çözmek için belge kurtarmayı kullanın"
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to "
+"resolve"
+msgstr ""
+"Birden fazla kullanıcının Geri Al/Yeniden Yap eylemi çakıştı. Bunu çözmek "
+"için belge kurtarmayı kullanın"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -921,7 +923,7 @@ msgstr "Şimdiki"
 #: src/control/Control.NotebookbarBuilder.js:658
 #: src/control/Control.NotebookbarBuilder.js:674
 msgid "Menu"
-msgstr ""
+msgstr "Menü"
 
 #: src/control/Control.Notebookbar.js:134
 #: src/control/Control.NotebookbarImpress.js:32
@@ -937,7 +939,7 @@ msgstr "İleri al"
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "~Dosya"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
@@ -968,7 +970,7 @@ msgstr "~Gözden Geçir"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Biçim"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -977,73 +979,61 @@ msgstr "~Tablo"
 
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
-msgstr ""
+msgstr "~Çizim"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "~Yardım"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Çalışma Sayfası"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Veri"
 
 #: src/control/Control.NotebookbarCalc.js:1903
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Tablo ekle"
+msgstr "Yukarı Satır Ekle"
 
 #: src/control/Control.NotebookbarCalc.js:1916
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Çalışma sayfası ekle"
+msgstr "Aşağı Satır Ekle"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Altına sayfa ekle"
+msgstr "Öncesine Sütun Ekle"
 
 #: src/control/Control.NotebookbarCalc.js:1951
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Bundan sonra sayfa ekle"
+msgstr "Sonrasına Sütun Ekle"
 
 #: src/control/Control.NotebookbarCalc.js:1973
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Satır Kesme Ekle"
 
 #: src/control/Control.NotebookbarCalc.js:1986
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Sütun Kesme Ekle"
 
 #: src/control/Control.NotebookbarCalc.js:2008
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Sil"
+msgstr "Satırları Sil"
 
 #: src/control/Control.NotebookbarCalc.js:2021
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Sütunlar"
+msgstr "Sütunları Sil"
 
 #: src/control/Control.NotebookbarCalc.js:2043
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Satır Kesmeyi Kaldır"
 
 #: src/control/Control.NotebookbarCalc.js:2056
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Sütun Kesmeyi Kaldır"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"
@@ -1051,17 +1041,15 @@ msgstr "Sunumu Başlat"
 
 #: src/control/Permission.js:45
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "Belge kilitlenemedi ve salt-okunur kipte açıldı."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Sunucudan gelen neden:"
 
 #: src/control/Permission.js:63
-#, fuzzy
-#| msgid "Document cannot be saved."
 msgid "The document could not be locked."
-msgstr "Belge kaydedilemedi."
+msgstr "Belge kilitlenemedi."
 
 #: src/control/Ruler.js:362
 msgid "Left Margin"
@@ -1220,7 +1208,8 @@ msgid "I understand the risks"
 msgstr "Risklerin farkındayım"
 
 #: src/control/Toolbar.js:474
-msgid "We are sorry, the information about the latest updates is not available."
+msgid ""
+"We are sorry, the information about the latest updates is not available."
 msgstr "Üzgünüz, son güncellemeler hakkında bilgi mevcut değil."
 
 #: src/control/Toolbar.js:519
@@ -1232,8 +1221,12 @@ msgid "\"Slow Proxy\""
 msgstr "\"Yavaş Vekil Sunucu\""
 
 #: src/control/Toolbar.js:532
-msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr "Kişisel sürüm gönüllüler tarafından desteklenir ve bireysel kullanım içindir."
+msgid ""
+"The Personal edition is supported by volunteers and intended for individual "
+"use."
+msgstr ""
+"Kişisel sürüm gönüllüler tarafından desteklenir ve bireysel kullanım "
+"içindir."
 
 #: src/control/Toolbar.js:619
 msgid "Insert hyperlink"
@@ -1248,8 +1241,17 @@ msgid "Link"
 msgstr "Köprü"
 
 #: src/core/Socket.js:59
-msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr "IE11 izin verilen en fazla bağlantı sayısına ulaştı. Bu sayıyı artırmak için gerekli olması durumunda şu dokümandan faydalanabilirsiniz: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document"
+" to increase this limit if needed: https://docs.microsoft.com/en-us"
+"/previous-versions/windows/internet-explorer/ie-developer/general-"
+"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"IE11 izin verilen en fazla bağlantı sayısına ulaştı. Bu sayıyı artırmak için"
+" gerekli olması durumunda şu dokümandan faydalanabilirsiniz: "
+"https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer"
+"/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
+"connections"
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -1272,10 +1274,9 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "Belge boşta - lütfen düzenlemeye devam etmek için tıklayın"
 
 #: src/core/Socket.js:403
-#, fuzzy
-#| msgid "Idle document - please click to reload and resume editing"
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Belge boşta - lütfen düzenlemeye devam etmek için tıklayın"
+msgstr ""
+"Atıl belge - yeniden yüklemek ve düzenlemeye devam etmek için lütfen dokunun"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1290,16 +1291,28 @@ msgid "Server is recycling and will be available shortly"
 msgstr "SUnucu yeniden başlatılıyor ve kısa süre sonra kullanılabilir olacak"
 
 #: src/core/Socket.js:447
-msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
-msgstr "Belge depolandığı yerde değişti. Yeni belge yükleniyor. Kendi sürümünüze farklı bir sürüm olarak ulaşılabilirsiniz."
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+"Belge depolandığı yerde değişti. Yeni belge yükleniyor. Kendi sürümünüze "
+"farklı bir sürüm olarak ulaşılabilirsiniz."
 
 #: src/core/Socket.js:453
-msgid "Restoring older revision. Any unsaved changes will be available in version history"
-msgstr "Eski sürümü yükleniyor. Kaydedilmemiş değişiklikler sürüm geçmişinde bulunabilir"
+msgid ""
+"Restoring older revision. Any unsaved changes will be available in version "
+"history"
+msgstr ""
+"Eski sürümü yükleniyor. Kaydedilmemiş değişiklikler sürüm geçmişinde "
+"bulunabilir"
 
 #: src/core/Socket.js:572
-msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr "Belge kaydedildiği yerde değiştirildi. Kaydedilmemiş değişiklikleri ne yapmak istiyorsunuz?"
+msgid ""
+"Document has been changed in storage. What would you like to do with your "
+"unsaved changes?"
+msgstr ""
+"Belge kaydedildiği yerde değiştirildi. Kaydedilmemiş değişiklikleri ne "
+"yapmak istiyorsunuz?"
 
 #: src/core/Socket.js:576
 msgid "Discard"
@@ -1338,52 +1351,95 @@ msgid "Connecting..."
 msgstr "Bağlanıyor..."
 
 #: src/core/Socket.js:1081
-msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
+msgid ""
+"Well, this is embarrassing, we cannot connect to your document. Please try "
+"again."
 msgstr "Utanç verici ama belgenize bağlanamadık. Lütfen tekrar deneyin."
 
 #: src/errormessages.js:13
-msgid "No disk space left on server, please contact the server administrator to continue."
-msgstr "Sunucuda yeterli disk alanı yok, devam etmek için lütfen sunucu yöneticinizle görüşün."
+msgid ""
+"No disk space left on server, please contact the server administrator to "
+"continue."
+msgstr ""
+"Sunucuda yeterli disk alanı yok, devam etmek için lütfen sunucu "
+"yöneticinizle görüşün."
 
 #: src/errormessages.js:14
-msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
-msgstr "İstemci adresi boş. loolwsd sunucusu muhtemelen hayalı yapılandırılmış, lütfen sistem yöneticisiyle görüşün."
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+"İstemci adresi boş. loolwsd sunucusu muhtemelen hayalı yapılandırılmış, "
+"lütfen sistem yöneticisiyle görüşün."
 
 #: src/errormessages.js:15
-msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr "Bu, {productname} yazılımının desteklenmeyen bir sürümüdür. Kurumlarda dağıtım için uygun olduğu izlenimini önlemek için, bu ileti aynı anda {docs} belge veya {connection} bağlantıdan daha fazlası kullanıldığında görünür."
+msgid ""
+"This is an unsupported version of {productname}. To avoid the impression "
+"that it is suitable for deployment in enterprises, this message appears when"
+" more than {docs} documents or {connections} connections are in use "
+"concurrently"
+msgstr ""
+"Bu, {productname} yazılımının desteklenmeyen bir sürümüdür. Kurumlarda "
+"dağıtım için uygun olduğu izlenimini önlemek için, bu ileti aynı anda {docs}"
+" belge veya {connection} bağlantıdan daha fazlası kullanıldığında görünür."
 
 #: src/errormessages.js:16
 msgid "More information and support"
 msgstr "Daha fazla bilgi ve destek için"
 
 #: src/errormessages.js:17
-msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
-msgstr "Bu servis yönetici tarafından %0 belge ve %1 bağlantıyla kısıtlanmıştır. Sınıra ulaştınız. Lütfen daha sonra tekrar deneyin."
+msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr ""
+"Bu servis yönetici tarafından %0 belge ve %1 bağlantıyla kısıtlanmıştır. "
+"Sınıra ulaştınız. Lütfen daha sonra tekrar deneyin."
 
 #: src/errormessages.js:18
-msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
-msgstr "Servis kullanılamıyor. Lütfen daha sonra tekrar deneyin ve sorun devam ederse yöneticinize raporlayın."
+msgid ""
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Servis kullanılamıyor. Lütfen daha sonra tekrar deneyin ve sorun devam "
+"ederse yöneticinize raporlayın."
 
 #: src/errormessages.js:19
-msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
-msgstr "Yetkisiz WOPI istemcisi. Lütfen daha sonra tekrar deneyin ve sorun devam ederse yöneticinize raporlayın."
+msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Yetkisiz WOPI istemcisi. Lütfen daha sonra tekrar deneyin ve sorun devam "
+"ederse yöneticinize raporlayın."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr "Hatalı veya eksik WOPISrc parametresi, lütfen destek ile iletişime geçin."
+msgstr ""
+"Hatalı veya eksik WOPISrc parametresi, lütfen destek ile iletişime geçin."
 
 #: src/errormessages.js:21
-msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
-msgstr "Oturumunuzun kapanmasına %time kaldı. Lütfen çalışmanızı kaydedin ve devam etmek için oturumu (veya web sayfasını) yenileyin."
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr ""
+"Oturumunuzun kapanmasına %time kaldı. Lütfen çalışmanızı kaydedin ve devam "
+"etmek için oturumu (veya web sayfasını) yenileyin."
 
 #: src/errormessages.js:22
-msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
-msgstr "Oturumunuz sonlandı. Bundan sonra yapacağınız değişiklikler kaydedilmeyecektir. Lütfen devam etmek için oturumu (veya web sayfasını) yenileyin."
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr ""
+"Oturumunuz sonlandı. Bundan sonra yapacağınız değişiklikler "
+"kaydedilmeyecektir. Lütfen devam etmek için oturumu (veya web sayfasını) "
+"yenileyin."
 
 #: src/errormessages.js:23
-msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
-msgstr "Belge yüklenemedi. Lütfen dosya türünün desteklendiğinden ve dosyanın bozuk olmadığından emin olup daha sonra tekrar deneyin."
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr ""
+"Belge yüklenemedi. Lütfen dosya türünün desteklendiğinden ve dosyanın bozuk "
+"olmadığından emin olup daha sonra tekrar deneyin."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1391,11 +1447,17 @@ msgstr "Geçersiz bağlantı: '%url'"
 
 #: src/errormessages.js:25
 msgid "You are leaving the editor, are you sure you want to visit %url?"
-msgstr "Düzenleyiciden çıkıyorsunuz, %url adresini ziyaret etmek istediğinizden emin misiniz?"
+msgstr ""
+"Düzenleyiciden çıkıyorsunuz, %url adresini ziyaret etmek istediğinizden emin"
+" misiniz?"
 
 #: src/errormessages.js:26
-msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr "Belge yükleme başarısız. Bu belge hatalı biçimlendirilmiş ya da izin verilenden daha fazla kaynak alıyor. Lütfen yöneticinize başvurun."
+msgid ""
+"Failed to load the document. This document is either malformed or is taking "
+"more resources than allowed. Please contact the administrator."
+msgstr ""
+"Belge yükleme başarısız. Bu belge hatalı biçimlendirilmiş ya da izin "
+"verilenden daha fazla kaynak alıyor. Lütfen yöneticinize başvurun."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1403,11 +1465,15 @@ msgstr "Belge yükleme başarısız oldu."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr "Diskte yeterli alan olmadığından kaydedilemedi. Belge artık salt okunur olacak."
+msgstr ""
+"Diskte yeterli alan olmadığından kaydedilemedi. Belge artık salt okunur "
+"olacak."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "Belge süresi geçtiğinden veya geçersiz erişim belirteci nedeniyle kaydedilemiyor."
+msgstr ""
+"Belge süresi geçtiğinden veya geçersiz erişim belirteci nedeniyle "
+"kaydedilemiyor."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
@@ -1419,21 +1485,39 @@ msgstr "Belge yeniden adlandırılamadı."
 
 #: src/errormessages.js:38
 #, javascript-format
-msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
-msgstr "Dosya depolamadan okunamadı. Lütfen depolama yöneticinize (%storageserver) başvurun."
+msgid ""
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr ""
+"Dosya depolamadan okunamadı. Lütfen depolama yöneticinize (%storageserver) "
+"başvurun."
 
 #: src/errormessages.js:39
 #, javascript-format
-msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
-msgstr "Sunucu diskinde yer kalmadığından kaydetme başarısız oldu. Belge artık salt okunur halde. Düzenlemeye devam edebilmek için sistem yöneticinize (%storageserver) başvurun."
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"Sunucu diskinde yer kalmadığından kaydetme başarısız oldu. Belge artık salt "
+"okunur halde. Düzenlemeye devam edebilmek için sistem yöneticinize "
+"(%storageserver) başvurun."
 
 #: src/errormessages.js:41
-msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
-msgstr "Belge depolama alanına kaydedilemedi. İzinlerinizi kontrol edin veya sistem yöneticinize başvurun."
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"Belge depolama alanına kaydedilemedi. İzinlerinizi kontrol edin veya sistem "
+"yöneticinize başvurun."
 
 #: src/errormessages.js:42
-msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
-msgstr "Belge yeniden adlandırılamadı. İzinlerinizi kontrol edin veya sistem yöneticinize başvurun."
+msgid ""
+"Document cannot be renamed. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"Belge yeniden adlandırılamadı. İzinlerinizi kontrol edin veya sistem "
+"yöneticinize başvurun."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
@@ -1472,14 +1556,14 @@ msgid "Resolve"
 msgstr "Çöz"
 
 #: src/layer/tile/TileLayer.js:826
-#, fuzzy
-#| msgid "Function Wizard"
 msgid "Functions"
-msgstr "İşlev Sihirbazı"
+msgstr "İşlevler"
 
 #: src/map/Clipboard.js:137
-msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "% ProductName dışına yapıştırmak için lütfen önce 'indir' düğmesini tıklayın"
+msgid ""
+"To paste outside %productName, please first click the 'download' button"
+msgstr ""
+"% ProductName dışına yapıştırmak için lütfen önce 'indir' düğmesini tıklayın"
 
 #: src/map/Clipboard.js:289
 msgid "Failed to download clipboard, please re-copy"
@@ -1487,19 +1571,44 @@ msgstr "Pano indirilemedi, lütfen tekrar kopyalayın"
 
 #: src/map/Clipboard.js:838
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Lütfen ekran klavyesindeki kopyala/yapıştır düğmelerini kullanın.</p>"
+msgstr ""
+"<p>Lütfen ekran klavyesindeki kopyala/yapıştır düğmelerini kullanın.</p>"
 
 #: src/map/Clipboard.js:840
-msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr "<p>Tarayıcınızın panoya erişimi oldukça sınırlı, bu yüzden şu klavye kısayollarını kullanın:<ul><li>Kopyalamak için: <b>Ctrl+C</b>.</li><li>Kesmek için:<b>Ctrl+X</b>.</li><li>Yapıştırmak için: <b>Ctrl+P</b>.</li></ul></p>"
+msgid ""
+"<p>Your browser has very limited access to the clipboard, so use these "
+"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For "
+"copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For "
+"pasting.</li></ul></p>"
+msgstr ""
+"<p>Tarayıcınızın panoya erişimi oldukça sınırlı, bu yüzden şu klavye "
+"kısayollarını kullanın:<ul><li>Kopyalamak için: "
+"<b>Ctrl+C</b>.</li><li>Kesmek için:<b>Ctrl+X</b>.</li><li>Yapıştırmak için: "
+"<b>Ctrl+P</b>.</li></ul></p>"
 
 #: src/map/Clipboard.js:861
-msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr "<p>Belgenizin daha büyük öğelerini diğer uygulamalarla paylaşmak istiyorsanız, bunları önce cihazınıza indirmeniz gerekir.  Bunu yapmak için aşağıdaki \"İndirmeyi başlat\" düğmesine basın ve tamamlandığında \"Panoya kopyalamayı onayla\" yı tıklayın.</p> <p>%productName içindeki belgeler arasında kopyalayıp yapıştırma yapıyorsanız, indirmenize gerek yoktur. </p>"
+msgid ""
+"<p>If you would like to share larger elements of your document with other "
+"applications it is necessary to first download them onto your device. To do "
+"that press the \"Start download\" button below, and when complete click "
+"\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
+"documents inside %productName, there is no need to download.</p>"
+msgstr ""
+"<p>Belgenizin daha büyük öğelerini diğer uygulamalarla paylaşmak "
+"istiyorsanız, bunları önce cihazınıza indirmeniz gerekir.  Bunu yapmak için "
+"aşağıdaki \"İndirmeyi başlat\" düğmesine basın ve tamamlandığında \"Panoya "
+"kopyalamayı onayla\" yı tıklayın.</p> <p>%productName içindeki belgeler "
+"arasında kopyalayıp yapıştırma yapıyorsanız, indirmenize gerek yoktur. </p>"
 
 #: src/map/Clipboard.js:877
-msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr "<p>Büyük bir kopya/yapıştır işlemi nedeniyle indirme işlemi zaten başladı.  Lütfen yeni bir indirme işlemine başlamadan önce mevcut indirmeyi bekleyin veya iptal edin</p>"
+msgid ""
+"<p>A download due to a large copy/paste operation has already started. "
+"Please, wait for the current download or cancel it before starting a new "
+"one</p>"
+msgstr ""
+"<p>Büyük bir kopya/yapıştır işlemi nedeniyle indirme işlemi zaten başladı.  "
+"Lütfen yeni bir indirme işlemine başlamadan önce mevcut indirmeyi bekleyin "
+"veya iptal edin</p>"
 
 #: src/map/Map.js:219
 msgid "Initializing..."
@@ -1521,12 +1630,14 @@ msgstr "Etkin olmayan belge - düzenlemeye devam etmek için lütfen tıklayın"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr "Dosya türü: %0 dosya adı olmadığından sunucuya yüklenemiyor"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr "Dosya türü: %0 dosya boş olduğundan sunucuya yüklenemiyor"
 
 #: src/map/handler/Map.FileInserter.js:129
@@ -1544,45 +1655,3 @@ msgstr "Şablondan yeni dosya oluşturuluyor ..."
 #: src/map/handler/Map.WOPI.js:436
 msgid "Creating copy..."
 msgstr "Kopya oluşturuluyor..."
-
-#~ msgid "Number of views"
-#~ msgstr "Görüntülenme sayısı"
-
-#~ msgid "Documents"
-#~ msgstr "Belgeler"
-
-#~ msgid "Edit"
-#~ msgstr "Düzenle"
-
-#~ msgid "First sheet"
-#~ msgstr "İlk sayfa"
-
-#~ msgid "Previous sheet"
-#~ msgstr "Önceki sayfa"
-
-#~ msgid "Next sheet"
-#~ msgstr "Sonraki sayfa"
-
-#~ msgid "Last sheet"
-#~ msgstr "Son sayfa"
-
-#~ msgid "Color"
-#~ msgstr "Renk"
-
-#~ msgid "Gradient"
-#~ msgstr "Geçiş"
-
-#~ msgid "Hatching"
-#~ msgstr "Tarama"
-
-#~ msgid "Pattern"
-#~ msgstr "Kalıp"
-
-#~ msgid "Portrait"
-#~ msgstr "Dikey"
-
-#~ msgid "Landscape"
-#~ msgstr "Yatay"
-
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "Sayfa Yönünü Değiştir"
