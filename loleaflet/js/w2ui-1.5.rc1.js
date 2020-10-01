@@ -2326,6 +2326,7 @@ w2utils.event = {
                 // if content of specific height
                 if (options.tmp.contentHeight) {
                     h = parseInt(options.tmp.contentHeight);
+                    if (h > $(".leaflet-layer").height()) h = $(".leaflet-layer").height();
                     div2.height(h);
                     setTimeout(function () {
                         var $div = div2.find('div.menu');
