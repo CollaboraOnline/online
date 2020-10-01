@@ -334,7 +334,7 @@ L.TextInput = L.Layer.extend({
 
 	// Marks the content of the textarea/contenteditable as selected,
 	// for system clipboard interaction.
-	select: function select() {
+	select: function() {
 		this._textArea.select();
 	},
 
