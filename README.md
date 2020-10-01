@@ -1,28 +1,37 @@
-Collabora Online.
+# Collabora Online.
+
+## Website
+
+For many more details, build instructions, downloads and more please see https://collaboraonline.github.io/
+
+Or ask questions on irc.freenode.net in #cool-dev or on our https://forum.collaboraonline.com/
+
+## Develoment bits
 
 This project has several components:
 
-wsd/
-	The Web Services Daemon - which accepts external connections.
+### wsd/
 
-kit/
-	The client which lives in its own chroot and renders documents.
+The Web Services Daemon - which accepts external connections.
 
-common/
-	Shared code between these processes.
+### kit/
+The client which lives in its own chroot and renders documents.
 
-loleaflet/
-	The client side JavaScript component.
+### common/
+Shared code between these processes.
 
-test/
-	C++ based unit tests.
+### loleaflet/
+The client side JavaScript component.
 
-cypress_test/
-	JavaScript based integration tests.
+### test/
+C++ based unit tests.
 
-It is recommended to read these files:
+### cypress_test/
+JavaScript based integration tests.
 
-	wsd/README
-	loleaflet/README
+## Further recommended reading with build details:
 
-Enjoy.
+wsd/README
+loleaflet/README
+
+## Enjoy.
