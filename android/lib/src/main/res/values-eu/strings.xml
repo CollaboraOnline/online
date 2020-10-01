@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">Kargatzen…</string>
-    <string name="cannot_open_file_chooser">Ezin da fitxategi-aukeratzailea ireki</string>
-    <string name="failed_to_insert_image">Huts egin du irudia txertatzeak</string>
-    <string name="failed_to_load_file">Huts egin du kargatu behar den fitxategia zehazteak</string>
-    <string name="storage_permission_required">Biltegiratze-baimena behar da</string>
     <string name="temp_file_saving_disabled">Fitxategia irakurtzeko soilik da, gordetzea desgaituta dago.</string>
-    <string name="saving">Gordetzen...</string>
-    <string name="preparing_for_the_first_start_after_an_update">Eguneratu ondoren lehen aldiz abiarazteko prestatzen.</string>
-    <string name="rate_our_app_text">Gustuko baduzu, emaizkiguzu 5 izar Google Play dendan. Zure berrikuspen onak gure motibaziorik onena dira.</string>
-    <string name="rate_our_app_title">Eskerrik asko %1$s erabiltzeagatik!</string>
-    <string name="later">Geroago</string>
-    <string name="rate_now">Eman puntuazioa orain</string>
-    <string name="exiting">Irteten...</string>
     <string name="file_chromeos_read_only">Fitxategi hau ezin da gorde kokaleku honetan, irakurtzeko moduan irekiko da. Eraman Play fitxategietara irakurtzeko/idazteko atzipen osoa eduki ahal izateko.</string>
+    <string name="storage_permission_required">Biltegiratze-baimena behar da</string>
+    <string name="failed_to_load_file">Huts egin du kargatu behar den fitxategia zehazteak</string>
+    <string name="failed_to_insert_image">Huts egin du irudia txertatzeak</string>
+    <string name="cannot_open_file_chooser">Ezin da fitxategi-aukeratzailea ireki</string>
+    <string name="preparing_for_the_first_start_after_an_update">Eguneratu ondoren lehen aldiz abiarazteko prestatzen.</string>
+    <string name="rate_now">Eman puntuazioa orain</string>
+    <string name="later">Geroago</string>
+    <string name="rate_our_app_title">Eskerrik asko %1$s erabiltzeagatik!</string>
+    <string name="rate_our_app_text">Gustuko baduzu, emaizkiguzu 5 izar Google Play dendan. Zure berrikuspen onak gure motibaziorik onena dira.</string>
+
+    <!-- Loading SlideShow Dialog Strings -->
+    <string name="loading">Kargatzen…</string>
+    <string name="exiting">Irteten...</string>
 </resources>
