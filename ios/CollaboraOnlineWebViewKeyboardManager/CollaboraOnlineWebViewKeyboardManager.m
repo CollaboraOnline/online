@@ -225,6 +225,8 @@
         lastCommandIsHide = NO;
         lastActionIsDisplay = YES;
 
+        NSLog(@"COKbdMgr: lastCommandIsHide:=NO lastActionIsDisplay:=YES");
+
         [self->webView addSubview:control];
         NSLog(@"COKbdMgr: Added _COWVKMKeyInputControl to webView");
         [control becomeFirstResponder];
@@ -241,17 +243,17 @@
     // folllowed by a display request within 100 ms.
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100000000ll), dispatch_get_main_queue(), ^{
             if (!self->lastCommandIsHide) {
-                NSLog(@"COKbdMgr: Ignoring hide command that was quickly followed by a display command");
+                NSLog(@"COKbdMgr: lastCommandIsHide==NO Ignoring hide command that was quickly followed by a display command");
                 return;
             }
             if (self->lastActionIsDisplay) {
-                NSLog(@"COKbdMgr: Ignoring hide command that quickly followed a display command");
+                NSLog(@"COKbdMgr: lastActionIsDisplay==YES Ignoring hide command that quickly followed a display command");
                 return;
             }
             if (self->control != nil) {
                 self->lastActionIsDisplay = NO;
                 [self->control removeFromSuperview];
-                NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
+                NSLog(@"COKbdMgr: lastActionIsDisplay:=NO Removed _COWVKMKeyInputControl from webView");
                 self->control = nil;
             }
         });
@@ -277,7 +279,7 @@
             [self displayKeyboardOfType:type withText:text at:(location != nil ? [location unsignedIntegerValue] : UINT_MAX)];
         } else if ([stringCommand isEqualToString:@"hide"]) {
             lastCommandIsHide = YES;
-            NSLog(@"COKbdMgr: command=hide");
+            NSLog(@"COKbdMgr: command=hide lastCommandIsHide:=YES");
             [self hideKeyboard];
         } else if (stringCommand == nil) {
             NSLog(@"COKbdMgr: No 'command' in %@", message.body);
@@ -295,6 +297,10 @@
         [control removeFromSuperview];
         NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
         control = nil;
+        if (self->lastActionIsDisplay) {
+            NSLog(@"COKbdMgr: lastActionIsDisplay==YES But display it again as loleaflet hasn't asked for it to be hidden");
+            [self displayKeyboardOfType:nil withText:@"" at:UINT_MAX];
+        }
     }
 }
 
