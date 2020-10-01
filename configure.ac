@@ -6,7 +6,7 @@ AC_PREREQ([2.63])
 AC_INIT([loolwsd], [6.4.0], [libreoffice@lists.freedesktop.org])
 LT_INIT([shared, disable-static, dlopen])
 
-AM_INIT_AUTOMAKE([1.10 subdir-objects tar-pax -Wno-portability])
+AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
 
 AC_CONFIG_MACRO_DIR([m4])
 
