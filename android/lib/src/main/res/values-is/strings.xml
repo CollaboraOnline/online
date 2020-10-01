@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">Hleð inn...</string>
-    <string name="cannot_open_file_chooser">Gat ekki opnað skráaval</string>
-    <string name="failed_to_insert_image">Mistókst að setja inn mynd</string>
-    <string name="failed_to_load_file">Mistókst að ákvarða hvaða skrá eigi að hlaða inn</string>
-    <string name="storage_permission_required">Heimild til aðgangs að gagnageymslu er nauðsynleg</string>
     <string name="temp_file_saving_disabled">Þessi skrá er aðeins lesanleg, vistun er óvirk.</string>
+    <string name="file_chromeos_read_only">Þessa skrá er ekki hægt að vista á þessum stað, opna hana skrifvarða. Færðu hana í Play-skrárnar til að fá fullan les/skrifaðgang.</string>
+    <string name="storage_permission_required">Heimild til aðgangs að gagnageymslu er nauðsynleg</string>
+    <string name="failed_to_load_file">Mistókst að ákvarða hvaða skrá eigi að hlaða inn</string>
+    <string name="failed_to_insert_image">Mistókst að setja inn mynd</string>
+    <string name="cannot_open_file_chooser">Gat ekki opnað skráaval</string>
     <string name="preparing_for_the_first_start_after_an_update">Undirbý fyrstu ræsingu eftir uppfærslu.</string>
     <string name="rate_now">Gefa einkunn núna</string>
     <string name="later">Seinna</string>
     <string name="rate_our_app_title">Takk fyrir að nota %1$s!</string>
     <string name="rate_our_app_text">Ef þér líkar þetta, skaltu endilega gefa okkur 5 stjörnur á Google Play. Góðar umsagnir notenda er það sem drífur okkur áfram.</string>
+
+    <!-- Loading SlideShow Dialog Strings -->
+    <string name="loading">Hleð inn...</string>
     <string name="exiting">Hætti...</string>
-    <string name="file_chromeos_read_only">Þessa skrá er ekki hægt að vista á þessum stað, opna hana skrifvarða. Færðu hana í Play-skrárnar til að fá fullan les/skrifaðgang.</string>
 </resources>
