@@ -34,6 +34,7 @@ man_MANS = man/loolwsd.1 \
            man/loolwsd-systemplate-setup.1 \
            man/loolwsd-generate-proof-key.1
 
+README: README.md
 dist_doc_DATA = wsd/README \
                 wsd/README.vars \
                 wsd/protocol.txt \
