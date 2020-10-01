@@ -2,23 +2,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Andras Timar <timar@fsf.hu>, 2020
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-30 18:19+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
-"Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hu/>\n"
-"Language: hu\n"
+"PO-Revision-Date: 2020-10-01 06:41+0000\n"
+"Last-Translator: Andras Timar <timar@fsf.hu>, 2020\n"
+"Language-Team: Hungarian (https://www.transifex.com/collabora-productivity-ltd/teams/68191/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
-"X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
-"X-Pootle-Revision: 3939165\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -161,11 +162,15 @@ msgstr "Munkamenet bezárása."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "A dokumentumfeldolgozáshoz használt virtuális memória maximális mennyisége (MB) – csak csökkenthető"
+msgstr ""
+"A dokumentumfeldolgozáshoz használt virtuális memória maximális mennyisége "
+"(MB) – csak csökkenthető"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "A dokumentumfeldolgozáshoz használt veremmemória maximális mennyisége (KB) – csak csökkenthető"
+msgstr ""
+"A dokumentumfeldolgozáshoz használt veremmemória maximális mennyisége (KB) –"
+" csak csökkenthető"
 
 #: admin/admin.strings.js:42
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -240,8 +245,8 @@ msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1231
-#: src/control/Control.MobileTopBar.js:45
+#: src/control/Control.LanguageDialog.js:86
+#: src/control/Control.Menubar.js:1231 src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:200
 #: src/control/Control.Tabs.js:217 src/control/Toolbar.js:626
 #: src/layer/marker/Annotation.js:202 src/layer/tile/TileLayer.js:405
@@ -250,7 +255,9 @@ msgstr "Mégse"
 
 #: admin/src/AdminSocketOverview.js:377
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr "Nem lehetett beállítani a jwt hitelesítő sütit a nem biztonságos kapcsolaton keresztül"
+msgstr ""
+"Nem lehetett beállítani a jwt hitelesítő sütit a nem biztonságos kapcsolaton"
+" keresztül"
 
 #: admin/src/AdminSocketOverview.js:381
 msgid "Failed to authenticate this session over protocol %0"
@@ -364,7 +371,8 @@ msgstr "Időbélyeg"
 msgid "Jump to state"
 msgstr "Ugrás állapotra"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:196
+#: src/control/Control.DocumentRepair.js:95
+#: src/control/Control.UserList.js:196
 msgid "You"
 msgstr "Ön"
 
@@ -766,7 +774,6 @@ msgstr "Munkalapok száma"
 msgid "Selected range of cells"
 msgstr "Kijelölt cellatartomány"
 
-# Mármint hogy insert vagy overwrite
 #: src/control/Control.StatusBar.js:305 src/control/Control.StatusBar.js:354
 msgid "Entering text mode"
 msgstr "Szövegbevitel módja"
@@ -844,8 +851,12 @@ msgid "Next slide"
 msgstr "Következő dia"
 
 #: src/control/Control.Toolbar.js:956
-msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "Feloldhatatlan visszavonási/újraalkalmazási helyzet. A dokumentum korábbi állapotának helyreállítása a megoldás."
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to "
+"resolve"
+msgstr ""
+"Feloldhatatlan visszavonási/újraalkalmazási helyzet. A dokumentum korábbi "
+"állapotának helyreállítása a megoldás."
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -1076,7 +1087,8 @@ msgstr "A QR kód nem elérhető."
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
-msgstr "Hiba történt a személyazonossághoz való hozzáférés helyreállítása közben."
+msgstr ""
+"Hiba történt a személyazonossághoz való hozzáférés helyreállítása közben."
 
 #: src/control/Signing.js:275
 msgid "PIN Code"
@@ -1199,7 +1211,8 @@ msgid "I understand the risks"
 msgstr "Megértettem a kockázatokat"
 
 #: src/control/Toolbar.js:474
-msgid "We are sorry, the information about the latest updates is not available."
+msgid ""
+"We are sorry, the information about the latest updates is not available."
 msgstr "Sajnáljuk, de nem tudunk új hírekkel szolgálni."
 
 #: src/control/Toolbar.js:519
@@ -1211,8 +1224,12 @@ msgid "\"Slow Proxy\""
 msgstr "„Lassú proxy üzemmód”"
 
 #: src/control/Toolbar.js:532
-msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr "A „Personal” változathoz csak önkéntesek nyújtanak terméktámogatást, és egyéni felhasználásra van szánva."
+msgid ""
+"The Personal edition is supported by volunteers and intended for individual "
+"use."
+msgstr ""
+"A „Personal” változathoz csak önkéntesek nyújtanak terméktámogatást, és "
+"egyéni felhasználásra van szánva."
 
 #: src/control/Toolbar.js:619
 msgid "Insert hyperlink"
@@ -1227,8 +1244,16 @@ msgid "Link"
 msgstr "Hivatkozás"
 
 #: src/core/Socket.js:59
-msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr "Az IE11 elérte a lehetséges kapcsolatok maximális számát. Ha szükséges a limit felemelése, olvassa el ezt a dokumentumot: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document"
+" to increase this limit if needed: https://docs.microsoft.com/en-us"
+"/previous-versions/windows/internet-explorer/ie-developer/general-"
+"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"Az IE11 elérte a lehetséges kapcsolatok maximális számát. Ha szükséges a "
+"limit felemelése, olvassa el ezt a dokumentumot: https://docs.microsoft.com"
+"/en-us/previous-versions/windows/internet-explorer/ie-developer/general-"
+"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -1248,11 +1273,15 @@ msgstr "A dokumentum tulajdonosa bezárta a munkamenetet"
 
 #: src/core/Socket.js:401
 msgid "Idle document - please click to reload and resume editing"
-msgstr "Inaktív dokumentum – kattintson az újratöltéshez és szerkesztés folytatásához"
+msgstr ""
+"Inaktív dokumentum – kattintson az újratöltéshez és szerkesztés "
+"folytatásához"
 
 #: src/core/Socket.js:403
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Inaktív dokumentum – tappantson az újratöltéshez és szerkesztés folytatásához"
+msgstr ""
+"Inaktív dokumentum – tappantson az újratöltéshez és szerkesztés "
+"folytatásához"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1267,16 +1296,28 @@ msgid "Server is recycling and will be available shortly"
 msgstr "A kiszolgáló éppen újraindul, hamarosan elérhető lesz."
 
 #: src/core/Socket.js:447
-msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
-msgstr "A dokumentum megváltozott a tárhelyen. Az új dokumentum fog betöltődni. Az Ön verziója egy korábbi állapotként lesz elérhető."
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+"A dokumentum megváltozott a tárhelyen. Az új dokumentum fog betöltődni. Az "
+"Ön verziója egy korábbi állapotként lesz elérhető."
 
 #: src/core/Socket.js:453
-msgid "Restoring older revision. Any unsaved changes will be available in version history"
-msgstr "Régebbi változat visszaállítása. A nem mentett változtatások a verzióelőzményekben meglesznek."
+msgid ""
+"Restoring older revision. Any unsaved changes will be available in version "
+"history"
+msgstr ""
+"Régebbi változat visszaállítása. A nem mentett változtatások a "
+"verzióelőzményekben meglesznek."
 
 #: src/core/Socket.js:572
-msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr "A dokumentum megváltozott a tárhelyen. Mi legyen a nem mentett változásokkal?"
+msgid ""
+"Document has been changed in storage. What would you like to do with your "
+"unsaved changes?"
+msgstr ""
+"A dokumentum megváltozott a tárhelyen. Mi legyen a nem mentett "
+"változásokkal?"
 
 #: src/core/Socket.js:576
 msgid "Discard"
@@ -1300,7 +1341,8 @@ msgstr "A dokumentum módosításához jelszó szükséges."
 
 #: src/core/Socket.js:661
 msgid "Hit Cancel to open in view-only mode."
-msgstr "A Mégse gombra kattintva a dokumentum csak olvasható módban fog megnyílni."
+msgstr ""
+"A Mégse gombra kattintva a dokumentum csak olvasható módban fog megnyílni."
 
 #: src/core/Socket.js:665
 msgid "Wrong password provided. Please try again."
@@ -1315,52 +1357,97 @@ msgid "Connecting..."
 msgstr "Kapcsolódás..."
 
 #: src/core/Socket.js:1081
-msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
-msgstr "Nagyon sajnáljuk, de nem lehet kapcsolódni a dokumentumhoz. Próbálja meg később."
+msgid ""
+"Well, this is embarrassing, we cannot connect to your document. Please try "
+"again."
+msgstr ""
+"Nagyon sajnáljuk, de nem lehet kapcsolódni a dokumentumhoz. Próbálja meg "
+"később."
 
 #: src/errormessages.js:13
-msgid "No disk space left on server, please contact the server administrator to continue."
+msgid ""
+"No disk space left on server, please contact the server administrator to "
+"continue."
 msgstr "Betelt a tárhely a kiszolgálón. Értesítse a rendszergazdát."
 
 #: src/errormessages.js:14
-msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
-msgstr "A host URL üres. A loolwsd kiszolgáló valószínűleg nincs jól konfigurálva. Forduljon a rendszergazdához."
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+"A host URL üres. A loolwsd kiszolgáló valószínűleg nincs jól konfigurálva. "
+"Forduljon a rendszergazdához."
 
 #: src/errormessages.js:15
-msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr "Ez a {productname} nem támogatott verziója. Elkerülendő azt a benyomást, hogy ez a verzió alkalmas intézményi felhasználásra, ez az üzenet jelenik meg, amikor több mint {docs} dokumentum vagy {connections} kapcsolat van megnyitva egy időben."
+msgid ""
+"This is an unsupported version of {productname}. To avoid the impression "
+"that it is suitable for deployment in enterprises, this message appears when"
+" more than {docs} documents or {connections} connections are in use "
+"concurrently"
+msgstr ""
+"Ez a {productname} nem támogatott verziója. Elkerülendő azt a benyomást, "
+"hogy ez a verzió alkalmas intézményi felhasználásra, ez az üzenet jelenik "
+"meg, amikor több mint {docs} dokumentum vagy {connections} kapcsolat van "
+"megnyitva egy időben."
 
 #: src/errormessages.js:16
 msgid "More information and support"
 msgstr "További információ és terméktámogatás"
 
 #: src/errormessages.js:17
-msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
-msgstr "A szolgáltatást a rendszergazda korlátozta: összesen %0 dokumentum és %1 kapcsolat lehet nyitva. A rendszer elérte ezt a korlátot. Próbálkozzon később."
+msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr ""
+"A szolgáltatást a rendszergazda korlátozta: összesen %0 dokumentum és %1 "
+"kapcsolat lehet nyitva. A rendszer elérte ezt a korlátot. Próbálkozzon "
+"később."
 
 #: src/errormessages.js:18
-msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
-msgstr "A szolgáltatás nem érhető el. Próbálja újra később, és jelezze a rendszergazdának, ha a probléma tartósan fennáll."
+msgid ""
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"A szolgáltatás nem érhető el. Próbálja újra később, és jelezze a "
+"rendszergazdának, ha a probléma tartósan fennáll."
 
 #: src/errormessages.js:19
-msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
-msgstr "Jogosulatlan WOPI gép. Próbálja újra később, és jelezze a rendszergazdának, ha a probléma tartósan fennáll."
+msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Jogosulatlan WOPI gép. Próbálja újra később, és jelezze a rendszergazdának, "
+"ha a probléma tartósan fennáll."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr "Rossz vagy hiányzó WOPISrc paraméter, lépjen kapcsolatba az ügyfélszolgálattal."
+msgstr ""
+"Rossz vagy hiányzó WOPISrc paraméter, lépjen kapcsolatba az "
+"ügyfélszolgálattal."
 
 #: src/errormessages.js:21
-msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
-msgstr "A munkamenet %time múlva lejár. Mentse a munkáját, és a folytatáshoz frissítse a munkamenetet (vagy a weboldalt)."
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr ""
+"A munkamenet %time múlva lejár. Mentse a munkáját, és a folytatáshoz "
+"frissítse a munkamenetet (vagy a weboldalt)."
 
 #: src/errormessages.js:22
-msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
-msgstr "A munkamenet lejárt. A dokumentum további módosításai nem lesznek mentve. A folytatáshoz frissítse a munkamenetet (vagy a weboldalt)."
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr ""
+"A munkamenet lejárt. A dokumentum további módosításai nem lesznek mentve. A "
+"folytatáshoz frissítse a munkamenetet (vagy a weboldalt)."
 
 #: src/errormessages.js:23
-msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
-msgstr "A dokumentum betöltése sikertelen. Ellenőrizze, hogy a fájltípus támogatott és a fájl nem sérült, majd próbálkozzon újra."
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr ""
+"A dokumentum betöltése sikertelen. Ellenőrizze, hogy a fájltípus támogatott "
+"és a fájl nem sérült, majd próbálkozzon újra."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1371,8 +1458,13 @@ msgid "You are leaving the editor, are you sure you want to visit %url?"
 msgstr "Elhagyja a szerkesztőt, biztos, hogy át akar lépni ide: %url?"
 
 #: src/errormessages.js:26
-msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr "Nem sikerült betölteni a dokumentumot. A dokumentum vagy nem jó formátumban van, vagy az engedélyezettnél több erőforrást akar használni. Forduljon a rendszergazdához."
+msgid ""
+"Failed to load the document. This document is either malformed or is taking "
+"more resources than allowed. Please contact the administrator."
+msgstr ""
+"Nem sikerült betölteni a dokumentumot. A dokumentum vagy nem jó formátumban "
+"van, vagy az engedélyezettnél több erőforrást akar használni. Forduljon a "
+"rendszergazdához."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1380,11 +1472,14 @@ msgstr "A dokumentum betöltése meghiúsult."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr "A mentés nem sikerült, mert nincs hely a lemezen. A dokumentum mostantól csak olvasható."
+msgstr ""
+"A mentés nem sikerült, mert nincs hely a lemezen. A dokumentum mostantól "
+"csak olvasható."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "A dokumentum nem menthető, mert a hozzáférési token lejárt vagy érvénytelen."
+msgstr ""
+"A dokumentum nem menthető, mert a hozzáférési token lejárt vagy érvénytelen."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
@@ -1396,21 +1491,39 @@ msgstr "A dokumentumot nem lehet átnevezni."
 
 #: src/errormessages.js:38
 #, javascript-format
-msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
-msgstr "Nem sikerült beolvasni a dokumentumot a tárhelyről. Forduljon a tárhely (%storageserver) rendszergazdájához."
+msgid ""
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr ""
+"Nem sikerült beolvasni a dokumentumot a tárhelyről. Forduljon a tárhely "
+"(%storageserver) rendszergazdájához."
 
 #: src/errormessages.js:39
 #, javascript-format
-msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
-msgstr "A mentés nem sikerült, mert a tárhelyen betelt a lemez. A dokumentum mostantól csak olvasható. A szerkesztés folytatásához lépjen kapcsolatba a rendszergazdával (%storageserver)."
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"A mentés nem sikerült, mert a tárhelyen betelt a lemez. A dokumentum "
+"mostantól csak olvasható. A szerkesztés folytatásához lépjen kapcsolatba a "
+"rendszergazdával (%storageserver)."
 
 #: src/errormessages.js:41
-msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
-msgstr "A dokumentumot nem sikerült menteni. Ellenőrizze a jogosultságokat vagy lépjen kapcsolatba a tárhely rendszergazdájával."
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"A dokumentumot nem sikerült menteni. Ellenőrizze a jogosultságokat vagy "
+"lépjen kapcsolatba a tárhely rendszergazdájával."
 
 #: src/errormessages.js:42
-msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
-msgstr "A dokumentumot nem sikerült átnevezni. Ellenőrizze a jogosultságokat vagy lépjen kapcsolatba a tárhely rendszergazdájával."
+msgid ""
+"Document cannot be renamed. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"A dokumentumot nem sikerült átnevezni. Ellenőrizze a jogosultságokat vagy "
+"lépjen kapcsolatba a tárhely rendszergazdájával."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
@@ -1453,7 +1566,8 @@ msgid "Functions"
 msgstr "Függvények"
 
 #: src/map/Clipboard.js:137
-msgid "To paste outside %productName, please first click the 'download' button"
+msgid ""
+"To paste outside %productName, please first click the 'download' button"
 msgstr "Ha másolni akar a %productName-ból, kattirson a „Letöltés” gombra."
 
 #: src/map/Clipboard.js:289
@@ -1462,19 +1576,46 @@ msgstr "Nem sikerült letölteni a vágólapot, másolja ki újra."
 
 #: src/map/Clipboard.js:838
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Használja a képernyőn megjelenő billentyűzeten lévő másolás és beillesztés gombokat.</p>"
+msgstr ""
+"<p>Használja a képernyőn megjelenő billentyűzeten lévő másolás és "
+"beillesztés gombokat.</p>"
 
 #: src/map/Clipboard.js:840
-msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért használja az alábbi gyorsbillentyűket:<ul><li><b>Ctrl+C</b>: másolás</li><li><b>Ctrl+X</b>: kivágás</li><li><b>Ctrl+V</b>: beillesztés</li></ul></p>"
+msgid ""
+"<p>Your browser has very limited access to the clipboard, so use these "
+"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For "
+"copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For "
+"pasting.</li></ul></p>"
+msgstr ""
+"<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért használja "
+"az alábbi gyorsbillentyűket:<ul><li><b>Ctrl+C</b>: "
+"másolás</li><li><b>Ctrl+X</b>: kivágás</li><li><b>Ctrl+V</b>: "
+"beillesztés</li></ul></p>"
 
 #: src/map/Clipboard.js:861
-msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr "<p>Ha a dokumentum nagyobb darabját akarja egy külső alkalmazással megosztani, akkor először le kell töltenie azt az eszközre. Ehhez nyomja meg a az alábbi „Letöltés indítása” gombot, és amikor a letöltés kész, nyomja meg a „Vágólapra másolás megerősítése” gombot.</p><p>Ha a %productName-on belül másol egyik dokumentumból a másikba, akkor nem kell a dokumentumot letöltenie.</p>"
+msgid ""
+"<p>If you would like to share larger elements of your document with other "
+"applications it is necessary to first download them onto your device. To do "
+"that press the \"Start download\" button below, and when complete click "
+"\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
+"documents inside %productName, there is no need to download.</p>"
+msgstr ""
+"<p>Ha a dokumentum nagyobb darabját akarja egy külső alkalmazással "
+"megosztani, akkor először le kell töltenie azt az eszközre. Ehhez nyomja meg"
+" a az alábbi „Letöltés indítása” gombot, és amikor a letöltés kész, nyomja "
+"meg a „Vágólapra másolás megerősítése” gombot.</p><p>Ha a %productName-on "
+"belül másol egyik dokumentumból a másikba, akkor nem kell a dokumentumot "
+"letöltenie.</p>"
 
 #: src/map/Clipboard.js:877
-msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr "<p>Már elkezdődött egy letöltés egy másolási/beillesztési művelet következtében. Várjon, amíg véget nem ér a letöltés, vagy szakítsa meg, mielőtt egy új letöltést kezdeményez.</p>"
+msgid ""
+"<p>A download due to a large copy/paste operation has already started. "
+"Please, wait for the current download or cancel it before starting a new "
+"one</p>"
+msgstr ""
+"<p>Már elkezdődött egy letöltés egy másolási/beillesztési művelet "
+"következtében. Várjon, amíg véget nem ér a letöltés, vagy szakítsa meg, "
+"mielőtt egy új letöltést kezdeményez.</p>"
 
 #: src/map/Map.js:219
 msgid "Initializing..."
@@ -1496,12 +1637,15 @@ msgstr "Inaktív dokumentum – kattintson a szerkesztés folytatásához"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "A fájltípus (%0) nem tölthető fel a kiszolgálóra, mert a fájlnak nincs neve."
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file has no name"
+msgstr ""
+"A fájltípus (%0) nem tölthető fel a kiszolgálóra, mert a fájlnak nincs neve."
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr "A fájltípus (%0) nem tölthető fel a kiszolgálóra, mert a fájl üres."
 
 #: src/map/handler/Map.FileInserter.js:129
@@ -1519,57 +1663,3 @@ msgstr "Új fájl létrehozása sablonból..."
 #: src/map/handler/Map.WOPI.js:436
 msgid "Creating copy..."
 msgstr "Másolat létrehozása..."
-
-#~ msgid "Number of views"
-#~ msgstr "Nézetek száma"
-
-#~ msgid "Documents"
-#~ msgstr "Dokumentumok"
-
-#~ msgid "Edit"
-#~ msgstr "Szerkesztés"
-
-#~ msgid "First sheet"
-#~ msgstr "Első munkalap"
-
-#~ msgid "Previous sheet"
-#~ msgstr "Előző munkalap"
-
-#~ msgid "Next sheet"
-#~ msgstr "Következő munkalap"
-
-#~ msgid "Last sheet"
-#~ msgstr "Utolsó munkalap"
-
-#~ msgid "Color"
-#~ msgstr "Szín"
-
-#~ msgid "Gradient"
-#~ msgstr "Színátmenet"
-
-#~ msgid "Hatching"
-#~ msgstr "Vonalkázás"
-
-#~ msgid "Pattern"
-#~ msgstr "Minta"
-
-#~ msgid "Portrait"
-#~ msgstr "Álló"
-
-#~ msgid "Landscape"
-#~ msgstr "Fekvő"
-
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "Oldal tájolásának átváltása"
-
-#~ msgid "Mobile Wizard"
-#~ msgstr "Mobilvarázsló"
-
-#~ msgid "Save as PDF"
-#~ msgstr "Mentés PDF-ként"
-
-#~ msgid "<p>Your browser has very limited access to the clipboard</p>"
-#~ msgstr "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p>"
-
-#~ msgid "Master Slides"
-#~ msgstr "Diasablonok"
