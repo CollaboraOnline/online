@@ -2,23 +2,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Andras Timar <timar@fsf.hu>, 2020
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-30 18:19+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ca/>\n"
-"Language: ca\n"
+"PO-Revision-Date: 2020-10-01 06:41+0000\n"
+"Last-Translator: Andras Timar <timar@fsf.hu>, 2020\n"
+"Language-Team: Catalan (https://www.transifex.com/collabora-productivity-ltd/teams/68191/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
-"X-Pootle-Path: /ca/libo_online/loleaflet-ui-ca.po\n"
-"X-Pootle-Revision: 3939538\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -161,11 +162,15 @@ msgstr "Finalitza la sessió."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "Màxima memòria virtual per a processament de documents (en MB); només reducció"
+msgstr ""
+"Màxima memòria virtual per a processament de documents (en MB); només "
+"reducció"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Màxima memòria de pila per a processament de documents (en kB); només reducció"
+msgstr ""
+"Màxima memòria de pila per a processament de documents (en kB); només "
+"reducció"
 
 #: admin/admin.strings.js:42
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -240,8 +245,8 @@ msgid "OK"
 msgstr "D'acord"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1231
-#: src/control/Control.MobileTopBar.js:45
+#: src/control/Control.LanguageDialog.js:86
+#: src/control/Control.Menubar.js:1231 src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:200
 #: src/control/Control.Tabs.js:217 src/control/Toolbar.js:626
 #: src/layer/marker/Annotation.js:202 src/layer/tile/TileLayer.js:405
@@ -250,7 +255,9 @@ msgstr "Cancel·la"
 
 #: admin/src/AdminSocketOverview.js:377
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr "No s'ha pogut establir la galeta d'autenticació del jwt a través d'una connexió no segura"
+msgstr ""
+"No s'ha pogut establir la galeta d'autenticació del jwt a través d'una "
+"connexió no segura"
 
 #: admin/src/AdminSocketOverview.js:381
 msgid "Failed to authenticate this session over protocol %0"
@@ -364,7 +371,8 @@ msgstr "Marca horària"
 msgid "Jump to state"
 msgstr "Salta a l'estat"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:196
+#: src/control/Control.DocumentRepair.js:95
+#: src/control/Control.UserList.js:196
 msgid "You"
 msgstr "Vós"
 
@@ -843,8 +851,12 @@ msgid "Next slide"
 msgstr "Diapositiva següent"
 
 #: src/control/Control.Toolbar.js:956
-msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "Hi ha un conflicte de desfer i refer amb múltiples usuaris. Useu la reparació del document per a resoldre-ho"
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to "
+"resolve"
+msgstr ""
+"Hi ha un conflicte de desfer i refer amb múltiples usuaris. Useu la "
+"reparació del document per a resoldre-ho"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -1031,7 +1043,8 @@ msgstr "Inicia la presentació"
 
 #: src/control/Permission.js:45
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr "No s'ha pogut blocar el document i s'ha obert en el mode només de lectura."
+msgstr ""
+"No s'ha pogut blocar el document i s'ha obert en el mode només de lectura."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
 msgid "Server returned this reason:"
@@ -1175,7 +1188,8 @@ msgstr "Signat però no validat"
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
-msgstr "La signatura és correcta, però el document només s'ha signat parcialment."
+msgstr ""
+"La signatura és correcta, però el document només s'ha signat parcialment."
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
@@ -1198,8 +1212,10 @@ msgid "I understand the risks"
 msgstr "Comprenc els riscs"
 
 #: src/control/Toolbar.js:474
-msgid "We are sorry, the information about the latest updates is not available."
-msgstr "No està disponible la informació quant a les actualitzacions més recents."
+msgid ""
+"We are sorry, the information about the latest updates is not available."
+msgstr ""
+"No està disponible la informació quant a les actualitzacions més recents."
 
 #: src/control/Toolbar.js:519
 msgid "This version of %productName is powered by"
@@ -1210,8 +1226,12 @@ msgid "\"Slow Proxy\""
 msgstr "«Servidor intermediari lent»"
 
 #: src/control/Toolbar.js:532
-msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr "L'edició Personal la mantenen voluntaris i està pensada per a un ús individual."
+msgid ""
+"The Personal edition is supported by volunteers and intended for individual "
+"use."
+msgstr ""
+"L'edició Personal la mantenen voluntaris i està pensada per a un ús "
+"individual."
 
 #: src/control/Toolbar.js:619
 msgid "Insert hyperlink"
@@ -1226,12 +1246,22 @@ msgid "Link"
 msgstr "Enllaç"
 
 #: src/core/Socket.js:59
-msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr "L'IE11 ha assolit el seu nombre màxim de connexions. Vegeu aquest document per a augmentar-ne el límit si cal: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document"
+" to increase this limit if needed: https://docs.microsoft.com/en-us"
+"/previous-versions/windows/internet-explorer/ie-developer/general-"
+"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"L'IE11 ha assolit el seu nombre màxim de connexions. Vegeu aquest document "
+"per a augmentar-ne el límit si cal: https://docs.microsoft.com/en-us"
+"/previous-versions/windows/internet-explorer/ie-developer/general-"
+"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Ep! S'ha produït un problema en intentar connectar amb el LibreOffice Online: "
+msgstr ""
+"Ep! S'ha produït un problema en intentar connectar amb el LibreOffice "
+"Online: "
 
 #: src/core/Socket.js:297
 msgid "Served by:"
@@ -1247,15 +1277,19 @@ msgstr "El propietari del document ha finalitzat la sessió"
 
 #: src/core/Socket.js:401
 msgid "Idle document - please click to reload and resume editing"
-msgstr "Document inactiu; feu clic per a tornar a carregar-lo i continuar-ne l'edició"
+msgstr ""
+"Document inactiu; feu clic per a tornar a carregar-lo i continuar-ne "
+"l'edició"
 
 #: src/core/Socket.js:403
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Document inactiu; toqueu per a tornar a carregar-lo i continuar-ne l'edició"
+msgstr ""
+"Document inactiu; toqueu per a tornar a carregar-lo i continuar-ne l'edició"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr "El servidor s'està tancant per manteniment (s'està desant automàticament)"
+msgstr ""
+"El servidor s'està tancant per manteniment (s'està desant automàticament)"
 
 #: src/core/Socket.js:415
 msgid "Oops, there is a problem connecting the document"
@@ -1266,16 +1300,28 @@ msgid "Server is recycling and will be available shortly"
 msgstr "El servidor s'està reciclant i aviat serà disponible"
 
 #: src/core/Socket.js:447
-msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
-msgstr "El document ha canviat en l'emmagatzematge. S'està carregant el document nou. La vostra versió és disponible com a versió."
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+"El document ha canviat en l'emmagatzematge. S'està carregant el document "
+"nou. La vostra versió és disponible com a versió."
 
 #: src/core/Socket.js:453
-msgid "Restoring older revision. Any unsaved changes will be available in version history"
-msgstr "Restauració d'una versió anterior. Tots els canvis sense desar seran disponibles en l'historial de versions"
+msgid ""
+"Restoring older revision. Any unsaved changes will be available in version "
+"history"
+msgstr ""
+"Restauració d'una versió anterior. Tots els canvis sense desar seran "
+"disponibles en l'historial de versions"
 
 #: src/core/Socket.js:572
-msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr "S'ha modificat el document a l'emmagatzematge. Què voleu fer amb els canvis sense desar?"
+msgid ""
+"Document has been changed in storage. What would you like to do with your "
+"unsaved changes?"
+msgstr ""
+"S'ha modificat el document a l'emmagatzematge. Què voleu fer amb els canvis "
+"sense desar?"
 
 #: src/core/Socket.js:576
 msgid "Discard"
@@ -1314,52 +1360,98 @@ msgid "Connecting..."
 msgstr "S'està connectant…"
 
 #: src/core/Socket.js:1081
-msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
-msgstr "Això no hauria de passar. No podem connectar amb el vostre document. Torneu-ho a intentar."
+msgid ""
+"Well, this is embarrassing, we cannot connect to your document. Please try "
+"again."
+msgstr ""
+"Això no hauria de passar. No podem connectar amb el vostre document. Torneu-"
+"ho a intentar."
 
 #: src/errormessages.js:13
-msgid "No disk space left on server, please contact the server administrator to continue."
-msgstr "No hi ha espai de disc al servidor, contacteu amb l'administrador del servidor per a continuar."
+msgid ""
+"No disk space left on server, please contact the server administrator to "
+"continue."
+msgstr ""
+"No hi ha espai de disc al servidor, contacteu amb l'administrador del "
+"servidor per a continuar."
 
 #: src/errormessages.js:14
-msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
-msgstr "L'URL del servidor és buit. Probablement el servidor loolwsd està mal configurat. Contacteu amb l'administrador."
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+"L'URL del servidor és buit. Probablement el servidor loolwsd està mal "
+"configurat. Contacteu amb l'administrador."
 
 #: src/errormessages.js:15
-msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr "Aquesta és una versió del {productname} sense assistència. Per a evitar la impressió que és adequada per a entorns empresarials, aquest missatge apareix si hi ha més de {docs} documents o {connections} connexions en ús simultàniament."
+msgid ""
+"This is an unsupported version of {productname}. To avoid the impression "
+"that it is suitable for deployment in enterprises, this message appears when"
+" more than {docs} documents or {connections} connections are in use "
+"concurrently"
+msgstr ""
+"Aquesta és una versió del {productname} sense assistència. Per a evitar la "
+"impressió que és adequada per a entorns empresarials, aquest missatge "
+"apareix si hi ha més de {docs} documents o {connections} connexions en ús "
+"simultàniament."
 
 #: src/errormessages.js:16
 msgid "More information and support"
 msgstr "Més informació i assistència"
 
 #: src/errormessages.js:17
-msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
-msgstr "Aquest servei és limitat a %0 documents i %1 connexions totals per l'administrador. Heu assolit aquest límit. Torneu a intentar-ho més tard."
+msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr ""
+"Aquest servei és limitat a %0 documents i %1 connexions totals per "
+"l'administrador. Heu assolit aquest límit. Torneu a intentar-ho més tard."
 
 #: src/errormessages.js:18
-msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
-msgstr "El servei no és disponible. Torneu-ho a intentar més tard i informeu l'administrador si el problema persisteix."
+msgid ""
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"El servei no és disponible. Torneu-ho a intentar més tard i informeu "
+"l'administrador si el problema persisteix."
 
 #: src/errormessages.js:19
-msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
-msgstr "Servidor WOPI no autoritzat. Torneu-ho a intentar més tard i informeu l'administrador si el problema persisteix."
+msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Servidor WOPI no autoritzat. Torneu-ho a intentar més tard i informeu "
+"l'administrador si el problema persisteix."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr "El paràmetre WOPISrc no existeix o és incorrecte. Poseu-vos en contacte amb el servei tècnic."
+msgstr ""
+"El paràmetre WOPISrc no existeix o és incorrecte. Poseu-vos en contacte amb "
+"el servei tècnic."
 
 #: src/errormessages.js:21
-msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
-msgstr "La sessió finalitzarà en %time. Deseu la feina i actualitzeu la sessió (o la pàgina web) per a continuar."
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr ""
+"La sessió finalitzarà en %time. Deseu la feina i actualitzeu la sessió (o la"
+" pàgina web) per a continuar."
 
 #: src/errormessages.js:22
-msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
-msgstr "La sessió ha finalitzat. Els canvis futurs en el document potser no es desin. Actualitzeu la sessió (o la pàgina web) per a continuar."
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr ""
+"La sessió ha finalitzat. Els canvis futurs en el document potser no es "
+"desin. Actualitzeu la sessió (o la pàgina web) per a continuar."
 
 #: src/errormessages.js:23
-msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
-msgstr "No s'ha pogut carregar el document. Assegureu-vos que el tipus de fitxer és suportat i no estigui malmès, i torneu a intentar-ho més tard."
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr ""
+"No s'ha pogut carregar el document. Assegureu-vos que el tipus de fitxer és "
+"suportat i no estigui malmès, i torneu a intentar-ho més tard."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1370,8 +1462,12 @@ msgid "You are leaving the editor, are you sure you want to visit %url?"
 msgstr "Esteu a punt d'abandonar l'editor. Segur que voleu visitar %url?"
 
 #: src/errormessages.js:26
-msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr "No s'ha pogut carregar el document. Potser està malmès o necessita més recursos dels permesos. Contacteu amb l'administrador."
+msgid ""
+"Failed to load the document. This document is either malformed or is taking "
+"more resources than allowed. Please contact the administrator."
+msgstr ""
+"No s'ha pogut carregar el document. Potser està malmès o necessita més "
+"recursos dels permesos. Contacteu amb l'administrador."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1379,7 +1475,9 @@ msgstr "No s'ha pogut carregar el document."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr "El desament ha fallat per manca d'espai lliure en el disc. El document ara serà de només lectura."
+msgstr ""
+"El desament ha fallat per manca d'espai lliure en el disc. El document ara "
+"serà de només lectura."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1395,21 +1493,39 @@ msgstr "No s'ha pogut canviar de nom el document."
 
 #: src/errormessages.js:38
 #, javascript-format
-msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
-msgstr "No s'ha pogut llegir el document del magatzem. Contacte amb l'administrador del servidor d'emmagatzematge (%storageserver)."
+msgid ""
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr ""
+"No s'ha pogut llegir el document del magatzem. Contacte amb l'administrador "
+"del servidor d'emmagatzematge (%storageserver)."
 
 #: src/errormessages.js:39
 #, javascript-format
-msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
-msgstr "No hi ha suficient espai de disc lliure en el servidor. Ara el document és de només lectura. Contacteu amb l'administrador del servidor (%storageserver) per a continuar l'edició."
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"No hi ha suficient espai de disc lliure en el servidor. Ara el document és "
+"de només lectura. Contacteu amb l'administrador del servidor "
+"(%storageserver) per a continuar l'edició."
 
 #: src/errormessages.js:41
-msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
-msgstr "El document no s'ha pogut desar en el magatzem. Comproveu els permisos o contacteu amb l'administrador del servidor d'emmagatzematge."
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"El document no s'ha pogut desar en el magatzem. Comproveu els permisos o "
+"contacteu amb l'administrador del servidor d'emmagatzematge."
 
 #: src/errormessages.js:42
-msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
-msgstr "No s'ha pogut canviar el nom del document. Comproveu els permisos o contacteu amb l'administrador del servidor d'emmagatzematge."
+msgid ""
+"Document cannot be renamed. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"No s'ha pogut canviar el nom del document. Comproveu els permisos o "
+"contacteu amb l'administrador del servidor d'emmagatzematge."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
@@ -1452,7 +1568,8 @@ msgid "Functions"
 msgstr "Funcions"
 
 #: src/map/Clipboard.js:137
-msgid "To paste outside %productName, please first click the 'download' button"
+msgid ""
+"To paste outside %productName, please first click the 'download' button"
 msgstr "Per a enganxar fora del %productName, primer feu clic al botó «Baixa»"
 
 #: src/map/Clipboard.js:289
@@ -1464,16 +1581,40 @@ msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Useu els botons de copiar i enganxar en el teclat de pantalla.</p>"
 
 #: src/map/Clipboard.js:840
-msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr "<p>El vostre navegador té accés molt limitat al porta-retalls. Feu servir aquestes dreceres de teclat:<ul><li><b>Ctrl+C</b>: per a copiar.</li><li><b>Ctrl+X</b>: per a retallar.</li><li><b>Ctrl+V</b>: per a enganxar.</li></ul></p>"
+msgid ""
+"<p>Your browser has very limited access to the clipboard, so use these "
+"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For "
+"copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For "
+"pasting.</li></ul></p>"
+msgstr ""
+"<p>El vostre navegador té accés molt limitat al porta-retalls. Feu servir "
+"aquestes dreceres de teclat:<ul><li><b>Ctrl+C</b>: per a "
+"copiar.</li><li><b>Ctrl+X</b>: per a retallar.</li><li><b>Ctrl+V</b>: per a "
+"enganxar.</li></ul></p>"
 
 #: src/map/Clipboard.js:861
-msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr "<p>Si voleu compartir elements més grans que el vostre document amb altres aplicacions cal baixar-los primer en el vostre aparell. Per a fer això pitgeu el botó «Inicia la baixada» de sota i aleshores feu clic en «Confirma la còpia al porta-retalls».</p><p>Si esteu copiant i baixant entre documents del %productName, no cal baixar-los.</p>"
+msgid ""
+"<p>If you would like to share larger elements of your document with other "
+"applications it is necessary to first download them onto your device. To do "
+"that press the \"Start download\" button below, and when complete click "
+"\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
+"documents inside %productName, there is no need to download.</p>"
+msgstr ""
+"<p>Si voleu compartir elements més grans que el vostre document amb altres "
+"aplicacions cal baixar-los primer en el vostre aparell. Per a fer això "
+"pitgeu el botó «Inicia la baixada» de sota i aleshores feu clic en «Confirma"
+" la còpia al porta-retalls».</p><p>Si esteu copiant i baixant entre "
+"documents del %productName, no cal baixar-los.</p>"
 
 #: src/map/Clipboard.js:877
-msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr "<p>Ja s'ha iniciat una baixada per una operació de copiat o enganxat gran. Espereu que la baixada actual finalitzi o cancel·leu-la abans de començar-ne una altra</p>"
+msgid ""
+"<p>A download due to a large copy/paste operation has already started. "
+"Please, wait for the current download or cancel it before starting a new "
+"one</p>"
+msgstr ""
+"<p>Ja s'ha iniciat una baixada per una operació de copiat o enganxat gran. "
+"Espereu que la baixada actual finalitzi o cancel·leu-la abans de començar-ne"
+" una altra</p>"
 
 #: src/map/Map.js:219
 msgid "Initializing..."
@@ -1495,12 +1636,15 @@ msgstr "El document no és actiu; feu clic per a continuar editant-lo"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "El fitxer de tipus «%0» no es pot pujar al servidor perquè no té un nom"
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file has no name"
+msgstr ""
+"El fitxer de tipus «%0» no es pot pujar al servidor perquè no té un nom"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr "El fitxer de tipus «%0» no es pot pujar al servidor perquè és buit"
 
 #: src/map/handler/Map.FileInserter.js:129
@@ -1518,57 +1662,3 @@ msgstr "S'està creant un fitxer nou a partir d'una plantilla..."
 #: src/map/handler/Map.WOPI.js:436
 msgid "Creating copy..."
 msgstr "S'està creant una còpia..."
-
-#~ msgid "Number of views"
-#~ msgstr "Nre. de visualitzacions"
-
-#~ msgid "Documents"
-#~ msgstr "Documents"
-
-#~ msgid "Edit"
-#~ msgstr "Edita"
-
-#~ msgid "First sheet"
-#~ msgstr "Primer full"
-
-#~ msgid "Previous sheet"
-#~ msgstr "Full anterior"
-
-#~ msgid "Next sheet"
-#~ msgstr "Full següent"
-
-#~ msgid "Last sheet"
-#~ msgstr "Últim full"
-
-#~ msgid "Color"
-#~ msgstr "Color"
-
-#~ msgid "Gradient"
-#~ msgstr "Degradat"
-
-#~ msgid "Hatching"
-#~ msgstr "Ombreig"
-
-#~ msgid "Pattern"
-#~ msgstr "Patró"
-
-#~ msgid "Portrait"
-#~ msgstr "Vertical"
-
-#~ msgid "Landscape"
-#~ msgstr "Horitzontal"
-
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "Commuta l'orientació del text"
-
-#~ msgid "Mobile Wizard"
-#~ msgstr "Auxiliar mòbil"
-
-#~ msgid "Save as PDF"
-#~ msgstr "Desa com a PDF"
-
-#~ msgid "<p>Your browser has very limited access to the clipboard</p>"
-#~ msgstr "<p>El vostre navegador té accés molt limitat al porta-retalls</p>"
-
-#~ msgid "Master Slides"
-#~ msgstr "Diapositives mestres"
