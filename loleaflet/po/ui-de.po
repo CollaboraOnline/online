@@ -2,22 +2,25 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Andras Timar <andras.timar@collabora.com>, 2020
+# Marc Rodrigues <info@sustain-release.de>, 2020
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-16 10:39+0000\n"
-"Last-Translator: Christian Kühl <kuehl.christian@googlemail.com>\n"
-"Language-Team: German <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/de/>\n"
-"Language: de\n"
+"PO-Revision-Date: 2020-10-01 06:41+0000\n"
+"Last-Translator: Marc Rodrigues <info@sustain-release.de>, 2020\n"
+"Language-Team: German (https://www.transifex.com/collabora-productivity-ltd/teams/68191/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
-"X-Pootle-Path: /de/libo_online/loleaflet-ui-de.po\n"
-"X-Pootle-Revision: 3937733\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -160,15 +163,19 @@ msgstr "Sitzung töten."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "Maximaler virtueller Speicher für Dokumentenprozess (in MB) - nur reduzieren"
+msgstr ""
+"Maximaler virtueller Speicher für Dokumentenprozess (in MB) - nur reduzieren"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Maximaler Stapelspeicher für Dokumentenprozess (in kB) - nur reduzieren"
+msgstr ""
+"Maximaler Stapelspeicher für Dokumentenprozess (in kB) - nur reduzieren"
 
 #: admin/admin.strings.js:42
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Maximal erlaubte Dateigröße zum Schreiben auf die Festplatte (in MB) - nur reduzieren"
+msgstr ""
+"Maximal erlaubte Dateigröße zum Schreiben auf die Festplatte (in MB) - nur "
+"reduzieren"
 
 #: admin/admin.strings.js:43
 msgid "Documents:"
@@ -239,8 +246,8 @@ msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1231
-#: src/control/Control.MobileTopBar.js:45
+#: src/control/Control.LanguageDialog.js:86
+#: src/control/Control.Menubar.js:1231 src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:200
 #: src/control/Control.Tabs.js:217 src/control/Toolbar.js:626
 #: src/layer/marker/Annotation.js:202 src/layer/tile/TileLayer.js:405
@@ -249,7 +256,9 @@ msgstr "Abbrechen"
 
 #: admin/src/AdminSocketOverview.js:377
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr "Fehler beim Setzen des JWT-Authentifizierungscookies über eine unsichere Verbindung"
+msgstr ""
+"Fehler beim Setzen des JWT-Authentifizierungscookies über eine unsichere "
+"Verbindung"
 
 #: admin/src/AdminSocketOverview.js:381
 msgid "Failed to authenticate this session over protocol %0"
@@ -309,7 +318,7 @@ msgstr " Sekunden"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Ausgewählte Blätter anzeigen"
 
 #: src/control/ColorPicker.js:129
 msgid "No color"
@@ -325,7 +334,8 @@ msgstr "Verknüpfung öffnen"
 
 #: src/control/Control.AlertDialog.js:84
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Der Server ist auf einen Fehler %0 beim Ausführen des Befehls %1 gestoßen."
+msgstr ""
+"Der Server ist auf einen Fehler %0 beim Ausführen des Befehls %1 gestoßen."
 
 #: src/control/Control.ContextMenu.js:187
 msgid "Delete"
@@ -363,7 +373,8 @@ msgstr "Zeitstempel"
 msgid "Jump to state"
 msgstr "Zum Status springen"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:196
+#: src/control/Control.DocumentRepair.js:95
+#: src/control/Control.UserList.js:196
 msgid "You"
 msgstr "Sie"
 
@@ -842,8 +853,12 @@ msgid "Next slide"
 msgstr "Nächste Folie"
 
 #: src/control/Control.Toolbar.js:956
-msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "Konflikt beim Rückgängigmachen/Wiederherstellen mit mehreren Benutzern. Bitte verwenden Sie die Dokumentwiederherstellung zur Lösung"
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to "
+"resolve"
+msgstr ""
+"Konflikt beim Rückgängigmachen/Wiederherstellen mit mehreren Benutzern. "
+"Bitte verwenden Sie die Dokumentwiederherstellung zur Lösung"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -1030,7 +1045,9 @@ msgstr "Präsentation starten"
 
 #: src/control/Permission.js:45
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr "Das Dokument konnte nicht gesperrt werden und wird im schreibgeschützten Modus geöffnet."
+msgstr ""
+"Das Dokument konnte nicht gesperrt werden und wird im schreibgeschützten "
+"Modus geöffnet."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
 msgid "Server returned this reason:"
@@ -1197,8 +1214,11 @@ msgid "I understand the risks"
 msgstr "Ich verstehe das Risiko"
 
 #: src/control/Toolbar.js:474
-msgid "We are sorry, the information about the latest updates is not available."
-msgstr "Es tut uns leid, die Informationen zu den neuesten Aktualisierungen sind nicht verfügbar."
+msgid ""
+"We are sorry, the information about the latest updates is not available."
+msgstr ""
+"Es tut uns leid, die Informationen zu den neuesten Aktualisierungen sind "
+"nicht verfügbar."
 
 #: src/control/Toolbar.js:519
 msgid "This version of %productName is powered by"
@@ -1209,8 +1229,12 @@ msgid "\"Slow Proxy\""
 msgstr "\"Langsamer Proxy\""
 
 #: src/control/Toolbar.js:532
-msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr "Die Personal Edition wird von Freiwilligen unterstützt und ist für den individuellen Gebrauch bestimmt."
+msgid ""
+"The Personal edition is supported by volunteers and intended for individual "
+"use."
+msgstr ""
+"Die Personal Edition wird von Freiwilligen unterstützt und ist für den "
+"individuellen Gebrauch bestimmt."
 
 #: src/control/Toolbar.js:619
 msgid "Insert hyperlink"
@@ -1225,8 +1249,17 @@ msgid "Link"
 msgstr "Hyperlink"
 
 #: src/core/Socket.js:59
-msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr "IE11 hat die maximale Anzahl an Verbindungen erreicht. Falls benötigt, lesen Sie in diesem Dokument nach, wie Sie diese Grenze erhöhen können: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document"
+" to increase this limit if needed: https://docs.microsoft.com/en-us"
+"/previous-versions/windows/internet-explorer/ie-developer/general-"
+"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"IE11 hat die maximale Anzahl an Verbindungen erreicht. Falls benötigt, lesen"
+" Sie in diesem Dokument nach, wie Sie diese Grenze erhöhen können: "
+"https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer"
+"/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
+"connections"
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -1246,11 +1279,15 @@ msgstr "Sitzung durch Dokumenteigentümer beendet"
 
 #: src/core/Socket.js:401
 msgid "Idle document - please click to reload and resume editing"
-msgstr "Leeres Dokument - zum Neuladen und Fortsetzen der Bearbeitung klicken Sie bitte"
+msgstr ""
+"Leeres Dokument - zum Neuladen und Fortsetzen der Bearbeitung klicken Sie "
+"bitte"
 
 #: src/core/Socket.js:403
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Inaktives Dokument – zum Neuladen und Fortsetzen der Bearbeitung bitte tippen"
+msgstr ""
+"Inaktives Dokument – zum Neuladen und Fortsetzen der Bearbeitung bitte "
+"tippen"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1265,16 +1302,28 @@ msgid "Server is recycling and will be available shortly"
 msgstr "Der Server wird neugestartet und ist demnächst wieder verfügbar."
 
 #: src/core/Socket.js:447
-msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
-msgstr "Das Dokument auf dem Speicher wurde geändert. Öffnen Sie das neue Dokument. Ihre Version steht als Revision zur Verfügung."
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+"Das Dokument auf dem Speicher wurde geändert. Öffnen Sie das neue Dokument. "
+"Ihre Version steht als Revision zur Verfügung."
 
 #: src/core/Socket.js:453
-msgid "Restoring older revision. Any unsaved changes will be available in version history"
-msgstr "Ältere Version wiederherstellen. Alle ungespeicherten Änderungen bleiben in der Versionshistorie erhalten"
+msgid ""
+"Restoring older revision. Any unsaved changes will be available in version "
+"history"
+msgstr ""
+"Ältere Version wiederherstellen. Alle ungespeicherten Änderungen bleiben in "
+"der Versionshistorie erhalten"
 
 #: src/core/Socket.js:572
-msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr "Das Dokument im Speicher wurde geändert. Wie möchten Sie mit Ihren ungespeicherten Änderungen verfahren?"
+msgid ""
+"Document has been changed in storage. What would you like to do with your "
+"unsaved changes?"
+msgstr ""
+"Das Dokument im Speicher wurde geändert. Wie möchten Sie mit Ihren "
+"ungespeicherten Änderungen verfahren?"
 
 #: src/core/Socket.js:576
 msgid "Discard"
@@ -1302,7 +1351,8 @@ msgstr "Klicken Sie auf Abbrechen, um das Dokument im Ansichtsmodus zu öffnen"
 
 #: src/core/Socket.js:665
 msgid "Wrong password provided. Please try again."
-msgstr "Sie haben ein falsches Kennwort eingegeben. Bitte versuchen Sie es erneut."
+msgstr ""
+"Sie haben ein falsches Kennwort eingegeben. Bitte versuchen Sie es erneut."
 
 #: src/core/Socket.js:803 src/map/Map.js:1518
 msgid "Loading..."
@@ -1313,52 +1363,103 @@ msgid "Connecting..."
 msgstr "Verbinden..."
 
 #: src/core/Socket.js:1081
-msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
-msgstr "Es konnte keine Verbindung zu Ihrem Dokument hergestellt werden. Bitte versuchen Sie es erneut."
+msgid ""
+"Well, this is embarrassing, we cannot connect to your document. Please try "
+"again."
+msgstr ""
+"Es konnte keine Verbindung zu Ihrem Dokument hergestellt werden. Bitte "
+"versuchen Sie es erneut."
 
 #: src/errormessages.js:13
-msgid "No disk space left on server, please contact the server administrator to continue."
-msgstr "Kein Speicherplatz mehr auf dem Server, kontaktieren Sie bitte den Server-Administrator, um fortzufahren."
+msgid ""
+"No disk space left on server, please contact the server administrator to "
+"continue."
+msgstr ""
+"Kein Speicherplatz mehr auf dem Server, kontaktieren Sie bitte den Server-"
+"Administrator, um fortzufahren."
 
 #: src/errormessages.js:14
-msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
-msgstr "Die Host-URL ist leer. Der loolwsd-Server ist vermutlich falsch konfiguriert, bitte wenden Sie sich an den Administrator."
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+"Die Host-URL ist leer. Der loolwsd-Server ist vermutlich falsch "
+"konfiguriert, bitte wenden Sie sich an den Administrator."
 
 #: src/errormessages.js:15
-msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr "Dies ist eine nicht unterstützte {productname} Version. Um den Eindruck zu vermeiden, dass sie sich für den Einsatz in Unternehmen eignet, erscheint diese Nachricht, wenn mehr als {docs} Dokumente oder {connections} Verbindungen gleichzeitig verwendet werden."
+msgid ""
+"This is an unsupported version of {productname}. To avoid the impression "
+"that it is suitable for deployment in enterprises, this message appears when"
+" more than {docs} documents or {connections} connections are in use "
+"concurrently"
+msgstr ""
+"Dies ist eine nicht unterstützte {productname} Version. Um den Eindruck zu "
+"vermeiden, dass sie sich für den Einsatz in Unternehmen eignet, erscheint "
+"diese Nachricht, wenn mehr als {docs} Dokumente oder {connections} "
+"Verbindungen gleichzeitig verwendet werden."
 
 #: src/errormessages.js:16
 msgid "More information and support"
 msgstr "Weitere Informationen und Unterstützung"
 
 #: src/errormessages.js:17
-msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
-msgstr "Dieser Service ist durch den Administrator auf %0 Dokumente und %1 Verbindungen insgesamt begrenzt. Diese Begrenzung wurde erreicht. Bitte versuchen Sie es später erneut."
+msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr ""
+"Dieser Service ist durch den Administrator auf %0 Dokumente und %1 "
+"Verbindungen insgesamt begrenzt. Diese Begrenzung wurde erreicht. Bitte "
+"versuchen Sie es später erneut."
 
 #: src/errormessages.js:18
-msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
-msgstr "Der Dienst ist nicht verfügbar. Bitte versuchen Sie es später noch einmal und melden Sie sich bei Ihrem Administrator, falls das Problem weiterhin besteht."
+msgid ""
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Der Dienst ist nicht verfügbar. Bitte versuchen Sie es später noch einmal "
+"und melden Sie sich bei Ihrem Administrator, falls das Problem weiterhin "
+"besteht."
 
 #: src/errormessages.js:19
-msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
-msgstr "Unautorisierter WOPI-Host. Bitte versuchen Sie es später noch einmal und melden Sie sich bei Ihrem Administrator, falls das Problem weiterhin besteht."
+msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Unautorisierter WOPI-Host. Bitte versuchen Sie es später noch einmal und "
+"melden Sie sich bei Ihrem Administrator, falls das Problem weiterhin "
+"besteht."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr "Falsche oder fehlenden WOPISrc-Parameter, bitte kontaktieren Sie den Support."
+msgstr ""
+"Falsche oder fehlenden WOPISrc-Parameter, bitte kontaktieren Sie den "
+"Support."
 
 #: src/errormessages.js:21
-msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
-msgstr "Ihre Sitzung wird in %time ablaufen. Bitte speichern Sie Ihre Arbeit und erneuern Sie die Sitzung (oder Webseite), um fortzufahren."
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr ""
+"Ihre Sitzung wird in %time ablaufen. Bitte speichern Sie Ihre Arbeit und "
+"erneuern Sie die Sitzung (oder Webseite), um fortzufahren."
 
 #: src/errormessages.js:22
-msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
-msgstr "Ihre Sitzung ist abgelaufen. Neuerliche Änderungen am Dokument werden möglicherweise nicht gespeichert. Bitte erneuern Sie die Sitzung (oder Webseite), um fortzufahren."
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr ""
+"Ihre Sitzung ist abgelaufen. Neuerliche Änderungen am Dokument werden "
+"möglicherweise nicht gespeichert. Bitte erneuern Sie die Sitzung (oder "
+"Webseite), um fortzufahren."
 
 #: src/errormessages.js:23
-msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
-msgstr "Das Laden des Dokuments ist fehlgeschlagen. Bitte vergewissern Sie sich, dass der Dateityp unterstützt und die Datei nicht defekt ist, und versuchen Sie es dann erneut."
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr ""
+"Das Laden des Dokuments ist fehlgeschlagen. Bitte vergewissern Sie sich, "
+"dass der Dateityp unterstützt und die Datei nicht defekt ist, und versuchen "
+"Sie es dann erneut."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1369,8 +1470,13 @@ msgid "You are leaving the editor, are you sure you want to visit %url?"
 msgstr "Sie verlassen den Editor, möchten Sie wirklich auf %url zugreifen?"
 
 #: src/errormessages.js:26
-msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr "Fehler beim Laden des Dokuments. Dieses Dokument ist entweder fehlerhaft oder beansprucht mehr Ressourcen als zulässig. Bitte wenden Sie sich an den Administrator."
+msgid ""
+"Failed to load the document. This document is either malformed or is taking "
+"more resources than allowed. Please contact the administrator."
+msgstr ""
+"Fehler beim Laden des Dokuments. Dieses Dokument ist entweder fehlerhaft "
+"oder beansprucht mehr Ressourcen als zulässig. Bitte wenden Sie sich an den "
+"Administrator."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1378,11 +1484,15 @@ msgstr "Dokument konnte nicht geladen werden."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr "Speichern fehlgeschlagen, da kein Speicherplatz mehr vorhanden ist. Das Dokument ist jetzt schreibgeschützt."
+msgstr ""
+"Speichern fehlgeschlagen, da kein Speicherplatz mehr vorhanden ist. Das "
+"Dokument ist jetzt schreibgeschützt."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "Das Dokument kann aufgrund eines abgelaufenen oder ungültigen Zugangs nicht gespeichert werden."
+msgstr ""
+"Das Dokument kann aufgrund eines abgelaufenen oder ungültigen Zugangs nicht "
+"gespeichert werden."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
@@ -1394,29 +1504,52 @@ msgstr "Dokument kann nicht umbenannt werden."
 
 #: src/errormessages.js:38
 #, javascript-format
-msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
-msgstr "Lesen des Dokuments vom Speicher fehlgeschlagen. Bitte kontaktieren Sie den Administrator Ihres Speicherservers (%storageserver)."
+msgid ""
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr ""
+"Lesen des Dokuments vom Speicher fehlgeschlagen. Bitte kontaktieren Sie den "
+"Administrator Ihres Speicherservers (%storageserver)."
 
 #: src/errormessages.js:39
 #, javascript-format
-msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
-msgstr "Das Speichern auf dem Speicherserver schlug aufgrund fehlenden Festplattenplatzes fehl. Das Dokument wird jetzt schreibgeschützt. Bitte kontaktieren Sie den Administrator Ihres Speicherservers (%storageserver), um mit der Bearbeitung fortzufahren."
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"Das Speichern auf dem Speicherserver schlug aufgrund fehlenden "
+"Festplattenplatzes fehl. Das Dokument wird jetzt schreibgeschützt. Bitte "
+"kontaktieren Sie den Administrator Ihres Speicherservers (%storageserver), "
+"um mit der Bearbeitung fortzufahren."
 
 #: src/errormessages.js:41
-msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
-msgstr "Das Dokument kann nicht gespeichert werden. Prüfen Sie Ihre Berechtigungen oder kontaktieren Sie den Administrator des Speicherservers."
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"Das Dokument kann nicht gespeichert werden. Prüfen Sie Ihre Berechtigungen "
+"oder kontaktieren Sie den Administrator des Speicherservers."
 
 #: src/errormessages.js:42
-msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
-msgstr "Das Dokument kann nicht umbenannt werden. Prüfen Sie Ihre Berechtigungen oder kontaktieren Sie den Administrator des Speicherservers."
+msgid ""
+"Document cannot be renamed. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"Das Dokument kann nicht umbenannt werden. Prüfen Sie Ihre Berechtigungen "
+"oder kontaktieren Sie den Administrator des Speicherservers."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr "Das Hochladen der Datei auf den Server ist fehlgeschlagen, die Datei wurde nicht gefunden."
+msgstr ""
+"Das Hochladen der Datei auf den Server ist fehlgeschlagen, die Datei wurde "
+"nicht gefunden."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
-msgstr "Das Hochladen der Datei auf den Server ist fehlgeschlagen. Die Datei ist zu groß."
+msgstr ""
+"Das Hochladen der Datei auf den Server ist fehlgeschlagen. Die Datei ist zu "
+"groß."
 
 #: src/layer/marker/Annotation.js:240
 msgid "Accept change"
@@ -1451,28 +1584,59 @@ msgid "Functions"
 msgstr "Funktionen"
 
 #: src/map/Clipboard.js:137
-msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "Um außerhalb von %productName einzufügen, klicken Sie bitte zunächst auf die Schaltfläche \"Herunterladen\""
+msgid ""
+"To paste outside %productName, please first click the 'download' button"
+msgstr ""
+"Um außerhalb von %productName einzufügen, klicken Sie bitte zunächst auf die"
+" Schaltfläche \"Herunterladen\""
 
 #: src/map/Clipboard.js:289
 msgid "Failed to download clipboard, please re-copy"
-msgstr "Fehler beim Herunterladen der Zwischenablage, bitte kopieren Sie erneut"
+msgstr ""
+"Fehler beim Herunterladen der Zwischenablage, bitte kopieren Sie erneut"
 
 #: src/map/Clipboard.js:838
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr "<p>Bitte verwenden Sie die Schaltflächen Kopieren/ Einfügen auf Ihrer Bildschirmtastatur.</p>"
+msgstr ""
+"<p>Bitte verwenden Sie die Schaltflächen Kopieren/ Einfügen auf Ihrer "
+"Bildschirmtastatur.</p>"
 
 #: src/map/Clipboard.js:840
-msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr "<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage, verwenden Sie deshalb nur folgende Tastaturkürzel:<ul><li><b>Strg+C</b>: Zum Kopieren.</li><li><b>Strg+X</b>: Zum Ausschneiden.</li><li><b>Strg+V</b>: Zum Einfügen.</li></ul></p>"
+msgid ""
+"<p>Your browser has very limited access to the clipboard, so use these "
+"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For "
+"copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For "
+"pasting.</li></ul></p>"
+msgstr ""
+"<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage, "
+"verwenden Sie deshalb nur folgende Tastaturkürzel:<ul><li><b>Strg+C</b>: Zum"
+" Kopieren.</li><li><b>Strg+X</b>: Zum Ausschneiden.</li><li><b>Strg+V</b>: "
+"Zum Einfügen.</li></ul></p>"
 
 #: src/map/Clipboard.js:861
-msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr "<p>Wenn Sie größere Elemente Ihres Dokuments für andere Anwendungen freigeben möchten, müssen Sie diese zuerst auf Ihr Gerät herunterladen. Klicken Sie dazu unten auf die Schaltfläche \"Download starten\" und anschließend auf \"Kopie in Zwischenablage bestätigen\".</p><p>Wenn Sie zwischen Dokumenten in %productName kopieren möchten,brauschen Sie nichts herunterladen.</p>"
+msgid ""
+"<p>If you would like to share larger elements of your document with other "
+"applications it is necessary to first download them onto your device. To do "
+"that press the \"Start download\" button below, and when complete click "
+"\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
+"documents inside %productName, there is no need to download.</p>"
+msgstr ""
+"<p>Wenn Sie größere Elemente Ihres Dokuments für andere Anwendungen "
+"freigeben möchten, müssen Sie diese zuerst auf Ihr Gerät herunterladen. "
+"Klicken Sie dazu unten auf die Schaltfläche \"Download starten\" und "
+"anschließend auf \"Kopie in Zwischenablage bestätigen\".</p><p>Wenn Sie "
+"zwischen Dokumenten in %productName kopieren möchten,brauschen Sie nichts "
+"herunterladen.</p>"
 
 #: src/map/Clipboard.js:877
-msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr "<p>Ein Download wurde bereits aufgrund eines großen Kopier-/Einfügevorgangs gestartet. Bitte warten Sie auf den aktuellen Download oder brechen Sie ihn ab, bevor Sie einen neuen starten.</p>"
+msgid ""
+"<p>A download due to a large copy/paste operation has already started. "
+"Please, wait for the current download or cancel it before starting a new "
+"one</p>"
+msgstr ""
+"<p>Ein Download wurde bereits aufgrund eines großen Kopier-/Einfügevorgangs "
+"gestartet. Bitte warten Sie auf den aktuellen Download oder brechen Sie ihn "
+"ab, bevor Sie einen neuen starten.</p>"
 
 #: src/map/Map.js:219
 msgid "Initializing..."
@@ -1494,13 +1658,19 @@ msgstr "Inaktives Dokument - zum Fortsetzen der Bearbeitung bitte klicken"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "Die Datei vom Typ: %0 kann nicht auf den Server hochgeladen werden, da die Datei keinen Namen hat."
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file has no name"
+msgstr ""
+"Die Datei vom Typ: %0 kann nicht auf den Server hochgeladen werden, da die "
+"Datei keinen Namen hat."
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Die Datei vom Typ: %0 kann nicht auf den Server hochgeladen werden, da die Datei leer ist."
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file is empty"
+msgstr ""
+"Die Datei vom Typ: %0 kann nicht auf den Server hochgeladen werden, da die "
+"Datei leer ist."
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1508,7 +1678,8 @@ msgstr "Hochladen..."
 
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
-msgstr "Das Hochladen der Datei auf den Server mit dem Status %0 ist fehlgeschlagen."
+msgstr ""
+"Das Hochladen der Datei auf den Server mit dem Status %0 ist fehlgeschlagen."
 
 #: src/map/handler/Map.WOPI.js:111
 msgid "Creating new file from template..."
@@ -1517,60 +1688,3 @@ msgstr "Neue Datei aus Vorlage erzeugen..."
 #: src/map/handler/Map.WOPI.js:436
 msgid "Creating copy..."
 msgstr "Kopie erstellen..."
-
-#~ msgid "Number of views"
-#~ msgstr "Anzahl der Ansehenden"
-
-#~ msgid "Documents"
-#~ msgstr "Dokumente"
-
-#~ msgid "Edit"
-#~ msgstr "Bearbeiten"
-
-#~ msgid "First sheet"
-#~ msgstr "Erste Tabelle"
-
-#~ msgid "Previous sheet"
-#~ msgstr "Vorherige Tabelle"
-
-#~ msgid "Next sheet"
-#~ msgstr "Nächste Tabelle"
-
-#~ msgid "Last sheet"
-#~ msgstr "Letzte Tabelle"
-
-#~ msgid "Color"
-#~ msgstr "Farbe"
-
-#~ msgid "Gradient"
-#~ msgstr "Farbverlauf"
-
-#~ msgid "Hatching"
-#~ msgstr "Schraffur"
-
-#~ msgid "Pattern"
-#~ msgstr "Muster"
-
-#~ msgid "Portrait"
-#~ msgstr "Hochformat"
-
-#~ msgid "Landscape"
-#~ msgstr "Querformat"
-
-#, fuzzy
-#~| msgid "Text orientation"
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "Textausrichtung"
-
-#~ msgid "\""
-#~ msgstr "\""
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "Chart type"
-#~ msgstr "Diagrammtyp"
-
-#, fuzzy
-#~ msgid "Search:"
-#~ msgstr "Suchen"
