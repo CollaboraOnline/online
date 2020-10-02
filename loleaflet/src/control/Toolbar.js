@@ -248,7 +248,7 @@ L.Map.include({
 			if (window.ThisIsAMobileApp) {
 				productName = window.MobileAppName;
 			} else {
-				productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online Personal';
+				productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition';
 			}
 			vex.open({
 				unsafeContent: data,
@@ -512,7 +512,7 @@ L.Map.include({
 		if (window.ThisIsAMobileApp) {
 			productName = window.MobileAppName;
 		} else {
-			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'LibreOffice Online Personal';
+			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition';
 		}
 		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://libreoffice.org';
 		content.find('#product-name').text(productName);

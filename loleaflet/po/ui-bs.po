@@ -1275,7 +1275,7 @@ msgid "IE11 has reached its maximum number of connections. Please see this docum
 msgstr ""
 
 #: src/core/Socket.js:61
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
+msgid "Oops, there is a problem connecting to Collabora Online : "
 msgstr "Uh, nastao je problem prilikom spajanja sa LibreOffice na mreži : "
 
 #: src/core/Socket.js:297

@@ -1230,8 +1230,8 @@ msgid "IE11 has reached its maximum number of connections. Please see this docum
 msgstr "O IE11 atingiu o número máximo de ligações. Se necessitar de mais ligações, consulte este documento: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Ocorreu um problema ao estabelecer ligação ao LibreOffice Online: "
+msgid "Oops, there is a problem connecting to Collabora Online : "
+msgstr "Ocorreu um problema ao estabelecer ligação ao Collabora Online: "
 
 #: src/core/Socket.js:297
 msgid "Served by:"
