@@ -1,6 +1,6 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
-require('cypress-file-upload');
+require('cypress-wait-until');
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
