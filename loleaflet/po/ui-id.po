@@ -2,23 +2,25 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Andras Timar <andras.timar@collabora.com>, 2020
+# Andika Triwidada <andika@gmail.com>, 2020
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-07-21 11:30+0000\n"
-"Last-Translator: Budi Aryo <venera.android.phone@gmail.com>\n"
-"Language-Team: Indonesian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/id/>\n"
-"Language: id\n"
+"PO-Revision-Date: 2020-10-01 06:41+0000\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>, 2020\n"
+"Language-Team: Indonesian (https://www.transifex.com/collabora-productivity-ltd/teams/68191/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.1.1\n"
-"X-Pootle-Path: /id/libo_online/loleaflet-ui-id.po\n"
-"X-Pootle-Revision: 3937880\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -61,23 +63,17 @@ msgid "User Name"
 msgstr "Nama Pengguna"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
 msgstr "Dokumen terbuka"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "0 users"
 msgid " user(s)."
-msgstr "0 pengguna"
+msgstr "pengguna."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "Dokumen terbuka"
+msgstr "dokumen terbuka."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -105,7 +101,7 @@ msgstr "Dokumen"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Tampilan"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -163,19 +159,23 @@ msgstr "Selang waktu statistik CPU (dalam ms)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Matikan sesi."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - kurangi saja"
+msgstr ""
+"Dokumen Maksimum yang diporoses Memori virtual (dalam MB) - kurangi saja"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Dokumen Maksimum yang diporoses Memori virtual (dalam kB) - Hanya kurangi"
+msgstr ""
+"Dokumen Maksimum yang diporoses Memori virtual (dalam kB) - Hanya kurangi"
 
 #: admin/admin.strings.js:42
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Ukuran file maksimum diizinkan untuk menulis ke disk (dalam MB) - kurangi saja"
+msgstr ""
+"Ukuran file maksimum diizinkan untuk menulis ke disk (dalam MB) - kurangi "
+"saja"
 
 #: admin/admin.strings.js:43
 msgid "Documents:"
@@ -246,8 +246,8 @@ msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1231
-#: src/control/Control.MobileTopBar.js:45
+#: src/control/Control.LanguageDialog.js:86
+#: src/control/Control.Menubar.js:1231 src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:200
 #: src/control/Control.Tabs.js:217 src/control/Toolbar.js:626
 #: src/layer/marker/Annotation.js:202 src/layer/tile/TileLayer.js:405
@@ -316,7 +316,7 @@ msgstr " d"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Tampilkan Lembar Yang Dipilih"
 
 #: src/control/ColorPicker.js:129
 msgid "No color"
@@ -370,7 +370,8 @@ msgstr "Cap Waktu"
 msgid "Jump to state"
 msgstr "Loncat ke pernyataan"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:196
+#: src/control/Control.DocumentRepair.js:95
+#: src/control/Control.UserList.js:196
 msgid "You"
 msgstr "Kamu"
 
@@ -642,10 +643,8 @@ msgid "Last modification"
 msgstr "Modifikasi terakhir"
 
 #: src/control/Control.Menubar.js:257
-#, fuzzy
-#| msgid "Comment"
 msgid "Save Comments"
-msgstr "Komentar"
+msgstr "Simpan Komentar"
 
 #: src/control/Control.Menubar.js:263 src/control/Control.Menubar.js:554
 #: src/control/Control.NotebookbarImpress.js:294
@@ -674,7 +673,7 @@ msgstr "Presentasi layar penuh"
 
 #: src/control/Control.Menubar.js:359
 msgid "Present current slide"
-msgstr ""
+msgstr "Sajikan salindia saat ini"
 
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:602
 #: src/control/Control.NotebookbarCalc.js:214
@@ -744,19 +743,19 @@ msgstr "Sembunyikan bilah pencarian"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Gulir ke lembar pertama"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "Gulir kiri"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "Gulir kanan"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Gulir ke lembar terakhir"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
@@ -851,8 +850,12 @@ msgid "Next slide"
 msgstr "Salindia selanjutnya"
 
 #: src/control/Control.Toolbar.js:956
-msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "Konfik Urungkan/Ulangi dengan user ganda. Tolong gunakan perbaiki dokumen untuk mengatasinya"
+msgid ""
+"Conflict Undo/Redo with multiple users. Please use document repair to "
+"resolve"
+msgstr ""
+"Konfik Urungkan/Ulangi dengan user ganda. Tolong gunakan perbaiki dokumen "
+"untuk mengatasinya"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -921,7 +924,7 @@ msgstr "Saat Ini"
 #: src/control/Control.NotebookbarBuilder.js:658
 #: src/control/Control.NotebookbarBuilder.js:674
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/control/Control.Notebookbar.js:134
 #: src/control/Control.NotebookbarImpress.js:32
@@ -937,7 +940,7 @@ msgstr "Jadi Lagi"
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "~Berkas"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
@@ -968,7 +971,7 @@ msgstr "~Tinjauan"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -977,73 +980,61 @@ msgstr "~Tabel"
 
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
-msgstr ""
+msgstr "~Gambar"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "~Bantuan"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Lembar"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Data"
 
 #: src/control/Control.NotebookbarCalc.js:1903
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert Rows Above"
-msgstr "Sisip tabel"
+msgstr "Sisipkan Baris Di Atas"
 
 #: src/control/Control.NotebookbarCalc.js:1916
-#, fuzzy
-#| msgid "Insert sheet"
 msgid "Insert Rows Below"
-msgstr "Sisipkan lembar kerja"
+msgstr "Sisipkan Baris Di Bawah"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
-#| msgid "Insert sheet before this"
 msgid "Insert Columns Before"
-msgstr "Sisipkan lembar sebelum ini"
+msgstr "Sisipkan Kolom Sebelum"
 
 #: src/control/Control.NotebookbarCalc.js:1951
-#, fuzzy
-#| msgid "Insert sheet after this"
 msgid "Insert Columns After"
-msgstr "Sisip lembar setelah ini"
+msgstr "Sisipkan Kolom Setelah"
 
 #: src/control/Control.NotebookbarCalc.js:1973
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Sisipkan Putus Baris"
 
 #: src/control/Control.NotebookbarCalc.js:1986
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Sisipkan Putus Kolom"
 
 #: src/control/Control.NotebookbarCalc.js:2008
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete Rows"
-msgstr "Hapus"
+msgstr "Hapus Baris"
 
 #: src/control/Control.NotebookbarCalc.js:2021
-#, fuzzy
-#| msgid "Columns"
 msgid "Delete Columns"
-msgstr "Kolom"
+msgstr "Hapus Kolom"
 
 #: src/control/Control.NotebookbarCalc.js:2043
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Hapus Putus Baris"
 
 #: src/control/Control.NotebookbarCalc.js:2056
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Hapus Putus Kolom"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"
@@ -1054,14 +1045,8 @@ msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Dokumen tidak bisa dikunci, dan dibuka dalam mode hanya baca."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "Server returned this reason: \""
 msgid "Server returned this reason:"
-msgstr ""
-"\n"
-"Server mengembalikan alasan ini: \""
+msgstr "Server mengembalikan alasan ini:"
 
 #: src/control/Permission.js:63
 msgid "The document could not be locked."
@@ -1224,7 +1209,8 @@ msgid "I understand the risks"
 msgstr "Saya mengerti risikonya"
 
 #: src/control/Toolbar.js:474
-msgid "We are sorry, the information about the latest updates is not available."
+msgid ""
+"We are sorry, the information about the latest updates is not available."
 msgstr "Mohon maaf, informasi tentang pembaruan terakhir tidak tersedia."
 
 #: src/control/Toolbar.js:519
@@ -1236,8 +1222,12 @@ msgid "\"Slow Proxy\""
 msgstr "\"Proksi Lambat\""
 
 #: src/control/Toolbar.js:532
-msgid "The Personal edition is supported by volunteers and intended for individual use."
-msgstr "Edisi Personal didukung oleh sukarelawan dan ditujukan untuk penggunaan individu."
+msgid ""
+"The Personal edition is supported by volunteers and intended for individual "
+"use."
+msgstr ""
+"Edisi Personal didukung oleh sukarelawan dan ditujukan untuk penggunaan "
+"individu."
 
 #: src/control/Toolbar.js:619
 msgid "Insert hyperlink"
@@ -1252,8 +1242,16 @@ msgid "Link"
 msgstr "Tautan"
 
 #: src/core/Socket.js:59
-msgid "IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
-msgstr "IE11 telah mencapai jumlah koneksi maksimum. Silakan lihat dokumen ini untuk meningkatkan batas ini jika diperlukan: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgid ""
+"IE11 has reached its maximum number of connections. Please see this document"
+" to increase this limit if needed: https://docs.microsoft.com/en-us"
+"/previous-versions/windows/internet-explorer/ie-developer/general-"
+"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+msgstr ""
+"IE11 telah mencapai jumlah koneksi maksimum. Silakan lihat dokumen ini untuk"
+" meningkatkan batas ini jika diperlukan: https://docs.microsoft.com/en-us"
+"/previous-versions/windows/internet-explorer/ie-developer/general-"
+"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to LibreOffice Online : "
@@ -1273,13 +1271,14 @@ msgstr "Sesi diakhiri oleh pemilik dokumen"
 
 #: src/core/Socket.js:401
 msgid "Idle document - please click to reload and resume editing"
-msgstr "Dokumen idle - silakan klik untuk memuat ulang dan melanjutkan penyuntingan"
+msgstr ""
+"Dokumen idle - silakan klik untuk memuat ulang dan melanjutkan penyuntingan"
 
 #: src/core/Socket.js:403
-#, fuzzy
-#| msgid "Idle document - please click to reload and resume editing"
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Dokumen idle - silakan klik untuk memuat ulang dan melanjutkan penyuntingan"
+msgstr ""
+"Dokumen menganggur - harap ketuk untuk memuat ulang dan melanjutkan "
+"penyuntingan"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1294,16 +1293,28 @@ msgid "Server is recycling and will be available shortly"
 msgstr "Peladen sendang mendaur ulang dan akan segera tersedia"
 
 #: src/core/Socket.js:447
-msgid "Document has changed in storage. Loading the new document. Your version is available as revision."
-msgstr "Dokumen telah berubah dalam penyimpanan. Memuat dokumen baru. Versi Anda tersedia sebagai revisi."
+msgid ""
+"Document has changed in storage. Loading the new document. Your version is "
+"available as revision."
+msgstr ""
+"Dokumen telah berubah dalam penyimpanan. Memuat dokumen baru. Versi Anda "
+"tersedia sebagai revisi."
 
 #: src/core/Socket.js:453
-msgid "Restoring older revision. Any unsaved changes will be available in version history"
-msgstr "Memulihkan revisi yang lebih lama. Setiap perubahan yang belum disimpan akan tersedia dalam riwayat versi"
+msgid ""
+"Restoring older revision. Any unsaved changes will be available in version "
+"history"
+msgstr ""
+"Memulihkan revisi yang lebih lama. Setiap perubahan yang belum disimpan akan"
+" tersedia dalam riwayat versi"
 
 #: src/core/Socket.js:572
-msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
-msgstr "Dokumen telah diubah dalam penyimpanan. Apa yang ingin Anda lakukan dengan perubahan yang belum disimpan?"
+msgid ""
+"Document has been changed in storage. What would you like to do with your "
+"unsaved changes?"
+msgstr ""
+"Dokumen telah diubah dalam penyimpanan. Apa yang ingin Anda lakukan dengan "
+"perubahan yang belum disimpan?"
 
 #: src/core/Socket.js:576
 msgid "Discard"
@@ -1342,52 +1353,96 @@ msgid "Connecting..."
 msgstr "Menghubungkan..."
 
 #: src/core/Socket.js:1081
-msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
-msgstr "Aduh, ini memalukan, kami tidak bisa menyambung ke dokumen Anda. Harap coba lagi."
+msgid ""
+"Well, this is embarrassing, we cannot connect to your document. Please try "
+"again."
+msgstr ""
+"Aduh, ini memalukan, kami tidak bisa menyambung ke dokumen Anda. Harap coba "
+"lagi."
 
 #: src/errormessages.js:13
-msgid "No disk space left on server, please contact the server administrator to continue."
-msgstr "Tidak ada ruang penyimpanan yang tersisa di pelden, silahkan hubungi admin peladen untuk melanjutkan."
+msgid ""
+"No disk space left on server, please contact the server administrator to "
+"continue."
+msgstr ""
+"Tidak ada ruang penyimpanan yang tersisa di pelden, silahkan hubungi admin "
+"peladen untuk melanjutkan."
 
 #: src/errormessages.js:14
-msgid "The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator."
-msgstr "URL host kosong. Server loolwsd mungkin salah konfigurasi, harap hubungi administrator."
+msgid ""
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"contact the administrator."
+msgstr ""
+"URL host kosong. Server loolwsd mungkin salah konfigurasi, harap hubungi "
+"administrator."
 
 #: src/errormessages.js:15
-msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr "Ini adalah versi {productname} yang tidak didukung. Untuk menghindari kesan bahwa itu cocok untuk ditempatkan di perusahaan, pesan ini muncul ketika lebih dari {docs} dokumen atau koneksi {connections} sedang digunakan secara bersamaan."
+msgid ""
+"This is an unsupported version of {productname}. To avoid the impression "
+"that it is suitable for deployment in enterprises, this message appears when"
+" more than {docs} documents or {connections} connections are in use "
+"concurrently"
+msgstr ""
+"Ini adalah versi {productname} yang tidak didukung. Untuk menghindari kesan "
+"bahwa itu cocok untuk ditempatkan di perusahaan, pesan ini muncul ketika "
+"lebih dari {docs} dokumen atau koneksi {connections} sedang digunakan secara"
+" bersamaan."
 
 #: src/errormessages.js:16
 msgid "More information and support"
 msgstr "Informasi dan dukungan lebih lanjut"
 
 #: src/errormessages.js:17
-msgid "This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later."
-msgstr "Layanan ini terbatas pada%0 dokumen, dan%1 koneksi total oleh admin. Batas ini telah tercapai. Silakan coba lagi nanti."
+msgid ""
+"This service is limited to %0 documents, and %1 connections total by the "
+"admin. This limit has been reached. Please try again later."
+msgstr ""
+"Layanan ini terbatas pada%0 dokumen, dan%1 koneksi total oleh admin. Batas "
+"ini telah tercapai. Silakan coba lagi nanti."
 
 #: src/errormessages.js:18
-msgid "Service is unavailable. Please try again later and report to your administrator if the issue persists."
-msgstr "Layanan tidak tersedia. Silakan coba lagi nanti dan laporkan ke administrator Anda jika masalah berlanjut."
+msgid ""
+"Service is unavailable. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"Layanan tidak tersedia. Silakan coba lagi nanti dan laporkan ke "
+"administrator Anda jika masalah berlanjut."
 
 #: src/errormessages.js:19
-msgid "Unauthorized WOPI host. Please try again later and report to your administrator if the issue persists."
-msgstr "host WOPI tidak resmi. Silakan coba lagi nanti dan laporkan ke administrator Anda jika masalah berlanjut."
+msgid ""
+"Unauthorized WOPI host. Please try again later and report to your "
+"administrator if the issue persists."
+msgstr ""
+"host WOPI tidak resmi. Silakan coba lagi nanti dan laporkan ke administrator"
+" Anda jika masalah berlanjut."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "Parameter WOPISrc salah atau hilang, silakan hubungi dukungan."
 
 #: src/errormessages.js:21
-msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
-msgstr "Sesi Anda akan kedaluwarsa dalam %time. Harap simpan pekerjaan Anda dan segarkan sesi (atau halaman web) untuk melanjutkan."
+msgid ""
+"Your session will expire in %time. Please save your work and refresh the "
+"session (or webpage) to continue."
+msgstr ""
+"Sesi Anda akan kedaluwarsa dalam %time. Harap simpan pekerjaan Anda dan "
+"segarkan sesi (atau halaman web) untuk melanjutkan."
 
 #: src/errormessages.js:22
-msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
-msgstr "Sesi Anda telah kedaluwarsa. Perubahan lebih lanjut pada dokumen mungkin tidak disimpan. Harap segarkan sesi (atau halaman web) untuk melanjutkan."
+msgid ""
+"Your session has been expired. Further changes to document might not be "
+"saved. Please refresh the session (or webpage) to continue."
+msgstr ""
+"Sesi Anda telah kedaluwarsa. Perubahan lebih lanjut pada dokumen mungkin "
+"tidak disimpan. Harap segarkan sesi (atau halaman web) untuk melanjutkan."
 
 #: src/errormessages.js:23
-msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
-msgstr "Gagal memuat dokumen. Harap pastikan jenis file didukung dan tidak rusak, dan coba lagi."
+msgid ""
+"Failed to load the document. Please ensure the file type is supported and "
+"not corrupted, and try again."
+msgstr ""
+"Gagal memuat dokumen. Harap pastikan jenis file didukung dan tidak rusak, "
+"dan coba lagi."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1398,8 +1453,12 @@ msgid "You are leaving the editor, are you sure you want to visit %url?"
 msgstr "Anda akan meninggalkan editor, apa Anda yakin akan mengunjungi %url?"
 
 #: src/errormessages.js:26
-msgid "Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator."
-msgstr "Gagal memuat dokumen. Dokumen ini salah format atau mengambil sumber daya melebihi dari yang diizinkan. Silakan hubungi administrator."
+msgid ""
+"Failed to load the document. This document is either malformed or is taking "
+"more resources than allowed. Please contact the administrator."
+msgstr ""
+"Gagal memuat dokumen. Dokumen ini salah format atau mengambil sumber daya "
+"melebihi dari yang diizinkan. Silakan hubungi administrator."
 
 #: src/errormessages.js:30
 msgid "Failed to load document."
@@ -1407,11 +1466,15 @@ msgstr "Gagal memuat dokumen."
 
 #: src/errormessages.js:31
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr "Gagal menyimpan karena tidak ada ruang diska tersisa. Dokumen saat ini hanya baca."
+msgstr ""
+"Gagal menyimpan karena tidak ada ruang diska tersisa. Dokumen saat ini hanya"
+" baca."
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "Dokumen tidak dapat disimpan karena token akses kedaluwarsa atau tidak valid."
+msgstr ""
+"Dokumen tidak dapat disimpan karena token akses kedaluwarsa atau tidak "
+"valid."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
@@ -1423,21 +1486,39 @@ msgstr "Dokumen tidak dapat diganti nama"
 
 #: src/errormessages.js:38
 #, javascript-format
-msgid "Failed to read document from storage. Please contact your storage server (%storageserver) administrator."
-msgstr "Gagal membaca dokumen dari penyimpanan. Silakan hubungi administrator peladen penyimpanan Anda (%storageserver)."
+msgid ""
+"Failed to read document from storage. Please contact your storage server "
+"(%storageserver) administrator."
+msgstr ""
+"Gagal membaca dokumen dari penyimpanan. Silakan hubungi administrator "
+"peladen penyimpanan Anda (%storageserver)."
 
 #: src/errormessages.js:39
 #, javascript-format
-msgid "Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing."
-msgstr "Gagal menyimpan karena tidak ada ruang disk yang tersisa di server penyimpanan. Dokumen sekarang akan menjadi hanya-baca. Silakan hubungi administrator server (%storageserver) untuk melanjutkan pengeditan."
+msgid ""
+"Save failed due to no disk space left on storage server. Document will now "
+"be read-only. Please contact the server (%storageserver) administrator to "
+"continue editing."
+msgstr ""
+"Gagal menyimpan karena tidak ada ruang disk yang tersisa di server "
+"penyimpanan. Dokumen sekarang akan menjadi hanya-baca. Silakan hubungi "
+"administrator server (%storageserver) untuk melanjutkan pengeditan."
 
 #: src/errormessages.js:41
-msgid "Document cannot be saved. Check your permissions or contact the storage server administrator."
-msgstr "Dokumen tidak dapat disimpan. Cek hak akses kamu atau hubungi admin peladen penyimpanan."
+msgid ""
+"Document cannot be saved. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"Dokumen tidak dapat disimpan. Cek hak akses kamu atau hubungi admin peladen "
+"penyimpanan."
 
 #: src/errormessages.js:42
-msgid "Document cannot be renamed. Check your permissions or contact the storage server administrator."
-msgstr "Dokumen tidak dapat diganti nama. Cek hak akses kamu atau hubungi admin peladen penyimpanan."
+msgid ""
+"Document cannot be renamed. Check your permissions or contact the storage "
+"server administrator."
+msgstr ""
+"Dokumen tidak dapat diganti nama. Cek hak akses kamu atau hubungi admin "
+"peladen penyimpanan."
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
@@ -1476,13 +1557,12 @@ msgid "Resolve"
 msgstr "Selesaikan"
 
 #: src/layer/tile/TileLayer.js:826
-#, fuzzy
-#| msgid "Function Wizard"
 msgid "Functions"
-msgstr "Fungsi Wisaya"
+msgstr "Fungsi"
 
 #: src/map/Clipboard.js:137
-msgid "To paste outside %productName, please first click the 'download' button"
+msgid ""
+"To paste outside %productName, please first click the 'download' button"
 msgstr "Untuk menempel di luar %productName, silakan klik dulu tombol 'unduh'"
 
 #: src/map/Clipboard.js:289
@@ -1494,16 +1574,41 @@ msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Tolong gunakan tombol salin/tempel di papan ketik layar mu.</p>"
 
 #: src/map/Clipboard.js:840
-msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr "<p>Peramban Anda memiliki akses yang sangat terbatas ke papan klip, jadi gunakan pintasan papan tik ini: <ul> <li> <b>Ctrl+C</b>: Untuk menyalin. </li> <li> <b>Ctrl+X</b>: Untuk memotong. </li> <li> <b>Ctrl+P</b>: Untuk merekat. </li> </ul> </p>"
+msgid ""
+"<p>Your browser has very limited access to the clipboard, so use these "
+"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For "
+"copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For "
+"pasting.</li></ul></p>"
+msgstr ""
+"<p>Peramban Anda memiliki akses yang sangat terbatas ke papan klip, jadi "
+"gunakan pintasan papan tik ini: <ul> <li> <b>Ctrl+C</b>: Untuk menyalin. "
+"</li> <li> <b>Ctrl+X</b>: Untuk memotong. </li> <li> <b>Ctrl+P</b>: Untuk "
+"merekat. </li> </ul> </p>"
 
 #: src/map/Clipboard.js:861
-msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
-msgstr "<p>Jika Anda ingin berbagi elemen yang lebih besar dari dokumen Anda dengan aplikasi lain, Anda perlu mengunduhnya terlebih dahulu ke perangkat Anda. Untuk melakukan itu tekan tombol \"Mulai unduh\" di bawah, dan ketika selesai klik \"Konfirmasikan salin ke papan klip\". </p><p>Jika Anda menyalin dan menempel di antara dokumen di dalam %productName, tidak perlu melakukan pengunduhan.</p>"
+msgid ""
+"<p>If you would like to share larger elements of your document with other "
+"applications it is necessary to first download them onto your device. To do "
+"that press the \"Start download\" button below, and when complete click "
+"\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
+"documents inside %productName, there is no need to download.</p>"
+msgstr ""
+"<p>Jika Anda ingin berbagi elemen yang lebih besar dari dokumen Anda dengan "
+"aplikasi lain, Anda perlu mengunduhnya terlebih dahulu ke perangkat Anda. "
+"Untuk melakukan itu tekan tombol \"Mulai unduh\" di bawah, dan ketika "
+"selesai klik \"Konfirmasikan salin ke papan klip\". </p><p>Jika Anda "
+"menyalin dan menempel di antara dokumen di dalam %productName, tidak perlu "
+"melakukan pengunduhan.</p>"
 
 #: src/map/Clipboard.js:877
-msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr "<p>Pengunduhan karena operasi besar salin / tempel sudah dimulai. Silahkan, tunggu untuk pengunduhan saat ini atau batalkan sebelum memulai sebuah unduhan baru</p>"
+msgid ""
+"<p>A download due to a large copy/paste operation has already started. "
+"Please, wait for the current download or cancel it before starting a new "
+"one</p>"
+msgstr ""
+"<p>Pengunduhan karena operasi besar salin / tempel sudah dimulai. Silahkan, "
+"tunggu untuk pengunduhan saat ini atau batalkan sebelum memulai sebuah "
+"unduhan baru</p>"
 
 #: src/map/Map.js:219
 msgid "Initializing..."
@@ -1525,13 +1630,18 @@ msgstr "Dokumen tidak aktif - silakan klik untuk melanjutkan pengeditan"
 
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "Tipe berkas: %0 tidak dapat di unggah ke peladen karena berkas tidak memiliki nama"
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file has no name"
+msgstr ""
+"Tipe berkas: %0 tidak dapat di unggah ke peladen karena berkas tidak "
+"memiliki nama"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
-msgid "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Tipe berkas: %0 tidak dapat diunggah ke peladen karena isi berkas kosong"
+msgid ""
+"The file of type: %0 cannot be uploaded to server since the file is empty"
+msgstr ""
+"Tipe berkas: %0 tidak dapat diunggah ke peladen karena isi berkas kosong"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1548,47 +1658,3 @@ msgstr "Membuat file baru dari template ..."
 #: src/map/handler/Map.WOPI.js:436
 msgid "Creating copy..."
 msgstr "Membuat salinan ..."
-
-#~ msgid "Number of views"
-#~ msgstr "Cacah tilikan"
-
-#~ msgid "Documents"
-#~ msgstr "Dokumen"
-
-#~ msgid "Edit"
-#~ msgstr "Sunting"
-
-#~ msgid "First sheet"
-#~ msgstr "Lembar pertama"
-
-#~ msgid "Previous sheet"
-#~ msgstr "Lembar sebelumnya"
-
-#~ msgid "Next sheet"
-#~ msgstr "Lembar selanjutnya"
-
-#~ msgid "Last sheet"
-#~ msgstr "Lembar terakhir"
-
-#~ msgid "Color"
-#~ msgstr "Warna"
-
-#~ msgid "Gradient"
-#~ msgstr "Gradien"
-
-#~ msgid "Hatching"
-#~ msgstr "Penggarisan"
-
-#~ msgid "Pattern"
-#~ msgstr "Pola"
-
-#~ msgid "Portrait"
-#~ msgstr "Portrait"
-
-#~ msgid "Landscape"
-#~ msgstr "Lanskap"
-
-#, fuzzy
-#~| msgid "Text orientation"
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "Orientasi Teks"
