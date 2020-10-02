@@ -1255,7 +1255,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'latest-updates') {
 			this._map.showWelcomeDialog(/*calledFromMenu=*/true);
 		} else if (id === 'report-an-issue') {
-			window.open('https://bugs.documentfoundation.org/enter_bug.cgi?product=LibreOffice%20Online', '_blank');
+			window.open('https://github.com/CollaboraOnline/online/issues', '_blank');
 		} else if (id === 'inserthyperlink') {
 			this._map.showHyperlinkDialog();
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
