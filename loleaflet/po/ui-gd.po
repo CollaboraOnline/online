@@ -1281,8 +1281,8 @@ msgid "IE11 has reached its maximum number of connections. Please see this docum
 msgstr "Tha uiread a cheanglaichean aig IE11 ’s a tha ceadaichte. Faic an sgrìobhainn seo ma tha thu airson a’ chrìoch seo a chur an àirde: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Ìoc, bha duilgheadas ann a’ ceangal ri LibreOffice Online:"
+msgid "Oops, there is a problem connecting to Collabora Online : "
+msgstr "Ìoc, bha duilgheadas ann a’ ceangal ri Collabora Online:"
 
 #: src/core/Socket.js:297
 msgid "Served by:"

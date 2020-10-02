@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
- * LibreOffice Online toolbar
+ * Collabora Online toolbar
  */
 
 /* global $ w2ui vex _ */

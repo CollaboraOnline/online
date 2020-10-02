@@ -2,7 +2,7 @@
 # Martin Srebotnjak <miles@filmsi.net>, 2016, 2019.
 msgid ""
 msgstr ""
-"Project-Id-Version: LibreOffice Online UI\n"
+"Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
 "PO-Revision-Date: 2020-09-22 21:49+0000\n"
@@ -1227,8 +1227,8 @@ msgid "IE11 has reached its maximum number of connections. Please see this docum
 msgstr "IE11 je dosegel največje število povezav. Po potrebi si oglejte naslednji dokument za povečanje te omejitve (v angl.): https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Pri povezovanju z LibreOffice Online je prišlo do težave: "
+msgid "Oops, there is a problem connecting to Collabora Online : "
+msgstr "Pri povezovanju z Collabora Online je prišlo do težave: "
 
 #: src/core/Socket.js:297
 msgid "Served by:"

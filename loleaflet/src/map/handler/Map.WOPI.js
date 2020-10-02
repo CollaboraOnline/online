@@ -368,7 +368,7 @@ L.Map.WOPI = L.Handler.extend({
 
 		// For all other messages, warn if trying to interact before we are completely loaded
 		if (!this._appLoaded) {
-			console.error('LibreOffice Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
+			console.error('Collabora Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
 			return;
 		}
 

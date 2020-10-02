@@ -153,7 +153,7 @@ Tool::Tool() :
 
 void Tool::displayHelp()
 {
-    std::cout << "LibreOffice Online document converter tool.\n"
+    std::cout << "Collabora Online document converter tool.\n"
               << "Usage: " << commandName() << " [options] file...\n"
               << "Options are:\n"
               << "  --help                      Show this text\n"

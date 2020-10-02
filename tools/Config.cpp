@@ -101,7 +101,7 @@ void Config::displayHelp()
     HelpFormatter helpFormatter(options());
     helpFormatter.setCommand(commandName());
     helpFormatter.setUsage("COMMAND [OPTIONS]");
-    helpFormatter.setHeader("loolconfig - Configuration tool for LibreOffice Online.\n"
+    helpFormatter.setHeader("loolconfig - Configuration tool for Collabora Online.\n"
                             "\n"
                             "Some options make sense only with a specific command.\n\n"
                             "Options:");

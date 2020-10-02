@@ -5,7 +5,7 @@ which can be found here: https://prometheus.io/docs/instrumenting/exposition_for
 GLOBAL
 
     global_host_system_memory_bytes - Total host system memory in bytes.
-    global_memory_available_bytes – Memory available to our application in bytes. This is equal to global_host_system_memory_bytes * memproportion where memproportion represents the maximum percentage of system memory consumed by all of the LibreOffice Online, after which we start cleaning up idle documents. This parameter can be setup in loolwsd.xml.
+    global_memory_available_bytes – Memory available to our application in bytes. This is equal to global_host_system_memory_bytes * memproportion where memproportion represents the maximum percentage of system memory consumed by all of the Collabora Online, after which we start cleaning up idle documents. This parameter can be setup in loolwsd.xml.
     global_memory_used_bytes – Total memory usage: PSS(loolwsd) + RSS(forkit) + Private_Dirty(all assigned loolkits).
     global_memory_free_bytes - global_memory_available_bytes - global_memory_used_bytes
 
@@ -112,7 +112,7 @@ DOCUMENT BYTES RECEIVED FROM CLIENTS
 
 DOCUMENT DOWNLOAD DURATION
 
-    document_all_wopi_download_duration_total_seconds - sum of download duration of each document (active or expired). 
+    document_all_wopi_download_duration_total_seconds - sum of download duration of each document (active or expired).
     document_all_wopi_download_duration_average_seconds – average between the download duration of each document (active or expired).
     document_all_wopi_download_duration_min_seconds – minimum from the download duration of each document (active or expired).
     document_all_wopi_download_duration_max_seconds - maximum from the download duration of each document (active or expired).
