@@ -1,5 +1,7 @@
 /* globals cy expect require */
 
+require('cypress-wait-until');
+
 var helper = require('../../common/helper');
 
 function selectTextShapeInTheCenter() {
