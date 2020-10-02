@@ -238,10 +238,8 @@ bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const st
     }
 
     // FIXME: check viewId for paranoia if we can.
-    for (auto &it : _clipboardKeys)
-        if (it == tag)
-            return true;
-    return false;
+    return std::any_of(std::begin(_clipboardKeys), std::end(_clipboardKeys),
+                       [&tag](const std::string& it) { return it == tag; });
 }
 
 
