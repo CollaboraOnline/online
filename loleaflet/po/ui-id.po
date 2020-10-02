@@ -1255,7 +1255,7 @@ msgstr ""
 
 #: src/core/Socket.js:61
 msgid "Oops, there is a problem connecting to Collabora Online : "
-msgstr "Ups, ada masalah menyambung ke LibreOffice Daring: "
+msgstr "Ups, ada masalah menyambung ke Collabora Daring: "
 
 #: src/core/Socket.js:297
 msgid "Served by:"
