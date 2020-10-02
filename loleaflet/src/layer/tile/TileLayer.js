@@ -1249,13 +1249,19 @@ L.TileLayer = L.GridLayer.extend({
 		// # for internal links
 		if (!url.startsWith('#')) {
 			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
-			.setContent('<a href="' + url + '" target="_blank">' + url + '</a>')
+			.setContent('<a id="hyperlink-pop-up">' + url + '</a>')
 			.setLatLng(position)
 			.openOn(this._map);
 			var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
 			var offsetDiffLeft = $('.hyperlink-popup').offset().left - $('#map').offset().left;
 			if (offsetDiffTop < 10) this._movePopUpBelow();
 			if (offsetDiffLeft < 10) this._movePopUpRight();
+			var map_ = this._map;
+			var element = document.getElementById('hyperlink-pop-up');
+			element.style.cursor = 'pointer';
+			element.onclick = element.ontouchend = function() {
+				map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
+			};
 		}
 	},
 
