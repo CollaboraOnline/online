@@ -255,7 +255,7 @@ void Stress::handleOption(const std::string& optionName,
 
         helpFormatter.setCommand(commandName());
         helpFormatter.setUsage("OPTIONS");
-        helpFormatter.setHeader("LibreOffice Online tool.");
+        helpFormatter.setHeader("Collabora Online tool.");
         helpFormatter.format(std::cerr);
         std::exit(EX_OK);
     }

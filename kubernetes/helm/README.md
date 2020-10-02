@@ -1,6 +1,6 @@
-# LibreOffice Online Helm Chart
+# Collabora Online Helm Chart
 
-Chart for deploying LibreOffice Online in Kubernetes cluster.</br>
+Chart for deploying Collabora Online in Kubernetes cluster.</br>
 
 How to test:
   1. Install Kubernetes cluster locally - minikube - https://minikube.sigs.k8s.io/docs/start/linux/
@@ -13,7 +13,7 @@ How to test:
 helm install --namespace=${your desired namespace} --generate-name libreoffice-online
 ```
 
-Access LibreOffice Online locally through service ClusterIP and port 9980.
+Access Collabora Online locally through service ClusterIP and port 9980.
 
 ```
 kubectl -n ${your desired namespace} describe service libreoffice-online

@@ -1,10 +1,10 @@
-LibreOffice Online WebSocket server
-====================================
+Collabora Online WebSocket server
+=================================
 
 Dependencies
 ------------
 
-LibreOffice Online WebSocket server has the following dependencies:
+Collabora Online WebSocket server has the following dependencies:
 
 * libpng
 * Poco library: http://pocoproject.org/

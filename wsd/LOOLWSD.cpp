@@ -1654,7 +1654,7 @@ void LOOLWSD::displayHelp()
     HelpFormatter helpFormatter(options());
     helpFormatter.setCommand(commandName());
     helpFormatter.setUsage("OPTIONS");
-    helpFormatter.setHeader("LibreOffice Online WebSocket server.");
+    helpFormatter.setHeader("Collabora Online WebSocket server.");
     helpFormatter.format(std::cout);
 }
 

@@ -1255,8 +1255,8 @@ msgstr ""
 "info/ee330736(v=vs.85 )#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Ojejku, jest problem z połączeniem z serwisem LibreOffice Online: "
+msgid "Oops, there is a problem connecting to Collabora Online : "
+msgstr "Ojejku, jest problem z połączeniem z serwisem Collabora Online: "
 
 #: src/core/Socket.js:297
 msgid "Served by:"

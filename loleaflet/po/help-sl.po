@@ -2,7 +2,7 @@
 # Martin Srebotnjak <miles@filmsi.net>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: LibreOffice Online - Help\n"
+"Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
 "PO-Revision-Date: 2020-09-22 21:49+0000\n"

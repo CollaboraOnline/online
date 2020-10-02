@@ -76,10 +76,10 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* LibreOffice Online WebSocket server version */
+/* Collabora Online WebSocket server version */
 #define LOOLWSD_VERSION "@LOOLWSD_VERSION@"
 
-/* LibreOffice Online git hash if present */
+/* Collabora Online git hash if present */
 #define LOOLWSD_VERSION_HASH "@LOOLWSD_VERSION_HASH@"
 
 /* Path to LibreOffice installation */

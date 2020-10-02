@@ -1,7 +1,7 @@
-Leaflet platform for LibreOffice Online
+Leaflet platform for Collabora Online
 ========================================
 
-This is the client part of LibreOffice Online.  For the server part, see the
+This is the client part of Collabora Online.  For the server part, see the
 ../wsd/README, and install it first.
 
 Build dependencies

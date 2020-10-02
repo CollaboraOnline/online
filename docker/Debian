@@ -8,20 +8,20 @@ FROM debian:stable
 # install LibreOffice run-time dependencies
 # install adduser, findutils, openssl and cpio that we need later
 # install an editor
-# tdf#117557 - Add CJK Fonts to LibreOffice Online Docker Image
+# tdf#117557 - Add CJK Fonts to Collabora Online Docker Image
 RUN apt-get update && \
     apt-get -y install libpng16-16 fontconfig adduser cpio \
                findutils nano libpoco-dev libcap2-bin openssl inotify-tools \
                procps libubsan0 libubsan1 openssh-client fonts-wqy-zenhei \
                fonts-wqy-microhei fonts-droid-fallback fonts-noto-cjk
 
-# copy freshly built LibreOffice master and LibreOffice Online master with latest translations
+# copy freshly built LibreOffice master and Collabora Online master with latest translations
 COPY /instdir /
 
-# copy the shell script which can start LibreOffice Online (loolwsd)
+# copy the shell script which can start Collabora Online (loolwsd)
 COPY /scripts/run-lool.sh /
 
-# set up LibreOffice Online (normally done by postinstall script of package)
+# set up Collabora Online (normally done by postinstall script of package)
 # Fix permissions
 RUN setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit && \
     adduser --quiet --system --group --home /opt/lool lool && \

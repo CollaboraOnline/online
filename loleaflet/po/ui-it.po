@@ -1262,9 +1262,9 @@ msgstr ""
 "connections"
 
 #: src/core/Socket.js:61
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
+msgid "Oops, there is a problem connecting to Collabora Online : "
 msgstr ""
-"Oops, si è verificato un problema di connessione a LibreOffice Online: "
+"Oops, si è verificato un problema di connessione a Collabora Online: "
 
 #: src/core/Socket.js:297
 msgid "Served by:"
