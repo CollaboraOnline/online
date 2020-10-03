@@ -1104,7 +1104,7 @@ var plugin = function plugin (vex) {
     name: 'dialog',
 
     // Open
-    open: function (opts) {
+    open: function open (opts) {
       var options = Object.assign({}, this.defaultOptions, opts)
 
       // `message` is unsafe internally, so translate
@@ -1214,7 +1214,7 @@ var plugin = function plugin (vex) {
       text: 'OK',
       type: 'submit',
       className: 'vex-dialog-button-primary',
-      click: function () {
+      click: function yesClick () {
         this.value = true
       }
     },
@@ -1223,7 +1223,7 @@ var plugin = function plugin (vex) {
       text: 'Cancel',
       type: 'button',
       className: 'vex-dialog-button-secondary',
-      click: function () {
+      click: function noClick () {
         this.value = false
         this.close()
       }
@@ -1240,7 +1240,7 @@ var plugin = function plugin (vex) {
       dialog.buttons.NO
     ],
     showCloseButton: false,
-    onSubmit: function (e) {
+    onSubmit: function onDialogSubmit (e) {
       e.preventDefault()
       if (this.options.input) {
         this.value = serialize(this.form, { hash: true })
@@ -1349,7 +1349,7 @@ var isEscapeActive = false
 
 // vex itself is an object that exposes a simple API to open and close vex objects in various ways
 var vex = {
-  open: function (opts) {
+  open: function open (opts) {
     // Check for usage of deprecated options, and log a warning
     var warnDeprecated = function warnDeprecated (prop) {
       console.warn('The "' + prop + '" property is deprecated in vex 3. Use CSS classes and the appropriate "ClassName" options, instead.')
@@ -1530,7 +1530,7 @@ var vex = {
   },
 
   // A top-level vex.close function to close dialogs by reference or id
-  close: function (vexOrId) {
+  close: function close (vexOrId) {
     var id
     if (vexOrId.id) {
       id = vexOrId.id
@@ -1546,7 +1546,7 @@ var vex = {
   },
 
   // Close the most recently created/opened vex
-  closeTop: function () {
+  closeTop: function closeTop () {
     var ids = Object.keys(vexes)
     if (!ids.length) {
       return false
@@ -1555,7 +1555,7 @@ var vex = {
   },
 
   // Close every vex!
-  closeAll: function () {
+  closeAll: function closeAll () {
     for (var id in vexes) {
       this.close(id)
     }
@@ -1563,12 +1563,12 @@ var vex = {
   },
 
   // A getter for the internal lookup table
-  getAll: function () {
+  getAll: function getAll () {
     return vexes
   },
 
   // A getter for the internal lookup table
-  getById: function (id) {
+  getById: function getById (id) {
     return vexes[id]
   }
 }
