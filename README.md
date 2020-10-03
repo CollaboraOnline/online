@@ -15,7 +15,7 @@ Please ask your questions on `irc.freenode.net` in our `#cool-dev` channel
 
 Join the conversation on our Discourse server at https://forum.collaboraonline.com/
 
-## Develoment bits
+## Development bits
 
 This project has several components:
 

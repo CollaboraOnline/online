@@ -537,7 +537,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.contains('.menu-entry-with-icon', 'Accept All')
 			.click();
 
-		// Check that we dont have the removed content
+		// Check that we don't have the removed content
 		helper.typeIntoDocument('{ctrl}a');
 
 		cy.wait(1000);
@@ -565,7 +565,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		writerMobileHelper.selectAllMobile();
 
-		// We dont have actual text content.
+		// We don't have actual text content.
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\n\n\n');
 
@@ -815,7 +815,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('.ui-combobox-text', 'None');
 
-		// Text is moved up by margin removal, so the the center tile will be empty.
+		// Text is moved up by margin removal, so the center tile will be empty.
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		// Check that the page wizard shows the right value after reopen.

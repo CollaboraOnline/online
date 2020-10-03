@@ -90,7 +90,7 @@ PATH=/opt/libtool/bin:$PATH ./autogen.sh
 5) In the app folder from step 2, edit the
 ios/Mobile.xcodeproj/project.pbxproj file in your favourite text
 editor. Change LOSRCDIR and all instances of "../ios-device" to refer
-the the LibreOffice core source directory from step 1.
+the LibreOffice core source directory from step 1.
 
 6) In the app folder, run:
 

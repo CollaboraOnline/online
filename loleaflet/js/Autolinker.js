@@ -1589,7 +1589,7 @@
          */
         UrlMatch.prototype.removePercentEncoding = function (anchorText) {
             // First, convert a few of the known % encodings to the corresponding
-            // HTML entities that could accidentally be interpretted as special
+            // HTML entities that could accidentally be interpreted as special
             // HTML characters
             var preProcessedEntityAnchorText = anchorText
                 .replace(/%22/gi, '&quot;') // " char
@@ -1927,17 +1927,17 @@
                 }
                 else if (mailtoTransitions[prevChar] === char) ;
                 else if (localPartCharRegex.test(char)) {
-                    // We we're reading a prefix of 'mailto:', but encountered a
+                    // We are reading a prefix of 'mailto:', but encountered a
                     // different character that didn't continue the prefix
                     state = 2 /* LocalPart */;
                 }
                 else if (char === '.') {
-                    // We we're reading a prefix of 'mailto:', but encountered a
+                    // We are reading a prefix of 'mailto:', but encountered a
                     // dot character
                     state = 3 /* LocalPartDot */;
                 }
                 else if (char === '@') {
-                    // We we're reading a prefix of 'mailto:', but encountered a
+                    // We are reading a prefix of 'mailto:', but encountered a
                     // an @ character
                     state = 4 /* AtSign */;
                 }
@@ -3240,7 +3240,7 @@
                 state = 17 /* CommentEndDash */;
             }
         }
-        // When we we've read the first dash inside a comment, it may signal the
+        // When we've read the first dash inside a comment, it may signal the
         // end of the comment if we read another dash
         // https://www.w3.org/TR/html51/syntax.html#comment-end-dash-state
         function stateCommentEndDash(char) {
