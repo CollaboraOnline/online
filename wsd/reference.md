@@ -101,7 +101,7 @@ Disables copying from the document in libreoffice online backend. Pasting into t
 Disables displaying of the explanation text on the overlay when the document becomes inactive or killed.  With this, the JS integration must provide the user with appropriate message when it gets Session_Closed or User_Idle postMessage's.
 
 ### DownloadAsPostMessage
-Indicate that the integration wants to handle the downloading of pdf for printing or svg for slideshows or experted document, because it cannot rely on browser's support for downloading.
+Indicate that the integration wants to handle the downloading of pdf for printing or svg for slideshows or exported document, because it cannot rely on browser's support for downloading.
 
 When this is set to true, the user's eg. Print action will trigger a postMessage called Download_As, with the following JSON in the Values:
 
@@ -143,7 +143,7 @@ access_token).  The VALUES can have a form like:
 
 where the:
 
-* UIMode specifies the general mode of operatior (classic or notebookbar)
+* UIMode specifies the general mode of operator (classic or notebookbar)
 
 * Text, Presentation or Spreadsheet - are prefixes to identify the component
 

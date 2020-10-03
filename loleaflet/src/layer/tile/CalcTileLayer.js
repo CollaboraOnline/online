@@ -681,7 +681,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	// sends the .uno:SheetGeometryData command optionally with arguments.
 	requestSheetGeometryData: function (flags) {
 		if (!this.sheetGeometry) {
-			// Supress multiple requests at document load, till we get a response.
+			// Suppress multiple requests at document load, till we get a response.
 			if (this._sheetGeomFirstWait === true) {
 				return;
 			}

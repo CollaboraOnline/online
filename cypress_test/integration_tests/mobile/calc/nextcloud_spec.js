@@ -22,7 +22,7 @@ describe('Nextcloud specific tests.', function() {
 
 		nextcloudHelper.insertImageFromStorage('image_to_insert.png');
 
-		// TOD
+		// TODO
 		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
 		//	.should('exist');
 	});

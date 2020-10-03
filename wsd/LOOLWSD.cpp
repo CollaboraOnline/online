@@ -553,7 +553,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId)
         {
             LOG_DBG("getNewChild: Have " << available << " spare " <<
                     (available == 1 ? "child" : "children") <<
-                    " after poping [" << child->getPid() << "] to return in " <<
+                    " after popping [" << child->getPid() << "] to return in " <<
                     std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                           startTime).count() << "ms.");
             return child;
@@ -703,7 +703,7 @@ void sendLoadResult(std::shared_ptr<ClientSession> clientSession, bool success,
 {
     const std::string result = success ? "" : "Error while loading document";
     const std::string resultstr = success ? "true" : "false";
-    // Some sane limit, otherwise we get problems transfering this
+    // Some sane limit, otherwise we get problems transferring this
     // to the client with large strings (can be a whole webpage)
     // Replace reserved characters
     std::string errorMsgFormatted = LOOLProtocol::getAbbreviatedMessage(errorMsg);
