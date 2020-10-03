@@ -6,7 +6,8 @@
 # Translators:
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Muhammet Kara <muhammetk@gmail.com>, 2020
-# PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020
+# Açıkkaynak Yazılım <bilgi@acikkaynak.com.tr>, 2020
+# Dr. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020
 # 
 #, fuzzy
 msgid ""
@@ -15,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
 "PO-Revision-Date: 2020-10-01 06:41+0000\n"
-"Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020\n"
+"Last-Translator: Dr. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020\n"
 "Language-Team: Turkish (https://www.transifex.com/collabora-productivity-ltd/teams/68191/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,7 +42,7 @@ msgstr "(geçerli)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr "Analizler"
+msgstr "Analitik"
 
 #: admin/admin.strings.js:11
 msgid "History"
@@ -168,7 +169,7 @@ msgstr "En Fazla Belge işlemi sanal belleği (MB olarak) - yalnızca azalt"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "En Fazla Belge işlem yığıtı belleği (KB olarak) - yalnızca azalt"
+msgstr "En Fazla Belge işlem yığın belleği (KB olarak) - yalnızca azalt"
 
 #: admin/admin.strings.js:42
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -1276,7 +1277,7 @@ msgstr "Belge boşta - lütfen düzenlemeye devam etmek için tıklayın"
 #: src/core/Socket.js:403
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
-"Atıl belge - yeniden yüklemek ve düzenlemeye devam etmek için lütfen dokunun"
+"Boş belge - yeniden yüklemek ve düzenlemeye devam etmek için lütfen dokunun"
 
 #: src/core/Socket.js:411
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1288,15 +1289,15 @@ msgstr "Belgeye bağlanırken hata oluştu"
 
 #: src/core/Socket.js:419
 msgid "Server is recycling and will be available shortly"
-msgstr "SUnucu yeniden başlatılıyor ve kısa süre sonra kullanılabilir olacak"
+msgstr "Sunucu yeniden başlatılıyor ve kısa süre sonra kullanılabilir olacak"
 
 #: src/core/Socket.js:447
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
-"Belge depolandığı yerde değişti. Yeni belge yükleniyor. Kendi sürümünüze "
-"farklı bir sürüm olarak ulaşılabilirsiniz."
+"Belge depolandığı yerde değiştirildi. Yeni belge yükleniyor. Kendi "
+"sürümünüze farklı bir sürüm olarak ulaşılabilirsiniz."
 
 #: src/core/Socket.js:453
 msgid ""
@@ -1369,8 +1370,8 @@ msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"İstemci adresi boş. loolwsd sunucusu muhtemelen hayalı yapılandırılmış, "
-"lütfen sistem yöneticisiyle görüşün."
+"Ana makine URL'si boş. Loolwsd sunucusu muhtemelen yanlış "
+"yapılandırılmıştır, lütfen sistem yöneticiniz ile görüşün."
 
 #: src/errormessages.js:15
 msgid ""
@@ -1401,15 +1402,15 @@ msgid ""
 "administrator if the issue persists."
 msgstr ""
 "Servis kullanılamıyor. Lütfen daha sonra tekrar deneyin ve sorun devam "
-"ederse yöneticinize raporlayın."
+"ederse yöneticinize bildirin."
 
 #: src/errormessages.js:19
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Yetkisiz WOPI istemcisi. Lütfen daha sonra tekrar deneyin ve sorun devam "
-"ederse yöneticinize raporlayın."
+"Yetkisiz WOPI ana bilgisayarı. Lütfen daha sonra tekrar deneyin ve sorun "
+"devam ederse yöneticinize bildirin."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -1472,7 +1473,7 @@ msgstr ""
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
-"Belge süresi geçtiğinden veya geçersiz erişim belirteci nedeniyle "
+"Erişim belirtecinin süresi dolduğu veya geçersiz olduğu için belge "
 "kaydedilemiyor."
 
 #: src/errormessages.js:33
@@ -1489,8 +1490,8 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
-"Dosya depolamadan okunamadı. Lütfen depolama yöneticinize (%storageserver) "
-"başvurun."
+"Belge depodan okunamadı. Lütfen depolama sunucusu (%storageserver) "
+"yöneticinizle iletişime geçin."
 
 #: src/errormessages.js:39
 #, javascript-format
@@ -1563,7 +1564,7 @@ msgstr "İşlevler"
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
 msgstr ""
-"% ProductName dışına yapıştırmak için lütfen önce 'indir' düğmesini tıklayın"
+"%productName dışına yapıştırmak için lütfen önce 'indir' düğmesini tıklayın"
 
 #: src/map/Clipboard.js:289
 msgid "Failed to download clipboard, please re-copy"
@@ -1594,10 +1595,10 @@ msgid ""
 "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
-"<p>Belgenizin daha büyük öğelerini diğer uygulamalarla paylaşmak "
+"<p>Belgenizin daha büyük ögelerini diğer uygulamalarla paylaşmak "
 "istiyorsanız, bunları önce cihazınıza indirmeniz gerekir.  Bunu yapmak için "
 "aşağıdaki \"İndirmeyi başlat\" düğmesine basın ve tamamlandığında \"Panoya "
-"kopyalamayı onayla\" yı tıklayın.</p> <p>%productName içindeki belgeler "
+"kopyalamayı onayla\"yı tıklayın.</p> <p>%productName içindeki belgeler "
 "arasında kopyalayıp yapıştırma yapıyorsanız, indirmenize gerek yoktur. </p>"
 
 #: src/map/Clipboard.js:877
