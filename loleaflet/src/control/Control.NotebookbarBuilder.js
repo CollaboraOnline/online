@@ -15,7 +15,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_overrideHandlers: function() {
 		this._controlHandlers['combobox'] = this._comboboxControlHandler;
 		this._controlHandlers['listbox'] = this._comboboxControlHandler;
-		this._controlHandlers['tabcontrol'] = this._overridenTabsControlHandler;
+		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['menubartoolitem'] = this._menubarToolItemHandler;
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
 
@@ -307,7 +307,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		return builder._comboboxControl(parentContainer, data, builder);
 	},
 
-	// overriden
+	// overridden
 	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
 	{
 		return function() {
@@ -332,7 +332,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		};
 	},
 
-	_overridenTabsControlHandler: function(parentContainer, data, builder) {
+	_overriddenTabsControlHandler: function(parentContainer, data, builder) {
 		data.tabs = builder.wizard.getTabs();
 		return builder._tabsControlHandler(parentContainer, data, builder);
 	},
