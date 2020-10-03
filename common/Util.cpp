@@ -59,7 +59,6 @@
 #include "Common.hpp"
 #include "Log.hpp"
 #include "Protocol.hpp"
-#include "Util.hpp"
 
 using std::size_t;
 
