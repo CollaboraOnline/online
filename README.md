@@ -1,5 +1,11 @@
 # Collabora Online
 
+[![irc](https://img.shields.io/badge/IRC-%23cool--dev%20on%20freenode-orange.svg)](https://webchat.freenode.net/?channels=cool-dev)
+[![Telegram](https://img.shields.io/badge/Telegram-Collabora%20Online-green.svg)](https://t.me/CollaboraOnline)
+[![Forum](https://img.shields.io/badge/Forum-Discourse-blue.svg)](https://forum.collaboraonline.com/)
+[![Website](https://img.shields.io/badge/Website-collaboraonline.github.io-blueviolet.svg)](https://collaboraonline.github.io/)
+[![L10n](https://img.shields.io/badge/L10n-Transifex-lightgrey.svg)](https://www.transifex.com/collabora-productivity-ltd/collabora-online/)
+
 ## Website
 
 For many more details, build instructions, downloads and more please visit https://collaboraonline.github.io/
