@@ -658,7 +658,7 @@ protected:
             payload.insert(payload.end(), data, data + dataLen);
     }
 
-    /// To be overriden to handle the websocket messages the way you need.
+    /// To be overridden to handle the websocket messages the way you need.
     virtual void handleMessage(const std::vector<char> &data)
     {
         if (_msgHandler)

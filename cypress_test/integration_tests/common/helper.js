@@ -283,7 +283,7 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 	// Wait for the document to fully load
 	cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-	// Wait until anyting is drawn on tile canvas.
+	// Wait until anything is drawn on tile canvas.
 	canvasShouldBeFullWhiteOrNot('.leaflet-canvas-container canvas', false);
 
 	// The client is irresponsive for some seconds after load, because of the incoming messages.

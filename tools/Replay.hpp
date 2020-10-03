@@ -162,7 +162,7 @@ protected:
 
             if (rec.getDir() == TraceFileRecord::Direction::Event)
             {
-                // Meta info about about an event.
+                // Meta info about an event.
                 static const std::string NewSession("NewSession: ");
                 static const std::string EndSession("EndSession: ");
 

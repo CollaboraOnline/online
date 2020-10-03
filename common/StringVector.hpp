@@ -136,7 +136,7 @@ public:
         return _string.compare(token._index, token._length, string, N) == 0;
     }
 
-    /// Compares the nth token with the mth token from an other StringVector.
+    /// Compares the nth token with the mth token from another StringVector.
     bool equals(std::size_t index, const StringVector& other, std::size_t otherIndex);
 };
 
