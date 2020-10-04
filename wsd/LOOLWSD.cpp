@@ -974,7 +974,6 @@ void LOOLWSD::initialize(Application& self)
             { "ssl.termination", "true" },
             { "storage.filesystem[@allow]", "false" },
 //            "storage.ssl.enable" - deliberately not set; for back-compat
-            { "storage.webdav[@allow]", "false" },
             { "storage.wopi.host[0]", "localhost" },
             { "storage.wopi.host[0][@allow]", "true" },
             { "storage.wopi.max_file_size", "0" },

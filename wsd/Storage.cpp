@@ -1200,8 +1200,7 @@ StorageBase::SaveResult WopiStorage::handleUploadToStorageResponse(const WopiUpl
                         std::string decodedUrl;
                         Poco::URI::decode(url, decodedUrl);
                         const std::string obfuscatedFileId = Util::getFilenameFromURL(decodedUrl);
-                        Util::mapAnonymized(obfuscatedFileId,
-                                            obfuscatedFileId); // Identity, to avoid re-anonymizing.
+                        Util::mapAnonymized(obfuscatedFileId, obfuscatedFileId); // Identity, to avoid re-anonymizing.
 
                         const std::string filenameOnly = Util::getFilenameFromURL(filename);
                         Util::mapAnonymized(filenameOnly, obfuscatedFileId);
@@ -1227,11 +1226,9 @@ StorageBase::SaveResult WopiStorage::handleUploadToStorageResponse(const WopiUpl
             Poco::JSON::Object::Ptr object;
             if (JsonUtil::parseJSON(origResponseString, object))
             {
-                const std::string lastModifiedTime
-                    = JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
+                const std::string lastModifiedTime = JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
                 LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
-                getFileInfo().setModifiedTime(
-                    Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime"));
+                getFileInfo().setModifiedTime(Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime"));
 
                 if (details.isSaveAs || details.isRename)
                 {
@@ -1267,8 +1264,7 @@ StorageBase::SaveResult WopiStorage::handleUploadToStorageResponse(const WopiUpl
             Poco::JSON::Object::Ptr object;
             if (JsonUtil::parseJSON(origResponseString, object))
             {
-                const unsigned loolStatusCode
-                    = JsonUtil::getJSONValue<unsigned>(object, "LOOLStatusCode");
+                const unsigned loolStatusCode = JsonUtil::getJSONValue<unsigned>(object, "LOOLStatusCode");
                 if (loolStatusCode == static_cast<unsigned>(LOOLStatusCode::DOC_CHANGED))
                 {
                     saveResult.setResult(StorageBase::SaveResult::Result::DOC_CHANGED);
@@ -1304,25 +1300,6 @@ StorageBase::SaveResult WopiStorage::handleUploadToStorageResponse(const WopiUpl
     }
 
     return saveResult;
-}
-
-std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/,
-                                                  const std::string& /*cookies*/,
-                                                  LockContext& /*lockCtx*/,
-                                                  const std::string& /*templateUri*/)
-{
-    // TODO: implement webdav GET.
-    setLoaded(true);
-    return getUri().toString();
-}
-
-StorageBase::SaveResult
-WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*cookies*/,
-                                      LockContext& /*lockCtx*/, const std::string& /*saveAsPath*/,
-                                      const std::string& /*saveAsFilename*/, bool /*isRename*/)
-{
-    // TODO: implement webdav PUT.
-    return StorageBase::SaveResult(StorageBase::SaveResult::Result::OK);
 }
 
 #endif // !MOBILEAPP

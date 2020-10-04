@@ -163,9 +163,6 @@
                 <refresh desc="How frequently we should re-acquire a lock with the storage server, in seconds (default 15 mins) or 0 for no refresh" type="int" default="900">900</refresh>
             </locking>
         </wopi>
-        <webdav desc="Allow/deny webdav storage. Mutually exclusive with wopi." allow="false">
-            <host desc="Hostname to allow" allow="false">localhost</host>
-        </webdav>
         <ssl desc="SSL settings">
 	    <as_scheme type="bool" default="true" desc="When set we exclusively use the WOPI URI's scheme to enable SSL for storage">true</as_scheme>
             <enable type="bool" desc="If as_scheme is false or not set, this can be set to force SSL encryption between storage and loolwsd. When empty this defaults to following the ssl.enable setting"></enable>
