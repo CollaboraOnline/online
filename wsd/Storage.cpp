@@ -1176,25 +1176,6 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     return saveResult;
 }
 
-std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/,
-                                                  const std::string& /*cookies*/,
-                                                  LockContext& /*lockCtx*/,
-                                                  const std::string& /*templateUri*/)
-{
-    // TODO: implement webdav GET.
-    setLoaded(true);
-    return getUri().toString();
-}
-
-StorageBase::SaveResult
-WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*cookies*/,
-                                      LockContext& /*lockCtx*/, const std::string& /*saveAsPath*/,
-                                      const std::string& /*saveAsFilename*/, bool /*isRename*/)
-{
-    // TODO: implement webdav PUT.
-    return StorageBase::SaveResult(StorageBase::SaveResult::OK);
-}
-
 #endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
