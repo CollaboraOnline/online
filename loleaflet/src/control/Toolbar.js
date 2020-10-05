@@ -514,7 +514,7 @@ L.Map.include({
 		} else {
 			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition';
 		}
-		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://libreoffice.org';
+		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://collaboraonline.github.io/';
 		content.find('#product-name').text(productName);
 		var productString = _('This version of %productName is powered by');
 		var productNameWithURL;
