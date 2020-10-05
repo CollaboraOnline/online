@@ -56,7 +56,7 @@ public class AboutDialogFragment extends DialogFragment {
             if (!onlineVersionHash.isEmpty() && !coreVersionHash.isEmpty() && !versionName.isEmpty())
             {
                 String version = String.format(versionView.getText().toString().replace("\n", "<br/>"),
-                        versionName, "<a href=\"https://hub.libreoffice.org/git-online/" + onlineVersionHash + "\">" + onlineVersionHash + "</a>",
+                        versionName, "<a href=\"https://github.com/CollaboraOnline/online/commits/" + onlineVersionHash + "\">" + onlineVersionHash + "</a>",
                         "<a href=\"https://hub.libreoffice.org/git-core/" + coreVersionHash + "\">" + coreVersionHash + "</a>");
                 @SuppressWarnings("deprecation") // since 24 with additional option parameter
                 Spanned versionString = Html.fromHtml(version);
