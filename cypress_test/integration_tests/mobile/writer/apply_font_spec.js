@@ -163,6 +163,30 @@ describe('Apply font changes.', function() {
 			.should('have.attr', 'color', '#6aa84f');
 	});
 
+	it('Apply automatic font color.', function() {
+		helper.clickOnIdle('#FontColor');
+
+		mobileHelper.selectFromColorPalette(0, 2);
+
+		mobileHelper.closeMobileWizard();
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p font')
+			.should('have.attr', 'color', '#ff0000');
+
+		mobileHelper.openMobileWizard();
+
+		helper.clickOnIdle('#FontColor');
+
+		helper.clickOnIdle('.colors-container-auto-color-row');
+
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p font')
+			.should('have.attr', 'color', '#000000');
+	});
+
 	it('Apply highlight color.', function() {
 		helper.clickOnIdle('#BackColor');
 
