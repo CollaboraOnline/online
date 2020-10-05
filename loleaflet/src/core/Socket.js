@@ -780,8 +780,15 @@ L.Socket = L.Class.extend({
 				var docUrl = url.split('?')[0];
 				this._map.options.doc = docUrl;
 				this._map.options.wopiSrc = encodeURIComponent(docUrl);
+
+				// if this is save-as, we need to load the document with edit permission
+				// otherwise the user has to close the doc then re-open it again
+				// in order to be able to edit.
+				if (textMsg.startsWith('saveas:'))
+					this._map.options.permission = 'edit';
 				this._map.loadDocument();
 				this._map.sendInitUNOCommands();
+
 
 				if (textMsg.startsWith('renamefile:')) {
 					this._map.fire('postMessage', {
