@@ -3268,9 +3268,7 @@ Editor to WOPI host
 		</td>
 		<td>
 			Hides a button from the toolbar.<br/>
-		    <code>id</code> is the button ID as defined in the
-		    <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-		    function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+		    <code>id</code> is the button ID, see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3280,9 +3278,7 @@ Editor to WOPI host
 		</td>
 		<td>
 			Shows a button from the toolbar.<br/>
-			<code>id</code> is the button ID as defined in the
-			<a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-			function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+		    <code>id</code> is the button ID, see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3293,7 +3289,7 @@ Editor to WOPI host
 		<td>
 			Hides an item from the menu.<br/>
 			<code>id</code> is the item ID as defined in the
-			<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
+			<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3304,7 +3300,7 @@ Editor to WOPI host
 		<td>
 			Shows an item from the menu.<br/>
 			<code>id</code> is the item ID as defined in the
-			<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
+			<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3354,23 +3350,23 @@ Editor to WOPI host
 <p>Toolbar button IDs are defined in getToolItems/create functions in:
 <ul>
 	<li>
-		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.TopToolbar.js">Control.TopToolbar.js</a> for the top toolbar on desktop or tablet.
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.TopToolbar.js">Control.TopToolbar.js</a> for the top toolbar on desktop or tablet.
 	</li>
 	<li>
-		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.MobileTopBar.js">Control.MobileTopBar.js</a> for the top toolbar on smartphone.
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.MobileTopBar.js">Control.MobileTopBar.js</a> for the top toolbar on smartphone.
 	</li>
 	<li>
-		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.MobileBottomBar.js">Control.MobileBottomBar.js</a> for the bottom toolbar on smartphone.
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.MobileBottomBar.js">Control.MobileBottomBar.js</a> for the bottom toolbar on smartphone.
 	</li>
 	<li>
-		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a> for the statusbar on desktop.
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a> for the statusbar on desktop.
 	</li>
 </ul>
 Note that they usually don't change but there is no guarantee that they are stable.</p>
 
 <h5><a name="statusbar-element-ids">Finding statusbar element IDs</a></h5>
-<p>Statusbar button IDs are defined in the <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=onDocLayerInit">onDocLayerInit</a>
-function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Toolbar.js">Control.Toolbar.js</a>.
+<p>Statusbar button IDs are defined in the onDocLayerInit function in
+<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a>.
 Note that they usually don't change but there is no guarantee that they are stable.</p>
 
 <h4>Editor to WOPI host</h4>
