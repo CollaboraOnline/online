@@ -6,19 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: irc push
-        uses: rectalogic/notify-irc@v1
+        uses: vmiklos/notify-irc@cb2de8ffd0d51d237db7cbb8fa347c57b818ab07
         if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
         with:
           channel: "#cool-dev"
-          nickname: cool-github-notifier
+          nickname: github-online
           message: |
-            ${{ github.actor }} pushed ${{ github.event.ref }} ${{ github.event.compare }}
-            ${{ join(github.event.commits.*.message) }}
-      - name: irc tag created
-        uses: rectalogic/notify-irc@v1
-        if: github.event_name == 'create' && github.event.ref_type == 'tag'
-        with:
-          channel: "#cool-dev"
-          nickname: cool-github-notifier
-          message: |
-            ${{ github.actor }} tagged ${{ github.repository }} ${{ github.event.ref }}
+            ${{ toJson(github.event) }}
