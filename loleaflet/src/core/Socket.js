@@ -736,7 +736,7 @@ L.Socket = L.Class.extend({
 				textMsg = textMsg.replace(/{productname}/g, (typeof brandProductName !== 'undefined' ?
 						brandProductName : 'Collabora Online Development Edition'));
 				var brandFAQURL = (typeof brandProductFAQURL !== 'undefined') ?
-						brandProductFAQURL : 'https://hub.libreoffice.org/professional-online-support';
+						brandProductFAQURL : 'https://collaboraonline.github.io/post/faq/';
 				this._map.fire('infobar',
 					{
 						msg: textMsg,
