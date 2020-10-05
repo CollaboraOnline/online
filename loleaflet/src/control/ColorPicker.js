@@ -60,11 +60,12 @@ L.ColorPicker = L.Class.extend({
 			this.options.autoColorControl = false;
 			console.warn('L.ColorPicker: requested both no color and auto color control');
 		}
-		this._id = L.ColorPicker.ID++;
-		this._basicColorSampleIdTag = L.ColorPicker.ID_TAG + this._id + '-basic-color-';
-		this._tintSampleIdTag = L.ColorPicker.ID_TAG + this._id + '-tint-';
-		this._noColorControlId = L.ColorPicker.ID_TAG + this._id + '-no-color';
-		this._autoColorControlId = L.ColorPicker.ID_TAG + this._id + '-auto-color';
+
+		var pickerID = L.ColorPicker.ID++;
+		this._basicColorSampleIdTag = L.ColorPicker.ID_TAG + pickerID + '-basic-color-';
+		this._tintSampleIdTag = L.ColorPicker.ID_TAG + pickerID + '-tint-';
+		this._noColorControlId = L.ColorPicker.ID_TAG + pickerID + '-no-color';
+		this._autoColorControlId = L.ColorPicker.ID_TAG + pickerID + '-auto-color';
 		this._createBasicColorSelectionMark();
 		this._selectedColorElement = selectedColorSample;
 		this._selectedColor = this.options.selectedColor;
@@ -72,10 +73,6 @@ L.ColorPicker = L.Class.extend({
 		this._initIndexes();
 		this._container = this._createControl();
 		this._initialized = true;
-	},
-
-	getId: function () {
-		return this._id;
 	},
 
 	getContainer: function () {
