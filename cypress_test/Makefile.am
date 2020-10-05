@@ -402,6 +402,11 @@ $(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
 	@mkdir -p $(dir $(NPM_INSTALLED))
 	@touch $(NPM_INSTALLED)
 
+else
+
+check-local:
+	$(error CypressError: Can't find LibreOffice core installation!)
+
 endif
 
 clean-local:
