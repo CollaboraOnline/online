@@ -1790,6 +1790,12 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     for (auto& tile : tileCombined.getTiles())
     {
         tile.setVersion(++_tileVersion);
+        if (!hasTileCache())
+        {
+            LOG_WRN("Combined tile request without a loaded document?");
+            continue;
+        }
+
         TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
         if(!cachedTile)
         {
