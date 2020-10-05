@@ -115,13 +115,6 @@ L.Control.MobileBottomBar = L.Control.extend({
 				window.onClick(e, e.target);
 				window.hideTooltip(this, e.target);
 			},
-			onRefresh: function(edata) {
-				if (edata.target === 'inserttable')
-					window.insertTable();
-
-				if (edata.target === 'insertshapes')
-					window.insertShapes();
-			}
 		});
 
 		toolbar.bind('touchstart', function(e) {
