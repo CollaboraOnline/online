@@ -537,21 +537,6 @@ private:
     bool _reuseCookies;
 };
 
-/// WebDAV protocol backed storage.
-class WebDAVStorage : public StorageBase
-{
-public:
-    WebDAVStorage(const Poco::URI& uri,
-                  const std::string& localStorePath,
-                  const std::string& jailPath,
-                  std::unique_ptr<AuthBase> authAgent) :
-        StorageBase(uri, localStorePath, jailPath),
-        _authAgent(std::move(authAgent))
-    {
-        LOG_INF("WebDAVStorage ctor with localStorePath: [" << localStorePath <<
-                "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
-    }
-
     // Implement me
     // WebDAVFileInfo getWebDAVFileInfo(const Poco::URI& uriPublic);
 
