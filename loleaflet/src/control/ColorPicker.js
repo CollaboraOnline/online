@@ -78,10 +78,6 @@ L.ColorPicker = L.Class.extend({
 		return this._id;
 	},
 
-	getSelectedColor: function () {
-		return this._selectedColor;
-	},
-
 	getContainer: function () {
 		return this._container;
 	},
