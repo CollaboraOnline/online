@@ -622,7 +622,7 @@ else
 fi
 AC_SUBST(VENDOR)
 
-INFO_URL='https://www.libreoffice.org'
+INFO_URL='https://collaboraonline.github.io/'
 if test -n "$with_info_url" -a "$with_info_url" != "no"; then
     INFO_URL="$with_info_url"
 fi
