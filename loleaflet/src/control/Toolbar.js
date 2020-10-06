@@ -476,7 +476,7 @@ L.Map.include({
 	},
 
 	shouldWelcome: function() {
-		if (!window.enableWelcomeMessage || L.Browser.cypressTest)
+		if (!window.isLocalStorageAllowed || !window.enableWelcomeMessage || L.Browser.cypressTest)
 			return false;
 
 		var storedVersion = localStorage.getItem('WSDWelcomeVersion');
