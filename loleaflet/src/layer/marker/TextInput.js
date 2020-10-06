@@ -386,11 +386,16 @@ L.TextInput = L.Layer.extend({
 		// Note that the contents of the textarea are NOT deleted on each composed
 		// word, in order to make
 		this._textArea = L.DomUtil.create('textarea', 'clipboard', this._container);
+		this._textArea.id = 'clipboard-area';
 		this._textArea.setAttribute('autocapitalize', 'off');
 		this._textArea.setAttribute('autofocus', 'true');
 		this._textArea.setAttribute('autocorrect', 'off');
 		this._textArea.setAttribute('autocomplete', 'off');
 		this._textArea.setAttribute('spellcheck', 'false');
+		
+		this._textAreaLabel = L.DomUtil.create('label', 'visuallyhidden', this._container);
+		this._textAreaLabel.setAttribute('for', 'clipboard-area');
+		this._textAreaLabel.innerHTML = 'clipboard area';
 
 		// Prevent automatic line breaks in the textarea. Without this,
 		// chromium/blink will trigger input/insertLineBreak events by
