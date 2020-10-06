@@ -20,6 +20,17 @@
 	--gray-light-txt--color: #696969;
 	--gray-bg-color: #EFEFEF;
 }
+/* clip technique: hide visually but keep it available to screen readers */
+.visuallyhidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
 #document-container {
 	border-top: 1px solid #B6B6B6;
 	background: #DFDFDF;
