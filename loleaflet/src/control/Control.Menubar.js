@@ -1331,23 +1331,6 @@ L.Control.Menubar = L.Control.extend({
 			self._map.focus();
 	},
 
-	_onMouseEnter: function(e, item) {
-		var self = e.data.self;
-		var type = $(item).data('type');
-		if (type === 'unocommand') {
-			var unoCommand = $(item).data('uno');
-			self._map.setHelpTarget(unoCommand);
-		} else if (type === 'action') {
-			var id = $(item).data('id');
-			self._map.setHelpTarget('modules/online/menu/' + id);
-		}
-	},
-
-	_onMouseLeave: function(e) {
-		var self = e.data.self;
-		self._map.setHelpTarget(null);
-	},
-
 	_onKeyDown: function(e) {
 		var self = e.data.self;
 
