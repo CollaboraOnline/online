@@ -113,7 +113,6 @@ L.Map = L.Evented.extend({
 		this._debugAlwaysActive = false; // disables the dimming / document inactivity when true
 		this._serverRecycling = false;
 		this._documentIdle = false;
-		this._helpTarget = null; // help page that fits best the current context
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
 		this.showSidebar = false;
 
@@ -1045,10 +1044,6 @@ L.Map = L.Evented.extend({
 	// On mobile, this signifies that the keyboard should be visible.
 	canAcceptKeyboardInput: function() {
 		return this._textInput.canAcceptKeyboardInput();
-	},
-
-	setHelpTarget: function(page) {
-		this._helpTarget = page;
 	},
 
 	isSearching: function() {
