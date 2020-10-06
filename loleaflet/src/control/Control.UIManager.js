@@ -375,13 +375,16 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	setSavedState: function(name, state) {
-		localStorage.setItem('UIDefaults_' + this.map.getDocType() + '_' + name, state);
+		if (window.isLocalStorageAllowed)
+			localStorage.setItem('UIDefaults_' + this.map.getDocType() + '_' + name, state);
 	},
 
 	getSavedStateOrDefault: function(name) {
 		var retval = true;
 		var docType = this.map.getDocType();
-		var state = localStorage.getItem('UIDefaults_' + docType + '_' + name);
+		var state = null;
+		if (window.isLocalStorageAllowed)
+			state = localStorage.getItem('UIDefaults_' + docType + '_' + name);
 		switch (state) {
 		case 'true':
 			return true;
