@@ -145,9 +145,6 @@ L.Control.MobileTopBar = L.Control.extend({
 			// Call global onClick handler
 			window.onClick(e, id, item);
 		}
-		else if (id === 'insertcomment') {
-			this.map.insertComment();
-		}
 		else if (id === 'mobile_wizard') {
 			if (window.mobileWizard) {
 				window.mobileWizard = false;
