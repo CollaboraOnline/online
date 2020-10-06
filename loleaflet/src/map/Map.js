@@ -1091,6 +1091,8 @@ L.Map = L.Evented.extend({
 
 		if (window.mode.isDesktop()) {
 			this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
+			this._resizeDetector.title = 'Intentionally blank';
+			this._resizeDetector.setAttribute('aria-hidden', 'true');
 			this._resizeDetector.contentWindow.addEventListener('touchstart', L.DomEvent.preventDefault, {passive: false});
 			L.DomEvent.on(this._resizeDetector.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
 		}
