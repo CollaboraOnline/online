@@ -1,3 +1,9 @@
+loolwsd (6.4.0-7) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-6.4.0-7
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 06 Oct 2020 12:10:00 +0200
+
 loolwsd (6.4.0-6) unstable; urgency=medium
 
   * https://cgit.freedesktop.org/libreoffice/online/log/?h=cp-6.4.0-6
