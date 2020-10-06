@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: irc push
         uses: vmiklos/notify-irc@e929a7062f8f4061357b65ef9a089de11b6211dd
-        if: github.event_name == 'push' && github.event.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.event.ref == 'refs/heads/master' && github.repository == 'CollaboraOnline/online'
         with:
           channel: "#cool-dev"
           nickname: github-online
