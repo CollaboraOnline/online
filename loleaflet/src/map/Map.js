@@ -1051,16 +1051,6 @@ L.Map = L.Evented.extend({
 		this._helpTarget = page;
 	},
 
-	showHelp: function() {
-		var helpURL = 'https://help.libreoffice.org/help.html';
-		var helpVersion = '6.0';
-		if (this._helpTarget !== null) {
-			helpURL += '?Target=' + this._helpTarget + '&Language=' + String.locale + '&System=UNIX&Version=' + helpVersion;
-		}
-
-		this.fire('hyperlinkclicked', {url: helpURL});
-	},
-
 	isSearching: function() {
 		return this._isSearching;
 	},
