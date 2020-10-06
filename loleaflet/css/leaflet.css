@@ -884,10 +884,10 @@ input.clipboard {
 	display: inline-block;
 	border-width: 0px .5px;
 	border-style: solid;
-	border-color: grey;
+	border-color: var(--gray-light-txt--color);
 	font-size: 10px;
 	text-align: center;
-	color: grey;
+	color: var(--gray-light-txt--color);
 	line-height: 7px;
 }
 
