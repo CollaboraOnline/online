@@ -102,6 +102,16 @@ var Base64ToArrayBuffer = function(base64Str) {
     window.fullyLoadedAndReady = true;
   }, false);
 
+window.isLocalStorageAllowed = (function() {
+  var str = 'localstorage_test';
+  try {
+    localStorage.setItem(str, str);
+    localStorage.removeItem(str);
+    return true;
+  } catch(e) {
+    return false;
+  }
+})();
 </script>
 
 m4_dnl In the debug case, just write all the .css files here
