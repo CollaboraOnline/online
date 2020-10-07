@@ -80,8 +80,8 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
             break;
         }
         default:
-            // assert(false);
-            throw BadRequestException("Invalid HTTP request type");
+            LOG_TRC("No HTTP Authorization type detected. Assuming no authorization needed. "
+                    "Specify access_token to set the Authorization Bearer header.");
             break;
     }
 }

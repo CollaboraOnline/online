@@ -751,7 +751,7 @@ void WhiteBoxTests::testAuthorization()
 
     Authorization auth6(Authorization::Type::None, "Authorization: basic huh==");
     Poco::Net::HTTPRequest req6;
-    CPPUNIT_ASSERT_THROW(auth6.authorizeRequest(req6), BadRequestException);
+    CPPUNIT_ASSERT_NO_THROW(auth6.authorizeRequest(req6));
 
     {
         const std::string WorkingDocumentURI
@@ -785,6 +785,19 @@ void WhiteBoxTests::testAuthorization()
         auth7.authorizeRequest(req7);
         LOK_ASSERT_EQUAL(AuthorizationParam, req7.get("Authorization"));
         LOK_ASSERT_EQUAL(std::string("XMLHttpRequest"), req7.get("X-Requested-With"));
+    }
+
+    {
+        const std::string URI
+            = "https://example.com:8443/rest/files/wopi/files/"
+              "8ac75551de4d89e60002?reuse_cookies=lang%3Den-us%3A_xx_%3DGS1.1.%3APublicToken%"
+              "3DeyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4ODkxNzc3NCwiaWF0IjoxNTg4OTE2ODc0LCJqdGkiOiI4OGZhN2"
+              "E3ZC1lMzU5LTQ2OWEtYjg3Zi02NmFhNzI0ZGFkNTcifQ%3AZNPCQ003-32383700%3De9c71c3b%"
+              "3AJSESSIONID%3Dnode019djohorurnaf1eo6f57ejhg0520.node0&permission=edit";
+
+        Authorization auth7(Authorization::create(URI));
+        Poco::Net::HTTPRequest req;
+        auth7.authorizeRequest(req);
     }
 }
 
