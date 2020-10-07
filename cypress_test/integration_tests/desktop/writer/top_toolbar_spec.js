@@ -24,5 +24,23 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container p b')
 			.should('exist');
 	});
+
+	it('Apply left alignment.', function() {
+		cy.get('#tb_editbar_item_centerpara')
+			.click();
+
+		helper.selectAllText(false);
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'align', 'center');
+
+		cy.get('#tb_editbar_item_leftpara')
+			.click();
+
+		helper.selectAllText(false);
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'align', 'left');
+	});
 });
 
