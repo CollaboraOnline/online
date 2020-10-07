@@ -42,8 +42,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('be.visible');
 	}
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply left/right alignment on text shape.', function() {
+	it('Apply left/right alignment on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -68,8 +67,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'x', '1400');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply center alignment on text shape.', function() {
+	it('Apply center alignment on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -83,8 +81,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'x', '12493');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply justified alignment on text shape.', function() {
+	it('Apply justified alignment on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -109,8 +106,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'x', '1400');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Set top/bottom alignment on text shape.', function() {
+	it('Set top/bottom alignment on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
@@ -135,8 +131,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'y', '4834');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply center vertical alignment on text shape.', function() {
+	it('Apply center vertical alignment on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
@@ -150,8 +145,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'y', '7823');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply default bulleting on text shape.', function() {
+	it('Apply default bulleting on text shape.', function() {
 		// We have no bulleting by default
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('not.exist');
@@ -166,8 +160,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('exist');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply default numbering on text shape.', function() {
+	it('Apply default numbering on text shape.', function() {
 		// We have no bulleting by default
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
@@ -182,8 +175,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply spacing above on text shape.', function() {
+	it('Apply spacing above on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
@@ -202,8 +194,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'y', '11180');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply spacing below on text shape.', function() {
+	it('Apply spacing below on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
