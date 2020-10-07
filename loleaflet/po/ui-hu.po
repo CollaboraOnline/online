@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-30 18:19+0000\n"
-"Last-Translator: Andras Timar <timar74@gmail.com>\n"
-"Language-Team: Hungarian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/hu/>\n"
+"PO-Revision-Date: 2020-10-08 21:00+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/"
+"collabora-online/ui/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
 "X-Pootle-Revision: 3939165\n"
 
@@ -34,7 +35,7 @@ msgstr "Áttekintés"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
-msgstr " (aktuális)"
+msgstr "(aktuális)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
@@ -1454,7 +1455,7 @@ msgstr "Függvények"
 
 #: src/map/Clipboard.js:137
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "Ha másolni akar a %productName-ból, kattirson a „Letöltés” gombra."
+msgstr "Ha másolni akar a %productName-ból, kattintson a „Letöltés” gombra."
 
 #: src/map/Clipboard.js:289
 msgid "Failed to download clipboard, please re-copy"

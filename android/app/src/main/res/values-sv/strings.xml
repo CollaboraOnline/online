@@ -104,4 +104,9 @@
     <string name="action_about">Om</string>
     <string name="title_activity_show_html">Om</string>
     <string name="app_name_settings">Inställningar</string>
+    <string name="theme_light">Ljus</string>
+    <string name="theme_dark">Mörk</string>
+    <string name="theme_system_default">Systemets standard</string>
+    <string name="choose_theme">Välj tema</string>
+    <string name="theme">Tema</string>
 </resources>

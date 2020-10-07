@@ -14,7 +14,7 @@
     <string name="negative_cancel">Mégse</string>
     <string name="negative_im_sure">Biztos</string>
     <string name="positive_ok">OK</string>
-    <string name="reason_required_to_read_documents">Jogosultság szükséges a tárolóhelyről való dokumentumolvasáshoz</string>
+    <string name="reason_required_to_read_documents">Jogosultság szükséges a tárolóhelyről való dokumentumolvasáshoz.</string>
     <string name="title_permission_required">Jogosultság szükséges</string>
     <string name="current_dir">Aktuális könyvtár: %1$s</string>
     <string name="bad_directory">Érvénytelen könyvtárelérési-út</string>
