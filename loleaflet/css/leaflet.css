@@ -204,6 +204,23 @@
 	cursor: -moz-grabbing;
 }
 
+.drag-marker--0,
+.drag-marker--4.drag-marker--8 {
+	cursor: nesw-resize;
+}
+.drag-marker--1.drag-marker--2,
+.drag-marker--5.drag-marker--10 {
+	cursor: ew-resize;
+}
+.drag-marker--2.drag-marker--4,
+.drag-marker--6.drag-marker--12 {
+	cursor: nwse-resize;
+}
+.drag-marker--3.drag-marker--6,
+.drag-marker--7.drag-marker--14 {
+	cursor: ns-resize;
+}
+
 /* visual tweaks */
 
 .leaflet-container a {
