@@ -3,10 +3,10 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([loolwsd], [master], [libreoffice@lists.freedesktop.org])
+AC_INIT([loolwsd], [master], [https://github.com/CollaboraOnline/online/issues], [loolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
-AM_INIT_AUTOMAKE([1.10 subdir-objects tar-pax -Wno-portability])
+AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
 
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -41,7 +41,7 @@ AC_SUBST([LOOLWSD_VERSION_MINOR])
 AC_SUBST([LOOLWSD_VERSION_MICRO])
 AC_SUBST([LOOLWSD_VERSION])
 
-AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[LibreOffice Online WebSocket server version])
+AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[Collabora Online WebSocket server version])
 
 # try to add a git hash for a version if we're developing
 LOOLWSD_VERSION_HASH="$LOOLWSD_VERSION"
@@ -51,7 +51,7 @@ if test "z$git_hash" != "z"; then
 fi
 AC_SUBST([LOOLWSD_VERSION_HASH])
 
-AC_DEFINE_UNQUOTED([LOOLWSD_VERSION_HASH],[["$LOOLWSD_VERSION_HASH"]],[LibreOffice Online git hash if present])
+AC_DEFINE_UNQUOTED([LOOLWSD_VERSION_HASH],[["$LOOLWSD_VERSION_HASH"]],[Collabora Online git hash if present])
 
 AC_CONFIG_SRCDIR([wsd/LOOLWSD.cpp])
 
@@ -260,7 +260,7 @@ AC_ARG_ENABLE([ssl],
 
 AC_ARG_WITH([support-public-key],
             AS_HELP_STRING([--with-support-public-key=<public-key-name.pub>],
-                [Implements signed key with expiration required for support. Targeted at LibreOffice Online Service Providers.]))
+                [Implements signed key with expiration required for support. Targeted at Collabora Online Service Providers.]))
 
 AC_ARG_WITH([max-connections],
             AS_HELP_STRING([--with-max-connections],
@@ -592,7 +592,7 @@ AC_SUBST(ENABLE_ANDROIDAPP)
 AM_CONDITIONAL([ENABLE_ANDROIDAPP], [test "$ENABLE_ANDROIDAPP" = "true"])
 AC_SUBST(ANDROID_PACKAGE_NAME)
 
-APP_NAME="LibreOffice Online Personal"
+APP_NAME="Collabora Online Development Edition"
 if test -n "$with_app_name"; then
    APP_NAME="$with_app_name"
 fi
@@ -622,7 +622,7 @@ else
 fi
 AC_SUBST(VENDOR)
 
-INFO_URL='https://www.libreoffice.org'
+INFO_URL='https://collaboraonline.github.io/'
 if test -n "$with_info_url" -a "$with_info_url" != "no"; then
     INFO_URL="$with_info_url"
 fi

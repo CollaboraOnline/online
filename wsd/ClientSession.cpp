@@ -1,7 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * This file is part of the LibreOffice project.
- *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -240,10 +238,8 @@ bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const st
     }
 
     // FIXME: check viewId for paranoia if we can.
-    for (auto &it : _clipboardKeys)
-        if (it == tag)
-            return true;
-    return false;
+    return std::any_of(std::begin(_clipboardKeys), std::end(_clipboardKeys),
+                       [&tag](const std::string& it) { return it == tag; });
 }
 
 
@@ -1253,7 +1249,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         // Prepend the jail path in the normal (non-nocaps) case
         if (resultURL.getScheme() == "file" && !LOOLWSD::NoCapsForKit)
         {
-            std::string relative(resultURL.getPath());
+            std::string relative;
+            if (isConvertTo)
+                Poco::URI::decode(resultURL.getPath(), relative);
+            else
+                relative = resultURL.getPath();
+
             if (relative.size() > 0 && relative[0] == '/')
                 relative = relative.substr(1);
 
@@ -1261,11 +1262,18 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             const Path path(docBroker->getJailRoot(), relative);
             if (Poco::File(path).exists())
             {
-                // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
-                std::string encodedPath;
-                Poco::URI::encode(path.toString(), "", encodedPath);
+                if (!isConvertTo)
+                {
+                    // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
+                    std::string encodedPath;
+                    Poco::URI::encode(path.toString(), "", encodedPath);
 
-                resultURL.setPath(encodedPath);
+                    resultURL.setPath(encodedPath);
+                }
+                else
+                {
+                    resultURL.setPath(path.toString());
+                }
             }
             else
             {
@@ -1296,16 +1304,14 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             if (!resultURL.getPath().empty())
             {
                 const std::string mimeType = "application/octet-stream";
-                std::string encodedFilePath;
-                Poco::URI::encode(resultURL.getPath(), "", encodedFilePath);
-                LOG_TRC("Sending file: " << encodedFilePath);
+                LOG_TRC("Sending file: " << resultURL.getPath());
 
                 const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
                 Poco::Net::HTTPResponse response;
                 if (!fileName.empty())
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
-                HttpHelper::sendFileAndShutdown(_saveAsSocket, encodedFilePath, mimeType, &response);
+                HttpHelper::sendFileAndShutdown(_saveAsSocket, resultURL.getPath(), mimeType, &response);
             }
 
             // Conversion is done, cleanup this fake session.

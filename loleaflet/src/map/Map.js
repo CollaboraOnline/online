@@ -113,7 +113,6 @@ L.Map = L.Evented.extend({
 		this._debugAlwaysActive = false; // disables the dimming / document inactivity when true
 		this._serverRecycling = false;
 		this._documentIdle = false;
-		this._helpTarget = null; // help page that fits best the current context
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
 		this.showSidebar = false;
 
@@ -1047,20 +1046,6 @@ L.Map = L.Evented.extend({
 		return this._textInput.canAcceptKeyboardInput();
 	},
 
-	setHelpTarget: function(page) {
-		this._helpTarget = page;
-	},
-
-	showHelp: function() {
-		var helpURL = 'https://help.libreoffice.org/help.html';
-		var helpVersion = '6.0';
-		if (this._helpTarget !== null) {
-			helpURL += '?Target=' + this._helpTarget + '&Language=' + String.locale + '&System=UNIX&Version=' + helpVersion;
-		}
-
-		this.fire('hyperlinkclicked', {url: helpURL});
-	},
-
 	isSearching: function() {
 		return this._isSearching;
 	},
@@ -1091,6 +1076,8 @@ L.Map = L.Evented.extend({
 
 		if (window.mode.isDesktop()) {
 			this._resizeDetector = L.DomUtil.create('iframe', 'resize-detector', container);
+			this._resizeDetector.title = 'Intentionally blank';
+			this._resizeDetector.setAttribute('aria-hidden', 'true');
 			this._resizeDetector.contentWindow.addEventListener('touchstart', L.DomEvent.preventDefault, {passive: false});
 			L.DomEvent.on(this._resizeDetector.contentWindow, 'contextmenu', L.DomEvent.preventDefault);
 		}

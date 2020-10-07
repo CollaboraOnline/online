@@ -1255,7 +1255,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'latest-updates') {
 			this._map.showWelcomeDialog(/*calledFromMenu=*/true);
 		} else if (id === 'report-an-issue') {
-			window.open('https://bugs.documentfoundation.org/enter_bug.cgi?product=LibreOffice%20Online', '_blank');
+			window.open('https://github.com/CollaboraOnline/online/issues', '_blank');
 		} else if (id === 'inserthyperlink') {
 			this._map.showHyperlinkDialog();
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
@@ -1329,23 +1329,6 @@ L.Control.Menubar = L.Control.extend({
 
 		if (!window.mode.isMobile() && $(item).data('id') !== 'insertcomment')
 			self._map.focus();
-	},
-
-	_onMouseEnter: function(e, item) {
-		var self = e.data.self;
-		var type = $(item).data('type');
-		if (type === 'unocommand') {
-			var unoCommand = $(item).data('uno');
-			self._map.setHelpTarget(unoCommand);
-		} else if (type === 'action') {
-			var id = $(item).data('id');
-			self._map.setHelpTarget('modules/online/menu/' + id);
-		}
-	},
-
-	_onMouseLeave: function(e) {
-		var self = e.data.self;
-		self._map.setHelpTarget(null);
 	},
 
 	_onKeyDown: function(e) {

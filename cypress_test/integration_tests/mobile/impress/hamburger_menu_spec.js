@@ -37,6 +37,22 @@ describe('Trigger hamburger menu options.', function() {
 	it('Save', function() {
 		before('hamburger_menu.odp');
 
+		// Change the document content and save it
+		impressMobileHelper.selectTextShapeInTheCenter();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.text', 'X');
+
+		// Type a new text
+		dblclickOnShape();
+
+		helper.typeIntoDocument('new');
+
+		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.text', 'Xnew');
+
 		mobileHelper.openHamburgerMenu();
 
 		cy.contains('.menu-entry-with-icon', 'File')
@@ -45,9 +61,15 @@ describe('Trigger hamburger menu options.', function() {
 		cy.contains('.menu-entry-with-icon', 'Save')
 			.click();
 
-		// TODO: we have no visual indicator of save was done
-		// So just trigger saving to catch any exception / console error
-		cy.wait(500);
+		// Reopen the document and check content.
+		helper.beforeAll(testFileName, 'impress', true);
+
+		mobileHelper.enableEditingMobile();
+
+		impressMobileHelper.selectTextShapeInTheCenter();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+			.should('have.text', 'Xnew');
 	});
 
 	it('Print', function() {

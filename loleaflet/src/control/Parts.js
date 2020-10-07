@@ -392,9 +392,10 @@ L.Map.include({
 		}
 	},
 
-	hidePage: function () {
+	hidePage: function (tabNumber) {
 		if (this.getDocType() === 'spreadsheet' && this.getNumberOfVisibleParts() > 1) {
-			this._socket.sendMessage('uno .uno:Hide');
+			var argument = {nTabNumber: {type: 'int16', value: tabNumber}};
+			this._socket.sendMessage('uno .uno:Hide ' + JSON.stringify(argument));
 		}
 	},
 

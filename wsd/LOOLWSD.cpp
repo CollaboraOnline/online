@@ -1,7 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * This file is part of the LibreOffice project.
- *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -555,7 +553,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId)
         {
             LOG_DBG("getNewChild: Have " << available << " spare " <<
                     (available == 1 ? "child" : "children") <<
-                    " after poping [" << child->getPid() << "] to return in " <<
+                    " after popping [" << child->getPid() << "] to return in " <<
                     std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
                                                                           startTime).count() << "ms.");
             return child;
@@ -705,7 +703,7 @@ void sendLoadResult(std::shared_ptr<ClientSession> clientSession, bool success,
 {
     const std::string result = success ? "" : "Error while loading document";
     const std::string resultstr = success ? "true" : "false";
-    // Some sane limit, otherwise we get problems transfering this
+    // Some sane limit, otherwise we get problems transferring this
     // to the client with large strings (can be a whole webpage)
     // Replace reserved characters
     std::string errorMsgFormatted = LOOLProtocol::getAbbreviatedMessage(errorMsg);
@@ -971,7 +969,6 @@ void LOOLWSD::initialize(Application& self)
             { "ssl.termination", "true" },
             { "storage.filesystem[@allow]", "false" },
 //            "storage.ssl.enable" - deliberately not set; for back-compat
-            { "storage.webdav[@allow]", "false" },
             { "storage.wopi.host[0]", "localhost" },
             { "storage.wopi.host[0][@allow]", "true" },
             { "storage.wopi.max_file_size", "0" },
@@ -1656,7 +1653,7 @@ void LOOLWSD::displayHelp()
     HelpFormatter helpFormatter(options());
     helpFormatter.setCommand(commandName());
     helpFormatter.setUsage("OPTIONS");
-    helpFormatter.setHeader("LibreOffice Online WebSocket server.");
+    helpFormatter.setHeader("Collabora Online WebSocket server.");
     helpFormatter.format(std::cout);
 }
 

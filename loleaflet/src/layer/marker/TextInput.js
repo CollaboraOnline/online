@@ -334,7 +334,7 @@ L.TextInput = L.Layer.extend({
 
 	// Marks the content of the textarea/contenteditable as selected,
 	// for system clipboard interaction.
-	select: function select() {
+	select: function() {
 		this._textArea.select();
 	},
 
@@ -379,11 +379,16 @@ L.TextInput = L.Layer.extend({
 		// Note that the contents of the textarea are NOT deleted on each composed
 		// word, in order to make
 		this._textArea = L.DomUtil.create('textarea', 'clipboard', this._container);
+		this._textArea.id = 'clipboard-area';
 		this._textArea.setAttribute('autocapitalize', 'off');
 		this._textArea.setAttribute('autofocus', 'true');
 		this._textArea.setAttribute('autocorrect', 'off');
 		this._textArea.setAttribute('autocomplete', 'off');
 		this._textArea.setAttribute('spellcheck', 'false');
+		
+		this._textAreaLabel = L.DomUtil.create('label', 'visuallyhidden', this._container);
+		this._textAreaLabel.setAttribute('for', 'clipboard-area');
+		this._textAreaLabel.innerHTML = 'clipboard area';
 
 		// Prevent automatic line breaks in the textarea. Without this,
 		// chromium/blink will trigger input/insertLineBreak events by
@@ -478,7 +483,7 @@ L.TextInput = L.Layer.extend({
 	},
 
 	// Generic handle attached to most text area events, just for debugging purposes.
-	_onEvent: function _onEvent(ev) {
+	_onEvent: function(ev) {
 		var msg = {
 			inputType: ev.inputType,
 			data: ev.data,
@@ -495,7 +500,7 @@ L.TextInput = L.Layer.extend({
 		this._fancyLog(ev.type, msg);
 	},
 
-	_fancyLog: function _fancyLog(type, payload) {
+	_fancyLog: function(type, payload) {
 		// Avoid unhelpful exceptions
 		if (payload === undefined)
 			payload = 'undefined';
@@ -556,7 +561,7 @@ L.TextInput = L.Layer.extend({
 	// Backspaces and deletes at the beginning / end are filtered out, so
 	// we get a beforeinput, but no input for them. Sometimes we can end up
 	// in a state where we lost our leading / terminal chars and can't recover
-	_onBeforeInput: function _onBeforeInput(ev) {
+	_onBeforeInput: function(ev) {
 		this._ignoreNextBackspace = false;
 		if (this._hasWorkingSelectionStart) {
 			var value = this._textArea.value;
@@ -578,7 +583,7 @@ L.TextInput = L.Layer.extend({
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
-	_onInput: function _onInput(ev) {
+	_onInput: function(ev) {
 		this._map.notifyActive();
 
 		if (this._ignoreInputCount > 0) {
@@ -685,7 +690,7 @@ L.TextInput = L.Layer.extend({
 
 	// Sends the given (UTF-8) string of text to loolwsd, as IME (text composition)
 	// messages
-	_sendText: function _sendText(text) {
+	_sendText: function(text) {
 		this._fancyLog('send-text-to-loolwsd', text);
 
 		// MSIE/Edge cannot compare a string to "\n" for whatever reason,
@@ -720,7 +725,7 @@ L.TextInput = L.Layer.extend({
 	// always catch deleteContentBackward/deleteContentForward input events
 	// (some combination of browser + input method don't fire those on an
 	// empty contenteditable).
-	_emptyArea: function _emptyArea(noSelect) {
+	_emptyArea: function(noSelect) {
 		this._fancyLog('empty-area');
 
 		this._ignoreInputCount++;
@@ -749,13 +754,13 @@ L.TextInput = L.Layer.extend({
 		this._ignoreInputCount--;
 	},
 
-	_onCompositionStart: function _onCompositionStart(/*ev*/) {
+	_onCompositionStart: function(/*ev*/) {
 		this._isComposing = true;
 	},
 
 	// Handled only in legacy situations ('input' events with an inputType
 	// property are preferred).
-	_onCompositionUpdate: function _onCompositionUpdate(ev) {
+	_onCompositionUpdate: function(ev) {
 		this._map.notifyActive();
 		this._onInput(ev);
 	},
@@ -765,7 +770,7 @@ L.TextInput = L.Layer.extend({
 	// to handle since Chrome also fires "input/insertText" events.
 	// The approach here is to use "compositionend" events *only in Chrome* to mark
 	// the composing text as committed to the text area.
-	_onCompositionEnd: function _onCompositionEnd(ev) {
+	_onCompositionEnd: function(ev) {
 		this._map.notifyActive();
 		this._isComposing = false;
 		this._onInput(ev);
@@ -775,14 +780,14 @@ L.TextInput = L.Layer.extend({
 	// on a timeout.
 	// Very difficult to handle right now, so the strategy is to panic and
 	// empty the text area.
-	_abortComposition: function _abortComposition(ev) {
+	_abortComposition: function(ev) {
 		this._fancyLog('abort-composition', ev.type);
 		if (this._isComposing)
 			this._isComposing = false;
 		this._emptyArea(document.activeElement !== this._textArea);
 	},
 
-	_onKeyDown: function _onKeyDown(ev) {
+	_onKeyDown: function(ev) {
 		if (ev.keyCode === 8)
 			this._deleteHint = 'backspace';
 		else if (ev.keyCode === 46)
@@ -798,7 +803,7 @@ L.TextInput = L.Layer.extend({
 	// whitespace around the caret.
 	// Across browsers, arrow up/down / home / end would move the caret to
 	// the beginning/end of the textarea/contenteditable.
-	_onKeyUp: function _onKeyUp(ev) {
+	_onKeyUp: function(ev) {
 		this._map.notifyActive();
 		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
 		    ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
@@ -812,7 +817,7 @@ L.TextInput = L.Layer.extend({
 	// Used in the deleteContentBackward for deleting multiple characters with a single
 	// message.
 	// Will remove characters from the queue first, if there are any.
-	_removeTextContent: function _removeTextContent(before, after) {
+	_removeTextContent: function(before, after) {
 		console.log('Remove ' + before + ' before, and ' + after + ' after');
 
 		/// TODO: rename the event to 'removetextcontent' as soon as loolwsd supports it
@@ -827,7 +832,7 @@ L.TextInput = L.Layer.extend({
 
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
 	// sends a pair of "input" for a composition update paird with an "end"
-	_sendCompositionEvent: function _sendCompositionEvent(text) {
+	_sendCompositionEvent: function(text) {
 		console.log('sending to loolwsd: ', text);
 
 		// We want to trigger auto-correction, but not if we may
@@ -851,7 +856,7 @@ L.TextInput = L.Layer.extend({
 
 	// Tiny helper - encapsulates sending a 'key' or 'windowkey' websocket message
 	// "type" can be "input" (default) or "up"
-	_sendKeyEvent: function _sendKeyEvent(charCode, unoKeyCode, type) {
+	_sendKeyEvent: function(charCode, unoKeyCode, type) {
 		if (!type) {
 			type = 'input';
 		}
@@ -874,7 +879,7 @@ L.TextInput = L.Layer.extend({
 		}
 	},
 
-	_onCursorHandlerDragEnd: function _onCursorHandlerDragEnd(ev) {
+	_onCursorHandlerDragEnd: function(ev) {
 		var cursorPos = this._map._docLayer._latLngToTwips(ev.target.getLatLng());
 		this._map._docLayer._postMouseEvent('buttondown', cursorPos.x, cursorPos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', cursorPos.x, cursorPos.y, 1, 1, 0);

@@ -322,6 +322,7 @@ EXTRA_DIST = discovery.xml \
              etc/apache2/loolwsd.conf \
              etc/nginx/loolwsd.conf \
              scripts/unocommands.py \
+             scripts/refresh-git-hooks \
              $(man_MANS)
 
 if ENABLE_LIBFUZZER
@@ -339,8 +340,7 @@ RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
 if ENABLE_SETCAP
 SET_CAPS_COMMAND=sudo @SETCAP@ cap_fowner,cap_mknod,cap_sys_chroot=ep loolforkit && sudo @SETCAP@ cap_sys_admin=ep loolmount
 else
-SET_CAPS_COMMAND=
-echo "Skipping capability setting"
+SET_CAPS_COMMAND=echo "Skipping capability setting"
 endif
 
 if ENABLE_LIBFUZZER
@@ -501,6 +501,7 @@ endif
 # installing the RPM or Debian package.
 all-local: $(ALL_LOCAL_DEPS) @JAILS_PATH@ $(SYSTEM_STAMP)
 	$(SET_CAPS_COMMAND)
+	@$(abs_top_srcdir)/scripts/refresh-git-hooks
 
 # just run the build without any tests
 build-nocheck: all-am

@@ -189,6 +189,14 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.06');
 
+		helper.clickOnIdle('#aboveparaspacing .plus');
+		cy.get('#aboveparaspacing .spinfield')
+			.should('have.attr', 'value', '0.08');
+
+		helper.clickOnIdle('#aboveparaspacing .minus');
+		cy.get('#aboveparaspacing .spinfield')
+			.should('have.attr', 'value', '0.06');
+
 		helper.clickOnIdle('#belowparaspacing .plus');
 		cy.get('#belowparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');

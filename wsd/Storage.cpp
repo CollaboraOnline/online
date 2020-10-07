@@ -1,7 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * This file is part of the LibreOffice project.
- *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -622,7 +620,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot get file info from WOPI storage uri [" << uriAnonym << "]. Error:  Failed HTPP request authorization");
+        LOG_ERR("Cannot get file info from WOPI storage uri [" << uriAnonym << "]. Error: " << exc.what());
     }
 
     Poco::JSON::Object::Ptr object;
@@ -843,7 +841,7 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot " << wopiLog << " uri [" << uriAnonym << "]. Error: Failed HTPP request authorization");
+        LOG_ERR("Cannot " << wopiLog << " uri [" << uriAnonym << "]. Error: " << exc.what());
     }
     return false;
 }
@@ -942,7 +940,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot load document from WOPI storage uri [" + uriAnonym + "]. Error: Failed HTPP request authorization");
+        LOG_ERR("Cannot load document from WOPI storage uri [" + uriAnonym + "]. Error: " << exc.what());
     }
 
     return "";
@@ -1172,29 +1170,10 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot save file to WOPI storage uri [" + uriAnonym + "]. Error: Failed HTPP request authorization");
+        LOG_ERR("Cannot save file to WOPI storage uri [" + uriAnonym + "]. Error: " << exc.what());
     }
 
     return saveResult;
-}
-
-std::string WebDAVStorage::loadStorageFileToLocal(const Authorization& /*auth*/,
-                                                  const std::string& /*cookies*/,
-                                                  LockContext& /*lockCtx*/,
-                                                  const std::string& /*templateUri*/)
-{
-    // TODO: implement webdav GET.
-    setLoaded(true);
-    return getUri().toString();
-}
-
-StorageBase::SaveResult
-WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::string& /*cookies*/,
-                                      LockContext& /*lockCtx*/, const std::string& /*saveAsPath*/,
-                                      const std::string& /*saveAsFilename*/, bool /*isRename*/)
-{
-    // TODO: implement webdav PUT.
-    return StorageBase::SaveResult(StorageBase::SaveResult::OK);
 }
 
 #endif // !MOBILEAPP

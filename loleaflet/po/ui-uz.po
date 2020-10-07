@@ -1277,8 +1277,8 @@ msgid "IE11 has reached its maximum number of connections. Please see this docum
 msgstr ""
 
 #: src/core/Socket.js:61
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
-msgstr "Obbo! LibreOffice Online xizmatiga ulanishda muammo yuz berdi: "
+msgid "Oops, there is a problem connecting to Collabora Online : "
+msgstr "Obbo! Collabora Online xizmatiga ulanishda muammo yuz berdi: "
 
 #: src/core/Socket.js:297
 msgid "Served by:"

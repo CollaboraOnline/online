@@ -1,7 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * This file is part of the LibreOffice project.
- *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -1792,6 +1790,12 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     for (auto& tile : tileCombined.getTiles())
     {
         tile.setVersion(++_tileVersion);
+        if (!hasTileCache())
+        {
+            LOG_WRN("Combined tile request without a loaded document?");
+            continue;
+        }
+
         TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
         if(!cachedTile)
         {

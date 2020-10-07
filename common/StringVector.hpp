@@ -1,7 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * This file is part of the LibreOffice project.
- *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -138,7 +136,7 @@ public:
         return _string.compare(token._index, token._length, string, N) == 0;
     }
 
-    /// Compares the nth token with the mth token from an other StringVector.
+    /// Compares the nth token with the mth token from another StringVector.
     bool equals(std::size_t index, const StringVector& other, std::size_t otherIndex);
 };
 

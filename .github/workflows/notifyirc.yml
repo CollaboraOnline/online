@@ -1,0 +1,15 @@
+name: "IRC Notification"
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: irc push
+        uses: vmiklos/notify-irc@a52a197c9507ad7a81c1a9295c9ed24786e396b3
+        if: github.event_name == 'push' && github.event.ref == 'refs/heads/master' && github.repository == 'CollaboraOnline/online'
+        with:
+          channel: "#cool-dev"
+          nickname: github-online
+          message: |
+            ${{ toJson(github.event) }}

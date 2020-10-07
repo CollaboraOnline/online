@@ -2717,7 +2717,7 @@ The <code>id</code> property of ErrorEvent can have the following values:
 
 <p>PostMessage API is used to interact with parent frame when loleaflet is
   enclosed in one. This is useful for hosts wanting to
-  integrate LibreOffice Online in them.</p>
+  integrate Collabora Online in them.</p>
 
 <p>This API is mostly based
   on <a href="https://wopi.readthedocs.io/en/latest/scenarios/postmessage.html">WOPI
@@ -2740,7 +2740,7 @@ sent from the WOPI host should also be in same form.
 <p>It is to be noted that as mentioned in WOPI specs, loleaflet frame will
   ignore all post messages coming from the host frame
   if <code>Host_PostmessageReady</code> has not been received. Further, since
-  for embedding LibreOffice Online as an iframe WOPI implementation is a must,
+  for embedding Collabora Online as an iframe WOPI implementation is a must,
   it is required that 'PostMessageOrigin' property is present in
   WOPI host's CheckFileInfo response. Otherwise, no post messages will be
   emitted.
@@ -3047,7 +3047,7 @@ Editor to WOPI host
 		successfully.<br/>
 		<code>result</code> contains the reason the document was not loaded.<br/>
 		<code>errorMsg</code> contains a detailed error message in case loading failed.
-		Probably it will contain the error message returned from the WOPI/Webdav host.
+		Probably it will contain the error message returned from the WOPI host.
 		</td>
 	</tr>
 
@@ -3070,7 +3070,7 @@ Editor to WOPI host
 		case, WOPI hosts can be sure that there are no changes pending
 		in the document to be saved to the storage.<br/>
 		<code>errorMsg</code> contains a detailed error message in case saving failed.
-		Probably it will contain the error message returned from the WOPI/Webdav host.
+		Probably it will contain the error message returned from the WOPI host.
 		</td>
 	</tr>
 	<tr>
@@ -3083,7 +3083,7 @@ Editor to WOPI host
 		<td>Notification about current following state.<br/>
 		<code>FollowedViewId</code> tells which user is followed. <code>IsFollowUser</code> determines if following the specific user is
 		activated. <code>IsFollowEditor</code> determines if following the editor is
-		activated. If both <code>IsFollowUser</code> & <code>IsFollowEditor</code> are false then following is
+		activated. If both <code>IsFollowUser</code> and <code>IsFollowEditor</code> are false then following is
 		inactive.
 		</td>
 	</tr>
@@ -3268,9 +3268,7 @@ Editor to WOPI host
 		</td>
 		<td>
 			Hides a button from the toolbar.<br/>
-		    <code>id</code> is the button ID as defined in the
-		    <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-		    function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+		    <code>id</code> is the button ID, see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3280,9 +3278,7 @@ Editor to WOPI host
 		</td>
 		<td>
 			Shows a button from the toolbar.<br/>
-			<code>id</code> is the button ID as defined in the
-			<a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-			function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+		    <code>id</code> is the button ID, see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3293,7 +3289,7 @@ Editor to WOPI host
 		<td>
 			Hides an item from the menu.<br/>
 			<code>id</code> is the item ID as defined in the
-			<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
+			<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3304,7 +3300,7 @@ Editor to WOPI host
 		<td>
 			Shows an item from the menu.<br/>
 			<code>id</code> is the item ID as defined in the
-			<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
+			<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3354,23 +3350,23 @@ Editor to WOPI host
 <p>Toolbar button IDs are defined in getToolItems/create functions in:
 <ul>
 	<li>
-		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.TopToolbar.js">Control.TopToolbar.js</a> for the top toolbar on desktop or tablet.
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.TopToolbar.js">Control.TopToolbar.js</a> for the top toolbar on desktop or tablet.
 	</li>
 	<li>
-		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.MobileTopBar.js">Control.MobileTopBar.js</a> for the top toolbar on smartphone.
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.MobileTopBar.js">Control.MobileTopBar.js</a> for the top toolbar on smartphone.
 	</li>
 	<li>
-		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.MobileBottomBar.js">Control.MobileBottomBar.js</a> for the bottom toolbar on smartphone.
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.MobileBottomBar.js">Control.MobileBottomBar.js</a> for the bottom toolbar on smartphone.
 	</li>
 	<li>
-		<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a> for the statusbar on desktop.
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a> for the statusbar on desktop.
 	</li>
 </ul>
 Note that they usually don't change but there is no guarantee that they are stable.</p>
 
 <h5><a name="statusbar-element-ids">Finding statusbar element IDs</a></h5>
-<p>Statusbar button IDs are defined in the <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=onDocLayerInit">onDocLayerInit</a>
-function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Toolbar.js">Control.Toolbar.js</a>.
+<p>Statusbar button IDs are defined in the onDocLayerInit function in
+<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a>.
 Note that they usually don't change but there is no guarantee that they are stable.</p>
 
 <h4>Editor to WOPI host</h4>

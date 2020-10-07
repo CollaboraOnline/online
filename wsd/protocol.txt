@@ -831,9 +831,9 @@ documents <pid> <filename> <number of views> <memory consumed> <elapsed time> <i
     Each set document attributes is separated by a newline.
 
 mem_consumed <memory>
-    Total memory being consumed by LibreOffice Online.
+    Total memory being consumed by Collabora Online.
 total_avail_mem <memory>
-    Total memory available to whole LibreOffice Online. This takes into account
+    Total memory available to whole Collabora Online. This takes into account
     the memproportion setting, if set by the user, when calculating the amount
     of memory available to the process.
 

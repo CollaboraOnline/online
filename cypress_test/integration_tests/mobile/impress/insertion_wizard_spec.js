@@ -5,6 +5,7 @@ require('cypress-file-upload');
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressMobileHelper = require('./impress_mobile_helper');
+var impressHelper = require('../../common/impress_helper');
 
 describe('Impress insertion wizard.', function() {
 	var testFileName = 'insertion_wizard.odp';
@@ -503,5 +504,23 @@ describe('Impress insertion wizard.', function() {
 		impressMobileHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('1');
+	});
+
+	it('Insert new slide with plus button.', function() {
+		impressHelper.assertNumberOfSlidePreviews(1);
+
+		cy.contains('.leaflet-control-zoom-in', '+')
+			.should('be.visible');
+			
+		cy.contains('.leaflet-control-zoom-in', '+')
+			.click();
+
+		impressHelper.assertNumberOfSlidePreviews(2);
+
+		cy.get('#tb_actionbar_item_closemobile')
+			.click();
+
+		cy.contains('.leaflet-control-zoom-in', '+')
+			.should('not.be.visible');
 	});
 });

@@ -17,6 +17,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://gerrit.libreoffice.org/online.git"
+    "url": "https://github.com/CollaboraOnline/online.git"
   }
 }

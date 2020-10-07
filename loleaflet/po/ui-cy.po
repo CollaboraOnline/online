@@ -1230,7 +1230,7 @@ msgid "IE11 has reached its maximum number of connections. Please see this docum
 msgstr "Mae E11 wedi cyrraedd ei uchafswm cysylltiad. Darllenwch y ddogfen hon i gynyddu'r terfyn os oes angen: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-msgid "Oops, there is a problem connecting to LibreOffice Online : "
+msgid "Oops, there is a problem connecting to Collabora Online : "
 msgstr "Wps, mae anhawster cysylltu â LibreOffice Ar-lein : "
 
 #: src/core/Socket.js:297

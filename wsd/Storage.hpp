@@ -1,7 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * This file is part of the LibreOffice project.
- *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -537,42 +535,6 @@ private:
     std::chrono::duration<double> _wopiSaveDuration;
     /// Whether or not to re-use cookies from the browser for the WOPI requests.
     bool _reuseCookies;
-};
-
-/// WebDAV protocol backed storage.
-class WebDAVStorage : public StorageBase
-{
-public:
-    WebDAVStorage(const Poco::URI& uri,
-                  const std::string& localStorePath,
-                  const std::string& jailPath,
-                  std::unique_ptr<AuthBase> authAgent) :
-        StorageBase(uri, localStorePath, jailPath),
-        _authAgent(std::move(authAgent))
-    {
-        LOG_INF("WebDAVStorage ctor with localStorePath: [" << localStorePath <<
-                "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
-    }
-
-    // Implement me
-    // WebDAVFileInfo getWebDAVFileInfo(const Poco::URI& uriPublic);
-
-    bool updateLockState(const Authorization&, const std::string&, LockContext&, bool) override
-    {
-        return true;
-    }
-
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& /*cookies*/,
-                                       LockContext& lockCtx,
-                                       const std::string& templateUri) override;
-
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& /*cookies*/,
-                                      LockContext& lockCtx, const std::string& saveAsPath,
-                                      const std::string& saveAsFilename,
-                                      const bool isRename) override;
-
-private:
-    std::unique_ptr<AuthBase> _authAgent;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

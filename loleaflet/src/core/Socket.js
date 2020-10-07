@@ -58,7 +58,7 @@ L.Socket = L.Class.extend({
 				if (isIE11)
 					msgHint = _('IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections');
 
-				this._map.fire('error', {msg: _('Oops, there is a problem connecting to LibreOffice Online : ').replace('LibreOffice Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'LibreOffice Online Personal')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
+				this._map.fire('error', {msg: _('Oops, there is a problem connecting to Collabora Online : ').replace('Collabora Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
 				return;
 			}
 		}
@@ -283,7 +283,7 @@ L.Socket = L.Class.extend({
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				h = '<a href="javascript:void(window.open(\'https://hub.libreoffice.org/git-online/' + h + '\'));">' + h + '</a>';
+				h = '<a href="javascript:void(window.open(\'https://github.com/CollaboraOnline/online/commits/' + h + '\'));">' + h + '</a>';
 				$('#loolwsd-version').html(this.WSDServer.Version + ' (git hash: ' + h + ')');
 			}
 			else {
@@ -734,9 +734,9 @@ L.Socket = L.Class.extend({
 				textMsg = textMsg.replace(/{docs}/g, command.params[0]);
 				textMsg = textMsg.replace(/{connections}/g, command.params[1]);
 				textMsg = textMsg.replace(/{productname}/g, (typeof brandProductName !== 'undefined' ?
-						brandProductName : 'LibreOffice Online Personal'));
+						brandProductName : 'Collabora Online Development Edition'));
 				var brandFAQURL = (typeof brandProductFAQURL !== 'undefined') ?
-						brandProductFAQURL : 'https://hub.libreoffice.org/professional-online-support';
+						brandProductFAQURL : 'https://collaboraonline.github.io/post/faq/';
 				this._map.fire('infobar',
 					{
 						msg: textMsg,
@@ -780,8 +780,15 @@ L.Socket = L.Class.extend({
 				var docUrl = url.split('?')[0];
 				this._map.options.doc = docUrl;
 				this._map.options.wopiSrc = encodeURIComponent(docUrl);
+
+				// if this is save-as, we need to load the document with edit permission
+				// otherwise the user has to close the doc then re-open it again
+				// in order to be able to edit.
+				if (textMsg.startsWith('saveas:'))
+					this._map.options.permission = 'edit';
 				this._map.loadDocument();
 				this._map.sendInitUNOCommands();
+
 
 				if (textMsg.startsWith('renamefile:')) {
 					this._map.fire('postMessage', {

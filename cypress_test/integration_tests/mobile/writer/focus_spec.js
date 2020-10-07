@@ -167,17 +167,19 @@ describe('Focus tests', function() {
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
 				var posX = svg[0].getBBox().x + svg[0].getBBox().width / 2;
 				var posY = svg[0].getBBox().y + svg[0].getBBox().height / 2;
+
 				cy.get('#document-container')
-					.dblclick(posX, posY).wait(100);
+					.dblclick(posX, posY);
 			});
 
-		// Document still has the focus
-		// TODO: Focus is inconsistent here.
-		//cy.document().its('activeElement.className')
-		//	.should('be.eq', 'clipboard');
+		cy.get('.blinking-cursor')
+			.should('be.visible');
 
-		// This is unstable too
-		// helper.assertHaveKeyboardInput()
+		// Document still has the focus
+		cy.document().its('activeElement.className')
+			.should('be.eq', 'clipboard');
+
+		helper.assertHaveKeyboardInput();
 	});
 
 	it('Focus with hamburger menu.', function() {

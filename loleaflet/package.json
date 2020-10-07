@@ -1,7 +1,7 @@
 {
   "name": "loleaflet",
   "version": "0.8.0-dev",
-  "description": "LibreOffice online front-end",
+  "description": "Collabora Online front-end",
   "devDependencies": {
     "@braintree/sanitize-url": "4.0.1",
     "autolinker": "3.14.1",
@@ -29,12 +29,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://gerrit.libreoffice.org/online.git"
+    "url": "https://github.com/CollaboraOnline/online.git"
   },
   "keywords": [
     "office",
     "libreoffice",
-    "lool"
+    "lool",
+    "collabora"
   ],
   "license": "BSD-2-Clause"
 }

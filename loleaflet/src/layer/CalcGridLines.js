@@ -71,7 +71,7 @@ L.CalcGridLines = L.LayerGroup.extend({
 
 	// Redraw col/row lines whenever new information about them is available.
 	// One websocket message might have info about cols, rows, or both
-	onUpdate: function onUpdate(ev) {
+	onUpdate: function(ev) {
 		var headerInfo, pos;
 
 		// Aux stuff to convert css pixels to map coordinate units
