@@ -620,7 +620,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot get file info from WOPI storage uri [" << uriAnonym << "]. Error:  Failed HTPP request authorization");
+        LOG_ERR("Cannot get file info from WOPI storage uri [" << uriAnonym << "]. Error: " << exc.what());
     }
 
     Poco::JSON::Object::Ptr object;
@@ -841,7 +841,7 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot " << wopiLog << " uri [" << uriAnonym << "]. Error: Failed HTPP request authorization");
+        LOG_ERR("Cannot " << wopiLog << " uri [" << uriAnonym << "]. Error: " << exc.what());
     }
     return false;
 }
@@ -940,7 +940,7 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot load document from WOPI storage uri [" + uriAnonym + "]. Error: Failed HTPP request authorization");
+        LOG_ERR("Cannot load document from WOPI storage uri [" + uriAnonym + "]. Error: " << exc.what());
     }
 
     return "";
@@ -1170,7 +1170,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot save file to WOPI storage uri [" + uriAnonym + "]. Error: Failed HTPP request authorization");
+        LOG_ERR("Cannot save file to WOPI storage uri [" + uriAnonym + "]. Error: " << exc.what());
     }
 
     return saveResult;
