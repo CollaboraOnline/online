@@ -1,5 +1,5 @@
 name: "Push Notification"
-on: [push, pull_request, create]
+on: [push]
 
 jobs:
   test:
