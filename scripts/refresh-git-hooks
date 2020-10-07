@@ -1,0 +1,21 @@
+#!/bin/bash -e
+
+srcdir="$PWD"
+if [ -n "${abs_srcdir}" ]; then
+    srcdir="${abs_srcdir}"
+fi
+
+if [ ! -d "${srcdir}/.git" ]; then
+    exit 0
+fi
+
+for hook_name in ${srcdir}/.git-hooks/*
+do
+    hook="${srcdir}/.git/hooks/${hook_name##*/}"
+    if [ ! -e "${hook}" ]; then
+        rm -f "${hook}"
+        ln -sf "${hook_name}" "${hook}"
+    fi
+done
+
+# vim:set shiftwidth=4 softtabstop=4 expandtab:

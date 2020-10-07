@@ -30,6 +30,8 @@ automake --add-missing || failed "automake"
 
 autoreconf || failed "autoreconf"
 
+scripts/refresh-git-hooks || failed "refresh-git-hooks"
+
 cat << EOF
 
 Result: All went OK, please run $srcdir/configure (with the appropriate parameters) now.

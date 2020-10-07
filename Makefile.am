@@ -323,6 +323,7 @@ EXTRA_DIST = discovery.xml \
              etc/apache2/loolwsd.conf \
              etc/nginx/loolwsd.conf \
              scripts/unocommands.py \
+             scripts/refresh-git-hooks \
              $(man_MANS)
 
 if ENABLE_LIBFUZZER
@@ -501,6 +502,7 @@ endif
 # installing the RPM or Debian package.
 all-local: $(ALL_LOCAL_DEPS) @JAILS_PATH@ $(SYSTEM_STAMP)
 	$(SET_CAPS_COMMAND)
+	@$(abs_top_srcdir)/scripts/refresh-git-hooks
 
 # just run the build without any tests
 build-nocheck: all-am
