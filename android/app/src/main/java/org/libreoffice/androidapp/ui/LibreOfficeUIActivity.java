@@ -57,7 +57,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import org.libreoffice.androidapp.AboutDialogFragment;
-import org.libreoffice.androidapp.LibreOfficeApplication;
 import org.libreoffice.androidapp.R;
 import org.libreoffice.androidapp.SettingsActivity;
 import org.libreoffice.androidapp.SettingsListenerModel;
