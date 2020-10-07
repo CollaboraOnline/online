@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-08-07 00:29+0000\n"
-"Last-Translator: Karl Morten Ramberg <karl.m.ramberg@gmail.com>\n"
-"Language-Team: Norwegian Bokmål <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/nb_NO/>\n"
+"PO-Revision-Date: 2020-10-11 05:27+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"collabora-online/ui/nb_NO/>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-ui-nb.po\n"
 "X-Pootle-Revision: 3938025\n"
 
@@ -68,16 +69,12 @@ msgstr "Åpnede dokumenter"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
-#| msgid "0 users"
 msgid " user(s)."
-msgstr "Ingen brukere."
+msgstr " bruker(e)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
-#| msgid "Documents opened"
 msgid " document(s) open."
-msgstr "Åpnede dokumenter"
+msgstr " åpent/(åpne) dokument(er)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -104,8 +101,9 @@ msgid "Document"
 msgstr "Dokument"
 
 #: admin/admin.strings.js:25
+#, fuzzy
 msgid "Views"
-msgstr ""
+msgstr "Visninger"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -163,7 +161,7 @@ msgstr "Tidsintervall for CPU statistikk (u ms)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Drep økt."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -264,7 +262,7 @@ msgstr "Kunne ikke godkjenne denne økten over protokoll % 0"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
-msgstr "Er du sikker på at du vil slå av tjeneren"
+msgstr "Er du sikker på at du vil slå av tjeneren?"
 
 #: admin/src/Util.js:14
 msgid "kB"
@@ -315,8 +313,9 @@ msgid " s"
 msgstr " s"
 
 #: src/control/Parts.js:377
+#, fuzzy
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Vis valgte ark"
 
 #: src/control/ColorPicker.js:129
 msgid "No color"
@@ -548,7 +547,7 @@ msgstr "Word 2003 Document (.doc)"
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:507
 #: src/control/Control.NotebookbarWriter.js:307
 msgid "Word Document (.docx)"
-msgstr "Word Document (.docx)"
+msgstr "Word-dokument (.docx)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:508
 #: src/control/Control.NotebookbarWriter.js:254
@@ -929,7 +928,7 @@ msgstr "Angre"
 #: src/control/Control.Notebookbar.js:139
 #: src/control/Control.NotebookbarImpress.js:37
 msgid "Redo"
-msgstr "Gjør om"
+msgstr "Gjenta"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
@@ -966,7 +965,7 @@ msgstr "Gjennomgang"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -1001,7 +1000,7 @@ msgstr "Sett inn Rader under"
 
 #: src/control/Control.NotebookbarCalc.js:1938
 msgid "Insert Columns Before"
-msgstr "Sett inn Kolonner  før"
+msgstr "Sett inn kolonner før"
 
 #: src/control/Control.NotebookbarCalc.js:1951
 msgid "Insert Columns After"
@@ -1037,7 +1036,7 @@ msgstr "Start Presentatsjon"
 
 #: src/control/Permission.js:45
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr "Dokumentet kunne ikke låses, og åpnes  derfor i skrivebeskyttet modus."
+msgstr "Dokumentet kunne ikke låses, og åpnes derfor i skrivebeskyttet modus."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
 msgid "Server returned this reason:"
@@ -1321,7 +1320,7 @@ msgstr "Kobler til …"
 
 #: src/core/Socket.js:1081
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
-msgstr "Vi kan  dessverre ikke koble til ditt dokument nå. Prøv å koble til på nytt."
+msgstr "Vi kan ikke koble til ditt dokument nå. Prøv å koble til på nytt."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server, please contact the server administrator to continue."
@@ -1481,7 +1480,10 @@ msgstr "<p> Hvis du vil dele større elementer av dokumentet ditt med andre appl
 
 #: src/map/Clipboard.js:877
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
-msgstr "<p> En nedlasting på grunn av  en stor kopiering/lim inn operasjon har allerede startet. Vent til den gjeldende nedlastingener ferdig eller avbryt den før du starter en ny </p>"
+msgstr ""
+"<p>En nedlasting på grunn av en stor kopiering-/lim inn-operasjon har "
+"allerede startet. Vent til den gjeldende nedlastingen er ferdig, eller "
+"avbryt den før du starter en ny</p>"
 
 #: src/map/Map.js:219
 msgid "Initializing..."

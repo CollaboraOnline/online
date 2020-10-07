@@ -3,15 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-04-29 11:22+0000\n"
-"Last-Translator: Michael Wolf <milupo@sorbzilla.de>\n"
-"Language-Team: Upper Sorbian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/hsb/>\n"
+"PO-Revision-Date: 2020-10-12 07:13+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Upper Sorbian <https://hosted.weblate.org/projects/"
+"collabora-online/help/hsb/>\n"
 "Language: hsb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
-"X-Generator: Weblate 3.10.3\n"
+"Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : "
+"((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /hsb/libo_online/loleaflet-help-hsb.po\n"
 "X-Pootle-Revision: 2524295\n"
 
@@ -52,10 +54,8 @@ msgid "Paste as unformatted text"
 msgstr "Jako njeformatowany tekst zasadźić"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Strg + Umsch + ?"
+msgstr "Strg + Umsch + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
@@ -1184,10 +1184,11 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "Móžeće z tastowej kombinaciju jako njeformatowany tekst zasadźić: <span class=\"kbd\">Strg</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Umsch</span> + <span class=\"kbd\">V</span>"
+msgstr ""
+"Móžeće z tastowej kombinaciju jako njeformatowany tekst zasadźić: <span "
+"class=\"kbd\">Strg</span> + <span class=\"kbd\">Umsch</span> + <span class="
+"\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."

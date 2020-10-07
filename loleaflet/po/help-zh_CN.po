@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-07-08 21:12+0000\n"
-"Last-Translator: Ming Hua <plateauwolf@qq.com>\n"
-"Language-Team: Chinese (Simplified) <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/zh_Hans/>\n"
+"PO-Revision-Date: 2020-10-12 07:13+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"collabora-online/help/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-help-zh_CN.po\n"
 "X-Pootle-Revision: 3806428\n"
 
@@ -52,10 +53,8 @@ msgid "Paste as unformatted text"
 msgstr "粘贴未格式化的文本"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
@@ -1184,10 +1183,10 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr "从同一文档中复制的内容，粘贴时将保留格式和元素。如果从其它文档、其它浏览器标签页或窗口、或者浏览器外部复制，粘贴的内容将保留富文本。"
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "您可以用快捷键粘贴为无格式文本：<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
+msgstr ""
+"您可以用快捷键粘贴为无格式文本：<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</"
+"span> + <span class=\"kbd\">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
@@ -1295,7 +1294,10 @@ msgstr "公式语言是电子表格用户都很熟悉的格式，详见 <a href=
 
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
-msgstr "<span class=\"def\">直接格式：</span>您可以使用菜单、工具栏或快捷菜单中的格式设置来直接设置电子表格中单元格、行、列和工作表的格式。直接格式仅应用于当前选中的对象。要设置单元格的格式，可以使用菜单或按  <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span> 组合键。该对话框可设置复杂的自定义数值格式，以及字体、复杂边框、背景、单元格保护等其他选项。"
+msgstr ""
+"<span class=\"def\">直接格式：</span>您可以使用菜单、工具栏或快捷菜单中的格式设置来直接设置电子表格中单元格、行、列和工作表的格"
+"式。直接格式仅应用于当前选中的对象。要设置单元格的格式，可以使用菜单或按 <span class=\"kbd\">Ctrl</span> + <span "
+"class=\"kbd\">1</span> 组合键。该对话框可设置复杂的自定义数值格式，以及字体、复杂边框、背景、单元格保护等其他选项。"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:354-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."

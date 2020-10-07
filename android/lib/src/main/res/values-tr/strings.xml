@@ -12,4 +12,5 @@
     <string name="preparing_for_the_first_start_after_an_update">Güncellemeden sonraki ilk çalıştırma için hazırlanılıyor.</string>
     <string name="rate_our_app_text">Beğendiyseniz, lütfen Google Play\'de bize 5 yıldız verin. İyi yorumlarınız en iyi motivasyonumuzdur.</string>
     <string name="rate_now">Şimdi oyla</string>
+    <string name="file_chromeos_read_only">Bu dosya bu konuma kaydedilemez, salt-okunur olarak açılıyor. Tam okuma/yazma erişimi için Play dosyalarına taşıyın.</string>
 </resources>

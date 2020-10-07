@@ -15,4 +15,8 @@
     <string name="rate_now">Calificar ahora</string>
     <string name="exiting">Saliendo…</string>
     <string name="file_chromeos_read_only">No se puede guardar este archivo en esta ubicación; se ha abierto en modo de solo lectura. Muévalo a Archivos de Play para poder modificarlo.</string>
+    <string name="ask_for_copy">Este documento es de solo lectura. ¿Quiere crear una copia para editarlo\?</string>
+    <string name="edit_copy">Editar copia</string>
+    <string name="view_only">Solo para visualización</string>
+    <string name="restarting">Reiniciando…</string>
 </resources>

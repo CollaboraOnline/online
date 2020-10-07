@@ -9,4 +9,6 @@
     <string name="exiting">Colando…</string>
     <string name="failed_to_insert_image">Nun se pudo inxertar la imaxe</string>
     <string name="file_chromeos_read_only">Esti ficheru nun se pue abrir nesta ubicación; abrióse nel mou namái de llectura. Muévilu a Ficheros de Play pa un accesu completu de llectura y escritura.</string>
+    <string name="restarting">Reaniciando…</string>
+    <string name="rate_our_app_title">¡Gracies por usar %1$s!</string>
 </resources>

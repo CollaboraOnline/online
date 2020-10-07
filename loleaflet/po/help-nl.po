@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-07-06 08:19+0000\n"
-"Last-Translator: kees538 <kees538@gmail.com>\n"
-"Language-Team: Dutch <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/nl/>\n"
+"PO-Revision-Date: 2020-10-12 07:13+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
+"help/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-help-nl.po\n"
 "X-Pootle-Revision: 832994\n"
 
@@ -52,10 +53,8 @@ msgid "Paste as unformatted text"
 msgstr "Als niet opgemaakte tekst plakken"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
@@ -1184,10 +1183,11 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr "Wanneer u inhoud plakt die vanuit hetzelfde document is gekopieerd, blijven de indeling en elementen behouden. Als u kopieert vanuit een ander document, in een ander tabblad of browservenster, of van buiten de browser, behoudt de inhoud geplakt als Rich Text (RTF)."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "U kunt als niet-opgemaakte tekst plakken met de toetscombinatie: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
+msgstr ""
+"U kunt als niet-opgemaakte tekst plakken met de toetscombinatie: <span class="
+"\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\""
+">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."

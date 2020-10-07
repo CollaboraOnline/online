@@ -105,4 +105,9 @@
     <string name="app_version_and_hash">Feriwn: %1$s
 \ngit-hash ar-lein: %2$s
 \ngit-hash craidd: %3$s</string>
+    <string name="theme_light">Golau</string>
+    <string name="theme_dark">Tywyll</string>
+    <string name="theme_system_default">Rhagosodiad y system</string>
+    <string name="choose_theme">Dewis thema</string>
+    <string name="theme">Thema</string>
 </resources>

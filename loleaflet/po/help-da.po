@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-08-31 22:23+0000\n"
-"Last-Translator: SteenRønnow <steen.roennow@mail.dk>\n"
-"Language-Team: Danish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/da/>\n"
+"PO-Revision-Date: 2020-10-12 07:13+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
+"help/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /da/libo_online/loleaflet-help-da.po\n"
 "X-Pootle-Revision: 2471973\n"
 
@@ -1184,10 +1185,11 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr "Når du indsætter indhold, der er kopieret fra dette samme dokument, bevares formatering og elementer. Hvis du kopierer fra et andet dokument, fra et andet faneblad eller vindue i netlæseren, eller uden for netlæseren, indsættes indholdet som Rich Text."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "Du kan indsætte som uformateret tekst med tastaturgenvejen: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Skift</span> + <span class=\"kbd\">V</span>"
+msgstr ""
+"Du kan indsætte som uformateret tekst med tastaturgenvejen: <span class=\"kbd"
+"\">Ctrl</span> + <span class=\"kbd\">Skift</span> + <span class=\"kbd\""
+">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
@@ -1315,7 +1317,10 @@ msgstr "I dialogen <span class=\"ui\">Standardfilter</span> kan du også definer
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:362-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
-msgstr "Det<span class=\"ui\">Avancerede filtre</span> tillader op til til i alt otte filterbetingelser. Med avancerede filtre indtaster du betingelserne direkte på arket."
+msgstr ""
+"Det <span class=\"ui\">Avancerede filtre</span> tillader op til til i alt "
+"otte filterbetingelser. Med avancerede filtre indtaster du betingelserne "
+"direkte på arket."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:364-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
@@ -1352,8 +1357,14 @@ msgstr "<span class=\"def\">Betinget formatering:</span> <span class=\"productna
 #: html/loleaflet-help.html%2Bdiv.div.p:389-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> redigerer tekstdokumenter på samme måde, som du redigerer et desktop dokument. \n"
-"Det tilbyder et What You See Is What You Get (WYSIWYG) layout – som bekvemt fremlægger dokumentet, som det udskrives. Handlinger som at indtaste teksten, klippe, kopiere og indsætte indhold, markere tekst, indsætte, ændre størrelse, forankre billeder, indsætte og håndtere tabeller og diagrammer ligner en desktop tekstbehandler. Brug tastaturet, menuer og værktøjslinjer til at interagere med dit dokument."
+"<span class=\"productname\">%productName</span> redigerer tekstdokumenter på "
+"samme måde, som du redigerer et desktop dokument. Det tilbyder et What You "
+"See Is What You Get (WYSIWYG) layout – som bekvemt fremlægger dokumentet, "
+"som det udskrives. Handlinger som at indtaste teksten, klippe, kopiere og "
+"indsætte indhold, markere tekst, indsætte, ændre størrelse, forankre "
+"billeder, indsætte og håndtere tabeller og diagrammer ligner en desktop "
+"tekstbehandler. Brug tastaturet, menuer og værktøjslinjer til at interagere "
+"med dit dokument."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:392-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
@@ -1637,11 +1648,25 @@ msgstr "Farven, som ændringer tildeles, afhænger af den bruger, der ændrer do
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid "To display or hide track changes choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. Beware that if track changes are enabled but hidden, you still record changes and may inadvertently leave unwanted text available in the document."
-msgstr "For at vise eller skjule \"Spor ændringer\" vælger du <span class=\"ui\">Rediger</span> → <span class=\"ui\">Spor ændringer</span> → <span class=\"ui\">Vis&. Husk, at hvis \"Spor ændringer\" er aktiveret men skjult, registrerer du stadig ændringer og kunne utilsigtet efterlade uønsket tekst tilgængeligt i dokumentet."
+msgstr ""
+"For at vise eller skjule \"Spor ændringer\" vælger du <span class=\"ui\""
+">Rediger</span> → <span class=\"ui\">Spor ændringer</span> → <span class=\"ui"
+"\">Vis</span>. Husk, at hvis \"Spor ændringer\" er aktiveret men skjult, "
+"registrerer du stadig ændringer og kunne utilsigtet efterlade uønsket tekst "
+"tilgængeligt i dokumentet."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:502-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
-msgstr "Ændringer kan accepteres eller afvises. For at acceptere eller afvise ændringer klikker du på de tilsvarende ikoner i kommentarfeltet til høre på dokumentet. Alternativt vælger du <span class=\"ui\">Rediger</span> →<span class=\"ui\">Spor ændringer</span> → <span class=\"ui\">Accepter</span> eller <span class=\"ui\">Afvis</span>. Hvis du derudover har brug for at filtrere ændringer, før du accepterer eller afviser, vælger du <span class=\"ui\">Rediger</span> → <span class=\"ui\">Spor ændringer</span> → <span class=\"ui\">Spor ændringer</span>  → <span class=\"ui\">Håndter</span>. En dialog viser en liste over alle sporede ændringer. Brug dialogknapperne efer deres tekster."
+msgstr ""
+"Ændringer kan accepteres eller afvises. For at acceptere eller afvise "
+"ændringer klikker du på de tilsvarende ikoner i kommentarfeltet til høre på "
+"dokumentet. Alternativt vælger du <span class=\"ui\">Rediger</span> → <span "
+"class=\"ui\">Spor ændringer</span> → <span class=\"ui\">Accepter</span> "
+"eller <span class=\"ui\">Afvis</span>. Hvis du derudover har brug for at "
+"filtrere ændringer, før du accepterer eller afviser, vælger du <span class="
+"\"ui\">Rediger</span> → <span class=\"ui\">Spor ændringer</span> → <span "
+"class=\"ui\">Håndter</span>. En dialog viser en liste over alle sporede "
+"ændringer. Brug dialogknapperne efer deres tekster."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:504-5
 msgid "How do I set the margins of the document?"
@@ -1713,6 +1738,7 @@ msgid "Select the text you want to apply the new format."
 msgstr "Marker den tekst, du vil anvende det nye format på."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:528-5
+#, fuzzy
 msgid "Applying a paragraph style:"
 msgstr "Anvend afsnitstypografien Overskrift 1"
 

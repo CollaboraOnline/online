@@ -1,13 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--string name="app_name" definition is deliberately missing here, it is filled in in build.gradle.-->
-
     <string name="app_name_settings">Nastavení</string>
     <string name="app_version_and_hash">Verze: %1$s
 \ngit-hash pro online: %2$s
 \ngit-hash pro core: %3$s</string>
     <string name="app_description">$APP_NAME je moderní, snadno použitelný, open source kancelářský balík pro zpracování textu, tabulky, prezentace a další.</string>
     <string name="app_vendor">Toto vydání bylo dodáno společností $VENDOR.</string>
-
     <string name="no_recent_items">Otevřete soubor klepnutím na ikonu složky v nástrojové liště.</string>
     <string name="no_items">Žádné položky</string>
     <string name="temp_file_saving_disabled">Soubor je pouze pro čtení, ukládání je zakázáno.</string>
@@ -15,13 +14,12 @@
     <string name="file_creation_failed">Vytváření souboru selhalo</string>
     <string name="storage_permission_required">Je vyžadováno povolení přístupu k úložišti</string>
     <string name="failed_to_load_file">Nepodařilo se určit soubor, který se má načíst</string>
-
     <string name="list_view">Seznam</string>
     <string name="grid_view">Mřížka</string>
     <string name="pref_category_explorer">Nastavení správce souborů</string>
     <string name="pref_category_editor">Nastavení editoru</string>
     <string name="pref_show_hidden_files">Skryté soubory/složky</string>
-    <string name="pref_show_hidden_files_summary">Povolit zobrazení skrytých souborů a složek.</string>
+    <string name="pref_show_hidden_files_summary">Povolit zobrazení skrytých souborů a složek</string>
     <string name="pref_sort_summary">Zvolte způsob řazení souborů: A-Z, podle velikosti nebo podle data.</string>
     <string name="pref_viewmode_summary">Zobrazit soubory v mřížce nebo v seznamu.</string>
     <string name="pref_file_explorer_title">Rozložení správce souborů</string>
@@ -32,16 +30,13 @@
     <string name="pref_show_debug_info_summary">Umožňuje zobrazit informace o ladění v prohlížeči dokumentů</string>
     <string name="pref_enable_chrome_debugger">Ladění Chrome</string>
     <string name="pref_enable_chrome_debugger_info">Povolí použít v dokumentu ladicí nástroj Chrome</string>
-
     <string name="about_license">Zobrazit licenci</string>
     <string name="about_notice">Zobrazit oznámení</string>
     <string name="about_moreinfo">Více informací</string>
-
     <string name="new_textdocument">Nový textový dokument</string>
     <string name="new_presentation">Nová prezentace</string>
     <string name="new_spreadsheet">Nový sešit</string>
     <string name="default_document_name">nepojmenovaný</string>
-
     <string name="filter">Filtrovat podle</string>
     <string name="sort">Řadit podle</string>
     <string name="sort_smallest">Nejmenší první</string>
@@ -55,20 +50,17 @@
     <string name="title_recents">Poslední soubory</string>
     <string name="title_browser">Všechny soubory</string>
     <!-- Pref keys as resources ; Not currently used -->
-
     <string name="action_about">O aplikaci</string>
     <string name="action_settings">Nastavení</string>
     <string name="open">Otevřít</string>
     <string name="share">Sdílet</string>
     <string name="remove_from_list">Odstranit ze seznamu</string>
     <string name="share_via">Sdílet prostřednictvím</string>
-
     <!-- Document browser filters -->
     <string name="filter_everything">Vše</string>
     <string name="filter_documents">Dokumenty</string>
     <string name="filter_spreadsheets">Sešity</string>
     <string name="filter_presentations">Prezentace</string>
-
     <!-- Document provider names -->
     <string name="document_locations">Umístění dokumentu</string>
     <string name="close_document_locations">Uzavřít umístění dokumentu</string>
@@ -78,18 +70,13 @@
     <string name="otg_file_system">OTG zařízení (experimentální)</string>
     <string name="remote_server">Vzdálený server</string>
     <string name="usb_connected_configure">USB připojeno, nastavte vaše zařízení.</string>
-
     <string name="owncloud_wrong_connection">Nelze se připojit ke cloudovému serveru. Zkontrolujte konfiguraci.</string>
     <string name="owncloud_unauthorized">Nelze se přihlásit ke cloudovému serveru. Zkontrolujte konfiguraci.</string>
     <string name="owncloud_unspecified_error">Nespecifikovaná chyba při připojení k cloudovému serveru. Zkontrolujte konfiguraci anebo to zkuste později.</string>
-
     <string name="ext_document_provider_error">Neplatný kořenový soubor. Zkontrolujte nastavení SD karty.</string>
     <string name="otg_missing_error">Neplatný kořenový soubor. Zkontrolujte vaše OTG zařízení a nebo nastavení .</string>
-
     <!-- Edit action names -->
-
     <!-- Feedback messages -->
-
     <!-- Document provider settings -->
     <string name="storage_provider_settings">Nastavení poskytovatele úložiště</string>
     <string name="owncloud_settings">Nastavení cloudového serveru</string>
@@ -98,10 +85,9 @@
     <string name="otg_device_path">Cesta k OTG zařízení</string>
     <string name="otg_warning">Experimentální funkce: Používejte, pouze pokud je zařízení OTG zapisovatelné.</string>
     <string name="server_url">URL serveru</string>
-    <string name="server_url_and_port">URL a port cloudového serveru</string>
+    <string name="server_url_and_port">URL a port cloudového serveru.</string>
     <string name="user_name">Uživatelské jméno</string>
     <string name="password">Heslo</string>
-
     <!-- Directory browser strings -->
     <string name="up_description">Do nadřazeného adresáře</string>
     <string name="confirm_label">Potvrdit</string>
@@ -110,44 +96,32 @@
     <string name="directory_browser_label">Zvolte adresář</string>
     <string name="bad_directory">Neplatná cesta k adresáři</string>
     <string name="current_dir">Aktuální adresář: %1$s</string>
-
     <!-- Permission rationale alert dialog strings -->
     <string name="title_permission_required">Je vyžadováno povolení</string>
     <string name="reason_required_to_read_documents">Ke čtení dokumentů je vyžadováno oprávnění pro přístup k úložišti.</string>
     <string name="positive_ok">OK</string>
     <string name="negative_im_sure">Jsem si jistý</string>
     <string name="negative_cancel">Zrušit</string>
-
     <!-- Save Alert dialog strings -->
     <string name="action_cancel">Zrušit</string>
-
     <!-- Create New Document Dialog Strings -->
     <string name="create_new_document_title">Vytvořit nový dokument</string>
     <string name="enter_filename">Zadejte název souboru:</string>
     <string name="action_create">Vytvořit</string>
     <string name="action_overwrite">Přepsat</string>
-
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Načítání...</string>
-
     <string name="share_document">Sdílet dokument</string>
-
     <!-- Presentation Mode Strings -->
-
     <!-- Calc Header Menu Strings -->
-
     <!-- Password dialog strings -->
-
     <!-- Insert Image Strings -->
-
     <!-- Clipboard Actions -->
-
     <!-- UNO cmd controller Strings -->
     <string name="unable_to_go_further">Nelze jít dále.</string>
     <string name="bmp_null">BMP je prázdné!</string>
     <string name="directory_not_saved">Adresář nebyl uložen.</string>
     <string name="title_activity_show_html">O aplikaci</string>
-
     <!-- Theme settings -->
     <string name="theme">Motiv vzhledu</string>
     <string name="choose_theme">Zvolte motiv vzhledu</string>

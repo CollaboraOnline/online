@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-06-19 09:24+0000\n"
-"Last-Translator: Karl Morten Ramberg <karl.m.ramberg@gmail.com>\n"
-"Language-Team: Norwegian Bokmål <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/nb_NO/>\n"
+"PO-Revision-Date: 2020-10-11 05:27+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"collabora-online/help/nb_NO/>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-help-nb.po\n"
 "X-Pootle-Revision: 831464\n"
 
@@ -33,7 +34,7 @@ msgstr "Ctrl + Z"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Redo"
-msgstr "Gjør på nytt"
+msgstr "Gjenta"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl + Y"
@@ -52,14 +53,13 @@ msgid "Paste as unformatted text"
 msgstr "Lim inn som uformatert tekst"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
+#, fuzzy
 msgid "Paste special"
-msgstr ""
+msgstr "Lim inn spesial"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
 msgid "Ctrl + Alt + Shift + V"
@@ -637,7 +637,9 @@ msgstr "Ctrl + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-56
 msgid "Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead."
-msgstr "Setter inn en tabulator (bare i tabeller). Avhengig av vindushåndtereren som brukes,  kan Alt + Tab brukes isteden."
+msgstr ""
+"Setter inn en tabulator (bare i tabeller). Avhengig av vindushåndtereren som "
+"brukes, kan Alt + Tab brukes istedenfor."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt + Arrow Keys"
@@ -752,7 +754,7 @@ msgstr "Sett inn hardt mellomrom"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-70
 msgid "Ctrl + Shift + Space"
-msgstr "Ctrl + Shift + Space"
+msgstr "Ctrl + Shift + mellomrom"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Insert line break"
@@ -1184,10 +1186,11 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr "Når du limer inn innhold som er kopiert fra samme dokument, opprettholdes formatet og elementene. Hvis du kopierer fra et annet dokument, i en annen fane eller nettleservindu, eller fra utsiden av nettleseren, vil det klistrede innholdet bevare rik tekst."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "Du kan lime inn som uformatert tekst med hurtigtasten: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
+msgstr ""
+"Du kan lime inn som uformatert tekst med hurtigtasten: <span class=\"kbd\""
+">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\""
+">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
@@ -1259,7 +1262,10 @@ msgstr "Kommentarer i dokumentet."
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
-msgstr "Sett inn kommentarer i  <span class=\"productname\">%productName</span> på steder som trenger spesiell leseroppmerksomhet. Kommentarer vises til høyre og har navn og dato for utsteder."
+msgstr ""
+"Sett inn kommentarer i <span class=\"productname\">%productName</span> på "
+"steder som trenger spesiell leseroppmerksomhet. Kommentarer vises til høyre "
+"og har navn og dato for utsteder."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:331-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."
@@ -1307,7 +1313,9 @@ msgstr "<span class=\"def\">Filtrering av data:</span> Filtre og avanserte filtr
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:358-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
-msgstr "Et bruksområde for  <span class=\"ui\">AutoFilter</span> funksjonen er å raskt begrense visningen til poster med identiske oppføringer i et datafelt."
+msgstr ""
+"Et bruksområde for <span class=\"ui\">AutoFilter</span> funksjonen er å "
+"raskt begrense visningen til poster med identiske oppføringer i et datafelt."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:361-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
@@ -1327,7 +1335,9 @@ msgstr "<span class=\"def\">Data validering:</span>For hver celle kan du definer
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:369-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
-msgstr "Velg <span class=\"ui\">Gyldighet</span> fra <span class=\"ui\">Data</span> menyen.  <span class=\"ui\">Gyldighet</span> dialogen åpnes."
+msgstr ""
+"Velg <span class=\"ui\">Gyldighet</span> fra <span class=\"ui\">Data</span>-"
+"menyen. <span class=\"ui\">Gyldighet</span>-dialogen åpnes."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:372-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."
@@ -1367,7 +1377,11 @@ msgstr "<span class=\"productname\">%productName</span> støtter moderne teknikk
 
 #: html/loleaflet-help.html%2Bdiv.div.p:396-5
 msgid "In contrast, direct formatting applies formatting to selected excerpts of the document contents. On a long document, direct formatting must be applied in every text excerpt, turning text formatting a long task, subject to errors and delays."
-msgstr "I kontrast til dette, er direkte formatering formatering på utvalgte utdrag av dokumentinnholdet. I et langt dokument må derfor direkte formatering brukes i hvert tekstutdrag, og tekstformateringen blir en lang arbeidsoppgave, med muligheter for feil og forsinkelser."
+msgstr ""
+"I kontrast til dette, utfører direkte formatering en formatering på utvalgte "
+"utdrag av dokumentinnholdet. I et langt dokument må derfor direkte "
+"formatering brukes i hvert tekstutdrag, og tekstformateringen blir en lang "
+"arbeidsoppgave, med muligheter for feil og forsinkelser."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format text document objects by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected."
@@ -1411,11 +1425,16 @@ msgstr "<span class=\"def\">Kommentarer:</span> Kommentarer settes inn i teksten
 
 #: html/loleaflet-help.html%2Bdiv.div.p:412-5
 msgid "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable spaces are shown as marks to assisting text alignment, editing and formatting."
-msgstr "<span class=\"def\">Formaterings markeringer:</span> Avsnitt, side og  mellomromsom ikke kan brytes, vises som merker for å hjelpe tekstjustering, redigering og formatering."
+msgstr ""
+"<span class=\"def\">Formateringsmarkeringer:</span> Avsnitt, side og "
+"mellomrom som ikke kan brytes, vises som merker for å hjelpe tekstjustering, "
+"redigering og formatering."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:413-5
 msgid "<span class=\"def\">Fields:</span> A basic set of fields is available to insert in the document."
-msgstr "<span class=\"def\">Felt:</span> Et grunnleggende sett med felt er tilgjengelig for å sette inn i dokumentet."
+msgstr ""
+"<span class=\"def\">Felt:</span> Et grunnleggende sett med felt er "
+"tilgjengelig for innsetting i dokumentet."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:414-5
 msgid "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index can be updated with new entries."
@@ -1491,7 +1510,9 @@ msgstr "Presentasjoner: Microsoft formatene PPT, PPTX, OpenDocument Format ODP"
 
 #: html/loleaflet-help.html%2Bdiv.p:450-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
-msgstr "I tillegg kan det støtte visning av  Visio, Keynote, Numbers, og Pages formatene"
+msgstr ""
+"I tillegg kan det støtte visning av Visio, Keynote, Numbers, og Pages "
+"-formatene"
 
 #: html/loleaflet-help.html%2Bdiv.h4:451-5
 msgid "How do I save a document with another name?"
@@ -1567,7 +1588,7 @@ msgstr "<span class=\"blue\">¶</span> symbolet er et formateringsmerke. Det bru
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:475-5
 msgid "How do I get a word count of my document?"
-msgstr "Hvordan gjør jeg ordtelling i dokumentet"
+msgstr "Hvordan utfører jeg ordtelling i dokumentet ?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:476-5
 msgid "Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui\">Word count</span>. A dialog shows word counts for selection and for the whole document."
@@ -1575,7 +1596,10 @@ msgstr "Ordtelling er tilgjengelig i <span class=\"ui\">Verktøy</span> → <spa
 
 #: html/loleaflet-help.html%2Bdiv.div.p:478-5
 msgid "Word count is also displayed in the status bar. If no text is selected the word count is for the whole document. Otherwise the word count is for the selected text."
-msgstr "Ordtelling vises også i statuslinjen. Hvis ingen tekst er valgt, er ordtellingen  for hele dokumentet. Ellers er ordtellingen for den valgte teksten."
+msgstr ""
+"Ordtelling vises også i statuslinjen. Hvis ingen tekst er valgt, er "
+"ordtellingen for hele dokumentet. Ellers er ordtellingen for den valgte "
+"teksten."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:479-5
 msgid "How can I insert a currency, copyright or trademark symbol in the document?"
@@ -1752,7 +1776,11 @@ msgstr "Aktiver <span class=\"productname\">%productName</span> regnearksvinduet
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:546-9
 msgid "Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\">Paste</span> or press <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>. The <span class=\"ui\">Text Import</span> dialog opens to let you describe the precise format of the CSV data."
-msgstr "Lim inn fra nettleseren <span class=\"ui\">Edit</span> → <span class=\"ui\">Lim inn</span> eller trykk <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>.  <span class=\"ui\">Tekst Import</span> dialogn åpner så du kan beskrive det eksakte formatet til CSV dataene."
+msgstr ""
+"Lim inn fra nettleseren <span class=\"ui\">Edit</span> → <span class=\"ui\""
+">Lim inn</span> eller trykk <span class=\"kbd\">Ctrl</span> + <span class="
+"\"kbd\">V</span>. <span class=\"ui\">Tekst Import</span>-dialogen åpner så "
+"du kan beskrive det eksakte formatet til CSV-dataene."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:549-11
 msgid "Select the character set, language and separator options for the CSV file."

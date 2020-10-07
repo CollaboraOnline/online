@@ -89,7 +89,7 @@
     <string name="grid_view">Siatka</string>
     <string name="list_view">Lista</string>
     <string name="failed_to_load_file">Nie udało się określić pliku do załadowania</string>
-    <string name="storage_permission_required">Wymagane są uprawnienia do pamięci wewnętrznej</string>
+    <string name="storage_permission_required">Wymagane jest uprawnienie do pamięci</string>
     <string name="file_creation_failed">Tworzenie pliku nie powiodło się</string>
     <string name="file_exists_warning">Plik o tej nazwie już istnieje i zostanie zastąpiony.</string>
     <string name="no_items">Brak pozycji</string>

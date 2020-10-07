@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-16 10:39+0000\n"
-"Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
-"Language-Team: Slovak <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/sk/>\n"
+"PO-Revision-Date: 2020-10-13 20:43+0000\n"
+"Last-Translator: Andrej Shadura <andrew.shadura@collabora.co.uk>\n"
+"Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
+"ui/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-ui-sk.po\n"
 "X-Pootle-Revision: 3938145\n"
 
@@ -67,7 +68,7 @@ msgstr "Otvorené dokumenty"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
 msgid " user(s)."
-msgstr " používateľ(ov)"
+msgstr " používateľ(ov)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
@@ -250,7 +251,8 @@ msgstr "Zrušiť"
 
 #: admin/src/AdminSocketOverview.js:377
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr "Cez nezabezpečené pripojenie sa nepodarilo nastaviť autentifikačný súbor cookie JWT."
+msgstr ""
+"Nepodarilo sa nastaviť autentifikačné cookie JWT cez nezabezpečené pripojenie"
 
 #: admin/src/AdminSocketOverview.js:381
 msgid "Failed to authenticate this session over protocol %0"
@@ -310,7 +312,7 @@ msgstr " s"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Zobraziť vybrané hárky"
 
 #: src/control/ColorPicker.js:129
 msgid "No color"
@@ -686,7 +688,7 @@ msgstr "Tabuľkový dokument Excel (.xlsx)"
 #: src/control/Control.Menubar.js:521 src/control/Control.Menubar.js:569
 #: src/control/Control.Menubar.js:616 src/control/Control.StatusBar.js:189
 msgid "Search"
-msgstr "Hľadať:"
+msgstr "Hľadať"
 
 #: src/control/Control.Menubar.js:532
 msgid "Page Setup"
@@ -844,7 +846,9 @@ msgstr "Nasledujúca snímka"
 
 #: src/control/Control.Toolbar.js:956
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "Konflikt medzi viacerými používateľmi pri rušení alebo obnove zmien. Na vyriešenie problému použite prosím obnovu dokumentu."
+msgstr ""
+"Konflikt medzi viacerými používateľmi pri rušení alebo obnove zmien. Na "
+"vyriešenie problému použite prosím obnovu dokumentu"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -1063,7 +1067,7 @@ msgstr "Vložte PIN kód"
 
 #: src/control/Signing.js:214
 msgid "Error at login."
-msgstr "Chyba pri prihlasovaní"
+msgstr "Chyba pri prihlasovaní."
 
 #: src/control/Signing.js:227
 msgid "Please scan the code"
@@ -1071,7 +1075,7 @@ msgstr "Zoskenujte kód"
 
 #: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
-msgstr "Nepodarilo sa získať obrázok QR kódu"
+msgstr "Nepodarilo sa získať obrázok QR kódu."
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
@@ -1175,7 +1179,7 @@ msgstr "Podpísaný, ale nie je validovaný"
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
-msgstr "Podpis je platný, ale dokument je podpísaný len čiastočne."
+msgstr "Podpis je platný, ale dokument je podpísaný len čiastočne"
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
@@ -1271,7 +1275,9 @@ msgstr "Dokument v úložisku bol zmenený. Dokument sa načítava, vaša verzia
 
 #: src/core/Socket.js:453
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
-msgstr "Obnovuje se staršia revízia. Všetky neuložené zmeny budú dostupné v histórii verzií."
+msgstr ""
+"Obnovuje se staršia revízia. Všetky neuložené zmeny budú dostupné v histórii "
+"verzií"
 
 #: src/core/Socket.js:572
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
@@ -1299,7 +1305,7 @@ msgstr "Na úpravu dokumentu je potrebné heslo."
 
 #: src/core/Socket.js:661
 msgid "Hit Cancel to open in view-only mode."
-msgstr "Stlačením Zrušiť otvoriť v režime zobrazenia"
+msgstr "Stlačte Zrušiť aby otvoriť dokument v režime zobrazenia."
 
 #: src/core/Socket.js:665
 msgid "Wrong password provided. Please try again."
@@ -1327,7 +1333,10 @@ msgstr "URL servera nie je špecifikovaný. Loowsd server je pravdepodobne zle n
 
 #: src/errormessages.js:15
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr "Toto je nepodporovaná verzia {productname}, ktorá nie je vhodná na nasadenie v podnikovom prostredí. Táto správa sa zobrazuje v prípade, keď sa súčasne používa {docs} dokumentov alebo {connections} pripojení."
+msgstr ""
+"Toto je nepodporovaná verzia {productname}, ktorá nie je vhodná na nasadenie "
+"v podnikovom prostredí. Táto správa sa zobrazuje v prípade, keď sa súčasne "
+"používa {docs} dokumentov alebo {connections} pripojení"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1351,11 +1360,15 @@ msgstr "Chybný alebo chýbajúci parameter WOPISrc, kontaktujte podporu."
 
 #: src/errormessages.js:21
 msgid "Your session will expire in %time. Please save your work and refresh the session (or webpage) to continue."
-msgstr "Relácia expiruje o %time. Na pokračovanie uložte dokumenty a reláciu (alebo webovú stránku) obnovte"
+msgstr ""
+"Relácia sa ukončí o %time. Pre pokračovanie uložte dokumenty a reláciu ("
+"alebo webovú stránku) obnovte."
 
 #: src/errormessages.js:22
 msgid "Your session has been expired. Further changes to document might not be saved. Please refresh the session (or webpage) to continue."
-msgstr "Vaša relácia expirovala, ďalšie zmeny dokumentu nemožno uložiť. Na pokračovanie reláciu (alebo webovú stránku) obnovte"
+msgstr ""
+"Vaša relácia exspirovala, ďalšie zmeny dokumentu nebolo možné uložiť. Pre "
+"pokračovanie reláciu (alebo webovú stránku) obnovte."
 
 #: src/errormessages.js:23
 msgid "Failed to load the document. Please ensure the file type is supported and not corrupted, and try again."
@@ -1383,7 +1396,9 @@ msgstr "Kvôli nedostatku miesta na disku sa dokument nepodarilo uložiť. Dokum
 
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "Dokument nemožno uložiť pre expiráciu alebo neplatnosť prístupového tokenu"
+msgstr ""
+"Dokument nebolo možno uložiť pre exspiráciu alebo neplatnosť prístupového "
+"tokenu."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."

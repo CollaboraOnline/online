@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="rate_our_app_text">If you like it, please give us 5 stars in Google Play. Your good reviews are our best motivation.</string>
+    <string name="exiting">Exiting...</string>
+    <string name="loading">Loading...</string>
+    <string name="rate_our_app_title">Thank you for using %1$s!</string>
+    <string name="later">Later</string>
+    <string name="rate_now">Rate now</string>
+    <string name="preparing_for_the_first_start_after_an_update">Preparing for the first start after an update.</string>
+    <string name="cannot_open_file_chooser">Cannot open file chooser</string>
+    <string name="failed_to_insert_image">Failed to insert image</string>
+    <string name="file_chromeos_read_only">This file cannot be saved in this location, opening it read-only. Move it to the Play files for full read/write access.</string>
+    <string name="failed_to_load_file">Failed to determine the file to load</string>
+    <string name="storage_permission_required">Storage permission is required</string>
+    <string name="temp_file_saving_disabled">This file is read-only, saving is disabled.</string>
+    <string name="ask_for_copy">This document is readonly. Do you want to make a copy for editing\?</string>
+    <string name="edit_copy">Edit a copy</string>
+    <string name="view_only">View only</string>
+    <string name="restarting">Restarting...</string>
+</resources>

@@ -21,7 +21,7 @@
     <string name="pref_sort_summary">Velg hvordan du sorterer filer: A-Z, etter størrelse eller dato.</string>
     <string name="pref_show_hidden_files_summary">Aktiver for å vise skjulte filer/mapper</string>
     <string name="title_activity_show_html">Om</string>
-    <string name="directory_not_saved">Katalogen ble ikke lagret</string>
+    <string name="directory_not_saved">Katalogen ble ikke lagret.</string>
     <string name="bmp_null">Bmp er null!</string>
     <string name="unable_to_go_further">Kan ikke fortsette.</string>
     <string name="share_document">Del Dokument</string>
@@ -101,8 +101,13 @@
     <string name="pref_enable_chrome_debugger">Feilsøking for Chrome</string>
     <string name="pref_show_debug_info_summary">Aktiver for å vise feilsøkingsinformasjon i dokumentvisningen</string>
     <string name="pref_show_debug_info">Vis Feilsøkingsinfo</string>
-    <string name="pref_filter_summary">Angi hvilke filter som skal brukes som standard</string>
+    <string name="pref_filter_summary">Angi hvilke filter som skal brukes som forvalg.</string>
     <string name="app_version_and_hash">Versjon: %1$s
 \nonline git-hash: %2$s
 \nkjerne git-hash: %3$s</string>
+    <string name="theme_light">Lys</string>
+    <string name="theme_dark">Mørk</string>
+    <string name="theme_system_default">Systemforvalg</string>
+    <string name="choose_theme">Velg drakt</string>
+    <string name="theme">Drakt</string>
 </resources>

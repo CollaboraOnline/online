@@ -6,7 +6,7 @@
     <string name="cannot_open_file_chooser">Nie można otworzyć selektora plików</string>
     <string name="failed_to_insert_image">Nie udało się wstawić obrazu</string>
     <string name="failed_to_load_file">Nie udało się określić pliku do załadowania</string>
-    <string name="storage_permission_required">Wymagane jest pozwolenie na przechowywanie</string>
+    <string name="storage_permission_required">Wymagane jest uprawnienie do pamięci</string>
     <string name="temp_file_saving_disabled">Ten plik jest tylko do odczytu, zapisywanie jest wyłączone.</string>
     <string name="exiting">Wychodzenie...</string>
     <string name="rate_our_app_text">Jeśli Ci się spodoba, daj nam 5 gwiazdek w Google Play. Twoja pozytywna recenzja jest naszą największą motywacją.</string>
@@ -14,4 +14,8 @@
     <string name="later">Później</string>
     <string name="rate_now">Oceń teraz</string>
     <string name="file_chromeos_read_only">Tego pliku tylko do odczytu nie można zapisać w tej lokalizacji. Przenieś go do plików Play, aby uzyskać pełny dostęp do odczytu i zapisu.</string>
+    <string name="ask_for_copy">Ten dokument jest tylko do odczytu. Chcesz zrobić kopię do edycji\?</string>
+    <string name="edit_copy">Edytuj kopię</string>
+    <string name="view_only">Tylko podgląd</string>
+    <string name="restarting">Ponowne uruchamianie...</string>
 </resources>

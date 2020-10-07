@@ -4,7 +4,7 @@
     <string name="cannot_open_file_chooser">Nem lehet megnyitni a fájlválasztót</string>
     <string name="failed_to_insert_image">Nem sikerült beilleszteni a képet</string>
     <string name="failed_to_load_file">Nem sikerült meghatározni a betöltendő fájlt</string>
-    <string name="storage_permission_required">Jogosultság szükséges a tárolóhelyhez való hozzáféréshez</string>
+    <string name="storage_permission_required">Jogosultság szükséges a tárolóhelyre íráshoz</string>
     <string name="temp_file_saving_disabled">Ez a fájl írásvédett, a mentés le van tiltva.</string>
     <string name="preparing_for_the_first_start_after_an_update">Előkészülés a frissítés utáni első indításhoz.</string>
     <string name="saving">Mentés...</string>
@@ -14,4 +14,8 @@
     <string name="later">Később</string>
     <string name="rate_now">Értékelés most</string>
     <string name="file_chromeos_read_only">Ezt a fájlt nem lehet erre a helyre menteni, ezért csak olvashatóként lesz megnyitva. Helyezze át a Play fájlok közé, ott már írható lesz.</string>
+    <string name="ask_for_copy">Ez a dokumentum csak olvasható. Készít egy másolatot szerkesztéshez\?</string>
+    <string name="edit_copy">Másolat szerkesztése</string>
+    <string name="view_only">Csak olvasás</string>
+    <string name="restarting">Újraindítás...</string>
 </resources>

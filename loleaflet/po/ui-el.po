@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-07-23 07:29+0000\n"
-"Last-Translator: Dimitris Spingos <dmtrs32@gmail.com>\n"
-"Language-Team: Greek <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/el/>\n"
+"PO-Revision-Date: 2020-10-13 20:43+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
+"ui/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
 "X-Pootle-Revision: 3940107\n"
 
@@ -61,8 +62,6 @@ msgid "User Name"
 msgstr "Όνομα χρήστη"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
 msgstr "Ανοιγμένα έγγραφα"
 
@@ -1054,14 +1053,8 @@ msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Το έγγραφο δεν μπόρεσε να κλειδωθεί και είναι ανοικτό σε κατάσταση μόνο για ανάγνωση."
 
 #: src/control/Permission.js:47 src/control/Permission.js:65
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "Server returned this reason: \""
 msgid "Server returned this reason:"
-msgstr ""
-"\n"
-"Ο διακομιστής επέστρεψε αυτήν την αιτία: \""
+msgstr "Ο διακομιστής επέστρεψε αυτήν την αιτία:"
 
 #: src/control/Permission.js:63
 msgid "The document could not be locked."

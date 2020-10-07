@@ -14,4 +14,8 @@
     <string name="rate_our_app_title">Gràcies per utilitzar el %1$s!</string>
     <string name="exiting">S\'està sortint…</string>
     <string name="file_chromeos_read_only">El fitxer no es pot obrir en aquesta ubicació; s\'ha obert en el mode només de lectura. Desplaceu-lo a Fitxers de Play per a obtenir l\'accés complet de lectura i escriptura.</string>
+    <string name="ask_for_copy">Aquest document és només de lectura. Voleu fer-ne una còpia i editar-la\?</string>
+    <string name="edit_copy">Edita\'n una còpia</string>
+    <string name="view_only">Només de visualització</string>
+    <string name="restarting">S\'està reiniciant…</string>
 </resources>
