@@ -385,7 +385,8 @@ L.Clipboard = L.Class.extend({
 		// FIXME: do we want this section ?
 
 		// Images get a look in only if we have no content and are async
-		if (content == null && htmlText === '' && dataTransfer != null)
+		var htmlImage = htmlText.substring(0, 4) === '<img';
+		if (((content == null && htmlText === '') || htmlImage) && dataTransfer != null)
 		{
 			var types = dataTransfer.types;
 
