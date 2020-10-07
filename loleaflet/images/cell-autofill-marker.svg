@@ -1,3 +1,1 @@
-<svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
- <rect x="1.8212" y="1.8212" width="28.358" height="28.358" fill-opacity=".86275" stroke="#000" stroke-linecap="round" stroke-width="1.6425"/>
-</svg>
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="m1.8212 1.8212h28.358v28.358h-28.358z" fill-opacity=".86275" stroke="#000" stroke-linecap="round" stroke-width="1.6425"/></svg>
