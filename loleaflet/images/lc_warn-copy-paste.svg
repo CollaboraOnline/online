@@ -5,11 +5,15 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   id="svg18"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 24 24"
    version="1.1"
-   viewBox="0 0 24 24">
+   id="svg20"
+   sodipodi:docname="lc_warn-copy-paste.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
-     id="metadata24">
+     id="metadata26">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -21,80 +25,92 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs22" />
+     id="defs24" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="700"
+     id="namedview22"
+     showgrid="true"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="4.9166667"
+     inkscape:cx="-1.2855693"
+     inkscape:cy="9.2943792"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg20">
+    <inkscape:grid
+       type="xygrid"
+       id="grid833" />
+  </sodipodi:namedview>
   <path
-     id="path2"
-     fill-rule="evenodd"
-     fill="#fff"
-     d="m3 16h10v-9-1l-3-3h-7z" />
+     d="m3 3v13h6v-10h4l-3-3z"
+     fill="#fafafa"
+     id="path2" />
   <path
-     id="path4"
-     fill="#808080"
-     d="m2.857422 2c-.474857 0-.857422.3825647-.857422.8574219v13.2851561c0 .474857.382565.857422.857422.857422h10.285156c.474857 0 .857422-.382565.857422-.857422v-10.142578l-1-1-2-2-1-1zm .142578 1h6v3.1425781c0 .474857.382565.8574219.857422.8574219h3.142578v9h-10zm7 .4140625 2.585938 2.5859375h-2.585938z" />
-  <rect
-     id="rect6"
-     y="13"
-     x="4"
-     width="8"
-     ry=".5"
-     height="1"
-     fill="#4d82b8" />
-  <rect
-     id="rect8"
-     y="10"
-     x="4"
-     width="8"
-     ry=".5"
-     height="1"
-     fill="#4d82b8" />
+     d="m2.8574219 2c-.474857 0-.8574219.3825647-.8574219.8574219v13.2851561c0 .474857.3825649.857422.8574219.857422h6.1425781v-1h-6v-13h6v3h1v-2.5859375l2.585938 2.5859375h1.414062l-1-1-2-2-1-1z"
+     fill="#3a3a38"
+     id="path4" />
   <path
-     id="path10"
-     fill-rule="evenodd"
-     fill="#fff"
-     d="m 10.000792,6.4073602 h 10 v 8.9999998 1 l -3,3 h -7 z" />
+     d="m4.5 13c-.277 0-.5.223-.5.5s.223.5.5.5h4.5v-1z"
+     fill="#1e8bcd"
+     id="path6" />
   <path
-     id="path12"
-     fill="#808080"
-     d="m 9.8582136,5.4073602 c -0.474857,0 -0.857422,0.3825647 -0.857422,0.8574219 V 19.549938 c 0,0.474857 0.382565,0.857422 0.857422,0.857422 H 20.14337 c 0.474857,0 0.857422,-0.382565 0.857422,-0.857422 V 9.4073602 l -1,-1 -2,-2 -1,-1 z m 0.1425784,1 h 6 v 3.142578 c 0,0.4748568 0.382565,0.8574218 0.857422,0.8574218 h 3.142578 v 9 h -10 z m 7,0.4140625 2.585938,2.5859375 h -2.585938 z" />
-  <rect
-     rx="0.5"
-     id="rect14"
-     y="16.40736"
-     x="11.000792"
-     width="8"
-     ry="0.5"
-     height="1"
-     fill="#4d82b8" />
-  <rect
-     rx="0.5"
-     id="rect16"
-     y="13.40736"
-     x="11.000792"
-     width="8"
-     ry="0.5"
-     height="1"
-     fill="#4d82b8" />
+     d="m4.5 10c-.277 0-.5.223-.5.5s.223.5.5.5h4.5v-1z"
+     fill="#1e8bcd"
+     id="path8" />
   <path
-     id="path878"
-     stroke-width="2"
-     stroke-linecap="square"
-     fill="#eac282"
-     d="m 17.787436,12.09011 c -1.641266,0.688222 -3.282535,0.969344 -4.923801,1.230949 v 5.128959 c 0,1.436162 2.659711,3.398064 4.923801,4.308326 2.26409,-0.910262 4.923801,-2.872164 4.923801,-4.308326 V 13.321059 C 21.06997,13.059454 19.428702,12.778332 17.787436,12.09011 Z"
-     style="opacity:1;fill:#ffffff;stop-opacity:1" />
+     style="fill:#fafafa"
+     d="M 11 8 L 11 21 L 13.802734 21 L 17.587891 12.589844 A 1.0001 1.0001 0 0 1 18.447266 12.001953 A 1.0001 1.0001 0 0 1 19.412109 12.589844 L 21 16.119141 L 21 12 L 21 11 L 18 8 L 11 8 z "
+     id="path10" />
+  <path
+     style="fill:#3a3a38"
+     d="M 10.857422 7 C 10.382565 7 10 7.3825647 10 7.8574219 L 10 21.142578 C 10 21.617435 10.382565 22 10.857422 22 L 13.353516 22 L 13.802734 21 L 11 21 L 11 8 L 17 8 L 17 11.142578 C 17 11.617435 17.382565 12 17.857422 12 L 21 12 L 21 16.119141 L 22 18.339844 L 22 11 L 21 10 L 19 8 L 18 7 L 10.857422 7 z M 18 8.4140625 L 20.585938 11 L 18 11 L 18 8.4140625 z "
+     id="path12" />
   <g
-     style="stroke-width:2.81746"
-     id="g853"
-     transform="matrix(0.35492961,0,0,0.35492961,12.108563,11.745354)">
+     fill="#1e8bcd"
+     id="g18">
     <path
-       id="path839"
-       stroke-width="2"
-       stroke-linecap="square"
-       fill="#eac282"
-       d="M 16,3 C 12.000003,4.6772979 7.9999982,5.362431 4,6 v 12.5 c 0,3.500131 6.482091,8.281561 12,10.5 5.517909,-2.218439 12,-6.999869 12,-10.5 V 6 C 24.000003,5.362431 19.999997,4.6772979 16,3 Z" />
+       d="M 12.5 18 C 12.223 18 12 18.223 12 18.5 C 12 18.777 12.223 19 12.5 19 L 14.703125 19 L 15.152344 18 L 12.5 18 z "
+       id="rect14" />
     <path
-       style="stroke-width:2.81746"
-       id="path841"
-       fill="#fff"
-       d="m 16,7.0000003 c -1.104569,0 -2,0.895431 -2,1.9999997 0,2 0.666667,4.666667 1.333333,10 h 1.333334 C 17.333333,13.666667 18,11 18,9 18,7.8954313 17.104569,7.0000003 16,7.0000003 Z M 16,21 c -1.104569,0 -2,0.895431 -2,2 0,1.104569 0.895431,2 2,2 1.104569,0 2,-0.895431 2,-2 0,-1.104569 -0.895431,-2 -2,-2 z" />
+       d="M 12.5 15 C 12.223 15 12 15.223 12 15.5 C 12 15.777 12.223 16 12.5 16 L 16.052734 16 L 16.503906 15 L 12.5 15 z "
+       id="rect16" />
+  </g>
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#ed8733"
+     d="M 18.5,13 14,23 h 9 z"
+     id="path12-3" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#f8db8f"
+     d="m 18.5,15.433594 -2.957031,6.568359 h 5.914062 z"
+     id="path14" />
+  <g
+     style="fill:#3a3a38;fill-opacity:0.965649"
+     id="g20">
+    <rect
+       height="3"
+       ry="0.5"
+       width="1"
+       x="18"
+       y="17"
+       id="rect16-6" />
+    <rect
+       height="1"
+       ry="0.470588"
+       width="1"
+       x="18"
+       y="21"
+       id="rect18" />
   </g>
 </svg>
