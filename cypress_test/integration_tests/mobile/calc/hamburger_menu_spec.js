@@ -23,6 +23,25 @@ describe('Trigger hamburger menu options.', function() {
 	it('Save', function() {
 		before('hamburger_menu.ods');
 
+		// Change the document content and save it
+		calcHelper.clickOnFirstCell(true, true);
+
+		calcMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('contain.text', 'Textx');
+
+		calcHelper.clickOnFirstCell(true, true);
+
+		helper.selectAllText();
+
+		helper.typeIntoDocument('new');
+
+		calcMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('contain.text', 'new');
+
 		mobileHelper.openHamburgerMenu();
 
 		cy.contains('.menu-entry-with-icon', 'File')
@@ -31,9 +50,15 @@ describe('Trigger hamburger menu options.', function() {
 		cy.contains('.menu-entry-with-icon', 'Save')
 			.click();
 
-		// TODO: we have no visual indicator of save was done
-		// So just trigger saving to catch any exception / console error
-		cy.wait(500);
+		// Reopen the document and check content.
+		helper.beforeAll(testFileName, 'calc', true);
+
+		mobileHelper.enableEditingMobile();
+
+		calcMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('contain.text', 'new');
 	});
 
 	it('Print', function() {
