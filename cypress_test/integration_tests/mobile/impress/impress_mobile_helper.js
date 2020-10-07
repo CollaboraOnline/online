@@ -59,9 +59,9 @@ function selectTextOfShape() {
 function removeShapeSelection() {
 	cy.log('Removing shape selection - start.');
 
-	// Remove selection with on the top-left corner of the slide
+	// Remove selection with clicking on the top-left corner of the slide
 	cy.waitUntil(function() {
-		cy.get('.leaflet-tile')
+		cy.get('.leaflet-canvas-container canvas')
 			.then(function(items) {
 				var XPos = items[0].getBoundingClientRect().left + 10;
 				var YPos = items[0].getBoundingClientRect().top + 10;
@@ -71,7 +71,7 @@ function removeShapeSelection() {
 
 		cy.wait(2000);
 
-		return cy.get('.leaflet-zoom-animated')
+		return cy.get('.leaflet-overlay-pane svg')
 			.then(function(overlay) {
 				return overlay.children('g').length === 0;
 			});
