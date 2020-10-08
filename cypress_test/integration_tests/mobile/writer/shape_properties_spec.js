@@ -112,7 +112,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'd', 'M 1965,4863 L 7957,18073 1965,18073 1965,4863 1965,4863 Z');
 	});
 
-	it.skip('Change size with keep ratio enabled.', function() {
+	it('Change size with keep ratio enabled.', function() {
 		openPosSizePanel();
 
 		// Enable keep ratio
@@ -188,7 +188,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'stroke', 'rgb(152,0,0)');
 	});
 
-	it.skip('Change line style', function() {
+	it('Change line style', function() {
 		openLinePropertyPanel();
 
 		helper.clickOnIdle('#linestyle');
@@ -201,7 +201,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.length.greaterThan', 12);
 	});
 
-	it.skip('Change line width', function() {
+	it('Change line width', function() {
 		openLinePropertyPanel();
 
 		cy.get('#linewidth .spinfield')
