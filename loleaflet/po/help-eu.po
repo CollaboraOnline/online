@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-03-17 08:29+0000\n"
-"Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
-"Language-Team: Basque <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/eu/>\n"
+"PO-Revision-Date: 2020-10-07 11:47+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
+"help/eu/>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-help-eu.po\n"
 "X-Pootle-Revision: 3858781\n"
 
@@ -52,10 +53,8 @@ msgid "Paste as unformatted text"
 msgstr "Itsatsi formaturik gabeko testu gisa"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Ctrl + ⇧ + ?"
+msgstr "Ctrl + ⇧ + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"

@@ -1957,7 +1957,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     // All tiles were processed on client side that we sent last time, so we can send
     // a new batch of tiles which was invalidated / requested in the meantime
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
-    if (!requestedTiles.empty())
+    if (!requestedTiles.empty() && hasTileCache())
     {
         size_t delayedTiles = 0;
         std::vector<TileDesc> tilesNeedsRendering;

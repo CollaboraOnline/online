@@ -1299,7 +1299,7 @@ void TileCacheTests::testTileWireIDHandling()
     sendTextFrame(socket, "tileprocessed tile=0:3840:0:3840:3840:0", testname);
     sendTextFrame(socket, "tileprocessed tile=0:7680:0:3840:3840:0", testname);
 
-    // Type an other character
+    // Type another character
     sendChar(socket, 'y', skNone, testname);
     assertResponseString(socket, "invalidatetiles:", testname);
 
@@ -1447,7 +1447,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
     {
         sendTextFrame(socket, "tileprocessed tile=0:0:0:3200:3200:0", testname);
 
-        // Type an other character
+        // Type another character
         sendChar(socket, 'y', skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
 
@@ -1501,7 +1501,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     sendTextFrame(socket1, "tileprocessed tile=0:3840:0:3840:3840:0", testname);
     sendTextFrame(socket1, "tileprocessed tile=0:7680:0:3840:3840:0", testname);
 
-    // Type an other character
+    // Type another character
     sendChar(socket1, 'y', skNone, testname);
     assertResponseString(socket1, "invalidatetiles:", testname);
 
@@ -1557,7 +1557,7 @@ void TileCacheTests::testLimitTileVersionsOnFly()
         getTileResp = !tile.empty();
     } while(getTileResp);
 
-    // Type an other character to trigger sending tiles
+    // Type another character to trigger sending tiles
     sendChar(socket, 'x', skNone, testname);
 
     // Handle all tiles sent by wsd

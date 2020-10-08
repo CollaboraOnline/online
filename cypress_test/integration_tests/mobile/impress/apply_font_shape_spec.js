@@ -24,8 +24,7 @@ describe('Apply font on selected shape.', function() {
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 	}
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply bold on text shape.', function() {
+	it('Apply bold on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Bold');
@@ -36,8 +35,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-weight', '700');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply italic on text shape.', function() {
+	it('Apply italic on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Italic');
@@ -48,8 +46,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-style', 'italic');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply underline on text shape.', function() {
+	it('Apply underline on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Underline');
@@ -60,8 +57,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'text-decoration', 'underline');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply strikeout on text shape.', function() {
+	it('Apply strikeout on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Strikeout');
@@ -72,8 +68,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'text-decoration', 'line-through');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply shadowed on text shape.', function() {
+	it('Apply shadowed on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#Shadowed');
@@ -84,8 +79,7 @@ describe('Apply font on selected shape.', function() {
 		// TODO: shadowed property is not in the SVG
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Change font name of text shape.', function() {
+	it('Change font name of text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		helper.clickOnIdle('#fontnamecombobox');
@@ -103,8 +97,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-family', 'Linux Libertine G');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Change font size of text shape.', function() {
+	it('Change font size of text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -125,8 +118,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '847px');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Grow font size of text shape.', function() {
+	it('Grow font size of text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -140,8 +132,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '705px');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Shrink font size of text shape.', function() {
+	it('Shrink font size of text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -155,8 +146,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '564px');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply text color on text shape.', function() {
+	it('Apply text color on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(0,0,0)');
 
@@ -175,8 +165,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'fill', 'rgb(106,168,79)');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply highlight on text shape.', function() {
+	it('Apply highlight on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
@@ -199,8 +188,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply superscript on text shape.', function() {
+	it('Apply superscript on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
@@ -218,8 +206,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Apply subscript on text shape.', function() {
+	it('Apply subscript on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
@@ -237,8 +224,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Clear direct formatting of text shape.', function() {
+	it('Clear direct formatting of text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		// Change the font size first

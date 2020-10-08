@@ -26,7 +26,7 @@ describe('Calc focus tests', function() {
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
-		// One tap on an other cell -> no focus on the document
+		// One tap on another cell -> no focus on the document
 		calcHelper.clickOnFirstCell();
 
 		cy.get('.leaflet-marker-icon')

@@ -283,7 +283,7 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 	// Wait for the document to fully load
 	cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-	// Wait until anyting is drawn on tile canvas.
+	// Wait until anything is drawn on tile canvas.
 	canvasShouldBeFullWhiteOrNot('.leaflet-canvas-container canvas', false);
 
 	// The client is irresponsive for some seconds after load, because of the incoming messages.
@@ -380,8 +380,16 @@ function clearAllText() {
 // Check that the clipboard text matches with the specified text.
 function expectTextForClipboard(expectedPlainText) {
 	doIfInWriter(function() {
-		cy.get('#copy-paste-container p font')
-			.should('have.text', expectedPlainText);
+		cy.get('#copy-paste-container p')
+			.then(function(pItem) {
+				if (pItem.children('font').length !== 0) {
+					cy.get('#copy-paste-container p font')
+						.should('have.text', expectedPlainText);
+				} else {
+					cy.get('#copy-paste-container p')
+						.should('have.text', expectedPlainText);
+				}
+			});
 	});
 	doIfInCalc(function() {
 		cy.get('#copy-paste-container pre')

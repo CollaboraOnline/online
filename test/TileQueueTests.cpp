@@ -47,6 +47,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSenderQueue);
     CPPUNIT_TEST(testSenderQueueTileDeduplication);
     CPPUNIT_TEST(testInvalidateViewCursorDeduplication);
+    CPPUNIT_TEST(testCallbackModifiedStatusIsSkipped);
     CPPUNIT_TEST(testCallbackInvalidation);
     CPPUNIT_TEST(testCallbackIndicatorValue);
     CPPUNIT_TEST(testCallbackPageSize);
@@ -61,6 +62,7 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
     void testSenderQueue();
     void testSenderQueueTileDeduplication();
     void testInvalidateViewCursorDeduplication();
+    void testCallbackModifiedStatusIsSkipped();
     void testCallbackInvalidation();
     void testCallbackIndicatorValue();
     void testCallbackPageSize();
@@ -467,6 +469,33 @@ void TileQueueTests::testCallbackPageSize()
 
     LOK_ASSERT_EQUAL(1, static_cast<int>(queue.getQueue().size()));
     LOK_ASSERT_EQUAL(std::string("callback all 13 12474, 205748"), payloadAsString(queue.get()));
+}
+
+void TileQueueTests::testCallbackModifiedStatusIsSkipped()
+{
+    TileQueue queue;
+    std::stringstream ss;
+    ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;
+
+    const std::vector<std::string> messages =
+    {
+        ss.str() + " .uno:ModifiedStatus=false",
+        ss.str() + " .uno:ModifiedStatus=true",
+        ss.str() + " .uno:ModifiedStatus=true",
+        ss.str() + " .uno:ModifiedStatus=false"
+    };
+
+    for (const auto& msg : messages)
+    {
+        queue.put(msg);
+    }
+
+    LOK_ASSERT_EQUAL(static_cast<size_t>(4), queue.getQueue().size());
+
+    LOK_ASSERT_EQUAL(messages[0], payloadAsString(queue.get()));
+    LOK_ASSERT_EQUAL(messages[1], payloadAsString(queue.get()));
+    LOK_ASSERT_EQUAL(messages[2], payloadAsString(queue.get()));
+    LOK_ASSERT_EQUAL(messages[3], payloadAsString(queue.get()));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileQueueTests);
