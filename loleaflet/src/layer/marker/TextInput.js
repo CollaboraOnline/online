@@ -256,6 +256,13 @@ L.TextInput = L.Layer.extend({
 						that._textArea.value = that._textArea.value.slice(0, -1) + message.text + that._textArea.value.slice(-1);
 						that._onInput({});
 					}
+				} else if (message.command === 'unoCommand') {
+					if (message.uno === undefined || typeof message.uno !== 'string') {
+						errorMessage = 'COKbdMgrCallback called for unoCommand without UNO command';
+						console.log(errorMessage);
+						throw errorMessage;
+					}
+					that._map.sendUnoCommand('.uno:' + message.uno);
 				} else {
 					errorMessage = 'COKbdMgrCallback called with unknown command ' + message.command;
 					console.log(errorMessage);
