@@ -30,7 +30,7 @@ describe('Chart tests.', function() {
 			.click();
 
 		cy.get('.leaflet-drag-transform-marker')
-			.should('have.length', 8);
+			.should('have.length', 32);
 
 		cy.get('svg .OLE2')
 			.should('exist');
@@ -44,7 +44,7 @@ describe('Chart tests.', function() {
 			.should('exist');
 
 		// Double click onto the chart shape
-		cy.get('svg g .leaflet-interactive')
+		cy.get('svg g svg')
 			.then(function(items) {
 				expect(items).to.have.length(1);
 				var boundingRect = items[0].getBoundingClientRect();
