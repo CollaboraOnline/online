@@ -469,11 +469,11 @@ body {
 }
 
 .loleaflet-redline-accept-button {
-	background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important;
+	background: url('images/colibre/cmd/24/lc_accepttrackedchanges.svg') no-repeat center !important;
 }
 
 .loleaflet-redline-reject-button {
-	background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
+	background: url('images/colibre/cmd/24/lc_rejecttrackedchange.svg') no-repeat center !important;
 }
 
 .loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {
