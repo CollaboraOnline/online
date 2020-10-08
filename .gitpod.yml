@@ -1,6 +1,10 @@
 image:
   file: .gitpod.dockerfile
 
+ports:
+  - port: 9980
+    onOpen: open-browser
+
 vscode:
   extensions:
     - ms-vscode.cpptools@0.26.2:Pq/tmf2WN3SanVzB4xZc1g==
