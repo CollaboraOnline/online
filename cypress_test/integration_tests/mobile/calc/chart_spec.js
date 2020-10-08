@@ -28,7 +28,7 @@ describe('Chart tests.', function() {
 			.click();
 
 		cy.get('.leaflet-drag-transform-marker')
-			.should('have.length', 8);
+			.should('have.length', 32);
 
 		cy.get('svg .OLE2')
 			.should('exist');
