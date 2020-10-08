@@ -1188,6 +1188,17 @@ int main(int argc, char**argv)
         return std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch().count();
     }
 
+    /**
+     * Constructs an object of type T and wraps it in a std::unique_ptr.
+     *
+     * Can be replaced by std::make_unique when we allow C++14.
+     */
+    template<typename T, typename... Args>
+    typename std::unique_ptr<T> make_unique(Args&& ... args)
+    {
+        return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+    }
+
 } // end namespace Util
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
