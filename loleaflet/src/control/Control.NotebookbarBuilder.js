@@ -380,6 +380,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			var button = L.DomUtil.create('img', 'ui-content unobutton', div);
 			button.src = icon;
 			button.id = buttonId;
+			button.setAttribute('alt', id);
 
 			var valueNode =  L.DomUtil.create('div', 'selected-color', div);
 
