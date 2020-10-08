@@ -35,6 +35,40 @@
     return self;
 }
 
+- (NSString*) describeUIPresses:(NSSet<UIPress *> *)presses {
+    NSString *result = @"";
+    NSString *comma = @"";
+    NSString *dash = @"";
+
+    for (UIPress *press in presses) {
+        result = [result stringByAppendingString:comma];
+        if ([press key].modifierFlags & UIKeyModifierShift) {
+            result = [result stringByAppendingString:@"Shift"];
+        }
+        if ([press key].modifierFlags & UIKeyModifierControl) {
+            result = [result stringByAppendingString:dash];
+            dash = @"-";
+            result = [result stringByAppendingString:@"Control"];
+        }
+        if ([press key].modifierFlags & UIKeyModifierAlternate) {
+            result = [result stringByAppendingString:dash];
+            dash = @"-";
+            result = [result stringByAppendingString:@"Option"];
+        }
+        if ([press key].modifierFlags & UIKeyModifierCommand) {
+            result = [result stringByAppendingString:dash];
+            dash = @"-";
+            result = [result stringByAppendingString:@"Command"];
+        }
+        result = [result stringByAppendingString:dash];
+        dash = @"-";
+        result = [result stringByAppendingString: [[press key] charactersIgnoringModifiers]];
+        comma = @",";
+    }
+
+    return result;
+}
+
 - (void)postMessage:(NSString *)message {
 
     NSMutableString *js = [NSMutableString string];
@@ -69,6 +103,11 @@
                         NSLog(@"Error when executing JavaScript: %@", error.localizedDescription);
                 }
               }];
+}
+
+- (void)sendUnoCommand:(NSString *)command {
+    NSString *message = [NSString stringWithFormat:@"{id: 'COKbdMgr', command: 'unoCommand', uno: '%@'}", command];
+    [self postMessage:message];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -130,6 +169,56 @@
 
 - (BOOL)canBecomeFirstResponder {
     return YES;
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    // We don't want any of the default UIResponder actions, as the UITextView has no idea about the
+    // real contents of the document or selection anyway.
+
+    // NSLog(@"COKbdMgr: canPerformAction:%@", NSStringFromSelector(action));
+    return NO;
+}
+
+- (void)pressesBegan:(NSSet<UIPress*>*)presses
+           withEvent:(UIPressesEvent*)event {
+
+    NSLog(@"COKbdMgr: pressesBegan: %@", [self describeUIPresses:presses]);
+
+    for (UIPress *press in presses) {
+        if ([press key].modifierFlags & UIKeyModifierCommand
+            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"a"]) {
+            [self sendUnoCommand:@"SelectAll"];
+            return;
+        } else if ([press key].modifierFlags & UIKeyModifierCommand
+            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"c"]) {
+            [self sendUnoCommand:@"Copy"];
+            return;
+        } else if ([press key].modifierFlags & UIKeyModifierCommand
+            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"s"]) {
+            [self sendUnoCommand:@"Save"];
+            return;
+        } else if ([press key].modifierFlags & UIKeyModifierCommand
+            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"v"]) {
+            [self sendUnoCommand:@"Paste"];
+            return;
+        } else if ([press key].modifierFlags & UIKeyModifierCommand
+            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"x"]) {
+            [self sendUnoCommand:@"Cut"];
+            return;
+        } else if ([press key].modifierFlags & UIKeyModifierCommand
+            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"z"]) {
+            [self sendUnoCommand:@"Undo"];
+            return;
+        }
+    }
+
+    [super pressesBegan:presses withEvent:event];
+}
+
+- (void)pressesEnded:(NSSet<UIPress*>*)presses
+           withEvent:(UIPressesEvent*)event {
+    NSLog(@"COKbdMgr: pressesEnded: %@", [self describeUIPresses:presses]);
 }
 
 @synthesize hasText;
