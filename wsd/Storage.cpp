@@ -548,6 +548,9 @@ void WopiStorage::initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::U
 
     if (_reuseCookies)
         addStorageReuseCookie(request, cookies);
+
+    // Helps wrt. debugging cluster cases from the logs
+    request.set("X-LOOL-WOPI-ServerId", Util::getProcessIdentifier());
 }
 
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth,
