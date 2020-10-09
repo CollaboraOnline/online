@@ -2196,7 +2196,13 @@ public:
         if(!allow)
         {
             if(report)
-                LOG_ERR("Requesting address is denied: " << addressToCheck);
+                LOG_WRN("convert-to: Requesting address is denied: " << addressToCheck);
+            return false;
+        }
+        else
+        {
+            if(report)
+                LOG_INF("convert-to: Requesting address is allowed: " << addressToCheck);
             return false;
         }
 
@@ -2226,7 +2232,13 @@ public:
                 if(!allow)
                 {
                     if(report)
-                        LOG_ERR("Requesting address is denied: " << addressToCheck);
+                        LOG_WRN("convert-to: Requesting address is denied: " << addressToCheck);
+                    return false;
+                }
+                else
+                {
+                    if(report)
+                        LOG_INF("convert-to: Requesting address is allowed: " << addressToCheck);
                     return false;
                 }
             }
@@ -3278,7 +3290,7 @@ private:
 
         // Can the convert-to be used?
         Poco::JSON::Object::Ptr convert_to = new Poco::JSON::Object;
-        Poco::Dynamic::Var available = allowConvertTo(socket->clientAddress(), request);
+        Poco::Dynamic::Var available = allowConvertTo(socket->clientAddress(), request, true);
         convert_to->set("available", available);
 
         Poco::JSON::Object::Ptr capabilities = new Poco::JSON::Object;
