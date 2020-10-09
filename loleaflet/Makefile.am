@@ -644,17 +644,9 @@ pot:
 
 	html2po --pot --input=html/loleaflet-help.html --output=po/templates/loleaflet-help.pot --duplicates=merge
 
-	prop2po --pot --personality=strings --encoding=utf8 --input=$(abs_top_srcdir)/ios/Mobile/Resources/Settings.bundle/en.lproj/Root.strings --output=po/templates/ios.pot
-
 l10n: pot
 	for i in po/ui-*.po; do pot2po --input=po/templates/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 	for i in po/help-*.po; do pot2po --input=po/templates/loleaflet-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
-	for i in po/ios-*.po;do pot2po --input=po/templates/ios.pot --template=$$i --output=$$i.new; mv $$i.new $$i; done
-# FIXME: po2prop gives 'string index out of range' error.
-#	for lang in ca cs da de el es fi fr hr hu id it ja ko ms nl no pl pt pt_PT ro ru sk sv th tr uk vi zh_CN zh_TW; do \
-#		mkdir -p $(abs_top_srcdir)/ios/Mobile/Resources/Settings.bundle/$$lang.lproj; \
-#		po2prop --personality=strings --encoding=utf8 --template=$(abs_top_srcdir)/ios/Mobile/Resources/Settings.bundle/en.lproj/Root.strings --input=po/ios-$$lang.po --output=$(abs_top_srcdir)/ios/Mobile/Resources/Settings.bundle/$$lang.lproj/Root.strings; \
-#	done
 
 clean-local:
 	@rm -rf $(DIST_FOLDER)
