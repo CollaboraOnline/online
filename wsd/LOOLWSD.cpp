@@ -2203,7 +2203,6 @@ public:
         {
             if(report)
                 LOG_INF("convert-to: Requesting address is allowed: " << addressToCheck);
-            return false;
         }
 
         // Handle forwarded header and make sure all participating IPs are allowed
@@ -2239,7 +2238,6 @@ public:
                 {
                     if(report)
                         LOG_INF("convert-to: Requesting address is allowed: " << addressToCheck);
-                    return false;
                 }
             }
         }
