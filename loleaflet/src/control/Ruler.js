@@ -396,20 +396,13 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_fixOffset: function() {
+		if (!this._map.options.docBounds)
+			return;
+
 		var scale = this._map.getZoomScale(this._map.getZoom(), 10);
 		var mapPane = this._map._mapPane;
-
-		/// The rulerOffset depends on the leftmost tile's position
-		/// sometimes the leftmost tile is not available and we need to calculate
-		/// from the tiles that we have already.
-		var tiles = this._map._docLayer._tiles;
-		var firstTileKey = Object.keys(tiles)[0];
-		if (!firstTileKey) {
-			return;
-		}
-		var columnNumber = parseInt(firstTileKey.match(/(\d*):/)[1]);
-		var firstTile = tiles[firstTileKey].el;
-		var firstTileXTranslate = parseInt(firstTile.style.left) - this._map._docLayer._tileWidthPx * columnNumber;
+		var topLeft = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthWest());
+		var firstTileXTranslate = topLeft.x;
 
 		var tileContainer = mapPane.getElementsByClassName('leaflet-tile-container');
 		for (var i = 0; i < tileContainer.length; ++i) {
