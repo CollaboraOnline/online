@@ -805,10 +805,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_isEditFormula: function () {
-		return this._lastFormula && this._map._isCursorVisible;
-	},
-
 	_onCellAddressMsg: function (textMsg) {
 		// When the user moves the focus to a different cell, a 'cellformula'
 		// message is received from loolwsd, *then* a 'celladdress' message.
@@ -2347,7 +2343,7 @@ L.TileLayer = L.GridLayer.extend({
 				if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
 				    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 				    !(docLayer._followEditor || docLayer._followUser) &&
-				    !this._isEditFormula()) {
+				    !this._map.calcInputBarHasFocus()) {
 					this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
 				}
 			}
@@ -3051,7 +3047,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			var mapBounds = this._map.getBounds();
 			if (!this._cellCursorXY.equals(this._prevCellCursorXY) &&
-			    !this._isEditFormula()) {
+			    !this._map.calcInputBarHasFocus()) {
 				var scroll = this._calculateScrollForNewCellCursor();
 				console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCellCursor returned wrong type');
 				if (scroll.lng !== 0 || scroll.lat !== 0) {

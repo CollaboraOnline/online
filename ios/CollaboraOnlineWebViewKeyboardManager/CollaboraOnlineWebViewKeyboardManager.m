@@ -37,33 +37,40 @@
 
 - (NSString*) describeUIPresses:(NSSet<UIPress *> *)presses {
     NSString *result = @"";
-    NSString *comma = @"";
-    NSString *dash = @"";
 
-    for (UIPress *press in presses) {
-        result = [result stringByAppendingString:comma];
-        if ([press key].modifierFlags & UIKeyModifierShift) {
-            result = [result stringByAppendingString:@"Shift"];
+    if (@available(iOS 13.4, *)) {
+        NSString *comma = @"";
+        NSString *dash = @"";
+
+        for (UIPress *press in presses) {
+            result = [result stringByAppendingString:comma];
+            if ([press key].modifierFlags & UIKeyModifierShift) {
+                result = [result stringByAppendingString:@"Shift"];
+                dash = @"-";
+            }
+            if ([press key].modifierFlags & UIKeyModifierControl) {
+                result = [result stringByAppendingString:dash];
+                dash = @"-";
+                result = [result stringByAppendingString:@"Control"];
+            }
+            if ([press key].modifierFlags & UIKeyModifierAlternate) {
+                result = [result stringByAppendingString:dash];
+                dash = @"-";
+                result = [result stringByAppendingString:@"Option"];
+            }
+            if ([press key].modifierFlags & UIKeyModifierCommand) {
+                result = [result stringByAppendingString:dash];
+                dash = @"-";
+                result = [result stringByAppendingString:@"Command"];
+            }
+            NSString *characters = [[press key] charactersIgnoringModifiers];
+            if (![characters isEqualToString:@""]) {
+                result = [result stringByAppendingString:dash];
+                result = [result stringByAppendingString: characters];
+            }
+            dash = @"";
+            comma = @",";
         }
-        if ([press key].modifierFlags & UIKeyModifierControl) {
-            result = [result stringByAppendingString:dash];
-            dash = @"-";
-            result = [result stringByAppendingString:@"Control"];
-        }
-        if ([press key].modifierFlags & UIKeyModifierAlternate) {
-            result = [result stringByAppendingString:dash];
-            dash = @"-";
-            result = [result stringByAppendingString:@"Option"];
-        }
-        if ([press key].modifierFlags & UIKeyModifierCommand) {
-            result = [result stringByAppendingString:dash];
-            dash = @"-";
-            result = [result stringByAppendingString:@"Command"];
-        }
-        result = [result stringByAppendingString:dash];
-        dash = @"-";
-        result = [result stringByAppendingString: [[press key] charactersIgnoringModifiers]];
-        comma = @",";
     }
 
     return result;
@@ -185,40 +192,37 @@
 
     NSLog(@"COKbdMgr: pressesBegan: %@", [self describeUIPresses:presses]);
 
-    for (UIPress *press in presses) {
-        if ([press key].modifierFlags & UIKeyModifierCommand
-            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"a"]) {
-            [self sendUnoCommand:@"SelectAll"];
-            return;
-        } else if ([press key].modifierFlags & UIKeyModifierCommand
-            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"c"]) {
-            [self sendUnoCommand:@"Copy"];
-            return;
-        } else if ([press key].modifierFlags & UIKeyModifierCommand
-            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"s"]) {
-            [self sendUnoCommand:@"Save"];
-            return;
-        } else if ([press key].modifierFlags & UIKeyModifierCommand
-            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"v"]) {
-            [self sendUnoCommand:@"Paste"];
-            return;
-        } else if ([press key].modifierFlags & UIKeyModifierCommand
-            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"x"]) {
-            [self sendUnoCommand:@"Cut"];
-            return;
-        } else if ([press key].modifierFlags & UIKeyModifierCommand
-            && [[[press key] charactersIgnoringModifiers] isEqualToString:@"z"]) {
-            [self sendUnoCommand:@"Undo"];
-            return;
+    if (@available(iOS 13.4, *)) {
+        for (UIPress *press in presses) {
+            if ([press key].modifierFlags & UIKeyModifierCommand
+                && [[[press key] charactersIgnoringModifiers] isEqualToString:@"a"]) {
+                [self sendUnoCommand:@"SelectAll"];
+                return;
+            } else if ([press key].modifierFlags & UIKeyModifierCommand
+                       && [[[press key] charactersIgnoringModifiers] isEqualToString:@"c"]) {
+                [self sendUnoCommand:@"Copy"];
+                return;
+            } else if ([press key].modifierFlags & UIKeyModifierCommand
+                       && [[[press key] charactersIgnoringModifiers] isEqualToString:@"s"]) {
+                [self sendUnoCommand:@"Save"];
+                return;
+            } else if ([press key].modifierFlags & UIKeyModifierCommand
+                       && [[[press key] charactersIgnoringModifiers] isEqualToString:@"v"]) {
+                [self sendUnoCommand:@"Paste"];
+                return;
+            } else if ([press key].modifierFlags & UIKeyModifierCommand
+                       && [[[press key] charactersIgnoringModifiers] isEqualToString:@"x"]) {
+                [self sendUnoCommand:@"Cut"];
+                return;
+            } else if ([press key].modifierFlags & UIKeyModifierCommand
+                       && [[[press key] charactersIgnoringModifiers] isEqualToString:@"z"]) {
+                [self sendUnoCommand:@"Undo"];
+                return;
+            }
         }
     }
 
     [super pressesBegan:presses withEvent:event];
-}
-
-- (void)pressesEnded:(NSSet<UIPress*>*)presses
-           withEvent:(UIPressesEvent*)event {
-    NSLog(@"COKbdMgr: pressesEnded: %@", [self describeUIPresses:presses]);
 }
 
 @synthesize hasText;
@@ -314,6 +318,8 @@
         lastCommandIsHide = NO;
         lastActionIsDisplay = YES;
 
+        NSLog(@"COKbdMgr: lastCommandIsHide:=NO lastActionIsDisplay:=YES");
+
         [self->webView addSubview:control];
         NSLog(@"COKbdMgr: Added _COWVKMKeyInputControl to webView");
         [control becomeFirstResponder];
@@ -330,17 +336,17 @@
     // folllowed by a display request within 100 ms.
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100000000ll), dispatch_get_main_queue(), ^{
             if (!self->lastCommandIsHide) {
-                NSLog(@"COKbdMgr: Ignoring hide command that was quickly followed by a display command");
+                NSLog(@"COKbdMgr: lastCommandIsHide==NO Ignoring hide command that was quickly followed by a display command");
                 return;
             }
             if (self->lastActionIsDisplay) {
-                NSLog(@"COKbdMgr: Ignoring hide command that quickly followed a display command");
+                NSLog(@"COKbdMgr: lastActionIsDisplay==YES Ignoring hide command that quickly followed a display command");
                 return;
             }
             if (self->control != nil) {
                 self->lastActionIsDisplay = NO;
                 [self->control removeFromSuperview];
-                NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
+                NSLog(@"COKbdMgr: lastActionIsDisplay:=NO Removed _COWVKMKeyInputControl from webView");
                 self->control = nil;
             }
         });
@@ -366,7 +372,7 @@
             [self displayKeyboardOfType:type withText:text at:(location != nil ? [location unsignedIntegerValue] : UINT_MAX)];
         } else if ([stringCommand isEqualToString:@"hide"]) {
             lastCommandIsHide = YES;
-            NSLog(@"COKbdMgr: command=hide");
+            NSLog(@"COKbdMgr: command=hide lastCommandIsHide:=YES");
             [self hideKeyboard];
         } else if (stringCommand == nil) {
             NSLog(@"COKbdMgr: No 'command' in %@", message.body);
@@ -384,6 +390,10 @@
         [control removeFromSuperview];
         NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
         control = nil;
+        if (self->lastActionIsDisplay) {
+            NSLog(@"COKbdMgr: lastActionIsDisplay==YES But display it again as loleaflet hasn't asked for it to be hidden");
+            [self displayKeyboardOfType:nil withText:@"" at:UINT_MAX];
+        }
     }
 }
 

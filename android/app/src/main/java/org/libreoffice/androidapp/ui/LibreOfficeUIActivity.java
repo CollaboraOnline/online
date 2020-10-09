@@ -571,20 +571,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     /** Opens an Input dialog to get the name of new file. */
     private void createNewFileInputDialog(final String defaultFileName, final String mimeType, final int requestCode) {
         collapseFabMenu();
-
-        Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-
-        // The mime type and category must be set
-        i.setType(mimeType);
-        i.addCategory(Intent.CATEGORY_OPENABLE);
-
-        i.putExtra(Intent.EXTRA_TITLE, defaultFileName);
-
-        // Try to default to the Documents folder
-        Uri documentsUri = Uri.parse("content://com.android.externalstorage.documents/document/home%3A");
-        i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, documentsUri);
-
-        startActivityForResult(i, requestCode);
+        // call existing function in LOActivity to avoid having the same code twice
+        LOActivity.createNewFileInputDialog(this, defaultFileName, mimeType, requestCode);
     }
 
     /**

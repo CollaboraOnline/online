@@ -340,7 +340,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint = relPath.substr(sizeof(WELCOME_ENDPOINT));
         }
 
-        // Is this a file we read at startup - if not; its not for serving.
+        // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
@@ -661,7 +661,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
-    // Is this a file we read at startup - if not; its not for serving.
+    // Is this a file we read at startup - if not; it's not for serving.
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string preprocess = *getUncompressedFile(relPath);
