@@ -121,7 +121,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     else if (tokens.equals(0, "version"))
     {
         // Send COOL version information
-        sendTextFrame("loolserver " + Util::getVersionJSON());
+        sendTextFrame("coolserver " + Util::getVersionJSON());
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
     }

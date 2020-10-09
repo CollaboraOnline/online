@@ -354,7 +354,7 @@ loggingleveloverride <default|max|verbose|terse|none|fatal|critical|error|warnin
 server -> client
 ================
 
-loolserver <loolwsd version> <loolwsd git hash> <major.minor[-patch]>
+coolserver <loolwsd version> <loolwsd git hash> <major.minor[-patch]>
 
     Upon connection, the server must announce the version number it supports.
     Major: an integer that must always match between client and server,
@@ -761,8 +761,8 @@ subscribe <space separated list of commands>
 
 version
 
-    Queries the server for current version of lokit and loolserver. See
-    'lokitversion' and 'loolserver' in admin -> client for the format of
+    Queries the server for current version of lokit and coolserver. See
+    'lokitversion' and 'coolserver' in admin -> client for the format of
     response message.
 
 documents
@@ -938,7 +938,7 @@ mem_stats <comma separated list of memory consumed values>
      The length of the list is equal to the value of setting
      mem_stats_size`
 
-loolserver <JSON string>
+coolserver <JSON string>
 
     The returned JSON string contains information in the following format:
     {Version: <>, Hash: <>}

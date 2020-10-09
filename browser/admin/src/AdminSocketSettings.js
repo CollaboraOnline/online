@@ -74,7 +74,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 				}
 			}
 		}
-		else if (textMsg.startsWith('loolserver ')) {
+		else if (textMsg.startsWith('coolserver ')) {
 			// This must be the first message, unless we reconnect.
 			var loolwsdVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			var h = loolwsdVersionObj.Hash;

@@ -462,7 +462,7 @@ app.definitions.Socket = L.Class.extend({
 		this._logSocket('INCOMING', textMsg);
 
 		var command = this.parseServerCmd(textMsg);
-		if (textMsg.startsWith('loolserver ')) {
+		if (textMsg.startsWith('coolserver ')) {
 			// This must be the first message, unless we reconnect.
 			var oldId = null;
 			var oldVersion = null;
