@@ -216,11 +216,6 @@
     [super pressesBegan:presses withEvent:event];
 }
 
-- (void)pressesEnded:(NSSet<UIPress*>*)presses
-           withEvent:(UIPressesEvent*)event {
-    NSLog(@"COKbdMgr: pressesEnded: %@", [self describeUIPresses:presses]);
-}
-
 @synthesize hasText;
 
 @end
