@@ -46,6 +46,7 @@
             result = [result stringByAppendingString:comma];
             if ([press key].modifierFlags & UIKeyModifierShift) {
                 result = [result stringByAppendingString:@"Shift"];
+                dash = @"-";
             }
             if ([press key].modifierFlags & UIKeyModifierControl) {
                 result = [result stringByAppendingString:dash];
@@ -62,9 +63,12 @@
                 dash = @"-";
                 result = [result stringByAppendingString:@"Command"];
             }
-            result = [result stringByAppendingString:dash];
-            dash = @"-";
-            result = [result stringByAppendingString: [[press key] charactersIgnoringModifiers]];
+            NSString *characters = [[press key] charactersIgnoringModifiers];
+            if (![characters isEqualToString:@""]) {
+                result = [result stringByAppendingString:dash];
+                result = [result stringByAppendingString: characters];
+            }
+            dash = @"";
             comma = @",";
         }
     }
