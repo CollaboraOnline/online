@@ -1163,7 +1163,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
 void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
 {
     const std::string resultstr = success ? "true" : "false";
-    // Some sane limit, otherwise we get problems transfering this to the client with large strings (can be a whole webpage)
+    // Some sane limit, otherwise we get problems transferring this to the client with large strings (can be a whole webpage)
     std::string errorMsgFormatted = LOOLProtocol::getAbbreviatedMessage(errorMsg);
     // Replace reserverd characters
     errorMsgFormatted = Poco::translate(errorMsgFormatted, "\"", "'");
