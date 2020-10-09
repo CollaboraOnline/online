@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-CYPRESS_BINARY="${DIR}/node_modules/cypress/bin/cypress"
+
+if [ -z "${NODE_PATH}" ]; then
+    BUILDDIR=${DIR}
+else
+    BUILDDIR=$(dirname ${NODE_PATH})
+fi
+
+CYPRESS_BINARY="${BUILDDIR}/node_modules/cypress/bin/cypress"
 DESKTOP_TEST_FOLDER="${DIR}/integration_tests/desktop/"
 MOBILE_TEST_FOLDER="${DIR}/integration_tests/mobile/"
 MULTIUSER_TEST_FOLDER="${DIR}/integration_tests/multiuser/"
-ERROR_LOG="${DIR}/workdir/error.log"
+ERROR_LOG="${BUILDDIR}/workdir/error.log"
 
 print_help ()
 {
