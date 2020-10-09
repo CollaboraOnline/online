@@ -4,6 +4,8 @@ image:
 ports:
   - port: 9980
     onOpen: open-browser
+  - port: 6080
+    protocol: "http"
 
 vscode:
   extensions:
