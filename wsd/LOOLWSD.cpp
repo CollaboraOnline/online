@@ -2289,7 +2289,7 @@ public:
         }
         return hosts.match(address);
     }
-    bool allowConvertTo(const std::string &address, const Poco::Net::HTTPRequest& request, bool report = false)
+    bool allowConvertTo(const std::string &address, const Poco::Net::HTTPRequest& request)
     {
         std::string addressToCheck = address;
         std::string hostToCheck = request.getHost();
@@ -2297,9 +2297,12 @@ public:
 
         if(!allow)
         {
-            if(report)
-                LOG_ERR("Requesting address is denied: " << addressToCheck);
+            LOG_WRN("convert-to: Requesting address is denied: " << addressToCheck);
             return false;
+        }
+        else
+        {
+            LOG_INF("convert-to: Requesting address is allowed: " << addressToCheck);
         }
 
         // Handle forwarded header and make sure all participating IPs are allowed
@@ -2327,9 +2330,12 @@ public:
                 }
                 if(!allow)
                 {
-                    if(report)
-                        LOG_ERR("Requesting address is denied: " << addressToCheck);
+                    LOG_WRN("convert-to: Requesting address is denied: " << addressToCheck);
                     return false;
+                }
+                else
+                {
+                    LOG_INF("convert-to: Requesting address is allowed: " << addressToCheck);
                 }
             }
         }
@@ -2993,7 +2999,7 @@ private:
         if (requestDetails.equals(1, "convert-to"))
         {
             // Validate sender - FIXME: should do this even earlier.
-            if (!allowConvertTo(socket->clientAddress(), request, true))
+            if (!allowConvertTo(socket->clientAddress(), request))
             {
                 LOG_WRN("Conversion requests not allowed from this address: " << socket->clientAddress());
                 std::ostringstream oss;
