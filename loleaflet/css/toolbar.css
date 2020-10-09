@@ -690,13 +690,13 @@ button.leaflet-control-search-next
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
 .w2ui-icon.alignright{ background: url('images/lc_alignright.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
-.w2ui-icon.linespacing{ background: url('images/lc_spacepara15.svg') no-repeat center !important; }
+.w2ui-icon.linespacing{ background: url('images/lc_linespacing.svg') no-repeat center !important; }
 .w2ui-icon.numbering{ background: url('images/lc_defaultnumbering.svg') no-repeat center !important; }
 .w2ui-icon.bullet{ background: url('images/lc_defaultbullet.svg') no-repeat center !important; }
 .w2ui-icon.incrementindent{ background: url('images/lc_incrementindent.svg') no-repeat center !important; }
 .w2ui-icon.decrementindent{ background: url('images/lc_decrementindent.svg') no-repeat center !important; }
 .w2ui-icon.text{ background: url('images/lc_text.svg') no-repeat center !important; }
-.w2ui-icon.annotation{ background: url('images/lc_showannotations.svg') no-repeat center !important; }
+.w2ui-icon.annotation{ background: url('images/lc_shownote.svg') no-repeat center !important; }
 .w2ui-icon.inserttable{ background: url('images/lc_inserttable.svg') no-repeat center !important; }
 .w2ui-icon.insertgraphic{ background: url('images/lc_gallery.svg') no-repeat center !important; }
 .w2ui-icon.link{ background: url('images/lc_inserthyperlink.svg') no-repeat center !important; }
@@ -708,10 +708,10 @@ button.leaflet-control-search-next
 .w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
 .w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
 .w2ui-icon.wraptext{ background: url('images/lc_wraptext.svg') no-repeat center !important; }
-.w2ui-icon.numberformatcurrency{ background: url('images/lc_currencyfield.svg') no-repeat center !important; }
+.w2ui-icon.numberformatcurrency{ background: url('images/lc_numberformatcurrency.svg') no-repeat center !important; }
 .w2ui-icon.numberformatpercent{ background: url('images/lc_numberformatpercent.svg') no-repeat center !important; }
 .w2ui-icon.numberformatdecimal{ background: url('images/lc_numberformatdecimal.svg') no-repeat center !important; }
-.w2ui-icon.numberformatdate{ background: url('images/lc_datefield.svg') no-repeat center !important; }
+.w2ui-icon.numberformatdate{ background: url('images/lc_numberformatdate.svg') no-repeat center !important; }
 .w2ui-icon.numberformatincdecimals{ background: url('images/lc_numberformatincdecimals.svg') no-repeat center !important; }
 .w2ui-icon.numberformatdecdecimals{ background: url('images/lc_numberformatdecdecimals.svg') no-repeat center !important; }
 .w2ui-icon.insertobjectchart{ background: url('images/lc_drawchart.svg') no-repeat center !important; }
@@ -755,9 +755,9 @@ button.leaflet-control-search-next
 .w2ui-icon.closemobile{ background: url('images/lc_closedocmobile.svg') no-repeat center !important; }
 .w2ui-icon.editmode { background: url('images/lc_listitem-selected.svg') no-repeat center / 28px !important; }
 .w2ui-icon.closetoolbar{ background: url('images/close_toolbar.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_modify_page{ background: url('images/lc_formproperties.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_slide_change{ background: url('images/sidebar-transition-large.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_custom_animation{ background: url('images/lc_animationobjects.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_modify_page{ background: url('images/lc_configuredialog.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_slide_change{ background: url('images/lc_slidechangewindow.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_custom_animation{ background: url('images/lc_customanimation.svg') no-repeat center !important; }
 .w2ui-icon.sidebar_master_slides{ background: url('images/lc_slidemasterpage.svg') no-repeat center !important; }
 .w2ui-icon.mobile_wizard{ background: url('images/lc_mobile_wizard.svg') no-repeat center !important; }
 .w2ui-icon.fullscreen-presentation{ background: url('images/lc_fullscreen-presentation-toolbar-mobile.svg') no-repeat center !important;}
