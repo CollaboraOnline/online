@@ -4,7 +4,7 @@
 [![Telegram](https://img.shields.io/badge/Telegram-Collabora%20Online-green.svg)](https://t.me/CollaboraOnline)
 [![Forum](https://img.shields.io/badge/Forum-Discourse-blue.svg)](https://forum.collaboraonline.com/)
 [![Website](https://img.shields.io/badge/Website-collaboraonline.github.io-blueviolet.svg)](https://collaboraonline.github.io/)
-[![L10n](https://img.shields.io/badge/L10n-Transifex-lightgrey.svg)](https://www.transifex.com/collabora-productivity-ltd/collabora-online/)
+[![L10n](https://img.shields.io/badge/L10n-Weblate-lightgrey.svg)](https://hosted.weblate.org/projects/collabora-online/)
 
 ## Website
 

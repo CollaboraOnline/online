@@ -107,4 +107,9 @@
     <string name="app_version_and_hash">Версия: %1$s
 \nonline git-hash: %2$s
 \ncore git-hash: %3$s</string>
+    <string name="theme_light">Светла</string>
+    <string name="theme_dark">Тъмна</string>
+    <string name="theme_system_default">Подразбирана за системата</string>
+    <string name="choose_theme">Изберете тема</string>
+    <string name="theme">Тема</string>
 </resources>

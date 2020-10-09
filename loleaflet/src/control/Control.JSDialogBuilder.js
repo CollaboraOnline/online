@@ -1665,6 +1665,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button = L.DomUtil.create('img', 'ui-content unobutton', div);
 			button.src = icon;
 			button.id = buttonId;
+			button.setAttribute('alt', id);
 
 			controls['button'] = button;
 
