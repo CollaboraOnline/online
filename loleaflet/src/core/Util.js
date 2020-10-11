@@ -164,10 +164,6 @@ L.Util = {
 		if (!useExactDPR)
 			dpiScale = Math.ceil(dpiScale);
 
-		if (dpiScale == 1 && L.Browser.retina) {
-			dpiScale = 2;
-		}
-
 		return dpiScale;
 	},
 

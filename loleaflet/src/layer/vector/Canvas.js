@@ -32,7 +32,7 @@ L.Canvas = L.Renderer.extend({
 		var b = this._bounds,
 		    container = this._container,
 		    size = b.getSize(),
-		    m = L.Browser.retina ? 2 : 1;
+		    m = L.Util.getDpiScaleFactor();
 
 		L.DomUtil.setPosition(container, b.min);
 
@@ -41,10 +41,6 @@ L.Canvas = L.Renderer.extend({
 		container.height = m * size.y;
 		container.style.width = size.x + 'px';
 		container.style.height = size.y + 'px';
-
-		if (L.Browser.retina) {
-			this._ctx.scale(2, 2);
-		}
 
 		// translate so we use the same path coordinates after canvas element moves
 		this._ctx.translate(-b.min.x, -b.min.y);

@@ -38,7 +38,7 @@ L.Canvas.include({
 	transformPath: function(layer, matrix) {
 		var copy   = this._containerCopy;
 		var ctx    = this._ctx, copyCtx;
-		var m      = L.Browser.retina ? 2 : 1;
+		var m      = L.Util.getDpiScaleFactor();
 		var bounds = this._bounds;
 		var size   = bounds.getSize();
 		var pos    = bounds.min;
