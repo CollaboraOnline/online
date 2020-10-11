@@ -881,7 +881,7 @@ namespace Util
         oss << std::setfill('0')
             << time_modified
             << std::setw(6)
-            << (time - lastModified_s).count() / 1000
+            << (time - lastModified_s).count() / (std::chrono::system_clock::period::den / std::chrono::system_clock::period::num / 1000000)
             << 'Z';
 
         return oss.str();
@@ -934,8 +934,15 @@ namespace Util
 
         char* end = nullptr;
         const size_t us = strtoul(trailing + 1, &end, 10); // Skip the '.' and read as integer.
+
+        std::size_t denominator = 1;
+        for (const char* i = trailing + 1; i != end; i++)
+        {
+            denominator *= 10;
+        }
+
         const std::size_t seconds_us = us * std::chrono::system_clock::period::den
-                                       / std::chrono::system_clock::period::num / 1000000;
+                                       / std::chrono::system_clock::period::num / denominator;
 
         timestamp += std::chrono::system_clock::duration(seconds_us);
 
