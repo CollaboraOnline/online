@@ -72,22 +72,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._tileWidthPx = options.tileSize;
 		this._tileHeightPx = options.tileSize;
 
-		// Conversion factor between the pixel view of tiled rendering
-		// and CSS pixels. NB. similar but not the same as
-		// L.Util.dpiScaleFactor()
-		this._tilePixelScale = 1;
-
-		// detecting retina displays, adjusting tileWidthPx, tileHeightPx and zoom levels
-		if (options.detectRetina && L.Browser.retina && options.maxZoom > 0) {
-			this._tilePixelScale = 2;
-			this._tileWidthPx *= this._tilePixelScale;
-			this._tileHeightPx *= this._tilePixelScale;
-			options.zoomOffset++;
-
-			options.minZoom = Math.max(0, options.minZoom);
-			options.maxZoom--;
-		}
-
 		if (typeof options.subdomains === 'string') {
 			options.subdomains = options.subdomains.split('');
 		}

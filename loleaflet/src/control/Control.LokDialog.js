@@ -259,7 +259,6 @@ L.Control.LokDialog = L.Control.extend({
 			return; // Don't request rendering an empty area.
 
 		var dpiscale = L.getDpiScaleFactor();
-		//console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
 		this._map._socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
 
 		if (this._map._docLayer && this._map._docLayer._debug)
