@@ -941,6 +941,14 @@ void WhiteBoxTests::testTime()
     t = std::chrono::system_clock::time_point(std::chrono::nanoseconds(1569592993495336798));
     LOK_ASSERT_EQUAL(std::string("Fri, 27 Sep 2019 14:03:13"), Util::getHttpTime(t));
 
+    t = Util::iso8601ToTimestamp("2020-09-22T21:45:12.583000Z", "LastModifiedTime");
+    LOK_ASSERT_EQUAL(std::string("2020-09-22T21:45:12.583000Z"),
+                         Util::time_point_to_iso8601(t));
+
+    t = Util::iso8601ToTimestamp("2020-09-22T21:45:12.583Z", "LastModifiedTime");
+    LOK_ASSERT_EQUAL(std::string("2020-09-22T21:45:12.583000Z"),
+                         Util::time_point_to_iso8601(t));
+
     for (int i = 0; i < 100; ++i)
     {
         t = std::chrono::system_clock::now();
