@@ -441,331 +441,331 @@ button.leaflet-control-search-next
 	border: 1px solid #888;
 }
 
-.w2ui-icon.basicshapes_rectangle { background: url('images/lc_rect.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_round-rectangle { background: url('images/lc_rect_rounded.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_quadrat { background: url('images/lc_square.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_round-quadrat { background: url('images/lc_basicshapes.round-quadrat.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_circle { background: url('images/lc_circle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_ellipse { background: url('images/lc_ellipse.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_circle-pie { background: url('images/lc_pie.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_isosceles-triangle { background: url('images/lc_basicshapes.isosceles-triangle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_right-triangle { background: url('images/lc_basicshapes.right-triangle.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_trapezoid { background: url('images/lc_basicshapes.trapezoid.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_diamond { background: url('images/lc_basicshapes.diamond.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_parallelogram { background: url('images/lc_flowchartshapes.flowchart-data.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_pentagon { background: url('images/lc_basicshapes.pentagon.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_hexagon { background: url('images/lc_basicshapes.hexagon.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_octagon { background: url('images/lc_basicshapes.octagon.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_cross { background: url('images/lc_basicshapes.cross.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_ring { background: url('images/lc_basicshapes.ring.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_block-arc { background: url('images/lc_basicshapes.block-arc.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_can { background: url('images/lc_basicshapes.can.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_cube { background: url('images/lc_basicshapes.cube.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_paper { background: url('images/lc_basicshapes.paper.svg') no-repeat center !important; }
-.w2ui-icon.basicshapes_frame { background: url('images/lc_rect_unfilled.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_rectangle { background: url('images/colibre/cmd/24/lc_rect.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_round-rectangle { background: url('images/colibre/cmd/24/lc_rect_rounded.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_quadrat { background: url('images/colibre/cmd/24/lc_square.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_round-quadrat { background: url('images/colibre/cmd/24/lc_basicshapes.round-quadrat.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_circle { background: url('images/colibre/cmd/24/lc_circle.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_ellipse { background: url('images/colibre/cmd/24/lc_ellipse.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_circle-pie { background: url('images/colibre/cmd/24/lc_pie.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_isosceles-triangle { background: url('images/colibre/cmd/24/lc_basicshapes.isosceles-triangle.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_right-triangle { background: url('images/colibre/cmd/24/lc_basicshapes.right-triangle.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_trapezoid { background: url('images/colibre/cmd/24/lc_basicshapes.trapezoid.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_diamond { background: url('images/colibre/cmd/24/lc_basicshapes.diamond.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_parallelogram { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-data.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_pentagon { background: url('images/colibre/cmd/24/lc_basicshapes.pentagon.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_hexagon { background: url('images/colibre/cmd/24/lc_basicshapes.hexagon.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_octagon { background: url('images/colibre/cmd/24/lc_basicshapes.octagon.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_cross { background: url('images/colibre/cmd/24/lc_basicshapes.cross.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_ring { background: url('images/colibre/cmd/24/lc_basicshapes.ring.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_block-arc { background: url('images/colibre/cmd/24/lc_basicshapes.block-arc.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_can { background: url('images/colibre/cmd/24/lc_basicshapes.can.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_cube { background: url('images/colibre/cmd/24/lc_basicshapes.cube.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_paper { background: url('images/colibre/cmd/24/lc_basicshapes.paper.svg') no-repeat center !important; }
+.w2ui-icon.basicshapes_frame { background: url('images/colibre/cmd/24/lc_rect_unfilled.svg') no-repeat center !important; }
 
-.w2ui-icon.symbolshapes { background: url('images/lc_symbolshapes.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_sun { background: url('images/lc_symbolshapes.sun.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_moon { background: url('images/lc_symbolshapes.moon.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_lightning { background: url('images/lc_symbolshapes.lightning.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_heart { background: url('images/lc_symbolshapes.heart.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_flower { background: url('images/lc_symbolshapes.flower.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_cloud { background: url('images/lc_symbolshapes.cloud.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_forbidden { background: url('images/lc_symbolshapes.forbidden.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_puzzle { background: url('images/lc_symbolshapes.puzzle.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_bracket-pair { background: url('images/lc_symbolshapes.bracket-pair.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_left-bracket { background: url('images/lc_symbolshapes.left-bracket.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_right-bracket { background: url('images/lc_symbolshapes.right-bracket.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_brace-pair { background: url('images/lc_symbolshapes.brace-pair.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_left-brace { background: url('images/lc_symbolshapes.left-brace.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_right-brace { background: url('images/lc_symbolshapes.right-brace.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_quad-bevel { background: url('images/lc_symbolshapes.right-brace.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_octagon-bevel { background: url('images/lc_symbolshapes.octagon-bevel.svg') no-repeat center !important; }
-.w2ui-icon.symbolshapes_diamond-bevel { background: url('images/lc_symbolshapes.diamond-bevel.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes { background: url('images/colibre/cmd/24/lc_symbolshapes.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_sun { background: url('images/colibre/cmd/24/lc_symbolshapes.sun.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_moon { background: url('images/colibre/cmd/24/lc_symbolshapes.moon.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_lightning { background: url('images/colibre/cmd/24/lc_symbolshapes.lightning.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_heart { background: url('images/colibre/cmd/24/lc_symbolshapes.heart.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_flower { background: url('images/colibre/cmd/24/lc_symbolshapes.flower.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_cloud { background: url('images/colibre/cmd/24/lc_symbolshapes.cloud.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_forbidden { background: url('images/colibre/cmd/24/lc_symbolshapes.forbidden.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_puzzle { background: url('images/colibre/cmd/24/lc_symbolshapes.puzzle.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_bracket-pair { background: url('images/colibre/cmd/24/lc_symbolshapes.bracket-pair.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_left-bracket { background: url('images/colibre/cmd/24/lc_symbolshapes.left-bracket.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_right-bracket { background: url('images/colibre/cmd/24/lc_symbolshapes.right-bracket.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_brace-pair { background: url('images/colibre/cmd/24/lc_symbolshapes.brace-pair.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_left-brace { background: url('images/colibre/cmd/24/lc_symbolshapes.left-brace.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_right-brace { background: url('images/colibre/cmd/24/lc_symbolshapes.right-brace.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_quad-bevel { background: url('images/colibre/cmd/24/lc_symbolshapes.right-brace.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_octagon-bevel { background: url('images/colibre/cmd/24/lc_symbolshapes.octagon-bevel.svg') no-repeat center !important; }
+.w2ui-icon.symbolshapes_diamond-bevel { background: url('images/colibre/cmd/24/lc_symbolshapes.diamond-bevel.svg') no-repeat center !important; }
 
-.w2ui-icon.arrowshapes_left-arrow { background: url('images/lc_arrowshapes.left-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_right-arrow { background: url('images/lc_arrowshapes.right-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_up-arrow { background: url('images/lc_arrowshapes.up-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_down-arrow { background: url('images/lc_arrowshapes.down-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_left-right-arrow { background: url('images/lc_arrowshapes.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_up-down-arrow { background: url('images/lc_arrowshapes.up-down-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_left-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.left-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_right-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.up-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_down-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.down-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_left-right-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-down-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.up-down-arrow.svg') no-repeat center !important; }
 
-.w2ui-icon.arrowshapes_up-right-arrow { background: url('images/lc_arrowshapes.up-right-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_up-right-down-arrow { background: url('images/lc_arrowshapes.up-right-down-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_quad-arrow { background: url('images/lc_arrowshapes.quad-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_corner-right-arrow { background: url('images/lc_arrowshapes.corner-right-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_split-arrow { background: url('images/lc_arrowshapes.split-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_striped-right-arrow { background: url('images/lc_arrowshapes.striped-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-right-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.up-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-right-down-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.up-right-down-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_quad-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.quad-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_corner-right-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.corner-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_split-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.split-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_striped-right-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.striped-right-arrow.svg') no-repeat center !important; }
 
-.w2ui-icon.arrowshapes_notched-right-arrow { background: url('images/lc_arrowshapes.notched-right-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_pentagon-right { background: url('images/lc_arrowshapes.pentagon-right.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_chevron { background: url('images/lc_arrowshapes.chevron.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_right-arrow-callout { background: url('images/lc_arrowshapes.right-arrow-callout.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_left-arrow-callout { background: url('images/lc_arrowshapes.left-arrow-callout.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_up-arrow-callout { background: url('images/lc_arrowshapes.up-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_notched-right-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.notched-right-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_pentagon-right { background: url('images/colibre/cmd/24/lc_arrowshapes.pentagon-right.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_chevron { background: url('images/colibre/cmd/24/lc_arrowshapes.chevron.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_right-arrow-callout { background: url('images/colibre/cmd/24/lc_arrowshapes.right-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_left-arrow-callout { background: url('images/colibre/cmd/24/lc_arrowshapes.left-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-arrow-callout { background: url('images/colibre/cmd/24/lc_arrowshapes.up-arrow-callout.svg') no-repeat center !important; }
 
-.w2ui-icon.arrowshapes_down-arrow-callout { background: url('images/lc_arrowshapes.down-arrow-callout.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_left-right-arrow-callout { background: url('images/lc_arrowshapes.left-right-arrow-callout.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_up-down-arrow-callout { background: url('images/lc_arrowshapes.up-down-arrow-callout.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_up-right-arrow-callout { background: url('images/lc_arrowshapes.up-right-arrow-callout.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_quad-arrow-callout { background: url('images/lc_arrowshapes.quad-arrow-callout.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_circular-arrow { background: url('images/lc_arrowshapes.circular-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_down-arrow-callout { background: url('images/colibre/cmd/24/lc_arrowshapes.down-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_left-right-arrow-callout { background: url('images/colibre/cmd/24/lc_arrowshapes.left-right-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-down-arrow-callout { background: url('images/colibre/cmd/24/lc_arrowshapes.up-down-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_up-right-arrow-callout { background: url('images/colibre/cmd/24/lc_arrowshapes.up-right-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_quad-arrow-callout { background: url('images/colibre/cmd/24/lc_arrowshapes.quad-arrow-callout.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_circular-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.circular-arrow.svg') no-repeat center !important; }
 
-.w2ui-icon.arrowshapes_split-round-arrow { background: url('images/lc_arrowshapes.split-round-arrow.svg') no-repeat center !important; }
-.w2ui-icon.arrowshapes_s-sharped-arrow { background: url('images/lc_arrowshapes.s-sharped-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_split-round-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.split-round-arrow.svg') no-repeat center !important; }
+.w2ui-icon.arrowshapes_s-sharped-arrow { background: url('images/colibre/cmd/24/lc_arrowshapes.s-sharped-arrow.svg') no-repeat center !important; }
 
-.w2ui-icon.starshapes_bang { background: url('images/lc_starshapes.bang.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_star4 { background: url('images/lc_starshapes.star4.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_star5 { background: url('images/lc_starshapes.star5.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_star6 { background: url('images/lc_starshapes.star6.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_star8 { background: url('images/lc_starshapes.star8.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_star12 { background: url('images/lc_starshapes.star12.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_bang { background: url('images/colibre/cmd/24/lc_starshapes.bang.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star4 { background: url('images/colibre/cmd/24/lc_starshapes.star4.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star5 { background: url('images/colibre/cmd/24/lc_starshapes.star5.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star6 { background: url('images/colibre/cmd/24/lc_starshapes.star6.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star8 { background: url('images/colibre/cmd/24/lc_starshapes.star8.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star12 { background: url('images/colibre/cmd/24/lc_starshapes.star12.svg') no-repeat center !important; }
 
-.w2ui-icon.starshapes_star24 { background: url('images/lc_starshapes.star24.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_concave-star6 { background: url('images/lc_starshapes.concave-star6.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_vertical-scroll { background: url('images/lc_starshapes.vertical-scroll.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_horizontal-scroll { background: url('images/lc_starshapes.horizontal-scroll.svg') no-repeat center !important; }
-.w2ui-icon.starshapes_signet { background: url('images/lc_starshapes.signet.svg' ) no-repeat center !important; }
-.w2ui-icon.starshapes_doorplate { background: url('images/lc_starshapes.doorplate.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_star24 { background: url('images/colibre/cmd/24/lc_starshapes.star24.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_concave-star6 { background: url('images/colibre/cmd/24/lc_starshapes.concave-star6.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_vertical-scroll { background: url('images/colibre/cmd/24/lc_starshapes.vertical-scroll.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_horizontal-scroll { background: url('images/colibre/cmd/24/lc_starshapes.horizontal-scroll.svg') no-repeat center !important; }
+.w2ui-icon.starshapes_signet { background: url('images/colibre/cmd/24/lc_starshapes.signet.svg' ) no-repeat center !important; }
+.w2ui-icon.starshapes_doorplate { background: url('images/colibre/cmd/24/lc_starshapes.doorplate.svg') no-repeat center !important; }
 
-.w2ui-icon.calloutshapes_rectangular-callout { background: url('images/lc_calloutshapes.rectangular-callout.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_round-rectangular-callout { background: url('images/lc_calloutshapes.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_round-callout { background: url('images/lc_calloutshapes.round-callout.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_cloud-callout { background: url('images/lc_calloutshapes.cloud-callout.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_line-callout-1 { background: url('images/sc_calloutshapes.line-callout-1.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_line-callout-2 { background: url('images/sc_calloutshapes.line-callout-2.svg') no-repeat center !important; }
-.w2ui-icon.calloutshapes_line-callout-3 { background: url('images/sc_calloutshapes.line-callout-3.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_rectangular-callout { background: url('images/colibre/cmd/24/lc_calloutshapes.rectangular-callout.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_round-rectangular-callout { background: url('images/colibre/cmd/24/lc_calloutshapes.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_round-callout { background: url('images/colibre/cmd/24/lc_calloutshapes.round-callout.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_cloud-callout { background: url('images/colibre/cmd/24/lc_calloutshapes.cloud-callout.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-1 { background: url('images/colibre/cmd/16/sc_calloutshapes.line-callout-1.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-2 { background: url('images/colibre/cmd/16/sc_calloutshapes.line-callout-2.svg') no-repeat center !important; }
+.w2ui-icon.calloutshapes_line-callout-3 { background: url('images/colibre/cmd/16/sc_calloutshapes.line-callout-3.svg') no-repeat center !important; }
 
-.w2ui-icon.flowchartshapes_flowchart-process { background: url('images/lc_square.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-alternate-process { background: url('images/lc_basicshapes.round-quadrat.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-decision { background: url('images/lc_flowchartshapes.flowchart-decision.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-data { background: url('images/lc_flowchartshapes.flowchart-data.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-predefined-process { background: url('images/lc_flowchartshapes.flowchart-predefined-process.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-internal-storage { background: url('images/lc_flowchartshapes.flowchart-internal-storage.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-process { background: url('images/colibre/cmd/24/lc_square.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-alternate-process { background: url('images/colibre/cmd/24/lc_basicshapes.round-quadrat.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-decision { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-decision.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-data { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-data.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-predefined-process { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-predefined-process.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-internal-storage { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-internal-storage.svg') no-repeat center !important; }
 
-.w2ui-icon.flowchartshapes_flowchart-document { background: url('images/lc_flowchartshapes.flowchart-document.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-multidocument { background: url('images/lc_flowchartshapes.flowchart-multidocument.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-terminator { background: url('images/lc_flowchartshapes.flowchart-terminator.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-preparation { background: url('images/lc_flowchartshapes.flowchart-preparation.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-manual-input { background: url('images/lc_flowchartshapes.flowchart-manual-input.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-manual-operation { background: url('images/lc_basicshapes.trapezoid.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-document { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-document.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-multidocument { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-multidocument.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-terminator { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-terminator.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-preparation { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-preparation.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-manual-input { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-manual-input.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-manual-operation { background: url('images/colibre/cmd/24/lc_basicshapes.trapezoid.svg') no-repeat center !important; }
 
-.w2ui-icon.flowchartshapes_flowchart-connector { background: url('images/lc_circle.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-off-page-connector { background: url('images/lc_flowchartshapes.flowchart-off-page-connector.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-card { background: url('images/lc_flowchartshapes.flowchart-card.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-punched-tape { background: url('images/lc_fontworkshapetype.fontwork-wave.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-summing-junction { background: url('images/lc_flowchartshapes.flowchart-summing-junction.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-or { background: url('images/lc_flowchartshapes.flowchart-or.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-connector { background: url('images/colibre/cmd/24/lc_circle.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-off-page-connector { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-off-page-connector.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-card { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-card.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-punched-tape { background: url('images/colibre/cmd/24/lc_fontworkshapetype.fontwork-wave.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-summing-junction { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-summing-junction.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-or { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-or.svg') no-repeat center !important; }
 
-.w2ui-icon.flowchartshapes_flowchart-collate { background: url('images/lc_flowchartshapes.flowchart-collate.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-sort { background: url('images/lc_flowchartshapes.flowchart-sort.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-extract { background: url('images/lc_basicshapes.isosceles-triangle.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-merge { background: url('images/lc_fontworkshapetype.fontwork-triangle-down.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-stored-data { background: url('images/lc_flowchartshapes.flowchart-stored-data.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-delay { background: url('images/lc_flowchartshapes.flowchart-delay.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-collate { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-collate.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-sort { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-sort.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-extract { background: url('images/colibre/cmd/24/lc_basicshapes.isosceles-triangle.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-merge { background: url('images/colibre/cmd/24/lc_fontworkshapetype.fontwork-triangle-down.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-stored-data { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-stored-data.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-delay { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-delay.svg') no-repeat center !important; }
 
-.w2ui-icon.flowchartshapes_flowchart-sequential-access { background: url('images/lc_flowchartshapes.flowchart-sequential-access.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-magnetic-disk { background: url('images/lc_basicshapes.can.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-direct-access-storage { background: url('images/lc_flowchartshapes.flowchart-direct-access-storage.svg') no-repeat center !important; }
-.w2ui-icon.flowchartshapes_flowchart-display { background: url('images/lc_flowchartshapes.flowchart-display.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-sequential-access { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-sequential-access.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-magnetic-disk { background: url('images/colibre/cmd/24/lc_basicshapes.can.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-direct-access-storage { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-direct-access-storage.svg') no-repeat center !important; }
+.w2ui-icon.flowchartshapes_flowchart-display { background: url('images/colibre/cmd/24/lc_flowchartshapes.flowchart-display.svg') no-repeat center !important; }
 
-.w2ui-icon.frame01 { background: url('images/fr01.svg') no-repeat center !important; }
-.w2ui-icon.frame02 { background: url('images/fr02.svg') no-repeat center !important; }
-.w2ui-icon.frame03 { background: url('images/fr03.svg') no-repeat center !important; }
-.w2ui-icon.frame04 { background: url('images/fr04.svg') no-repeat center !important; }
-.w2ui-icon.frame05 { background: url('images/fr05.svg') no-repeat center !important; }
-.w2ui-icon.frame06 { background: url('images/fr06.svg') no-repeat center !important; }
-.w2ui-icon.frame07 { background: url('images/fr07.svg') no-repeat center !important; }
-.w2ui-icon.frame08 { background: url('images/fr08.svg') no-repeat center !important; }
-.w2ui-icon.frame09 { background: url('images/fr09.svg') no-repeat center !important; }
-.w2ui-icon.frame10 { background: url('images/fr010.svg') no-repeat center !important; }
-.w2ui-icon.frame11 { background: url('images/fr011.svg') no-repeat center !important; }
-.w2ui-icon.frame12 { background: url('images/fr012.svg') no-repeat center !important; }
+.w2ui-icon.frame01 { background: url('images/colibre/svx/res/fr01.svg') no-repeat center !important; }
+.w2ui-icon.frame02 { background: url('images/colibre/svx/res/fr02.svg') no-repeat center !important; }
+.w2ui-icon.frame03 { background: url('images/colibre/svx/res/fr03.svg') no-repeat center !important; }
+.w2ui-icon.frame04 { background: url('images/colibre/svx/res/fr04.svg') no-repeat center !important; }
+.w2ui-icon.frame05 { background: url('images/colibre/svx/res/fr05.svg') no-repeat center !important; }
+.w2ui-icon.frame06 { background: url('images/colibre/svx/res/fr06.svg') no-repeat center !important; }
+.w2ui-icon.frame07 { background: url('images/colibre/svx/res/fr07.svg') no-repeat center !important; }
+.w2ui-icon.frame08 { background: url('images/colibre/svx/res/fr08.svg') no-repeat center !important; }
+.w2ui-icon.frame09 { background: url('images/colibre/svx/res/fr09.svg') no-repeat center !important; }
+.w2ui-icon.frame10 { background: url('images/colibre/svx/res/fr010.svg') no-repeat center !important; }
+.w2ui-icon.frame11 { background: url('images/colibre/svx/res/fr011.svg') no-repeat center !important; }
+.w2ui-icon.frame12 { background: url('images/colibre/svx/res/fr012.svg') no-repeat center !important; }
 .w2ui-icon.frame13 { width: 108px !important; }
 #div-frame13 { width: 102px; height: 18px; text-align: center; display: table-cell; vertical-align: middle; cursor: default; }
 
-.w2ui-icon.iconset00 { background: url('images/icon-set-colorarrows-down.svg') no-repeat, url('images/icon-set-colorarrows-same.svg') no-repeat, url('images/icon-set-colorarrows-up.svg') no-repeat !important;
+.w2ui-icon.iconset00 { background: url('images/colibre/sc/res/icon-set-colorarrows-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-same.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-up.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset01 { background: url('images/icon-set-grayarrows-down.svg') no-repeat, url('images/icon-set-grayarrows-same.svg') no-repeat, url('images/icon-set-grayarrows-up.svg') no-repeat !important;
+.w2ui-icon.iconset01 { background: url('images/colibre/sc/res/icon-set-grayarrows-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-same.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-up.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset02 { background: url('images/icon-set-flags-red.svg') no-repeat, url('images/icon-set-flags-yellow.svg') no-repeat, url('images/icon-set-flags-green.svg') no-repeat !important;
+.w2ui-icon.iconset02 { background: url('images/colibre/sc/res/icon-set-flags-red.svg') no-repeat, url('images/colibre/sc/res/icon-set-flags-yellow.svg') no-repeat, url('images/colibre/sc/res/icon-set-flags-green.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset03 { background: url('images/icon-set-circles1-red.svg') no-repeat, url('images/icon-set-circles1-yellow.svg') no-repeat, url('images/icon-set-circles1-green.svg') no-repeat !important;
+.w2ui-icon.iconset03 { background: url('images/colibre/sc/res/icon-set-circles1-red.svg') no-repeat, url('images/colibre/sc/res/icon-set-circles1-yellow.svg') no-repeat, url('images/colibre/sc/res/icon-set-circles1-green.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset04 { background: url('images/icon-set-trafficlights-red.svg') no-repeat, url('images/icon-set-trafficlights-yellow.svg') no-repeat, url('images/icon-set-trafficlights-green.svg') no-repeat !important;
+.w2ui-icon.iconset04 { background: url('images/colibre/sc/res/icon-set-trafficlights-red.svg') no-repeat, url('images/colibre/sc/res/icon-set-trafficlights-yellow.svg') no-repeat, url('images/colibre/sc/res/icon-set-trafficlights-green.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset05 { background: url('images/icon-set-shapes-diamond.svg') no-repeat, url('images/icon-set-shapes-triangle.svg') no-repeat, url('images/icon-set-shapes-circle.svg') no-repeat !important;
+.w2ui-icon.iconset05 { background: url('images/colibre/sc/res/icon-set-shapes-diamond.svg') no-repeat, url('images/colibre/sc/res/icon-set-shapes-triangle.svg') no-repeat, url('images/colibre/sc/res/icon-set-shapes-circle.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset06 { background: url('images/icon-set-symbols1-cross.svg') no-repeat, url('images/icon-set-symbols1-exclamation-mark.svg') no-repeat, url('images/icon-set-symbols1-check.svg') no-repeat !important;
+.w2ui-icon.iconset06 { background: url('images/colibre/sc/res/icon-set-symbols1-cross.svg') no-repeat, url('images/colibre/sc/res/icon-set-symbols1-exclamation-mark.svg') no-repeat, url('images/colibre/sc/res/icon-set-symbols1-check.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
 /* Avoid the iconset07, the core renders it the same as iconset06, no need to support it in the online.
-.w2ui-icon.iconset07 { background: url('images/icon-set-symbols1-cross.svg') no-repeat, url('images/icon-set-symbols1-exclamation-mark.svg') no-repeat, url('images/icon-set-symbols1-check.svg') no-repeat !important;
+.w2ui-icon.iconset07 { background: url('images/colibre/sc/res/icon-set-symbols1-cross.svg') no-repeat, url('images/colibre/sc/res/icon-set-symbols1-exclamation-mark.svg') no-repeat, url('images/colibre/sc/res/icon-set-symbols1-check.svg') no-repeat !important;
 											 background-size: 16px 16px, 16px 16px, 16px 16px !important;
 											 background-position: 2px center, 20px center, 38px center !important;
 																			width: 94px !important; }*/
-.w2ui-icon.iconset08 { background: url('images/icon-set-positive-yellow-smilie.svg') no-repeat, url('images/icon-set-neutral-yellow-smilie.svg') no-repeat, url('images/icon-set-negative-yellow-smilie.svg') no-repeat !important;
+.w2ui-icon.iconset08 { background: url('images/colibre/sc/res/icon-set-positive-yellow-smilie.svg') no-repeat, url('images/colibre/sc/res/icon-set-neutral-yellow-smilie.svg') no-repeat, url('images/colibre/sc/res/icon-set-negative-yellow-smilie.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset09 { background: url('images/icon-set-stars-empty.svg') no-repeat, url('images/icon-set-stars-half.svg') no-repeat, url('images/icon-set-stars-full.svg') no-repeat !important;
+.w2ui-icon.iconset09 { background: url('images/colibre/sc/res/icon-set-stars-empty.svg') no-repeat, url('images/colibre/sc/res/icon-set-stars-half.svg') no-repeat, url('images/colibre/sc/res/icon-set-stars-full.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset10 { background: url('images/icon-set-triangles-down.svg') no-repeat, url('images/icon-set-triangles-same.svg') no-repeat, url('images/icon-set-triangles-up.svg') no-repeat !important;
+.w2ui-icon.iconset10 { background: url('images/colibre/sc/res/icon-set-triangles-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-triangles-same.svg') no-repeat, url('images/colibre/sc/res/icon-set-triangles-up.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset11 { background: url('images/icon-set-positive-green-smilie.svg') no-repeat, url('images/icon-set-neutral-yellow-smilie.svg') no-repeat, url('images/icon-set-negative-red-smilie.svg') no-repeat !important;
+.w2ui-icon.iconset11 { background: url('images/colibre/sc/res/icon-set-positive-green-smilie.svg') no-repeat, url('images/colibre/sc/res/icon-set-neutral-yellow-smilie.svg') no-repeat, url('images/colibre/sc/res/icon-set-negative-red-smilie.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset12 { background: url('images/icon-set-colorarrows-down.svg') no-repeat, url('images/icon-set-colorarrows-slightly-down.svg') no-repeat, url('images/icon-set-colorarrows-slightly-up.svg') no-repeat, url('images/icon-set-colorarrows-up.svg') no-repeat !important;
+.w2ui-icon.iconset12 { background: url('images/colibre/sc/res/icon-set-colorarrows-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-slightly-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-slightly-up.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-up.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset13 { background: url('images/icon-set-grayarrows-down.svg') no-repeat, url('images/icon-set-grayarrows-slightly-down.svg') no-repeat, url('images/icon-set-grayarrows-slightly-up.svg') no-repeat, url('images/icon-set-grayarrows-up.svg') no-repeat !important;
+.w2ui-icon.iconset13 { background: url('images/colibre/sc/res/icon-set-grayarrows-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-slightly-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-slightly-up.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-up.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset14 { background: url('images/icon-set-circles2-dark-gray.svg') no-repeat, url('images/icon-set-circles2-light-gray.svg') no-repeat, url('images/icon-set-circles2-light-red.svg') no-repeat, url('images/icon-set-circles2-dark-red.svg') no-repeat !important;
+.w2ui-icon.iconset14 { background: url('images/colibre/sc/res/icon-set-circles2-dark-gray.svg') no-repeat, url('images/colibre/sc/res/icon-set-circles2-light-gray.svg') no-repeat, url('images/colibre/sc/res/icon-set-circles2-light-red.svg') no-repeat, url('images/colibre/sc/res/icon-set-circles2-dark-red.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset15 { background: url('images/icon-set-bars-one-quarter.svg') no-repeat, url('images/icon-set-bars-half.svg') no-repeat, url('images/icon-set-bars-three-quarters.svg') no-repeat, url('images/icon-set-bars-full.svg') no-repeat !important;
+.w2ui-icon.iconset15 { background: url('images/colibre/sc/res/icon-set-bars-one-quarter.svg') no-repeat, url('images/colibre/sc/res/icon-set-bars-half.svg') no-repeat, url('images/colibre/sc/res/icon-set-bars-three-quarters.svg') no-repeat, url('images/colibre/sc/res/icon-set-bars-full.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset16 { background: url('images/icon-set-circles1-gray.svg') no-repeat, url('images/icon-set-circles1-red.svg') no-repeat, url('images/icon-set-circles1-yellow.svg') no-repeat, url('images/icon-set-circles1-green.svg') no-repeat !important;
+.w2ui-icon.iconset16 { background: url('images/colibre/sc/res/icon-set-circles1-gray.svg') no-repeat, url('images/colibre/sc/res/icon-set-circles1-red.svg') no-repeat, url('images/colibre/sc/res/icon-set-circles1-yellow.svg') no-repeat, url('images/colibre/sc/res/icon-set-circles1-green.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset17 { background: url('images/icon-set-colorarrows-down.svg') no-repeat, url('images/icon-set-colorarrows-slightly-down.svg') no-repeat, url('images/icon-set-colorarrows-same.svg') no-repeat, url('images/icon-set-colorarrows-slightly-up.svg') no-repeat, url('images/icon-set-colorarrows-up.svg') no-repeat !important;
+.w2ui-icon.iconset17 { background: url('images/colibre/sc/res/icon-set-colorarrows-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-slightly-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-same.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-slightly-up.svg') no-repeat, url('images/colibre/sc/res/icon-set-colorarrows-up.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset18 { background: url('images/icon-set-grayarrows-down.svg') no-repeat, url('images/icon-set-grayarrows-slightly-down.svg') no-repeat, url('images/icon-set-grayarrows-same.svg') no-repeat, url('images/icon-set-grayarrows-slightly-up.svg') no-repeat, url('images/icon-set-grayarrows-up.svg') no-repeat !important;
+.w2ui-icon.iconset18 { background: url('images/colibre/sc/res/icon-set-grayarrows-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-slightly-down.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-same.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-slightly-up.svg') no-repeat, url('images/colibre/sc/res/icon-set-grayarrows-up.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset19 { background: url('images/icon-set-bars-empty.svg') no-repeat, url('images/icon-set-bars-one-quarter.svg') no-repeat, url('images/icon-set-bars-half.svg') no-repeat, url('images/icon-set-bars-three-quarters.svg') no-repeat, url('images/icon-set-bars-full.svg') no-repeat !important;
+.w2ui-icon.iconset19 { background: url('images/colibre/sc/res/icon-set-bars-empty.svg') no-repeat, url('images/colibre/sc/res/icon-set-bars-one-quarter.svg') no-repeat, url('images/colibre/sc/res/icon-set-bars-half.svg') no-repeat, url('images/colibre/sc/res/icon-set-bars-three-quarters.svg') no-repeat, url('images/colibre/sc/res/icon-set-bars-full.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset20 { background: url('images/icon-set-pies-empty.svg') no-repeat, url('images/icon-set-pies-one-quarter.svg') no-repeat, url('images/icon-set-pies-half.svg') no-repeat, url('images/icon-set-pies-three-quarters.svg') no-repeat, url('images/icon-set-pies-full.svg') no-repeat !important;
+.w2ui-icon.iconset20 { background: url('images/colibre/sc/res/icon-set-pies-empty.svg') no-repeat, url('images/colibre/sc/res/icon-set-pies-one-quarter.svg') no-repeat, url('images/colibre/sc/res/icon-set-pies-half.svg') no-repeat, url('images/colibre/sc/res/icon-set-pies-three-quarters.svg') no-repeat, url('images/colibre/sc/res/icon-set-pies-full.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
 	width: 94px !important; }
-.w2ui-icon.iconset21 { background: url('images/icon-set-squares-empty.svg') no-repeat, url('images/icon-set-squares-one-quarter.svg') no-repeat, url('images/icon-set-squares-half.svg') no-repeat, url('images/icon-set-squares-three-quarters.svg') no-repeat, url('images/icon-set-squares-full.svg') no-repeat !important;
+.w2ui-icon.iconset21 { background: url('images/colibre/sc/res/icon-set-squares-empty.svg') no-repeat, url('images/colibre/sc/res/icon-set-squares-one-quarter.svg') no-repeat, url('images/colibre/sc/res/icon-set-squares-half.svg') no-repeat, url('images/colibre/sc/res/icon-set-squares-three-quarters.svg') no-repeat, url('images/colibre/sc/res/icon-set-squares-full.svg') no-repeat !important;
 	background-size: 16px 16px, 16px 16px, 16px 16px, 16px 16px, 16px 16px !important;
 	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
 	width: 94px !important; }
 
-.w2ui-icon.print{ background: url('images/lc_print.svg') no-repeat center !important; }
-.w2ui-icon.undo{ background: url('images/lc_undo.svg') no-repeat center !important; }
-.w2ui-icon.redo{ background: url('images/lc_redo.svg') no-repeat center !important; }
-.w2ui-icon.copyformat{ background: url('images/lc_formatpaintbrush.svg') no-repeat center !important; }
-.w2ui-icon.deleteformat{ background: url('images/lc_resetattributes.svg') no-repeat center !important; }
-.w2ui-icon.bold{ background: url('images/lc_bold.svg') no-repeat center !important; }
-.w2ui-icon.italic{ background: url('images/lc_italic.svg') no-repeat center !important; }
-.w2ui-icon.underline{ background: url('images/lc_underline.svg') no-repeat center !important; }
-.w2ui-icon.strikeout{ background: url('images/lc_strikeout.svg') no-repeat center !important; }
-.w2ui-icon.textcolor{ background: url('images/lc_color.svg') no-repeat center !important; }
-.w2ui-icon.backcolor{ background: url('images/lc_backcolor.svg') no-repeat center !important; }
-.w2ui-icon.backgroundcolor{ background: url('images/lc_backgroundcolor.svg') no-repeat center !important; }
-.w2ui-icon.alignleft{ background: url('images/lc_alignleft.svg') no-repeat center !important; }
-.w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
-.w2ui-icon.alignright{ background: url('images/lc_alignright.svg') no-repeat center !important; }
-.w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
-.w2ui-icon.linespacing{ background: url('images/lc_linespacing.svg') no-repeat center !important; }
-.w2ui-icon.numbering{ background: url('images/lc_defaultnumbering.svg') no-repeat center !important; }
-.w2ui-icon.bullet{ background: url('images/lc_defaultbullet.svg') no-repeat center !important; }
-.w2ui-icon.incrementindent{ background: url('images/lc_incrementindent.svg') no-repeat center !important; }
-.w2ui-icon.decrementindent{ background: url('images/lc_decrementindent.svg') no-repeat center !important; }
-.w2ui-icon.text{ background: url('images/lc_text.svg') no-repeat center !important; }
-.w2ui-icon.annotation{ background: url('images/lc_shownote.svg') no-repeat center !important; }
-.w2ui-icon.inserttable{ background: url('images/lc_inserttable.svg') no-repeat center !important; }
-.w2ui-icon.insertgraphic{ background: url('images/lc_gallery.svg') no-repeat center !important; }
-.w2ui-icon.link{ background: url('images/lc_inserthyperlink.svg') no-repeat center !important; }
-.w2ui-icon.insertsymbol{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
-.w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; }
+.w2ui-icon.print{ background: url('images/colibre/cmd/24/lc_print.svg') no-repeat center !important; }
+.w2ui-icon.undo{ background: url('images/colibre/cmd/24/lc_undo.svg') no-repeat center !important; }
+.w2ui-icon.redo{ background: url('images/colibre/cmd/24/lc_redo.svg') no-repeat center !important; }
+.w2ui-icon.copyformat{ background: url('images/colibre/cmd/24/lc_formatpaintbrush.svg') no-repeat center !important; }
+.w2ui-icon.deleteformat{ background: url('images/colibre/cmd/24/lc_resetattributes.svg') no-repeat center !important; }
+.w2ui-icon.bold{ background: url('images/colibre/cmd/24/lc_bold.svg') no-repeat center !important; }
+.w2ui-icon.italic{ background: url('images/colibre/cmd/24/lc_italic.svg') no-repeat center !important; }
+.w2ui-icon.underline{ background: url('images/colibre/cmd/24/lc_underline.svg') no-repeat center !important; }
+.w2ui-icon.strikeout{ background: url('images/colibre/cmd/24/lc_strikeout.svg') no-repeat center !important; }
+.w2ui-icon.textcolor{ background: url('images/colibre/cmd/24/lc_color.svg') no-repeat center !important; }
+.w2ui-icon.backcolor{ background: url('images/colibre/cmd/24/lc_backcolor.svg') no-repeat center !important; }
+.w2ui-icon.backgroundcolor{ background: url('images/colibre/cmd/24/lc_backgroundcolor.svg') no-repeat center !important; }
+.w2ui-icon.alignleft{ background: url('images/colibre/cmd/24/lc_alignleft.svg') no-repeat center !important; }
+.w2ui-icon.alignhorizontal{ background: url('images/colibre/cmd/24/lc_alignhorizontalcenter.svg') no-repeat center !important; }
+.w2ui-icon.alignright{ background: url('images/colibre/cmd/24/lc_alignright.svg') no-repeat center !important; }
+.w2ui-icon.alignblock{ background: url('images/colibre/cmd/24/lc_alignblock.svg') no-repeat center !important; }
+.w2ui-icon.linespacing{ background: url('images/colibre/cmd/24/lc_linespacing.svg') no-repeat center !important; }
+.w2ui-icon.numbering{ background: url('images/colibre/cmd/24/lc_defaultnumbering.svg') no-repeat center !important; }
+.w2ui-icon.bullet{ background: url('images/colibre/cmd/24/lc_defaultbullet.svg') no-repeat center !important; }
+.w2ui-icon.incrementindent{ background: url('images/colibre/cmd/24/lc_incrementindent.svg') no-repeat center !important; }
+.w2ui-icon.decrementindent{ background: url('images/colibre/cmd/24/lc_decrementindent.svg') no-repeat center !important; }
+.w2ui-icon.text{ background: url('images/colibre/cmd/24/lc_text.svg') no-repeat center !important; }
+.w2ui-icon.annotation{ background: url('images/colibre/cmd/24/lc_shownote.svg') no-repeat center !important; }
+.w2ui-icon.inserttable{ background: url('images/colibre/cmd/24/lc_inserttable.svg') no-repeat center !important; }
+.w2ui-icon.insertgraphic{ background: url('images/colibre/cmd/24/lc_gallery.svg') no-repeat center !important; }
+.w2ui-icon.link{ background: url('images/colibre/cmd/24/lc_inserthyperlink.svg') no-repeat center !important; }
+.w2ui-icon.insertsymbol{ background: url('images/colibre/cmd/24/lc_insertsymbol.svg') no-repeat center !important; }
+.w2ui-icon.edit{ background: url('images/colibre/cmd/24/lc_editdoc.svg') no-repeat center !important; }
 .w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center center / 19px !important; opacity: 0.8; filter: alpha(opacity=80);}
 .w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center center/ 19px !important; opacity: 0.8; filter: alpha(opacity=80);}
 .w2ui-icon.hamburger{ background: url('images/hamburger.svg') no-repeat center !important; }
-.w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
-.w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
-.w2ui-icon.wraptext{ background: url('images/lc_wraptext.svg') no-repeat center !important; }
-.w2ui-icon.numberformatcurrency{ background: url('images/lc_numberformatcurrency.svg') no-repeat center !important; }
-.w2ui-icon.numberformatpercent{ background: url('images/lc_numberformatpercent.svg') no-repeat center !important; }
-.w2ui-icon.numberformatdecimal{ background: url('images/lc_numberformatdecimal.svg') no-repeat center !important; }
-.w2ui-icon.numberformatdate{ background: url('images/lc_numberformatdate.svg') no-repeat center !important; }
-.w2ui-icon.numberformatincdecimals{ background: url('images/lc_numberformatincdecimals.svg') no-repeat center !important; }
-.w2ui-icon.numberformatdecdecimals{ background: url('images/lc_numberformatdecdecimals.svg') no-repeat center !important; }
-.w2ui-icon.insertobjectchart{ background: url('images/lc_drawchart.svg') no-repeat center !important; }
-.w2ui-icon.insertrowsafter{ background: url('images/lc_insertrowsafter.svg') no-repeat center !important; }
-.w2ui-icon.insertcolumnsafter{ background: url('images/lc_insertcolumnsafter.svg') no-repeat center !important; }
-.w2ui-icon.autosum{ background: url('images/lc_autosum.svg') no-repeat center !important; }
-.w2ui-icon.orientation{ background: url('images/lc_orientation.svg') no-repeat center !important; }
+.w2ui-icon.setborderstyle{ background: url('images/colibre/cmd/24/lc_setborderstyle.svg') no-repeat center !important; }
+.w2ui-icon.togglemergecells{ background: url('images/colibre/cmd/24/lc_togglemergecells.svg') no-repeat center !important; }
+.w2ui-icon.wraptext{ background: url('images/colibre/cmd/24/lc_wraptext.svg') no-repeat center !important; }
+.w2ui-icon.numberformatcurrency{ background: url('images/colibre/cmd/24/lc_numberformatcurrency.svg') no-repeat center !important; }
+.w2ui-icon.numberformatpercent{ background: url('images/colibre/cmd/24/lc_numberformatpercent.svg') no-repeat center !important; }
+.w2ui-icon.numberformatdecimal{ background: url('images/colibre/cmd/24/lc_numberformatdecimal.svg') no-repeat center !important; }
+.w2ui-icon.numberformatdate{ background: url('images/colibre/cmd/24/lc_numberformatdate.svg') no-repeat center !important; }
+.w2ui-icon.numberformatincdecimals{ background: url('images/colibre/cmd/24/lc_numberformatincdecimals.svg') no-repeat center !important; }
+.w2ui-icon.numberformatdecdecimals{ background: url('images/colibre/cmd/24/lc_numberformatdecdecimals.svg') no-repeat center !important; }
+.w2ui-icon.insertobjectchart{ background: url('images/colibre/cmd/24/lc_drawchart.svg') no-repeat center !important; }
+.w2ui-icon.insertrowsafter{ background: url('images/colibre/cmd/24/lc_insertrowsafter.svg') no-repeat center !important; }
+.w2ui-icon.insertcolumnsafter{ background: url('images/colibre/cmd/24/lc_insertcolumnsafter.svg') no-repeat center !important; }
+.w2ui-icon.autosum{ background: url('images/colibre/cmd/24/lc_autosum.svg') no-repeat center !important; }
+.w2ui-icon.orientation{ background: url('images/colibre/cmd/24/lc_orientation.svg') no-repeat center !important; }
 
-.w2ui-icon.functiondialog{ background: url('images/lc_functiondialog.svg') no-repeat center !important; }
-.w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
-.w2ui-icon.ok{ background: url('images/lc_ok.svg') no-repeat center !important; }
-.w2ui-icon.cancel{ background: url('images/lc_cancel.svg') no-repeat center !important; }
-.w2ui-icon.color{ background: url('images/lc_color.svg') no-repeat center !important; }
-.w2ui-icon.deletepage{ background: url('images/lc_deletepage.svg') no-repeat center !important; }
-.w2ui-icon.duplicatepage{ background: url('images/lc_duplicatepage.svg') no-repeat center !important; }
+.w2ui-icon.functiondialog{ background: url('images/colibre/cmd/24/lc_functiondialog.svg') no-repeat center !important; }
+.w2ui-icon.accepttrackedchanges{ background: url('images/colibre/cmd/24/lc_accepttrackedchanges.svg') no-repeat center !important; }
+.w2ui-icon.ok{ background: url('images/colibre/cmd/24/lc_ok.svg') no-repeat center !important; }
+.w2ui-icon.cancel{ background: url('images/colibre/cmd/24/lc_cancel.svg') no-repeat center !important; }
+.w2ui-icon.color{ background: url('images/colibre/cmd/24/lc_color.svg') no-repeat center !important; }
+.w2ui-icon.deletepage{ background: url('images/colibre/cmd/24/lc_deletepage.svg') no-repeat center !important; }
+.w2ui-icon.duplicatepage{ background: url('images/colibre/cmd/24/lc_duplicatepage.svg') no-repeat center !important; }
 .w2ui-icon.equal{ background: url('images/lc26049.svg') no-repeat center !important; }
-.w2ui-icon.help{ background: url('images/lc_helpindex.svg') no-repeat center !important; }
-.w2ui-icon.insertpage{ background: url('images/lc_insertpage.svg') no-repeat center !important; }
-.w2ui-icon.insertsheet{ background: url('images/plus.svg') no-repeat center !important; }
-.w2ui-icon.conditionalformatdialog{ background: url('images/lc_conditionalformatdialog.svg') no-repeat center !important; }
-.w2ui-icon.search{ background: url('images/sc_recsearch.svg') no-repeat center !important; }
-.w2ui-icon.next{ background: url('images/lc_downsearch.svg') no-repeat center !important; }
-.w2ui-icon.presentation{ background: url('images/lc_dia.svg') no-repeat center !important; }
-.w2ui-icon.prev{ background: url('images/lc_upsearch.svg') no-repeat center !important; }
-.w2ui-icon.save{ background: url('images/lc_save.svg') no-repeat center !important; }
-.w2ui-icon.saveas{ background: url('images/lc_saveas.svg') no-repeat center !important; }
-.w2ui-icon.savemodified{ background: url('images/savemodified_large.svg') no-repeat center !important; }
-.w2ui-icon.zoomin{ background: url('images/plus.svg') no-repeat center !important; }
-.w2ui-icon.zoomout{ background: url('images/minus.svg') no-repeat center !important; }
-.w2ui-icon.zoomreset{ background: url('images/lc_view100.svg') no-repeat center !important; }
-.w2ui-icon.more{ background: url('images/lc_downsearch.svg') no-repeat center !important; }
-.w2ui-icon.firstrecord{ background: url('images/lc_firstrecord.svg') no-repeat center !important; }
-.w2ui-icon.nextrecord{ background: url('images/lc_nextrecord.svg') no-repeat center !important; }
-.w2ui-icon.prevrecord{ background: url('images/lc_prevrecord.svg') no-repeat center !important; }
-.w2ui-icon.lastrecord{ background: url('images/lc_lastrecord.svg') no-repeat center !important; }
-.w2ui-icon.sortascending{ background: url('images/lc_sortascending.svg') no-repeat center !important; }
-.w2ui-icon.sortdescending{ background: url('images/lc_sortdescending.svg') no-repeat center !important; }
-.w2ui-icon.selected{ background: url('images/lc_ok.svg') no-repeat center !important; }
+.w2ui-icon.help{ background: url('images/colibre/cmd/24/lc_helpindex.svg') no-repeat center !important; }
+.w2ui-icon.insertpage{ background: url('images/colibre/cmd/24/lc_insertpage.svg') no-repeat center !important; }
+.w2ui-icon.insertsheet{ background: url('images/colibre/res/plus.svg') no-repeat center !important; }
+.w2ui-icon.conditionalformatdialog{ background: url('images/colibre/cmd/24/lc_conditionalformatdialog.svg') no-repeat center !important; }
+.w2ui-icon.search{ background: url('images/colibre/cmd/16/sc_recsearch.svg') no-repeat center !important; }
+.w2ui-icon.next{ background: url('images/colibre/cmd/24/lc_downsearch.svg') no-repeat center !important; }
+.w2ui-icon.presentation{ background: url('images/colibre/cmd/24/lc_dia.svg') no-repeat center !important; }
+.w2ui-icon.prev{ background: url('images/colibre/cmd/24/lc_upsearch.svg') no-repeat center !important; }
+.w2ui-icon.save{ background: url('images/colibre/cmd/24/lc_save.svg') no-repeat center !important; }
+.w2ui-icon.saveas{ background: url('images/colibre/cmd/24/lc_saveas.svg') no-repeat center !important; }
+.w2ui-icon.savemodified{ background: url('images/colibre/res/savemodified_large.svg') no-repeat center !important; }
+.w2ui-icon.zoomin{ background: url('images/colibre/res/plus.svg') no-repeat center !important; }
+.w2ui-icon.zoomout{ background: url('images/colibre/res/minus.svg') no-repeat center !important; }
+.w2ui-icon.zoomreset{ background: url('images/colibre/cmd/24/lc_view100.svg') no-repeat center !important; }
+.w2ui-icon.more{ background: url('images/colibre/cmd/24/lc_downsearch.svg') no-repeat center !important; }
+.w2ui-icon.firstrecord{ background: url('images/colibre/cmd/24/lc_firstrecord.svg') no-repeat center !important; }
+.w2ui-icon.nextrecord{ background: url('images/colibre/cmd/24/lc_nextrecord.svg') no-repeat center !important; }
+.w2ui-icon.prevrecord{ background: url('images/colibre/cmd/24/lc_prevrecord.svg') no-repeat center !important; }
+.w2ui-icon.lastrecord{ background: url('images/colibre/cmd/24/lc_lastrecord.svg') no-repeat center !important; }
+.w2ui-icon.sortascending{ background: url('images/colibre/cmd/24/lc_sortascending.svg') no-repeat center !important; }
+.w2ui-icon.sortdescending{ background: url('images/colibre/cmd/24/lc_sortdescending.svg') no-repeat center !important; }
+.w2ui-icon.selected{ background: url('images/colibre/cmd/24/lc_ok.svg') no-repeat center !important; }
 .w2ui-icon.users{ background: url('images/contacts-dark.svg') no-repeat center; }
-.w2ui-icon.fullscreen{ background: url('images/lc_fullscreen.svg') no-repeat center !important; }
-.w2ui-icon.closemobile{ background: url('images/lc_closedocmobile.svg') no-repeat center !important; }
-.w2ui-icon.editmode { background: url('images/lc_listitem-selected.svg') no-repeat center / 28px !important; }
+.w2ui-icon.fullscreen{ background: url('images/colibre/cmd/24/lc_fullscreen.svg') no-repeat center !important; }
+.w2ui-icon.closemobile{ background: url('images/colibre/cmd/24/lc_closedocmobile.svg') no-repeat center !important; }
+.w2ui-icon.editmode { background: url('images/colibre/cmd/24/lc_listitem-selected.svg') no-repeat center / 28px !important; }
 .w2ui-icon.closetoolbar{ background: url('images/close_toolbar.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_modify_page{ background: url('images/lc_configuredialog.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_slide_change{ background: url('images/lc_slidechangewindow.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_custom_animation{ background: url('images/lc_customanimation.svg') no-repeat center !important; }
-.w2ui-icon.sidebar_master_slides{ background: url('images/lc_slidemasterpage.svg') no-repeat center !important; }
-.w2ui-icon.mobile_wizard{ background: url('images/lc_mobile_wizard.svg') no-repeat center !important; }
-.w2ui-icon.fullscreen-presentation{ background: url('images/lc_fullscreen-presentation-toolbar-mobile.svg') no-repeat center !important;}
-.w2ui-icon.insertion_mobile_wizard{ background: url('images/lc_insertion_mobile_wizard.svg') no-repeat center !important; }
-.w2ui-icon.insertcomment{ background: url('images/lc_insertcomment.svg') no-repeat center !important; }
-.w2ui-icon.freezepanes{ background: url('images/lc_freezepanes.svg') no-repeat center !important; }
-.w2ui-icon.freezepanescolumn{ background: url('images/lc_freezepanescolumn.svg') no-repeat center !important; }
-.w2ui-icon.freezepanesrow{ background: url('images/lc_freezepanesrow.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_modify_page{ background: url('images/colibre/cmd/24/lc_configuredialog.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_slide_change{ background: url('images/colibre/cmd/24/lc_slidechangewindow.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_custom_animation{ background: url('images/colibre/cmd/24/lc_customanimation.svg') no-repeat center !important; }
+.w2ui-icon.sidebar_master_slides{ background: url('images/colibre/cmd/24/lc_slidemasterpage.svg') no-repeat center !important; }
+.w2ui-icon.mobile_wizard{ background: url('images/colibre/cmd/24/lc_mobile_wizard.svg') no-repeat center !important; }
+.w2ui-icon.fullscreen-presentation{ background: url('images/colibre/cmd/24/lc_fullscreen-presentation-toolbar-mobile.svg') no-repeat center !important;}
+.w2ui-icon.insertion_mobile_wizard{ background: url('images/colibre/cmd/24/lc_insertion_mobile_wizard.svg') no-repeat center !important; }
+.w2ui-icon.insertcomment{ background: url('images/colibre/cmd/24/lc_insertcomment.svg') no-repeat center !important; }
+.w2ui-icon.freezepanes{ background: url('images/colibre/cmd/24/lc_freezepanes.svg') no-repeat center !important; }
+.w2ui-icon.freezepanescolumn{ background: url('images/colibre/cmd/24/lc_freezepanescolumn.svg') no-repeat center !important; }
+.w2ui-icon.freezepanesrow{ background: url('images/colibre/cmd/24/lc_freezepanesrow.svg') no-repeat center !important; }
 
 
 .w2ui-icon.vereign{ background: url('images/vereign.png') no-repeat center !important; }
@@ -901,7 +901,7 @@ tr.useritem > td > img {
 }
 
 .menu-entry-checked {
-	background: url('images/lc_listitem-selected.svg') no-repeat 97% center;
+	background: url('images/colibre/cmd/24/lc_listitem-selected.svg') no-repeat 97% center;
 }
 
 .menu-entry-with-icon {

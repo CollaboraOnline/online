@@ -174,7 +174,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	width: 48px !important;
 	right: -16px;
 	border-radius: 100px !important;
-	background: url('images/lc_scrollbar_mobile.svg') no-repeat center #fff !important;
+	background: url('images/colibre/cmd/24/lc_scrollbar_mobile.svg') no-repeat center #fff !important;
 	background-size: 24px !important;
 	box-shadow: 0 1px 3px 1px #00000050;
 }

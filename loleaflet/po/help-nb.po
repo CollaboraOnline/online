@@ -1727,8 +1727,8 @@ msgstr "Velg teksten med det eksisterende formatet"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:525-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:556-11
-msgid "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
-msgstr "Klikk på klonformateringsikonet<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Musepekeren vender seg mot en malingsbøtte."
+msgid "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
+msgstr "Klikk på klonformateringsikonet<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_formatpaintbrush.svg\">. Musepekeren vender seg mot en malingsbøtte."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Select the text you want to apply the new format."
@@ -1831,8 +1831,8 @@ msgid "Open the presentation in <span class=\"productname\">%productName</span>"
 msgstr "Åpne presentasjonen med <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:570-11
-msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
-msgstr "Velg enten<span class=\"ui\">Lysbildefremvisning</span> → <span class=\"ui\">Presentasjon på hel skjerm</span> eller klikk på ikonet til venstre nederst i lysbildepanelet: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
+msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_dia.svg\">"
+msgstr "Velg enten<span class=\"ui\">Lysbildefremvisning</span> → <span class=\"ui\">Presentasjon på hel skjerm</span> eller klikk på ikonet til venstre nederst i lysbildepanelet: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_dia.svg\">"
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:572-5
 msgid "How can I change the line, area and position of a shape in my slides?"

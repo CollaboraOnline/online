@@ -1742,7 +1742,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:525-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:556-11
-msgid "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
+msgid "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
@@ -1842,7 +1842,7 @@ msgid "Open the presentation in <span class=\"productname\">%productName</span>"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:570-11
-msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
+msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_dia.svg\">"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:572-5

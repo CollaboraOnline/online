@@ -1704,8 +1704,8 @@ msgstr "Επιλέξτε το κείμενο με την υφιστάμενη μ
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:525-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:556-11
-msgid "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
-msgstr "Πατήστε στο εικονίδιο μορφοποίησης κλώνου <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">.  Ο δείκτης του ποντικιού γίνεται κουβάς βαφής."
+msgid "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_formatpaintbrush.svg\">. The mouse pointer turns to a paint bucket."
+msgstr "Πατήστε στο εικονίδιο μορφοποίησης κλώνου <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_formatpaintbrush.svg\">.  Ο δείκτης του ποντικιού γίνεται κουβάς βαφής."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Select the text you want to apply the new format."
@@ -1804,8 +1804,8 @@ msgid "Open the presentation in <span class=\"productname\">%productName</span>"
 msgstr "Ανοίξτε την παρουσίαση στο <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:570-11
-msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
-msgstr "Είτε επιλέξτε <span class=\"ui\">Παρουσίαση προβολής</span> → <span class=\"ui\">Παρουσίαση πλήρους οθόνης</span>, είτε πατήστε στο πιο αριστερό εικονίδιο στο τέλος του παραθύρου διαφανειών: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
+msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_dia.svg\">"
+msgstr "Είτε επιλέξτε <span class=\"ui\">Παρουσίαση προβολής</span> → <span class=\"ui\">Παρουσίαση πλήρους οθόνης</span>, είτε πατήστε στο πιο αριστερό εικονίδιο στο τέλος του παραθύρου διαφανειών: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/colibre/cmd/24/lc_dia.svg\">"
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:572-5
 msgid "How can I change the line, area and position of a shape in my slides?"

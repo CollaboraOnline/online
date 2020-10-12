@@ -149,7 +149,7 @@
 .lo-menu ul a span.sub-arrow {
 	right: 0;
 	margin-right: 5px;
-	background: transparent url('images/lc_menu_chevron.svg') no-repeat center right; /* we want them to be transparent always whether mobile or desktop */
+	background: transparent url('images/colibre/cmd/24/lc_menu_chevron.svg') no-repeat center right; /* we want them to be transparent always whether mobile or desktop */
 	color: transparent;
 	/*transform: rotate(180deg);*/
 }
@@ -256,7 +256,7 @@
 	position: absolute;
 	content: ' ';
 	left: 2px;
-	background: url('images/lc_listitem-selected.svg') no-repeat left -2px;
+	background: url('images/colibre/cmd/24/lc_listitem-selected.svg') no-repeat left -2px;
 	width: 20px;
 	height: 20px;
 }
@@ -268,21 +268,21 @@
 }
 
 .writer-icon-img {
-	background-image: url('images/x-office-document.svg');
+	background-image: url('images/colibre/res/x-office-document.svg');
 	background-size: 30px 30px;
 	background-repeat: no-repeat;
 	background-position: bottom;
 }
 
 .calc-icon-img {
-	background-image: url('images/x-office-spreadsheet.svg');
+	background-image: url('images/colibre/res/x-office-spreadsheet.svg');
 	background-size: 30px 30px;
 	background-repeat: no-repeat;
 	background-position: bottom;
 }
 
 .impress-icon-img {
-	background-image: url('images/x-office-presentation.svg');
+	background-image: url('images/colibre/res/x-office-presentation.svg');
 	background-size: 30px 30px;
 	background-repeat: no-repeat;
 	background-position: bottom;

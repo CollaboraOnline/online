@@ -3,7 +3,7 @@
     <net-zone name="external-http">
 
         <!-- Writer documents -->
-        <app name="writer" favIconUrl="images/x-office-document.svg">
+        <app name="writer" favIconUrl="images/colibre/res/x-office-document.svg">
             <action name="view" default="true" ext="sxw"/>
             <action name="edit" default="true" ext="odt"/>
             <action name="edit" default="true" ext="fodt"/>
@@ -48,7 +48,7 @@
         </app>
 
         <!-- Calc documents -->
-        <app name="calc" favIconUrl="images/x-office-spreadsheet.svg">
+        <app name="calc" favIconUrl="images/colibre/res/x-office-spreadsheet.svg">
             <action name="view" default="true" ext="sxc"/>
             <action name="edit" default="true" ext="ods"/>
             <action name="edit" default="true" ext="fods"/>
@@ -75,7 +75,7 @@
         </app>
 
         <!-- Impress documents -->
-        <app name="impress" favIconUrl="images/x-office-presentation.svg">
+        <app name="impress" favIconUrl="images/colibre/res/x-office-presentation.svg">
             <action name="view" default="true" ext="sxi"/>
             <action name="edit" default="true" ext="odp"/>
             <action name="edit" default="true" ext="fodp"/>
