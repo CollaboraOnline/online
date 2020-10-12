@@ -42,13 +42,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'new');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Save')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		// Reopen the document and check content.
 		helper.beforeAll(testFileName, 'calc', true);
@@ -70,13 +64,7 @@ describe('Trigger hamburger menu options.', function() {
 				cy.stub(win, 'open');
 			});
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Print')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['File', 'Print']);
 
 		cy.window().its('open').should('be.called');
 	});
@@ -84,13 +72,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Download as PDF', function() {
 		before('hamburger_menu.ods');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'PDF Document (.pdf)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'PDF Document (.pdf)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -100,13 +82,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Download as ODS', function() {
 		before('hamburger_menu.ods');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'ODF spreadsheet (.ods)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'ODF spreadsheet (.ods)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -116,13 +92,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Download as XLS', function() {
 		before('hamburger_menu.ods');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Excel 2003 Spreadsheet (.xls)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'Excel 2003 Spreadsheet (.xls)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -132,13 +102,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Download as XLSX', function() {
 		before('hamburger_menu.ods');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Excel Spreadsheet (.xlsx)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'Excel Spreadsheet (.xlsx)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -160,13 +124,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'q');
 
 		// Undo
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Undo')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Undo']);
 
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'A1');
@@ -177,13 +135,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('not.contain.text', 'q');
 
 		// Redo
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Redo')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Redo']);
 
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'A1');
@@ -208,13 +160,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'q');
 
 		// Revert one undo step via Repair
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Repair')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
 
 		cy.get('.leaflet-popup-content')
 			.should('be.visible');
@@ -242,13 +188,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Cut')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -270,13 +210,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Copy')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -298,13 +232,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcMobileHelper.selectAllMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Paste')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -327,13 +255,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('not.contain.text', 'Text');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Select All')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -345,10 +267,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Search some word.', function() {
 		before('hamburger_menu_search.ods');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Search')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Search']);
 
 		// Search bar become visible
 		cy.get('#mobile-wizard-content')
@@ -372,16 +291,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Insert Rows')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Rows Above')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Rows', 'Rows Above']);
 
 		calcMobileHelper.selectAllMobile(false);
 
@@ -402,16 +312,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Insert Rows')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Rows Below')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Rows', 'Rows Below']);
 
 		calcMobileHelper.selectAllMobile(false);
 
@@ -432,16 +333,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Insert Columns')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Columns Before')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Columns', 'Columns Before']);
 
 		calcMobileHelper.selectAllMobile(false);
 
@@ -462,16 +354,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Insert Columns')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Columns After')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Columns', 'Columns After']);
 
 		calcMobileHelper.selectAllMobile(false);
 
@@ -492,13 +375,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Delete Rows')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Rows']);
 
 		calcMobileHelper.selectAllMobile(false);
 
@@ -517,13 +394,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Delete Columns')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Columns']);
 
 		calcMobileHelper.selectAllMobile(false);
 
@@ -556,30 +427,12 @@ describe('Trigger hamburger menu options.', function() {
 					.should('have.prop', 'value', 'B2');
 			});
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Insert Page Break')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Row Break')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Page Break', 'Row Break']);
 
 		// TODO: no visual indicator here
 		cy.wait(500);
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Remove Row Break')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Page Break', 'Remove Row Break']);
 
 		// TODO: no visual indicator here
 		cy.wait(500);
@@ -604,30 +457,12 @@ describe('Trigger hamburger menu options.', function() {
 					.should('have.prop', 'value', 'B2');
 			});
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Insert Page Break')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Column Break')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Page Break', 'Column Break']);
 
 		// TODO: no visual indicator here
 		cy.wait(500);
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Remove Column Break')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Page Break', 'Remove Column Break']);
 
 		// TODO: no visual indicator here
 		cy.wait(500);
@@ -639,13 +474,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Sort the first column's data
 		calcMobileHelper.selectFirstColumn();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Sort Ascending')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Sort Ascending']);
 
 		calcMobileHelper.selectAllMobile(false);
 
@@ -668,13 +497,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Sort the first column's data
 		calcMobileHelper.selectFirstColumn();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Sort Descending')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Sort Descending']);
 
 		calcMobileHelper.selectAllMobile(false);
 
@@ -707,16 +530,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Group first
 		calcMobileHelper.selectFirstColumn();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group and Outline')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group...')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
 		cy.get('@origHeaderHeight')
 			.then(function(origHeaderHeight) {
@@ -727,16 +541,7 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Then ungroup
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group and Outline')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Ungroup...')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Ungroup...']);
 
 		cy.get('@origHeaderHeight')
 			.then(function(origHeaderHeight) {
@@ -763,16 +568,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Group first
 		calcMobileHelper.selectFirstColumn();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group and Outline')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group...')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
 		cy.get('@origHeaderHeight')
 			.then(function(origHeaderHeight) {
@@ -783,16 +579,7 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Then remove outline
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group and Outline')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Remove Outline')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Remove Outline']);
 
 		cy.get('@origHeaderHeight')
 			.then(function(origHeaderHeight) {
@@ -819,16 +606,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Group first
 		calcMobileHelper.selectFirstColumn();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group and Outline')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group...')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
 		cy.get('@origHeaderHeight')
 			.then(function(origHeaderHeight) {
@@ -845,16 +623,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('exist');
 
 		// Hide details
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group and Outline')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Hide Details')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Hide Details']);
 
 		// Frist column is hidden -> no content
 		calcMobileHelper.selectAllMobile(false);
@@ -863,16 +632,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('not.exist');
 
 		// Show details
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Data')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Group and Outline')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Show Details')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Show Details']);
 
 		// Frist column is visible again -> we have content again
 		calcMobileHelper.selectAllMobile(false);
@@ -915,18 +675,12 @@ describe('Trigger hamburger menu options.', function() {
 		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
 
 		// Disable automatic spell checking
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
 
 		helper.imageShouldBeFullWhiteOrNot(firstTile, true);
 
 		// Enable automatic spell checking again
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
 
 		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
 	});
@@ -934,11 +688,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Check version information.', function() {
 		before('hamburger_menu.ods');
 
-		mobileHelper.openHamburgerMenu();
-
-		// Open about dialog
-		cy.contains('.menu-entry-with-icon', 'About')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['About']);
 
 		cy.get('.vex-content')
 			.should('exist');
