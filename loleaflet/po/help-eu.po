@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-07 11:47+0000\n"
+"PO-Revision-Date: 2020-10-12 07:13+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "help/eu/>\n"
@@ -58,7 +58,7 @@ msgstr "Ctrl + ⇧ + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
-msgstr ""
+msgstr "Itsatsi berezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
 msgid "Ctrl + Alt + Shift + V"
@@ -1183,10 +1183,11 @@ msgid "When you paste content copied from within the same document, the format a
 msgstr "Dokumentu beretik kopiatutako edukia itsastzen denean, formatuari eta elementuei eutsi egiten zaie. Beste dokumentu batetik, nabigatzaileko beste fitxa batetik edo leiho batetik, edo nabigatzaile kanpotik kopiatzen bada, itsatsitako edukia testu aberatsekoa izango da."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
-#, fuzzy
-#| msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "Formaturik gabe ere kopiatu daiteke honako lasterbidearekin: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Alt</span> + <span class=\"kbd\">⇧</span> + <span class=\"kbd\">V</span>"
+msgstr ""
+"Formaturik gabe ere kopiatu daiteke honako lasterbidearekin: <span class="
+"\"kbd\">Ctrl</span> + <span class=\"kbd\">⇧</span> + <span class=\"kbd\""
+">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
