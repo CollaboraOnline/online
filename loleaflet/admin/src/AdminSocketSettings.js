@@ -31,14 +31,14 @@ var AdminSocketSettings = AdminSocketBase.extend({
 
 			document.getElementById('btnShutdown').onclick = function() {
 				var dialog = (new DlgYesNo())
-				.title(_('Confirmation'))
-				.text(_('Are you sure you want to shut down the server?'))
-				.yesButtonText(_('OK'))
-				.noButtonText(_('Cancel'))
-				.type('warning')
-				.yesFunction(function() {
-					socketSettings.send('shutdown maintenance');
-				});
+					.title(_('Confirmation'))
+					.text(_('Are you sure you want to shut down the server?'))
+					.yesButtonText(_('OK'))
+					.noButtonText(_('Cancel'))
+					.type('warning')
+					.yesFunction(function() {
+						socketSettings.send('shutdown maintenance');
+					});
 				dialog.open();
 			};
 		});

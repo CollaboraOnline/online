@@ -94,14 +94,14 @@ function upsertDocsTable(doc, sName, socket) {
 	if (add === true) { row.appendChild(sessionCloseCell); } else { row.cells[0] = sessionCloseCell; }
 	sessionCloseCell.onclick = function() {
 		var dialog = (new DlgYesNo())
-		.title(_('Confirmation'))
-		.text(_('Are you sure you want to terminate this session?'))
-		.yesButtonText(_('OK'))
-		.noButtonText(_('Cancel'))
-		.type('warning')
-		.yesFunction(function() {
-			socket.send('kill ' + doc['pid']);
-		});
+			.title(_('Confirmation'))
+			.text(_('Are you sure you want to terminate this session?'))
+			.yesButtonText(_('OK'))
+			.noButtonText(_('Cancel'))
+			.type('warning')
+			.yesFunction(function() {
+				socket.send('kill ' + doc['pid']);
+			});
 		dialog.open();
 	};
 
