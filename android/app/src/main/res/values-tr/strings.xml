@@ -4,7 +4,7 @@
     <string name="app_version">Versiyon: %1$s, Build ID: %2$s</string>
     <string name="app_description">$APP_NAME LibreOffice tabanlı bir belge görüntüleyicisidir.</string>
     <string name="app_vendor">Bu sürüm $VENDOR tarafından derlenmiştir.</string>
-    <string name="temp_file_saving_disabled">Bu dosya salt okunabilir haldedir. Kaydetme devredışı.</string>
+    <string name="temp_file_saving_disabled">Bu dosya salt okunur, kaydedilemez.</string>
     <string name="about_license">Lisansı Görüntüle</string>
     <string name="about_notice">Bildiriyi Görüntüle</string>
     <string name="about_moreinfo">Daha Fazla Bilgi</string>
@@ -14,8 +14,8 @@
     <string name="default_document_name">adsız</string>
     <string name="list_view">Liste</string>
     <string name="grid_view">Izgara</string>
-    <string name="filter">Şununla filtrele:</string>
-    <string name="sort">Şununla sırala:</string>
+    <string name="filter">Filtreleme ölçütü</string>
+    <string name="sort">Sıralama ölçütü</string>
     <string name="sort_smallest">Küçükten büyüğe</string>
     <string name="sort_largest">Büyükten küçüğe</string>
     <string name="sort_az">A-Z</string>
@@ -28,7 +28,7 @@
     <!-- Pref keys as resources ; Not currently used -->
     <string name="pref_category_explorer">Dosya Gezgini Ayarları</string>
     <string name="pref_show_hidden_files">Gizli Dosyalar ve Dizinler</string>
-    <string name="pref_show_hidden_files_summary">Gizli dosyalar ve dizinleri göstermeyi etkinleştir.</string>
+    <string name="pref_show_hidden_files_summary">Gizli dosyaları/dizinleri göstermeyi etkinleştir</string>
     <string name="action_about">Hakkında</string>
     <string name="action_settings">Ayarlar</string>
     <string name="open">Aç</string>
@@ -60,9 +60,9 @@
     <string name="physical_storage_settings">Fiziksel depolama ayarları</string>
     <string name="external_sd_path">Harici SD yolu</string>
     <string name="otg_device_path">OTG cihazı yolu</string>
-    <string name="otg_warning">Deneysel özellik: OTG cihazı yazılabilir ise kullanın</string>
+    <string name="otg_warning">Deneysel Özellik: Yalnızca OTG cihazı yazılabilir ise kullanın.</string>
     <string name="server_url">Sunucu URL</string>
-    <string name="server_url_and_port">Bulut sunucusu URL ve port</string>
+    <string name="server_url_and_port">Bulut sunucusunun URL ve bağlantı noktası.</string>
     <string name="user_name">Kullanıcı Adı</string>
     <string name="password">Parola</string>
     <!-- Directory browser strings -->
@@ -90,7 +90,7 @@
     <string name="pref_file_explorer_title">Dosya Gezgini</string>
     <string name="pref_sort_title">Dosya Sıralaması</string>
     <string name="pref_filter_title">Varsayılan Dosya Filtrelemesi</string>
-    <string name="pref_filter_summary">Varsayılan dosya filtrelemesini seç</string>
+    <string name="pref_filter_summary">Öntanımlı olarak hangi dosya filtresinin kullanılması gerektiğini ayarla.</string>
     <string name="bmp_null">Bmp boş!</string>
     <string name="directory_not_saved">Dizin kaydedilmedi.</string>
     <string name="title_activity_show_html">Hakkında</string>
@@ -106,7 +106,7 @@
     <string name="remote_server">Uzak sunucu</string>
     <string name="pref_show_debug_info_summary">Belge göstericide hata kaydı bilgisi göstermeyi etkinleştir</string>
     <string name="pref_show_debug_info">Hata Kayıt Bilgisini Göster</string>
-    <string name="failed_to_load_file">Yüklemek için dosya tanımlaması başarısız oldu</string>
+    <string name="failed_to_load_file">Yüklenecek dosyanın tanımlaması başarısız oldu</string>
     <string name="storage_permission_required">Depolama izni gerekiyor</string>
     <string name="file_creation_failed">Dosya oluşturma basarısız oldu</string>
     <string name="file_exists_warning">Bu isimde bir dosya zaten var ve üzerine yazılacak.</string>
@@ -120,4 +120,9 @@
     <string name="app_version_and_hash">Sürüm: %1$s
 \nçevrimiçi git-hash: %2$s
 \nçekirdek git-hash: %3$s</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="theme_system_default">Sistem öntanımlı değeri</string>
+    <string name="choose_theme">Tema seç</string>
+    <string name="theme">Tema</string>
 </resources>
