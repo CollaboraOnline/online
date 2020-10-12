@@ -120,11 +120,11 @@ L.ColorPicker = L.Class.extend({
 		};
 		var label =
 			noColorControl ? {type: 'fixedtext', style: 'no-color-control-label', text: _('No color')}
-							: {type: 'fixedtext', style: 'auto-color-control-label', text: _('Automatic color')};
+				: {type: 'fixedtext', style: 'auto-color-control-label', text: _('Automatic color')};
 		var description = {type: 'divcontainer', children: [icon, label]};
 		var checked =
 			noColorControl ? {type:'fixedtext', id: this._noColorControlId, style: 'no-color-control-mark', text: ''}
-							: {type:'fixedtext', id: this._autoColorControlId, style: 'auto-color-control-mark', text: ''};
+				: {type:'fixedtext', id: this._autoColorControlId, style: 'auto-color-control-mark', text: ''};
 		var container = {
 			type: 'divcontainer',
 			style: noColorControl ? 'colors-container-no-color-row' : 'colors-container-auto-color-row',
