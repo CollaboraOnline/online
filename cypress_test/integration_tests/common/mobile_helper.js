@@ -223,9 +223,27 @@ function openTextPropertiesPanel() {
 		.should('be.visible');
 }
 
+function selectHamburgerMenuItem(menuItems) {
+	cy.log('Selecting hamburger menu item - start.');
+	cy.log('Param - menuItems: ' + menuItems);
+
+	openHamburgerMenu();
+
+	for (var i = 0; i < menuItems.length; i++) {
+		cy.contains('.menu-entry-with-icon', menuItems[i])
+			.click();
+
+		cy.contains('.menu-entry-with-icon', menuItems[i])
+			.should('not.be.visible');
+	}
+
+	cy.log('Selecting hamburger menu item - end.');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
+module.exports.selectHamburgerMenuItem = selectHamburgerMenuItem;
 module.exports.closeHamburgerMenu = closeHamburgerMenu;
 module.exports.openMobileWizard = openMobileWizard;
 module.exports.closeMobileWizard = closeMobileWizard;

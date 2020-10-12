@@ -29,20 +29,11 @@ describe('Trigger hamburger menu options.', function() {
 		mobileHelper.selectFromColorPalette(0, 0, 7);
 
 		// End remove spell checking red lines
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'View')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 	}
 
 	function openPageWizard() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Page Setup')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Page Setup']);
 
 		cy.get('#mobile-wizard-content')
 			.should('not.be.empty');
@@ -66,13 +57,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.expectTextForClipboard('\nnew');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Save')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		// Reopen the document and check content.
 		helper.beforeAll(testFileName, 'writer', true);
@@ -91,25 +76,13 @@ describe('Trigger hamburger menu options.', function() {
 				cy.stub(win, 'open');
 			});
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Print')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['File', 'Print']);
 
 		cy.window().its('open').should('be.called');
 	});
 
 	it('Download as PDF', function() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'PDF Document (.pdf)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'PDF Document (.pdf)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -117,13 +90,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as ODT', function() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'ODF text document (.odt)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'ODF text document (.odt)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -131,13 +98,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as DOC', function() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Word 2003 Document (.doc)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'Word 2003 Document (.doc)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -145,13 +106,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as DOCX', function() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Word Document (.docx)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'Word Document (.docx)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -159,13 +114,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as RTF', function() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Rich Text (.rtf)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'Rich Text (.rtf)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -173,13 +122,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Download as EPUB', function() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'EPUB (.epub)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'EPUB (.epub)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -196,13 +139,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'q');
 
 		// Undo
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Undo')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Undo']);
 
 		writerMobileHelper.selectAllMobile();
 
@@ -210,13 +147,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('not.contain.text', 'q');
 
 		// Redo
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Redo')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Redo']);
 
 		writerMobileHelper.selectAllMobile();
 
@@ -237,13 +168,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'qw');
 
 		// Undo
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Undo')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Undo']);
 
 		writerMobileHelper.selectAllMobile();
 
@@ -251,13 +176,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('not.contain.text', 'w');
 
 		// Revert one undo step via Repair
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Repair')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
 
 		cy.get('.leaflet-popup-content')
 			.should('be.visible');
@@ -280,13 +199,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'qw');
 
 		// Revert to the initial state via Repair
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Repair')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
 
 		cy.get('.leaflet-popup-content')
 			.should('be.visible');
@@ -315,13 +228,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Cut.', function() {
 		writerMobileHelper.selectAllMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Cut')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -341,13 +248,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Copy.', function() {
 		writerMobileHelper.selectAllMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Copy')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -367,13 +268,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Paste.', function() {
 		writerMobileHelper.selectAllMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Paste')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -394,13 +289,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('#copy-paste-container p')
 			.should('not.contain.text', 'xxxxxx');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Select All')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -410,24 +299,12 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Enable track changes recording.', function() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Record')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Record']);
 
 		// Insert some text and check whether it's tracked.
 		helper.typeIntoDocument('q');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Previous')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Previous']);
 
 		cy.get('.leaflet-marker-icon')
 			.should('exist');
@@ -437,23 +314,11 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', '\nq');
 
 		// Then disable recording.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Record')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Record']);
 
 		helper.typeIntoDocument('{rightArrow}w');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Previous')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Previous']);
 
 		cy.get('.leaflet-marker-icon')
 			.should('exist');
@@ -464,14 +329,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Show track changes.', function() {
-		mobileHelper.openHamburgerMenu();
-
-		// First start recording.
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Record')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Record']);
 
 		// Remove text content.
 		cy.get('#document-container')
@@ -504,13 +362,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.typeIntoDocument('{leftArrow}');
 
 		// Hide track changes.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Show')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Show']);
 
 		// Trigger select all
 		helper.typeIntoDocument('{ctrl}a');
@@ -527,14 +379,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Accept all changes.', function() {
-		mobileHelper.openHamburgerMenu();
-
-		// First start recording.
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Record')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Record']);
 
 		// Remove text content.
 		cy.get('#document-container')
@@ -543,13 +388,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.clearAllText();
 
 		// Accept removal.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Accept All')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Accept All']);
 
 		// Check that we don't have the removed content
 		helper.typeIntoDocument('{ctrl}a');
@@ -562,14 +401,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Reject all changes.', function() {
-		mobileHelper.openHamburgerMenu();
-
-		// First start recording.
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Record')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Record']);
 
 		// Remove text content.
 		cy.get('#document-container')
@@ -584,13 +416,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', '\n\n\n');
 
 		// Reject removal.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Reject All')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Reject All']);
 
 		writerMobileHelper.selectAllMobile();
 
@@ -600,14 +426,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Go to next/prev change.', function() {
-		mobileHelper.openHamburgerMenu();
-
-		// First start recording.
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Record')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Record']);
 
 		// First change
 		helper.typeIntoDocument('q');
@@ -616,47 +435,26 @@ describe('Trigger hamburger menu options.', function() {
 		helper.typeIntoDocument('{rightArrow}w');
 
 		// Find second change using prev.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Previous')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Previous']);
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\nw');
 
 		// Find first change using prev.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Previous')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Previous']);
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\nq');
 
 		// Find second change using next.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Track Changes')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Next')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Next']);
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\nw');
 	});
 
 	it('Search some word.', function() {
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Search')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Search']);
 
 		// Search bar become visible
 		cy.get('#mobile-wizard-content')
@@ -684,10 +482,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Check word counts.', function() {
 		writerMobileHelper.selectAllMobile();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Word Count...')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Word Count...']);
 
 		// Selected counts
 		cy.get('#selectwords')
@@ -850,24 +645,12 @@ describe('Trigger hamburger menu options.', function() {
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		// Enable it first -> spaces will be visible.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'View')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Formatting Marks')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
 		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
 
 		// Then disable it again.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'View')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Formatting Marks')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 	});
@@ -881,24 +664,12 @@ describe('Trigger hamburger menu options.', function() {
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		// Enable it first.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'View')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
 		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
 
 		// Then disable it again.
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'View')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 	});
@@ -935,26 +706,14 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain', 'visibility: hidden');
 
 		// Show resolved comments
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'View')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Resolved Comments')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
 
 		cy.get('.loleaflet-annotation:nth-of-type(2)')
 			.should('have.attr', 'style')
 			.should('not.contain', 'visibility: hidden');
 
 		// Hide resolved comments
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'View')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Resolved Comments')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
 
 		// TODO: can't hide resolved comments again.
 		//cy.get('.loleaflet-annotation:nth-of-type(2)')
@@ -963,11 +722,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Check version information.', function() {
-		mobileHelper.openHamburgerMenu();
-
-		// Open about dialog
-		cy.contains('.menu-entry-with-icon', 'About')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['About']);
 
 		cy.get('.vex-content')
 			.should('exist');

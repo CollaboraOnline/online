@@ -53,13 +53,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'Xnew');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Save')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		// Reopen the document and check content.
 		helper.beforeAll(testFileName, 'impress', true);
@@ -81,13 +75,7 @@ describe('Trigger hamburger menu options.', function() {
 				cy.stub(win, 'open');
 			});
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Print')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['File', 'Print']);
 
 		cy.window().its('open').should('be.called');
 	});
@@ -95,13 +83,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Download as PDF', function() {
 		before('hamburger_menu.odp');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'PDF Document (.pdf)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'PDF Document (.pdf)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -111,13 +93,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Download as ODP', function() {
 		before('hamburger_menu.odp');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'ODF presentation (.odp)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'ODF presentation (.odp)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -127,13 +103,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Download as PPT', function() {
 		before('hamburger_menu.odp');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'PowerPoint 2003 Presentation (.ppt)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'PowerPoint 2003 Presentation (.ppt)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -143,13 +113,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Download as PPTX', function() {
 		before('hamburger_menu.odp');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Download as')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'PowerPoint Presentation (.pptx)')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Download as', 'PowerPoint Presentation (.pptx)']);
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -176,13 +140,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'Xq');
 
 		// Undo
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Undo')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Undo']);
 
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 
@@ -190,13 +148,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Redo
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Redo')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Redo']);
 
 		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
 
@@ -224,13 +176,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'Xq');
 
 		// Revert one undo step via Repair
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Repair')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
 
 		cy.get('.leaflet-popup-content')
 			.should('be.visible');
@@ -256,13 +202,7 @@ describe('Trigger hamburger menu options.', function() {
 		impressMobileHelper.selectTextShapeInTheCenter();
 		impressMobileHelper.selectTextOfShape();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Cut')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -285,13 +225,7 @@ describe('Trigger hamburger menu options.', function() {
 		impressMobileHelper.selectTextShapeInTheCenter();
 		impressMobileHelper.selectTextOfShape();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Copy')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -314,13 +248,7 @@ describe('Trigger hamburger menu options.', function() {
 		impressMobileHelper.selectTextShapeInTheCenter();
 		impressMobileHelper.selectTextOfShape();
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Paste')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 
 		// TODO: cypress does not support clipboard operations
 		// so we get a warning dialog here.
@@ -346,13 +274,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('#copy-paste-container pre')
 			.should('not.exist');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Edit')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Select All')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 
 		cy.get('.leaflet-marker-icon')
 			.should('be.visible');
@@ -363,10 +285,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Search some word.', function() {
 		before('hamburger_menu.odp');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Search')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Search']);
 
 		// Search bar become visible
 		cy.get('#mobile-wizard-content')
@@ -392,13 +311,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		impressHelper.assertNumberOfSlidePreviews(1);
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Slide')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'New Slide')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Slide', 'New Slide']);
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});
@@ -408,13 +321,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		impressHelper.assertNumberOfSlidePreviews(1);
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Slide')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Duplicate Slide')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Slide', 'Duplicate Slide']);
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});
@@ -424,23 +331,11 @@ describe('Trigger hamburger menu options.', function() {
 
 		impressHelper.assertNumberOfSlidePreviews(1);
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Slide')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'New Slide')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Slide', 'New Slide']);
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Slide')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Delete Slide')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Slide', 'Delete Slide']);
 
 		cy.get('.vex-content')
 			.should('exist');
@@ -457,10 +352,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Full Screen.', function() {
 		before('hamburger_menu.odp');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Full Screen')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Full Screen']);
 
 		// TODO: We can't hit the actual full screen from cypress
 		cy.wait(500);
@@ -502,10 +394,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.imageShouldBeFullWhiteOrNot(preiew, false);
 
 		// Disable automatic spell checking
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Automatic Spell Checking')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
 
 		helper.imageShouldBeFullWhiteOrNot(preiew, true);
 	});
@@ -516,10 +405,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('iframe.leaflet-slideshow')
 			.should('not.exist');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Fullscreen presentation')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['Fullscreen presentation']);
 
 		cy.get('iframe.leaflet-slideshow')
 			.should('exist');
@@ -528,10 +414,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Check version information.', function() {
 		before('hamburger_menu.odp');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'About')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['About']);
 
 		cy.get('.vex-content')
 			.should('exist');

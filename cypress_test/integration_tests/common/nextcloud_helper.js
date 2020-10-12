@@ -3,10 +3,7 @@
 var mobileHelper = require('./mobile_helper');
 
 function openRevisionHistory() {
-	mobileHelper.openHamburgerMenu();
-
-	cy.contains('.menu-entry-with-icon', 'File')
-		.click();
+	mobileHelper.selectHamburgerMenuItem(['File']);
 
 	cy.contains('.menu-entry-with-icon', 'See revision history')
 		.then(function(item) {
@@ -58,10 +55,7 @@ function restorePreviousVersion() {
 }
 
 function checkAndCloseSharing() {
-	mobileHelper.openHamburgerMenu();
-
-	cy.contains('.menu-entry-with-icon', 'File')
-		.click();
+	mobileHelper.selectHamburgerMenuItem(['File']);
 
 	cy.contains('.menu-entry-with-icon', 'Share...')
 		.then(function(item) {
@@ -112,10 +106,7 @@ function insertImageFromStorage(fileName) {
 function saveFileAs(fileName) {
 	mobileHelper.enableEditingMobile();
 
-	mobileHelper.openHamburgerMenu();
-
-	cy.contains('.menu-entry-with-icon', 'File')
-		.click();
+	mobileHelper.selectHamburgerMenuItem(['File']);
 
 	cy.contains('.menu-entry-with-icon', 'Save As...')
 		.then(function(item) {

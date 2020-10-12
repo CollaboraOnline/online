@@ -11,16 +11,8 @@ function selectAllMobile() {
 	cy.get('.leaflet-selection-marker-start')
 		.should('not.exist');
 
-	// Open hamburger menu
-	mobileHelper.openHamburgerMenu();
+	mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 
-	// Open edit menu
-	cy.contains('.ui-header.level-0 .menu-entry-with-icon', 'Edit')
-		.click();
-
-	// Do the selection
-	cy.contains('.ui-header.level-1 .menu-entry-with-icon', 'Select All')
-		.click();
 	cy.get('.leaflet-marker-icon')
 		.should('exist');
 
