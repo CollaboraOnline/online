@@ -29,7 +29,7 @@
 \nreta git-hash: %2$s
 \nkerna git-hash: %3$s</string>
     <string name="directory_not_saved">Ne konservis dosierujon.</string>
-    <string name="bmp_null">Bmp estas nevalida!</string>
+    <string name="bmp_null">BMP estas nevalida!</string>
     <string name="unable_to_go_further">Ne povas iri plu.</string>
     <string name="share_document">Kunhavi dokumenton</string>
     <string name="action_overwrite">Anstataŭigi</string>
@@ -108,4 +108,6 @@
     <string name="theme_system_default">Defaŭlta sistema</string>
     <string name="choose_theme">Elekti etoson</string>
     <string name="theme">Etoso</string>
+    <string name="theme_light">Hela</string>
+    <string name="theme_dark">Malhela</string>
 </resources>

@@ -82,4 +82,5 @@
     <string name="unable_to_go_further">Nun se pue dir más allá.</string>
     <string name="theme">Tema</string>
     <string name="theme_system_default">Predetermináu del sistema</string>
+    <string name="remove_from_list">Quitar de la llista</string>
 </resources>
