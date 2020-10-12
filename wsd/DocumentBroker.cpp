@@ -1784,17 +1784,17 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     std::unique_lock<std::mutex> lock(_mutex);
 
     LOG_TRC("TileCombined request for " << tileCombined.serialize());
+    if (!hasTileCache())
+    {
+        LOG_WRN("Combined tile request without a loaded document?");
+        return;
+    }
 
     // Check which newly requested tiles need rendering.
     std::vector<TileDesc> tilesNeedsRendering;
     for (auto& tile : tileCombined.getTiles())
     {
         tile.setVersion(++_tileVersion);
-        if (!hasTileCache())
-        {
-            LOG_WRN("Combined tile request without a loaded document?");
-            continue;
-        }
 
         TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
         if(!cachedTile)
