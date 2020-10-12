@@ -387,7 +387,7 @@ button.leaflet-control-search-next
 	font-size: 12px;
 }
 .styles-select {
-	width: 180px;
+	width: 150px !important;
 }
 #tb_editbar_item_fonts .select2-container{
 	width: 150px !important;
