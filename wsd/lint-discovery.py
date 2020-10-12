@@ -12,13 +12,16 @@ import os
 import sys
 import xml.sax
 
-# Parses an online.git discovery.xml.
+
 class DiscoveryHandler(xml.sax.handler.ContentHandler):
+    """Parses an online.git discovery.xml."""
+
     def __init__(self):
         # Dict of app -> {extension -> action}
         self.appActions = {}
         self.app = None
         self.allExtensions = set()
+
     def startElement(self, name, attrs):
         if name == "app":
             for k, v in list(attrs.items()):
@@ -36,26 +39,33 @@ class DiscoveryHandler(xml.sax.handler.ContentHandler):
             if action and ext:
                 self.appActions[self.app][ext] = action
                 if ext in self.allExtensions:
-                    # Potential problem: see 2de5017e329ce09efbd8f4dc6066fdba3e2c080c
-                    # discovery.xml with duplicating "ext" is valid, but can't be
-                    # used directly in e.g. SharePoint, unless specific extensions
-                    # are imported using New-SPWOPIBinding's parameters, avoiding
+                    # Potential problem:
+                    # see 2de5017e329ce09efbd8f4dc6066fdba3e2c080c
+                    # discovery.xml with duplicating "ext" is valid, but
+                    # can't be used directly in e.g. SharePoint, unless
+                    # specific extensions are imported using
+                    # New-SPWOPIBinding's parameters, avoiding
                     # the duplication.
-                    print("warning: extension '" + ext + "' exists for '" + self.app + "', " +
+                    print("warning: extension '" + ext +
+                          "' exists for '" + self.app + "', " +
                           "but already used earlier in discovery.xml")
                 self.allExtensions.add(ext)
+
     def endElement(self, name):
         if name == "app" and self.app:
             self.app = None
 
-# Parses core.git filter/source/config/fragments/types/*.xcu.
+
 class FilterTypeHandler(xml.sax.handler.ContentHandler):
+    """Parses core.git filter/source/config/fragments/types/*.xcu."""
+
     def __init__(self):
         self.name = None
         self.inExtensions = False
         self.content = []
         self.extensions = None
         self.extensionsSep = " "
+
     def startElement(self, name, attrs):
         if name == "node":
             for k, v in list(attrs.items()):
@@ -69,18 +79,23 @@ class FilterTypeHandler(xml.sax.handler.ContentHandler):
             for k, v in list(attrs.items()):
                 if k == "oor:separator":
                     self.extensionsSep = v
+
     def endElement(self, name):
         if name == "prop" and self.inExtensions:
             self.inExtensions = False
-            self.extensions = "".join(self.content).strip().encode("utf-8").split(self.extensionsSep)
+            self.extensions = "".join(self.content).strip()\
+                                .encode("utf-8").split(self.extensionsSep)
             self.extensionsSep = " "
             self.content = []
+
     def characters(self, content):
         if self.inExtensions:
             self.content.append(content)
 
-# Parses core.git filter/source/config/fragments/filters/*.xcu.
+
 class FilterFragmentHandler(xml.sax.handler.ContentHandler):
+    """Parses core.git filter/source/config/fragments/filters/*.xcu."""
+
     def __init__(self):
         self.inType = False
         self.typeName = None
@@ -89,6 +104,7 @@ class FilterFragmentHandler(xml.sax.handler.ContentHandler):
         self.inDocumentService = False
         self.documentService = None
         self.content = []
+
     def startElement(self, name, attrs):
         if name == "prop":
             for k, v in list(attrs.items()):
@@ -98,6 +114,7 @@ class FilterFragmentHandler(xml.sax.handler.ContentHandler):
                     self.inFlags = True
                 elif k == "oor:name" and v == "DocumentService":
                     self.inDocumentService = True
+
     def endElement(self, name):
         if name == "prop" and self.inType:
             self.inType = False
@@ -112,9 +129,11 @@ class FilterFragmentHandler(xml.sax.handler.ContentHandler):
             self.inDocumentService = False
             self.documentService = "".join(self.content).strip()
             self.content = []
+
     def characters(self, content):
         if self.inType or self.inFlags or self.inDocumentService:
             self.content.append(content)
+
 
 # Builds a 'document service' -> {'extension' -> 'filter flags'} dictionary.
 def getExtensionProperties(filterDir):
@@ -130,8 +149,10 @@ def getExtensionProperties(filterDir):
         parser.parse(os.path.join(typeFragments, typeFragment))
         # Did we find some extensions?
         if filterTypeHandler.extensions:
-            typeNameExtensions[filterTypeHandler.name] = filterTypeHandler.extensions
-    # Build a 'type name' -> ('filter flag list', 'document service') dictionary.
+            typeNameExtensions[filterTypeHandler.name] = \
+                filterTypeHandler.extensions
+    # Build a 'type name' -> ('filter flag list', 'document service')
+    # dictionary.
     typeNameFlags = {}
     filterFragments = os.path.join(filterDir, "filters")
     for filterFragment in os.listdir(filterFragments):
@@ -144,9 +165,12 @@ def getExtensionProperties(filterDir):
         if "IMPORT" in handler.flags:
             if handler.typeName in typeNameFlags:
                 if "EXPORT" in typeNameFlags[handler.typeName][0]:
-                    continue # don't modify a filetype with maximal capabilities
-            typeNameFlags[handler.typeName] = (handler.flags, handler.documentService)
-    # Now build the combined 'document service' -> {'extension' -> 'filter flags'}.
+                    # don't modify a filetype with maximal capabilities
+                    continue
+            typeNameFlags[handler.typeName] = \
+                (handler.flags, handler.documentService)
+    # Now build the combined
+    # 'document service' -> {'extension' -> 'filter flags'}.
     extensionProperties = {}
     for typeName in typeNameExtensions:
         if typeName not in typeNameFlags:
@@ -157,6 +181,7 @@ def getExtensionProperties(filterDir):
         for extension in typeNameExtensions[typeName]:
             extensionProperties[documentService][extension] = flags
     return extensionProperties
+
 
 # Map app names to document service names
 appDocumentServices = {
@@ -171,8 +196,9 @@ documentServicesApp = {v: k for k, v in appDocumentServices.items()}
 
 # We know about these extensions
 extensionsSkipList = {
-    'xls', # we know that it can be edited
-    'pdf', # it exists for draw - its entry in core.git is missing document service
+    'xls',  # we know that it can be edited
+    'pdf',  # it exists for draw - its entry in core.git is missing document
+            # service
     'zip',
     'htm',
     'html',
@@ -180,6 +206,7 @@ extensionsSkipList = {
     '*',   # well, obvious ;-)
     '',    # and this :-D
 }
+
 
 def main():
     discoveryXml = "discovery.xml"
@@ -205,7 +232,7 @@ def main():
     # Now look up the filter flags in core.git for the extension.
     for app, actions in discoveryHandler.appActions.items():
         if app not in appDocumentServices:
-            continue # e.g., for "Capabilities"
+            continue  # e.g., for "Capabilities"
         documentService = appDocumentServices[app]
         if documentService not in extensionProperties:
             # Inconsistency found.
@@ -251,7 +278,8 @@ def main():
         if documentService not in documentServicesApp:
             # Inconsistency found.
             print("warning: extensions for '" + documentService + "' " +
-                  "found in core.git, without mapping to apps in discovery.xml")
+                  "found in core.git, without mapping to apps "
+                  "in discovery.xml")
             missingName = documentService
         else:
             app = documentServicesApp[documentService]
@@ -278,16 +306,17 @@ def main():
             if extension in extensionsSkipList:
                 continue
             if extension in discoveryHandler.allExtensions:
-                continue # see 2de5017e329ce09efbd8f4dc6066fdba3e2c080c
+                continue  # see 2de5017e329ce09efbd8f4dc6066fdba3e2c080c
             newExtensions[extension] = action
         if not newExtensions:
-            continue # no extensions after filtering
+            continue  # no extensions after filtering
 
         print('        <app name="' + app + '">')
         for extension, action in newExtensions.items():
             print('            <action name="' + action + '" default="true" ' +
                   'ext="' + extension + '"/>')
         print('        </app>')
+
 
 if __name__ == "__main__":
     main()
