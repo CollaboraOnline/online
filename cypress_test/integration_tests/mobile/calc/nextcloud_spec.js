@@ -92,13 +92,7 @@ describe('Nextcloud specific tests.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('have.text', 'new');
 
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'File')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Save')
-			.click();
+		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		nextcloudHelper.restorePreviousVersion();
 
