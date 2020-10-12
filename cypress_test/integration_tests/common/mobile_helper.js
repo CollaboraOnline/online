@@ -240,10 +240,26 @@ function selectHamburgerMenuItem(menuItems) {
 	cy.log('Selecting hamburger menu item - end.');
 }
 
+function selectAnnotationMenuItem(menuItem) {
+	cy.log('Selecting annotation menu item - start.');
+
+	cy.get('.loleaflet-annotation-menu')
+		.click({force: true});
+
+	cy.get('.context-menu-list')
+		.should('exist');
+
+	cy.contains('.context-menu-link', menuItem)
+		.click();
+
+	cy.log('Selecting annotation menu item - end.');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
 module.exports.selectHamburgerMenuItem = selectHamburgerMenuItem;
+module.exports.selectAnnotationMenuItem = selectAnnotationMenuItem;
 module.exports.closeHamburgerMenu = closeHamburgerMenu;
 module.exports.openMobileWizard = openMobileWizard;
 module.exports.closeMobileWizard = closeMobileWizard;
