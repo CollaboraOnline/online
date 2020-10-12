@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
+"PO-Revision-Date: 2020-10-11 05:27+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "collabora-online/ui/nb_NO/>\n"
@@ -928,7 +928,7 @@ msgstr "Angre"
 #: src/control/Control.Notebookbar.js:139
 #: src/control/Control.NotebookbarImpress.js:37
 msgid "Redo"
-msgstr "Gjør om"
+msgstr "Gjenta"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
