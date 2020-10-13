@@ -104,7 +104,7 @@ L.ImageOverlay = L.Layer.extend({
 
 	_initImage: function () {
 		var img = this._image = L.DomUtil.create('img',
-				'leaflet-image-layer ' + (this._zoomAnimated ? 'leaflet-zoom-animated' : ''));
+			'leaflet-image-layer ' + (this._zoomAnimated ? 'leaflet-zoom-animated' : ''));
 
 		img.onselectstart = L.Util.falseFn;
 		img.onmousemove = L.Util.falseFn;

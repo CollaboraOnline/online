@@ -3,7 +3,7 @@
  * L.ProgressOverlay is used to overlay progress images over the map.
  */
 
- /* global brandProductName $ */
+/* global brandProductName $ */
 L.ProgressOverlay = L.Layer.extend({
 
 	options: {
