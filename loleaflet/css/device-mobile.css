@@ -499,6 +499,9 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	background-image: none;
 	background-color: #dae6f3;
 }
+#formulabar .w2ui-break {
+	visibility: hidden;
+}
 #setgamma input.spinfield, #linewidth input.spinfield, #nolines input.spinfield{
 	width: 140px !important;
 }
