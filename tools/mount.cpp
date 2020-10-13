@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 
     if (!hasCorrectUID("loolmount"))
     {
-        fprintf(stderr, "%s: incorrect UID.", program);
+        fprintf(stderr, "%s: incorrect UID.\n", program);
         return 1;
     }
 
