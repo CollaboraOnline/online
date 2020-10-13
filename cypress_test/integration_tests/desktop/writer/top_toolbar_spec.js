@@ -25,6 +25,26 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 	});
 
+	it('Apply italic font.', function() {
+		cy.get('#tb_editbar_item_italic')
+			.click();
+
+		helper.selectAllText(false);
+
+		cy.get('#copy-paste-container p i')
+		    .should('exist');
+	});
+
+	it('Apply underline.', function() {
+		cy.get('#tb_editbar_item_underline')
+			.click();
+
+		helper.selectAllText(false);
+
+		cy.get('#copy-paste-container p')
+			.should('exist');
+	});
+		
 	it('Apply left alignment.', function() {
 		cy.get('#tb_editbar_item_centerpara')
 			.click();
@@ -68,4 +88,3 @@ describe('Top toolbar tests.', function() {
 			.should('have.text', 'some text');
 	});
 });
-
