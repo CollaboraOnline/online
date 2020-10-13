@@ -775,7 +775,7 @@ function doIfOnDesktop(callback) {
 		});
 }
 
-function moveCursor(direction) {
+function moveCursor(direction, checkCursorVis = true) {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
 
@@ -784,7 +784,8 @@ function moveCursor(direction) {
 	cy.get('.blinking-cursor')
 		.should('exist');
 
-	if (direction === 'up' || direction === 'down') {
+	if (direction === 'up' || direction === 'down'
+		|| direction === 'ctrl-home' || direction === 'ctrl-end') {
 		cy.get('.blinking-cursor')
 			.invoke('offset')
 			.its('top')
@@ -813,19 +814,25 @@ function moveCursor(direction) {
 		key = '{home}';
 	} else if (direction === 'end') {
 		key = '{end}';
+	} else if (direction === 'ctrl-home') {
+		key = '{ctrl}{home}';
+	} else if (direction === 'ctrl-end') {
+		key = '{ctrl}{end}';
 	}
 	typeIntoDocument(key);
 
-	cy.get('.blinking-cursor')
-		.should('be.visible');
+	if (checkCursorVis === true) {
+		cy.get('.blinking-cursor')
+			.should('be.visible');
+	}
 
 	cy.get('@origCursorPos')
 		.then(function(origCursorPos) {
 			cy.get('.blinking-cursor')
 				.should(function(cursor) {
-					if (direction === 'up') {
+					if (direction === 'up' || direction === 'ctrl-home') {
 						expect(cursor.offset().top).to.be.lessThan(origCursorPos);
-					} else if (direction === 'down') {
+					} else if (direction === 'down' || direction === 'ctrl-end') {
 						expect(cursor.offset().top).to.be.greaterThan(origCursorPos);
 					} else if (direction === 'left' || direction === 'home') {
 						expect(cursor.offset().left).to.be.lessThan(origCursorPos);
