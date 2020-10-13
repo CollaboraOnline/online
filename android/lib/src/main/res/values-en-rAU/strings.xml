@@ -13,4 +13,8 @@
     <string name="failed_to_load_file">Failed to determine the file to load</string>
     <string name="storage_permission_required">Storage permission is required</string>
     <string name="temp_file_saving_disabled">This file is read-only, saving is disabled.</string>
+    <string name="ask_for_copy">This document is readonly. Do you want to make a copy for editing\?</string>
+    <string name="edit_copy">Edit a copy</string>
+    <string name="view_only">View only</string>
+    <string name="restarting">Restarting...</string>
 </resources>

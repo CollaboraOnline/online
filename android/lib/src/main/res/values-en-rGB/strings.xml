@@ -14,4 +14,8 @@
     <string name="later">Later</string>
     <string name="rate_now">Rate now</string>
     <string name="file_chromeos_read_only">This file cannot be saved in this location, opening it read-only. Move it to the Play files for full read/write access.</string>
+    <string name="ask_for_copy">This document is readonly. Do you want to make a copy for editing\?</string>
+    <string name="edit_copy">Edit a copy</string>
+    <string name="view_only">View only</string>
+    <string name="restarting">Restarting...</string>
 </resources>
