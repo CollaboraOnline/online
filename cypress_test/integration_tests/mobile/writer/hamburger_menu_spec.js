@@ -636,42 +636,40 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'None');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Show formatting marks.', function() {
+	it('Show formatting marks.', function() {
 		// Hide text so the center tile is full white.
 		hideText();
 
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		var canvas = '.leaflet-canvas-container canvas';
+		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 
 		// Enable it first -> spaces will be visible.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.canvasShouldBeFullWhiteOrNot(canvas, false);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Automatic spell checking.', function() {
+	it('Automatic spell checking.', function() {
 		// Hide text so the center tile is full white.
 		hideText();
 
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		var canvas = '.leaflet-canvas-container canvas';
+		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 
 		// Enable it first.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.canvasShouldBeFullWhiteOrNot(canvas, false);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 	});
 
 	it('Resolved comments.', function() {
