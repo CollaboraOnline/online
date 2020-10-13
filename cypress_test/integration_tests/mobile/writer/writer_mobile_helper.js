@@ -19,4 +19,17 @@ function selectAllMobile() {
 	cy.log('Select all via hamburger menu - end.');
 }
 
+function getCursorPos(offsetProperty, aliasName) {
+	helper.initAliasToNegative(aliasName);
+
+	cy.get('.blinking-cursor')
+		.invoke('offset')
+		.its(offsetProperty)
+		.as(aliasName);
+
+	cy.get('@' + aliasName)
+		.should('be.greaterThan', 0);
+}
+
+module.exports.getCursorPos = getCursorPos;
 module.exports.selectAllMobile = selectAllMobile;

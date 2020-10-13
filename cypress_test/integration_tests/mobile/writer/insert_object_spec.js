@@ -20,18 +20,6 @@ describe('Insert objects via insertion wizard.', function() {
 		helper.afterAll(testFileName);
 	});
 
-	function getCursorPos(offsetProperty, aliasName) {
-		helper.initAliasToNegative(aliasName);
-
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its(offsetProperty)
-			.as(aliasName);
-
-		cy.get('@' + aliasName)
-			.should('be.greaterThan', 0);
-	}
-
 	it('Insert local image.', function() {
 		mobileHelper.openInsertionWizard();
 
@@ -139,7 +127,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 		helper.typeText('body', 'xxxx', 500);
 
-		getCursorPos('left', 'cursorOrigLeft');
+		writerMobileHelper.getCursorPos('left', 'cursorOrigLeft');
 
 		mobileHelper.openInsertionWizard();
 
@@ -170,7 +158,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		getCursorPos('top', 'cursorOrigTop');
+		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -202,7 +190,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		getCursorPos('top', 'cursorOrigTop');
+		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -224,7 +212,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		getCursorPos('top', 'cursorOrigTop');
+		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -246,7 +234,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		getCursorPos('top', 'cursorOrigTop');
+		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -268,7 +256,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		getCursorPos('top', 'cursorOrigTop');
+		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
