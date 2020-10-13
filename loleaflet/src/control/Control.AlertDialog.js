@@ -64,14 +64,6 @@ L.Control.AlertDialog = L.Control.extend({
 					click: function openClick () {
 						window.open(url, '_blank');
 						vex.closeAll();
-
-						if (!window.ThisIsAMobileApp &&
-							window.webkit &&
-							window.webkit.messageHandlers &&
-							window.webkit.messageHandlers.lool &&
-							window.webkit.messageHandlers.lool.postMessage) {
-							window.webkit.messageHandlers.lool.postMessage('HYPERLINK ' + url);
-						}
 					}
 				});
 			}
