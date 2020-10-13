@@ -52,8 +52,7 @@ describe('Impress focus tests', function() {
 		impressHelper.assertNotInTextEditMode();
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Double-click to edit', function() {
+	it('Double-click to edit', function() {
 
 		mobileHelper.enableEditingMobile();
 
@@ -80,8 +79,7 @@ describe('Impress focus tests', function() {
 		impressHelper.typeTextAndVerify('Bazinga Impress');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Single-click to edit', function() {
+	it('Single-click to edit', function() {
 
 		mobileHelper.enableEditingMobile();
 
