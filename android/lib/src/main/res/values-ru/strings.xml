@@ -8,4 +8,13 @@
     <string name="failed_to_insert_image">Не удалось вставить изображение</string>
     <string name="failed_to_load_file">Не удалось определить файл для загрузки</string>
     <string name="storage_permission_required">Требуется разрешение на сохранение</string>
+    <string name="ask_for_copy">Этот документ только для чтения. Хотите сделать копию для редактирования\?</string>
+    <string name="edit_copy">Редактировать копию</string>
+    <string name="view_only">Только просмотр</string>
+    <string name="restarting">Перезапуск...</string>
+    <string name="exiting">Выход...</string>
+    <string name="rate_our_app_text">Если вам понравилось приложение, поставь, пожалуйста, 5 звезд в Google Play. Ваши хорошие отзывы - наша лучшая мотивация.</string>
+    <string name="rate_our_app_title">Спасибо за использование %1$s!</string>
+    <string name="later">Позже</string>
+    <string name="rate_now">Оценить сейчас</string>
 </resources>
