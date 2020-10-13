@@ -39,6 +39,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._setCanvasHeight();
 		this._canvasBaseHeight = this._canvasHeight;
 
+		var scale = this.canvasDPIScale();
+		this._canvasContext.scale(scale, scale);
+
 		this._headerHeight = this._canvasHeight;
 		L.Control.Header.colHeaderHeight = this._canvasHeight;
 
@@ -221,6 +224,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		ctx.save();
+		var scale = this.canvasDPIScale();
+		ctx.scale(scale, scale);
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
@@ -285,6 +290,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var height = group.endPos - group.startPos;
 
 		ctx.save();
+		var scale = this.canvasDPIScale();
+		ctx.scale(scale, scale);
 
 		// clip mask
 		ctx.beginPath();
@@ -332,11 +339,13 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var ctx = this._cornerCanvasContext;
 		var ctrlHeadSize = this._groupHeadSize;
 		var levelSpacing = this._levelSpacing;
+		var scale = this.canvasDPIScale();
 
 		var startOrt = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
-		var startPar = this._cornerCanvas.width - (ctrlHeadSize + (L.Control.Header.rowHeaderWidth - ctrlHeadSize) / 2);
+		var startPar = this._cornerCanvas.width / scale - (ctrlHeadSize + (L.Control.Header.rowHeaderWidth - ctrlHeadSize) / 2);
 
 		ctx.save();
+		ctx.scale(scale, scale);
 		ctx.fillStyle = this._hoverColor;
 		ctx.fillRect(startPar, startOrt, ctrlHeadSize, ctrlHeadSize);
 		ctx.strokeStyle = 'black';
@@ -523,7 +532,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 		}
 
-		var rowOutlineWidth = this._cornerCanvas.width - L.Control.Header.rowHeaderWidth - this._borderWidth;
+		var scale = this.canvasDPIScale();
+		var rowOutlineWidth = this._cornerCanvas.width / scale - L.Control.Header.rowHeaderWidth - this._borderWidth;
 		if (pos.x <= rowOutlineWidth) {
 			// empty rectangle on the left select all
 			this._map.sendUnoCommand('.uno:SelectAll');
