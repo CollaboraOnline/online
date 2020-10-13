@@ -3,7 +3,7 @@
  * L.Cursor blinking cursor.
  */
 
- /* global $ */
+/* global $ */
 L.Cursor = L.Layer.extend({
 
 	options: {
@@ -162,7 +162,7 @@ L.Cursor.getCustomCursor = function (cursorName) {
 	if (L.Cursor.isCustomCursor(cursorName)) {
 		var cursorHotSpot = L.Cursor.hotSpot[cursorName] || {x: 0, y: 0};
 		customCursor = L.Browser.ie ? // IE10 does not like item with left/top position in the url list
-			'url(' + L.Cursor.imagePath + '/' + cursorName + '.cur), default' :
+		'url(' + L.Cursor.imagePath + '/' + cursorName + '.cur), default' :
 			'url(' + L.Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
 	}
 	return customCursor;

@@ -188,11 +188,11 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			coords = this._keyToTileCoords(key);
 			var scale = this._map.getZoomScale(coords.z);
 			topLeftTwips = new L.Point(
-					this.options.tileWidthTwips / scale * coords.x,
-					this.options.tileHeightTwips / scale * coords.y);
+				this.options.tileWidthTwips / scale * coords.x,
+				this.options.tileHeightTwips / scale * coords.y);
 			bottomRightTwips = topLeftTwips.add(new L.Point(
-					this.options.tileWidthTwips / scale,
-					this.options.tileHeightTwips / scale));
+				this.options.tileWidthTwips / scale,
+				this.options.tileHeightTwips / scale));
 			bounds = new L.Bounds(topLeftTwips, bottomRightTwips);
 			if (invalidBounds.intersects(bounds)) {
 				delete this._tileCache[key];
