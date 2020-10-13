@@ -319,6 +319,8 @@ L.Map = L.Evented.extend({
 
 	loadDocument: function(socket) {
 		this._socket.connect(socket);
+		if (this._clip)
+			this._clip.clearSelection();
 		this.removeObjectFocusDarkOverlay();
 	},
 
