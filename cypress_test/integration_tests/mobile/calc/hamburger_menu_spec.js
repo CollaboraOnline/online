@@ -408,14 +408,13 @@ describe('Trigger hamburger menu options.', function() {
 			});
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Sheet: insert / delete row break.', function() {
+	it('Sheet: insert / delete row break.', function() {
 		before('hamburger_menu_sheet.ods');
 
 		// Select B2 cell
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(77px, 11px, 0px); z-index: 11;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(77px, 11px, 0px); z-index: 11;\']')
 			.then(function(marker) {
 				expect(marker).to.have.lengthOf(1);
 				var XPos = marker[0].getBoundingClientRect().right + 2;
@@ -438,14 +437,13 @@ describe('Trigger hamburger menu options.', function() {
 		cy.wait(500);
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Sheet: insert / delete column break.', function() {
+	it('Sheet: insert / delete column break.', function() {
 		before('hamburger_menu_sheet.ods');
 
 		// Select B2 cell
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(77px, 11px, 0px); z-index: 11;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(77px, 11px, 0px); z-index: 11;\']')
 			.then(function(marker) {
 				expect(marker).to.have.lengthOf(1);
 				var XPos = marker[0].getBoundingClientRect().right + 2;
