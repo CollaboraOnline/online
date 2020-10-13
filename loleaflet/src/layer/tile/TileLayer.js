@@ -924,6 +924,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._onUpdateCursor();
 	},
 
+	_setCursorVisible: function() {
+		this._map._isCursorVisible = true;
+	},
+
 	_onDownloadAsMsg: function (textMsg) {
 		var command = this._map._socket.parseServerCmd(textMsg);
 		var parser = document.createElement('a');

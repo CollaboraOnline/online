@@ -499,6 +499,7 @@ L.Socket = L.Class.extend({
 					{
 						console.debug('idleness: reactivating');
 						map._documentIdle = false;
+						map._docLayer._setCursorVisible();
 						// force reinitialization of calcInputBar(formulabar)
 						if (map.dialog._calcInputBar)
 							map.dialog._calcInputBar.id = null;
