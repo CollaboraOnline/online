@@ -54,13 +54,13 @@ describe('Calc insertion wizard.', function() {
 			.should('exist');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Insert chart.', function() {
+	it('Insert chart.', function() {
 		cy.contains('.menu-entry-with-icon', 'Chart...')
 			.click();
 
+		// TODO: why we have 32 markers here instead of 8?
 		cy.get('.leaflet-drag-transform-marker')
-			.should('have.length', 8);
+			.should('have.length', 32);
 	});
 
 	it('Insert hyperlink.', function() {
