@@ -54,6 +54,28 @@ L.Map.WOPI = L.Handler.extend({
 		L.DomEvent.on(window, 'message', this._postMessageListener, this);
 
 		this._map.on('updateviewslist', function() { this._postViewsMessage('Views_List'); }, this);
+
+		if (!window.ThisIsAMobileApp) {
+			// override the window.open to issue a postMessage, so that
+			// it is possible to handle the hyperlink in the integration
+			var that = this;
+			window.open = function (open) {
+				return function (url, name, features) {
+					that._map.fire('postMessage', {
+						msgId: 'UI_Hyperlink',
+						args: {
+							Url: url,
+							Name: name,
+							Features: features
+						}
+					});
+					if (!that._map._disableDefaultAction['UI_Hyperlink'])
+						return open.call(window, url, name, features);
+					else
+						return null;
+				};
+			}(window.open);
+		}
 	},
 
 	removeHooks: function() {

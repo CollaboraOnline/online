@@ -3404,6 +3404,21 @@ Note that they usually don't change but there is no guarantee that they are stab
 		</td>
 	</tr>
 	<tr>
+		<td><code><b>UI_Hyperlink</b></code></td>
+		<td></td>
+		<td>
+		Notifies WOPI host that the user clicked a hyperlink and
+		confirmed they really want to leave the document to follow the
+		hyperlink.</br>
+		This is especially useful for integrations that
+		embed Collabora Online into an iframe in a mobile app, where
+		actually trying to open a new window should trigger starting a
+		new Activity on Android (or something similar on iOS).</br>
+		The integration using this most probably also wants to trigger
+		the <b>Disable_Default_UIAction</b> for UI_Hyperlink.
+		</td>
+	</tr>
+	<tr>
 		<td><code><b>Doc_ModifiedStatus</b></code></td>
 		<td></td>
 		<td>
