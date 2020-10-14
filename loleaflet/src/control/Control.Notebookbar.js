@@ -204,7 +204,7 @@ L.Control.Notebookbar = L.Control.extend({
 				if ($('.notebookbar-scroll-wrapper').scrollLeft() < $(rootContainer).outerWidth() - $(window).width() - 1)
 					$(container).find('.w2ui-scroll-right').show();
 				else
-				$(container).find('.w2ui-scroll-right').hide();
+					$(container).find('.w2ui-scroll-right').hide();
 			} else {
 				$(container).find('.w2ui-scroll-left').hide();
 				$(container).find('.w2ui-scroll-right').hide();
