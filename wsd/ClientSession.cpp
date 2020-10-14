@@ -835,6 +835,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " deviceFormFactor=" << getDeviceFormFactor();
         }
 
+        if (!getSpellOnline().empty())
+        {
+            oss << " spellOnline=" << getSpellOnline();
+        }
+
         if (!getWatermarkText().empty())
         {
             std::string encodedWatermarkText;

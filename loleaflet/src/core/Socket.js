@@ -201,6 +201,10 @@ L.Socket = L.Class.extend({
 			};
 			msg += ' options=' + JSON.stringify(options);
 		}
+		if (window.isLocalStorageAllowed) {
+			var spellOnline = window.localStorage.getItem('SpellOnline');
+			msg += ' spellOnline=' +  spellOnline;
+		}
 
 		this._doSend(msg);
 		for (var i = 0; i < this._msgQueue.length; i++) {
