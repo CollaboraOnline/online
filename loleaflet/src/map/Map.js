@@ -1641,7 +1641,7 @@ L.Map = L.Evented.extend({
 			e.type !== 'copy' && e.type !== 'cut' && e.type !== 'paste' &&
 		    e.type !== 'compositionstart' && e.type !== 'compositionupdate' && e.type !== 'compositionend' && e.type !== 'textInput') {
 			data.containerPoint = target instanceof L.Marker ?
-					this.latLngToContainerPoint(target.getLatLng()) : this.mouseEventToContainerPoint(e);
+				this.latLngToContainerPoint(target.getLatLng()) : this.mouseEventToContainerPoint(e);
 			data.layerPoint = this.containerPointToLayerPoint(data.containerPoint);
 			data.latlng = this.layerPointToLatLng(data.layerPoint);
 		}
