@@ -1,4 +1,4 @@
-/* global cy expect */
+/* global cy expect Cypress */
 
 // Click on the formula bar.
 // mouseover is triggered to avoid leaving the mouse on the Formula-Bar,
@@ -63,10 +63,15 @@ function dblClickOnFirstCell() {
 function typeIntoFormulabar(text) {
 	cy.log('Typing into formulabar - start.');
 
-	clickFormulaBar();
-
 	cy.get('#calc-inputbar .lokdialog-cursor')
-		.should('be.visible');
+		.then(function(cursor) {
+			if (!Cypress.dom.isVisible(cursor)) {
+				clickFormulaBar();
+
+				cy.get('#calc-inputbar .lokdialog-cursor')
+					.should('be.visible');
+			}
+		});
 
 	cy.get('#tb_actionbar_item_acceptformula')
 		.should('be.visible');

@@ -77,7 +77,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	it.skip('Formula-bar focus', function() {
+	it('Formula-bar focus', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
@@ -100,9 +100,8 @@ describe('Calc focus tests', function() {
 
 		// Type some text.
 		var text1 = 'Hello from Calc';
-		helper.typeIntoDocument(text1);
-		helper.typeIntoDocument('{enter}');
-
+		calcHelper.typeIntoFormulabar(text1);
+		calcHelper.typeIntoFormulabar('{enter}');
 		helper.assertNoKeyboardInput();
 
 		// Select the first cell to edit the same one.
@@ -111,11 +110,11 @@ describe('Calc focus tests', function() {
 		// Check the text we typed.
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
-		helper.typeIntoDocument('{ctrl}a');
+		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1);
 
 		// Accept changes.
-		helper.typeIntoDocument('{enter}');
+		calcHelper.typeIntoFormulabar('{enter}');
 		helper.assertNoKeyboardInput();
 
 		// Type some more text, at the end.
@@ -124,12 +123,12 @@ describe('Calc focus tests', function() {
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		var text2 = ', this is a test.';
-		helper.typeIntoDocument(text2);
+		calcHelper.typeIntoFormulabar(text2);
 		// Validate.
-		helper.typeIntoDocument('{ctrl}a');
+		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
-		helper.typeIntoDocument('{enter}');
+		calcHelper.typeIntoFormulabar('{enter}');
 		helper.assertNoKeyboardInput();
 
 		// Type some more text, in the middle.
@@ -139,17 +138,17 @@ describe('Calc focus tests', function() {
 		helper.assertCursorAndFocus();
 
 		// Move cursor before text2
-		helper.typeIntoDocument('{end}');
+		calcHelper.typeIntoFormulabar('{end}');
 		for (var i = 0; i < text2.length; i++)
 			helper.moveCursor('left');
 
 		var text3 = ', BAZINGA';
-		helper.typeText('textarea.clipboard', text3);
+		calcHelper.typeIntoFormulabar(text3);
 		// Validate.
-		helper.typeIntoDocument('{ctrl}a');
+		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text3 + text2);
 		// End editing.
-		helper.typeIntoDocument('{enter}');
+		calcHelper.typeIntoFormulabar('{enter}');
 		helper.assertNoKeyboardInput();
 	});
 });
