@@ -100,7 +100,8 @@ rm -rf ${TEST_ERROR}
 echo "`echo ${RUN_COMMAND} && ${RUN_COMMAND} || touch ${TEST_ERROR}`" > ${TEST_LOG} 2>&1
 if [ ! -f ${TEST_ERROR} ];
     then cat ${TEST_LOG};
-    else cat ${TEST_LOG} >> ${ERROR_LOG} && \
+    else echo -e "Cypress test failed: ${TEST_FILE}\n" && \
+        cat ${TEST_LOG} >> ${ERROR_LOG} && \
         print_error;
 fi;
 
