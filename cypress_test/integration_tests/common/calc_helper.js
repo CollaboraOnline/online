@@ -60,6 +60,27 @@ function dblClickOnFirstCell() {
 	clickOnFirstCell(false, true);
 }
 
+function typeIntoFormulabar(text) {
+	cy.log('Typing into formulabar - start.');
+
+	clickFormulaBar();
+
+	cy.get('#calc-inputbar .lokdialog-cursor')
+		.should('be.visible');
+
+	cy.get('#tb_actionbar_item_acceptformula')
+		.should('be.visible');
+
+	cy.get('#tb_actionbar_item_cancelformula')
+		.should('be.visible');
+
+	cy.get('body')
+		.type(text);
+
+	cy.log('Typing into formulabar - end.');
+}
+
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
+module.exports.typeIntoFormulabar = typeIntoFormulabar;
