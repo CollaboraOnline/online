@@ -221,6 +221,8 @@ public:
 
     const std::string& getDeviceFormFactor() const { return _deviceFormFactor; }
 
+    const std::string& getSpellOnline() const { return _spellOnline; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -318,6 +320,9 @@ private:
 
     /// The form factor of the device where the client is running: desktop, tablet, mobile.
     std::string _deviceFormFactor;
+
+    /// The start value of Auto Spell Checking wheter it is enabled or disabled on start.
+    std::string _spellOnline;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
