@@ -186,6 +186,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _deviceFormFactor = value;
             ++offset;
         }
+        else if (name == "spellOnline")
+        {
+            _spellOnline = value;
+            ++offset;
+        }
     }
 
     Util::mapAnonymized(_userId, _userIdAnonym);
