@@ -786,7 +786,10 @@
 				if (window.deviceFormFactor) {
 					msg += ' deviceFormFactor=' + window.deviceFormFactor;
 				}
-
+				if (window.isLocalStorageAllowed) {
+					var spellOnline = window.localStorage.getItem('SpellOnline');
+					msg += ' spellOnline=' +  spellOnline;
+				}
 				global.socket.send(msg);
 			}
 		};

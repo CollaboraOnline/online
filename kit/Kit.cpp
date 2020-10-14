@@ -1137,6 +1137,7 @@ private:
         const bool haveDocPassword = session->getHaveDocPassword();
         const std::string& lang = session->getLang();
         const std::string& deviceFormFactor = session->getDeviceFormFactor();
+        std::string spellOnline = "";
 
         std::string options;
         if (!lang.empty())
@@ -1213,6 +1214,7 @@ private:
             // Only save the options on opening the document.
             // No support for changing them after opening a document.
             _renderOpts = renderOpts;
+            spellOnline = session->getSpellOnline();
         }
         else
         {
@@ -1244,11 +1246,12 @@ private:
         }
 
         LOG_INF("Initializing for rendering session [" << sessionId << "] on document url [" <<
-                anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym) << "].");
+                anonymizeUrl(_url) << "] with: [" << makeRenderParams(_renderOpts, userNameAnonym, spellOnline) << "].");
 
         // initializeForRendering() should be called before
         // registerCallback(), as the previous creates a new view in Impress.
-        const std::string renderParams = makeRenderParams(_renderOpts, userName);
+        const std::string renderParams = makeRenderParams(_renderOpts, userName, spellOnline);
+
         _loKitDocument->initializeForRendering(renderParams.c_str());
 
         const int viewId = _loKitDocument->getView();
@@ -1350,7 +1353,16 @@ private:
         return false;
     }
 
-    static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName)
+    template <typename T>
+    static Object::Ptr makePropertyValue(const std::string& type, const T& val)
+    {
+        Object::Ptr obj = new Object();
+        obj->set("type", type);
+        obj->set("value", val);
+        return obj;
+    }
+
+    static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName, const std::string& spellOnline)
     {
         Object::Ptr renderOptsObj;
 
@@ -1369,12 +1381,15 @@ private:
         // Append name of the user, if any, who opened the document to rendering options
         if (!userName.empty())
         {
-            Object::Ptr authorObj = new Object();
-            authorObj->set("type", "string");
             std::string decodedUserName;
             URI::decode(userName, decodedUserName);
-            authorObj->set("value", decodedUserName);
-            renderOptsObj->set(".uno:Author", authorObj);
+            renderOptsObj->set(".uno:Author", makePropertyValue("string", decodedUserName));
+        }
+
+        if (!spellOnline.empty())
+        {
+            bool bSet = (spellOnline != "false");
+            renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
         }
 
         if (renderOptsObj)
