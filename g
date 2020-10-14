@@ -16,15 +16,19 @@ if [ "$1" == "review" ]; then
         exit 1
     fi
 
+    # e.g. co-4-2
     BRANCH=$(git symbolic-ref HEAD|sed 's|refs/heads/||')
-    REMOTE_BRANCH=private/$USER/$BRANCH
+    # e.g. origin
+    REMOTE=$(git config branch.$BRANCH.remote)
+    # e.g. distro/collabora/co-4-2
+    TRACKED_BRANCH=$(git rev-parse --abbrev-ref --symbolic-full-name HEAD@{upstream}|sed "s|${REMOTE}/||")
+    REMOTE_BRANCH=private/$USER/$TRACKED_BRANCH
     CUSTOM_BRANCH=
     if [ -n "$2" ]; then
         REMOTE_BRANCH=private/$USER/$2
         CUSTOM_BRANCH=y
     fi
     HAS_REMOTE_BRANCH=
-    REMOTE=$(git config branch.$BRANCH.remote)
     if git rev-parse --quiet --verify $REMOTE/$REMOTE_BRANCH >/dev/null; then
         HAS_REMOTE_BRANCH=y
     fi
@@ -39,7 +43,7 @@ if [ "$1" == "review" ]; then
         # Open a new PR.
         git push $REMOTE HEAD:$REMOTE_BRANCH
         git branch $REMOTE_BRANCH
-        gh pr create --base $BRANCH --head $REMOTE_BRANCH --fill
+        gh pr create --base $TRACKED_BRANCH --head $REMOTE_BRANCH --fill
         git branch -D $REMOTE_BRANCH
     fi
     exit 0
