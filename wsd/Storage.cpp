@@ -274,10 +274,26 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     {
         LOG_INF("Public URI [" << LOOLWSD::anonymizeUrl(uri.toString()) << "] considered WOPI.");
         const auto& targetHost = uri.getHost();
+        bool allowed(false);
         if (WopiHosts.match(targetHost) || isLocalhost(targetHost))
         {
-            return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
+            allowed = true;
         }
+        if (!allowed)
+        {
+            // check if the IP address is in the list of allowed hosts
+            const auto hostAddresses(Poco::Net::DNS::resolve(targetHost));
+            for (auto &address : hostAddresses.addresses())
+            {
+                if (WopiHosts.match(address.toString()))
+                {
+                    allowed = true;
+                    break;
+                }
+            }
+        }
+        if (allowed)
+            return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
         LOG_ERR("No acceptable WOPI hosts found matching the target host [" << targetHost << "] in config.");
         throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host [" + targetHost + "] in config.");
     }
