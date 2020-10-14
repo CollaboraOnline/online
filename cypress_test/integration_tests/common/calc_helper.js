@@ -1,4 +1,6 @@
-/* global cy expect Cypress */
+/* global cy expect Cypress require */
+
+var helper = require('./helper');
 
 // Click on the formula bar.
 // mouseover is triggered to avoid leaving the mouse on the Formula-Bar,
@@ -43,10 +45,15 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 			}
 		});
 
-	if (firstClick && !dblClick)
+	if (firstClick && !dblClick) {
 		cy.get('.spreadsheet-cell-autofill-marker')
 			.should('be.visible');
-	else
+
+		helper.doIfOnMobile(function() {
+			cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(-8px, -8px, 0px); z-index: -8;')
+				.should('be.visible');
+		});
+	} else
 		cy.get('.leaflet-cursor.blinking-cursor')
 			.should('be.visible');
 
