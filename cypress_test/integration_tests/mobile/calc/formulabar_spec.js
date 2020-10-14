@@ -24,12 +24,6 @@ describe('Change alignment settings.', function() {
 		// Select first cell by clicking on it
 		calcHelper.clickOnFirstCell();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;')
-			.should('be.visible');
-
 		// Select a different cell using address input.
 		cy.get('input#addressInput')
 			.clear()
@@ -56,12 +50,6 @@ describe('Change alignment settings.', function() {
 		// Select first cell by clicking on it.
 		calcHelper.clickOnFirstCell();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;')
-			.should('be.visible');
-
 		// Select a cell range using address input.
 		cy.get('input#addressInput')
 			.clear()
@@ -78,12 +66,6 @@ describe('Change alignment settings.', function() {
 
 		// Select first cell by clicking on it.
 		calcHelper.clickOnFirstCell();
-
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;')
-			.should('be.visible');
 
 		cy.get('#tb_editbar_item_togglemergecells')
 			.should('have.class', 'disabled');
