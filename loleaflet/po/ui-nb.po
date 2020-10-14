@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-11 05:27+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2020-10-14 13:30+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "collabora-online/ui/nb_NO/>\n"
 "Language: nb\n"
@@ -62,8 +62,6 @@ msgid "User Name"
 msgstr "Brukernavn"
 
 #: admin/admin.strings.js:16
-#, fuzzy
-#| msgid "Documents opened"
 msgid "Documents open"
 msgstr "Åpnede dokumenter"
 
@@ -101,7 +99,6 @@ msgid "Document"
 msgstr "Dokument"
 
 #: admin/admin.strings.js:25
-#, fuzzy
 msgid "Views"
 msgstr "Visninger"
 
@@ -313,7 +310,6 @@ msgid " s"
 msgstr " s"
 
 #: src/control/Parts.js:377
-#, fuzzy
 msgid "Show Selected Sheets"
 msgstr "Vis valgte ark"
 
@@ -1453,10 +1449,8 @@ msgid "Resolve"
 msgstr "Løs"
 
 #: src/layer/tile/TileLayer.js:826
-#, fuzzy
-#| msgid "Function Wizard"
 msgid "Functions"
-msgstr "Funksjonsveileder"
+msgstr "Funksjoner"
 
 #: src/map/Clipboard.js:137
 msgid "To paste outside %productName, please first click the 'download' button"

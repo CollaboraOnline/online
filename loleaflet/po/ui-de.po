@@ -7,20 +7,21 @@
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Marc Rodrigues <info@sustain-release.de>, 2020
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-01 06:41+0000\n"
-"Last-Translator: Marc Rodrigues <info@sustain-release.de>, 2020\n"
-"Language-Team: German (https://www.transifex.com/collabora-productivity-ltd/teams/68191/de/)\n"
+"PO-Revision-Date: 2020-10-16 03:24+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
+"ui/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -557,7 +558,7 @@ msgstr "Word-Dokument (.docx)"
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:508
 #: src/control/Control.NotebookbarWriter.js:254
 msgid "Rich Text (.rtf)"
-msgstr "Rich Text (.rtf)"
+msgstr "Reicher Text (.rtf)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:509
 #: src/control/Control.NotebookbarWriter.js:360
@@ -1103,7 +1104,7 @@ msgstr "Geben Sie bitte den PIN-Code der E-Mail oder SMS ein"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
-msgstr "Anmeldung über E-Mail oder Handynummer"
+msgstr "Anmeldung über E-Mail oder Mobilnummer"
 
 #: src/control/Signing.js:329
 msgid "Select document type to upload"
@@ -1299,7 +1300,7 @@ msgstr "Es besteht ein Problem bei der Verbindung zum Dokument"
 
 #: src/core/Socket.js:419
 msgid "Server is recycling and will be available shortly"
-msgstr "Der Server wird neugestartet und ist demnächst wieder verfügbar."
+msgstr "Der Server wird neu gestartet und ist demnächst wieder verfügbar"
 
 #: src/core/Socket.js:447
 msgid ""
@@ -1347,7 +1348,7 @@ msgstr "Das Dokument benötigt ein Kennwort zum Bearbeiten."
 
 #: src/core/Socket.js:661
 msgid "Hit Cancel to open in view-only mode."
-msgstr "Klicken Sie auf Abbrechen, um das Dokument im Ansichtsmodus zu öffnen"
+msgstr "Klicken Sie auf Abbrechen, um das Dokument im Ansichtsmodus zu öffnen."
 
 #: src/core/Socket.js:665
 msgid "Wrong password provided. Please try again."
@@ -1356,7 +1357,7 @@ msgstr ""
 
 #: src/core/Socket.js:803 src/map/Map.js:1518
 msgid "Loading..."
-msgstr "Laden..."
+msgstr "Lade …"
 
 #: src/core/Socket.js:803
 msgid "Connecting..."
@@ -1396,7 +1397,7 @@ msgstr ""
 "Dies ist eine nicht unterstützte {productname} Version. Um den Eindruck zu "
 "vermeiden, dass sie sich für den Einsatz in Unternehmen eignet, erscheint "
 "diese Nachricht, wenn mehr als {docs} Dokumente oder {connections} "
-"Verbindungen gleichzeitig verwendet werden."
+"Verbindungen gleichzeitig verwendet werden"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1662,7 +1663,7 @@ msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr ""
 "Die Datei vom Typ: %0 kann nicht auf den Server hochgeladen werden, da die "
-"Datei keinen Namen hat."
+"Datei keinen Namen hat"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format
@@ -1670,7 +1671,7 @@ msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr ""
 "Die Datei vom Typ: %0 kann nicht auf den Server hochgeladen werden, da die "
-"Datei leer ist."
+"Datei leer ist"
 
 #: src/map/handler/Map.FileInserter.js:129
 msgid "Uploading..."
@@ -1679,7 +1680,7 @@ msgstr "Hochladen..."
 #: src/map/handler/Map.FileInserter.js:143
 msgid "Uploading file to server failed with status: %0"
 msgstr ""
-"Das Hochladen der Datei auf den Server mit dem Status %0 ist fehlgeschlagen."
+"Das Hochladen der Datei auf den Server mit dem Status %0 ist fehlgeschlagen"
 
 #: src/map/handler/Map.WOPI.js:111
 msgid "Creating new file from template..."

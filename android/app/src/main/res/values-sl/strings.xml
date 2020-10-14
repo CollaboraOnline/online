@@ -105,4 +105,9 @@
     <string name="app_version_and_hash">Različica: %1$s
 \nSpletna LO (git-hash): %2$s
 \nOsrčje LO (git-hash): %3$s</string>
+    <string name="theme_light">Svetla</string>
+    <string name="theme_dark">Temna</string>
+    <string name="theme_system_default">Sistemsko privzeta</string>
+    <string name="choose_theme">Izberite temo</string>
+    <string name="theme">Tema</string>
 </resources>

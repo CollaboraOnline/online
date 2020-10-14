@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="temp_file_saving_disabled">This file is read-only, saving is disabled.</string>
     <string name="file_chromeos_read_only">This file cannot be saved in this location, opening it read-only. Move it to the "Play files" for full read/write access.</string>
@@ -10,12 +11,11 @@
     <string name="later">Later</string>
     <string name="rate_our_app_title">Thank you for using %1$s!</string>
     <string name="rate_our_app_text">If you like it, please give us 5 stars in Google Play. Your good reviews are our best motivation.</string>
-
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Loading...</string>
     <string name="exiting">Exiting...</string>
     <string name="restarting">Restarting...</string>
     <string name="view_only">View only</string>
     <string name="edit_copy">Edit a copy</string>
-    <string name="ask_for_copy">This document is readonly. Do you want to make a copy for editing?</string>
+    <string name="ask_for_copy">This document is read-only. Do you want to make a copy for editing\?</string>
 </resources>

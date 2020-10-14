@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-08 21:00+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2020-10-16 03:24+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -68,11 +68,11 @@ msgstr "Documents ouverts"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
 msgid " user(s)."
-msgstr " utilisateur(s)"
+msgstr " utilisateur(s)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
-msgstr " document(s) ouvert(s)"
+msgstr " document(s) ouvert(s)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -299,11 +299,11 @@ msgstr "BB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
-msgstr " hrs"
+msgstr " h"
 
 #: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
-msgstr " mins"
+msgstr " min"
 
 #: admin/src/Util.js:54
 msgid " s"
@@ -477,7 +477,7 @@ msgstr "Insérer un tableau"
 
 #: src/control/Control.JSDialogBuilder.js:2254
 msgid "Line style:"
-msgstr "Style de ligne:"
+msgstr "Style de ligne :"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:231
 #: src/control/Control.Menubar.js:233 src/control/Control.Menubar.js:235
@@ -845,7 +845,9 @@ msgstr "Diapositive suivante"
 
 #: src/control/Control.Toolbar.js:956
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "Il y a un conflit d'annulation/restauration avec plusieurs utilisateurs. Veuillez utiliser la restauration du document pour le résoudre."
+msgstr ""
+"Il y a un conflit d'annulation/restauration avec plusieurs utilisateurs. "
+"Veuillez utiliser la restauration du document pour le résoudre"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -919,12 +921,12 @@ msgstr "Menu"
 #: src/control/Control.Notebookbar.js:134
 #: src/control/Control.NotebookbarImpress.js:32
 msgid "Undo"
-msgstr "Défaire"
+msgstr "Annuler"
 
 #: src/control/Control.Notebookbar.js:139
 #: src/control/Control.NotebookbarImpress.js:37
 msgid "Redo"
-msgstr "Refaire"
+msgstr "Rétablir"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
@@ -1084,11 +1086,11 @@ msgstr "Code PIN"
 
 #: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr "Veuillez saisir le code PIN du courriel ou du SMS"
+msgstr "Veuillez saisir le NIP du courriel ou du SMS"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
-msgstr "Connexion à partir d'un e-mail ou d'un numéro de portable"
+msgstr "Connexion à partir d'un courriel ou d'un numéro de portable"
 
 #: src/control/Signing.js:329
 msgid "Select document type to upload"
@@ -1112,7 +1114,7 @@ msgstr "Connexion à partir d'un portable"
 
 #: src/control/Signing.js:490
 msgid "Recover from email"
-msgstr "Récupérer d'un e-mail"
+msgstr "Récupérer d'un courriel"
 
 #: src/control/Signing.js:598
 msgid "Select passport"
@@ -1180,7 +1182,7 @@ msgstr "La signature est correcte, mais le document est seulement partiellement 
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
-msgstr "Signé mais tous les fichiers ne sont pas signés."
+msgstr "Signé mais tous les fichiers ne sont pas signés"
 
 #: src/control/Toolbar.js:76 src/control/Toolbar.js:88
 msgid "Downloading..."
@@ -1329,7 +1331,11 @@ msgstr "L'URL de l'hôte est vide. Le serveur loolwsd est probablement mal confi
 
 #: src/errormessages.js:15
 msgid "This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently"
-msgstr "Cette version de {productname} n'est pas prise en charge. Pour éviter de donner l'impression qu'elle peut être déployée en entreprise, ce message apparaît lorsque plus de {docs} documents ou {connections} connexions sont utilisées concurremment."
+msgstr ""
+"Cette version de {productname} n'est pas prise en charge. Pour éviter de "
+"donner l'impression qu'elle peut être déployée en entreprise, ce message "
+"apparaît lorsque plus de {docs} documents ou {connections} connexions sont "
+"utilisées concurremment"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1467,7 +1473,10 @@ msgstr "<p>Veuillez utiliser les boutons copier/coller du clavier à l'écran.</
 
 #: src/map/Clipboard.js:840
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
-msgstr "<p>Votre navigateur a un accès limité au presse-papier, utilisez ces raccourcis :<ul><li><b>Ctrl+C</b>: pour copier.</li><li><b>Ctrl+X</b>: pour couper.</li><li><b>Ctrl+V</b>: pour coller.</li></ul></p>"
+msgstr ""
+"<p>Votre navigateur a un accès limité au presse-papier, utilisez ces "
+"raccourcis :<ul><li><b>Ctrl+C</b> : pour copier.</li><li><b>Ctrl+X</b> : "
+"pour couper.</li><li><b>Ctrl+V</b> : pour coller.</li></ul></p>"
 
 #: src/map/Clipboard.js:861
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
@@ -1498,7 +1507,9 @@ msgstr "Document inactif - veuillez cliquer pour reprendre l'édition"
 #: src/map/handler/Map.FileInserter.js:96
 #, javascript-format
 msgid "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "Le fichier du type : %0 ne peut pas être téléversé sur le serveur dans la mesure où il n'a pas de nom."
+msgstr ""
+"Le fichier du type : %0 ne peut pas être téléversé sur le serveur dans la "
+"mesure où il n'a pas de nom"
 
 #: src/map/handler/Map.FileInserter.js:98
 #, javascript-format

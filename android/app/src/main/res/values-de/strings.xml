@@ -1,13 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--string name="app_name" definition is deliberately missing here, it is filled in in build.gradle.-->
-
     <string name="app_name_settings">Einstellungen</string>
     <string name="app_version_and_hash">Version: %1$s
 \nOnline git-Hash: %2$s
 \nKern git-Hash: %3$s</string>
     <string name="app_description">$APP_NAME ist eine moderne, benutzerfreundliche Open Source Office-Anwendung für Textverarbeitung, Tabellenkalkulationen, Präsentationen und mehr.</string>
     <string name="app_vendor">Dieses Release wurde bereitgestellt durch $VENDOR.</string>
-
     <string name="no_recent_items">Öffnen Sie bitte eine Datei über das Ordnersymbol in der Symbolleiste.</string>
     <string name="no_items">Keine Elemente</string>
     <string name="temp_file_saving_disabled">Diese Datei ist schreibgeschützt, Speichern ist deaktiviert.</string>
@@ -15,7 +14,6 @@
     <string name="file_creation_failed">Dateierstellung fehlgeschlagen</string>
     <string name="storage_permission_required">Eine Speichererlaubnis ist erforderlich</string>
     <string name="failed_to_load_file">Fehler beim Ermitteln der zu ladenden Datei</string>
-
     <string name="list_view">Liste</string>
     <string name="grid_view">Raster</string>
     <string name="pref_category_explorer">Dateimanager-Einstellungen</string>
@@ -32,16 +30,13 @@
     <string name="pref_show_debug_info_summary">Aktivieren Sie diese Option, um Debug-Informationen in der Dokumentanzeige anzuzeigen</string>
     <string name="pref_enable_chrome_debugger">Chrome-Debugging</string>
     <string name="pref_enable_chrome_debugger_info">Aktivieren Sie diese Option, um Chromes Debugging-Tool im Dokument zu verwenden</string>
-
     <string name="about_license">Lizenz anzeigen</string>
     <string name="about_notice">Hinweise anzeigen</string>
     <string name="about_moreinfo">Weitere Informationen</string>
-
     <string name="new_textdocument">Neues Textdokument</string>
     <string name="new_presentation">Neue Präsentation</string>
     <string name="new_spreadsheet">Neues Tabellendokument</string>
     <string name="default_document_name">unbenannt</string>
-
     <string name="filter">Filtern nach</string>
     <string name="sort">Sortieren nach</string>
     <string name="sort_smallest">Kleinste zuerst</string>
@@ -55,20 +50,17 @@
     <string name="title_recents">Zuletzt verwendete Dateien</string>
     <string name="title_browser">Alle Dateien</string>
     <!-- Pref keys as resources ; Not currently used -->
-
     <string name="action_about">Über</string>
     <string name="action_settings">Einstellungen</string>
     <string name="open">Öffnen</string>
     <string name="share">Teilen</string>
     <string name="remove_from_list">Von der Liste entfernen</string>
     <string name="share_via">Teilen via</string>
-
     <!-- Document browser filters -->
     <string name="filter_everything">Alles</string>
     <string name="filter_documents">Dokumente</string>
     <string name="filter_spreadsheets">Tabellendokumente</string>
     <string name="filter_presentations">Präsentationen</string>
-
     <!-- Document provider names -->
     <string name="document_locations">Dokument-Speicherorte</string>
     <string name="close_document_locations">Dokument-Speicherorte schließen</string>
@@ -78,18 +70,13 @@
     <string name="otg_file_system">OTG-Gerät (experimentell)</string>
     <string name="remote_server">Webserver</string>
     <string name="usb_connected_configure">USB verbunden, konfigurieren Sie Ihr Gerät.</string>
-
     <string name="owncloud_wrong_connection">Es kann keine Verbindung zum Cloud-Server hergestellt werden. Überprüfen Sie Ihre Konfiguration.</string>
     <string name="owncloud_unauthorized">Anmeldung am Cloud-Server nicht möglich. Überprüfen Sie Ihre Konfiguration.</string>
     <string name="owncloud_unspecified_error">Unspezifischer Fehler beim Verbinden mit dem Cloud-Server. Überprüfen Sie Ihre Konfiguration und/oder versuchen Sie es später erneut.</string>
-
     <string name="ext_document_provider_error">Ungültige root-Datei. Überprüfen Sie Ihre SD-Kartenkonfiguration.</string>
     <string name="otg_missing_error">Ungültige root-Datei. Überprüfen Sie Ihr OTG-Gerät und/oder Ihre Konfiguration.</string>
-
     <!-- Edit action names -->
-
     <!-- Feedback messages -->
-
     <!-- Document provider settings -->
     <string name="storage_provider_settings">Speicheranbieter-Einstellungen</string>
     <string name="owncloud_settings">Cloud-Server-Einstellungen</string>
@@ -98,10 +85,9 @@
     <string name="otg_device_path">Pfad zum OTG-Gerät</string>
     <string name="otg_warning">Experimentelle Funktion: Nur verwenden, wenn das OTG-Gerät beschreibbar ist.</string>
     <string name="server_url">Server-URL</string>
-    <string name="server_url_and_port">URL und Port des Cloud-Servers</string>
+    <string name="server_url_and_port">URL und Port des Cloud-Servers.</string>
     <string name="user_name">Benutzername</string>
     <string name="password">Passwort</string>
-
     <!-- Directory browser strings -->
     <string name="up_description">Nach oben</string>
     <string name="confirm_label">Bestätigen</string>
@@ -110,48 +96,36 @@
     <string name="directory_browser_label">Verzeichnis auswählen</string>
     <string name="bad_directory">Ungültiger Verzeichnispfad</string>
     <string name="current_dir">Aktuelles Verzeichnis: %1$s</string>
-
     <!-- Permission rationale alert dialog strings -->
     <string name="title_permission_required">Berechtigung erforderlich</string>
     <string name="reason_required_to_read_documents">Zum Lesen Ihrer Dokumente ist eine Speichererlaubnis erforderlich.</string>
     <string name="positive_ok">OK</string>
     <string name="negative_im_sure">Ich bin mir sicher</string>
     <string name="negative_cancel">Abbrechen</string>
-
     <!-- Save Alert dialog strings -->
     <string name="action_cancel">Abbrechen</string>
-
     <!-- Create New Document Dialog Strings -->
     <string name="create_new_document_title">Neues Dokument Erstellen</string>
     <string name="enter_filename">Bitte Dateinamen eingeben:</string>
     <string name="action_create">Erstellen</string>
     <string name="action_overwrite">Überschreiben</string>
-
     <!-- Loading SlideShow Dialog Strings -->
-    <string name="loading">Laden…</string>
-
+    <string name="loading">Lade …</string>
     <string name="share_document">Dokument teilen</string>
-
     <!-- Presentation Mode Strings -->
-
     <!-- Calc Header Menu Strings -->
-
     <!-- Password dialog strings -->
-
     <!-- Insert Image Strings -->
-
     <!-- Clipboard Actions -->
-
     <!-- UNO cmd controller Strings -->
     <string name="unable_to_go_further">Weiter gehen nicht möglich.</string>
     <string name="bmp_null">Bmp ist null!</string>
     <string name="directory_not_saved">Verzeichnis nicht gespeichert.</string>
     <string name="title_activity_show_html">Über</string>
-
     <!-- Theme settings -->
-    <string name="theme">Theme</string>
-    <string name="choose_theme">Theme auswählen</string>
+    <string name="theme">Design</string>
+    <string name="choose_theme">Design auswählen</string>
     <string name="theme_system_default">Systemvoreinstellung</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="theme_light">Hell</string>
 </resources>

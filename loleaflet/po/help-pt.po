@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-25 13:37+0000\n"
-"Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
-"Language-Team: Portuguese <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pt/>\n"
+"PO-Revision-Date: 2020-10-18 08:40+0000\n"
+"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
+"Language-Team: Portuguese <https://hosted.weblate.org/projects/"
+"collabora-online/help/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3.1-dev\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-help-pt.po\n"
 "X-Pootle-Revision: 855160\n"
 
@@ -1060,14 +1061,26 @@ msgstr "<span class=\"def\">A área do documento:</span> mostra o conteúdo do d
 #: html/loleaflet-help.html%2Bdiv.p.img:262-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
 msgstr ""
+"<span class=\"def\">The menu bar:</span> O menu principal é colocado no topo "
+"e inclui muitas opções, comandos para impressão, edição, visualização e "
+"outros comandos avançados. Pode esconder a barra de menu clicando no <img "
+"style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> ícone na parte "
+"direita. Clique no <img style=\"height:0.6cm;width:0.6cm;\" src=\"images"
+"/unfold.svg\"> ícone para visualizar o menu."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
 msgstr ""
+"<span class=\"def\">Menus de contexto:</span> Ao clicar com o botão direito "
+"do rato, aparece um menu com comandos associados ao objeto subjacente."
 
 #: html/loleaflet-help.html%2Bdiv.p:264-5
 msgid "<span class=\"def\">The toolbar:</span> The toolbar contains the most used options for daily editing. Toolbar buttons are dynamic, meaning that their state (on or off) depends on different factors."
 msgstr ""
+"<span class=\"def\">A barra de ferramentas:</span> A barra de ferramentas "
+"contém as opções mais utilizadas para a edição diária. Os botões da barra de "
+"ferramentas são dinâmicos, o que significa que o seu estado (ligado ou "
+"desligado) depende de diferentes factores."
 
 #: html/loleaflet-help.html%2Bdiv.p:265-5
 msgid "<span class=\"def\">The status bar:</span> The status bar is shown in the bottom, and contains several useful options and features."
@@ -1076,6 +1089,11 @@ msgstr "<span class=\"def\">Barra de estado:</span> a barra de estado é mostrad
 #: html/loleaflet-help.html%2Bdiv.p:267-5
 msgid "<span class=\"def\">The search bar:</span> Searching starts automatically when content is inserted in the search box, and the document window automatically moves to the first occurrence found. Searching is not case-sensitive. There are three buttons right next to the search box:"
 msgstr ""
+"<span class=\"def\">A barra de pesquisa:</span> A pesquisa começa "
+"automaticamente quando o conteúdo é inserido na caixa de pesquisa, e a "
+"janela do documento move-se automaticamente para a primeira ocorrência "
+"encontrada. A pesquisa não é sensível a maiúsculas e minúsculas. Há três "
+"botões mesmo ao lado da caixa de pesquisa:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:269-11
 msgid "Search backwards"
@@ -1092,38 +1110,67 @@ msgstr "Cancelar a pesquisa (aparece apenas durante a pesquisa de um texto)"
 #: html/loleaflet-help.html%2Bdiv.p:273-5
 msgid "<span class=\"def\">The zoom bar:</span> At the right of the status bar, there is a set of buttons that allow you to zoom to 100%, zoom out and zoom in. The zoom applies to the document area, the user interface is not affected. The current level of zoom is shown in this area."
 msgstr ""
+"<span class=\"def\">A barra de ampliação:</span> À direita da barra de "
+"estado, existe um conjunto de botões que lhe permite ampliar até 100%, "
+"diminuir e aumentar a ampliação. A ampliação aplica-se à área do documento, "
+"a interface do utilizador não é afetada. O nível atual de ampliação é "
+"mostrado nesta área."
 
 #: html/loleaflet-help.html%2Bdiv.p:274-5
 msgid "Text, charts, shapes and svg images will stay sharp, when zooming in, you will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
+"Texto, gráficos, formas e imagens svg permanecerão nítidos, durante a "
+"ampliação, apenas verá aparecerem pixeis em imagens inseridas, tais como os "
+"formatos jpg ou png."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
+"A utilização da ampliação do navegador afeta as áreas do documento e da "
+"interface do utilizador."
 
 #: html/loleaflet-help.html%2Bdiv.p:276-5
 msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
 msgstr ""
+"<span class=\"def\">A barra de informação:</span> À direita da barra de "
+"pesquisa, é exibido um conjunto de informações sobre o documento. A "
+"informação propriamente dita depende da natureza do documento."
 
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
+"Os seus documentos são arquivados e administrados no armazenamento em nuvem "
+"que está integrado com <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
 msgstr ""
+"Para descarregar um documento, descarregue-o do menu de <span class=\"ui\""
+">Ficheiros</span> da aplicação <span class=\"productname\">%productName</"
+"span>. Os formatos de descarregamento disponíveis dependem da aplicação. "
+"Todas as aplicações exportam documentos em formato PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:282-5
 msgid "To open document, click on the file to open the <span class=\"productname\">%productName</span> module associated to the document format."
 msgstr ""
+"Para abrir o documento, clicar no ficheiro para abrir o módulo <span class="
+"\"productname\">%productName</span> associado ao formato do documento."
 
 #: html/loleaflet-help.html%2Bdiv.p:283-5
 msgid "Documents in <span class=\"productname\">%productName</span> save automatically, but if you are concerned that a document is synchronized as quickly as possible you can also force saving using the <span class=\"ui\">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
+"Os documentos em <span class=\"productname\">%productName</span> guardam "
+"automaticamente, mas se estiver preocupado de que um documento seja "
+"sincronizado o mais rapidamente possível, pode também forçar a gravação "
+"usando a função <span class=\"ui\">Gravar</span> do menu <span class=\"ui\""
+">Ficheiro</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
 msgstr ""
+"Dependendo das capacidades do seu navegador, ou pode aparecer a janela de "
+"impressão ou um popup \"Descarregar exportação PDF?\". Pode imprimir este "
+"PDF no seu leitor de PDF favorito."
 
 #: html/loleaflet-help.html%2Bdiv.p:285-5
 msgid "When closing a document, it is automatically saved if it has been changed."
@@ -1132,160 +1179,270 @@ msgstr "Ao fechar um documento, as alterações serão guardadas automaticamente
 #: html/loleaflet-help.html%2Bdiv.p:288-5
 msgid "Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:"
 msgstr ""
+"A edição de documentos deve ser familiar a todos os que já utilizaram uma "
+"aplicação de escritório antes, mas aqui estão algumas características "
+"distintivas:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:289-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Copiar e colar"
 
 #: html/loleaflet-help.html%2Bdiv.p:290-5
 msgid "Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class=\"productname\">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required."
 msgstr ""
+"É suportado copiar/cortar e colar conteúdo rico, não só dentro de um "
+"determinado documento, mas também através de documentos na/no mesma/o ou "
+"diferente <span class=\"productname\">%productName</span>. Para estas "
+"utilizações internas, os utilizadores podem copiar/cortar conteúdo, "
+"incluindo imagens e conteúdo misto, no PC, utilizando os atalhos do teclado "
+"directamente (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</"
+"span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span "
+"class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). Por razões de "
+"segurança é necessário utilizar <span class=\"kbd\">Ctrl</span> + <span "
+"class=\"kbd\">V</span> colar no PC, mas os menus de contexto podem ser "
+"utilizados para cortar e copiar. No Android ou iOS, é necessário seleccionar "
+"texto através de duplo toque, e utilizar uma longa fita para aceder ao "
+"copiar/cortar/colar através do menu de contexto."
 
 #: html/loleaflet-help.html%2Bdiv.p:291-5
 msgid "To copy larger pieces of content to other applications on your device, users need to press the <span class=\"ui\">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images."
 msgstr ""
+"Para copiar partes maiores de conteúdo para outras aplicações no seu "
+"dispositivo, os usuários precisam de premir o botão <span class=\"ui\""
+">Iniciar descarga</span>, e depois voltar a copiá-lo para a sua área de "
+"transferência, de modo a o tornar disponível para a aplicação alvo a ler. "
+"Isto é possível através de um pequeno widget que aparece no canto inferior "
+"direito, e é apenas necessário para exportar o conteúdo para colar em "
+"aplicações externas. Este passo também converte categorias de objetos "
+"complexos em imagens estáticas."
 
 #: html/loleaflet-help.html%2Bdiv.h4:292-5
 msgid "Document repair"
-msgstr ""
+msgstr "Reparação de documentos"
 
 #: html/loleaflet-help.html%2Bdiv.p:293-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."
 msgstr ""
+"Quando várias pessoas editam o mesmo documento ao mesmo tempo, é possível "
+"que as suas alterações entrem em conflito, o que pode causar alguma "
+"confusão. A função de Reparação de Documentos permite aos utilizadores "
+"desfazerem as alterações de outros editores ao documento para um estado "
+"anterior."
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
 msgid "To jump back to the selected state, select it with the mouse and hit <span class=\"ui\">Jump to state</span>."
 msgstr ""
+"Para voltar ao estado seleccionado, seleccione-o com o rato e carregue em "
+"<span class=\"ui\">Saltar para o estado</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:296-5
 msgid "This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> and proceeded to type over it destroying it – while you were concurrently editing."
 msgstr ""
+"Isto é particularmente útil - digamos, quando um colega selecionou "
+"inadvertidamente todo o texto do documento com <span class=\"kbd\">Ctrl</"
+"span> + <span class=\"kbd\">A</span> e procedeu à sua digitação sobre o "
+"mesmo destruindo-o - enquanto o colega estava simultaneamente a editar."
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Documento inativo"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid "When <span class=\"productname\">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”."
 msgstr ""
+"Quando <span class=\"productname\">%productName</span> detecta que não houve "
+"qualquer atividade no navegador durante algum tempo, coloca o documento num "
+"estado \"Inativo\". O documento é mostrado com uma sobreposição cinza "
+"transparente, com a mensagem \"Documento inativo - por favor clique para "
+"retomar a edição\"."
 
 #: html/loleaflet-help.html%2Bdiv.p:300-5
 msgid "To continue editing, click on the document and the layover and message disappear. Any changes that may have been made by other users – while collaboratively editing the document – are re-loaded."
 msgstr ""
+"Para continuar a edição, clique no documento e a mensagem desaparecerá. "
+"Quaisquer alterações que possam ter sido feitas por outros usuários - "
+"enquanto editam o documento em colaboração - são carregadas de novo."
 
 #: html/loleaflet-help.html%2Bdiv.h4:301-5
 msgid "Pasting"
-msgstr ""
+msgstr "Colagem"
 
 #: html/loleaflet-help.html%2Bdiv.p:302-5
 msgid "When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text."
 msgstr ""
+"Quando se cola conteúdo copiado de dentro do mesmo documento, o formato e "
+"elementos são mantidos. Se copiar de outro documento, noutro separador ou "
+"janela do navegador, ou de fora do navegador, o conteúdo colado irá "
+"preservar o texto rico."
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
 msgstr ""
+"Pode colar como texto não formatado com o atalho do teclado: <span class="
+"\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\""
+">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
 msgstr ""
+"Quando se cola texto de dentro do documento, a formatação será respeitada. "
+"Também pode colar objectos, tais como imagens, se estas forem copiadas do "
+"documento em que está a trabalhar."
 
 #: html/loleaflet-help.html%2Bdiv.p:305-5
 msgid "When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text."
 msgstr ""
+"Quando se cola texto do exterior do documento (outra janela do navegador ou "
+"uma aplicação de ambiente de trabalho), este será colado com fidelidade à "
+"formatação (texto enriquecido)."
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
 msgid "When you have internal cut or copied content, you can paste this content using the context menu."
 msgstr ""
+"Quando tiver conteúdo interno cortado ou copiado, pode colar este conteúdo "
+"usando o menu de contexto."
 
 #: html/loleaflet-help.html%2Bdiv.h4:309-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Adição de gráficos"
 
 #: html/loleaflet-help.html%2Bdiv.p:310-5
 msgid "<span class=\"productname\">%productName</span> supports inserting and visualization of charts in documents. To add a chart:"
 msgstr ""
+"<span class=\"productname\">%productName</span> suporta a inserção e "
+"visualização de gráficos em documentos. Para adicionar um gráfico:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:312-11
 msgid "Select a table in text document, a range in a spreadsheet or a table in a presentation."
 msgstr ""
+"Selecionar uma tabela num documento de texto, um intervalo numa folha de "
+"cálculo ou uma tabela numa apresentação."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:314-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. Customize your chart on the sidebar:"
 msgstr ""
+"Escolher <span class=\"ui\">Inserir</span> → <span class=\"ui\">Charts</"
+"span>. Personalize o seu gráfico na barra lateral:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:317-11
 msgid "If no table or range was selected, a prototype chart is displayed."
 msgstr ""
+"Se não foi selecionada nenhuma tabela ou intervalo, é apresentado um "
+"protótipo de gráfico."
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid "<span class=\"def\">Chart editing:</span> Double click the chart to select. Use context menus to add chart elements such as title, axis, and other. Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart Type</span> to edit chart data and select chart type."
 msgstr ""
+"<span class=\"def\">Edição do gráfico:</span> Clique duas vezes no gráfico "
+"para selecionar. Utilize menus de contexto para adicionar elementos do "
+"gráfico, tais como título, eixo, e outros. Escolha <span class=\"ui\""
+">Intervalo de dados</span> e <span class=\"ui\">Tipo de gráfico</span> para "
+"editar os dados do gráfico e selecionar o tipo de gráfico."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid "<span class=\"def\">Chart formatting:</span> The same context menu brings you to chart data table and chart type selection."
 msgstr ""
+"<span class=\"def\">Formatação do gráfico:</span> O mesmo menu de contexto "
+"leva-o a tabela de dados do gráfico e selecção do tipo de gráfico."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
 msgstr ""
+"<span class=\"def\">Formatação de séries de dados:</span> Abrir o menu de "
+"contexto e escolher <span class=\"ui\">Formatar séries de dados</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:323-5
 msgid "Handling images"
-msgstr ""
+msgstr "Manipulação de imagens"
 
 #: html/loleaflet-help.html%2Bdiv.p:324-5
 msgid "<span class=\"productname\">%productName</span> inserts images in the text document from your local computer or from your cloud storage. Inserted images are always embedded in the document."
 msgstr ""
+"<span class=\"productname\">%productName</span> insere imagens no documento "
+"de texto a partir do seu computador local ou do seu armazenamento em nuvem. "
+"As imagens inseridas são sempre incorporadas no documento."
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">Insert image</span> icon allows you to choose an image from the cloud storage's folders and shares."
 msgstr ""
+"<span class=\"def\">Inserir imagem:</span> Clicando no ícone <span class=\"ui"
+"\">Inserir imagem</span> permite-lhe escolher uma imagem das pastas e "
+"partilhas do armazenamento na nuvem."
 
 #: html/loleaflet-help.html%2Bdiv.p:326-5
 msgid "<span class=\"def\">Insert local image:</span> opens the browser file picker to upload the image from your local computer and insert it into the document."
 msgstr ""
+"<span class=\"def\">Inserir imagem local:</span> abre o seletor de ficheiros "
+"do navegador para carregar a imagem do seu computador local e inseri-la no "
+"documento."
 
 #: html/loleaflet-help.html%2Bdiv.p:327-5
 msgid "Images can be resized, rotated and anchored. Text can be wrapped around the image. Select the image and open the context menu. Use the images handles to resize the image with the mouse."
 msgstr ""
+"As imagens podem ser redimensionadas, rodadas e ancoradas. O texto pode ser "
+"enrolado à volta da imagem. Selecionar a imagem e abrir o menu de contexto. "
+"Utilize as pegas das imagens para redimensionar a imagem com o rato."
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
-#, fuzzy
-#| msgid "Go to end of document"
 msgid "Comments in documents"
-msgstr "Ir para o fim do documento"
+msgstr "Comentários em documentos"
 
 #: html/loleaflet-help.html%2Bdiv.p:329-5
 msgid "Insert comments in <span class=\"productname\">%productName</span> in places that need special reader attention. Comments are displayed on the right and carry the name and date of the issuer."
 msgstr ""
+"Inserir comentários em <span class=\"productname\">%productName</span> em "
+"locais que necessitem de atenção especial do leitor. Os comentários são "
+"exibidos à direita e contêm o nome e a data do emissor."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:331-5
 msgid "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/submenu.svg\">) icon to reply, move and delete comments."
 msgstr ""
+"Clique no submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
+"\"images/submenu.svg\">) ícone para responder, mover e apagar comentários."
 
 #: html/loleaflet-help.html%2Bdiv.h4:332-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Corretor ortográfico"
 
 #: html/loleaflet-help.html%2Bdiv.p:333-5
 msgid "<span class=\"productname\">%productName</span> can check spelling in text documents, spreadsheets and presentations. A red wavy underline indicates misspelled words. Click on the right mouse button to open a context menu with suggested misspelling corrections."
 msgstr ""
+"<span class=\"productname\">%productName</span> pode verificar a ortografia "
+"em documentos de texto, folhas de cálculo e apresentações. Um sublinhado "
+"vermelho ondulado indica palavras mal soletradas. Clique no botão direito do "
+"rato para abrir um menu de contexto com sugestões de correcções ortográficas "
+"erradas."
 
 #: html/loleaflet-help.html%2Bdiv.p:335-5
 msgid "To systematically spell-check the whole document use the <span class=\"ui\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
+"Para verificar sistematicamente todo o documento, usar a opção <span class="
+"\"ui\">Ferramentas</span> do menu<span class=\"ui\">Ortografia</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
 msgstr ""
+"Edita uma folha de cálculo em linha da mesma forma que edita uma folha de "
+"cálculo de secretária. Operações como introduzir dados, seleccionar "
+"intervalos, colunas, linhas ou folhas são as mesmas. Utilizar o teclado, "
+"menus ou barra de ferramentas para comandar acções na folha de cálculo. O "
+"arrastamento do conteúdo das células para preencher células com dados também "
+"é suportado. Os comandos copiar, cortar e colar estão disponíveis a partir "
+"do menu de contexto. Seguindo os dados introduzidos com uma <span class=\"kbd"
+"\">Tab</span> moverá o cursor para a célula seguinte à direita, e com uma "
+"<span class=\"kbd\">Enter</span> para a célula abaixo para facilitar a "
+"introdução de mais dados."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:344-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
 msgstr ""
+"As fórmulas são introduzidas na barra de fórmulas. Introduzir '=' e inserir "
+"a fórmula."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:345-5
 msgid "All spreadsheets functions and mathematical rules applies."
 msgstr ""
+"Todas as funções das folhas de cálculo e regras matemáticas são aplicáveis."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:347-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."

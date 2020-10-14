@@ -14,4 +14,8 @@
     <string name="later">Più tardi</string>
     <string name="rate_now">Valuta ora</string>
     <string name="file_chromeos_read_only">Impossibile salvare il file in questa posizione, verrà aperto in modalità di sola lettura. Per avere un accesso completo in lettura e scrittura, spostalo nei file di Play.</string>
+    <string name="ask_for_copy">Questo documento è di sola lettura. Vuoi fare una copia per la modifica\?</string>
+    <string name="edit_copy">Modifica una copia</string>
+    <string name="view_only">Visualizza solo</string>
+    <string name="restarting">Riavvio…</string>
 </resources>

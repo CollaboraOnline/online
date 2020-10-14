@@ -14,4 +14,8 @@
     <string name="later">Senere</string>
     <string name="rate_now">Ranger nå</string>
     <string name="file_chromeos_read_only">Denne filen kan ikke lagres på dette stedet, og åpner den bare for lesing. Flytt den til Play-filene for full tilgang til lese / skriving.</string>
+    <string name="ask_for_copy">Dette dokumentet er skrivebeskyttet. Ønsker du å lage en kopi for redigering\?</string>
+    <string name="edit_copy">Rediger en kopi</string>
+    <string name="view_only">Kun visning</string>
+    <string name="restarting">Starter på ny…</string>
 </resources>

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-08 21:00+0000\n"
+"PO-Revision-Date: 2020-10-16 21:33+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.3.1-dev\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
 "X-Pootle-Revision: 3713610\n"
 
@@ -1184,7 +1184,10 @@ msgstr "Al pegar el contenido copiado del mismo documento, se conserva el format
 
 #: html/loleaflet-help.html%2Bdiv.p:303-5
 msgid "You can paste as unformatted text with the keyboard shortcut: <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\">V</span>"
-msgstr "Puede pegar texto sin formato mediante el atajo de teclado <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Mayús</span> + <span class=\"kbd\">V</span>."
+msgstr ""
+"Puede pegar texto sin formato mediante el atajo de teclado <span class=\"kbd"
+"\">Ctrl</span> + <span class=\"kbd\">Mayús</span> + <span class=\"kbd\""
+">V</span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:304-5
 msgid "When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in."
@@ -1352,7 +1355,10 @@ msgstr "El <span class=\"productname\">%productName</span> edita documentos de t
 
 #: html/loleaflet-help.html%2Bdiv.div.p:392-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
-msgstr "Los menús contextuales están disponibles al pulsar con el botón secundario del ratón. Las órdenes disponibles se relacionan en parte con el objeto del documento."
+msgstr ""
+"Los menús contextuales están disponibles al pulsar con el botón secundario "
+"del ratón. Las órdenes disponibles se relacionan (en parte) con el objeto "
+"del documento."
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:394-5
 msgid "Formatting text"
