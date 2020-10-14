@@ -140,6 +140,9 @@ L.Map = L.Evented.extend({
 			this.dragging._draggable._manualDrag = true;
 			this._mainEvents('off');
 			this.addHandler('touchGesture', L.Map.TouchGesture);
+			if (window.mode.isChromebook()) {
+				this.addHandler('scrollHandler', L.Map.Scroll);
+			}
 		} else {
 			this.addHandler('mouse', L.Map.Mouse);
 			this.addHandler('boxZoom', L.Map.BoxZoom);
