@@ -112,7 +112,7 @@ L.SVG.include(!L.Browser.vml ? {} : {
 		    r2 = Math.round(layer._radiusY || r);
 
 		this._setPath(layer, layer._empty() ? 'M0 0' :
-				'AL ' + p.x + ',' + p.y + ' ' + r + ',' + r2 + ' 0,' + (65535 * 360));
+			'AL ' + p.x + ',' + p.y + ' ' + r + ',' + r2 + ' 0,' + (65535 * 360));
 	},
 
 	_setPath: function (layer, path) {

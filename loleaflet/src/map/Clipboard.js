@@ -419,11 +419,11 @@ L.Clipboard = L.Class.extend({
 
 			var that = this;
 			this._doAsyncDownload('POST', this.getMetaURL(), formData,
-							function() {
-								console.log('Posted ' + content.size + ' bytes successfully');
-								that._doInternalPaste(that._map, usePasteKeyEvent);
-							},
-							function(progress) { return progress; }
+				function() {
+					console.log('Posted ' + content.size + ' bytes successfully');
+					that._doInternalPaste(that._map, usePasteKeyEvent);
+				},
+				function(progress) { return progress; }
 					    );
 		} else {
 			console.log('Nothing we can paste on the clipboard');
@@ -479,7 +479,7 @@ L.Clipboard = L.Class.extend({
 		}
 
 		var text = this._getHtmlForClipboard();
-//		this._stopHideDownload(); - this confuses the browser ruins copy/cut on iOS
+		//this._stopHideDownload(); - this confuses the browser ruins copy/cut on iOS
 
 		var plainText = this.stripHTML(text);
 		if (ev.clipboardData) { // Standard
