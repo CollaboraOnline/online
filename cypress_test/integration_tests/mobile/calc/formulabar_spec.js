@@ -188,4 +188,111 @@ describe('Change alignment settings.', function() {
 		cy.get('#copy-paste-container table td:nth-of-type(1)')
 			.should('have.text', 'long line long line long line');
 	});
+
+	it('Switch oneline-multiline mode of input bar', function() {
+		helper.initAliasToNegative('inputOriginalHeight');
+
+		cy.get('#calc-inputbar')
+			.invoke('height')
+			.as('inputOriginalHeight');
+
+		cy.get('@inputOriginalHeight')
+			.should('be.greaterThan', 0);
+
+		// Switch to multiline mode.
+		var arrowPos = [250, 10];
+		cy.get('#calc-inputbar')
+			.click(arrowPos[0], arrowPos[1]);
+
+		cy.get('@inputOriginalHeight')
+			.then(function(inputOriginalHeight) {
+				cy.get('#calc-inputbar')
+					.should(function(inputbar) {
+						expect(inputbar.height()).to.be.greaterThan(inputOriginalHeight);
+					});
+			});
+
+		cy.get('#calc-inputbar')
+			.should(function(inputbar) {
+				expect(inputbar.height()).to.be.equal(111);
+			});
+
+		// Switch back to one-line mode.
+		cy.get('#calc-inputbar')
+			.click(arrowPos[0], arrowPos[1]);
+
+		cy.get('@inputOriginalHeight')
+			.then(function(inputOriginalHeight) {
+				cy.get('#calc-inputbar')
+					.should(function(inputbar) {
+						expect(inputbar.height()).to.be.equal(inputOriginalHeight);
+					});
+			});
+	});
+
+	it('Check formula help', function() {
+		cy.get('#tb_formulabar_item_functiondialog')
+			.click();
+
+		cy.get('#mobile-wizard-content')
+			.should('be.visible');
+
+		cy.contains('.ui-header.level-0.mobile-wizard', 'Logical')
+			.click();
+
+		cy.contains('.func-entry', 'AND')
+			.find('.func-info-icon')
+			.click();
+
+		cy.get('#mobile-wizard-title')
+			.should('be.visible')
+			.should('have.text', 'AND');
+
+		cy.get('.ui-content.level-1.mobile-wizard[title=\'AND\'] .func-info-sig')
+			.should('be.visible')
+			.should('contain.text', 'AND( Logical value 1, Logical value 2, ...');
+
+		cy.get('.ui-content.level-1.mobile-wizard[title=\'AND\'] .func-info-desc')
+			.should('be.visible')
+			.should('have.text', 'Returns TRUE if all arguments are TRUE.');
+	});
+
+	it('Add formula to cell', function() {
+		calcHelper.clickOnFirstCell();
+
+		cy.get('#tb_formulabar_item_functiondialog')
+			.click();
+
+		cy.get('#mobile-wizard-content')
+			.should('be.visible');
+
+		// Select average
+		cy.contains('.ui-header.level-0.mobile-wizard', 'Statistical')
+			.click();
+
+		cy.contains('.ui-content.level-0.mobile-wizard[title=\'Statistical\'] .func-entry', 'AVERAGE')
+			.find('.ui-header-left')
+			.click();
+
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		cy.get('#calc-inputbar .lokdialog-cursor')
+			.should('be.visible');
+
+		// Add a range
+		calcHelper.typeIntoFormulabar('B2:B4{enter}');
+
+		// Close mobile wizard with formulas.
+		cy.get('#mobile-wizard-back')
+			.click();
+
+		cy.get('#mobile-wizard-content')
+			.should('not.be.visible');
+
+		calcMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td:nth-of-type(1)')
+			.should('have.text', '5');
+	});
 });
