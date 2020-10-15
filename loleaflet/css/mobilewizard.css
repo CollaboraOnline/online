@@ -467,10 +467,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	z-index: 2;
 }
 
-#mobile-wizard.portrait > #mobile-wizard-header + #mobile-wizard-tabs {
-	top: 60px;
-}
-
 .ui-tab.mobile-wizard {
 	display: table-cell;
 	width: 49%;
