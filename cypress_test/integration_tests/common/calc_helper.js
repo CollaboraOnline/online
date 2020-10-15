@@ -74,17 +74,19 @@ function typeIntoFormulabar(text) {
 		.then(function(cursor) {
 			if (!Cypress.dom.isVisible(cursor)) {
 				clickFormulaBar();
-
-				cy.get('#calc-inputbar .lokdialog-cursor')
-					.should('be.visible');
 			}
 		});
 
-	cy.get('#tb_actionbar_item_acceptformula')
+	cy.get('#calc-inputbar .lokdialog-cursor')
 		.should('be.visible');
 
-	cy.get('#tb_actionbar_item_cancelformula')
-		.should('be.visible');
+	helper.doIfOnMobile(function() {
+		cy.get('#tb_actionbar_item_acceptformula')
+			.should('be.visible');
+
+		cy.get('#tb_actionbar_item_cancelformula')
+			.should('be.visible');
+	});
 
 	cy.get('body')
 		.type(text);
