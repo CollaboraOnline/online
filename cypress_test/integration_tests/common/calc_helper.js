@@ -1,4 +1,6 @@
-/* global cy expect */
+/* global cy expect Cypress require */
+
+var helper = require('./helper');
 
 // Click on the formula bar.
 // mouseover is triggered to avoid leaving the mouse on the Formula-Bar,
@@ -43,10 +45,15 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 			}
 		});
 
-	if (firstClick && !dblClick)
+	if (firstClick && !dblClick) {
 		cy.get('.spreadsheet-cell-autofill-marker')
 			.should('be.visible');
-	else
+
+		helper.doIfOnMobile(function() {
+			cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;')
+				.should('be.visible');
+		});
+	} else
 		cy.get('.leaflet-cursor.blinking-cursor')
 			.should('be.visible');
 
@@ -60,6 +67,34 @@ function dblClickOnFirstCell() {
 	clickOnFirstCell(false, true);
 }
 
+function typeIntoFormulabar(text) {
+	cy.log('Typing into formulabar - start.');
+
+	cy.get('#calc-inputbar .lokdialog-cursor')
+		.then(function(cursor) {
+			if (!Cypress.dom.isVisible(cursor)) {
+				clickFormulaBar();
+			}
+		});
+
+	cy.get('#calc-inputbar .lokdialog-cursor')
+		.should('be.visible');
+
+	helper.doIfOnMobile(function() {
+		cy.get('#tb_actionbar_item_acceptformula')
+			.should('be.visible');
+
+		cy.get('#tb_actionbar_item_cancelformula')
+			.should('be.visible');
+	});
+
+	cy.get('body')
+		.type(text);
+
+	cy.log('Typing into formulabar - end.');
+}
+
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
+module.exports.typeIntoFormulabar = typeIntoFormulabar;

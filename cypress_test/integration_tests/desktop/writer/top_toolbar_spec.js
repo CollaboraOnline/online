@@ -44,6 +44,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container p')
 			.should('exist');
 	});
+
 		
 	it('Apply left alignment.', function() {
 		cy.get('#tb_editbar_item_centerpara')

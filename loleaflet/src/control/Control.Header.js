@@ -578,6 +578,12 @@ L.Control.Header = L.Control.extend({
 		return Math.round(this._getParallelPos(this.converter(point)));
 	},
 
+	canvasDPIScale: function () {
+		var docLayer = this._map && this._map._docLayer;
+		var scale = docLayer && docLayer.canvasDPIScale ? docLayer.canvasDPIScale() : L.getDpiScaleFactor();
+		return scale;
+	},
+
 	_setCanvasSizeImpl: function (container, canvas, property, value, isCorner) {
 		if (!value) {
 			value = parseInt(L.DomUtil.getStyle(container, property));
@@ -586,15 +592,18 @@ L.Control.Header = L.Control.extend({
 			L.DomUtil.setStyle(container, property, value + 'px');
 		}
 
+		var scale = this.canvasDPIScale();
 		if (property === 'width') {
-			canvas.width = Math.floor(value);
+			canvas.width = Math.floor(value * scale);
 			if (!isCorner)
 				this._canvasWidth = value;
+//			console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
-			canvas.height = Math.floor(value);
+			canvas.height = Math.floor(value * scale);
 			if (!isCorner)
 				this._canvasHeight = value;
+//			console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
 		}
 	},
 
@@ -658,8 +667,8 @@ L.Control.Header = L.Control.extend({
 			if (!this._groups[level]) {
 				this._groups[level] = {};
 			}
-			var startPos = parseInt(groupData.startPos);
-			var endPos = parseInt(groupData.endPos);
+			var startPos = parseInt(groupData.startPos) / this._map._docLayer._tilePixelScale;
+			var endPos = parseInt(groupData.endPos) / this._map._docLayer._tilePixelScale;
 			var isHidden = !!parseInt(groupData.hidden);
 			if (isHidden || startPos === endPos) {
 				startPos -= this._groupHeadSize / 2;
@@ -714,15 +723,17 @@ L.Control.Header = L.Control.extend({
 			return;
 
 		ctx.save();
+		var scale = this.canvasDPIScale();
+		ctx.scale(scale, scale);
 
 		ctx.fillStyle = this._borderColor;
 		if (this._isColumn) {
-			var startY = this._cornerCanvas.height - (L.Control.Header.colHeaderHeight + this._borderWidth);
+			var startY = this._cornerCanvas.height / scale - (L.Control.Header.colHeaderHeight + this._borderWidth);
 			if (startY > 0)
 				ctx.fillRect(0, startY, this._cornerCanvas.width, this._borderWidth);
 		}
 		else {
-			var startX = this._cornerCanvas.width - (L.Control.Header.rowHeaderWidth + this._borderWidth);
+			var startX = this._cornerCanvas.width / scale - (L.Control.Header.rowHeaderWidth + this._borderWidth);
 			if (startX > 0)
 				ctx.fillRect(startX, 0, this._borderWidth, this._cornerCanvas.height);
 		}

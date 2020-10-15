@@ -890,7 +890,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         dontUseCache = true;
 #endif
 
-        _tileCache.reset(new TileCache(_storage->getUriString(), _lastFileModifiedTime, dontUseCache));
+        _tileCache = Util::make_unique<TileCache>(_storage->getUriString(), _lastFileModifiedTime, dontUseCache);
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 

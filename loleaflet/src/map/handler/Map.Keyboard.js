@@ -7,7 +7,7 @@
  * at TextInput.
  */
 
- /* global vex _ */
+/* global vex _ */
 
 L.Map.mergeOptions({
 	keyboard: true,

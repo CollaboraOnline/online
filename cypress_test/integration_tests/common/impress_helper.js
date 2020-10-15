@@ -25,8 +25,6 @@ function assertInTextEditMode() {
 	cy.get('#doc-clipboard-container')
 		.should('exist');
 
-	cy.get('.leaflet-zoom-animated')
-		.should('exist');
 	cy.get('.leaflet-interactive')
 		.should('exist');
 

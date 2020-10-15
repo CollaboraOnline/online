@@ -3,8 +3,8 @@
  * L.Map.StateChanges stores the state changes commands coming from core
  * LOK_CALLBACK_STATE_CHANGED callback
  */
- /* global $ */
- /*eslint no-extend-native:0*/
+/* global $ */
+/*eslint no-extend-native:0*/
 L.Map.mergeOptions({
 	stateChangeHandler: true
 });

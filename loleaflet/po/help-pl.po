@@ -3,15 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-03-02 00:56+0000\n"
-"Last-Translator: Adam Rak <kitynska@gmail.com>\n"
-"Language-Team: Polish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/pl/>\n"
+"PO-Revision-Date: 2020-10-13 20:43+0000\n"
+"Last-Translator: Matthaiks <kitynska@gmail.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
+"help/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.10.3\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /pl/libo_online/loleaflet-help-pl.po\n"
 "X-Pootle-Revision: 3510350\n"
 
@@ -52,14 +54,12 @@ msgid "Paste as unformatted text"
 msgstr "Wklej jako niesformatowany tekst"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
-#| msgid "Ctrl + Shift + ?"
 msgid "Ctrl + Shift + V"
-msgstr "Ctrl + Shift + ?"
+msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
-msgstr ""
+msgstr "Wklej specjalnie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
 msgid "Ctrl + Alt + Shift + V"
@@ -781,7 +781,8 @@ msgstr "Ctrl + Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
 msgid "Insert new paragraph directly before or after a section, or before a table"
-msgstr "Wstaw wony akapit bezpośrednio przed lub po rozdziale, albo przed tabelą."
+msgstr ""
+"Wstaw nowy akapit bezpośrednio przed sekcją lub po niej albo przed tabelą"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-155
@@ -790,7 +791,9 @@ msgstr "Alt + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
 msgid "Insert new paragraph without numbering inside a list. Does not work when the cursor is at the end of the list."
-msgstr "Wstaw nowy pakapit bez numeracji wewnątrz listy. Nie działa, gdy kursor jest na końcu listy."
+msgstr ""
+"Wstaw nowy akapit bez numeracji do listy. Nie działa, gdy kursor znajduje "
+"się na końcu listy."
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Cell formatting"
@@ -904,11 +907,11 @@ msgstr "Esc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 msgid "Select objects in the order in which they were created"
-msgstr "Zaznacza obiekty w kolejności, w której były tworzone."
+msgstr "Zaznacza obiekty w kolejności, w której były tworzone"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Zaznacza obiekty w odwrotnej kolejności, w której były tworzone."
+msgstr "Zaznacza obiekty w odwrotnej kolejności, w której były tworzone"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
 msgid "Move to next text object on slide / drawing page"
@@ -1038,30 +1041,55 @@ msgstr "Prezentacje"
 #: html/loleaflet-help.html%2Bdiv.p:250-5
 msgid "<span class=\"productname\">%productName</span> allows you to create and edit office documents text documents, spreadsheets and presentations directly in your browser, in a simple and straight-forward way. You can work alone on a document, or collaboratively as part of a team."
 msgstr ""
+"<span class=\"productname\">%productName</span> umożliwia tworzenie i "
+"edytowanie dokumentów biurowych, dokumentów tekstowych, arkuszy "
+"kalkulacyjnych i prezentacji bezpośrednio w przeglądarce, w prosty i "
+"nieskomplikowany sposób. Możesz pracować samodzielnie nad dokumentem lub "
+"wspólnie jako część zespołu."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:254-11
 msgid "Each user gets assigned a color. The cursor of each user will be shown in the assigned color. Note: you will see your cursor as black, blinking cursor, although others will see you with a different color."
 msgstr ""
+"Każdemu użytkownikowi zostanie przypisany kolor. Kursor każdego użytkownika "
+"zostanie pokazany w przypisanym kolorze. Uwaga: zobaczysz kursor jako "
+"czarny, migający kursor, chociaż inni będą widzieć Cię w innym kolorze."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:255-11
 msgid "You can jump to the cursor of a user by clicking on the name (or avatar) of the user. It is possible to follow the editor."
 msgstr ""
+"Możesz przejść do kursora użytkownika, klikając nazwę (lub awatar) "
+"użytkownika. Możliwe jest śledzenie edytora."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:256-11
 msgid "<span class=\"productname\">%productName</span> notifies you with a small notification in the footer when a new user enters or when a user leaves."
 msgstr ""
+"<span class=\"productname\">%productName</span> powiadamia Cię małym "
+"powiadomieniem w stopce, gdy pojawia się nowy użytkownik lub odchodzi."
 
 #: html/loleaflet-help.html%2Bdiv.p:260-5
 msgid "<span class=\"productname\">%productName</span> uses modern browser resources to adapt the user interface to the size of the viewing area, including small screens found in mobile devices. The interface is composed of:"
 msgstr ""
+"<span class=\"productname\">%productName</span> wykorzystuje zasoby "
+"nowoczesnych przeglądarek, aby dostosować interfejs użytkownika do rozmiaru "
+"obszaru wyświetlania, w tym małych ekranów w urządzeniach mobilnych. W skład "
+"interfejsu wchodzą:"
 
 #: html/loleaflet-help.html%2Bdiv.p:261-5
 msgid "<span class=\"def\">The document area:</span> The application area shows the document contents, either spreadsheets, presentations or text documents."
 msgstr ""
+"<span class=\"def\">Obszar dokumentu:</span> Obszar aplikacji pokazuje "
+"zawartość dokumentu, arkusze kalkulacyjne, prezentacje lub dokumenty "
+"tekstowe."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:262-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Pasek menu:</span> Menu główne znajduje się na górze i "
+"zawiera wiele opcji, poleceń drukowania, edycji, przeglądania i innych "
+"zaawansowanych poleceń. Możesz ukryć pasek menu, klikając <img style=\"height"
+":0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> ikonę po prawej stronie. "
+"Kliknij <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> "
+"ikonę, aby wyświetlić menu."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
@@ -1110,6 +1138,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:280-5
 msgid "Your documents are stored and managed in the cloud storage that is integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
+"Twoje dokumenty są przechowywane i zarządzane w chmurze, która jest "
+"zintegrowana z <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:281-5
 msgid "To download a document download it from the <span class=\"productname\">%productName</span> application’s <span class=\"ui\">File</span> menu. The download formats available depends on the application. All applications exports documents in PDF format."
@@ -1126,6 +1156,9 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid "Depending on the capabilities of your browser the print window may appear or a “Download PDF export?” popup shows. You can print this PDF in your favorite PDF reader."
 msgstr ""
+"W zależności od możliwości Twojej przeglądarki może pojawić się okno "
+"drukowania lub wyskakujące okienko \"Pobrać eksport PDF?\". Możesz "
+"wydrukować ten plik PDF w swoim ulubionym czytniku PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:285-5
 msgid "When closing a document, it is automatically saved if it has been changed."
@@ -1149,7 +1182,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:292-5
 msgid "Document repair"
-msgstr ""
+msgstr "Naprawa dokumentu"
 
 #: html/loleaflet-help.html%2Bdiv.p:293-5
 msgid "When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state."

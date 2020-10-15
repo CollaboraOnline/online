@@ -195,8 +195,8 @@ L.TileLayer.include({
 				var bottomRightTwips = topLeftTwips.add(offset);
 
 				var tableRectangle = new L.LatLngBounds(
-						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+					this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+					this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 				this._map.addLayer(this._tableMoveMarker);
 
 				var markerRect;

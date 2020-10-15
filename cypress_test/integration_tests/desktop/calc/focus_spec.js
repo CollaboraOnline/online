@@ -30,17 +30,17 @@ describe('Calc focus tests', function() {
 		// Type some text.
 		var text1 = 'Hello from Calc';
 		helper.typeText('textarea.clipboard', text1);
-		helper.typeIntoDocument('{enter}');
+		calcHelper.typeIntoFormulabar('{enter}');
 
 		// Select the first cell to edit the same one.
 		calcHelper.clickOnFirstCell();
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		// Validate.
-		helper.typeIntoDocument('{ctrl}a');
+		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1);
 		// End editing.
-		helper.typeIntoDocument('{enter}');
+		calcHelper.typeIntoFormulabar('{enter}');
 
 		// Type some more text, at the end.
 		cy.log('Appending text at the end.');
@@ -50,10 +50,10 @@ describe('Calc focus tests', function() {
 		var text2 = ', this is a test.';
 		helper.typeText('textarea.clipboard', text2);
 		// Validate.
-		helper.typeIntoDocument('{ctrl}a');
+		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
-		helper.typeIntoDocument('{enter}');
+		calcHelper.typeIntoFormulabar('{enter}');
 
 		// Type some more text, in the middle.
 		cy.log('Inserting text in the middle.');
@@ -62,14 +62,14 @@ describe('Calc focus tests', function() {
 		helper.assertCursorAndFocus();
 
 		// Move cursor inside text2
-		helper.typeIntoDocument('{end}');
+		calcHelper.typeIntoFormulabar('{end}');
 		for (var i = 0; i < 6; i++)
 			helper.moveCursor('left');
 
 		var text3 = ' BAZINGA';
 		helper.typeText('textarea.clipboard', text3);
 		// Validate.
-		helper.typeIntoDocument('{ctrl}a');
+		calcHelper.typeIntoFormulabar('{ctrl}a');
 		//NOTE: If this fails, it's probably because we clicked
 		// at a different point in the text.
 		helper.expectTextForClipboard(text1 + ', this is a' + text3 + ' test.');

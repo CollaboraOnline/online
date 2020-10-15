@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-11 05:27+0000\n"
-"Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
+"PO-Revision-Date: 2020-10-13 20:43+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "help/fr/>\n"
 "Language: fr\n"
@@ -1060,7 +1060,13 @@ msgstr "<span class=\"def\">La zone du document :</span> la zone de l'applicatio
 
 #: html/loleaflet-help.html%2Bdiv.p.img:262-5
 msgid "<span class=\"def\">The menu bar:</span> The main menu is placed on the top and includes many options, commands for printing, editing, viewing and other advanced commands. You can hide the menu bar clicking on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icon to show the menu."
-msgstr "<span class=\"def\">La barre de menu :</span> Le menu principal est placé en haut et inclut de nombreuses options, commandes d'impression, d'édition, d'affichage et d'autres commandes avancées. Vous pouvez masquer la barre de menu en cliquant sur  l'<img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\">icône tout à droite. Cliquez sur l' <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> icône pour afficher le menu."
+msgstr ""
+"<span class=\"def\">La barre de menu :</span> Le menu principal est placé en "
+"haut et inclut de nombreuses options, commandes d'impression, d'édition, "
+"d'affichage et d'autres commandes avancées. Vous pouvez masquer la barre de "
+"menu en cliquant sur l'icône <img style=\"height:0.6cm;width:0.6cm;\" src="
+"\"images/fold.svg\"> tout à droite. Cliquez sur l'icône <img style=\"height:0"
+".6cm;width:0.6cm;\" src=\"images/unfold.svg\"> pour afficher le menu."
 
 #: html/loleaflet-help.html%2Bdiv.p:263-5
 msgid "<span class=\"def\">Context menus:</span> On clicking with the right mouse button, a menu appears with commands associated with the underlying object."
@@ -1283,7 +1289,9 @@ msgstr "Vous modifiez une feuille de calcul en ligne de la même manière que vo
 
 #: html/loleaflet-help.html%2Bdiv.div.p:344-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr "Les formules sont saisies dans la barre de formules. Saisissez '=' et insérez la formule"
+msgstr ""
+"Les formules sont saisies dans la barre de formules. Saisissez '=' et "
+"insérez la formule."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:345-5
 msgid "All spreadsheets functions and mathematical rules applies."
@@ -1491,7 +1499,9 @@ msgstr "Présentations : formats Microsoft PPT, PPTX, OpenDocument Format ODP"
 
 #: html/loleaflet-help.html%2Bdiv.p:450-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
-msgstr "De plus, il peut fournir un affichage pour les formats Visio, Keynote, Numbers et Pages"
+msgstr ""
+"De plus, il peut fournir un affichage pour les formats Visio, Keynote, "
+"Numbers et Pages."
 
 #: html/loleaflet-help.html%2Bdiv.h4:451-5
 msgid "How do I save a document with another name?"

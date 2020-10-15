@@ -511,19 +511,28 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', '0');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change paper size.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+	it('Page setup: change paper size.', function() {
+		// We use the cursor horizontal position as indicator of document width change.
+		helper.moveCursor('end');
+
+		writerMobileHelper.getCursorPos('left', 'cursorOrigLeft');
 
 		openPageWizard();
 
 		helper.clickOnIdle('#papersize');
 
-		helper.clickOnIdle('.ui-combobox-text', 'C6 Envelope');
+		helper.clickOnIdle('.ui-combobox-text', 'A3');
 
-		// Smaller paper size makes center tile to contain text too.
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		// Cursor postion changes because of the bigger document width.
+		helper.moveCursor('end');
+
+		cy.get('@cursorOrigLeft')
+			.then(function(cursorOrigLeft) {
+				cy.get('.blinking-cursor')
+					.should(function(cursor) {
+						expect(cursor.offset().left).to.be.greaterThan(cursorOrigLeft);
+					});
+			});
 
 		// Check that the page wizard shows the right value after reopen.
 		closePageWizard();
@@ -531,20 +540,29 @@ describe('Trigger hamburger menu options.', function() {
 		openPageWizard();
 
 		cy.get('#papersize .ui-header-left')
-			.should('have.text', 'C6 Envelope');
+			.should('have.text', 'A3');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change paper width.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+	it('Page setup: change paper width.', function() {
+		// We use the cursor horizontal position as indicator of document width change.
+		helper.moveCursor('end');
+
+		writerMobileHelper.getCursorPos('left', 'cursorOrigLeft');
 
 		openPageWizard();
 
-		helper.inputOnIdle('#paperwidth .spinfield', '5');
+		helper.inputOnIdle('#paperwidth .spinfield', '12');
 
-		// Smaller paper size makes center tile to contain text too.
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		// Cursor postion changes because of the bigger document width.
+		helper.moveCursor('end');
+
+		cy.get('@cursorOrigLeft')
+			.then(function(cursorOrigLeft) {
+				cy.get('.blinking-cursor')
+					.should(function(cursor) {
+						expect(cursor.offset().left).to.be.greaterThan(cursorOrigLeft);
+					});
+			});
 
 		// Check that the page wizard shows the right value after reopen.
 		closePageWizard();
@@ -555,20 +573,27 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'User');
 
 		cy.get('#paperwidth .spinfield')
-			.should('have.attr', 'value', '5');
+			.should('have.attr', 'value', '12');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change paper height.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+	it('Page setup: change paper height.', function() {
+		// We use the cursor vertical position as indicator of document size change.
+		helper.moveCursor('ctrl-end');
+
+		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
 
 		openPageWizard();
 
 		helper.inputOnIdle('#paperheight .spinfield', '3.0');
 
-		// Smaller paper size makes center tile to contain the end of the page.
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		// Cursor postion changes because of having more pages (page gap).
+		cy.get('@cursorOrigTop')
+			.then(function(cursorOrigTop) {
+				cy.get('.blinking-cursor')
+					.should(function(cursor) {
+						expect(cursor.offset().top).to.be.greaterThan(cursorOrigTop);
+					});
+			});
 
 		// Check that the page wizard shows the right value after reopen.
 		closePageWizard();
@@ -582,17 +607,11 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.attr', 'value', '3');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change orientation.', function() {
-		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1024px; top: 5px;\']')
-			.should('not.exist');
+	it('Page setup: change orientation.', function() {
+		// We use the cursor horizontal position as indicator of document width change.
+		helper.moveCursor('end');
 
-		// Move the cursor to the right side of the document,
-		// so the new tile will be visible and loaded.
-		helper.typeIntoDocument('{end}');
-
-		cy.get('.blinking-cursor')
-			.should('be.visible');
+		writerMobileHelper.getCursorPos('left', 'cursorOrigLeft');
 
 		openPageWizard();
 
@@ -601,8 +620,17 @@ describe('Trigger hamburger menu options.', function() {
 		helper.clickOnIdle('.ui-combobox-text', 'Landscape');
 
 		// We got some extra tiles horizontally.
-		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1024px; top: 5px;\']')
-			.should('exist');
+		// TODO: issue here, view is not moved with the cursor
+		helper.moveCursor('end', false);
+
+		// Cursor postion changes because of the bigger document width.
+		cy.get('@cursorOrigLeft')
+			.then(function(cursorOrigLeft) {
+				cy.get('.blinking-cursor')
+					.should(function(cursor) {
+						expect(cursor.offset().left).to.be.greaterThan(cursorOrigLeft);
+					});
+			});
 
 		// Check that the page wizard shows the right value after reopen.
 		closePageWizard();
@@ -613,10 +641,14 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'Landscape');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change margin.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+	it('Page setup: change margin.', function() {
+		// We use the cursor horizontal position as indicator of margin change.
+		helper.typeIntoDocument('{home}');
+
+		cy.get('.blinking-cursor')
+			.should('be.visible');
+
+		writerMobileHelper.getCursorPos('left', 'cursorOrigLeft');
 
 		openPageWizard();
 
@@ -624,8 +656,14 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('.ui-combobox-text', 'None');
 
-		// Text is moved up by margin removal, so the center tile will be empty.
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		// Text is moved leftward by margin removal.
+		cy.get('@cursorOrigLeft')
+			.then(function(cursorOrigLeft) {
+				cy.get('.blinking-cursor')
+					.should(function(cursor) {
+						expect(cursor.offset().left).to.be.lessThan(cursorOrigLeft);
+					});
+			});
 
 		// Check that the page wizard shows the right value after reopen.
 		closePageWizard();
@@ -636,42 +674,40 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'None');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Show formatting marks.', function() {
+	it('Show formatting marks.', function() {
 		// Hide text so the center tile is full white.
 		hideText();
 
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		var canvas = '.leaflet-canvas-container canvas';
+		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 
 		// Enable it first -> spaces will be visible.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.canvasShouldBeFullWhiteOrNot(canvas, false);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Automatic spell checking.', function() {
+	it('Automatic spell checking.', function() {
 		// Hide text so the center tile is full white.
 		hideText();
 
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		var canvas = '.leaflet-canvas-container canvas';
+		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 
 		// Enable it first.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.canvasShouldBeFullWhiteOrNot(canvas, false);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 	});
 
 	it('Resolved comments.', function() {

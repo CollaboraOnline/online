@@ -1185,7 +1185,10 @@ void LOOLWSD::initialize(Application& self)
 #endif
 
     std::string allowedLanguages(config().getString("allowed_languages"));
+    // Core <= 7.0.
     setenv("LOK_WHITELIST_LANGUAGES", allowedLanguages.c_str(), 1);
+    // Core >= 7.1.
+    setenv("LOK_ALLOWLIST_LANGUAGES", allowedLanguages.c_str(), 1);
 
 #endif
 
@@ -1361,11 +1364,11 @@ void LOOLWSD::initialize(Application& self)
 
         const auto compress = getConfigValue<bool>(conf, "trace.path[@compress]", false);
         const auto takeSnapshot = getConfigValue<bool>(conf, "trace.path[@snapshot]", false);
-        TraceDumper.reset(new TraceFileWriter(path, recordOutgoing, compress, takeSnapshot, filters));
+        TraceDumper = Util::make_unique<TraceFileWriter>(path, recordOutgoing, compress, takeSnapshot, filters);
     }
 
 #if !MOBILEAPP
-    SavedClipboards.reset(new ClipboardCache());
+    SavedClipboards = Util::make_unique<ClipboardCache>();
 
     FileServerRequestHandler::initialize();
 #endif
