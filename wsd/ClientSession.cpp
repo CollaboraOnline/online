@@ -338,6 +338,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return false;
     }
 
+    if (tokens.equals(0, "DEBUG"))
+    {
+        std::cerr << std::string(buffer, length).substr(strlen("DEBUG") + 1) << std::endl;
+        return false;
+    }
+
     LOOLWSD::dumpIncomingTrace(docBroker->getJailId(), getId(), firstLine);
 
     if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))

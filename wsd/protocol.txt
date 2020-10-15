@@ -39,6 +39,11 @@ it as a final error (that requires reloading to retry).
 client -> server
 ================
 
+DEBUG <rest of message>
+
+    The rest of the message (without the DEBUG keyword), possibly
+    multiple lines, is printed to the server's stderr.
+
 canceltiles
 
     All outstanding tile messages from the client to the server are
