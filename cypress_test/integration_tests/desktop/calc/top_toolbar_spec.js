@@ -25,4 +25,32 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container table td b')
 			.should('exist');
 	});
+
+	it('Apply left/right alignment', function() {
+		// Set right aligment first
+		cy.get('#tb_editbar_item_textalign .w2ui-tb-down')
+			.click();
+
+		cy.contains('.menu-text', 'Align Right')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'align', 'right');
+
+		// Change alignment back
+		calcHelper.clickOnFirstCell();
+
+		cy.get('#tb_editbar_item_textalign .w2ui-tb-down')
+			.click();
+
+		cy.contains('.menu-text', 'Align Left')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'align', 'left');
+	});
 });
