@@ -1,1 +1,11 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m22 12a10 8 0 0 1 -10 8 10 8 0 0 1 -10-8 10 8 0 0 1 10-8 10 8 0 0 1 10 8z" fill="#3a3a38"/><path d="m21 12a9 7 0 0 1 -9 7 9 7 0 0 1 -9-7 9 7 0 0 1 9-7 9 7 0 0 1 9 7z" fill="#fafafa"/></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path
+	 id="ShapeColor" 
+     d="m22 12a10 8 0 0 1 -10 8 10 8 0 0 1 -10-8 10 8 0 0 1 10-8 10 8 0 0 1 10 8z"
+     fill="#fafafa" 
+	 stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     />
+</svg>
