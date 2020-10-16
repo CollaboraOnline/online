@@ -1,1 +1,27 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m3 8c-.554 0-1 .446-1 1v10c0 .554.446 1 1 1h10c.554 0 1-.446 1-1v-10c0-.554-.446-1-1-1zm0 1h10v10h-10z" fill="#3a3a38"/><path d="m3 9h10v10h-10z" fill="#fafafa"/><g transform="translate(8 -6)"><path d="m8 8a6 6 0 0 0 -6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6 6 6 0 0 0 -6-6zm0 1a5 5 0 0 1 5 5 5 5 0 0 1 -5 5 5 5 0 0 1 -5-5 5 5 0 0 1 5-5z" fill="#3a3a38"/><path d="m13 14a5 5 0 0 1 -5 5 5 5 0 0 1 -5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5z" fill="#fafafa"/></g><g fill-rule="evenodd"><path d="m14.992188 8a.46684355.46684355 0 0 0 -.322266.1367188l-6.5332032 6.5332032a.46684355.46684355 0 0 0 0 .660156l6.5332032 6.533203a.46684355.46684355 0 0 0 .660156 0l6.533203-6.533203a.46684355.46684355 0 0 0 0-.660156l-6.533203-6.5332032a.46684355.46684355 0 0 0 -.33789-.1367188z" fill="#3a3a38"/><path d="m15 9-6 6 6 6 6-6z" fill="#fafafa"/></g></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path
+	 id="ShapeColor" 
+     d="m 2.5,8.5 v 11 h 13 v -11 z"
+     fill="#fafafa" 
+	 stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     />
+  <path
+	 id="ShapeColor" 
+     d="m 16,2.5 c 3.5,0 5.5,3 5.5,5.5 0,3 -2.5,5.5 -5,5.5 -3.5,0 -6,-2.5 -6,-5.5 0,-3 2.5,-5.5 5.5,-5.5 z"
+     fill="#fafafa" 
+	 stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     />
+  <path
+	 id="ShapeColor" 
+     d="M 15,8.5 8.5,15 15,21.5 21.5,15 Z"
+     fill="#fafafa" 
+	 stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     />
+</svg>
