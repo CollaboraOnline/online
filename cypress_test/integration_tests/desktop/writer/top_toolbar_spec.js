@@ -35,6 +35,15 @@ describe('Top toolbar tests.', function() {
 		    .should('exist');
 	});
 		
+	it('Apply underline.', function() {
+		cy.get('#tb_editbar_item_underline')
+			.click();
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p u')
+			.should('exist');
+	});
+
 	it('Apply left alignment.', function() {
 		cy.get('#tb_editbar_item_centerpara')
 			.click();
