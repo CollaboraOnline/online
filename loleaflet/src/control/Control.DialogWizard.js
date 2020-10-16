@@ -60,3 +60,69 @@ L.Control.DialogWizard = L.Control.MobileWizard.extend({
 L.control.dialogWizard = function (dialogid) {
 	return new L.Control.DialogWizard(dialogid);
 };
+
+L.ControllerDialogWizard = L.Class.extend({
+	statics: {
+		Dialogs: {},
+		MACRO_SELECTOR: 1
+	},
+
+	initialize: function (map) {
+		this._map = map;
+
+		map.on('macroselector', this._runMacroSelector, this);
+		map.on('commandresult', this._onCommandResult, this);
+		map.on('dialogaction', this._executeAction, this);
+	},
+
+	_createDialog: function(dialogid, json) {
+		var data = data = JSON.parse(json);
+		var dlg = L.ControllerDialogWizard.Dialogs[dialogid];
+		if (!dlg) {
+			dlg = L.ControllerDialogWizard.Dialogs[dialogid] =
+				L.control.dialogWizard(dialogid);
+		}
+		dlg._fillContent(data, this._map);
+		dlg.addTo(this._map);
+	},
+
+	_onCommandResult: function (e) {
+		if (!e.success || !e.result)
+			return;
+
+		if (e.commandName.startsWith('.uno:RunMacro')) {
+			this._createDialog(L.ControllerDialogWizard.MACRO_SELECTOR, e.result.value);
+		}
+	},
+
+	_executeAction: function (action) {
+		var selected;
+		var dlg = L.ControllerDialogWizard.Dialogs[action.dialogid];
+
+		switch (action.dialogid) {
+		case L.ControllerDialogWizard.MACRO_SELECTOR:
+			break;
+		}
+	},
+
+	_isDlgOpen: function(dlg) {
+		var result = false;
+		if (dlg) {
+			var corner = this._map._controlCorners[dlg.getPosition()];
+			result = corner.querySelector(dlg.options.idPrefix);
+		}
+
+		return result;
+	},
+
+	_runMacroSelector: function () {
+		var dlg = L.ControllerDialogWizard.Dialogs[L.ControllerDialogWizard.MACRO_SELECTOR];
+		if (!dlg) {
+			this._map.sendUnoCommand('.uno:RunMacro');
+		} else if (!this._isDlgOpen(dlg)) {
+			dlg.addTo(this._map);
+		}
+	}
+});
+
+L.Map.addInitHook('addController', 'dialogWizard', L.ControllerDialogWizard);
