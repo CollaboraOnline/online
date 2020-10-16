@@ -799,7 +799,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 
 	update: function () {
 		var bounds = this._map.getPixelBounds();
-		var startPx = this._isCol ? bounds.getTopLeft().x : bounds.getTopLeft().y;
+		var startPx = this._isCol ? bounds.getTopLeft().x / (L.Browser.retina ? 2: 1) : bounds.getTopLeft().y / (L.Browser.retina ? 2: 1);
 		this._docVisStart = startPx;
 		var endPx = this._isCol ? bounds.getBottomRight().x : bounds.getBottomRight().y;
 		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'csspixels');
@@ -849,8 +849,8 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		var firstFreeSize = Math.max(0, firstFreeEnd - firstFreeStart);
 		this._elements[startIdx] = {
 			index: startIdx,
-			pos: firstFreeEnd, // end position on the header canvas
-			size: firstFreeSize,
+			pos: firstFreeEnd * (L.Browser.retina ? 2: 1), // end position on the header canvas
+			size: firstFreeSize * (L.Browser.retina ? 2: 1),
 			origsize: dataFirstFree.size,
 		};
 
@@ -861,8 +861,8 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 				var size = endpos - startpos;
 				this._elements[idx] = {
 					index: idx,
-					pos: endpos, // end position on the header canvas
-					size: size,
+					pos: endpos * (L.Browser.retina ? 2: 1), // end position on the header canvas
+					size: size * (L.Browser.retina ? 2: 1),
 					origsize: size,
 				};
 			}.bind(this));
