@@ -3,9 +3,11 @@ image:
 
 ports:
   - port: 9980
-    onOpen: open-browser
+    onOpen: ignore
   - port: 6080
     protocol: "http"
+  - port: 5900
+    onOpen: ignore
 
 vscode:
   extensions:
