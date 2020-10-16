@@ -4,7 +4,6 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Nextcloud specific tests.', function() {
 	var testFileName = 'nextcloud.ods';
@@ -75,7 +74,7 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Initially we have "text" text in the document
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', 'Text');
@@ -87,7 +86,7 @@ describe('Nextcloud specific tests.', function() {
 
 		helper.typeIntoDocument('new');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', 'new');
@@ -98,7 +97,7 @@ describe('Nextcloud specific tests.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', 'Text');

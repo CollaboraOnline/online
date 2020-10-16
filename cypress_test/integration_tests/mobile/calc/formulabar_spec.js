@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 require('cypress-wait-until');
 
@@ -125,7 +124,7 @@ describe('Change alignment settings.', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td:nth-of-type(1)')
 			.should('have.text', 'long line long line long line');
@@ -135,7 +134,7 @@ describe('Change alignment settings.', function() {
 
 		calcHelper.typeIntoFormulabar('{end}xxxxxxx{enter}');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td:nth-of-type(1)')
 			.should('have.text', 'long line long line long linexxxxxxx');
@@ -145,7 +144,7 @@ describe('Change alignment settings.', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td:nth-of-type(1)')
 			.should('have.text', 'long line long line long line');
@@ -158,7 +157,7 @@ describe('Change alignment settings.', function() {
 		cy.get('#tb_actionbar_item_acceptformula')
 			.click();
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td:nth-of-type(1)')
 			.should('have.text', 'long line long line long l');
@@ -168,7 +167,7 @@ describe('Change alignment settings.', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td:nth-of-type(1)')
 			.should('have.text', 'long line long line long line');
@@ -183,7 +182,7 @@ describe('Change alignment settings.', function() {
 
 		cy.wait(2000);
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td:nth-of-type(1)')
 			.should('have.text', 'long line long line long line');
@@ -290,7 +289,7 @@ describe('Change alignment settings.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td:nth-of-type(1)')
 			.should('have.text', '5');
