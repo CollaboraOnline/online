@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Apply font changes.', function() {
 	var testFileName = 'apply_font.ods';
@@ -30,7 +29,7 @@ describe('Apply font changes.', function() {
 	it('Apply bold.', function() {
 		helper.clickOnIdle('#Bold');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td b')
 			.should('exist');
@@ -39,7 +38,7 @@ describe('Apply font changes.', function() {
 	it('Apply italic.', function() {
 		helper.clickOnIdle('#Italic');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td i')
 			.should('exist');
@@ -48,7 +47,7 @@ describe('Apply font changes.', function() {
 	it('Apply underline.', function() {
 		helper.clickOnIdle('#Underline');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td u')
 			.should('exist');
@@ -57,7 +56,7 @@ describe('Apply font changes.', function() {
 	it('Apply strikeout.', function() {
 		helper.clickOnIdle('#Strikeout');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td s')
 			.should('exist');
@@ -66,7 +65,7 @@ describe('Apply font changes.', function() {
 	it('Apply shadowed.', function() {
 		helper.clickOnIdle('#Shadowed');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		// TODO: Shadowed is not in the clipboard content.
 	});
@@ -86,7 +85,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontnamecombobox .ui-header-right .entry-value')
 			.should('have.text', 'Linux Libertine G');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'face', 'Linux Libertine G');
@@ -111,7 +110,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontsizecombobox .ui-header-right .entry-value')
 			.should('have.text', '14');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'size', '4');
@@ -120,7 +119,7 @@ describe('Apply font changes.', function() {
 	it('Apply grow.', function() {
 		helper.clickOnIdle('#Grow');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'size', '3');
@@ -129,7 +128,7 @@ describe('Apply font changes.', function() {
 	it('Apply shrink.', function() {
 		helper.clickOnIdle('#Shrink');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'size', '1');
@@ -140,7 +139,7 @@ describe('Apply font changes.', function() {
 
 		mobileHelper.selectFromColorPalette(0, 5);
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'color', '#00FF00');
