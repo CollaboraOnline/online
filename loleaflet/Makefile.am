@@ -285,6 +285,7 @@ LOLEAFLET_JS =\
 	src/control/Control.JSDialogBuilder.js \
 	src/control/Control.DialogBuilder.js \
 	src/control/Control.MobileWizard.js \
+	src/control/Control.DialogWizard.js \
 	src/control/Control.LanguageDialog.js \
 	src/control/Control.Attribution.js \
 	src/control/Control.MobileSlide.js \
