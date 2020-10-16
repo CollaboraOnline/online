@@ -7,7 +7,8 @@
 L.Control.MobileWizard = L.Control.extend({
 	options: {
 		maxHeight: '45%',
-		idPrefix: '#mobile-wizard'
+		idPrefix: '#mobile-wizard',
+		classPrefix: '.mobile-wizard'
 	},
 
 	_inMainMenu: true,
@@ -182,7 +183,7 @@ L.Control.MobileWizard = L.Control.extend({
 			$(this.options.idPrefix + '-tabs').hide();
 		}
 
-		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard:visible';
+		var titles = '.ui-header.level-' + this.getCurrentLevel() + this.options.classPrefix + ':visible';
 
 		if (animate)
 			$(titles).hide('slide', { direction: 'left' }, 'fast');
@@ -234,7 +235,7 @@ L.Control.MobileWizard = L.Control.extend({
 		} else {
 			this._currentDepth--;
 
-			var parent = $('.ui-content.mobile-wizard:visible');
+			var parent = $('.ui-content' + this.options.classPrefix + ':visible');
 			if (this._currentDepth > 0 && parent)
 				this._setTitle(parent.get(0).title);
 			else
@@ -242,13 +243,14 @@ L.Control.MobileWizard = L.Control.extend({
 
 			var headers;
 			if (this._currentDepth === 0) {
-				headers = $('.ui-header.level-' + this._currentDepth + '.mobile-wizard');
+				headers = $('.ui-header.level-' + this._currentDepth + this.options.classPrefix);
+				
 			} else {
-				headers = $('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').siblings()
-					.not('.ui-content.level-' + this._currentDepth + '.mobile-wizard');
+				headers = $('.ui-content.level-' + this._currentDepth + this.options.classPrefix + ':visible').siblings()
+					.not('.ui-content.level-' + this._currentDepth + this.options.classPrefix);
 			}
 
-			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
+			$('.ui-content.level-' + this._currentDepth + this.options.classPrefix + ':visible').hide();
 			$(this.options.idPrefix + '.funcwizard div' + this.options.idPrefix + '-content').removeClass('showHelpBG');
 			$(this.options.idPrefix + '.funcwizard div' + this.options.idPrefix + '-content').addClass('hideHelpBG');
 			headers.show('slide', { direction: 'left' }, 'fast');
