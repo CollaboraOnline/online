@@ -696,6 +696,25 @@ L.Map = L.Evented.extend({
 		delete this[name];
 	},
 
+	addController: function (name, controllerClass) {
+		if (!controllerClass) {
+			return this;
+		}
+
+		this[name] = new controllerClass(this);
+		return this;
+	},
+
+	removeController: function(name) {
+		var controller = this[name];
+
+		if (!controller) {
+			return;
+		}
+
+		delete this[name];
+	},
+
 	remove: function () {
 
 		this._initEvents(true);
