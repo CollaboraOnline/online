@@ -584,7 +584,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-				{uno: '.uno:GoalSeekDialog'}
+				{uno: '.uno:GoalSeekDialog'},
+				{type: 'separator'},
+				{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
@@ -1305,6 +1307,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.showSignDocument();
 		} else if (id === 'insertcomment') {
 			this._map.insertComment();
+		} else if (id === 'runmacro') {
+			this._map.sendUnoCommand('.uno:RunMacro');
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
 		} else if (id === 'insertgraphicremote') {
