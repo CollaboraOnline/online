@@ -37,7 +37,7 @@ describe('Change alignment settings.', function() {
 		cy.get('@currentTextPos')
 			.should('be.greaterThan', 0);
 
-		calcMobileHelper.removeTextSelection();
+		calcHelper.removeTextSelection();
 	}
 
 	function openAlignmentPaneForFirstCell() {
@@ -57,7 +57,7 @@ describe('Change alignment settings.', function() {
 		// Set right aligment first
 		helper.clickOnIdle('#AlignRight');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'right');
@@ -71,7 +71,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignLeft');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'left');
@@ -82,7 +82,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignHorizontalCenter');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'center');
@@ -93,7 +93,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignBlock');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'justify');
@@ -118,7 +118,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignTop');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'top');
@@ -132,7 +132,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignBottom');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'bottom');
@@ -143,7 +143,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignVCenter');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'middle');
@@ -227,7 +227,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#IncrementIndent');
 
-		calcMobileHelper.removeTextSelection();
+		calcHelper.removeTextSelection();
 
 		openAlignmentPaneForFirstCell();
 
@@ -332,7 +332,7 @@ describe('Change alignment settings.', function() {
 			.should('have.prop', 'checked', true);
 
 		// Check content
-		calcMobileHelper.selectAllMobile(false);
+		calcHelper.selectAllMobile(false);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'colspan', '1024');
