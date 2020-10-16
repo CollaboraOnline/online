@@ -8,7 +8,8 @@ L.Control.MobileWizard = L.Control.extend({
 	options: {
 		maxHeight: '45%',
 		idPrefix: '#mobile-wizard',
-		classPrefix: '.mobile-wizard'
+		classPrefix: '.mobile-wizard',
+		nameElement: 'mobile-wizard'
 	},
 
 	_inMainMenu: true,
@@ -70,7 +71,7 @@ L.Control.MobileWizard = L.Control.extend({
 		//console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
 		var maxScrolled = 52;
 		if ((ContentsLength > 5 || this._tabs) && !window.mobileMenuWizard) {
-			$(this.options.idPrefix + '-content').append('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
+			$(this.options.idPrefix + '-content').append('<div id="' + this.options.nameElement + '-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
 		}
 		if (docType == 'spreadsheet')
 			maxScrolled = 30;
@@ -210,7 +211,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 		this._currentDepth++;
 		if (!this._inBuilding)
-			history.pushState({context: 'mobile-wizard', level: this._currentDepth}, 'mobile-wizard-level-' + this._currentDepth);
+			history.pushState({context: this.options.nameElement, level: this._currentDepth}, this.options.nameElement + '-level-' + this._currentDepth);
 		this._setTitle(contentToShow.title);
 		this._inMainMenu = false;
 
@@ -267,7 +268,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_onResize: function() {
-		L.DomUtil.updateElementsOrientation(['mobile-wizard', 'mobile-wizard-content']);
+		L.DomUtil.updateElementsOrientation([this.options.nameElement, this.options.nameElement + '-content']);
 	},
 
 	_setTitle: function(title) {
@@ -396,11 +397,11 @@ L.Control.MobileWizard = L.Control.extend({
 				this._modifySidebarLayout(data);
 
 			if (!alreadyOpen) {
-				history.pushState({context: 'mobile-wizard'}, 'mobile-wizard-opened');
-				history.pushState({context: 'mobile-wizard', level: 0}, 'mobile-wizard-level-0');
+				history.pushState({context: this.options.nameElement}, this.options.nameElement + '-opened');
+				history.pushState({context: this.options.nameElement, level: 0}, this.options.nameElement + '-level-0');
 			}
 
-			var builder = L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
+			var builder = L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: this.options.nameElement});
 			builder.build(this.content.get(0), [data]);
 
 			this._mainTitle = data.text ? data.text : '';
@@ -439,11 +440,11 @@ L.Control.MobileWizard = L.Control.extend({
 
 	// These 2 functions show/hide mobile-slide-sorter.
 	_showSlideSorter: function() {
-		document.getElementById('mobile-wizard-header').style.display = 'block';
+		document.getElementById(this.options.nameElement + '-header').style.display = 'block';
 	},
 
 	_hideSlideSorter: function() {
-		document.getElementById('mobile-wizard-header').style.display = 'none';
+		document.getElementById(this.options.nameElement + '-header').style.display = 'none';
 	},
 
 	_isSlidePropertyPanel: function(data) {
