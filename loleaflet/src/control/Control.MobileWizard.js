@@ -6,7 +6,8 @@
 /* global $ w2ui */
 L.Control.MobileWizard = L.Control.extend({
 	options: {
-		maxHeight: '45%'
+		maxHeight: '45%',
+		idPrefix: '#mobile-wizard'
 	},
 
 	_inMainMenu: true,
@@ -44,12 +45,12 @@ L.Control.MobileWizard = L.Control.extend({
 		this._inMainMenu = true;
 		this.content.empty();
 		this.backButton.addClass('close-button');
-		$('#mobile-wizard-tabs').empty();
-		$('#mobile-wizard-tabs').hide();
-		$('#mobile-wizard-titlebar').show();
-		$('#mobile-wizard-titlebar').css('top', '0px');
-		$('#mobile-wizard').removeClass('menuwizard');
-		$('#mobile-wizard').removeClass('funcwizard');
+		$(this.options.idPrefix + '-tabs').empty();
+		$(this.options.idPrefix + '-tabs').hide();
+		$(this.options.idPrefix + '-titlebar').show();
+		$(this.options.idPrefix + '-titlebar').css('top', '0px');
+		$(this.options.idPrefix).removeClass('menuwizard');
+		$(this.options.idPrefix).removeClass('funcwizard');
 		this._isTabMode = false;
 		this._currentPath = [];
 		this._tabs = [];
@@ -57,8 +58,8 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_setupBackButton: function() {
-		this.content = $('#mobile-wizard-content');
-		this.backButton = $('#mobile-wizard-back');
+		this.content = $(this.options.idPrefix + '-content');
+		this.backButton = $(this.options.idPrefix + '-back');
 		this.backButton.click(function() { history.back(); });
 		$(this.backButton).addClass('close-button');
 	},
@@ -68,19 +69,19 @@ L.Control.MobileWizard = L.Control.extend({
 		//console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
 		var maxScrolled = 52;
 		if ((ContentsLength > 5 || this._tabs) && !window.mobileMenuWizard) {
-			$('#mobile-wizard-content').append('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
+			$(this.options.idPrefix + '-content').append('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
 		}
 		if (docType == 'spreadsheet')
 			maxScrolled = 30;
 		else if (docType == 'presentation')
 			maxScrolled = 20;
-		$('#mobile-wizard').show();
-		$('#mobile-wizard-content').on('scroll', function() {
-			var mWizardContentScroll = $('#mobile-wizard-content').scrollTop();
-			var height = $('#mobile-wizard-content').prop('scrollHeight');
+		$(this.options.idPrefix).show();
+		$(this.options.idPrefix + '-content').on('scroll', function() {
+			var mWizardContentScroll = $(this.options.idPrefix + '-content').scrollTop();
+			var height = $(this.options.idPrefix + '-content').prop('scrollHeight');
 			var scrolled = (mWizardContentScroll / height) * 100;
-			if (scrolled > maxScrolled) {$('#mobile-wizard-scroll-indicator').css('display','none');}
-			else {$('#mobile-wizard-scroll-indicator').css('display','block');}
+			if (scrolled > maxScrolled) {$(this.options.idPrefix + '-scroll-indicator').css('display','none');}
+			else {$(this.options.idPrefix + '-scroll-indicator').css('display','block');}
 		});
 		$('#toolbar-down').hide();
 		if (window.ThisIsTheAndroidApp)
@@ -101,8 +102,8 @@ L.Control.MobileWizard = L.Control.extend({
 			window.mobileDialogId = undefined;
 		}
 
-		$('#mobile-wizard').hide();
-		$('#mobile-wizard-content').empty();
+		$(this.options.idPrefix).hide();
+		$(this.options.idPrefix + '-content').empty();
 		if (this.map.isPermissionEdit()) {
 			$('#toolbar-down').show();
 		}
@@ -134,7 +135,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	isOpen: function() {
-		return $('#mobile-wizard').is(':visible');
+		return $(this.options.idPrefix).is(':visible');
 	},
 
 	_hideKeyboard: function() {
@@ -159,15 +160,15 @@ L.Control.MobileWizard = L.Control.extend({
 
 	setTabs: function(tabs) {
 		this._tabs = tabs;
-		$('#mobile-wizard-tabs').show();
-		$('#mobile-wizard-tabs').empty();
-		$('#mobile-wizard-tabs').append(tabs);
-		$('#mobile-wizard-titlebar').hide();
+		$(this.options.idPrefix + '-tabs').show();
+		$(this.options.idPrefix + '-tabs').empty();
+		$(this.options.idPrefix + '-tabs').append(tabs);
+		$(this.options.idPrefix + '-titlebar').hide();
 		this._isTabMode = true;
 	},
 
 	setCurrentScrollPosition: function() {
-		this._currentScrollPosition = $('#mobile-wizard-content').scrollTop();
+		this._currentScrollPosition = $(this.options.idPrefix + '-content').scrollTop();
 	},
 
 	goLevelDown: function(contentToShow, options) {
@@ -177,8 +178,8 @@ L.Control.MobileWizard = L.Control.extend({
 			this.backButton.removeClass('close-button');
 
 		if (this._isTabMode && this._currentDepth > 0) {
-			$('#mobile-wizard-titlebar').show();
-			$('#mobile-wizard-tabs').hide();
+			$(this.options.idPrefix + '-titlebar').show();
+			$(this.options.idPrefix + '-tabs').hide();
 		}
 
 		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard:visible';
@@ -188,7 +189,7 @@ L.Control.MobileWizard = L.Control.extend({
 		else
 			$(titles).hide();
 
-		$('#mobile-wizard .ui-effects-placeholder').hide();
+		$(this.options.idPrefix + ' .ui-effects-placeholder').hide();
 
 		var nodesToHide = $(contentToShow).siblings();
 
@@ -198,8 +199,8 @@ L.Control.MobileWizard = L.Control.extend({
 		else
 			nodesToHide.hide();
 
-		$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('hideHelpBG');
-		$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('showHelpBG');
+		$(this.options.idPrefix + '.funcwizard div' + this.options.idPrefix + '-content').removeClass('hideHelpBG');
+		$(this.options.idPrefix + '.funcwizard div' + this.options.idPrefix + '-content').addClass('showHelpBG');
 
 		if (animate)
 			$(contentToShow).show('slide', { direction: 'right' }, 'fast');
@@ -248,16 +249,16 @@ L.Control.MobileWizard = L.Control.extend({
 			}
 
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
-			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');
-			$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('hideHelpBG');
+			$(this.options.idPrefix + '.funcwizard div' + this.options.idPrefix + '-content').removeClass('showHelpBG');
+			$(this.options.idPrefix + '.funcwizard div' + this.options.idPrefix + '-content').addClass('hideHelpBG');
 			headers.show('slide', { direction: 'left' }, 'fast');
 
 			if (this._currentDepth == 0 || (this._isTabMode && this._currentDepth == 1)) {
 				this._inMainMenu = true;
 				this.backButton.addClass('close-button');
 				if (this._isTabMode) {
-					$('#mobile-wizard-titlebar').hide();
-					$('#mobile-wizard-tabs').show();
+					$(this.options.idPrefix + '-titlebar').hide();
+					$(this.options.idPrefix + '-tabs').show();
 				}
 			}
 		}
@@ -268,13 +269,13 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_setTitle: function(title) {
-		var right = $('#mobile-wizard-title');
+		var right = $(this.options.idPrefix + '-title');
 		right.text(title);
 	},
 
 	_scrollToPosition: function(position) {
 		if (this._currentScrollPosition) {
-			$('#mobile-wizard-content').animate({ scrollTop: position }, 0);
+			$(this.options.idPrefix + '-content').animate({ scrollTop: position }, 0);
 		}
 	},
 
@@ -315,7 +316,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 		if (goBack) {
 			this._currentScrollPosition = 0;
-			$('#mobile-wizard-content').animate({ scrollTop: 0 }, 0);
+			$(this.options.idPrefix + '-content').animate({ scrollTop: 0 }, 0);
 		}
 
 		this._currentPath = _path;
@@ -404,23 +405,23 @@ L.Control.MobileWizard = L.Control.extend({
 			this._setTitle(this._mainTitle);
 
 			if (data.id === 'menubar' || data.id === 'insertshape') {
-				$('#mobile-wizard').height('100%');
+				$(this.options.idPrefix).height('100%');
 				if (data.id === 'menubar')
-					$('#mobile-wizard').addClass('menuwizard');
+					$(this.options.idPrefix).addClass('menuwizard');
 				else if (data.id === 'insertshape') {
-					$('#mobile-wizard').addClass('shapeswizard');
+					$(this.options.idPrefix).addClass('shapeswizard');
 				}
 				if (this.map.getDocType() === 'spreadsheet')
-					$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
+					$(this.options.idPrefix).css('top', $('#spreadsheet-row-column-frame').css('top'));
 				else
-					$('#mobile-wizard').css('top', $('#document-container').css('top'));
+					$(this.options.idPrefix).css('top', $('#document-container').css('top'));
 			} else if (data.id === 'funclist') {
-				$('#mobile-wizard').height('100%');
-				$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
-				$('#mobile-wizard').addClass('funcwizard');
+				$(this.options.idPrefix).height('100%');
+				$(this.options.idPrefix).css('top', $('#spreadsheet-row-column-frame').css('top'));
+				$(this.options.idPrefix).addClass('funcwizard');
 			} else {
-				$('#mobile-wizard').height(this.options.maxHeight);
-				$('#mobile-wizard').css('top', '');
+				$(this.options.idPrefix).height(this.options.maxHeight);
+				$(this.options.idPrefix).css('top', '');
 			}
 
 			if (this._isActive && currentPath.length) {
