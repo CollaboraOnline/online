@@ -18,6 +18,7 @@ L.Clipboard = L.Class.extend({
 		this._clipboardSerial = 0; // incremented on each operation
 		this._failedTimer = null;
 		this._dummyDivName = 'copy-paste-container';
+		this._unoCommandForCopyCutPaste = null;
 
 		var div = document.createElement('div');
 		this._dummyDiv = div;
@@ -483,6 +484,15 @@ L.Clipboard = L.Class.extend({
 
 		var plainText = this.stripHTML(text);
 		if (ev.clipboardData) { // Standard
+			if (this._unoCommandForCopyCutPaste === '.uno:CopyHyperlinkLocation') {
+				var ess = 's';
+				var re = new RegExp('^(.*)(<a href=")([^"]+)(">.*</a>)(</p>\n</body>\n</html>)$', ess);
+				var match = re.exec(text);
+				if (match !== null && match.length === 6) {
+					text = match[1] + match[3] + match[5];
+					plainText = this.stripHTML(text);
+				}
+			}
 			// if copied content is graphical then plainText is null and it does not work on mobile.
 			ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
 			ev.clipboardData.setData('text/html', text);
@@ -582,17 +592,20 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// Encourage browser(s) to actually execute the command
-	_execCopyCutPaste: function(operation) {
+	_execCopyCutPaste: function(operation, cmd) {
 		var serial = this._clipboardSerial;
 
 		// try a direct execCommand.
 		if (L.Browser.isInternetExplorer && operation != 'paste')
 			this._beforeSelectImpl(operation);
+		this._unoCommandForCopyCutPaste = cmd;
 		if (document.execCommand(operation) &&
 		    serial !== this._clipboardSerial) {
 			console.log('copied successfully');
+			this._unoCommandForCopyCutPaste = null;
 			return;
 		}
+		this._unoCommandForCopyCutPaste = null;
 
 		// try a hidden div
 		if (this._execOnElement(operation)) {
@@ -652,12 +665,12 @@ L.Clipboard = L.Class.extend({
 			return true;
 		}
 
-		if (cmd === '.uno:Copy') {
-			this._execCopyCutPaste('copy');
+		if (cmd === '.uno:Copy' || cmd === '.uno:CopyHyperlinkLocation') {
+			this._execCopyCutPaste('copy', cmd);
 		} else if (cmd === '.uno:Cut') {
-			this._execCopyCutPaste('cut');
+			this._execCopyCutPaste('cut', cmd);
 		} else if (cmd === '.uno:Paste') {
-			this._execCopyCutPaste('paste');
+			this._execCopyCutPaste('paste', cmd);
 		} else {
 			return false;
 		}
