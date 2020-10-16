@@ -94,7 +94,61 @@ function typeIntoFormulabar(text) {
 	cy.log('Typing into formulabar - end.');
 }
 
+function removeTextSelection() {
+	cy.log('Removing text selection - start.');
+
+	cy.get('.spreadsheet-header-rows')
+		.then(function(header) {
+			var rect = header[0].getBoundingClientRect();
+			var posX = (rect.right + rect.left) / 2.0;
+			var posY = (rect.top + rect.bottom) / 2.0;
+
+			var moveY = 0.0;
+			cy.waitUntil(function() {
+				cy.get('body')
+					.click(posX, posY + moveY);
+
+				moveY += 1.0;
+				var regex = /A([0-9]+):AMJ\1$/;
+				return cy.get('input#addressInput')
+					.should('have.prop', 'value')
+					.then(function(value) {
+						return regex.test(value);
+					});
+			});
+		});
+
+
+	cy.log('Removing text selection - end.');
+}
+
+function selectAllMobile(removeSelection = true) {
+	cy.log('Selecting all text - start.');
+
+	if (removeSelection)
+		removeTextSelection();
+
+	cy.get('#spreadsheet-header-corner')
+		.then(function(corner) {
+			var yPos = corner.height() - 10;
+			cy.get('#spreadsheet-header-corner')
+				.click(0, yPos);
+		});
+
+	helper.doIfOnMobile(function() {
+		cy.get('.spreadsheet-cell-resize-marker')
+			.should('be.visible');
+	});
+
+	cy.get('input#addressInput')
+		.should('have.prop', 'value', 'A1:AMJ1048576');
+
+	cy.log('Selecting all text - end.');
+}
+
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
 module.exports.typeIntoFormulabar = typeIntoFormulabar;
+module.exports.removeTextSelection = removeTextSelection;
+module.exports.selectAllMobile = selectAllMobile;

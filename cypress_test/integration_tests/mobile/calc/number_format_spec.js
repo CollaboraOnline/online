@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Apply number formatting.', function() {
 	var testFileName = 'number_format.ods';
@@ -55,7 +54,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';0;0.00%$');
 		cy.get('#copy-paste-container table td')
@@ -82,7 +81,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';0;0.00%$');
 		cy.get('#copy-paste-container table td')
@@ -106,7 +105,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';\\[\\$\\$-409]#,##0.00;\\[RED]-\\[\\$\\$-409]#,##0.00$');
 		cy.get('#copy-paste-container table td')
@@ -133,7 +132,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';\\[\\$\\$-409]#,##0.00;\\[RED]-\\[\\$\\$-409]#,##0.00$');
 		cy.get('#copy-paste-container table td')
@@ -158,7 +157,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';\\[\\$\\$-409]#,##0.00;\\[RED]-\\[\\$\\$-409]#,##0.00$');
 		cy.get('#copy-paste-container table td')
@@ -186,7 +185,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#numberformatcombobox .ui-header-left')
 			.should('have.text', 'Number');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', '1,000.00');
@@ -208,7 +207,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';MM/DD/YY$');
 		cy.get('#copy-paste-container table td')
@@ -232,7 +231,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';HH:MM:SS AM/PM$');
 		cy.get('#copy-paste-container table td')
@@ -256,7 +255,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '1');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';0\\.00E\\+00$');
 		cy.get('#copy-paste-container table td')
@@ -277,7 +276,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';# \\?/\\?$');
 		cy.get('#copy-paste-container table td')
@@ -298,7 +297,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';BOOLEAN$');
 		cy.get('#copy-paste-container table td')
@@ -319,7 +318,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '0');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';@$');
 		cy.get('#copy-paste-container table td')
@@ -343,7 +342,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#decimalplaces input')
 			.should('have.attr', 'value', '2');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';0\\.00$');
 		cy.get('#copy-paste-container table td')
@@ -367,7 +366,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#leadingzeroes input')
 			.should('have.attr', 'value', '6');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';000000$');
 		cy.get('#copy-paste-container table td')
@@ -389,7 +388,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#negativenumbersred input')
 			.should('have.prop', 'checked', true);
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';0;\\[RED]-0$');
 		cy.get('#copy-paste-container table td')
@@ -411,7 +410,7 @@ describe('Apply number formatting.', function() {
 		cy.get('#thousandseparator input')
 			.should('have.prop', 'checked', true);
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';#,##0$');
 		cy.get('#copy-paste-container table td')

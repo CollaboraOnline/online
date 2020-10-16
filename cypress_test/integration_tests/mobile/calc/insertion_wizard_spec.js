@@ -5,7 +5,6 @@ require('cypress-file-upload');
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Calc insertion wizard.', function() {
 	var testFileName = 'insertion_wizard.ods';
@@ -84,7 +83,7 @@ describe('Calc insertion wizard.', function() {
 		cy.get('.blinking-cursor')
 			.should('be.visible');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td a')
 			.should('have.text', 'some text');
@@ -117,7 +116,7 @@ describe('Calc insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Date')
 			.click();
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';MM/DD/YY$');
 		cy.get('#copy-paste-container table td')
@@ -130,7 +129,7 @@ describe('Calc insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Time')
 			.click();
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		var regex = new RegExp(';HH:MM:SS AM/PM$');
 		cy.get('#copy-paste-container table td')

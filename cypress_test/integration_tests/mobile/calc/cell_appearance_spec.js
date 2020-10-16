@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Change cell appearance.', function() {
 	var testFileName = 'cell_appearance.ods';
@@ -35,7 +34,7 @@ describe('Change cell appearance.', function() {
 	}
 
 	function openAppearencePanelOnAllCells() {
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		openAppearencePanel();
 	}
@@ -51,7 +50,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#BackgroundColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(255, 0, 0);');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'bgcolor', '#FF0000');
@@ -62,7 +61,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-2');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000');
@@ -74,7 +73,7 @@ describe('Change cell appearance.', function() {
 		// First add left border
 		helper.clickOnIdle('#border-2');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000');
@@ -84,7 +83,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-1');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('not.have.attr', 'style');
@@ -95,7 +94,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-3');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-right: 1px solid #000000');
@@ -106,7 +105,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-4');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000; border-right: 1px solid #000000');
@@ -117,7 +116,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-5');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000');
@@ -128,7 +127,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-6');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-bottom: 1px solid #000000');
@@ -139,7 +138,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-7');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000');
@@ -150,7 +149,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-8');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
@@ -161,7 +160,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-9');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should(function(cells) {
@@ -177,7 +176,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-10');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should(function(cells) {
@@ -203,7 +202,7 @@ describe('Change cell appearance.', function() {
 		// TODO
 		cy.wait(200);
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should(function(cells) {
@@ -226,7 +225,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-12');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should(function(cells) {
@@ -259,7 +258,7 @@ describe('Change cell appearance.', function() {
 		cy.get('#FrameLineColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(255, 153, 0);');
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #ff9900');

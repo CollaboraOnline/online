@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Calc spell checking menu.', function() {
 	var testFileName = 'spellchecking.ods';
@@ -41,7 +40,7 @@ describe('Calc spell checking menu.', function() {
 				}
 
 				// Remove selection
-				calcMobileHelper.removeTextSelection();
+				calcHelper.removeTextSelection();
 
 				// Step into edit mode again
 				calcHelper.dblClickOnFirstCell();
@@ -59,7 +58,7 @@ describe('Calc spell checking menu.', function() {
 		cy.contains('.context-menu-link', 'hello')
 			.click();
 
-		calcMobileHelper.selectAllMobile();
+		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'hello');
