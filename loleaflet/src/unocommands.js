@@ -268,6 +268,7 @@ var unoCommandsArray = {
 	RotateLeft:{text:{menu:_('Rotate 90° ~Left'),},},
 	RotateMenu:{global:{menu:_('Rot~ate'),},},
 	RotateRight:{text:{menu:_('Rotate 90° ~Right'),},},
+	RunMacro:{global:{menu:_('R~un Macro...'),},},
 	Save:{global:{menu:_('~Save'),},},
 	SaveAs:{global:{menu:_('Save ~As...'),},},
 	SearchDialog:{global:{menu:_('Find & Rep~lace...'),},},
