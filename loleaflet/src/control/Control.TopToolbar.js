@@ -275,9 +275,9 @@ L.Control.TopToolbar = L.Control.extend({
 		case 'spreadsheet':
 			if (toolbarUp) {
 				toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
-				'numberformatcurrency', 'numberformatpercent',
-				'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
-				'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
+					'numberformatcurrency', 'numberformatpercent',
+					'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
+					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
 				toolbarUp.remove('styles');
 			}
 
@@ -292,8 +292,8 @@ L.Control.TopToolbar = L.Control.extend({
 		case 'text':
 			if (toolbarUp)
 				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-				'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
-				'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
+					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
+					'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
 
 			break;
 		case 'presentation':
@@ -322,8 +322,8 @@ L.Control.TopToolbar = L.Control.extend({
 		case 'drawing':
 			if (toolbarUp)
 				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-				'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
-				'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
+					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
+					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
 			break;
 		}
 
@@ -517,7 +517,7 @@ L.Control.TopToolbar = L.Control.extend({
 				// we need to add the size
 				$('.styles-select')
 					.append($('<option></option>')
-					.text(state));
+						.text(state));
 			}
 
 			this.options.stylesSelectValue = state;
@@ -535,7 +535,7 @@ L.Control.TopToolbar = L.Control.extend({
 				// we need to add the size
 				$('.fonts-select')
 					.append($('<option></option>')
-					.text(state));
+						.text(state));
 			}
 			this.options.fontsSelectValue = state;
 			$('.fonts-select').val(state).trigger('change');
@@ -554,7 +554,7 @@ L.Control.TopToolbar = L.Control.extend({
 				// we need to add the size
 				$('.fontsizes-select')
 					.append($('<option>')
-					.text(state).val(state));
+						.text(state).val(state));
 			}
 			$('.fontsizes-select').val(state).trigger('change');
 		}
