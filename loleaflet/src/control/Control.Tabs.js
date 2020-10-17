@@ -126,13 +126,13 @@ L.Control.Tabs = L.Control.extend({
 
 					if (window.mode.isMobile()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
-						.on('press', function (j) {
-							return function() {
-								this._tabForContextMenu = j;
-								window.contextMenuWizard = true;
-								if (!this._map.isPermissionReadOnly()) this._map.fire('mobilewizard', menuData);
-							};
-						}(i).bind(this));
+							.on('press', function (j) {
+								return function() {
+									this._tabForContextMenu = j;
+									window.contextMenuWizard = true;
+									if (!this._map.isPermissionReadOnly()) this._map.fire('mobilewizard', menuData);
+								};
+							}(i).bind(this));
 					} else {
 						L.DomEvent.on(tab, 'contextmenu', function(j) {
 							return function() {

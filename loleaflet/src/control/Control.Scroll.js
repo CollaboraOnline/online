@@ -107,8 +107,8 @@ L.Control.Scroll = L.Control.extend({
 		}
 
 		var offset = new L.Point(
-				newLeft - this._prevScrollX,
-				newTop - this._prevScrollY);
+			newLeft - this._prevScrollX,
+			newTop - this._prevScrollY);
 
 		if (offset.equals(new L.Point(0, 0))) {
 			return;

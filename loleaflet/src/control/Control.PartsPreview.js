@@ -219,11 +219,11 @@ L.Control.PartsPreview = L.Control.extend({
 		img.fetched = false;
 		if (!window.mode.isDesktop()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
-			.on('press', function (e) {
-				if (this._map.isPermissionEdit()) {
-					this._addDnDTouchHandlers(e);
-				}
-			}.bind(this));
+				.on('press', function (e) {
+					if (this._map.isPermissionEdit()) {
+						this._addDnDTouchHandlers(e);
+					}
+				}.bind(this));
 		}
 		L.DomEvent.on(img, 'click', function (e) {
 			L.DomEvent.stopPropagation(e);
