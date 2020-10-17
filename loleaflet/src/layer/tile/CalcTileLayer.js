@@ -1398,7 +1398,7 @@ L.SheetGeometry = L.Class.extend({
 		}
 
 		return new L.Point(this._columns.getTileTwipsPosFromPrint(point.x),
-				this._rows.getTileTwipsPosFromPrint(point.y));
+			this._rows.getTileTwipsPosFromPrint(point.y));
 	},
 
 	// accepts a point in tile-twips coordinates and returns the equivalent point
@@ -1410,7 +1410,7 @@ L.SheetGeometry = L.Class.extend({
 		}
 
 		return new L.Point(this._columns.getPrintTwipsPosFromTile(point.x),
-				this._rows.getPrintTwipsPosFromTile(point.y));
+			this._rows.getPrintTwipsPosFromTile(point.y));
 	},
 
 	// accepts a rectangle in print twips coordinates and returns the equivalent rectangle
@@ -1716,7 +1716,7 @@ L.SheetDimension = L.Class.extend({
 	// returns element pos/size in css pixels by default.
 	_getElementDataFromSpanByIndex: function (index, span, useCorePixels) {
 		return this._getElementDataAnyFromSpanByIndex(index, span,
-				useCorePixels ? 'corepixels' : 'csspixels');
+			useCorePixels ? 'corepixels' : 'csspixels');
 	},
 
 	// returns element pos/size in the requested unit.

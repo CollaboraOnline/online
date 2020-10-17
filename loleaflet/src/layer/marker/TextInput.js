@@ -45,7 +45,7 @@ L.TextInput = L.Layer.extend({
 		this._postSpaceChar = ' ';
 
 		// Debug flag, used in fancyLog(). See the debug() method.
-//		this._isDebugOn = true;
+		//this._isDebugOn = true;
 		this._isDebugOn = false;
 
 		this._initLayout();
