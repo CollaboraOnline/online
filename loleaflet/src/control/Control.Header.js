@@ -597,13 +597,13 @@ L.Control.Header = L.Control.extend({
 			canvas.width = Math.floor(value * scale);
 			if (!isCorner)
 				this._canvasWidth = value;
-//			console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
+			// console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
 			canvas.height = Math.floor(value * scale);
 			if (!isCorner)
 				this._canvasHeight = value;
-//			console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
+			// console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
 		}
 	},
 

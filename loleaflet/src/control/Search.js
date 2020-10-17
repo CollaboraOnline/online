@@ -40,8 +40,8 @@ L.Map.include({
 		var viewTopLeftpx = this.project(this.getBounds().getNorthWest());
 		var docBoundsTopLeft = this.project(this.options.maxBounds.getNorthWest());
 		var topLeft = this.unproject(new L.Point(
-				Math.max(viewTopLeftpx.x, docBoundsTopLeft.x),
-				Math.max(viewTopLeftpx.y, docBoundsTopLeft.y)));
+			Math.max(viewTopLeftpx.x, docBoundsTopLeft.x),
+			Math.max(viewTopLeftpx.y, docBoundsTopLeft.y)));
 		var topLeftTwips = this._docLayer._latLngToTwips(topLeft);
 
 		var searchStartPointX = topLeftTwips.x;

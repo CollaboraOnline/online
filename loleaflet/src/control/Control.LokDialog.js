@@ -1620,7 +1620,7 @@ L.Control.LokDialog = L.Control.extend({
 		// set the canvas to have the actual size, while
 		// the image is rendered with the HiDPI scale.
 		this._setCanvasWidthHeight(canvas, this._dialogs[parentId].childwidth,
-						this._dialogs[parentId].childheight);
+			this._dialogs[parentId].childheight);
 
 		var ctx = canvas.getContext('2d');
 		var img = new Image();

@@ -201,8 +201,8 @@ L.Map.include({
 			// we can scroll to the desired page without having a LOK instance
 			var pageBounds = docLayer._partPageRectanglesPixels[docLayer._currentPage];
 			var pos = new L.Point(
-					pageBounds.min.x + (pageBounds.max.x - pageBounds.min.x) / 2,
-					pageBounds.min.y);
+				pageBounds.min.x + (pageBounds.max.x - pageBounds.min.x) / 2,
+				pageBounds.min.y);
 			pos.y -= this.getSize().y / 4; // offset by a quater of the viewing area so that the previous page is visible
 			this.scrollTop(pos.y, {update: true});
 			this.scrollLeft(pos.x, {update: true});
