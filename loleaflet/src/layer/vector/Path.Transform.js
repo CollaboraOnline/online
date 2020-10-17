@@ -455,7 +455,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		// all shifts are in-place
 		if (path._point) { // L.Circle
 			path._latlng = this._transformPoint(
-			path._latlng, projectedMatrix, map, zoom);
+				path._latlng, projectedMatrix, map, zoom);
 		} else if (path._rings || path._parts) { // everything else
 			var rings = path._rings;
 			var latlngs = path._latlngs;
@@ -548,14 +548,14 @@ L.Handler.PathTransform = L.Handler.extend({
 			(latlngs[1].lng + latlngs[2].lng) / 2);
 
 		var handlerPosition = map.layerPointToLatLng(
-		L.PathTransform.pointOnLine(
-			map.latLngToLayerPoint(bottom),
-			map.latLngToLayerPoint(topPoint),
-			this.options.handleLength)
+			L.PathTransform.pointOnLine(
+				map.latLngToLayerPoint(bottom),
+				map.latLngToLayerPoint(topPoint),
+				this.options.handleLength)
 		);
 
 		this._handleLine = new L.Polyline([topPoint, handlerPosition],
-		this.options.rotateHandleOptions).addTo(this._handlersGroup);
+			this.options.rotateHandleOptions).addTo(this._handlersGroup);
 		var RotateHandleClass = this.options.rotateHandleClass;
 		this._rotationMarker = new RotateHandleClass(handlerPosition,
 			this.options.handlerOptions)
