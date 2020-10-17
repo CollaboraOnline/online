@@ -294,7 +294,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		var projection = crs.projection;
 
 		var diff = transformation.untransform(px, scale)
-		.subtract(transformation.untransform(L.point(0, 0), scale));
+			.subtract(transformation.untransform(L.point(0, 0), scale));
 		var applyTransform = !dest;
 		var bounds = path._bounds;
 
@@ -304,7 +304,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		// all shifts are in-place
 		if (path._point) { // L.Circle
 			dest = projection.unproject(
-			projection.project(path._latlng)._add(diff));
+				projection.project(path._latlng)._add(diff));
 			if (applyTransform) {
 				path._latlng = dest;
 				path._point._add(px);
