@@ -428,8 +428,8 @@ L.GridLayer = L.Layer.extend({
 			}
 			scale = this._map.options.crs.scale(1);
 			this._map.setMaxBounds(new L.LatLngBounds(
-					this._map.unproject(new L.Point(0, 0)),
-					this._map.unproject(new L.Point(width * scale, height * scale))));
+				this._map.unproject(new L.Point(0, 0)),
+				this._map.unproject(new L.Point(width * scale, height * scale))));
 		}
 		else if (this._map.options._origMaxBounds) {
 			// if after zoomimg the document becomes larger than the viewing area
@@ -1106,40 +1106,40 @@ L.GridLayer = L.Layer.extend({
 
 	_twipsToCoords: function (twips) {
 		return new L.Point(
-				Math.round(twips.x / twips.tileWidth),
-				Math.round(twips.y / twips.tileHeight));
+			Math.round(twips.x / twips.tileWidth),
+			Math.round(twips.y / twips.tileHeight));
 	},
 
 	_coordsToTwips: function (coords) {
 		return new L.Point(
-				coords.x * this._tileWidthTwips,
-				coords.y * this._tileHeightTwips);
+			coords.x * this._tileWidthTwips,
+			coords.y * this._tileHeightTwips);
 	},
 
 	_twipsToLatLng: function (twips, zoom) {
 		var pixels = new L.Point(
-				twips.x / this._tileWidthTwips * this._tileSize,
-				twips.y / this._tileHeightTwips * this._tileSize);
+			twips.x / this._tileWidthTwips * this._tileSize,
+			twips.y / this._tileHeightTwips * this._tileSize);
 		return this._map.unproject(pixels, zoom);
 	},
 
 	_latLngToTwips: function (latLng, zoom) {
 		var pixels = this._map.project(latLng, zoom);
 		return new L.Point(
-				Math.round(pixels.x / this._tileSize * this._tileWidthTwips),
-				Math.round(pixels.y / this._tileSize * this._tileHeightTwips));
+			Math.round(pixels.x / this._tileSize * this._tileWidthTwips),
+			Math.round(pixels.y / this._tileSize * this._tileHeightTwips));
 	},
 
 	_twipsToPixels: function (twips) {
 		return new L.Point(
-				twips.x / this._tileWidthTwips * this._tileSize,
-				twips.y / this._tileHeightTwips * this._tileSize);
+			twips.x / this._tileWidthTwips * this._tileSize,
+			twips.y / this._tileHeightTwips * this._tileSize);
 	},
 
 	_pixelsToTwips: function (pixels) {
 		return new L.Point(
-				pixels.x * this._tileWidthTwips / this._tileSize,
-				pixels.y * this._tileHeightTwips / this._tileSize);
+			pixels.x * this._tileWidthTwips / this._tileSize,
+			pixels.y * this._tileHeightTwips / this._tileSize);
 	},
 
 	_twipsRectangleToPixelBounds: function (strRectangle) {
@@ -1153,8 +1153,8 @@ L.GridLayer = L.Layer.extend({
 		var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 		var bottomRightTwips = topLeftTwips.add(offset);
 		return new L.Bounds(
-				this._twipsToPixels(topLeftTwips),
-				this._twipsToPixels(bottomRightTwips));
+			this._twipsToPixels(topLeftTwips),
+			this._twipsToPixels(bottomRightTwips));
 	},
 
 	_twipsRectanglesToPixelBounds: function (strRectangles) {

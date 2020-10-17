@@ -594,18 +594,18 @@ L.Map.include({
 	},
 	setupSigningToolbarItems: function() {
 		return [
-				{type: 'html',  id: 'logo', html: '<a href="http://www.vereign.com" target="_blank"><img src="images/vereign.png" style="padding-right: 16px; padding-left: 6px; height: 32px"/></a>' },
-				{type: 'menu', id: 'passport', caption: _('Select passport'), items: []},
-				{type: 'html', id: 'current-passport', html: _('Passport: N/A')},
-				{type: 'break', id: 'passport-break' },
-				{type: 'button',  id: 'sign-upload',  caption: _('Sign'), img: '', hint: _('Sign document')},
-				{type: 'break', id: 'sign-upload-break' },
-				{type: 'html', id: 'current-document-status-label', html: '<p><b>' + _('Status:') + '&nbsp;</b></p>'},
-				{type: 'html', id: 'current-document-status', html: _('N/A')},
-				{type: 'spacer'},
-				{type: 'html', id: 'identity', html: ''},
-				{type: 'button',  id: 'login',  caption: _('Login'), img: '', hint: _('Login')},
-				{type: 'button',  id: 'close-document-signing-bar', img: 'closetoolbar', hint: _('Close')}];
+			{type: 'html',  id: 'logo', html: '<a href="http://www.vereign.com" target="_blank"><img src="images/vereign.png" style="padding-right: 16px; padding-left: 6px; height: 32px"/></a>' },
+			{type: 'menu', id: 'passport', caption: _('Select passport'), items: []},
+			{type: 'html', id: 'current-passport', html: _('Passport: N/A')},
+			{type: 'break', id: 'passport-break' },
+			{type: 'button',  id: 'sign-upload',  caption: _('Sign'), img: '', hint: _('Sign document')},
+			{type: 'break', id: 'sign-upload-break' },
+			{type: 'html', id: 'current-document-status-label', html: '<p><b>' + _('Status:') + '&nbsp;</b></p>'},
+			{type: 'html', id: 'current-document-status', html: _('N/A')},
+			{type: 'spacer'},
+			{type: 'html', id: 'identity', html: ''},
+			{type: 'button',  id: 'login',  caption: _('Login'), img: '', hint: _('Login')},
+			{type: 'button',  id: 'close-document-signing-bar', img: 'closetoolbar', hint: _('Close')}];
 	},
 	onChangeSignStatus: function(signstatus) {
 		var statusText = '';

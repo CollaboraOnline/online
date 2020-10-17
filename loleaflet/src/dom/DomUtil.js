@@ -233,16 +233,16 @@ L.DomUtil = {
 	// prefix style property names
 
 	L.DomUtil.TRANSFORM = L.DomUtil.testProp(
-			['transform', 'WebkitTransform', 'OTransform', 'MozTransform', 'msTransform']);
+		['transform', 'WebkitTransform', 'OTransform', 'MozTransform', 'msTransform']);
 
 	L.DomUtil.TRANSFORM_ORIGIN = L.DomUtil.testProp(
-			['transformOrigin', 'msTransformOrigin', 'WebkitTransformOrigin']);
+		['transformOrigin', 'msTransformOrigin', 'WebkitTransformOrigin']);
 
 	// webkitTransition comes first because some browser versions that drop vendor prefix don't do
 	// the same for the transitionend event, in particular the Android 4.1 stock browser
 
 	var transition = L.DomUtil.TRANSITION = L.DomUtil.testProp(
-			['webkitTransition', 'transition', 'OTransition', 'MozTransition', 'msTransition']);
+		['webkitTransition', 'transition', 'OTransition', 'MozTransition', 'msTransition']);
 
 	L.DomUtil.TRANSITION_END =
 			transition === 'webkitTransition' || transition === 'OTransition' ? transition + 'End' : 'transitionend';

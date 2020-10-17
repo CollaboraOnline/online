@@ -121,7 +121,7 @@ L.DomEvent = {
 			} else {
 				obj.removeEventListener(
 					type === 'mouseenter' ? 'mouseover' :
-					type === 'mouseleave' ? 'mouseout' : type, handler, false);
+						type === 'mouseleave' ? 'mouseout' : type, handler, false);
 			}
 
 		} else if ('detachEvent' in obj) {
