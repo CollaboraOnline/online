@@ -285,7 +285,7 @@ function insertTable() {
 			var row = $(this).parent().index() + 1;
 			$('.col').removeClass('bright');
 			$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
-			.addClass('bright');
+				.addClass('bright');
 			$status.html(col + 'x' + row);
 
 		},
@@ -1061,8 +1061,8 @@ function setupToolbar(e) {
 				var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 				var bottomRightTwips = topLeftTwips.add(offset);
 				var cellCursor = new L.LatLngBounds(
-								map._docLayer._twipsToLatLng(topLeftTwips, map.getZoom()),
-								map._docLayer._twipsToLatLng(bottomRightTwips, map.getZoom()));
+					map._docLayer._twipsToLatLng(topLeftTwips, map.getZoom()),
+					map._docLayer._twipsToLatLng(bottomRightTwips, map.getZoom()));
 				//click pos tweak
 				cellCursor._northEast.lng = cellCursor._southWest.lng;
 				map._docLayer._closeURLPopUp();

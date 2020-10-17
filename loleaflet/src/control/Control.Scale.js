@@ -43,8 +43,8 @@ L.Control.Scale = L.Control.extend({
 		    y = map.getSize().y / 2;
 
 		var maxMeters = L.CRS.Earth.distance(
-				map.containerPointToLatLngIgnoreSplits([0, y]),
-				map.containerPointToLatLngIgnoreSplits([this.options.maxWidth, y]));
+			map.containerPointToLatLngIgnoreSplits([0, y]),
+			map.containerPointToLatLngIgnoreSplits([this.options.maxWidth, y]));
 
 		this._updateScales(maxMeters);
 	},

@@ -98,12 +98,12 @@ L.Control.RowHeader = L.Control.Header.extend({
 		} else {
 			var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
 			(new Hammer(this._canvas, {recognizers: [[Hammer.Press, {time: 500}]]}))
-			.on('press', L.bind(function () {
-				if (this._map.isPermissionEdit()) {
-					window.contextMenuWizard = true;
-					this._map.fire('mobilewizard', menuData);
-				}
-			}, this));
+				.on('press', L.bind(function () {
+					if (this._map.isPermissionEdit()) {
+						window.contextMenuWizard = true;
+						this._map.fire('mobilewizard', menuData);
+					}
+				}, this));
 		}
 
 	},
