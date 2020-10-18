@@ -9,20 +9,21 @@
 # Açıkkaynak Yazılım <bilgi@acikkaynak.com.tr>, 2020
 # Dr. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-01 06:41+0000\n"
-"Last-Translator: Dr. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020\n"
-"Language-Team: Turkish (https://www.transifex.com/collabora-productivity-ltd/teams/68191/tr/)\n"
+"PO-Revision-Date: 2020-10-15 10:32+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
+"ui/tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: tr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -71,11 +72,11 @@ msgstr "Açık belgeler"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
 msgid " user(s)."
-msgstr "kullanıcı(lar)."
+msgstr " kullanıcı(lar)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
-msgstr "açık belge(ler)."
+msgstr " açık belge(ler)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -1094,7 +1095,7 @@ msgstr "PIN Kodu"
 
 #: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr "Lütfen EMail veya SMS’le gelen PIN kodunu girin."
+msgstr "Lütfen EMail veya SMS’le gelen PIN kodunu girin"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
@@ -1186,7 +1187,7 @@ msgstr "İmzalı ancak doğrulanmamış"
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
-msgstr "İmza doğru fakat belge sadece kısmi olarak imzalanmış."
+msgstr "İmza doğru fakat belge sadece kısmi olarak imzalanmış"
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
@@ -1381,8 +1382,8 @@ msgid ""
 "concurrently"
 msgstr ""
 "Bu, {productname} yazılımının desteklenmeyen bir sürümüdür. Kurumlarda "
-"dağıtım için uygun olduğu izlenimini önlemek için, bu ileti aynı anda {docs}"
-" belge veya {connection} bağlantıdan daha fazlası kullanıldığında görünür."
+"dağıtım için uygun olduğu izlenimini önlemek için, bu ileti aynı anda {docs} "
+"belge veya {connection} bağlantıdan daha fazlası kullanıldığında görünür"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1596,10 +1597,10 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 "<p>Belgenizin daha büyük ögelerini diğer uygulamalarla paylaşmak "
-"istiyorsanız, bunları önce cihazınıza indirmeniz gerekir.  Bunu yapmak için "
+"istiyorsanız, bunları önce cihazınıza indirmeniz gerekir. Bunu yapmak için "
 "aşağıdaki \"İndirmeyi başlat\" düğmesine basın ve tamamlandığında \"Panoya "
-"kopyalamayı onayla\"yı tıklayın.</p> <p>%productName içindeki belgeler "
-"arasında kopyalayıp yapıştırma yapıyorsanız, indirmenize gerek yoktur. </p>"
+"kopyalamayı onayla\"yı tıklayın.</p><p>%productName içindeki belgeler "
+"arasında kopyalayıp yapıştırma yapıyorsanız, indirmenize gerek yoktur.</p>"
 
 #: src/map/Clipboard.js:877
 msgid ""
@@ -1607,7 +1608,7 @@ msgid ""
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
-"<p>Büyük bir kopya/yapıştır işlemi nedeniyle indirme işlemi zaten başladı.  "
+"<p>Büyük bir kopyala/yapıştır işlemi nedeniyle indirme işlemi zaten başladı. "
 "Lütfen yeni bir indirme işlemine başlamadan önce mevcut indirmeyi bekleyin "
 "veya iptal edin</p>"
 
