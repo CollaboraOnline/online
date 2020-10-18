@@ -83,4 +83,8 @@
     <string name="theme">Tema</string>
     <string name="theme_system_default">Predetermináu del sistema</string>
     <string name="remove_from_list">Quitar de la llista</string>
+    <string name="title_permission_required">Ríquese permisu</string>
+    <string name="user_name">Nome d\'usuariu</string>
+    <string name="server_url">URL del sirvidor</string>
+    <string name="external_sd_path">Camín a SD esterna</string>
 </resources>
