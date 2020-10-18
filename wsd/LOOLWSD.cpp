@@ -2466,7 +2466,7 @@ private:
                     std::ostringstream oss;
                     oss << "HTTP/1.1 401 \r\n"
                         << "Content-Type: text/html charset=UTF-8\r\n"
-                        << "Date: " << Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
+                        << "Date: " << Util::getHttpTimeNow() << "\r\n"
                         << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                         << "WWW-authenticate: Basic realm=\"online\"\r\n"
                         << "\r\n";
