@@ -7,20 +7,21 @@
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Marco Cecchetti <mrcekets@gmail.com>, 2020
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-01 06:41+0000\n"
-"Last-Translator: Marco Cecchetti <mrcekets@gmail.com>, 2020\n"
-"Language-Team: Italian (https://www.transifex.com/collabora-productivity-ltd/teams/68191/it/)\n"
+"PO-Revision-Date: 2020-10-16 03:24+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
+"ui/it/>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -744,7 +745,7 @@ msgstr "Cancella il campo di ricerca"
 
 #: src/control/Control.SearchBar.js:32
 msgid "Hide the search bar"
-msgstr "Nascondi  la barra di ricerca"
+msgstr "Nascondi la barra di ricerca"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
@@ -1101,7 +1102,7 @@ msgstr "Codice PIN"
 
 #: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr "Inserisci il codice PIN da e-mail o SMS"
+msgstr "Inserisci il NIP dall'e-mail o dal SMS"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"

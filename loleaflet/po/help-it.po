@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-28 02:35+0000\n"
-"Last-Translator: Valter Mura <valtermura@gmail.com>\n"
-"Language-Team: Italian <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/it/>\n"
+"PO-Revision-Date: 2020-10-16 03:24+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
+"help/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3-dev\n"
 "X-Pootle-Path: /it/libo_online/loleaflet-help-it.po\n"
 "X-Pootle-Revision: 838337\n"
 
@@ -651,7 +652,9 @@ msgstr "Alt + Maiusc + Tasti freccia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr "Aumenta/diminuisce la dimensione della colonna/riga sul margine in alto a sinistra della cella."
+msgstr ""
+"Aumenta/diminuisce la dimensione della colonna/riga sul margine in alto a "
+"sinistra della cella"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 msgid "Alt + Ctrl + Arrow Keys"
@@ -680,7 +683,9 @@ msgstr "Alt + Canc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-55
 msgid "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key merges cell with neighboring cell"
-msgstr "Tre secondi in modo eliminazione, il tasto freccia elimina una riga/colonna, Ctrl + tasto freccia unisce celle adiacenti."
+msgstr ""
+"Tre secondi in modo eliminazione, il tasto freccia elimina una riga/colonna, "
+"Ctrl + tasto freccia unisce celle adiacenti"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid "Shift + Ctrl + Del"
@@ -902,7 +907,7 @@ msgstr "Esc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 msgid "Select objects in the order in which they were created"
-msgstr "Seleziona gli oggetti nell'ordine in cui sono stati creati."
+msgstr "Seleziona gli oggetti nell'ordine in cui sono stati creati"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
 msgid "Select objects in the reverse order in which they were created"
@@ -1347,7 +1352,16 @@ msgstr "<span class=\"def\">Formattazione condizionale:</span> <span class=\"pro
 
 #: html/loleaflet-help.html%2Bdiv.div.p:389-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
-msgstr "<span class=\"productname\">%productName</span> lavora i documenti di testo allo stesso modo di un documento nel computer. Fornisce un layout WYSIWYG (What You See Is What You Get, 'Quel che vedi è che che ottieni'), che presenta il documento nell'aspetto col quale verrà stampato. Le operazioni di digitazione e selezione del testo, copia, taglia e incolla di contenuti, inserimento, ridimensionamento e ancoraggio delle immagini, aggiunta e gestione di tabelle e grafici, sono simili a quelle di un elaboratore di testi desktop. Usa la tastiera, i menu e le barre degli strumenti per interagire col documento."
+msgstr ""
+"<span class=\"productname\">%productName</span> lavora i documenti di testo "
+"allo stesso modo di un documento nel computer. Fornisce un layout WYSIWYG ("
+"What You See Is What You Get, «Quel che vedi è che che ottieni»), che "
+"presenta il documento nell'aspetto col quale verrà stampato. Le operazioni "
+"di digitazione e selezione del testo, copia, taglia e incolla di contenuti, "
+"inserimento, ridimensionamento e ancoraggio delle immagini, aggiunta e "
+"gestione di tabelle e grafici, sono simili a quelle di un elaboratore di "
+"testi desktop. Usa la tastiera, i menu e le barre degli strumenti per "
+"interagire col documento."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:392-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."
@@ -1675,7 +1689,7 @@ msgstr "Nell'area <span class=\"ui\">Interruzioni</span> attiva l'opzione Inseri
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:517-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "Seleziona Orizzontale nell'opzione “Con stile di pagina”"
+msgstr "Seleziona Orizzontale nell'opzione «Con stile di pagina»"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:518-11
 msgid "Select if you want to change page numbering."
@@ -1740,7 +1754,9 @@ msgstr "Come posso importare i dati CSV?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:543-11
 msgid "Load your CSV data in some native tool to your platform, select and copy it to the clipboard"
-msgstr "Carica i tuoi dati CSV in qualche strumento nativo nella tua piattaforma, poi seleziona e copia negli appunti."
+msgstr ""
+"Carica i tuoi dati CSV in qualche strumento nativo nella tua piattaforma, "
+"poi seleziona e copia negli appunti"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:544-11
 msgid "Activate the <span class=\"productname\">%productName</span> spreadsheet window."

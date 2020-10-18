@@ -2,16 +2,20 @@
 <resources>
     <string name="loading">Chargement...</string>
     <string name="cannot_open_file_chooser">Impossible d\'ouvrir le sélecteur de fichiers</string>
-    <string name="failed_to_insert_image">Échec lors de l\'insertion de l\'image.</string>
+    <string name="failed_to_insert_image">Échec lors de l\'insertion de l\'image</string>
     <string name="failed_to_load_file">Échec à déterminer le ficher à charger</string>
-    <string name="storage_permission_required">Une permission de stockage est requise.</string>
+    <string name="storage_permission_required">Une permission de stockage est requise</string>
     <string name="temp_file_saving_disabled">Ce fichier est en lecture seule, l\'enregistrement est désactivé.</string>
     <string name="preparing_for_the_first_start_after_an_update">En cours de préparation pour le premier démarrage après une mise à jour.</string>
     <string name="saving">Enregistrement...</string>
     <string name="exiting">Fermeture...</string>
     <string name="rate_our_app_text">Si vous l\'aimez, donnez-nous 5 étoiles dans Google Play. Vos bonnes critiques sont notre meilleure motivation.</string>
-    <string name="rate_our_app_title">"Merci d\'utiliser  %1$s !"</string>
+    <string name="rate_our_app_title">Merci d\'utiliser %1$s !</string>
     <string name="later">Plus tard</string>
     <string name="rate_now">Évaluer maintenant</string>
     <string name="file_chromeos_read_only">Ce fichier ne peut pas être enregistré à cet emplacement, l\'ouvrir en lecture seule. Déplacez-le vers les fichiers de lecture pour un accès complet en lecture/écriture.</string>
+    <string name="ask_for_copy">Ce document est en lecture seule. Voulez-vous en faire une copie pour l\'édition \?</string>
+    <string name="edit_copy">Modifier une copie</string>
+    <string name="view_only">Afficher seulement</string>
+    <string name="restarting">Redémarrage…</string>
 </resources>
