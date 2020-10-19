@@ -688,11 +688,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('not.contain', 'visibility: hidden');
 
 		// Resolve comment
-		cy.get('.loleaflet-annotation-menu')
-			.click({force: true});
-
-		cy.contains('.context-menu-item', 'Resolve')
-			.click();
+		mobileHelper.selectAnnotationMenuItem('Resolve');
 
 		cy.get('.loleaflet-annotation')
 			.should('have.attr', 'style')
