@@ -13,6 +13,8 @@
 
 #include <Poco/Path.h>
 
+#include "Log.hpp"
+
 namespace FileUtil
 {
     /// Used for anonymizing URLs
@@ -68,6 +70,10 @@ namespace FileUtil
     bool isEmptyDirectory(const char* path);
     inline bool isEmptyDirectory(const std::string& path) { return isEmptyDirectory(path.c_str()); }
 
+    /// Returns truee iff the path given is writable by our *real* UID.
+    bool isWritable(const char* path);
+    inline bool isWritable(const std::string& path) { return isWritable(path.c_str()); }
+
     /// Update the access-time and modified-time metadata for the given file.
     bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified);
 
@@ -110,6 +116,10 @@ namespace FileUtil
     {
         return realpath(path.c_str());
     }
+
+    /// Returns true iff the two files both exist, can be read,
+    /// have equal size and every byte of their contents match.
+    bool compareFileContents(const std::string& rhsPath, const std::string& lhsPath);
 
     /// File/Directory stat helper.
     class Stat
@@ -154,17 +164,25 @@ namespace FileUtil
         /// the same size and modified timestamp.
         bool isUpToDate(const Stat& other) const
         {
-            if (exists() && other.exists() && !isDirectory() && !other.isDirectory())
+            // No need to check whether they are linked or not,
+            // since if they are, the following check will match,
+            // and if they aren't, we still need to rely on the following.
+            // Finally, compare the contents, to avoid costly copying if we fail to update.
+            if (exists() && other.exists() && !isDirectory() && !other.isDirectory()
+                && size() == other.size() && modifiedTime().tv_sec == other.modifiedTime().tv_sec
+                && (modifiedTime().tv_nsec / 1000000) // Millisecond precision.
+                       == (other.modifiedTime().tv_nsec / 1000000)
+                && compareFileContents(_path, other._path))
             {
-                // No need to check whether they are linked or not,
-                // since if they are, the following check will match,
-                // and if they aren't, we still need to rely on the following.
-                return (size() == other.size()
-                        && modifiedTime().tv_sec == other.modifiedTime().tv_sec
-                        && (modifiedTime().tv_nsec / 1000000) // Millisecond precision.
-                               == (other.modifiedTime().tv_nsec / 1000000));
+                return true;
             }
 
+            // Clearly, no match. Log something informative.
+            LOG_DBG("File contents mismatch: ["
+                    << _path << "] " << (exists() ? "exists" : "missing") << ", " << size()
+                    << " bytes, modified at " << modifiedTime().tv_sec << " =/= [" << other._path
+                    << "]: " << (other.exists() ? "exists" : "missing") << ", " << other.size()
+                    << " bytes, modified at " << other.modifiedTime().tv_sec);
             return false;
         }
 
