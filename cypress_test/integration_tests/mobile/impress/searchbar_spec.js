@@ -26,20 +26,6 @@ describe('Searching via search bar.', function() {
 		helper.afterAll(testFileName);
 	});
 
-	function dblclickOnShape() {
-		cy.get('.transform-handler--rotate')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = items[0].getBoundingClientRect().bottom + 50;
-				cy.get('body')
-					.dblclick(XPos, YPos);
-			});
-
-		cy.get('.leaflet-cursor.blinking-cursor')
-			.should('exist');
-	}
-
 	it('Search existing word.', function() {
 		cy.get('input#search-input')
 			.type('a');
@@ -59,7 +45,7 @@ describe('Searching via search bar.', function() {
 	it('Search not existing word.', function() {
 		impressMobileHelper.selectTextShapeInTheCenter();
 
-		dblclickOnShape();
+		impressMobileHelper.dblclickOnSelectedShape();
 
 		helper.selectAllText();
 
