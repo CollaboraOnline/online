@@ -249,7 +249,7 @@ function selectAnnotationMenuItem(menuItem) {
 	cy.get('.context-menu-list')
 		.should('exist');
 
-	cy.contains('.context-menu-link', menuItem)
+	cy.contains('.context-menu-item', menuItem)
 		.click();
 
 	cy.log('Selecting annotation menu item - end.');
