@@ -40,18 +40,6 @@ describe('Searching via search bar.', function() {
 			.should('exist');
 	}
 
-	function getCursorPos(offsetProperty, aliasName) {
-		helper.initAliasToNegative(aliasName);
-
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its(offsetProperty)
-			.as(aliasName);
-
-		cy.get('@' + aliasName)
-			.should('be.greaterThan', 0);
-	}
-
 	it('Search existing word.', function() {
 		cy.get('input#search-input')
 			.type('a');
@@ -102,7 +90,7 @@ describe('Searching via search bar.', function() {
 		cy.get('.leaflet-selection-marker-start')
 			.should('be.visible');
 
-		getCursorPos('left', 'cursorOrigLeft');
+		helper.getCursorPos('left', 'cursorOrigLeft');
 
 		helper.expectTextForClipboard('a');
 
@@ -160,7 +148,7 @@ describe('Searching via search bar.', function() {
 
 		helper.expectTextForClipboard('a');
 
-		getCursorPos('left', 'cursorOrigLeft');
+		helper.getCursorPos('left', 'cursorOrigLeft');
 
 		// Search next instance
 		cy.get('#tb_searchbar_item_searchnext')
