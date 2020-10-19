@@ -127,7 +127,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 		helper.typeText('body', 'xxxx', 500);
 
-		writerMobileHelper.getCursorPos('left', 'cursorOrigLeft');
+		helper.getCursorPos('left', 'cursorOrigLeft');
 
 		mobileHelper.openInsertionWizard();
 
@@ -158,7 +158,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
+		helper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -190,7 +190,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
+		helper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -212,7 +212,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
+		helper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -234,7 +234,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
+		helper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
@@ -256,7 +256,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
 
-		writerMobileHelper.getCursorPos('top', 'cursorOrigTop');
+		helper.getCursorPos('top', 'cursorOrigTop');
 
 		mobileHelper.openInsertionWizard();
 
