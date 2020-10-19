@@ -775,26 +775,13 @@ function moveCursor(direction) {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
 
-	initAliasToNegative('origCursorPos');
-
-	cy.get('.blinking-cursor')
-		.should('exist');
-
-	if (direction === 'up' || direction === 'down') {
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its('top')
-			.as('origCursorPos');
+	if (direction === 'up' || direction === 'down'
+		|| direction === 'ctrl-home' || direction === 'ctrl-end') {
+		getCursorPos('top', 'origCursorPos');
 	} else if (direction === 'left' || direction === 'right'
 		|| direction === 'home' || direction === 'end') {
-		cy.get('.blinking-cursor')
-			.invoke('offset')
-			.its('left')
-			.as('origCursorPos');
+		getCursorPos('left', 'origCursorPos');
 	}
-
-	cy.get('@origCursorPos')
-		.should('be.at.least', 0);
 
 	var key = '';
 	if (direction === 'up') {
@@ -856,6 +843,18 @@ function typeIntoDocument(text) {
 	cy.log('Typing into document - end.');
 }
 
+function getCursorPos(offsetProperty, aliasName) {
+	initAliasToNegative(aliasName);
+
+	cy.get('.blinking-cursor')
+		.invoke('offset')
+		.its(offsetProperty)
+		.as(aliasName);
+
+	cy.get('@' + aliasName)
+		.should('be.greaterThan', 0);
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -886,3 +885,4 @@ module.exports.doIfOnDesktop = doIfOnDesktop;
 module.exports.moveCursor = moveCursor;
 module.exports.typeIntoDocument = typeIntoDocument;
 module.exports.loadFileToNextCloud = loadFileToNextCloud;
+module.exports.getCursorPos = getCursorPos;
