@@ -1,7 +1,7 @@
 <?xml-stylesheet type="text/css" href="icons.css" ?>
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path
-	 id="ShapeColor" 
+	 class="icn icn--shape-color" 
      d="m11.993042 2.5-9.493042 7.5 4 11.5h11l4-11.5z"
      fill="#fafafa" 
 	 stroke="#3a3a38" 
