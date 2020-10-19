@@ -98,7 +98,23 @@ function triggerNewSVGForShapeInTheCenter() {
 	cy.log('Triggering new SVG for shape - end.');
 }
 
+
+function dblclickOnSelectedShape() {
+	cy.get('.transform-handler--rotate')
+		.then(function(items) {
+			expect(items).to.have.length(1);
+			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
+			var YPos = items[0].getBoundingClientRect().bottom + 50;
+			cy.get('body')
+				.dblclick(XPos, YPos);
+		});
+
+	cy.get('.leaflet-cursor.blinking-cursor')
+		.should('exist');
+}
+
 module.exports.selectTextShapeInTheCenter = selectTextShapeInTheCenter;
 module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCenter;
 module.exports.selectTextOfShape = selectTextOfShape;
 module.exports.removeShapeSelection = removeShapeSelection;
+module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
