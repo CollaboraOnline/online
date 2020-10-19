@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
+var searchHelper = require('../../common/search_helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerMobileHelper = require('./writer_mobile_helper');
 
@@ -12,14 +13,7 @@ describe('Searching via search bar.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		cy.get('#tb_editbar_item_showsearchbar')
-			.click();
-
-		cy.get('input#search-input')
-			.should('be.visible');
-
-		cy.get('#tb_editbar_item_bold')
-			.should('not.be.visible');
+		searchHelper.showSearchBar();
 	});
 
 	afterEach(function() {
@@ -27,8 +21,7 @@ describe('Searching via search bar.', function() {
 	});
 
 	it('Search existing word.', function() {
-		cy.get('input#search-input')
-			.type('a');
+		searchHelper.tpyeIntoSearchField('a');
 
 		// Part of the text should be selected
 		cy.get('.leaflet-marker-icon')
@@ -44,8 +37,7 @@ describe('Searching via search bar.', function() {
 		cy.get('.leaflet-marker-icon')
 			.should('exist');
 
-		cy.get('input#search-input')
-			.type('q');
+		searchHelper.tpyeIntoSearchField('q');
 
 		// Should be no selection
 		cy.get('.leaflet-marker-icon')
@@ -53,8 +45,7 @@ describe('Searching via search bar.', function() {
 	});
 
 	it('Search next / prev instance.', function() {
-		cy.get('input#search-input')
-			.type('a');
+		searchHelper.tpyeIntoSearchField('a');
 
 		cy.get('.leaflet-marker-icon')
 			.should('exist');
@@ -66,8 +57,7 @@ describe('Searching via search bar.', function() {
 			.should('not.exist');
 
 		// Search next instance
-		cy.get('#tb_searchbar_item_searchnext')
-			.click();
+		searchHelper.searchNext();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -79,8 +69,7 @@ describe('Searching via search bar.', function() {
 			.should('have.text', '\na');
 
 		// Search prev instance
-		cy.get('#tb_searchbar_item_searchprev')
-			.click();
+		searchHelper.searchPrev();
 
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
@@ -93,8 +82,7 @@ describe('Searching via search bar.', function() {
 	});
 
 	it('Search at the document end.', function() {
-		cy.get('input#search-input')
-			.type('a');
+		searchHelper.tpyeIntoSearchField('a');
 
 		cy.get('.leaflet-marker-icon')
 			.should('exist');
@@ -106,8 +94,7 @@ describe('Searching via search bar.', function() {
 			.should('not.exist');
 
 		// Search next instance
-		cy.get('#tb_searchbar_item_searchnext')
-			.click();
+		searchHelper.searchNext();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -119,8 +106,7 @@ describe('Searching via search bar.', function() {
 			.should('have.text', '\na');
 
 		// Search next instance, which is in the beginning of the document.
-		cy.get('#tb_searchbar_item_searchnext')
-			.click();
+		searchHelper.searchNext();
 
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
@@ -133,8 +119,7 @@ describe('Searching via search bar.', function() {
 	});
 
 	it('Cancel search.', function() {
-		cy.get('input#search-input')
-			.type('a');
+		searchHelper.tpyeIntoSearchField('a');
 
 		// Part of the text should be selected
 		cy.get('.leaflet-marker-icon')
@@ -144,8 +129,7 @@ describe('Searching via search bar.', function() {
 			.should('have.text', '\na');
 
 		// Cancel search -> selection removed
-		cy.get('#tb_searchbar_item_cancelsearch')
-			.click();
+		searchHelper.cancelSearch();
 
 		cy.get('.leaflet-marker-icon')
 			.should('not.exist');
@@ -155,8 +139,7 @@ describe('Searching via search bar.', function() {
 	});
 
 	it('Close search.', function() {
-		cy.get('input#search-input')
-			.type('a');
+		searchHelper.tpyeIntoSearchField('a');
 
 		// Part of the text should be selected
 		cy.get('.leaflet-marker-icon')
@@ -166,13 +149,6 @@ describe('Searching via search bar.', function() {
 			.should('have.text', '\na');
 
 		// Close search -> search bar is closed
-		cy.get('#tb_searchbar_item_hidesearchbar')
-			.click();
-
-		cy.get('input#search-input')
-			.should('not.be.visible');
-
-		cy.get('#tb_editbar_item_bold')
-			.should('be.visible');
+		searchHelper.closeSearchBar();
 	});
 });
