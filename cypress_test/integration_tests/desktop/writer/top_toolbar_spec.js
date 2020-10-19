@@ -44,6 +44,16 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 	});
 
+	it('Apply strikethrough.', function() {
+		cy.get('#tb_editbar_item_strikeout')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p strike')
+			.should('exist');
+	});
+
 	it('Apply left alignment.', function() {
 		cy.get('#tb_editbar_item_centerpara')
 			.click();
