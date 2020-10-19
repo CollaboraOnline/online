@@ -427,7 +427,16 @@ bool updateDynamicFiles(const std::string& sysTemplate)
 void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& name)
 {
     const std::string path = sysTemplate + "/dev/";
-    Poco::File(path).createDirectories();
+    try
+    {
+        // Create the path first.
+        Poco::File(path).createDirectories();
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_WRN("Failed to create [" << path << "]: " << ex.what());
+        return;
+    }
 
     const std::string linkpath = path + name;
     const std::string target = "../tmp/dev/" + name;
