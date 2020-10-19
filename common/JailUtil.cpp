@@ -215,8 +215,26 @@ void setupJails(bool bindMount, const std::string& jailRoot, const std::string& 
 // /tmp/dev/ in the jail chroot. See setupRandomDeviceLinks().
 void setupJailDevNodes(const std::string& root)
 {
-    // Create the urandom and random devices
-    Poco::File(Poco::Path(root, "/dev")).createDirectory();
+    if (!FileUtil::isWritable(root))
+    {
+        LOG_WRN("Path [" << root << "] is read-only. Will not create the random device nodes.");
+        return;
+    }
+
+    const auto pathDev = Poco::Path(root, "/dev");
+
+    try
+    {
+        // Create the path first.
+        Poco::File(pathDev).createDirectory();
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_WRN("Failed to create [" << pathDev.toString() << "]: " << ex.what());
+        return;
+    }
+
+    // Create the urandom and random devices.
     if (!Poco::File(root + "/dev/random").exists())
     {
         LOG_DBG("Making /dev/random node in [" << root << "/dev].");
