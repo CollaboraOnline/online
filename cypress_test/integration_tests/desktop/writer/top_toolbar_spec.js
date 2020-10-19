@@ -54,6 +54,17 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 	});
 
+	it('Apply font size', function() {
+		cy.get('#tb_editbar_item_fontsizes')
+			.click();
+
+		cy.contains('.select2-results__option','72')
+			 .click();
+
+		cy.get('#copy-paste-container p font')
+		    .should('have.attr', 'style', 'font-size: 72pt');
+	});
+
 	it('Apply left alignment.', function() {
 		cy.get('#tb_editbar_item_centerpara')
 			.click();
