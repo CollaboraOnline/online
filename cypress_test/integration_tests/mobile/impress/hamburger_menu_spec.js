@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach expect */
+/* global describe it cy require afterEach */
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -20,20 +20,6 @@ describe('Trigger hamburger menu options.', function() {
 		helper.afterAll(testFileName);
 	});
 
-	function dblclickOnShape() {
-		cy.get('.transform-handler--rotate')
-			.then(function(items) {
-				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = items[0].getBoundingClientRect().bottom + 50;
-				cy.get('body')
-					.dblclick(XPos, YPos);
-			});
-
-		cy.get('.leaflet-cursor.blinking-cursor')
-			.should('exist');
-	}
-
 	it('Save', function() {
 		before('hamburger_menu.odp');
 
@@ -44,7 +30,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Type a new text
-		dblclickOnShape();
+		impressMobileHelper.dblclickOnSelectedShape();
 
 		helper.typeIntoDocument('new');
 
@@ -129,7 +115,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Type a new character
-		dblclickOnShape();
+		impressMobileHelper.dblclickOnSelectedShape();
 
 		helper.typeIntoDocument('q');
 
@@ -164,7 +150,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Type a new character
-		dblclickOnShape();
+		impressMobileHelper.dblclickOnSelectedShape();
 
 		helper.typeIntoDocument('q');
 
@@ -267,7 +253,8 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.odp');
 
 		impressMobileHelper.selectTextShapeInTheCenter();
-		dblclickOnShape();
+
+		impressMobileHelper.dblclickOnSelectedShape();
 
 		cy.get('#copy-paste-container pre')
 			.should('not.exist');
@@ -366,7 +353,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Type a new character
-		dblclickOnShape();
+		impressMobileHelper.dblclickOnSelectedShape();
 
 		helper.typeIntoDocument('qqqqqq');
 
