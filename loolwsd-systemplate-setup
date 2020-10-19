@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+# set -x
 
 test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to create> <LO installation directory>"; exit 1; }
 
@@ -66,11 +66,14 @@ grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's
 cpio -p -d -L $CHROOT
 
 # Link the dynamic files, replacing any existing.
+rm -f $CHROOT/etc/copied
 for file in hosts nsswitch.conf resolv.conf passwd group host.conf timezone localtime
 do
-    #echo "Linking/Copying /etc/$file"
+    # echo "Linking/Copying /etc/$file"
     # Prefer hard-linking, fallback to just copying (do *not* use soft-linking because that would be relative to the jail).
-    ln -f /etc/$file $CHROOT/etc/ 2> /dev/null || cp /etc/$file $CHROOT/etc/ || echo "Failed to link or copy $file"
+    # When copying, we must make sure that we copy the source and not a symlink. Otherwise, the source won't be accessible from the jail.
+    # In addition, we flag that at least one file is copied by creating the 'copied' file, so that we do check for updates.
+    ln -f `realpath /etc/$file` $CHROOT/etc/$file || (cp --dereference --preserve=all /etc/$file $CHROOT/etc/$file && touch $CHROOT/etc/copied) || echo "Failed to link or copy $file"
 done
 
 # Link dev/random and dev/urandom to ../tmp/dev/.

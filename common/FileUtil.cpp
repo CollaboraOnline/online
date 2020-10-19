@@ -271,6 +271,15 @@ namespace FileUtil
         return count <= 2; // Discounting . and ..
     }
 
+    bool isWritable(const char* path)
+    {
+        if (access(path, W_OK) == 0)
+            return true;
+
+        LOG_DBG("Cannot access path [" << path << "]: " << strerror(errno));
+        return false;
+    }
+
     bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified)
     {
         // The timestamp is in seconds and microseconds.
@@ -333,12 +342,32 @@ namespace FileUtil
     {
         if (link(source, target) == -1)
         {
-            LOG_INF("link(\"" << source << "\", \"" << target << "\") failed: " << strerror(errno)
+            LOG_DBG("link(\"" << source << "\", \"" << target << "\") failed: " << strerror(errno)
                               << ". Will copy.");
             return copy(source, target, /*log=*/false, /*throw_on_error=*/false);
         }
 
         return true;
+    }
+
+    bool compareFileContents(const std::string& rhsPath, const std::string& lhsPath)
+    {
+        std::ifstream rhs(rhsPath, std::ifstream::binary | std::ifstream::ate);
+        if (rhs.fail())
+            return false;
+
+        std::ifstream lhs(lhsPath, std::ifstream::binary | std::ifstream::ate);
+        if (lhs.fail())
+            return false;
+
+        if (rhs.tellg() != lhs.tellg())
+            return false;
+
+        rhs.seekg(0, std::ifstream::beg);
+        lhs.seekg(0, std::ifstream::beg);
+        return std::equal(std::istreambuf_iterator<char>(rhs.rdbuf()),
+                          std::istreambuf_iterator<char>(),
+                          std::istreambuf_iterator<char>(lhs.rdbuf()));
     }
 
 } // namespace FileUtil
