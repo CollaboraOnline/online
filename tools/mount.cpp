@@ -11,12 +11,11 @@
 #include <config.h>
 
 #include <stdio.h>
+#include <string.h>
 #include <errno.h>
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
-#include <security.h>
 
 void usage(const char* program)
 {
@@ -30,12 +29,6 @@ void usage(const char* program)
 int main(int argc, char** argv)
 {
     const char* program = argv[0];
-
-    if (!hasCorrectUID("loolmount"))
-    {
-        fprintf(stderr, "%s: incorrect UID.\n", program);
-        return 1;
-    }
 
     if (argc < 3)
     {
