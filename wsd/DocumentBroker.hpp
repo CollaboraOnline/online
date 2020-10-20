@@ -176,7 +176,8 @@ public:
     bool isLastStorageSaveSuccessful() { return _lastStorageSaveSuccessful; }
 
     /// Save the document to Storage if it needs persisting.
-    bool saveToStorage(const std::string& sesionId, bool success, const std::string& result = "", bool force = false);
+    bool saveToStorage(const std::string& sesionId, bool success, const std::string& result,
+                       bool force);
 
     /// Save As the document to Storage.
     /// @param saveAsPath Absolute path to the jailed file.
