@@ -66,13 +66,13 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 					{type: 'separator'},
-			]).concat([
+				]).concat([
 					{uno: '.uno:ControlCodes'},
 					{type: 'separator'},
 					{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 					{type: 'separator'},
 					{uno: '.uno:Sidebar'},
-			])},
+				])},
 			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
