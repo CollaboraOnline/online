@@ -795,7 +795,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				if (handler)
 					processChildren = handler(childObject, childData, this);
 				else
-					console.warn('Unsupported control type: \"' + childType + '\"');
+					console.warn('Unsupported control type: "' + childType + '"');
 
 				if (childType === 'toolbox' && hasVerticalParent === true && childData.children.length === 1)
 					this.options.useInLineLabelsForUnoButtons = true;

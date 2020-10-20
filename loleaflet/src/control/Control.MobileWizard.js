@@ -327,7 +327,7 @@ L.Control.MobileWizard = L.Control.extend({
 		setTimeout(function () {
 			var message = 'dialogevent ' +
 			    (window.sidebarId !== undefined ? window.sidebarId : -1) +
-			    ' {\"id\":\"-1\"}';
+			    ' {"id":"-1"}';
 			map._socket.sendMessage(message);
 		}, ms);
 	},

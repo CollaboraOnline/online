@@ -159,9 +159,9 @@ L.FormFieldButton = L.Layer.extend({
 		// Find item index
 		var index = $(event.target).index();
 
-		var message = 'formfieldevent {\"type\": \"drop-down\",' +
-					  '\"cmd\": \"selected\",' +
-					  '\"data\":\"' + index.toString() + '\"}';
+		var message = 'formfieldevent {"type": "drop-down",' +
+					  '"cmd": "selected",' +
+					  '"data":"' + index.toString() + '"}';
 
 		// Apply selection in the document.
 		this.map._socket.sendMessage(message);
