@@ -573,7 +573,7 @@ $(DIST_FOLDER)/l10n/%: $(srcdir)/l10n/%
 	@cp $< $@
 
 $(DIST_FOLDER)/l10n/%.json: $(srcdir)/po/%.po
-	@$(srcdir)/util/po2json.py $< -o $@
+	@$(srcdir)/util/po2json.py --quiet $< -o $@
 
 $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
