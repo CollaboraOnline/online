@@ -1686,7 +1686,7 @@ L.SheetDimension = L.Class.extend({
 				}
 			});
 
-			if (!useCorePixels) {
+			if (!useCorePixels && false) { // This is a test patch.
 				// startpos and size are now in core pixels, so convert to css pixels.
 				startpos = Math.floor(startpos / this._corePixelsPerCssPixel);
 				size = Math.floor(size / this._corePixelsPerCssPixel);

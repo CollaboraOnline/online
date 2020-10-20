@@ -592,7 +592,7 @@ L.Control.Header = L.Control.extend({
 			L.DomUtil.setStyle(container, property, value + 'px');
 		}
 
-		var scale = this.canvasDPIScale();
+		var scale = 1; // this.canvasDPIScale(); // We assume that 1 core px = 1 canvas px
 		if (property === 'width') {
 			canvas.width = Math.floor(value * scale);
 			if (!isCorner)
@@ -799,9 +799,9 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 
 	update: function () {
 		var bounds = this._map.getPixelBounds();
-		var startPx = this._isCol ? bounds.getTopLeft().x : bounds.getTopLeft().y;
+		var startPx = this._isCol ? bounds.getTopLeft().x / (L.Browser.retina ? 2: 1) : bounds.getTopLeft().y / (L.Browser.retina ? 2: 1);
 		this._docVisStart = startPx;
-		var endPx = this._isCol ? bounds.getBottomRight().x : bounds.getBottomRight().y;
+		var endPx = this._isCol ? bounds.getBottomRight().x / (L.Browser.retina ? 2: 1) : bounds.getBottomRight().y / (L.Browser.retina ? 2: 1);
 		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'csspixels');
 		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'csspixels');
 		this._elements = [];

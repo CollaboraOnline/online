@@ -211,8 +211,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var ctx = this._canvasContext;
 		var content = this._colIndexToAlpha(entry.index + 1);
 		var startOrt = this._canvasHeight - this._headerHeight;
-		var startPar = entry.pos - entry.size;
-		var endPar = entry.pos;
+		var posTemp = entry.pos * (L.Browser.retina ? 2: 1);
+		var startPar = posTemp - (entry.size * (L.Browser.retina ? 2: 1));
+		var endPar = posTemp;
 		var width = endPar - startPar;
 		var height = this._headerHeight;
 
@@ -224,8 +225,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		ctx.save();
-		var scale = this.canvasDPIScale();
-		ctx.scale(scale, scale);
+		//var scale = this.canvasDPIScale();
+		//ctx.scale(scale, scale);
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
