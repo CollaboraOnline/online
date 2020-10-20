@@ -928,15 +928,25 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId,
     assertCorrectThread();
 
     // Force saving on exit, if enabled.
-    if (!force && isMarkedToDestroy())
+    if (!force)
     {
-        static const bool always_save = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
-        if (always_save)
+        static const bool always_save
+            = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
+        if (isMarkedToDestroy() && always_save)
         {
             LOG_TRC("Enabling forced saving to storage per always_save_on_exit config.");
-            _storage->forceSave();
             force = true;
         }
+        else if (!_lastStorageSaveSuccessful)
+        {
+            LOG_TRC("Enabling forced saving to storage as last attempt had failed.");
+            force = true;
+        }
+    }
+
+    if (force)
+    {
+        _storage->forceSave();
     }
 
     constexpr bool isRename = false;
@@ -1031,7 +1041,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
 
     // If the file timestamp hasn't changed, skip saving.
     const std::chrono::system_clock::time_point newFileModifiedTime = Util::getFileTimestamp(_storage->getRootFilePath());
-    if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime && !isRename)
+    if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime && !isRename && !force)
     {
         // Nothing to do.
         const auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>
