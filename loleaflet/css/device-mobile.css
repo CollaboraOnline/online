@@ -314,6 +314,12 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	font-size: 1em !important;
 	font-weight: 600 !important;
 }
+.vex-dialog-message > div {
+	text-align: left;
+	font-family: var(--vex-font) !important;
+	font-size: 1em !important;
+	font-weight: 600 !important;
+}
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='text'] {
 	border-radius: 4px !important;
 	background-color: #fff !important;
