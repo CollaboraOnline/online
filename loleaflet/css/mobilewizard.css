@@ -345,7 +345,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	vertical-align: middle;
 }
 
-.ui-content.unobutton.selected {
+#mobile-wizard .ui-content.unobutton.selected {
 	-webkit-filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
 	filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
 	box-shadow: 0 0 0px 8px #e6e6e640;

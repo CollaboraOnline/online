@@ -208,11 +208,8 @@
 }
 
 .hasnotebookbar .ui-content.unobutton.selected {
-	-webkit-filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
-	filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
-	box-shadow: 0 0 0px 8px rgba(230, 230, 230, 0.24);
-	border-radius: 0.1px;
-	background-color: rgba(230, 230, 230, 0.24);
+	border-radius: 2px;
+	background-color: var(--gray-bg-color);
 }
 
 div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookbar, #ObjectBackOne.notebookbar, #ObjectForwardOne.notebookbar, #BringToFront.notebookbar, #SetObjectToBackground.notebookbar, #SetObjectToForeground.notebookbar, #FlipVertical.notebookbar, #FlipHorizontal.notebookbar, #Bold.notebookbar, #Italic.notebookbar, #Underline.notebookbar, #Strikeout.notebookbar, #StyleApply.notebookbar, #StyleUpdateByExample.notebookbar, #StyleNewByExample.notebookbar, #Shadowed.notebookbar, #Grow.notebookbar, #Shrink.notebookbar, #Spacing.notebookbar, #SuperScript.notebookbar, #SubScript.notebookbar,#AlignLeft.notebookbar, #AlignRight.notebookbar, #AlignHorizontalCenter.notebookbar, #AlignBlock.notebookbar, #ParaRightToLeft.notebookbar, #ParaLeftToRight.notebookbar, #AlignTop.notebookbar, #AlignVCenter.notebookbar, #AlignBottom.notebookbar, #IncrementIndent.notebookbar, #DecrementIndent.notebookbar, #LeftPara.notebookbar, #RightPara.notebookbar, #CenterPara.notebookbar, #JustifyPara.notebookbar, #DefaultBullet.notebookbar, #DefaultNumbering.notebookbar, #ParaspaceIncrease.notebookbar, #ParaspaceDecrease.notebookbar, #LineSpacing.notebookbar, #HangingIndent.notebookbar, #CellVertTop.notebookbar, #CellVertCenter.notebookbar, #CellVertBottom.notebookbar, #DeleteTable.notebookbar, #MergeCells.notebookbar{
@@ -262,9 +259,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	border-top: 5px solid #4c566a;
 }
 
-.unotoolbutton.notebookbar .unobutton.selected {
-	box-shadow: 0 0 0px 4px rgba(230, 230, 230, 0.24) !important;
-}
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
 	border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
