@@ -3566,11 +3566,14 @@ private:
         // Set the product name
         capabilities->set("productName", APP_NAME);
 
+        std::string version, hash;
+        Util::getVersionInfo(version, hash);
+
         // Set the product version
-        capabilities->set("productVersion", LOOLWSD_VERSION);
+        capabilities->set("productVersion", version);
 
         // Set the product version hash
-        capabilities->set("productVersionHash", LOOLWSD_VERSION_HASH);
+        capabilities->set("productVersionHash", hash);
 
         // Set that this is a proxy.php-enabled instance
         capabilities->set("hasProxyPrefix", LOOLWSD::IsProxyPrefixEnabled);
