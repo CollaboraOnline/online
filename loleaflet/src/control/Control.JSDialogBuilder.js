@@ -237,8 +237,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else if (object) {
 			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
 			var windowId = window.mobileDialogId !== undefined ? window.mobileDialogId :
-								(window.notebookbarId !== undefined ? window.notebookbarId :
-								(window.sidebarId !== undefined ? window.sidebarId : -1));
+				(window.notebookbarId !== undefined ? window.notebookbarId :
+					(window.sidebarId !== undefined ? window.sidebarId : -1));
 			var message = 'dialogevent ' + windowId
 					+ ' {\"id\":\"' + object.id
 				+ '\", \"cmd\": \"' + eventType

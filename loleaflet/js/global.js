@@ -315,13 +315,13 @@
 			return this.decoder.decode(this.doSlice(bytes, start,end));
 		};
 		this.parseIncomingArray = function(arr) {
-//			console.debug('proxy: parse incoming array of length ' + arr.length);
+			//console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i)
 			{
 				var left = arr.length - i;
 				if (left < 4)
 				{
-//					console.debug('no data left');
+					//console.debug('no data left');
 					break;
 				}
 				var type = String.fromCharCode(arr[i+0]);
@@ -440,8 +440,8 @@
 			// too long, hangs, throws, etc. we can recover.
 			that._setPollInterval(that.maxPollMs);
 
-//			console.debug('send msg - ' + that.msgInflight + ' on session ' +
-//				      that.sessionId + '  queue: "' + that.sendQueue + '"');
+			//console.debug('send msg - ' + that.msgInflight + ' on session ' +
+			//	      that.sessionId + '  queue: "' + that.sendQueue + '"');
 			var req = new XMLHttpRequest();
 			req.open('POST', that.getEndPoint('write'));
 			req.responseType = 'arraybuffer';
@@ -476,7 +476,7 @@
 					{
 						// Throttle.
 						that.curPollMs = Math.min(that.maxPollMs, that.curPollMs * that.throttleFactor) | 0;
-//						console.debug('No data for ' + timeSinceLastDataMs + ' ms -- throttling to ' + that.curPollMs + ' ms.');
+						//console.debug('No data for ' + timeSinceLastDataMs + ' ms -- throttling to ' + that.curPollMs + ' ms.');
 					}
 				}
 
@@ -555,7 +555,7 @@
 				// Unless we are backed up.
 				if (that.msgInflight <= 3)
 				{
-//					console.debug('Have data to send, lowering poll interval.');
+					//console.debug('Have data to send, lowering poll interval.');
 					that.curPollMs = that.minPollMs;
 					that._setPollInterval(that.curPollMs);
 				}
