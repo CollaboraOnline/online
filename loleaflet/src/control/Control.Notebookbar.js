@@ -95,7 +95,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (this._showNotebookbar === false)
 			this.hideTabs();
 
-		if (window.mode.isDesktop())
+		if (window.mode.isDesktop() || (window.ThisIsTheiOSApp && window.mode.isTablet()))
 			this.createOptionsSection();
 
 		this.scrollToLastPositionIfNeeded();
