@@ -218,7 +218,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			else if (data.text) {
 				builder._unoToolButton(parentContainer, data, builder);
 			} else
-				console.warn('Unsupported toolitem type: \"' + data.command + '\"');
+				console.warn('Unsupported toolitem type: "' + data.command + '"');
 		}
 
 		return false;
@@ -240,10 +240,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				(window.notebookbarId !== undefined ? window.notebookbarId :
 					(window.sidebarId !== undefined ? window.sidebarId : -1));
 			var message = 'dialogevent ' + windowId
-					+ ' {\"id\":\"' + object.id
-				+ '\", \"cmd\": \"' + eventType
-				+ '\", \"data\": \"' + data
-				+ '\", \"type\": \"' + objectType + '\"}';
+					+ ' {"id":"' + object.id
+				+ '", "cmd": "' + eventType
+				+ '", "data": "' + data
+				+ '", "type": "' + objectType + '"}';
 			builder.map._socket.sendMessage(message);
 		}
 	},
@@ -890,7 +890,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_unitToVisibleString: function(unit) {
 		if (unit == 'inch') {
-			return '\"';
+			return '"';
 		} else if (unit == 'percent') {
 			return '%';
 		} else if (unit == 'degree') {
@@ -2329,7 +2329,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (handler)
 					processChildren = handler(childObject, childData, this);
 				else
-					console.warn('Unsupported control type: \"' + childType + '\"');
+					console.warn('Unsupported control type: "' + childType + '"');
 
 				if (processChildren && childData.children != undefined)
 					this.build(childObject, childData.children);
