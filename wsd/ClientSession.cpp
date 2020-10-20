@@ -516,11 +516,15 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "savetostorage"))
     {
-        int force = 0;
+        // By default savetostorage implies forcing.
+        int force = 1;
         if (tokens.size() > 1)
             getTokenInteger(tokens[1], "force", force);
 
-        docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, true);
+        // The savetostorage command is really only used to resolve save conflicts
+        // and it seems to always have force=1. However, we should still honor the
+        // contract and do as told, not as we expect the API to be used. Use force if provided.
+        docBroker->saveToStorage(getId(), true, "" /* This is irrelevant when success is true*/, force);
     }
     else if (tokens.equals(0, "clientvisiblearea"))
     {
@@ -1141,7 +1145,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
 
                 // Save to Storage and log result.
-                docBroker->saveToStorage(getId(), success, result);
+                docBroker->saveToStorage(getId(), success, result, /*force=*/false);
 
                 if (!isCloseFrame())
                     forwardToClient(payload);
@@ -1466,7 +1470,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             {
                 std::string result;
                 LOG_DBG("Saving template [" << _wopiFileInfo->getTemplateSource() << "] to storage");
-                docBroker->saveToStorage(getId(), true, result);
+                docBroker->saveToStorage(getId(), true, result, /*force=*/false);
             }
 
             for(auto &token : tokens)

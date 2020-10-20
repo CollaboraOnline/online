@@ -726,7 +726,6 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         }
     }
 
-
 #if ENABLE_SUPPORT_KEY
     if (!LOOLWSD::OverrideWatermark.empty())
         watermarkText = LOOLWSD::OverrideWatermark;
@@ -922,8 +921,8 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
     return bResult;
 }
 
-bool DocumentBroker::saveToStorage(const std::string& sessionId,
-                                   bool success, const std::string& result, bool force)
+bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
+                                   const std::string& result, bool force)
 {
     assertCorrectThread();
 
