@@ -1890,6 +1890,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			titleClass = 'menu-entry-with-icon';
 		}
 
+		sectionTitle.title = data.text;
+		$(sectionTitle).tooltip();
+
 		var updateFunction = function() {
 			var items = builder.map['stateChangeHandler'];
 			var state = items.getItemValue(data.command);
