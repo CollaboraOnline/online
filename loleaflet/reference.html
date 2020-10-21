@@ -3010,6 +3010,28 @@ Editor to WOPI host
 		</td>
 	</tr>
 	<tr>
+		<td><code><b>Action_InsertGraphics</b></code></td>
+		<td><code>
+		    <nobr>url: &lt;String&gt;</nobr>
+		</code></td>
+		<td>
+		Downloads image from the url and inserts it to the document.
+		</td>
+	</tr>
+	<tr>
+		<td><code><b>Action_Paste</b></code></td>
+		<td><code>
+		    <nobr>Mimetype: &lt;String&gt;</nobr>
+		    <nobr>Data: &lt;String&gt;</nobr>
+		</code></td>
+		<td>
+		Pastes the Data with the given Mimetype at the current cursor
+		position. This works around the copy/paste mechanism that is
+		in Collabora Online, and pastes the data directly to the
+		document.
+		</td>
+	</tr>
+	<tr>
 		<td><code><b>Action_ShowBusy</b></code></td>
 		<td><code>
 		    <nobr>Label: &lt;String&gt;</nobr>
