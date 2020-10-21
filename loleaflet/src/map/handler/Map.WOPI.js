@@ -378,6 +378,12 @@ L.Map.WOPI = L.Handler.extend({
 				this._map.insertURL(msg.Values.url);
 			}
 		}
+		else if (msg.MessageId == 'Action_Paste') {
+			if (msg.Values && msg.Values.Mimetype && msg.Values.Data) {
+				var blob = new Blob(['paste mimetype=' + msg.Values.Mimetype + '\n', msg.Values.Data]);
+				app.socket.sendMessage(blob);
+			}
+		}
 		else if (msg.MessageId === 'Action_ShowBusy') {
 			if (msg.Values && msg.Values.Label) {
 				this._map.fire('showbusy', {label: msg.Values.Label});
