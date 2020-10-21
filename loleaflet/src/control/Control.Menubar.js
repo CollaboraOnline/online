@@ -1080,15 +1080,21 @@ L.Control.Menubar = L.Control.extend({
 					} else if (id === 'showruler') {
 						if (self._map.uiManager.isRulerVisible()) {
 							$(aItem).addClass(constChecked);
+							if ($('#menu-showruler .svg-object').length < 1)
+								$(aItem).prepend('<object class="svg-object" width="20" data="images/lc_listitem-selected.svg" type="image/svg+xml"></object>');
 						} else {
 							$(aItem).removeClass(constChecked);
+							$('#menu-showruler .svg-object').remove('.svg-object');
 						}
 
 					} else if (id === 'showstatusbar') {
 						if (self._map.uiManager.isStatusBarVisible()) {
 							$(aItem).addClass(constChecked);
+							if ($('#menu-showstatusbar .svg-object').length < 1)
+								$(aItem).prepend('<object class="svg-object" width="20" data="images/lc_listitem-selected.svg" type="image/svg+xml"></object>');
 						} else {
 							$(aItem).removeClass(constChecked);
+							$('#menu-showstatusbar .svg-object').remove('.svg-object');
 						}
 
 					} else if (self._map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {

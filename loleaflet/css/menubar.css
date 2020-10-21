@@ -252,21 +252,18 @@
 /* Some more lo-menu specific customizations */
 
 /* The smartmenus plugin doesn't seem to have support for icons, so implement our own pseudo-elements */
-.lo-menu-item-checked::before {
-	position: absolute;
-	content: ' ';
-	left: 2px;
-	background: url('images/lc_listitem-selected.svg') no-repeat left -2px;
-	width: 20px;
-	height: 20px;
+.lo-menu-item-checked > .svg-object {
+	float: left;
+	margin-left: -20px;
+	margin-top: -2px;
 }
-
-.lo-menu-item-checked:hover::before {
-	color: #fff;
-	-webkit-filter: brightness(100);
-	filter: brightness(100);
+path#listitem-selected {
+	fill: #0b87e7;
 }
-
+.lo-menu-item-checked:hover .svg-object{
+	-webkit-filter: saturate(0) brightness(100);
+	filter: saturate(0) brightness(100)
+}
 .writer-icon-img {
 	background-image: url('images/x-office-document.svg');
 	background-size: 30px 30px;
