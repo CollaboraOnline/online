@@ -12,12 +12,14 @@
     <string name="pref_category_explorer">ファイルマネージャーの設定</string>
     <string name="list_view">リスト</string>
     <string name="storage_permission_required">ストレージの権限が必要です</string>
-    <string name="file_creation_failed">ファイルの作成に失敗しました。</string>
-    <string name="no_items">アイテムはありません。</string>
+    <string name="file_creation_failed">ファイルの作成に失敗しました</string>
+    <string name="no_items">アイテムはありません</string>
     <string name="no_recent_items">ツールバーのフォルダアイコンを使用してファイルを開いてください。</string>
     <string name="app_version">バージョン: %1$s, ビルド ID: %2$s</string>
     <string name="new_textdocument">新規文書ドキュメント</string>
     <string name="new_presentation">新規プレゼンテーション</string>
     <string name="new_spreadsheet">新規表計算</string>
     <string name="sort_za">Z-A</string>
+    <string name="app_vendor">このリリースは $VENDOR が提供しました。</string>
+    <string name="loading">読み込み中...</string>
 </resources>
