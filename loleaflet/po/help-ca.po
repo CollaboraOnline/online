@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-09-11 16:49+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Catalan <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-help/ca/>\n"
+"PO-Revision-Date: 2020-10-18 21:54+0000\n"
+"Last-Translator: Joan Montané <joan@montane.cat>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
+"help/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3.1-dev\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-help-ca.po\n"
 "X-Pootle-Revision: 827117\n"
 
@@ -643,7 +644,9 @@ msgstr "Alt + Fletxes de direcció"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-62
 msgid "Increases/decreases the size of the column/row on the right/bottom cell edge"
-msgstr "Augmenta/disminueix la mida de la columna/fila a la vora dreta/inferior de la cel·la."
+msgstr ""
+"Augmenta o disminueix la mida de la columna o fila a la vora dreta o "
+"inferior de la cel·la"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
 msgid "Alt + Shift + Arrow Keys"
@@ -651,7 +654,9 @@ msgstr "Alt + Maj + Fletxes de direcció"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-70
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
-msgstr "Augmenta/disminueix la mida de la columna/fila a la vora esquerra/superior de la cel·la."
+msgstr ""
+"Augmenta o disminueix la mida de la columna o fila a la vora esquerra o "
+"superior de la cel·la"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
 msgid "Alt + Ctrl + Arrow Keys"
@@ -1275,7 +1280,17 @@ msgstr "Per a comprovar sistemàticament l'ortografia de tot el document, trieu 
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
-msgstr "Editeu un full de càlcul en línia de la mateixa manera que ho feu en un full de càlcul d'escriptori. Les operacions d'introducció  de dades, selecció d'intervals columnes, files o fulls són iguals. Useu el teclat, menús o la barra d'eines per a executar ordres en el full de càlcul. També és possible arrossegar el contingut de cel·les per a emplenar altres cel·les amb dades. Les ordres de copiar, retallar i enganxar són disponibles en el menú contextual. Després d'introduir dades en una cel·la, la tecla <span class=\"kbd\">Tab</span> mou el cursor a la cel·la següent cap a la dreta, i amb <span class=\"kbd\">Retorn</span> es mou cap a la cel·la inferior, per a facilitar l'entrada de més dades."
+msgstr ""
+"Editeu un full de càlcul en línia de la mateixa manera que ho feu en un full "
+"de càlcul d'escriptori. Les operacions d'introducció de dades, selecció "
+"d'intervals columnes, files o fulls són iguals. Useu el teclat, menús o la "
+"barra d'eines per a executar ordres en el full de càlcul. També és possible "
+"arrossegar el contingut de cel·les per a emplenar altres cel·les amb dades. "
+"Les ordres de copiar, retallar i enganxar són disponibles en el menú "
+"contextual. Després d'introduir dades en una cel·la, la tecla <span class="
+"\"kbd\">Tab</span> mou el cursor a la cel·la següent cap a la dreta, i amb "
+"<span class=\"kbd\">Retorn</span> es mou cap a la cel·la inferior, per a "
+"facilitar l'entrada de més dades."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:344-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
@@ -1287,7 +1302,11 @@ msgstr "S'hi apliquen totes les funcions de full de càlcul i regles matemàtiqu
 
 #: html/loleaflet-help.html%2Bdiv.div.p:347-5
 msgid "The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula specification</a>."
-msgstr "El llenguatge de les fórmules hauria de ser molt familiar per a qualsevol usuari de full de càlcul, i s'explica en detall en  l'<a href=\"https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\">especificació OASIS OpenFormula</a>."
+msgstr ""
+"El llenguatge de les fórmules hauria de ser molt familiar per a qualsevol "
+"usuari de full de càlcul, i s'explica en detall en l'<a href=\"https://www."
+"oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\""
+">especificació OASIS OpenFormula</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
@@ -1379,7 +1398,12 @@ msgstr "Manipulació de taules"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid "Insert tables with proper icon in the toolbar. Select the initial number of rows and columns. Add rows and columns with the cell context menu. Merge cells with the <span class=\"ui\">Table</span> menu. The default paragraph style inside cells is “Table contents”."
-msgstr "Inseriu taules amb la icona de la barra d'eines corresponent. Seleccioneu  el nombre inicial de files i columnes. Afegiu-hi files i columnes amb el menú contextual de les cel·les. Fusioneu cel·les amb el menú <span class=\"ui\">Taula</span>. L'estil de paràgraf predeterminat de les cel·les és «Contingut de la taula»."
+msgstr ""
+"Inseriu taules amb la icona de la barra d'eines corresponent. Seleccioneu el "
+"nombre inicial de files i columnes. Afegiu-hi files i columnes amb el menú "
+"contextual de les cel·les. Fusioneu cel·les amb el menú <span class=\"ui\""
+">Taula</span>. L'estil de paràgraf predeterminat de les cel·les és «"
+"Contingut de la taula»."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:405-5
 msgid "<span class=\"def\">Formatting cells:</span> Click in the cell or range of cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\">Properties</span>. Fine tune the table with the properties dialog."
@@ -1475,15 +1499,18 @@ msgstr "El <span class=\"productname\">%productName</span> admet la lectura i l'
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:446-11
 msgid "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr "Documents de text.— Formats de Microsoft DOC, DOCX i RTF. Format OpenDocument ODT."
+msgstr ""
+"Documents de text: formats de Microsoft DOC, DOCX i RTF. Format OpenDocument "
+"ODT"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:447-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr "Fulls de càlcul.— Formats de Microsoft XLS i XLSX. Format OpenDocument ODS."
+msgstr ""
+"Fulls de càlcul: formats de Microsoft XLS i XLSX, format OpenDocument ODS"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:448-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr "Presentacions.— Formats de Microsoft PPT i PPTX. Format OpenDocument ODP."
+msgstr "Presentacions: formats de Microsoft PPT i PPTX, format OpenDocument ODP"
 
 #: html/loleaflet-help.html%2Bdiv.p:450-5
 msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
@@ -1599,7 +1626,9 @@ msgstr "Pitgeu el botó <span class=\"ui\">Insereix</span>. Per a tancar el dià
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:490-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr "Per què no puc suprimir text? Tot el que obtinc és una ratlla per sobre les paraules."
+msgstr ""
+"Per què no puc suprimir text? Tot el que obtinc és una ratlla per sobre les "
+"paraules?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "You have the Track Changes feature enabled for the document. Track Changes records all changes in the text and shows the editions for later revision. Useful for marking changes in text and spreadsheets. Track changes are enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Record</span>."
@@ -1635,7 +1664,16 @@ msgstr "Per a mostrar o amagar els canvis, trieu <span class=\"ui\">Edita</span>
 
 #: html/loleaflet-help.html%2Bdiv.div.p:502-5
 msgid "Changes can be accepted or rejected. To accept or reject changes, click on the corresponding icons in the comment box on the right of the document. Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\"ui\">Reject</span>. Furthermore, if you need to filter changes before accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog shows a list of all tracked changes. Use the dialog buttons accordingly."
-msgstr "Els canvis es poden acceptar o rebutjar. Per a acceptar o rebutjar canvis, feu clic en les icones corresponents en el quadre de comentaris de la dreta del document. Alternativament, trieu <span class=\"ui\">Edita</span> ▸ <span class=\"ui\">Seguiment de canvis</span> ▸ <span class=\"ui\">Accepta</span> o <span class=\"ui\">Rebutja</span>. A més a més, si voleu filtrar els canvis abans d'acceptar-los o rebutjar-los, trieu <span class=\"ui\">Edita</span> ▸ <span class=\"ui\">Seguiment de canvis</span> ▸ <span class=\"ui\">Gestiona</span>. Es mostra una llista de tots els canvis  seguits. Useu els botons del diàleg corresponents."
+msgstr ""
+"Els canvis es poden acceptar o rebutjar. Per a acceptar o rebutjar canvis, "
+"feu clic en les icones corresponents en el quadre de comentaris de la dreta "
+"del document. Alternativament, trieu <span class=\"ui\">Edita</span> ▸ <span "
+"class=\"ui\">Seguiment de canvis</span> ▸ <span class=\"ui\">Accepta</span> "
+"o <span class=\"ui\">Rebutja</span>. A més a més, si voleu filtrar els "
+"canvis abans d'acceptar-los o rebutjar-los, trieu <span class=\"ui\">Edita</"
+"span> ▸ <span class=\"ui\">Seguiment de canvis</span> ▸ <span class=\"ui\""
+">Gestiona</span>. Es mostra una llista de tots els canvis seguits. Useu els "
+"botons del diàleg corresponents."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:504-5
 msgid "How do I set the margins of the document?"
@@ -1659,7 +1697,8 @@ msgstr "Ajusteu els marges en el diàleg."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:512-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr "Com puc canviar en el document l'orientació de la pàgina a apaïsat?"
+msgstr ""
+"Com puc canviar en el document l'orientació de la pàgina i posar-lo apaïsat?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:514-11
 msgid "Place the cursor at the place where the page orientation is to change. Add an empty paragraph."
@@ -1675,7 +1714,7 @@ msgstr "En l'àrea <span class=\"ui\">Salts</span>, marqueu Insereix, Tipus: sal
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:517-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "Seleccioneu horitzontal a  «Amb estil de pàgina»"
+msgstr "Seleccioneu horitzontal a «Amb estil de pàgina»"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:518-11
 msgid "Select if you want to change page numbering."
@@ -1712,7 +1751,7 @@ msgstr "Mitjançant un estil de paràgraf:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:530-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr "Situeu el cursor al paràgraf que voleu aplicar el format."
+msgstr "Situeu el cursor al paràgraf que voleu aplicar el format"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:531-11
 msgid "Select the style to apply in the style dropdown list. The paragraph displays the styles attributes."
