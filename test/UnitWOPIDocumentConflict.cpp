@@ -34,40 +34,41 @@ class UnitWOPIDocumentConflict : public WopiTestServer
 
     enum class DocLoaded
     {
-	Doc1,
-	Doc2
+        Doc1,
+        Doc2
     } _docLoaded;
 
     const std::string _testName = "UnitWOPIDocumentConflict";
 
 public:
-    UnitWOPIDocumentConflict() :
-        _phase(Phase::Load)
+    UnitWOPIDocumentConflict()
+        : _phase(Phase::Load)
     {
     }
 
     void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-	if (_docLoaded == DocLoaded::Doc2)
-	{
-	    // On second doc load, we should have the document in storage which
-	    // was changed beneath us, not the one which we modified by pressing 'a'
-	    if (getFileContent() != "Modified content in storage")
-		exitTest(TestResult::Failed);
-	    else
-		exitTest(TestResult::Ok);
-	}
+        if (_docLoaded == DocLoaded::Doc2)
+        {
+            // On second doc load, we should have the document in storage which
+            // was changed beneath us, not the one which we modified by pressing 'a'
+            if (getFileContent() != "Modified content in storage")
+                exitTest(TestResult::Failed);
+            else
+                exitTest(TestResult::Ok);
+        }
     }
 
-    bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/) override
+    bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */,
+                           const bool /* flush */, int& /*unitReturn*/) override
     {
         std::string message(data, len);
         if (message == "error: cmd=storage kind=documentconflict")
         {
-	    // we don't want to save current changes because doing so would
-	    // overwrite the document which was changed underneath us
-	    helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", _testName);
-	    _phase = Phase::LoadNewDocument;
+            // we don't want to save current changes because doing so would
+            // overwrite the document which was changed underneath us
+            helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", _testName);
+            _phase = Phase::LoadNewDocument;
         }
 
         return false;
@@ -80,40 +81,43 @@ public:
             case Phase::Load:
             {
                 initWebsocket("/wopi/files/0?access_token=anything");
-		_docLoaded = DocLoaded::Doc1;
+                _docLoaded = DocLoaded::Doc1;
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), _testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(),
+                                       _testName);
 
                 _phase = Phase::ModifyAndChangeStorageDoc;
                 break;
             }
             case Phase::ModifyAndChangeStorageDoc:
             {
-		// modify the currently opened document; type 'a'
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0", _testName);
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512", _testName);
+                // modify the currently opened document; type 'a'
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0",
+                                       _testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512",
+                                       _testName);
                 SocketPoll::wakeupWorld();
 
-		// ModifiedStatus=true is a bit slow; let's sleep and hope that
-		// it is received before we wake up
-		std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
+                // ModifiedStatus=true is a bit slow; let's sleep and hope that
+                // it is received before we wake up
+                std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
 
-		// change the document underneath, in storage
-		setFileContent("Modified content in storage");
+                // change the document underneath, in storage
+                setFileContent("Modified content in storage");
 
-		// save the document; wsd should detect now that document has
-		// been changed underneath it and send us:
-		// "error: cmd=storage kind=documentconflict"
-		helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "save", _testName);
+                // save the document; wsd should detect now that document has
+                // been changed underneath it and send us:
+                // "error: cmd=storage kind=documentconflict"
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "save", _testName);
 
                 _phase = Phase::Polling;
 
                 break;
             }
-	    case Phase::LoadNewDocument:
+            case Phase::LoadNewDocument:
             {
-		initWebsocket("/wopi/files/0?access_token=anything");
-		_docLoaded = DocLoaded::Doc2;
+                initWebsocket("/wopi/files/0?access_token=anything");
+                _docLoaded = DocLoaded::Doc2;
                 _phase = Phase::Polling;
                 break;
             }
