@@ -2329,7 +2329,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (handler)
 					processChildren = handler(childObject, childData, this);
 				else
-					console.warn('Unsupported control type: "' + childType + '"');
+					console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
 				if (processChildren && childData.children != undefined)
 					this.build(childObject, childData.children);
