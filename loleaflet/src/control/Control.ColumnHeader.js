@@ -269,7 +269,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// the exact bounding box in html5's canvas, and the textBaseline
 		// 'middle' measures everything including the descent etc.
 		// '+ 1' looks visually fine, and seems safe enough
-		ctx.fillText(content, endPar - (width / 2), startOrt + (height / 2) + 1);
+		ctx.fillText(content, endPar - (width / 2), (startOrt + (height / 2) + 1) / window.devicePixelRatio);
 		// draw row separator
 		ctx.fillStyle = this._borderColor;
 		ctx.fillRect(endPar -1, startOrt, this._borderWidth, height);

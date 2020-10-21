@@ -209,16 +209,16 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var height = endPar - startPar;
 		var width = this._headerWidth;
 
+		if (height <= 0)
+			return;
+
 		if (isHighlighted !== true && isHighlighted !== false) {
 			isHighlighted = this.isHighlighted(entry.index);
 		}
 
-		if (height <= 0)
-			return;
-
 		ctx.save();
-		var scale = this.canvasDPIScale();
-		ctx.scale(scale, scale);
+		ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
@@ -228,20 +228,22 @@ L.Control.RowHeader = L.Control.Header.extend({
 			selectionBackgroundGradient.addColorStop(1, this._selectionBackgroundGradient[2]);
 		}
 
+		// Start from bottom to top.
+
 		// draw header/outline border separator
 		if (this._headerWidth !== this._canvasWidth) {
+			ctx.beginPath();
 			ctx.fillStyle = this._borderColor;
-			ctx.fillRect(startOrt - this._borderWidth, startPar, this._borderWidth, height);
+			ctx.rect(startOrt - this._borderWidth, startPar, this._borderWidth, entry.size);
+			ctx.fill();
 		}
 
-		// clip mask
-		ctx.beginPath();
-		ctx.rect(startOrt, startPar, width, height);
-		ctx.clip();
 		// draw background
+		ctx.beginPath();
 		ctx.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
-		ctx.fillRect(startOrt, startPar, width, height);
-		// draw resize handle
+		ctx.rect(startOrt, entry.pos - entry.size, this._canvasWidth, entry.size);
+		ctx.fill();
+
 		var handleSize = this._resizeHandleSize;
 		if (isCurrent && height > 2 * handleSize) {
 			var center = startPar + height - handleSize / 2;
@@ -249,19 +251,30 @@ L.Control.RowHeader = L.Control.Header.extend({
 			var w = width - 4;
 			var size = 2;
 			var offset = 1;
+			ctx.beginPath();
 			ctx.fillStyle = '#BBBBBB';
-			ctx.fillRect(x + 2, center - size - offset, w - 4, size);
-			ctx.fillRect(x + 2, center + offset, w - 4, size);
+			ctx.rect(x + 2, center - size - offset, w - 4, size);
+			ctx.fill();
+			ctx.beginPath();
+			ctx.rect(x + 2, center + offset, w - 4, size);
+			ctx.fill();
 		}
+
+		// draw row separator
+		ctx.fillStyle = this._borderColor;
+		ctx.beginPath();
+		ctx.rect(startOrt, entry.pos - 1, this._canvasWidth , this._borderWidth);
+		ctx.fill();
+
 		// draw text content
+		ctx.beginPath();
 		ctx.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
 		ctx.font = this._font.getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
-		ctx.fillText(content, startOrt + (width / 2), endPar - (height / 2));
-		// draw row separator
-		ctx.fillStyle = this._borderColor;
-		ctx.fillRect(startOrt, endPar - 1, width , this._borderWidth);
+		ctx.fillText(content, (startOrt + (this._canvasWidth / 2)) / window.devicePixelRatio, entry.pos - (entry.size / 2));
+
+		ctx.stroke();
 		ctx.restore();
 	},
 
