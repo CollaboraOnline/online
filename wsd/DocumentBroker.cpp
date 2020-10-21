@@ -434,12 +434,18 @@ void DocumentBroker::pollThread()
         // Remove idle documents after 1 hour.
         if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
         {
-            // Stop if there is nothing to save.
-            LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey() << "] to kill.");
-            if (!autoSave(isPossiblyModified()))
+            // Don't hammer on saving.
+            if (std::chrono::duration_cast<std::chrono::seconds>(now - _lastSaveRequestTime).count()
+                >= 5)
             {
-                LOG_INF("Terminating idle DocumentBroker for docKey [" << getDocKey() << "].");
-                stop("idle");
+                // Stop if there is nothing to save.
+                LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey()
+                                                                      << "] to kill.");
+                if (!autoSave(isPossiblyModified()))
+                {
+                    LOG_INF("Terminating idle DocumentBroker for docKey [" << getDocKey() << "].");
+                    stop("idle");
+                }
             }
         }
 #endif
