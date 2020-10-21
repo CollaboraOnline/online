@@ -51,6 +51,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -1222,14 +1223,22 @@ public class LOActivity extends AppCompatActivity {
         }
     }
 
-    /// Do the paste, and return true if we should short-circuit the paste locally
+    /// Do the paste, and return true if we should short-circuit the paste locally (ie. let the core handle that)
     private final boolean performPaste()
     {
         clipData = clipboardManager.getPrimaryClip();
-        ClipDescription clipDesc = clipData != null ? clipData.getDescription() : null;
-        if (clipDesc != null) {
-            if (clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_HTML)) {
-                final String html = clipData.getItemAt(0).getHtmlText();
+        if (clipData == null)
+            return false;
+
+        ClipDescription clipDesc = clipData.getDescription();
+        if (clipDesc == null)
+            return false;
+
+        for (int i = 0; i < clipDesc.getMimeTypeCount(); ++i) {
+            Log.d(TAG, "Pasting mime " + i + ": " + clipDesc.getMimeType(i));
+
+            if (clipDesc.getMimeType(i).equals(ClipDescription.MIMETYPE_TEXT_HTML)) {
+                final String html = clipData.getItemAt(i).getHtmlText();
                 // Check if the clipboard content was made with the app
                 if (html.contains(CLIPBOARD_LOOL_SIGNATURE)) {
                     // Check if the clipboard content is from the same app instance
@@ -1252,20 +1261,44 @@ public class LOActivity extends AppCompatActivity {
                             byte[] htmlByteArray = html.getBytes(Charset.forName("UTF-8"));
                             LOActivity.this.paste("text/html", htmlByteArray);
                         }
+                        return false;
                     }
                 } else {
                     Log.i(TAG, "foreign html '" + html + "'");
                     byte[] htmlByteArray = html.getBytes(Charset.forName("UTF-8"));
                     LOActivity.this.paste("text/html", htmlByteArray);
+                    return false;
                 }
             }
-            else if (clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                final ClipData.Item clipItem = clipData.getItemAt(0);
-                String text = clipItem.getText().toString();
-                byte[] textByteArray = text.getBytes(Charset.forName("UTF-16"));
-                LOActivity.this.paste("text/plain;charset=utf-16", textByteArray);
+            else if (clipDesc.getMimeType(i).startsWith("image/")) {
+                ClipData.Item item = clipData.getItemAt(i);
+                Uri uri = item.getUri();
+                try {
+                    InputStream imageStream = getContentResolver().openInputStream(uri);
+                    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+                    int nRead;
+                    byte[] data = new byte[16384];
+                    while ((nRead = imageStream.read(data, 0, data.length)) != -1) {
+                        buffer.write(data, 0, nRead);
+                    }
+
+                    LOActivity.this.paste(clipDesc.getMimeType(i), buffer.toByteArray());
+                    return false;
+                } catch (Exception e) {
+                    Log.d(TAG, "Failed to paste image: " + e.getMessage());
+                }
             }
         }
+
+        // try the plaintext as the last resort
+        if (clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+            final ClipData.Item clipItem = clipData.getItemAt(0);
+            String text = clipItem.getText().toString();
+            byte[] textByteArray = text.getBytes(Charset.forName("UTF-16"));
+            LOActivity.this.paste("text/plain;charset=utf-16", textByteArray);
+        }
+
         return false;
     }
 }
