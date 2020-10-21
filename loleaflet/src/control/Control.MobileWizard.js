@@ -24,6 +24,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 	initialize: function (options) {
 		L.setOptions(this, options);
+		this._container = L.DomUtil.get(this.options.idPrefix);
 	},
 
 	onAdd: function (map) {
@@ -60,7 +61,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_setupBackButton: function() {
-		this.content = $(this.options.idPrefix + '-content');
+		this.content = $(this.options.idPrefix + '-content', $(this._container));
 		this.backButton = $(this.options.idPrefix + '-back');
 		this.backButton.click(function() { history.back(); });
 		$(this.backButton).addClass('close-button');
