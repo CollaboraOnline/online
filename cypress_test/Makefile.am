@@ -65,7 +65,8 @@ MULTIUSER_TESTS= \
 	writer/sidebar_visibility \
 	writer/simultaneous_typing \
 	calc/sheet_operations \
-	impress/slide_operations
+	impress/slide_operations \
+	writer/top_toolbar_interfer
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
