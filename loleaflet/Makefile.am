@@ -624,6 +624,7 @@ pot:
 		src/control/Control.NotebookbarCalc.js \
 		src/control/Control.NotebookbarImpress.js \
 		src/control/Control.NotebookbarBuilder.js \
+		src/control/Parts.js \
 		src/control/Permission.js \
 		src/control/Ruler.js \
 		src/control/Signing.js \
