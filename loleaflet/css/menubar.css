@@ -252,15 +252,21 @@
 /* Some more lo-menu specific customizations */
 
 /* The smartmenus plugin doesn't seem to have support for icons, so implement our own pseudo-elements */
-.lo-menu-item-checked > .svg-object {
+.lo-menu-item-checked > svg {
 	float: left;
 	margin-left: -20px;
 	margin-top: -2px;
 }
-path#listitem-selected {
-	fill: #0b87e7;
+.text-color-indicator .lo-menu-item-checked path {
+	fill: rgb(var(--blue1-txt-primary-color));
 }
-.lo-menu-item-checked:hover .svg-object{
+.spreadsheet-color-indicator .lo-menu-item-checked path {
+	fill: rgb(var(--green0-txt-primary-color));
+}
+.presentation-color-indicator .lo-menu-item-checked path {
+	fill: rgb(var(--orange1-txt-primary-color));
+}
+.lo-menu-item-checked:hover svg {
 	-webkit-filter: saturate(0) brightness(100);
 	filter: saturate(0) brightness(100)
 }

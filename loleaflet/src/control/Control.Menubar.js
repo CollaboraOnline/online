@@ -1018,6 +1018,7 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_beforeShow: function(e, menu) {
+		var listitemSelected = '<svg height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="#0b87e7" id="listitem-selected" d="m7.7417 13.575-2.9917-2.9917c-.325-.325-.325-.85 0-1.175s.85-.325 1.175 0l2.4083 2.4 5.7333-5.7333c.325-.325.85-.325 1.175 0s.325.85 0 1.175l-6.325 6.325c-.31667.325-.85.325-1.175 0z"/></svg>';
 		var self = e.data.self;
 		var items = $(menu).children().children('a').not('.has-submenu');
 		$(items).each(function() {
@@ -1049,12 +1050,15 @@ L.Control.Menubar = L.Control.extend({
 						languageAndCode = self._map[constState].getItemValue(unoCommand);
 						lang = languageAndCode.split(';')[0];
 						data = decodeURIComponent($(aItem).data(constUno));
-						if (data.indexOf(lang) !== -1) {
+						if (data.indexOf(lang) !== -1 && $(aItem).hasClass(constChecked) === false) {
 							$(aItem).addClass(constChecked);
-						} else if (data.indexOf('LANGUAGE_NONE') !== -1 && lang === '[None]') {
+							$(aItem).prepend(listitemSelected);
+						} else if (data.indexOf('LANGUAGE_NONE') !== -1 && lang === '[None]' && $(aItem).hasClass(constChecked) === false) {
 							$(aItem).addClass(constChecked);
+							$(aItem).prepend(listitemSelected);
 						} else {
 							$(aItem).removeClass(constChecked);
+							$('#listitem-selected').remove();
 						}
 					}
 					else if (unoCommand.startsWith(constPageHeader)) {
@@ -1065,10 +1069,13 @@ L.Control.Menubar = L.Control.extend({
 						unoCommand = constPageFooter;
 						self._checkedMenu(unoCommand, this);
 					}
-					else if (itemState === 'true') {
+					else if (itemState === 'true' && $(aItem).hasClass(constChecked) === false) {
 						$(aItem).addClass(constChecked);
+						$(aItem).remove('#listitem-selected');
+						$(aItem).prepend(listitemSelected);
 					} else {
 						$(aItem).removeClass(constChecked);
+						$(aItem).remove('#listitem-selected');
 					}
 				} else if (type === 'action') { // enable all except fullscreen on windows
 					if (id === 'fullscreen' && (L.Browser.ie || L.Browser.edge)) { // Full screen works weirdly on IE 11 and on Edge
@@ -1078,23 +1085,21 @@ L.Control.Menubar = L.Control.extend({
 							self.options.allowedViewModeActions.splice(index, 1);
 						}
 					} else if (id === 'showruler') {
-						if (self._map.uiManager.isRulerVisible()) {
+						if (self._map.uiManager.isRulerVisible() && $(aItem).hasClass(constChecked) === false) {
 							$(aItem).addClass(constChecked);
-							if ($('#menu-showruler .svg-object').length < 1)
-								$(aItem).prepend('<object class="svg-object" width="20" data="images/lc_listitem-selected.svg" type="image/svg+xml"></object>');
+							$(aItem).prepend(listitemSelected);
 						} else {
 							$(aItem).removeClass(constChecked);
-							$('#menu-showruler .svg-object').remove('.svg-object');
+							$('#menu-showruler > .lo-menu-item-checked').remove('#listitem-selected');
 						}
 
 					} else if (id === 'showstatusbar') {
-						if (self._map.uiManager.isStatusBarVisible()) {
+						if (self._map.uiManager.isStatusBarVisible() && $(aItem).hasClass(constChecked) === false) {
 							$(aItem).addClass(constChecked);
-							if ($('#menu-showstatusbar .svg-object').length < 1)
-								$(aItem).prepend('<object class="svg-object" width="20" data="images/lc_listitem-selected.svg" type="image/svg+xml"></object>');
+							$(aItem).prepend(listitemSelected);
 						} else {
 							$(aItem).removeClass(constChecked);
-							$('#menu-showstatusbar .svg-object').remove('.svg-object');
+							$('#menu-showstatusbar > .lo-menu-item-checked').remove('#listitem-selected');
 						}
 
 					} else if (self._map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
@@ -1113,12 +1118,14 @@ L.Control.Menubar = L.Control.extend({
 					} else if (id === 'showresolved') {
 						if (self._map._docLayer._annotations._items.length === 0) {
 							$(aItem).addClass('disabled');
-						} else if (self._map._docLayer._annotations._showResolved) {
+						} else if (self._map._docLayer._annotations._showResolved && $(aItem).hasClass(constChecked) === false) {
 							$(aItem).removeClass('disabled');
 							$(aItem).addClass(constChecked);
+							$(aItem).prepend(listitemSelected);
 						} else {
 							$(aItem).removeClass('disabled');
 							$(aItem).removeClass(constChecked);
+							$(aItem).remove('#listitem-selected');
 						}
 					} else {
 						$(aItem).removeClass('disabled');
