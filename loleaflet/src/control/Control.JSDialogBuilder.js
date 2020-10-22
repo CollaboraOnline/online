@@ -1590,7 +1590,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			image.id = data.id;
 			image.alt = data.text;
 			image.title = data.text;
-			$(image).tooltip();
+			if (!window.ThisIsTheiOSApp)
+				$(image).tooltip();
 
 			if (data.loading && data.loading === 'true') {
 				var loaderContainer = L.DomUtil.create('div', 'ui-drawing-area-loader-container', container);
@@ -1678,7 +1679,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('has-label');
 			} else {
 				div.title = data.text;
-				$(div).tooltip();
+				if (!window.ThisIsTheiOSApp)
+					$(div).tooltip();
 				$(div).addClass('no-label');
 			}
 
@@ -1891,7 +1893,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		sectionTitle.title = data.text;
-		$(sectionTitle).tooltip();
+		if (!window.ThisIsTheiOSApp)
+			$(sectionTitle).tooltip();
 
 		var updateFunction = function() {
 			var items = builder.map['stateChangeHandler'];
