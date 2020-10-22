@@ -1590,7 +1590,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			image.id = data.id;
 			image.alt = data.text;
 			image.title = data.text;
-			if (!window.ThisIsTheiOSApp)
+			if (!window.ThisIsAMobileApp)
 				$(image).tooltip();
 
 			if (data.loading && data.loading === 'true') {
@@ -1679,7 +1679,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('has-label');
 			} else {
 				div.title = data.text;
-				if (!window.ThisIsTheiOSApp)
+				if (!window.ThisIsAMobileApp)
 					$(div).tooltip();
 				$(div).addClass('no-label');
 			}
@@ -1893,7 +1893,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		sectionTitle.title = data.text;
-		if (!window.ThisIsTheiOSApp)
+		if (!window.ThisIsAMobileApp)
 			$(sectionTitle).tooltip();
 
 		var updateFunction = function() {
