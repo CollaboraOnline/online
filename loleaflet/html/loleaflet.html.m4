@@ -331,4 +331,5 @@ m4_ifelse(MOBILEAPP,[true],
   ])
 )m4_dnl
     <!--%BRANDING_JS%--> <!-- logo onclick handler -->
+    <!--%CSS_VARIABLES%-->
 </body></html>
