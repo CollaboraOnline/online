@@ -99,4 +99,39 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
     return previousJSON;
 }
 
+std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
+{
+    static std::string previousVars;
+    static std::string previousStyle("");
+
+    // early exit if we are serving the same thing
+    if (cssVars == previousVars)
+        return previousStyle;
+
+    std::ostringstream styleOSS;
+    styleOSS << "<style>:root {";
+    StringVector tokens(Util::tokenize(cssVars, ';'));
+    for (const auto& token : tokens)
+    {
+        StringVector keyValue(Util::tokenize(tokens.getParam(token), '='));
+        if (keyValue.size() < 2)
+        {
+            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it does not have '='");
+            continue;
+        }
+        else if (keyValue.size() > 2)
+        {
+            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it has more than one '=' pair");
+            continue;
+        }
+        styleOSS << keyValue[0] << ":" << keyValue[1] << ";";
+    }
+    styleOSS << "}</style>";
+
+    previousVars = cssVars;
+    previousStyle = styleOSS.str();
+
+    return previousStyle;
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

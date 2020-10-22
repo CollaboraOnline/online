@@ -677,6 +677,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_TRC("access_header=" << accessHeader);
     const std::string uiDefaults = form.get("ui_defaults", "");
     LOG_TRC("ui_defaults=" << uiDefaults);
+    const std::string cssVars = form.get("css_variables", "");
+    LOG_TRC("css_variables=" << cssVars);
 
     // Escape bad characters in access token.
     // This is placed directly in javascript in loleaflet.html, we need to make sure
@@ -744,6 +746,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_JS%-->"), brandJS);
+    Poco::replaceInPlace(preprocess, std::string("<!--%CSS_VARIABLES%-->"), cssVarsToStyle(cssVars));
 
     // Customization related to document signing.
     std::string documentSigningDiv;

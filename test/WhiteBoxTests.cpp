@@ -48,6 +48,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRequestDetails_local);
     CPPUNIT_TEST(testRequestDetails);
     CPPUNIT_TEST(testUIDefaults);
+    CPPUNIT_TEST(testCSSVars);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -71,6 +72,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRequestDetails_local();
     void testRequestDetails();
     void testUIDefaults();
+    void testCSSVars();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -1595,6 +1597,21 @@ void WhiteBoxTests::testUIDefaults()
 
     LOK_ASSERT_EQUAL(std::string("{\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}"),
                      FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false"));
+}
+
+void WhiteBoxTests::testCSSVars()
+{
+    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
+                     FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;--co-somestyle-size=15px;"));
+
+    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
+                     FileServerRequestHandler::cssVarsToStyle(";;--co-somestyle-text=#123456;;--co-somestyle-size=15px;;;"));
+
+    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
+                     FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;;--co-somestyle-size=15px;--co-sometext#324;;"));
+
+    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;}</style>"),
+                     FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;;--some-val=3453--some-other-val=4536;;"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
