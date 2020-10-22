@@ -14,7 +14,7 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
-
+	
 	it('Apply bold font.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
@@ -65,6 +65,24 @@ describe('Top toolbar tests.', function() {
 		    .should('have.attr', 'style', 'font-size: 72pt');
 	});
 
+	it('Clear direct formatting', function() {
+		cy.get('#tb_editbar_item_bold')
+			.click();
+		
+		helper.selectAllText(false);
+
+		cy.get('#copy-paste-container p b')
+			.should('exist');
+
+		helper.selectAllText(false);
+		
+		cy.get('#tb_editbar_item_reset')
+			.click();
+	
+		cy.get('#copy-paste-container p b')
+			.should('not.exist');
+	});
+	
 	it('Apply left alignment.', function() {
 		cy.get('#tb_editbar_item_centerpara')
 			.click();
