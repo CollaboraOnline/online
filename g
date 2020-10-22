@@ -28,6 +28,10 @@ if [ "$1" == "review" ]; then
         REMOTE_BRANCH=private/$USER/$2
         CUSTOM_BRANCH=y
     fi
+
+    # So that we have an up to date view on what remote branches exist.
+    git fetch --prune $REMOTE
+
     HAS_REMOTE_BRANCH=
     if git rev-parse --quiet --verify $REMOTE/$REMOTE_BRANCH >/dev/null; then
         HAS_REMOTE_BRANCH=y
