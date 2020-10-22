@@ -256,8 +256,6 @@ public:
                            const std::string& saveAsFilename, const bool isRename)
         = 0;
 
-    static size_t getFileSize(const std::string& filename);
-
     /// Must be called at startup to configure.
     static void initialize();
 
