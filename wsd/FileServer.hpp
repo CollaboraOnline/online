@@ -33,6 +33,8 @@ class FileServerRequestHandler
     /// that is passed as "ui_defaults" hidden input during the iframe setup.
     static std::string uiDefaultsToJSON(const std::string& uiDefaults);
 
+    static std::string cssVarsToStyle(const std::string& cssVars);
+
 public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
