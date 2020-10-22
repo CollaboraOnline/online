@@ -466,12 +466,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
 #if !MOBILEAPP
 
-// add to common / tools
-size_t getFileSize(const std::string& filename)
-{
-    return std::ifstream(filename, std::ifstream::ate | std::ifstream::binary).tellg();
-}
-
 std::string getMimeFromFileType(const std::string & fileType)
 {
     if (fileType == "pdf")
@@ -554,7 +548,9 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const St
 
         request.set("X-WOPI-Override", "PUT");
 
-        const size_t filesize = getFileSize(url);
+        // If we can't access the file, reading it will throw.
+        const FileUtil::Stat fileStat(url);
+        const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
 
         request.setContentType(mimetype);
         request.setContentLength(filesize);
@@ -1915,7 +1911,9 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
 
         request.set("X-WOPI-Override", "PUT");
 
-        const size_t filesize = getFileSize(aTempDocumentURL);
+        // If we can't access the file, reading it will throw.
+        const FileUtil::Stat fileStat(aTempDocumentURL);
+        const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
 
         request.setContentType(mimetype);
         request.setContentLength(filesize);

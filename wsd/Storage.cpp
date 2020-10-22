@@ -76,11 +76,6 @@ std::string StorageBase::getLocalRootPath() const
     return rootPath.toString();
 }
 
-size_t StorageBase::getFileSize(const std::string& filename)
-{
-    return std::ifstream(filename, std::ifstream::ate | std::ifstream::binary).tellg();
-}
-
 #endif
 
 void StorageBase::initialize()
@@ -940,7 +935,10 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
                       std::istreambuf_iterator<char>(),
                       std::ostreambuf_iterator<char>(ofs));
             ofs.close();
-            LOG_INF("WOPI::GetFile downloaded " << getFileSize(getRootFilePath()) << " bytes from [" <<
+
+            const FileUtil::Stat fileStat(getRootFilePath());
+            const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
+            LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" <<
                     uriAnonym << "] -> " << getRootFilePathAnonym() << " in " << diff.count() << 's');
             setLoaded(true);
 
@@ -976,7 +974,13 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     const std::string filePath(isSaveAs ? saveAsPath : getRootFilePath());
     const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath);
 
-    const size_t size = getFileSize(filePath);
+    const FileUtil::Stat fileStat(filePath);
+    if (!fileStat.good())
+    {
+        LOG_ERR("Cannot access file [" << filePathAnonym << "] to upload to wopi storage.");
+    }
+
+    const std::size_t size = (fileStat.good() ? fileStat.size() : 0);
 
     Poco::URI uriObject(getUri());
     uriObject.setPath(isSaveAs || isRename? uriObject.getPath(): uriObject.getPath() + "/contents");
@@ -984,7 +988,8 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
 
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
 
-    LOG_INF("Uploading URI via WOPI [" << uriAnonym << "] from [" << filePathAnonym + "].");
+    LOG_INF("Uploading " << size << " bytes from [" << filePathAnonym << "] to URI via WOPI ["
+                         << uriAnonym << "].");
 
     StorageBase::SaveResult saveResult(StorageBase::SaveResult::FAILED);
     const auto startTime = std::chrono::steady_clock::now();
