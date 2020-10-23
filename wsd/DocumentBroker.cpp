@@ -639,7 +639,10 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             LOG_DBG("Setting the session as readonly");
             session->setReadOnly();
             if (LOOLWSD::IsViewWithCommentsFileExtension(wopiStorage->getFileExtension()))
+            {
+                LOG_DBG("Allow session to change comments");
                 session->setAllowChangeComments();
+            }
         }
 
         // Construct a JSON containing relevant WOPI host properties
@@ -727,7 +730,10 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                 LOG_DBG("Setting the session as readonly");
                 session->setReadOnly();
                 if (LOOLWSD::IsViewWithCommentsFileExtension(localStorage->getFileExtension()))
+                {
+                    LOG_DBG("Allow session to change comments");
                     session->setAllowChangeComments();
+                }
             }
         }
     }
@@ -1463,7 +1469,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
         // Last view going away, can destroy.
         _markToDestroy = (_sessions.size() <= 1);
 
-        const bool lastEditableSession = !session->isReadOnly() && !haveAnotherEditableSession(id);
+        const bool lastEditableSession = (!session->isReadOnly() || session->isAllowChangeComments()) && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
 
         LOG_INF("Removing session ["
@@ -2126,7 +2132,7 @@ bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
     {
         if (it.second->getId() != id &&
             it.second->isViewLoaded() &&
-            !it.second->isReadOnly() &&
+            (!it.second->isReadOnly() || it.second->isAllowChangeComments()) &&
             !it.second->inWaitDisconnected())
         {
             // This is a loaded session that is non-readonly.

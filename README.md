@@ -48,4 +48,10 @@ Please consult the README files in the component's directory for more details:
 - wsd/README
 - loleaflet/README
 
+## iOS and Android apps
+
+See the corresponding READMEs:
+* **ios/README**
+* **android/README**
+
 ## Enjoy!
