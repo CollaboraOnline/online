@@ -200,6 +200,7 @@ public:
         const std::shared_ptr<ProtocolHandlerInterface> &protocol,
         const std::string& id,
         const std::string& jailId,
+        const std::string& jailRoot,
         DocumentManagerInterface& docManager);
     virtual ~ChildSession();
 
@@ -322,6 +323,7 @@ public:
 
 private:
     const std::string _jailId;
+    const std::string _jailRoot;
     DocumentManagerInterface* _docManager;
 
     std::queue<std::chrono::steady_clock::time_point> _cursorInvalidatedEvent;
