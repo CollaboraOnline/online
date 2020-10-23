@@ -196,6 +196,15 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		}
 		this._map.focus();
 	},
+	countDocumentAnnotations: function () {
+		var count = 0;
+		if (this._annotations) {
+			for (var part in this._annotations) {
+				count = count + this._annotations[part].length;
+			}
+		}
+		return count;
+	},
 	findNextPartWithComment: function () {
 		var part = this.getSelectedPart() + 1;
 
@@ -240,7 +249,7 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 	},
 	onAnnotationScrollUp: function () {
 		var part = this.getSelectedPart();
-		if (this._topAnnotation[part] === 0) {
+		if (!this._topAnnotation[part] || this._topAnnotation[part] === 0) {
 			var newPart = this.findPreviousPartWithComment();
 			if (newPart != null)
 				this._map.setPart(newPart);
@@ -386,8 +395,10 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 					topLeft = bounds ? bounds.getBottomLeft() : topRight;
 					annotation.setLatLng(this._map.layerPointToLatLng(topLeft));
 					annotation.show();
-					bounds = annotation.getBounds();
-					bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
+					if (this.countDocumentAnnotations() > 1) {
+						bounds = annotation.getBounds();
+						bounds.extend(L.point(bounds.max.x, bounds.max.y + this.options.marginY));
+					}
 				}
 			} else {
 				annotation.hide();
