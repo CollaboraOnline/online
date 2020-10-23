@@ -213,9 +213,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	#spreadsheet-row-column-frame.readonly {
 		top: 36px !important;
 	}
-	#document-container.spreadsheet-document.readonly {
-		top: 56px !important;
-	}
 	#spreadsheet-row-column-frame {
 		top: 75px !important
 	}
@@ -630,9 +627,6 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	bottom: 68px;
 }
 
-#document-container.spreadsheet-document.readonly {
-	top: 57px !important;
-}
 #spreadsheet-row-column-frame.readonly {
 	top: 41px !important;
 	bottom: 35px !important;
