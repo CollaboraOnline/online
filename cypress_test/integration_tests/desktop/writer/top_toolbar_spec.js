@@ -15,6 +15,17 @@ describe('Top toolbar tests.', function() {
 		helper.afterAll(testFileName);
 	});
 
+	it('Apply style combobox', function() {
+		cy.get('#tb_editbar_item_styles')
+			.click();
+	
+		cy.contains('.select2-results__option','Title')
+			 .click({force: true});
+	
+		cy.get('#copy-paste-container p font font')
+			.should('have.attr', 'style', 'font-size: 28pt');
+	});
+
 	it('Apply font style', function() {
 		cy.get('#tb_editbar_item_fonts')
 			.click();
