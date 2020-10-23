@@ -1439,10 +1439,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		return !!(this._ySplitter);
 	},
 
-	hasCanvasRenderer: function () {
-		return true;
-	},
-
 });
 
 L.TilesPreFetcher = L.Class.extend({
