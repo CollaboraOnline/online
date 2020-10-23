@@ -438,10 +438,6 @@ function beforeAll(fileName, subFolder, noFileCopy, subsequentLoad) {
 function afterAll(fileName) {
 	cy.log('Waiting for closing the document - start.');
 
-	//https://github.com/cypress-io/cypress/issues/8621
-	if (Cypress.mocha.getRunner().stopped)
-		return;
-
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		if (Cypress.env('IFRAME_LEVEL') === '2') {
 			// Close the document
