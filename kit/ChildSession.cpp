@@ -70,15 +70,17 @@ ChildSession::ChildSession(
     const std::shared_ptr<ProtocolHandlerInterface> &protocol,
     const std::string& id,
     const std::string& jailId,
+    const std::string& jailRoot,
     DocumentManagerInterface& docManager) :
     Session(protocol, "ToMaster-" + id, id, false),
     _jailId(jailId),
+    _jailRoot(jailRoot),
     _docManager(&docManager),
     _viewId(-1),
     _isDocLoaded(false),
     _copyToClipboard(false)
 {
-    LOG_INF("ChildSession ctor [" << getName() << "].");
+    LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << "].");
 }
 
 ChildSession::~ChildSession()
@@ -638,11 +640,28 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const S
 
     if (!doctemplate.empty())
     {
-        std::string url = getJailedFilePath();
-        bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, "TakeOwnership");
+        static constexpr auto Protocol = "file://";
+
+        // If we aren't chroot-ed, we need to use the absolute path.
+        // Because that's where Storage in WSD expects the document.
+        std::string url;
+        if (!_jailRoot.empty())
+        {
+            url = Protocol + _jailRoot;
+            if (Util::startsWith(getJailedFilePath(), Protocol))
+                url += getJailedFilePath().substr(sizeof(Protocol) - 1);
+            else
+                url += getJailedFilePath();
+        }
+        else
+            url += getJailedFilePath();
+
+        LOG_INF("Saving the template document after loading to [" << url << "].");
+
+        const bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, "TakeOwnership");
         if (!success)
         {
-            LOG_ERR("Failed to save template [" << getJailedFilePath() << "].");
+            LOG_ERR("Failed to save template [" << url << "].");
             return false;
         }
     }
