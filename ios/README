@@ -57,7 +57,7 @@ yet. We call this the app folder.
 4) On a Linux machine: Do a separate clone of the online repo, run
 autogen.sh, and configure it with the --enable-iosapp option:
 
-./configure --enable-iosapp --with-app-name="My Own Collabora Office Build"
+./configure --enable-iosapp --with-app-name="My Own Mobile Office Suite"
 
 Then run make. That will produce files in loleaflet/dist, nothing
 else. Copy those to the corresponding folder in the app folder from
@@ -95,10 +95,10 @@ the the LibreOffice core source directory from step 1.
 6) In the app folder, run:
 
 for DEVICE:
-./configure --enable-iosapp --with-app-name="My Own Collabora Office Build" --with-lo-builddir=$HOME/lode/dev/LO --with-poco-includes=$HOME/poco-ios-arm64/include --with-poco-libs=$HOME/poco-ios-arm64/lib
+./configure --enable-iosapp --with-app-name="My Own Mobile Office Suite" --with-lo-builddir=$HOME/lode/dev/LO --with-poco-includes=$HOME/poco-ios-arm64/include --with-poco-libs=$HOME/poco-ios-arm64/lib
 
 for SIMULATOR:
-./configure --enable-iosapp --with-app-name="My Own Collabora Office Build" --with-lo-builddir=$HOME/lode/dev/LO --with-poco-includes=$HOME/poco-ios-x64/include --with-poco-libs=$HOME/poco-ios-x64/lib
+./configure --enable-iosapp --with-app-name="My Own Mobile Office Suite" --with-lo-builddir=$HOME/lode/dev/LO --with-poco-includes=$HOME/poco-ios-x64/include --with-poco-libs=$HOME/poco-ios-x64/lib
 
 The configure script puts the app name as the CFBundleDisplayName
 property into the ios/Mobile/Info.plist file, and sets up some
