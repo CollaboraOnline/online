@@ -40,7 +40,7 @@ L.PathTransform.merge = function() {
 	while (obj) {
 		obj = arguments[i++];
 		for (key in obj) {
-			if (!obj.hasOwnProperty(key)) {
+			if (!Object.prototype.hasOwnProperty.call(obj, 'key')) {
 				continue;
 			}
 

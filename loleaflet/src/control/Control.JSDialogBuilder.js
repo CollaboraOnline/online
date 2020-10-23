@@ -2283,7 +2283,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (!data[idx])
 				continue;
 			var controlId = data[idx].id;
-			if (controlId && this._missingLabelData.hasOwnProperty(controlId)) {
+			if (controlId && Object.prototype.hasOwnProperty.call(this._missingLabelData, 'controlId')) {
 				data.splice(idx, 0, this._missingLabelData[controlId]);
 				++idx;
 			}

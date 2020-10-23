@@ -945,7 +945,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_getEditCursorRectangle: function (msgObj) {
 
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry ||
-			!msgObj.hasOwnProperty('relrect') || !msgObj.hasOwnProperty('refpoint')) {
+			!Object.prototype.hasOwnProperty.call(msgObj, 'relrect') || !Object.prototype.hasOwnProperty.call(msgObj, 'refpoint')) {
 			// 1) non-print-twips messaging mode OR
 			// 2) the edit-cursor belongs to draw/chart objects.
 			return L.TileLayer.prototype._getEditCursorRectangle.call(this, msgObj);
@@ -1189,12 +1189,12 @@ L.MessageStore = L.Class.extend({
 
 		var othersMessage = (typeof viewId === 'number');
 
-		if (!othersMessage && this._ownMessages.hasOwnProperty(msgType)) {
+		if (!othersMessage && Object.prototype.hasOwnProperty.call(this._ownMessages, 'msgType')) {
 			this._ownMessages[msgType] = textMsg;
 			return;
 		}
 
-		if (othersMessage && this._othersMessages.hasOwnProperty(msgType)) {
+		if (othersMessage && Object.prototype.hasOwnProperty.call(this._othersMessages, 'msgType')) {
 			this._othersMessages[msgType][viewId] = textMsg;
 		}
 	},
@@ -1473,7 +1473,7 @@ L.SheetGeometry = L.Class.extend({
 
 	_testValidity: function (sheetGeomJSON, checkCompleteness) {
 
-		if (!sheetGeomJSON.hasOwnProperty('commandName')) {
+		if (!Object.prototype.hasOwnProperty.call(sheetGeomJSON, 'commandName')) {
 			console.error(this._unoCommand + ' response has no property named "commandName".');
 			return false;
 		}
@@ -1499,8 +1499,8 @@ L.SheetGeometry = L.Class.extend({
 
 		if (checkCompleteness) {
 
-			if (!sheetGeomJSON.hasOwnProperty('rows') ||
-				!sheetGeomJSON.hasOwnProperty('columns')) {
+			if (!Object.prototype.hasOwnProperty.call(sheetGeomJSON, 'rows') ||
+				!Object.prototype.hasOwnProperty.call(sheetGeomJSON, 'columns')) {
 
 				console.error(this._unoCommand + ' response is incomplete.');
 				return false;
@@ -1565,24 +1565,24 @@ L.SheetDimension = L.Class.extend({
 
 		var regenerateVisibleSizes = false;
 		var loadsOK = true;
-		if (jsonObject.hasOwnProperty('sizes')) {
+		if (Object.prototype.hasOwnProperty.call(jsonObject, 'sizes')) {
 			loadsOK = this._sizes.load(jsonObject.sizes);
 			regenerateVisibleSizes = true;
 		}
 
-		if (jsonObject.hasOwnProperty('hidden')) {
+		if (Object.prototype.hasOwnProperty.call(jsonObject, 'hidden')) {
 			var thisLoadOK = this._hidden.load(jsonObject.hidden);
 			loadsOK = loadsOK && thisLoadOK;
 			regenerateVisibleSizes = true;
 		}
 
-		if (jsonObject.hasOwnProperty('filtered')) {
+		if (Object.prototype.hasOwnProperty.call(jsonObject, 'filtered')) {
 			thisLoadOK = this._filtered.load(jsonObject.filtered);
 			loadsOK = loadsOK && thisLoadOK;
 			regenerateVisibleSizes = true;
 		}
 
-		if (jsonObject.hasOwnProperty('groups')) {
+		if (Object.prototype.hasOwnProperty.call(jsonObject, 'groups')) {
 			thisLoadOK = this._outlines.load(jsonObject.groups);
 			loadsOK = loadsOK && thisLoadOK;
 		}
