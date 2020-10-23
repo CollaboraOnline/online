@@ -703,7 +703,8 @@ L.TextInput = L.Layer.extend({
 		if (text === '\n' || (text.length === 1 && text.charCodeAt(0) === 13)) {
 			// The composition messages doesn't play well with just a line break,
 			// therefore send a keystroke.
-			this._sendKeyEvent(13, 1280);
+			var unoKeyCode = this._linebreakHint ? 5376 : 1280;
+			this._sendKeyEvent(13, unoKeyCode);
 			this._emptyArea();
 		} else {
 			// The composition messages doesn't play well with line breaks inside
