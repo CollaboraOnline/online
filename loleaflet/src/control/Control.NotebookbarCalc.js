@@ -1886,6 +1886,28 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																			'enabled': 'true',
 																			'children': [
 																				{
+																					'id': 'PageFormatDialog-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'id': 'SectionBottom655',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'bigtoolitem',
+																									'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
+																									'command': '.uno:PageFormatDialog'
+																								}
+																							]
+																						}
+																					],
+																					'vertical': 'false'
+																				},
+																				{
 																					'id': 'rows-Section',
 																					'type': 'container',
 																					'text': '',
