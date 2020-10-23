@@ -1118,9 +1118,9 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
                 }
             }
 
-            LOG_INF(wopiLog << " response: " << responseString);
-            LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePathAnonym <<
-                    "] -> [" << uriAnonym << "]: " << response.getStatus() << ' ' << response.getReason());
+            LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePathAnonym << "] -> ["
+                            << uriAnonym << "]: " << response.getStatus() << ' '
+                            << response.getReason() << ": " << responseString);
         }
 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
@@ -1181,8 +1181,10 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
         else
         {
             // Internal server error, and other failures.
-            LOG_ERR("Unexpected response to " << wopiLog << " : " << response.getStatus() <<
-                    "Cannot save file to WOPI storage uri [" << uriAnonym << "]. Error: ");
+            LOG_ERR("Unexpected response to "
+                    << wopiLog << ". Cannot upload file to WOPI storage uri [" << uriAnonym
+                    << "]: " << response.getStatus() << ' ' << response.getReason() << ": "
+                    << responseString);
             saveResult.setResult(StorageBase::SaveResult::FAILED);
         }
     }
