@@ -283,6 +283,7 @@ LOLEAFLET_JS =\
 	src/control/Control.AlertDialog.js \
 	src/control/Control.Infobar.js src/control/ColorPicker.js \
 	src/control/Control.JSDialogBuilder.js \
+	src/control/Control.DialogBuilder.js \
 	src/control/Control.MobileWizard.js \
 	src/control/Control.LanguageDialog.js \
 	src/control/Control.Attribution.js \
