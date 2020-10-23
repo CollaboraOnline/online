@@ -602,7 +602,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 
 #document-container.readonly.spreadsheet-document {
 	top: 61px !important;
-	bottom: 42px;
+	bottom: 39px;
 }
 
 #document-container.parts-preview-document {
