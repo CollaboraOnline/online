@@ -1590,7 +1590,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			image.id = data.id;
 			image.alt = data.text;
 			image.title = data.text;
-			$(image).tooltip();
+			if (!window.ThisIsAMobileApp)
+				$(image).tooltip();
 
 			if (data.loading && data.loading === 'true') {
 				var loaderContainer = L.DomUtil.create('div', 'ui-drawing-area-loader-container', container);
@@ -1678,7 +1679,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('has-label');
 			} else {
 				div.title = data.text;
-				$(div).tooltip();
+				if (!window.ThisIsAMobileApp)
+					$(div).tooltip();
 				$(div).addClass('no-label');
 			}
 
@@ -1889,6 +1891,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			icon.alt = '';
 			titleClass = 'menu-entry-with-icon';
 		}
+
+		sectionTitle.title = data.text;
+		if (!window.ThisIsAMobileApp)
+			$(sectionTitle).tooltip();
 
 		var updateFunction = function() {
 			var items = builder.map['stateChangeHandler'];
@@ -2329,7 +2335,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (handler)
 					processChildren = handler(childObject, childData, this);
 				else
-					console.warn('Unsupported control type: "' + childType + '"');
+					console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
 				if (processChildren && childData.children != undefined)
 					this.build(childObject, childData.children);

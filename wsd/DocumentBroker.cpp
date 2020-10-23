@@ -434,12 +434,18 @@ void DocumentBroker::pollThread()
         // Remove idle documents after 1 hour.
         if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
         {
-            // Stop if there is nothing to save.
-            LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey() << "] to kill.");
-            if (!autoSave(isPossiblyModified()))
+            // Don't hammer on saving.
+            if (std::chrono::duration_cast<std::chrono::seconds>(now - _lastSaveRequestTime).count()
+                >= 5)
             {
-                LOG_INF("Terminating idle DocumentBroker for docKey [" << getDocKey() << "].");
-                stop("idle");
+                // Stop if there is nothing to save.
+                LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey()
+                                                                      << "] to kill.");
+                if (!autoSave(isPossiblyModified()))
+                {
+                    LOG_INF("Terminating idle DocumentBroker for docKey [" << getDocKey() << "].");
+                    stop("idle");
+                }
             }
         }
 #endif
@@ -726,7 +732,6 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         }
     }
 
-
 #if ENABLE_SUPPORT_KEY
     if (!LOOLWSD::OverrideWatermark.empty())
         watermarkText = LOOLWSD::OverrideWatermark;
@@ -922,8 +927,8 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
     return bResult;
 }
 
-bool DocumentBroker::saveToStorage(const std::string& sessionId,
-                                   bool success, const std::string& result, bool force)
+bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
+                                   const std::string& result, bool force)
 {
     assertCorrectThread();
 

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-16 21:33+0000\n"
+"PO-Revision-Date: 2020-10-21 12:31+0000\n"
 "Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.1-dev\n"
+"X-Generator: Weblate 4.3.1\n"
 "X-Pootle-Path: /tr/libo_online/loleaflet-help-tr.po\n"
 "X-Pootle-Revision: 828276\n"
 
@@ -1364,6 +1364,15 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid "You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class=\"kbd\">Tab</span> will move the cursor to the next cell to the right, and with an <span class=\"kbd\">Enter</span> to the cell below for easy further data entry."
 msgstr ""
+"Çevrimiçi bir hesap tablosunu, bir masaüstü hesap tablosunu düzenlediğiniz "
+"gibi düzenlersiniz. Veri girme, aralık, sütun, satır veya sayfa seçme gibi "
+"işlemler aynıdır. Hesap tablosundaki eylemlere komut vermek için klavyeyi, "
+"menüleri veya araç çubuğunu kullanın. Hücreleri verilerle doldurmak için "
+"hücre içeriğini sürüklemek de desteklenmektedir. Kopyala, kes ve yapıştır "
+"komutları içerik menüsünde mevcuttur. Daha kolay veri girişi için girilen "
+"verinin arkasındaki imleci bir sağdaki hücreye taşımak için bir <span class="
+"\"kbd\">Tab</span>, aşağıdaki hücreye taşımak için <span class=\"kbd\""
+">Enter</span> tuşlarını kullanabilirsiniz."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:344-5
 msgid "Formulas are entered in the formula bar. Enter '=' and insert the formula."
@@ -1384,30 +1393,60 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid "<span class=\"def\">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options."
 msgstr ""
+"<span class=\"def\">Doğrudan biçimlendirme:</span> Menülerden, araç "
+"çubuğundan veya içerik menülerinden biçimlendirerek elektronik tablo "
+"hücrelerini, sütunları, satırları ve sayfaları doğrudan "
+"biçimlendirebilirsiniz. Doğrudan biçimlendirme yalnızca seçilen geçerli "
+"nesneye uygulanır. Bir hücreyi biçimlendirmek için menüyü kullanın veya "
+"<span class=\"kbd\">Ctrl</span>+<span class=\"kbd\"> 1 </span> tuşlarına "
+"basın. İletişim penceresi, karmaşık ve özel sayı biçimlendirmesinin yanı "
+"sıra yazı tipi, karmaşık kenarlık, arka plan, hücre koruması ve diğer "
+"seçeneklere izin verir."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:354-5
 msgid "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or text ascending or descending. <span class=\"productname\">%productName</span> automatically detects cells that are headers, and adjoining columns, to extend the selection."
 msgstr ""
+"<span class=\"def\">Verileri sıralama:</span> Sayı veya metin listesini "
+"artan veya azalan düzende sıralayabilirsiniz. <span class=\"productname\""
+">%productName </span>, seçimi genişletmek için üstbilgi olan hücreleri ve "
+"bitişik sütunları otomatik olarak algılar."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:355-5
 msgid "<span class=\"def\">Filtering data:</span> Filters and advanced filters allow you to work on certain filtered rows (records) of a data range. In the spreadsheets in <span class=\"productname\">%productName</span> there are various possibilities for applying filters."
 msgstr ""
+"<span class=\"def\">Verileri filtreleme:</span> Filtreler ve gelişmiş "
+"filtreler, bir veri aralığının belirli filtrelenmiş satırları (kayıtları) "
+"üzerinde çalışmanıza olanak tanır. <span class=\"productname\">%productName</"
+"span> hesap tablolarında, filtre uygulamak için çeşitli olasılıklar vardır."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:358-10
 msgid "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly restrict the display to records with identical entries in a data field."
 msgstr ""
+"<span class=\"ui\">Otomatik Filtre</span> işlevinin bir kullanımı, ekranı "
+"bir veri alanındaki aynı girdilere sahip kayıtlarla hızlı bir şekilde "
+"kısıtlamaktır."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:361-11
 msgid "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define ranges which contain the values in particular data fields. You can use the standard filter to connect the conditions with either a logical AND or a logical OR operator."
 msgstr ""
+"<span class=\"ui\">Standart Filtre</span> iletişim penceresinde, belirli "
+"veri alanlarındaki değerleri içeren aralıkları da tanımlayabilirsiniz. "
+"Koşulları mantıksal AND veya mantıksal OR operatörüyle bağlamak için "
+"standart filtreyi kullanabilirsiniz."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:362-11
 msgid "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight filter conditions. With advanced filters you enter the conditions directly into the sheet."
 msgstr ""
+"<span class=\"ui\">Gelişmiş Filtre</span>, toplamda sekiz filtre koşulu "
+"sağlar. Gelişmiş filtrelerle koşulları doğrudan sayfaya girersiniz."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:364-5
 msgid "<span class=\"def\">Outlining:</span> You can create an outline of your data and group rows and columns together so that you can collapse and expand the groups with a single click making it easy to represent hierarchical data."
 msgstr ""
+"<span class=\"def\">Anahat Oluşturma:</span> Verilerinizin ana hatlarını "
+"oluşturabilir ve satırları ve sütunları birlikte gruplayabilirsiniz, böylece "
+"tek bir tıklamayla grupları daraltabilir ve hiyerarşik verileri göstermeyi "
+"kolaylaştıracak şekilde genişletebilirsiniz."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:366-5
 msgid "<span class=\"def\">Data validation:</span> For each cell, you can define entries to be valid. Invalid entries to a cell will be rejected. To enable data validation:"
@@ -1420,26 +1459,53 @@ msgstr "<span class=\"ui\">Veri</span> menüsünden <span class=\"ui\">Geçerlil
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:372-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."
 msgstr ""
+"<span class=\"ui\">İzin Ver</span> açılan kutu listesinden geçerlilik ölçütü "
+"seçin. Kritere bağlı olarak, daha fazla seçenek gösterir. Gerekli verileri "
+"doldurun."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:374-9
 msgid "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\">OK</span> to close the dialog."
 msgstr ""
+"Kullanıcı etkileşimlerini geliştirmek için <span class=\"ui\">Giriş Yardımı</"
+"span> ve <span class=\"ui\">Hata Uyarısı</span> sekmelerini kullanın. "
+"İletişim penceresini kapatmak için <span class=\"ui\"> Tamam </span> "
+"düğmesini tıklayın."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:377-11
 msgid "To remove the validity of the cell, open the dialog and set the <span class=\"ui\">Allow</span> list to “All values”."
 msgstr ""
+"Hücrenin geçerliliğini kaldırmak için, iletişim penceresini açın ve <span "
+"class=\"ui\">İzin Ver</span> listesini \"Tüm değerler\" olarak ayarlayın."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:379-5
 msgid "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one comment per cell. When you select <span class=\"ui\">Insert comment</span>, a popup appears that allows you to write the content for the comment. A red dot shows on the top right corner of the cell when it has a comment. Hover the mouse on the cell to display comments."
 msgstr ""
+"<span class=\"def\">Yorumlar: </span> Bir hesap tablosunda, her hücreye bir "
+"yorum ekleyebilirsiniz. <span class=\"ui\">Yorum Ekle</span> ögesini "
+"seçtiğinizde, yorumun içeriğini yazmanıza olanak tanıyan bir açılır pencere "
+"görüntülenir. Bir yorum varsa hücrenin sağ üst köşesinde kırmızı bir nokta "
+"gösterilir. Yorumları görüntülemek için fareyi hücrenin üzerine getirin."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:381-5
 msgid "<span class=\"def\">Conditional formatting:</span> <span class=\"productname\">%productName</span> adds symbols to each cell of a range based on cells conditions. Select the cell range and click the <span class=\"ui\">Conditional Formatting</span> icon on the toolbar. Select the symbol set to apply on the range."
 msgstr ""
+"<span class=\"def\">Koşullu biçimlendirme:</span> <span class=\"productname\""
+">%productName</span>, hücre koşullarına bağlı olarak bir aralığın her "
+"hücresine semboller ekler. Hücre aralığını seçin ve araç çubuğundaki <span "
+"class=\"ui\">Koşullu Biçimlendirme</span> simgesini tıklayın. Aralığa "
+"uygulanacak sembol kümesini seçin."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:389-5
 msgid "<span class=\"productname\">%productName</span> edits text documents in the same way you edit a desktop document. It provides a What You See Is What You Get (WYSIWYG) layout – that conveniently lays out the document as it will be printed. Operations like typing text, cut, copy and pasting contents, selecting text, inserting, resizing, anchoring images, adding and handling tables and charts, are similar to a desktop word processor. Use the keyboard, menus and toolbars to interact with your document."
 msgstr ""
+"<span class=\"productname\">%productName</span>, bir masaüstü belgesini "
+"düzenlediğiniz şekilde metin belgelerini düzenler. Belgeyi yazdırılacağı "
+"gibi uygun bir şekilde düzenleyen bir Aldığınız Şey Gördüğünüz Şeydir "
+"(WYSIWYG) düzeni sağlar. Metin yazma, içeriği kesme, kopyalama ve "
+"yapıştırma, metin seçme, ekleme, yeniden boyutlandırma, sabitleme, tablo ve "
+"grafikler ekleme ve işleme gibi işlemler bir masaüstü kelime işlemciye "
+"benzer. Belgenizle etkileşim kurmak için klavyeyi, menüleri ve araç "
+"çubuklarını kullanın."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:392-5
 msgid "Context menus are available on clicking the right mouse button. The commands available in the context menu are related - not extensively - to the underlying object in the document."

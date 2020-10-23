@@ -77,6 +77,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
                                [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
                                [NSURLQueryItem queryItemWithName:@"lang" value:app_locale],
                                [NSURLQueryItem queryItemWithName:@"appdocid" value:[NSString stringWithFormat:@"%u", appDocId]],
+                               [NSURLQueryItem queryItemWithName:@"userinterfacemode" value:([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ? @"notebookbar" : @"classic")],
                              ];
 
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:components.URL];
