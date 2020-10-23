@@ -14,7 +14,18 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
-	
+
+	it('Apply font style', function() {
+		cy.get('#tb_editbar_item_fonts')
+			.click();
+
+		cy.contains('.select2-results__option','Alef')
+			 .click({force: true});
+
+		cy.get('#copy-paste-container p font')
+		    .should('have.attr', 'face', 'Alef, sans-serif');
+	});
+
 	it('Apply bold font.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
