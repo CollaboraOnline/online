@@ -112,6 +112,21 @@ static bool AnonymizeUserData = false;
 static uint64_t AnonymizationSalt = 82589933;
 #endif
 
+/// When chroot is enabled, this is blank as all
+/// the paths inside the jail, relative to it's jail.
+/// E.g. /tmp/user/docs/...
+/// However, without chroot, the jail path is
+/// absolute in the system root.
+/// I.e. ChildRoot/JailId/tmp/user/docs/...
+/// We need to know where the jail really is
+/// because WSD doesn't know if chroot will succeed
+/// or fail, but it assumes the document path to
+/// be relative to the root of the jail (i.e. chroot
+/// expected to succeed). If it fails, or when caps
+/// are disabled, file paths would be relative to the
+/// system root, not the jail.
+static std::string JailRoot;
+
 #if !MOBILEAPP
 
 static LokHookFunction2* initFunction = nullptr;
@@ -520,7 +535,7 @@ public:
 
             auto session = std::make_shared<ChildSession>(
                 _websocketHandler,
-                sessionId, _jailId, *this);
+                sessionId, _jailId, JailRoot, *this);
             _sessions.emplace(sessionId, session);
 
             int viewId = session->getViewId();
@@ -2253,11 +2268,16 @@ void lokit_main(
         }
         else // noCapabilities set
         {
-            LOG_ERR("Security warning - using template "
-                    << loTemplate << " as install subpath - skipping chroot jail setup");
+            LOG_WRN("Security warning: running without chroot jails is insecure.");
+            LOG_INF("Using template ["
+                    << loTemplate << "] as install subpath directly, without chroot jail setup.");
             userdir_url = "file:///" + jailPathStr + "/tmp/user";
             instdir_path = '/' + loTemplate + "/program";
+            JailRoot = jailPathStr;
         }
+
+        LOG_DBG("Initializing LOK with instdir [" << instdir_path << "] and userdir ["
+                                                  << userdir_url << "].");
 
         LibreOfficeKit *kit;
         {
