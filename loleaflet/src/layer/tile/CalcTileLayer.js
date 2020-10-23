@@ -476,7 +476,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._sendClientZoom();
 		if (this.sheetGeometry) {
 			this.sheetGeometry.setTileGeometryData(this._tileWidthTwips, this._tileHeightTwips,
-				this._tileSize, this.hasCanvasRenderer() ? this.canvasDPIScale() : this._tilePixelScale);
+				this._tileSize, window.mode.useCanvasLayer() ? this.canvasDPIScale() : this._tilePixelScale);
 		}
 		this._restrictDocumentSize();
 		this._replayPrintTwipsMsgs();
@@ -742,7 +742,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
 		if (!this.sheetGeometry) {
 			this._sheetGeomFirstWait = false;
-			var dpiScale = this.hasCanvasRenderer() ? this.canvasDPIScale() : this._tilePixelScale;
+			var dpiScale = window.mode.useCanvasLayer() ? this.canvasDPIScale() : this._tilePixelScale;
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
 				this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, dpiScale, this._selectedPart);
@@ -1621,7 +1621,10 @@ L.SheetDimension = L.Class.extend({
 		this._coreZoomFactor = this._tileSizePixels * 15.0 / this._tileSizeTwips;
 		this._twipsPerCorePixel = this._tileSizeTwips / this._tileSizePixels;
 
-		this._corePixelsPerCssPixel = this._dpiScale;
+		if (window.mode.useCanvasLayer())
+			this._corePixelsPerCssPixel = this._dpiScale;
+		else
+			this._corePixelsPerCssPixel = 1;
 
 		if (updatePositions) {
 			// We need to compute positions data for every zoom change.
