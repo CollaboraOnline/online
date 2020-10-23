@@ -601,7 +601,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #document-container.readonly.spreadsheet-document {
-	top: 61px !important;
+	top: 58px !important;
 	bottom: 39px;
 }
 
@@ -628,7 +628,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #spreadsheet-row-column-frame.readonly {
-	top: 41px !important;
+	top: 38px !important;
 	bottom: 35px !important;
 }
 
