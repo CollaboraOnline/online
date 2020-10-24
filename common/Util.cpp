@@ -53,7 +53,6 @@
 #include <Poco/JSON/Parser.h>
 #include <Poco/RandomStream.h>
 #include <Poco/TemporaryFile.h>
-#include <Poco/Timestamp.h>
 #include <Poco/Util/Application.h>
 
 #include "Common.hpp"
