@@ -40,7 +40,6 @@ public:
         {
             LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
 
-            Poco::LocalDateTime now;
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", "test.odt");
             fileInfo->set("TemplateSource", std::string("http://127.0.0.1:") + std::to_string(ClientPortNumber) + "/test.ott"); // must be http, otherwise Neon in the core complains

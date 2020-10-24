@@ -44,7 +44,6 @@ public:
 
             assertCheckFileInfoRequest(request);
 
-            Poco::LocalDateTime now;
             const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", fileName);
