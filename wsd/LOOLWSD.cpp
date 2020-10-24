@@ -2475,7 +2475,7 @@ private:
                     return;
                 }
 
-                response->add("Last-Modified", Poco::DateTimeFormatter::format(Poco::Timestamp(), Poco::DateTimeFormat::HTTP_FORMAT));
+                response->add("Last-Modified", Util::getHttpTimeNow());
                 // Ask UAs to block if they detect any XSS attempt
                 response->add("X-XSS-Protection", "1; mode=block");
                 // No referrer-policy
