@@ -24,12 +24,10 @@
 
 #include <Poco/AutoPtr.h>
 #include <Poco/ConsoleChannel.h>
-#include <Poco/DateTimeFormatter.h>
 #include <Poco/FileChannel.h>
 #include <Poco/FormattingChannel.h>
 #include <Poco/PatternFormatter.h>
 #include <Poco/SplitterChannel.h>
-#include <Poco/Timestamp.h>
 
 #include "Log.hpp"
 #include "Util.hpp"
