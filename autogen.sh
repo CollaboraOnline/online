@@ -16,7 +16,7 @@ EOF
     exit 1
 }
 
-if test `uname -s` = Linux; then
+if test `uname -s` = Linux -o `uname -s` = FreeBSD; then
     libtoolize || failed "libtool"
 elif test `uname -s` = Darwin; then
     libtoolize || glibtoolize || failed "Can't find libtoolize or glibtoolize. Use lode or install it yourself."
