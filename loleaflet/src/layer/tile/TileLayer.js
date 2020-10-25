@@ -438,6 +438,8 @@ L.TileLayer = L.GridLayer.extend({
 
 					// FIXME: Unify annotation code in all modules...
 					addCommentFn.call(that, {annotation: annotation}, comment);
+					if (!isMod)
+						that._map.removeLayer(annotation);
 				}
 			}
 		});
