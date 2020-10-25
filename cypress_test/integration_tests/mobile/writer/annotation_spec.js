@@ -96,10 +96,10 @@ describe('Annotation tests.', function() {
 		cy.get('.loleaflet-annotation')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation:nth-of-type(2) .loleaflet-annotation-content')
+		cy.get('.loleaflet-annotation:nth-of-type(1) .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
-		cy.get('.loleaflet-annotation:nth-of-type(3) .loleaflet-annotation-content')
+		cy.get('.loleaflet-annotation:nth-of-type(2) .loleaflet-annotation-content')
 			.should('have.text', 'reply');
 	});
 
@@ -112,7 +112,8 @@ describe('Annotation tests.', function() {
 		mobileHelper.selectAnnotationMenuItem('Remove');
 
 		cy.get('.loleaflet-annotation-content')
-			.should('have.text', '');
+			.should('not.exist');
+
 	});
 
 	it('Try to insert empty comment.', function() {

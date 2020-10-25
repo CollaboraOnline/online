@@ -726,21 +726,21 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.loleaflet-annotation:nth-of-type(2)')
+		cy.get('.loleaflet-annotation')
 			.should('have.attr', 'style')
 			.should('not.contain', 'visibility: hidden');
 
 		// Resolve comment
 		mobileHelper.selectAnnotationMenuItem('Resolve');
 
-		cy.get('.loleaflet-annotation:nth-of-type(2)')
+		cy.get('.loleaflet-annotation')
 			.should('have.attr', 'style')
 			.should('contain', 'visibility: hidden');
 
 		// Show resolved comments
 		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
 
-		cy.get('.loleaflet-annotation:nth-of-type(2)')
+		cy.get('.loleaflet-annotation')
 			.should('have.attr', 'style')
 			.should('not.contain', 'visibility: hidden');
 
