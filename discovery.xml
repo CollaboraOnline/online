@@ -99,8 +99,8 @@
         <!-- Draw documents -->
         <app name="draw">
             <action name="view" default="true" ext="sxd"/>
-            <action name="view" default="true" ext="odg"/>
-            <action name="view" default="true" ext="fodg"/>
+            <action name="edit" default="true" ext="odg"/>
+            <action name="edit" default="true" ext="fodg"/>
             <!-- Drawing template documents -->
             <action name="view" default="true" ext="std"/>
             <action name="edit" default="true" ext="otg"/>
@@ -182,13 +182,13 @@
 
         <!-- Draw documents -->
         <app name="application/vnd.sun.xml.draw">
-            <action name="view" default="true" ext=""/>
+            <action name="edit" default="true" ext=""/>
         </app>
         <app name="application/vnd.oasis.opendocument.graphics">
-            <action name="view" default="true" ext=""/>
+            <action name="edit" default="true" ext=""/>
         </app>
         <app name="application/vnd.oasis.opendocument.graphics-flat-xml">
-            <action name="view" default="true" ext=""/>
+            <action name="edit" default="true" ext=""/>
         </app>
 
         <!-- Chart documents -->
