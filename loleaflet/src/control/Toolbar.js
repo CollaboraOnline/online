@@ -406,8 +406,11 @@ L.Map.include({
 						else if (map.getDocType() === 'spreadsheet') {
 							document.getElementById('spreadsheet-shortcuts').style.display='block';
 						}
-						else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
+						else if (map.getDocType() === 'presentation') {
 							document.getElementById('presentation-shortcuts').style.display='block';
+						}
+						else if (map.getDocType() === 'drawing') {
+							document.getElementById('drawing-shortcuts').style.display='block';
 						}
 					} else /* id === 'online-help' */ {
 						document.getElementById('keyboard-shortcuts').style.display='none';
