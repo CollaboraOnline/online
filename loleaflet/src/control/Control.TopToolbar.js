@@ -320,15 +320,18 @@ L.Control.TopToolbar = L.Control.extend({
 			}
 
 			if (toolbarUp) {
-				toolbarUp.show('resetimpress', 'breaksidebar', 'modifypage');
+				toolbarUp.show('resetimpress', 'breaksidebar', 'modifypage',
+					'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
+					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
 			}
-
-			// FALLTHROUGH intended
+			break;
 		case 'drawing':
-			if (toolbarUp)
+			if (toolbarUp) {
 				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
 					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
+			}
 			break;
 		}
 
