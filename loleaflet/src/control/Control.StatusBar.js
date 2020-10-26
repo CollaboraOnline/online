@@ -450,7 +450,7 @@ L.Control.StatusBar = L.Control.extend({
 			this.updateToolbarItem(statusbar, 'RowColSelCount', $('#RowColSelCount').html(state ? state : '<span class="ToolbarStatusInactive">&nbsp;Select multiple cells&nbsp;</span>').parent().html());
 		}
 		else if (commandName === '.uno:InsertMode') {
-			this.updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;Insert mode: inactive&nbsp;</span>').parent().html());
+			this.updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;' + _('Insert mode: inactive') + '&nbsp;</span>').parent().html());
 
 			if (!state && this.map.hyperlinkPopup) {
 				this.map.hyperlinkUnderCursor = null;
@@ -460,7 +460,7 @@ L.Control.StatusBar = L.Control.extend({
 		}
 		else if (commandName === '.uno:StatusSelectionMode' ||
 				commandName === '.uno:SelectionMode') {
-			this.updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;Selection mode: inactive&nbsp;</span>').parent().html());
+			this.updateToolbarItem(statusbar, 'StatusSelectionMode', $('#StatusSelectionMode').html(state ? L.Styles.selectionMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;' + _('Selection mode: inactive') + '&nbsp;</span>').parent().html());
 		}
 		else if (commandName == '.uno:StateTableCell') {
 			this.updateToolbarItem(statusbar, 'StateTableCell', $('#StateTableCell').html(state ? this.localizeStateTableCell(state) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
