@@ -955,7 +955,7 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
         }
     }
 
-    if (force)
+    if (force && _storage)
     {
         _storage->forceSave();
     }
