@@ -16,6 +16,11 @@ if [ "$1" == "review" ]; then
         exit 1
     fi
 
+    if ! gh auth status &>/dev/null; then
+        echo "'gh' thinks you are not logged into any GitHub hosts. Run 'gh auth login' to authenticate."
+        exit 1
+    fi
+
     # e.g. co-4-2
     BRANCH=$(git symbolic-ref HEAD|sed 's|refs/heads/||')
     # e.g. origin
