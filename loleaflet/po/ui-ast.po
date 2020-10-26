@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-21 14:39+0200\n"
-"PO-Revision-Date: 2020-09-30 18:19+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fito@libreoffice.org>\n"
-"Language-Team: Asturian <https://weblate.documentfoundation.org/projects/"
-"libo_online/loleaflet-ui/ast/>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-10-23 21:26+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Language-Team: Asturian <https://hosted.weblate.org/projects/"
+"collabora-online/ui/ast/>\n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.3.1\n"
 "X-Pootle-Path: /ast/libo_online/loleaflet-ui-ast.po\n"
 "X-Pootle-Revision: 3937643\n"
 
@@ -578,11 +578,11 @@ msgstr ""
 #: src/control/Control.Menubar.js:66
 #: src/control/Control.NotebookbarBuilder.js:622
 msgid "Show Ruler"
-msgstr ""
+msgstr "Amosar la regla"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:299
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Amosar la barra d'estáu"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:302
 #: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:666
@@ -597,7 +597,7 @@ msgstr "Too"
 
 #: src/control/Control.Menubar.js:145
 msgid "Text orientation"
-msgstr ""
+msgstr "Orientación del testu"
 
 #: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:370
 #: src/control/Control.Menubar.js:493
@@ -637,9 +637,8 @@ msgid "Last modification"
 msgstr "Cabera modificación"
 
 #: src/control/Control.Menubar.js:258
-#, fuzzy
 msgid "Save Comments"
-msgstr "Comentariu"
+msgstr "Guardar los comentarios"
 
 #: src/control/Control.Menubar.js:264 src/control/Control.Menubar.js:562
 #: src/control/Control.NotebookbarImpress.js:294
