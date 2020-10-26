@@ -291,6 +291,13 @@
 	background-position: bottom;
 }
 
+.draw-icon-img {
+	background-image: url('images/x-office-drawing.svg');
+	background-size: 30px 30px;
+	background-repeat: no-repeat;
+	background-position: bottom;
+}
+
 #menu-last-mod a {
 	color: grey;
 	text-decoration: underline;
