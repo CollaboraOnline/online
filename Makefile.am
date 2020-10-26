@@ -102,6 +102,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Util.cpp \
                  common/Authorization.cpp \
                  net/DelaySocket.cpp \
+                 net/HttpHelper.cpp \
                  net/Socket.cpp
 if ENABLE_SSL
 shared_sources += net/Ssl.cpp
@@ -263,6 +264,7 @@ shared_headers = common/Common.hpp \
                  common/SpookyV2.h \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
+                 net/HttpHelper.hpp \
                  net/ServerSocket.hpp \
                  net/Socket.hpp \
                  net/WebSocketHandler.hpp \
