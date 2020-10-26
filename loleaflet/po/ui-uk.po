@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 14:39+0200\n"
+"POT-Creation-Date: 2020-10-26 21:34+0100\n"
 "PO-Revision-Date: 2020-10-08 21:00+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
@@ -446,36 +446,36 @@ msgstr "Шрифт"
 msgid "Font Size"
 msgstr "Кегль"
 
-#: src/control/Control.JSDialogBuilder.js:1987
+#: src/control/Control.JSDialogBuilder.js:1993
 msgid "Cell borders"
 msgstr "Краї комірки"
 
-#: src/control/Control.JSDialogBuilder.js:2026
+#: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
 msgstr "Колір фону"
 
-#: src/control/Control.JSDialogBuilder.js:2028
+#: src/control/Control.JSDialogBuilder.js:2034
 msgid "Gradient Start"
 msgstr "Початок градієнту"
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2036
 msgid "Gradient End"
 msgstr "Кінець градієнту"
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
 msgstr "Рядки"
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
 msgstr "Стовпчики"
 
-#: src/control/Control.JSDialogBuilder.js:2233
+#: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "Вставити таблицю"
 
-#: src/control/Control.JSDialogBuilder.js:2262
+#: src/control/Control.JSDialogBuilder.js:2268
 msgid "Line style:"
 msgstr "Стиль лінії:"
 
@@ -823,6 +823,14 @@ msgstr "Лічильник слів"
 msgid "Number of Slides"
 msgstr "Число слайдів"
 
+#: src/control/Control.StatusBar.js:453
+msgid "Insert mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:463
+msgid "Selection mode: inactive"
+msgstr ""
+
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
 msgstr "Вставити аркуш перед"
@@ -1061,11 +1069,11 @@ msgstr "Ліве поле"
 msgid "Right Margin"
 msgstr "Праве поле"
 
-#: src/control/Ruler.js:648
+#: src/control/Ruler.js:641
 msgid "Insert tabstop"
 msgstr "Вставити табулятор"
 
-#: src/control/Ruler.js:655
+#: src/control/Ruler.js:648
 msgid "Delete tabstop"
 msgstr "Видалити табулятор"
 
@@ -1667,7 +1675,7 @@ msgstr "Завантаження файлу на сервер не вдалос�
 msgid "Creating new file from template..."
 msgstr "Створити новий файл із шаблона..."
 
-#: src/map/handler/Map.WOPI.js:458
+#: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
 msgstr "Створення копії..."
 

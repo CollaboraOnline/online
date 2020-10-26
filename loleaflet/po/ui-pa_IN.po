@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 14:39+0200\n"
+"POT-Creation-Date: 2020-10-26 21:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -449,37 +449,37 @@ msgstr "ਫੋਂਟ"
 msgid "Font Size"
 msgstr "ਦਸਤਖਤ ਨਹੀਂ ਕੀਤੇ"
 
-#: src/control/Control.JSDialogBuilder.js:1987
+#: src/control/Control.JSDialogBuilder.js:1993
 #, fuzzy
 msgid "Cell borders"
 msgstr "ਹਾਸ਼ੀਏ"
 
-#: src/control/Control.JSDialogBuilder.js:2026
+#: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2028
+#: src/control/Control.JSDialogBuilder.js:2034
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2036
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2233
+#: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "ਸਾਰਣੀ ਜੋੜੋ"
 
-#: src/control/Control.JSDialogBuilder.js:2262
+#: src/control/Control.JSDialogBuilder.js:2268
 msgid "Line style:"
 msgstr ""
 
@@ -835,6 +835,14 @@ msgstr ""
 msgid "Number of Slides"
 msgstr "ਵੇਖਣ ਦੀ ਗਿਣਤੀ"
 
+#: src/control/Control.StatusBar.js:453
+msgid "Insert mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:463
+msgid "Selection mode: inactive"
+msgstr ""
+
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
 msgstr ""
@@ -1079,12 +1087,12 @@ msgstr "ਖੱਬਾ ਹਾਸ਼ੀਆ"
 msgid "Right Margin"
 msgstr "ਸੱਜਾ ਹਾਸ਼ੀਆ"
 
-#: src/control/Ruler.js:648
+#: src/control/Ruler.js:641
 #, fuzzy
 msgid "Insert tabstop"
 msgstr "ਸਾਰਣੀ ਜੋੜੋ"
 
-#: src/control/Ruler.js:655
+#: src/control/Ruler.js:648
 #, fuzzy
 msgid "Delete tabstop"
 msgstr "ਸਾਰਣੀ ਜੋੜੋ"
@@ -1626,7 +1634,7 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr "...ਟੈਪਲੇਟ ਤੋਂ ਨਵੀ ਫਾਇਲ ਬਣਾਓ"
 
-#: src/map/handler/Map.WOPI.js:458
+#: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
 msgstr "...ਨਕਲ ਬਣਾਈ ਜਾ ਰਹੀ ਹੈ"
 

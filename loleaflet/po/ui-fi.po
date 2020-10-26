@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 14:39+0200\n"
+"POT-Creation-Date: 2020-10-26 21:34+0100\n"
 "PO-Revision-Date: 2020-03-12 11:37+0000\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: Finnish <https://weblate.documentfoundation.org/projects/"
@@ -449,39 +449,39 @@ msgstr "Kirjasinlaji"
 msgid "Font Size"
 msgstr "Kirjasinkoko"
 
-#: src/control/Control.JSDialogBuilder.js:1987
+#: src/control/Control.JSDialogBuilder.js:1993
 #, fuzzy
 msgid "Cell borders"
 msgstr "Reunat"
 
-#: src/control/Control.JSDialogBuilder.js:2026
+#: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2028
+#: src/control/Control.JSDialogBuilder.js:2034
 #, fuzzy
 msgid "Gradient Start"
 msgstr "Gradientti"
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2036
 #, fuzzy
 msgid "Gradient End"
 msgstr "Gradientti"
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
 msgstr "Rivejä"
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
 msgstr "Sarakkeita"
 
-#: src/control/Control.JSDialogBuilder.js:2233
+#: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "Lisää taulukko"
 
-#: src/control/Control.JSDialogBuilder.js:2262
+#: src/control/Control.JSDialogBuilder.js:2268
 msgid "Line style:"
 msgstr "Viivatyylit:"
 
@@ -832,6 +832,14 @@ msgstr "Sanalaskuri"
 msgid "Number of Slides"
 msgstr "Diojen lukumäärä"
 
+#: src/control/Control.StatusBar.js:453
+msgid "Insert mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:463
+msgid "Selection mode: inactive"
+msgstr ""
+
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
 msgstr "Lisää laskentataulukko ennen tätä"
@@ -1080,12 +1088,12 @@ msgstr "Vasen marginaali"
 msgid "Right Margin"
 msgstr "Oikea marginaali"
 
-#: src/control/Ruler.js:648
+#: src/control/Ruler.js:641
 #, fuzzy
 msgid "Insert tabstop"
 msgstr "Lisää taulukko"
 
-#: src/control/Ruler.js:655
+#: src/control/Ruler.js:648
 #, fuzzy
 msgid "Delete tabstop"
 msgstr "Lisää taulukko"
@@ -1692,7 +1700,7 @@ msgstr "Tiedoston lähetys palvelumelle epäonnistui, tila: %0"
 msgid "Creating new file from template..."
 msgstr "Luodaan uusi tiedosto mallista..."
 
-#: src/map/handler/Map.WOPI.js:458
+#: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
 msgstr "Luodaan kopiota..."
 

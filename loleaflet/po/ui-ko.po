@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 14:39+0200\n"
+"POT-Creation-Date: 2020-10-26 21:34+0100\n"
 "PO-Revision-Date: 2020-08-30 15:35+0000\n"
 "Last-Translator: 김주현 <kjh000121@gmail.com>\n"
 "Language-Team: Korean <https://weblate.documentfoundation.org/projects/"
@@ -449,37 +449,37 @@ msgstr "글꼴 이름"
 msgid "Font Size"
 msgstr "글꼴 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1987
+#: src/control/Control.JSDialogBuilder.js:1993
 #, fuzzy
 msgid "Cell borders"
 msgstr "테두리"
 
-#: src/control/Control.JSDialogBuilder.js:2026
+#: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2028
+#: src/control/Control.JSDialogBuilder.js:2034
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2036
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
 msgstr "열"
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
 msgstr "행"
 
-#: src/control/Control.JSDialogBuilder.js:2233
+#: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "표 삽입"
 
-#: src/control/Control.JSDialogBuilder.js:2262
+#: src/control/Control.JSDialogBuilder.js:2268
 msgid "Line style:"
 msgstr "줄 양식:"
 
@@ -830,6 +830,14 @@ msgstr "단어 수"
 msgid "Number of Slides"
 msgstr "슬라이드 수"
 
+#: src/control/Control.StatusBar.js:453
+msgid "Insert mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:463
+msgid "Selection mode: inactive"
+msgstr ""
+
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
 msgstr "현재 시트 앞에 시트 삽입"
@@ -1077,12 +1085,12 @@ msgstr "왼쪽 여백"
 msgid "Right Margin"
 msgstr "오른쪽 여백"
 
-#: src/control/Ruler.js:648
+#: src/control/Ruler.js:641
 #, fuzzy
 msgid "Insert tabstop"
 msgstr "표 삽입"
 
-#: src/control/Ruler.js:655
+#: src/control/Ruler.js:648
 #, fuzzy
 msgid "Delete tabstop"
 msgstr "표 삽입"
@@ -1634,7 +1642,7 @@ msgstr "서버로 파일 업로드가 실패되었음, 상태: %0"
 msgid "Creating new file from template..."
 msgstr "템플릿으로 새로운 파일 만들기..."
 
-#: src/map/handler/Map.WOPI.js:458
+#: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
 msgstr "복사본 만드는 중..."
 
