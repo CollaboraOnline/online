@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-21 14:39+0200\n"
-"PO-Revision-Date: 2020-10-21 10:26+0000\n"
+"PO-Revision-Date: 2020-10-25 11:26+0000\n"
 "Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.3.1\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -587,7 +587,7 @@ msgstr "Cetveli Göster"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:299
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Durum Çubuğunu Göster"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:302
 #: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:666
@@ -1555,7 +1555,7 @@ msgstr "Sil"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Konuyu Kaldır"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1563,15 +1563,15 @@ msgstr "Çöz"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Çözülmemiş"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Çözülmemiş Sorun"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Sorunu Çöz"
 
 #: src/layer/tile/TileLayer.js:853
 msgid "Functions"
@@ -1598,9 +1598,9 @@ msgid ""
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
 "<p>Tarayıcınızın panoya erişimi oldukça sınırlı, bu yüzden şu klavye "
-"kısayollarını kullanın:<ul><li>Kopyalamak için: <b>Ctrl+C</b>.</li><li>"
-"Kesmek için:<b>Ctrl+X</b>.</li><li>Yapıştırmak için: "
-"<b>Ctrl+P</b>.</li></ul></p>"
+"kısayollarını kullanın:<ul><li>Kopyalamak için: <b>Ctrl+C</b>.</"
+"li><li>Kesmek için:<b>Ctrl+X</b>.</li><li>Yapıştırmak için: "
+"<b>Ctrl+V</b>.</li></ul></p>"
 
 #: src/map/Clipboard.js:875
 msgid ""
