@@ -113,6 +113,14 @@ void ChildSession::disconnect()
 
 bool ChildSession::_handleInput(const char *buffer, int length)
 {
+    bool ret = doHandleInput(buffer, length);
+    getLOKitDocument()->setView(GlobalNastyViewId);
+    return ret;
+}
+
+
+bool ChildSession::doHandleInput(const char *buffer, int length)
+{
     LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
     const StringVector tokens = Util::tokenize(firstLine.data(), firstLine.size());

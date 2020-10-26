@@ -32,6 +32,5 @@ states:
 
 Signed-off-by: Random J Developer <random@developer.example.org>
 
-using your real name and the email address you sent the original email
-you used to send the Online Contributor Representation & Certificate
-of Origin to us (sorry, no pseudonyms or anonymous contributions.)
+using your real name and the email address (sorry, no pseudonyms
+or anonymous contributions.)
