@@ -1569,8 +1569,10 @@ L.Control.Menubar = L.Control.extend({
 			iconClass += ' writer-icon-img';
 		} else if (docType === 'spreadsheet') {
 			iconClass += ' calc-icon-img';
-		} else if (docType === 'presentation' || docType === 'drawing') {
+		} else if (docType === 'presentation') {
 			iconClass += ' impress-icon-img';
+		} else if (docType === 'drawing') {
+			iconClass += ' draw-icon-img';
 		}
 		$('.main-nav').addClass(docType + '-color-indicator');
 
