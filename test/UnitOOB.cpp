@@ -19,7 +19,6 @@
 #include <UnitHTTP.hpp>
 #include <Util.hpp>
 
-#include <Poco/Timestamp.h>
 #include <Poco/Net/HTTPServerRequest.h>
 
 class UnitOOB : public UnitWSD
