@@ -45,8 +45,9 @@
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include <Util.hpp>
+#if !MOBILEAPP
 #include <net/HttpHelper.hpp>
-
+#endif
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPBasicCredentials;
 using Poco::Net::HTTPRequest;
@@ -416,15 +417,11 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                     std::ostringstream oss;
                     Poco::DateTime now;
                     Poco::DateTime later(now.utcTime(), int64_t(1000)*1000 * 60 * 60 * 24 * 128);
-                    oss << "HTTP/1.1 304 Not Modified\r\n"
-                        "Date: " << Util::getHttpTimeNow() << "\r\n"
-                        "Expires: " << Poco::DateTimeFormatter::format(
-                            later, Poco::DateTimeFormat::HTTP_FORMAT) << "\r\n"
-                        "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                        "Cache-Control: max-age=11059200\r\n"
-                        "\r\n";
-                    socket->send(oss.str());
-                    socket->shutdown();
+                    std::string extraHeaders =
+                        "Expires: " + Poco::DateTimeFormatter::format(
+                            later, Poco::DateTimeFormat::HTTP_FORMAT) + "\r\n" +
+                        "Cache-Control: max-age=11059200\r\n";
+                    HttpHelper::sendErrorAndShutdown(304, socket, std::string(), extraHeaders);
                     return;
                 }
             }
