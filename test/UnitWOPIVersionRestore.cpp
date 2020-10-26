@@ -14,7 +14,6 @@
 #include "helpers.hpp"
 
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Timestamp.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
 

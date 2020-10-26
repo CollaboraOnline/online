@@ -17,7 +17,6 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 
-#include <Poco/Timestamp.h>
 #include <Poco/Net/HTTPServerRequest.h>
 
 // Inside the WSD process
