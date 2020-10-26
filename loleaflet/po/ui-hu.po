@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-21 14:39+0200\n"
-"PO-Revision-Date: 2020-10-08 21:00+0000\n"
+"PO-Revision-Date: 2020-10-22 03:01+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.3.1\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
 "X-Pootle-Revision: 3939165\n"
 
@@ -588,7 +588,7 @@ msgstr "Vonalzó megjelenítése"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:299
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Állapotsor megjelenítése"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:302
 #: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:666
@@ -1559,7 +1559,7 @@ msgstr "Eltávolítás"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Szál eltávolítása"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1567,15 +1567,15 @@ msgstr "Feloldás"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Megoldatlan"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "A szál legyen megoldatlan"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Szál megoldása"
 
 #: src/layer/tile/TileLayer.js:853
 msgid "Functions"
