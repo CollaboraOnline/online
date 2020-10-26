@@ -28,7 +28,9 @@
 #include <common/Session.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
-
+#if !MOBILEAPP
+#include <net/HttpHelper.hpp>
+#endif
 using namespace LOOLProtocol;
 
 using Poco::Path;
@@ -259,14 +261,9 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             return; // the getclipboard already completed.
         if (type == DocumentBroker::CLIP_REQUEST_SET)
         {
-            std::ostringstream oss;
-            oss << "HTTP/1.1 400 Bad Request\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: 0\r\n"
-                << "\r\n";
-            socket->send(oss.str());
-            socket->shutdown();
+            #if !MOBILEAPP
+            HttpHelper::sendErrorAndShutdown(400, socket);
+            #endif
         }
         else // will be handled during shutdown
         {
@@ -305,14 +302,9 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         }
         else
         {
-            std::ostringstream oss;
-            oss << "HTTP/1.1 400 Bad Request\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "Content-Length: 0\r\n"
-                << "\r\n";
-            socket->send(oss.str());
-            socket->shutdown();
+            #if !MOBILEAPP
+            HttpHelper::sendErrorAndShutdown(400, socket);
+            #endif
         }
     }
 }
