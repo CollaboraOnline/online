@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 14:39+0200\n"
+"POT-Creation-Date: 2020-10-26 21:34+0100\n"
 "PO-Revision-Date: 2020-07-04 07:55+0000\n"
 "Last-Translator: Paul Roos <iNetRoos@gmail.com>\n"
 "Language-Team: Afrikaans <https://weblate.documentfoundation.org/projects/"
@@ -447,36 +447,36 @@ msgstr "Font Naam"
 msgid "Font Size"
 msgstr "Font Grootte"
 
-#: src/control/Control.JSDialogBuilder.js:1987
+#: src/control/Control.JSDialogBuilder.js:1993
 msgid "Cell borders"
 msgstr "Sel grense"
 
-#: src/control/Control.JSDialogBuilder.js:2026
+#: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
 msgstr "Agtergrond Kleur"
 
-#: src/control/Control.JSDialogBuilder.js:2028
+#: src/control/Control.JSDialogBuilder.js:2034
 msgid "Gradient Start"
 msgstr "Gradiënt beginkleur"
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2036
 msgid "Gradient End"
 msgstr "Gradiënt Eindkleur"
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
 msgstr "Rye"
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
 msgstr "Kolomme"
 
-#: src/control/Control.JSDialogBuilder.js:2233
+#: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "Tabel Invoeg"
 
-#: src/control/Control.JSDialogBuilder.js:2262
+#: src/control/Control.JSDialogBuilder.js:2268
 msgid "Line style:"
 msgstr "Lyn styl:"
 
@@ -724,8 +724,9 @@ msgid "Accept"
 msgstr "veranderings aanvaar"
 
 #: src/control/Control.PresentationBar.js:85
+#, fuzzy
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "Is u seker dat u die sessie wil beindig?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -830,6 +831,14 @@ msgstr ""
 msgid "Number of Slides"
 msgstr "Aantal Aansig"
 
+#: src/control/Control.StatusBar.js:453
+msgid "Insert mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:463
+msgid "Selection mode: inactive"
+msgstr ""
+
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
 msgstr ""
@@ -839,8 +848,9 @@ msgid "Insert sheet after this"
 msgstr ""
 
 #: src/control/Control.Tabs.js:197
+#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr ""
+msgstr "Is u seker dat u die sessie wil beindig?"
 
 #: src/control/Control.Tabs.js:214
 msgid "Enter new sheet name"
@@ -1071,11 +1081,11 @@ msgstr ""
 msgid "Right Margin"
 msgstr ""
 
-#: src/control/Ruler.js:648
+#: src/control/Ruler.js:641
 msgid "Insert tabstop"
 msgstr ""
 
-#: src/control/Ruler.js:655
+#: src/control/Ruler.js:648
 msgid "Delete tabstop"
 msgstr ""
 
@@ -1614,7 +1624,7 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:458
+#: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 14:39+0200\n"
+"POT-Creation-Date: 2020-10-26 21:34+0100\n"
 "PO-Revision-Date: 2020-10-16 21:33+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
@@ -443,36 +443,36 @@ msgstr "Heiti leturgerðar"
 msgid "Font Size"
 msgstr "Leturstærð"
 
-#: src/control/Control.JSDialogBuilder.js:1987
+#: src/control/Control.JSDialogBuilder.js:1993
 msgid "Cell borders"
 msgstr "Jaðrar reita"
 
-#: src/control/Control.JSDialogBuilder.js:2026
+#: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
 msgstr "Bakgrunnslitur"
 
-#: src/control/Control.JSDialogBuilder.js:2028
+#: src/control/Control.JSDialogBuilder.js:2034
 msgid "Gradient Start"
 msgstr "Upphaf litstiguls"
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2036
 msgid "Gradient End"
 msgstr "Endir litstiguls"
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
 msgstr "Raðir"
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
 msgstr "Dálkar"
 
-#: src/control/Control.JSDialogBuilder.js:2233
+#: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "Setja inn töflu"
 
-#: src/control/Control.JSDialogBuilder.js:2262
+#: src/control/Control.JSDialogBuilder.js:2268
 msgid "Line style:"
 msgstr "Línustíll:"
 
@@ -820,6 +820,14 @@ msgstr "Orðateljari"
 msgid "Number of Slides"
 msgstr "Fjöldi skyggna"
 
+#: src/control/Control.StatusBar.js:453
+msgid "Insert mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:463
+msgid "Selection mode: inactive"
+msgstr ""
+
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
 msgstr "Setja inn blað hér á undan"
@@ -1058,11 +1066,11 @@ msgstr "Vinstri spássía"
 msgid "Right Margin"
 msgstr "Hægri spássía"
 
-#: src/control/Ruler.js:648
+#: src/control/Ruler.js:641
 msgid "Insert tabstop"
 msgstr "Setja inn inndráttarmerki"
 
-#: src/control/Ruler.js:655
+#: src/control/Ruler.js:648
 msgid "Delete tabstop"
 msgstr "Eyða inndráttarmerki"
 
@@ -1665,7 +1673,7 @@ msgstr "Sending á skrá til þjónsins mistókst, með stöðutilkynninguna: %0
 msgid "Creating new file from template..."
 msgstr "Bý til nýja skrá út frá sniðmáti..."
 
-#: src/map/handler/Map.WOPI.js:458
+#: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
 msgstr "Bý til afrit..."
 
