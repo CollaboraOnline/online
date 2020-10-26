@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-21 14:39+0200\n"
-"PO-Revision-Date: 2020-10-11 05:26+0000\n"
+"PO-Revision-Date: 2020-10-23 21:26+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (Australia) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_AU/>\n"
-"Language: \n"
+"Language: en_AU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.3.1\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:6
@@ -580,7 +580,7 @@ msgstr "Show Ruler"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:299
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Show Status Bar"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:302
 #: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:666
@@ -1542,7 +1542,7 @@ msgstr "Remove"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Remove Thread"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1550,15 +1550,15 @@ msgstr "Resolve"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Unresolve"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Unresolve Thread"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Resolve Thread"
 
 #: src/layer/tile/TileLayer.js:853
 msgid "Functions"
