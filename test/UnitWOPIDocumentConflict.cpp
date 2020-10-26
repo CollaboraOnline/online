@@ -14,7 +14,6 @@
 #include "helpers.hpp"
 
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Timestamp.h>
 
 /**
  * This test asserts that the unsaved changes in the opened document are
