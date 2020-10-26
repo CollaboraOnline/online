@@ -3510,7 +3510,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (json.action === 'show') {
 			this._formFieldButton = new L.FormFieldButton(json);
 			this._map.addLayer(this._formFieldButton);
-		} else {
+		} else if (this._formFieldButton) {
 			this._map.removeLayer(this._formFieldButton);
 		}
 	},
