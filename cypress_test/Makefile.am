@@ -206,22 +206,6 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
 	@$(KILL_COMMAND) || true
 
-check-proxy-mobile: @JAILS_PATH@ $(NODE_BINS)
-	$(call run_JS_error_check)
-	$(eval FREE_PORT:=9979)
-	@pkill loolwsd || pkill --signal SIGKILL loolwsd || true
-	@sleep 5
-	../test/run_unit.sh \
-		--test-name unit-php-proxy.la \
-		--log-file workdir/php-proxy.log \
-		--trs-file workdir/php-proxy.trs \
-		--color-tests yes \
-		--enable-hard-errors yes \
-		--expect-failure no -- ../test/unit-php-proxy.la &
-	@$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000
-	$(call run_mobile_tests,$(spec))
-	@pkill loolwsd || pkill --signal SIGKILL loolwsd || true
-
 @JAILS_PATH@:
 	mkdir -p $@
 
