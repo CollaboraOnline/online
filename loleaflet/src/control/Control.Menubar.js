@@ -268,10 +268,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
-					{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action', drawing: false},
-					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action', drawing: false},
-					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action', drawing: false},
-					{name: _('ODF Drawing (.odg)'), id: 'downloadas-odg', type: 'action'}
+					{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
+					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
+					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'},
 				]},
 				{type: 'separator'},
 				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
@@ -295,15 +294,15 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
 				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
-				{type: 'separator', drawing: false},
-				{uno: '.uno:SlideMasterPage', drawing: false},
-				{type: 'separator', drawing: false},
-				{uno: '.uno:ModifyPage', drawing: false},
-				{uno: '.uno:SlideChangeWindow', drawing: false},
-				{uno: '.uno:CustomAnimation', drawing: false},
-				{uno: '.uno:MasterSlidesPanel', drawing: false},
-				{type: 'separator', drawing: false},
-				{uno: '.uno:Sidebar', drawing: false},
+				{type: 'separator'},
+				{uno: '.uno:SlideMasterPage'},
+				{type: 'separator'},
+				{uno: '.uno:ModifyPage'},
+				{uno: '.uno:SlideChangeWindow'},
+				{uno: '.uno:CustomAnimation'},
+				{uno: '.uno:MasterSlidesPanel'},
+				{type: 'separator'},
+				{uno: '.uno:Sidebar'},
 				{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}]
 			},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
@@ -394,9 +393,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
-					{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action', drawing: false},
-					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action', drawing: false},
-					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action', drawing: false},
 					{name: _('ODF Drawing (.odg)'), id: 'downloadas-odg', type: 'action'}
 				]},
 				{type: 'separator'},
@@ -420,17 +416,10 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
 				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
-				{type: 'separator', drawing: false},
-				{uno: '.uno:SlideMasterPage', drawing: false},
-				{type: 'separator', drawing: false},
-				{uno: '.uno:ModifyPage', drawing: false},
-				{uno: '.uno:SlideChangeWindow', drawing: false},
-				{uno: '.uno:CustomAnimation', drawing: false},
-				{uno: '.uno:MasterSlidesPanel', drawing: false},
-				{type: 'separator', drawing: false},
-				{uno: '.uno:Sidebar', drawing: false},
-				{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}]
-			},
+				{type: 'separator'},
+				{uno: '.uno:Sidebar'},
+				{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
+			]},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
@@ -488,10 +477,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:SlideMenu', 'presentation'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'},
-				{type: 'separator', id: 'fullscreen-presentation-separator'},
-				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
-				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'}]
+				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellDialog'},
