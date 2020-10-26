@@ -8,24 +8,23 @@
 # Szymon Kłos <eszkadev@gmail.com>, 2020
 # No Ne, 2020
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-21 14:39+0200\n"
-"PO-Revision-Date: 2020-10-01 06:41+0000\n"
-"Last-Translator: No Ne, 2020\n"
-"Language-Team: Polish (https://www.transifex.com/collabora-productivity-ltd/"
-"teams/68191/pl/)\n"
-"Language: \n"
+"PO-Revision-Date: 2020-10-22 03:01+0000\n"
+"Last-Translator: Matthaiks <kitynska@gmail.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
+"ui/pl/>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 4.3.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -590,7 +589,7 @@ msgstr "Pokaż linijkę"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:299
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Pokaż pasek stanu"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:302
 #: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:666
@@ -1558,7 +1557,7 @@ msgstr "Usuń"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Usuń wątek"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1566,15 +1565,15 @@ msgstr "Rozwiąż"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Odwróć rozwiązanie"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Odwróć rozwiązanie wątku"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Rozwiąż wątek"
 
 #: src/layer/tile/TileLayer.js:853
 msgid "Functions"
