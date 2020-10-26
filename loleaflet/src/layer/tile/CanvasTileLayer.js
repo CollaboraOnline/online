@@ -200,13 +200,16 @@ L.CanvasTilePainter = L.Class.extend({
 			var cropWidth = crop.max.x - crop.min.x;
 			var cropHeight = crop.max.y - crop.min.y;
 
-			this._canvasCtx.drawImage(tile.el,
-						  crop.min.x - tileBounds.min.x,
-						  crop.min.y - tileBounds.min.y,
-						  cropWidth, cropHeight,
-						  crop.min.x - paneOffset.x,
-						  crop.min.y - paneOffset.y,
-						  cropWidth, cropHeight);
+			if (cropWidth && cropHeight) {
+				this._canvasCtx.drawImage(tile.el,
+							crop.min.x - tileBounds.min.x,
+							crop.min.y - tileBounds.min.y,
+							cropWidth, cropHeight,
+							crop.min.x - paneOffset.x,
+							crop.min.y - paneOffset.y,
+							cropWidth, cropHeight);
+			}
+
 			if (this._layer._debug)
 			{
 				this._canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
