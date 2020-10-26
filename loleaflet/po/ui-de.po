@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 14:39+0200\n"
+"POT-Creation-Date: 2020-10-26 21:34+0100\n"
 "PO-Revision-Date: 2020-10-16 03:24+0000\n"
 "Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
@@ -450,36 +450,36 @@ msgstr "Schriftart"
 msgid "Font Size"
 msgstr "Schriftgröße"
 
-#: src/control/Control.JSDialogBuilder.js:1987
+#: src/control/Control.JSDialogBuilder.js:1993
 msgid "Cell borders"
 msgstr "Zellumrandung"
 
-#: src/control/Control.JSDialogBuilder.js:2026
+#: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
-#: src/control/Control.JSDialogBuilder.js:2028
+#: src/control/Control.JSDialogBuilder.js:2034
 msgid "Gradient Start"
 msgstr "Startfarbe"
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2036
 msgid "Gradient End"
 msgstr "Endfarbe"
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
 msgstr "Zeilen"
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
 msgstr "Spalten"
 
-#: src/control/Control.JSDialogBuilder.js:2233
+#: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "Tabelle einfügen"
 
-#: src/control/Control.JSDialogBuilder.js:2262
+#: src/control/Control.JSDialogBuilder.js:2268
 msgid "Line style:"
 msgstr "Linienstil:"
 
@@ -827,6 +827,14 @@ msgstr "Anzahl an Wörtern"
 msgid "Number of Slides"
 msgstr "Anzahl an Folien"
 
+#: src/control/Control.StatusBar.js:453
+msgid "Insert mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:463
+msgid "Selection mode: inactive"
+msgstr ""
+
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
 msgstr "Tabelle vor dieser einfügen"
@@ -1067,11 +1075,11 @@ msgstr "Linker Rand"
 msgid "Right Margin"
 msgstr "Rechter Rand"
 
-#: src/control/Ruler.js:648
+#: src/control/Ruler.js:641
 msgid "Insert tabstop"
 msgstr "Tabulator einfügen"
 
-#: src/control/Ruler.js:655
+#: src/control/Ruler.js:648
 msgid "Delete tabstop"
 msgstr "Tabulator löschen"
 
@@ -1697,6 +1705,6 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr "Neue Datei aus Vorlage erzeugen..."
 
-#: src/map/handler/Map.WOPI.js:458
+#: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
 msgstr "Kopie erstellen..."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 14:39+0200\n"
+"POT-Creation-Date: 2020-10-26 21:34+0100\n"
 "PO-Revision-Date: 2020-10-11 05:27+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
 "Language-Team: Occitan <https://hosted.weblate.org/projects/collabora-online/"
@@ -446,36 +446,36 @@ msgstr "Poliça"
 msgid "Font Size"
 msgstr "Poliça"
 
-#: src/control/Control.JSDialogBuilder.js:1987
+#: src/control/Control.JSDialogBuilder.js:1993
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2026
+#: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2028
+#: src/control/Control.JSDialogBuilder.js:2034
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2030
+#: src/control/Control.JSDialogBuilder.js:2036
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2233
+#: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
 msgid "Insert table"
 msgstr "Inserir un tablèu"
 
-#: src/control/Control.JSDialogBuilder.js:2262
+#: src/control/Control.JSDialogBuilder.js:2268
 msgid "Line style:"
 msgstr ""
 
@@ -763,8 +763,9 @@ msgid "Scroll to the last sheet"
 msgstr ""
 
 #: src/control/Control.SheetsBar.js:31
+#, fuzzy
 msgid "Insert sheet"
-msgstr ""
+msgstr "Inserir un tablèu"
 
 #: src/control/Control.StatusBar.js:196
 msgid "Cancel the search"
@@ -829,6 +830,14 @@ msgstr "Comptador de mot"
 #: src/control/Control.StatusBar.js:377
 msgid "Number of Slides"
 msgstr "Nombre de diapositivas"
+
+#: src/control/Control.StatusBar.js:453
+msgid "Insert mode: inactive"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:463
+msgid "Selection mode: inactive"
+msgstr ""
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -1073,12 +1082,12 @@ msgstr ""
 msgid "Right Margin"
 msgstr ""
 
-#: src/control/Ruler.js:648
+#: src/control/Ruler.js:641
 #, fuzzy
 msgid "Insert tabstop"
 msgstr "Inserir un tablèu"
 
-#: src/control/Ruler.js:655
+#: src/control/Ruler.js:648
 #, fuzzy
 msgid "Delete tabstop"
 msgstr "Inserir un tablèu"
@@ -1618,7 +1627,7 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:458
+#: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
 msgstr ""
 
