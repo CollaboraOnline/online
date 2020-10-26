@@ -69,6 +69,7 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
 #include <Poco/Net/SocketAddress.h>
+#include <net/HttpHelper.hpp>
 
 using Poco::Net::HTMLForm;
 using Poco::Net::PartHandler;
@@ -2368,14 +2369,7 @@ private:
         if (!LOOLWSD::isSSLEnabled() && socket->sniffSSL())
         {
             LOG_ERR("Looks like SSL/TLS traffic on plain http port");
-            std::ostringstream oss;
-            oss << "HTTP/1.1 400\r\n"
-                "Date: " << Util::getHttpTimeNow() << "\r\n"
-                "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                "Content-Length: 0\r\n"
-                "\r\n";
-            socket->send(oss.str());
-            socket->shutdown();
+            HttpHelper::sendErrorAndShutdown(400, socket);
             return;
         }
 
@@ -2529,14 +2523,7 @@ private:
                 LOG_ERR("Unknown resource: " << requestDetails.toString());
 
                 // Bad request.
-                std::ostringstream oss;
-                oss << "HTTP/1.1 400\r\n"
-                    "Date: " << Util::getHttpTimeNow() << "\r\n"
-                    "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                    "Content-Length: 0\r\n"
-                    "\r\n";
-                socket->send(oss.str());
-                socket->shutdown();
+                HttpHelper::sendErrorAndShutdown(400, socket);
                 return;
             }
         }
@@ -2794,15 +2781,7 @@ private:
                 errMsg = "Empty clipboard item / session tag " + tag;
 
             // Bad request.
-            std::ostringstream oss;
-            oss << "HTTP/1.1 400\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: LOOLWSD WOPI Agent\r\n"
-                << "Content-Length: 0\r\n"
-                << "\r\n"
-                << errMsg;
-            socket->send(oss.str());
-            socket->shutdown();
+            HttpHelper::sendErrorAndShutdown(400, socket, errMsg);
         }
     }
 
@@ -3272,14 +3251,7 @@ private:
                                 LOG_ERR("Error while loading : " << exc.what());
                             }
                             // badness occurred:
-                            std::ostringstream oss;
-                            oss << "HTTP/1.1 400\r\n"
-                                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                                << "User-Agent: LOOLWSD WOPI Agent\r\n"
-                                << "Content-Length: 0\r\n"
-                                << "\r\n";
-                            streamSocket->send(oss.str());
-                            streamSocket->shutdown();
+                            HttpHelper::sendErrorAndShutdown(400, streamSocket);
                         });
                 });
         }
@@ -3288,15 +3260,8 @@ private:
             auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
             LOG_ERR("Failed to find document");
             // badness occurred:
-            std::ostringstream oss;
-            oss << "HTTP/1.1 400\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: LOOLWSD WOPI Agent\r\n"
-                << "Content-Length: \r\n"
-                << "\r\n";
+            HttpHelper::sendErrorAndShutdown(400, streamSocket);
             // FIXME: send docunloading & re-try on client ?
-            streamSocket->send(oss.str());
-            streamSocket->shutdown();
         }
     }
 #endif

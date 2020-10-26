@@ -37,7 +37,9 @@
 #include <common/Protocol.hpp>
 #include <common/Unit.hpp>
 #include <common/FileUtil.hpp>
-
+#if !MOBILEAPP
+#include <net/HttpHelper.hpp>
+#endif
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -1917,14 +1919,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
 
 #if !MOBILEAPP
     // Bad request.
-    std::ostringstream oss;
-    oss << "HTTP/1.1 400\r\n"
-        << "Date: " << Util::getHttpTimeNow() << "\r\n"
-        << "User-Agent: LOOLWSD WOPI Agent\r\n"
-        << "Content-Length: 0\r\n"
-        << "\r\n"
-        << "Failed to find this clipboard";
-    socket->send(oss.str());
+    HttpHelper::sendError(400, socket, "Failed to find this clipboard");
 #endif
     socket->shutdown();
 
