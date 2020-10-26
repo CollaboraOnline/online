@@ -1228,6 +1228,8 @@ private:
             // Only save the options on opening the document.
             // No support for changing them after opening a document.
             _renderOpts = renderOpts;
+
+            GlobalNastyViewId = _loKitDocument->createView("" /* ?? */);
         }
         else
         {
@@ -1789,6 +1791,10 @@ public:
             return -1;
         }
 #endif
+
+        // No idea if this is slightly fair ;-)
+        getLOKitDocument()->setView(GlobalNastyViewId);
+
         // Report the number of events we processed.
         return eventsSignalled;
     }
