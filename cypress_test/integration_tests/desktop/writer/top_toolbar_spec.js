@@ -15,6 +15,21 @@ describe('Top toolbar tests.', function() {
 		helper.afterAll(testFileName);
 	});
 
+	it('Apply highlight color.', function() {
+		cy.get('#tb_editbar_item_backcolor')
+			.click();
+
+		helper.selectAllText(false);
+
+		cy.get('[name="FFF2CC"]')
+			 .click();
+		
+		helper.reselectAllText();
+	
+		cy.get('#copy-paste-container p font span')
+			.should('have.attr', 'style', 'background: #fff2cc');
+	});
+
 	it('Apply style combobox', function() {
 		cy.get('#tb_editbar_item_styles')
 			.click();
