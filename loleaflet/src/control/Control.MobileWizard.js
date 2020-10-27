@@ -273,7 +273,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_setTitle: function(title) {
-		var right = $(this.options.idPrefix + '-title');
+		var right = $(this.options.idPrefix + '-title', $(this._container));
 		right.text(title);
 	},
 
