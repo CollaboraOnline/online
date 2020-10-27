@@ -1,3 +1,11 @@
+/* Autofilter */
+
+.autofilter-container {
+	background-color: white;
+	border: solid 1px silver;
+	position: absolute;
+	z-index: 1105;
+}
 
 /* Word count dialog */
 
