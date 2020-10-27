@@ -55,6 +55,12 @@ L.Control.DialogBuilder = L.Control.JSDialogBuilder.extend({
 		return false;
 	},
 
+	_fillProperties: function(node, entry) {
+		for (var key in entry) {
+			node.setAttribute('data-' + key, entry[key]);
+		}
+	},
+
 	_fillTreeListBox: function(parent, entries, builder) {
 		var child, entry;
 		for (var index in entries) {
@@ -63,10 +69,14 @@ L.Control.DialogBuilder = L.Control.JSDialogBuilder.extend({
 				child = L.DomUtil.create('ul', '', parent);
 				child.innerHTML = builder._cleanText(entry.text);
 				builder._fillTreeListBox(child, entry.entries, builder);
+				delete entry.entries;
+				delete entry.text;
 			} else {
 				child = L.DomUtil.create('li', '', parent);
 				child.innerHTML = builder._cleanText(entry.text);
+				delete entry.text;
 			}
+			builder._fillProperties(child, entry);
 		}
 	},
 
