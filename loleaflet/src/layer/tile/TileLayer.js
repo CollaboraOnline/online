@@ -1054,7 +1054,9 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		} else {
 			msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
-			if (msgData.type == 'borderwindow') {
+			if (msgData.jsontype === 'autofilter') {
+				this._map.fire('autofilterdropdown', msgData);
+			} else if (msgData.jsontype === 'notebookbar' || msgData.type === 'borderwindow') {
 				window.notebookbarId = msgData.id;
 				for (var i = 0; i < msgData.children.length; i++) {
 					if (msgData.children[i].type === 'control') {
