@@ -63,15 +63,15 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
 					{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+					{type: 'separator'},
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
-					{type: 'separator'},
 				]).concat([
-					{uno: '.uno:ControlCodes'},
+					{uno: '.uno:Sidebar'},
 					{type: 'separator'},
 					{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 					{type: 'separator'},
-					{uno: '.uno:Sidebar'},
+					{uno: '.uno:ControlCodes'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
