@@ -655,11 +655,6 @@ a.leaflet-control-zoom-in {
 	background-size: 18px !important;
 }
 
-#toolbar-down table.w2ui-button.checked {
-	border: 1px solid #e5f1ff;
-	background-color: #e5f1ff;
-	border-radius: 0px;
-}
 .w2ui-icon.users{
 	background-size: 20px !important;
 }
