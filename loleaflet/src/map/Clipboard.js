@@ -709,6 +709,9 @@ L.Clipboard = L.Class.extend({
 	paste: function(ev) {
 		console.log('Paste');
 
+		if ($('.w2ui-input').is(':focus'))
+			return;
+
 		if (isAnyVexDialogActive() && !(this.pasteSpecialVex && this.pasteSpecialVex.isOpen))
 			return;
 
