@@ -240,6 +240,10 @@ L.Map.include({
 		}
 		var map = this;
 		var helpLocation = 'loleaflet-help.html';
+		if (window.ThisIsAMobileApp) {
+			window.open(helpLocation);
+			return;
+		}
 		if (window.socketProxy)
 			helpLocation = window.host + window.serviceRoot + '/loleaflet/dist/' + helpLocation;
 
