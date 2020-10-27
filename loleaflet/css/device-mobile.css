@@ -281,7 +281,11 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	background-color: #eeeeee;
 	border-radius: 0px;
 }
-
+#toolbar-down table.w2ui-button.checked {
+	border: 1px solid #e5f1ff;
+	background-color: #e5f1ff;
+	border-radius: 0px;
+}
 /* Related to vex.css */
 .vex-open .loleaflet-user-idle {
 	background: rgba(0, 0, 0, 0) !important;
