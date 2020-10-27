@@ -749,7 +749,7 @@ L.Control.Header = L.Control.extend({
 		if (this._groups) {
 			for (var itLevel = 0; itLevel < this._groups.length; ++itLevel) {
 				for (var groupIndex in this._groups[itLevel]) {
-					if (this._groups[itLevel].hasOwnProperty(groupIndex))
+					if (Object.prototype.hasOwnProperty.call(this._groups[itLevel], groupIndex))
 						this.drawGroupControl(this._groups[itLevel][groupIndex]);
 				}
 			}

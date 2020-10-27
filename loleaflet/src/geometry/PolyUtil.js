@@ -87,7 +87,7 @@ L.PolyUtil.rectanglesToPolygons = function (rectangles, docLayer) {
 	function getKeys(points) {
 		var keys = [];
 		for (var key in points) {
-			if (points.hasOwnProperty(key)) {
+			if (Object.prototype.hasOwnProperty.call(points, key)) {
 				keys.push(key);
 			}
 		}

@@ -3536,7 +3536,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_getEditCursorRectangle: function (msgObj) {
 
-		if (typeof msgObj !== 'object' || !msgObj.hasOwnProperty('rectangle')) {
+		if (typeof msgObj !== 'object' || !Object.prototype.hasOwnProperty.call(msgObj,'rectangle')) {
 			console.error('invalid edit cursor message');
 			return undefined;
 		}
