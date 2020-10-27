@@ -29,6 +29,20 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: #fff2cc');
 	});
+	it('Apply font color.', function() {
+		cy.get('#tb_editbar_item_fontcolor')
+			.click();
+
+		helper.selectAllText(false);
+		
+		cy.get('[name="8E7CC3"]')
+			 .click();
+		
+		helper.reselectAllText();
+	
+		cy.get('#copy-paste-container p font')
+			.should('have.attr', 'color', '#8e7cc3');
+	});
 
 	it('Apply style combobox', function() {
 		cy.get('#tb_editbar_item_styles')
