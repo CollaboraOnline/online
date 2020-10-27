@@ -19,43 +19,40 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_backcolor')
 			.click();
 
-		helper.selectAllText(false);
+		cy.get('.w2ui-color [name="FFF2CC"]')
+			.click();
 
-		cy.get('[name="FFF2CC"]')
-			 .click();
-		
 		helper.reselectAllText();
-	
+
 		cy.get('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: #fff2cc');
 	});
+
 	it('Apply font color.', function() {
 		cy.get('#tb_editbar_item_fontcolor')
 			.click();
 
-		helper.selectAllText(false);
-		
-		cy.get('[name="8E7CC3"]')
-			 .click();
-		
+		cy.get('.w2ui-color [name="8E7CC3"]')
+			.click();
+
 		helper.reselectAllText();
-	
+
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'color', '#8e7cc3');
 	});
 
-	it('Apply style combobox', function() {
+	it('Apply style.', function() {
 		cy.get('#tb_editbar_item_styles')
 			.click();
-	
+
 		cy.contains('.select2-results__option','Title')
 			 .click({force: true});
-	
+
 		cy.get('#copy-paste-container p font font')
 			.should('have.attr', 'style', 'font-size: 28pt');
 	});
 
-	it('Apply font style', function() {
+	it('Apply font name.', function() {
 		cy.get('#tb_editbar_item_fonts')
 			.click();
 
@@ -63,7 +60,7 @@ describe('Top toolbar tests.', function() {
 			 .click({force: true});
 
 		cy.get('#copy-paste-container p font')
-		    .should('have.attr', 'face', 'Alef, sans-serif');
+			.should('have.attr', 'face', 'Alef, sans-serif');
 	});
 
 	it('Apply bold font.', function() {
@@ -83,12 +80,13 @@ describe('Top toolbar tests.', function() {
 		helper.selectAllText(false);
 
 		cy.get('#copy-paste-container p i')
-		    .should('exist');
+			.should('exist');
 	});
-		
+
 	it('Apply underline.', function() {
 		cy.get('#tb_editbar_item_underline')
 			.click();
+
 		helper.reselectAllText();
 
 		cy.get('#copy-paste-container p u')
@@ -113,27 +111,27 @@ describe('Top toolbar tests.', function() {
 			 .click();
 
 		cy.get('#copy-paste-container p font')
-		    .should('have.attr', 'style', 'font-size: 72pt');
+			.should('have.attr', 'style', 'font-size: 72pt');
 	});
 
 	it('Clear direct formatting', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
-		
+
 		helper.selectAllText(false);
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
-
-		helper.selectAllText(false);
 		
 		cy.get('#tb_editbar_item_reset')
 			.click();
-	
+
+		helper.selectAllText(false);
+
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
 	});
-	
+
 	it('Apply left alignment.', function() {
 		cy.get('#tb_editbar_item_centerpara')
 			.click();
