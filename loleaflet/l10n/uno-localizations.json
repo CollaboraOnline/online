@@ -108,6 +108,7 @@
     "ss": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno/ss.json",
     "st": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno/st.json",
     "sv": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno/sv.json",
+    "szl": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno/szl.json",
     "sw": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno/sw-TZ.json",
     "ta": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno/ta.json",
     "te": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/uno/te.json",
