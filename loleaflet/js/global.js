@@ -693,7 +693,7 @@
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
 		if (window.ThisIsAMobileApp) {
 			// We use another approach just for iOS for now.
-			if (window.LOCALIZATIONS && window.LOCALIZATIONS.hasOwnProperty(string)) {
+			if (window.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(window.LOCALIZATIONS, string)) {
 				// window.postMobileDebug('_(' + string + '): YES: ' + window.LOCALIZATIONS[string]);
 				var result = window.LOCALIZATIONS[string];
 				if (window.LANG === 'de-CH') {

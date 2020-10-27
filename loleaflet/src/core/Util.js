@@ -109,7 +109,7 @@ L.Util = {
 
 	// set options to an object, inheriting parent's options as well
 	setOptions: function (obj, options) {
-		if (!obj.hasOwnProperty('options')) {
+		if (!Object.prototype.hasOwnProperty.call(obj, 'options')) {
 			obj.options = obj.options ? L.Util.create(obj.options) : {};
 		}
 		for (var i in options) {

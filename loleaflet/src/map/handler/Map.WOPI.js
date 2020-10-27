@@ -336,7 +336,7 @@ L.Map.WOPI = L.Handler.extend({
 								img: msg.Values.id,
 								hint: _(msg.Values.hint), /* "Try" to localize ! */
 								/* Notify the host back when button is clicked (only when unoCommand is not set) */
-								postmessage: !msg.Values.hasOwnProperty('unoCommand')
+								postmessage: !Object.prototype.hasOwnProperty.call(msg.Values, 'unoCommand')
 							}
 						]);
 						if (msg.Values.mobile)
@@ -480,8 +480,8 @@ L.Map.WOPI = L.Handler.extend({
 			}
 		}
 		else if (msg.MessageId === 'CallPythonScript' &&
-			 msg.hasOwnProperty('ScriptFile') &&
-			 msg.hasOwnProperty('Function')) {
+			 Object.prototype.hasOwnProperty.call(msg, 'ScriptFile') && 
+			 Object.prototype.hasOwnProperty.call(msg, 'Function')) {
 			this._map.CallPythonScriptSource = e.source;
 			this._map.sendUnoCommand('vnd.sun.star.script:' + msg.ScriptFile + '$' + msg.Function + '?language=Python&location=share', msg.Values);
 		}
