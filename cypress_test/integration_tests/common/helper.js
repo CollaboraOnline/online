@@ -87,6 +87,9 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			.click();
 
 		// Select files on the starting screen
+		cy.get('#appmenu [data-id="files"]', {timeout : Cypress.config('defaultCommandTimeout') * 2.0})
+			.should('be.visible');
+
 		cy.get('#appmenu [data-id="files"]')
 			.click();
 
