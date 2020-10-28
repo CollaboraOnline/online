@@ -41,6 +41,7 @@ L.Control.DialogWizard = L.Control.MobileWizard.extend({
 		L.DomUtil.createWithId('div', this.options.nameElement + '-title', tr);
 
 		L.DomUtil.createWithId('div', this.options.nameElement + '-content', this._container);
+		L.DomEvent.on(this._container, 'click dblclick mousedown mousemove mouseup', L.DomEvent.stopPropagation);
 	},
 
 	_fillContent: function (data, map) {
