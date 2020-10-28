@@ -135,6 +135,7 @@ LOLEAFLET_CSS =\
 	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
 	$(srcdir)/css/menubar.css \
 	$(srcdir)/css/mobilewizard.css \
+	$(srcdir)/css/dialogwizard.css \
 	$(srcdir)/css/jsdialogs.css \
 	$(srcdir)/css/notebookbar.css \
 	$(srcdir)/css/vex.css \
