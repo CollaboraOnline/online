@@ -71,7 +71,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	});
 
 	// Open local nextcloud installation
-	cy.visit('http://localhost/nextcloud');
+	cy.visit('http://localhost/nextcloud/index.php/apps/files');
 
 	if (subsequentLoad !== true) {
 		// Log in with cypress test user / password
@@ -84,13 +84,6 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			.type('cypress_test');
 
 		cy.get('input#submit-form')
-			.click();
-
-		// Select files on the starting screen
-		cy.get('#appmenu [data-id="files"]', {timeout : Cypress.config('defaultCommandTimeout') * 2.0})
-			.should('be.visible');
-
-		cy.get('#appmenu [data-id="files"]')
 			.click();
 
 		cy.get('.button.new')
