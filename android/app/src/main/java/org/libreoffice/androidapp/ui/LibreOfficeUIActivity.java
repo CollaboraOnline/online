@@ -416,34 +416,43 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                     expandFabMenu();
             }
         });
+        final OnClickListener clickListener = new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.newWriterFAB:
+                    case R.id.writerLayout:
+                        createNewFileInputDialog(getString(R.string.new_textdocument) + FileUtilities.DEFAULT_WRITER_EXTENSION, "application/vnd.oasis.opendocument.text", CREATE_DOCUMENT_REQUEST_CODE);
+                        break;
+                    case R.id.newCalcFAB:
+                    case R.id.calcLayout:
+                        createNewFileInputDialog(getString(R.string.new_spreadsheet) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, "application/vnd.oasis.opendocument.spreadsheet", CREATE_SPREADSHEET_REQUEST_CODE);
+                        break;
+                    case R.id.newImpressFAB:
+                    case R.id.impressLayout:
+                        createNewFileInputDialog(getString(R.string.new_presentation) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, "application/vnd.oasis.opendocument.presentation", CREATE_PRESENTATION_REQUEST_CODE);
+                        break;
+                }
+            }
+        };
 
         writerFAB = findViewById(R.id.newWriterFAB);
-        writerFAB.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNewFileInputDialog(getString(R.string.new_textdocument) + FileUtilities.DEFAULT_WRITER_EXTENSION, "application/vnd.oasis.opendocument.text", CREATE_DOCUMENT_REQUEST_CODE);
-            }
-        });
+        writerFAB.setOnClickListener(clickListener);
 
         calcFAB = findViewById(R.id.newCalcFAB);
-        calcFAB.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNewFileInputDialog(getString(R.string.new_spreadsheet) + FileUtilities.DEFAULT_SPREADSHEET_EXTENSION, "application/vnd.oasis.opendocument.spreadsheet", CREATE_SPREADSHEET_REQUEST_CODE);
-            }
-        });
+        calcFAB.setOnClickListener(clickListener);
 
         impressFAB = findViewById(R.id.newImpressFAB);
-        impressFAB.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNewFileInputDialog(getString(R.string.new_presentation) + FileUtilities.DEFAULT_IMPRESS_EXTENSION, "application/vnd.oasis.opendocument.presentation", CREATE_PRESENTATION_REQUEST_CODE);
-            }
-        });
+        impressFAB.setOnClickListener(clickListener);
 
         writerLayout = findViewById(R.id.writerLayout);
+        writerLayout.setOnClickListener(clickListener);
+
         impressLayout = findViewById(R.id.impressLayout);
+        impressLayout.setOnClickListener(clickListener);
+
         calcLayout = findViewById(R.id.calcLayout);
+        calcLayout.setOnClickListener(clickListener);
     }
 
     /** Expand the Floating action button. */
