@@ -105,4 +105,9 @@
     <string name="app_version_and_hash">גרסה: %1$s
 \nגיבוב git מקוון: %2$s
 \nגיבוב git ליבה: %3$s</string>
+    <string name="theme_light">בהיר</string>
+    <string name="theme_dark">כהה</string>
+    <string name="theme_system_default">ברירת מחדל של המערכת</string>
+    <string name="choose_theme">בחר ערכת נושא</string>
+    <string name="theme">ערכות נושא</string>
 </resources>
