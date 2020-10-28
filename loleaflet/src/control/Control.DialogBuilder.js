@@ -71,6 +71,10 @@ L.Control.DialogBuilder = L.Control.JSDialogBuilder.extend({
 				span = L.DomUtil.create('span',
 							builder.wizard.options.nameElement + '-bullet', node);
 				span.innerHTML = builder._cleanText(entry.text);
+				L.DomEvent.on(span, 'click', function () {
+					node.classList.toggle(builder.wizard.options.nameElement + '-active');
+					this.classList.toggle(builder.wizard.options.nameElement + '-down');
+				});
 				node = L.DomUtil.create('ul', builder.wizard.options.nameElement + '-sublist', node);
 				builder._fillTreeListBox(node, entry.entries, builder);
 				delete entry.entries;
