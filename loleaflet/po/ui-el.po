@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-26 21:34+0100\n"
-"PO-Revision-Date: 2020-10-13 20:43+0000\n"
+"PO-Revision-Date: 2020-10-28 04:26+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
-"Language: \n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
 "X-Pootle-Revision: 3940107\n"
 
@@ -67,14 +67,12 @@ msgstr "Ανοιγμένα έγγραφα"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
 msgid " user(s)."
-msgstr "0 χρήστες"
+msgstr " χρήστες"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
 msgid " document(s) open."
-msgstr "Ανοιγμένα έγγραφα"
+msgstr " ανοιγμένα έγγραφα."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -102,7 +100,7 @@ msgstr "Έγγραφο"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Προβολές"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -160,7 +158,7 @@ msgstr "Χρονικό διάστημα της στατιστικής CPU (σε 
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Τερματισμός συνεδρίας."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -586,7 +584,7 @@ msgstr "Εμφάνιση χάρακα"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:299
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Εμφάνιση επιλεγμένων φύλλων"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:302
 #: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:666
@@ -641,9 +639,8 @@ msgid "Last modification"
 msgstr "Τελευταία τροποποίηση"
 
 #: src/control/Control.Menubar.js:258
-#, fuzzy
 msgid "Save Comments"
-msgstr "Σχόλιο"
+msgstr "Αποθήκευση σχολίων"
 
 #: src/control/Control.Menubar.js:264 src/control/Control.Menubar.js:562
 #: src/control/Control.NotebookbarImpress.js:294
@@ -672,7 +669,7 @@ msgstr "Παρουσίαση πλήρους οθόνης"
 
 #: src/control/Control.Menubar.js:361
 msgid "Present current slide"
-msgstr ""
+msgstr "Παρουσίαση τρέχουσας διαφάνειας"
 
 #: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:610
 #: src/control/Control.NotebookbarCalc.js:214
@@ -742,19 +739,19 @@ msgstr "Απόκρυψη γραμμής αναζήτησης"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Κύλιση στο πρώτο φύλλο"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "Κύλιση προς τα αριστερά"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "Κύλιση προς τα δεξιά"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Κύλιση στο τελευταίο φύλλο"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
@@ -930,7 +927,7 @@ msgstr "Τρέχουσα"
 #: src/control/Control.NotebookbarBuilder.js:658
 #: src/control/Control.NotebookbarBuilder.js:674
 msgid "Menu"
-msgstr ""
+msgstr "Μενού"
 
 #: src/control/Control.Notebookbar.js:136
 #: src/control/Control.NotebookbarImpress.js:32
@@ -946,7 +943,7 @@ msgstr "Ακύρωση αναίρεσης"
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "Α~ρχείο"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
@@ -977,7 +974,7 @@ msgstr "Ε~πιθεώρηση"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Μορφή"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -986,67 +983,61 @@ msgstr "~Πίνακας"
 
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
-msgstr ""
+msgstr "~Σχεδίαση"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "~Βοήθεια"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Φύλλο"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Δεδομένα"
 
 #: src/control/Control.NotebookbarCalc.js:1903
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Εισαγωγή πίνακα"
+msgstr "Εισαγωγή γραμμών από πάνω"
 
 #: src/control/Control.NotebookbarCalc.js:1916
-#, fuzzy
 msgid "Insert Rows Below"
-msgstr "Εισαγωγή φύλλου"
+msgstr "Εισαγωγή γραμμών από κάτω"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "Εισαγωγή φύλλου πριν από αυτό"
+msgstr "Εισαγωγή στηλών πριν"
 
 #: src/control/Control.NotebookbarCalc.js:1951
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "Εισαγωγή φύλλου μετά από αυτό"
+msgstr "Εισαγωγή στηλών μετά"
 
 #: src/control/Control.NotebookbarCalc.js:1973
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Εισαγωγή αλλαγής γραμμής"
 
 #: src/control/Control.NotebookbarCalc.js:1986
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Εισαγωγή αλλαγής στήλης"
 
 #: src/control/Control.NotebookbarCalc.js:2008
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Διαγραφή"
+msgstr "Διαγραφή γραμμών"
 
 #: src/control/Control.NotebookbarCalc.js:2021
-#, fuzzy
 msgid "Delete Columns"
-msgstr "Στήλες"
+msgstr "Διαγραφή στηλών"
 
 #: src/control/Control.NotebookbarCalc.js:2043
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Αφαίρεση αλλαγής γραμμής"
 
 #: src/control/Control.NotebookbarCalc.js:2056
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Αφαίρεση αλλαγής στήλης"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"
