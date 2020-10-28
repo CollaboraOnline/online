@@ -62,21 +62,25 @@ L.Control.DialogBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_fillTreeListBox: function(parent, entries, builder) {
-		var child, entry;
+		var node, span, entry;
+
 		for (var index in entries) {
 			entry = entries[index];
 			if (entry.entries && L.Util.isArray(entry.entries)) {
-				child = L.DomUtil.create('ul', '', parent);
-				child.innerHTML = builder._cleanText(entry.text);
-				builder._fillTreeListBox(child, entry.entries, builder);
+				node = L.DomUtil.create('li', '', parent);
+				span = L.DomUtil.create('span',
+							builder.wizard.options.nameElement + '-bullet', node);
+				span.innerHTML = builder._cleanText(entry.text);
+				node = L.DomUtil.create('ul', builder.wizard.options.nameElement + '-sublist', node);
+				builder._fillTreeListBox(node, entry.entries, builder);
 				delete entry.entries;
 				delete entry.text;
 			} else {
-				child = L.DomUtil.create('li', '', parent);
-				child.innerHTML = builder._cleanText(entry.text);
+				node = L.DomUtil.create('li', '', parent);
+				node.innerHTML = builder._cleanText(entry.text);
 				delete entry.text;
 			}
-			builder._fillProperties(child, entry);
+			builder._fillProperties(node, entry);
 		}
 	},
 
