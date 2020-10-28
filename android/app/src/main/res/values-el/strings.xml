@@ -107,4 +107,9 @@
     <string name="app_version_and_hash">Έκδοση: %1$s
 \nΔιαδικτυακό git-hash: %2$s
 \nΠυρήνας git-hash: %3$s</string>
+    <string name="theme_light">Ανοιχτόχρωμο</string>
+    <string name="theme_dark">Σκούρο</string>
+    <string name="theme_system_default">Προεπιλεγμένο σύστημα</string>
+    <string name="choose_theme">Επιλέξτε θέμα</string>
+    <string name="theme">Θέμα</string>
 </resources>
