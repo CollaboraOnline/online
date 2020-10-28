@@ -857,7 +857,7 @@ button.leaflet-control-search-next
 .insertshape-grid .row-header {
 	height: 30px;
 	text-align: center;
-	padding: 7px;
+	padding: 0 7px;
 	clear: both;
 	background-color: rgba(128, 128, 128, 0.1);
 	position: static;
