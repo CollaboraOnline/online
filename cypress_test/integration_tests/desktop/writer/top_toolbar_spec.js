@@ -174,4 +174,17 @@ describe('Top toolbar tests.', function() {
 		cy.get('.loleaflet-annotation-content.loleaflet-dont-break')
 			.should('have.text', 'some text');
 	});
+
+	it('Insert table.', function() {
+		cy.get('#tb_editbar_item_inserttable')
+			.click();
+
+		cy.get('.inserttable-grid > .row > .col').eq(3)
+		   .click();
+
+		helper.reselectAllText();
+		
+		cy.get('#copy-paste-container table')
+			.should('exist');
+	});
 });
