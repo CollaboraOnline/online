@@ -80,6 +80,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
@@ -398,6 +399,14 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     /** Initialize the FloatingActionButton. */
     private void setupFloatingActionButton() {
         editFAB = findViewById(R.id.editFAB);
+        if (LOActivity.isChromeOS(this)) {
+            int dp = (int)getResources().getDisplayMetrics().density;
+            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams)editFAB.getLayoutParams();
+            layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+            layoutParams.bottomMargin = dp * 24;
+            editFAB.setCustomSize(dp * 70);
+        }
+
         editFAB.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
