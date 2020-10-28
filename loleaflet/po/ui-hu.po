@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-26 21:34+0100\n"
-"PO-Revision-Date: 2020-10-22 03:01+0000\n"
+"PO-Revision-Date: 2020-10-28 16:33+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.1\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
 "X-Pootle-Revision: 3939165\n"
 
@@ -828,11 +828,11 @@ msgstr "Diák száma"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Beszúrási mód: inaktív"
 
 #: src/control/Control.StatusBar.js:463
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Kijelölési mód: inaktív"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -1571,7 +1571,7 @@ msgstr "Szál eltávolítása"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
-msgstr "Feloldás"
+msgstr "Megoldás"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
