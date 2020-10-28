@@ -16,6 +16,7 @@
 @property (strong) WKWebView *slideshowWebView;
 @property std::string slideshowFile;
 @property (strong) NSURL *slideshowURL;
+@property (strong) UIStackView *helpView;
 
 - (void)bye;
 

@@ -469,6 +469,45 @@ static IMP standardImpOfInputAccessoryView = nil;
             NSArray *messageBodyItems = [message.body componentsSeparatedByString:@" "];
             if ([messageBodyItems count] >= 2) {
                 NSURL *url = [[NSURL alloc] initWithString:messageBodyItems[1]];
+
+                // Is it just a file name? In that case it is the help page.
+                if ([url scheme] == nil) {
+                    url = [[NSBundle mainBundle] URLForResource:messageBodyItems[1] withExtension:nil];
+
+                    // Add a new full-screen WebView displaying the help file.
+
+                    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+                    WKUserContentController *userContentController = [[WKUserContentController alloc] init];
+
+                    configuration.userContentController = userContentController;
+
+                    UIButton *helpCloseButton = [UIButton buttonWithType:UIButtonTypeClose];
+                    [helpCloseButton addTarget:self action:@selector(helpCloseButtonPressed:) forControlEvents:UIControlEventPrimaryActionTriggered];
+
+                    WKWebView *helpWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
+
+                    // helpWebView.translatesAutoresizingMaskIntoConstraints = NO;
+                    helpWebView.navigationDelegate = self;
+
+                    self.webView.hidden = true;
+
+                    self.helpView = [[UIStackView alloc] initWithFrame:self.view.frame];
+
+                    // FIXME: The helpCloseButton gets grotesquely stretched horizontally.
+                    [self.helpView addArrangedSubview:helpCloseButton];
+                    [self.helpView addArrangedSubview:helpWebView];
+
+                    self.helpView.axis = UILayoutConstraintAxisVertical;
+                    self.helpView.alignment = UIStackViewAlignmentFill;
+
+                    [self.view addSubview:self.helpView];
+                    [self.view bringSubviewToFront:self.helpView];
+                    [helpWebView loadRequest:[NSURLRequest requestWithURL:url]];
+
+                    return;
+                }
+
+                // For https: URLs, just open them in the web browser.
                 UIApplication *application = [UIApplication sharedApplication];
                 [application openURL:url options:@{} completionHandler:nil];
                 return;
@@ -566,6 +605,12 @@ static IMP standardImpOfInputAccessoryView = nil;
                    ^{
                        [self dismissDocumentViewController];
                    });
+}
+
+- (void)helpCloseButtonPressed:(UIButton *)sender {
+    [self.helpView removeFromSuperview];
+    self.helpView = nil;
+    self.webView.hidden = false;
 }
 
 @end
