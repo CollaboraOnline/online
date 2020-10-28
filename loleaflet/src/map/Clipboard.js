@@ -671,7 +671,7 @@ L.Clipboard = L.Class.extend({
 			return true;
 		}
 
-		if (cmd === '.uno:Copy' || cmd === '.uno:CopyHyperlinkLocation') {
+		if (cmd === '.uno:Copy' || (L.Browser.mobile && L.Browser.safari && cmd === '.uno:CopyHyperlinkLocation')) {
 			this._execCopyCutPaste('copy', cmd);
 		} else if (cmd === '.uno:Cut') {
 			this._execCopyCutPaste('cut', cmd);
