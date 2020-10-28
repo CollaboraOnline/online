@@ -1460,14 +1460,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             // Wopi post load actions
             if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
             {
-                // When creating new documents from templates, a reproducible race-condition
-                // in at least one host results in 'file locked' error when saving the document
-                // within a short time from creating it. To avoid this, a small delay seems to
-                // be sufficient to allow enough time for the creation lock to be released.
-                // FIXM: remove when said race-condition is reliably fixed in the affected hosts.
-                sleep(2);
-                LOG_DBG("Saving template [" << _wopiFileInfo->getTemplateSource() << "] to storage");
                 std::string result;
+                LOG_DBG("Saving template [" << _wopiFileInfo->getTemplateSource() << "] to storage");
                 docBroker->saveToStorage(getId(), true, result, /*force=*/false);
             }
 
