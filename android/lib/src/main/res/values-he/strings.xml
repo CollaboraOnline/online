@@ -9,7 +9,7 @@
     <string name="preparing_for_the_first_start_after_an_update">בהכנות לקראת ההפעלה הראשונה לאחר עדכון.</string>
     <string name="cannot_open_file_chooser">לא ניתן לפתוח את בוחר הקבצים</string>
     <string name="failed_to_insert_image">הוספת התמונה נכשלה</string>
-    <string name="failed_to_load_file">איתור הקובץ לטעינה נכשל</string>
+    <string name="failed_to_load_file">בחירת הקובץ לטעינה נכשלה</string>
     <string name="storage_permission_required">נדרשת הרשאת גישה לאחסון</string>
     <string name="temp_file_saving_disabled">קובץ זה הוא לקריאה בלבד, אפשרות השמירה הושבתה.</string>
 </resources>
