@@ -1,10 +1,143 @@
-/* Autofilter */
+/* TreeView */
+
+.ui-treeview {
+	display: block;
+}
+
+.ui-treeview-body {
+	display: block;
+	height: 150px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+}
+
+.ui-treeview-expandable > .ui-treeview-expander::before {
+	content: '\25B6';
+	color: black;
+	margin-right: 6px;
+	display: inline-block;
+
+	transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+}
+
+.ui-treeview-expandable.collapsed > .ui-treeview-expander::before {
+	transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+}
+
+.ui-treeview-expandable.collapsed + ul {
+	display: none;
+}
+
+.ui-treeview-body > ul {
+	margin: 0;
+	padding: 0;
+}
+
+.ui-treeview-body ul {
+	list-style-type: none;
+}
+
+.ui-treeview-entry {
+	display: flex;
+	width: 100%;
+}
+
+.ui-treeview-entry input[type='checkbox'] {
+	width: 20px;
+	vertical-align: middle;
+}
+
+.ui-treeview-entry span {
+	width: 100%;
+}
+
+.ui-treeview-entry.mobile-wizard {
+	line-height: 40px;
+	padding-left: 20px;
+}
+
+.ui-treeview-entry:hover,
+.ui-treeview-entry.selected {
+	background-color: silver;
+}
+
+#mobile-wizard .ui-treeview-body input[type='checkbox'] {
+	float: none;
+	vertical-align: middle;
+}
+
+/* Autofilter dropdown */
 
 .autofilter-container {
 	background-color: white;
 	border: solid 1px silver;
 	position: absolute;
 	z-index: 1105;
+	padding: 10px;
+}
+
+#menu.ui-treeview .ui-treeview-body {
+	height: 140px;
+	width: 100%;
+}
+
+.autofilter-container #toggle_all.checkbutton {
+	display: inline-table;
+}
+
+.autofilter-container #menu + #search_edit {
+	display: block;
+}
+
+#mobile-wizard #toggle_all.checkbutton + #select_current,
+.autofilter-container #toggle_all.checkbutton + #select_current {
+	background: url('images/select_current.svg') no-repeat center;
+}
+
+.autofilter-container #toggle_all.checkbutton + #select_current {
+	height: 25px;
+	width: 25px;
+	border: none;
+	margin: 10px 5px 5px;
+	position: absolute;
+	right: 40px;
+}
+
+#mobile-wizard #toggle_all.checkbutton + #select_current + #unselect_current,
+.autofilter-container #toggle_all.checkbutton + #select_current + #unselect_current {
+	background: url('images/unselect_current.svg') no-repeat center;
+}
+
+.autofilter-container #toggle_all.checkbutton + #select_current + #unselect_current {
+	height: 25px;
+	width: 25px;
+	border: none;
+	margin: 10px 5px 5px;
+	position: absolute;
+	right: 5px;
+}
+
+
+.autofilter-container #toggle_all.checkbutton > label,
+.autofilter-container #toggle_all.checkbutton > input {
+	display: table-cell;
+	vertical-align: middle;
+	height: 40px;
+}
+
+.autofilter-container #check_tree_box.ui-treeview .ui-treeview-body,
+.autofilter-container #check_list_box.ui-treeview .ui-treeview-body {
+	width: 100%;
+	min-width: 200px;
 }
 
 /* Word count dialog */

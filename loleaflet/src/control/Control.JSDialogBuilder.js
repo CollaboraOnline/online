@@ -9,6 +9,8 @@
 L.Control.JSDialogBuilder = L.Control.extend({
 
 	options: {
+		// window id
+		windowId: null,
 		// reference to map
 		map: null,
 		// reference to the parent container
@@ -177,7 +179,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
 		this._controlHandlers['colorlistbox'] = this._colorControl;
 		this._controlHandlers['borderstyle'] = this._borderControl;
-		this._controlHandlers['treelistbox'] = this._listboxControl;
+		this._controlHandlers['treelistbox'] = this._treelistboxControl;
 		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
@@ -228,7 +230,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_defaultCallbackHandler: function(objectType, eventType, object, data, builder) {
 		console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
-		builder.wizard.setCurrentScrollPosition();
+		if (builder.wizard.setCurrentScrollPosition)
+			builder.wizard.setCurrentScrollPosition();
 
 		if (objectType == 'toolbutton' && eventType == 'click') {
 			// encode spaces
@@ -236,14 +239,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.sendUnoCommand(encodedCommand);
 		} else if (object) {
 			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
-			var windowId = window.mobileDialogId !== undefined ? window.mobileDialogId :
-				(window.notebookbarId !== undefined ? window.notebookbarId :
-					(window.sidebarId !== undefined ? window.sidebarId : -1));
+			var windowId = builder.options.windowId !== null && builder.options.windowId !== undefined ? builder.options.windowId :
+				(window.mobileDialogId !== undefined ? window.mobileDialogId :
+					(window.notebookbarId !== undefined ? window.notebookbarId :
+						(window.sidebarId !== undefined ? window.sidebarId : -1)));
 			var message = 'dialogevent ' + windowId
-					+ ' {"id":"' + object.id
-				+ '", "cmd": "' + eventType
-				+ '", "data": "' + data
-				+ '", "type": "' + objectType + '"}';
+					+ ' {\"id\":\"' + object.id
+				+ '\", \"cmd\": \"' + eventType
+				+ '\", \"data\": \"' + (typeof(data) === 'object' ? encodeURIComponent(JSON.stringify(data)) : data)
+				+ '\", \"type\": \"' + objectType + '\"}';
 			builder.map._socket.sendMessage(message);
 		}
 	},
@@ -1513,6 +1517,78 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			iconPath = builder._createIconURL(data.command);
 
 		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath);
+
+		return false;
+	},
+
+	_treelistboxEntry: function (parentContainer, treeViewData, entry, builder) {
+		var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
+
+		var span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-entry ' + (entry.children ? ' ui-treeview-expandable' : 'ui-treeview-notexpandable'), li);
+
+		var expander = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander ', span);
+
+		if (entry.selected && entry.selected === 'true')
+			$(span).addClass('selected');
+
+		if (entry.state) {
+			var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', span);
+			checkbox.type = 'checkbox';
+
+			if (entry.state === 'true')
+				checkbox.checked = true;
+
+			$(checkbox).change(function() {
+				if (this.checked) {
+					builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
+				} else {
+					builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
+				}
+			});
+		}
+
+		var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
+		text.innerText = entry.text;
+
+		if (entry.children) {
+			var ul = L.DomUtil.create('ul', builder.options.cssClass, li);
+			for (var i in entry.children) {
+				builder._treelistboxEntry(ul, treeViewData, entry.children[i], builder);
+			}
+
+			var toggleFunction = function() {
+				$(span).toggleClass('collapsed');
+			};
+
+			$(expander).click(toggleFunction);
+
+			// block expand/collapse on checkbox
+			if (entry.state)
+				$(checkbox).click(toggleFunction);
+		}
+
+		$(text).click(function() {
+			$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
+			$(span).addClass('selected');
+
+			builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+		});
+	},
+
+	_treelistboxControl: function (parentContainer, data, builder) {
+		if (!data.entries || data.entries.length === 0)
+			return false;
+
+		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
+		table.id = data.id;
+
+		var tbody = L.DomUtil.create('tbody', builder.options.cssClass + ' ui-treeview-body', table);
+		var ul = L.DomUtil.create('ul', builder.options.cssClass, tbody);
+
+
+		for (var i in data.entries) {
+			builder._treelistboxEntry(ul, data, data.entries[i], builder);
+		}
 
 		return false;
 	},
