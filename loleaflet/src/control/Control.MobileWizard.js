@@ -28,7 +28,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	onAdd: function (map) {
-		this.map = map;
+		this._map = map;
 
 		// for the moment, the mobile-wizard is mobile phone only
 		if (!window.mode.isMobile())
@@ -90,30 +90,30 @@ L.Control.MobileWizard = L.Control.extend({
 		if (window.ThisIsTheAndroidApp)
 			window.postMobileMessage('MOBILEWIZARD show');
 		if (window.mobileMenuWizard)
-			this.map.showSidebar = false;
+			this._map.showSidebar = false;
 	},
 
 	_showWizardSidebar: function() {
-		this.map.showSidebar = true;
+		this._map.showSidebar = true;
 		this._refreshSidebar();
 	},
 
 	_hideWizard: function() {
 		// dialog
-		if (this.map.dialog.hasDialogInMobilePanelOpened()) {
-			this.map.dialog._onDialogClose(window.mobileDialogId, true);
+		if (this._map.dialog.hasDialogInMobilePanelOpened()) {
+			this._map.dialog._onDialogClose(window.mobileDialogId, true);
 			window.mobileDialogId = undefined;
 		}
 
 		$(this.options.idPrefix).hide();
 		$(this.options.idPrefix + '-content').empty();
-		if (this.map.isPermissionEdit()) {
+		if (this._map.isPermissionEdit()) {
 			$('#toolbar-down').show();
 		}
 		if (window.ThisIsTheAndroidApp)
 			window.postMobileMessage('MOBILEWIZARD hide');
 
-		this.map.showSidebar = false;
+		this._map.showSidebar = false;
 		this._isActive = false;
 		this._currentPath = [];
 		if (window.mobileWizard === true)
@@ -130,8 +130,8 @@ L.Control.MobileWizard = L.Control.extend({
 
 		this._updateToolbarItemStateByClose();
 
-		if (!this.map.hasFocus()) {
-			this.map.focus();
+		if (!this._map.hasFocus()) {
+			this._map.focus();
 		}
 
 		this._updateMapSize();
@@ -232,7 +232,7 @@ L.Control.MobileWizard = L.Control.extend({
 				$('#main-menu-state').click();
 			} else if (window.contextMenuWizard) {
 				window.contextMenuWizard = false;
-				this.map.fire('closemobilewizard');
+				this._map.fire('closemobilewizard');
 			}
 		} else {
 			this._currentDepth--;
@@ -302,7 +302,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_goToPath: function(path) {
 		// when dialog has tabs, tab selection triggers the callback, causes infinite regenetate loop
-		if (this._tabs && path && path.length && !this.map.dialog.hasDialogInMobilePanelOpened())
+		if (this._tabs && path && path.length && !this._map.dialog.hasDialogInMobilePanelOpened())
 			this._selectTab(path[0]);
 
 		var _path = [];
@@ -328,7 +328,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_refreshSidebar: function(ms) {
 		ms = ms !== undefined ? ms : 400;
-		var map = this.map;
+		var map = this._map;
 		setTimeout(function () {
 			var message = 'dialogevent ' +
 			    (window.sidebarId !== undefined ? window.sidebarId : -1) +
@@ -350,10 +350,10 @@ L.Control.MobileWizard = L.Control.extend({
 					 data.children[0].type == 'deck');
 
 			if (!this._isActive && isSidebar) {
-				if (this.map.showSidebar == false)
+				if (this._map.showSidebar == false)
 					return;
 			}
-			if (isSidebar && !this.map.showSidebar) {
+			if (isSidebar && !this._map.showSidebar) {
 				return;
 			}
 
@@ -363,7 +363,7 @@ L.Control.MobileWizard = L.Control.extend({
 				window.mobileDialogId = data.id;
 			}
 
-			if (this.map.getDocType() === 'presentation' && this._isSlidePropertyPanel(data))
+			if (this._map.getDocType() === 'presentation' && this._isSlidePropertyPanel(data))
 				this._showSlideSorter();
 
 			this._isActive = true;
@@ -402,7 +402,7 @@ L.Control.MobileWizard = L.Control.extend({
 				history.pushState({context: this.options.nameElement, level: 0}, this.options.nameElement + '-level-0');
 			}
 
-			var builder = L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: this.options.nameElement});
+			var builder = L.control.jsDialogBuilder({mobileWizard: this, map: this._map, cssClass: this.options.nameElement});
 			builder.build(this.content.get(0), [data]);
 
 			this._mainTitle = data.text ? data.text : '';
@@ -415,7 +415,7 @@ L.Control.MobileWizard = L.Control.extend({
 				else if (data.id === 'insertshape') {
 					$(this.options.idPrefix).addClass('shapeswizard');
 				}
-				if (this.map.getDocType() === 'spreadsheet')
+				if (this._map.getDocType() === 'spreadsheet')
 					$(this.options.idPrefix).css('top', $('#spreadsheet-row-column-frame').css('top'));
 				else
 					$(this.options.idPrefix).css('top', $('#document-container').css('top'));
@@ -476,7 +476,7 @@ L.Control.MobileWizard = L.Control.extend({
 			var stylesIdx = L.LOUtil.findIndexInParentByAttribute(deck, 'id', 'StylesPropertyPanel');
 			var textIdx = L.LOUtil.findIndexInParentByAttribute(deck, 'id', 'TextPropertyPanel');
 
-			if (stylesIdx >= 0 && this.map.getDocType() === 'spreadsheet')
+			if (stylesIdx >= 0 && this._map.getDocType() === 'spreadsheet')
 			{       // remove rather useless calc styles panel
 				deck.children.splice(stylesIdx, 1);
 			}
@@ -490,7 +490,7 @@ L.Control.MobileWizard = L.Control.extend({
 					   'linespacing', 'stylenew', 'styleupdate',
 					   'beginarrowstyle', 'endarrowstyle'];
 
-			if (this.map.getDocType() === 'presentation')
+			if (this._map.getDocType() === 'presentation')
 				removeItems.push('indentfieldbox');
 
 			this._removeItems(deck, removeItems);
