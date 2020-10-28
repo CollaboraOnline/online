@@ -270,6 +270,10 @@ static IMP standardImpOfInputAccessoryView = nil;
     completionHandler(@"Something happened.");
 }
 
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
+    LOG_ERR("WebContent process terminated! What should we do?");
+}
+
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     int rc;
     struct pollfd p;
