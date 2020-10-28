@@ -65,6 +65,11 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - subsequentLoad: ' + subsequentLoad);
 
+	// Ignore exceptions comming from nextlcoud.
+	Cypress.on('uncaught:exception', function() {
+		return false;
+	});
+
 	// Open local nextcloud installation
 	cy.visit('http://localhost/nextcloud');
 
@@ -79,6 +84,10 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			.type('cypress_test');
 
 		cy.get('input#submit-form')
+			.click();
+
+		// Select files on the starting screen
+		cy.get('#appmenu [data-id="files"]')
 			.click();
 
 		cy.get('.button.new')

@@ -137,7 +137,7 @@ CYPRESS_INTEGRATION environment variable. For example:
 CYPRESS_INTEGRATION="nextcloud" make check
 
 Prerequisites:
-* Need a local NC installation connected with Collabora Online
+* Need a local NC 20 installation connected with Collabora Online
 * NC should be available at http://localhost/nextcloud/ (no ssl)
 * Need an NC user with 'cypress_test' as user name and password.
 
