@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-26 19:53+0000\n"
+"PO-Revision-Date: 2020-10-28 16:33+0000\n"
 "Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -1789,6 +1789,9 @@ msgstr "Kendi dilimde imla denetimini nasıl yapabilirim?"
 #: html/loleaflet-help.html%2Bdiv.p:462-5
 msgid "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</span> and select the language for the whole document. Optionally you can set languages for the selected text and for the current paragraph."
 msgstr ""
+"<span class=\"ui\">Araçlar</span> → <span class=\"ui\">Diller</span> "
+"menüsünü seçin ve tüm belge için dili seçin. İsteğe bağlı olarak mevcut "
+"paragraf ve seçilen metin için dili ayarlayabilirsiniz."
 
 #: html/loleaflet-help.html%2Bdiv.h4:463-5
 msgid "How can I remove the red wavy lines in my document?"
@@ -1797,6 +1800,8 @@ msgstr "Belgemdeki kırmızı dalgalı çizgileri nasıl kaldırabilirim?"
 #: html/loleaflet-help.html%2Bdiv.p:464-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
 msgstr ""
+"<span class=\"ui\">Araçlar</span> menüsünü seçin ve <span class=\"ui\""
+">Otomatik İmla Denetimi</span> seçimini kaldırın."
 
 #: html/loleaflet-help.html%2Bdiv.h4:465-5
 msgid "What is the blue wavy underline in some words in the text?"
@@ -1805,6 +1810,10 @@ msgstr "Metindeki bazı kelimelerde bulunan mavi dalgalı alt çizgi nedir?"
 #: html/loleaflet-help.html%2Bdiv.p:466-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
 msgstr ""
+"Metindeki dil bilgisi hataları mavi dalgalı alt çizgi ile işaretlenmiştir. "
+"Dil bilgisi hatasını ve rahatsız edici dil bilgisi kurallarını düzeltmek "
+"için öneriler içeren bir menü açmak için farenin sağ düğmesiyle altı çizili "
+"metne tıklayın. Metni değiştirmek için doğru öneriyi seçin."
 
 #: html/loleaflet-help.html%2Bdiv.h4:467-5
 msgid "Is here a thesaurus?"
@@ -1813,14 +1822,23 @@ msgstr "Burada bir eş anlamlılar sözlüğü var mı?"
 #: html/loleaflet-help.html%2Bdiv.p:468-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
 msgstr ""
+"Evet. İstediğiniz kelimeyi tıklayın ve <span class=\"ui\">Araçlar</span> → "
+"<span class=\"ui\">Eş Anlamlılar Sözlüğü</span>'nü seçin. Değişiklik "
+"önerileri içeren bir iletişim penceresi açılır."
 
 #: html/loleaflet-help.html%2Bdiv.h4:470-5
 msgid "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove from my text document?"
 msgstr ""
+"Mavi <span class=\"blue\"> ¶ </span> sembolü nedir ve metin belgemden nasıl "
+"çıkarabilirim?"
 
 #: html/loleaflet-help.html%2Bdiv.p:471-5
 msgid "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to help text alignment and editing and is not printed. To toggle it in the document display, choose menu <span class=\"ui\">View</span> → <span class=\"ui\">Formatting mark</span>."
 msgstr ""
+"<span class=\"blue\">¶</span> sembolü bir biçimlendirme işaretidir. Metin "
+"hizalamaya ve düzenlemeye yardımcı olmak için kullanılır ve yazdırılmaz. "
+"Belge görünümünde değiştirmek için, <span class=\"ui\">Görünüm</span> → "
+"<span class=\"ui\">Biçimlendirme işareti</span> menüsünü seçin."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:475-5
 msgid "How do I get a word count of my document?"
