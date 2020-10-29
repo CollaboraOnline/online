@@ -102,6 +102,21 @@ L.ControllerDialogWizard = L.Class.extend({
 
 		switch (action.dialogid) {
 		case L.ControllerDialogWizard.MACRO_SELECTOR:
+			switch (action.controlid) {
+			case 'categories':
+				var target = action.data;
+				selected = dlg._container.querySelector(dlg.options.classPrefix + '-selected');
+				if (selected)
+					L.DomUtil.removeClass(selected, dlg.options.nameElement + '-selected');
+
+				if (!target)
+					break;
+
+				if (target.hasAttribute('data-uri')) {
+					target.classList.toggle(dlg.options.nameElement + '-selected');
+				}
+				break;
+			}
 			break;
 		}
 	},

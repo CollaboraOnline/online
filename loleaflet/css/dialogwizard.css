@@ -21,6 +21,10 @@
 	transform: rotate(90deg);
 }
 
+.dialog-wizard-sublist > li.dialog-wizard-selected {
+	background-color: #ccc;
+}
+
 .dialog-wizard-sublist {
 	display: none;
 }
