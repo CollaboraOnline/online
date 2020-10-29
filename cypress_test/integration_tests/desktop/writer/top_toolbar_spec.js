@@ -14,7 +14,7 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
-
+	
 	it('Apply highlight color.', function() {
 		cy.get('#tb_editbar_item_backcolor')
 			.click();
@@ -185,6 +185,19 @@ describe('Top toolbar tests.', function() {
 		helper.reselectAllText();
 		
 		cy.get('#copy-paste-container table')
+			.should('exist');
+	});
+
+	it('Insert image.', function() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+		   .click();
+		cy.get('#tb_editbar_item_insertgraphic')
+			.should('be.visible');
+
+		cy.get('#insertgraphic[type=file]')
+			.attachFile('/desktop/writer/image_to_insert.png');
+		
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
 			.should('exist');
 	});
 });
