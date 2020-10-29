@@ -484,21 +484,24 @@ static IMP standardImpOfInputAccessoryView = nil;
                     UIButton *helpCloseButton = [UIButton buttonWithType:UIButtonTypeClose];
                     [helpCloseButton addTarget:self action:@selector(helpCloseButtonPressed:) forControlEvents:UIControlEventPrimaryActionTriggered];
 
-                    WKWebView *helpWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
+                    UIStackView *helpCloseButtonContainer = [[UIStackView alloc] initWithArrangedSubviews:@[ helpCloseButton ]];
+                    helpCloseButtonContainer.axis = UILayoutConstraintAxisVertical;
+                    helpCloseButtonContainer.alignment = UIStackViewAlignmentLeading;
 
-                    // helpWebView.translatesAutoresizingMaskIntoConstraints = NO;
+                    WKWebView *helpWebView = [[WKWebView alloc] initWithFrame:CGRectInset(self.view.frame, 20, 40) configuration:configuration];
+
+                    [helpWebView becomeFirstResponder];
+
                     helpWebView.navigationDelegate = self;
 
                     self.webView.hidden = true;
 
-                    self.helpView = [[UIStackView alloc] initWithFrame:self.view.frame];
+                    self.helpView = [[UIStackView alloc] initWithFrame:CGRectInset(self.view.frame, 20, 20)];
 
-                    // FIXME: The helpCloseButton gets grotesquely stretched horizontally.
-                    [self.helpView addArrangedSubview:helpCloseButton];
+                    [self.helpView addArrangedSubview:helpCloseButtonContainer];
                     [self.helpView addArrangedSubview:helpWebView];
 
                     self.helpView.axis = UILayoutConstraintAxisVertical;
-                    self.helpView.alignment = UIStackViewAlignmentFill;
 
                     [self.view addSubview:self.helpView];
                     [self.view bringSubviewToFront:self.helpView];
