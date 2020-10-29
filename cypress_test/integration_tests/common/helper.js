@@ -93,6 +93,17 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 		cy.get('#free_space')
 			.should('not.have.attr', 'value', '');
 
+		// Hide first run wizard if it's there
+		cy.get('body')
+			.then(function(body) {
+				if (body.find('#firstrunwizard').length !== 0) {
+					cy.get('#firstrunwizard')
+						.then(function(wizard) {
+							wizard.hide();
+						});
+				}
+			});
+
 		// Remove all files
 		cy.get('#fileList')
 			.then(function(filelist) {
