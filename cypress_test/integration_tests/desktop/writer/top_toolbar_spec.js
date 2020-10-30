@@ -200,4 +200,33 @@ describe('Top toolbar tests.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
 			.should('exist');
 	});
+
+	it('Insert hyperlink.', function() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+		   .click();
+		
+		cy.get('#tb_editbar_item_link')
+			.click();
+
+		cy.get('.vex-content.hyperlink-dialog')
+			.should('exist');
+
+		cy.get('#hyperlink-text-box')
+			.type('link');
+			
+		cy.get('#hyperlink-link-box')
+			.type('www.something.com');
+
+		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\ntextlink');
+
+		cy.get('#copy-paste-container p a')
+			.should('have.attr', 'href', 'http://www.something.com/');
+	});
+
 });
