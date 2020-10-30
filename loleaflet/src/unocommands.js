@@ -232,6 +232,7 @@ var unoCommandsArray = {
 	NumberFormatIncDecimals:{spreadsheet:{menu:_('Add Decimal Place'),},},
 	NumberFormatPercent:{spreadsheet:{context:_('Format as Percent'),menu:_('Percent'),},text:{menu:_('Number Format: Percent'),},},
 	NumberingStart:{text:{menu:_('Restart Numbering'),},},
+	RemoveBullets:{text:{menu:_('Numbering Off'),},},
 	ObjectBackOne:{global:{menu:_('Back One'),},},
 	ObjectForwardOne:{global:{menu:_('Forward One'),},},
 	OnlineAutoFormat:{text:{menu:_('~While Typing'),},},
