@@ -1238,6 +1238,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
+		this._removeSelection();
 	},
 
 	_removeInputHelpMarker: function() {
@@ -3278,14 +3279,19 @@ L.TileLayer = L.GridLayer.extend({
 			this._updateMarkers();
 		}
 		else {
-			this._textSelectionStart = null;
-			this._textSelectionEnd = null;
-			this._selectedTextContent = '';
-			for (var key in this._selectionHandles) {
-				this._map.removeLayer(this._selectionHandles[key]);
-				this._selectionHandles[key].isDragged = false;
-			}
+			this._removeSelection();
 		}
+	},
+
+	_removeSelection: function() {
+		this._textSelectionStart = null;
+		this._textSelectionEnd = null;
+		this._selectedTextContent = '';
+		for (var key in this._selectionHandles) {
+			this._map.removeLayer(this._selectionHandles[key]);
+			this._selectionHandles[key].isDragged = false;
+		}
+		this._selections.clearLayers();
 	},
 
 	_updateMarkers: function() {
