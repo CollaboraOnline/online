@@ -124,6 +124,14 @@ L.ControllerDialogWizard = L.Class.extend({
 
 				description.innerHTML = target.getAttribute('data-description');
 				break;
+			case 'ok':
+				var scriptURL;
+				selected = dlg._container.querySelector(dlg.options.classPrefix + '-selected');
+				if (selected && selected.hasAttribute('data-uri')) {
+					scriptURL = selected.getAttribute('data-uri');
+					this._map.sendUnoCommand('.uno:RunMacro?ScriptURL:string=' + scriptURL);
+				}
+				break;
 			}
 			break;
 		}
