@@ -440,6 +440,12 @@ L.Clipboard = L.Class.extend({
 	_getHtmlForClipboard: function() {
 		var text;
 
+		if ($('.ui-edit').is(':focus'))
+			return $('.ui-edit').value();
+
+		if ($('.w2ui-input').is(':focus'))
+			return $('.w2ui-input').value();
+
 		if (this._selectionType === 'complex' ||
 		    this._map._docLayer.hasGraphicSelection()) {
 			console.log('Copy/Cut with complex/graphical selection');
@@ -708,6 +714,9 @@ L.Clipboard = L.Class.extend({
 
 	paste: function(ev) {
 		console.log('Paste');
+
+		if ($('.ui-edit').is(':focus'))
+			return;
 
 		if ($('.w2ui-input').is(':focus'))
 			return;
