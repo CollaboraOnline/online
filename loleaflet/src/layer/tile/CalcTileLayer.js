@@ -1576,7 +1576,7 @@ L.SheetDimension = L.Class.extend({
 			regenerateVisibleSizes = true;
 		}
 
-		if (Object.prototype.hasOwnProperty.call(jsonObject, 'filtered')) { 
+		if (Object.prototype.hasOwnProperty.call(jsonObject, 'filtered')) {
 			thisLoadOK = this._filtered.load(jsonObject.filtered);
 			loadsOK = loadsOK && thisLoadOK;
 			regenerateVisibleSizes = true;

@@ -480,7 +480,7 @@ L.Map.WOPI = L.Handler.extend({
 			}
 		}
 		else if (msg.MessageId === 'CallPythonScript' &&
-			 Object.prototype.hasOwnProperty.call(msg, 'ScriptFile') && 
+			 Object.prototype.hasOwnProperty.call(msg, 'ScriptFile') &&
 			 Object.prototype.hasOwnProperty.call(msg, 'Function')) {
 			this._map.CallPythonScriptSource = e.source;
 			this._map.sendUnoCommand('vnd.sun.star.script:' + msg.ScriptFile + '$' + msg.Function + '?language=Python&location=share', msg.Values);
