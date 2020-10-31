@@ -172,6 +172,11 @@ public:
 #endif
     }
 
+protected:
+    std::shared_ptr<WebSocketHandler> getWSHandler() const { return _ws; }
+    std::shared_ptr<Socket> getSocket() const { return _socket; };
+
+private:
     std::string _name;
     pid_t _pid;
     std::shared_ptr<WebSocketHandler> _ws;
@@ -198,7 +203,7 @@ public:
     ForKitProcess(int pid, std::shared_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest &request)
         : WSProcess("ForKit", pid, socket, std::make_shared<ForKitProcWSHandler>(socket, request))
     {
-        socket->setHandler(_ws);
+        socket->setHandler(getWSHandler());
     }
 };
 
