@@ -59,7 +59,7 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
     _docBroker = docBroker;
 
     // Add the prisoner socket to the docBroker poll.
-    docBroker->addSocketToPoll(_socket);
+    docBroker->addSocketToPoll(getSocket());
 }
 
 namespace
