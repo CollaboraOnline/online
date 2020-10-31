@@ -3536,7 +3536,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_getEditCursorRectangle: function (msgObj) {
 
-		if (typeof msgObj !== 'object' || !msgObj.hasOwnProperty('rectangle')) {
+		if (typeof msgObj !== 'object' || !Object.prototype.hasOwnProperty.call(msgObj,'rectangle')) {
 			console.error('invalid edit cursor message');
 			return undefined;
 		}
@@ -3601,7 +3601,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._debugRenderCount = 0;
 		if (!this._debugData) {
 			this._debugData = {};
-			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount'];
+			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
 			for (var i = 0; i < this._debugDataNames.length; i++) {
 				this._debugData[this._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(this._map);
 			}
@@ -3657,6 +3657,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._debugLoremPos = 0;
 	},
 
+	_debugSetPostMessage: function(type,msg) {
+		this._debugData['postMessage'].setPrefix(type+': '+ msg);
+	},
+	
 	_debugSetTimes: function(times, value) {
 		if (value < times.best) {
 			times.best = value;
