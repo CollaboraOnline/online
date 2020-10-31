@@ -14,4 +14,8 @@
     <string name="rate_our_app_text">Pokud se vám tato aplikace líbí, dejte jí na Google Play 5 hvězdiček. Příznivé recenze jsou pro nás tou nejlepší motivací.</string>
     <string name="rate_now">Ohodnotit nyní</string>
     <string name="file_chromeos_read_only">Soubor nelze v tomto umístění uložit, je proto otevřen jen pro čtení. Chcete-li využít přístup pro čtení i zápis, přesuňte jej mezi soubory Play.</string>
+    <string name="ask_for_copy">Tento dokument je jen ke čtení. Chcete vytvořit kopii k úpravám\?</string>
+    <string name="edit_copy">Upravit kopii</string>
+    <string name="view_only">Jen prohlížení</string>
+    <string name="restarting">Restartování...</string>
 </resources>
