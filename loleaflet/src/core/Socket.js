@@ -242,6 +242,9 @@ L.Socket = L.Class.extend({
 
 	_logSocket: function(type, msg) {
 		var fullDebug = this._map._docLayer && this._map._docLayer._debug;
+		if (fullDebug) 
+			this._map._docLayer._debugSetPostMessage(type,msg);
+
 		if (!window.protocolDebug && !fullDebug)
 			return;
 
@@ -255,8 +258,10 @@ L.Socket = L.Class.extend({
 			status += '[!bundlejsLoaded]';
 
 		var color = type === 'OUTGOING' ? 'color:red' : 'color:blue';
+		
 		console.log2(+new Date() + ' %c' + type + status + '%c: ' + msg.concat(' ').replace(' ', '%c '),
-			     'background:#ddf;color:black', color, 'color:black');
+				 'background:#ddf;color:black', color, 'color:black');
+		
 	},
 
 	_onMessage: function (e) {
