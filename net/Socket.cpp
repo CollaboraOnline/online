@@ -50,8 +50,9 @@ int Socket::createSocket(Socket::Type type)
     case Type::IPv6: domain = AF_INET6; break;
     case Type::All:  domain = AF_INET6; break;
     case Type::Unix: domain = AF_UNIX;  break;
-    default: assert (false); break;
+    default: assert(!"Unknown Socket::Type"); break;
     }
+
     return socket(domain, SOCK_STREAM | SOCK_NONBLOCK, 0);
 #else
     return fakeSocketSocket();
