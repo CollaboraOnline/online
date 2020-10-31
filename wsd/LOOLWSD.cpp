@@ -2103,7 +2103,7 @@ private:
         }
 
         Poco::MemoryInputStream message(&socket->getInBuffer()[0],
-                                        socket->getInBuffer().size());;
+                                        socket->getInBuffer().size());
         Poco::Net::HTTPRequest request;
 
         try
@@ -2252,7 +2252,7 @@ public:
 #endif
 
 /// Handles incoming connections and dispatches to the appropriate handler.
-class ClientRequestDispatcher : public SimpleSocketHandler
+class ClientRequestDispatcher final : public SimpleSocketHandler
 {
 public:
     ClientRequestDispatcher()

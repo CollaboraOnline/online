@@ -51,7 +51,7 @@ private:
 };
 
 /// Handles incoming connections and dispatches to the appropriate handler.
-class ClientRequestDispatcher : public SimpleSocketHandler
+class ClientRequestDispatcher final : public SimpleSocketHandler
 {
 public:
     ClientRequestDispatcher()

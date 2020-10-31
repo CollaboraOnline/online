@@ -42,7 +42,7 @@ class WSProcess
 {
 public:
     /// @param pid is the process ID.
-    /// @param socket is the underlying Sockeet to the process.
+    /// @param socket is the underlying Socket to the process.
     WSProcess(const std::string& name,
               const pid_t pid,
               const std::shared_ptr<StreamSocket>& socket,

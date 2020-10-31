@@ -64,18 +64,16 @@ class ChildProcess : public WSProcess
 {
 public:
     /// @param pid is the process ID of the child.
-    /// @param socket is the underlying Sockeet to the child.
+    /// @param socket is the underlying Socket to the child.
     ChildProcess(const pid_t pid,
                  const std::string& jailId,
                  const std::shared_ptr<StreamSocket>& socket,
                  const Poco::Net::HTTPRequest &request) :
-
         WSProcess("ChildProcess", pid, socket, std::make_shared<WebSocketHandler>(socket, request)),
         _jailId(jailId),
         _smapsFD(-1)
     {
     }
-
 
     ChildProcess(ChildProcess&& other) = delete;
 
