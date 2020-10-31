@@ -189,6 +189,10 @@
 
 			return !L.Browser.mobile;
 		},
+		useCanvasLayer: function() {
+			// FIXME the CanvasTileLayer is so far desktop-only
+			return global.mode.isDesktop();
+		},
 		getDeviceFormFactor: function() {
 			if (window.mode.isMobile())
 				return 'mobile';
