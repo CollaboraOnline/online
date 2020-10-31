@@ -13,4 +13,8 @@
     <string name="rate_our_app_text">Ef þér líkar þetta, skaltu endilega gefa okkur 5 stjörnur á Google Play. Góðar umsagnir notenda er það sem drífur okkur áfram.</string>
     <string name="exiting">Hætti...</string>
     <string name="file_chromeos_read_only">Þessa skrá er ekki hægt að vista á þessum stað, opna hana skrifvarða. Færðu hana í Play-skrárnar til að fá fullan les/skrifaðgang.</string>
+    <string name="ask_for_copy">Þetta skjal er skrifvarið. Viltu gera afrit til að breyta\?</string>
+    <string name="edit_copy">Breyta afriti</string>
+    <string name="view_only">Aðeins skoða</string>
+    <string name="restarting">Endurræsi...</string>
 </resources>

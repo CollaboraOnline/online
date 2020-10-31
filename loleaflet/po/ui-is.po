@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-26 21:34+0100\n"
-"PO-Revision-Date: 2020-10-16 21:33+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2020-10-30 16:26+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.3.1-dev\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-ui-is.po\n"
 "X-Pootle-Revision: 3937885\n"
 
@@ -583,7 +583,7 @@ msgstr "Birta mælistiku"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:299
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Sýna stöðustiku"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:302
 #: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:666
@@ -822,11 +822,11 @@ msgstr "Fjöldi skyggna"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Innsetningarhamur: óvirkur"
 
 #: src/control/Control.StatusBar.js:463
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Valhamur: óvirkur"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -1558,7 +1558,7 @@ msgstr "Fjarlægja"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Fjarlægja athugasemdarunu"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1566,15 +1566,15 @@ msgstr "Leysa"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Taka til baka lausn"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Taka til baka lausn á athugasemdarunu"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Leysa athugasemdarunu"
 
 #: src/layer/tile/TileLayer.js:853
 msgid "Functions"
