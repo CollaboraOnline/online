@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-11 09:41+0200\n"
-"PO-Revision-Date: 2020-10-16 21:33+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2020-10-30 16:26+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/help/is/>\n"
 "Language: is\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.3.1-dev\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-help-is.po\n"
 "X-Pootle-Revision: 2357047\n"
 
@@ -1229,6 +1229,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid "<span class=\"def\">Data series formatting:</span> Open the context menu and choose <span class=\"ui\">Format data series</span>."
 msgstr ""
+"<span class=\"def\">Snið gagnaraða:</span> Opnaðu samhengisvalmyndina og "
+"veldu <span class=\"ui\">Sníða gagnaraðir</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:323-5
 msgid "Handling images"
@@ -1325,6 +1327,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:369-9
 msgid "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
+"Veldu <span class=\"ui\">Lögmæti</span> úr <span class=\"ui\">Gögn</span> "
+"valmyndinni. Gluggi með heitinu <span class=\"ui\">Lögmæti</span> mun opnast."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:372-11
 msgid "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-box list. Depending on the criterion, more options shows. Fill the required data."
@@ -1496,15 +1500,17 @@ msgstr "Hvernig get ég vistað skjal með öðru heiti?"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:453-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr ""
+msgstr "Láttu músarbendilinn svífa yfir heiti skjalsins á valmyndastikunni."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:454-11
 msgid "Type the new file name in the text box and press <span class=\"kbd\">Enter</span>."
 msgstr ""
+"Skrifaðu nýtt heiti fyrir skrána í textareitinn og ýttu síðan á <span class="
+"\"kbd\">Enter</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:456-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "Afrit af skjalinu er vistað með nýju heiti í sömu möppu."
 
 #: html/loleaflet-help.html%2Bdiv.h4:457-5
 msgid "How can I quit <span class=\"productname\">%productName</span> without saving my edits?"
@@ -1524,7 +1530,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:461-5
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "Hvernig get ég yfirfarið stafsetningu á tungumálinu mínu?"
 
 #: html/loleaflet-help.html%2Bdiv.p:462-5
 msgid "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</span> and select the language for the whole document. Optionally you can set languages for the selected text and for the current paragraph."
@@ -1532,7 +1538,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:463-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Hvernig get ég fjarlægt rauðu bylgjulínurnar úr skjalinu mínu?"
 
 #: html/loleaflet-help.html%2Bdiv.p:464-5
 msgid "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">Automatic Spell Checking</span>."
@@ -1540,7 +1546,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:465-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "Hvað táknar þessi bláa bylgjulína undir sumum orðum í textanum?"
 
 #: html/loleaflet-help.html%2Bdiv.p:466-5
 msgid "Grammar errors in the text is marked with the blue wavy underline. Click on the underlined text with the right mouse button to open a menu with suggestions to correct the grammar error and the offended grammar rules. Select the right suggestion to change the text."
@@ -1548,7 +1554,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:467-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Er til samheitaorðasafn?"
 
 #: html/loleaflet-help.html%2Bdiv.p:468-5
 msgid "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → <span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions for replacements."
@@ -1577,6 +1583,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h4:479-5
 msgid "How can I insert a currency, copyright or trademark symbol in the document?"
 msgstr ""
+"Hvernig get ég sett inn tákn fyrir gjaldmiðla, höfundarrétt eða vörumerki í "
+"skjalinu?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:480-5
 msgid "You can insert these special characters in the document using the <span class=\"ui\">Special Character</span> dialog."
@@ -1589,6 +1597,9 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:484-9
 msgid "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special Characters </span> or click the corresponding icon in the toolbar. A dialog shows."
 msgstr ""
+"Veldu <span class=\"ui\">Setja inn</span> → <span class=\"ui\">Sértákn</"
+"span> eða smelltu á samsvarandi táknmynd á verkfærastikunni. Gluggi mun "
+"birtast."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:487-11
 msgid "You can either browse the characters displayed with the drop lists or type a search key in the <span class=\"ui\">Search</span> box. If you know the Unicode numeric code of the special character, enter in the boxes on the right."
@@ -1600,7 +1611,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:490-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "Af hverju get ég ekki eytt texta? Hann verður bara gegnumstrikaður?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "You have the Track Changes feature enabled for the document. Track Changes records all changes in the text and shows the editions for later revision. Useful for marking changes in text and spreadsheets. Track changes are enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track Changes </span> → <span class=\"ui\">Record</span>."
@@ -1648,7 +1659,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:506-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Nota síðustílinn"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:508-11
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and select the <span class=\"ui\">Page</span> tab"
@@ -1656,7 +1667,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:509-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Stilltu spássíurnar í samskiptaglugganum."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:512-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -1680,7 +1691,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:518-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "Veldu hvort þú vilt breyta númerum blaðsíðna."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:520-5
 msgid "To return to portrait orientation, repeat the procedure, choosing Portrait in “With page style”."
@@ -1689,6 +1700,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h4:521-5
 msgid "How can I make the new text look like other existing text?"
 msgstr ""
+"Hvernig get ég látið nýja textann líta út eins og annan fyrirliggjandi texta?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:522-5
 msgid "Directly:"
@@ -1705,7 +1717,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:526-11
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "Veldu textann þar sem á að virkja nýja sniðið."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:528-5
 msgid "Applying a paragraph style:"
@@ -1713,7 +1725,7 @@ msgstr "Virkja málsgeinarstíl:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:530-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr ""
+msgstr "Settu bendilinn í málsgreinina sem á að sníða"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:531-11
 msgid "Select the style to apply in the style dropdown list. The paragraph displays the styles attributes."
@@ -1729,7 +1741,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:539-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Hvernig get ég valið gögn til prentunar?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:540-5
 msgid "Insert column and row breaks in the spreadsheet to narrow the print range and print the document to download. On printing the PDF, select the pages of interest."
@@ -1737,7 +1749,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:541-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "Hvernig get ég flutt inn CSV-gögn?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:543-11
 msgid "Load your CSV data in some native tool to your platform, select and copy it to the clipboard"
@@ -1761,7 +1773,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:552-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "Hvernig get ég afritað snið í fyrirliggjandi reitum yfir í nýja reiti?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:553-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
@@ -1773,11 +1785,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:557-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "Veldu reitina sem á að sníða. Slepptu músarhnappnum."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:559-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "Hvað gerir táknmyndin \"Hreinsa handvirk snið\"?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:560-5
 msgid "Direct formatting is formatting applied directly to the selected contents of a paragraph or a spreadsheet cell, and overlaps its assigned style formatting. To restore the formatting to the style settings, select the text or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
@@ -1785,7 +1797,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:561-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Hvernig get ég endurnefnt blað?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:562-5
 msgid "Rename a sheet in the spreadsheet document using the context menu (using the right mouse button) over the sheet tab in the bottom. Enter the new sheet name in the dialog that follows."
@@ -1793,11 +1805,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:567-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Hvernig get ég keyrt skyggnusýninguna mína?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:569-11
 msgid "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "Opnaðu kynninguna í <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:570-11
 msgid "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen Presentation</span> or click on the left-most icon in the bottom of the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
@@ -1814,6 +1826,9 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:576-9
 msgid "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or <span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</span>). A dialog opens."
 msgstr ""
+"Veldu <span class=\"ui\">Sníða</span> → <span class=\"ui\">Lína</span> (eða "
+"<span class=\"ui\">Flötur</span>, eða <span class=\"ui\">Staða og "
+"stærð</span>). Samskiptagluggi mun opnast."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:579-11
 msgid "Set the properties of the element of the object."
