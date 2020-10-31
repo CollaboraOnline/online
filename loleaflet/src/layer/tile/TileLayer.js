@@ -770,9 +770,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('formfieldbutton:')) {
 			this._onFormFieldButtonMsg(textMsg);
 		}
-		else if (textMsg.startsWith('OUTGOING:')) {
-			console.log('Outgoing message #########################################');
-		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
