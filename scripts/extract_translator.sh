@@ -17,6 +17,7 @@
 SINCE=$(date +%s --date="-1 month")
 TEXT='Translated using Weblate'
 INPUT_FILE=""
+CSV_FILE=""
 OUTPUT_FILE=""
 
 set -ef
@@ -27,19 +28,26 @@ print_help(){
 	--full	generate translator list from beginning ( only last month generated without this )
 	-i file	give input file for previous contributors
 	-o file	give output file for latest contributors list including previous
+	--csv file	give input from csv file
 	'
 
 	echo "$usage"
 }
 
 find_hashs(){
-	git log --since="$SINCE" --pretty=format:"%h %s" | grep -w "$TEXT" | cut -d ' ' -f1
+	# if since is greater than 0 take last month's authors else full
+	if [ "$SINCE" -gt 0 ]
+	then
+		git log --since="$SINCE" --pretty=format:"%h %s" --grep="$TEXT" | cut -d ' ' -f1
+	else
+		git log --pretty=format:"%h %s" --grep="$TEXT" | cut -d ' ' -f1
+	fi
 }
 
 collect_authors(){
 	for hash in $(find_hashs)
 	do
-		info=$(git show "$hash" --pretty=format:'%an %ae' | head -n 1)
+		info=$(git show "$hash" --pretty=format:'%an' | head -n 1)
 		echo $info
 	done
 }
@@ -58,13 +66,16 @@ while [ $# -gt 1 ];
 do
 	case "$1" in
 		'--full')
-			shift; SINCE="1970-00-00T00:00:00"; shift;
+			shift; SINCE="0";
 			;;
 		'-i')
 			shift; INPUT_FILE="$1"; shift;
 			;;
 		'-o')
 			shift; OUTPUT_FILE="$1"; shift;
+			;;
+		'--csv')
+			shift; CSV_FILE="$1"; shift;
 			;;
 		*)
 			shift;
@@ -84,6 +95,24 @@ if [ ! -z "$INPUT_FILE" ] && [ -f "$INPUT_FILE" ]
 then
 	cat "$INPUT_FILE" > 'tmp.txt'
 fi
+
+# load csv if csv file given
+if [ ! -z "$CSV_FILE" ] && [ -f "$CSV_FILE" ]
+then
+	# backup and switch delimiter to comma
+	OLDIFS="$IFS"
+	IFS=','
+	for author in $( cat "$CSV_FILE" )
+	do
+		# first remove leading spaces, second sed trim trailing space
+		echo "$author" |  sed 's,^ *,,g' | sed 's, *$,,g' >> 'tmp.txt'
+	done
+	# restore old delimitier
+	IFS="$OLDIFS"
+fi
+
+
+
 # generate latest list and combine
 collect_authors >> 'tmp.txt'
 # read all, sort all, make unique and write to output file
