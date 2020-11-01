@@ -71,9 +71,11 @@ L.Control.ContextMenu = L.Control.extend({
 			'TransformDialog', 'FormatLine', 'FormatArea',
 			'InsertTitles', 'InsertRemoveAxes',
 			'DiagramType', 'DataRanges',
-			'FormatWall', 'FormatDataSeries',
+			'FormatWall', 'FormatDataSeries', 'FormatXErrorBars', 'FormatYErrorBars',
 			'FormatDataPoint', 'FormatAxis', 'FormatMajorGrid', 'FormatMinorGrid',
-			'InsertTrendline', 'InsertXErrorBars' , 'InsertYErrorBars',
+			'InsertTrendline', 'InsertXErrorBars' , 'InsertYErrorBars', 'FormatChartArea',
+			'FormatMeanValue', 'DiagramData', 'FormatLegend', 'FormatTrendline',
+			'FormatTrendlineEquation', 'FormatStockLoss', 'FormatStockGain',
 			// text
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
