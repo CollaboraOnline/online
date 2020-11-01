@@ -117,5 +117,14 @@ fi
 collect_authors >> 'tmp.txt'
 # read all, sort all, make unique and write to output file
 cat 'tmp.txt' | sort | uniq > "$OUTPUT_FILE"
+
+if [ ! -z "$CSV_FILE" ]
+then
+	# put a comma on end of every line
+	sed -e 's/$/,/g' "$OUTPUT_FILE" > 'tmp.txt'
+	# delete newline characters
+	cat tmp.txt | tr -d '\n' > "$OUTPUT_FILE"
+fi
+
 # thanks for service tmp.txt, but we dont need you anymore
 rm 'tmp.txt'
