@@ -70,6 +70,7 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
 #include <Poco/Net/SocketAddress.h>
+#include <net/HttpHelper.hpp>
 
 using Poco::Net::HTMLForm;
 using Poco::Net::PartHandler;
