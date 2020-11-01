@@ -45,6 +45,9 @@
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include <Util.hpp>
+#if !MOBILEAPP
+#include <net/HttpHelper.hpp>
+#endif
 
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPBasicCredentials;

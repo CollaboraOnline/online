@@ -28,6 +28,9 @@
 #include <common/Session.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
+#if !MOBILEAPP
+#include <net/HttpHelper.hpp>
+#endif
 
 using namespace LOOLProtocol;
 

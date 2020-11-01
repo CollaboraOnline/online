@@ -15,6 +15,7 @@
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
+#include <net/HttpHelper.hpp>
 
 /// Test the FileUrl WOPI CheckFileInfo property.
 /// When FileUrl is set, it must be used for
