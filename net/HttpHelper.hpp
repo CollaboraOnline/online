@@ -7,7 +7,18 @@
 
 #pragma once
 
-#include "Socket.hpp"
+#include <memory>
+#include <string>
+
+namespace Poco
+{
+    namespace Net
+    {
+        class HTTPResponse;
+    }
+}
+
+class StreamSocket;
 
 namespace HttpHelper
 {
@@ -20,6 +31,12 @@ void sendError(int errorCode, const std::shared_ptr<StreamSocket>& socket,
 void sendErrorAndShutdown(int errorCode, const std::shared_ptr<StreamSocket>& socket,
                           const std::string& body = std::string(),
                           const std::string& extraHeader = std::string());
+
+/// Sends file as HTTP response and shutdown the socket.
+void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+                         const std::string& mediaType,
+                         Poco::Net::HTTPResponse* optResponse = nullptr, bool noCache = false,
+                         bool deflate = false, const bool headerOnly = false);
 
 } // namespace HttpHelper
 
