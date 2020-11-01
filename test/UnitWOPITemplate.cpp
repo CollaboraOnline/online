@@ -7,12 +7,14 @@
 
 #include <config.h>
 
+#include <Poco/Net/HTTPRequest.h>
+
 #include <WopiTestServer.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
-#include <Poco/Net/HTTPRequest.h>
+#include <net/HttpHelper.hpp>
 
 class UnitWOPITemplate : public WopiTestServer
 {
