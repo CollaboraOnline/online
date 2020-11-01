@@ -934,8 +934,6 @@ L.Control.Menubar = L.Control.extend({
 		this._onRefresh();
 
 		$('#main-menu').bind('select.smapi', {self: this}, this._onItemSelected);
-		$('#main-menu').bind('mouseenter.smapi', {self: this}, this._onMouseEnter);
-		$('#main-menu').bind('mouseleave.smapi', {self: this}, this._onMouseLeave);
 
 		$('#main-menu').bind('beforeshow.smapi', {self: this}, this._beforeShow);
 		$('#main-menu').bind('click.smapi', {self: this}, this._onClicked);
