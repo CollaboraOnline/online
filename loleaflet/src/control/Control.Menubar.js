@@ -102,6 +102,9 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{uno: '.uno:InsertBookmark'},
+				{uno: '.uno:InsertReferenceField'},
+				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
@@ -238,10 +241,13 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 				]},
 				{uno: '.uno:WordCountDialog'},
-				{uno: '.uno:LineNumberingDialog'},
 				{type: 'separator'},
 				{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
-					{uno: '.uno:OnlineAutoFormat'}]}
+					{uno: '.uno:OnlineAutoFormat'}]},
+				{type: 'separator'},
+				{uno: '.uno:ChapterNumberingDialog'},
+				{uno: '.uno:LineNumberingDialog'},
+				{uno: '.uno:FootnoteDialog'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
