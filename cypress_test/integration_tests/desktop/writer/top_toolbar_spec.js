@@ -14,7 +14,7 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
-	
+
 	it('Apply highlight color.', function() {
 		cy.get('#tb_editbar_item_backcolor')
 			.click();
@@ -238,6 +238,17 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('.col.w2ui-icon.basicshapes_octagon').
 			click();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+			.should('exist');
+	});
+
+	it('Insert chart.', function() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+		    .click();
+
+		cy.get('#tb_editbar_item_insertobjectchart')
+		    .click();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
