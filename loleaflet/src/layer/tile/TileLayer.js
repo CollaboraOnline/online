@@ -3601,7 +3601,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._debugRenderCount = 0;
 		if (!this._debugData) {
 			this._debugData = {};
-			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount'];
+			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
 			for (var i = 0; i < this._debugDataNames.length; i++) {
 				this._debugData[this._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(this._map);
 			}
@@ -3655,6 +3655,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 		this._debugLorem += ' ' + this._debugLorem + '\n';
 		this._debugLoremPos = 0;
+	},
+
+	_debugSetPostMessage: function(type,msg) {
+		this._debugData['postMessage'].setPrefix(type+': '+ msg);
 	},
 
 	_debugSetTimes: function(times, value) {
