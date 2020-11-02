@@ -242,6 +242,10 @@ L.Socket = L.Class.extend({
 
 	_logSocket: function(type, msg) {
 		var fullDebug = this._map._docLayer && this._map._docLayer._debug;
+
+		if (fullDebug) 
+			this._map._docLayer._debugSetPostMessage(type,msg);
+		
 		if (!window.protocolDebug && !fullDebug)
 			return;
 
