@@ -14,7 +14,7 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
-
+	
 	it('Apply highlight color.', function() {
 		cy.get('#tb_editbar_item_backcolor')
 			.click();
@@ -148,6 +148,16 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'left');
+	});
+
+	it('Apply center alignment.', function() {
+		cy.get('#tb_editbar_item_centerpara')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'align', 'center');
 	});
 
 	it('Insert comment.', function() {
