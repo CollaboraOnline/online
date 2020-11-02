@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-26 21:34+0100\n"
+"POT-Creation-Date: 2020-11-02 11:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -246,7 +246,7 @@ msgstr ""
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1244
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:199
-#: src/control/Control.Tabs.js:216 src/control/Toolbar.js:625
+#: src/control/Control.Tabs.js:216 src/control/Toolbar.js:629
 msgid "OK"
 msgstr ""
 
@@ -254,7 +254,7 @@ msgstr ""
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1245
 #: src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:200
-#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:626
+#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:630
 #: src/layer/marker/Annotation.js:207 src/layer/tile/TileLayer.js:424
 msgid "Cancel"
 msgstr "Sguir dheth"
@@ -492,9 +492,9 @@ msgstr "Cuir a-steach clàr"
 msgid "Line style:"
 msgstr ""
 
-#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:232
-#: src/control/Control.Menubar.js:234 src/control/Control.Menubar.js:236
-#: src/control/Control.Menubar.js:367 src/control/Control.Menubar.js:489
+#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:234
+#: src/control/Control.Menubar.js:236 src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:491
 #: src/control/Control.StatusBar.js:504
 #: src/control/Control.NotebookbarBuilder.js:643
 #: src/control/Control.NotebookbarBuilder.js:645
@@ -504,215 +504,215 @@ msgstr ""
 msgid "None (Do not check spelling)"
 msgstr "Chan eil gin (Na dearbhaich an litreachadh)"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:259
-#: src/control/Control.Menubar.js:383 src/control/Control.Menubar.js:506
-#: src/control/Control.Menubar.js:556 src/control/Control.Menubar.js:604
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:261
+#: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:508
+#: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:606
 #: src/control/Control.NotebookbarWriter.js:175
 #: src/control/Control.NotebookbarCalc.js:157
 #: src/control/Control.NotebookbarImpress.js:237
 msgid "Share..."
 msgstr "Co-roinn…"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:261
-#: src/control/Control.Menubar.js:385 src/control/Control.Menubar.js:508
-#: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:606
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:262
+#: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:510
+#: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:608
 #: src/control/Control.NotebookbarWriter.js:205
 #: src/control/Control.NotebookbarCalc.js:187
 #: src/control/Control.NotebookbarImpress.js:267
 msgid "See revision history"
 msgstr "Seall eachdraidh nan lèirmheasan"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:262
-#: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:511
-#: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:608
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:263
+#: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:513
+#: src/control/Control.Menubar.js:562 src/control/Control.Menubar.js:610
 msgid "Download as"
 msgstr "Luchdaich a-nuas mar"
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:262
-#: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:511
-#: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:608
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:263
+#: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:513
+#: src/control/Control.Menubar.js:562 src/control/Control.Menubar.js:610
 msgid "Export as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:263
-#: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:512
-#: src/control/Control.Menubar.js:561 src/control/Control.Menubar.js:609
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:264
+#: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:514
+#: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:611
 #: src/control/Control.NotebookbarWriter.js:338
 #: src/control/Control.NotebookbarCalc.js:236
 #: src/control/Control.NotebookbarImpress.js:400
 msgid "PDF Document (.pdf)"
 msgstr "Sgrìobhainn PDF (.pdf)"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:513
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:515
 #: src/control/Control.NotebookbarWriter.js:232
 msgid "ODF text document (.odt)"
 msgstr "Sgrìobhainn teacsa ODF (.odt)"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:514
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:516
 #: src/control/Control.NotebookbarWriter.js:285
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 Document (.doc)"
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:515
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:517
 #: src/control/Control.NotebookbarWriter.js:307
 msgid "Word Document (.docx)"
 msgstr "Word Document (.docx)"
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:516
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:518
 #: src/control/Control.NotebookbarWriter.js:254
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:517
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:519
 #: src/control/Control.NotebookbarWriter.js:360
 msgid "EPUB (.epub)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:31 src/control/Control.Menubar.js:509
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:511
 #: src/control/Control.NotebookbarWriter.js:379 src/control/Signing.js:601
 msgid "Sign document"
 msgstr "Soidhnich an sgrìobhainn"
 
-#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:392
+#: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:272
+#: src/control/Control.Menubar.js:394
 msgid "Close document"
 msgstr "Dùin an sgrìobhainn"
 
-#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:275
-#: src/control/Control.Menubar.js:397 src/control/Control.Menubar.js:522
-#: src/control/Control.Menubar.js:570 src/control/Control.Menubar.js:617
+#: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:277
+#: src/control/Control.Menubar.js:399 src/control/Control.Menubar.js:524
+#: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:619
 #: src/control/Control.NotebookbarBuilder.js:636
 #: src/control/Control.NotebookbarBuilder.js:663
 #: src/control/Control.NotebookbarBuilder.js:686
 msgid "Repair"
 msgstr "Càirich"
 
-#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:289
+#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:291
 #: src/control/Control.StatusBar.js:205
 msgid "Reset zoom"
 msgstr "Ath-shuidhich an sùm"
 
-#: src/control/Control.Menubar.js:66
+#: src/control/Control.Menubar.js:67
 #: src/control/Control.NotebookbarBuilder.js:622
 msgid "Show Ruler"
 msgstr ""
 
-#: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:299
+#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:301
 msgid "Show Status Bar"
 msgstr ""
 
-#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:302
-#: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:666
-#: src/control/Control.Menubar.js:706 src/control/Control.Menubar.js:720
+#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:304
+#: src/control/Control.Menubar.js:420 src/control/Control.Menubar.js:668
+#: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:722
 msgid "Local Image..."
 msgstr "Dealbh ionadail…"
 
 #: src/control/Control.Menubar.js:94 src/control/Control.Menubar.js:96
-#: src/control/Control.Menubar.js:682 src/control/Control.Menubar.js:684
+#: src/control/Control.Menubar.js:684 src/control/Control.Menubar.js:686
 msgid "All"
 msgstr "Na h-uile"
 
-#: src/control/Control.Menubar.js:145
+#: src/control/Control.Menubar.js:146
 msgid "Text orientation"
 msgstr "Comhair an teacsa"
 
-#: src/control/Control.Menubar.js:245 src/control/Control.Menubar.js:370
-#: src/control/Control.Menubar.js:493
+#: src/control/Control.Menubar.js:247 src/control/Control.Menubar.js:372
+#: src/control/Control.Menubar.js:495
 #: src/control/Control.NotebookbarWriter.js:471
 msgid "Online Help"
 msgstr ""
 
-#: src/control/Control.Menubar.js:246 src/control/Control.Menubar.js:371
-#: src/control/Control.Menubar.js:494
+#: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:373
+#: src/control/Control.Menubar.js:496
 #: src/control/Control.NotebookbarWriter.js:485
 msgid "Keyboard shortcuts"
 msgstr "Ath-ghoiridean a’ mheur-chlàir"
 
-#: src/control/Control.Menubar.js:247 src/control/Control.Menubar.js:372
-#: src/control/Control.Menubar.js:495
+#: src/control/Control.Menubar.js:249 src/control/Control.Menubar.js:374
+#: src/control/Control.Menubar.js:497
 #: src/control/Control.NotebookbarWriter.js:499
 msgid "Report an issue"
 msgstr ""
 
-#: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:373
-#: src/control/Control.Menubar.js:496 src/control/Control.Menubar.js:548
-#: src/control/Control.Menubar.js:596 src/control/Control.Menubar.js:659
+#: src/control/Control.Menubar.js:250 src/control/Control.Menubar.js:375
+#: src/control/Control.Menubar.js:498 src/control/Control.Menubar.js:550
+#: src/control/Control.Menubar.js:598 src/control/Control.Menubar.js:661
 #: src/control/Control.NotebookbarWriter.js:514
 msgid "Latest Updates"
 msgstr ""
 
-#: src/control/Control.Menubar.js:249 src/control/Control.Menubar.js:374
-#: src/control/Control.Menubar.js:497 src/control/Control.Menubar.js:549
-#: src/control/Control.Menubar.js:597 src/control/Control.Menubar.js:660
+#: src/control/Control.Menubar.js:251 src/control/Control.Menubar.js:376
+#: src/control/Control.Menubar.js:499 src/control/Control.Menubar.js:551
+#: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:662
 #: src/control/Control.NotebookbarWriter.js:528
 msgid "About"
 msgstr "Mu dhèidhinn"
 
-#: src/control/Control.Menubar.js:251 src/control/Control.Menubar.js:376
-#: src/control/Control.Menubar.js:499 src/map/Map.js:393
+#: src/control/Control.Menubar.js:253 src/control/Control.Menubar.js:378
+#: src/control/Control.Menubar.js:501 src/map/Map.js:393
 msgid "Last modification"
 msgstr "An t-atharrachadh mu dheireadh"
 
-#: src/control/Control.Menubar.js:258
+#: src/control/Control.Menubar.js:260
 #, fuzzy
 msgid "Save Comments"
 msgstr "Beachd"
 
-#: src/control/Control.Menubar.js:264 src/control/Control.Menubar.js:562
+#: src/control/Control.Menubar.js:265 src/control/Control.Menubar.js:564
 #: src/control/Control.NotebookbarImpress.js:294
 msgid "ODF presentation (.odp)"
 msgstr "Taisbeanadh ODF (.odp)"
 
-#: src/control/Control.Menubar.js:265 src/control/Control.Menubar.js:563
+#: src/control/Control.Menubar.js:266 src/control/Control.Menubar.js:565
 #: src/control/Control.NotebookbarImpress.js:347
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Taisbeanadh PowerPoint 2003 (.ppt)"
 
-#: src/control/Control.Menubar.js:266 src/control/Control.Menubar.js:564
+#: src/control/Control.Menubar.js:267 src/control/Control.Menubar.js:566
 #: src/control/Control.NotebookbarImpress.js:369
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Taisbeanadh PowerPoint (.pptx)"
 
-#: src/control/Control.Menubar.js:267 src/control/Control.Menubar.js:565
+#: src/control/Control.Menubar.js:268 src/control/Control.Menubar.js:567
 #: src/control/Control.NotebookbarImpress.js:316
 #, fuzzy
 msgid "ODF Drawing (.odg)"
 msgstr "Taisbeanadh ODF (.odp)"
 
-#: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:595
+#: src/control/Control.Menubar.js:362 src/control/Control.Menubar.js:597
 #: src/control/Control.PresentationBar.js:33
 msgid "Fullscreen presentation"
 msgstr "Taisbeanadh làn-sgrìn"
 
-#: src/control/Control.Menubar.js:361
+#: src/control/Control.Menubar.js:363
 msgid "Present current slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:610
+#: src/control/Control.Menubar.js:389 src/control/Control.Menubar.js:612
 #: src/control/Control.NotebookbarCalc.js:214
 msgid "ODF spreadsheet (.ods)"
 msgstr "Cliath-dhuilleag ODF (*.ods)"
 
-#: src/control/Control.Menubar.js:389 src/control/Control.Menubar.js:611
+#: src/control/Control.Menubar.js:390 src/control/Control.Menubar.js:613
 #: src/control/Control.NotebookbarCalc.js:267
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Cliath-dhuilleag Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:390 src/control/Control.Menubar.js:612
+#: src/control/Control.Menubar.js:391 src/control/Control.Menubar.js:614
 #: src/control/Control.NotebookbarCalc.js:289
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Cliath-dhuilleag Excel (.xlsx)"
 
-#: src/control/Control.Menubar.js:529 src/control/Control.Menubar.js:577
-#: src/control/Control.Menubar.js:624 src/control/Control.StatusBar.js:190
+#: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:579
+#: src/control/Control.Menubar.js:626 src/control/Control.StatusBar.js:190
 msgid "Search"
 msgstr "Lorg"
 
-#: src/control/Control.Menubar.js:540
+#: src/control/Control.Menubar.js:542
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:807 src/control/Control.StatusBar.js:503
+#: src/control/Control.Menubar.js:809 src/control/Control.StatusBar.js:503
 msgid "Reset to Default Language"
 msgstr "Aisig an cànan bunaiteach"
 
@@ -843,6 +843,10 @@ msgstr "Cunntas nam faclan"
 #: src/control/Control.StatusBar.js:377
 msgid "Number of Slides"
 msgstr "Àireamh de shleamhnagan"
+
+#: src/control/Control.StatusBar.js:450
+msgid "Select multiple cells"
+msgstr ""
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
@@ -1025,48 +1029,48 @@ msgstr ""
 msgid "~Data"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1903
+#: src/control/Control.NotebookbarCalc.js:1925
 #, fuzzy
 msgid "Insert Rows Above"
 msgstr "Cuir a-steach clàr"
 
-#: src/control/Control.NotebookbarCalc.js:1916
+#: src/control/Control.NotebookbarCalc.js:1938
 #, fuzzy
 msgid "Insert Rows Below"
 msgstr "Cuir a-steach siota"
 
-#: src/control/Control.NotebookbarCalc.js:1938
+#: src/control/Control.NotebookbarCalc.js:1960
 #, fuzzy
 msgid "Insert Columns Before"
 msgstr "Cuir a-steach siota roimhe"
 
-#: src/control/Control.NotebookbarCalc.js:1951
+#: src/control/Control.NotebookbarCalc.js:1973
 #, fuzzy
 msgid "Insert Columns After"
 msgstr "Cuir a-steach siota ’na dhèidh"
 
-#: src/control/Control.NotebookbarCalc.js:1973
+#: src/control/Control.NotebookbarCalc.js:1995
 msgid "Insert Row Break"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1986
+#: src/control/Control.NotebookbarCalc.js:2008
 msgid "Insert Column Break"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:2008
+#: src/control/Control.NotebookbarCalc.js:2030
 #, fuzzy
 msgid "Delete Rows"
 msgstr "Cuir a-steach clàr"
 
-#: src/control/Control.NotebookbarCalc.js:2021
+#: src/control/Control.NotebookbarCalc.js:2043
 msgid "Delete Columns"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:2043
+#: src/control/Control.NotebookbarCalc.js:2065
 msgid "Remove Row Break"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:2056
+#: src/control/Control.NotebookbarCalc.js:2078
 msgid "Remove Column Break"
 msgstr ""
 
@@ -1249,38 +1253,38 @@ msgstr "’Ga shàbhaladh..."
 msgid "Renaming..."
 msgstr "A’ cur ainm ùr air…"
 
-#: src/control/Toolbar.js:422
+#: src/control/Toolbar.js:426
 msgid "I understand the risks"
 msgstr ""
 
-#: src/control/Toolbar.js:474
+#: src/control/Toolbar.js:478
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:519
+#: src/control/Toolbar.js:523
 msgid "This version of %productName is powered by"
 msgstr "An tionndadh seo de %productName le cumhachd"
 
-#: src/control/Toolbar.js:529
+#: src/control/Toolbar.js:533
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:532
+#: src/control/Toolbar.js:536
 msgid ""
 "The Personal edition is supported by volunteers and intended for individual "
 "use."
 msgstr ""
 
-#: src/control/Toolbar.js:619
+#: src/control/Toolbar.js:623
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:621
+#: src/control/Toolbar.js:625
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:622
+#: src/control/Toolbar.js:626
 msgid "Link"
 msgstr ""
 
@@ -1301,46 +1305,46 @@ msgstr ""
 msgid "Oops, there is a problem connecting to Collabora Online : "
 msgstr "Ìoc, bha duilgheadas ann a’ ceangal ri Collabora Online:"
 
-#: src/core/Socket.js:297
+#: src/core/Socket.js:301
 msgid "Served by:"
 msgstr ""
 
-#: src/core/Socket.js:302
+#: src/core/Socket.js:306
 msgid "Unsupported server version."
 msgstr "Chan eil taic ri tionndadh an fhrithealaiche."
 
-#: src/core/Socket.js:396
+#: src/core/Socket.js:400
 msgid "Session terminated by document owner"
 msgstr "Chuir sealbhadair na sgrìobhainn crìoch air an t-seisean"
 
-#: src/core/Socket.js:401
+#: src/core/Socket.js:405
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson ath-luchdadh is leantainn "
 "air an deasachadh"
 
-#: src/core/Socket.js:403
+#: src/core/Socket.js:407
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson ath-luchdadh is leantainn "
 "air an deasachadh"
 
-#: src/core/Socket.js:411
+#: src/core/Socket.js:415
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Tha am frithealaiche a’ dùnadh airson obair-ghlèidhidh (fèin-sàbhaladh)"
 
-#: src/core/Socket.js:415
+#: src/core/Socket.js:419
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ìoc, tha duilgheadas leis a’ cheangal ris an sgrìobhainn"
 
-#: src/core/Socket.js:419
+#: src/core/Socket.js:423
 msgid "Server is recycling and will be available shortly"
 msgstr ""
 "Tha am frithealaiche ri ath-chuairteachadh agus bi e ri fhaighinn a "
 "dh’aithghearr"
 
-#: src/core/Socket.js:447
+#: src/core/Socket.js:451
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1348,7 +1352,7 @@ msgstr ""
 "Chaidh an sgrìobhainn san stòras atharrachadh. A’ luchdadh na sgrìobhainne "
 "ùr. Tha an tionndadh agad ri fhaighinn mar lèirmheas."
 
-#: src/core/Socket.js:453
+#: src/core/Socket.js:457
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1356,7 +1360,7 @@ msgstr ""
 "Ag aiseag an t-seann-lèirmheis. Gheibhear cothrom air atharraichean nach "
 "deach a shàbhaladh ann an eachdraidh nan tionndadh."
 
-#: src/core/Socket.js:573
+#: src/core/Socket.js:577
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1364,43 +1368,43 @@ msgstr ""
 "Chaidh an sgrìobhainn atharrachadh san stòras. Dè nì sinn leis na h-"
 "atharraichean agad nach deach an sàbhaladh?"
 
-#: src/core/Socket.js:577
+#: src/core/Socket.js:581
 msgid "Discard"
 msgstr "Tilg air falbh"
 
-#: src/core/Socket.js:582
+#: src/core/Socket.js:586
 msgid "Overwrite"
 msgstr "Sgrìobh thairis"
 
-#: src/core/Socket.js:587
+#: src/core/Socket.js:591
 msgid "Save to new file"
 msgstr "Sàbhail ann am faidhle ùr"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:661
 msgid "Document requires password to view."
 msgstr "Feumar facal-faire mus fhaicear an sgrìobhainn."
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:664
 msgid "Document requires password to modify."
 msgstr "Feumar facal-faire mus urrainnear an sgrìobhainn atharrachadh."
 
-#: src/core/Socket.js:662
+#: src/core/Socket.js:666
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Briog air “Sguir dheth” airson a shealltainn a-mhàin."
 
-#: src/core/Socket.js:666
+#: src/core/Socket.js:670
 msgid "Wrong password provided. Please try again."
 msgstr "Tha am facal-faire cearr. Feuch ris a-rithist."
 
-#: src/core/Socket.js:814 src/map/Map.js:1543
+#: src/core/Socket.js:818 src/map/Map.js:1543
 msgid "Loading..."
 msgstr "’Ga luchdadh..."
 
-#: src/core/Socket.js:814
+#: src/core/Socket.js:818
 msgid "Connecting..."
 msgstr "A’ dèanamh ceangal..."
 
-#: src/core/Socket.js:1092
+#: src/core/Socket.js:1096
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1635,11 +1639,11 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:852
+#: src/map/Clipboard.js:855
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:854
+#: src/map/Clipboard.js:857
 #, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
@@ -1652,7 +1656,7 @@ msgstr ""
 "dhèanamh.</li><li><b>Ctrl+X</b>: Airson gearradh a "
 "dhèanamh.</li><li><b>Ctrl+P</b>: Airson rud a chur ann.</li></ul></p>"
 
-#: src/map/Clipboard.js:875
+#: src/map/Clipboard.js:878
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1661,7 +1665,7 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:891
+#: src/map/Clipboard.js:894
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
