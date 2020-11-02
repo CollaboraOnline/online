@@ -229,4 +229,18 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'href', 'http://www.something.com/');
 	});
 
+	it('Insert shape.', function() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+		    .click();
+
+		cy.get('#tb_editbar_item_insertshapes')
+		    .click();
+
+		cy.get('.col.w2ui-icon.basicshapes_octagon').
+			click();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+			.should('exist');
+	});
+
 });
