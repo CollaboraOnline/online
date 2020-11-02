@@ -202,6 +202,9 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
+		cy.get('#copy-paste-container p')
+			.should('have.text', '\ntext');
+
 		cy.get('#toolbar-up .w2ui-scroll-right')
 		   .click();
 		
