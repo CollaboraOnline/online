@@ -1318,6 +1318,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.hidden)
 			$(edit).hide();
 
+		if (data.placeholder)
+			$(edit).attr('placeholder', data.placeholder);
+
 		return false;
 	},
 
