@@ -323,6 +323,8 @@ L.Control.UIManager = L.Control.extend({
 					this.map.removeControl(this.notebookbar);
 					this.notebookbar = null;
 				}
+			} else {
+				this.map._socket.sendMessage('uno .uno:SidebarHide');
 			}
 		}
 
