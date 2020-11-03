@@ -70,89 +70,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 		return false;
 	});
 
-	// Open local nextcloud installation
-	cy.visit('http://localhost/nextcloud/index.php/apps/files');
-
-	if (subsequentLoad !== true) {
-		// Log in with cypress test user / password
-		cy.get('input#user')
-			.clear()
-			.type('cypress_test');
-
-		cy.get('input#password')
-			.clear()
-			.type('cypress_test');
-
-		cy.get('input#submit-form')
-			.click();
-
-		cy.get('.button.new')
-			.should('be.visible');
-
-		// Wait for free space calculation before uploading document
-		cy.get('#free_space')
-			.should('not.have.attr', 'value', '');
-
-		// Hide first run wizard if it's there
-		cy.wait(2000); // Wait some time to the wizard become visible, if it's there.
-		cy.get('body')
-			.then(function(body) {
-				if (body.find('#firstrunwizard').length !== 0) {
-					cy.get('#firstrunwizard')
-						.then(function(wizard) {
-							wizard.hide();
-						});
-				}
-			});
-
-		// Remove all files
-		cy.get('#fileList')
-			.then(function(filelist) {
-				if (filelist.find('tr').length !== 0) {
-					cy.waitUntil(function() {
-						cy.get('#fileList tr:nth-of-type(1) .action-menu.permanent')
-							.click();
-
-						cy.get('.menuitem.action.action-delete.permanent')
-							.click();
-
-						cy.get('#uploadprogressbar')
-							.should('not.be.visible');
-
-						return cy.get('#fileList')
-							.then(function(filelist) {
-								return filelist.find('tr').length === 0;
-							});
-					}, {timeout: 60000});
-				}
-			});
-	} else {
-		// Wait for free space calculation before uploading document
-		cy.get('#free_space')
-			.should('not.have.attr', 'value', '');
-	}
-
-	cy.get('tr[data-file=\'' + fileName + '\']')
-		.should('not.exist');
-
-	// Upload test document
-	var fileURI = '';
-	if (subFolder === undefined) {
-		fileURI += fileName;
-	} else {
-		fileURI += subFolder + '/' + fileName;
-	}
-	doIfOnDesktop(function() {
-		cy.get('input#file_upload_start')
-			.attachFile({ filePath: 'desktop/' + fileURI, encoding: 'binary' });
-	});
-	doIfOnMobile(function() {
-		cy.get('input#file_upload_start')
-			.attachFile({ filePath: 'mobile/' + fileURI, encoding: 'binary' });
-	});
-
-	cy.get('#uploadprogressbar')
-		.should('not.be.visible');
+	loadFileToNextCloud(fileName, subFolder, subsequentLoad);
 
 	// Open test document
 	cy.get('tr[data-file=\'' + fileName + '\']')
@@ -207,53 +125,72 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Loading test document with nextcloud - end.');
 }
 
-function loadFileToNextCloud(fileName, subFolder) {
+function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Loading test document with nextcloud - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
+	cy.log('Param - subsequentLoad: ' + subsequentLoad);
 
 	// Open local nextcloud installation
-	cy.visit('http://localhost/nextcloud');
+	cy.visit('http://localhost/nextcloud/index.php/apps/files');
 
 	// Log in with cypress test user / password
-	cy.get('input#user')
-		.clear()
-		.type('cypress_test');
+	if (subsequentLoad !== true) {
+		cy.get('input#user')
+			.clear()
+			.type('cypress_test');
 
-	cy.get('input#password')
-		.clear()
-		.type('cypress_test');
+		cy.get('input#password')
+			.clear()
+			.type('cypress_test');
 
-	cy.get('input#submit-form')
-		.click();
+		cy.get('input#submit-form')
+			.click();
 
-	cy.get('.button.new')
-		.should('be.visible');
+		cy.get('.button.new')
+			.should('be.visible');
 
-	// Wait for free space calculation before uploading document
-	cy.get('#free_space')
-		.should('not.have.attr', 'value', '');
+		// Wait for free space calculation before uploading document
+		cy.get('#free_space')
+			.should('not.have.attr', 'value', '');
 
-	cy.get('#fileList')
-		.then(function(filelist) {
-			if (filelist.find('tr').length !== 0) {
-				cy.waitUntil(function() {
-					cy.get('#fileList tr:nth-of-type(1) .action-menu.permanent')
-						.click();
-
-					cy.get('.menuitem.action.action-delete.permanent')
-						.click();
-
-					cy.get('#uploadprogressbar')
-						.should('not.be.visible');
-
-					return cy.get('#fileList')
-						.then(function(filelist) {
-							return filelist.find('tr').length === 0;
+		// Hide first run wizard if it's there
+		cy.wait(2000); // Wait some time to the wizard become visible, if it's there.
+		cy.get('body')
+			.then(function(body) {
+				if (body.find('#firstrunwizard').length !== 0) {
+					cy.get('#firstrunwizard')
+						.then(function(wizard) {
+							wizard.hide();
 						});
-				}, {timeout: 60000});
-			}
-		});
+				}
+			});
+
+		cy.get('#fileList')
+			.then(function(filelist) {
+				if (filelist.find('tr').length !== 0) {
+					cy.waitUntil(function() {
+						cy.get('#fileList tr:nth-of-type(1) .action-menu.permanent')
+							.click();
+
+						cy.get('.menuitem.action.action-delete.permanent')
+							.click();
+
+						cy.get('#uploadprogressbar')
+							.should('not.be.visible');
+
+						return cy.get('#fileList')
+							.then(function(filelist) {
+								return filelist.find('tr').length === 0;
+							});
+					}, {timeout: 60000});
+				}
+			});
+	} else {
+		// Wait for free space calculation before uploading document
+		cy.get('#free_space')
+			.should('not.have.attr', 'value', '');
+	}
 
 	cy.get('tr[data-file=\'' + fileName + '\']')
 		.should('not.exist');
