@@ -46,6 +46,8 @@ L.Control.Notebookbar = L.Control.extend({
 			this._showNotebookbar = true;
 			this.showTabs();
 			$('.main-nav').removeClass('readonly');
+		} else {
+			this.hideTabs();
 		}
 	},
 
@@ -56,20 +58,22 @@ L.Control.Notebookbar = L.Control.extend({
 	showTabs: function() {
 		$('.ui-tabs.notebookbar').show();
 		$('.notebookbar-shortcuts-bar').show();
+		this.extend();
 	},
 
 	hideTabs: function() {
 		$('.ui-tabs.notebookbar').hide();
 		$('.notebookbar-shortcuts-bar').hide();
 		$('.main-nav').addClass('readonly');
+		this.collapse();
 	},
 
 	collapse: function() {
-		this.map.uiManager.collapseNotebookbar();
+		if (this._showNotebookbar !== false) this.map.uiManager.collapseNotebookbar();
 	},
 
 	extend: function() {
-		this.map.uiManager.extendNotebookbar();
+		if (this._showNotebookbar !== false) this.map.uiManager.extendNotebookbar();
 	},
 
 	isCollapsed: function() {
