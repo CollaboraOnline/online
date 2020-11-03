@@ -1,4 +1,4 @@
-/* global cy expect require*/
+/* global cy expect require Cypress */
 
 var helper = require('./helper');
 
@@ -233,8 +233,10 @@ function selectHamburgerMenuItem(menuItems) {
 		cy.contains('.menu-entry-with-icon', menuItems[i])
 			.click();
 
-		cy.contains('.menu-entry-with-icon', menuItems[i])
-			.should('not.be.visible');
+		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
+			cy.contains('.menu-entry-with-icon', menuItems[i])
+				.should('not.be.visible');
+		}
 	}
 
 	cy.log('Selecting hamburger menu item - end.');
