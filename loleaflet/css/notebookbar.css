@@ -12,7 +12,7 @@
 	float: left;
 	font-size: 12pt;
 	font-family: var(--loleaflet-font);
-	line-height: 20px;
+	line-height: normal;
 	color: dimgray;
 	height: 24px;
 	padding: 0px 1em;
@@ -74,6 +74,11 @@
 
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar {
 	margin-right: 10px;
+	height: 26px;
+}
+
+.notebookbar-shortcuts-bar #Menubar.unotoolbutton.notebookbar {
+	height: 16px;
 }
 
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
@@ -118,7 +123,7 @@
 
 .hasnotebookbar #shortcuts-menubar-icon {
 	position: absolute;
-	top: 52%;
+	top: 56%;
 	left: 0px;
 	height: 1px;
 	width: 13px;

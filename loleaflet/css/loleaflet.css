@@ -164,6 +164,7 @@ body {
 	overscroll-behavior-y: none; /* disable the pull to reload gesture */
 	background: #ffffff;
 	touch-action: none;
+	line-height: normal;
 }
 
 #presentation-controls-wrapper {
