@@ -64,17 +64,29 @@ var nextcloudBlackList = [
 	['desktop/calc/focus_spec.js', []],
 	['mobile/calc/hamburger_menu_spec.js',
 		[
-			'Print'
+			'Print',
+			'Save'
 		]
 	],
 	['mobile/writer/hamburger_menu_spec.js',
 		[
-			'Print'
+			'Print',
+			'Save'
 		]
 	],
 	['mobile/impress/hamburger_menu_spec.js',
 		[
-			'Print'
+			'Save'
+		]
+	],
+	['mobile/writer/annotation_spec.js',
+		[
+			'Saving comment.'
+		]
+	],
+	['mobile/impress/annotation_spec.js',
+		[
+			'Saving comment.'
 		]
 	],
 	['desktop/writer/top_toolbar_spec.js',
