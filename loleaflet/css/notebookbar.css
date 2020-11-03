@@ -74,14 +74,22 @@
 
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar {
 	margin-right: 10px;
+	height: auto;
+}
+
+.notebookbar-shortcuts-bar #Menubar.unotoolbutton.notebookbar {
+	height: 16px;
 }
 
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
 	width: 16px !important;
 	height: 16px !important;
 	margin-right: 0px;
+}
+.notebookbar-shortcuts-bar #Save > .unobutton {
 	margin-top: 3px;
 }
+
 
 /* Hamburger icon: from shortcutsbar (notebookbar) */
 .hasnotebookbar.text-color-indicator #shortcuts-menubar-icon,
