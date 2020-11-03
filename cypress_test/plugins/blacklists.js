@@ -77,6 +77,11 @@ var nextcloudBlackList = [
 			'Print'
 		]
 	],
+	['desktop/writer/top_toolbar_spec.js',
+		[
+			'Insert image.'
+		]
+	],
 	['multiuser/calc/sheet_operations_user1_spec.js',
 		[]
 	],
