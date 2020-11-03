@@ -50,7 +50,7 @@
 }
 
 .main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
-	top: -10px;
+	top: -11px;
 }
 .main-nav.readonly #document-titlebar {
 	top: 1px;
