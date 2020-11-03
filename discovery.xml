@@ -111,6 +111,7 @@
             <action name="view" default="true" ext="wmf"/>
             <action name="view" default="true" ext="cdr"/>
             <action name="view" default="true" ext="vsd"/>
+            <action name="view" default="true" ext="vsdx"/>
             <action name="view" default="true" ext="vss"/>
             <action name="view" default="true" ext="pub"/>
             <action name="view" default="true" ext="p65"/>
@@ -363,6 +364,9 @@
             <action name="view" default="true" ext=""/>
         </app>
         <app name="application/vnd.visio">
+            <action name="view" default="true" ext=""/>
+        </app>
+        <app name="application/vnd.ms-visio.drawing">
             <action name="view" default="true" ext=""/>
         </app>
         <app name="application/x-mspublisher">
