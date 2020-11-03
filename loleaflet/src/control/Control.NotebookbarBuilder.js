@@ -639,6 +639,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_menubarControl: function(parentContainer, data, builder) {
+		if (window.ThisIsAMobileApp && window.mode.isTablet())
+			return;
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
 		$(control.container).unbind('click');
