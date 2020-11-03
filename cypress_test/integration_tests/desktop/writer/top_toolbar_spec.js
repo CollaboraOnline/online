@@ -159,6 +159,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
 	});
+	
 	it('Apply right alignment.', function() {
 		cy.get('#tb_editbar_item_rightpara')
 			.click();
@@ -167,6 +168,36 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'right');
+	});
+
+	it('Apply justified.', function() {
+		cy.get('#tb_editbar_item_justifypara')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'align', 'justify');
+	});
+
+	it('Toggle numbered list.', function() {
+		cy.get('#tb_editbar_item_defaultnumbering')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container ol')
+			.should('exist');
+	});
+
+	it('Toggle bulleted list.', function() {
+		cy.get('#tb_editbar_item_defaultbullet')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container ul')
+			.should('exist');
 	});
 	it('Insert comment.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
