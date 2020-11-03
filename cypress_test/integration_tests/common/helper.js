@@ -94,6 +94,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			.should('not.have.attr', 'value', '');
 
 		// Hide first run wizard if it's there
+		cy.wait(2000); // Wait some time to the wizard become visible, if it's there.
 		cy.get('body')
 			.then(function(body) {
 				if (body.find('#firstrunwizard').length !== 0) {
