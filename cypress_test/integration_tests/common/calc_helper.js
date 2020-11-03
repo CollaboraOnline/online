@@ -50,7 +50,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 			.should('be.visible');
 
 		helper.doIfOnMobile(function() {
-			cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(-8px, -8px, 0px); z-index: -8;')
+			cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 				.should('be.visible');
 		});
 	} else
