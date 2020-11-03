@@ -12,7 +12,7 @@ function openRevisionHistory() {
 				.click();
 		});
 
-	cy.get('#app-sidebar')
+	cy.get('#app-sidebar-vue')
 		.should('be.visible');
 
 	cy.get('section#tab-versionsTabView')
@@ -44,14 +44,23 @@ function restorePreviousVersion() {
 	cy.get('#versionsTabView .versions li:nth-of-type(1) .revertVersion')
 		.click();
 
+	cy.wait(10000);
+
 	cy.get('.app-sidebar__close.icon-close')
+		.then(function(item) {
+			Cypress.env('IFRAME_LEVEL', '1');
+			cy.wrap(item)
+				.click();
+		});
+
+	cy.get('#revViewerContainer .icon-close')
 		.then(function(item) {
 			Cypress.env('IFRAME_LEVEL', '2');
 			cy.wrap(item)
 				.click();
 		});
 
-	cy.wait(10000);
+	cy.wait(2000);
 }
 
 function checkAndCloseSharing() {
@@ -64,7 +73,7 @@ function checkAndCloseSharing() {
 				.click();
 		});
 
-	cy.get('#app-sidebar')
+	cy.get('#app-sidebar-vue')
 		.should('be.visible');
 
 	// issue here
