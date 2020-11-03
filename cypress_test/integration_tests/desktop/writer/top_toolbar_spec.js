@@ -159,7 +159,15 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
 	});
+	it('Apply right alignment.', function() {
+		cy.get('#tb_editbar_item_rightpara')
+			.click();
 
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'align', 'right');
+	});
 	it('Insert comment.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
