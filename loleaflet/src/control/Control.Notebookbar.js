@@ -268,7 +268,7 @@ L.Control.Notebookbar = L.Control.extend({
 		var optionsSection = L.DomUtil.create('div', 'notebookbar-options-section');
 		$('#document-titlebar').parent().append(optionsSection);
 
-		if (L.Params.closeButtonEnabled && !window.mode.isTablet())
+		if (L.Params.closeButtonEnabled)
 			$(optionsSection).css('right', '30px');
 
 		var builderOptions = {
