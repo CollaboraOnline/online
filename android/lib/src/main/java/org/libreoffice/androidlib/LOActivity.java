@@ -811,6 +811,13 @@ public class LOActivity extends AppCompatActivity {
         System.loadLibrary("androidapp");
     }
 
+    /**
+     * Used for determining tablets
+     */
+    public boolean isLargeScreen() {
+        return getResources().getBoolean(R.bool.isLargeScreen);
+    }
+
     public SharedPreferences getPrefs() {
         return sPrefs;
     }
