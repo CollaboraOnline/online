@@ -31,7 +31,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'B2');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 
 		cy.get('input#addressInput')
@@ -41,7 +41,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'A1');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('exist');
 	});
 
@@ -57,7 +57,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'B2:B3');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 
 		cy.get('#tb_editbar_item_togglemergecells')
@@ -77,7 +77,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'B2:B3');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 
 		cy.get('#tb_editbar_item_togglemergecells')
