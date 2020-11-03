@@ -76,6 +76,7 @@ var nextcloudBlackList = [
 	],
 	['mobile/impress/hamburger_menu_spec.js',
 		[
+			'Print',
 			'Save'
 		]
 	],
