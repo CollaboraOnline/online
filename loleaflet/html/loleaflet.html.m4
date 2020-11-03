@@ -297,6 +297,9 @@ m4_syscmd([cat ]GLOBAL_JS)m4_dnl
 m4_ifelse(IOSAPP,[true],
      [window.userInterfaceMode = window.getParameterByName('userinterfacemode');])
 
+m4_ifelse(ANDROIDAPP,[true],
+     [window.userInterfaceMode = window.getParameterByName('userinterfacemode');])
+
 // Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css
 var link = document.createElement('link');
 link.setAttribute("rel", "stylesheet");

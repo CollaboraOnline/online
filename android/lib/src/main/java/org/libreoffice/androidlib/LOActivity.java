@@ -775,8 +775,8 @@ public class LOActivity extends AppCompatActivity {
         String cacheDir = getApplication().getCacheDir().getAbsolutePath();
         String apkFile = getApplication().getPackageResourcePath();
         AssetManager assetManager = getResources().getAssets();
-
-        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad);
+        String uiMode = (isLargeScreen() && !isChromeOS()) ? "notebookbar" : "classic";
+        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad, uiMode);
 
         // trigger the load of the document
         String finalUrlToLoad = "file:///android_asset/dist/loleaflet.html?file_path=" +
@@ -799,6 +799,8 @@ public class LOActivity extends AppCompatActivity {
             finalUrlToLoad += "&debug=true";
         }
 
+        if (isLargeScreen() && !isChromeOS())
+            finalUrlToLoad += "&userinterfacemode=notebookbar";
         // load the page
         mWebView.loadUrl(finalUrlToLoad);
 
@@ -825,7 +827,7 @@ public class LOActivity extends AppCompatActivity {
     /**
      * Initialize the LOOLWSD to load 'loadFileURL'.
      */
-    public native void createLOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL);
+    public native void createLOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL, String uiMode);
 
     /**
      * Passing messages from JS (instead of the websocket communication).

@@ -48,7 +48,6 @@ JNI_OnLoad(JavaVM* vm, void*) {
         return JNI_ERR; // JNI version not supported.
     }
 
-    setupKitEnvironment("");
 
     // Uncomment the following to see the logs from the core too
     //setenv("SAL_LOG", "+WARN+INFO", 0);
@@ -299,7 +298,7 @@ extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstr
 
 /// Create the LOOLWSD instance.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject instance, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL)
+Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject instance, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL, jstring uiMode)
 {
     fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
 
@@ -318,7 +317,8 @@ Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject in
         closeDocument();
         return;
     }
-
+    const std::string userInterfaceMode = std::string(env->GetStringUTFChars(uiMode, nullptr));
+    setupKitEnvironment(userInterfaceMode);
     lokInitialized = true;
     libreofficekit_initialize(env, dataDir, cacheDir, apkFile, assetManager);
 
