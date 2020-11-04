@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require expect afterEach*/
+/* global describe it cy beforeEach require expect afterEach Cypress*/
 
 require('cypress-file-upload');
 
@@ -517,10 +517,12 @@ describe('Impress insertion wizard.', function() {
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 
-		cy.get('#tb_actionbar_item_closemobile')
-			.click();
+		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
+			cy.get('#tb_actionbar_item_closemobile')
+				.click();
 
-		cy.contains('.leaflet-control-zoom-in', '+')
-			.should('not.be.visible');
+			cy.contains('.leaflet-control-zoom-in', '+')
+				.should('not.exist');
+		}
 	});
 });
