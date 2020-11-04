@@ -1,0 +1,11 @@
+commit-msg
+----------
+
+This hooks supports the `commit.signOff` option.
+
+This is a boolean value which lets you enable the -s/--signoff option of
+commit by default.  Note: Adding the Signed-off-by: line to a commit should be
+a conscious act and means that you certify you have the rights to submit this
+work under the same open source license. Please see the README.CONTRIBUTING.md
+document for further discussion. The option is ignored if the author and the
+committer is not the same.

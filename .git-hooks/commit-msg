@@ -28,9 +28,26 @@ if test ! -f "$1" ; then
   exit 1
 fi
 
+# $RANDOM will be undefined if not using bash, so don't use set -u
+random=$( (whoami ; hostname ; date; cat $1 ; echo $RANDOM) | git hash-object --stdin)
+dest="$1.tmp.${random}"
+
+trap 'rm -f "${dest}"' EXIT
+
+GIT_AUTHOR="$(git var GIT_AUTHOR_IDENT | sed 's/^\(.*>\).*$/\1/')"
+GIT_COMMITTER="$(git var GIT_COMMITTER_IDENT | sed 's/^\(.*>\).*$/\1/')"
+git config --bool --get commit.signOff >/dev/null
+if [ $? = 0 -a "${GIT_AUTHOR}" = "${GIT_COMMITTER}" ]; then
+  SOB="Signed-off-by: ${GIT_AUTHOR}"
+  git -c trailer.ifexists=doNothing interpret-trailers \
+        --trailer "${SOB}" < "$1" > "${dest}"
+  mv "${dest}" "$1"
+fi
+
 if ! grep -q "^Signed-off-by:" "$1"; then
   echo "Commit message is not signed off: $1"
   echo "Use 'git commit -s' to sign off the commit message."
+  echo "Use 'git config commit.signOff true' to automatically sign off commits."
   exit 1
 fi
 
@@ -38,12 +55,6 @@ fi
 if test "false" = "`git config --bool --get gerrit.createChangeId`" ; then
   exit 0
 fi
-
-# $RANDOM will be undefined if not using bash, so don't use set -u
-random=$( (whoami ; hostname ; date; cat $1 ; echo $RANDOM) | git hash-object --stdin)
-dest="$1.tmp.${random}"
-
-trap 'rm -f "${dest}"' EXIT
 
 if ! git stripspace --strip-comments < "$1" > "${dest}" ; then
    echo "cannot strip comments from $1"
