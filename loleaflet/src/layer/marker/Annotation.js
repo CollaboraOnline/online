@@ -241,13 +241,17 @@ L.Annotation = L.Layer.extend({
 			var acceptButton = this._acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
 			var tdReject = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
 			var rejectButton = this._rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
+			var acceptButtonTooltipText = _('Accept change');
+			var rejectButtonTooltipText = _('Reject change');
 
-			acceptButton.title = _('Accept change');
+			acceptButton.dataset.title = acceptButtonTooltipText;
+			acceptButton.setAttribute('aria-label', acceptButtonTooltipText);
 			L.DomEvent.on(acceptButton, click, function() {
 				this._map.fire('RedlineAccept', {id: this._data.id});
 			}, this);
 
-			rejectButton.title = _('Reject change');
+			rejectButton.dataset.title = rejectButtonTooltipText;
+			rejectButton.setAttribute('aria-label', rejectButtonTooltipText);
 			L.DomEvent.on(rejectButton, click, function() {
 				this._map.fire('RedlineReject', {id: this._data.id});
 			}, this);
@@ -256,7 +260,9 @@ L.Annotation = L.Layer.extend({
 		if (this.options.noMenu !== true && this._map.isPermissionEditForComments()) {
 			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
 			var divMenu = this._menu = L.DomUtil.create(tagDiv, this._data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
-			divMenu.title = _('Open menu');
+			var divMenuTooltipText = _('Open menu');
+			divMenu.dataset.title = divMenuTooltipText;
+			divMenu.setAttribute('aria-label', divMenuTooltipText);
 			divMenu.annotation = this;
 		}
 		if (this._data.trackchange) {
