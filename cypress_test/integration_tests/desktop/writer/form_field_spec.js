@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach expect */
+/* global describe it cy require afterEach expect Cypress */
 
 var helper = require('../../common/helper');
 
@@ -9,9 +9,10 @@ describe('Form field button tests.', function() {
 		testFileName = fileName;
 		helper.beforeAll(fileName, 'writer');
 
+		showStatusBar();
+
 		// Blinking cursor is not visible for some reason.
-		cy.get('textarea.clipboard')
-			.type('x');
+		helper.typeIntoDocument('x');
 
 		cy.get('.blinking-cursor')
 			.should('be.visible');
@@ -19,6 +20,22 @@ describe('Form field button tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName, 'writer');
 	});
+
+	function showStatusBar() {
+		cy.get('#toolbar-down')
+			.then(function(statusbar) {
+				if (!Cypress.dom.isVisible(statusbar[0])) {
+					cy.get('#menu-view')
+						.click();
+
+					cy.get('#menu-showstatusbar')
+						.click();
+				}
+			});
+
+		cy.get('#toolbar-down')
+			.should('be.visible');
+	}
 
 	function buttonShouldNotExist() {
 		cy.get('.form-field-frame')
