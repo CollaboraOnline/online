@@ -519,14 +519,15 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('#papersize');
 
+
 		helper.clickOnIdle('.ui-combobox-text', 'C6 Envelope');
+
+		closePageWizard();
 
 		// Smaller paper size makes center tile to contain text too.
 		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#papersize .ui-header-left')
@@ -539,14 +540,15 @@ describe('Trigger hamburger menu options.', function() {
 
 		openPageWizard();
 
+
 		helper.inputOnIdle('#paperwidth .spinfield', '5');
+
+		closePageWizard();
 
 		// Smaller paper size makes center tile to contain text too.
 		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#papersize .ui-header-left')
@@ -564,12 +566,12 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.inputOnIdle('#paperheight .spinfield', '3.0');
 
+		closePageWizard();
+
 		// Smaller paper size makes center tile to contain the end of the page.
 		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#papersize .ui-header-left')
@@ -596,13 +598,13 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('.ui-combobox-text', 'Landscape');
 
+		closePageWizard();
+
 		// We got some extra tiles horizontally.
 		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1024px; top: 5px;\']')
 			.should('exist');
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#paperorientation .ui-header-left')
@@ -619,12 +621,12 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('.ui-combobox-text', 'None');
 
+		closePageWizard();
+
 		// Text is moved up by margin removal, so the the center tile will be empty.
 		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#marginLB .ui-header-left')
