@@ -159,7 +159,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
 	});
-	
+
 	it('Apply right alignment.', function() {
 		cy.get('#tb_editbar_item_rightpara')
 			.click();
@@ -199,6 +199,30 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container ul')
 			.should('exist');
 	});
+	it('Increase/Decrease Indent.', function() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+			.click();
+
+		//Increase indent
+		cy.get('#tb_editbar_item_incrementindent')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'style', 'margin-left: 0.49in; margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 100%');
+
+		//Decrease indent
+		cy.get('#tb_editbar_item_decrementindent')
+			.click();
+
+		helper.reselectAllText();
+
+		
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 100%');
+	});
+
 	it('Insert comment.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
