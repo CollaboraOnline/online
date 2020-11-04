@@ -523,6 +523,8 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('.ui-combobox-text', 'A3');
 
+		closePageWizard();
+
 		// Cursor postion changes because of the bigger document width.
 		helper.moveCursor('end');
 
@@ -535,8 +537,6 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#papersize .ui-header-left')
@@ -553,6 +553,8 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.inputOnIdle('#paperwidth .spinfield', '12');
 
+		closePageWizard();
+
 		// Cursor postion changes because of the bigger document width.
 		helper.moveCursor('end');
 
@@ -565,8 +567,6 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#papersize .ui-header-left')
@@ -586,6 +586,8 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.inputOnIdle('#paperheight .spinfield', '3.0');
 
+		closePageWizard();
+
 		// Cursor postion changes because of having more pages (page gap).
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
@@ -596,8 +598,6 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#papersize .ui-header-left')
@@ -619,6 +619,8 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('.ui-combobox-text', 'Landscape');
 
+		closePageWizard();
+
 		// We got some extra tiles horizontally.
 		// TODO: issue here, view is not moved with the cursor
 		helper.moveCursor('end', false);
@@ -633,8 +635,6 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#paperorientation .ui-header-left')
@@ -656,6 +656,8 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('.ui-combobox-text', 'None');
 
+		closePageWizard();
+
 		// Text is moved leftward by margin removal.
 		cy.get('@cursorOrigLeft')
 			.then(function(cursorOrigLeft) {
@@ -666,8 +668,6 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Check that the page wizard shows the right value after reopen.
-		closePageWizard();
-
 		openPageWizard();
 
 		cy.get('#marginLB .ui-header-left')
