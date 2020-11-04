@@ -15,7 +15,7 @@ describe('Clipboard operations.', function() {
 
 	it('Copy and Paste text.', function() {
 		// Select some text
-		helper.selectAllText();
+		helper.selectAllText(false);
 
 		cy.get('.leaflet-marker-icon')
 			.then(function(marker) {
