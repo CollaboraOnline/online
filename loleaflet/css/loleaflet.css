@@ -494,6 +494,26 @@ body {
 	padding: 0;
 	vertical-align: top;
 }
+/*Tooltips
+----------------------------------*/
+[data-title]:hover:after {
+	opacity: 1;
+	transition: all 0.1s ease 0.5s;
+	visibility: visible;
+}
+[data-title]:after {
+	content: attr(data-title);
+	font-size: 1em !important;
+	bottom: -1.6em;
+	left: 100%;
+	white-space: nowrap;
+	opacity: 0;
+	border-color: #2a2a2a;
+	visibility: hidden;
+}
+[data-title] {
+	position: relative;
+}
 
 .loleaflet-annotation-caption {
 	font-weight: bold;
