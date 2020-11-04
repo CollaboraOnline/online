@@ -875,7 +875,8 @@ button.ui-button::-moz-focus-inner {
 }
 /* Component containers
 ----------------------------------*/
-.ui-widget {
+.ui-widget,
+[data-title]:after {
 	font-family: var(--jquery-ui-font);
 	font-size: 1.1em;
 }
@@ -912,17 +913,20 @@ button.ui-button::-moz-focus-inner {
 
 /*Tooltips
 ----------------------------------*/
-.ui-tooltip {
+.ui-tooltip,
+[data-title]:after {
 	padding: 7px 9px;
 	position: absolute;
 	z-index: 9999;
 	max-width: 300px;
 	background: #2a2a2a;
 }
-body .ui-tooltip {
+body .ui-tooltip,
+[data-title]:after {
 	border-width: 2px;
 }
-.ui-tooltip-content {
+.ui-tooltip-content,
+[data-title]:after {
 	font-size: 0.8em;
 	color: #fff;
 	background: #2a2a2a;
@@ -1285,24 +1289,28 @@ a.ui-button:active,
 ----------------------------------*/
 
 /* Corner radius */
+[data-title]:after,
 .ui-corner-all,
 .ui-corner-top,
 .ui-corner-left,
 .ui-corner-tl {
 	border-top-left-radius: 4px;
 }
+[data-title]:after,
 .ui-corner-all,
 .ui-corner-top,
 .ui-corner-right,
 .ui-corner-tr {
 	border-top-right-radius: 4px;
 }
+[data-title]:after,
 .ui-corner-all,
 .ui-corner-bottom,
 .ui-corner-left,
 .ui-corner-bl {
 	border-bottom-left-radius: 4px;
 }
+[data-title]:after,
 .ui-corner-all,
 .ui-corner-bottom,
 .ui-corner-right,
@@ -1316,7 +1324,8 @@ a.ui-button:active,
 	opacity: .5;
 	filter: Alpha(Opacity=50); /* support: IE8 */
 }
-.ui-widget-shadow {
+.ui-widget-shadow,
+[data-title]:after {
 	-webkit-box-shadow: 0px 0px 4px 2px rgb(217, 217, 217);
 	box-shadow: 0px 0px 4px 2px rgb(217, 217, 217);
 }
