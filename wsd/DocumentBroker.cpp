@@ -1188,7 +1188,7 @@ void DocumentBroker::broadcastSaveResult(bool success, const std::string& result
     const std::string resultstr = success ? "true" : "false";
     // Some sane limit, otherwise we get problems transferring this to the client with large strings (can be a whole webpage)
     std::string errorMsgFormatted = LOOLProtocol::getAbbreviatedMessage(errorMsg);
-    // Replace reserverd characters
+    // Replace reserved characters
     errorMsgFormatted = Poco::translate(errorMsgFormatted, "\"", "'");
     broadcastMessage("commandresult: { \"command\": \"save\", \"success\": " + resultstr +
                      ", \"result\": \"" + result + "\", \"errorMsg\": \"" + errorMsgFormatted  + "\"}");
