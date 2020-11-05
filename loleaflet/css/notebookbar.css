@@ -12,7 +12,7 @@
 	float: left;
 	font-size: 12pt;
 	font-family: var(--loleaflet-font);
-	line-height: 20px;
+	line-height: normal;
 	color: dimgray;
 	height: 24px;
 	padding: 0px 1em;
@@ -126,7 +126,7 @@
 
 .hasnotebookbar #shortcuts-menubar-icon {
 	position: absolute;
-	top: 52%;
+	top: 56%;
 	left: 0px;
 	height: 1px;
 	width: 13px;
