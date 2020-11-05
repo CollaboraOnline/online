@@ -14,11 +14,13 @@ L.Control.UIManager = L.Control.extend({
 
 		map.on('updatepermission', this.onUpdatePermission, this);
 
-		window.addEventListener('popstate', this.onGoBack.bind(this));
+		if (window.mode.isMobile()) {
+			window.addEventListener('popstate', this.onGoBack.bind(this));
 
-		// provide entries in the history we can catch to close the app
-		history.pushState({context: 'app-started'}, 'app-started');
-		history.pushState({context: 'app-started'}, 'app-started');
+			// provide entries in the history we can catch to close the app
+			history.pushState({context: 'app-started'}, 'app-started');
+			history.pushState({context: 'app-started'}, 'app-started');
+		}
 	},
 
 	// UI initialization
