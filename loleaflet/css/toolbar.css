@@ -387,6 +387,8 @@ button.leaflet-control-search-next
 	width: 150px !important;
 }
 #tb_editbar_item_fonts .select2-container{
+	margin-left: 5px;
+	margin-right: 5px;
 	width: 150px !important;
 }
 #fontnamecombobox {
