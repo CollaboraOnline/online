@@ -65,13 +65,15 @@ L.control.dialogWizard = function (dialogid) {
 L.ControllerDialogWizard = L.Class.extend({
 	statics: {
 		Dialogs: {},
-		MACRO_SELECTOR: 1
+		MACRO_SELECTOR: 1,
+		MACRO_SECURITY: 2
 	},
 
 	initialize: function (map) {
 		this._map = map;
 
 		map.on('macroselector', this._runMacroSelector, this);
+		map.on('macrosecurity', this._runMacroSecurity, this);
 		map.on('commandresult', this._onCommandResult, this);
 		map.on('dialogaction', this._executeAction, this);
 	},
@@ -93,6 +95,8 @@ L.ControllerDialogWizard = L.Class.extend({
 
 		if (e.commandName.startsWith('.uno:RunMacro')) {
 			this._createDialog(L.ControllerDialogWizard.MACRO_SELECTOR, e.result.value);
+		} else if (e.commandName.startsWith('.uno:OptionsTreeDialog')) {
+			this._createDialog(L.ControllerDialogWizard.MACRO_SECURITY, e.result.value);
 		}
 	},
 
@@ -145,6 +149,15 @@ L.ControllerDialogWizard = L.Class.extend({
 		}
 
 		return result;
+	},
+
+	_runMacroSecurity: function () {
+		var dlg = L.ControllerDialogWizard.Dialogs[L.ControllerDialogWizard.MACRO_SECURITY];
+		if (!dlg) {
+			this._map.sendUnoCommand('.uno:OptionsTreeDialog?Option:string=MacroSecurity');
+		} else if (!this._isDlgOpen(dlg)) {
+			dlg.addTo(this._map);
+		}
 	},
 
 	_runMacroSelector: function () {
