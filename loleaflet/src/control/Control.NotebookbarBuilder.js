@@ -6,8 +6,6 @@
 /* global $ _ _UNO */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
-	_iOSFontNameButton: null,
-
 	_customizeOptions: function() {
 		this.options.noLabelsForUnoButtons = true;
 		this.options.useInLineLabelsForUnoButtons = false;
@@ -207,9 +205,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		if (commandName === '.uno:CharFontName') {
 			if (window.ThisIsTheiOSApp) {
-				if (this._iOSFontNameButton !== null) {
-					this._iOSFontNameButton.innerHTML = state;
-				}
+				$('#fontnamecombobox').html(state);
+				window.LastSetiOSFontNameButtonFont = state;
 			} else {
 				$('#fontnamecombobox').val(state).trigger('change');
 			}
@@ -284,8 +281,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		if (window.ThisIsTheiOSApp && data.id === 'fontnamecombobox') {
 			var button = L.DomUtil.createWithId('button', data.id, parentContainer);
-			this._iOSFontNameButton = button;
-			button.innerHTML = data.entries[data.selectedEntries[0]];
+			if (data.entries[data.selectedEntries[0]])
+				button.innerHTML = data.entries[data.selectedEntries[0]];
+			else if (window.LastSetiOSFontNameButtonFont)
+				button.innerHTML = window.LastSetiOSFontNameButtonFont;
 			var map = builder.map;
 			window.MagicFontNameCallback = function(font) {
 				button.innerHTML = font;
