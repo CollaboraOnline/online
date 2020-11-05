@@ -106,12 +106,13 @@ L.ControllerDialogWizard = L.Class.extend({
 			case 'categories':
 				var target = action.data;
 				var button = dlg._container.querySelector('#ok');
+				var description = dlg._container.querySelector('#description');
 
 				selected = dlg._container.querySelector(dlg.options.classPrefix + '-selected');
 				if (selected)
 					L.DomUtil.removeClass(selected, dlg.options.nameElement + '-selected');
 
-				if (!target || !button)
+				if (!target || !button || !description)
 					break;
 
 				if (target.hasAttribute('data-uri')) {
@@ -120,6 +121,8 @@ L.ControllerDialogWizard = L.Class.extend({
 				} else {
 					button.setAttribute('disabled', 'disabled');
 				}
+
+				description.innerHTML = target.getAttribute('data-description');
 				break;
 			}
 			break;
