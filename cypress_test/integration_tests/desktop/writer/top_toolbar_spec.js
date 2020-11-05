@@ -360,7 +360,7 @@ describe('Top toolbar tests.', function() {
 		cy.window().its('open').should('be.called');
 	});
 	
-	it('Apply Undo/Redo.', function() {
+	it.skip('Apply Undo/Redo.', function() {
 		cy.get('#tb_editbar_item_italic')
 			.click();
 
