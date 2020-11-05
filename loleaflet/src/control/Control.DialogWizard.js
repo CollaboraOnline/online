@@ -136,6 +136,18 @@ L.ControllerDialogWizard = L.Class.extend({
 					this._map.sendUnoCommand('.uno:RunMacro?ScriptURL:string=' + scriptURL);
 				}
 				break;
+
+			case 'cancel':
+				dlg.remove();
+				break;
+			}
+			break;
+
+		case L.ControllerDialogWizard.MACRO_SECURITY:
+			switch (action.controlid) {
+			case 'cancel':
+				dlg.remove();
+				break;
 			}
 			break;
 		}
