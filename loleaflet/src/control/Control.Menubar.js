@@ -238,6 +238,10 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:WordCountDialog'},
 				{uno: '.uno:LineNumberingDialog'},
 				{type: 'separator'},
+				{name: _('Security'), type: 'menu', menu: [
+					{name: _('Macro Securit_y...'), id: 'macrosecurity', type: 'action'}
+				]},
+				{type: 'separator'},
 				{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:OnlineAutoFormat'}]}
 			]},
@@ -364,7 +368,11 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SpellDialog'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+				{type: 'separator'},
+				{name: _('Security'), type: 'menu', menu: [
+					{name: _('Macro Securit_y...'), id: 'macrosecurity', type: 'action'}
+				]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
@@ -488,6 +496,10 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 				{uno: '.uno:GoalSeekDialog'},
+				{type: 'separator'},
+				{name: _('Security'), type: 'menu', menu: [
+					{name: _('Macro Securit_y...'), id: 'macrosecurity', type: 'action'}
+				]},
 				{type: 'separator'},
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'}
 			]},
@@ -1282,6 +1294,8 @@ L.Control.Menubar = L.Control.extend({
 			} else {
 				this._map.sendUnoCommand('.uno:SearchDialog');
 			}
+		} else if (id === 'macrosecurity') {
+			this._map.fire('macrosecurity');
 		} else if (id === 'inserttextbox') {
 			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
 		} else if (id === 'insertslidefield') {
