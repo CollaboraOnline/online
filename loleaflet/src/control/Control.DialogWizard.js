@@ -161,7 +161,17 @@ L.ControllerDialogWizard = L.Class.extend({
 			break;
 
 		case L.ControllerDialogWizard.MACRO_SECURITY:
+			var radio;
 			switch (action.controlid) {
+			case 'ok':
+				selected = dlg._container.querySelector('input[checked="checked"]');
+				if (selected) {
+					this._map.sendUnoCommand('.uno:SetOptions?Options.MacroSecurityLevel:short=' +
+								 selected.getAttribute('data-value'));
+					dlg.remove();
+				}
+				break;
+
 			case 'cancel':
 				dlg.remove();
 				break;
