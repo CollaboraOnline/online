@@ -125,6 +125,20 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Loading test document with nextcloud - end.');
 }
 
+function hideNCFirstRunWizard() {
+	// Hide first run wizard if it's there
+	cy.wait(2000); // Wait some time to the wizard become visible, if it's there.
+	cy.get('body')
+		.then(function(body) {
+			if (body.find('#firstrunwizard').length !== 0) {
+				cy.get('#firstrunwizard')
+					.then(function(wizard) {
+						wizard.hide();
+					});
+			}
+		});
+}
+
 function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Loading test document with nextcloud - start.');
 	cy.log('Param - fileName: ' + fileName);
@@ -154,17 +168,7 @@ function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 		cy.get('#free_space')
 			.should('not.have.attr', 'value', '');
 
-		// Hide first run wizard if it's there
-		cy.wait(2000); // Wait some time to the wizard become visible, if it's there.
-		cy.get('body')
-			.then(function(body) {
-				if (body.find('#firstrunwizard').length !== 0) {
-					cy.get('#firstrunwizard')
-						.then(function(wizard) {
-							wizard.hide();
-						});
-				}
-			});
+		hideNCFirstRunWizard();
 
 		cy.get('#fileList')
 			.then(function(filelist) {
@@ -190,6 +194,8 @@ function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 		// Wait for free space calculation before uploading document
 		cy.get('#free_space')
 			.should('not.have.attr', 'value', '');
+
+		hideNCFirstRunWizard();
 	}
 
 	cy.get('tr[data-file=\'' + fileName + '\']')
