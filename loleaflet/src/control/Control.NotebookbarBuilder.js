@@ -6,6 +6,8 @@
 /* global $ _ _UNO */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
+	_iOSFontNameButton: null,
+
 	_customizeOptions: function() {
 		this.options.noLabelsForUnoButtons = true;
 		this.options.useInLineLabelsForUnoButtons = false;
@@ -204,7 +206,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var state = e.state;
 
 		if (commandName === '.uno:CharFontName') {
-			$('#fontnamecombobox').val(state).trigger('change');
+			if (window.ThisIsTheiOSApp) {
+				if (this._iOSFontNameButton !== null) {
+					this._iOSFontNameButton.innerHTML = state;
+				}
+			} else {
+				$('#fontnamecombobox').val(state).trigger('change');
+			}
 		} else if (commandName === '.uno:FontHeight') {
 			$('#fontsize').val(parseFloat(state)).trigger('change');
 			$('#fontsizecombobox').val(parseFloat(state)).trigger('change');
@@ -273,6 +281,26 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_comboboxControl: function(parentContainer, data, builder) {
 		if (!data.entries || data.entries.length === 0)
 			return false;
+
+		if (window.ThisIsTheiOSApp && data.id === 'fontnamecombobox') {
+			var button = L.DomUtil.createWithId('button', data.id, parentContainer);
+			this._iOSFontNameButton = button;
+			button.innerHTML = data.entries[data.selectedEntries[0]];
+			var map = builder.map;
+			window.MagicFontNameCallback = function(font) {
+				button.innerHTML = font;
+				map.applyFont(font);
+				map.focus();
+			};
+			button.onclick = function() {
+
+				// There doesn't seem to be a way to pre-select an entry in the
+				// UIFontPickerViewController so no need to pass the
+				// current font here.
+				window.postMobileMessage('FONTPICKER');
+			};
+			return false;
+		}
 
 		var select = L.DomUtil.createWithId('select', data.id, parentContainer);
 		$(select).addClass(builder.options.cssClass);
