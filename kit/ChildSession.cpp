@@ -1531,6 +1531,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
                           tokens[1] == ".uno:Undo" ||
                           tokens[1] == ".uno:Redo" ||
                           tokens[1] == ".uno:RunMacro" ||
+                          Util::startsWith(tokens[1], ".uno:OptionsTreeDialog") ||
                           Util::startsWith(tokens[1], "vnd.sun.star.script:"));
 
     getLOKitDocument()->setView(_viewId);
