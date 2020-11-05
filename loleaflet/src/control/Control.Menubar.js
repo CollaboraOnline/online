@@ -414,6 +414,10 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
 				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
 				{type: 'separator'},
+				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
+				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
+				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				{type: 'separator'},
 				{name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
 				{name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
 					{name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
@@ -425,11 +429,16 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
-				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
+				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{uno: '.uno:InsertSymbol'},
+				{type: 'separator'},
+				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
+					{uno: '.uno:InsertCurrentDate'},
+					{uno: '.uno:InsertCurrentTime'}
+				]},
 				{uno: '.uno:EditHeaderAndFooter'} /*todo: add to Control.Notebookbar.Calc.js (as Insert tab)*/
 			]},
 			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), id: 'format', type: 'menu', menu: [
