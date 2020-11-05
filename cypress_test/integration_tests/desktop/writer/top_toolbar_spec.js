@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe('Top toolbar tests.', function() {
 	var testFileName = 'top_toolbar.odt';
@@ -328,6 +329,76 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
+	});
+
+	it('Save.', function() {
+		cy.get('#tb_editbar_item_bold')
+			.click();
+
+		cy.get('#tb_editbar_item_save')
+			.click();
+
+		helper.beforeAll(testFileName, 'writer', true);
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p b')
+			.should('exist');
+
+	});
+
+	it('Print', function() {
+		// A new window should be opened with the PDF.
+		cy.window()
+			.then(function(win) {
+				cy.stub(win, 'open');
+			});
+
+		cy.get('#tb_editbar_item_print')
+		    .click();
+
+		cy.window().its('open').should('be.called');
+	});
+	
+	it('Apply Undo/Redo.', function() {
+		cy.get('#tb_editbar_item_italic')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p i')
+			.should('exist');
+
+		//Undo
+		cy.get('#tb_editbar_item_undo')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p i')
+			.should('not.exist');
+
+		//Redo
+		cy.get('#tb_editbar_item_redo')
+			.click();
+
+		helper.reselectAllText();
+
+		cy.get('#copy-paste-container p i')
+			.should('exist');
+	});
+
+	it('Show/Hide sidebar.', function() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+		   .click();
+		cy.get('#tb_editbar_item_sidebar')
+			.click();
+
+		//show sidebar
+		desktopHelper.showSidebar();
+		
+		//hide sidebar
+		desktopHelper.hideSidebar();
 	});
 
 });
