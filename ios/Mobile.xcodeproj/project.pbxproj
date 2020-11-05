@@ -32,7 +32,7 @@
 		BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D521401E0F00E0826C /* Storage.cpp */; };
 		BE5EB5DA2140363100E0826C /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D92140363100E0826C /* ios.mm */; };
 		BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* ICU.dat */; };
-		BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* MobileCoreServices.framework */; };
+		BE6362C22153B5B500F4237E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* CoreServices.framework */; };
 		BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE7228E02417BC9F000ADABD /* StringVector.cpp */; };
 		BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */; };
 		BE80E43221AD92F700859C97 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BE80E43121AD92F600859C97 /* Fonts */; };
@@ -549,7 +549,7 @@
 		BE62A59524BF875700AFFD77 /* GraphicFormatDetector.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicFormatDetector.cxx; path = "../../ios-device/vcl/source/filter/GraphicFormatDetector.cxx"; sourceTree = "<group>"; };
 		BE62A59624BF875700AFFD77 /* FilterConfigItem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FilterConfigItem.cxx; path = "../../ios-device/vcl/source/filter/FilterConfigItem.cxx"; sourceTree = "<group>"; };
 		BE636210215101D000F4237E /* WebSocketHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocketHandler.hpp; sourceTree = "<group>"; };
-		BE6362C12153B5B500F4237E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		BE6362C12153B5B500F4237E /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		BE6C48502524A19B0066A166 /* asynccallback.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = asynccallback.cxx; path = "../../ios-device/toolkit/source/awt/asynccallback.cxx"; sourceTree = "<group>"; };
 		BE6C48512524A19B0066A166 /* vclxtoolkit.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxtoolkit.cxx; path = "../../ios-device/toolkit/source/awt/vclxtoolkit.cxx"; sourceTree = "<group>"; };
 		BE6C48522524A19B0066A166 /* vclxfont.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxfont.cxx; path = "../../ios-device/toolkit/source/awt/vclxfont.cxx"; sourceTree = "<group>"; };
@@ -1409,7 +1409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE512CBA2518DE6E00921C15 /* libsqlite3.tbd in Frameworks */,
-				BE6362C22153B5B500F4237E /* MobileCoreServices.framework in Frameworks */,
+				BE6362C22153B5B500F4237E /* CoreServices.framework in Frameworks */,
 				BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */,
 				BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */,
 				BE00F8B5213ED543001CE2D4 /* libiconv.tbd in Frameworks */,
@@ -1454,7 +1454,7 @@
 			isa = PBXGroup;
 			children = (
 				BE512CB92518DE6400921C15 /* libsqlite3.tbd */,
-				BE6362C12153B5B500F4237E /* MobileCoreServices.framework */,
+				BE6362C12153B5B500F4237E /* CoreServices.framework */,
 				BEA2835921470A1C00848631 /* WebKit.framework */,
 				BE00F8B6213ED573001CE2D4 /* libz.tbd */,
 				BE00F8B4213ED543001CE2D4 /* libiconv.tbd */,
