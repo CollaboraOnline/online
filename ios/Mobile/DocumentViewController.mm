@@ -27,7 +27,7 @@
 
 #import "DocumentViewController.h"
 
-@interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate, UIDocumentPickerDelegate> {
+@interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate, UIDocumentPickerDelegate, UIFontPickerViewControllerDelegate> {
     int closeNotificationPipeForForwardingThread[2];
     NSURL *downloadAsTmpURL;
     CollaboraOnlineWebViewKeyboardManager *keyboardManager;
@@ -473,6 +473,15 @@ static IMP standardImpOfInputAccessoryView = nil;
                 [application openURL:url options:@{} completionHandler:nil];
                 return;
             }
+        } else if ([message.body isEqualToString:@"FONTPICKER"]) {
+            UIFontPickerViewControllerConfiguration *configuration = [[UIFontPickerViewControllerConfiguration alloc] init];
+            configuration.includeFaces = YES;
+            UIFontPickerViewController *picker = [[UIFontPickerViewController alloc] initWithConfiguration:configuration];
+            picker.delegate = self;
+            [self presentViewController:picker
+                               animated:YES
+                             completion:nil];
+            return;
         } else if ([message.body hasPrefix:@"downloadas "]) {
             NSArray<NSString*> *messageBodyItems = [message.body componentsSeparatedByString:@" "];
             NSString *format = nil;
@@ -551,6 +560,26 @@ static IMP standardImpOfInputAccessoryView = nil;
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     scrollView.pinchGestureRecognizer.enabled = NO;
+}
+
+- (void)fontPickerViewControllerDidPickFont:(UIFontPickerViewController *)viewController {
+    NSLog(@"Picked font: %@", [viewController selectedFontDescriptor]);
+    NSDictionary<UIFontDescriptorAttributeName, id> *attribs = [[viewController selectedFontDescriptor] fontAttributes];
+    NSString *family = attribs[UIFontDescriptorFamilyAttribute];
+    if (family && [family length] > 0) {
+        NSString *js = [[@"window.MagicFontNameCallback('" stringByAppendingString:family] stringByAppendingString:@"');"];
+        [self.webView evaluateJavaScript:js
+                       completionHandler:^(id _Nullable obj, NSError * _Nullable error)
+             {
+                 if (error) {
+                     LOG_ERR("Error after " << [js UTF8String] << ": " << [[error localizedDescription] UTF8String]);
+                     NSString *jsException = error.userInfo[@"WKJavaScriptExceptionMessage"];
+                     if (jsException != nil)
+                         LOG_ERR("JavaScript exception: " << [jsException UTF8String]);
+                 }
+             }
+         ];
+    }
 }
 
 - (void)bye {
