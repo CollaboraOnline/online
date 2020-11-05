@@ -105,15 +105,20 @@ L.ControllerDialogWizard = L.Class.extend({
 			switch (action.controlid) {
 			case 'categories':
 				var target = action.data;
+				var button = dlg._container.querySelector('#ok');
+
 				selected = dlg._container.querySelector(dlg.options.classPrefix + '-selected');
 				if (selected)
 					L.DomUtil.removeClass(selected, dlg.options.nameElement + '-selected');
 
-				if (!target)
+				if (!target || !button)
 					break;
 
 				if (target.hasAttribute('data-uri')) {
 					target.classList.toggle(dlg.options.nameElement + '-selected');
+					button.removeAttribute('disabled');
+				} else {
+					button.setAttribute('disabled', 'disabled');
 				}
 				break;
 			}
