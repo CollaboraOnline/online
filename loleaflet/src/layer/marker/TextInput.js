@@ -275,12 +275,12 @@ L.TextInput = L.Layer.extend({
 
 		// Trick to avoid showing the software keyboard: Set the textarea
 		// read-only before focus() and reset it again after the blur()
-		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone') {
+		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.mode.isChromebook()) {
 			if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true)
 				this._textArea.setAttribute('readonly', true);
 		}
 
-		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone') {
+		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.mode.isChromebook()) {
 			this._textArea.focus();
 		} else if (acceptInput === true) {
 			// On the iPhone, only call the textarea's focus() when we get an explicit
@@ -302,7 +302,7 @@ L.TextInput = L.Layer.extend({
 			this._textArea.focus();
 		}
 
-		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone') {
+		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.mode.isChromebook()) {
 			if ((window.ThisIsAMobileApp || window.mode.isMobile()) && acceptInput !== true) {
 				this._setAcceptInput(false);
 				this._textArea.blur();
@@ -329,7 +329,7 @@ L.TextInput = L.Layer.extend({
 		}
 
 		this._setAcceptInput(false);
-		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone')
+		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.mode.isChromebook())
 			this._textArea.blur();
 	},
 
