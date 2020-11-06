@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var impressMobileHelper = require('./impress_mobile_helper');
 
 describe('Trigger hamburger menu options.', function() {
 	var testFileName = '';
@@ -30,7 +29,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Type a new text
-		impressMobileHelper.dblclickOnSelectedShape();
+		impressHelper.dblclickOnSelectedShape();
 
 		helper.typeIntoDocument('new');
 
@@ -115,7 +114,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Type a new character
-		impressMobileHelper.dblclickOnSelectedShape();
+		impressHelper.dblclickOnSelectedShape();
 
 		helper.typeIntoDocument('q');
 
@@ -150,7 +149,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Type a new character
-		impressMobileHelper.dblclickOnSelectedShape();
+		impressHelper.dblclickOnSelectedShape();
 
 		helper.typeIntoDocument('q');
 
@@ -184,7 +183,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.odp');
 
 		impressHelper.selectTextShapeInTheCenter();
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 
@@ -207,7 +206,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.odp');
 
 		impressHelper.selectTextShapeInTheCenter();
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 
@@ -230,7 +229,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.odp');
 
 		impressHelper.selectTextShapeInTheCenter();
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 
@@ -254,7 +253,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		impressHelper.selectTextShapeInTheCenter();
 
-		impressMobileHelper.dblclickOnSelectedShape();
+		impressHelper.dblclickOnSelectedShape();
 
 		cy.get('#copy-paste-container pre')
 			.should('not.exist');
@@ -353,7 +352,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'X');
 
 		// Type a new character
-		impressMobileHelper.dblclickOnSelectedShape();
+		impressHelper.dblclickOnSelectedShape();
 
 		helper.typeIntoDocument('qqqqqq');
 
@@ -363,7 +362,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'Xqqqqqq');
 
 		// Make everything white on tile
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
