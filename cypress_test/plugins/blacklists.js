@@ -148,12 +148,38 @@ var phpProxyBlackList = [
 	['mobile/writer/table_properties_spec.js',
 		[]
 	],
+	['mobile/calc/hamburger_menu_spec.js',
+		[
+			'Save'
+		]
+	],
+	['mobile/writer/hamburger_menu_spec.js',
+		[
+			'Save'
+		]
+	],
+	['mobile/impress/hamburger_menu_spec.js',
+		[
+			'Save'
+		]
+	],
+	['mobile/writer/annotation_spec.js',
+		[
+			'Saving comment.'
+		]
+	],
+	['mobile/impress/annotation_spec.js',
+		[
+			'Saving comment.'
+		]
+	],
 	['desktop/calc/focus_spec.js',
 		[]
 	],
 	['desktop/writer/top_toolbar_spec.js',
 		[
-			'Insert image.'
+			'Insert image.',
+			'Save.'
 		]
 	],
 	['multiuser/calc/sheet_operations_user1_spec.js',
