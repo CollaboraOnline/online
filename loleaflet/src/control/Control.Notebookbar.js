@@ -8,6 +8,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 	_currentScrollPosition: 0,
 	_showNotebookbar: false,
+	/// do we use cached JSON or already received something from the core
+	_isLoaded: false,
 
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
@@ -33,6 +35,17 @@ L.Control.Notebookbar = L.Control.extend({
 		$(docLogo).data('id', 'document-logo');
 		$(docLogo).data('type', 'action');
 		$('.main-nav').prepend(docLogoHeader);
+
+		var that = this;
+		var retryNotebookbarInit = function() {
+			if (!that._isLoaded) {
+				console.error('notebookbar is not initialized, retrying');
+				that.map.sendUnoCommand('.uno:Notebookbar?File:string=notebookbar.ui');
+				setTimeout(retryNotebookbarInit, 10000);
+			}
+		};
+
+		setTimeout(retryNotebookbarInit, 3000);
 	},
 
 	onRemove: function() {
@@ -53,6 +66,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onNotebookbar: function(data) {
+		this._isLoaded = true;
 		this.loadTab(data);
 	},
 
