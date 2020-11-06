@@ -230,7 +230,7 @@ private:
 
     void dumpState(std::ostream& os) override;
 
-    /// Handle invalidation message comming from a kit and transfer it to a tile request.
+    /// Handle invalidation message coming from a kit and transfer it to a tile request.
     void handleTileInvalidation(const std::string& message,
                                 const std::shared_ptr<DocumentBroker>& docBroker);
 
