@@ -4,7 +4,6 @@ require('cypress-file-upload');
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var impressMobileHelper = require('./impress_mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe('Impress insertion wizard.', function() {
@@ -208,7 +207,7 @@ describe('Impress insertion wizard.', function() {
 		selectionShouldBeTextShape();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('Tap to edit text');
 	});
@@ -226,7 +225,7 @@ describe('Impress insertion wizard.', function() {
 		selectionShouldBeTextShape(false);
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
@@ -246,7 +245,7 @@ describe('Impress insertion wizard.', function() {
 		selectionShouldBeTextShape(false);
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
@@ -266,7 +265,7 @@ describe('Impress insertion wizard.', function() {
 		selectionShouldBeTextShape(false);
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
@@ -286,7 +285,7 @@ describe('Impress insertion wizard.', function() {
 		selectionShouldBeTextShape(false);
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
@@ -306,7 +305,7 @@ describe('Impress insertion wizard.', function() {
 		selectionShouldBeTextShape();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('1');
 	});
@@ -324,7 +323,7 @@ describe('Impress insertion wizard.', function() {
 		selectionShouldBeTextShape();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('Slide 1');
 	});
@@ -342,7 +341,7 @@ describe('Impress insertion wizard.', function() {
 		selectionShouldBeTextShape();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('1');
 	});
@@ -371,7 +370,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('some text');
 
@@ -391,7 +390,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
@@ -410,7 +409,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a date in MM/DD/YY format
 		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
@@ -429,7 +428,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
@@ -448,7 +447,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a time in HH/MM/SS format
 		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
@@ -467,7 +466,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('1');
 	});
@@ -484,7 +483,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('Slide 1');
 	});
@@ -501,7 +500,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('1');
 	});
