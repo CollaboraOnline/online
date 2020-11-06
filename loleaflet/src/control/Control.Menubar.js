@@ -1412,6 +1412,11 @@ L.Control.Menubar = L.Control.extend({
 			case 'pagesetup':
 			case 'watermark':
 				return false;
+			case 'insertcomment':
+			case 'savecomments':
+				if (!this._map.isPermissionEditForComments()) {
+					return false;
+				}
 			}
 		}
 
