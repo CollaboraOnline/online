@@ -55,6 +55,9 @@
 .main-nav.readonly #document-titlebar {
 	top: 1px;
 }
+.main-nav.readonly #table-optionstoolboxdown {
+	display: none;
+}
 .main-nav {
 	height: 32px; /* on mouseover menubar items, border emerges */
 	width: auto;
