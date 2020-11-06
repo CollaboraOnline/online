@@ -35,6 +35,9 @@
 .main-nav {
 	margin: 0;
 }
+.main-nav.hasnotebookbar {
+	overflow: visible; /*make sure #Menubar's contents are visible*/
+}
 .hasnotebookbar{
 	min-width: 808px; /*set a minimum so the logo fits*/
 	overflow: auto hidden;
