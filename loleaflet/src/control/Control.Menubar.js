@@ -538,7 +538,6 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:DataSort'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
-				{uno: '.uno:Validation'},
 				{type: 'separator'},
 				{uno: '.uno:DataFilterAutoFilter'},
 				{name: _UNO('.uno:FilterMenu', 'spreadsheet'), type: 'menu', menu: [
@@ -548,6 +547,12 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:DataFilterRemoveFilter'},
 					{uno: '.uno:DataFilterHideAutoFilter'}]},
 				{type: 'separator'},
+				{uno: '.uno:DefineDBName'},
+				{uno: '.uno:Validation'},
+				{uno: '.uno:DataSubTotals'},
+				{uno: '.uno:DataForm'},
+				{type: 'separator'},
+				{uno: '.uno:DataConsolidate'},
 				{name: _UNO('.uno:GroupOutlineMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:Group'},
 					{uno: '.uno:Ungroup'},
@@ -562,7 +567,19 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-				{uno: '.uno:GoalSeekDialog'}
+				{type: 'separator'},
+				{uno: '.uno:GoalSeekDialog'},
+				{uno: '.uno:SolverDialog'},
+				{name: _UNO('.uno:AuditMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:ShowPrecedents'},
+					{uno: '.uno:ShowDependents'},
+					{type: 'separator'},
+					{uno: '.uno:ClearArrows'},
+					{uno: '.uno:ClearArrowPrecedents'},
+					{uno: '.uno:ClearArrowDependents'}]},
+				{type: 'separator'},
+				{uno: '.uno:Protect'},
+				{uno: '.uno:ToolProtectionDocument'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
