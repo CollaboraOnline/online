@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
-var impressMobileHelper = require('./impress_mobile_helper');
 
 describe('Apply font on selected text.', function() {
 	var testFileName = 'apply_font_text.odp';
@@ -26,7 +25,7 @@ describe('Apply font on selected text.', function() {
 	}
 
 	it('Apply bold on selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -39,7 +38,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Apply italic on selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -52,7 +51,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Apply underline on selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -65,7 +64,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Apply strikeout on selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -78,7 +77,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Apply shadowed on selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -91,7 +90,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Change font name of selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -111,7 +110,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Change font size of selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -134,7 +133,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Grow font size of selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -150,7 +149,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Shrink font size of selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -169,7 +168,7 @@ describe('Apply font on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(0,0,0)');
 
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -187,7 +186,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Apply highlight on selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -203,7 +202,7 @@ describe('Apply font on selected text.', function() {
 		// TODO: highlight color is not in the SVG
 		// At least check the mobile wizard's state
 		cy.wait(400);
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -212,7 +211,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Apply superscript on selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
@@ -232,7 +231,7 @@ describe('Apply font on selected text.', function() {
 	});
 
 	it('Apply subscript on selected text.', function() {
-		impressMobileHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
 
