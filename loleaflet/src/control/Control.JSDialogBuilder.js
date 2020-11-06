@@ -1597,6 +1597,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var loaderContainer = L.DomUtil.create('div', 'ui-drawing-area-loader-container', container);
 				L.DomUtil.create('div', 'ui-drawing-area-loader', loaderContainer);
 			}
+			if (data.placeholderText && data.placeholderText === 'true') {
+				var spanContainer = L.DomUtil.create('div', 'ui-drawing-area-placeholder-container', container);
+				var span = L.DomUtil.create('span', 'ui-drawing-area-placeholder', spanContainer);
+				span.innerText = data.text;
+			}
 
 			$(image).click(function () {
 				builder.callback('drawingarea', 'click', image, null, builder);
