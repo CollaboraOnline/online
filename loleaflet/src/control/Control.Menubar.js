@@ -461,6 +461,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:ConditionalFormatManagerDialog'}]},
 			]},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
+				{uno: '.uno:InsertCell'},
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
 					{uno: '.uno:InsertRowsAfter'}]},
@@ -471,11 +472,21 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertRowBreak'},
 					{uno: '.uno:InsertColumnBreak'}]},
 				{type: 'separator'},
+				{uno: '.uno:DeleteCell'},
 				{uno: '.uno:DeleteRows'},
 				{uno: '.uno:DeleteColumns'},
 				{name: _UNO('.uno:DelBreakMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:DeleteRowbreak'},
-					{uno: '.uno:DeleteColumnbreak'}]}
+					{uno: '.uno:DeleteColumnbreak'}]},
+				{type: 'separator'},
+				{uno: '.uno:Delete'},
+				{name: _UNO('.uno:NamesMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:AddName'},
+					{uno: '.uno:DefineName'},
+					{uno: '.uno:SheetInsertName'},
+					{type: 'separator'},
+					{uno: '.uno:CreateNames'},
+					{uno: '.uno:DefineLabelRange'}]}
 			]},
 			{name: _UNO('.uno:DataMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:DataSort'},
