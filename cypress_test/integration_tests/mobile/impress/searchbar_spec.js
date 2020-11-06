@@ -4,7 +4,6 @@ var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
-var impressMobileHelper = require('./impress_mobile_helper');
 
 describe('Searching via search bar.', function() {
 	var testFileName = 'search_bar.odp';
@@ -38,7 +37,7 @@ describe('Searching via search bar.', function() {
 	it('Search not existing word.', function() {
 		impressHelper.selectTextShapeInTheCenter();
 
-		impressMobileHelper.dblclickOnSelectedShape();
+		impressHelper.dblclickOnSelectedShape();
 
 		helper.selectAllText();
 
