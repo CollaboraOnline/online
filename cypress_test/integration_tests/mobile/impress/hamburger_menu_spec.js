@@ -24,7 +24,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.odp');
 
 		// Change the document content and save it
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'X');
@@ -34,7 +34,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.typeIntoDocument('new');
 
-		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'Xnew');
@@ -46,7 +46,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'Xnew');
@@ -109,7 +109,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Undo/redo.', function() {
 		before('hamburger_menu.odp');
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'X');
@@ -119,7 +119,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.typeIntoDocument('q');
 
-		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'Xq');
@@ -127,7 +127,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Undo
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Undo']);
 
-		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'X');
@@ -135,7 +135,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Redo
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Redo']);
 
-		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'Xq');
@@ -144,7 +144,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Repair.', function() {
 		before('hamburger_menu.odp');
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'X');
@@ -154,7 +154,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.typeIntoDocument('q');
 
-		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'Xq');
@@ -174,7 +174,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.leaflet-popup-content input[value=\'Jump to state\']')
 			.click();
 
-		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'X');
@@ -183,7 +183,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Cut.', function() {
 		before('hamburger_menu.odp');
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
@@ -206,7 +206,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Copy.', function() {
 		before('hamburger_menu.odp');
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
@@ -229,7 +229,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Paste.', function() {
 		before('hamburger_menu.odp');
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 		impressMobileHelper.selectTextOfShape();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
@@ -252,7 +252,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Select all.', function() {
 		before('hamburger_menu.odp');
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 
 		impressMobileHelper.dblclickOnSelectedShape();
 
@@ -347,7 +347,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.odp');
 
 		// Add a spelling error to the shape
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'X');
@@ -357,7 +357,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.typeIntoDocument('qqqqqq');
 
-		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'Xqqqqqq');
@@ -373,7 +373,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.closeMobileWizard();
 
-		impressMobileHelper.removeShapeSelection();
+		impressHelper.removeShapeSelection();
 
 		var preiew = '.preview-frame:nth-of-type(2) img';
 		helper.imageShouldBeFullWhiteOrNot(preiew, false);

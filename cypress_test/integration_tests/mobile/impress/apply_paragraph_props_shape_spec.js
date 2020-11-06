@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var impressMobileHelper = require('./impress_mobile_helper');
+var impressHelper = require('../../common/impress_helper');
 
 describe('Apply paragraph properties on selected shape.', function() {
 	var testFileName = 'apply_paragraph_props_shape.odp';
@@ -12,7 +12,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 	});
 
 	afterEach(function() {
@@ -21,7 +21,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 
 	function triggerNewSVG() {
 		mobileHelper.closeMobileWizard();
-		impressMobileHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 	}
 
 	function openParagraphPropertiesPanel() {
