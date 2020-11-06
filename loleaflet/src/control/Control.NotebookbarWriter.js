@@ -1518,32 +1518,36 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																																		{
 																																			'id': 'style1',
 																																			'type': 'drawingarea',
-																																			'text': '',
-																																			'loading': 'true',
+																																			'text': _('Default Style'),
+																																			'placeholderText': 'true',
+																																			'loading': 'false',
 																																			'enabled': 'true',
 																																			'image': 'data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABACAYAAADs39J0AAAAr0lEQVR4nO3RMREAIBDAMIb3bxlYUUCHREHvOvtaZMzvAF6GxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgScwDMKAT9P9vfmAAAAABJRU5ErkJggg=='
 																																		},
 																																		{
 																																			'id': 'style2',
 																																			'type': 'drawingarea',
-																																			'text': '',
-																																			'loading': 'true',
+																																			'text': _('Text Body'),
+																																			'placeholderText': 'true',
+																																			'loading': 'false',
 																																			'enabled': 'true',
 																																			'image': 'data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABACAYAAADs39J0AAAAr0lEQVR4nO3RMREAIBDAMIb3bxlYUUCHREHvOvtaZMzvAF6GxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgScwDMKAT9P9vfmAAAAABJRU5ErkJggg=='
 																																		},
 																																		{
 																																			'id': 'style3',
 																																			'type': 'drawingarea',
-																																			'text': '',
-																																			'loading': 'true',
+																																			'text': _('Title'),
+																																			'placeholderText': 'true',
+																																			'loading': 'false',
 																																			'enabled': 'true',
 																																			'image': 'data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABACAYAAADs39J0AAAAr0lEQVR4nO3RMREAIBDAMIb3bxlYUUCHREHvOvtaZMzvAF6GxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgScwDMKAT9P9vfmAAAAABJRU5ErkJggg=='
 																																		},
 																																		{
 																																			'id': 'style4',
 																																			'type': 'drawingarea',
-																																			'text': '',
-																																			'loading': 'true',
+																																			'text': _('Subtitle'),
+																																			'placeholderText': 'true',
+																																			'loading': 'false',
 																																			'enabled': 'true',
 																																			'image': 'data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABACAYAAADs39J0AAAAr0lEQVR4nO3RMREAIBDAMIb3bxlYUUCHREHvOvtaZMzvAF6GxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgScwDMKAT9P9vfmAAAAABJRU5ErkJggg=='
 																																		}
