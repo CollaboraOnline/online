@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
+var impressHelper = require('../../common/impress_helper');
 var impressMobileHelper = require('./impress_mobile_helper');
 
 describe('Nextcloud specific tests.', function() {
@@ -73,7 +74,7 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Initially we have "text" text in the document
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 
 		impressMobileHelper.selectTextOfShape();
 
@@ -91,7 +92,7 @@ describe('Nextcloud specific tests.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		impressMobileHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextShapeInTheCenter();
 
 		impressMobileHelper.selectTextOfShape();
 
