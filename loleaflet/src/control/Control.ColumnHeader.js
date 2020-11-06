@@ -39,7 +39,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._setCanvasHeight();
 		this._canvasBaseHeight = this._canvasHeight;
 
-		var scale = this.canvasDPIScale();
+		var scale = L.Util.getDpiScaleFactor();
 		this._canvasContext.scale(scale, scale);
 
 		this._headerHeight = this._canvasHeight;
@@ -209,58 +209,64 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 
 		var ctx = this._canvasContext;
-		var content = this._colIndexToAlpha(entry.index + 1);
-		var startOrt = this._canvasHeight - this._headerHeight;
-		var startPar = entry.pos - entry.size;
-		var endPar = entry.pos;
-		var width = endPar - startPar;
-		var height = this._headerHeight;
+		var startY = (this._canvasHeight - this._headerHeight) * this._dpiScale;
+		var startX = (entry.pos - entry.size) * this._dpiScale;
 
 		if (isHighlighted !== true && isHighlighted !== false) {
 			isHighlighted = this.isHighlighted(entry.index);
 		}
 
-		if (width <= 0)
+		if (entry.size <= 0)
 			return;
 
-		ctx.save();
-		var scale = this.canvasDPIScale();
-		ctx.scale(scale, scale);
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
-			selectionBackgroundGradient = ctx.createLinearGradient(startPar, startOrt, startPar, startOrt + height);
+			selectionBackgroundGradient = ctx.createLinearGradient(startX, startY, startX, startY + this._headerHeight * this._dpiScale);
 			selectionBackgroundGradient.addColorStop(0, this._selectionBackgroundGradient[0]);
 			selectionBackgroundGradient.addColorStop(0.5, this._selectionBackgroundGradient[1]);
 			selectionBackgroundGradient.addColorStop(1, this._selectionBackgroundGradient[2]);
 		}
 
+		// draw background
+		ctx.beginPath();
+		ctx.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
+		ctx.rect(startX, startY, entry.size * this._dpiScale, this._headerHeight * this._dpiScale);
+		ctx.fill();
+
 		// draw header/outline border separator
 		if (this._headerHeight !== this._canvasHeight) {
+			ctx.beginPath();
 			ctx.fillStyle = this._borderColor;
-			ctx.fillRect(startPar, startOrt - this._borderWidth, width, this._borderWidth);
+			ctx.rect(startX, startY - this._borderWidth * this._dpiScale, entry.size * this._dpiScale, this._borderWidth * this._dpiScale);
+			ctx.fill();
 		}
 
-		// clip mask
-		ctx.beginPath();
-		ctx.rect(startPar, startOrt, width, height);
-		ctx.clip();
-		// draw background
-		ctx.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
-		ctx.fillRect(startPar, startOrt, width, height);
 		// draw resize handle
-		var handleSize = this._resizeHandleSize;
-		if (isCurrent && width > 2 * handleSize) {
-			var center = startPar + width - handleSize / 2;
-			var y = startOrt + 2;
-			var h = height - 4;
-			var size = 2;
-			var offset = 1;
+		var handleSize = this._resizeHandleSize * this._dpiScale;
+		if (isCurrent && entry.size * this._dpiScale > 2 * handleSize) {
+			var center = startX + entry.size * this._dpiScale - handleSize / 2;
+			var y = startY + 2 * this._dpiScale;
+			var h = (this._headerHeight - 4) * this._dpiScale;
+			var size = 2 * this._dpiScale;
+			var offset = 1 * this._dpiScale;
 			ctx.fillStyle = '#BBBBBB';
-			ctx.fillRect(center - size - offset, y + 2, size, h - 4);
-			ctx.fillRect(center + offset, y + 2, size, h - 4);
+			ctx.beginPath();
+			ctx.rect(center - size - offset, y + 2 * this._dpiScale, size, h - 4 * this._dpiScale);
+			ctx.fill();
+			ctx.beginPath();
+			ctx.rect(center + offset, y + 2 * this._dpiScale, size, h * this._dpiScale - 4 * this._dpiScale);
+			ctx.fill();
 		}
+
+		// draw row separator
+		ctx.beginPath();
+		ctx.fillStyle = this._borderColor;
+		ctx.rect(entry.pos * this._dpiScale -1 * this._dpiScale, startY, this._borderWidth * this._dpiScale, this._headerHeight * this._dpiScale);
+		ctx.fill();
+
 		// draw text content
+		ctx.beginPath();
 		ctx.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
 		ctx.font = this._font.getFont();
 		ctx.textAlign = 'center';
@@ -269,11 +275,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// the exact bounding box in html5's canvas, and the textBaseline
 		// 'middle' measures everything including the descent etc.
 		// '+ 1' looks visually fine, and seems safe enough
-		ctx.fillText(content, endPar - (width / 2), startOrt + (height / 2) + 1);
-		// draw row separator
-		ctx.fillStyle = this._borderColor;
-		ctx.fillRect(endPar -1, startOrt, this._borderWidth, height);
-		ctx.restore();
+		ctx.fillText(this._colIndexToAlpha(entry.index + 1), entry.pos * this._dpiScale - (entry.size * this._dpiScale * 0.5), startY + (this._headerHeight * 0.5) + 1 * this._dpiScale);
 	},
 
 	drawGroupControl: function (group) {
@@ -290,7 +292,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var height = group.endPos - group.startPos;
 
 		ctx.save();
-		var scale = this.canvasDPIScale();
+		var scale = L.Util.getDpiScaleFactor();
 		ctx.scale(scale, scale);
 
 		// clip mask
@@ -339,7 +341,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var ctx = this._cornerCanvasContext;
 		var ctrlHeadSize = this._groupHeadSize;
 		var levelSpacing = this._levelSpacing;
-		var scale = this.canvasDPIScale();
+		var scale = L.Util.getDpiScaleFactor();
 
 		var startOrt = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 		var startPar = this._cornerCanvas.width / scale - (ctrlHeadSize + (L.Control.Header.rowHeaderWidth - ctrlHeadSize) / 2);
@@ -532,7 +534,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			return;
 		}
 
-		var scale = this.canvasDPIScale();
+		var scale = L.Util.getDpiScaleFactor();
 		var rowOutlineWidth = this._cornerCanvas.width / scale - L.Control.Header.rowHeaderWidth - this._borderWidth;
 		if (pos.x <= rowOutlineWidth) {
 			// empty rectangle on the left select all

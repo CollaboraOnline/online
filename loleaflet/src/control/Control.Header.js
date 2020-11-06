@@ -14,7 +14,7 @@ L.Control.Header = L.Control.extend({
 
 	initialize: function () {
 		this._isColumn = undefined;
-
+		this._dpiScale = L.Util.getDpiScaleFactor(true);
 		this.converter = null;
 
 		this._canvas = null;
@@ -68,7 +68,7 @@ L.Control.Header = L.Control.extend({
 		this._textColor = L.DomUtil.getStyle(elem, 'color');
 		this._backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
 		var fontFamily = L.DomUtil.getStyle(elem, 'font-family');
-		var fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
+		var fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size')) * this._dpiScale;
 		var fontHeight = parseInt(L.DomUtil.getStyle(elem, 'line-height'));
 		var rate = fontHeight / fontSize;
 		this._font = {
@@ -80,14 +80,9 @@ L.Control.Header = L.Control.extend({
 				// Limit zoomScale to 115%. At 120% the row ids at the bottom eat all
 				// horizontal margins and it looks ugly. Beyond 120% the row ids get
 				// clipped out visibly.
-				var zoomScale = this._hdr.getHeaderZoomScale(
-					/* lowerBound */ 0.5, /* upperBound */ 1.15);
+				var zoomScale = this._hdr.getHeaderZoomScale(/* lowerBound */ 0.5, /* upperBound */ 1.15);
 
-				return Math.floor(this._baseFontSize * zoomScale) +
-					'px/' +
-					this._fontSizeRate +
-					' ' +
-					this._fontFamily;
+				return Math.floor(this._baseFontSize * zoomScale) + 'px/' + this._fontSizeRate + ' ' + this._fontFamily;
 			}
 		};
 		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
@@ -195,6 +190,9 @@ L.Control.Header = L.Control.extend({
 	updateSelection: function(start, end) {
 		if (!this._headerInfo)
 			return;
+
+		//start *= this._dpiScale;
+		//end *= this._dpiScale;
 
 		start = this._headerInfo.docToHeaderPos(start);
 		end = this._headerInfo.docToHeaderPos(end);
@@ -578,33 +576,16 @@ L.Control.Header = L.Control.extend({
 		return Math.round(this._getParallelPos(this.converter(point)));
 	},
 
-	canvasDPIScale: function () {
-		var docLayer = this._map && this._map._docLayer;
-		var scale = docLayer && docLayer.canvasDPIScale ? docLayer.canvasDPIScale() : L.getDpiScaleFactor();
-		return scale;
-	},
-
 	_setCanvasSizeImpl: function (container, canvas, property, value, isCorner) {
-		if (!value) {
+		if (!value)
 			value = parseInt(L.DomUtil.getStyle(container, property));
-		}
-		else {
-			L.DomUtil.setStyle(container, property, value + 'px');
-		}
 
-		var scale = this.canvasDPIScale();
-		if (property === 'width') {
-			canvas.width = Math.floor(value * scale);
-			if (!isCorner)
-				this._canvasWidth = value;
-			// console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
-		}
-		else if (property === 'height') {
-			canvas.height = Math.floor(value * scale);
-			if (!isCorner)
-				this._canvasHeight = value;
-			// console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
-		}
+		value = Math.floor(value * this._dpiScale);
+		L.DomUtil.setStyle(container, property, (value / this._dpiScale).toFixed(4) + 'px');
+
+		canvas[property] = value;
+		if (!isCorner)
+			this[property === 'width' ? '_canvasWidth': '_canvasHeight'] = value;
 	},
 
 	_setCanvasWidth: function (width) {
@@ -667,8 +648,8 @@ L.Control.Header = L.Control.extend({
 			if (!this._groups[level]) {
 				this._groups[level] = {};
 			}
-			var startPos = parseInt(groupData.startPos) / this._map._docLayer._tilePixelScale;
-			var endPos = parseInt(groupData.endPos) / this._map._docLayer._tilePixelScale;
+			var startPos = parseInt(groupData.startPos);
+			var endPos = parseInt(groupData.endPos);
 			var isHidden = !!parseInt(groupData.hidden);
 			if (isHidden || startPos === endPos) {
 				startPos -= this._groupHeadSize / 2;
@@ -722,22 +703,17 @@ L.Control.Header = L.Control.extend({
 		if (!this._groups)
 			return;
 
-		ctx.save();
-		var scale = this.canvasDPIScale();
-		ctx.scale(scale, scale);
-
 		ctx.fillStyle = this._borderColor;
 		if (this._isColumn) {
-			var startY = this._cornerCanvas.height / scale - (L.Control.Header.colHeaderHeight + this._borderWidth);
+			var startY = this._cornerCanvas.height / this._dpiScale - (L.Control.Header.colHeaderHeight + this._borderWidth);
 			if (startY > 0)
 				ctx.fillRect(0, startY, this._cornerCanvas.width, this._borderWidth);
 		}
 		else {
-			var startX = this._cornerCanvas.width / scale - (L.Control.Header.rowHeaderWidth + this._borderWidth);
+			var startX = this._cornerCanvas.width / this._dpiScale - (L.Control.Header.rowHeaderWidth + this._borderWidth);
 			if (startX > 0)
 				ctx.fillRect(startX, 0, this._borderWidth, this._cornerCanvas.height);
 		}
-		ctx.restore();
 
 		var levels = this._groups.length + 1;
 		for (var i = 0; i < levels; ++i) {
@@ -789,6 +765,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 
 	initialize: function (map, isCol) {
 		console.assert(map && isCol !== undefined, 'map and isCol required');
+		this._dpiScale = L.Util.getDpiScaleFactor(true);
 		this._map = map;
 		this._isCol = isCol;
 		console.assert(this._map._docLayer.sheetGeometry, 'no sheet geometry data-structure found!');
@@ -802,8 +779,8 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		var startPx = this._isCol ? bounds.getTopLeft().x : bounds.getTopLeft().y;
 		this._docVisStart = startPx;
 		var endPx = this._isCol ? bounds.getBottomRight().x : bounds.getBottomRight().y;
-		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'csspixels');
-		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'csspixels');
+		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'corepixels');
+		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'corepixels');
 		this._elements = [];
 
 		var splitPosContext = this._map.getSplitPanesContext();
@@ -815,7 +792,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		if (splitPosContext) {
 
 			splitPos = this._isCol ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y;
-			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'csspixels');
+			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'corepixels');
 
 			if (splitIndex) {
 				// Make sure splitPos is aligned to the cell boundary.
@@ -836,35 +813,31 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 				this._splitIndex = splitIndex;
 
 				var freeStartPos = startPx + splitPos + 1;
-				var freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'csspixels');
+				var freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'corepixels');
 
 				startIdx = freeStartIndex;
 			}
 		}
 
 		// first free index
-		var dataFirstFree = this._dimGeom.getElementData(startIdx);
-		var firstFreeEnd = dataFirstFree.startpos + dataFirstFree.size - startPx;
-		var firstFreeStart = splitPos;
-		var firstFreeSize = Math.max(0, firstFreeEnd - firstFreeStart);
+		var firstVisibleRowData = this._dimGeom.getElementData(startIdx);
+		var firstFreeEnd = firstVisibleRowData.startpos + firstVisibleRowData.size - startPx;
 		this._elements[startIdx] = {
 			index: startIdx,
 			pos: firstFreeEnd, // end position on the header canvas
-			size: firstFreeSize,
-			origsize: dataFirstFree.size,
+			size: firstFreeEnd,
+			origsize: firstVisibleRowData.size,
 		};
-
+		startPx = firstFreeEnd;
 		this._dimGeom.forEachInRange(startIdx + 1,
 			endIdx, function (idx, data) {
-				var startpos = data.startpos - startPx;
-				var endpos = startpos + data.size;
-				var size = endpos - startpos;
 				this._elements[idx] = {
 					index: idx,
-					pos: endpos, // end position on the header canvas
-					size: size,
-					origsize: size,
+					pos: startPx + data.size,
+					size: data.size,
+					origsize: data.size,
 				};
+				startPx = this._elements[idx].pos;
 			}.bind(this));
 
 		this._startIndex = startIdx;
