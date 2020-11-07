@@ -1262,7 +1262,7 @@ public class LOActivity extends AppCompatActivity {
 
                         if (clipboardData != null) {
                             LOActivity.this.setClipboardContent(clipboardData);
-                            LOActivity.this.postUnoCommand(".uno:Paste", null, false);
+                            return true;
                         } else {
                             // Couldn't get data from the clipboard file, but we can still paste html
                             byte[] htmlByteArray = html.getBytes(Charset.forName("UTF-8"));
