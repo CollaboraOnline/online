@@ -388,6 +388,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 	onSocketClose: function() {
 		clearInterval(this._basicStatsIntervalId);
 		clearInterval(this._docElapsedTimeIntervalId);
+		this.base.call(this);
 	}
 });
 
