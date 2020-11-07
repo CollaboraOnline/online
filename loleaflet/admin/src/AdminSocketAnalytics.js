@@ -519,6 +519,7 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 
 	onSocketClose: function() {
 		clearInterval(this._basicStatsIntervalId);
+		this.base.call(this);
 	}
 });
 
