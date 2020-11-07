@@ -336,6 +336,7 @@ L.Map.Keyboard = L.Handler.extend({
 				// console.log(e);
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					keyEventFn('input', charCode, unoKeyCode);
+					ev.preventDefault();
 				}
 			}
 			else if ((ev.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
