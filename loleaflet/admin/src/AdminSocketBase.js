@@ -15,7 +15,7 @@ if (typeof String.prototype.startsWith !== 'function') {
 var AdminSocketBase = Base.extend({
 	socket: null,
 
-	constructor: function(host) {
+	constructor: function (host) {
 		// because i am abstract
 		if (this.constructor === AdminSocketBase) {
 			throw new Error('Cannot instantiate abstract class');
@@ -33,24 +33,32 @@ var AdminSocketBase = Base.extend({
 		}
 	},
 
-	onSocketOpen: function() {
+	onSocketOpen: function () {
 		// Authenticate
 		var cookie = Util.getCookie('jwt');
 		this.socket.send('auth ' + cookie);
 	},
 
-	onSocketMessage: function() {
+	onSocketMessage: function () {
 		/* Implemented by child */
 	},
 
-	onSocketClose: function() {
-		this.socket.onerror = function() {};
-		this.socket.onclose = function() {};
-		this.socket.onmessage = function() {};
+	onSocketClose: function () {
+		this.socket.onerror = function () { };
+		this.socket.onclose = function () { };
+		this.socket.onmessage = function () { };
+
+		this.vexInstance = vex.open({
+			content: _('Server has been shutdown please reload the page'),
+			contentClassName: 'loleaflet-user-idle',
+			showCloseButton: false,
+			overlayClosesOnClick: false,
+			escapeButtonCloses: false,
+		});
 		this.socket.close();
 	},
 
-	onSocketError: function() {
+	onSocketError: function () {
 		vex.dialog.alert(_('Connection error'));
 	}
 });
