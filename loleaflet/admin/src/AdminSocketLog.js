@@ -113,7 +113,7 @@ var AdminSocketLog = AdminSocketBase.extend({
 	},
 
 	onSocketClose: function() {
-
+		this.base.call(this);
 	}
 });
 
