@@ -500,20 +500,21 @@ L.Map.Keyboard = L.Handler.extend({
 
 			return false;
 		}
-
-		if (window.ThisIsTheiOSApp) {
+		/* Without specifying the key type, the messages are sent twice (both keydown/up) */
+		if (e.type === 'keydown' &&
+			(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp)) {
 			if (e.key === 'c' || e.key === 'C') {
 				this._map._socket.sendMessage('uno .uno:Copy');
-				return true;
 			}
 			else if (e.key === 'v' || e.key === 'V') {
 				this._map._socket.sendMessage('uno .uno:Paste');
-				return true;
 			}
 			else if (e.key === 'x' || e.key === 'X') {
 				this._map._socket.sendMessage('uno .uno:Cut');
-				return true;
 			}
+			if (window.ThisIsTheAndroidApp)
+				e.preventDefault();
+			return true;
 		}
 
 		switch (e.keyCode) {
