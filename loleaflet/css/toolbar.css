@@ -69,6 +69,9 @@ w2ui-toolbar {
 	padding: 0;
 	position: absolute;
 }
+#spreadsheet-toolbar.rtl{
+	direction: rtl;
+}
 
 #formulabar {
 	border-top: 1px solid #bbbbbb;

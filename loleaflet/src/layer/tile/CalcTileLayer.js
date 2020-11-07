@@ -3,7 +3,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global */
+/* global $ */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -11,6 +11,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		sheetGeometryDataEnabled: true,
 		printTwipsMsgsEnabled: true,
 		syncSplits: true, // if false, the splits/freezes are not synced with other users viewing the same sheet.
+		RTL: false, // If sheet should be right to left
 	},
 
 	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
@@ -814,6 +815,37 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 		else if (e.commandName === '.uno:FreezePanesRow') {
 			this._onSplitStateChanged(e, false /* isSplitCol */);
+		}
+		else if (e.commandName === '.uno:SheetRightToLeft') {
+			this._changeSheetDirection(e);
+		}
+	},
+
+	_changeSheetDirection: function(e) {
+		var toolbar, toolbarItems;
+		if (e.state == 'false' && this.options.RTL === true) {
+			$('.spreadsheet-tabs-container').removeClass('rtl');
+
+			toolbar = $('#spreadsheet-toolbar');
+			toolbar.removeClass('rtl');
+
+			// rearrange item orders to fit in LTR
+			toolbarItems = toolbar.w2toolbar()['items'];
+			toolbar.w2toolbar()['items'] = toolbarItems.slice(0,4).reverse().concat(toolbarItems[4]);
+			toolbar.w2toolbar().render();
+			this.options.RTL = false;
+		}
+		else if (e.state == 'true' && this.options.RTL === false) {
+			$('.spreadsheet-tabs-container').addClass('rtl');
+
+			toolbar = $('#spreadsheet-toolbar');
+			toolbar.addClass('rtl');
+			
+			// rearrange item orders to fit in RTL
+			toolbarItems = toolbar.w2toolbar()['items'];
+			toolbar.w2toolbar()['items'] = toolbarItems.slice(0,4).reverse().concat(toolbarItems[4]);
+			toolbar.w2toolbar().render();
+			this.options.RTL = true;
 		}
 	},
 
