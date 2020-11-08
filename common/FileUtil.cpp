@@ -18,6 +18,9 @@
 #include <sys/vfs.h>
 #elif defined IOS
 #import <Foundation/Foundation.h>
+#elif defined __FreeBSD__
+#include <sys/param.h>
+#include <sys/mount.h>
 #endif
 
 #include <chrono>
@@ -479,7 +482,7 @@ namespace FileUtil
 #endif
         constexpr int64_t ENOUGH_SPACE = gb*1024*1024*1024;
 
-#ifdef __linux
+#if defined(__linux ) || defined(__FreeBSD__)
         struct statfs sfs;
         if (statfs(path.c_str(), &sfs) == -1)
             return true;
