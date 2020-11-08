@@ -756,7 +756,6 @@ std::string AdminModel::getDocuments() const
     assertCorrectThread();
 
     std::ostringstream oss;
-    std::map<std::string, View> viewers;
     oss << '{' << "\"documents\"" << ':' << '[';
     std::string separator1;
     for (const auto& it: _documents)
@@ -775,7 +774,7 @@ std::string AdminModel::getDocuments() const
                 << "\"idleTime\"" << ':' << it.second->getIdleTime() << ','
                 << "\"modified\"" << ':' << '"' << (it.second->getModifiedStatus() ? "Yes" : "No") << '"' << ','
                 << "\"views\"" << ':' << '[';
-            viewers = it.second->getViews();
+            std::map<std::string, View> viewers = it.second->getViews();
             std::string separator;
             for(const auto& viewIt: viewers)
             {
