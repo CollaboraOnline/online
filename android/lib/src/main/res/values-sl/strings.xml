@@ -14,4 +14,8 @@
     <string name="later">Kasneje</string>
     <string name="rate_now">Ocenite zdaj</string>
     <string name="file_chromeos_read_only">Te datoteke ni mogoče shraniti na tem mestu, zato je odprta samo za branje. Premaknite jih med datoteke Play, da boste imeli dostop s polnimi pravicami branja in pisanja.</string>
+    <string name="ask_for_copy">Ta dokument je samo za branje. Ali želite izdelati kopijo za urejanje\?</string>
+    <string name="edit_copy">Uredi kopijo</string>
+    <string name="view_only">Samo pokaži</string>
+    <string name="restarting">Ponoven zagon ...</string>
 </resources>
