@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-10-28 16:33+0000\n"
+"PO-Revision-Date: 2020-11-04 00:09+0000\n"
 "Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 "X-Pootle-Path: /tr/libo_online/loleaflet-help-tr.po\n"
 "X-Pootle-Revision: 828276\n"
 
@@ -2305,6 +2305,9 @@ msgid ""
 "ui\">Word count</span>. A dialog shows word counts for selection and for the "
 "whole document."
 msgstr ""
+"Kelime sayısı <span class=\"ui\">Araçlar</span> → <span class=\"ui\">Kelime "
+"sayısı</span> menüsündedir. İletişim penceresi, seçim ve tüm belge için "
+"sözcük sayılarını gösterir."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:477-5
 msgid ""
@@ -2312,6 +2315,9 @@ msgid ""
 "word count is for the whole document. Otherwise the word count is for the "
 "selected text."
 msgstr ""
+"Kelime sayısı, durum çubuğunda da görüntülenir. Hiçbir metin seçilmezse, "
+"gösterilen kelime sayısı belgenin tamamı içindir. Aksi takdirde, gösterilen "
+"kelime sayısı seçili metin içindir."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:478-5
 msgid ""
@@ -2338,6 +2344,9 @@ msgid ""
 "Characters </span> or click the corresponding icon in the toolbar. A dialog "
 "shows."
 msgstr ""
+"<span class=\"ui\">Ekle</span> → <span class=\"ui\">Özel Karakter</span>'i "
+"seçin ya da araç çubuğundaki karşılık gelen simgeyi tıklayın. Bir iletişim "
+"penceresi gösterilir."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:486-11
 msgid ""
@@ -2346,16 +2355,21 @@ msgid ""
 "Unicode numeric code of the special character, enter in the boxes on the "
 "right."
 msgstr ""
+"Açılır listeler ile görüntülenen karakterlere göz atabilir veya <span class="
+"\"ui\">Ara</span> kutusuna bir arama anahtarı yazabilirsiniz. Özel "
+"karakterin Unicode sayısal kodunu biliyorsanız, sağdaki kutulara girin."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:487-11
 msgid ""
 "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <"
 "span class=\"ui\">Cancel</span>."
 msgstr ""
+"<span class=\"ui\">Ekle</span> düğmesine basın. İletişim penceresini "
+"kapatmak için, <span class=\"ui\">İptal</span>'e basın."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:489-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "Metni neden silemiyorum? Sadece üstü çizildi?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:490-5
 msgid ""
@@ -2365,6 +2379,12 @@ msgid ""
 "enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track "
 "Changes </span> → <span class=\"ui\">Record</span>."
 msgstr ""
+"Belge için Değişiklikleri İzle özelliğini etkinleştirdiniz. Değişiklikleri "
+"İzle, metindeki tüm değişiklikleri kaydeder ve daha sonraki revizyon için "
+"basımları gösterir. Metin ve elektronik tablolardaki değişiklikleri "
+"işaretlemek için kullanışlıdır. <Span class=\"ui\">Düzenle</span> → <span "
+"class=\"ui\">Değişiklikleri İzle</span> → <span class=\"ui\">Kaydet</span> "
+"seçilerek değişiklikleri izle etkinleştirilir."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "With track changes enabled your document is shown the following manner:"
@@ -2400,6 +2420,11 @@ msgid ""
 "Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
+"Değişiklikleri izlemek veya gizlemek için <span class=\"ui\">Düzenle</span> →"
+" <span class=\"ui\">Değişiklikleri İzle</span> → <span class=\"ui\">Göster</"
+"span> seçeneğini seçin. Değişiklikleri izleme özelliği etkin ancak gizli "
+"ise, değişiklikleri kaydetmeye devam edeceğinizi ve istemeden belgede "
+"istenmeyen metinler bırakabileceğinizi unutmayın."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:501-5
 msgid ""
@@ -2422,6 +2447,8 @@ msgid ""
 "Using the ruler drag the leftmost edge of the ruler to adjust the left "
 "margin, or the rightmost for the right margin."
 msgstr ""
+"Cetveli kullanarak sol kenar boşluğunu ayarlamak için cetvelin en sol "
+"kenarını veya sağ kenar boşluğu için en sağını sürükleyin."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:505-5
 msgid "Using the page style"
@@ -2432,6 +2459,8 @@ msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"<span class=\"ui\">Bicim</span> → <span class=\"ui\">Sayfa</span> ve <span "
+"class=\"ui\">Sayfa</span> sekmesini seçin"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:508-11
 msgid "Set the page margins in the dialog."
@@ -2446,18 +2475,23 @@ msgid ""
 "Place the cursor at the place where the page orientation is to change. Add "
 "an empty paragraph."
 msgstr ""
+"İmleci, sayfa yönünün değişeceği yere yerleştirin. Boş bir paragraf ekleyin."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:514-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>"
 ", <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
+"<span class=\"ui\">Biçim</span> → <span class=\"ui\">Paragraf</span>, <span "
+"class=\"ui\">Metin Akışı</span> sekmesini seçin"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:515-11
 msgid ""
 "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, "
 "Position: Before."
 msgstr ""
+"<span class=\"ui\">Sonlandırmalar</span> alanında, Ekle, Tür: Sayfa Sonu, "
+"Konum: Önce seçeneğini işaretleyin."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:516-11
 msgid "Select Landscape in “With Page Style”"
@@ -2472,6 +2506,8 @@ msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
 msgstr ""
+"Dikey yönlendirmeye dönmek için, “Sayfa Biçemi ile” de Dikey'i seçerek "
+"işlemi tekrarlayın."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:520-5
 msgid "How can I make the new text look like other existing text?"
@@ -2542,6 +2578,9 @@ msgid ""
 "and print the document to download. On printing the PDF, select the pages of "
 "interest."
 msgstr ""
+"Yazdırma aralığını daraltmak ve indirilecek belgeyi yazdırmak için "
+"elektronik tabloya sütun ve satır sonları ekleyin. PDF'yi yazdırırken "
+"ilgilendiğiniz sayfaları seçin."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:540-5
 msgid "How can I import CSV data?"
@@ -2552,12 +2591,16 @@ msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
 msgstr ""
+"CSV verilerinizi platformunuza bazı yerel araçlarla yükleyin, seçin ve "
+"panoya kopyalayın"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:543-11
 msgid ""
 "Activate the <span class=\"productname\">%productName</span> spreadsheet "
 "window."
 msgstr ""
+"<span class=\"productname\">%productName</span> hesap tablosu penceresini "
+"etkinleştir."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:545-9
 msgid ""
@@ -2566,6 +2609,11 @@ msgid ""
 ">V</span>. The <span class=\"ui\">Text Import</span> dialog opens to let you "
 "describe the precise format of the CSV data."
 msgstr ""
+"Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
+">Paste</span> or press <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\""
+">V</span> kısayolu ile tarayıcıdan yapıştırın. CSV verilerinizin tam "
+"biçimini tanımlamanıza imkan veren <span class=\"ui\">Metin İçe Aktarma</"
+"span> iletişim penceresi açılır."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:548-11
 msgid ""
@@ -2651,6 +2699,9 @@ msgid ""
 "<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
 "Size</span>). A dialog opens."
 msgstr ""
+"<span class=\"ui\">Biçim</span> → <span class=\"ui\">Satır</span> (veya "
+"<span class=\"ui\">Alan</span>, veya <span class=\"ui\">Konum ve "
+"Boyut</span>)'u seçin. Bir iletişim penceresi açılır."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:578-11
 msgid "Set the properties of the element of the object."
