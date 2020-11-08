@@ -815,6 +815,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		else if (e.commandName === '.uno:FreezePanesRow') {
 			this._onSplitStateChanged(e, false /* isSplitCol */);
 		}
+		else if (e.commandName === '.uno:SheetRightToLeft') {
+			this._changeSheetDirection(e);
+		}
+	},
+
+	_changeSheetDirection: function(e) {
+		if (e.state == 'true')
+			this._map.sendUnoCommand('.uno:SheetRightToLeft?RightToLeft:bool=false');
 	},
 
 	_onSplitStateChanged: function (e, isSplitCol) {
