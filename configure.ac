@@ -1056,6 +1056,12 @@ AS_IF([test `uname -s` = "Linux"],
        fi
        ])
 
+AS_IF([test `uname -s` = "FreeBSD"],
+      AC_CHECK_LIB(iconv, libiconv_open, [], [AC_MSG_ERROR([No. Install 3rd-party libiconv.])]))
+
+AS_IF([test `uname -s` = "FreeBSD"],
+      [LIBS="$LIBS -lexecinfo -lz -liconv"])
+
 # need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
 AS_IF([test -n "$with_compiler_plugins"],
       [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin -Xclang -plugin-arg-loplugin -Xclang --lool-base-path=\${abs_top_srcdir}"])
