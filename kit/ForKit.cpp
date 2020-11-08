@@ -11,7 +11,9 @@
 
 #include <config.h>
 
+#ifndef __FreeBSD__
 #include <sys/capability.h>
+#endif
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sysexits.h>
@@ -176,6 +178,7 @@ protected:
 };
 
 #ifndef KIT_IN_PROCESS
+#ifndef __FreeBSD__
 static bool haveCapability(cap_value_t capability)
 {
     cap_t caps = cap_get_proc();
@@ -244,6 +247,13 @@ static bool haveCorrectCapabilities()
 
     return result;
 }
+#else
+static bool haveCorrectCapabilities()
+{
+    // chroot() can only be called by root
+    return getuid() == 0;
+}
+#endif // __FreeBSD__
 #endif
 
 /// Check if some previously forked kids have died.
