@@ -2407,7 +2407,7 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
             docBroker->startThread();
 
             // We no longer own this socket.
-            moveSocket->setThreadOwner(std::thread::id(0));
+            moveSocket->setThreadOwner(std::thread::id());
 
             docBroker->addCallback([docBroker, moveSocket]()
                  {
