@@ -18,6 +18,14 @@
 #include <sys/capability.h>
 #include <sys/sysmacros.h>
 #endif
+#ifdef __FreeBSD__
+#include <sys/capsicum.h>
+#include <ftw.h>
+#define FTW_CONTINUE 0
+#define FTW_STOP (-1)
+#define FTW_SKIP_SUBTREE 0
+#define FTW_ACTIONRETVAL 0
+#endif
 #include <unistd.h>
 #include <utime.h>
 #include <sys/time.h>
@@ -384,6 +392,7 @@ namespace
         }
     }
 
+#ifndef __FreeBSD__
     void dropCapability(cap_value_t capability)
     {
         cap_t caps;
@@ -422,6 +431,7 @@ namespace
 
         cap_free(caps);
     }
+#endif // __FreeBSD__
 #endif
 }
 
@@ -2258,9 +2268,13 @@ void lokit_main(
                 std::_Exit(EX_SOFTWARE);
             }
 
+#ifndef __FreeBSD__
             dropCapability(CAP_SYS_CHROOT);
             dropCapability(CAP_MKNOD);
             dropCapability(CAP_FOWNER);
+#else
+            cap_enter();
+#endif
 
             LOG_DBG("Initialized jail nodes, dropped caps.");
         }
