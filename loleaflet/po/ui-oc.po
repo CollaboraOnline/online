@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0100\n"
-"PO-Revision-Date: 2020-10-11 05:27+0000\n"
+"PO-Revision-Date: 2020-11-08 00:31+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
 "Language-Team: Occitan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/oc/>\n"
-"Language: \n"
+"Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.3.2\n"
 "X-Pootle-Path: /oc/libo_online/loleaflet-ui-oc.po\n"
 "X-Pootle-Revision: 3938060\n"
 
@@ -39,7 +39,7 @@ msgstr "(actual)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "Analitics"
 
 #: admin/admin.strings.js:11
 msgid "History"
@@ -47,7 +47,7 @@ msgstr "Istoric"
 
 #: admin/admin.strings.js:12
 msgid "Log"
-msgstr ""
+msgstr "Jornal"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -72,7 +72,7 @@ msgstr " utilizaires(s)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
-msgstr ""
+msgstr " document(s) dobèrt(s)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -80,19 +80,19 @@ msgstr "Nombre de documents"
 
 #: admin/admin.strings.js:20
 msgid "Memory consumed"
-msgstr ""
+msgstr "Memòria consumida"
 
 #: admin/admin.strings.js:21
 msgid "Bytes sent"
-msgstr ""
+msgstr "Octets enviats"
 
 #: admin/admin.strings.js:22
 msgid "Bytes received"
-msgstr ""
+msgstr "Octets recebuts"
 
 #: admin/admin.strings.js:23
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin/admin.strings.js:24
 msgid "Document"
@@ -100,39 +100,39 @@ msgstr "Document"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Vistas"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
-msgstr ""
+msgstr "Temps passat"
 
 #: admin/admin.strings.js:27
 msgid "Idle time"
-msgstr ""
+msgstr "Durada d’inactivitat"
 
 #: admin/admin.strings.js:28
 msgid "Modified"
-msgstr ""
+msgstr "Modificat"
 
 #: admin/admin.strings.js:29
 msgid "Kill"
-msgstr ""
+msgstr "Atudar"
 
 #: admin/admin.strings.js:30
 msgid "Graphs"
-msgstr ""
+msgstr "Grafics"
 
 #: admin/admin.strings.js:31
 msgid "Memory Graph"
-msgstr ""
+msgstr "Grafics de memòria"
 
 #: admin/admin.strings.js:32
 msgid "CPU Graph"
-msgstr ""
+msgstr "Grafics de CPU"
 
 #: admin/admin.strings.js:33
 msgid "Network Graph"
-msgstr ""
+msgstr "Grafic de ret"
 
 #: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:131
 #: src/control/Control.NotebookbarImpress.js:22
@@ -142,7 +142,7 @@ msgstr "Enregistrar"
 
 #: admin/admin.strings.js:35
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Talha del cache de las estatisticas de memòria"
 
 #: admin/admin.strings.js:36
 msgid "Time interval of memory statistics (in ms)"
@@ -178,23 +178,23 @@ msgstr "Documents :"
 
 #: admin/admin.strings.js:44
 msgid "Expired:"
-msgstr ""
+msgstr "Expirat :"
 
 #: admin/admin.strings.js:45
 msgid "Refresh"
-msgstr ""
+msgstr "Actualizar"
 
 #: admin/admin.strings.js:46
 msgid "Shutdown Server"
-msgstr ""
+msgstr "Atudar lo servidor"
 
 #: admin/admin.strings.js:47
 msgid "Server uptime"
-msgstr ""
+msgstr "Temps d’activitat del servidor"
 
 #: admin/admin.strings.js:48
 msgid "Refresh Log"
-msgstr ""
+msgstr "Actualizar lo jornal"
 
 #: admin/admin.strings.js:49
 msgid "Set Log Levels"
@@ -207,7 +207,7 @@ msgstr ""
 #: admin/admin.strings.js:51 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:376 src/control/Signing.js:608
 msgid "Close"
-msgstr ""
+msgstr "Tampar"
 
 #: admin/admin.strings.js:52
 msgid "Update Log Levels"
@@ -227,7 +227,7 @@ msgstr "Error de connexion"
 
 #: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmacion"
 
 #: admin/src/AdminSocketOverview.js:98
 msgid "Are you sure you want to terminate this session?"
@@ -238,7 +238,7 @@ msgstr "Sètz segur que volètz suprimir aquesta session ?"
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:199
 #: src/control/Control.Tabs.js:216 src/control/Toolbar.js:629
 msgid "OK"
-msgstr ""
+msgstr "D’acòrdi"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1245
@@ -279,23 +279,23 @@ msgstr "To"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:14
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:14
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -311,15 +311,15 @@ msgstr " s"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
-msgstr ""
+msgstr "Cap de color"
 
 #: src/control/ColorPicker.js:123
 msgid "Automatic color"
-msgstr ""
+msgstr "Color automatica"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
-msgstr ""
+msgstr "Dobrir lo ligam"
 
 #: src/control/Control.AlertDialog.js:84
 msgid "The server encountered a %0 error while parsing the %1 command."
@@ -327,7 +327,7 @@ msgstr ""
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
-msgstr ""
+msgstr "Suprimir"
 
 #: src/control/Control.ContextMenu.js:264
 msgid "Paste Special"
@@ -335,7 +335,7 @@ msgstr "Empegament especial"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
-msgstr ""
+msgstr "Reparar lo document"
 
 #: src/control/Control.DocumentRepair.js:44
 msgid "Type"
@@ -367,7 +367,7 @@ msgstr "Vos"
 
 #: src/control/Control.DownloadProgress.js:36
 msgid "Start download"
-msgstr ""
+msgstr "Començar lo telecargament"
 
 #: src/control/Control.DownloadProgress.js:51
 msgid "Confirm copy to clipboard"
@@ -375,16 +375,15 @@ msgstr ""
 
 #: src/control/Control.DownloadProgress.js:209
 msgid "Start upload"
-msgstr ""
+msgstr "Començar lo telecargament"
 
 #: src/control/Control.DownloadProgress.js:314
 msgid "Start cross copy/paste"
 msgstr ""
 
 #: src/control/Control.FormulaBar.js:34
-#, fuzzy
 msgid "Function Wizard"
-msgstr "Foncion"
+msgstr "Assistent de foncion"
 
 #: src/control/Control.JSDialogBuilder.js:289
 #: src/control/Control.StatusBar.js:331
@@ -421,30 +420,27 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:314
 msgid "Fixed size"
-msgstr ""
+msgstr "Talha fixa"
 
 #: src/control/Control.JSDialogBuilder.js:1224
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #: src/control/Control.JSDialogBuilder.js:1227
 msgid "To"
-msgstr ""
+msgstr "A"
 
 #: src/control/Control.JSDialogBuilder.js:1352
-#, fuzzy
 msgid "Select range"
-msgstr "Regetar la modificacion"
+msgstr "Seleccionar l’interval"
 
 #: src/control/Control.JSDialogBuilder.js:1381
-#, fuzzy
 msgid "Font Name"
-msgstr "Poliça"
+msgstr "Nom de la poliça"
 
 #: src/control/Control.JSDialogBuilder.js:1383
-#, fuzzy
 msgid "Font Size"
-msgstr "Poliça"
+msgstr "Talha de la poliça"
 
 #: src/control/Control.JSDialogBuilder.js:1993
 msgid "Cell borders"
@@ -452,7 +448,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2032
 msgid "Background Color"
-msgstr ""
+msgstr "Color del fons"
 
 #: src/control/Control.JSDialogBuilder.js:2034
 msgid "Gradient Start"
@@ -464,11 +460,11 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2218
 msgid "Rows"
-msgstr ""
+msgstr "Linhas"
 
 #: src/control/Control.JSDialogBuilder.js:2219
 msgid "Columns"
-msgstr ""
+msgstr "Colomnas"
 
 #: src/control/Control.JSDialogBuilder.js:2239
 #: src/control/Control.TopToolbar.js:209
@@ -498,7 +494,7 @@ msgstr "Non (pas de verificacion ortografica)"
 #: src/control/Control.NotebookbarCalc.js:157
 #: src/control/Control.NotebookbarImpress.js:237
 msgid "Share..."
-msgstr ""
+msgstr "Partejar..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:262
 #: src/control/Control.Menubar.js:386 src/control/Control.Menubar.js:510
@@ -519,7 +515,7 @@ msgstr "Telecargar jos"
 #: src/control/Control.Menubar.js:387 src/control/Control.Menubar.js:513
 #: src/control/Control.Menubar.js:562 src/control/Control.Menubar.js:610
 msgid "Export as"
-msgstr ""
+msgstr "Exportar coma"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:264
 #: src/control/Control.Menubar.js:388 src/control/Control.Menubar.js:514
@@ -538,27 +534,27 @@ msgstr "Document tèxte ODF (.odt)"
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:516
 #: src/control/Control.NotebookbarWriter.js:285
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Document Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:517
 #: src/control/Control.NotebookbarWriter.js:307
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Document Word (.docx)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:518
 #: src/control/Control.NotebookbarWriter.js:254
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Tèxt ric (.rtf)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:519
 #: src/control/Control.NotebookbarWriter.js:360
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:511
 #: src/control/Control.NotebookbarWriter.js:379 src/control/Signing.js:601
 msgid "Sign document"
-msgstr ""
+msgstr "Signar lo document"
 
 #: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:272
 #: src/control/Control.Menubar.js:394
@@ -582,22 +578,22 @@ msgstr "Reïnicializar lo zoom"
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.NotebookbarBuilder.js:622
 msgid "Show Ruler"
-msgstr ""
+msgstr "Mostrar la règla"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:301
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Mostrar la barra d’estat"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:304
 #: src/control/Control.Menubar.js:420 src/control/Control.Menubar.js:668
 #: src/control/Control.Menubar.js:708 src/control/Control.Menubar.js:722
 msgid "Local Image..."
-msgstr ""
+msgstr "Imatge local..."
 
 #: src/control/Control.Menubar.js:94 src/control/Control.Menubar.js:96
 #: src/control/Control.Menubar.js:684 src/control/Control.Menubar.js:686
 msgid "All"
-msgstr ""
+msgstr "Tot"
 
 #: src/control/Control.Menubar.js:146
 msgid "Text orientation"
@@ -607,7 +603,7 @@ msgstr "Orientacion del tèxte"
 #: src/control/Control.Menubar.js:495
 #: src/control/Control.NotebookbarWriter.js:471
 msgid "Online Help"
-msgstr ""
+msgstr "Ajuda en linha"
 
 #: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:373
 #: src/control/Control.Menubar.js:496
@@ -619,14 +615,14 @@ msgstr "Acorchis de clavièr"
 #: src/control/Control.Menubar.js:497
 #: src/control/Control.NotebookbarWriter.js:499
 msgid "Report an issue"
-msgstr ""
+msgstr "Senhalar un problèma"
 
 #: src/control/Control.Menubar.js:250 src/control/Control.Menubar.js:375
 #: src/control/Control.Menubar.js:498 src/control/Control.Menubar.js:550
 #: src/control/Control.Menubar.js:598 src/control/Control.Menubar.js:661
 #: src/control/Control.NotebookbarWriter.js:514
 msgid "Latest Updates"
-msgstr ""
+msgstr "Darrièras mesas a jorn"
 
 #: src/control/Control.Menubar.js:251 src/control/Control.Menubar.js:376
 #: src/control/Control.Menubar.js:499 src/control/Control.Menubar.js:551
@@ -638,12 +634,11 @@ msgstr "A prepaus"
 #: src/control/Control.Menubar.js:253 src/control/Control.Menubar.js:378
 #: src/control/Control.Menubar.js:501 src/map/Map.js:393
 msgid "Last modification"
-msgstr ""
+msgstr "Darrièra modificacion"
 
 #: src/control/Control.Menubar.js:260
-#, fuzzy
 msgid "Save Comments"
-msgstr "Comentari"
+msgstr "Enregistrar los comentaris"
 
 #: src/control/Control.Menubar.js:265 src/control/Control.Menubar.js:564
 #: src/control/Control.NotebookbarImpress.js:294
@@ -653,18 +648,17 @@ msgstr "Presentacion ODF (.odp)"
 #: src/control/Control.Menubar.js:266 src/control/Control.Menubar.js:565
 #: src/control/Control.NotebookbarImpress.js:347
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "Presentacion PowerPoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:267 src/control/Control.Menubar.js:566
 #: src/control/Control.NotebookbarImpress.js:369
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "Presentacion PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.js:268 src/control/Control.Menubar.js:567
 #: src/control/Control.NotebookbarImpress.js:316
-#, fuzzy
 msgid "ODF Drawing (.odg)"
-msgstr "Presentacion ODF (.odp)"
+msgstr "Dessenh ODF (.odp)"
 
 #: src/control/Control.Menubar.js:362 src/control/Control.Menubar.js:597
 #: src/control/Control.PresentationBar.js:33
