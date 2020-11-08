@@ -11,6 +11,10 @@
 #include <unistd.h>
 #include "Ssl.hpp"
 
+#ifdef __FreeBSD__
+#include <pthread_np.h>
+#endif
+
 #include <sys/syscall.h>
 #include <Util.hpp>
 
@@ -167,7 +171,13 @@ void SslContext::lock(int mode, int n, const char* /*file*/, int /*line*/)
 
 unsigned long SslContext::id()
 {
+#ifdef __linux__
     return syscall(SYS_gettid);
+#elif defined(__FreeBSD__)
+    return pthread_getthreadid_np();
+#else
+#error Implement for your platform
+#endif
 }
 
 CRYPTO_dynlock_value* SslContext::dynlockCreate(const char* /*file*/, int /*line*/)
