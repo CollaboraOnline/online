@@ -181,7 +181,7 @@ namespace Log
 
     char* prefix(const Poco::DateTime& time, char* buffer, const char* level)
     {
-#ifdef IOS
+#if defined(IOS) || defined(__FreeBSD__)
         // Don't bother with the "Source" which would be just "Mobile" always and non-informative as
         // there is just one process in the app anyway.
         char *pos = buffer;
