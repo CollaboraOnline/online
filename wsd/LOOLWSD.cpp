@@ -2757,7 +2757,7 @@ private:
                     LOG_TRC("Move clipboard request " << tag << " to docbroker thread with data: " <<
                             (data ? data->length() : 0) << " bytes");
                     // We no longer own this socket.
-                    moveSocket->setThreadOwner(std::thread::id(0));
+                    moveSocket->setThreadOwner(std::thread::id());
 
                     // Perform all of this after removing the socket
                     docBroker->addCallback([=]()
