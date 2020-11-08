@@ -18,7 +18,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
+#ifndef __FreeBSD__
 #include <error.h>
+#endif
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,6 +30,19 @@
 #include <math.h>
 
 #include <Util.hpp>
+
+#ifdef __FreeBSD__
+void error(int status, int errnum, const char *format, ...)
+{
+    va_list args;
+    (void)status;
+    (void)errnum;
+
+    va_start(args, format);
+    printf(format, args);
+    va_end(args);
+}
+#endif
 
 typedef unsigned long long addr_t;
 
