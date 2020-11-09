@@ -702,8 +702,8 @@ a.leaflet-control-zoom-in {
 #belowparaspacing, #spacinglabel, #OutlineRight, #DefaultBullet, #CellVertTop, #rowheight, #columnwidth{float: left;}
 #Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel, #spacinglabel, #sizelabel{clear: both;}
 #BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel, .mobile-wizard.ui-text {
-	border-bottom: 1px solid #c2d5ed;
-	color: #b3c5dc !important;
+	border-bottom: 1px solid rgba(var(--blue1-txt-primary-color),0.5);
+	color: rgba(var(--blue1-txt-primary-color),0.5) !important;
 	margin-left: 4%;
 	width: 94%;
 	font-size: 12px;
