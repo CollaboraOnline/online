@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require afterEach Cypress */
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -10,7 +10,11 @@ describe('Top toolbar tests.', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
 
-		desktopHelper.hideSidebar();
+		if (Cypress.env('INTEGRATION') === 'nextcloud') {
+			desktopHelper.hideSidebarIfVisible();
+		} else {
+			desktopHelper.hideSidebar();
+		}
 
 		impressHelper.selectTextShapeInTheCenter();
 	});
