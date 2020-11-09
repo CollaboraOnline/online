@@ -511,6 +511,11 @@ body {
 	border-color: #2a2a2a;
 	visibility: hidden;
 }
+.loleaflet-ruler-left[data-title]:after,
+.loleaflet-ruler-right[data-title]:after {
+	bottom: -2.8em;
+	left: auto;
+}
 [data-title] {
 	position: relative;
 }
