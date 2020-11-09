@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach require afterEach Cypress */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -8,6 +8,10 @@ describe('Top toolbar tests.', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
+
+		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
+			desktopHelper.showSidbarIfHidden();
+		}
 
 		helper.selectAllText(false);
 	});

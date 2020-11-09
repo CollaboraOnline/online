@@ -1,4 +1,4 @@
-/* global cy */
+/* global cy Cypress */
 
 function showSidebar() {
 	cy.log('Showing sidebar - start.');
@@ -38,5 +38,32 @@ function hideSidebar() {
 	cy.log('Hiding sidebar - end.');
 }
 
+function showStatusBarIfHidden() {
+	cy.get('#toolbar-down')
+		.then(function(statusbar) {
+			if (!Cypress.dom.isVisible(statusbar[0])) {
+				cy.get('#menu-view')
+					.click();
+
+				cy.get('#menu-showstatusbar')
+					.click();
+			}
+		});
+
+	cy.get('#toolbar-down')
+		.should('be.visible');
+}
+
+function showSidbarIfHidden() {
+	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+		.then(function(sidebarItem) {
+			if (!sidebarItem.hasClass('checked')) {
+				showSidebar();
+			}
+		});
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
+module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
+module.exports.showSidbarIfHidden = showSidbarIfHidden;
