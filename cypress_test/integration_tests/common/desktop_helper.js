@@ -63,7 +63,17 @@ function showSidebarIfHidden() {
 		});
 }
 
+function hideSidebarIfVisible() {
+	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+		.then(function(sidebarItem) {
+			if (sidebarItem.hasClass('checked')) {
+				hideSidebar();
+			}
+		});
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
 module.exports.showSidebarIfHidden = showSidebarIfHidden;
+module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
