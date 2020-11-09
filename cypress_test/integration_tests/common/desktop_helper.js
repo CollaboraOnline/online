@@ -54,7 +54,7 @@ function showStatusBarIfHidden() {
 		.should('be.visible');
 }
 
-function showSidbarIfHidden() {
+function showSidebarIfHidden() {
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
 		.then(function(sidebarItem) {
 			if (!sidebarItem.hasClass('checked')) {
@@ -66,4 +66,4 @@ function showSidbarIfHidden() {
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
-module.exports.showSidbarIfHidden = showSidbarIfHidden;
+module.exports.showSidebarIfHidden = showSidebarIfHidden;

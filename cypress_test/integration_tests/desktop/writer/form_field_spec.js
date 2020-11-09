@@ -10,7 +10,7 @@ describe('Form field button tests.', function() {
 		testFileName = fileName;
 		helper.beforeAll(fileName, 'writer');
 
-		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
+		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();
 		}
 
