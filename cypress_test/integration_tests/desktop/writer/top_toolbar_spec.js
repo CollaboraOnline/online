@@ -9,8 +9,8 @@ describe('Top toolbar tests.', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 
-		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
-			desktopHelper.showSidbarIfHidden();
+		if (Cypress.env('INTEGRATION') === 'nextcloud') {
+			desktopHelper.showSidebarIfHidden();
 		}
 
 		helper.selectAllText(false);
