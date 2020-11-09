@@ -366,13 +366,13 @@ L.Control.Ruler = L.Control.extend({
 			this._lToolTip = L.DomUtil.create('div', 'loleaflet-ruler-ltooltip', this._lMarginDrag);
 			this._rMarginDrag = L.DomUtil.create('div', 'loleaflet-ruler-drag loleaflet-ruler-right', this._rMarginWrapper);
 			this._rToolTip = L.DomUtil.create('div', 'loleaflet-ruler-rtooltip', this._rMarginDrag);
-			var rulerLeftMargin = _('Left Margin');
-			var rulerRightMargin = _('Right Margin');
+			var lMarginTooltipText = _('Left Margin');
+			var rMarginTooltipText = _('Right Margin');
 
-			this._lMarginDrag.dataset.title = rulerLeftMargin;
-			this._lMarginDrag.setAttribute('aria-label', rulerLeftMargin);
-			this._rMarginDrag.dataset.title = rulerRightMargin;
-			this._rMarginDrag.setAttribute('aria-label', rulerRightMargin);
+			this._lMarginDrag.dataset.title = lMarginTooltipText;
+			this._lMarginDrag.setAttribute('aria-label', lMarginTooltipText);
+			this._rMarginDrag.dataset.title = rMarginTooltipText;
+			this._rMarginDrag.setAttribute('aria-label', rMarginTooltipText);
 
 			if (window.ThisIsTheiOSApp) {
 				this.options.interactive = true;
