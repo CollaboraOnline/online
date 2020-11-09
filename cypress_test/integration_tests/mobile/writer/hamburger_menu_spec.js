@@ -41,6 +41,9 @@ describe('Trigger hamburger menu options.', function() {
 
 	function closePageWizard() {
 		cy.get('#mobile-wizard-back')
+			.should('have.class', 'close-button');
+
+		cy.get('#mobile-wizard-back')
 			.click();
 
 		cy.get('#mobile-wizard')
