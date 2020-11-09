@@ -693,7 +693,16 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 						{uno: '.uno:SpellOnline'},
 						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-						{uno: '.uno:GoalSeekDialog'}
+						{uno: '.uno:GoalSeekDialog'},
+						{type: 'separator'},
+						{name: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'), type: 'menu', menu: [
+							{uno: '.uno:ConditionalFormatDialog'},
+							{uno: '.uno:ColorScaleFormatDialog'},
+							{uno: '.uno:DataBarFormatDialog'},
+							{uno: '.uno:IconSetFormatDialog'},
+							{uno: '.uno:CondDateFormatDialog'},
+							{type: 'separator'},
+							{uno: '.uno:ConditionalFormatManagerDialog'}]}
 					]}
 				]}
 			],
