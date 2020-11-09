@@ -1292,11 +1292,15 @@ public class LOActivity extends AppCompatActivity {
         }
 
         // try the plaintext as the last resort
-        if (clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-            final ClipData.Item clipItem = clipData.getItemAt(0);
-            String text = clipItem.getText().toString();
-            byte[] textByteArray = text.getBytes(Charset.forName("UTF-16"));
-            LOActivity.this.paste("text/plain;charset=utf-16", textByteArray);
+        for (int i = 0; i < clipDesc.getMimeTypeCount(); ++i) {
+            Log.d(TAG, "Plain text paste attempt " + i + ": " + clipDesc.getMimeType(i));
+
+            if (clipDesc.getMimeType(i).equals(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+                final ClipData.Item clipItem = clipData.getItemAt(i);
+                String text = clipItem.getText().toString();
+                byte[] textByteArray = text.getBytes(Charset.forName("UTF-8"));
+                LOActivity.this.paste("text/plain;charset=utf-8", textByteArray);
+            }
         }
 
         return false;
