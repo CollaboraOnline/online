@@ -463,4 +463,83 @@ describe('Top toolbar tests.', function() {
 		desktopHelper.showSidebar();
 	});
 
+	it('Insert Special Character.', function() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+			.click();
+
+		cy.get('#tb_editbar_item_insertsymbol')
+			.click();
+
+		// Dialog is opened
+		cy.get('.lokdialog_canvas')
+			.should('be.visible');
+
+		cy.get('.ui-dialog-title')
+			.should('have.text', 'Special Characters');
+
+		cy.get('body')
+			.type('{esc}');
+
+		cy.get('.lokdialog_canvas')
+			.should('not.exist');
+	});
+
+	it('Hide/show menu bar.', function() {
+		cy.get('#main-menu')
+			.should('be.visible');
+
+		cy.get('#toolbar-up .w2ui-scroll-right')
+			.click();
+
+		// Hide the menu first.
+		cy.get('#tb_editbar_item_fold')
+			.click();
+
+		cy.get('#main-menu')
+			.should('not.be.visible');
+
+		// Show it again.
+		cy.get('#tb_editbar_item_fold')
+			.click();
+
+		cy.get('#main-menu')
+			.should('be.visible');
+	});
+
+	it('Clone Formatting.', function() {
+		// Select one character at the beginning of the text.
+		helper.moveCursor('home');
+
+		cy.get('.leaflet-marker-icon')
+			.should('not.exist');
+
+		helper.typeIntoDocument('{shift}{rightArrow}');
+
+		cy.get('.leaflet-marker-icon')
+			.should('exist');
+
+		// Apply bold and try to clone it to the whole word.
+		cy.get('#tb_editbar_item_bold')
+			.click();
+
+		cy.get('#tb_editbar_item_formatpaintbrush')
+			.click();
+
+		// Click at the blinking cursor position.
+		cy.get('.leaflet-cursor.blinking-cursor')
+			.then(function(cursor) {
+				var boundRect = cursor[0].getBoundingClientRect();
+				var XPos = boundRect.left;
+				var YPos = (boundRect.top + boundRect.bottom) / 2;
+
+				cy.get('body')
+					.click(XPos, YPos);
+			});
+
+		helper.reselectAllText();
+
+		// Full word should have bold font.
+		cy.get('#copy-paste-container p b')
+			.should('contain', 'text');
+	});
 });
