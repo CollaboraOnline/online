@@ -137,14 +137,14 @@ describe('Top toolbar tests.', function() {
 			.should('not.exist');
 	});
 
-	it('Apply left alignment.', function() {
-		cy.get('#tb_editbar_item_centerpara')
+	it('Apply left/right alignment.', function() {
+		cy.get('#tb_editbar_item_rightpara')
 			.click();
 
-		helper.selectAllText(false);
+		helper.reselectAllText();
 
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'align', 'center');
+			.should('have.attr', 'align', 'right');
 
 		cy.get('#tb_editbar_item_leftpara')
 			.click();
@@ -163,16 +163,6 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
-	});
-
-	it('Apply right alignment.', function() {
-		cy.get('#tb_editbar_item_rightpara')
-			.click();
-
-		helper.reselectAllText();
-
-		cy.get('#copy-paste-container p')
-			.should('have.attr', 'align', 'right');
 	});
 
 	it('Apply justified.', function() {
