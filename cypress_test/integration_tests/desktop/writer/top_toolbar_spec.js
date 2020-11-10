@@ -454,17 +454,11 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Show/Hide sidebar.', function() {
-		cy.get('#toolbar-up .w2ui-scroll-right')
-			.click();
-
-		cy.get('#tb_editbar_item_sidebar')
-			.click();
+		//hide sidebar
+		desktopHelper.hideSidebar();
 
 		//show sidebar
 		desktopHelper.showSidebar();
-
-		//hide sidebar
-		desktopHelper.hideSidebar();
 	});
 
 });
