@@ -185,8 +185,8 @@ describe('Top toolbar tests.', function() {
 		helper.reselectAllText();
 
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 150%');
-	
+			.should('have.attr', 'style')
+			.should('contain', 'line-height: 150%');
 
 		cy.get('#tb_editbar_item_linespacing')
 			.click();
@@ -197,48 +197,51 @@ describe('Top toolbar tests.', function() {
 		helper.reselectAllText();
 
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 100%');
+			.should('have.attr', 'style')
+			.should('contain', 'line-height: 100%');
 	});
 	
 	it('Apply Line spacing: 2', function() {
 		cy.get('#tb_editbar_item_linespacing')
 			.click();
-		
+
 		cy.contains('.menu-text', 'Line Spacing: 2')
 			.click();
 
 		helper.reselectAllText();
 
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 200%');
+			.should('have.attr', 'style')
+			.should('contain', 'line-height: 200%');
 	});
 
 	it('Increase/Decrease Paragraph spacing', function() {
 		cy.get('#tb_editbar_item_linespacing')
 			.click();
-	
+
 		cy.contains('.menu-text', 'Increase Paragraph Spacing')
 			.click();
-	
+
 		helper.reselectAllText();
-	
+
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-top: 0.04in; margin-bottom: 0.04in; font-style: normal; font-weight: normal; line-height: 100%');
+			.should('have.attr', 'style')
+			.should('contain', 'margin-top: 0.04in');
 
 		helper.reselectAllText();
 
 		//Decrease Paragraph Spacing
 		cy.get('#tb_editbar_item_linespacing')
 			.click();
-		
+
 		cy.contains('.menu-text', 'Decrease Paragraph Spacing')
 			.click();
-		
+
 		helper.reselectAllText();
-				
+
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 100%');
-		
+			.should('have.attr', 'style')
+			.should('not.contain', 'margin-top: 0.04in');
 	});
 
 	it('Toggle numbered list.', function() {
@@ -271,7 +274,8 @@ describe('Top toolbar tests.', function() {
 		helper.reselectAllText();
 
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-left: 0.49in; margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 100%');
+			.should('have.attr', 'style')
+			.should('contain', 'margin-left: 0.49in');
 
 		//Decrease indent
 		cy.get('#tb_editbar_item_decrementindent')
@@ -281,7 +285,8 @@ describe('Top toolbar tests.', function() {
 
 		
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 100%');
+			.should('have.attr', 'style')
+			.should('not.contain', 'margin-left: 0.49in');
 	});
 
 	it('Insert comment.', function() {
