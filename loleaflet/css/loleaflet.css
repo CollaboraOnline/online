@@ -326,10 +326,17 @@ body {
 	content: '\2713';
 }
 
-.context-menu-hover,
-.context-menu-hover > span > a {
+.context-menu-hover {
 	background-color: #0b87e7 !important;
 	color: #fff !important;
+}
+
+.context-menu-hover > span > a {
+	color: #fff;
+}
+
+.context-menu-submenu.context-menu-hover:after {
+	border-color: transparent transparent transparent #fff;
 }
 
 .loleaflet-annotation {
