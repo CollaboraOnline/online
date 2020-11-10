@@ -175,7 +175,7 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'align', 'justify');
 	});
 
-	it('Apply Line spacing: 1', function() {
+	it('Apply Line spacing: 1 and 1.5', function() {
 		cy.get('#tb_editbar_item_linespacing')
 			.click();
 
@@ -198,19 +198,6 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 100%');
-	});
-
-	it('Apply Line spacing: 1.5', function() {
-		cy.get('#tb_editbar_item_linespacing')
-			.click();
-		
-		cy.contains('.menu-text', 'Line Spacing: 1.5')
-			.click();
-
-		helper.reselectAllText();
-
-		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 150%');
 	});
 	
 	it('Apply Line spacing: 2', function() {
