@@ -80,14 +80,9 @@ L.Control.Header = L.Control.extend({
 				// Limit zoomScale to 115%. At 120% the row ids at the bottom eat all
 				// horizontal margins and it looks ugly. Beyond 120% the row ids get
 				// clipped out visibly.
-				var zoomScale = this._hdr.getHeaderZoomScale(
-					/* lowerBound */ 0.5, /* upperBound */ 1.15);
+				var zoomScale = this._hdr.getHeaderZoomScale(/* lowerBound */ 0.5, /* upperBound */ 1.15);
 
-				return Math.floor(this._baseFontSize * zoomScale) +
-					'px/' +
-					this._fontSizeRate +
-					' ' +
-					this._fontFamily;
+				return Math.floor(this._baseFontSize * zoomScale) + 'px/' + this._fontSizeRate + ' ' + this._fontFamily;
 			}
 		};
 		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
@@ -585,26 +580,15 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_setCanvasSizeImpl: function (container, canvas, property, value, isCorner) {
-		if (!value) {
+		if (!value)
 			value = parseInt(L.DomUtil.getStyle(container, property));
-		}
-		else {
-			L.DomUtil.setStyle(container, property, value + 'px');
-		}
 
 		var scale = this.canvasDPIScale();
-		if (property === 'width') {
-			canvas.width = Math.floor(value * scale);
-			if (!isCorner)
-				this._canvasWidth = value;
-			// console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
-		}
-		else if (property === 'height') {
-			canvas.height = Math.floor(value * scale);
-			if (!isCorner)
-				this._canvasHeight = value;
-			// console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
-		}
+		L.DomUtil.setStyle(container, property, value + 'px');
+		canvas[property] = Math.floor(value * scale);
+
+		if (!isCorner)
+			this[property === 'width' ? '_canvasWidth': '_canvasHeight'] = value;
 	},
 
 	_setCanvasWidth: function (width) {

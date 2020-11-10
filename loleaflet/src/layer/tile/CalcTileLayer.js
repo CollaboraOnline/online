@@ -1666,7 +1666,7 @@ L.SheetDimension = L.Class.extend({
 		});
 	},
 
-	// returns the element pos/size in css pixels by default.
+	// returns the element pos & size in css pixels by default.
 	getElementData: function (index, useCorePixels, zoomScale) {
 		if (zoomScale !== undefined) {
 			var startpos = 0;

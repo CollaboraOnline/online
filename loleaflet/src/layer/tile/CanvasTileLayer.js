@@ -40,8 +40,7 @@ L.CanvasTilePainter = L.Class.extend({
 		this._layer = layer;
 		this._canvas = this._layer._canvas;
 
-		var dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
-		this._dpiScale = dpiScale;
+		this._dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
 
 		this._map = this._layer._map;
 		this._setupCanvas();
@@ -50,13 +49,8 @@ L.CanvasTilePainter = L.Class.extend({
 		this._lastZoom = undefined;
 		this._lastPart = undefined;
 		var splitPanesContext = this._layer.getSplitPanesContext();
-		this._splitPos = splitPanesContext ?
-			splitPanesContext.getSplitPos() : new L.Point(0, 0);
+		this._splitPos = splitPanesContext ? splitPanesContext.getSplitPos() : new L.Point(0, 0);
 		this._updatesRunning = false;
-	},
-
-	isUpdatesRunning: function () {
-		return this._updatesRunning;
 	},
 
 	startUpdates: function () {
@@ -96,22 +90,16 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	_setCanvasSize: function (widthCSSPx, heightCSSPx) {
-		this._pixWidth = Math.floor(widthCSSPx * this._dpiScale);
-		this._pixHeight = Math.floor(heightCSSPx * this._dpiScale);
-
 		// real pixels have to be integral
-		this._canvas.width = this._pixWidth;
-		this._canvas.height = this._pixHeight;
+		this._canvas.width = Math.floor(widthCSSPx * this._dpiScale);
+		this._canvas.height = Math.floor(heightCSSPx * this._dpiScale);
 
 		// CSS pixels can be fractional, but need to round to the same real pixels
-		var cssWidth = this._pixWidth / this._dpiScale; // NB. beware
-		var cssHeight = this._pixHeight / this._dpiScale;
+		var cssWidth = this._canvas.width / this._dpiScale; // NB. beware
+		var cssHeight = this._canvas.height / this._dpiScale;
 		this._canvas.style.width = cssWidth.toFixed(4) + 'px';
 		this._canvas.style.height = cssHeight.toFixed(4) + 'px';
 
-		// FIXME: is this a good idea ? :
-		this._width = parseInt(this._canvas.style.width);
-		this._height = parseInt(this._canvas.style.height);
 		this.clear();
 		this._syncTileContainerSize();
 
@@ -125,8 +113,8 @@ L.CanvasTilePainter = L.Class.extend({
 	_syncTileContainerSize: function () {
 		var tileContainer = this._layer._container;
 		if (tileContainer) {
-			tileContainer.style.width = this._width + 'px';
-			tileContainer.style.height = this._height + 'px';
+			tileContainer.style.width = this._canvas.style.width;
+			tileContainer.style.height = this._canvas.style.height;
 		}
 	},
 
@@ -144,7 +132,8 @@ L.CanvasTilePainter = L.Class.extend({
 				this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 			else
 				this._canvasCtx.fillStyle = 'white';
-			this._canvasCtx.fillRect(0, 0, this._pixWidth, this._pixHeight);
+
+			this._canvasCtx.fillRect(0, 0, parseFloat(this._canvas.style.width.replace('px', '')), parseFloat(this._canvas.style.height.replace('px', '')));
 		}
 	},
 
@@ -154,15 +143,14 @@ L.CanvasTilePainter = L.Class.extend({
 
 		var viewBounds = this._map.getPixelBounds();
 		var splitPanesContext = this._layer.getSplitPanesContext();
-		var paneBoundsList = splitPanesContext ?
-		    splitPanesContext.getPxBoundList(viewBounds) :
-		    [viewBounds];
-		var canvasCorePx = new L.Point(this._pixWidth, this._pixHeight);
+		var paneBoundsList = splitPanesContext ? splitPanesContext.getPxBoundList(viewBounds): [viewBounds];
 
-		return { canvasSize: canvasCorePx,
-			 tileSize: tileSize,
-			 viewBounds: viewBounds,
-			 paneBoundsList: paneBoundsList };
+		return {
+			canvasSize: new L.Point(this._pixWidth, this._pixHeight),
+			tileSize: tileSize,
+			viewBounds: viewBounds,
+			paneBoundsList: paneBoundsList
+		};
 	},
 
 	paint: function (tile, ctx) {
@@ -273,8 +261,6 @@ L.CanvasTilePainter = L.Class.extend({
 			!splitPosChanged &&
 			!scaleChanged);
 
-		//console.debug('Tile size: ' + this._layer._getTileSize());
-
 		if (skipUpdate)
 			return;
 
@@ -327,14 +313,9 @@ L.CanvasTilePainter = L.Class.extend({
 
 					var key = coords.key();
 					var tile = this._layer._tiles[key];
-					//var invalid = tile && tile._invalidCount && tile._invalidCount > 0;
 					if (tile && tile.loaded) {
 						this.paint(tile, ctx);
 					}
-					/*else
-						console.log('missing tile at ' + i + ', ' + j + ' ' +
-							    tile + ' ' + (tile && tile.loaded) + ' ' +
-							    (tile ? tile._invalidCount : -42) + ' ' + invalid); */
 				}
 			}
 		}
