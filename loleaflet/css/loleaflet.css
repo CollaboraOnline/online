@@ -326,8 +326,8 @@ body {
 	content: '\2713';
 }
 
-.context-menu-hover
-{
+.context-menu-hover,
+.context-menu-hover > span > a {
 	background-color: #0b87e7 !important;
 	color: #fff !important;
 }
