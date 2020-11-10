@@ -30,6 +30,8 @@ function checkAndCloseRevisionHistory() {
 				.click();
 		});
 
+	cy.wait(2000);
+
 	cy.get('#revViewerContainer .icon-close')
 		.then(function(item) {
 			Cypress.env('IFRAME_LEVEL', '2');
@@ -52,6 +54,8 @@ function restorePreviousVersion() {
 			cy.wrap(item)
 				.click();
 		});
+
+	cy.wait(2000);
 
 	cy.get('#revViewerContainer .icon-close')
 		.then(function(item) {
