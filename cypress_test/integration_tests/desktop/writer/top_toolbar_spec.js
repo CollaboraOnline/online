@@ -127,7 +127,7 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
-		
+
 		cy.get('#tb_editbar_item_reset')
 			.click();
 
@@ -192,7 +192,7 @@ describe('Top toolbar tests.', function() {
 			.click();
 
 		cy.contains('.menu-text', 'Line Spacing: 1')
-		    .click();
+			.click();
 
 		helper.reselectAllText();
 
@@ -200,7 +200,7 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'style')
 			.should('contain', 'line-height: 100%');
 	});
-	
+
 	it('Apply Line spacing: 2', function() {
 		cy.get('#tb_editbar_item_linespacing')
 			.click();
@@ -263,6 +263,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container ul')
 			.should('exist');
 	});
+
 	it('Increase/Decrease Indent.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
@@ -283,7 +284,6 @@ describe('Top toolbar tests.', function() {
 
 		helper.reselectAllText();
 
-		
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
 			.should('not.contain', 'margin-left: 0.49in');
@@ -322,20 +322,21 @@ describe('Top toolbar tests.', function() {
 		   .click();
 
 		helper.reselectAllText();
-		
+
 		cy.get('#copy-paste-container table')
 			.should('exist');
 	});
 
 	it('Insert image.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
-		   .click();
+			.click();
+
 		cy.get('#tb_editbar_item_insertgraphic')
 			.should('be.visible');
 
 		cy.get('#insertgraphic[type=file]')
 			.attachFile('/desktop/writer/image_to_insert.png');
-		
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
 			.should('exist');
 	});
@@ -345,8 +346,8 @@ describe('Top toolbar tests.', function() {
 			.should('have.text', '\ntext');
 
 		cy.get('#toolbar-up .w2ui-scroll-right')
-		   .click();
-		
+			.click();
+
 		cy.get('#tb_editbar_item_link')
 			.click();
 
@@ -355,7 +356,7 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#hyperlink-text-box')
 			.type('link');
-			
+
 		cy.get('#hyperlink-link-box')
 			.type('www.something.com');
 
@@ -373,13 +374,13 @@ describe('Top toolbar tests.', function() {
 
 	it('Insert shape.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
-		    .click();
+			.click();
 
 		cy.get('#tb_editbar_item_insertshapes')
-		    .click();
+			.click();
 
-		cy.get('.col.w2ui-icon.basicshapes_octagon').
-			click();
+		cy.get('.col.w2ui-icon.basicshapes_octagon')
+			.click();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
@@ -387,10 +388,10 @@ describe('Top toolbar tests.', function() {
 
 	it('Insert chart.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
-		    .click();
+			.click();
 
 		cy.get('#tb_editbar_item_insertobjectchart')
-		    .click();
+			.click();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
@@ -409,7 +410,6 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
-
 	});
 
 	it('Print', function() {
@@ -424,7 +424,7 @@ describe('Top toolbar tests.', function() {
 
 		cy.window().its('open').should('be.called');
 	});
-	
+
 	it.skip('Apply Undo/Redo.', function() {
 		cy.get('#tb_editbar_item_italic')
 			.click();
@@ -455,13 +455,14 @@ describe('Top toolbar tests.', function() {
 
 	it('Show/Hide sidebar.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
-		   .click();
+			.click();
+
 		cy.get('#tb_editbar_item_sidebar')
 			.click();
 
 		//show sidebar
 		desktopHelper.showSidebar();
-		
+
 		//hide sidebar
 		desktopHelper.hideSidebar();
 	});
