@@ -26,6 +26,9 @@ Please ask your questions on `irc.freenode.net` in our `#cool-dev` channel
 
 Join the conversation on our Discourse server at https://forum.collaboraonline.com/
 
+Watch the tinderbox status (if it's green) at
+https://cpci.cbg.collabora.co.uk:8080/view/Tinderbox/job/Tinderbox%20for%20online%20master/
+
 ## Development bits
 
 This project has several components:
