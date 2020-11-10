@@ -425,7 +425,7 @@ describe('Top toolbar tests.', function() {
 		cy.window().its('open').should('be.called');
 	});
 
-	it.skip('Apply Undo/Redo.', function() {
+	it('Apply Undo/Redo.', function() {
 		cy.get('#tb_editbar_item_italic')
 			.click();
 
@@ -436,6 +436,7 @@ describe('Top toolbar tests.', function() {
 
 		//Undo
 		cy.get('#tb_editbar_item_undo')
+			.should('not.have.class', 'disabled')
 			.click();
 
 		helper.reselectAllText();
@@ -445,6 +446,7 @@ describe('Top toolbar tests.', function() {
 
 		//Redo
 		cy.get('#tb_editbar_item_redo')
+			.should('not.have.class', 'disabled')
 			.click();
 
 		helper.reselectAllText();
