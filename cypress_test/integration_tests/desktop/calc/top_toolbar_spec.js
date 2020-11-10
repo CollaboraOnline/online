@@ -26,6 +26,36 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 	});
 
+	it('Apply underline.', function() {
+		cy.get('#tb_editbar_item_underline')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td u')
+			.should('exist');
+	});
+
+	it('Apply italic.', function() {
+		cy.get('#tb_editbar_item_italic')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td i')
+			.should('exist');
+	});
+
+	it('Apply strikethrough.', function() {
+		cy.get('#tb_editbar_item_strikeout')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td s')
+			.should('exist');
+	});
+
 	it('Apply left/right alignment', function() {
 		// Set right aligment first
 		cy.get('#tb_editbar_item_textalign .w2ui-tb-down')
