@@ -2,6 +2,7 @@
 
 var unoCommandsArray = {
 	AcceptAllTrackedChanges:{text:{menu:_('Accept All'),},},
+	AcceptTrackedChange:{text:{context:_('Accept Change'),menu:_('Accept'),},},
 	AcceptTrackedChanges:{text:{menu:_('~Manage...'),},},
 	AlignBlock:{spreadsheet:{menu:_('Justified'),},},
 	AlignHorizontalCenter:{spreadsheet:{menu:_('Align Center'),},text:{menu:_('Center Horizontal'),},},
@@ -275,6 +276,7 @@ var unoCommandsArray = {
 	RecalcPivotTable:{spreadsheet:{menu:_('~Refresh'),},},
 	Redo:{global:{menu:_('~Redo'),},},
 	RejectAllTrackedChanges:{text:{menu:_('Reject All'),},},
+	RejectTrackedChange:{text:{context:_('Reject Change'),menu:_('Reject'),},},
 	Remove:{spreadsheet:{menu:_('~Delete Sheet...'),},},
 	RemoveHyperlink:{text:{menu:_('Remove Hyperlink'),},},
 	RemoveTableOf:{text:{menu:_('Delete index'),},},
