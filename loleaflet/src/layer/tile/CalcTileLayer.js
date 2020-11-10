@@ -829,6 +829,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			$('#spreadsheet-header-rows-container').removeClass('rtl');
 			$('#spreadsheet-header-corner-container').removeClass('rtl');
 			$('#spreadsheet-header-columns-container').removeClass('rtl');
+			$('.scroll-container.mCustomScrollbar').removeClass('mCS-dir-rtl');
 
 			toolbar = $('#spreadsheet-toolbar');
 			toolbar.removeClass('rtl');
@@ -845,6 +846,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			$('#spreadsheet-header-rows-container').addClass('rtl');
 			$('#spreadsheet-header-corner-container').addClass('rtl');
 			$('#spreadsheet-header-columns-container').addClass('rtl');
+			$('.scroll-container.mCustomScrollbar').addClass('mCS-dir-rtl');
 
 			toolbar = $('#spreadsheet-toolbar');
 			toolbar.addClass('rtl');
