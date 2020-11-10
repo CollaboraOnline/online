@@ -153,6 +153,14 @@ var phpProxyBlackList = [
 			'Save'
 		]
 	],
+	['mobile/calc/focus_spec.js',
+		[
+			'Formula-bar focus'
+		]
+	],
+	['mobile/calc/formulabar_spec.js',
+		[]
+	],
 	['mobile/writer/hamburger_menu_spec.js',
 		[
 			'Save'
