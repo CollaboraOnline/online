@@ -5,6 +5,16 @@
 	bottom: 75px;
 }
 
+#document-container.spreadsheet-document.sidebar-closed.rtl {
+	left: 0px;
+	right: 49px !important;
+}
+
+#document-container.spreadsheet-document.rtl {
+	left: 0px;
+	right: 454px !important;
+}
+
 #document-container.spreadsheet-document.readonly {
 	top: 56px;
 }
@@ -99,6 +109,11 @@
 	height: 19px;
 }
 
+#spreadsheet-header-corner-container.rtl {
+	right: 0px;
+	left: unset;
+}
+
 #spreadsheet-header-corner {
 	display: inline-block;
 	white-space: nowrap;
@@ -130,6 +145,11 @@
 	right: 0;
 	height: 19px;
 	overflow: hidden;
+}
+
+#spreadsheet-header-columns-container.rtl {
+	right: 49px;
+	left: 0;
 }
 
 .spreadsheet-header-columns {
@@ -174,6 +194,11 @@
 	width: 48px;
 	bottom: 0;
 	overflow: hidden;
+}
+
+#spreadsheet-header-rows-container.rtl {
+	right: 0;
+	left: unset;
 }
 
 .spreadsheet-header-rows {

@@ -825,6 +825,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var toolbar, toolbarItems;
 		if (e.state == 'false' && this.options.RTL === true) {
 			$('.spreadsheet-tabs-container').removeClass('rtl');
+			$('#document-container.spreadsheet-document').removeClass('rtl');
+			$('#spreadsheet-header-rows-container').removeClass('rtl');
+			$('#spreadsheet-header-corner-container').removeClass('rtl');
+			$('#spreadsheet-header-columns-container').removeClass('rtl');
 
 			toolbar = $('#spreadsheet-toolbar');
 			toolbar.removeClass('rtl');
@@ -837,6 +841,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 		else if (e.state == 'true' && this.options.RTL === false) {
 			$('.spreadsheet-tabs-container').addClass('rtl');
+			$('#document-container.spreadsheet-document').addClass('rtl');
+			$('#spreadsheet-header-rows-container').addClass('rtl');
+			$('#spreadsheet-header-corner-container').addClass('rtl');
+			$('#spreadsheet-header-columns-container').addClass('rtl');
 
 			toolbar = $('#spreadsheet-toolbar');
 			toolbar.addClass('rtl');
