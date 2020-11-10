@@ -32,12 +32,22 @@ describe('Apply paragraph properties.', function() {
 		helper.afterAll(testFileName);
 	});
 
-	it('Apply left alignment.', function() {
-		helper.clickOnIdle('#CenterPara');
+	it('Apply left/right alignment.', function() {
+		helper.clickOnIdle('#RightPara');
 
-		cy.get('#CenterParaimg')
+		writerMobileHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container p')
+			.should('have.attr', 'align', 'right');
+
+		// Then apply left alignment
+		mobileHelper.openMobileWizard();
+
+		helper.clickOnIdle('#Paragraph');
+
+		cy.get('#Paragraph')
 			.should('have.class', 'selected');
-
+			
 		helper.clickOnIdle('#LeftPara');
 
 		cy.get('#LeftParaimg')
@@ -56,15 +66,6 @@ describe('Apply paragraph properties.', function() {
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
-	});
-
-	it('Apply right alignment.', function() {
-		helper.clickOnIdle('#RightPara');
-
-		writerMobileHelper.selectAllMobile();
-
-		cy.get('#copy-paste-container p')
-			.should('have.attr', 'align', 'right');
 	});
 
 	it('Apply justify alignment.', function() {
