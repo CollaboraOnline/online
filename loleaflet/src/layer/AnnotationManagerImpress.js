@@ -238,8 +238,10 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 
 		if (commentsOnThePage >= this._topAnnotation[part] + 1) {
 			this._topAnnotation[part] = this._topAnnotation[part] + 1;
-			var topRight = this._map.latLngToLayerPoint(this._map.options.docBounds.getNorthEast());
-			this._map.fire('scrollby', {x: topRight.x, y: 0});
+
+			var offset = this._map._getCenterOffset(this._map.options.docBounds.getNorthEast());
+			this._map.panBy({x: offset.x, y: 0});
+
 			this.onAnnotationCancel();
 		} else if (part + 1 < this._map._docLayer._parts) {
 			var newPart = this.findNextPartWithComment();
