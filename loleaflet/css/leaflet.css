@@ -516,7 +516,8 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-popup-tip {
 	background: white;
 	color: #333;
-	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	-webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,0.4);
+	box-shadow: 0 0 2px 0 rgba(0,0,0,0.4);
 }
 .leaflet-container a.leaflet-popup-close-button {
 	position: absolute;
