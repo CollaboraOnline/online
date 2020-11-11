@@ -16,6 +16,49 @@ describe('Top toolbar tests.', function() {
 		helper.afterAll(testFileName);
 	});
 	
+	it('Clear Direct formatting.', function() {
+		cy.get('#tb_editbar_item_bold')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td b')
+			.should('exist');
+
+		cy.get('#tb_editbar_item_reset')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td b')
+			.should('not.exist');
+		
+	});
+
+	it('Apply font style.', function() {
+		cy.get('#tb_editbar_item_fonts')
+			.click();
+
+		cy.contains('.select2-results__option','Alef')
+			 .click({force: true});
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td font')
+		    .should('have.attr', 'face', 'Alef');
+	});
+
+	it('Apply font size.', function() {
+		cy.get('#tb_editbar_item_fontsizes')
+			.click();
+
+		cy.contains('.select2-results__option','12')
+			 .click({force: true});
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td font')
+		    .should('have.attr', 'size', '3');
+	});
+
 	it('Apply bold font.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
