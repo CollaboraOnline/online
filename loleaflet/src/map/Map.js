@@ -1326,6 +1326,7 @@ L.Map = L.Evented.extend({
 					this._docLayer._resetClientVisArea();
 					this._docLayer._requestNewTiles();
 				}
+				this._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 
 				if (isAnyVexDialogActive()) {
 					for (var vexId in vex.getAll()) {
