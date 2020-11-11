@@ -107,7 +107,7 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	canvasDPIScale: function () {
-		return parseInt(this._canvas.width) / this._width;
+		return parseInt(this._canvas.width) / parseFloat(this._canvas.style.width.replace('px', ''));
 	},
 
 	_syncTileContainerSize: function () {
