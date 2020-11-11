@@ -394,6 +394,12 @@ button.leaflet-control-search-next
 	margin-right: 5px;
 	width: 150px !important;
 }
+#fontnamecombobox {
+	border-color: transparent;
+	background-color: transparent;
+	line-height: 24px;
+	padding-right: 8px;
+}
 .fontsizes-select {
 	width: 55px !important;
 }
