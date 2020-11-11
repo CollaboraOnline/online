@@ -98,6 +98,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container table td s')
 			.should('exist');
 	});
+	
 	it('Apply highlight color.', function() {
 		cy.get('#tb_editbar_item_backgroundcolor')
 			.click();
@@ -121,6 +122,28 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'color', '#FFF2CC');
+	});
+
+	it('Add/Delete decimal places', function() {
+		// Add decimal place
+		cy.get('#tb_editbar_item_numberformatincdecimals')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;0.0');
+
+		// Delete Decimal place
+		calcHelper.clickOnFirstCell();
+
+		cy.get('#tb_editbar_item_numberformatdecdecimals')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;0');
 	});
 
 	it('Apply left/right alignment', function() {
