@@ -508,7 +508,7 @@ describe('Top toolbar tests.', function() {
 
 	it('Clone Formatting.', function() {
 		// Select one character at the beginning of the text.
-		helper.moveCursor('home');
+		helper.typeIntoDocument('{home}');
 
 		cy.get('.leaflet-marker-icon')
 			.should('not.exist');
