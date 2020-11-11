@@ -70,7 +70,7 @@ namespace FileUtil
     bool isEmptyDirectory(const char* path);
     inline bool isEmptyDirectory(const std::string& path) { return isEmptyDirectory(path.c_str()); }
 
-    /// Returns truee iff the path given is writable by our *real* UID.
+    /// Returns true iff the path given is writable by our *real* UID.
     bool isWritable(const char* path);
     inline bool isWritable(const std::string& path) { return isWritable(path.c_str()); }
 
