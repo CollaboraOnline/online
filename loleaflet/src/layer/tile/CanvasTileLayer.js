@@ -106,10 +106,6 @@ L.CanvasTilePainter = L.Class.extend({
 		this._lastSize = new L.Point(widthCSSPx, heightCSSPx);
 	},
 
-	canvasDPIScale: function () {
-		return parseInt(this._canvas.width) / parseFloat(this._canvas.style.width.replace('px', ''));
-	},
-
 	_syncTileContainerSize: function () {
 		var tileContainer = this._layer._container;
 		if (tileContainer) {
@@ -133,7 +129,7 @@ L.CanvasTilePainter = L.Class.extend({
 			else
 				this._canvasCtx.fillStyle = 'white';
 
-			this._canvasCtx.fillRect(0, 0, parseFloat(this._canvas.style.width.replace('px', '')), parseFloat(this._canvas.style.height.replace('px', '')));
+			this._canvasCtx.fillRect(0, 0, this._canvas.width, this._canvas.height);
 		}
 	},
 
@@ -142,13 +138,14 @@ L.CanvasTilePainter = L.Class.extend({
 		var tileSize = new L.Point(this._layer._getTileSize(), this._layer._getTileSize());
 
 		var viewBounds = this._map.getPixelBounds();
+		var viewBoundsCore = new L.Bounds(viewBounds.getTopLeft(), viewBounds.getBottomRight());
 		var splitPanesContext = this._layer.getSplitPanesContext();
-		var paneBoundsList = splitPanesContext ? splitPanesContext.getPxBoundList(viewBounds): [viewBounds];
+		var paneBoundsList = splitPanesContext ? splitPanesContext.getPxBoundList(viewBoundsCore): [viewBoundsCore];
 
 		return {
-			canvasSize: new L.Point(this._pixWidth, this._pixHeight),
+			canvasSize: new L.Point(this._canvas.width, this._canvas.height),
 			tileSize: tileSize,
-			viewBounds: viewBounds,
+			viewBounds: viewBoundsCore,
 			paneBoundsList: paneBoundsList
 		};
 	},
@@ -162,9 +159,9 @@ L.CanvasTilePainter = L.Class.extend({
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
-			var paneBounds = this._layer._cssBoundsToCore(ctx.paneBoundsList[i]);
+			var paneBounds = ctx.paneBoundsList[i];
 			// co-ordinates of the main-(bottom right) pane in core document pixels
-			var viewBounds = this._layer._cssBoundsToCore(ctx.viewBounds);
+			var viewBounds = ctx.viewBounds;
 
 			// into real pixel-land ...
 			paneBounds.round();
@@ -188,32 +185,33 @@ L.CanvasTilePainter = L.Class.extend({
 			var cropWidth = crop.max.x - crop.min.x;
 			var cropHeight = crop.max.y - crop.min.y;
 
+			this._canvasCtx.imageSmoothingEnabled = false;
+
 			if (cropWidth && cropHeight) {
 				this._canvasCtx.drawImage(tile.el,
-					crop.min.x - tileBounds.min.x,
-					crop.min.y - tileBounds.min.y,
+					(crop.min.x - tileBounds.min.x),
+					(crop.min.y - tileBounds.min.y),
 					cropWidth, cropHeight,
-					crop.min.x - paneOffset.x,
-					crop.min.y - paneOffset.y,
-					cropWidth, cropHeight);
+					(crop.min.x - paneOffset.x) * this._dpiScale,
+					(crop.min.y - paneOffset.y) * this._dpiScale,
+					cropWidth * this._dpiScale, cropHeight * this._dpiScale);
 			}
 
 			if (this._layer._debug)
 			{
 				this._canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-				this._canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
+				this._canvasCtx.strokeRect(tile.coords.x * this._dpiScale, tile.coords.y * this._dpiScale, 256 * this._dpiScale, 256 * this._dpiScale);
 			}
 		}
 	},
 
 	_drawSplits: function () {
 		var splitPanesContext = this._layer.getSplitPanesContext();
-		if (!splitPanesContext) {
-			return;
+		if (splitPanesContext) {
+			var splitPos = splitPanesContext.getSplitPos();
+			this._canvasCtx.strokeStyle = 'red';
+			this._canvasCtx.strokeRect(0, 0, splitPos.x * this._dpiScale, splitPos.y * this._dpiScale);
 		}
-		var splitPos = this._layer._cssPixelsToCore(splitPanesContext.getSplitPos());
-		this._canvasCtx.strokeStyle = 'red';
-		this._canvasCtx.strokeRect(0, 0, splitPos.x, splitPos.y);
 	},
 
 	_updateWithRAF: function () {
@@ -223,7 +221,6 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	update: function () {
-
 		var newDpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
 		var scaleChanged = this._dpiScale != newDpiScale;
 
@@ -290,7 +287,6 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	_paintWholeCanvas: function(ctx) {
-
 		var zoom = this._lastZoom || Math.round(this._map.getZoom());
 		var part = this._lastPart || this._layer._selectedPart;
 
@@ -342,7 +338,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_setup: function () {
-
 		if (!this._canvasContainer) {
 			console.error('canvas container not found. _initContainer failed ?');
 		}
@@ -393,16 +388,16 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				canvas.strokeStyle = 'blue';
 			else // now fr some grid-lines ...
 				canvas.strokeStyle = '#c0c0c0';
-			canvas.lineWidth = 1.0;
+			canvas.lineWidth = 1.0; // * this._dpiScale;
 
 			canvas.beginPath();
 			for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 				// FIXME: de-duplicate before firing myself:
 
 				// co-ordinates of this pane in core document pixels
-				var paneBounds = that._cssBoundsToCore(ctx.paneBoundsList[i]);
+				var paneBounds = ctx.paneBoundsList[i];
 				// co-ordinates of the main-(bottom right) pane in core document pixels
-				var viewBounds = that._cssBoundsToCore(ctx.viewBounds);
+				var viewBounds = ctx.viewBounds;
 				// into real pixel-land ...
 				paneBounds.round();
 				viewBounds.round();
@@ -425,19 +420,19 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					that.sheetGeometry._columns.forEachInCorePixelRange(
 						paneBounds.min.x, paneBounds.max.x,
 						function(pos) {
-							canvas.moveTo(pos - paneOffset.x - 0.5, paneBounds.min.y - paneOffset.y - 0.5);
-							canvas.lineTo(pos - paneOffset.x - 0.5, paneBounds.max.y - paneOffset.y - 0.5);
+							canvas.moveTo((pos - paneOffset.x - 0.5) * this._dpiScale, (paneBounds.min.y - paneOffset.y - 0.5) * this._dpiScale);
+							canvas.lineTo((pos - paneOffset.x - 0.5) * this._dpiScale, (paneBounds.max.y - paneOffset.y - 0.5) * this._dpiScale);
 							canvas.stroke();
-						});
+						}.bind(this));
 
 				if (that.sheetGeometry._rows)
 					that.sheetGeometry._rows.forEachInCorePixelRange(
 						paneBounds.min.y, paneBounds.max.y,
 						function(pos) {
-							canvas.moveTo(paneBounds.min.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
-							canvas.lineTo(paneBounds.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+							canvas.moveTo((paneBounds.min.x - paneOffset.x - 0.5 * this._dpiScale), (pos - paneOffset.y - 0.5) * this._dpiScale);
+							canvas.lineTo((paneBounds.max.x - paneOffset.x - 0.5) * this._dpiScale, (pos - paneOffset.y - 0.5) * this._dpiScale);
 							canvas.stroke();
-						});
+						}.bind(this));
 			}
 			canvas.closePath();
 		};
@@ -462,7 +457,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		// Override L.TileLayer._tilePixelScale to 1 (independent of the device).
 		this._tileWidthPx = this.options.tileSize;
 		this._tileHeightPx = this.options.tileSize;
-		this._tilePixelScale = 1;
+		//this._tilePixelScale = 1;
 
 		L.TileLayer.prototype.onAdd.call(this, map);
 		map.setZoom();
@@ -561,10 +556,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			coords.part);
 	},
 
-	canvasDPIScale: function () {
-		return this._painter.canvasDPIScale();
-	},
-
 	_pxBoundsToTileRanges: function (bounds) {
 		if (!this._splitPanesContext) {
 			return [this._pxBoundsToTileRange(bounds)];
@@ -576,57 +567,20 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 	_pxBoundsToTileRange: function (bounds) {
 		return new L.Bounds(
-			this._cssPixelsToCore(bounds.min)._divideBy(this._tileSize)._floor(),
-			this._cssPixelsToCore(bounds.max)._divideBy(this._tileSize)._floor());
+			bounds.min.divideBy(this._tileSize)._floor(),
+			bounds.max.divideBy(this._tileSize)._floor());
 	},
 
-	_getCoreZoomFactor: function () {
-		return new L.Point(
-			this._tileSize * 15.0 / this._tileWidthTwips,
-			this._tileSize * 15.0 / this._tileHeightTwips);
-	},
-
-	_corePixelsToCss: function (corePixels) {
-		var dpiScale = this.canvasDPIScale();
-		return corePixels.divideBy(dpiScale);
-	},
-
-	_cssPixelsToCore: function (cssPixels) {
-		var dpiScale = this.canvasDPIScale();
-		return cssPixels.multiplyBy(dpiScale);
-	},
-
-	_cssBoundsToCore: function (bounds) {
-		return new L.Bounds(
-			this._cssPixelsToCore(bounds.min),
-			this._cssPixelsToCore(bounds.max)
-		);
-	},
-
-	_twipsToCorePixels: function (twips) {
+	_twipsToCssPixels: function (twips) {
 		return new L.Point(
 			twips.x / this._tileWidthTwips * this._tileSize,
 			twips.y / this._tileHeightTwips * this._tileSize);
 	},
 
-	_corePixelsToTwips: function (corePixels) {
-		return new L.Point(
-			corePixels.x / this._tileSize * this._tileWidthTwips,
-			corePixels.y / this._tileSize * this._tileHeightTwips);
-	},
-
-	_twipsToCssPixels: function (twips) {
-		var dpiScale = this.canvasDPIScale();
-		return new L.Point(
-			twips.x / this._tileWidthTwips * this._tileSize / dpiScale,
-			twips.y / this._tileHeightTwips * this._tileSize / dpiScale);
-	},
-
 	_cssPixelsToTwips: function (pixels) {
-		var dpiScale = this.canvasDPIScale();
 		return new L.Point(
-			pixels.x * dpiScale / this._tileSize * this._tileWidthTwips,
-			pixels.y * dpiScale / this._tileSize * this._tileHeightTwips);
+			pixels.x / this._tileSize * this._tileWidthTwips,
+			pixels.y / this._tileSize * this._tileHeightTwips);
 	},
 
 	_twipsToLatLng: function (twips, zoom) {
@@ -678,11 +632,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			zoom = this._map.getZoom();
 		}
 
-		var dpiScale = this.canvasDPIScale();
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
 			this._docHeightTwips / this.options.tileHeightTwips);
 		// docPixelLimits should be in csspx.
-		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize / dpiScale);
+		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 		var scale = this._map.getZoomScale(zoom, 10);
 		var topLeft = new L.Point(0, 0);
 		topLeft = this._map.unproject(topLeft.multiplyBy(scale));
@@ -702,7 +655,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
 			this._docHeightTwips / this._tileHeightTwips);
-		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize / dpiScale);
+		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize);
 		if (extraSize) {
 			// extraSize is unscaled.
 			scrollPixelLimits = scrollPixelLimits.add(extraSize);
@@ -1238,8 +1191,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		var nwPoint = new L.Point(coords.x, coords.y);
 		var sePoint = nwPoint.add([tileSize, tileSize]);
-		nwPoint = this._corePixelsToCss(nwPoint);
-		sePoint = this._corePixelsToCss(sePoint);
 
 		var nw = map.wrapLatLng(map.unproject(nwPoint, coords.z));
 		var se = map.wrapLatLng(map.unproject(sePoint, coords.z));

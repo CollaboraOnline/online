@@ -502,7 +502,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return;
 		}
 
-		var newSizePx = this._twipsToCorePixels(new L.Point(newDocWidth, newDocHeight));
+		var newSizePx = this._twipsToCssPixels(new L.Point(newDocWidth, newDocHeight));
 
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 		var bottomRight = this._map.unproject(newSizePx);
