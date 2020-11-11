@@ -15,7 +15,7 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName);
 	});
-
+	
 	it('Apply bold font.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
@@ -54,6 +54,30 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container table td s')
 			.should('exist');
+	});
+	it('Apply highlight color.', function() {
+		cy.get('#tb_editbar_item_backgroundcolor')
+			.click();
+
+		cy.get('.w2ui-color [name="8E7CC3"]')
+			.click();
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'bgcolor', '#8E7CC3');
+	});
+
+	it('Apply font color.', function() {
+		cy.get('#tb_editbar_item_fontcolor')
+			.click();
+
+		cy.get('.w2ui-color [name="FFF2CC"]')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td font')
+			.should('have.attr', 'color', '#FFF2CC');
 	});
 
 	it('Apply left/right alignment', function() {
