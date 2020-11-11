@@ -150,7 +150,9 @@ var phpProxyBlackList = [
 	],
 	['mobile/calc/hamburger_menu_spec.js',
 		[
-			'Save'
+			'Save',
+			'Undo/redo.',
+			'Repair.'
 		]
 	],
 	['mobile/calc/focus_spec.js',
