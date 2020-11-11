@@ -10,6 +10,7 @@ L.Control.Notebookbar = L.Control.extend({
 	_showNotebookbar: false,
 
 	onAdd: function (map) {
+		// log and test window.ThisIsTheiOSApp = true;
 		this.map = map;
 		this._currentScrollPosition = 0;
 
@@ -102,7 +103,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	setTabs: function(tabs) {
-		$('nav').prepend(tabs);
+		$('#document-titlebar').before(tabs);
 		this.createShortcutsBar();
 	},
 
@@ -148,7 +149,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 	createShortcutsBar: function() {
 		var shortcutsBar = L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
-		$('nav').prepend(shortcutsBar);
+		$('#main-menu').after(shortcutsBar);
 		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
 		builder.build(shortcutsBar, this.getShortcutsBarData());
 	},
