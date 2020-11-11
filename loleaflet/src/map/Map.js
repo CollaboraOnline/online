@@ -389,7 +389,7 @@ L.Map = L.Evented.extend({
 	initializeModificationIndicator: function() {
 		var lastModButton = L.DomUtil.get('menu-last-mod');
 		if (lastModButton !== null && lastModButton !== undefined
-			&& lastModButton.firstChild.innerHTML !== null
+			&& lastModButton.firstChild && lastModButton.firstChild.innerHTML !== null
 			&& lastModButton.firstChild.childElementCount == 0) {
 			if (this._lastmodtime == null) {
 				// No modification time -> hide the indicator
