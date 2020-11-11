@@ -22,7 +22,7 @@ public:
     Watermark(const std::shared_ptr<lok::Document>& loKitDoc, const std::string& text,
               double opacity)
         : _loKitDoc(loKitDoc)
-        , _text(text)
+        , _text(Util::replace(text, "\\n", "\n"))
         , _font("Carlito")
         , _alphaLevel(opacity)
         , _width(0)
