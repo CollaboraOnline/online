@@ -674,22 +674,20 @@ public:
             _loKitDocument->setView(session->getViewId());
 #endif
 
+        const auto blenderFunc = [&](unsigned char* data, int offsetX, int offsetY,
+                                     size_t pixmapWidth, size_t pixmapHeight, int pixelWidth,
+                                     int pixelHeight, LibreOfficeKitTileMode mode) {
+            if (session->watermark())
+                session->watermark()->blending(data, offsetX, offsetY, pixmapWidth, pixmapHeight,
+                                               pixelWidth, pixelHeight, mode);
+        };
+
+        const auto postMessageFunc = [&](const char* buffer, size_t length) {
+            postMessage(buffer, length, WSOpCode::Binary);
+        };
+
         if (!RenderTiles::doRender(_loKitDocument, tileCombined, _pngCache, _pngPool, combined,
-                                   [&](unsigned char *data,
-                                       int offsetX, int offsetY,
-                                       size_t pixmapWidth, size_t pixmapHeight,
-                                       int pixelWidth, int pixelHeight,
-                                       LibreOfficeKitTileMode mode) {
-                                       if (session->hasWatermark())
-                                           session->_docWatermark->blending(data, offsetX, offsetY,
-                                                                            pixmapWidth, pixmapHeight,
-                                                                            pixelWidth, pixelHeight,
-                                                                            mode);
-                                   },
-                                   [&](const char *buffer, size_t length) {
-                                       postMessage(buffer, length, WSOpCode::Binary);
-                                   }
-                                   ))
+                                   blenderFunc, postMessageFunc))
         {
             LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
             return;
@@ -1283,8 +1281,7 @@ private:
                 sessionId << "] loaded view [" << viewId << "]. Have " <<
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
-        if (session->hasWatermark())
-            session->_docWatermark.reset(new Watermark(_loKitDocument, session));
+        session->initWatermark();
         session->recalcCanonicalViewId(_sessions);
 
         return _loKitDocument;
