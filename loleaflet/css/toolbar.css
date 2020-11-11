@@ -392,6 +392,12 @@ button.leaflet-control-search-next
 #tb_editbar_item_fonts .select2-container{
 	width: 150px !important;
 }
+#fontnamecombobox {
+	border-color: transparent;
+	background-color: transparent;
+	line-height: 24px;
+	padding-right: 8px;
+}
 .fontsizes-select {
 	width: 55px !important;
 }
