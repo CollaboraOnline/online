@@ -25,7 +25,7 @@ public:
     Watermark(const std::shared_ptr<lok::Document>& loKitDoc,
               const std::shared_ptr<ChildSession> & session)
         : _loKitDoc(loKitDoc)
-        , _text(session->getWatermarkText())
+        , _text(Util::replace(session->getWatermarkText(), "\\n", "\n"))
         , _font("Carlito")
         , _width(0)
         , _height(0)
