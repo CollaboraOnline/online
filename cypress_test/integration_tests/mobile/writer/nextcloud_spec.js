@@ -58,7 +58,7 @@ describe('Nextcloud specific tests.', function() {
 		nextcloudHelper.checkAndCloseSharing();
 	});
 
-	it('Revision history.', function() {
+	it.skip('Revision history.', function() {
 		helper.beforeAll(testFileName, 'writer');
 
 		mobileHelper.enableEditingMobile();
@@ -66,7 +66,7 @@ describe('Nextcloud specific tests.', function() {
 		nextcloudHelper.checkAndCloseRevisionHistory();
 	});
 
-	it('Restore previous revision.', function() {
+	it.skip('Restore previous revision.', function() {
 		helper.beforeAll(testFileName, 'writer');
 
 		mobileHelper.enableEditingMobile();
