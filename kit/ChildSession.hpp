@@ -17,8 +17,8 @@
 #include "Common.hpp"
 #include "Kit.hpp"
 #include "Session.hpp"
+#include "Watermark.hpp"
 
-class Watermark;
 class ChildSession;
 
 enum class LokEventTargetEnum
@@ -215,7 +215,20 @@ public:
 
     void loKitCallback(const int type, const std::string& payload);
 
-    std::shared_ptr<Watermark> _docWatermark;
+    /// Initializes the watermark support, if enabled and required.
+    /// Returns true if watermark is enabled and initialized.
+    bool initWatermark()
+    {
+        if (hasWatermark())
+        {
+            _docWatermark.reset(
+                new Watermark(getLOKitDocument(), getWatermarkText(), getWatermarkOpacity()));
+        }
+
+        return _docWatermark != nullptr;
+    }
+
+    const std::shared_ptr<Watermark>& watermark() const { return _docWatermark; };
 
     bool sendTextFrame(const char* buffer, int length) override
     {
@@ -297,12 +310,12 @@ private:
     virtual void disconnect() override;
     virtual bool _handleInput(const char* buffer, int length) override;
 
-    std::shared_ptr<lok::Document> getLOKitDocument()
+    std::shared_ptr<lok::Document> getLOKitDocument() const
     {
         return _docManager->getLOKitDocument();
     }
 
-    std::string getLOKitLastError()
+    std::string getLOKitLastError() const
     {
         char *lastErr = _docManager->getLOKit()->getError();
         std::string ret;
@@ -325,6 +338,8 @@ private:
     const std::string _jailId;
     const std::string _jailRoot;
     DocumentManagerInterface* _docManager;
+
+    std::shared_ptr<Watermark> _docWatermark;
 
     std::queue<std::chrono::steady_clock::time_point> _cursorInvalidatedEvent;
     const unsigned _eventStorageIntervalMs = 15*1000;

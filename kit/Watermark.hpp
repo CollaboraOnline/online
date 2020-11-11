@@ -15,24 +15,24 @@
 #include <Log.hpp>
 #include <cstdlib>
 #include <string>
-#include "ChildSession.hpp"
 
-class Watermark
+class Watermark final
 {
 public:
-    Watermark(const std::shared_ptr<lok::Document>& loKitDoc,
-              const std::shared_ptr<ChildSession> & session)
+    Watermark(const std::shared_ptr<lok::Document>& loKitDoc, const std::string& text,
+              double opacity)
         : _loKitDoc(loKitDoc)
-        , _text(session->getWatermarkText())
+        , _text(text)
         , _font("Carlito")
+        , _alphaLevel(opacity)
         , _width(0)
         , _height(0)
-        , _alphaLevel(session->getWatermarkOpacity())
     {
-    }
-
-    ~Watermark()
-    {
+        if (_loKitDoc == nullptr)
+        {
+            LOG_ERR("Watermark rendering requested without a valid document. Watermarking will be disabled.");
+            assert(_loKitDoc && "Valid loKitDoc is required for Watermark.");
+        }
     }
 
     void blending(unsigned char* tilePixmap,
@@ -42,8 +42,8 @@ public:
                    LibreOfficeKitTileMode /*mode*/)
     {
         // set requested watermark size a little bit smaller than tile size
-        int width = tileWidth * 0.9;
-        int height = tileHeight * 0.9;
+        const int width = tileWidth * 0.9;
+        const int height = tileHeight * 0.9;
 
         const std::vector<unsigned char>* pixmap = getPixmap(width, height);
 
@@ -106,9 +106,8 @@ private:
         _width = width;
         _height = height;
 
-        if (!_loKitDoc)
+        if (_loKitDoc == nullptr)
         {
-            LOG_ERR("Watermark rendering requested without a valid document.");
             return nullptr;
         }
 
@@ -177,12 +176,12 @@ private:
     }
 
 private:
-    std::shared_ptr<lok::Document> _loKitDoc;
-    std::string _text;
-    std::string _font;
+    const std::shared_ptr<lok::Document> _loKitDoc;
+    const std::string _text;
+    const std::string _font;
+    const double _alphaLevel;
     int _width;
     int _height;
-    double _alphaLevel;
     std::vector<unsigned char> _pixmap;
 };
 
