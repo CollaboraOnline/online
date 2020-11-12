@@ -131,7 +131,21 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		this.onAnnotationCancel();
 		this._selectedAnnotation = annotation._data.id;
 		if (window.mode.isMobile() || window.mode.isTablet()) {
-			this._doclayer.newAnnotationVex(annotation, annotation._onReplyClick,/* isMod */ true, '');
+			var avatar = undefined;
+			var author = this._map.getViewName(this._map._docLayer._viewId);
+			if (author in this._map._viewInfoByUserName) {
+				avatar = this._map._viewInfoByUserName[author].userextrainfo.avatar;
+			}
+			var replyAnnotation = {
+				text: '',
+				textrange: '',
+				author: author,
+				dateTime: new Date().toDateString(),
+				id: annotation._data.id,
+				avatar: avatar,
+				parent: annotation._data.parent
+			};
+			this._doclayer.newAnnotationVex(replyAnnotation, annotation._onReplyClick,/* isMod */ false, '');
 		} else {
 			annotation.reply();
 			this.scrollUntilAnnotationIsVisible(annotation);
