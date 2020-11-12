@@ -47,8 +47,11 @@
 	outline: none;
 }
 
-.vex.vex-theme-plain .vex-close:hover:before {
-	line-height: 30px;
+.vex.vex-theme-plain .vex-close:before {
+	width: 20px;
+	height: 20px;
+	line-height: 18px;
+	font-size: 30px;
 }
 
 .vex-closing {
