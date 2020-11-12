@@ -47,6 +47,13 @@
 	outline: none;
 }
 
+.vex.vex-theme-plain .vex-close:before {
+	width: 20px;
+	height: 20px;
+	line-height: 18px;
+	font-size: 30px;
+}
+
 .vex-closing {
 	-webkit-animation: vex-fadeout .25s forwards;
 	animation: vex-fadeout .25s forwards;
