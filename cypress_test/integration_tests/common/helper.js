@@ -448,16 +448,8 @@ function afterAll(fileName) {
 				.should('not.exist');
 
 		}
-	} else if (Cypress.env('SERVER_PORT') === 9979 || Cypress.env('INTEGRATION') === 'php-proxy') {
-		// Make sure that the document is closed
-		if (Cypress.env('INTEGRATION') === 'php-proxy') {
-			cy.visit('http://admin:admin@localhost/richproxy/proxy.php?req=' +
-				'/loleaflet/dist/admin/admin.html');
-		} else {
-			cy.visit('http://admin:admin@localhost:' +
-				Cypress.env('SERVER_PORT') +
-				'/loleaflet/dist/admin/admin.html');
-		}
+	} else if (Cypress.env('INTEGRATION') === 'php-proxy') {
+		cy.visit('http://localhost/', {failOnStatusCode: false});
 
 		cy.wait(5000);
 	} else {
