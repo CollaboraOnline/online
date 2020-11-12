@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0100\n"
-"PO-Revision-Date: 2020-10-13 20:43+0000\n"
-"Last-Translator: koffevar <egor.kafisov@gmail.com>\n"
+"PO-Revision-Date: 2020-11-12 09:28+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /ru/libo_online/loleaflet-ui-ru.po\n"
 "X-Pootle-Revision: 3938105\n"
 
@@ -44,12 +44,11 @@ msgstr "Аналитика"
 
 #: admin/admin.strings.js:11
 msgid "History"
-msgstr "Журнал"
+msgstr "История"
 
 #: admin/admin.strings.js:12
-#, fuzzy
 msgid "Log"
-msgstr "Имя пользователя"
+msgstr "Журнал"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -201,9 +200,8 @@ msgid "Server uptime"
 msgstr "Время работы сервера"
 
 #: admin/admin.strings.js:48
-#, fuzzy
 msgid "Refresh Log"
-msgstr "Обновить"
+msgstr "Обновить журнал"
 
 #: admin/admin.strings.js:49
 msgid "Set Log Levels"
@@ -261,6 +259,7 @@ msgstr "Отклонить"
 #: admin/src/AdminSocketOverview.js:377
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr ""
+"Ошибка установки cookie аутентификации jwt через небезопасное соединение"
 
 #: admin/src/AdminSocketOverview.js:381
 msgid "Failed to authenticate this session over protocol %0"
@@ -288,23 +287,23 @@ msgstr "ТБ"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "ПБ"
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "ЭБ"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ЗБ"
 
 #: admin/src/Util.js:14
 msgid "YB"
-msgstr ""
+msgstr "ЙиБ"
 
 #: admin/src/Util.js:14
 msgid "BB"
-msgstr ""
+msgstr "ББ"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -591,7 +590,7 @@ msgstr "Показать линейку"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:301
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Показать строку состояния"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:304
 #: src/control/Control.Menubar.js:420 src/control/Control.Menubar.js:668
@@ -696,7 +695,7 @@ msgstr "Таблица Excel (.xlsx)"
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:579
 #: src/control/Control.Menubar.js:626 src/control/Control.StatusBar.js:190
 msgid "Search"
-msgstr "Найти:"
+msgstr "Поиск"
 
 #: src/control/Control.Menubar.js:542
 msgid "Page Setup"
@@ -830,15 +829,15 @@ msgstr "Число слайдов"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Выбор нескольких ячеек"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Режим вставки: откл"
 
 #: src/control/Control.StatusBar.js:463
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Режим выбора: откл"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -960,13 +959,13 @@ msgstr "~Файл"
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarImpress.js:91
 msgid "~Home"
-msgstr "~Домашняя"
+msgstr "~Главная"
 
 #: src/control/Control.NotebookbarWriter.js:23
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:97
 msgid "~Insert"
-msgstr "~Вставить"
+msgstr "~Вставка"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
@@ -974,93 +973,85 @@ msgstr "~Макет"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
-msgstr ""
+msgstr "~Ссылки"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarImpress.js:102
-#, fuzzy
 msgid "~Review"
-msgstr "Обзор"
+msgstr "~Рецензирование"
 
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Формат"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Table"
-msgstr ""
+msgstr "~Таблица"
 
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
-msgstr ""
+msgstr "~Рисование"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "~Справка"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Лист"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Данные"
 
 #: src/control/Control.NotebookbarCalc.js:1925
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Вставить таблицу"
+msgstr "Вставить строки выше"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
 msgid "Insert Rows Below"
-msgstr "Вставить лист"
+msgstr "Вставить строки ниже"
 
 #: src/control/Control.NotebookbarCalc.js:1960
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "Вставить лист перед"
+msgstr "Вставить столбцы слева"
 
 #: src/control/Control.NotebookbarCalc.js:1973
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "Вставить лист после"
+msgstr "Вставить столбцы справа"
 
 #: src/control/Control.NotebookbarCalc.js:1995
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Вставить разрыв строк"
 
 #: src/control/Control.NotebookbarCalc.js:2008
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Вставить разрыв столбцов"
 
 #: src/control/Control.NotebookbarCalc.js:2030
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Удалить"
+msgstr "Удалить строки"
 
 #: src/control/Control.NotebookbarCalc.js:2043
-#, fuzzy
 msgid "Delete Columns"
-msgstr "Столбцы"
+msgstr "Удалить столбцы"
 
 #: src/control/Control.NotebookbarCalc.js:2065
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Удалить разрыв строк"
 
 #: src/control/Control.NotebookbarCalc.js:2078
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Удалить разрыв столбцов"
 
 #: src/control/Control.NotebookbarImpress.js:27
-#, fuzzy
 msgid "Start Presentation"
-msgstr "Ориентация текста"
+msgstr "Начать презентацию"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
@@ -1068,16 +1059,15 @@ msgstr "Показать выделенные листы"
 
 #: src/control/Permission.js:48
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "Не удалось заблокировать файл; он открыт в режиме только для чтения."
 
 #: src/control/Permission.js:50 src/control/Permission.js:68
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Сообщение сервера:"
 
 #: src/control/Permission.js:66
-#, fuzzy
 msgid "The document could not be locked."
-msgstr "Документ не может быть сохранён."
+msgstr "Не удалось заблокировать файл."
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1088,14 +1078,12 @@ msgid "Right Margin"
 msgstr "Правое поле"
 
 #: src/control/Ruler.js:641
-#, fuzzy
 msgid "Insert tabstop"
-msgstr "Вставить таблицу"
+msgstr "Вставить позицию табуляции"
 
 #: src/control/Ruler.js:648
-#, fuzzy
 msgid "Delete tabstop"
-msgstr "Вставить таблицу"
+msgstr "Удалить позицию табуляции"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1199,7 +1187,7 @@ msgstr "Подпись сломана"
 
 #: src/control/Signing.js:627
 msgid "The signature was valid, but the document has been modified"
-msgstr "Подпись была верна, но документ был изменён."
+msgstr "Подпись была верна, но документ был изменён"
 
 #: src/control/Signing.js:628
 msgid "Signed but document modified"
@@ -1215,7 +1203,7 @@ msgstr "Подписано, но не подтверждено"
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
-msgstr "Подпись верна, но документ подписан только частично."
+msgstr "Подпись верна, но документ подписан только частично"
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
@@ -1235,12 +1223,12 @@ msgstr "Переименование..."
 
 #: src/control/Toolbar.js:426
 msgid "I understand the risks"
-msgstr ""
+msgstr "Я осознаю риски"
 
 #: src/control/Toolbar.js:478
 msgid ""
 "We are sorry, the information about the latest updates is not available."
-msgstr ""
+msgstr "К сожалению, информация о последних обновлениях недоступна."
 
 #: src/control/Toolbar.js:523
 msgid "This version of %productName is powered by"
@@ -1248,13 +1236,15 @@ msgstr "Эта версия %productName работает на"
 
 #: src/control/Toolbar.js:533
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"Slow Proxy\""
 
 #: src/control/Toolbar.js:536
 msgid ""
 "The Personal edition is supported by volunteers and intended for individual "
 "use."
 msgstr ""
+"Издание Personal поддерживается волонтёрами и рассчитано для индивидуального "
+"использования."
 
 #: src/control/Toolbar.js:623
 msgid "Insert hyperlink"
@@ -1304,10 +1294,9 @@ msgstr ""
 "продолжить редактирование"
 
 #: src/core/Socket.js:407
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
-"Не активный документ - пожалуйста щёлкните, чтобы перезагрузить его и "
+"Неактивный документ - пожалуйста щёлкните, чтобы перезагрузить его и "
 "продолжить редактирование"
 
 #: src/core/Socket.js:415
@@ -1449,7 +1438,7 @@ msgstr ""
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr ""
 "Неправильный или отсутствующий параметр WOPISrc, пожалуйста обратитесь в "
-"службу технической поддержки"
+"службу технической поддержки."
 
 #: src/errormessages.js:21
 msgid ""
@@ -1505,7 +1494,7 @@ msgstr ""
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
 "Документ не может быть сохранён из-за отсутствующего или неправильного ключа "
-"доступа"
+"доступа."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
@@ -1585,7 +1574,7 @@ msgstr "Удалить"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Удалить обсуждение"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1593,20 +1582,19 @@ msgstr "Решено"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Удалить пометку \"Решено\""
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Удалить пометку \"Решено\" с обсуждения"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Обсуждение решено"
 
 #: src/layer/tile/TileLayer.js:853
-#, fuzzy
 msgid "Functions"
-msgstr "Мастер функций"
+msgstr "Функции"
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
