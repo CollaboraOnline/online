@@ -15,4 +15,8 @@
     <string name="later">Mais tarde</string>
     <string name="exiting">Saindo...</string>
     <string name="file_chromeos_read_only">Este arquivo não pode ser salvo neste local, abrindo-o em só leitura. Mova-o para os arquivos de Play para poder ler e gravar o arquivo.</string>
+    <string name="ask_for_copy">Este documento é somente para leitura. Você quer fazer uma cópia para editá-lo\?</string>
+    <string name="edit_copy">Editar uma cópia</string>
+    <string name="view_only">Apenas visualização</string>
+    <string name="restarting">Reiniciando...</string>
 </resources>
