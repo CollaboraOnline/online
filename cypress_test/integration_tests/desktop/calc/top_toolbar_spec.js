@@ -98,7 +98,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container table td s')
 			.should('exist');
 	});
-	
+
 	it('Apply highlight color.', function() {
 		cy.get('#tb_editbar_item_backgroundcolor')
 			.click();
@@ -146,6 +146,25 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'sdnum', '1033;0;0');
 	});
 
+	it('Format as currency.', function() {
+		cy.get('#tb_editbar_item_numberformatcurrency')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;[$$-409]#,##0.00;[RED]-[$$-409]#,##0.00');
+	});
+
+	it('Format as Percent.', function() {
+		cy.get('#tb_editbar_item_numberformatpercent')
+			.click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'sdnum', '1033;0;0.00%');
+	});
 	it('Apply left/right alignment', function() {
 		// Set right aligment first
 		cy.get('#tb_editbar_item_textalign .w2ui-tb-down')
