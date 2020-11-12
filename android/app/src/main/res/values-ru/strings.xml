@@ -14,7 +14,7 @@
     <string name="about_notice">Показать уведомление</string>
     <string name="about_license">Показать лицензию</string>
     <string name="pref_show_debug_info_summary">Включить отображение отладочной информации в просмотре документа</string>
-    <string name="pref_show_debug_info">Показать отладочную информацию.</string>
+    <string name="pref_show_debug_info">Показать отладочную информацию</string>
     <string name="pref_filter_summary">Установить, какой фильтр файлов должен быть по умолчанию.</string>
     <string name="pref_filter_title">Фильтр файлов по умолчанию</string>
     <string name="pref_viewmode_summary">Показать файлы сеткой или списком.</string>
@@ -25,7 +25,7 @@
     <string name="grid_view">Сетка</string>
     <string name="list_view">Список</string>
     <string name="failed_to_load_file">Не удалось определить файл для загрузки</string>
-    <string name="storage_permission_required">Требуется разрешение на хранение</string>
+    <string name="storage_permission_required">Требуется разрешение на сохранение</string>
     <string name="file_creation_failed">Ошибка создания файла</string>
     <string name="file_exists_warning">Файл с таким именем уже существует и будет перезаписан.</string>
     <string name="temp_file_saving_disabled">Этот файл только для чтения, сохранение отключено.</string>
@@ -95,7 +95,7 @@
     <string name="sort_newest">Первые новые</string>
     <string name="sort_oldest">Первые наиболее старые</string>
     <string name="pref_enable_chrome_debugger_info">Включить для использования утилиты отладки Chrome в документе</string>
-    <string name="pref_enable_chrome_debugger">"Отладка  Chrome"</string>
+    <string name="pref_enable_chrome_debugger">Отладка Chrome</string>
     <string name="pref_sort_title">Сортировка файлов</string>
     <string name="pref_file_explorer_title">Вид менеджера файлов</string>
     <string name="storage_provider_settings">Настройки хранилища</string>
