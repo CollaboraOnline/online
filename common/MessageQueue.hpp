@@ -42,10 +42,7 @@ public:
             throw std::runtime_error("Cannot queue empty item.");
         }
 
-        std::unique_lock<std::mutex> lock(_mutex);
         put_impl(value);
-        lock.unlock();
-        _cv.notify_one();
     }
 
     void put(const std::string& value)
@@ -56,30 +53,14 @@ public:
     /// Thread safe obtaining of the message.
     /// timeoutMs can be 0 to signify infinity.
     /// Returns an empty payload on timeout.
-    Payload get(const unsigned timeoutMs = 0)
+    Payload get()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
-        if (timeoutMs > 0)
-        {
-            if (!_cv.wait_for(lock, std::chrono::milliseconds(timeoutMs),
-                              [this] { return wait_impl(); }))
-            {
-                return Payload();
-            }
-        }
-        else
-        {
-            _cv.wait(lock, [this] { return wait_impl(); });
-        }
-
         return get_impl();
     }
 
     /// Get a message without waiting
     Payload pop()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         if (_queue.empty())
             return Payload();
         return get_impl();
@@ -88,21 +69,18 @@ public:
     /// Anything in the queue ?
     bool isEmpty()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         return _queue.empty();
     }
 
     /// Thread safe removal of all the pending messages.
     void clear()
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         clear_impl();
     }
 
     /// Thread safe remove_if.
     void remove_if(const std::function<bool(const Payload&)>& pred)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
         std::remove_if(_queue.begin(), _queue.end(), pred);
     }
 
@@ -110,11 +88,6 @@ protected:
     virtual void put_impl(const Payload& value)
     {
         _queue.push_back(value);
-    }
-
-    bool wait_impl() const
-    {
-        return _queue.size() > 0;
     }
 
     virtual Payload get_impl()
@@ -129,15 +102,10 @@ protected:
         _queue.clear();
     }
 
-    /// Get the queue lock when accessing members of derived classes.
-    std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
-
     std::vector<Payload>& getQueue() { return _queue; }
 
 private:
     std::vector<Payload> _queue;
-    mutable std::mutex _mutex;
-    std::condition_variable _cv;
 };
 
 typedef MessageQueueBase<std::vector<char>> MessageQueue;
@@ -180,8 +148,6 @@ public:
     {
         const TileQueue::CursorPosition cursorPosition = CursorPosition(part, x, y, width, height);
 
-        std::unique_lock<std::mutex> lock = getLock();
-
         auto it = _cursorPositions.lower_bound(viewId);
         if (it != _cursorPositions.end() && it->first == viewId)
         {
@@ -205,8 +171,6 @@ public:
 
     void removeCursorPosition(int viewId)
     {
-        std::unique_lock<std::mutex> lock = getLock();
-
         const auto view = std::find(_viewOrder.begin(), _viewOrder.end(), viewId);
         if (view != _viewOrder.end())
         {
