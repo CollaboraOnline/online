@@ -280,7 +280,7 @@ L.TextInput = L.Layer.extend({
 				this._textArea.setAttribute('readonly', true);
 		}
 
-		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.mode.isChromebook()) {
+		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone') {
 			this._textArea.focus();
 		} else if (acceptInput === true) {
 			// On the iPhone, only call the textarea's focus() when we get an explicit
