@@ -64,9 +64,22 @@ L.control.dialogWizard = function (dialogid) {
 
 L.ControllerDialogWizard = L.Class.extend({
 	statics: {
+		MACRO_SELECTOR: 0,
+		MACRO_SECURITY: 1,
 		Dialogs: {},
-		MACRO_SELECTOR: 1,
-		MACRO_SECURITY: 2
+		States: [null, {
+			SetOptions: {
+				type: 'com.sun.star.beans.PropertyValue',
+				value: {
+					Name: {
+						type: 'string',
+						value: '.uno:SetOptions'
+					},
+					Value: {
+					}
+				}
+			}
+		}]
 	},
 
 	initialize: function (map) {
@@ -99,6 +112,14 @@ L.ControllerDialogWizard = L.Class.extend({
 			this._createDialog(L.ControllerDialogWizard.MACRO_SECURITY, e.result.value);
 			this._executeAction({dialogid: L.ControllerDialogWizard.MACRO_SECURITY,
 					     controlid: '__init', data: {}});
+		} else if (e.commandName.startsWith('.uno:QueryState')) {
+			var dialogid = e.commandName.split('?');
+			dialogid = parseInt(dialogid[1]);
+			if (!isNaN(dialogid)) {
+				this._executeAction({dialogid: dialogid,
+						     controlid:'__state',
+						     data: e.result});
+			}
 		}
 	},
 
@@ -185,7 +206,25 @@ L.ControllerDialogWizard = L.Class.extend({
 				radio = dlg._container.querySelector('#low');
 				radio.setAttribute('data-value',0);
 				break;
-			case 'reset':
+			case '__state':
+				var secLevel = action.data.SetOptions;
+				if (secLevel[0] && secLevel[0].Name == 'MacroSecurityLevel') {
+					this._unselectRadio(dlg);
+					radio = dlg._container.querySelector('input[data-value="' +
+									     secLevel[0].Value + '"]');
+					this._selectRadio(radio);
+				}
+
+				if (action.data.Id) {
+					L.ControllerDialogWizard.
+						States[L.ControllerDialogWizard.MACRO_SECURITY].
+						SetOptions.value.Value = {
+							type: 'unsigned short',
+							value: action.data.Id
+						};
+				}
+
+				dlg.addTo(this._map);
 				break;
 			default:
 				if (action.object.type === 'radio') {
@@ -212,7 +251,8 @@ L.ControllerDialogWizard = L.Class.extend({
 		if (!dlg) {
 			this._map.sendUnoCommand('.uno:OptionsTreeDialog?Option:string=MacroSecurity');
 		} else if (!this._isDlgOpen(dlg)) {
-			dlg.addTo(this._map);
+			var args = L.ControllerDialogWizard.States[L.ControllerDialogWizard.MACRO_SECURITY];
+			this._map.sendUnoCommand('.uno:QueryState?' + L.ControllerDialogWizard.MACRO_SECURITY, args);
 		}
 	},
 
