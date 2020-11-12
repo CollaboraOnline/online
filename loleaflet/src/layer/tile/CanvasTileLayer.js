@@ -27,7 +27,6 @@ L.TileCoordData = L.Class.extend({
 });
 
 L.TileCoordData.parseKey = function (keyString) {
-
 	console.assert(typeof keyString === 'string', 'key should be a string');
 	var k = keyString.split(':');
 	console.assert(k.length >= 4, 'invalid key format');
@@ -138,14 +137,13 @@ L.CanvasTilePainter = L.Class.extend({
 		var tileSize = new L.Point(this._layer._getTileSize(), this._layer._getTileSize());
 
 		var viewBounds = this._map.getPixelBounds();
-		var viewBoundsCore = new L.Bounds(viewBounds.getTopLeft(), viewBounds.getBottomRight());
 		var splitPanesContext = this._layer.getSplitPanesContext();
-		var paneBoundsList = splitPanesContext ? splitPanesContext.getPxBoundList(viewBoundsCore): [viewBoundsCore];
+		var paneBoundsList = splitPanesContext ? splitPanesContext.getPxBoundList(viewBounds): [viewBounds];
 
 		return {
 			canvasSize: new L.Point(this._canvas.width, this._canvas.height),
 			tileSize: tileSize,
-			viewBounds: viewBoundsCore,
+			viewBounds: viewBounds,
 			paneBoundsList: paneBoundsList
 		};
 	},
@@ -162,10 +160,6 @@ L.CanvasTilePainter = L.Class.extend({
 			var paneBounds = ctx.paneBoundsList[i];
 			// co-ordinates of the main-(bottom right) pane in core document pixels
 			var viewBounds = ctx.viewBounds;
-
-			// into real pixel-land ...
-			paneBounds.round();
-			viewBounds.round();
 
 			if (!paneBounds.intersects(tileBounds))
 				continue;
@@ -398,9 +392,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				var paneBounds = ctx.paneBoundsList[i];
 				// co-ordinates of the main-(bottom right) pane in core document pixels
 				var viewBounds = ctx.viewBounds;
-				// into real pixel-land ...
-				paneBounds.round();
-				viewBounds.round();
 
 				var paneOffset = paneBounds.getTopLeft(); // allocates
 				// Cute way to detect the in-canvas pixel offset of each pane
@@ -454,10 +445,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	onAdd: function (map) {
-		// Override L.TileLayer._tilePixelScale to 1 (independent of the device).
 		this._tileWidthPx = this.options.tileSize;
 		this._tileHeightPx = this.options.tileSize;
-		//this._tilePixelScale = 1;
 
 		L.TileLayer.prototype.onAdd.call(this, map);
 		map.setZoom();
@@ -571,34 +560,26 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			bounds.max.divideBy(this._tileSize)._floor());
 	},
 
-	_twipsToCssPixels: function (twips) {
+	_twipsToPixels: function (twips) {
 		return new L.Point(
 			twips.x / this._tileWidthTwips * this._tileSize,
 			twips.y / this._tileHeightTwips * this._tileSize);
 	},
 
-	_cssPixelsToTwips: function (pixels) {
+	_pixelsToTwips: function (pixels) {
 		return new L.Point(
 			pixels.x / this._tileSize * this._tileWidthTwips,
 			pixels.y / this._tileSize * this._tileHeightTwips);
 	},
 
 	_twipsToLatLng: function (twips, zoom) {
-		var pixels = this._twipsToCssPixels(twips);
+		var pixels = this._twipsToPixels(twips);
 		return this._map.unproject(pixels, zoom);
 	},
 
 	_latLngToTwips: function (latLng, zoom) {
 		var pixels = this._map.project(latLng, zoom);
-		return this._cssPixelsToTwips(pixels);
-	},
-
-	_twipsToPixels: function (twips) { // css pixels
-		return this._twipsToCssPixels(twips);
-	},
-
-	_pixelsToTwips: function (pixels) { // css pixels
-		return this._cssPixelsToTwips(pixels);
+		return this._pixelsToTwips(pixels);
 	},
 
 	_twipsToCoords: function (twips) {
@@ -743,7 +724,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
-
 		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
 
 		var visibleArea = this._map.getPixelBounds();
@@ -1185,7 +1165,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_tileCoordsToBounds: function (coords) {
-
 		var map = this._map;
 		var tileSize = this._getTileSize();
 
@@ -1322,7 +1301,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	updateHorizPaneSplitter: function () {
-
 		var map = this._map;
 
 		if (!this._xSplitter) {
@@ -1337,7 +1315,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	updateVertPaneSplitter: function () {
-
 		var map = this._map;
 
 		if (!this._ySplitter) {
@@ -1369,7 +1346,6 @@ L.TilesPreFetcher = L.Class.extend({
 	},
 
 	preFetchTiles: function (forceBorderCalc) {
-
 		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer) {
 			return;
 		}
@@ -1609,7 +1585,6 @@ L.TilesPreFetcher = L.Class.extend({
 	},
 
 	resetPreFetching: function (resetBorder) {
-
 		if (!this._map) {
 			return;
 		}

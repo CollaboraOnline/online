@@ -502,7 +502,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return;
 		}
 
-		var newSizePx = this._twipsToCssPixels(new L.Point(newDocWidth, newDocHeight));
+		var newSizePx = this._twipsToPixels(new L.Point(newDocWidth, newDocHeight));
 
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 		var bottomRight = this._map.unproject(newSizePx);
@@ -608,7 +608,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	// active sheet geometry data-source, it may ask core to send current
 	// view area's data or the global data on geometry changes.
 	refreshViewData: function (coordinatesData, compatDataSrcOnly, sheetGeometryChanged) {
-
 		if (this.options.sheetGeometryDataEnabled && compatDataSrcOnly) {
 			return;
 		}
@@ -670,14 +669,13 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	// This send .uno:ViewRowColumnHeaders command to core with the new view coordinates (tile-twips).
 	requestViewRowColumnData: function (pos, size) {
-
 		var payload = 'commandvalues command=.uno:ViewRowColumnHeaders?x=' + Math.round(pos.x) + '&y=' + Math.round(pos.y) +
 			'&width=' + Math.round(size.x) + '&height=' + Math.round(size.y);
 
 		this._map._socket.sendMessage(payload);
 	},
 
-	// sends the .uno:SheetGeometryData command optionally with arguments.
+	// Sends the .uno:SheetGeometryData command, optionally with arguments.
 	requestSheetGeometryData: function (flags) {
 		if (!this.sheetGeometry) {
 			// Suppress multiple requests at document load, till we get a response.
@@ -765,7 +763,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	// Calculates the split-cell from the split position in (core-pixels).
 	setSplitCellFromPos: function () {
-
 		if (!this.sheetGeometry || !this._splitPanesContext) {
 			return;
 		}
@@ -774,7 +771,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_switchSplitPanesContext: function () {
-
 		if (!this.hasSplitPanesSupport()) {
 			return;
 		}
@@ -833,32 +829,27 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	sendSplitIndex: function (newSplitIndex, isSplitCol) {
-
 		if (!this._map.isPermissionEdit() || !this._splitCellState || !this.options.syncSplits) {
 			return false;
 		}
-
-		var splitColState = this._splitCellState.x;
-		var splitRowState = this._splitCellState.y;
-		if (splitColState === -1 || splitRowState === -1) {
+		else if (this._splitCellState.x === -1 || this._splitCellState.y === -1) {
 			// Did not get the 'first' FreezePanesColumn/FreezePanesRow messages from core yet.
 			return false;
 		}
-
-		var currentState = isSplitCol ? splitColState : splitRowState;
-		if (currentState === newSplitIndex) {
+		else if ((isSplitCol ? this._splitCellState.x : this._splitCellState.y) === newSplitIndex) {
 			return false;
 		}
+		else {
+			var unoName = isSplitCol ? 'FreezePanesColumn' : 'FreezePanesRow';
+			var command = {};
+			command[unoName] = {
+				type: 'int32',
+				value: newSplitIndex
+			};
 
-		var unoName = isSplitCol ? 'FreezePanesColumn' : 'FreezePanesRow';
-		var command = {};
-		command[unoName] = {
-			type: 'int32',
-			value: newSplitIndex
-		};
-
-		this._map.sendUnoCommand('.uno:' + unoName, command);
-		return true;
+			this._map.sendUnoCommand('.uno:' + unoName, command);
+			return true;
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -931,7 +922,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_getEditCursorRectangle: function (msgObj) {
-
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry ||
 			!Object.prototype.hasOwnProperty.call(msgObj, 'relrect') || !Object.prototype.hasOwnProperty.call(msgObj, 'refpoint')) {
 			// 1) non-print-twips messaging mode OR
@@ -951,7 +941,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_getTextSelectionRectangles: function (textMsg) {
-
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
 			return L.TileLayer.prototype._getTextSelectionRectangles.call(this, textMsg);
 		}
@@ -971,16 +960,17 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			}, this);
 			return rangeRectArray;
 		}
+		else {
+			var refpoint = L.Point.parse(textMsg.substring(delimIndex + refpointDelim.length));
+			refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
 
-		var refpoint = L.Point.parse(textMsg.substring(delimIndex + refpointDelim.length));
-		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
+			var rectArray = L.Bounds.parseArray(textMsg.substring(0, delimIndex));
+			rectArray.forEach(function (rect) {
+				rect._add(refpoint); // compute absolute coordinates and update in-place.
+			});
 
-		var rectArray = L.Bounds.parseArray(textMsg.substring(0, delimIndex));
-		rectArray.forEach(function (rect) {
-			rect._add(refpoint); // compute absolute coordinates and update in-place.
-		});
-
-		return rectArray;
+			return rectArray;
+		}
 	},
 
 	getSnapDocPosX: function (docPosX, unit) {
@@ -1012,7 +1002,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	getMaxDocSize: function () {
-
 		if (this.sheetGeometry) {
 			return this.sheetGeometry.getSize('corepixels');
 		}
@@ -1025,7 +1014,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_calculateScrollForNewCellCursor: function () {
-
 		var scroll = new L.LatLng(0, 0);
 
 		if (!this._cellCursor || this._isEmptyRectangle(this._cellCursor)) {
@@ -1073,7 +1061,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	getSelectedPart: function () {
 		return this._selectedPart;
 	},
-
 });
 
 L.CalcSplitPanesContext = L.SplitPanesContext.extend({
@@ -1126,7 +1113,6 @@ L.CalcSplitPanesContext = L.SplitPanesContext.extend({
 
 	// Calculates the split-cell from the split position in (core-pixels).
 	setSplitCellFromPos: function () {
-
 		// This should not call setSplitPosFromCell() directly/indirectly.
 
 		var newSplitCell = this._docLayer.sheetGeometry.getCellFromPos(this._splitPos, 'corepixels');
@@ -1142,7 +1128,6 @@ L.MessageStore = L.Class.extend({
 	// ownViewTypes : The types of messages related to own view.
 	// otherViewTypes: The types of messages related to other views.
 	initialize: function (ownViewTypes, otherViewTypes) {
-
 		if (!Array.isArray(ownViewTypes) || !Array.isArray(otherViewTypes)) {
 			console.error('Unexpected argument types');
 			return;
@@ -1174,7 +1159,6 @@ L.MessageStore = L.Class.extend({
 	},
 
 	save: function (msgType, textMsg, viewId) {
-
 		var othersMessage = (typeof viewId === 'number');
 
 		if (!othersMessage && Object.prototype.hasOwnProperty.call(this._ownMessages, msgType)) {
@@ -1216,7 +1200,6 @@ L.SheetGeometry = L.Class.extend({
 	// all flags (ie 'columns', 'rows', 'sizes', 'hidden', 'filtered',
 	// 'groups') enabled.
 	initialize: function (sheetGeomJSON, tileWidthTwips, tileHeightTwips, tileSizePixels, part) {
-
 		if (typeof sheetGeomJSON !== 'object' ||
 			typeof tileWidthTwips !== 'number' ||
 			typeof tileHeightTwips !== 'number' ||
@@ -1238,7 +1221,6 @@ L.SheetGeometry = L.Class.extend({
 	},
 
 	update: function (sheetGeomJSON, checkCompleteness, part) {
-
 		if (!this._testValidity(sheetGeomJSON, checkCompleteness)) {
 			return false;
 		}
@@ -1281,7 +1263,6 @@ L.SheetGeometry = L.Class.extend({
 	},
 
 	setViewArea: function (topLeftTwipsPoint, sizeTwips) {
-
 		if (!(topLeftTwipsPoint instanceof L.Point) || !(sizeTwips instanceof L.Point)) {
 			console.error('invalid argument types');
 			return false;
@@ -1455,7 +1436,6 @@ L.SheetGeometry = L.Class.extend({
 	},
 
 	_testValidity: function (sheetGeomJSON, checkCompleteness) {
-
 		if (!Object.prototype.hasOwnProperty.call(sheetGeomJSON, 'commandName')) {
 			console.error(this._unoCommand + ' response has no property named "commandName".');
 			return false;
@@ -1527,7 +1507,6 @@ L.SheetGeometry = L.Class.extend({
 L.SheetDimension = L.Class.extend({
 
 	initialize: function () {
-
 		this._sizes = new L.SpanList();
 		this._hidden = new L.BoolSpanList();
 		this._filtered = new L.BoolSpanList();
@@ -1541,7 +1520,6 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	update: function (jsonObject) {
-
 		if (typeof jsonObject !== 'object') {
 			return false;
 		}
@@ -1582,7 +1560,6 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	setTileGeometryData: function (tileSizeTwips, tileSizePixels, updatePositions) {
-
 		if (updatePositions === undefined) {
 			updatePositions = true;
 		}
@@ -1605,14 +1582,12 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	_updateVisible: function () {
-
 		var invisibleSpanList = this._hidden.union(this._filtered); // this._hidden is not modified.
 		this._visibleSizes = this._sizes.applyZeroValues(invisibleSpanList); // this._sizes is not modified.
 		this._updatePositions();
 	},
 
 	_updatePositions: function() {
-
 		var posCorePx = 0; // position in core pixels.
 		var posPrintTwips = 0;
 		var dimensionObj = this;
@@ -1687,7 +1662,6 @@ L.SheetDimension = L.Class.extend({
 
 	// returns element pos/size in the requested unit.
 	_getElementDataAnyFromSpanByIndex: function (index, span, unitName) {
-
 		if (span === undefined || index < span.start || span.end < index) {
 			return undefined;
 		}
@@ -1721,7 +1695,6 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	forEachInRange: function (start, end, callback) {
-
 		var dimensionObj = this;
 		this._visibleSizes.forEachSpanInRange(start, end, function (span) {
 			var first = Math.max(span.start, start);
@@ -1806,7 +1779,6 @@ L.SheetDimension = L.Class.extend({
 	},
 
 	setViewLimits: function (startPosTileTwips, endPosTileTwips) {
-
 		this._viewStartIndex = Math.max(0, this._getIndexFromTileTwipsPos(startPosTileTwips));
 		this._viewEndIndex = Math.min(this._maxIndex, this._getIndexFromTileTwipsPos(endPosTileTwips));
 	},
@@ -1853,7 +1825,6 @@ L.SheetDimension = L.Class.extend({
 
 	// Accepts a position in print twips and returns the corresponding position in tile twips.
 	getTileTwipsPosFromPrint: function (posPT) {
-
 		if (typeof posPT !== 'number') {
 			console.error('Wrong argument type');
 			return;
@@ -1872,7 +1843,6 @@ L.SheetDimension = L.Class.extend({
 
 	// Accepts a position in tile twips and returns the corresponding position in print twips.
 	getPrintTwipsPosFromTile: function (posTT) {
-
 		if (typeof posTT !== 'number') {
 			console.error('Wrong argument type');
 			return;
@@ -1977,7 +1947,6 @@ L.SheetDimension = L.Class.extend({
 L.SpanList = L.Class.extend({
 
 	initialize: function (encoding) {
-
 		// spans are objects with keys: 'index' and 'value'.
 		// 'index' holds the last element of the span.
 		// Optionally custom data of a span can be added
@@ -1991,7 +1960,6 @@ L.SpanList = L.Class.extend({
 	},
 
 	load: function (encoding) {
-
 		if (typeof encoding !== 'string') {
 			return false;
 		}
@@ -2007,7 +1975,6 @@ L.SpanList = L.Class.extend({
 
 	// Runs in O(#spans in 'this' + #spans in 'other')
 	applyZeroValues: function (other) {
-
 		if (!(other instanceof L.BoolSpanList)) {
 			return undefined;
 		}
@@ -2063,7 +2030,6 @@ L.SpanList = L.Class.extend({
 	},
 
 	addCustomDataForEachSpan: function (getCustomDataCallback) {
-
 		if (typeof getCustomDataCallback != 'function') {
 			return;
 		}
@@ -2078,7 +2044,6 @@ L.SpanList = L.Class.extend({
 	},
 
 	getSpanDataByIndex: function (index) {
-
 		if (typeof index != 'number') {
 			return undefined;
 		}
@@ -2092,7 +2057,6 @@ L.SpanList = L.Class.extend({
 	},
 
 	getSpanDataByCustomDataField: function (value, fieldName) {
-
 		if (typeof value != 'number' || typeof fieldName != 'string' || !fieldName) {
 			return undefined;
 		}
@@ -2106,7 +2070,6 @@ L.SpanList = L.Class.extend({
 	},
 
 	forEachSpanInRange: function (start, end, callback) {
-
 		if (typeof start != 'number' || typeof end != 'number' ||
 			typeof callback != 'function' || start > end) {
 			return;
@@ -2131,7 +2094,6 @@ L.SpanList = L.Class.extend({
 	},
 
 	_getSpanData: function (spanid) {
-
 		var span = this._spanlist[spanid];
 		var dataClone = undefined;
 		if (span.data) {
@@ -2150,7 +2112,6 @@ L.SpanList = L.Class.extend({
 	},
 
 	_searchByIndex: function (index) {
-
 		return binarySearch(this._spanlist, index,
 			function directionProvider(testIndex, prevSpan, curSpan) {
 				var spanStart = prevSpan ?
@@ -2162,10 +2123,8 @@ L.SpanList = L.Class.extend({
 	},
 
 	_searchByCustomDataField: function (value, fieldName) {
-
 		// All custom searchable data values are assumed to start
 		// from 0 at the start of first span and are in non-decreasing order.
-
 		return binarySearch(this._spanlist, value,
 			function directionProvider(testValue, prevSpan, curSpan, nextSpan) {
 				var valueStart = prevSpan ?
@@ -2181,13 +2140,11 @@ L.SpanList = L.Class.extend({
 		// About the last argument: duplicates can happen, for instance if the
 		// custom field represents positions, and there are spans with zero sizes (hidden/filtered).
 	}
-
 });
 
 L.BoolSpanList = L.SpanList.extend({
 
 	load: function (encoding) {
-
 		if (typeof encoding !== 'string') {
 			return false;
 		}
@@ -2204,7 +2161,6 @@ L.BoolSpanList = L.SpanList.extend({
 
 	// Runs in O(#spans in 'this' + #spans in 'other')
 	union: function (other) {
-
 		if (!(other instanceof L.BoolSpanList)) {
 			return undefined;
 		}
@@ -2262,7 +2218,6 @@ L.BoolSpanList = L.SpanList.extend({
 });
 
 function parseSpanListEncoding(encoding, booleanValue) {
-
 	var spanlist = [];
 	var splits = encoding.split(' ');
 	if (splits.length < 2) {
@@ -2330,7 +2285,6 @@ function parseSpanListEncoding(encoding, booleanValue) {
 L.DimensionOutlines = L.Class.extend({
 
 	initialize: function (encoding) {
-
 		this._outlines = [];
 		if (typeof encoding !== 'string') {
 			return;
@@ -2340,7 +2294,6 @@ L.DimensionOutlines = L.Class.extend({
 	},
 
 	load: function (encoding) {
-
 		if (typeof encoding !== 'string') {
 			return false;
 		}
@@ -2399,7 +2352,6 @@ L.DimensionOutlines = L.Class.extend({
 	// Calls 'callback' for all groups in all levels that have an intersection with the inclusive element range [start, end].
 	// 'callback' is called with these parameters : (levelIdx, groupIdx, groupStart, groupEnd, groupHidden).
 	forEachGroupInRange: function (start, end, callback) {
-
 		if (typeof start != 'number' || typeof end != 'number' || typeof callback != 'function') {
 			return;
 		}
@@ -2476,7 +2428,6 @@ L.DimensionOutlines = L.Class.extend({
 //  -1: to try searching lower half
 
 function binarySearch(array, key, directionProvider, firstMatch) {
-
 	if (!Array.isArray(array) || !array.length) {
 		return -1;
 	}
@@ -2533,7 +2484,6 @@ function binarySearch(array, key, directionProvider, firstMatch) {
 
 // Helper function for binarySearch().
 function _findFirstMatch(array, key, directionProvider, randomMatchingIndex) {
-
 	if (randomMatchingIndex === 0) {
 		return 0;
 	}
