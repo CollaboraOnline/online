@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0100\n"
-"PO-Revision-Date: 2020-11-04 00:09+0000\n"
-"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
+"PO-Revision-Date: 2020-11-10 23:24+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -590,7 +590,7 @@ msgstr "Lineal anzeigen"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:301
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Statusleiste anzeigen"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:304
 #: src/control/Control.Menubar.js:420 src/control/Control.Menubar.js:668
@@ -829,15 +829,15 @@ msgstr "Anzahl an Folien"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Mehrere Zellen auswählen"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Einfügemodus: inaktiv"
 
 #: src/control/Control.StatusBar.js:463
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Auswahlmodus: inaktiv"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -1588,7 +1588,7 @@ msgstr "Entfernen"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Thread entfernen"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1596,15 +1596,15 @@ msgstr "Auflösen"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Ungelöst"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Thread als ungelöst markieren"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Thread als gelöst markieren"
 
 #: src/layer/tile/TileLayer.js:853
 msgid "Functions"
