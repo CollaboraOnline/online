@@ -377,7 +377,7 @@ L.Annotation = L.Layer.extend({
 	_onReplyClick: function (e) {
 		L.DomEvent.stopPropagation(e);
 		if (window.mode.isMobile() || window.mode.isTablet()) {
-			e.annotation._data.reply = e.annotation.text;
+			e.annotation._data.reply = e.annotation._data.text;
 			e.annotation.show();
 			e.annotation._checkBounds();
 			this._map.fire('AnnotationReply', {annotation: e.annotation});
