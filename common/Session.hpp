@@ -36,8 +36,8 @@ public:
     SessionMap() {
         static_assert(std::is_base_of<Session, T>::value, "sessions must have base of Session");
     }
-    /// Generate a unique key for this set of view properties
-    int getCanonicalId(const std::string &viewProps)
+    /// Generate a unique key for this set of view properties, only used by WSD
+    int createCanonicalId(const std::string &viewProps)
     {
         if (viewProps.empty())
             return 0;
@@ -49,6 +49,7 @@ public:
         _canonicalIds[viewProps] = id;
         return id;
     }
+    /// Lookup one session in the map that matches this canonical view id, only used by Kit
     std::shared_ptr<T> findByCanonicalId(int id)
     {
         for (const auto &it : *this) {
@@ -206,9 +207,12 @@ public:
     const std::string& getJailedFilePathAnonym() const { return _jailedFilePathAnonym; }
 
     int  getCanonicalViewId() { return _canonicalViewId; }
-    template<class T> void recalcCanonicalViewId(SessionMap<T> &map)
+    // Only called by kit.
+    void setCanonicalViewId(int viewId) { _canonicalViewId = viewId; }
+    // Only called by wsd.
+    template<class T> void createCanonicalViewId(SessionMap<T> &map)
     {
-        _canonicalViewId = map.getCanonicalId(_watermarkText);
+        _canonicalViewId = map.createCanonicalId(_watermarkText);
     }
 
     const std::string& getDeviceFormFactor() const { return _deviceFormFactor; }
