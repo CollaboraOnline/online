@@ -51,3 +51,76 @@
 .vex-content .loleaflet-annotation-img {
 	box-sizing: content-box !important;
 }
+
+/* pan tabs & overflow indicator */
+
+.notebookbar-tabs-container > div {
+	white-space: nowrap;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 0 auto;
+	-ms-flex: 1 0 auto;
+	flex: 1 0 auto;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	list-style-type: none;
+}
+
+.notebookbar-tabs-container {
+	position: relative;
+	z-index: 1;
+	overflow-x: auto;
+	overflow-y: hidden;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: inline-flex;
+	-webkit-box-pack: start;
+	-webkit-justify-content: flex-start;
+	-ms-flex-pack: start;
+	justify-content: flex-start;
+	-webkit-overflow-scrolling: touch;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	-webkit-flex-wrap: nowrap;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	word-wrap: nowrap;
+	max-width: 60%;
+	margin: 0px auto;
+	background: transparent no-repeat;
+	background-image: -webkit-radial-gradient(0 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)), -webkit-radial-gradient(100% 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0));
+	background-image: -o-radial-gradient(0 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)), -o-radial-gradient(100% 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0));
+	background-image: radial-gradient(farthest-side at 0 50%, rgba(0,0,0,0.2), rgba(0,0,0,0)), radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.2), rgba(0,0,0,0));
+	background-position: 0 0, 100% 0;
+	background-size: 1rem 100%;
+}
+
+.notebookbar-tabs-container:after,
+.notebookbar-tabs-container:before {
+	content: '';
+	position: relative;
+	z-index: -1;
+	display: block;
+	min-width: 2rem;
+	margin: 0;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 0 auto;
+	-ms-flex: 1 0 auto;
+	flex: 1 0 auto;
+}
+
+.notebookbar-tabs-container::before {
+	max-width: 2rem;
+	background: -webkit-gradient(linear,left top, right top,from(var(--gray-bg-color)),color-stop(50%, var(--gray-bg-color)),to(rgba(255,255,255,0)));
+	background: -webkit-linear-gradient(left,var(--gray-bg-color),var(--gray-bg-color) 50%,rgba(255,255,255,0));
+	background: -o-linear-gradient(left,var(--gray-bg-color),var(--gray-bg-color) 50%,rgba(255,255,255,0));
+	background: linear-gradient(to right,var(--gray-bg-color),var(--gray-bg-color) 50%,rgba(255,255,255,0));
+}
+
+.notebookbar-tabs-container:after {
+	background: -webkit-gradient(linear,left top, right top,from(rgba(255,255,255,0)),color-stop(50%, var(--gray-bg-color)),to(var(--gray-bg-color)));
+	background: -webkit-linear-gradient(left,rgba(255,255,255,0),var(--gray-bg-color) 50%,var(--gray-bg-color));
+	background: -o-linear-gradient(left,rgba(255,255,255,0),var(--gray-bg-color) 50%,var(--gray-bg-color));
+	background: linear-gradient(to right,rgba(255,255,255,0),var(--gray-bg-color) 50%,var(--gray-bg-color));
+}
