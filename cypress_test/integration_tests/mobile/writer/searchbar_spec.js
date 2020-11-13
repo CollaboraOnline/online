@@ -17,7 +17,7 @@ describe('Searching via search bar.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Search existing word.', function() {

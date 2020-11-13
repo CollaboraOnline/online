@@ -23,7 +23,7 @@ describe('Interact with bottom toolbar.', function() {
 	}
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function getTextPosForFirstCell() {

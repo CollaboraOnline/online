@@ -21,7 +21,7 @@ describe('Form field button tests.', function() {
 			.should('be.visible');
 	}
 	afterEach(function() {
-		helper.afterAll(testFileName, 'writer');
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function buttonShouldNotExist() {

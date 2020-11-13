@@ -15,7 +15,7 @@ describe('Change cell appearance.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function openAppearencePanel() {

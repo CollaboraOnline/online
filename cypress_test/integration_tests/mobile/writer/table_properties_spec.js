@@ -16,7 +16,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	}
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function openTablePanel() {

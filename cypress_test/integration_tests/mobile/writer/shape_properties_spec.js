@@ -36,7 +36,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function triggerNewSVG() {

@@ -18,7 +18,7 @@ describe('Pushing bottom toolbar items.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Apply bold.', function() {

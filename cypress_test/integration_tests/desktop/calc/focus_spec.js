@@ -14,7 +14,7 @@ describe('Calc focus tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Formula-bar focus', function() {

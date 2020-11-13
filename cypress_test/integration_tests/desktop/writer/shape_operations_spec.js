@@ -6,7 +6,7 @@ describe('Shape operations', function() {
 	var testFileName = 'shape_operations.odt';
 
 	afterEach(function() {
-		helper.afterAll(testFileName, 'writer');
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert a simple shape.', function() {

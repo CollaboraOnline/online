@@ -16,7 +16,7 @@ describe('Apply font on selected shape.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function triggerNewSVG() {
