@@ -1,6 +1,10 @@
 
 /* tabs */
 
+.notebookbar-tabs-container {
+	display: inline-flex;
+}
+
 .ui-tabs.notebookbar {
 	display: inline-block;
 	z-index: 1000;
@@ -16,7 +20,6 @@
 	color: dimgray;
 	height: 24px;
 	padding: 0px 1em;
-	background: var(--gray-bg-color);
 	padding-top: 7px;
 }
 
