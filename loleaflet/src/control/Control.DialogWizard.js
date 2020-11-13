@@ -196,6 +196,10 @@ L.ControllerDialogWizard = L.Class.extend({
 			case 'cancel':
 				dlg.remove();
 				break;
+			case 'reset':
+				this._map.sendUnoCommand('.uno:SetOptions?Options.MacroSecurityLevel:short=2');
+				dlg.remove();
+				break;
 			case '__init':
 				radio = dlg._container.querySelector('#vhigh');
 				radio.setAttribute('data-value',3);
