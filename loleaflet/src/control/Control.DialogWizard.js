@@ -97,6 +97,8 @@ L.ControllerDialogWizard = L.Class.extend({
 			this._createDialog(L.ControllerDialogWizard.MACRO_SELECTOR, e.result.value);
 		} else if (e.commandName.startsWith('.uno:OptionsTreeDialog')) {
 			this._createDialog(L.ControllerDialogWizard.MACRO_SECURITY, e.result.value);
+			this._executeAction({dialogid: L.ControllerDialogWizard.MACRO_SECURITY,
+					     controlid: '__init', data: {}});
 		}
 	},
 
@@ -162,6 +164,18 @@ L.ControllerDialogWizard = L.Class.extend({
 			switch (action.controlid) {
 			case 'cancel':
 				dlg.remove();
+				break;
+			case '__init':
+				radio = dlg._container.querySelector('#vhigh');
+				radio.setAttribute('data-value',3);
+				radio = dlg._container.querySelector('#high');
+				radio.setAttribute('data-value',2);
+				radio = dlg._container.querySelector('#med');
+				radio.setAttribute('data-value',1);
+				radio = dlg._container.querySelector('#low');
+				radio.setAttribute('data-value',0);
+				break;
+			case 'reset':
 				break;
 			default:
 				if (action.object.type === 'radio') {
