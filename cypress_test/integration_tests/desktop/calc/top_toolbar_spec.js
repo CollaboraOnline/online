@@ -131,8 +131,10 @@ describe('Top toolbar tests.', function() {
 
 		calcHelper.selectAllMobile();
 
+		var regex = new RegExp(';0;0.0$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;0.0');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 
 		// Delete Decimal place
 		calcHelper.clickOnFirstCell();
@@ -142,8 +144,10 @@ describe('Top toolbar tests.', function() {
 
 		calcHelper.selectAllMobile();
 
+		regex = new RegExp(';0;0$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;0');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 	});
 
 	it('Format as currency.', function() {
@@ -152,8 +156,10 @@ describe('Top toolbar tests.', function() {
 
 		calcHelper.selectAllMobile();
 
+		var regex = new RegExp(';0;\\[\\$\\$-409]#,##0.00;\\[RED]-\\[\\$\\$-409]#,##0.00$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;[$$-409]#,##0.00;[RED]-[$$-409]#,##0.00');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 	});
 
 	it('Format as Percent.', function() {
@@ -162,8 +168,10 @@ describe('Top toolbar tests.', function() {
 
 		calcHelper.selectAllMobile();
 
+		var regex = new RegExp(';0;0.00%$');
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'sdnum', '1033;0;0.00%');
+			.should('have.attr', 'sdnum')
+			.should('match', regex);
 	});
 	it('Apply left/right alignment', function() {
 		// Set right aligment first
