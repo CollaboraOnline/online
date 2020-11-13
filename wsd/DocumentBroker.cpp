@@ -1753,11 +1753,14 @@ size_t DocumentBroker::getMemorySize() const
 }
 
 // Expected to be legacy, ~all new requests are tilecombinedRequests
-void DocumentBroker::handleTileRequest(TileDesc& tile,
+void DocumentBroker::handleTileRequest(const StringVector &tokens,
                                        const std::shared_ptr<ClientSession>& session)
 {
     assertCorrectThread();
     std::unique_lock<std::mutex> lock(_mutex);
+
+    TileDesc tile = TileDesc::parse(tokens);
+    tile.setNormalizedViewId(session->getCanonicalViewId());
 
     tile.setVersion(++_tileVersion);
     const std::string tileMsg = tile.serialize();
@@ -1783,7 +1786,10 @@ void DocumentBroker::handleTileRequest(TileDesc& tile,
         for (auto& it: _sessions)
         {
             if (!it.second->inWaitDisconnected())
+            {
+                tile.setNormalizedViewId(it.second->getCanonicalViewId());
                 tileCache().subscribeToTileRendering(tile, it.second, now);
+            }
         }
     }
     else
