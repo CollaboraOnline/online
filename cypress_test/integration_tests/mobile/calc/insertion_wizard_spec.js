@@ -24,7 +24,7 @@ describe('Calc insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Inset local image.', function() {

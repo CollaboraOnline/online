@@ -16,7 +16,7 @@ describe('Trigger hamburger menu options.', function() {
 	}
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Save', function() {

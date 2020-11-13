@@ -20,7 +20,7 @@ describe('Apply font changes.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function applyStyle(styleName) {

@@ -17,7 +17,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Apply highlight color.', function() {
