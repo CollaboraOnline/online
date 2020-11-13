@@ -743,14 +743,15 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         watermarkText = LOOLWSD::OverrideWatermark;
 #endif
 
-    LOG_DBG("Setting username [" << LOOLWSD::anonymizeUsername(username) << "] and userId [" <<
-            LOOLWSD::anonymizeUsername(userId) << "] for session [" << sessionId << ']');
-
     session->setUserId(userId);
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);
     session->setWatermarkText(watermarkText);
-    session->recalcCanonicalViewId(_sessions);
+    session->createCanonicalViewId(_sessions);
+
+    LOG_DBG("Setting username [" << LOOLWSD::anonymizeUsername(username) << "] and userId [" <<
+            LOOLWSD::anonymizeUsername(userId) << "] for session [" << sessionId <<
+            "] is canonical id " << session->getCanonicalViewId());
 
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
     const StorageBase::FileInfo fileInfo = _storage->getFileInfo();
@@ -1430,7 +1431,8 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     const std::string id = session->getId();
 
     // Request a new session from the child kit.
-    const std::string aMessage = "session " + id + ' ' + _docKey + ' ' + _docId;
+    const std::string aMessage = "session " + id + ' ' + _docKey + ' ' +
+        _docId + ' ' + std::to_string(session->getCanonicalViewId());
     _childProcess->sendTextFrame(aMessage);
 
 #if !MOBILEAPP
