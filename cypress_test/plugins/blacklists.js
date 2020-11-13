@@ -104,6 +104,11 @@ var phpProxyBlackList = [
 			'Insert local image.'
 		]
 	],
+	['mobile/impress/impress_focus_spec.js',
+		[
+			'Double-click to edit'
+		]
+	],
 	['mobile/impress/insertion_wizard_spec.js',
 		[
 			'Insert local image.'
