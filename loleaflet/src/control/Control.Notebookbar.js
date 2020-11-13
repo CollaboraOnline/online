@@ -97,7 +97,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 	clearNotebookbar: function() {
 		$('.root-container.notebookbar').remove();
-		$('.ui-tabs.notebookbar').remove();
+		$('.notebookbar-tabs-container').remove();
 		$('.notebookbar-scroll-wrapper').remove();
 		$('.notebookbar-shortcuts-bar').remove();
 	},
@@ -121,7 +121,9 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	setTabs: function(tabs) {
-		$('#document-titlebar').before(tabs);
+		var container = L.DomUtil.create('div', 'notebookbar-tabs-container');
+		container.appendChild(tabs);
+		$('#document-titlebar').before(container);
 		this.createShortcutsBar();
 	},
 
