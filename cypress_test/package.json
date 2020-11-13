@@ -10,7 +10,7 @@
     "cypress-log-to-output": "1.1.2",
     "cypress-select-tests": "1.5.8",
     "cypress-wait-until": "1.7.1",
-    "eslint": "6.8.0",
+    "eslint": "7.12.0",
     "eslint-plugin-cypress-rules": "file:eslint_plugin",
     "get-port-cli": "2.0.0",
     "wait-on": "5.2.0"
