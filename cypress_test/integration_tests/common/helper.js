@@ -400,8 +400,11 @@ function beforeAll(fileName, subFolder, noFileCopy, subsequentLoad) {
 	loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad);
 }
 
-function afterAll(fileName) {
+function afterAll(fileName, testState) {
 	cy.log('Waiting for closing the document - start.');
+
+	if (testState === 'failed')
+		return;
 
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		if (Cypress.env('IFRAME_LEVEL') === '2') {

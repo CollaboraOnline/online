@@ -24,7 +24,7 @@ describe('Insert fields via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert page number field.', function() {

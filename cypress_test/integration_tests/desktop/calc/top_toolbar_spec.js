@@ -13,7 +13,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 	
 	it('Clear Direct formatting.', function() {

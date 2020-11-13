@@ -15,7 +15,7 @@ describe('Spell checking menu.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function openContextMenu() {

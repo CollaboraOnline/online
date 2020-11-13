@@ -13,7 +13,7 @@ describe('Calc bottom bar tests.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Bottom tool bar.', function() {

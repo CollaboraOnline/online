@@ -16,7 +16,7 @@ describe('Impress insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function selectionShouldBeTextShape(checkShape) {

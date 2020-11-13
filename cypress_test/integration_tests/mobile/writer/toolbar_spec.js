@@ -11,7 +11,7 @@ describe('Toolbar tests', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('State of mobile wizard toolbar item.', function() {
