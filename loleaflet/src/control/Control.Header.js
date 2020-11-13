@@ -74,7 +74,7 @@ L.Control.Header = L.Control.extend({
 		var rate = fontHeight / fontSize;
 		this._font = {
 			_hdr: this,
-			_baseFontSize: fontSize,
+			_baseFontSize: fontSize * this._dpiScale,
 			_fontSizeRate: rate,
 			_fontFamily: fontFamily,
 			getFont: function() {

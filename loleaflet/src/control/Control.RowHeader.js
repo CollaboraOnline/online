@@ -201,12 +201,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 			return;
 
 		var ctx = this._canvasContext;
-		var content = entry.index + 1;
-		var startOrt = this._canvasWidth - this._headerWidth;
-		var startPar = entry.pos - entry.size;
-		var endPar = entry.pos;
-		var height = endPar - startPar;
-		var width = this._headerWidth;
+		var startX = (this._canvasWidth - this._headerWidth) * this._dpiScale;
+		var startY = (entry.pos - entry.size) * this._dpiScale;
+		var height = entry.size * this._dpiScale;
+		var width = this._headerWidth * this._dpiScale;
 
 		if (isHighlighted !== true && isHighlighted !== false) {
 			isHighlighted = this.isHighlighted(entry.index);
@@ -215,52 +213,60 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (height <= 0)
 			return;
 
-		ctx.save();
-		ctx.scale(this._dpiScale, this._dpiScale);
+		ctx.lineWidth = 1;
+
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
-			selectionBackgroundGradient = ctx.createLinearGradient(0, startPar, 0, startPar + height);
+			selectionBackgroundGradient = ctx.createLinearGradient(0, startY, 0, startY + height);
 			selectionBackgroundGradient.addColorStop(0, this._selectionBackgroundGradient[0]);
 			selectionBackgroundGradient.addColorStop(0.5, this._selectionBackgroundGradient[1]);
 			selectionBackgroundGradient.addColorStop(1, this._selectionBackgroundGradient[2]);
 		}
 
+		// draw background
+		ctx.beginPath();
+		ctx.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
+		ctx.rect(startX, startY, width, height);
+		ctx.fill();
+
 		// draw header/outline border separator
 		if (this._headerWidth !== this._canvasWidth) {
+			ctx.beginPath();
 			ctx.fillStyle = this._borderColor;
-			ctx.fillRect(startOrt - this._borderWidth, startPar, this._borderWidth, height);
+			ctx.rect(startX - this._borderWidth, startY, this._borderWidth, height);
+			ctx.fill();
 		}
 
-		// clip mask
-		ctx.beginPath();
-		ctx.rect(startOrt, startPar, width, height);
-		ctx.clip();
-		// draw background
-		ctx.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
-		ctx.fillRect(startOrt, startPar, width, height);
 		// draw resize handle
-		var handleSize = this._resizeHandleSize;
+		var handleSize = this._resizeHandleSize * this._dpiScale;
 		if (isCurrent && height > 2 * handleSize) {
-			var center = startPar + height - handleSize / 2;
-			var x = startOrt + 2;
-			var w = width - 4;
-			var size = 2;
-			var offset = 1;
+			var center = startY + height - handleSize / 2;
+			var x = startX + 2 * this._dpiScale;
+			var w = width - 4 * this._dpiScale;
+			var size = 2 * this._dpiScale;
+			var offset = 1 * this._dpiScale;
+			ctx.beginPath();
 			ctx.fillStyle = '#BBBBBB';
-			ctx.fillRect(x + 2, center - size - offset, w - 4, size);
-			ctx.fillRect(x + 2, center + offset, w - 4, size);
+			ctx.rect(x + 2 * this._dpiScale, center - size - offset, w - 4 * this._dpiScale, size);
+			ctx.fill();
+			ctx.beginPath();
+			ctx.fillRect(x + 2 * this._dpiScale, center + offset, w - 4 * this._dpiScale, size);
+			ctx.fill();
 		}
+
+		// draw row separator
+		ctx.beginPath();
+		ctx.strokeStyle = this._borderColor;
+		ctx.strokeRect(startX, startY, width, height - 1);
+
 		// draw text content
+		ctx.beginPath();
 		ctx.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
 		ctx.font = this._font.getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
-		ctx.fillText(content, startOrt + (width / 2), endPar - (height / 2));
-		// draw row separator
-		ctx.fillStyle = this._borderColor;
-		ctx.fillRect(startOrt, endPar - 1, width , this._borderWidth);
-		ctx.restore();
+		ctx.fillText(String(entry.index + 1), startX + (width / 2), entry.pos * this._dpiScale - (height / 2));
 	},
 
 	drawGroupControl: function (group) {
