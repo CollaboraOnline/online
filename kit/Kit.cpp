@@ -517,7 +517,7 @@ public:
         return true;
     }
 
-    bool createSession(const std::string& sessionId)
+    bool createSession(const std::string& sessionId, int canonicalViewId)
     {
         std::unique_lock<std::mutex> lock(_mutex);
 
@@ -534,9 +534,10 @@ public:
                     sessionId << " on jailId: " << _jailId);
 
             auto session = std::make_shared<ChildSession>(
-                _websocketHandler,
-                sessionId, _jailId, JailRoot, *this);
+                _websocketHandler, sessionId,
+                _jailId, JailRoot, *this);
             _sessions.emplace(sessionId, session);
+            session->setCanonicalViewId(canonicalViewId);
 
             int viewId = session->getViewId();
             _lastUpdatedAt[viewId] = std::chrono::steady_clock::now();
@@ -1282,7 +1283,6 @@ private:
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
         session->initWatermark();
-        session->recalcCanonicalViewId(_sessions);
 
         return _loKitDocument;
     }
@@ -1882,12 +1882,13 @@ protected:
             const std::string& sessionId = tokens[1];
             const std::string& docKey = tokens[2];
             const std::string& docId = tokens[3];
+            const int canonicalViewId = std::stoi(tokens[4]);
             const std::string fileId = Util::getFilenameFromURL(docKey);
             Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
             std::string url;
             URI::decode(docKey, url);
-            LOG_INF("New session [" << sessionId << "] request on url [" << url << "].");
+            LOG_INF("New session [" << sessionId << "] request on url [" << url << "] with viewId " << canonicalViewId);
 #ifndef IOS
             Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif
@@ -1901,7 +1902,7 @@ protected:
             }
 
             // Validate and create session.
-            if (!(url == _document->getUrl() && _document->createSession(sessionId)))
+            if (!(url == _document->getUrl() && _document->createSession(sessionId, canonicalViewId)))
             {
                 LOG_DBG("CreateSession failed.");
             }
