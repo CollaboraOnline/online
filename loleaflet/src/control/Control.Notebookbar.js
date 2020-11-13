@@ -283,6 +283,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 		if (L.Params.closeButtonEnabled && !window.mode.isTablet())
 			$(optionsSection).css('right', '30px');
+		if (window.ThisIsTheiOSApp)
+			$('.notebookbar-options-section').addClass('tablet');
 
 		var builderOptions = {
 			mobileWizard: this,
