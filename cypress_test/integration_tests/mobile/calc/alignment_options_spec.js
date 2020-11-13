@@ -149,7 +149,7 @@ describe('Change alignment settings.', function() {
 			.should('have.attr', 'valign', 'middle');
 	});
 
-	it('Increment / decrement text indent.', function() {
+	it.skip('Increment / decrement text indent.', function() {
 		helper.initAliasToNegative('originalTextPos');
 
 		// Get text position first
@@ -254,7 +254,7 @@ describe('Change alignment settings.', function() {
 			});
 	});
 
-	it('Enable text wrapping.', function() {
+	it.skip('Enable text wrapping.', function() {
 		helper.initAliasToNegative('originalTextPos');
 
 		getTextPosForFirstCell();
