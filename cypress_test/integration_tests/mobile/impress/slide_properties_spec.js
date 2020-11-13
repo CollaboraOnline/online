@@ -17,7 +17,7 @@ describe('Changing slide properties.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function previewShouldBeFullWhite(fullWhite = true, slideNumber = 1) {

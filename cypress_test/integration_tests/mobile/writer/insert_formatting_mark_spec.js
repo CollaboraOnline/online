@@ -24,7 +24,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert non-breaking space.', function() {

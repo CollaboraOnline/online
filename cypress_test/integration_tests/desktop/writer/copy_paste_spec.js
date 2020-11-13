@@ -10,7 +10,7 @@ describe('Clipboard operations.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Copy and Paste text.', function() {

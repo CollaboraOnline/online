@@ -29,7 +29,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Apply left/right alignment.', function() {

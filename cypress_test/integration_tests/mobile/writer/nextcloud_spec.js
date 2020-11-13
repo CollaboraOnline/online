@@ -9,7 +9,7 @@ describe('Nextcloud specific tests.', function() {
 	var testFileName = 'nextcloud.odt';
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert image from storage.', function() {

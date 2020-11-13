@@ -16,7 +16,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	function triggerNewSVG() {
