@@ -157,7 +157,7 @@ L.Map.include({
 	},
 
 	isPermissionEditForComments: function() {
-		return false;
+		return true;
 	},
 
 	isPermissionReadOnly: function() {
