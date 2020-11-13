@@ -100,6 +100,21 @@ L.ControllerDialogWizard = L.Class.extend({
 		}
 	},
 
+	_unselectRadio: function (dlg) {
+		var selected = dlg._container.querySelector('input[checked="checked"]');
+		if (selected) {
+			selected.removeAttribute('checked');
+			selected.checked = false;
+		}
+	},
+
+	_selectRadio: function (radio) {
+		if (radio) {
+			radio.setAttribute('checked', 'checked');
+			radio.checked = true;
+		}
+	},
+
 	_executeAction: function (action) {
 		var selected;
 		var dlg = L.ControllerDialogWizard.Dialogs[action.dialogid];
@@ -148,6 +163,11 @@ L.ControllerDialogWizard = L.Class.extend({
 			case 'cancel':
 				dlg.remove();
 				break;
+			default:
+				if (action.object.type === 'radio') {
+					this._unselectRadio(dlg);
+					this._selectRadio(action.object);
+				}
 			}
 			break;
 		}
