@@ -3275,11 +3275,6 @@ L.TileLayer = L.GridLayer.extend({
 		var endMarker = this._selectionHandles['end'];
 
 		if (this._map.editorHasFocus() && (this._selections.getLayers().length !== 0 || startMarker.isDragged || endMarker.isDragged)) {
-			if (!startMarker || !endMarker ||
-					this._isEmptyRectangle(this._textSelectionStart) ||
-					this._isEmptyRectangle(this._textSelectionEnd)) {
-				return;
-			}
 			this._updateMarkers();
 		}
 		else {
@@ -3296,6 +3291,12 @@ L.TileLayer = L.GridLayer.extend({
 	_updateMarkers: function() {
 		var startMarker = this._selectionHandles['start'];
 		var endMarker = this._selectionHandles['end'];
+
+		if (!startMarker || !endMarker ||
+		    this._isEmptyRectangle(this._textSelectionStart) ||
+		    this._isEmptyRectangle(this._textSelectionEnd)) {
+			return;
+		}
 
 		var startPos = this._map.project(this._textSelectionStart.getSouthWest());
 		var endPos = this._map.project(this._textSelectionEnd.getSouthWest());
