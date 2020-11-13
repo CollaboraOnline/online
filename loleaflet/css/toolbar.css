@@ -254,32 +254,35 @@ td[id^='tb_editbar_item_sidebar']{
 #closebuttonwrapper {
 	position: fixed;
 	z-index: 1050;
-	right: 4px;
-	top: 0px;
+	right: 0px;
+	top: -3px;
 	width: 32px;
 	height: 32px;
-	background-color: white;
+	background-color: #444444;
+	background-image: linear-gradient(black 0%, #444444 20%);
+	border-radius: 0px 0px 8px 8px;
 	display: none;
 }
 
 #closebutton {
 	width: 18px;
 	height: 18px;
-	border: 1px solid;
-	border-color: transparent;
-	border-radius: 5px;
+	border: none;
 	margin: 8px;
 }
 
 #closebutton:hover {
-	border-color: #ccc;
 	background-color: #eee;
+	filter: contrast(10) invert(1);
 }
 
 .closebuttonimage {
 	background: url('images/closedoc.svg') no-repeat center !important;
+	filter: contrast(1) invert(1);
 }
-
+.tablet #Sidebar {
+	margin-right: 42px !important;
+}
 #tb_actionbar_item_left {
 	width: 45%;
 }

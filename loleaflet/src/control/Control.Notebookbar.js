@@ -60,6 +60,8 @@ L.Control.Notebookbar = L.Control.extend({
 			this._showNotebookbar = true;
 			this.showTabs();
 			$('.main-nav').removeClass('readonly');
+			if (window.mode.isTablet())
+				$('.notebookbar-options-section').addClass('tablet');
 		}
 	},
 
