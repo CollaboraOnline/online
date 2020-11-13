@@ -43,6 +43,11 @@ function plugin(on, config) {
 		config.retries.openMode = 0;
 	}
 
+	if (process.env.CYPRESS_INTEGRATION === 'nextcloud') {
+		config.retries.runMode = 0;
+		config.retries.openMode = 0;
+	}
+
 	on('file:preprocessor', selectTests(config, pickTests));
 
 	return config;
