@@ -243,7 +243,7 @@ public:
         _tileCache->invalidateTiles(tiles, normalizedViewId);
     }
 
-    void handleTileRequest(TileDesc& tile,
+    void handleTileRequest(const StringVector &tokens,
                            const std::shared_ptr<ClientSession>& session);
     void handleTileCombinedRequest(TileCombined& tileCombined,
                                    const std::shared_ptr<ClientSession>& session);
