@@ -35,11 +35,21 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		var panePos = this._map._getMapPanePos();
 		var cursorPos = this._map._docLayer.getCursorPos();
 
-		var corePoint = new L.Point(parseInt(data.posx) - 35, parseInt(data.posy) - 75);
-		var cssPoint = this._map._docLayer._corePixelsToCss ? this._map._docLayer._corePixelsToCss(corePoint) : corePoint;
+		// autofilter docking window position is relative to the main window
+		// we have to take into account calc input bar and notebookbar height (where spreadsheet starts)
+		// best to base on input bar position and size (it can be also expanded)
+		var spreadsheetAreaOffset = new L.Point(35, 75); // in classic toolbar mode
 
-		var left = cssPoint.x * scale;
-		var top = cssPoint.y * scale;
+		var calcInputBar = this._map.dialog._calcInputBar;
+		var offsetX = spreadsheetAreaOffset.x;
+		var offsetY = calcInputBar ?
+			(spreadsheetAreaOffset.y + (calcInputBar.top - 28) + (calcInputBar.height - 29))
+			: spreadsheetAreaOffset.y;
+
+		var corePoint = new L.Point(parseInt(data.posx) - offsetX, parseInt(data.posy) - offsetY);
+
+		var left = corePoint.x * scale;
+		var top = corePoint.y * scale;
 
 		var splitPanesContext = this._map.getSplitPanesContext();
 		var splitPos = new L.Point(0, 0);
