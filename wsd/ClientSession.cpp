@@ -894,9 +894,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const Stri
 {
     try
     {
-        TileDesc tileDesc = TileDesc::parse(tokens);
-        tileDesc.setNormalizedViewId(getCanonicalViewId());
-        docBroker->handleTileRequest(tileDesc, client_from_this());
+        docBroker->handleTileRequest(tokens, client_from_this());
     }
     catch (const std::exception& exc)
     {
