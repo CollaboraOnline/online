@@ -55,21 +55,21 @@ public:
             offsetX += (tileWidth - maxX) / 2;
             offsetY += (tileHeight - maxY) / 2;
 
-            alphaBlend(*pixmap, _width, _height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight);
+            alphaBlend(*pixmap, _width, _height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight, false);
         }
     }
 
 private:
     /// Alpha blend pixels from 'from' over the 'to'.
     void alphaBlend(const std::vector<unsigned char>& from, int from_width, int from_height, int from_offset_x, int from_offset_y,
-            unsigned char* to, int to_width, int to_height)
+            unsigned char* to, int to_width, int to_height, const bool isFontBlending)
     {
         for (int to_y = from_offset_y, from_y = 0; (to_y < to_height) && (from_y < from_height) ; ++to_y, ++from_y)
             for (int to_x = from_offset_x, from_x = 0; (to_x < to_width) && (from_x < from_width); ++to_x, ++from_x)
             {
                 unsigned char* t = to + 4 * (to_y * to_width + to_x);
 
-                if (t[3] != 255)
+                if (!isFontBlending && t[3] != 255)
                     continue;
 
                 double dst_r = t[0];
@@ -164,7 +164,7 @@ private:
         }
 
         // Now copy the (black) text over the (white) blur
-        alphaBlend(text, _width, _height, 0, 0, _pixmap.data(), _width, _height);
+        alphaBlend(text, _width, _height, 0, 0, _pixmap.data(), _width, _height, true);
 
         // Make the resulting pixmap semi-transparent
         for (unsigned char* p = _pixmap.data(); p < _pixmap.data() + pixel_count; p++)
