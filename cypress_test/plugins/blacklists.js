@@ -91,6 +91,12 @@ var nextcloudBlackList = [
 	['multiuser/writer/simultaneous_typing_user2_spec.js',
 		[]
 	],
+	['multiuser/writer/top_toolbar_interfer_user1_spec.js',
+		[]
+	],
+	['multiuser/writer/top_toolbar_interfer_user2_spec.js',
+		[]
+	],
 ];
 
 var phpProxyBlackList = [
@@ -184,6 +190,12 @@ var phpProxyBlackList = [
 		[]
 	],
 	['multiuser/writer/simultaneous_typing_user2_spec.js',
+		[]
+	],
+	['multiuser/writer/top_toolbar_interfer_user1_spec.js',
+		[]
+	],
+	['multiuser/writer/top_toolbar_interfer_user2_spec.js',
 		[]
 	],
 ];
