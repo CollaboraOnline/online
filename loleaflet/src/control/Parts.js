@@ -146,7 +146,7 @@ L.Map.include({
 							'tilewidth=' + tileWidth + ' ' +
 							'tileheight=' + tileHeight + ' ' +
 							'id=' + id + ' ' +
-						 'broadcast=' + (forAllClients ? 'yes' : 'no'));
+						 'broadcast=no');
 		}
 
 		return {width: maxWidth, height: maxHeight};
