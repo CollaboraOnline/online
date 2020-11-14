@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Load Online Editor</title>
+
+    <style>
+      .alert {
+        font-size: large;
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      input[type='text'] {
+        font-size: 18;
+        font-family: monospace;
+      }
+    </style>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+  <body>
+    <div id="usage" class="alert" style="display:none">
+      <h2>Usage</h2>
+      <p>
+        Load this page via https or http, depending on whether SSL is enabled or not, from the Online server directly.</br>
+      </p>
+
+      <h4>Example</h4>
+      <p>
+        http://localhost:9980/loleaflet/dist/load.doc.html
+      </p>
+    </div>
+
+    <script>
+      if (document.location.protocol == 'file:') {
+        document.getElementById("usage").style.display = "block";
+        alert('Incorrect usage, please follow the instructions at the top of this page.');
+      }
+
+      function submitform() {
+        var path = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'loleaflet.html';
+        var query = '?access_token=' + document.getElementById("access_token").value;
+        query += '&file_path=' + document.getElementById("file_path").value;
+        query += '&NotWOPIButIframe=true';
+
+        var url = window.location.protocol + '//' + window.location.host + path + query;
+
+        document.getElementById("request").action = url;
+        return true;
+      }
+    </script>
+
+    <h3>Load Collabora Online page via a Post request</h3>
+    <form id="request" onsubmit="submitform()" action="" method="post" target="online" style="font-size: large;">
+
+      <input id="access_token" name="access_token" value="zzzzzzzzz" type="hidden" />
+      <input name="NotWOPIButIframe" value="true" type="hidden" />
+
+      <label for="file_path">Document Path:</label>
+      <input id="file_path" name="file_path" value="file:///home/lool/online/test/data/hello-world.odt" type="text" size="80" /></br>
+      </br>
+      <input type="submit" value="Load Collabora Online" />
+    </form>
+
+  </body>
+</html>
