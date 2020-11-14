@@ -14,6 +14,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Online Editor</title>
 
+    <style>
+      .alert {
+        font-size: large;
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        margin-bottom: 15px;
+      }
+    </style>
+
     <script>
 
       function post(msg) {
@@ -124,7 +134,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
-  <body style="user-select: none;">
+  <body>
+    <div id="usage" class="alert" style="display:none">
+      <h2>Usage</h2>
+      <p>
+        Load this page via https or http, depending on whether SSL is enabled or not, from the Online server directly.</br>
+        The document to load must be given as a query parameter called file_path. The document can be any accessible URL, including on disk, via file://.
+      </p>
+
+      <h4>Example</h4>
+      <p>
+        http://localhost:9980/loleaflet/dist/framed.doc.html?file_path=file:///path/to/document/hello-world.odt
+      </p>
+    </div>
 
     <h3>PostMessage test harness</h3>
 
@@ -164,12 +186,21 @@
     <h4>If the frame still fails to load ensure you have <code>localhost:*</code> included in your <code>net.frame_ancestors</code> in loolwsd.xml</h4>
     <iframe id="frame" height="1000" width="1000"></iframe>
 
-    <!-- 127.0.0.2 allows us to test CSS issues -->
     <script>
-      var uriBase = document.location.protocol + "//127.0.0.2:9980/loleaflet/42/loleaflet.html" + window.location.search;
+      if (document.location.protocol == 'file:' || window.location.search == '') {
+        document.getElementById("usage").style.display = "block";
+        alert('Incorrect usage, please follow the instructions at the top of this page.');
+      }
+
+      var query = '?';
+      if (window.location.search !== '')
+        query = window.location.search + '&';
+      query += 'NotWOPIButIframe=true';
+
+      var path = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'loleaflet.html';
+      var uriBase = window.location.protocol + '//' + window.location.host + path + query;
       var iframe = document.getElementById("frame");
-      iframe.src = uriBase + "&NotWOPIButIframe=true";
-      var msg = document.getElementById("link");
+      iframe.src = uriBase;
       link.href = uriBase;
     </script>
   </body>
