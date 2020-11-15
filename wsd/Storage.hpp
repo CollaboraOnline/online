@@ -97,12 +97,12 @@ public:
         std::chrono::system_clock::time_point _modifiedTime;
     };
 
-    class SaveResult
+    class SaveResult final
     {
     public:
-        enum Result
+        enum class Result
         {
-            OK,
+            OK = 0,
             DISKFULL,
             UNAUTHORIZED,
             DOC_CHANGED, /**< Document changed in storage */

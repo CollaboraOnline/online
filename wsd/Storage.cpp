@@ -415,12 +415,12 @@ LocalStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::s
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_ERR("copyTo(\"" << getRootFilePathAnonym() << "\", \"" << LOOLWSD::anonymizeUrl(getUri().getPath()) <<
-                "\") failed: " << exc.displayText());
-        return StorageBase::SaveResult::FAILED;
+        LOG_ERR("copyTo(\"" << getRootFilePathAnonym() << "\", \"" << LOOLWSD::anonymizeUrl(getUri().getPath())
+                            << "\") failed: " << exc.displayText());
+        return StorageBase::SaveResult::Result::FAILED;
     }
 
-    return StorageBase::SaveResult(StorageBase::SaveResult::OK);
+    return StorageBase::SaveResult::Result::OK;
 }
 
 #if !MOBILEAPP
@@ -1059,7 +1059,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     LOG_INF("Uploading " << size << " bytes from [" << filePathAnonym << "] to URI via WOPI ["
                          << uriAnonym << "].");
 
-    StorageBase::SaveResult saveResult(StorageBase::SaveResult::FAILED);
+    StorageBase::SaveResult saveResult(StorageBase::SaveResult::Result::FAILED);
     const auto startTime = std::chrono::steady_clock::now();
     try
     {
@@ -1194,7 +1194,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
         {
-            saveResult.setResult(StorageBase::SaveResult::OK);
+            saveResult.setResult(StorageBase::SaveResult::Result::OK);
             Poco::JSON::Object::Ptr object;
             if (JsonUtil::parseJSON(oss.str(), object))
             {
@@ -1225,16 +1225,16 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
         {
-            saveResult.setResult(StorageBase::SaveResult::DISKFULL);
+            saveResult.setResult(StorageBase::SaveResult::Result::DISKFULL);
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED ||
                  response.getStatus() == Poco::Net::HTTPResponse::HTTP_FORBIDDEN)
         {
-            saveResult.setResult(StorageBase::SaveResult::UNAUTHORIZED);
+            saveResult.setResult(StorageBase::SaveResult::Result::UNAUTHORIZED);
         }
         else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_CONFLICT)
         {
-            saveResult.setResult(StorageBase::SaveResult::CONFLICT);
+            saveResult.setResult(StorageBase::SaveResult::Result::CONFLICT);
             Poco::JSON::Object::Ptr object;
             if (JsonUtil::parseJSON(oss.str(), object))
             {
@@ -1242,7 +1242,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
                     = JsonUtil::getJSONValue<unsigned>(object, "LOOLStatusCode");
                 if (loolStatusCode == static_cast<unsigned>(LOOLStatusCode::DOC_CHANGED))
                 {
-                    saveResult.setResult(StorageBase::SaveResult::DOC_CHANGED);
+                    saveResult.setResult(StorageBase::SaveResult::Result::DOC_CHANGED);
                 }
             }
             else
@@ -1257,14 +1257,14 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
                     << wopiLog << ". Cannot upload file to WOPI storage uri [" << uriAnonym
                     << "]: " << response.getStatus() << ' ' << response.getReason() << ": "
                     << responseString);
-            saveResult.setResult(StorageBase::SaveResult::FAILED);
+            saveResult.setResult(StorageBase::SaveResult::Result::FAILED);
         }
     }
     catch (const Poco::Exception& pexc)
     {
         LOG_ERR("Cannot save file to WOPI storage uri [" << uriAnonym << "]. Error: " <<
                 pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
-        saveResult.setResult(StorageBase::SaveResult::FAILED);
+        saveResult.setResult(StorageBase::SaveResult::Result::FAILED);
     }
     catch (const BadRequestException& exc)
     {
@@ -1290,7 +1290,7 @@ WebDAVStorage::saveLocalFileToStorage(const Authorization& /*auth*/, const std::
                                       const std::string& /*saveAsFilename*/, bool /*isRename*/)
 {
     // TODO: implement webdav PUT.
-    return StorageBase::SaveResult(StorageBase::SaveResult::OK);
+    return StorageBase::SaveResult(StorageBase::SaveResult::Result::OK);
 }
 
 #endif // !MOBILEAPP
