@@ -1073,6 +1073,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     assert(_storage && _tileCache);
     const StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(
         auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
+
+    const StorageUploadDetails details { uriAnonym, newFileModifiedTime, it->second, isSaveAs, isRename };
+    return handleUploadToStorageResponse(details, storageSaveResult);
+}
+
+bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& details,
+                                                   const StorageBase::SaveResult& storageSaveResult)
+{
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
     _lastStorageSaveSuccessful
@@ -1086,10 +1094,10 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
             Admin::instance().setDocWopiUploadDuration(_docKey, std::chrono::duration_cast<std::chrono::milliseconds>(wopiStorage->getWopiSaveDuration()));
 #endif
 
-        if (!isSaveAs && !isRename)
+        if (!details.isSaveAs && !details.isRename)
         {
             // Saved and stored; update flags.
-            _lastFileModifiedTime = newFileModifiedTime;
+            _lastFileModifiedTime = details.newFileModifiedTime;
             _lastSaveTime = std::chrono::steady_clock::now();
 
             // Save the storage timestamp.
@@ -1098,13 +1106,13 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
 
-            LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << uriAnonym << "] and updated timestamps. " <<
+            LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << details.uriAnonym << "] and updated timestamps. " <<
                     " Document modified timestamp: " << _documentLastModifiedTime);
 
             // Resume polling.
             _poll->wakeup();
         }
-        else if (isRename)
+        else if (details.isRename)
         {
             // encode the name
             const std::string& filename = storageSaveResult.getSaveAsName();
@@ -1132,7 +1140,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
             std::ostringstream oss;
             oss << "saveas: url=" << url << " filename=" << encodedName
                 << " xfilename=" << filenameAnonym;
-            it->second->sendTextFrame(oss.str());
+            details.session->sendTextFrame(oss.str());
 
             LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url) <<
                     "] with name [" << filenameAnonym << "] successfully.");
@@ -1144,7 +1152,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::DISKFULL)
     {
-        LOG_WRN("Disk full while saving docKey [" << _docKey << "] to URI [" << uriAnonym <<
+        LOG_WRN("Disk full while saving docKey [" << _docKey << "] to URI [" << details.uriAnonym <<
                 "]. Making all sessions on doc read-only and notifying clients.");
 
         // Make everyone readonly and tell everyone that storage is low on diskspace.
@@ -1156,18 +1164,18 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::UNAUTHORIZED)
     {
-        LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uriAnonym <<
+        LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << details.uriAnonym <<
                 "]. Invalid or expired access token. Notifying client.");
-        it->second->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
+        details.session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
         broadcastSaveResult(false, "Invalid or expired access token");
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::FAILED)
     {
         //TODO: Should we notify all clients?
-        LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << uriAnonym << "]. Notifying client.");
+        LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << details.uriAnonym << "]. Notifying client.");
         std::ostringstream oss;
-        oss << "error: cmd=storage kind=" << (isRename ? "renamefailed" : "savefailed");
-        it->second->sendTextFrame(oss.str());
+        oss << "error: cmd=storage kind=" << (details.isRename ? "renamefailed" : "savefailed");
+        details.session->sendTextFrame(oss.str());
         broadcastSaveResult(false, "Save failed", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::DOC_CHANGED
@@ -1188,9 +1196,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
 void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
 {
     const std::string resultstr = success ? "true" : "false";
-    // Some sane limit, otherwise we get problems transfering this to the client with large strings (can be a whole webpage)
+    // Some sane limit, otherwise we get problems transferring this to the client with large strings (can be a whole webpage)
     std::string errorMsgFormatted = LOOLProtocol::getAbbreviatedMessage(errorMsg);
-    // Replace reserverd characters
+    // Replace reserved characters
     errorMsgFormatted = Poco::translate(errorMsgFormatted, "\"", "'");
     broadcastMessage("commandresult: { \"command\": \"save\", \"success\": " + resultstr +
                      ", \"result\": \"" + result + "\", \"errorMsg\": \"" + errorMsgFormatted  + "\"}");

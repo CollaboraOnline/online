@@ -26,6 +26,7 @@
 #include "Util.hpp"
 #include "net/Socket.hpp"
 #include "net/WebSocketHandler.hpp"
+#include "Storage.hpp"
 
 #include "common/SigUtil.hpp"
 #include "common/Session.hpp"
@@ -38,7 +39,6 @@
 class PrisonerRequestDispatcher;
 class DocumentBroker;
 struct LockContext;
-class StorageBase;
 class TileCache;
 class Message;
 
@@ -357,6 +357,18 @@ private:
                                const std::string& saveAsPath = std::string(),
                                const std::string& saveAsFilename = std::string(),
                                const bool isRename = false, const bool force = false);
+
+    struct StorageUploadDetails
+    {
+        const std::string uriAnonym;
+        const std::chrono::system_clock::time_point newFileModifiedTime;
+        const std::shared_ptr<class ClientSession> session;
+        const bool isSaveAs;
+        const bool isRename;
+    };
+
+    bool handleUploadToStorageResponse(const StorageUploadDetails& details,
+                                       const StorageBase::SaveResult& storageSaveResult);
 
     /**
      * Report back the save result to PostMessage users (Action_Save_Resp)
