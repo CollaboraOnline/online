@@ -166,6 +166,15 @@ namespace FileUtil
         return false;
     }
 
+    std::string getTemporaryDirectoryPath()
+    {
+#if HAVE_STD_FILESYSTEM
+        return filesystem::temp_directory_path();
+#else
+        return Poco::Path::temp();
+#endif
+    }
+
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
     {
         const std::string srcPath = srcDir + '/' + srcFilename;

@@ -7,11 +7,14 @@
 
 #include <config.h>
 
+#include <chrono>
+#include <fstream>
 #include <test/lokassert.hpp>
 
 #include <Auth.hpp>
 #include <ChildSession.hpp>
 #include <Common.hpp>
+#include <FileUtil.hpp>
 #include <Kit.hpp>
 #include <MessageQueue.hpp>
 #include <Protocol.hpp>
@@ -52,6 +55,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRequestDetails);
     CPPUNIT_TEST(testUIDefaults);
     CPPUNIT_TEST(testCSSVars);
+    CPPUNIT_TEST(testStat);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -78,6 +82,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRequestDetails();
     void testUIDefaults();
     void testCSSVars();
+    void testStat();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -1716,6 +1721,54 @@ void WhiteBoxTests::testCSSVars()
 
     LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;}</style>"),
                      FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;;--some-val=3453--some-other-val=4536;;"));
+}
+
+void WhiteBoxTests::testStat()
+{
+    FileUtil::Stat invalid("/missing/file/path");
+    LOK_ASSERT(!invalid.good());
+    LOK_ASSERT(invalid.bad());
+    LOK_ASSERT(!invalid.exists());
+
+    const std::string tmpFile = FileUtil::getTemporaryDirectoryPath() + "/test_stat";
+    std::ofstream ofs(tmpFile);
+    FileUtil::Stat st(tmpFile);
+    LOK_ASSERT(st.good());
+    LOK_ASSERT(!st.bad());
+    LOK_ASSERT(st.exists());
+    LOK_ASSERT(!st.isDirectory());
+    LOK_ASSERT(st.isFile());
+    LOK_ASSERT(!st.isLink());
+    LOK_ASSERT(st.path() == tmpFile);
+
+    // Modified-time tests.
+    // Some test might fail when the system has a different resolution for file timestamps
+    // and time_point. Specifically, if the filesystem has microsecond precision but time_point
+    // has lower resolution (milliseconds or seconds, f.e.), modifiedTimepoint() will not match
+    // modifiedTimeUs(), and the checks will fail.
+    // So far, microseconds seem to be the lower common denominator. At least on Android and
+    // iOS that's the precision of time_point (as of late 2020), but Linux servers have
+    // nanosecond precision.
+
+    LOK_ASSERT(std::chrono::time_point_cast<std::chrono::microseconds>(st.modifiedTimepoint())
+                   .time_since_epoch()
+                   .count()
+               == static_cast<long>(st.modifiedTimeUs()));
+    LOK_ASSERT(std::chrono::time_point_cast<std::chrono::milliseconds>(st.modifiedTimepoint())
+                   .time_since_epoch()
+                   .count()
+               == static_cast<long>(st.modifiedTimeMs()));
+    LOK_ASSERT(std::chrono::time_point_cast<std::chrono::seconds>(st.modifiedTimepoint())
+                   .time_since_epoch()
+                   .count()
+               == static_cast<long>(st.modifiedTimeMs() / 1000));
+    LOK_ASSERT(st.modifiedTime().tv_sec == static_cast<long>(st.modifiedTimeMs() / 1000));
+    LOK_ASSERT(st.modifiedTime().tv_nsec / 1000
+               == static_cast<long>(st.modifiedTimeUs())
+                      - (st.modifiedTime().tv_sec * 1000 * 1000));
+
+    ofs.close();
+    FileUtil::removeFile(tmpFile);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
