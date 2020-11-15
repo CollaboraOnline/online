@@ -62,28 +62,22 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
     docBroker->addSocketToPoll(getSocket());
 }
 
-namespace
+void DocumentBroker::broadcastLastModificationTime(
+    const std::shared_ptr<ClientSession>& session) const
 {
-
-void sendLastModificationTime(const std::shared_ptr<Session>& session,
-                              DocumentBroker* documentBroker,
-                              const std::chrono::system_clock::time_point& documentLastModifiedTime)
-{
-    if (!session)
-        return;
-
-    if (documentLastModifiedTime == std::chrono::system_clock::time_point())
+    if (_documentLastModifiedTime == std::chrono::system_clock::time_point())
         // No time from the storage (e.g., SharePoint 2013 and 2016) -> don't send
         return;
 
-    std::stringstream stream;
-    stream << "lastmodtime: " << documentLastModifiedTime;
+    std::ostringstream stream;
+    stream << "lastmodtime: " << _documentLastModifiedTime;
     const std::string message = stream.str();
-    session->sendTextFrame(message);
-    if (documentBroker)
-        documentBroker->broadcastMessage(message);
-}
 
+    // While loading, the current session is not yet added to
+    // the sessions container, so we need to send to it directly.
+    if (session)
+        session->sendTextFrame(message);
+    broadcastMessage(message);
 }
 
 Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
@@ -797,7 +791,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
         }
     }
 
-    sendLastModificationTime(session, this, _documentLastModifiedTime);
+    broadcastLastModificationTime(session);
 
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
@@ -1144,7 +1138,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
                     "] with name [" << filenameAnonym << "] successfully.");
         }
 
-        sendLastModificationTime(it->second, this, _documentLastModifiedTime);
+        broadcastLastModificationTime();
 
         return true;
     }
@@ -2393,7 +2387,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
     _closeRequest = true;
 }
 
-void DocumentBroker::broadcastMessage(const std::string& message)
+void DocumentBroker::broadcastMessage(const std::string& message) const
 {
     assertCorrectThread();
 

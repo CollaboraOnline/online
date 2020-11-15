@@ -295,7 +295,7 @@ public:
                      bool isExitSave = false, const std::string& extendedData = std::string());
 
     /// Sends a message to all sessions
-    void broadcastMessage(const std::string& message);
+    void broadcastMessage(const std::string& message) const;
 
     /// Returns true iff an initial setting by the given name is already initialized.
     bool isInitialSettingSet(const std::string& name) const;
@@ -365,6 +365,9 @@ private:
      * @param errorMsg: Long error msg (Error message from WOPI host if any)
      */
     void broadcastSaveResult(bool success, const std::string& result = "", const std::string& errorMsg = "");
+
+    /// Broadcasts to all sessions the last modification time of the document.
+    void broadcastLastModificationTime(const std::shared_ptr<ClientSession>& session = nullptr) const;
 
     /// True iff a save is in progress (requested but not completed).
     bool isSaving() const { return _lastSaveResponseTime < _lastSaveRequestTime; }
