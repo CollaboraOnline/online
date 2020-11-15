@@ -8,6 +8,7 @@
 #pragma once
 
 #include <cerrno>
+#include <chrono>
 #include <string>
 #include <sys/stat.h>
 
@@ -35,7 +36,7 @@ namespace FileUtil
     // if everything goes well. In case of any error, both the destination file (if it already
     // exists) and the temporary file (if was created, or existed already) are removed. Return true
     // if everything succeeded.
-    bool saveDataToFileSafely(const std::string& fileName, const char* data, size_t size);
+    bool saveDataToFileSafely(const std::string& fileName, const char* data, std::size_t size);
 
     // We work around some of the mess of using the same sources both on the server side and in unit
     // tests with conditional compilation based on BUILDING_TESTS.
@@ -94,12 +95,15 @@ namespace FileUtil
         copy(fromPath, toPath, /*log=*/true, /*throw_on_error=*/true);
     }
 
+    /// Returns the system temporary directory.
+    std::string getTemporaryDirectoryPath();
+
     /// Make a temp copy of a file, and prepend it with a prefix.
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename,
                                 const std::string& dstFilenamePrefix);
 
     /// Make a temp copy of a file.
-    /// Used by tests to avoid tainting the originals.
+    /// Primarily used by tests to avoid tainting the originals.
     /// srcDir shouldn't end with '/' and srcFilename shouldn't contain '/'.
     /// Returns the created file path.
     inline std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename)
@@ -142,9 +146,10 @@ namespace FileUtil
         bool isLink() const { return S_ISLNK(_sb.st_mode); }
 
         /// Returns the filesize in bytes.
-        size_t size() const { return _sb.st_size; }
+        std::size_t size() const { return _sb.st_size; }
 
-        /// Returns the modified time.
+        /// Returns the modified unix-time as timespec since epoch with
+        /// nanosecond precision, if/when the filesystem supports it.
         timespec modifiedTime() const
         {
 #ifdef IOS
@@ -152,6 +157,32 @@ namespace FileUtil
 #else
             return _sb.st_mtim;
 #endif
+        }
+
+        /// Returns the modified unix-time in microseconds since epoch.
+        std::size_t modifiedTimeUs() const
+        {
+            return (modifiedTime().tv_sec * 1000 * 1000) + (modifiedTime().tv_nsec / 1000);
+        }
+
+        /// Returns the modified unix-time in milliseconds since epoch.
+        std::size_t modifiedTimeMs() const
+        {
+            return (modifiedTime().tv_sec * 1000) + (modifiedTime().tv_nsec / 1000000);
+        }
+
+        /// Returns the modified unix-time as time_point (in microsecond precision, if available).
+        /// The units is system-dependent, but it's 100% safe as time_point does the conversion
+        /// to whatever we request, remembering the original units.
+        std::chrono::system_clock::time_point modifiedTimepoint() const
+        {
+            // The time in microseconds.
+            const std::chrono::microseconds us{ modifiedTimeUs() };
+
+            // Convert to the precision of the system_clock::time_point,
+            // which can be different from microseconds.
+            return std::chrono::system_clock::time_point(
+                std::chrono::duration_cast<std::chrono::system_clock::duration>(us));
         }
 
         /// Returns true iff the path exists, regardless of access permission.
@@ -166,7 +197,8 @@ namespace FileUtil
             // and if they aren't, we still need to rely on the following.
             // Finally, compare the contents, to avoid costly copying if we fail to update.
             if (exists() && other.exists() && !isDirectory() && !other.isDirectory()
-                && size() == other.size() && compareFileContents(_path, other._path))
+                && size() == other.size() && modifiedTimeMs() == other.modifiedTimeMs()
+                && compareFileContents(_path, other._path))
             {
                 return true;
             }
