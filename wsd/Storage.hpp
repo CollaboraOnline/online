@@ -70,7 +70,7 @@ public:
         FileInfo(const std::string& filename,
                  const std::string& ownerId,
                  const std::chrono::system_clock::time_point& modifiedTime,
-                 size_t /*size*/)
+                 std::size_t /*size*/)
             : _filename(filename),
               _ownerId(ownerId),
               _modifiedTime(modifiedTime)

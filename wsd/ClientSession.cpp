@@ -69,7 +69,7 @@ ClientSession::ClientSession(
     _serverURL(requestDetails),
     _isTextDocument(false)
 {
-    const size_t curConnections = ++LOOLWSD::NumConnections;
+    const std::size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
                                    << "], current number of connections: " << curConnections);
 
@@ -102,7 +102,7 @@ void ClientSession::construct()
 
 ClientSession::~ClientSession()
 {
-    const size_t curConnections = --LOOLWSD::NumConnections;
+    const std::size_t curConnections = --LOOLWSD::NumConnections;
     LOG_INF("~ClientSession dtor [" << getName() << "], current number of connections: " << curConnections);
 
     std::unique_lock<std::mutex> lock(GlobalSessionMapMutex);
@@ -463,7 +463,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "status") || tokens.equals(0, "statusupdate"))
     {
-        assert(firstLine.size() == static_cast<size_t>(length));
+        assert(firstLine.size() == static_cast<std::size_t>(length));
         return forwardToChild(firstLine, docBroker);
     }
     else if (tokens.equals(0, "tile"))
@@ -1068,7 +1068,7 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
 {
     // Insert our meta origin if we can
     payload->rewriteDataBody([=](std::vector<char>& data) {
-            size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
+            std::size_t pos = Util::findInVector(data, "<meta name=\"generator\" content=\"");
 
             if (pos == std::string::npos)
                 pos = Util::findInVector(data, "<meta http-equiv=\"content-type\" content=\"text/html;");
@@ -1115,7 +1115,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     {
         const std::string stringMsg(buffer, length);
         LOG_INF(getName() << ": Command: " << stringMsg);
-        const size_t index = stringMsg.find_first_of('{');
+        const std::size_t index = stringMsg.find_first_of('{');
         if (index != std::string::npos)
         {
             const std::string stringJSON = stringMsg.substr(index);
@@ -1393,7 +1393,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
         postProcessCopyPayload(payload);
 
-        size_t header;
+        std::size_t header;
         for (header = 0; header < payload->size();)
             if (payload->data()[header++] == '\n')
                 break;
@@ -1422,8 +1422,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             if (!empty)
             {
                 oss.write(&payload->data()[header], payload->size() - header);
-                socket->setSocketBufferSize(std::min(payload->size() + 256,
-                                                     size_t(Socket::MaximumSendBufferSize)));
+                socket->setSocketBufferSize(
+                    std::min(payload->size() + 256, std::size_t(Socket::MaximumSendBufferSize)));
             }
 
             socket->send(oss.str());
@@ -1492,7 +1492,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         else if (tokens[0] == "commandvalues:")
         {
             const std::string stringMsg(buffer, length);
-            const size_t index = stringMsg.find_first_of('{');
+            const std::size_t index = stringMsg.find_first_of('{');
             if (index != std::string::npos)
             {
                 const std::string stringJSON = stringMsg.substr(index);
@@ -1522,7 +1522,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
 
-            const size_t index = firstLine.find_first_of('{');
+            const std::size_t index = firstLine.find_first_of('{');
             const std::string stringJSON = firstLine.substr(index);
             Poco::JSON::Parser parser;
             const Poco::Dynamic::Var result = parser.parse(stringJSON);
@@ -1606,8 +1606,8 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     }
 
     LOG_TRC(getName() << " enqueueing client message " << data->id());
-    size_t sizeBefore = _senderQueue.size();
-    size_t newSize = _senderQueue.enqueue(data);
+    std::size_t sizeBefore = _senderQueue.size();
+    std::size_t newSize = _senderQueue.enqueue(data);
 
     // Track sent tile
     if (tile)
@@ -1646,9 +1646,9 @@ void ClientSession::removeOutdatedTilesOnFly()
     }
 }
 
-size_t ClientSession::countIdenticalTilesOnFly(const TileDesc& tile) const
+std::size_t ClientSession::countIdenticalTilesOnFly(const TileDesc& tile) const
 {
-    size_t count = 0;
+    std::size_t count = 0;
     const std::string tileID = tile.generateID();
     for (const auto& tileItem : _tilesOnFly)
     {

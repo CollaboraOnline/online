@@ -210,10 +210,10 @@ public:
     std::string getJailRoot() const;
 
     /// Add a new session. Returns the new number of sessions.
-    size_t addSession(const std::shared_ptr<ClientSession>& session);
+    std::size_t addSession(const std::shared_ptr<ClientSession>& session);
 
     /// Removes a session by ID. Returns the new number of sessions.
-    size_t removeSession(const std::string& id);
+    std::size_t removeSession(const std::string& id);
 
     /// Add a callback to be invoked in our polling thread.
     void addCallback(const SocketPoll::CallbackFn& fn);
@@ -298,7 +298,7 @@ public:
     std::vector<std::shared_ptr<ClientSession>> getSessionsTestOnlyUnsafe();
 
     /// Estimate memory usage / bytes
-    size_t getMemorySize() const;
+    std::size_t getMemorySize() const;
 
     /// Get URL for corresponding download id if registered, or empty string otherwise
     std::string getDownloadURL(const std::string& downloadId);
@@ -371,7 +371,7 @@ private:
     bool haveAnotherEditableSession(const std::string& id) const;
 
     /// Loads a new session and adds to the sessions container.
-    size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
+    std::size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
 
     /// Starts the Kit <-> DocumentBroker shutdown handshake
     void disconnectSessionInternal(const std::string& id);
@@ -452,7 +452,7 @@ private:
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.
-    std::atomic<size_t> _tileVersion;
+    std::atomic<std::size_t> _tileVersion;
 
     int _debugRenderedTileCount;
 
@@ -497,7 +497,7 @@ public:
     void setLoaded() override;
 
     /// How many live conversions are running.
-    static size_t getInstanceCount();
+    static std::size_t getInstanceCount();
 
     /// Cleanup path and its parent
     static void removeFile(const std::string &uri);

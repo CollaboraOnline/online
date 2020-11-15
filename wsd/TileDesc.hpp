@@ -213,7 +213,7 @@ public:
 
         TileWireId oldWireId = 0;
         TileWireId wireId = 0;
-        for (size_t i = 0; i < tokens.size(); ++i)
+        for (std::size_t i = 0; i < tokens.size(); ++i)
         {
             if (LOOLProtocol::getTokenUInt32(tokens[i], "oldwid", oldWireId))
                 ;
@@ -311,7 +311,7 @@ private:
         StringVector oldWireIdTokens(Util::tokenize(oldWireIds, ','));
         StringVector wireIdTokens(Util::tokenize(wireIds, ','));
 
-        const size_t numberOfPositions = positionXtokens.size();
+        const std::size_t numberOfPositions = positionXtokens.size();
 
         // check that the comma-separated strings have the same number of elements
         if (numberOfPositions != positionYtokens.size() ||
@@ -323,7 +323,7 @@ private:
             throw BadArgumentException("Invalid tilecombine descriptor. Unequal number of tiles in parameters.");
         }
 
-        for (size_t i = 0; i < numberOfPositions; ++i)
+        for (std::size_t i = 0; i < numberOfPositions; ++i)
         {
             int x = 0;
             if (!LOOLProtocol::stringToInteger(positionXtokens[i], x))

@@ -101,7 +101,6 @@ using Poco::Path;
 #endif
 
 using namespace LOOLProtocol;
-using std::size_t;
 
 extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 
@@ -308,10 +307,10 @@ namespace
             break;
         case FTW_SL:
             {
-                const size_t size = sb->st_size;
+                const std::size_t size = sb->st_size;
                 char target[size + 1];
                 const ssize_t written = readlink(fpath, target, size);
-                if (written <= 0 || static_cast<size_t>(written) > size)
+                if (written <= 0 || static_cast<std::size_t>(written) > size)
                 {
                     LOG_SYS("nftw: readlink(\"" << fpath << "\") failed");
                     Log::shutdown();
@@ -557,10 +556,10 @@ public:
     /// Purges dead connections and returns
     /// the remaining number of clients.
     /// Returns -1 on failure.
-    size_t purgeSessions()
+    std::size_t purgeSessions()
     {
         std::vector<std::shared_ptr<ChildSession>> deadSessions;
-        size_t num_sessions = 0;
+        std::size_t num_sessions = 0;
         {
             std::unique_lock<std::mutex> lock(_mutex, std::defer_lock);
             if (!lock.try_lock())
@@ -676,14 +675,14 @@ public:
 #endif
 
         const auto blenderFunc = [&](unsigned char* data, int offsetX, int offsetY,
-                                     size_t pixmapWidth, size_t pixmapHeight, int pixelWidth,
-                                     int pixelHeight, LibreOfficeKitTileMode mode) {
+                                     std::size_t pixmapWidth, std::size_t pixmapHeight,
+                                     int pixelWidth, int pixelHeight, LibreOfficeKitTileMode mode) {
             if (session->watermark())
                 session->watermark()->blending(data, offsetX, offsetY, pixmapWidth, pixmapHeight,
                                                pixelWidth, pixelHeight, mode);
         };
 
-        const auto postMessageFunc = [&](const char* buffer, size_t length) {
+        const auto postMessageFunc = [&](const char* buffer, std::size_t length) {
             postMessage(buffer, length, WSOpCode::Binary);
         };
 
@@ -1292,7 +1291,7 @@ private:
         assert(payload.size() > prefix.size());
 
         // Remove the prefix and trim.
-        size_t index = prefix.size();
+        std::size_t index = prefix.size();
         for ( ; index < payload.size(); ++index)
         {
             if (payload[index] != ' ')
@@ -1302,7 +1301,7 @@ private:
         }
 
         const char* data = payload.data() + index;
-        size_t size = payload.size() - index;
+        std::size_t size = payload.size() - index;
 
         std::string name;
         std::string sessionId;
@@ -1328,7 +1327,7 @@ private:
                     session->sendTextFrame("disconnected:");
 
                     _sessions.erase(it);
-                    const size_t count = _sessions.size();
+                    const std::size_t count = _sessions.size();
                     LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren") <<
                             " after removing ChildSession [" << sessionId << "].");
 
@@ -1470,7 +1469,8 @@ public:
                         const int type = std::stoi(tokens[2]);
 
                         // payload is the rest of the message
-                        const size_t offset = tokens[0].length() + tokens[1].length() + tokens[2].length() + 3; // + delims
+                        const std::size_t offset = tokens[0].length() + tokens[1].length()
+                                                   + tokens[2].length() + 3; // + delims
                         const std::string payload(input.data() + offset, input.size() - offset);
 
                         // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
@@ -2067,7 +2067,7 @@ void lokit_main(
                 int docBrokerSocket,
                 const std::string& userInterface,
 #endif
-                size_t numericIdentifier
+                std::size_t numericIdentifier
                 )
 {
 #if !MOBILEAPP

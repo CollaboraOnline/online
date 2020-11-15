@@ -109,7 +109,7 @@ namespace Log
     }
 
     /// Convert an unsigned number to ascii with 0 padding.
-    template <int Width> void to_ascii_fixed(char* buf, size_t num)
+    template <int Width> void to_ascii_fixed(char* buf, std::size_t num)
     {
         buf[Width - 1] = '0' + num % 10; // Units.
 
@@ -159,7 +159,7 @@ namespace Log
 
     /// Convert unsigned long num to base-10 ascii in place.
     /// Returns the *end* position.
-    char* to_ascii(char* buf, size_t num)
+    char* to_ascii(char* buf, std::size_t num)
     {
         int i = 0;
         do

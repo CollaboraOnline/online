@@ -220,7 +220,7 @@ bool runClientTests(bool standalone, bool verbose)
         std::cerr << "  (cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() << "\" gdb --args " << cmd << ")\n\n";
 #else
         std::string aLib = UnitBase::get().getUnitLibPath();
-        size_t lastSlash = aLib.rfind('/');
+        std::size_t lastSlash = aLib.rfind('/');
         if (lastSlash != std::string::npos)
             aLib = aLib.substr(lastSlash + 1, aLib.length() - lastSlash - 4) + ".la";
         std::cerr << "(cd test; CPPUNIT_TEST_NAME=\"" << (*failures.begin())->failedTestName() <<

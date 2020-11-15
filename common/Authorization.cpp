@@ -57,21 +57,21 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
             {
                 std::string token = tokens.getParam(*it);
 
-                size_t separator = token.find_first_of(':');
+                std::size_t separator = token.find_first_of(':');
                 if (separator != std::string::npos)
                 {
-                    size_t headerStart = token.find_first_not_of(' ', 0);
-                    size_t headerEnd = token.find_last_not_of(' ', separator - 1);
+                    std::size_t headerStart = token.find_first_not_of(' ', 0);
+                    std::size_t headerEnd = token.find_last_not_of(' ', separator - 1);
 
-                    size_t valueStart = token.find_first_not_of(' ', separator + 1);
-                    size_t valueEnd = token.find_last_not_of(' ');
+                    std::size_t valueStart = token.find_first_not_of(' ', separator + 1);
+                    std::size_t valueEnd = token.find_last_not_of(' ');
 
                     // set the header
                     if (headerStart != std::string::npos && headerEnd != std::string::npos &&
                             valueStart != std::string::npos && valueEnd != std::string::npos)
                     {
-                        size_t headerLength = headerEnd - headerStart + 1;
-                        size_t valueLength = valueEnd - valueStart + 1;
+                        std::size_t headerLength = headerEnd - headerStart + 1;
+                        std::size_t valueLength = valueEnd - valueStart + 1;
 
                         request.set(token.substr(headerStart, headerLength), token.substr(valueStart, valueLength));
                     }

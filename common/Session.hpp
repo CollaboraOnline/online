@@ -36,19 +36,23 @@ public:
     SessionMap() {
         static_assert(std::is_base_of<Session, T>::value, "sessions must have base of Session");
     }
+
     /// Generate a unique key for this set of view properties, only used by WSD
     int createCanonicalId(const std::string &viewProps)
     {
         if (viewProps.empty())
             return 0;
-        for (auto &it : _canonicalIds) {
+        for (const auto& it : _canonicalIds)
+        {
             if (it.first == viewProps)
                 return it.second;
         }
-        size_t id = _canonicalIds.size() + 1;
+
+        const std::size_t id = _canonicalIds.size() + 1;
         _canonicalIds[viewProps] = id;
         return id;
     }
+
     /// Lookup one session in the map that matches this canonical view id, only used by Kit
     std::shared_ptr<T> findByCanonicalId(int id)
     {

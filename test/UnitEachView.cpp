@@ -61,7 +61,7 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
                      std::string("buttonup"), docWidth / 2, docHeight / 6);
         helpers::sendTextFrame(socket, text, Poco::format(view, itView));
         // Double of the default.
-        size_t timeoutMs = 20000;
+        const std::size_t timeoutMs = 20000;
         response = helpers::getResponseString(socket, protocol, Poco::format(view, itView), timeoutMs);
         LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 

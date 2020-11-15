@@ -291,8 +291,8 @@ void DocumentBroker::pollThread()
     static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
 
 #if !MOBILEAPP
-    static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
-                                                      "per_document.idle_timeout_secs", 3600);
+    static const std::size_t IdleDocTimeoutSecs
+        = LOOLWSD::getConfigValue<int>("per_document.idle_timeout_secs", 3600);
 
     // Used to accumulate B/W deltas.
     uint64_t adminSent = 0;
@@ -832,7 +832,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
                     int inputs(0), outputs(0);
 
                     std::string input("@INPUT");
-                    size_t pos = commandLine.find(input);
+                    std::size_t pos = commandLine.find(input);
                     if (pos != std::string::npos)
                     {
                         commandLine.replace(pos, input.length(), _storage->getRootFilePath());
@@ -1383,7 +1383,7 @@ std::string DocumentBroker::getJailRoot() const
     return Poco::Path(LOOLWSD::ChildRoot, _jailId).toString();
 }
 
-size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
+std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
 {
     try
     {
@@ -1402,7 +1402,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
     }
 }
 
-size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session)
+std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session)
 {
     assertCorrectThread();
 
@@ -1451,7 +1451,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     _sessions.emplace(session->getId(), session);
     session->setState(ClientSession::SessionState::LOADING);
 
-    const size_t count = _sessions.size();
+    const std::size_t count = _sessions.size();
     LOG_TRC("Added " << (session->isReadOnly() ? "readonly" : "non-readonly") <<
             " session [" << id << "] to docKey [" <<
             _docKey << "] to have " << count << " sessions.");
@@ -1459,7 +1459,7 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
     return count;
 }
 
-size_t DocumentBroker::removeSession(const std::string& id)
+std::size_t DocumentBroker::removeSession(const std::string& id)
 {
     assertCorrectThread();
 
@@ -1591,7 +1591,7 @@ void DocumentBroker::finalRemoveSession(const std::string& id)
             // in question, lest we destroy from underneath them.
             it->second->dispose();
             _sessions.erase(it);
-            const size_t count = _sessions.size();
+            const std::size_t count = _sessions.size();
 
             Log::StreamLogger logger = Log::trace();
             if (logger.enabled())
@@ -1752,7 +1752,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     return true;
 }
 
-size_t DocumentBroker::getMemorySize() const
+std::size_t DocumentBroker::getMemorySize() const
 {
     return sizeof(DocumentBroker) +
         (!!_tileCache ? _tileCache->getMemorySize() : 0) +
@@ -1916,8 +1916,8 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
                 << "X-Content-Type-Options: nosniff\r\n"
                 << "\r\n";
             oss.write(saved->c_str(), saved->length());
-            socket->setSocketBufferSize(std::min(saved->length() + 256,
-                                                 size_t(Socket::MaximumSendBufferSize)));
+            socket->setSocketBufferSize(
+                std::min(saved->length() + 256, std::size_t(Socket::MaximumSendBufferSize)));
             socket->send(oss.str());
             socket->shutdown();
             LOG_INF("Found and queued clipboard response for send of size " << saved->length());
@@ -1986,9 +1986,9 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
     if (!requestedTiles.empty() && hasTileCache())
     {
-        size_t delayedTiles = 0;
+        std::size_t delayedTiles = 0;
         std::vector<TileDesc> tilesNeedsRendering;
-        size_t beingRendered = _tileCache->countTilesBeingRenderedForSession(session, now);
+        std::size_t beingRendered = _tileCache->countTilesBeingRenderedForSession(session, now);
         while (session->getTilesOnFlyCount() + beingRendered < tilesOnFlyUpperLimit &&
               !requestedTiles.empty() &&
               // If we delayed all tiles we don't send any tile (we will when next tileprocessed message arrives)
@@ -2073,12 +2073,12 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
 
     try
     {
-        const size_t length = payload.size();
+        const std::size_t length = payload.size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
             const TileDesc tile = TileDesc::parse(firstLine);
             const char* buffer = payload.data();
-            const size_t offset = firstLine.size() + 1;
+            const std::size_t offset = firstLine.size() + 1;
 
             std::unique_lock<std::mutex> lock(_mutex);
 
@@ -2103,12 +2103,12 @@ void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload
 
     try
     {
-        const size_t length = payload.size();
+        const std::size_t length = payload.size();
         if (firstLine.size() <= static_cast<std::string::size_type>(length) - 1)
         {
             const TileCombined tileCombined = TileCombined::parse(firstLine);
             const char* buffer = payload.data();
-            size_t offset = firstLine.size() + 1;
+            std::size_t offset = firstLine.size() + 1;
 
             std::unique_lock<std::mutex> lock(_mutex);
 
@@ -2374,9 +2374,9 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
 }
 
 #if !MOBILEAPP
-static std::atomic<size_t> NumConverters;
+static std::atomic<std::size_t> NumConverters;
 
-size_t ConvertToBroker::getInstanceCount()
+std::size_t ConvertToBroker::getInstanceCount()
 {
     return NumConverters;
 }

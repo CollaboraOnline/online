@@ -120,53 +120,53 @@ void WhiteBoxTests::testLOOLProtocolFunctions()
     LOK_ASSERT(LOOLProtocol::getTokenKeywordFromMessage(message, "mumble", map, mumble));
     LOK_ASSERT_EQUAL(2, mumble);
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), Util::trimmed("A").size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed("A").size());
     LOK_ASSERT_EQUAL(std::string("A"), Util::trimmed("A"));
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), Util::trimmed(" X").size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed(" X").size());
     LOK_ASSERT_EQUAL(std::string("X"), Util::trimmed(" X"));
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), Util::trimmed("Y ").size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed("Y ").size());
     LOK_ASSERT_EQUAL(std::string("Y"), Util::trimmed("Y "));
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), Util::trimmed(" Z ").size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed(" Z ").size());
     LOK_ASSERT_EQUAL(std::string("Z"), Util::trimmed(" Z "));
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), Util::trimmed(" ").size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), Util::trimmed(" ").size());
     LOK_ASSERT_EQUAL(std::string(""), Util::trimmed(" "));
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), Util::trimmed("   ").size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), Util::trimmed("   ").size());
     LOK_ASSERT_EQUAL(std::string(""), Util::trimmed("   "));
 
     std::string s;
 
     s = "A";
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), Util::trim(s).size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trim(s).size());
     s = "A";
     LOK_ASSERT_EQUAL(std::string("A"), Util::trim(s));
 
     s = " X";
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), Util::trim(s).size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trim(s).size());
     s = " X";
     LOK_ASSERT_EQUAL(std::string("X"), Util::trim(s));
 
     s = "Y ";
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), Util::trim(s).size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trim(s).size());
     s = "Y ";
     LOK_ASSERT_EQUAL(std::string("Y"), Util::trim(s));
 
     s = " Z ";
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), Util::trim(s).size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trim(s).size());
     s = " Z ";
     LOK_ASSERT_EQUAL(std::string("Z"), Util::trim(s));
 
     s = " ";
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), Util::trim(s).size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), Util::trim(s).size());
     s = " ";
     LOK_ASSERT_EQUAL(std::string(""), Util::trim(s));
 
     s = "   ";
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), Util::trim(s).size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), Util::trim(s).size());
     s = "   ";
     LOK_ASSERT_EQUAL(std::string(""), Util::trim(s));
 }
@@ -240,7 +240,7 @@ void WhiteBoxTests::testSplitting()
     LOK_ASSERT_EQUAL(std::string("aa"), first);
     LOK_ASSERT_EQUAL(std::string(".bb"), second);
 
-    LOK_ASSERT_EQUAL(static_cast<size_t>(5), Util::getLastDelimiterPosition("aa.bb.cc", 8, '.'));
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), Util::getLastDelimiterPosition("aa.bb.cc", 8, '.'));
 
     // Split last, remove delim.
     std::tie(first, second) = Util::splitLast(std::string("aa.bb.cc"), '.', true);
@@ -333,51 +333,51 @@ void WhiteBoxTests::testTokenizer()
     StringVector tokens;
 
     tokens = Util::tokenize("");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
     tokens = Util::tokenize("  ");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
     tokens = Util::tokenize("A");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenize("  A");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenize("A  ");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenize(" A ");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenize(" A  Z ");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
     tokens = Util::tokenize("\n");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
     tokens = Util::tokenize(" A  \nZ ");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenize(" A  Z\n ");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
     tokens = Util::tokenize(" A  Z  \n ");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
     tokens = Util::tokenize("tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(10), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(10), tokens.size());
     LOK_ASSERT_EQUAL(std::string("tile"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("nviewid=0"), tokens[1]);
     LOK_ASSERT_EQUAL(std::string("part=0"), tokens[2]);
@@ -419,21 +419,21 @@ void WhiteBoxTests::testTokenizer()
     std::vector<int> ints;
 
     ints = LOOLProtocol::tokenizeInts(std::string("-1"));
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), ints.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), ints.size());
     LOK_ASSERT_EQUAL(-1, ints[0]);
 
     ints = LOOLProtocol::tokenizeInts(std::string("1,2,3,4"));
-    LOK_ASSERT_EQUAL(static_cast<size_t>(4), ints.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(4), ints.size());
     LOK_ASSERT_EQUAL(1, ints[0]);
     LOK_ASSERT_EQUAL(2, ints[1]);
     LOK_ASSERT_EQUAL(3, ints[2]);
     LOK_ASSERT_EQUAL(4, ints[3]);
 
     ints = LOOLProtocol::tokenizeInts("");
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), ints.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), ints.size());
 
     ints = LOOLProtocol::tokenizeInts(std::string(",,,"));
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), ints.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), ints.size());
 }
 
 void WhiteBoxTests::testTokenizerTokenizeAnyOf()
@@ -442,57 +442,57 @@ void WhiteBoxTests::testTokenizerTokenizeAnyOf()
     const char delimiters[] = "\n\r"; // any of these delimits; and we trim whitespace
 
     tokens = Util::tokenizeAnyOf("", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
     tokens = Util::tokenizeAnyOf("  ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
     tokens = Util::tokenizeAnyOf("A", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenizeAnyOf("  A", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenizeAnyOf("A  ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenizeAnyOf(" A ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
     tokens = Util::tokenizeAnyOf(" A  Z ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
 
     tokens = Util::tokenizeAnyOf("\n", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
     tokens = Util::tokenizeAnyOf("\n\r\r\n", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(0), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
     tokens = Util::tokenizeAnyOf(" A  \nZ ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
     tokens = Util::tokenizeAnyOf(" A  Z\n ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
 
     tokens = Util::tokenizeAnyOf(" A  Z  \n\r\r\n ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(1), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
 
     tokens = Util::tokenizeAnyOf(" A  \n\r\r\n  \r  \n  Z  \n ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
     tokens = Util::tokenizeAnyOf("  \r A  \n  \r  \n  Z  \n ", delimiters);
-    LOK_ASSERT_EQUAL(static_cast<size_t>(2), tokens.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
@@ -816,9 +816,9 @@ void WhiteBoxTests::testJson()
     Poco::JSON::Object::Ptr object;
     LOK_ASSERT(JsonUtil::parseJSON(testString, object));
 
-    size_t iValue = false;
+    std::size_t iValue = 0;
     JsonUtil::findJSONValue(object, "Size", iValue);
-    LOK_ASSERT_EQUAL(size_t(193551U), iValue);
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(193551), iValue);
 
     bool bValue = false;
     JsonUtil::findJSONValue(object, "DisableCopy", bValue);
@@ -977,7 +977,7 @@ void WhiteBoxTests::testStringVector()
     StringVector vector;
     vector.push_back("a");
     vector.push_back("b");
-    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), vector.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<std::size_t>(2), vector.size());
     auto it = vector.begin();
     CPPUNIT_ASSERT_EQUAL(std::string("a"), vector.getParam(*it));
     ++it;
