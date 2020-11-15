@@ -1964,6 +1964,10 @@ protected:
             }
 #endif
         }
+        else if (tokens.equals(0, "setloglevel"))
+        {
+            Log::logger().setLevel(tokens[1]);
+        }
         else
         {
             LOG_ERR("Bad or unknown token [" << tokens[0] << ']');
