@@ -13,7 +13,7 @@
 
 inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
 {
-    const size_t size = v.size();
+    const std::size_t size = v.size();
     if (size <= 32)
         os << std::string(v.data(), size);
     else

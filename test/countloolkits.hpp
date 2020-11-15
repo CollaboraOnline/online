@@ -30,9 +30,9 @@ static int countLoolKitProcesses(const int expected)
     const int sleepMs = 50;
 
     // This has to cause waiting for at least COMMAND_TIMEOUT_MS. Tolerate more for safety.
-    const size_t repeat = ((COMMAND_TIMEOUT_MS * 8) / sleepMs);
+    const std::size_t repeat = ((COMMAND_TIMEOUT_MS * 8) / sleepMs);
     int count = getLoolKitProcessCount();
-    for (size_t i = 0; i < repeat; ++i)
+    for (std::size_t i = 0; i < repeat; ++i)
     {
         TST_LOG_APPEND(count << ' ');
         if (count == expected)

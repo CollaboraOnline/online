@@ -37,17 +37,18 @@ struct SupportKeyImpl
         : _invalid(true), _key(key)
     {
         LOG_INF("Support key '" << key << "' provided");
-        size_t firstColon = key.find(':');
+        std::size_t firstColon = key.find(':');
         if (firstColon != std::string::npos)
         {
             std::string expiry(key.substr(0, firstColon));
             LOG_INF("Support key with expiry '" << expiry << '\'');
 
-            try {
+            try
+            {
                 int timeZoneDifferential = 0;
                 Poco::DateTimeParser::parse(expiry, _expiry, timeZoneDifferential);
 
-                size_t lastColon = key.rfind(':');
+                std::size_t lastColon = key.rfind(':');
                 if (lastColon != std::string::npos)
                 {
                     _signature = key.substr(lastColon + 1,

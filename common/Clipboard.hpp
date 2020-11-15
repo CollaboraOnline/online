@@ -51,7 +51,7 @@ struct ClipboardData
         }
     }
 
-    size_t size()
+    std::size_t size() const
     {
         assert(_mimeTypes.size() == _content.size());
         return _mimeTypes.size();
@@ -96,7 +96,7 @@ public:
     }
 
     void insertClipboard(const std::string key[2],
-                         const char *data, size_t size)
+                         const char *data, std::size_t size)
     {
         if (size == 0)
         {

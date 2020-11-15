@@ -48,7 +48,7 @@ public:
         if (url.size() <= 0)
             return;
 
-        size_t pos = url.find("://");
+        std::size_t pos = url.find("://");
         if (pos != std::string::npos) {
             pos += 3;
             auto hostEndPos = url.find('/', pos);

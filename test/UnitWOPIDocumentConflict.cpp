@@ -58,7 +58,7 @@ public:
         }
     }
 
-    bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */,
+    bool filterSendMessage(const char* data, const std::size_t len, const WSOpCode /* code */,
                            const bool /* flush */, int& /*unitReturn*/) override
     {
         std::string message(data, len);

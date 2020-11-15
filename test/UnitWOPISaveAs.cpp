@@ -39,7 +39,8 @@ public:
         LOK_ASSERT(std::stoul(request.get("X-WOPI-Size")) > getFileContent().size());
     }
 
-    bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/) override
+    bool filterSendMessage(const char* data, const std::size_t len, const WSOpCode /* code */,
+                           const bool /* flush */, int& /*unitReturn*/) override
     {
         const std::string message(data, len);
 

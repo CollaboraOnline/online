@@ -38,7 +38,6 @@
 using namespace LOOLProtocol;
 
 using Poco::Exception;
-using std::size_t;
 
 Session::Session(const std::shared_ptr<ProtocolHandlerInterface> &protocol,
                  const std::string& name, const std::string& id, bool readOnly) :
@@ -89,14 +88,14 @@ bool Session::sendBinaryFrame(const char *buffer, int length)
 void Session::parseDocOptions(const StringVector& tokens, int& part, std::string& timestamp, std::string& doctemplate)
 {
     // First token is the "load" command itself.
-    size_t offset = 1;
+    std::size_t offset = 1;
     if (tokens.size() > 2 && tokens[1].find("part=") == 0)
     {
         getTokenInteger(tokens[1], "part", part);
         ++offset;
     }
 
-    for (size_t i = offset; i < tokens.size(); ++i)
+    for (std::size_t i = offset; i < tokens.size(); ++i)
     {
         std::string name;
         std::string value;

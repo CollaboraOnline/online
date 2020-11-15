@@ -38,7 +38,7 @@ void lokit_main(
                 int docBrokerSocket,
                 const std::string& userInterface,
 #endif
-                size_t numericIdentifier
+                std::size_t numericIdentifier
                 );
 
 #ifdef IOS
