@@ -402,14 +402,24 @@ public:
     /// Clear all external references
     virtual void dispose() { _msgHandler.reset(); }
 
+    /// Sends a text message.
+    /// Returns the number of bytes written (including frame overhead) on success,
+    /// 0 for closed/invalid socket, and -1 for other errors.
     virtual int sendTextMessage(const char* msg, const size_t len, bool flush = false) const = 0;
+
+    /// Sends a binary message.
+    /// Returns the number of bytes written (including frame overhead) on success,
+    /// 0 for closed/invalid socket, and -1 for other errors.
     virtual int sendBinaryMessage(const char *data, const size_t len, bool flush = false) const = 0;
+
+    /// Shutdown the socket and specify if the endpoint is going away or not (useful for WS).
+    /// Optionally provide a message sent in the close frame (useful for WS).
     virtual void shutdown(bool goingAway = false, const std::string &statusMessage = "") = 0;
 
     virtual void getIOStats(uint64_t &sent, uint64_t &recv) = 0;
 
     /// Append pretty printed internal state to a line
-    virtual void dumpState(std::ostream& os) { os << "\n"; }
+    virtual void dumpState(std::ostream& os) { os << '\n'; }
 };
 
 /// A ProtocolHandlerInterface with dummy sending API.
@@ -647,7 +657,9 @@ public:
     static void wakeupWorld();
 
     /// Insert a new socket to be polled.
-    /// Sockets are removed only when the handler return false.
+    /// A socket is removed when it is closed, readIncomingData
+    /// returns false, or when removeSockets is called (which is
+    /// done automatically when SocketPoll is stopped via joinThread).
     void insertNewSocket(const std::shared_ptr<Socket>& newSocket)
     {
         if (newSocket)

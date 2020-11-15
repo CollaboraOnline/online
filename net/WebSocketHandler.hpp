@@ -41,8 +41,8 @@ private:
 protected:
     struct WSFrameMask
     {
-        static const unsigned char Fin = 0x80;
-        static const unsigned char Mask = 0x80;
+        static constexpr unsigned char Fin = 0x80;
+        static constexpr unsigned char Mask = 0x80;
     };
 
     static const int InitialPingDelayMicroS;
@@ -492,6 +492,7 @@ private:
         }
 #endif
     }
+
 public:
     void performWrites() override
     {
@@ -680,7 +681,7 @@ protected:
 
 private:
     /// To make the protected 'computeAccept' accessible.
-    class PublicComputeAccept : public Poco::Net::WebSocket
+    class PublicComputeAccept final : public Poco::Net::WebSocket
     {
     public:
         static std::string doComputeAccept(const std::string &key)
