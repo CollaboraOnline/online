@@ -603,42 +603,34 @@ unsigned Admin::getNetStatsInterval()
 
 std::string Admin::getChannelLogLevels()
 {
-    std::string result;
-    // Get the list of channels..
-    std::vector<std::string> nameList;
-    Log::logger().names(nameList);
-
     std::string levelList[9] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
+    unsigned int wsdLogLevel = Log::logger().get("wsd").getLevel();
+	std::string result = "wsd=" + levelList[wsdLogLevel];
 
-    for (size_t i = 0; i < nameList.size(); i++)
-    {
-        result += (nameList[i] != "" ? nameList[i]: "?") + '=' + levelList[Log::logger().get(nameList[i]).getLevel()] + (i != nameList.size() - 1 ? " ": "");
-    }
+    result += " kits=" + (_forkitLogLevel != "" ? _forkitLogLevel: levelList[wsdLogLevel]);
 
     return result;
 }
 
-void Admin::setChannelLogLevel(const std::string& _channelName, std::string _level)
+void Admin::setChannelLogLevel(const std::string& _channelName, std::string level)
 {
     assertCorrectThread();
-
-    std::string levelList[9] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
-    if (std::find(std::begin(levelList), std::end(levelList), _level) == std::end(levelList))
-    {
-        _level = "trace";
-    }
 
     // Get the list of channels..
     std::vector<std::string> nameList;
     Log::logger().names(nameList);
 
-    for (size_t i = 0; i < nameList.size(); i++)
+    std::string levelList[9] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
+    if (std::find(std::begin(levelList), std::end(levelList), level) == std::end(levelList))
+        level = "trace";
+
+    if (_channelName == "wsd")
+        Log::logger().get("wsd").setLevel(level);
+    else if (_channelName == "kits")
     {
-        if (nameList[i] == _channelName)
-        {
-            Log::logger().get(nameList[i]).setLevel(_level);
-            break;
-        }
+        LOOLWSD::setLogLevelsOfKits(level); // For current kits.
+		LOOLWSD::sendMessageToForKit("setloglevel " + level); // For forkit and future kits.
+		_forkitLogLevel = level; // We will remember this setting rather than asking forkit its loglevel.
     }
 }
 

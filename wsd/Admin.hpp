@@ -172,6 +172,7 @@ private:
     uint64_t _lastRecvCount;
     size_t _totalSysMemKb;
     size_t _totalAvailMemKb;
+	std::string _forkitLogLevel = "";
 
     struct MonitorConnectRecord
     {

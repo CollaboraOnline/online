@@ -405,6 +405,8 @@ public:
     /// Autosave a given document (currently only called from Admin).
     static void autoSave(const std::string& docKey);
 
+    static void setLogLevelsOfKits(const std::string& level);
+
     /// Anonymize the basename of filenames, preserving the path and extension.
     static std::string anonymizeUrl(const std::string& url)
     {
