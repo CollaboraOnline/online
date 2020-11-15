@@ -1053,9 +1053,6 @@ int main(int argc, char**argv)
     //// Return time in HTTP format.
     std::string getHttpTime(std::chrono::system_clock::time_point time);
 
-    //// Return timestamp of file
-    std::chrono::system_clock::time_point getFileTimestamp(const std::string& str_path);
-
     //// Return time in ISO8061 fraction format
     std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time);
 
