@@ -132,9 +132,22 @@ public:
     void addFailure(const CppUnit::TestFailure& failure)
     {
         if (failure.isError())
-            writeTestLog("\n>>>>>>>> FAILED " + _name + " <<<<<<<<<\n");
+            writeTestLog("\n>>>>>>>> ERROR " + failure.failedTestName() + " <<<<<<<<<\n");
         else
-            writeTestLog("\n>>>>>>>> PASS " + _name + " <<<<<<<<<\n");
+            writeTestLog("\n>>>>>>>> FAILED " + failure.failedTestName() + " <<<<<<<<<\n");
+
+        const auto ex = failure.thrownException();
+        if (ex != nullptr)
+        {
+            writeTestLog("\nException: " + ex->message().shortDescription() + '\n'
+                         + ex->message().details() + "\tat " + ex->sourceLine().fileName() + ':'
+                         + std::to_string(ex->sourceLine().lineNumber()) + '\n');
+        }
+        else
+        {
+            writeTestLog("\tat " + failure.sourceLine().fileName() + ':'
+                         + std::to_string(failure.sourceLine().lineNumber()) + '\n');
+        }
     }
 
     void done() { writeTestLog("\n=============== END " + _name + " ===============\n"); }
