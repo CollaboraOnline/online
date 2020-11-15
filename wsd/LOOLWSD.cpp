@@ -1791,6 +1791,20 @@ void LOOLWSD::autoSave(const std::string& docKey)
     }
 }
 
+void LOOLWSD::setLogLevelsOfKits(const std::string& level) {
+    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
+
+    LOG_INF("Changing kits' log levels: [" << level << ']');
+
+    for (auto& brokerIt : DocBrokers)
+    {
+        std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
+        docBroker->addCallback([docBroker, level]() {
+            docBroker->setLogLevel(level);
+        });
+    }
+}
+
 /// Really do the house-keeping
 void PrisonerPoll::wakeupHook()
 {

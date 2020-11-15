@@ -4,6 +4,8 @@
 */
 /* global Admin $ AdminSocketBase */
 var AdminSocketLog = AdminSocketBase.extend({
+	_logLines: '',
+
 	constructor: function(host) {
 		this.base(host);
 		// There is a "$" is never used error. Let's get rid of this. This is vanilla script and has not more lines than the one with JQuery.
@@ -47,6 +49,7 @@ var AdminSocketLog = AdminSocketBase.extend({
 
 		document.getElementById('refresh-log').onclick = this.refreshLog.bind(this);
 		document.getElementById('update-log-levels').onclick = this.sendChannelListLogLevels.bind(this);
+		document.getElementById('log-channel-filter').onchange = this.applyChannelFilter.bind(this);
 
 		this.pullChannelList();
 		this.refreshLog();
@@ -100,11 +103,64 @@ var AdminSocketLog = AdminSocketBase.extend({
 		document.getElementById('update-log-levels').classList.add('is-info');
 	},
 
+	applyChannelFilter: function() {
+		if (document.getElementById('log-channel-filter').selectedIndex !== 0) {
+			var filteredChannel = document.getElementById('log-channel-filter').value;
+			var filteredLines = '';
+			var lineList = this._logLines.split('\n');
+			for (var i = 0; i < lineList.length; i++) {
+				if (lineList[i].split('[').length > 1) {
+					if (lineList[i].split('[')[1].split(']')[0].trim() === filteredChannel)
+						filteredLines += lineList[i] + '\n';
+				}
+			}
+			document.getElementById('log-lines').value = filteredLines;
+		}
+		else {
+			document.getElementById('log-lines').value = this._logLines;
+		}
+	},
+
+	refreshChannelFilter: function() {
+		var lineList = this._logLines.split('\n');
+		var channelList = new Array(0);
+		for (var i = 0; i < lineList.length; i++) {
+			if (lineList[i].trim() !== '' && lineList[i].split('[').length > 1) {
+				var channelName = lineList[i].split('[')[1].split(']')[0].trim();
+				if (!channelList.includes(channelName))
+					channelList.push(channelName);
+			}
+		}
+
+		var currentFilteredChannel = document.getElementById('log-channel-filter').value;
+
+		// Remove previous channels.
+		for (i = document.getElementById('log-channel-filter').options.length - 1; i > 0; i--)
+			document.getElementById('log-channel-filter').remove(i);
+
+		// Now add new ones.
+		for (i = 0; i < channelList.length; i++) {
+			var option = document.createElement('option');
+			option.text = channelList[i];
+			document.getElementById('log-channel-filter').add(option);
+		}
+
+		// Does previously selected channel name still exist? If not, we will re-set filter.
+		if (!channelList.includes(currentFilteredChannel))
+			document.getElementById('log-channel-filter').selectedIndex = 0;
+		else
+			document.getElementById('log-channel-filter').selectedIndex = channelList.findIndex(function(item) {return item === currentFilteredChannel;}) + 1;
+
+		// Now, we will apply filter.
+		this.applyChannelFilter();
+	},
+
 	onSocketMessage: function(e) {
 		if (e.data.startsWith('log_lines')) {
 			var result = e.data;
 			result = result.substring(10, result.length);
-			document.getElementById('log-lines').value = result;
+			this._logLines = result;
+			this.refreshChannelFilter();
 		}
 		else if (e.data.startsWith('channel_list')) {
 			var channelListStr = e.data.substring(13, e.data.length);

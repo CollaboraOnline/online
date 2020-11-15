@@ -230,6 +230,8 @@ public:
         alertAllUsers("error: cmd=" + cmd + " kind=" + kind);
     }
 
+	void setLogLevel(const std::string& level);
+
     /// Invalidate the cursor position.
     void invalidateCursor(int x, int y, int w, int h)
     {
