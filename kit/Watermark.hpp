@@ -17,6 +17,7 @@
 #include <Log.hpp>
 #include <cstdlib>
 #include <string>
+#include <cmath>
 #include "ChildSession.hpp"
 
 class Watermark
@@ -44,8 +45,8 @@ public:
                    LibreOfficeKitTileMode /*mode*/)
     {
         // set requested watermark size a little bit smaller than tile size
-        int width = tileWidth * 0.9;
-        int height = tileHeight * 0.9;
+        const int width = tileWidth * 0.8;
+        const int height = tileHeight * 0.8;
 
         const std::vector<unsigned char>* pixmap = getPixmap(width, height);
 
@@ -118,7 +119,7 @@ private:
         // are always set to 0 (black) and the alpha level is 0 everywhere
         // except on the text area; the alpha level take into account of
         // performing anti-aliasing over the text edges.
-        unsigned char* textPixels = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &_width, &_height, 450);
+        unsigned char* textPixels = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &_width, &_height, 0);
 
         if (!textPixels)
         {
@@ -133,18 +134,57 @@ private:
 
         _pixmap.reserve(pixel_count);
 
+        /*
+            apply 2d rotation transformation (counter-clockwise):
+            | cos(a) -sin(a) |  | x |
+            | sin(a)  cos(a) |  | y |
+        */
         // Create the white blurred background
         // Use box blur, it's enough for our purposes
+
+        // PI / 4 degrees (45)
+        const double PI = 3.14159265359;
+        const double ANGLE = PI / 4;
+        const double sin = std::sin(ANGLE);
+        const double cos = std::cos(ANGLE);
+
+        std::vector<unsigned char> _rotatedText;
+        _rotatedText.reserve(pixel_count);
+
         const int r = 2;
         const double weight = (r+1) * (r+1);
         for (int y = 0; y < height; ++y)
         {
             for (int x = 0; x < width; ++x)
             {
-                double t = 0;
-                for (int ky = std::max(y - r, 0); ky <= std::min(y + r, height - 1); ++ky)
+                const double x0 = width / 2.0;
+                const double y0 = height / 2.0;
+                // move origin to the center
+                const double fx = x - x0;
+                const double fy = y - y0;
+                const int rX = (fx * cos) - (fy * sin) + x0;
+                const int rY = (fx * sin) + (fy * cos) + y0;
+                const unsigned int pPos = 4 * (rY * width + rX);
+                if (rX >= 0 && rX <= width && rY >= 0 && rY <= height && pPos < text.size())
                 {
-                    for (int kx = std::max(x - r, 0); kx <= std::min(x + r, width - 1); ++kx)
+                    unsigned char* p = text.data() + 4 * (rY * width + rX);
+                    _rotatedText[4 * (y * width + x) + 0] = p[0];
+                    _rotatedText[4 * (y * width + x) + 1] = p[1];
+                    _rotatedText[4 * (y * width + x) + 2] = p[2];
+                    _rotatedText[4 * (y * width + x) + 3] = p[3];
+                }
+                else
+                {
+                    _rotatedText[4 * (y * width + x) + 0] = 0.0;
+                    _rotatedText[4 * (y * width + x) + 1] = 0.0;
+                    _rotatedText[4 * (y * width + x) + 2] = 0.0;
+                    _rotatedText[4 * (y * width + x) + 3] = 0.0;
+                }
+
+                double t = 0;
+                for (int ky = std::max(rY - r, 0); ky <= std::min(rY + r, height - 1); ++ky)
+                {
+                    for (int kx = std::max(rX - r, 0); kx <= std::min(rX + r, width - 1); ++kx)
                     {
                         // Pre-multiplied alpha; the text is black, so all the
                         // information is only in the alpha channel
@@ -167,7 +207,7 @@ private:
         }
 
         // Now copy the (black) text over the (white) blur
-        alphaBlend(text, _width, _height, 0, 0, _pixmap.data(), _width, _height, true);
+        alphaBlend(_rotatedText, _width, _height, 0, 0, _pixmap.data(), _width, _height, true);
 
         // Make the resulting pixmap semi-transparent
         for (unsigned char* p = _pixmap.data(); p < _pixmap.data() + pixel_count; p++)
