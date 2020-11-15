@@ -1082,9 +1082,9 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
     _lastStorageSaveSuccessful
-        = storageSaveResult.getResult() == StorageBase::SaveResult::OK ||
-        storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED;
-    if (storageSaveResult.getResult() == StorageBase::SaveResult::OK)
+        = storageSaveResult.getResult() == StorageBase::SaveResult::Result::OK ||
+        storageSaveResult.getResult() == StorageBase::SaveResult::Result::DOC_CHANGED;
+    if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::OK)
     {
 #if !MOBILEAPP
         WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
@@ -1148,7 +1148,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
 
         return true;
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::DISKFULL)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::DISKFULL)
     {
         LOG_WRN("Disk full while saving docKey [" << _docKey << "] to URI [" << uriAnonym <<
                 "]. Making all sessions on doc read-only and notifying clients.");
@@ -1160,14 +1160,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         }
         broadcastSaveResult(false, "Disk full", storageSaveResult.getErrorMsg());
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::UNAUTHORIZED)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::UNAUTHORIZED)
     {
         LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << uriAnonym <<
                 "]. Invalid or expired access token. Notifying client.");
         it->second->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
         broadcastSaveResult(false, "Invalid or expired access token");
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::FAILED)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::FAILED)
     {
         //TODO: Should we notify all clients?
         LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << uriAnonym << "]. Notifying client.");
@@ -1176,8 +1176,8 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         it->second->sendTextFrame(oss.str());
         broadcastSaveResult(false, "Save failed", storageSaveResult.getErrorMsg());
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::DOC_CHANGED
-             || storageSaveResult.getResult() == StorageBase::SaveResult::CONFLICT)
+    else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::DOC_CHANGED
+             || storageSaveResult.getResult() == StorageBase::SaveResult::Result::CONFLICT)
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;
