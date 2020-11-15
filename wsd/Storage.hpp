@@ -524,6 +524,22 @@ public:
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
     std::chrono::duration<double> getWopiSaveDuration() const { return _wopiSaveDuration; }
 
+protected:
+    struct WopiUploadDetails
+    {
+        const std::string filePathAnonym;
+        const std::string uriAnonym;
+        const std::string httpResponseReason;
+        const long httpResponseCode;
+        const std::size_t size;
+        const bool isSaveAs;
+        const bool isRename;
+    };
+
+    /// Handles the response from the server when uploading the document.
+    SaveResult handleUploadToStorageResponse(const WopiUploadDetails& details,
+                                             std::string responseString);
+
 private:
     /// Initialize an HTTPRequest instance with the common settings and headers.
     /// Older Poco versions don't support copying HTTPRequest objects, so we can't generate them.

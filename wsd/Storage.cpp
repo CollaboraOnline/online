@@ -1059,7 +1059,6 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
     LOG_INF("Uploading " << size << " bytes from [" << filePathAnonym << "] to URI via WOPI ["
                          << uriAnonym << "].");
 
-    StorageBase::SaveResult saveResult(StorageBase::SaveResult::Result::FAILED);
     const auto startTime = std::chrono::steady_clock::now();
     try
     {
@@ -1148,12 +1147,41 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
 
         _wopiSaveDuration = std::chrono::steady_clock::now() - startTime;
 
+        WopiUploadDetails details
+            = { filePathAnonym, uriAnonym, response.getReason(), response.getStatus(), size,
+                isSaveAs,       isRename };
+
         std::ostringstream oss;
         Poco::StreamCopier::copyStream(rs, oss);
-        std::string responseString = oss.str();
+        return handleUploadToStorageResponse(details, oss.str());
+    }
+    catch (const Poco::Exception& pexc)
+    {
+        LOG_ERR("Cannot save file to WOPI storage uri [" << uriAnonym << "]. Error: " <<
+                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
+    }
+    catch (const BadRequestException& exc)
+    {
+        LOG_ERR("Cannot save file to WOPI storage uri [" + uriAnonym + "]. Error: " << exc.what());
+    }
+
+    return StorageBase::SaveResult::Result::FAILED;
+}
+
+StorageBase::SaveResult WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
+                                                                   std::string responseString)
+{
+    // Assume we failed, unless we have confirmation of success.
+    StorageBase::SaveResult saveResult(StorageBase::SaveResult::Result::FAILED);
+    try
+    {
+        const std::string origResponseString = responseString;
+
         saveResult.setErrorMsg(responseString);
 
-        const std::string wopiLog(isSaveAs ? "WOPI::PutRelativeFile" : (isRename ? "WOPI::RenameFile":"WOPI::PutFile"));
+        const std::string wopiLog(details.isSaveAs
+                                      ? "WOPI::PutRelativeFile"
+                                      : (details.isRename ? "WOPI::RenameFile" : "WOPI::PutFile"));
 
         if (Log::infoEnabled())
         {
@@ -1165,8 +1193,8 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
                     // Anonymize the filename
                     std::string url;
                     std::string filename;
-                    if (JsonUtil::findJSONValue(object, "Url", url) &&
-                        JsonUtil::findJSONValue(object, "Name", filename))
+                    if (JsonUtil::findJSONValue(object, "Url", url)
+                        && JsonUtil::findJSONValue(object, "Name", filename))
                     {
                         // Get the FileId form the URL, which we use as the anonymized filename.
                         std::string decodedUrl;
@@ -1187,16 +1215,17 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
                 }
             }
 
-            LOG_INF(wopiLog << " uploaded " << size << " bytes from [" << filePathAnonym << "] -> ["
-                            << uriAnonym << "]: " << response.getStatus() << ' '
-                            << response.getReason() << ": " << responseString);
+            LOG_INF(wopiLog << " uploaded " << details.size << " bytes from ["
+                            << details.filePathAnonym << "] -> [" << details.uriAnonym
+                            << "]: " << details.httpResponseCode << ' '
+                            << details.httpResponseReason << ": " << responseString);
         }
 
-        if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+        if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_OK)
         {
             saveResult.setResult(StorageBase::SaveResult::Result::OK);
             Poco::JSON::Object::Ptr object;
-            if (JsonUtil::parseJSON(oss.str(), object))
+            if (JsonUtil::parseJSON(origResponseString, object))
             {
                 const std::string lastModifiedTime
                     = JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
@@ -1204,7 +1233,7 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
                 getFileInfo().setModifiedTime(
                     Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime"));
 
-                if (isSaveAs || isRename)
+                if (details.isSaveAs || details.isRename)
                 {
                     const std::string name = JsonUtil::getJSONValue<std::string>(object, "Name");
                     LOG_TRC(wopiLog << " returns Name [" << LOOLWSD::anonymizeUrl(name) << "].");
@@ -1223,20 +1252,20 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
                 LOG_WRN("Invalid or missing JSON in " << wopiLog << " HTTP_OK response.");
             }
         }
-        else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_REQUESTENTITYTOOLARGE)
+        else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_REQUEST_ENTITY_TOO_LARGE)
         {
             saveResult.setResult(StorageBase::SaveResult::Result::DISKFULL);
         }
-        else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED ||
-                 response.getStatus() == Poco::Net::HTTPResponse::HTTP_FORBIDDEN)
+        else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED
+                 || details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_FORBIDDEN)
         {
             saveResult.setResult(StorageBase::SaveResult::Result::UNAUTHORIZED);
         }
-        else if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_CONFLICT)
+        else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_CONFLICT)
         {
             saveResult.setResult(StorageBase::SaveResult::Result::CONFLICT);
             Poco::JSON::Object::Ptr object;
-            if (JsonUtil::parseJSON(oss.str(), object))
+            if (JsonUtil::parseJSON(origResponseString, object))
             {
                 const unsigned loolStatusCode
                     = JsonUtil::getJSONValue<unsigned>(object, "LOOLStatusCode");
@@ -1254,21 +1283,24 @@ WopiStorage::saveLocalFileToStorage(const Authorization& auth, const std::string
         {
             // Internal server error, and other failures.
             LOG_ERR("Unexpected response to "
-                    << wopiLog << ". Cannot upload file to WOPI storage uri [" << uriAnonym
-                    << "]: " << response.getStatus() << ' ' << response.getReason() << ": "
-                    << responseString);
+                    << wopiLog << ". Cannot upload file to WOPI storage uri [" << details.uriAnonym
+                    << "]: " << details.httpResponseCode << ' ' << details.httpResponseReason
+                    << ": " << responseString);
             saveResult.setResult(StorageBase::SaveResult::Result::FAILED);
         }
     }
     catch (const Poco::Exception& pexc)
     {
-        LOG_ERR("Cannot save file to WOPI storage uri [" << uriAnonym << "]. Error: " <<
-                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
+        LOG_ERR("Cannot save file to WOPI storage uri ["
+                << details.uriAnonym << "]. Error: " << pexc.displayText()
+                << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
         saveResult.setResult(StorageBase::SaveResult::Result::FAILED);
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot save file to WOPI storage uri [" + uriAnonym + "]. Error: " << exc.what());
+        LOG_ERR("Cannot save file to WOPI storage uri [" + details.uriAnonym + "]. Error: "
+                << exc.what());
+        saveResult.setResult(StorageBase::SaveResult::Result::FAILED);
     }
 
     return saveResult;
