@@ -875,16 +875,6 @@ namespace Util
         return std::string::npos;
     }
 
-    std::chrono::system_clock::time_point getFileTimestamp(const std::string& str_path)
-    {
-        struct stat file;
-        stat(str_path.c_str(), &file);
-        std::chrono::seconds ns{file.st_mtime};
-        std::chrono::system_clock::time_point mod_time_point{ns};
-
-        return mod_time_point;
-    }
-
     std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time){
         char time_modified[64];
         std::time_t lastModified_us_t = std::chrono::system_clock::to_time_t(time);

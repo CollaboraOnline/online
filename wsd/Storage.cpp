@@ -309,16 +309,14 @@ std::atomic<unsigned> LocalStorage::LastLocalStorageId;
 
 std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 {
-    const Poco::Path path = Poco::Path(getUri().getPath());
+    const Poco::Path path = getUri().getPath();
     LOG_DBG("Getting info for local uri [" << LOOLWSD::anonymizeUrl(getUri().toString()) << "], path [" << LOOLWSD::anonymizeUrl(path.toString()) << "].");
 
-    std::string str_path = path.toString();
-    const auto& filename = path.getFileName();
-    const Poco::File file = Poco::File(path);
-    std::chrono::system_clock::time_point lastModified = Util::getFileTimestamp(str_path);
-    const size_t size = file.getSize();
+    const FileUtil::Stat stat(path.toString());
+    const std::chrono::system_clock::time_point lastModified = stat.modifiedTimepoint();
+    const std::size_t size = stat.size();
 
-    setFileInfo(FileInfo({filename, "localhost", lastModified, size}));
+    setFileInfo(FileInfo(path.getFileName(), "LocalOwner", lastModified, size));
 
     // Set automatic userid and username
     std::string userNameString;
@@ -403,6 +401,8 @@ StorageBase::UploadResult LocalStorage::uploadLocalFileToStorage(
     const Authorization& /*auth*/, const std::string& /*cookies*/, LockContext& /*lockCtx*/,
     const std::string& /*saveAsPath*/, const std::string& /*saveAsFilename*/, bool /*isRename*/)
 {
+    const std::string path = getUri().getPath();
+
     try
     {
         LOG_TRC("Copying local file to local file storage (isCopy: " << _isCopy << ") for "
@@ -410,13 +410,11 @@ StorageBase::UploadResult LocalStorage::uploadLocalFileToStorage(
 
         // Copy the file back.
         if (_isCopy && Poco::File(getRootFilePath()).exists())
-            FileUtil::copyFileTo(getRootFilePath(), getUri().getPath());
+            FileUtil::copyFileTo(getRootFilePath(), path);
 
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
-        const Poco::Path path = Poco::Path(getUri().getPath());
-        std::string str_path = path.toString();
-        getFileInfo().setModifiedTime(Util::getFileTimestamp(str_path));
+        getFileInfo().setModifiedTime(FileUtil::Stat(path).modifiedTimepoint());
         LOG_TRC("New FileInfo modified time in storage " << getFileInfo().getModifiedTime());
     }
     catch (const Poco::Exception& exc)
@@ -998,7 +996,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
 
     // Try the default URL, we either don't have FileUrl, or it failed.
     // WOPI URI to download files ends in '/contents'.
-    // Add it's here to get the payload instead of file info.
+    // Add it here to get the payload instead of file info.
     Poco::URI uriObject(getUri());
     uriObject.setPath(uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
