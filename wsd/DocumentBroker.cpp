@@ -1137,13 +1137,25 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
             Poco::URI::encode(filename, "", encodedName);
             const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
 
-            std::ostringstream oss;
-            oss << "saveas: url=" << url << " filename=" << encodedName
-                << " xfilename=" << filenameAnonym;
-            details.session->sendTextFrame(oss.str());
+            const auto session = details.session.lock();
+            if (session)
+            {
+                LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url)
+                                            << "] with name [" << filenameAnonym
+                                            << "] successfully.");
 
-            LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url) <<
-                    "] with name [" << filenameAnonym << "] successfully.");
+                std::ostringstream oss;
+                oss << "saveas: url=" << url << " filename=" << encodedName
+                    << " xfilename=" << filenameAnonym;
+
+                session->sendTextFrame(oss.str());
+            }
+            else
+            {
+                LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url)
+                                            << "] with name [" << filenameAnonym
+                                            << "] successfully, but the client session is closed.");
+            }
         }
 
         broadcastLastModificationTime();
@@ -1164,18 +1176,41 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::UNAUTHORIZED)
     {
-        LOG_ERR("Cannot save docKey [" << _docKey << "] to storage URI [" << details.uriAnonym <<
-                "]. Invalid or expired access token. Notifying client.");
-        details.session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
+        const auto session = details.session.lock();
+        if (session)
+        {
+            LOG_ERR("Cannot save docKey ["
+                    << _docKey << "] to storage URI [" << details.uriAnonym
+                    << "]. Invalid or expired access token. Notifying client.");
+            session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
+        }
+        else
+        {
+            LOG_ERR("Cannot save docKey ["
+                    << _docKey << "] to storage URI [" << details.uriAnonym
+                    << "]. Invalid or expired access token. The client session is closed.");
+        }
+
         broadcastSaveResult(false, "Invalid or expired access token");
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::FAILED)
     {
         //TODO: Should we notify all clients?
-        LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << details.uriAnonym << "]. Notifying client.");
-        std::ostringstream oss;
-        oss << "error: cmd=storage kind=" << (details.isRename ? "renamefailed" : "savefailed");
-        details.session->sendTextFrame(oss.str());
+        const auto session = details.session.lock();
+        if (session)
+        {
+            LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << details.uriAnonym
+                                              << "]. Notifying client.");
+            const std::string msg = std::string("error: cmd=storage kind=")
+                                    + (details.isRename ? "renamefailed" : "savefailed");
+            session->sendTextFrame(msg);
+        }
+        else
+        {
+            LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << details.uriAnonym
+                                              << "]. The client session is closed.");
+        }
+
         broadcastSaveResult(false, "Save failed", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::DOC_CHANGED
