@@ -16,6 +16,58 @@ describe('Top toolbar tests.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 	
+	it('Remove cell border', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+		 
+		//Add left border
+		cy.get('.w2ui-tb-image.w2ui-icon.frame02')
+			 .click({force: true});
+			 
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'style', 'border-left: 1px solid #000000');
+		
+		// Then remove it
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame01')
+			 .click({force: true});
+			 
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('not.have.attr', 'style');
+	});
+
+	it('Apply right border', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame03')
+			 .click({force: true});
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'style', 'border-right: 1px solid #000000');
+	});
+
+	it('Apply left border', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame02')
+			 .click({force: true});
+			 
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'style', 'border-left: 1px solid #000000');
+	});
+	
 	it('Clear Direct formatting.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
