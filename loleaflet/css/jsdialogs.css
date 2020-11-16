@@ -1,3 +1,14 @@
+/* JSDialog */
+
+.jsdialog-container {
+	position: absolute;
+	z-index: 1105;
+}
+
+.jsdialog-container .ui-dialog-content {
+	background-color: white !important;
+}
+
 /* TreeView */
 
 .ui-treeview {
