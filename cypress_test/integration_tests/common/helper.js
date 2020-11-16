@@ -387,10 +387,10 @@ function beforeAll(fileName, subFolder, noFileCopy, subsequentLoad) {
 function afterAll(fileName, testState) {
 	cy.log('Waiting for closing the document - start.');
 
-	if (testState === 'failed' && Cypress.env('INTEGRATION') === 'nextcloud')
-		return;
-
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
+		if (testState === 'failed')
+			return;
+
 		if (Cypress.env('IFRAME_LEVEL') === '2') {
 			// Close the document
 			doIfOnMobile(function() {
@@ -444,6 +444,12 @@ function afterAll(fileName, testState) {
 		cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +
 			'/loleaflet/dist/admin/admin.html');
+
+		// https://github.com/cypress-io/cypress/issues/9207
+		if (testState === 'failed') {
+			cy.wait(5000);
+			return;
+		}
 
 		cy.get('#uptime')
 			.should('not.have.text', '0');
