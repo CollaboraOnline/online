@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach Cypress */
 
 var helper = require('../../common/helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Top toolbar interfering test: user-1.', function() {
 	var testFileName = 'top_toolbar_interfer.odt';
@@ -13,7 +14,7 @@ describe('Top toolbar interfering test: user-1.', function() {
 
 		cy.wait(2000);
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 	});
 
 	afterEach(function() {
@@ -24,7 +25,7 @@ describe('Top toolbar interfering test: user-1.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -34,7 +35,7 @@ describe('Top toolbar interfering test: user-1.', function() {
 		cy.get('#tb_editbar_item_italic')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p i')
 		    .should('exist');
@@ -43,7 +44,7 @@ describe('Top toolbar interfering test: user-1.', function() {
 	it('Apply underline.', function() {
 		cy.get('#tb_editbar_item_underline')
 			.click();
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p u')
 			.should('exist');
@@ -53,7 +54,7 @@ describe('Top toolbar interfering test: user-1.', function() {
 		cy.get('#tb_editbar_item_strikeout')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p strike')
 			.should('exist');
@@ -63,7 +64,7 @@ describe('Top toolbar interfering test: user-1.', function() {
 		cy.get('#tb_editbar_item_centerpara')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
@@ -71,7 +72,7 @@ describe('Top toolbar interfering test: user-1.', function() {
 		cy.get('#tb_editbar_item_leftpara')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'left');

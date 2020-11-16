@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Trigger hamburger menu options.', function() {
 	var testFileName = 'hamburger_menu.odt';
@@ -20,7 +20,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	function hideText() {
 		// Change text color to white to hide text.
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.openMobileWizard();
 
@@ -52,11 +52,11 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Save', function() {
 		// Change the document content and save it
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		helper.typeIntoDocument('new');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		helper.expectTextForClipboard('\nnew');
 
@@ -67,7 +67,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		helper.expectTextForClipboard('\nnew');
 	});
@@ -136,7 +136,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Type a new character
 		helper.typeIntoDocument('q');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', 'q');
@@ -144,7 +144,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Undo
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Undo']);
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('not.contain.text', 'q');
@@ -152,7 +152,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Redo
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Redo']);
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', 'q');
@@ -165,7 +165,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Second change
 		helper.typeIntoDocument('w');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', 'qw');
@@ -173,7 +173,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Undo
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Undo']);
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('not.contain.text', 'w');
@@ -196,7 +196,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.leaflet-popup-content input[value=\'Jump to state\']')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', 'qw');
@@ -219,7 +219,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.leaflet-popup-content input[value=\'Jump to state\']')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('not.contain.text', 'q');
@@ -229,7 +229,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Cut.', function() {
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 
@@ -249,7 +249,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Copy.', function() {
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 
@@ -269,7 +269,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Paste.', function() {
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 
@@ -341,7 +341,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.clearAllText();
 
 		// By default track changed are shown.
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		// We have selection markers.
 		cy.get('.leaflet-marker-icon')
@@ -412,7 +412,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clearAllText();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		// We dont have actual text content.
 		cy.get('#copy-paste-container p')
@@ -421,7 +421,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Reject removal.
 		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Reject All']);
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		// We get back the content.
 		cy.contains('#copy-paste-container p', 'xxxxxxx')
@@ -483,7 +483,7 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Check word counts.', function() {
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.selectHamburgerMenuItem(['Word Count...']);
 
