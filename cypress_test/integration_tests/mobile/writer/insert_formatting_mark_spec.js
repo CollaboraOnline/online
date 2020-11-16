@@ -28,7 +28,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert non-breaking space.', function() {
-		cy.contains('.menu-entry-with-icon', 'Non-breaking space')
+		cy.contains('.menu-entry-with-icon', 'Insert non-breaking space')
 			.click();
 
 		writerMobileHelper.selectAllMobile();
@@ -38,7 +38,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert non-breaking hyphen.', function() {
-		cy.contains('.menu-entry-with-icon', 'Non-breaking hyphen')
+		cy.contains('.menu-entry-with-icon', 'Insert non-breaking hyphen')
 			.click();
 
 		writerMobileHelper.selectAllMobile();
@@ -48,7 +48,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert soft hyphen.', function() {
-		cy.contains('.menu-entry-with-icon', 'Soft hyphen')
+		cy.contains('.menu-entry-with-icon', 'Insert soft Hyphen')
 			.click();
 
 		writerMobileHelper.selectAllMobile();
@@ -58,7 +58,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert no-width optional break.', function() {
-		cy.contains('.menu-entry-with-icon', 'No-width optional break')
+		cy.contains('.menu-entry-with-icon', 'No-width Optional Break')
 			.click();
 
 		writerMobileHelper.selectAllMobile();
@@ -68,7 +68,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert no-width no break.', function() {
-		cy.contains('.menu-entry-with-icon', 'No-width no break')
+		cy.contains('.menu-entry-with-icon', 'No-width No Break')
 			.click();
 
 		writerMobileHelper.selectAllMobile();
@@ -78,7 +78,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert left-to-right mark.', function() {
-		cy.contains('.menu-entry-with-icon', 'Left-to-right mark')
+		cy.contains('.menu-entry-with-icon', 'Left-to-right Mark')
 			.click();
 
 		writerMobileHelper.selectAllMobile();
@@ -88,7 +88,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 	});
 
 	it('Insert right-to-left mark.', function() {
-		cy.contains('.menu-entry-with-icon', 'Right-to-left mark')
+		cy.contains('.menu-entry-with-icon', 'Right-to-left Mark')
 			.click();
 
 		writerMobileHelper.selectAllMobile();

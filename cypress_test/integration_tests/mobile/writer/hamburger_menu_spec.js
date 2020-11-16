@@ -906,7 +906,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.loleaflet-annotation-menu')
 			.click({force: true});
 
-		cy.contains('.context-menu-link', 'Resolve')
+		cy.contains('.context-menu-item', 'Resolve')
 			.click();
 
 		cy.get('.loleaflet-annotation')
