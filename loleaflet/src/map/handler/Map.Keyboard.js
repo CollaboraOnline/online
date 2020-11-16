@@ -501,8 +501,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return false;
 		}
 		/* Without specifying the key type, the messages are sent twice (both keydown/up) */
-		if (e.type === 'keydown' &&
-			(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp)) {
+		if (e.type === 'keydown' && window.ThisIsAMobileApp) {
 			if (e.key === 'c' || e.key === 'C') {
 				this._map._socket.sendMessage('uno .uno:Copy');
 			}
