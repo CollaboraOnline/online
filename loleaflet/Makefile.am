@@ -282,6 +282,7 @@ LOLEAFLET_JS =\
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
 	src/control/Control.Infobar.js src/control/ColorPicker.js \
+	src/control/Control.JSDialog.js \
 	src/control/Control.JSDialogBuilder.js \
 	src/control/Control.MobileWizard.js \
 	src/control/Control.LanguageDialog.js \
@@ -603,6 +604,7 @@ pot:
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.DownloadProgress.js \
 		src/control/Control.FormulaBar.js \
+		src/control/Control.JSDialog.js \
 		src/control/Control.JSDialogBuilder.js \
 		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
