@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Insert formatting mark via insertion wizard.', function() {
 	var testFileName = 'insert_formatting_mark.odt';
@@ -31,7 +31,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Insert non-breaking space')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', '\u00a0');
@@ -41,7 +41,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Insert non-breaking hyphen')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', '\u2011');
@@ -51,7 +51,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Insert soft Hyphen')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', '\u00ad');
@@ -61,7 +61,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'No-width Optional Break')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', '\u200b');
@@ -71,7 +71,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'No-width No Break')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', '\u2060');
@@ -81,7 +81,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Left-to-right Mark')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', '\u200e');
@@ -91,7 +91,7 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Right-to-left Mark')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', '\u200f');
