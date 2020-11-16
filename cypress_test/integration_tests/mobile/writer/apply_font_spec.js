@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Apply font changes.', function() {
 	var testFileName = 'apply_font.odt';
@@ -10,11 +10,9 @@ describe('Apply font changes.', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 
-		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Do a new selection
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.openMobileWizard();
 	});
@@ -24,8 +22,7 @@ describe('Apply font changes.', function() {
 	});
 
 	function applyStyle(styleName) {
-		// Do a new selection
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.openMobileWizard();
 
@@ -59,7 +56,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontnamecombobox .ui-header-right .entry-value')
 			.should('have.text', 'Linux Libertine G');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Linux Libertine G');
@@ -84,7 +81,7 @@ describe('Apply font changes.', function() {
 		cy.get('#fontsizecombobox .ui-header-right .entry-value')
 			.should('have.text', '36');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 36pt');
@@ -93,7 +90,7 @@ describe('Apply font changes.', function() {
 	it('Apply bold font.', function() {
 		helper.clickOnIdle('#Bold');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -102,7 +99,7 @@ describe('Apply font changes.', function() {
 	it('Apply italic font.', function() {
 		helper.clickOnIdle('#Italic');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p i')
 			.should('exist');
@@ -111,7 +108,7 @@ describe('Apply font changes.', function() {
 	it('Apply underline.', function() {
 		helper.clickOnIdle('#Underline');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p u')
 			.should('exist');
@@ -120,7 +117,7 @@ describe('Apply font changes.', function() {
 	it('Apply strikeout.', function() {
 		helper.clickOnIdle('#Strikeout');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p strike')
 			.should('exist');
@@ -129,7 +126,7 @@ describe('Apply font changes.', function() {
 	it('Apply shadowed.', function() {
 		helper.clickOnIdle('#Shadowed');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		// TODO: Shadowed is not in the clipboard content.
 	});
@@ -137,7 +134,7 @@ describe('Apply font changes.', function() {
 	it('Apply grow.', function() {
 		helper.clickOnIdle('#Grow');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 42pt');
@@ -146,7 +143,7 @@ describe('Apply font changes.', function() {
 	it('Apply shrink.', function() {
 		helper.clickOnIdle('#Shrink');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 38pt');
@@ -157,7 +154,7 @@ describe('Apply font changes.', function() {
 
 		mobileHelper.selectFromColorPalette(0, 5, 2);
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'color', '#6aa84f');
@@ -170,7 +167,7 @@ describe('Apply font changes.', function() {
 
 		mobileHelper.closeMobileWizard();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'color', '#ff0000');
@@ -181,7 +178,7 @@ describe('Apply font changes.', function() {
 
 		helper.clickOnIdle('.colors-container-auto-color-row');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'color', '#000000');
@@ -192,7 +189,7 @@ describe('Apply font changes.', function() {
 
 		mobileHelper.selectFromColorPalette(1, 5, 4);
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: #93c47d');
@@ -201,7 +198,7 @@ describe('Apply font changes.', function() {
 	it('Apply superscript.', function() {
 		helper.clickOnIdle('#SuperScript');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p sup')
 			.should('exist');
@@ -210,7 +207,7 @@ describe('Apply font changes.', function() {
 	it('Apply subscript.', function() {
 		helper.clickOnIdle('#SubScript');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p sub')
 			.should('exist');
@@ -228,11 +225,13 @@ describe('Apply font changes.', function() {
 			.should('not.exist');
 	});
 
-	it('Apply style.', function() {
+	it('Apply style.', {retries : 0}, function() {
+		mobileHelper.closeMobileWizard();
+
 		// Apply Title style
 		applyStyle('Title');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Liberation Sans, sans-serif');
@@ -242,7 +241,7 @@ describe('Apply font changes.', function() {
 		// Clear formatting
 		applyStyle('Clear formatting');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style', 'margin-bottom: 0in; line-height: 100%');

@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Insert fields via insertion wizard.', function() {
 	var testFileName = 'insert_field.odt';
@@ -32,7 +32,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Page Number')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'PAGE')
@@ -44,7 +44,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Page Count')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCSTAT')
@@ -56,7 +56,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Date')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DATETIME');
@@ -72,7 +72,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Time')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DATETIME');
@@ -88,7 +88,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Title')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
@@ -100,7 +100,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'First Author')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
@@ -113,7 +113,7 @@ describe('Insert fields via insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Subject')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p span sdfield')
 			.should('have.attr', 'type', 'DOCINFO')

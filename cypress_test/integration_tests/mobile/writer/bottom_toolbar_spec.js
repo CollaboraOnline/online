@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Pushing bottom toolbar items.', function() {
 	var testFileName = 'bottom_toolbar.odt';
@@ -10,11 +10,9 @@ describe('Pushing bottom toolbar items.', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 
-		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Do a new selection
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 	});
 
 	afterEach(function() {
@@ -31,7 +29,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_bold div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -47,7 +45,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_italic div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p i')
 			.should('exist');
@@ -62,7 +60,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_underline div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p u')
 			.should('exist');
@@ -78,7 +76,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_strikeout div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p strike')
 			.should('exist');
@@ -93,7 +91,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.textcolor')
 			.should('have.attr', 'style', 'box-shadow: rgb(255, 255, 255) 0px -2px inset, rgb(0, 0, 255) 0px -6px inset;');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'color', '#0000ff');
@@ -108,7 +106,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.backcolor')
 			.should('have.attr', 'style', 'box-shadow: rgb(255, 255, 255) 0px -2px inset, rgb(255, 0, 255) 0px -6px inset;');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: #ff00ff');
@@ -124,7 +122,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_rightpara div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'right');
@@ -138,7 +136,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_leftpara div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'left');
@@ -154,7 +152,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_centerpara div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
@@ -170,7 +168,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_justifypara div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'justify');
@@ -186,7 +184,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_defaultnumbering div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container ol li p')
 			.should('exist');
@@ -202,7 +200,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_defaultbullet div table')
 			.should('have.class', 'checked');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container ul li p')
 			.should('exist');
@@ -212,7 +210,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_incrementindent')
 			.click().click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -221,7 +219,7 @@ describe('Pushing bottom toolbar items.', function() {
 		cy.get('#tb_editbar_item_decrementindent')
 			.click();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
