@@ -54,24 +54,5 @@ describe('Calc focus tests', function() {
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
 		calcHelper.typeIntoFormulabar('{enter}');
-
-		// Type some more text, in the middle.
-		cy.log('Inserting text in the middle.');
-		calcHelper.clickOnFirstCell();
-		calcHelper.clickFormulaBar();
-		helper.assertCursorAndFocus();
-
-		// Move cursor inside text2
-		calcHelper.typeIntoFormulabar('{end}');
-		for (var i = 0; i < 6; i++)
-			helper.moveCursor('left');
-
-		var text3 = ' BAZINGA';
-		helper.typeText('textarea.clipboard', text3);
-		// Validate.
-		calcHelper.typeIntoFormulabar('{ctrl}a');
-		//NOTE: If this fails, it's probably because we clicked
-		// at a different point in the text.
-		helper.expectTextForClipboard(text1 + ', this is a' + text3 + ' test.');
 	});
 });
