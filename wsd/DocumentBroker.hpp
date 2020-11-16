@@ -362,7 +362,7 @@ private:
     {
         const std::string uriAnonym;
         const std::chrono::system_clock::time_point newFileModifiedTime;
-        const std::shared_ptr<class ClientSession> session;
+        const std::weak_ptr<class ClientSession> session;
         const bool isSaveAs;
         const bool isRename;
     };
