@@ -63,8 +63,11 @@ describe('Annotation tests.', function() {
 		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
 			.should('have.text', 'some text');
 
+		cy.get('.blinking-cursor')
+			.should('be.visible');
+
 		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.type('modified ');
+			.type('{home}modified ');
 
 		cy.get('.vex-dialog-button-primary')
 			.click();
