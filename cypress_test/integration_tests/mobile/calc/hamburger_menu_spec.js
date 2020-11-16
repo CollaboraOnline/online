@@ -552,7 +552,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
 			.click();
 
-		cy.contains('.menu-entry-with-icon', 'Remove Row Break')
+		cy.contains('[title=\'Delete Page Break\'] .menu-entry-with-icon', 'Row Break')
 			.click();
 
 		// TODO: no visual indicator here
@@ -599,7 +599,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
 			.click();
 
-		cy.contains('.menu-entry-with-icon', 'Remove Column Break')
+		cy.contains('[title=\'Delete Page Break\'] .menu-entry-with-icon', 'Column Break')
 			.click();
 
 		// TODO: no visual indicator here
