@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect */
+/* global describe it cy beforeEach require afterEach expect Cypress*/
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -88,35 +88,22 @@ describe('Change alignment settings.', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
-		calcHelper.typeIntoFormulabar('{end}');
-
-		cy.get('#calc-inputbar .lokdialog-cursor')
-			.should(function(cursor) {
-				expect(cursor.offset().left).to.be.equal(294);
-			});
+		calcHelper.typeIntoFormulabar('{ctrl}a');
+		helper.expectTextForClipboard('long line long line long line');
 
 		// A2 cell is empty
 		cy.get('input#addressInput')
 			.clear()
 			.type('A2{enter}');
 
+		cy.get('.spreadsheet-cell-autofill-marker')
+			.should('be.visible');
+
 		calcHelper.typeIntoFormulabar('{end}');
 
 		cy.get('#calc-inputbar .lokdialog-cursor')
 			.should(function(cursor) {
 				expect(cursor.offset().left).to.be.equal(103);
-			});
-
-		// Change first cell content
-		calcHelper.dblClickOnFirstCell();
-		
-		helper.typeIntoDocument('xxx');
-
-		calcHelper.typeIntoFormulabar('{end}');
-
-		cy.get('#calc-inputbar .lokdialog-cursor')
-			.should(function(cursor) {
-				expect(cursor.offset().left).to.be.equal(318);
 			});
 	});
 
@@ -280,11 +267,20 @@ describe('Change alignment settings.', function() {
 			.should('be.visible');
 
 		// Add a range
-		calcHelper.typeIntoFormulabar('B2:B4{enter}');
+		calcHelper.typeIntoFormulabar('B2:B4');
+		cy.get('#tb_actionbar_item_acceptformula')
+			.click();
 
 		// Close mobile wizard with formulas.
-		cy.get('#mobile-wizard-back')
-			.click();
+		cy.waitUntil(function() {
+			cy.get('#mobile-wizard-back')
+				.click();
+
+			return cy.get('#mobile-wizard-content')
+				.then(function(wizardContent) {
+					return !Cypress.dom.isVisible(wizardContent[0]);
+				});
+		});
 
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
