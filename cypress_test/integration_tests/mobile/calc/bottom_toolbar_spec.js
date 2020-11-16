@@ -26,21 +26,10 @@ describe('Interact with bottom toolbar.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function getTextPosForFirstCell() {
+	function getTextEndPosForFirstCell() {
 		calcHelper.dblClickOnFirstCell();
 
-		// Select text content
-		helper.typeIntoDocument('{ctrl}a');
-
-		helper.initAliasToNegative('currentTextPos');
-
-		cy.get('.leaflet-selection-marker-end')
-			.invoke('offset')
-			.its('left')
-			.as('currentTextPos');
-
-		cy.get('@currentTextPos')
-			.should('be.greaterThan', 0);
+		helper.getCursorPos('left', 'currentTextEndPos');
 
 		calcHelper.removeTextSelection();
 	}
@@ -190,13 +179,13 @@ describe('Interact with bottom toolbar.', function() {
 	it('Enable text wrapping.', function() {
 		before('bottom_toolbar.ods');
 
-		helper.initAliasToNegative('originalTextPos');
+		helper.initAliasToNegative('originalTextEndPos');
 
-		getTextPosForFirstCell();
-		cy.get('@currentTextPos')
-			.as('originalTextPos');
+		getTextEndPosForFirstCell();
+		cy.get('@currentTextEndPos')
+			.as('originalTextEndPos');
 
-		cy.get('@currentTextPos')
+		cy.get('@currentTextEndPos')
 			.should('be.greaterThan', 0);
 
 		calcHelper.clickOnFirstCell();
@@ -206,13 +195,13 @@ describe('Interact with bottom toolbar.', function() {
 
 		// We use the text position as indicator
 		cy.waitUntil(function() {
-			getTextPosForFirstCell();
+			getTextEndPosForFirstCell();
 
-			return cy.get('@currentTextPos')
-				.then(function(currentTextPos) {
-					return cy.get('@originalTextPos')
-						.then(function(originalTextPos) {
-							return originalTextPos > currentTextPos;
+			return cy.get('@currentTextEndPos')
+				.then(function(currentTextEndPos) {
+					return cy.get('@originalTextEndPos')
+						.then(function(originalTextEndPos) {
+							return originalTextEndPos > currentTextEndPos;
 						});
 				});
 		});

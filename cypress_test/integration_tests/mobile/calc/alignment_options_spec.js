@@ -21,21 +21,10 @@ describe('Change alignment settings.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function getTextPosForFirstCell() {
+	function getTextEndPosForFirstCell() {
 		calcHelper.dblClickOnFirstCell();
 
-		// Select text content
-		helper.typeIntoDocument('{ctrl}a');
-
-		helper.initAliasToNegative('currentTextPos');
-
-		cy.get('.leaflet-selection-marker-end')
-			.invoke('offset')
-			.its('left')
-			.as('currentTextPos');
-
-		cy.get('@currentTextPos')
-			.should('be.greaterThan', 0);
+		helper.getCursorPos('left', 'currentTextEndPos');
 
 		calcHelper.removeTextSelection();
 	}
@@ -149,15 +138,15 @@ describe('Change alignment settings.', function() {
 			.should('have.attr', 'valign', 'middle');
 	});
 
-	it.skip('Increment / decrement text indent.', function() {
-		helper.initAliasToNegative('originalTextPos');
+	it('Increment / decrement text indent.', function() {
+		helper.initAliasToNegative('originalTextEndPos');
 
 		// Get text position first
-		getTextPosForFirstCell();
-		cy.get('@currentTextPos')
-			.as('originalTextPos');
+		getTextEndPosForFirstCell();
+		cy.get('@currentTextEndPos')
+			.as('originalTextEndPos');
 
-		cy.get('@originalTextPos')
+		cy.get('@originalTextEndPos')
 			.should('be.greaterThan', 0);
 
 		openAlignmentPaneForFirstCell();
@@ -168,23 +157,23 @@ describe('Change alignment settings.', function() {
 		// We use the text position as indicator
 		cy.get('body')
 			.should(function() {
-				getTextPosForFirstCell();
+				getTextEndPosForFirstCell();
 
-				cy.get('@currentTextPos')
-					.then(function(currentTextPos) {
-						cy.get('@originalTextPos')
-							.then(function(originalTextPos) {
-								expect(originalTextPos).to.be.lessThan(currentTextPos);
+				cy.get('@currentTextEndPos')
+					.then(function(currentTextEndPos) {
+						cy.get('@originalTextEndPos')
+							.then(function(originalTextEndPos) {
+								expect(originalTextEndPos).to.be.lessThan(currentTextEndPos);
 							});
 					});
 			});
 
-		helper.initAliasToNegative('originalTextPos');
+		helper.initAliasToNegative('originalTextEndPos');
 
-		cy.get('@currentTextPos')
-			.as('originalTextPos');
+		cy.get('@currentTextEndPos')
+			.as('originalTextEndPos');
 
-		cy.get('@currentTextPos')
+		cy.get('@currentTextEndPos')
 			.should('be.greaterThan', 0);
 
 		// Decrease indent
@@ -195,13 +184,13 @@ describe('Change alignment settings.', function() {
 		// We use the text position as indicator
 		cy.get('body')
 			.should(function() {
-				getTextPosForFirstCell();
+				getTextEndPosForFirstCell();
 
-				cy.get('@currentTextPos')
-					.then(function(currentTextPos) {
-						cy.get('@originalTextPos')
-							.then(function(originalTextPos) {
-								expect(originalTextPos).to.be.greaterThan(currentTextPos);
+				cy.get('@currentTextEndPos')
+					.then(function(currentTextEndPos) {
+						cy.get('@originalTextEndPos')
+							.then(function(originalTextEndPos) {
+								expect(originalTextEndPos).to.be.greaterThan(currentTextEndPos);
 							});
 					});
 			});
@@ -209,13 +198,13 @@ describe('Change alignment settings.', function() {
 
 	it.skip('Change text indent via input field.', function() {
 		// TODO: this fails, because the input field always becomes disabled.
-		helper.initAliasToNegative('originalTextPos');
+		helper.initAliasToNegative('originalTextEndPos');
 
-		getTextPosForFirstCell();
-		cy.get('@currentTextPos')
-			.as('originalTextPos');
+		getTextEndPosForFirstCell();
+		cy.get('@currentTextEndPos')
+			.as('originalTextEndPos');
 
-		cy.get('@currentTextPos')
+		cy.get('@currentTextEndPos')
 			.should('be.greaterThan', 0);
 
 		openAlignmentPaneForFirstCell();
@@ -242,26 +231,26 @@ describe('Change alignment settings.', function() {
 		// We use the text position as indicator
 		cy.get('body')
 			.should(function() {
-				getTextPosForFirstCell();
+				getTextEndPosForFirstCell();
 
-				cy.get('@currentTextPos')
-					.then(function(currentTextPos) {
-						cy.get('@originalTextPos')
-							.then(function(originalTextPos) {
-								expect(originalTextPos).to.be.lessThan(currentTextPos);
+				cy.get('@currentTextEndPos')
+					.then(function(currentTextEndPos) {
+						cy.get('@originalTextEndPos')
+							.then(function(originalTextEndPos) {
+								expect(originalTextEndPos).to.be.lessThan(currentTextEndPos);
 							});
 					});
 			});
 	});
 
-	it.skip('Enable text wrapping.', function() {
-		helper.initAliasToNegative('originalTextPos');
+	it('Enable text wrapping.', function() {
+		helper.initAliasToNegative('originalTextEndPos');
 
-		getTextPosForFirstCell();
-		cy.get('@currentTextPos')
-			.as('originalTextPos');
+		getTextEndPosForFirstCell();
+		cy.get('@currentTextEndPos')
+			.as('originalTextEndPos');
 
-		cy.get('@currentTextPos')
+		cy.get('@currentTextEndPos')
 			.should('be.greaterThan', 0);
 
 		openAlignmentPaneForFirstCell();
@@ -276,13 +265,13 @@ describe('Change alignment settings.', function() {
 
 		// We use the text position as indicator
 		cy.waitUntil(function() {
-			getTextPosForFirstCell();
+			getTextEndPosForFirstCell();
 
-			return cy.get('@currentTextPos')
-				.then(function(currentTextPos) {
-					return cy.get('@originalTextPos')
-						.then(function(originalTextPos) {
-							return originalTextPos > currentTextPos;
+			return cy.get('@currentTextEndPos')
+				.then(function(currentTextEndPos) {
+					return cy.get('@originalTextEndPos')
+						.then(function(originalTextEndPos) {
+							return originalTextEndPos > currentTextEndPos;
 						});
 				});
 		});

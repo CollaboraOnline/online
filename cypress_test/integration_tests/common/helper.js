@@ -825,10 +825,21 @@ function typeIntoDocument(text) {
 function getCursorPos(offsetProperty, aliasName) {
 	initAliasToNegative(aliasName);
 
-	cy.get('.blinking-cursor')
-		.invoke('offset')
-		.its(offsetProperty)
-		.as(aliasName);
+	cy.get('.leaflet-pane')
+		.then(function(pane) {
+			// We try document's blinking cursor first if exists.
+			if (pane.find('.blinking-cursor').length !== 0) {
+				cy.get('.leaflet-pane .blinking-cursor')
+					.invoke('offset')
+					.its(offsetProperty)
+					.as(aliasName);
+			} else {
+				cy.get('.blinking-cursor')
+					.invoke('offset')
+					.its(offsetProperty)
+					.as(aliasName);
+			}
+		});
 
 	cy.get('@' + aliasName)
 		.should('be.greaterThan', 0);
