@@ -1056,6 +1056,8 @@ L.TileLayer = L.GridLayer.extend({
 			msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
 			if (msgData.jsontype === 'autofilter') {
 				this._map.fire('autofilterdropdown', msgData);
+			} else if (msgData.jsontype === 'dialog') {
+				this._map.fire('jsdialog', msgData);
 			} else if (msgData.jsontype === 'notebookbar' || msgData.type === 'borderwindow') {
 				window.notebookbarId = msgData.id;
 				for (var i = 0; i < msgData.children.length; i++) {
