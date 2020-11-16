@@ -77,7 +77,7 @@ describe('Calc focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	it.skip('Formula-bar focus', function() {
+	it('Formula-bar focus', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
@@ -101,7 +101,8 @@ describe('Calc focus tests', function() {
 		// Type some text.
 		var text1 = 'Hello from Calc';
 		calcHelper.typeIntoFormulabar(text1);
-		calcHelper.typeIntoFormulabar('{enter}');
+		cy.get('#tb_actionbar_item_acceptformula')
+			.click();
 		helper.assertNoKeyboardInput();
 
 		// Select the first cell to edit the same one.
@@ -114,7 +115,8 @@ describe('Calc focus tests', function() {
 		helper.expectTextForClipboard(text1);
 
 		// Accept changes.
-		calcHelper.typeIntoFormulabar('{enter}');
+		cy.get('#tb_actionbar_item_acceptformula')
+			.click();
 		helper.assertNoKeyboardInput();
 
 		// Type some more text, at the end.
@@ -128,27 +130,8 @@ describe('Calc focus tests', function() {
 		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
-		calcHelper.typeIntoFormulabar('{enter}');
-		helper.assertNoKeyboardInput();
-
-		// Type some more text, in the middle.
-		cy.log('Inserting text in the middle.');
-		calcHelper.clickOnFirstCell();
-		calcHelper.clickFormulaBar();
-		helper.assertCursorAndFocus();
-
-		// Move cursor before text2
-		calcHelper.typeIntoFormulabar('{end}');
-		for (var i = 0; i < text2.length; i++)
-			helper.moveCursor('left');
-
-		var text3 = ', BAZINGA';
-		calcHelper.typeIntoFormulabar(text3);
-		// Validate.
-		calcHelper.typeIntoFormulabar('{ctrl}a');
-		helper.expectTextForClipboard(text1 + text3 + text2);
-		// End editing.
-		calcHelper.typeIntoFormulabar('{enter}');
+		cy.get('#tb_actionbar_item_acceptformula')
+			.click();
 		helper.assertNoKeyboardInput();
 	});
 });
