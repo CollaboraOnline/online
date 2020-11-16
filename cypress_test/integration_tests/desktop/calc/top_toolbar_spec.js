@@ -41,6 +41,19 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('not.have.attr', 'style');
 	});
+	
+	it('Apply left border', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame02')
+			 .click({force: true});
+			 
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'style', 'border-left: 1px solid #000000');
+	});
 
 	it('Apply right border', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
@@ -55,17 +68,43 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'style', 'border-right: 1px solid #000000');
 	});
 
-	it('Apply left border', function() {
+	it('Apply left and right border', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
 
-		cy.get('.w2ui-tb-image.w2ui-icon.frame02')
-			 .click({force: true});
-			 
+		cy.get('.w2ui-tb-image.w2ui-icon.frame04')
+			 .click();
+
 		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'style', 'border-left: 1px solid #000000');
+			.should('have.attr', 'style', 'border-left: 1px solid #000000; border-right: 1px solid #000000');
+	});
+
+	it('Apply top border', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame05')
+			 .click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'style', 'border-top: 1px solid #000000');
+	});
+
+	it('Apply bottom border', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame06')
+			 .click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'style', 'border-bottom: 1px solid #000000');
 	});
 	
 	it('Clear Direct formatting.', function() {
@@ -225,6 +264,7 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'sdnum')
 			.should('match', regex);
 	});
+
 	it('Apply left/right alignment', function() {
 		// Set right aligment first
 		cy.get('#tb_editbar_item_textalign .w2ui-tb-down')
@@ -252,4 +292,5 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'left');
 	});
+
 });
