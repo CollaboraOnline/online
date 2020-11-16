@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Searching via search bar.', function() {
 	var testFileName = 'search_bar.odt';
@@ -32,7 +32,7 @@ describe('Searching via search bar.', function() {
 	});
 
 	it('Search not existing word.', function() {
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('.leaflet-marker-icon')
 			.should('exist');

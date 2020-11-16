@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Apply paragraph properties.', function() {
 	var testFileName = 'apply_paragraph_properties.odt';
@@ -10,11 +10,9 @@ describe('Apply paragraph properties.', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 
-		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Do a selection
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.openMobileWizard();
 
@@ -35,7 +33,9 @@ describe('Apply paragraph properties.', function() {
 	it('Apply left/right alignment.', function() {
 		helper.clickOnIdle('#RightPara');
 
-		writerMobileHelper.selectAllMobile();
+		mobileHelper.closeMobileWizard();
+
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'right');
@@ -53,7 +53,9 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#LeftParaimg')
 			.should('have.class', 'selected');
 
-		writerMobileHelper.selectAllMobile();
+		mobileHelper.closeMobileWizard();
+
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'left');
@@ -62,7 +64,7 @@ describe('Apply paragraph properties.', function() {
 	it('Apply center alignment.', function() {
 		helper.clickOnIdle('#CenterPara');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
@@ -71,7 +73,7 @@ describe('Apply paragraph properties.', function() {
 	it('Apply justify alignment.', function() {
 		helper.clickOnIdle('#JustifyPara');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'justify');
@@ -80,13 +82,14 @@ describe('Apply paragraph properties.', function() {
 	it('Change writing direction.', function() {
 		helper.clickOnIdle('#ParaRightToLeft');
 
-		writerMobileHelper.selectAllMobile();
+		mobileHelper.closeMobileWizard();
+
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'dir', 'rtl');
 
-		// Select text
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.openMobileWizard();
 
@@ -96,7 +99,9 @@ describe('Apply paragraph properties.', function() {
 		// Change writing mode
 		helper.clickOnIdle('#ParaLeftToRight');
 
-		writerMobileHelper.selectAllMobile();
+		mobileHelper.closeMobileWizard();
+
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('not.have.attr', 'dir');
@@ -105,7 +110,7 @@ describe('Apply paragraph properties.', function() {
 	it('Apply default bulleting.', function() {
 		helper.clickOnIdle('#DefaultBullet');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container ul li p')
 			.should('exist');
@@ -114,7 +119,7 @@ describe('Apply paragraph properties.', function() {
 	it('Apply default numbering.', function() {
 		helper.clickOnIdle('#DefaultNumbering');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container ol li p')
 			.should('exist');
@@ -125,7 +130,7 @@ describe('Apply paragraph properties.', function() {
 
 		mobileHelper.selectFromColorPalette(2, 5, 2);
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -138,7 +143,9 @@ describe('Apply paragraph properties.', function() {
 
 		helper.clickOnIdle('#ParaspaceIncrease');
 
-		writerMobileHelper.selectAllMobile();
+		mobileHelper.closeMobileWizard();
+
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -148,8 +155,7 @@ describe('Apply paragraph properties.', function() {
 			.should('have.attr', 'style')
 			.should('contain', 'margin-bottom: 0.08in');
 
-		// Select text
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.openMobileWizard();
 
@@ -159,7 +165,7 @@ describe('Apply paragraph properties.', function() {
 		// Decrease para spacing
 		helper.clickOnIdle('#ParaspaceDecrease');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -202,7 +208,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#belowparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -218,14 +224,15 @@ describe('Apply paragraph properties.', function() {
 		helper.clickOnIdle('#IncrementIndent');
 		helper.clickOnIdle('#IncrementIndent');
 
-		writerMobileHelper.selectAllMobile();
+		mobileHelper.closeMobileWizard();
+
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
 			.should('contain', 'margin-left: 0.98in');
 
-		// Select text
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		mobileHelper.openMobileWizard();
 
@@ -235,7 +242,7 @@ describe('Apply paragraph properties.', function() {
 		// Decrease indent
 		helper.clickOnIdle('#DecrementIndent');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -252,7 +259,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#beforetextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -269,7 +276,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#aftertextindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -286,7 +293,7 @@ describe('Apply paragraph properties.', function() {
 		cy.get('#firstlineindent .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')

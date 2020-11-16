@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Change table properties / layout via mobile wizard.', function() {
 	var testFileName = '';
@@ -31,7 +31,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	function selectFullTable() {
 		helper.typeIntoDocument('{downarrow}{downarrow}{downarrow}{downarrow}');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 	}
 
 	it('Insert row before.', function() {
@@ -182,8 +182,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		mobileHelper.closeMobileWizard();
 
-		// Do a new selection
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		// Check markers are in the same row (we have text selection only)
 		cy.get('.leaflet-marker-icon')

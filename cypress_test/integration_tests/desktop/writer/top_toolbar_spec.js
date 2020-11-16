@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Top toolbar tests.', function() {
 	var testFileName = 'top_toolbar.odt';
@@ -13,7 +14,7 @@ describe('Top toolbar tests.', function() {
 			desktopHelper.showSidebarIfHidden();
 		}
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 	});
 
 	afterEach(function() {
@@ -27,7 +28,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-color [name="FFF2CC"]')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: #fff2cc');
@@ -40,7 +41,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-color [name="8E7CC3"]')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'color', '#8e7cc3');
@@ -72,7 +73,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -82,7 +83,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_italic')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p i')
 			.should('exist');
@@ -92,7 +93,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_underline')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p u')
 			.should('exist');
@@ -102,7 +103,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_strikeout')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p strike')
 			.should('exist');
@@ -123,7 +124,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -131,7 +132,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_reset')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
@@ -141,7 +142,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_rightpara')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'right');
@@ -149,7 +150,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_leftpara')
 			.click();
 
-		helper.selectAllText(false);
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'left');
@@ -159,7 +160,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_centerpara')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'center');
@@ -169,7 +170,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_justifypara')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'justify');
@@ -182,7 +183,7 @@ describe('Top toolbar tests.', function() {
 		cy.contains('.menu-text', 'Line Spacing: 1.5')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -194,7 +195,7 @@ describe('Top toolbar tests.', function() {
 		cy.contains('.menu-text', 'Line Spacing: 1')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -208,7 +209,7 @@ describe('Top toolbar tests.', function() {
 		cy.contains('.menu-text', 'Line Spacing: 2')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -222,13 +223,13 @@ describe('Top toolbar tests.', function() {
 		cy.contains('.menu-text', 'Increase Paragraph Spacing')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
 			.should('contain', 'margin-top: 0.04in');
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		//Decrease Paragraph Spacing
 		cy.get('#tb_editbar_item_linespacing')
@@ -237,7 +238,7 @@ describe('Top toolbar tests.', function() {
 		cy.contains('.menu-text', 'Decrease Paragraph Spacing')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -248,7 +249,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_defaultnumbering')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container ol')
 			.should('exist');
@@ -258,7 +259,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_defaultbullet')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container ul')
 			.should('exist');
@@ -272,7 +273,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_incrementindent')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -282,7 +283,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_decrementindent')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -321,7 +322,9 @@ describe('Top toolbar tests.', function() {
 		cy.get('.inserttable-grid > .row > .col').eq(3)
 		   .click();
 
-		helper.reselectAllText();
+		// Move cursor outside of the table to make selection work.
+		helper.moveCursor('down');
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container table')
 			.should('exist');
@@ -363,7 +366,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\ntextlink');
@@ -406,7 +409,7 @@ describe('Top toolbar tests.', function() {
 
 		helper.beforeAll(testFileName, 'writer', true);
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
@@ -429,7 +432,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_italic')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p i')
 			.should('exist');
@@ -439,7 +442,7 @@ describe('Top toolbar tests.', function() {
 			.should('not.have.class', 'disabled')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p i')
 			.should('not.exist');
@@ -449,7 +452,7 @@ describe('Top toolbar tests.', function() {
 			.should('not.have.class', 'disabled')
 			.click();
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p i')
 			.should('exist');
@@ -536,7 +539,7 @@ describe('Top toolbar tests.', function() {
 					.click(XPos, YPos);
 			});
 
-		helper.reselectAllText();
+		writerHelper.selectAllTextOfDoc();
 
 		// Full word should have bold font.
 		cy.get('#copy-paste-container p b')

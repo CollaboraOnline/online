@@ -320,22 +320,6 @@ function selectAllText(assertFocus = true) {
 		.should('exist');
 }
 
-function reselectAllText() {
-
-	cy.log('Unselect all texts');
-
-	typeIntoDocument('{downarrow}');
-
-	cy.get('.leaflet-marker-icon')
-		.should('not.exist');
-
-	typeIntoDocument('{ctrl}a');
-
-	cy.get('.leaflet-marker-icon')
-	   .should('exist');
-	cy.log('Reselect all texts');
-}
-
 // Clear all text by selecting all and deleting.
 function clearAllText() {
 	assertCursorAndFocus();
@@ -850,7 +834,6 @@ module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
 module.exports.assertHaveKeyboardInput = assertHaveKeyboardInput;
 module.exports.selectAllText = selectAllText;
-module.exports.reselectAllText = reselectAllText;
 module.exports.clearAllText = clearAllText;
 module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.matchClipboardText = matchClipboardText;

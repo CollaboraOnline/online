@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
-var writerMobileHelper = require('./writer_mobile_helper');
+var writerHelper = require('../../common/writer_helper');
 
 describe('Nextcloud specific tests.', function() {
 	var testFileName = 'nextcloud.odt';
@@ -72,14 +72,14 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Initially we have "text" text in the document
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		helper.expectTextForClipboard('text');
 
 		// Change the document content and save it
 		helper.typeIntoDocument('new');
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		helper.expectTextForClipboard('new');
 
@@ -89,7 +89,7 @@ describe('Nextcloud specific tests.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		writerMobileHelper.selectAllMobile();
+		writerHelper.selectAllTextOfDoc();
 
 		helper.expectTextForClipboard('text');
 	});
