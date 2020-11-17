@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0100\n"
-"PO-Revision-Date: 2020-10-14 13:30+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2020-11-16 05:28+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "collabora-online/ui/nb_NO/>\n"
-"Language: \n"
+"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-ui-nb.po\n"
 "X-Pootle-Revision: 3938025\n"
 
@@ -583,7 +583,7 @@ msgstr "Vis linjal"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:301
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Vis statusfelt"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:304
 #: src/control/Control.Menubar.js:420 src/control/Control.Menubar.js:668
@@ -822,15 +822,15 @@ msgstr "Antall presentasjonssider"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Velg flere celler"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Innsmettingsmodus: inaktivt"
 
 #: src/control/Control.StatusBar.js:463
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Utvalgsmodus: inaktivt"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -958,7 +958,7 @@ msgstr "Hjem"
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:97
 msgid "~Insert"
-msgstr "Sett inn"
+msgstr "~Sett inn"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
@@ -1008,7 +1008,7 @@ msgstr "Sett inn rader over"
 
 #: src/control/Control.NotebookbarCalc.js:1938
 msgid "Insert Rows Below"
-msgstr "Sett inn Rader under"
+msgstr "Sett inn rader nedenfor"
 
 #: src/control/Control.NotebookbarCalc.js:1960
 msgid "Insert Columns Before"
@@ -1024,7 +1024,7 @@ msgstr "Sett inn radbrytning"
 
 #: src/control/Control.NotebookbarCalc.js:2008
 msgid "Insert Column Break"
-msgstr "Sett inn Kolonnebrytning"
+msgstr "Sett inn kolonnebrytning"
 
 #: src/control/Control.NotebookbarCalc.js:2030
 msgid "Delete Rows"
@@ -1072,7 +1072,7 @@ msgstr "Høyre marg"
 
 #: src/control/Ruler.js:641
 msgid "Insert tabstop"
-msgstr "Sett inn tab stopp"
+msgstr "Sett inn tabulatorstopp"
 
 #: src/control/Ruler.js:648
 msgid "Delete tabstop"
@@ -1557,7 +1557,7 @@ msgstr "Slett"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Fjern tråd"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1565,15 +1565,15 @@ msgstr "Løs"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Opphev løst status"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Opphev løst status for tråd"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Løs tråd"
 
 #: src/layer/tile/TileLayer.js:853
 msgid "Functions"
