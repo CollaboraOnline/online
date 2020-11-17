@@ -13,7 +13,7 @@
 #include <config.h>
 
 #include <dlfcn.h>
-#ifdef __linux
+#ifdef __linux__
 #include <ftw.h>
 #include <sys/capability.h>
 #include <sys/sysmacros.h>
@@ -2380,7 +2380,7 @@ void lokit_main(
         setupKitEnvironment(userInterface);
 #endif
 
-#if defined(__linux) && !defined(__ANDROID__)
+#if defined(__linux__) && !defined(__ANDROID__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
 #else

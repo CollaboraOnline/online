@@ -14,7 +14,7 @@
 #include <ftw.h>
 #include <stdexcept>
 #include <sys/time.h>
-#ifdef __linux
+#ifdef __linux__
 #include <sys/vfs.h>
 #elif defined IOS
 #import <Foundation/Foundation.h>
@@ -482,7 +482,7 @@ namespace FileUtil
 #endif
         constexpr int64_t ENOUGH_SPACE = gb*1024*1024*1024;
 
-#if defined(__linux ) || defined(__FreeBSD__)
+#if defined(__linux__) || defined(__FreeBSD__)
         struct statfs sfs;
         if (statfs(path.c_str(), &sfs) == -1)
             return true;

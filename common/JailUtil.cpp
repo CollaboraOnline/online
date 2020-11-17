@@ -13,7 +13,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
-#ifdef __linux
+#ifdef __linux__
 #include <sys/sysmacros.h>
 #endif
 

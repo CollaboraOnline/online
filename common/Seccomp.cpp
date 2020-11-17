@@ -15,7 +15,7 @@
 
 #include <dlfcn.h>
 #include <ftw.h>
-#ifdef __linux
+#ifdef __linux__
 #include <linux/audit.h>
 #include <linux/filter.h>
 #if DISABLE_SECCOMP == 0
@@ -26,7 +26,7 @@
 #include <sys/capability.h>
 #include <sys/prctl.h>
 #include <sys/syscall.h>
-#endif // __linux
+#endif // __linux__
 #include <sys/resource.h>
 #include <sys/time.h>
 #include <unistd.h>
