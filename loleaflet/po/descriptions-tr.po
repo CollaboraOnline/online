@@ -1,11 +1,12 @@
 # Yunusemre Şentürk <se.yunusemre@gmail.com>, 2020.
+# Muhammet Kara <muhammet.kara@metu.edu.tr>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: 2020-11-17 10:21+0000\n"
-"Last-Translator: Yunusemre Şentürk <se.yunusemre@gmail.com>\n"
+"PO-Revision-Date: 2020-11-17 13:05+0000\n"
+"Last-Translator: Muhammet Kara <muhammet.kara@metu.edu.tr>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/tr/>\n"
 "Language: tr\n"
@@ -18,7 +19,7 @@ msgstr ""
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
 msgid "Collabora Office: LibreOffice, OpenOffice & more"
-msgstr "Collabora Office: LibreOffice, OpenOffice ve daha fazlası"
+msgstr "Collabora Office: LibreOffice, OpenOffice, dahası"
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
@@ -26,18 +27,18 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"Microsoft, LibreOffice ve OpenOffice dökümanları için LibreOffice tabanlı "
+"Microsoft, LibreOffice ve OpenOffice belgeleri için LibreOffice tabanlı "
 "editör."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
 msgid "Major upgrade to the new 6.4 core."
-msgstr "Yeni 6.4 çekirdeğe önemli güncelleme."
+msgstr "Yeni 6.4 çekirdeğe yönelik ana güncelleme."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
 msgid "Improved MS Office interoperability."
-msgstr "Gelişmiş MS Office ile birlikte çalışabilirlik."
+msgstr "MS Office ile birlikte çalışabilirlik iyileştirildi."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
@@ -47,9 +48,9 @@ msgstr "Chromebook' larda daha iyi klavye, fare ve izleme dörtgeni desteği."
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
 msgid "New tablet UI featuring a notebookbar."
-msgstr "Notebookbar ile sunulan yeni tablet arayüzü."
+msgstr "Sekmeli araç çubuğu (notebookbar) sunan yeni tablet arayüzü."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
-msgstr "Her alanda çok sayıda düzeltme ve iyileştirme."
+msgstr "Farklı konularda çok sayıda düzeltme ve iyileştirme."
