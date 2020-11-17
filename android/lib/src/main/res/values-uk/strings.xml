@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">Підготовка...</string>
+    <string name="loading">Завантаження...</string>
     <string name="preparing_for_the_first_start_after_an_update">Підготовка до першого старту після оновлення.</string>
     <string name="saving">Збереження...</string>
     <string name="cannot_open_file_chooser">Не можу відкрити оглядач файлів</string>
     <string name="failed_to_insert_image">Помилка вставки зображення</string>
     <string name="failed_to_load_file">Помилка визначення файлу для завантаження</string>
     <string name="storage_permission_required">Необхідний дозвіл на збереження</string>
-    <string name="temp_file_saving_disabled">Цей файл тільки для читання, збереження неможливе.</string>
+    <string name="temp_file_saving_disabled">Цей файл лише для читання, збереження неможливе.</string>
     <string name="exiting">Виходимо...</string>
     <string name="rate_our_app_text">Якщо Вам це подобається, будь ласка, поставте нам 5 зірочок в Google Play. Ваші гарні відгуки - наша найкраща мотивація.</string>
     <string name="rate_our_app_title">Дякуємо за використання %1$s!</string>
     <string name="later">Пізніше</string>
     <string name="rate_now">Оцінити зараз</string>
     <string name="file_chromeos_read_only">Цей файл неможливо зберегти за вказаним призначенням, відкриваю в режимі читання. Перемістіть його до Play файлів для повного доступу до операцій читання/запису.</string>
+    <string name="ask_for_copy">Цей документ доступний лише для читання. Створити копію для редагування\?</string>
+    <string name="edit_copy">Змінити копію</string>
+    <string name="view_only">Лише перегляд</string>
+    <string name="restarting">Перезапуск...</string>
 </resources>
