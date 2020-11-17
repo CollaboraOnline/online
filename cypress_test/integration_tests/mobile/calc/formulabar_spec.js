@@ -139,7 +139,12 @@ describe('Change alignment settings.', function() {
 		// Change first cell content via formula bar
 		calcHelper.clickOnFirstCell();
 
-		calcHelper.typeIntoFormulabar('{end}{backspace}{backspace}{backspace}');
+		calcHelper.clickFormulaBar();
+		helper.assertCursorAndFocus();
+
+		helper.moveCursor('end');
+
+		calcHelper.typeIntoFormulabar('{backspace}{backspace}{backspace}');
 
 		cy.get('#tb_actionbar_item_acceptformula')
 			.click();
