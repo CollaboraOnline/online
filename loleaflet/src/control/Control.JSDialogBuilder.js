@@ -1579,15 +1579,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_treelistboxControl: function (parentContainer, data, builder) {
-		if (!data.entries || data.entries.length === 0)
-			return false;
-
 		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
 		table.id = data.id;
 
 		var tbody = L.DomUtil.create('tbody', builder.options.cssClass + ' ui-treeview-body', table);
-		var ul = L.DomUtil.create('ul', builder.options.cssClass, tbody);
 
+		if (!data.entries || data.entries.length === 0)
+			return false;
+
+		var ul = L.DomUtil.create('ul', builder.options.cssClass, tbody);
 
 		for (var i in data.entries) {
 			builder._treelistboxEntry(ul, data, data.entries[i], builder);
