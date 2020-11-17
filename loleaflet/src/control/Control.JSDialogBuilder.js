@@ -161,6 +161,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['valueset'] = this._valuesetControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
 		this._controlHandlers['htmlcontrol'] = this._htmlControl;
+		this._controlHandlers['expander'] = this._expanderHandler;
 		this._controlHandlers['grid'] = this._gridHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
@@ -551,6 +552,35 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
+	},
+
+	_expanderHandler: function(parentContainer, data, builder) {
+		if (data.children.length > 0) {
+			var expander = L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, parentContainer);
+			expander.id = data.id;
+			var label = L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expander);
+			label.innerText = builder._cleanText(data.children[0].text);
+
+			if (data.children.length > 1)
+				$(label).addClass('expanded');
+
+			$(expander).click(function () {
+				builder.callback('expander', 'toggle', data, null, builder);
+			});
+
+			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, parentContainer);
+
+			var children = [];
+			for (var i = 1; i < data.children.length; i++) {
+				children.push(data.children[i]);
+			}
+
+			builder.build(expanderChildren, children);
+		} else {
+			return true;
+		}
+
+		return false;
 	},
 
 	_generateMenuIconName: function(commandName) {
