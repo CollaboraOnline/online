@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0100\n"
-"PO-Revision-Date: 2020-11-04 00:09+0000\n"
+"PO-Revision-Date: 2020-11-17 09:52+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
 "%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
 "%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -147,11 +147,11 @@ msgstr "Zapisz"
 
 #: admin/admin.strings.js:35
 msgid "Cache size of memory statistics"
-msgstr "Wielkość pamięci w pamięci podręcznej"
+msgstr "Statystyka rozmiaru pamięci podręcznej pamięci"
 
 #: admin/admin.strings.js:36
 msgid "Time interval of memory statistics (in ms)"
-msgstr "Przedział czasu statystyki pamięci (w ms)"
+msgstr "Statystyka przedziału czasu pamięci (w ms)"
 
 #: admin/admin.strings.js:37
 msgid "Cache size of CPU statistics"
@@ -159,7 +159,7 @@ msgstr "Statystyka rozmiaru pamięci podręcznej CPU"
 
 #: admin/admin.strings.js:38
 msgid "Time interval of CPU statistics (in ms)"
-msgstr "Przedział czasu statystyk CPU (w ms)"
+msgstr "Statystyka przedziału czasu CPU (w ms)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
@@ -171,7 +171,7 @@ msgstr "Maksymalna pamięć wirtualna procesu dokumentu (w MB) - tylko zmniejsz"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr "Maksymalna pamięć stosu dokumentów (w KB) - tylko redukcja"
+msgstr "Maksymalna pamięć stosu przetwarzania dokumentu (w KB) - tylko zmniejsz"
 
 #: admin/admin.strings.js:42
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
