@@ -834,8 +834,6 @@ bool StreamSocket::parseHeader(const char *clientName,
                                Poco::Net::HTTPRequest &request,
                                MessageMap *map)
 {
-    LOG_TRC('#' << getFD() << " handling incoming " << _inBuffer.size() << " bytes.");
-
     assert(!map || (map->_headerSize == 0 && map->_messageSize == 0));
 
     // Find the end of the header, if any.
@@ -844,7 +842,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                               marker.begin(), marker.end());
     if (itBody == _inBuffer.end())
     {
-        LOG_TRC('#' << getFD() << " doesn't have enough data yet.");
+        LOG_TRC('#' << getFD() << " doesn't have enough data for the header yet.");
         return false;
     }
 
@@ -882,7 +880,8 @@ bool StreamSocket::parseHeader(const char *clientName,
 
         if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
         {
-            LOG_DBG("Not enough content yet: ContentLength: " << contentLength << ", available: " << available);
+            LOG_DBG('#' << getFD() << ": Not enough content yet: ContentLength: " << contentLength
+                        << ", available: " << available);
             return false;
         }
         if (map)
@@ -974,14 +973,16 @@ bool StreamSocket::parseHeader(const char *clientName,
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_DBG("parseHeader exception caught with " << _inBuffer.size() << " bytes: " << exc.displayText());
+        LOG_DBG('#' << getFD() << ": parseHeader exception caught with " << _inBuffer.size()
+                    << " bytes: " << exc.displayText());
         // Probably don't have enough data just yet.
         // TODO: timeout if we never get enough.
         return false;
     }
     catch (const std::exception& exc)
     {
-        LOG_DBG("parseHeader std::exception caught with " << _inBuffer.size() << " bytes: " << exc.what());
+        LOG_DBG('#' << getFD() << ": parseHeader std::exception caught with " << _inBuffer.size()
+                    << " bytes: " << exc.what());
         // Probably don't have enough data just yet.
         // TODO: timeout if we never get enough.
         return false;
