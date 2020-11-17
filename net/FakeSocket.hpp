@@ -13,7 +13,7 @@
 
 #include <poll.h>
 
-#ifndef __linux
+#ifndef __linux__
 #ifndef SOCK_NONBLOCK
 #define SOCK_NONBLOCK 0x100
 #endif

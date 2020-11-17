@@ -7,7 +7,7 @@
 
 #include <config.h>
 
-#ifdef __linux
+#ifdef __linux__
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #endif

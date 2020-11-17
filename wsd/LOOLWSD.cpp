@@ -3881,7 +3881,7 @@ int LOOLWSD::innerMain()
 #endif
 
 #if !MOBILEAPP
-#  ifdef __linux
+#  ifdef __linux__
     // down-pay all the forkit linking cost once & early.
     setenv("LD_BIND_NOW", "1", 1);
 #  endif

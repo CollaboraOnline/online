@@ -11,7 +11,7 @@
 
 #include <csignal>
 #include <sys/poll.h>
-#ifdef __linux
+#ifdef __linux__
 #  include <sys/prctl.h>
 #  include <sys/syscall.h>
 #  include <sys/vfs.h>
@@ -525,7 +525,7 @@ namespace Util
         int res = setpriority(PRIO_PROCESS, pid, prio);
         LOG_TRC("Lowered kit [" << (int)pid << "] priority: " << prio << " with result: " << res);
 
-#ifdef __linux
+#ifdef __linux__
         // rely on Linux thread-id priority setting to drop this thread' priority
         pid_t tid = getThreadId();
         res = setpriority(PRIO_PROCESS, tid, prio);
@@ -533,7 +533,7 @@ namespace Util
 #endif
     }
 
-#endif
+#endif // !MOBILEAPP
 
     std::string replace(std::string result, const std::string& a, const std::string& b)
     {
@@ -577,7 +577,7 @@ namespace Util
         // Set the new name.
         strncpy(ThreadName, s.c_str(), sizeof(ThreadName) - 1);
         ThreadName[sizeof(ThreadName) - 1] = '\0';
-#ifdef __linux
+#ifdef __linux__
         if (prctl(PR_SET_NAME, reinterpret_cast<unsigned long>(s.c_str()), 0, 0, 0) != 0)
             LOG_SYS("Cannot set thread name of "
                     << getThreadId() << " (" << std::hex << std::this_thread::get_id() << std::dec
@@ -599,7 +599,7 @@ namespace Util
         // Main process and/or not set yet.
         if (ThreadName[0] == '\0')
         {
-#ifdef __linux
+#ifdef __linux__
             // prctl(2): The buffer should allow space for up to 16 bytes; the returned string will be null-terminated.
             if (prctl(PR_GET_NAME, reinterpret_cast<unsigned long>(ThreadName), 0, 0, 0) != 0)
                 strncpy(ThreadName, "<noid>", sizeof(ThreadName) - 1);
@@ -614,7 +614,7 @@ namespace Util
         return ThreadName;
     }
 
-#ifdef __linux
+#ifdef __linux__
     static thread_local pid_t ThreadTid = 0;
 
     pid_t getThreadId()
@@ -623,7 +623,7 @@ namespace Util
 #endif
     {
         // Avoid so many redundant system calls
-#ifdef __linux
+#ifdef __linux__
         if (!ThreadTid)
             ThreadTid = ::syscall(SYS_gettid);
         return ThreadTid;
