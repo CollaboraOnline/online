@@ -5,9 +5,12 @@ After=network.target
 [Service]
 EnvironmentFile=-/etc/sysconfig/loolwsd
 ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd
+KillSignal=SIGINT
+TimeoutStopSec=120
 User=lool
 KillMode=control-group
 Restart=always
+LimitNOFILE=infinity:infinity
 
 [Install]
 WantedBy=multi-user.target
