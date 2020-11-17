@@ -9,6 +9,20 @@
 	background-color: white !important;
 }
 
+/* Expander */
+.ui-expander-label::before {
+	content: '>';
+	margin-right: 10px;
+}
+
+.ui-expander-label.expanded::before {
+	content: 'V';
+}
+
+.ui-expander:hover {
+	cursor: pointer;
+}
+
 /* TreeView */
 
 .ui-treeview {
