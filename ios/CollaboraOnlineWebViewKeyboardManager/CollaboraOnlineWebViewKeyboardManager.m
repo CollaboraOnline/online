@@ -322,11 +322,10 @@
 
         [self->webView addSubview:control];
         NSLog(@"COKbdMgr: Added _COWVKMKeyInputControl to webView");
-        [control becomeFirstResponder];
     }
     control.text = text;
     control.selectedRange = NSMakeRange(location, 0);
-
+    [control becomeFirstResponder];
 }
 
 - (void)hideKeyboard {
@@ -390,10 +389,6 @@
         [control removeFromSuperview];
         NSLog(@"COKbdMgr: Removed _COWVKMKeyInputControl from webView");
         control = nil;
-        if (self->lastActionIsDisplay) {
-            NSLog(@"COKbdMgr: lastActionIsDisplay==YES But display it again as loleaflet hasn't asked for it to be hidden");
-            [self displayKeyboardOfType:nil withText:@"" at:UINT_MAX];
-        }
     }
 }
 
