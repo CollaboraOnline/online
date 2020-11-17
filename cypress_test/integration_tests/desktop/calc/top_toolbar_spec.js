@@ -15,7 +15,7 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
-	
+
 	it('Remove cell border', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
@@ -107,6 +107,32 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'style', 'border-bottom: 1px solid #000000');
 	});
 	
+	it('Apply top and bottom border', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame07')
+			 .click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000');
+	});
+
+	it('Apply border for all sides', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame08')
+			 .click();
+
+		calcHelper.selectAllMobile();
+
+		cy.get('#copy-paste-container table td')
+			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
+	});
+
 	it('Clear Direct formatting.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
