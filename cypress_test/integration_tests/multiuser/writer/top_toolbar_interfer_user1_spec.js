@@ -6,13 +6,31 @@ var writerHelper = require('../../common/writer_helper');
 describe('Top toolbar interfering test: user-1.', function() {
 	var testFileName = 'top_toolbar_interfer.odt';
 
+	function checkAndRemoveComment() {
+		cy.get('.loleaflet-annotation-content.loleaflet-dont-break')
+			.should('have.text', 'Ready!');
+
+		cy.get('.loleaflet-annotation-menu')
+			.click({force: true});
+
+		cy.get('.context-menu-list')
+			.should('exist');
+
+		cy.contains('.context-menu-item', 'Remove')
+			.click({force: true});
+
+		cy.get('.loleaflet-annotation-content')
+			.should('not.exist');
+	}
+
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 
 		cy.get('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 			.should('be.visible');
 
-		cy.wait(2000);
+		// Wait for user-1's comment and remove it.
+		checkAndRemoveComment();
 
 		writerHelper.selectAllTextOfDoc();
 	});
