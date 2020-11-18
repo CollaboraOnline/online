@@ -83,9 +83,22 @@ function selectColorFromPalette(color) {
 		.should('not.exist');
 }
 
+function selectFromListbox(item) {
+	cy.get('.select2-dropdown')
+		.should('be.visible');
+
+	// We use force because of the tooltip hiding the items.
+	cy.contains('.select2-results__option', item)
+		.click({force: true});
+
+	cy.get('.select2-dropdown')
+		.should('not.exist');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
 module.exports.showSidebarIfHidden = showSidebarIfHidden;
 module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
+module.exports.selectFromListbox = selectFromListbox;
