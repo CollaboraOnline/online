@@ -182,11 +182,7 @@ describe('Change cell appearance.', function() {
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(4);
 				for (var i = 0; i < cells.length; i++) {
-					if (i == 0)
-						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000');
-					else if (i == 1)
-						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000');
-					else if (i == 2)
+					if (i == 0 || i == 2)
 						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000');
 					else
 						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000');
@@ -205,12 +201,8 @@ describe('Change cell appearance.', function() {
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(4);
 				for (var i = 0; i < cells.length; i++) {
-					if (i == 0)
+					if (i == 0 || i == 1)
 						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
-					else if (i == 1)
-						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
-					else if (i == 2)
-						expect(cells[i]).to.have.attr('style', 'border-left: 1px solid #000000; border-right: 1px solid #000000');
 					else
 						expect(cells[i]).to.have.attr('style', 'border-left: 1px solid #000000; border-right: 1px solid #000000');
 				}
@@ -228,14 +220,7 @@ describe('Change cell appearance.', function() {
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(4);
 				for (var i = 0; i < cells.length; i++) {
-					if (i == 0)
-						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
-					else if (i == 1)
-						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
-					else if (i == 2)
-						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
-					else
-						expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
+					expect(cells[i]).to.have.attr('style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
 				}
 			});
 	});
