@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Slide operations: user-2.', {retries : 0}, function() {
+describe('Slide operations: user-2.', function() {
 	var testFileName = 'slide_operations.odp';
 
 	beforeEach(function() {

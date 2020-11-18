@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Sidebar visibility: user-2.', {retries : 0}, function() {
+describe('Sidebar visibility: user-2.', function() {
 	var testFileName = 'sidebar_visibility.odt';
 
 	beforeEach(function() {
