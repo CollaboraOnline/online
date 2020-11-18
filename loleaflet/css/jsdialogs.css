@@ -101,6 +101,10 @@
 	vertical-align: middle;
 }
 
+.ui-treeview.droptarget {
+	border: 2px dashed darkslateblue;
+}
+
 /* Autofilter dropdown */
 
 .autofilter-container {
