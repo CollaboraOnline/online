@@ -258,8 +258,8 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_fonts')
 			.click();
 
-		cy.contains('.select2-results__option','Alef')
-			 .click({force: true});
+		desktopHelper.selectFromListbox('Alef');
+
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td font')
@@ -270,8 +270,8 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_fontsizes')
 			.click();
 
-		cy.contains('.select2-results__option','12')
-			 .click({force: true});
+		desktopHelper.selectFromListbox('12');
+
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td font')

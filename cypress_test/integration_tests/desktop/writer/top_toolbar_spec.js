@@ -49,8 +49,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_styles')
 			.click();
 
-		cy.contains('.select2-results__option','Title')
-			 .click({force: true});
+		desktopHelper.selectFromListbox('Title');
 
 		cy.get('#copy-paste-container p font font')
 			.should('have.attr', 'style', 'font-size: 28pt');
@@ -60,8 +59,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_fonts')
 			.click();
 
-		cy.contains('.select2-results__option','Alef')
-			 .click({force: true});
+		desktopHelper.selectFromListbox('Alef');
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Alef, sans-serif');
@@ -111,8 +109,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_fontsizes')
 			.click();
 
-		cy.contains('.select2-results__option','72')
-			 .click();
+		desktopHelper.selectFromListbox('72');
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 72pt');
