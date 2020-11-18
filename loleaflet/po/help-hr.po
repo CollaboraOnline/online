@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2020-11-18 13:39+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/help/hr/>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-help-hr.po\n"
 "X-Pootle-Revision: 3899436\n"
 
@@ -54,13 +54,12 @@ msgid "Paste as unformatted text"
 msgstr "Umetanje neformatiranog teksta"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
 msgid "Ctrl + Shift + V"
 msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
-msgstr ""
+msgstr "Posebno umetanje"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
 msgid "Ctrl + Alt + Shift + V"
@@ -1068,7 +1067,7 @@ msgstr "Uređivanje prezentacija"
 #: html/loleaflet-help.html%2Bdiv.div.p:235-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide show"
-msgstr "Slide show"
+msgstr "Dijaprojekcija"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:236-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
@@ -1932,7 +1931,6 @@ msgid "What is the blue wavy underline in some words in the text?"
 msgstr "Čemu služi plava valovita crta ispod nekih riječi u tekstu?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
-#, fuzzy
 msgid ""
 "Grammar errors in the text is marked with the blue wavy underline. Click on "
 "the underlined text with the right mouse button to open a menu with "
@@ -1941,7 +1939,8 @@ msgid ""
 msgstr ""
 "Gramatičke greške u tekstu podvučene su plavom valovitom crtom. Klikni na "
 "podcrtani tekst desnim gumbom miša za otvaranje izbornika s prijedlozima za "
-"ispravljanje gramatičkih grešaka. Odaberi pravi prijedlog za promjenu teksta."
+"ispravljanje gramatičkih grešaka. Odaberi ipravni prijedlog za promjenu "
+"teksta."
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
@@ -2042,10 +2041,9 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
-#, fuzzy
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr ""
-"S aktiviranim praćenjem promjena u dokumentu prikazuje sljedeće postavke:"
+"S aktiviranim praćenjem promjena dokument se prikazuje na sljedeći način:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."
