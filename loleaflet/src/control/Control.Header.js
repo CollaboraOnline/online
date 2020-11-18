@@ -295,7 +295,7 @@ L.Control.Header = L.Control.extend({
 			var start = end - entry.size;
 			if (position >= start && position < end) {
 				var resizeAreaStart = Math.max(start, end - 3);
-				if (that.isHeaderSelected(entry.index)) {
+				if (that.isHeaderSelected(entry.index) || window.mode.isMobile()) {
 					resizeAreaStart = end - that._resizeHandleSize;
 				}
 				var isMouseOverResizeArea = (position > resizeAreaStart);
@@ -316,6 +316,9 @@ L.Control.Header = L.Control.extend({
 
 		var result = this._entryAtPoint(this._hammerEventToCanvasPos(this._canvas, event));
 		if (!result)
+			return false;
+
+		if (!result.hit)
 			return false;
 
 		this._mouseOverEntry = result.entry;
