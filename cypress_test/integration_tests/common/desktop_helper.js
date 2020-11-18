@@ -72,8 +72,20 @@ function hideSidebarIfVisible() {
 		});
 }
 
+function selectColorFromPalette(color) {
+	cy.get('.w2ui-overlay')
+		.should('be.visible');
+
+	cy.get('.w2ui-color [name="' + color + '"]')
+		.click();
+
+	cy.get('.w2ui-overlay')
+		.should('not.exist');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
 module.exports.showSidebarIfHidden = showSidebarIfHidden;
 module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
+module.exports.selectColorFromPalette = selectColorFromPalette;

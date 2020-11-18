@@ -25,8 +25,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_backcolor')
 			.click();
 
-		cy.get('.w2ui-color [name="FFF2CC"]')
-			.click();
+		desktopHelper.selectColorFromPalette('FFF2CC');
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -38,8 +37,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_fontcolor')
 			.click();
 
-		cy.get('.w2ui-color [name="8E7CC3"]')
-			.click();
+		desktopHelper.selectColorFromPalette('8E7CC3');
 
 		writerHelper.selectAllTextOfDoc();
 
