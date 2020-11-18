@@ -82,14 +82,7 @@ describe('Apply font on selected shape.', function() {
 	it('Change font name of text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#fontnamecombobox');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Linux Libertine G');
-
-		helper.clickOnIdle('#mobile-wizard-back');
-
-		cy.get('#fontnamecombobox .ui-header-right .entry-value')
-			.should('have.text', 'Linux Libertine G');
+		mobileHelper.selectListBoxItem('#fontnamecombobox', 'Linux Libertine G');
 
 		triggerNewSVG();
 
@@ -103,14 +96,7 @@ describe('Apply font on selected shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('#fontsizecombobox');
-
-		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', '24');
-
-		helper.clickOnIdle('#mobile-wizard-back');
-
-		cy.get('#fontsizecombobox .ui-header-right .entry-value')
-			.should('have.text', '24');
+		mobileHelper.selectListBoxItem('#fontsizecombobox', '24');
 
 		triggerNewSVG();
 

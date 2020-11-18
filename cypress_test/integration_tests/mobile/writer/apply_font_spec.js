@@ -43,18 +43,7 @@ describe('Apply font changes.', function() {
 	}
 
 	it('Apply font name.', function() {
-		helper.clickOnIdle('#fontnamecombobox');
-
-		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', 'Linux Libertine G');
-
-		cy.get('.level-1[title="Font Name"] .mobile-wizard.ui-combobox-text.selected')
-			.should('have.text', 'Linux Libertine G');
-
-		helper.clickOnIdle('#mobile-wizard-back');
-
-		// Combobox entry contains the selected font name
-		cy.get('#fontnamecombobox .ui-header-right .entry-value')
-			.should('have.text', 'Linux Libertine G');
+		mobileHelper.selectListBoxItem('#fontnamecombobox', 'Linux Libertine G');
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -63,23 +52,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font size.', function() {
-		// Change font size
-		helper.clickOnIdle('#fontsizecombobox');
-
-		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', '36');
-
-		if (helper.getLOVersion() === 'master')
-			cy.get('.level-1[title="Font Size"] .mobile-wizard.ui-combobox-text.selected')
-				.should('have.text', '36 pt');
-		else
-			cy.get('.level-1[title="Font Size"] .mobile-wizard.ui-combobox-text.selected')
-				.should('have.text', '36');
-
-		helper.clickOnIdle('#mobile-wizard-back');
-
-		// Combobox entry contains the selected font name
-		cy.get('#fontsizecombobox .ui-header-right .entry-value')
-			.should('have.text', '36');
+		mobileHelper.selectListBoxItem('#fontsizecombobox', '36');
 
 		writerHelper.selectAllTextOfDoc();
 
