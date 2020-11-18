@@ -24,7 +24,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame02')
 			 .click({force: true});
 			 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000');
@@ -36,7 +36,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame01')
 			 .click({force: true});
 			 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('not.have.attr', 'style');
@@ -49,7 +49,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame02')
 			 .click({force: true});
 			 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000');
@@ -62,7 +62,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame03')
 			 .click({force: true});
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-right: 1px solid #000000');
@@ -75,7 +75,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame04')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000; border-right: 1px solid #000000');
@@ -88,7 +88,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame05')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000');
@@ -101,7 +101,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame06')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-bottom: 1px solid #000000');
@@ -114,7 +114,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame07')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000');
@@ -127,21 +127,22 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame08')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000');
 	});
 
 	it('Apply horizontal borders for multiple cells', function() {
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
+
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.frame09')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should(function(cells) {
@@ -153,14 +154,15 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply horizontal inner borders and vertical outer borders', function() {
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
+
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.frame10')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should(function(cells) {
@@ -179,14 +181,15 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply vertical inner borders and horizontal outer borders', function() {
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
+
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.frame11')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should(function(cells) {
@@ -205,14 +208,15 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply all inner and outer borders', function() {
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
+
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.frame12')
 			 .click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should(function(cells) {
@@ -234,7 +238,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td b')
 			.should('exist');
@@ -242,7 +246,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_reset')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td b')
 			.should('not.exist');
@@ -255,7 +259,7 @@ describe('Top toolbar tests.', function() {
 
 		cy.contains('.select2-results__option','Alef')
 			 .click({force: true});
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td font')
 		    .should('have.attr', 'face', 'Alef');
@@ -267,7 +271,7 @@ describe('Top toolbar tests.', function() {
 
 		cy.contains('.select2-results__option','12')
 			 .click({force: true});
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td font')
 		    .should('have.attr', 'size', '3');
@@ -277,7 +281,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td b')
 			.should('exist');
@@ -287,7 +291,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_underline')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td u')
 			.should('exist');
@@ -297,7 +301,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_italic')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td i')
 			.should('exist');
@@ -307,7 +311,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_strikeout')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td s')
 			.should('exist');
@@ -319,7 +323,7 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('.w2ui-color [name="8E7CC3"]')
 			.click();
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'bgcolor', '#8E7CC3');
@@ -332,7 +336,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-color [name="FFF2CC"]')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'color', '#FFF2CC');
@@ -343,7 +347,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_numberformatincdecimals')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		var regex = new RegExp(';0;0.0$');
 		cy.get('#copy-paste-container table td')
@@ -356,7 +360,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_numberformatdecdecimals')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		regex = new RegExp(';0;0$');
 		cy.get('#copy-paste-container table td')
@@ -368,7 +372,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_numberformatcurrency')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		var regex = new RegExp(';0;\\[\\$\\$-409]#,##0.00;\\[RED]-\\[\\$\\$-409]#,##0.00$');
 		cy.get('#copy-paste-container table td')
@@ -380,7 +384,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_numberformatpercent')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		var regex = new RegExp(';0;0.00%$');
 		cy.get('#copy-paste-container table td')
@@ -396,7 +400,7 @@ describe('Top toolbar tests.', function() {
 		cy.contains('.menu-text', 'Align Right')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'right');
@@ -410,7 +414,7 @@ describe('Top toolbar tests.', function() {
 		cy.contains('.menu-text', 'Align Left')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'left');

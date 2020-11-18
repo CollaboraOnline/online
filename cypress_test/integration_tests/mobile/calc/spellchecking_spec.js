@@ -58,7 +58,7 @@ describe('Calc spell checking menu.', function() {
 		cy.contains('.context-menu-link', 'hello')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'hello');

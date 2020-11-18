@@ -122,8 +122,8 @@ function removeTextSelection() {
 	cy.log('Removing text selection - end.');
 }
 
-function selectAllMobile(removeSelection = true) {
-	cy.log('Selecting all text - start.');
+function selectEntireSheet(removeSelection = true) {
+	cy.log('Selecting entire sheet - start.');
 
 	if (removeSelection)
 		removeTextSelection();
@@ -143,7 +143,7 @@ function selectAllMobile(removeSelection = true) {
 	cy.get('input#addressInput')
 		.should('have.prop', 'value', 'A1:AMJ1048576');
 
-	cy.log('Selecting all text - end.');
+	cy.log('Selecting entire sheet - end.');
 }
 
 module.exports.clickOnFirstCell = clickOnFirstCell;
@@ -151,4 +151,4 @@ module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
 module.exports.typeIntoFormulabar = typeIntoFormulabar;
 module.exports.removeTextSelection = removeTextSelection;
-module.exports.selectAllMobile = selectAllMobile;
+module.exports.selectEntireSheet = selectEntireSheet;
