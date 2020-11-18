@@ -2837,6 +2837,7 @@ L.TileLayer = L.GridLayer.extend({
 	// Update dragged text selection.
 	_onSelectionHandleDrag: function (e) {
 		if (e.type === 'drag') {
+			window.IgnorePanning = true;
 			e.target.isDragged = true;
 
 			if (!e.originalEvent.pageX && !e.originalEvent.pageY) {
@@ -2876,6 +2877,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.fire('handleautoscroll', {pos: containerPos, map: this._map});
 		}
 		if (e.type === 'dragend') {
+			window.IgnorePanning = undefined;
 			e.target.isDragged = false;
 			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
 		}
