@@ -257,6 +257,25 @@ function selectAnnotationMenuItem(menuItem) {
 	cy.log('Selecting annotation menu item - end.');
 }
 
+function selectListBoxItem(listboxSelector, item) {
+	cy.log('Selecting an item from listbox - start.');
+
+	helper.clickOnIdle(listboxSelector);
+
+	helper.clickOnIdle('.mobile-wizard.ui-combobox-text', item);
+
+	cy.contains('.mobile-wizard.ui-combobox-text', item)
+		.should('have.class', 'selected');
+
+	helper.clickOnIdle('#mobile-wizard-back');
+
+	// Combobox entry contains the selected item
+	cy.get(listboxSelector + ' .ui-header-right .entry-value')
+		.should('have.text', item);
+
+	cy.log('Selecting an item from listbox - end.');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
@@ -270,3 +289,4 @@ module.exports.openInsertionWizard = openInsertionWizard;
 module.exports.closeInsertionWizard = closeInsertionWizard;
 module.exports.selectFromColorPalette = selectFromColorPalette;
 module.exports.openTextPropertiesPanel = openTextPropertiesPanel;
+module.exports.selectListBoxItem = selectListBoxItem;
