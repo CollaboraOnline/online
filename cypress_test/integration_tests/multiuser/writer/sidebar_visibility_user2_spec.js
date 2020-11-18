@@ -6,9 +6,6 @@ describe('Sidebar visibility: user-2.', {retries : 0}, function() {
 	var testFileName = 'sidebar_visibility.odt';
 
 	beforeEach(function() {
-		// Wait here, before loading the document.
-		// Opening two clients at the same time causes an issue.
-		cy.wait(5000);
 		helper.beforeAll(testFileName, 'writer', true);
 	});
 

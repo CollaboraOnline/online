@@ -364,6 +364,7 @@ define run_multiuser_test
 		--spec $(USER1_SPEC) \
 		--type multi-user \
 		--log-file $(USER1_LOG) & \
+	sleep 5 && \
 	$(PARALLEL_SCRIPT) \
 		--browser $(BROWSER) \
 		--config $(MULTIUSER_CONFIG) \
