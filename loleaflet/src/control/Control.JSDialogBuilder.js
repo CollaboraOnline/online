@@ -1556,6 +1556,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_treelistboxEntry: function (parentContainer, treeViewData, entry, builder) {
 		var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
+		li.draggable = true;
+
+		li.ondragstart = function drag(ev) {
+			ev.dataTransfer.setData('text', entry.row);
+			builder.callback('treeview', 'dragstart', treeViewData, entry.row, builder);
+
+			$('.ui-treeview').addClass('droptarget');
+		};
+
+		li.ondragend = function () { $('.ui-treeview').removeClass('droptarget'); };
+		li.ondragover = function (event) { event.preventDefault(); };
 
 		var span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-entry ' + (entry.children ? ' ui-treeview-expandable' : 'ui-treeview-notexpandable'), li);
 
@@ -1613,6 +1624,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		table.id = data.id;
 
 		var tbody = L.DomUtil.create('tbody', builder.options.cssClass + ' ui-treeview-body', table);
+
+		tbody.ondrop = function (ev) {
+			ev.preventDefault();
+			var row = ev.dataTransfer.getData('text');
+			builder.callback('treeview', 'dragend', data, row, builder);
+			$('.ui-treeview').removeClass('droptarget');
+		};
+
+		tbody.ondragover = function (event) { event.preventDefault(); };
 
 		if (!data.entries || data.entries.length === 0)
 			return false;
