@@ -73,7 +73,7 @@
     <string name="about_notice">Kennisgeving tonen</string>
     <string name="about_license">Licentie tonen</string>
     <string name="pref_show_debug_info_summary">Schakel foutopsporingsinformatie in documentviewer weergeven in</string>
-    <string name="pref_show_debug_info">"Foutopsporingsinformatie  weergeven"</string>
+    <string name="pref_show_debug_info">Informatie voor foutopsporing weergeven</string>
     <string name="pref_filter_summary">Stel in welk bestandsfilter standaard moet worden gebruikt.</string>
     <string name="pref_filter_title">Standaard bestandsfilter</string>
     <string name="pref_sort_title">Bestandsvolgorde</string>
@@ -86,7 +86,7 @@
     <string name="grid_view">Raster</string>
     <string name="list_view">Lijst</string>
     <string name="failed_to_load_file">Kan het te laden bestand niet vinden</string>
-    <string name="storage_permission_required">Bevoegdheid voor opslag is vereist</string>
+    <string name="storage_permission_required">Rechten om op te slaan zijn vereist</string>
     <string name="file_creation_failed">Aanmaken van bestand mislukt</string>
     <string name="file_exists_warning">Er bestaat al een bestand met deze naam en zal overschreven worden.</string>
     <string name="temp_file_saving_disabled">Dit bestand is alleen-lezen, opslaan is uitgeschakeld.</string>
@@ -100,11 +100,16 @@
     <string name="app_name_settings">Instellingen</string>
     <string name="pref_enable_chrome_debugger">Foutopsporing Chrome</string>
     <string name="share_document">Delen dit document</string>
-    <string name="pref_enable_chrome_debugger_info">Activeren om het werktuig voor foutopsporing in Chrome in dit document te gebruiken.</string>
+    <string name="pref_enable_chrome_debugger_info">Gebruik Chrome\'s hulpmiddel voor foutopsporing in dit document</string>
     <string name="remove_from_list">Van de lijst verwijderen</string>
     <string name="file_actions_icon_desc">Bestandsacties</string>
     <string name="pref_category_editor">Editor-instellingen</string>
     <string name="app_version_and_hash">Versie: %1$s
 \nonline git-hash: %2$s
 \ncore git-hash: %3$s</string>
+    <string name="theme_light">Licht</string>
+    <string name="theme_dark">Donker</string>
+    <string name="theme_system_default">Systeem standaardinstelling</string>
+    <string name="choose_theme">Kies thema</string>
+    <string name="theme">Thema</string>
 </resources>
