@@ -5,6 +5,20 @@ var helper = require('../../common/helper');
 describe('Top toolbar interfering test: user-2.', function() {
 	var testFileName = 'top_toolbar_interfer.odt';
 
+	function insertComment() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+			.click();
+
+		cy.get('#tb_editbar_item_insertannotation')
+			.click();
+
+		cy.get('.loleaflet-annotation-edit:nth-of-type(2) .loleaflet-annotation-textarea')
+			.type('Ready!');
+
+		cy.get('#annotation-save')
+			.click();
+	}
+
 	it('Spaming keyboard input.', function() {
 		cy.waitUntil(function() {
 			// Wait for the user-1 to open the document
@@ -23,6 +37,9 @@ describe('Top toolbar interfering test: user-2.', function() {
 
 			cy.get('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 				.should('be.visible');
+
+			// Leave a comment to make user-1 to start the test.
+			insertComment();
 
 			// We are doing some keyboard input activity here.
 			cy.waitUntil(function() {
