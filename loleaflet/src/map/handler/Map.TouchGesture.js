@@ -420,6 +420,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPanStart: function (e) {
+		if (window.IgnorePanning)
+			return;
+
 		L.Util.cancelAnimFrame(this.autoscrollAnimReq);
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
@@ -474,6 +477,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPan: function (e) {
+		if (window.IgnorePanning)
+			return;
+
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
@@ -498,6 +504,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPanEnd: function (e) {
+		if (window.IgnorePanning)
+			return;
+
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
