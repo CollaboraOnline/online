@@ -7,9 +7,6 @@ describe('Slide operations: user-2.', {retries : 0}, function() {
 	var testFileName = 'slide_operations.odp';
 
 	beforeEach(function() {
-		// Wait here, before loading the document.
-		// Opening two clients at the same time causes an issue.
-		cy.wait(5000);
 		helper.beforeAll(testFileName, 'impress', true);
 	});
 
