@@ -26,7 +26,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Change the document content and save it
 		calcHelper.clickOnFirstCell(true, true);
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'Textx');
@@ -37,7 +37,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.typeIntoDocument('new');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'new');
@@ -49,7 +49,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'new');
@@ -118,7 +118,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('textarea.clipboard')
 			.type('{q}');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'q');
@@ -129,7 +129,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'A1');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('not.contain.text', 'q');
@@ -140,7 +140,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'A1');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'q');
@@ -154,7 +154,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('textarea.clipboard')
 			.type('{q}');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('contain.text', 'q');
@@ -177,7 +177,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'A1');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('not.contain.text', 'q');
@@ -186,7 +186,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Cut.', function() {
 		before('hamburger_menu.ods');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 
@@ -208,7 +208,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Copy.', function() {
 		before('hamburger_menu.ods');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 
@@ -230,7 +230,7 @@ describe('Trigger hamburger menu options.', function() {
 	it('Paste.', function() {
 		before('hamburger_menu.ods');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 
@@ -293,7 +293,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Rows', 'Rows Above']);
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 3);
@@ -314,7 +314,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Rows', 'Rows Below']);
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 3);
@@ -335,7 +335,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Columns', 'Columns Before']);
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 2);
@@ -356,7 +356,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Columns', 'Columns After']);
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 2);
@@ -377,7 +377,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Rows']);
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 1);
@@ -396,7 +396,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Columns']);
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 2);
@@ -474,7 +474,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Sort Ascending']);
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 4);
@@ -497,7 +497,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Sort Descending']);
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 4);
@@ -615,7 +615,7 @@ describe('Trigger hamburger menu options.', function() {
 			});
 
 		// Use selected content as indicator
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table')
 			.should('exist');
@@ -624,7 +624,7 @@ describe('Trigger hamburger menu options.', function() {
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Hide Details']);
 
 		// Frist column is hidden -> no content
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table')
 			.should('not.exist');
@@ -633,7 +633,7 @@ describe('Trigger hamburger menu options.', function() {
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Show Details']);
 
 		// Frist column is visible again -> we have content again
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table')
 			.should('exist');
@@ -644,7 +644,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.ods');
 
 		// Make everything white on tile
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		mobileHelper.openMobileWizard();
 

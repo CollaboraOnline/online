@@ -74,7 +74,7 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Initially we have "text" text in the document
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', 'Text');
@@ -86,7 +86,7 @@ describe('Nextcloud specific tests.', function() {
 
 		helper.typeIntoDocument('new');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', 'new');
@@ -97,7 +97,7 @@ describe('Nextcloud specific tests.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.text', 'Text');

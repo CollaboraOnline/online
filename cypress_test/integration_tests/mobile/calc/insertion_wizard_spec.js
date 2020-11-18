@@ -84,7 +84,7 @@ describe('Calc insertion wizard.', function() {
 		cy.get('.blinking-cursor')
 			.should('be.visible');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td a')
 			.should('have.text', 'some text');
@@ -117,7 +117,7 @@ describe('Calc insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Date')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		var regex = new RegExp(';MM/DD/YY$');
 		cy.get('#copy-paste-container table td')
@@ -130,7 +130,7 @@ describe('Calc insertion wizard.', function() {
 		cy.contains('.menu-entry-with-icon', 'Time')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		var regex = new RegExp(';HH:MM:SS AM/PM$');
 		cy.get('#copy-paste-container table td')
