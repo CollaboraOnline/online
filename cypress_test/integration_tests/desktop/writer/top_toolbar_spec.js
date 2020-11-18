@@ -468,18 +468,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_insertsymbol')
 			.click();
 
-		// Dialog is opened
-		cy.get('.lokdialog_canvas')
-			.should('be.visible');
-
-		cy.get('.ui-dialog-title')
-			.should('have.text', 'Special Characters');
-
-		cy.get('body')
-			.type('{esc}');
-
-		cy.get('.lokdialog_canvas')
-			.should('not.exist');
+		desktopHelper.checkDialogAndClose('Special Characters');
 	});
 
 	it('Hide/show menu bar.', function() {

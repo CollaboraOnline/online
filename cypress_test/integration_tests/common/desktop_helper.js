@@ -95,6 +95,22 @@ function selectFromListbox(item) {
 		.should('not.exist');
 }
 
+function checkDialogAndClose(dialogTitle) {
+	// Dialog is opened
+	cy.get('.lokdialog_canvas')
+		.should('be.visible');
+
+	cy.get('.ui-dialog-title')
+		.should('have.text', dialogTitle);
+
+	// Close the dialog
+	cy.get('body')
+		.type('{esc}');
+
+	cy.get('.lokdialog_canvas')
+		.should('not.exist');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
@@ -102,3 +118,4 @@ module.exports.showSidebarIfHidden = showSidebarIfHidden;
 module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
 module.exports.selectFromListbox = selectFromListbox;
+module.exports.checkDialogAndClose = checkDialogAndClose;
