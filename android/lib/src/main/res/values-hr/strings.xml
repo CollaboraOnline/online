@@ -6,6 +6,16 @@
     <string name="cannot_open_file_chooser">Nije moguće otvoriti izbornika datoteka</string>
     <string name="failed_to_insert_image">Neuspjelo umetanje slike</string>
     <string name="failed_to_load_file">Neuspjelo određivanje datoteke za učitavanje</string>
-    <string name="storage_permission_required">Potrebna je dozvola za spremanje</string>
-    <string name="temp_file_saving_disabled">Datoteka je zaštićena, spremanje je onemogućeno.</string>
+    <string name="storage_permission_required">Potrebna je dozvola za spremište</string>
+    <string name="temp_file_saving_disabled">Datoteka je zaštićena, spremanje je deaktivirano.</string>
+    <string name="ask_for_copy">Ovaj dokument je samo-za-čitanje. Želiš li izraditi kopiju za uređivanje\?</string>
+    <string name="edit_copy">Uredi kopiju</string>
+    <string name="view_only">Samo prikaz</string>
+    <string name="restarting">Ponovo pokretanje …</string>
+    <string name="exiting">Zatvaranje …</string>
+    <string name="rate_our_app_text">Ako ti se sviđa, daj nam 5 zvjezdica na Google Play stranici. Tvoje dobre kritike su nam najbolja motivacija.</string>
+    <string name="rate_our_app_title">Hvala što koristiš %1$s!</string>
+    <string name="later">Kasnije</string>
+    <string name="rate_now">Ocijeni sada</string>
+    <string name="file_chromeos_read_only">Datoteku nije moguće spremiti na ovom mjestu, otvorit će se u zaštićenom stanju. Premjesti je u datoteke za reprodukciju za potpuni pristup čitanju/pisanju.</string>
 </resources>

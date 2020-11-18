@@ -16,7 +16,7 @@
     <string name="sort_za">Z-A</string>
     <string name="sort_oldest">Najprije najstarije</string>
     <string name="sort_newest">Najprije najnovije</string>
-    <string name="file_icon_desc">Ikona datoteka</string>
+    <string name="file_icon_desc">Ikona datoteke</string>
     <string name="title_recents">Nedavne datoteke</string>
     <string name="title_browser">Sve datoteke</string>
     <string name="filter_documents">Dokumenti</string>
@@ -99,4 +99,15 @@
     <string name="loading">Učitavanje …</string>
     <string name="unable_to_go_further">Nije moguće ići dalje.</string>
     <string name="no_recent_items">Otvori dokument koristeći ikonu mape u alatnoj traci.</string>
+    <string name="theme_light">Svijetla</string>
+    <string name="theme_dark">Tamna</string>
+    <string name="theme_system_default">Standardna tema sustava</string>
+    <string name="choose_theme">Odaberi temu</string>
+    <string name="theme">Tema</string>
+    <string name="remove_from_list">Ukloni s popisa</string>
+    <string name="file_actions_icon_desc">Radnje datoteke</string>
+    <string name="pref_category_editor">Postavke uređivača</string>
+    <string name="app_version_and_hash">Verzija: %1$s
+\nonline git-hash: %2$s
+\ncore git-hash: %3$s</string>
 </resources>
