@@ -46,7 +46,7 @@ describe('Change alignment settings.', function() {
 		// Set right aligment first
 		helper.clickOnIdle('#AlignRight');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'right');
@@ -60,7 +60,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignLeft');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'left');
@@ -71,7 +71,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignHorizontalCenter');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'center');
@@ -82,7 +82,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignBlock');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'justify');
@@ -107,7 +107,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignTop');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'top');
@@ -121,7 +121,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignBottom');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'bottom');
@@ -132,7 +132,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#AlignVCenter');
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'valign', 'middle');
@@ -321,7 +321,7 @@ describe('Change alignment settings.', function() {
 			.should('have.prop', 'checked', true);
 
 		// Check content
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'colspan', '1024');

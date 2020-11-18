@@ -40,7 +40,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.bold')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td b')
 			.should('exist');
@@ -52,7 +52,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.italic')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td i')
 			.should('exist');
@@ -64,7 +64,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.underline')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td u')
 			.should('exist');
@@ -76,7 +76,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.strikeout')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td s')
 			.should('exist');
@@ -90,7 +90,7 @@ describe('Interact with bottom toolbar.', function() {
 
 		mobileHelper.selectFromColorPalette(0, 5);
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td font')
 			.should('have.attr', 'color', '#00FF00');
@@ -104,7 +104,7 @@ describe('Interact with bottom toolbar.', function() {
 
 		mobileHelper.selectFromColorPalette(0, 5);
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'bgcolor', '#00FF00');
@@ -122,7 +122,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.togglemergecells')
 			.click();
 
-		calcHelper.selectAllMobile(false);
+		calcHelper.selectEntireSheet(false);
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'colspan', '1024');
@@ -135,7 +135,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.alignright')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'right');
@@ -146,7 +146,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.alignleft')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'left');
@@ -158,7 +158,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.alignhorizontal')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'center');
@@ -170,7 +170,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.alignblock')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'align', 'justify');
@@ -213,7 +213,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.insertrowsafter')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 3);
@@ -237,7 +237,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.insertcolumnsafter')
 			.click();
 
-		calcHelper.selectAllMobile();
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 2);
