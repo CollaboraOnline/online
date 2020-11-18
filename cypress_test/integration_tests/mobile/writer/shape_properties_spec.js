@@ -200,9 +200,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Change line style', function() {
 		openLinePropertyPanel();
 
-		helper.clickOnIdle('#linestyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Ultrafine Dashed');
+		mobileHelper.selectListBoxItem2('#linestyle', 'Ultrafine Dashed');
 
 		triggerNewSVG();
 
@@ -273,23 +271,13 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#fillstylearea .ui-header-left')
 			.should('have.text', 'Color');
 
-		helper.clickOnIdle('#fillstylearea');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Gradient');
-
-		cy.get('#fillstylearea .ui-header-left')
-			.should('have.text', 'Gradient');
+		mobileHelper.selectListBoxItem2('#fillstylearea', 'Gradient');
 
 		// Select type
 		cy.get('#gradientstyle .ui-header-left')
 			.should('have.text', 'Linear');
 
-		helper.clickOnIdle('#gradientstyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Square');
-
-		cy.get('#gradientstyle .ui-header-left')
-			.should('have.text', 'Square');
+		mobileHelper.selectListBoxItem2('#gradientstyle', 'Square');
 
 		// Select From color
 		helper.clickOnIdle('#fillgrad1');
@@ -322,22 +310,12 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#fillstylearea .ui-header-left')
 			.should('have.text', 'Color');
 
-		helper.clickOnIdle('#fillstylearea');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Hatching');
-
-		cy.get('#fillstylearea .ui-header-left')
-			.should('have.text', 'Hatching');
+		mobileHelper.selectListBoxItem2('#fillstylearea', 'Hatching');
 
 		cy.get('#fillattrhb .ui-header-left')
 			.should('have.text', 'Black 0 Degrees');
 
-		helper.clickOnIdle('#fillattrhb');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Black 45 Degrees');
-
-		cy.get('#fillattrhb .ui-header-left')
-			.should('have.text', 'Black 45 Degrees');
+		mobileHelper.selectListBoxItem2('#fillattrhb', 'Black 45 Degrees');
 
 		triggerNewSVG();
 
@@ -354,22 +332,12 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#fillstylearea .ui-header-left')
 			.should('have.text', 'Color');
 
-		helper.clickOnIdle('#fillstylearea');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Bitmap');
-
-		cy.get('#fillstylearea .ui-header-left')
-			.should('have.text', 'Bitmap');
+		mobileHelper.selectListBoxItem2('#fillstylearea', 'Bitmap');
 
 		cy.get('#fillattrhb .ui-header-left')
 			.should('have.text', 'Painted White');
 
-		helper.clickOnIdle('#fillattrhb');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Paper Graph');
-
-		cy.get('#fillattrhb .ui-header-left')
-			.should('have.text', 'Paper Graph');
+		mobileHelper.selectListBoxItem2('#fillattrhb', 'Paper Graph');
 
 		triggerNewSVG();
 
@@ -386,22 +354,12 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#fillstylearea .ui-header-left')
 			.should('have.text', 'Color');
 
-		helper.clickOnIdle('#fillstylearea');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Pattern');
-
-		cy.get('#fillstylearea .ui-header-left')
-			.should('have.text', 'Pattern');
+		mobileHelper.selectListBoxItem2('#fillstylearea', 'Pattern');
 
 		cy.get('#fillattrhb .ui-header-left')
 			.should('have.text', '5 Percent');
 
-		helper.clickOnIdle('#fillattrhb');
-
-		helper.clickOnIdle('.ui-combobox-text', '20 Percent');
-
-		cy.get('#fillattrhb .ui-header-left')
-			.should('have.text', '20 Percent');
+		mobileHelper.selectListBoxItem2('#fillattrhb', '20 Percent');
 
 		triggerNewSVG();
 
@@ -440,12 +398,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#transtype .ui-header-left')
 			.should('have.text', 'None');
 
-		helper.clickOnIdle('#transtype');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Linear');
-
-		cy.get('#transtype .ui-header-left')
-			.should('have.text', 'Linear');
+		mobileHelper.selectListBoxItem2('#transtype', 'Linear');
 
 		cy.get('#settransparency .spinfield')
 			.should('not.be.visible');

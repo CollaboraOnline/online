@@ -32,13 +32,7 @@ describe('Apply number formatting.', function() {
 
 	function selectFormatting(formattingString) {
 		// Select formatting list
-		helper.clickOnIdle('#numberformatcombobox');
-
-		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', formattingString);
-
-		// Combobox entry contains the selected format
-		cy.get('#numberformatcombobox .ui-header-left')
-			.should('have.text', formattingString);
+		mobileHelper.selectListBoxItem2('#numberformatcombobox', formattingString);
 	}
 
 	it('Select percent format from list.', function() {
