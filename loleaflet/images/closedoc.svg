@@ -1,1 +1,70 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="#333" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m4 20 16-16"/><path d="m20 20-16-15.9999998"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 22 22"
+   id="svg2"
+   version="1.1"
+   inkscape:version="1.0 (4035a4f, 2020-05-01)"
+   sodipodi:docname="closedoc.svg"
+   width="22"
+   height="22">
+  <metadata
+     id="metadata14">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1021"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="13.906433"
+     inkscape:cx="1.7019796"
+     inkscape:cy="14.367661"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:document-rotation="0" />
+  <g
+     fill="none"
+     stroke="#e68497"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="1.2"
+     id="g4"
+     style="fill:#4d4d4d;stroke:#4d4d4d;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;fill-opacity:1;stroke-opacity:1"
+     transform="matrix(0.49999999,0,0,0.49999999,5.0000001,5.0000001)">
+    <path
+       d="M 4,20 20,4"
+       id="path6"
+       style="fill:#4d4d4d;stroke:#4d4d4d;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;fill-opacity:1;stroke-opacity:1" />
+    <path
+       d="M 20,20 4,4.0000002"
+       id="path8"
+       style="fill:#4d4d4d;stroke:#4d4d4d;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;fill-opacity:1;stroke-opacity:1" />
+  </g>
+</svg>
