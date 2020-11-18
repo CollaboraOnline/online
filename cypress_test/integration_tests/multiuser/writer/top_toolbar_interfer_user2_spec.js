@@ -3,8 +3,6 @@
 var helper = require('../../common/helper');
 
 describe('Top toolbar interfering test: user-2.', function() {
-	var testFileName = 'top_toolbar_interfer.odt';
-
 	function insertComment() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
@@ -29,11 +27,14 @@ describe('Top toolbar interfering test: user-2.', function() {
 			cy.get('#uptime')
 				.should('not.have.text', '0');
 
-			var regex = new RegExp('[0-9]' + testFileName);
-			cy.contains('#docview', regex);
+			cy.get('#doclist > tr > td').eq(3)
+				.should('not.be.empty')
+				.invoke('text')
+				.then(function(text) {
 
-			// We open the same document
-			helper.beforeAll(testFileName, 'writer', true);
+					// We open the same document
+					helper.beforeAll(text, 'writer', true);
+				});
 
 			cy.get('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 				.should('be.visible');
@@ -62,12 +63,13 @@ describe('Top toolbar interfering test: user-2.', function() {
 			cy.get('#uptime')
 				.should('not.have.text', '0');
 
-			cy.wait(2000);
+			// Wait some time for our instance to be closed.
+			cy.wait(5000);
 
-			return cy.get('#docview')
+			return cy.get('#doclist')
 				.invoke('text')
 				.then(function(text) {
-					return !text.match(regex);
+					return text.length === 0;
 				});
 
 		}, {timeout: 60000, log: false});
