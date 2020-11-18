@@ -873,8 +873,9 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	background-color: #ebf2fb;
 }
 #mobile-wizard button:disabled{
-	background-color: silver;
-	border-color: silver;
+	background-color: var(--gray-bg-color);
+	border-color: var(--gray-bg-color);
+	color: var(--gray-light-txt--color) !important;
 }
 #enablecontour + button {
 	float: right;
