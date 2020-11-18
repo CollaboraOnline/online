@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Top toolbar tests.', function() {
@@ -321,8 +322,8 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_backgroundcolor')
 			.click();
 
-		cy.get('.w2ui-color [name="8E7CC3"]')
-			.click();
+		desktopHelper.selectColorFromPalette('8E7CC3');
+
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
@@ -333,8 +334,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_fontcolor')
 			.click();
 
-		cy.get('.w2ui-color [name="FFF2CC"]')
-			.click();
+		desktopHelper.selectColorFromPalette('FFF2CC');
 
 		calcHelper.selectEntireSheet();
 
