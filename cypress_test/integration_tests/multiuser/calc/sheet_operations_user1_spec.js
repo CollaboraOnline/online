@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Sheet operations: user-1.', {retries : 0}, function() {
+describe('Sheet operations: user-1.', function() {
 	var testFileName = 'sheet_operations.ods';
 
 	beforeEach(function() {

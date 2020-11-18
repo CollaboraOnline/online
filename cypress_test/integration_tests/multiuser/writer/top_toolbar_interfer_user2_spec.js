@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Top toolbar interfering test: user-2.', {retries : 0}, function() {
+describe('Top toolbar interfering test: user-2.', function() {
 	var testFileName = 'top_toolbar_interfer.odt';
 
 	it('Spaming keyboard input.', function() {
