@@ -199,9 +199,6 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#border-11');
 
-		// TODO
-		cy.wait(200);
-
 		calcHelper.selectAllMobile();
 
 		cy.get('#copy-paste-container table td')
