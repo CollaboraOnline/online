@@ -43,6 +43,13 @@ L.Control.JSDialog = L.Control.extend({
 
 		var builder = new L.control.notebookbarBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
 		builder.build(content, [data]);
+
+		var that = this;
+		button.onclick = function() {
+			L.DomUtil.remove(that.dialogs[data.id]);
+			that.dialogs[data.id] = undefined;
+			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
+		};
 	},
 });
 
