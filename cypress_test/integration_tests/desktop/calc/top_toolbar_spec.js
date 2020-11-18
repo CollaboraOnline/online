@@ -235,6 +235,17 @@ describe('Top toolbar tests.', function() {
 			});
 	});
 
+	it('Apply More Border styles', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+			
+		cy.get('.w2ui-tb-image.w2ui-icon.frame13')
+		    .click();
+
+		cy.get('.lokdialog.ui-dialog-content.ui-widget-content')
+		 .should('exist');
+	});
+
 	it('Clear Direct formatting.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
