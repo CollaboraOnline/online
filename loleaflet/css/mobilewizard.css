@@ -652,7 +652,6 @@ a.leaflet-control-zoom-in {
 #toolbar-down table.w2ui-button.checked .w2ui-tb-image{
 	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
-	background-size: 18px !important;
 }
 
 .w2ui-icon.users{
