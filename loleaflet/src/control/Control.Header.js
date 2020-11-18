@@ -291,7 +291,7 @@ L.Control.Header = L.Control.extend({
 		this._tickMap.forEachGap(function(gap) {
 			if (position >= gap.start && position < gap.end) {
 				var resizeAreaStart = Math.max(gap.start, gap.end - 3);
-				if (that.isHeaderSelected(gap.index)) {
+				if (that.isHeaderSelected(gap.index) || window.mode.isMobile()) {
 					resizeAreaStart = gap.end - that._resizeHandleSize;
 				}
 				var isMouseOverResizeArea = (position > resizeAreaStart);
@@ -312,6 +312,9 @@ L.Control.Header = L.Control.extend({
 
 		var result = this._entryAtPoint(this._hammerEventToCanvasPos(this._canvas, event));
 		if (!result)
+			return false;
+
+		if (!result.hit)
 			return false;
 
 		this._mouseOverEntry = result.entry;

@@ -561,12 +561,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	onDragMove: function (item, start, offset, e) {
-		if (this._vertLine) {
+		if (this._vertLine && offset) {
 			this._vertLine.setLatLngs(this._getVertLatLng(start, offset, e));
 		}
 	},
 
 	onDragEnd: function (item, start, offset, e) {
+		if (!offset)
+			return;
 		var end = new L.Point(e.clientX + offset.x, e.clientY);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
