@@ -194,22 +194,11 @@ namespace Log
         *pos++ = '-';
 
         // Thread ID.
-        const long osTid = Util::getThreadId();
-        if (osTid > 99999)
-        {
-            if (osTid > 999999)
-                pos = to_ascii(pos, osTid);
-            else
-            {
-                to_ascii_fixed<6>(pos, osTid);
-                pos += 6;
-            }
-        }
-        else
-        {
-            to_ascii_fixed<5>(pos, osTid);
-            pos += 5;
-        }
+        auto osTid = Util::getThreadId();
+        std::stringstream ss;
+        ss << osTid;
+        pos = strcopy(ss.str().c_str(), pos);
+
         *pos++ = ' ';
 #endif
 
