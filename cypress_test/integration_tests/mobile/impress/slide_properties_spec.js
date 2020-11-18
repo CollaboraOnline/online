@@ -36,12 +36,7 @@ describe('Changing slide properties.', function() {
 
 	it('Apply solid color background.', function() {
 		// Change fill style
-		helper.clickOnIdle('#fillstyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Color');
-
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Color');
+		mobileHelper.selectListBoxItem2('#fillstyle', 'Color');
 
 		// Check the default color
 		cy.get('#fillattr .color-sample-selected')
@@ -70,12 +65,7 @@ describe('Changing slide properties.', function() {
 
 	it('Apply gradient fill.', function() {
 		// Change fill style
-		helper.clickOnIdle('#fillstyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Gradient');
-
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Gradient');
+		mobileHelper.selectListBoxItem2('#fillstyle', 'Gradient');
 
 		// Check the default color
 		cy.get('#fillattr2 .color-sample-selected')
@@ -117,24 +107,14 @@ describe('Changing slide properties.', function() {
 
 	it('Apply hatching fill.', function() {
 		// Change fill style
-		helper.clickOnIdle('#fillstyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Hatching');
-
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Hatching');
+		mobileHelper.selectListBoxItem2('#fillstyle', 'Hatching');
 
 		// Check the default value
 		cy.get('#fillattr1 .ui-header-left')
 			.should('have.text', 'Black 0 Degrees');
 
 		// Change the hatching
-		helper.clickOnIdle('#fillattr1');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Blue Triple 90 Degrees');
-
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', 'Blue Triple 90 Degrees');
+		mobileHelper.selectListBoxItem2('#fillattr1', 'Blue Triple 90 Degrees');
 
 		previewShouldBeFullWhite(false);
 
@@ -151,24 +131,14 @@ describe('Changing slide properties.', function() {
 
 	it('Apply bitmap fill.', function() {
 		// Change fill style
-		helper.clickOnIdle('#fillstyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Bitmap');
-
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Bitmap');
+		mobileHelper.selectListBoxItem2('#fillstyle', 'Bitmap');
 
 		// Check the default value
 		cy.get('#fillattr1 .ui-header-left')
 			.should('have.text', 'Painted White');
 
 		// Change the value
-		helper.clickOnIdle('#fillattr1');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Wooden Board');
-
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', 'Wooden Board');
+		mobileHelper.selectListBoxItem2('#fillattr1', 'Wooden Board');
 
 		previewShouldBeFullWhite(false);
 
@@ -185,24 +155,14 @@ describe('Changing slide properties.', function() {
 
 	it('Apply pattern fill.', function() {
 		// Change fill style
-		helper.clickOnIdle('#fillstyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Pattern');
-
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Pattern');
+		mobileHelper.selectListBoxItem2('#fillstyle', 'Pattern');
 
 		// Check the default value
 		cy.get('#fillattr1 .ui-header-left')
 			.should('have.text', '5 Percent');
 
 		// Change the value
-		helper.clickOnIdle('#fillattr1');
-
-		helper.clickOnIdle('.ui-combobox-text', '50 Percent');
-
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', '50 Percent');
+		mobileHelper.selectListBoxItem2('#fillattr1', '50 Percent');
 
 		previewShouldBeFullWhite(false);
 
@@ -219,12 +179,7 @@ describe('Changing slide properties.', function() {
 
 	it('Remove slide fill.', function() {
 		// Apply color fill first
-		helper.clickOnIdle('#fillstyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Color');
-
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Color');
+		mobileHelper.selectListBoxItem2('#fillstyle', 'Color');
 
 		previewShouldBeFullWhite(false);
 
@@ -236,12 +191,7 @@ describe('Changing slide properties.', function() {
 			.should('have.text', 'Color');
 
 		// Remove fill
-		helper.clickOnIdle('#fillstyle');
-
-		helper.clickOnIdle('.ui-combobox-text', 'None');
-
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'None');
+		mobileHelper.selectListBoxItem2('#fillstyle', 'None');
 
 		previewShouldBeFullWhite();
 
@@ -256,12 +206,7 @@ describe('Changing slide properties.', function() {
 	it('Change master background.', function() {
 		// The default master slide does not have background
 		// So switch to a different master slide first
-		helper.clickOnIdle('#masterslide');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Colored');
-
-		cy.get('#masterslide .ui-header-left')
-			.should('have.text', 'Colored');
+		mobileHelper.selectListBoxItem2('#masterslide', 'Colored');
 
 		previewShouldBeFullWhite(false);
 
@@ -326,12 +271,7 @@ describe('Changing slide properties.', function() {
 				expect(sizeRatio).to.be.lessThan(16 / 9 + EPS);
 			});
 
-		helper.clickOnIdle('#paperformat');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Screen 4:3');
-
-		cy.get('#paperformat .ui-header-left')
-			.should('have.text', 'Screen 4:3');
+		mobileHelper.selectListBoxItem2('#paperformat', 'Screen 4:3');
 
 		cy.get('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
@@ -358,12 +298,7 @@ describe('Changing slide properties.', function() {
 		cy.get('#orientation .ui-header-left')
 			.should('have.text', 'Landscape');
 
-		helper.clickOnIdle('#orientation');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Portrait');
-
-		cy.get('#orientation .ui-header-left')
-			.should('have.text', 'Portrait');
+		mobileHelper.selectListBoxItem2('#orientation', 'Portrait');
 
 		cy.get('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
@@ -385,12 +320,7 @@ describe('Changing slide properties.', function() {
 		cy.get('#masterslide .ui-header-left')
 			.should('have.text', 'Default');
 
-		helper.clickOnIdle('#masterslide');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Colored');
-
-		cy.get('#masterslide .ui-header-left')
-			.should('have.text', 'Colored');
+		mobileHelper.selectListBoxItem2('#masterslide', 'Colored');
 
 		previewShouldBeFullWhite(false);
 
@@ -442,12 +372,7 @@ describe('Changing slide properties.', function() {
 				expect(sizeRatio).to.be.lessThan(16 / 9 + EPS);
 			});
 
-		helper.clickOnIdle('#paperformat');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Screen 4:3');
-
-		cy.get('#paperformat .ui-header-left')
-			.should('have.text', 'Screen 4:3');
+		mobileHelper.selectListBoxItem2('#paperformat', 'Screen 4:3');
 
 		cy.get('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
@@ -476,12 +401,7 @@ describe('Changing slide properties.', function() {
 		cy.get('#orientation .ui-header-left')
 			.should('have.text', 'Landscape');
 
-		helper.clickOnIdle('#orientation');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Portrait');
-
-		cy.get('#orientation .ui-header-left')
-			.should('have.text', 'Portrait');
+		mobileHelper.selectListBoxItem2('#orientation', 'Portrait');
 
 		cy.get('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {

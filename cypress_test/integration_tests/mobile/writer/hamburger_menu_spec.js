@@ -520,10 +520,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		openPageWizard();
 
-		helper.clickOnIdle('#papersize');
-
-
-		helper.clickOnIdle('.ui-combobox-text', 'C6 Envelope');
+		mobileHelper.selectListBoxItem2('#papersize', 'C6 Envelope');
 
 		closePageWizard();
 
@@ -597,9 +594,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		openPageWizard();
 
-		helper.clickOnIdle('#paperorientation');
-
-		helper.clickOnIdle('.ui-combobox-text', 'Landscape');
+		mobileHelper.selectListBoxItem2('#paperorientation', 'Landscape');
 
 		closePageWizard();
 
@@ -620,9 +615,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		openPageWizard();
 
-		helper.clickOnIdle('#marginLB');
-
-		helper.clickOnIdle('.ui-combobox-text', 'None');
+		mobileHelper.selectListBoxItem2('#marginLB', 'None');
 
 		closePageWizard();
 

@@ -276,6 +276,19 @@ function selectListBoxItem(listboxSelector, item) {
 	cy.log('Selecting an item from listbox - end.');
 }
 
+function selectListBoxItem2(listboxSelector, item) {
+	cy.log('Selecting an item from listbox 2 - start.');
+
+	helper.clickOnIdle(listboxSelector);
+
+	helper.clickOnIdle('.ui-combobox-text', item);
+
+	cy.get(listboxSelector + ' .ui-header-left')
+		.should('have.text', item);
+
+	cy.log('Selecting an item from listbox 2 - end.');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
@@ -290,3 +303,4 @@ module.exports.closeInsertionWizard = closeInsertionWizard;
 module.exports.selectFromColorPalette = selectFromColorPalette;
 module.exports.openTextPropertiesPanel = openTextPropertiesPanel;
 module.exports.selectListBoxItem = selectListBoxItem;
+module.exports.selectListBoxItem2 = selectListBoxItem2;
