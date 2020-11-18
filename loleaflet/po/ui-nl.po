@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0100\n"
-"PO-Revision-Date: 2020-07-06 08:19+0000\n"
-"Last-Translator: kees538 <kees538@gmail.com>\n"
-"Language-Team: Dutch <https://weblate.documentfoundation.org/projects/"
-"libo_online/loleaflet-ui/nl/>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-11-18 13:39+0000\n"
+"Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
+"ui/nl/>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
 "X-Pootle-Revision: 3939479\n"
 
@@ -68,14 +68,12 @@ msgstr "Geopende documenten"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
 msgid " user(s)."
-msgstr "0 gebruikers"
+msgstr " gebruiker(s)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
 msgid " document(s) open."
-msgstr "Geopende documenten"
+msgstr " geopende document(en)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -697,7 +695,7 @@ msgstr "Excel-spreadsheet (.xlsx)"
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:579
 #: src/control/Control.Menubar.js:626 src/control/Control.StatusBar.js:190
 msgid "Search"
-msgstr "Zoeken:"
+msgstr "Zoeken"
 
 #: src/control/Control.Menubar.js:542
 msgid "Page Setup"
@@ -855,7 +853,7 @@ msgstr "Weet u zeker dat u blad %sheet% wilt verwijderen?"
 
 #: src/control/Control.Tabs.js:214
 msgid "Enter new sheet name"
-msgstr "Voer een nieuwe bladnaam in."
+msgstr "Voer een nieuwe bladnaam in"
 
 #: src/control/Control.Toolbar.js:904
 msgid "Previous slide"
@@ -869,8 +867,8 @@ msgstr "Volgende dia"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
-"Ongedaan maken/Opnieuw conflicteert met meerdere gebruikers. Gebruik "
-"document herstellen om dit op te lossen."
+"Conflict bij het Ongedaan maken/Opnieuw uitvoeren met meerdere gebruikers. "
+"Gebruik Document herstellen om dit op te lossen"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -1136,7 +1134,7 @@ msgstr "Type:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
-msgstr "Document geüpload"
+msgstr "Document ge-upload."
 
 #: src/control/Signing.js:488
 msgid "Select identity:"
@@ -1214,7 +1212,7 @@ msgstr "Ondertekend maar niet gevalideerd"
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
 msgstr ""
-"De ondertekening is OK, maar het document is maar gedeeltelijk ondertekend."
+"De ondertekening is OK, maar het document is maar gedeeltelijk ondertekend"
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
@@ -1291,7 +1289,7 @@ msgstr "Bediend door:"
 
 #: src/core/Socket.js:306
 msgid "Unsupported server version."
-msgstr "Niet-ondersteunde serverversie"
+msgstr "Niet-ondersteunde serverversie."
 
 #: src/core/Socket.js:400
 msgid "Session terminated by document owner"
@@ -1316,8 +1314,7 @@ msgstr "Oeps, er is een probleem met de toegang tot het document"
 
 #: src/core/Socket.js:423
 msgid "Server is recycling and will be available shortly"
-msgstr ""
-"De server wordt opnieuw opgestart en zal binnenkort weer beschikbaar zijn."
+msgstr "De server wordt opnieuw opgestart en is snel weer beschikbaar"
 
 #: src/core/Socket.js:451
 msgid ""
