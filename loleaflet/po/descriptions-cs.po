@@ -1,0 +1,55 @@
+# Jan Holesovsky <kendy@collabora.com>, 2020.
+# Weblate <noreply@weblate.org>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-16 22:52+0200\n"
+"PO-Revision-Date: 2020-11-18 18:06+0000\n"
+"Last-Translator: Jan Holesovsky <kendy@collabora.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
+"app-store-descriptions/cs/>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.4-dev\n"
+
+#. App name - 50 chars limit
+#: descriptions/google-play.html%2Bhtml.body.h3:5-1
+msgid "Collabora Office: LibreOffice, OpenOffice & more"
+msgstr "Collabora Office: LibreOffice, OpenOffice a další"
+
+#. Short description - 80 chars limit
+#: descriptions/google-play.html%2Bhtml.body.p:9-1
+msgid ""
+"LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
+"docs."
+msgstr ""
+"LibreOffice editor na dokumenty LibreOffice, OpenOffice a Microsoft Office."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
+msgid "Major upgrade to the new 6.4 core."
+msgstr "Upgrade na nové jádro 6.4."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
+msgid "Improved MS Office interoperability."
+msgstr "Vylepšená interoperabilita s MS Office."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
+msgid "Better keyboard, mouse and trackpad support on Chromebooks."
+msgstr "Lepší podpora klávesnice, myši a trackpadu na Chromeboocích."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
+msgid "New tablet UI featuring a notebookbar."
+msgstr "Nové uživatelské rozhraní na tabletech s lištou karet."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
+msgid "Numerous fixes and improvements all over the place."
+msgstr "Četné opravy a vylepšení na různých místech."
