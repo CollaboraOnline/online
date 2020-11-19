@@ -34,6 +34,7 @@
 #include "Log.hpp"
 #include "Util.hpp"
 #include "Protocol.hpp"
+#include "Buffer.hpp"
 #include "SigUtil.hpp"
 
 namespace Poco
@@ -872,7 +873,7 @@ public:
         assertCorrectThread();
         if (data != nullptr && len > 0)
         {
-            _outBuffer.insert(_outBuffer.end(), data, data + len);
+            _outBuffer.append(data, len);
             if (flush)
                 writeOutgoingData();
         }
@@ -898,9 +899,7 @@ public:
         // so that our non-ancillary data will
         // match ancillary data.
         if (getOutBuffer().size() > 0)
-        {
             writeOutgoingData();
-        }
 
         msghdr msg;
         iovec iov[1];
@@ -1051,7 +1050,7 @@ public:
         return _inBuffer;
     }
 
-    std::vector<char>& getOutBuffer()
+    Buffer& getOutBuffer()
     {
         return _outBuffer;
     }
@@ -1153,9 +1152,10 @@ public:
             ssize_t len;
             do
             {
-                // Writing more than we can absorb in the kernel causes SSL wastage.
-                len = writeData(&_outBuffer[0], std::min((int)_outBuffer.size(),
-                                                         getSendBufferSize()));
+                // Writing much more than we can absorb in the kernel causes wastage.
+                len = writeData(_outBuffer.getBlock(),
+                                std::min((int)_outBuffer.getBlockSize(),
+                                         getSendBufferSize()));
 
                 LOG_TRC('#' << getFD() << ": Wrote outgoing data " << len << " bytes of "
                             << _outBuffer.size() << " bytes buffered.");
@@ -1163,7 +1163,7 @@ public:
 #ifdef LOG_SOCKET_DATA
                 auto& log = Log::logger();
                 if (log.trace() && len > 0)
-                    log.dump("", &_outBuffer[0], len);
+                    log.dump("", _outBuffer.getBlock(), len);
 #endif
 
                 if (len <= 0 && errno != EAGAIN && errno != EWOULDBLOCK)
@@ -1174,7 +1174,7 @@ public:
             if (len > 0)
             {
                 _bytesSent += len;
-                _outBuffer.erase(_outBuffer.begin(), _outBuffer.begin() + len);
+                _outBuffer.eraseFirst(len);
             }
             else
             {
@@ -1274,7 +1274,7 @@ protected:
     std::shared_ptr<ProtocolHandlerInterface> _socketHandler;
 
     std::vector<char> _inBuffer;
-    std::vector<char> _outBuffer;
+    Buffer _outBuffer;
 
     uint64_t _bytesSent;
     uint64_t _bytesRecvd;
