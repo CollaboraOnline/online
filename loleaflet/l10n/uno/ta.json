@@ -1,4 +1,5 @@
 {
+"Accept":"ஏற்றுக்கொள்",
 "Accept All":"அனைத்தும் ஏற்றுக்கொள்",
 "Add Decimal Place":"தசம இடத்தைச் சேர்",
 "Align Left":"இடது ஒழுங்கு",
@@ -154,6 +155,7 @@
 "Next Page":"அடுத்த பக்கம்",
 "Number Format: Currency":"எண் வடிவம்: நாணயம்",
 "Number Format: Percent":"எண் வடிவம்: சதவீதம்",
+"Numbering Off":"எண்ணிடலை முடக்கு",
 "Open Hyperlink":"மீத்தொடுப்பைத் திற",
 "Optimal Column Width":"உகப்பான நிரல் அகலம்",
 "Optimal Row Height":"உகப்பான வரி உயரம்",

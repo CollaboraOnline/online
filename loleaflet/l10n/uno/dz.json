@@ -1,4 +1,5 @@
 {
+"Accept":"དང་ལེན།",
 "Accept All":"ཆ་མཉམ་དང་ལེན་འབད།",
 "Align Left":"གཡོན་ཕྲང་།",
 "Align Right":"གཡས་ཕྲང་།",
@@ -78,6 +79,7 @@
 "Next Page":"ཤུལ་མམ་གྱི་ཤོག་ལེབ།",
 "Number Format: Currency":"ཨང་གྲངས་རྩ་སྒྲིག་འབད་ནི་:དངུལ།",
 "Number Format: Percent":"ཨང་གྲངས་རྩ་སྒྲིག་འབད་ནི་:བརྒྱ་ཆ།",
+"Numbering Off":"ཨང་གྲངས་བཏགས་ནི་ ཨོཕ།",
 "Open Hyperlink":"ཧེའི་པར་ལིནཀི་ཁ་ཕྱེ།",
 "Optimal Column Width":"ཀེར་ཐིག་གི་རྒྱ་ཚད་ གང་དྲག།",
 "Optimal Row Height":"གྲལ་ཐིག་གི་མཐོ་ཚད་གང་དྲག",

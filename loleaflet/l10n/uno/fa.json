@@ -1,4 +1,5 @@
 {
+"Accept":"پذیرش",
 "Accept All":"قبول کردن همه",
 "Align Left":"چپ‌چین",
 "Align Right":"راست‌چین",
@@ -76,6 +77,7 @@
 "Next Page":"صفحه‌ی بعد",
 "Number Format: Currency":"قالب عدد: پول",
 "Number Format: Percent":"قالب عدد: درصد",
+"Numbering Off":"شماره‌گذاری خاموش",
 "Open Hyperlink":"باز کردن فراپیوند",
 "Optimal Column Width":"عرض ستون بهینه",
 "Optimal Row Height":"ارتفاع سطر بهینه",

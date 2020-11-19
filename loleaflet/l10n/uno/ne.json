@@ -1,4 +1,5 @@
 {
+"Accept":"स्वीकार गर्नुहोस्",
 "Accept All":"सबै स्वीकार गर्नुहोस्",
 "Align Left":"बायाँ पङ्क्तिबद्ध गर्नुहोस्",
 "Align Right":"दायाँ पङ्क्तिबद्ध गर्नुहोस्",
@@ -83,6 +84,7 @@
 "Next Page":"पछिल्लो पृष्ठ",
 "Number Format: Currency":"नम्बर ढाँचा: मुद्रा",
 "Number Format: Percent":"नम्बर ढाँचा: प्रतिशत",
+"Numbering Off":"सङ्ख्याङ्कन बन्द",
 "Open Hyperlink":"हाइपरलिङ्क खोल्नुहोस्",
 "Optimal Column Width":"इष्टतम स्तम्भ चौडाइ",
 "Optimal Row Height":"इष्टतम पङ्क्ति उचाइ",
