@@ -551,8 +551,7 @@ void StreamSocket::dumpState(std::ostream& os)
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         Util::dumpHex(os, "\t\tinBuffer:\n", "\t\t", _inBuffer);
-    if (_outBuffer.size() > 0)
-        _outBuffer.dumpHex(os, "\t\toutBuffer:\n", "\t\t");
+    _outBuffer.dumpHex(os, "\t\toutBuffer:\n", "\t\t");
 }
 
 void StreamSocket::send(Poco::Net::HTTPResponse& response)
