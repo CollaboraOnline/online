@@ -75,7 +75,7 @@ DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DESKTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
 MULTIUSER_TESTS_DONE= \
-	$(foreach test,$(MULTIUSER_TESTS),$(MULTIUSER_TRACK_FOLDER)/$(test).done)
+	$(MULTIUSER_TRACK_FOLDER)/multiuser_tests.done
 
 check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
@@ -112,7 +112,7 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 	)
 
 $(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
-	$(call run_multiuser_test,$(subst $(MULTIUSER_TRACK_FOLDER)/,,$(basename $@)))
+	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test),$(1)))
 	@mkdir -p $(dir $@) && touch $@
 
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
