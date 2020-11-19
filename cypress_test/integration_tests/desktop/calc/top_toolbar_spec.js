@@ -17,6 +17,17 @@ describe('Top toolbar tests.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
+
+	it('Merge cells', function() {
+		calcHelper.selectEntireSheet();
+
+		cy.get('#tb_editbar_item_togglemergecells')
+			.click();
+		
+		cy.get('.lokdialog_canvas')
+			.should('exist');
+	});
+
 	it('Remove cell border', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
