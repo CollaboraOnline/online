@@ -79,21 +79,24 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	cy.get('iframe#richdocumentsframe')
 		.should('be.visible', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-	var getIframeBody = function(originalGet, level) {
+	cy.wait(10000);
+
+	cy.get('iframe#richdocumentsframe')
+		.its('0.contentDocument').should('exist')
+		.its('body').should('not.be.undefined')
+		.then(cy.wrap).as('richdocumentsIFrameGlobal');
+
+	cy.get('@richdocumentsIFrameGlobal')
+		.find('iframe#loleafletframe', {log: false})
+		.its('0.contentDocument', {log: false}).should('exist')
+		.its('body', {log: false}).should('not.be.undefined')
+		.then(cy.wrap, {log: false}).as('loleafletIFrameGlobal');
+
+	var getIframeBody = function(level) {
 		if (level === 1) {
-			return cy.wrap(originalGet('iframe#richdocumentsframe'))
-				.its('0.contentDocument', {log: false}).should('exist')
-				.its('body', {log: false}).should('not.be.undefined')
-				.then(cy.wrap, {log: false});
+			return cy.get('@richdocumentsIFrameGlobal');
 		} else if (level === 2) {
-			return cy.wrap(originalGet('iframe#richdocumentsframe'))
-				.its('0.contentDocument', {log: false}).should('exist')
-				.its('body', {log: false}).should('not.be.undefined')
-				.then(cy.wrap, {log: false})
-				.find('iframe#loleafletframe', {log: false})
-				.its('0.contentDocument', {log: false}).should('exist')
-				.its('body', {log: false}).should('not.be.undefined')
-				.then(cy.wrap, {log: false});
+			return cy.get('@loleafletIFrameGlobal');
 		}
 	};
 
@@ -106,9 +109,9 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 		var iFrameLevel = Cypress.env('IFRAME_LEVEL');
 		if ((iFrameLevel === '1' || iFrameLevel === '2') && !selector.startsWith('@'))
 			if (selector === 'body')
-				return getIframeBody(originalFn, parseInt(iFrameLevel));
+				return getIframeBody(parseInt(iFrameLevel));
 			else
-				return getIframeBody(originalFn, parseInt(iFrameLevel)).find(selector, options);
+				return getIframeBody(parseInt(iFrameLevel)).find(selector, options);
 		else
 			return originalFn(selector, options);
 	});
@@ -120,7 +123,6 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			return originalFn(selector, content, options);
 	});
 
-	cy.wait(10000);
 
 	cy.log('Loading test document with nextcloud - end.');
 }
