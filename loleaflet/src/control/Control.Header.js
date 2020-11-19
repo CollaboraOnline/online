@@ -413,6 +413,10 @@ L.Control.Header = L.Control.extend({
 			this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
 		}
 
+		// cypress mobile emulation sometimes triggers resizing unintentionally.
+		if (L.Browser.cypressTest)
+			return false;
+
 		if (isMouseOverResizeArea !== this._hitResizeArea) {
 			if (isMouseOverResizeArea) {
 				L.DomEvent.off(this._canvas, 'click', this._onClick, this);
