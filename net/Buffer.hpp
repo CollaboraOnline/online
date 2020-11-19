@@ -17,9 +17,10 @@
  */
 class Buffer {
     size_t _size;
+    size_t _offset;
     std::vector<char> _buffer;
 public:
-    Buffer() : _size(0)
+    Buffer() : _size(0), _offset(0)
     {
     }
     size_t size() { return _size; }
@@ -27,7 +28,7 @@ public:
 
     const char *getBlock()
     {
-        return &_buffer[0];
+        return &_buffer[_offset];
     }
     size_t getBlockSize()
     {
@@ -35,17 +36,34 @@ public:
     }
     void eraseFirst(size_t len)
     {
-        _buffer.erase(_buffer.begin(), _buffer.begin() + len);
-        _size = _buffer.size();
+        assert(_offset + len <= _buffer.size());
+
+        // avoid regular shuffling down larger chunks of data
+        if (_buffer.size() > 16384 && // lots of queued data
+            len < _buffer.size() &&   // not a complete erase
+            _offset < 16384 * 64 &&   // do cleanup a Mb at a time or so:
+            _size > 512)              // early cleanup if what remains is small.
+        {
+            _offset += len;
+            _size -= len;
+            return;
+        }
+
+        _buffer.erase(_buffer.begin(), _buffer.begin() + _offset + len);
+        _offset = 0;
+        _size = _buffer.size() - _offset;
     }
     void append(const char *data, const int len)
     {
         _buffer.insert(_buffer.end(), data, data + len);
-        _size = _buffer.size();
+        _size = _buffer.size() - _offset;
     }
     void dumpHex(std::ostream &os, const char *legend, const char *prefix)
     {
-        Util::dumpHex(os, legend, prefix, _buffer);
+        if (_size > 0 || _offset > 0)
+            os << prefix << "Buffer size: " << _size << " offset: " << _offset << "\n";
+        if (_buffer.size() > 0)
+            Util::dumpHex(os, legend, prefix, _buffer);
     }
 };
 
