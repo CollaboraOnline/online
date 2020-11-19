@@ -264,9 +264,6 @@ function selectListBoxItem(listboxSelector, item) {
 
 	helper.clickOnIdle('.mobile-wizard.ui-combobox-text', item);
 
-	cy.contains('.mobile-wizard.ui-combobox-text', item)
-		.should('have.class', 'selected');
-
 	helper.clickOnIdle('#mobile-wizard-back');
 
 	// Combobox entry contains the selected item
