@@ -86,8 +86,8 @@ public:
     {
         return _socket;
     }
-    bool isMove() { return _disposition == Type::MOVE; }
-    bool isClosed() { return _disposition == Type::CLOSED; }
+    bool isMove() const { return _disposition == Type::MOVE; }
+    bool isClosed() const { return _disposition == Type::CLOSED; }
 
     /// Perform the queued up work.
     void execute();
