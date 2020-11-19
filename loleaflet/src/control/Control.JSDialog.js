@@ -3,9 +3,10 @@
  * L.Control.JSDialog
  */
 
-/* global */
+/* global Hammer */
 L.Control.JSDialog = L.Control.extend({
 	dialogs: {},
+	draggingObject: null,
 
 	onAdd: function (map) {
 		this.map = map;
@@ -18,24 +19,25 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	onJSDialog: function(data) {
-		if (this.dialogs[data.id])
+		var posX = 0;
+		var posY = 0;
+
+		if (this.dialogs[data.id]) {
+			posX = this.dialogs[data.id].startX;
+			posY = this.dialogs[data.id].startY;
 			L.DomUtil.remove(this.dialogs[data.id]);
+		}
 
 		if (data.action === 'close')
 			return;
 
-		var left = 100;
-		var top = 100;
-
 		var container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
+		container.id = data.id;
 		this.dialogs[data.id] = container;
-
-		L.DomUtil.setStyle(container, 'margin-left', left + 'px');
-		L.DomUtil.setStyle(container, 'margin-top', top + 'px');
 
 		var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
 		var title = L.DomUtil.create('span', 'ui-dialog-title', titlebar);
-		title.innerText = 'title';
+		title.innerText = data.title;
 		var button = L.DomUtil.create('button', 'ui-dialog-titlebar-close', titlebar);
 		L.DomUtil.create('button', 'ui-button-icon ui-icon ui-icon-closethick', button);
 
@@ -50,7 +52,59 @@ L.Control.JSDialog = L.Control.extend({
 			that.dialogs[data.id] = undefined;
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 		};
+
+		var hammerContent = new Hammer(titlebar);
+		hammerContent.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
+
+		hammerContent.on('panstart', this.onPan.bind(this));
+		hammerContent.on('panmove', this.onPan.bind(this));
+		hammerContent.on('hammer.input', function(ev) {
+			if (ev.isFinal && that.draggingObject) {
+				that.draggingObject.startX = that.draggingObject.translateX;
+				that.draggingObject.startY = that.draggingObject.translateY;
+				that.draggingObject.translateX = 0;
+				that.draggingObject.translateY = 0;
+				that.draggingObject = null;
+			}
+		});
+
+		if (posX === 0 && posY === 0) {
+			posX = window.innerWidth/2 - container.offsetWidth/2;
+			posY = window.innerHeight/2 - container.offsetHeight/2;
+		}
+
+		container.startX = posX;
+		container.startY = posY;
+		this.updatePosition(container, posX, posY);
 	},
+
+	onPan: function (ev) {
+		if (ev.target && ev.target.parentNode && ev.target.parentNode.id) {
+			var target = ev.target.parentNode;
+			this.draggingObject = target;
+
+			var startX = target.startX ? target.startX : 0;
+			var startY = target.startY ? target.startY : 0;
+
+			var newX = startX + ev.deltaX;
+			var newY = startY + ev.deltaY;
+
+			// Don't allow to put dialog outside the view
+			if (window.mode.isDesktop() && !(newX < 0 || newY < 0
+				|| newX > window.innerWidth - target.offsetWidth/2
+				|| newY > window.innerHeight - target.offsetHeight/2)) {
+				target.translateX = newX;
+				target.translateY = newY;
+
+				this.updatePosition(target, newX, newY);
+			}
+		}
+	},
+
+	updatePosition: function (target, newX, newY) {
+		target.style.marginLeft = newX + 'px';
+		target.style.marginTop = newY + 'px';
+	}
 });
 
 L.control.jsDialog = function (options) {
