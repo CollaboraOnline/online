@@ -87,10 +87,10 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 		.then(cy.wrap).as('richdocumentsIFrameGlobal');
 
 	cy.get('@richdocumentsIFrameGlobal')
-		.find('iframe#loleafletframe', {log: false})
-		.its('0.contentDocument', {log: false}).should('exist')
-		.its('body', {log: false}).should('not.be.undefined')
-		.then(cy.wrap, {log: false}).as('loleafletIFrameGlobal');
+		.find('iframe#loleafletframe')
+		.its('0.contentDocument').should('exist')
+		.its('body').should('not.be.undefined')
+		.then(cy.wrap).as('loleafletIFrameGlobal');
 
 	var getIframeBody = function(level) {
 		if (level === 1) {
