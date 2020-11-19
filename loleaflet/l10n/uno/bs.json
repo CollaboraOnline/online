@@ -1,4 +1,5 @@
 {
+"Accept":"Prihvati",
 "Accept All":"Prihvati sve",
 "Align Left":"Poravnaj lijevo",
 "Align Right":"Poravnaj desno",
@@ -123,6 +124,7 @@
 "Next Page":"Sljedeća strana",
 "Number Format: Currency":"Format brojeva: Valuta",
 "Number Format: Percent":"Format brojeva: Postotak",
+"Numbering Off":"Isključi numerisanje",
 "Open Hyperlink":"Otvori link",
 "Optimal Column Width":"Optimalna širina kolone",
 "Optimal Row Height":"Optimalna visina reda",

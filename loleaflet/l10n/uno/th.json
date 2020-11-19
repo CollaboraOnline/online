@@ -1,4 +1,5 @@
 {
+"Accept":"ยอมรับ",
 "Accept All":"ยอมรับทั้งหมด",
 "Align Left":"จัดตำแหน่งชิดซ้าย",
 "Align Right":"จัดตำแหน่งชิดขวา",
@@ -116,6 +117,7 @@
 "Next Page":"หน้าถัดไป",
 "Number Format: Currency":"รูปแบบตัวเลข: เงินตรา",
 "Number Format: Percent":"รูปแบบตัวเลข: ร้อยละ",
+"Numbering Off":"ปิดการใช้งานรายการลำดับ",
 "Open Hyperlink":"เปิดไฮเพอร์ลิงก์",
 "Optimal Column Width":"ความกว้างคอลัมน์ที่เหมาะที่สุด",
 "Optimal Row Height":"ความสูงแถวที่เหมาะที่สุด",

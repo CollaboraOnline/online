@@ -1,5 +1,7 @@
 {
+"Accept":"ຍອມຮັບ",
 "Accept All":"ຍອມຮັບທັງໝົດ",
+"Accept Change":"ຍອມຮັບການປ່ຽນແປງ",
 "Align Left":"ຈັດລຽນຊ້າຍ",
 "Align Right":"ຈັດລຽນຂວາ",
 "Arrange":"ຈັດແຈງ",
@@ -65,6 +67,7 @@
 "Next Page":"ໜ້າຕໍ່ໄປ",
 "Number Format: Currency":"ຮູບແບບຕົວເລກ: ສະກຸນເງີນ",
 "Number Format: Percent":"ຮູບແບບຕົວເລກ:ເປີເຊັ່ນ",
+"Numbering Off":"ການລຽງຕົວເລກປິດ",
 "Open Hyperlink":"ເປີດການເຊື່ອມຕໍ່",
 "Optimal Column Width":"ຄວາມກ້ວາງຂອງຖັນທີ່ໃຊ້ການໄດ້",
 "Optimal Row Height":"ຄວາມສູງແຖວທີ່ໃຊ້ໄດ້",
@@ -75,6 +78,7 @@
 "Promote One Level":"ຂື້ນໜຶ່ງລະດັບ",
 "Promote One Level With Subpoints":"ຍ້າຍຂື້ນດ້ວຍຈຸດຍ່ອຍ",
 "P~aragraph...":"~ຫຍໍ້ໜ້າ...",
+"Reject Change":"ປະຕິເສດການປ່ຽນແປງ",
 "Restart Numbering":"ທຳການລຽງຕາມຕົວເລກຄືນໃໝ່",
 "Right":"ຂວາ",
 "Right-To-Left":"ຊ້າຍຫາຂວາ",

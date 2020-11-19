@@ -1,4 +1,5 @@
 {
+"Accept":"গ্রহণ",
 "Accept All":"সব গ্রহণ করুন",
 "Align Left":"বাম প্রান্তিক",
 "Align Right":"ডান প্রান্তিক",
@@ -112,6 +113,7 @@
 "Next Page":"পরবর্তী পৃষ্ঠা",
 "Number Format: Currency":"সংখ্যার বিন্যাস: মুদ্রা",
 "Number Format: Percent":"সংখ্যার বিন্যাস: শতাংশ",
+"Numbering Off":"সংখ্যায়ন বন্ধ",
 "Open Hyperlink":"হাইপারলিংক খুলুন",
 "Optimal Column Width":"উপযুক্ত কলাম প্রস্থ",
 "Optimal Row Height":"উপযুক্ত সারির উচ্চতা",

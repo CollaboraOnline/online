@@ -1,4 +1,5 @@
 {
+"Accept":"Accept",
 "Accept All":"Accept All",
 "Align Left":"Align Left",
 "Align Right":"Align Right",
@@ -113,6 +114,7 @@
 "Next Page":"Next Page",
 "Number Format: Currency":"Number Format: Currency",
 "Number Format: Percent":"Number Format: Percent",
+"Numbering Off":"Numbering Off",
 "Open Hyperlink":"Open Hyperlink",
 "Optimal Column Width":"Optimal Column Width",
 "Optimal Row Height":"Optimal Row Height",

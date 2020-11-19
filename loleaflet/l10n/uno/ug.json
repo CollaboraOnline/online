@@ -1,4 +1,5 @@
 {
+"Accept":"قوشۇل",
 "Accept All":"ھەممىگە قوشۇل",
 "Add Decimal Place":"كەسىر چېكىتى خانىسى قوش",
 "Align Center":"ئوتتۇرىغا توغرىلا",
@@ -165,6 +166,7 @@
 "Next Page":"كېيىنكى بەت",
 "Number Format: Currency":"رەقەم پىچىمى: پۇل",
 "Number Format: Percent":"رەقەم پىچىمى: پىرسەنت",
+"Numbering Off":"تەرتىپ نومۇرى يوشۇر",
 "Open Hyperlink":"ئۇلانما ئاچ",
 "Optimal Column Width":"ئەڭ مۇۋاپىق رەت كەڭلىكى",
 "Optimal Row Height":"ئەڭ مۇۋاپىق ئېگىزلىك",
