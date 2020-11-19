@@ -17,6 +17,21 @@ describe('Top toolbar tests.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
+	it('Merge cells', function() {
+
+		// Select the full column
+		calcHelper.selectFirstColumn();
+	
+		// Despite the selection is there, merge cells needs more time here.
+		cy.wait(1000);
+	
+		cy.get('.w2ui-tb-image.w2ui-icon.togglemergecells')
+			.click();
+
+		desktopHelper.checkDialogAndClose('Merge Cells');
+	});
+
+
 	it('Remove cell border', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
