@@ -544,54 +544,66 @@ protected:
 #if !MOBILEAPP
     /// Builds a websocket frame based on data and flags received as parameters.
     /// The frame is output in 'out' parameter
-    void buildFrame(const char* data, const uint64_t len, unsigned char flags, std::vector<char>& out) const
+    void buildFrame(const char* data, const uint64_t len, unsigned char flags, Buffer &out) const
     {
-        out.push_back(flags);
+        int slen = 0;
+        char scratch[16];
+
+        scratch[slen++] = flags;
 
         int maskFlag = _isMasking ? 0x80 : 0;
         if (len < 126)
         {
-            out.push_back((char)(len | maskFlag));
+            scratch[slen++] = (char)(len | maskFlag);
         }
         else if (len <= 0xffff)
         {
-            out.push_back((char)(126 | maskFlag));
-            out.push_back(static_cast<char>((len >> 8) & 0xff));
-            out.push_back(static_cast<char>((len >> 0) & 0xff));
+            scratch[slen++] = (char)(126 | maskFlag);
+            scratch[slen++] = static_cast<char>((len >> 8) & 0xff);
+            scratch[slen++] = static_cast<char>((len >> 0) & 0xff);
         }
         else
         {
-            out.push_back((char)(127 | maskFlag));
-            out.push_back(static_cast<char>((len >> 56) & 0xff));
-            out.push_back(static_cast<char>((len >> 48) & 0xff));
-            out.push_back(static_cast<char>((len >> 40) & 0xff));
-            out.push_back(static_cast<char>((len >> 32) & 0xff));
-            out.push_back(static_cast<char>((len >> 24) & 0xff));
-            out.push_back(static_cast<char>((len >> 16) & 0xff));
-            out.push_back(static_cast<char>((len >> 8) & 0xff));
-            out.push_back(static_cast<char>((len >> 0) & 0xff));
+            scratch[slen++] = (char)(127 | maskFlag);
+            scratch[slen++] = static_cast<char>((len >> 56) & 0xff);
+            scratch[slen++] = static_cast<char>((len >> 48) & 0xff);
+            scratch[slen++] = static_cast<char>((len >> 40) & 0xff);
+            scratch[slen++] = static_cast<char>((len >> 32) & 0xff);
+            scratch[slen++] = static_cast<char>((len >> 24) & 0xff);
+            scratch[slen++] = static_cast<char>((len >> 16) & 0xff);
+            scratch[slen++] = static_cast<char>((len >> 8) & 0xff);
+            scratch[slen++] = static_cast<char>((len >> 0) & 0xff);
         }
+
+        out.append(scratch, slen);
 
         if (_isMasking)
         { // flip some top bits - perhaps it helps.
-            size_t mask = out.size();
+            char mask[4];
 
-            out.push_back(static_cast<char>(0x81));
-            out.push_back(static_cast<char>(0x76));
-            out.push_back(static_cast<char>(0x81));
-            out.push_back(static_cast<char>(0x76));
+            mask[0] = static_cast<char>(0x81);
+            mask[1] = static_cast<char>(0x76);
+            mask[2] = static_cast<char>(0x81);
+            mask[3] = static_cast<char>(0x76);
+            out.append(mask, 4);
 
-            // Copy the data.
-            out.insert(out.end(), data, data + len);
-
-            // Mask it.
-            for (size_t i = 4; i < out.size() - mask; ++i)
-                out[mask + i] = out[mask + i] ^ out[mask + (i%4)];
+            // copy and mask the data
+            char copy[16384];
+            ssize_t i = 0, toSend;
+            while (true)
+            {
+                toSend = std::min(sizeof(copy), len - i);
+                if (toSend == 0)
+                    break;
+                for (ssize_t j = 0; j < toSend; ++j, ++i)
+                    copy[j] = data[i] ^ mask[i%4];
+                out.append(copy, toSend);
+            }
         }
         else
         {
             // Copy the data.
-            out.insert(out.end(), data, data + len);
+            out.append(data, len);
         }
     }
 #endif
@@ -610,7 +622,7 @@ protected:
             return 0;
 
         socket->assertCorrectThread();
-        std::vector<char>& out = socket->getOutBuffer();
+        Buffer& out = socket->getOutBuffer();
 
 #if !MOBILEAPP
         const size_t oldSize = out.size();
@@ -628,7 +640,7 @@ protected:
         // WebSocket framing, we put the messages as such into the FakeSocket queue.
 
         (void) flush;
-        out.insert(out.end(), data, data + len);
+        out.append(data, len);
         const size_t size = out.size();
 
         socket->writeOutgoingData();

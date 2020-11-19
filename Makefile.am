@@ -262,6 +262,7 @@ shared_headers = common/Common.hpp \
                  common/SigUtil.hpp \
                  common/security.h \
                  common/SpookyV2.h \
+                 net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
                  net/HttpHelper.hpp \
