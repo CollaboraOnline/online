@@ -57,7 +57,10 @@ static std::string UnitTestLibrary;
 static std::string LogLevel;
 static std::atomic<unsigned> ForkCounter(0);
 
+/// The [child pid -> jail path] map.
 static std::map<pid_t, std::string> childJails;
+/// The jails that need cleaning up. This should be small.
+static std::vector<std::string> cleanupJailPaths;
 
 #ifndef KIT_IN_PROCESS
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
@@ -220,10 +223,18 @@ static bool haveCorrectCapabilities()
 }
 #endif
 
+static bool isDirectoryPresent(const std::string &path)
+{
+    try {
+        return Poco::File(path).isDirectory();
+    } catch (const Poco::FileNotFoundException &) {
+        return false;
+    }
+}
+
 /// Check if some previously forked kids have died.
 static void cleanupChildren()
 {
-    std::vector<std::string> jails;
     pid_t exitedChildPid;
     int status, segFaultCount = 0;
 
@@ -234,7 +245,7 @@ static void cleanupChildren()
         if (it != childJails.end())
         {
             LOG_INF("Child " << exitedChildPid << " has exited, will remove its jail [" << it->second << "].");
-            jails.emplace_back(it->second);
+            cleanupJailPaths.emplace_back(it->second);
             childJails.erase(it);
             if (childJails.empty() && !SigUtil::getTerminationFlag())
             {
@@ -278,10 +289,16 @@ static void cleanupChildren()
     }
 
     // Now delete the jails.
-    for (const auto& path : jails)
+    auto i = cleanupJailPaths.size();
+    while (i-- > 0)
     {
+        const std::string path = cleanupJailPaths[i];
         LOG_INF("Removing jail [" << path << "].");
         FileUtil::removeFile(path, true);
+        if (isDirectoryPresent(path))
+            LOG_DBG("Could not remove jail path [" << path << "]. Will retry later.");
+        else
+            cleanupJailPaths.erase(cleanupJailPaths.begin() + i);
     }
 }
 
