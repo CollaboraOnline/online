@@ -146,9 +146,25 @@ function selectEntireSheet(removeSelection = true) {
 	cy.log('Selecting entire sheet - end.');
 }
 
+function selectFirstColumn() {
+	cy.get('.spreadsheet-header-columns')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+
+			var XPos = items[0].getBoundingClientRect().left + 10;
+			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
+			cy.get('body')
+				.click(XPos, YPos);
+		});
+
+	cy.get('input#addressInput')
+		.should('have.prop', 'value', 'A1:A1048576');
+}
+
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
 module.exports.typeIntoFormulabar = typeIntoFormulabar;
 module.exports.removeTextSelection = removeTextSelection;
 module.exports.selectEntireSheet = selectEntireSheet;
+module.exports.selectFirstColumn = selectFirstColumn;
