@@ -32,6 +32,10 @@
 #tb_actionbar_item_StateTableCellMenu .w2ui-tb-down {
 	padding: 4px;
 }
+#InsertMode.insert-mode-false {
+	background-color: var(--gray-light-txt--color);
+	color: white;
+}
 #tb_actionbar_item_zoom .w2ui-tb-caption{
 	min-width: 43px;
 }
