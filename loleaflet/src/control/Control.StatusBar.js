@@ -303,7 +303,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break3', tablet: false},
 					{
 						type: 'html', id: 'InsertMode', mobile: false, tablet: false,
-						html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+						html: '<div id="InsertMode" class="loleaflet-font insert-mode-true" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 					},
 					{type: 'break', id: 'break4', tablet: false},
 					{type: 'menu-radio', id: 'LanguageStatus',
@@ -352,7 +352,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break5', mobile: false, tablet: false},
 					{
 						type: 'html', id: 'InsertMode', mobile: false, tablet: false,
-						html: '<div id="InsertMode" class="loleaflet-font" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+						html: '<div id="InsertMode" class="loleaflet-font insert-mode-true" title="' + _('Entering text mode') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 					},
 					{type: 'break', id: 'break6', mobile: false, tablet: false},
 					{
@@ -451,6 +451,9 @@ L.Control.StatusBar = L.Control.extend({
 		}
 		else if (commandName === '.uno:InsertMode') {
 			this.updateToolbarItem(statusbar, 'InsertMode', $('#InsertMode').html(state ? L.Styles.insertMode[state].toLocaleString() : '<span class="ToolbarStatusInactive">&nbsp;' + _('Insert mode: inactive') + '&nbsp;</span>').parent().html());
+
+			$('#InsertMode').removeClass();
+			$('#InsertMode').addClass('loleaflet-font insert-mode-' + state);
 
 			if (!state && this.map.hyperlinkPopup) {
 				this.map.hyperlinkUnderCursor = null;
