@@ -217,8 +217,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 			return;
 
 		ctx.save();
-		var scale = this.canvasDPIScale();
-		ctx.scale(scale, scale);
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {

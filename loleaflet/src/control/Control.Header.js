@@ -73,7 +73,7 @@ L.Control.Header = L.Control.extend({
 		var rate = fontHeight / fontSize;
 		this._font = {
 			_hdr: this,
-			_baseFontSize: fontSize,
+			_baseFontSize: fontSize * window.devicePixelRatio,
 			_fontSizeRate: rate,
 			_fontFamily: fontFamily,
 			getFont: function() {
@@ -92,7 +92,7 @@ L.Control.Header = L.Control.extend({
 		};
 		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
 		var borderWidth = L.DomUtil.getStyle(elem, 'border-top-width');
-		this._borderWidth = Math.round(parseFloat(borderWidth));
+		this._borderWidth = Math.round(parseFloat(borderWidth)) * window.devicePixelRatio;
 		this._cursor = L.DomUtil.getStyle(elem, 'cursor');
 		L.DomUtil.remove(elem);
 	},
@@ -352,16 +352,16 @@ L.Control.Header = L.Control.extend({
 	_mouseEventToCanvasPos: function(canvas, evt) {
 		var rect = canvas.getBoundingClientRect();
 		return {
-			x: evt.clientX - rect.left,
-			y: evt.clientY - rect.top
+			x: (evt.clientX - rect.left) * window.devicePixelRatio,
+			y: (evt.clientY - rect.top) * window.devicePixelRatio
 		};
 	},
 
 	_hammerEventToCanvasPos: function(canvas, event) {
 		var rect = canvas.getBoundingClientRect();
 		return {
-			x: event.center.x - rect.left,
-			y: event.center.y - rect.top
+			x: (event.center.x - rect.left) * window.devicePixelRatio,
+			y: (event.center.y - rect.top) * window.devicePixelRatio
 		};
 	},
 
@@ -579,9 +579,7 @@ L.Control.Header = L.Control.extend({
 	},
 
 	canvasDPIScale: function () {
-		var docLayer = this._map && this._map._docLayer;
-		var scale = docLayer && docLayer.canvasDPIScale ? docLayer.canvasDPIScale() : L.getDpiScaleFactor();
-		return scale;
+		return L.getDpiScaleFactor(true);
 	},
 
 	_setCanvasSizeImpl: function (container, canvas, property, value, isCorner) {
@@ -596,13 +594,13 @@ L.Control.Header = L.Control.extend({
 		if (property === 'width') {
 			canvas.width = Math.floor(value * scale);
 			if (!isCorner)
-				this._canvasWidth = value;
+				this._canvasWidth = value * scale;
 			// console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
 			canvas.height = Math.floor(value * scale);
 			if (!isCorner)
-				this._canvasHeight = value;
+				this._canvasHeight = value * scale;
 			// console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
 		}
 	},
@@ -798,12 +796,12 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 	},
 
 	update: function () {
-		var bounds = this._map.getPixelBounds();
+		var bounds = this._map.getPixelBoundsCore();
 		var startPx = this._isCol ? bounds.getTopLeft().x : bounds.getTopLeft().y;
 		this._docVisStart = startPx;
 		var endPx = this._isCol ? bounds.getBottomRight().x : bounds.getBottomRight().y;
-		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'csspixels');
-		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'csspixels');
+		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'corepixels');
+		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'corepixels');
 		this._elements = [];
 
 		var splitPosContext = this._map.getSplitPanesContext();
@@ -815,7 +813,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		if (splitPosContext) {
 
 			splitPos = this._isCol ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y;
-			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'csspixels');
+			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'corepixels');
 
 			if (splitIndex) {
 				// Make sure splitPos is aligned to the cell boundary.
@@ -836,7 +834,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 				this._splitIndex = splitIndex;
 
 				var freeStartPos = startPx + splitPos + 1;
-				var freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'csspixels');
+				var freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'corepixels');
 
 				startIdx = freeStartIndex;
 			}
