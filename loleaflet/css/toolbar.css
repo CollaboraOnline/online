@@ -28,6 +28,10 @@
 #tb_actionbar_item_LanguageStatus .w2ui-tb-caption{
 	float: none;
 }
+#InsertMode.insert-mode-false {
+	background-color: var(--gray-light-txt--color);
+	color: white;
+}
 #tb_actionbar_item_zoom .w2ui-tb-caption{
 	min-width: 43px;
 }
