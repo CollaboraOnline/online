@@ -2620,10 +2620,6 @@ L.TileLayer = L.GridLayer.extend({
 				if (newPos.y < 0)
 					newPos.y = 0;
 
-				if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
-					newPos = this.sheetGeometry.getPrintTwipsPointFromTile(newPos);
-				}
-
 				param = {
 					TransformPosX: {
 						type: 'long',
@@ -2754,10 +2750,6 @@ L.TileLayer = L.GridLayer.extend({
 					newSize.x = Math.round(u / s);
 					newSize.y = Math.round(v / c);
 				}
-			}
-
-			if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
-				newPos = this.sheetGeometry.getPrintTwipsPointFromTile(newPos);
 			}
 
 			// fill params for uno command
@@ -3526,7 +3518,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		var rectSize = rectangle.getSize();
-		var newTopLeft = this.sheetGeometry.getTileTwipsPointFromPrint(rectangle.getTopLeft());
+		var newTopLeft = rectangle.getTopLeft();
 		return new L.Bounds(newTopLeft, newTopLeft.add(rectSize));
 	},
 

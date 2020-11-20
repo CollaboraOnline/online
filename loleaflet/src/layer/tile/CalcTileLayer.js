@@ -266,6 +266,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_saveMessageForReplay: function (textMsg, viewId) {
+		// I couldn't understand this. It feels like it would be possible only for the top left corner of the view if and only if our anchor was top left corner when zooming.
+		// And at least for mobile, zooming anchor should be the the center point of the pinch.
+
 		// If this.options.printTwipsMsgsEnabled is set, we will not get some messages (with coordinates)
 		// from core when zoom changes because print-twips coordinates are zoom-invariant. So we need to
 		// remember the last version of them and replay, when zoom is changed.
@@ -956,7 +959,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		var relrect = L.Bounds.parse(msgObj.relrect);
 		var refpoint = L.Point.parse(msgObj.refpoint);
-		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
 		return relrect.add(refpoint);
 	},
 
@@ -983,7 +985,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		var refpoint = L.Point.parse(textMsg.substring(delimIndex + refpointDelim.length));
-		refpoint = this.sheetGeometry.getTileTwipsPointFromPrint(refpoint);
 
 		var rectArray = L.Bounds.parseArray(textMsg.substring(0, delimIndex));
 		rectArray.forEach(function (rect) {
@@ -1382,30 +1383,6 @@ L.SheetGeometry = L.Class.extend({
 
 	getRowGroupsDataInView: function () {
 		return this._rows.getGroupsDataInView();
-	},
-
-	// accepts a point in print twips coordinates and returns the equivalent point
-	// in tile-twips.
-	getTileTwipsPointFromPrint: function (point) { // (L.Point) -> L.Point
-		if (!(point instanceof L.Point)) {
-			console.error('Bad argument type, expected L.Point');
-			return point;
-		}
-
-		return new L.Point(this._columns.getTileTwipsPosFromPrint(point.x),
-			this._rows.getTileTwipsPosFromPrint(point.y));
-	},
-
-	// accepts a point in tile-twips coordinates and returns the equivalent point
-	// in print-twips.
-	getPrintTwipsPointFromTile: function (point) { // (L.Point) -> L.Point
-		if (!(point instanceof L.Point)) {
-			console.error('Bad argument type, expected L.Point');
-			return point;
-		}
-
-		return new L.Point(this._columns.getPrintTwipsPosFromTile(point.x),
-			this._rows.getPrintTwipsPosFromTile(point.y));
 	},
 
 	// Returns full sheet size as L.Point in the given unit.
