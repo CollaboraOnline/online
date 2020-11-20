@@ -1202,8 +1202,7 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			this._cellCursorTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+			this._cellCursorTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
 			this._cellCursor = new L.LatLngBounds(
 				this._twipsToLatLng(this._cellCursorTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
@@ -1470,8 +1469,7 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			var boundsTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+			var boundsTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
 			this._cellViewCursors[viewId].bounds = new L.LatLngBounds(
 				this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(boundsTwips.getBottomRight(), this._map.getZoom()));
@@ -1863,8 +1861,7 @@ L.TileLayer = L.GridLayer.extend({
 				for (var i = 0; i < strTwips.length; i += 4) {
 					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
 					var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
-					var boundsTwips = this._convertToTileTwipsSheetArea(
-						new L.Bounds(topLeftTwips, topLeftTwips.add(offset)));
+					var boundsTwips = new L.Bounds(topLeftTwips, topLeftTwips.add(offset));
 					rectangles.push([boundsTwips.getBottomLeft(), boundsTwips.getBottomRight(),
 						boundsTwips.getTopLeft(), boundsTwips.getTopRight()]);
 				}
@@ -1964,8 +1961,7 @@ L.TileLayer = L.GridLayer.extend({
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
-			var boundsTwips = this._convertToTileTwipsSheetArea(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
+			var boundsTwips = new L.Bounds(topLeftTwips, bottomRightTwips);
 			var oldSelection = this._cellSelectionArea;
 			this._cellSelectionArea = new L.LatLngBounds(
 				this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
@@ -3522,15 +3518,6 @@ L.TileLayer = L.GridLayer.extend({
 		} else if (this._formFieldButton) {
 			this._map.removeLayer(this._formFieldButton);
 		}
-	},
-
-	// converts rectangle in print-twips to tile-twips rectangle of the smallest cell-range that encloses it.
-	_convertToTileTwipsSheetArea: function (rectangle) {
-		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
-			return rectangle;
-		}
-
-		return this.sheetGeometry.getTileTwipsSheetAreaFromPrint(rectangle);
 	},
 
 	_getGraphicSelectionRectangle: function (rectangle) {

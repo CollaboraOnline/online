@@ -333,7 +333,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					obj.comment.avatar = this._map._viewInfoByUserName[obj.comment.author].userextrainfo.avatar;
 				}
 				var cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
-				obj.comment.cellPos = this._convertToTileTwipsSheetArea(cellPos);
+				obj.comment.cellPos = cellPos;
 				obj.comment.cellPos = L.latLngBounds(this._twipsToLatLng(obj.comment.cellPos.getBottomLeft()),
 					this._twipsToLatLng(obj.comment.cellPos.getTopRight()));
 				if (!this._annotations[obj.comment.tab]) {
@@ -352,7 +352,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			} else if (obj.comment.action === 'Modify') {
 				var modified = this._annotations[obj.comment.tab][obj.comment.id];
 				cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
-				obj.comment.cellPos = this._convertToTileTwipsSheetArea(cellPos);
+				obj.comment.cellPos = cellPos;
 				obj.comment.cellPos = L.latLngBounds(this._twipsToLatLng(obj.comment.cellPos.getBottomLeft()),
 					this._twipsToLatLng(obj.comment.cellPos.getTopRight()));
 				if (modified) {
@@ -977,7 +977,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			// No refpoint information available, treat it as cell-range selection rectangle.
 			var rangeRectArray = L.Bounds.parseArray(textMsg);
 			rangeRectArray = rangeRectArray.map(function (rect) {
-				return this._convertToTileTwipsSheetArea(rect);
+				return rect;
 			}, this);
 			return rangeRectArray;
 		}
@@ -1406,26 +1406,6 @@ L.SheetGeometry = L.Class.extend({
 
 		return new L.Point(this._columns.getPrintTwipsPosFromTile(point.x),
 			this._rows.getPrintTwipsPosFromTile(point.y));
-	},
-
-	// accepts a rectangle in print twips coordinates and returns the equivalent rectangle
-	// in tile-twips aligned to the cells.
-	getTileTwipsSheetAreaFromPrint: function (rectangle) { // (L.Bounds) -> L.Bounds
-		if (!(rectangle instanceof L.Bounds)) {
-			console.error('Bad argument type, expected L.Bounds');
-			return rectangle;
-		}
-
-		var topLeft = rectangle.getTopLeft();
-		var bottomRight = rectangle.getBottomRight();
-
-		var horizBounds = this._columns.getTileTwipsRangeFromPrint(topLeft.x, bottomRight.x);
-		var vertBounds = this._rows.getTileTwipsRangeFromPrint(topLeft.y, bottomRight.y);
-
-		topLeft = new L.Point(horizBounds.startpos, vertBounds.startpos);
-		bottomRight = new L.Point(horizBounds.endpos, vertBounds.endpos);
-
-		return new L.Bounds(topLeft, bottomRight);
 	},
 
 	// Returns full sheet size as L.Point in the given unit.
