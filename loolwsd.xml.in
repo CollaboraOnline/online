@@ -55,6 +55,7 @@
              See also: https://docs.libreoffice.org/sal/html/sal_log.html -->
         <lokit_sal_log type="string" desc="Fine tune log messages from LOKit. Default is to suppress log messages from LOKit." default="-INFO-WARN">-INFO-WARN</lokit_sal_log>
         <file enable="@LOOLWSD_LOG_TO_FILE@">
+            <!-- If you use other path than /var/log and you run loolwsd from systemd, make sure that you enable that path in loolwsd.service (ReadWritePaths). -->
             <property name="path" desc="Log file path.">@LOOLWSD_LOGFILE@</property>
             <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>
             <property name="archive" desc="Append either timestamp or number to the archived log filename.">timestamp</property>
