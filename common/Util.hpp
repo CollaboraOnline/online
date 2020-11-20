@@ -26,7 +26,7 @@
 
 #include <memory.h>
 
-#ifndef __linux
+#ifndef __linux__
 #include <thread>
 #endif
 
@@ -165,7 +165,7 @@ namespace Util
 
     const char *getThreadName();
 
-#ifdef __linux
+#ifdef __linux__
     pid_t getThreadId();
 #else
     std::thread::id getThreadId();
