@@ -194,10 +194,30 @@ namespace Log
         *pos++ = '-';
 
         // Thread ID.
-        auto osTid = Util::getThreadId();
+        const auto osTid = Util::getThreadId();
+#if defined(__linux__)
+        // On Linux osTid is pid_t.
+        if (osTid > 99999)
+        {
+            if (osTid > 999999)
+                pos = to_ascii(pos, osTid);
+            else
+            {
+                to_ascii_fixed<6>(pos, osTid);
+                pos += 6;
+            }
+        }
+        else
+        {
+            to_ascii_fixed<5>(pos, osTid);
+            pos += 5;
+        }
+#else
+        // On all other systems osTid is std::thread::id.
         std::stringstream ss;
         ss << osTid;
         pos = strcopy(ss.str().c_str(), pos);
+#endif
 
         *pos++ = ' ';
 #endif
