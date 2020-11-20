@@ -6,6 +6,8 @@
 /* global $ */
 L.Control.AutofilterDropdown = L.Control.extend({
 	container: null,
+	subMenu: null,
+	position: {x: 0, y: 0},
 
 	onAdd: function (map) {
 		this.map = map;
@@ -24,8 +26,12 @@ L.Control.AutofilterDropdown = L.Control.extend({
 	},
 
 	onAutofilterDropdown: function(data) {
-		if (this.container)
+		var isSubMenu = data.children && data.children[0].children[0].children.length === 1;
+
+		if (!isSubMenu && this.container)
 			L.DomUtil.remove(this.container);
+		else if (isSubMenu && this.subMenu)
+			L.DomUtil.remove(this.subMenu);
 
 		if (data.action === 'close')
 			return;
@@ -74,20 +80,39 @@ L.Control.AutofilterDropdown = L.Control.extend({
 				top = top - splitPos.y;
 		}
 
-		this.container = L.DomUtil.create('div', 'autofilter-container', $('#document-container').get(0));
+		var mainContainer = null;
+		if (isSubMenu) {
+			this.subMenu = L.DomUtil.create('div', 'autofilter-container-submenu');
+			this.container.parentNode.insertBefore(this.subMenu, this.container.nextSibling);
 
-		L.DomUtil.setStyle(this.container, 'margin-left', left + 'px');
-		L.DomUtil.setStyle(this.container, 'margin-top', top + 'px');
+			var innerContainer = L.DomUtil.create('div', 'autofilter-container', this.subMenu);
+			mainContainer = innerContainer;
+
+			L.DomUtil.setStyle(mainContainer, 'margin-left', this.position.x + this.container.offsetWidth - 30 + 'px');
+			L.DomUtil.setStyle(mainContainer, 'margin-top', this.position.y + 50 + 'px');
+		} else {
+			this.container = L.DomUtil.create('div', 'autofilter-container', $('#document-container').get(0));
+			mainContainer = this.container;
+
+			L.DomUtil.setStyle(mainContainer, 'margin-left', left + 'px');
+			L.DomUtil.setStyle(mainContainer, 'margin-top', top + 'px');
+
+			this.position.x = left;
+			this.position.y = top;
+		}
 
 		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'dockingwindow'});
-		builder.build(this.container, [data]);
+		builder.build(mainContainer, [data]);
 	},
 
 	onClosePopup: function() {
 		if (this.container)
 			L.DomUtil.remove(this.container);
+		if (this.subMenu)
+			L.DomUtil.remove(this.subMenu);
 
-		// TODO: kill popup in the core
+		this.container = null;
+		this.subMenu = null;
 	}
 });
 
