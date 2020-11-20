@@ -1711,38 +1711,14 @@ L.SheetDimension = L.Class.extend({
 		});
 	},
 
-	// computes element index from tile-twips position and returns
-	// an object with this index and the span data.
-	_getSpanAndIndexFromTileTwipsPos: function (pos) {
-		var result = {};
-		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'posTwips');
-		result.span = span;
-		if (span === undefined) {
-			// enforce limits.
-			result.index = (pos >= 0) ? this._maxIndex : 0;
-			result.span = this._visibleSizes.getSpanDataByIndex(result.index);
-			return result;
-		}
-		var elementCount = span.end - span.start + 1;
-		var posStart = ((span.data.poscorepx - span.data.sizecore * elementCount) * this._twipsPerCorePixel);
-		var posEnd = span.data.posTwips;
-		var sizeOne = (posEnd - posStart) / elementCount;
-
-		// always round down as relativeIndex is zero-based.
-		var relativeIndex = Math.floor((pos - posStart) / sizeOne);
-
-		result.index = span.start + relativeIndex;
-		return result;
-	},
-
 	// computes element index from tile-twips position.
-	_getIndexFromTileTwipsPos: function (pos) {
-		return this._getSpanAndIndexFromTileTwipsPos(pos).index;
+	_getIndexFromTwipsPos: function (pos) {
+		return this._getSpanAndIndexFromTwipsPos(pos).index;
 	},
 
-	// computes element index from print twips position and returns
+	// computes element index from twips position and returns
 	// an object with this index and the span data.
-	_getSpanAndIndexFromPrintTwipsPos: function (pos) {
+	_getSpanAndIndexFromTwipsPos: function (pos) {
 		var result = {};
 		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'posTwips');
 		result.span = span;
@@ -1765,8 +1741,8 @@ L.SheetDimension = L.Class.extend({
 
 	setViewLimits: function (startPosTwips, endPosTwips) {
 
-		this._viewStartIndex = Math.max(0, this._getIndexFromTileTwipsPos(startPosTwips));
-		this._viewEndIndex = Math.min(this._maxIndex, this._getIndexFromTileTwipsPos(endPosTwips));
+		this._viewStartIndex = Math.max(0, this._getIndexFromTwipsPos(startPosTwips));
+		this._viewEndIndex = Math.min(this._maxIndex, this._getIndexFromTwipsPos(endPosTwips));
 	},
 
 	getViewElementRange: function () {
@@ -1809,74 +1785,6 @@ L.SheetDimension = L.Class.extend({
 		return this._maxIndex;
 	},
 
-	// Accepts a position in print twips and returns the corresponding position in tile twips.
-	getTileTwipsPosFromPrint: function (posPT) {
-
-		if (typeof posPT !== 'number') {
-			console.error('Wrong argument type');
-			return;
-		}
-
-		var element = this._getSpanAndIndexFromPrintTwipsPos(posPT);
-		var elementDataTT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'twips');
-		var elementDataPT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'twips');
-
-		var offset = posPT - elementDataPT.startpos;
-		console.assert(offset >= 0, 'offset should not be negative');
-
-		// Preserve any offset from the matching column/row start position.
-		return elementDataTT.startpos + offset;
-	},
-
-	// Accepts a position in tile twips and returns the corresponding position in print twips.
-	getPrintTwipsPosFromTile: function (posTT) {
-
-		if (typeof posTT !== 'number') {
-			console.error('Wrong argument type');
-			return;
-		}
-
-		var element = this._getSpanAndIndexFromTileTwipsPos(posTT);
-		var elementDataTT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'twips');
-		var elementDataPT = this._getElementDataAnyFromSpanByIndex(element.index, element.span, 'twips');
-
-		var offset = posTT - elementDataTT.startpos;
-		console.assert(offset >= 0, 'offset should not be negative');
-
-		// Preserve any offset from the matching column/row start position.
-		return elementDataPT.startpos + offset;
-	},
-
-	// Accepts a start and end positions in print twips, and returns the
-	// corresponding positions in tile twips, by first computing the element range.
-	getTileTwipsRangeFromPrint: function (posStartPT, posEndPT) {
-		var startElement = this._getSpanAndIndexFromPrintTwipsPos(posStartPT);
-		var startData = this._getElementDataAnyFromSpanByIndex(startElement.index, startElement.span, 'twips');
-		if (posStartPT === posEndPT) {
-			// range is hidden, send a minimal sized tile-twips range.
-			// Set the size = twips equivalent of 1 core pixel,
-			// to imitate what core does when it sends cursor/ranges in tile-twips coordinates.
-			var rangeSize = Math.floor(this._twipsPerCorePixel);
-			return {
-				startpos: startData.startpos,
-				endpos: startData.startpos + rangeSize
-			};
-		}
-		var endElement = this._getSpanAndIndexFromPrintTwipsPos(posEndPT);
-		var endData = this._getElementDataAnyFromSpanByIndex(endElement.index, endElement.span, 'twips');
-
-		var startPos = startData.startpos;
-		var endPos = endData.startpos + endData.size;
-		if (endPos < startPos) {
-			endPos = startPos;
-		}
-
-		return {
-			startpos: startPos,
-			endpos: endPos
-		};
-	},
-
 	getSize: function (unit) {
 		var posSize = this.getElementDataAny(this._maxIndex, unit);
 		if (!posSize) {
@@ -1905,9 +1813,7 @@ L.SheetDimension = L.Class.extend({
 		}
 
 		console.assert(unit === 'twips', 'wrong unit assumption');
-		var result = (unit === 'twips') ?
-			this._getSpanAndIndexFromTileTwipsPos(pos) :
-			this._getSpanAndIndexFromPrintTwipsPos(pos);
+		var result = this._getSpanAndIndexFromTwipsPos(pos);
 
 		return this._getElementDataAnyFromSpanByIndex(result.index, result.span, origUnit).startpos;
 	},
@@ -1922,9 +1828,7 @@ L.SheetDimension = L.Class.extend({
 		}
 
 		console.assert(unit === 'twips', 'wrong unit assumption');
-		var result = (unit === 'twips') ?
-			this._getSpanAndIndexFromTileTwipsPos(pos) :
-			this._getSpanAndIndexFromPrintTwipsPos(pos);
+		var result = this._getSpanAndIndexFromTwipsPos(pos);
 
 		return result.index;
 	},
