@@ -49,6 +49,7 @@ public:
 
         config.setBool("ssl.enable", true);
         config.setInt("per_document.limit_load_secs", 30);
+        config.setBool("storage.filesystem[@allow]", false);
     }
 
     void sendConvertTo(std::unique_ptr<Poco::Net::HTTPClientSession>& session, const std::string& filename)
