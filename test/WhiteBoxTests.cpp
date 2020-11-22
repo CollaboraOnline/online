@@ -1626,7 +1626,7 @@ void WhiteBoxTests::testStat()
     LOK_ASSERT(invalid.bad());
     LOK_ASSERT(!invalid.exists());
 
-    const std::string tmpFile = FileUtil::getTemporaryDirectoryPath() + "/test_stat";
+    const std::string tmpFile = FileUtil::getSysTempDirectoryPath() + "/test_stat";
     std::ofstream ofs(tmpFile);
     FileUtil::Stat st(tmpFile);
     LOK_ASSERT(st.good());

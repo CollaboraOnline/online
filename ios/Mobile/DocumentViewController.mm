@@ -369,7 +369,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
             // Create the SVG for the slideshow.
 
-            self.slideshowFile = Util::createRandomTmpDir() + "/slideshow.svg";
+            self.slideshowFile = FileUtil::createRandomTmpDir() + "/slideshow.svg";
             self.slideshowURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:self.slideshowFile.c_str()] isDirectory:NO];
 
             getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
@@ -424,7 +424,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
             // Create the PDF to print.
 
-            std::string printFile = Util::createRandomTmpDir() + "/print.pdf";
+            std::string printFile = FileUtil::createRandomTmpDir() + "/print.pdf";
             NSURL *printURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:printFile.c_str()] isDirectory:NO];
             getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
 

@@ -169,13 +169,42 @@ namespace FileUtil
         return false;
     }
 
-    std::string getTemporaryDirectoryPath()
+    std::string getSysTempDirectoryPath()
     {
+        // Don't const to allow for automatic move on return.
 #if HAVE_STD_FILESYSTEM
-        return filesystem::temp_directory_path();
+        std::string path = filesystem::temp_directory_path();
 #else
-        return Poco::Path::temp();
+        std::string path = Poco::Path::temp();
 #endif
+
+        if (!path.empty())
+            return path;
+
+        // Sensible fallback, though shouldn't be needed.
+        const char *tmp = getenv("TMPDIR");
+        if (!tmp)
+            tmp = getenv("TEMP");
+        if (!tmp)
+            tmp = getenv("TMP");
+        if (!tmp)
+            tmp = "/tmp";
+        return tmp;
+    }
+
+    std::string createRandomTmpDir(std::string root)
+    {
+        if (root.empty())
+            root = getSysTempDirectoryPath();
+
+        // Don't const to allow for automatic move on return.
+        std::string newTmp = root + "/lool-" + Util::rng::getFilename(16);
+        if (::mkdir(newTmp.c_str(), S_IRWXU) < 0)
+        {
+            LOG_SYS("Failed to create random temp directory [" << newTmp << "]");
+            return root;
+        }
+        return newTmp;
     }
 
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
@@ -183,7 +212,8 @@ namespace FileUtil
         const std::string srcPath = srcDir + '/' + srcFilename;
         const std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
 #if HAVE_STD_FILESYSTEM
-        const std::string dstPath = filesystem::temp_directory_path() / dstFilename;
+        // Don't const to allow for automatic move on return.
+        std::string dstPath = filesystem::temp_directory_path() / dstFilename;
         filesystem::copy(srcPath, dstPath);
 
         static FileDeleter fileDeleter;
