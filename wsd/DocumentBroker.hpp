@@ -386,6 +386,12 @@ private:
     /// Sum the I/O stats from all connected sessions
     void getIOStats(uint64_t &sent, uint64_t &recv);
 
+    /// Returns true iff this is a Convert-To request.
+    /// This is needed primarily for security reasons,
+    /// because we can't trust the given file-path is
+    /// a convert-to request or doctored to look like one.
+    virtual bool isConvertTo() const { return false; }
+
 protected:
     /// Seconds to live for, or 0 forever
     int64_t _limitLifeSeconds;
@@ -501,6 +507,9 @@ public:
 
     /// Cleanup path and its parent
     static void removeFile(const std::string &uri);
+
+private:
+    bool isConvertTo() const override { return true; }
 };
 #endif
 

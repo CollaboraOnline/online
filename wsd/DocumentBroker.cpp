@@ -597,7 +597,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
         try
         {
-            _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
+            _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString(),
+                                           /*takeOwnership=*/isConvertTo());
         }
         catch (...)
         {
