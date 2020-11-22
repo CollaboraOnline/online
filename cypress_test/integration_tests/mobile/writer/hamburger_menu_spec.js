@@ -707,7 +707,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 	});
 
-	it('Resolved comments.', function() {
+	it.skip('Resolved comments.', function() {
 		// Insert comment first
 		mobileHelper.openInsertionWizard();
 

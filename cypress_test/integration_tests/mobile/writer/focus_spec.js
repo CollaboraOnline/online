@@ -31,7 +31,7 @@ describe('Focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	it('Focus with a vex dialog.', function() {
+	it.skip('Focus with a vex dialog.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 

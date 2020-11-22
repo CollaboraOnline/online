@@ -34,7 +34,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('exist');
 	});
 
-	it('Insert comment.', function() {
+	it.skip('Insert comment.', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'Comment')
