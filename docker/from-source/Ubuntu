@@ -18,11 +18,11 @@ RUN apt-get update && \
                fonts-wqy-zenhei fonts-wqy-microhei fonts-droid-fallback \
                fonts-noto-cjk
 
-# copy freshly built LibreOffice master and Collabora Online master with latest translations
+# copy freshly built LOKit and Collabora Online
 COPY /instdir /
 
 # copy the shell script which can start Collabora Online (loolwsd)
-COPY /scripts/run-lool.sh /
+COPY /start-collabora-online.sh /
 
 # set up Collabora Online (normally done by postinstall script of package)
 # Fix permissions
@@ -44,4 +44,4 @@ EXPOSE 9980
 # switch to lool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
 USER 101
 
-CMD bash /run-lool.sh
+CMD bash /start-collabora-online.sh
