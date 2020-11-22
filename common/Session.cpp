@@ -50,7 +50,6 @@ Session::Session(const std::shared_ptr<ProtocolHandlerInterface> &protocol,
     _isCloseFrame(false),
     _isReadOnly(readOnly),
     _isAllowChangeComments(false),
-    _docPassword(""),
     _haveDocPassword(false),
     _isDocPasswordProtected(false),
     _watermarkOpacity(0.2)

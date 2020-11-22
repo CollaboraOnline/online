@@ -3029,7 +3029,6 @@ private:
 
                 cleanupDocBrokers();
 
-                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
                 DocBrokers.emplace(docKey, docBroker);
                 LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
 

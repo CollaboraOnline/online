@@ -98,7 +98,8 @@ namespace FileUtil
     /// Returns the system temporary directory.
     std::string getSysTempDirectoryPath();
 
-    /// Create randomized temporary directory in the root provided.
+    /// Create randomized temporary directory in the root provided
+    /// with S_IRWXU (read, write, and execute by owner) permissions.
     /// If root is empty, the current system temp directory is used.
     std::string createRandomTmpDir(std::string root = std::string());
 

@@ -2390,6 +2390,10 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
     _format(format),
     _sOptions(sOptions)
 {
+    LOG_TRC("Created ConvertToBroker: uri: [" << uri << "], uriPublic: [" << uriPublic.toString()
+                                              << "], docKey: [" << docKey << "], format: ["
+                                              << format << "], options: [" << sOptions << "].");
+
     static const int limit_convert_secs = LOOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100);
     NumConverters++;
     _limitLifeSeconds = limit_convert_secs;
