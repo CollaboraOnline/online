@@ -635,7 +635,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
         try
         {
-            _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString());
+            _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString(),
+                                           /*takeOwnership=*/isConvertTo());
         }
         catch (...)
         {

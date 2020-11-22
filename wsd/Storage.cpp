@@ -213,7 +213,8 @@ bool isLocalhost(const std::string& targetHost)
 
 #endif
 
-std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot, const std::string& jailPath)
+std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot,
+                                                 const std::string& jailPath, bool takeOwnership)
 {
     // FIXME: By the time this gets called we have already sent to the client three
     // 'statusindicator:' messages: 'find', 'connect' and 'ready'. We should ideally do the checks
@@ -241,24 +242,10 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             throw UnauthorizedRequestException("No acceptable WOPI hosts found matching the target host in config.");
         }
 #endif
-        if (FilesystemEnabled)
+        if (FilesystemEnabled || takeOwnership)
         {
-            return std::unique_ptr<StorageBase>(new LocalStorage(uri, jailRoot, jailPath));
-        }
-        else
-        {
-            // guard against attempts to escape
-            Poco::URI normalizedUri(uri);
-            normalizedUri.normalize();
-
-            std::vector<std::string> pathSegments;
-            normalizedUri.getPathSegments(pathSegments);
-
-            if (pathSegments.size() == 4 && pathSegments[0] == "tmp" && pathSegments[1] == "convert-to")
-            {
-                LOG_INF("Public URI [" << LOOLWSD::anonymizeUrl(normalizedUri.toString()) << "] is actually a convert-to tempfile.");
-                return std::unique_ptr<StorageBase>(new LocalStorage(normalizedUri, jailRoot, jailPath));
-            }
+            return std::unique_ptr<StorageBase>(
+                new LocalStorage(uri, jailRoot, jailPath, takeOwnership));
         }
 
         LOG_ERR("Local Storage is disabled by default. Enable in the config file or on the command-line to enable.");
@@ -336,24 +323,49 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
     const std::string publicFilePath = getUri().getPath();
+    if (!Poco::File(publicFilePath).exists())
+    {
+        LOG_ERR("Local file URI [" << publicFilePath << "] invalid or doesn't exist.");
+        throw BadRequestException("Invalid URI: " + getUri().toString());
+    }
 
     if (!FileUtil::checkDiskSpace(getRootFilePath()))
     {
         throw StorageSpaceLowException("Low disk space for " + getRootFilePathAnonym());
     }
 
-    LOG_INF("Linking " << LOOLWSD::anonymizeUrl(publicFilePath) << " to " << getRootFilePathAnonym());
-    if (!Poco::File(getRootFilePath()).exists() && link(publicFilePath.c_str(), getRootFilePath().c_str()) == -1)
+    if (_isTemporaryFile)
     {
-        // Failed
+        try
+        {
+            // Neither link nor copy, just move, it's a temporary file.
+            Poco::File(publicFilePath).moveTo(getRootFilePath());
+        }
+        catch (const Poco::Exception& exc)
+        {
+            LOG_WRN("Failed to move [" << LOOLWSD::anonymizeUrl(publicFilePath) << "] to ["
+                                       << getRootFilePathAnonym() << "]: " << exc.displayText());
+        }
+    }
+
+    if (!FileUtil::Stat(getRootFilePath()).exists())
+    {
+        // Try to link.
+        LOG_INF("Linking " << LOOLWSD::anonymizeUrl(publicFilePath) << " to "
+                           << getRootFilePathAnonym());
+        if (!Poco::File(getRootFilePath()).exists()
+            && link(publicFilePath.c_str(), getRootFilePath().c_str()) == -1)
+        {
+            // Failed
         LOG_WRN("link(\"" << LOOLWSD::anonymizeUrl(publicFilePath) << "\", \"" << getRootFilePathAnonym() << "\") failed. Will copy. "
                 "Linking error: " << Util::symbolicErrno(errno) << ' ' << strerror(errno));
+        }
     }
 
     try
     {
         // Fallback to copying.
-        if (!Poco::File(getRootFilePath()).exists())
+        if (!FileUtil::Stat(getRootFilePath()).exists())
         {
             FileUtil::copyFileTo(publicFilePath, getRootFilePath());
             _isCopy = true;
