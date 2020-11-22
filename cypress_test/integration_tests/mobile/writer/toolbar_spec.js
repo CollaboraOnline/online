@@ -40,7 +40,7 @@ describe('Toolbar tests', function() {
 			.should('not.have.class', 'disabled');
 	});
 
-	it('State of insert comment toolbar item.', function() {
+	it.skip('State of insert comment toolbar item.', function() {
 		// Insertion mobile wizard toolbar button is disabled by default
 		cy.get('#tb_actionbar_item_insertcomment')
 			.should('have.class', 'disabled');
@@ -140,7 +140,7 @@ describe('Toolbar tests', function() {
 		mobileHelper.openInsertionWizard();
 	});
 
-	it('Open insert comment dialog by toolbar item.', function() {
+	it.skip('Open insert comment dialog by toolbar item.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 

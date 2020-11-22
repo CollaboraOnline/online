@@ -638,7 +638,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.imageShouldBeFullWhite(centerTile);
 	});
 
-	it('Resolved comments.', function() {
+	it.skip('Resolved comments.', function() {
 		// Insert comment first
 		mobileHelper.openInsertionWizard();
 
