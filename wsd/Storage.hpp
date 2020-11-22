@@ -331,9 +331,10 @@ public:
     static void initialize();
 
     /// Storage object creation factory.
-    static std::unique_ptr<StorageBase> create(const Poco::URI& uri,
-                                               const std::string& jailRoot,
-                                               const std::string& jailPath);
+    /// @takeOwnership is for local files that are temporary,
+    /// such as convert-to requests.
+    static std::unique_ptr<StorageBase> create(const Poco::URI& uri, const std::string& jailRoot,
+                                               const std::string& jailPath, bool takeOwnership);
 
     static bool allowedWopiHost(const std::string& host);
     static Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri);
@@ -405,11 +406,11 @@ private:
 class LocalStorage : public StorageBase
 {
 public:
-    LocalStorage(const Poco::URI& uri,
-                 const std::string& localStorePath,
-                 const std::string& jailPath) :
-        StorageBase(uri, localStorePath, jailPath),
-        _isCopy(false)
+    LocalStorage(const Poco::URI& uri, const std::string& localStorePath,
+                 const std::string& jailPath, bool isTemporaryFile)
+        : StorageBase(uri, localStorePath, jailPath)
+        , _isTemporaryFile(isTemporaryFile)
+        , _isCopy(false)
     {
         LOG_INF("LocalStorage ctor with localStorePath: [" << localStorePath <<
                 "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
@@ -453,6 +454,9 @@ public:
                                           const bool isRename) override;
 
 private:
+    /// True if we the source file a temporary that we own.
+    /// Typically for convert-to requests.
+    const bool _isTemporaryFile;
     /// True if the jailed file is not linked but copied.
     bool _isCopy;
     static std::atomic<unsigned> LastLocalStorageId;

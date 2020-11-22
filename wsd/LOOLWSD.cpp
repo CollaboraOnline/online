@@ -660,7 +660,8 @@ public:
 
         // FIXME: needs wrapping - until then - keep in sync with ~ConvertToBroker
         Path tempPath = Path::forDirectory(
-            Poco::TemporaryFile::tempName(_convertTo ? "/tmp/convert-to" : "") + '/');
+            Poco::TemporaryFile::tempName(_convertTo ? LOOLWSD::ChildRoot + "/tmp/convert-to" : "")
+            + '/');
         LOG_TRC("Creating temporary convert-to path: " << tempPath.toString());
         File(tempPath).createDirectories();
         chmod(tempPath.toString().c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
@@ -669,7 +670,7 @@ public:
         // A "filename" should always be a filename, not a path
         const Path filenameParam(params.get("filename"));
         tempPath.setFileName(filenameParam.getFileName());
-        _filename = tempPath.toString();
+        _filename = tempPath.toString(); // For convert-to this is bogus.
 
         // Copy the stream to _filename.
         std::ofstream fileStream;
