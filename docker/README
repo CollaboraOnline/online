@@ -16,7 +16,7 @@ Examples:
 
   cd from-packages
   # Get your secret URL key from https://support.collaboraoffice.com/ (Collabora Partners/Customers)
-  docker build --no-cache --build-arg version=4.2 --build-arg type=cool --build-arg secret-key=<....> -t mydomain/cool -f Ubuntu .
+  docker build --no-cache --build-arg version=4.2 --build-arg type=cool --build-arg secret-key=<....> -t mydomain/cool -f RHEL8 .
 
 3. Build Collabora Online 6.4 license key enabled version
 
