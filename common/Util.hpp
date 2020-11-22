@@ -60,10 +60,6 @@ namespace Util
         std::string getFilename(const size_t length);
     }
 
-    /// Create randomized temporary directory in the root provided.
-    /// If root is empty, the current temp directory is used.
-    std::string createRandomTmpDir(std::string root = std::string());
-
 #if !MOBILEAPP
     /// Get number of threads in this process or -1 on error
     int getProcessThreadCount();

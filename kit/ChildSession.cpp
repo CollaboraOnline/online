@@ -1233,7 +1233,7 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const Stri
 #else
         assert(type == "graphic");
         auto binaryData = decodeBase64(data);
-        std::string tempFile = Util::createRandomTmpDir() + "/" + name;
+        const std::string tempFile = FileUtil::createRandomTmpDir() + '/' + name;
         std::ofstream fileStream;
         fileStream.open(tempFile);
         fileStream.write(reinterpret_cast<char*>(binaryData.data()), binaryData.size());

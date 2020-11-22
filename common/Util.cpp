@@ -151,31 +151,6 @@ namespace Util
         }
     }
 
-    static std::string getDefaultTmpDir()
-    {
-        const char *tmp = getenv("TMPDIR");
-        if (!tmp)
-            tmp = getenv("TEMP");
-        if (!tmp)
-            tmp = getenv("TMP");
-        if (!tmp)
-            tmp = "/tmp";
-        return tmp;
-    }
-
-    std::string createRandomTmpDir(std::string root)
-    {
-        if (root.empty())
-            root = getDefaultTmpDir();
-        const std::string newTmp = root + "/lool-" + rng::getFilename(16);
-        if (::mkdir(newTmp.c_str(), S_IRWXU) < 0)
-        {
-            LOG_SYS("Failed to create random temp directory [" << newTmp << "]");
-            return root;
-        }
-        return newTmp;
-    }
-
 #if !MOBILEAPP
     int getProcessThreadCount()
     {

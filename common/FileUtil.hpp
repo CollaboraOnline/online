@@ -96,7 +96,11 @@ namespace FileUtil
     }
 
     /// Returns the system temporary directory.
-    std::string getTemporaryDirectoryPath();
+    std::string getSysTempDirectoryPath();
+
+    /// Create randomized temporary directory in the root provided.
+    /// If root is empty, the current system temp directory is used.
+    std::string createRandomTmpDir(std::string root = std::string());
 
     /// Make a temp copy of a file, and prepend it with a prefix.
     std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename,
