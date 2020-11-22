@@ -207,7 +207,7 @@ namespace FileUtil
         return newTmp;
     }
 
-    std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
+    std::string getTempFileCopyPath(const std::string& srcDir, const std::string& srcFilename, const std::string& dstFilenamePrefix)
     {
         const std::string srcPath = srcDir + '/' + srcFilename;
         const std::string dstFilename = dstFilenamePrefix + Util::encodeId(Util::rng::getNext()) + '_' + srcFilename;
