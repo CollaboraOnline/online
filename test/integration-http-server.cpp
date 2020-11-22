@@ -233,7 +233,7 @@ void HTTPServerTest::testScriptsAndLinksPost()
 void HTTPServerTest::testConvertTo()
 {
     const char *testname = "testConvertTo";
-    const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", "convertTo_");
+    const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
     session->setTimeout(Poco::Timespan(5, 0)); // 5 seconds.
 
@@ -279,7 +279,7 @@ void HTTPServerTest::testConvertTo()
 void HTTPServerTest::testConvertTo2()
 {
     const char *testname = "testConvertTo2";
-    const std::string srcPath = FileUtil::getTempFilePath(TDOC, "convert-to.xlsx", "convertTo_");
+    const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "convert-to.xlsx", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
     session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
 
@@ -328,7 +328,7 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
     {
         TST_LOG("Converting from a disallowed IP.");
 
-        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname + "disallowed");
+        const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", testname + "disallowed");
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
@@ -372,7 +372,7 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
     {
         TST_LOG("Converting from an allowed IP.");
 
-        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname + "allowed");
+        const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", testname + "allowed");
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
@@ -415,7 +415,7 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
     {
         TST_LOG("Converting from multiple IPs, on disallowed.");
 
-        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname + "disallowed-multi");
+        const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", testname + "disallowed-multi");
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 

@@ -198,7 +198,7 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
     std::unique_lock<std::mutex> guard(lock);
 
     std::replace(prefix.begin(), prefix.end(), ' ', '_');
-    documentPath = FileUtil::getTempFilePath(TDOC, docFilename, prefix);
+    documentPath = FileUtil::getTempFileCopyPath(TDOC, docFilename, prefix);
     std::string encodedUri;
     Poco::URI::encode("file://" + Poco::Path(documentPath).makeAbsolute().toString(), ":/?",
                       encodedUri);
