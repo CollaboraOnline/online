@@ -108,7 +108,7 @@
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-top: 8px;
-	z-index: 500;
+	z-index: 400;
 	border-left: 1px solid #ffffff;
 	border-right: 1px solid #ffffff;
 	border-top: 1px solid transparent;
@@ -295,6 +295,6 @@
 	color: grey;
 	text-decoration: underline;
 	padding: 8px 15px 7px;
-	z-index: 500;
+	z-index: 400;
 	border: 1px solid transparent;
 }
