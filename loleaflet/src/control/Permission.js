@@ -81,8 +81,13 @@ L.Map.include({
 			this.fire('editorgotfocus');
 			// In the iOS/android app, just clicking the mobile-edit-button is
 			// not reason enough to pop up the on-screen keyboard.
-			if (!(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp))
-				this.focus();
+			if (!(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp)) {
+				this.focus(true);
+				if (this._docLayer._docType === 'spreadsheet') {
+					this._docLayer.postKeyboardEvent('input', 0, 769); //F2
+
+				}
+			}
 		}
 	},
 
