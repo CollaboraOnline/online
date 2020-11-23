@@ -20,6 +20,7 @@
 	border-top: 1px solid #bbbbbb;
 }
 #toolbar-down *{
+	font-family: var(--loleaflet-font);
 	max-height: 35px !important;
 }
 #tb_actionbar_item_LanguageStatus table table td:first-of-type{
@@ -27,6 +28,9 @@
 }
 #tb_actionbar_item_LanguageStatus .w2ui-tb-caption{
 	float: none;
+}
+#tb_actionbar_item_StateTableCellMenu .w2ui-tb-down {
+	padding: 4px;
 }
 #InsertMode.insert-mode-false {
 	background-color: var(--gray-light-txt--color);
@@ -65,6 +69,12 @@ w2ui-toolbar {
 #toolbar-down .ToolbarStatusInactive {
 	color: var(--gray-light-txt--color);
 	box-shadow: inset 0px 0px 0px 10px #f2f2f2, 0px 0px 0px 2px #f2f2f2, 4px 0px 0px 1px #fff, -4px 0px 0px 1px #fff, 0px 0px 0px 5px #fff;
+}
+#tb_actionbar_item_LanguageStatus .w2ui-button.checked .w2ui-tb-down > div,
+#tb_actionbar_item_StateTableCellMenu .w2ui-button.checked .w2ui-tb-down > div {
+	border-color: transparent;
+	border-bottom: 5px solid #888;
+	margin-top: -5px;
 }
 #spreadsheet-toolbar {
 	left: 0;
