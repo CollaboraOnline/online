@@ -400,6 +400,7 @@ public:
     /// Autosave a given document (currently only called from Admin).
     static void autoSave(const std::string& docKey);
 
+    /// Sets the log level of current kits.
     static void setLogLevelsOfKits(const std::string& level);
 
     /// Anonymize the basename of filenames, preserving the path and extension.

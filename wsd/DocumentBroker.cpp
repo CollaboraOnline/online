@@ -1675,11 +1675,11 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
     }
 }
 
-void DocumentBroker::setLogLevel(const std::string& level)
+void DocumentBroker::setKitLogLevel(const std::string& level)
 {
-	assertCorrectThread();
-	std::unique_lock<std::mutex> lock(_mutex);
-	_childProcess->sendTextFrame("setloglevel " + level);
+    assertCorrectThread();
+    std::unique_lock<std::mutex> lock(_mutex);
+    _childProcess->sendTextFrame("setloglevel " + level);
 }
 
 std::string DocumentBroker::getDownloadURL(const std::string& downloadId)
