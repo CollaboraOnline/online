@@ -7,6 +7,9 @@
 # Install some more fonts (I did not find open-sans-fonts in RHEL repos)
 # dnf install -y open-sans-fonts
 
+# Install cpio (missing dependency needed by loolwsd-systemplate-setup)
+dnf install -y cpio
+
 # Install gnupg2
 dnf install -y gnupg2
 
@@ -49,7 +52,6 @@ else
     dnf -y install CODE-brand
 fi
 
-mkdir -p /opt/lool/systemplate/etc # FIXME???
 # Install inotifywait and killall to automatic restart loolwsd, if loolwsd.xml changes
 dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 dnf install -y inotify-tools psmisc perl
