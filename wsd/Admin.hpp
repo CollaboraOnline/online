@@ -103,8 +103,10 @@ public:
 
     unsigned getNetStatsInterval();
 
+    /// Returns the log levels of wsd and forkit & kits.
     std::string getChannelLogLevels();
 
+    /// Sets the specified channel's log level (wsd or forkit and kits).
     void setChannelLogLevel(const std::string& _channelName, std::string _level);
 
     std::string getLogLines();
@@ -173,7 +175,7 @@ private:
     uint64_t _lastRecvCount;
     size_t _totalSysMemKb;
     size_t _totalAvailMemKb;
-	std::string _forkitLogLevel = "";
+    std::string _forkitLogLevel;
 
     struct MonitorConnectRecord
     {
