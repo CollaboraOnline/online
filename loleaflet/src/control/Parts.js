@@ -100,6 +100,42 @@ L.Map.include({
 		}
 	},
 
+	_processPreviewQueue: function() {
+		if (this._previewRequestsOnFly > 1) {
+			// we don't always get a response for each tile requests
+			// especially when we have more than one view
+			// the server can determine that we have the tile already
+			// and does not response to us
+			// in that case we cannot decrease previewRequestsOnFly counter
+			// we should not wait more than 2 seconds for each 3 requests
+			var now = new Date();
+			if (now - this._timeToEmptyQueue < 2000)
+				// wait until the queue is empty
+				return;
+			else {
+				this._previewRequestsOnFly = 0;
+				this._timeToEmptyQueue = now;
+			}
+		}
+		// take 3 requests from the queue:
+		while (this._previewRequestsOnFly < 3) {
+			var tile = this._previewQueue.pop();
+			if (!tile)
+				break;
+			this._previewRequestsOnFly++;
+			this._socket.sendMessage(tile[1]);
+		}
+	},
+
+	_addPreviewToQueue: function(part, tileMsg) {
+		for (var tile in this._previewQueue)
+			if (tile[0] === part)
+				// we already have this tile in the queue
+				// no need to ask for it twice
+				return;
+		this._previewQueue.push([part, tileMsg]);
+	},
+
 	getPreview: function (id, index, maxWidth, maxHeight, options) {
 		if (!this._docPreviews) {
 			this._docPreviews = {};
@@ -136,7 +172,7 @@ L.Map.include({
 		}
 
 		if (fetchThumbnail) {
-			this._socket.sendMessage('tile ' +
+			this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
 							'width=' + maxWidth * dpiscale + ' ' +
@@ -147,6 +183,7 @@ L.Map.include({
 							'tileheight=' + tileHeight + ' ' +
 							'id=' + id + ' ' +
 						 'broadcast=no');
+			this._processPreviewQueue();
 		}
 
 		return {width: maxWidth, height: maxHeight};
@@ -162,7 +199,7 @@ L.Map.include({
 
 		var dpiscale = L.getDpiScaleFactor();
 
-		this._socket.sendMessage('tile ' +
+		this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
 							'width=' + width * dpiscale + ' ' +
@@ -173,6 +210,7 @@ L.Map.include({
 							'tileheight=' + tileHeight + ' ' +
 							'id=' + id + ' ' +
 							'broadcast=no');
+		this._processPreviewQueue();
 	},
 
 	removePreviewUpdate: function (id) {
