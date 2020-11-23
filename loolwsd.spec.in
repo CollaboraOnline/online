@@ -28,7 +28,7 @@ BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros
 
 Requires:       %{lo_rpm_list}
 Requires:       systemd
-Requires(post): coreutils grep sed
+Requires(post): coreutils grep sed cpio
 %if 0%{?fedora} || 0%{?rhel} >= 7
 # loolwsd dependencies
 Requires:       expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssl-libs pcre xz-libs zlib
