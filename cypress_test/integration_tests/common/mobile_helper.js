@@ -144,6 +144,9 @@ function openMobileWizard() {
 	cy.get('#tb_actionbar_item_mobile_wizard table')
 		.should('have.class', 'checked');
 
+	// Wait for mobile wizard to be idle.
+	cy.wait(2000);
+
 	cy.log('Opening mobile wizard - end.');
 }
 
