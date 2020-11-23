@@ -41,7 +41,7 @@ using Poco::Util::Application;
 
 const int Admin::MinStatsIntervalMs = 50;
 const int Admin::DefStatsIntervalMs = 1000;
-
+const std::string levelList[] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
 
 /// Process incoming websocket messages
 void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
@@ -603,11 +603,10 @@ unsigned Admin::getNetStatsInterval()
 
 std::string Admin::getChannelLogLevels()
 {
-    std::string levelList[9] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
     unsigned int wsdLogLevel = Log::logger().get("wsd").getLevel();
-	std::string result = "wsd=" + levelList[wsdLogLevel];
+    std::string result = "wsd=" + levelList[wsdLogLevel];
 
-    result += " kits=" + (_forkitLogLevel != "" ? _forkitLogLevel: levelList[wsdLogLevel]);
+    result += " kits=" + (_forkitLogLevel.empty() != true ? _forkitLogLevel: levelList[wsdLogLevel]);
 
     return result;
 }
@@ -620,7 +619,6 @@ void Admin::setChannelLogLevel(const std::string& _channelName, std::string leve
     std::vector<std::string> nameList;
     Log::logger().names(nameList);
 
-    std::string levelList[9] = {"none", "fatal", "critical", "error", "warning", "notice", "information", "debug", "trace"};
     if (std::find(std::begin(levelList), std::end(levelList), level) == std::end(levelList))
         level = "trace";
 
@@ -629,8 +627,8 @@ void Admin::setChannelLogLevel(const std::string& _channelName, std::string leve
     else if (_channelName == "kits")
     {
         LOOLWSD::setLogLevelsOfKits(level); // For current kits.
-		LOOLWSD::sendMessageToForKit("setloglevel " + level); // For forkit and future kits.
-		_forkitLogLevel = level; // We will remember this setting rather than asking forkit its loglevel.
+        LOOLWSD::sendMessageToForKit("setloglevel " + level); // For forkit and future kits.
+        _forkitLogLevel = level; // We will remember this setting rather than asking forkit its loglevel.
     }
 }
 

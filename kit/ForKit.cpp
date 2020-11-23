@@ -152,11 +152,11 @@ protected:
                 LOG_WRN("Cannot spawn " << tokens[1] << " children as requested.");
             }
         }
-		else if (tokens.size() == 2 && tokens.equals(0, "setloglevel"))
+        else if (tokens.size() == 2 && tokens.equals(0, "setloglevel"))
         {
             // Set environment variable so that new children will also set their log levels accordingly.
             setenv("LOOL_LOGLEVEL", tokens[1].c_str(), true);
-			Log::logger().setLevel(tokens[1]);
+            Log::logger().setLevel(tokens[1]);
         }
         else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
         {
