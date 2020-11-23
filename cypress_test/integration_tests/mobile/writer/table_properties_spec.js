@@ -28,6 +28,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		cy.get('.ui-content.level-0.mobile-wizard')
 			.should('be.visible');
+
+		// Wait for mobile wizard to be idle.
+		cy.wait(2000);
 	}
 
 	function moveCursorToFirstCell() {
