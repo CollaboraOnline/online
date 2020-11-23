@@ -580,17 +580,13 @@ class ConvertToPartHandler : public PartHandler
 {
     std::string _filename;
 
-    /// Is it really a convert-to, ie. use an especially formed path?
-    bool _convertTo;
-
 public:
     std::string getFilename() const { return _filename; }
 
     /// Afterwards someone else is responsible for cleaning that up.
     void takeFile() { _filename.clear(); }
 
-    ConvertToPartHandler(bool convertTo = false)
-        : _convertTo(convertTo)
+    ConvertToPartHandler()
     {
     }
 
@@ -617,19 +613,22 @@ public:
         if (!params.has("filename"))
             return;
 
-        // FIXME: needs wrapping - until then - keep in sync with ~ConvertToBroker
+        // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
+        // Always create a random sub-directory to avoid file-name collision.
         Path tempPath = Path::forDirectory(
-            Poco::TemporaryFile::tempName(_convertTo ? LOOLWSD::ChildRoot + "/tmp/convert-to" : "")
+            FileUtil::createRandomTmpDir(LOOLWSD::ChildRoot + JailUtil::JAIL_TMP_INCOMING_PATH)
             + '/');
-        LOG_TRC("Creating temporary convert-to path: " << tempPath.toString());
-        File(tempPath).createDirectories();
-        chmod(tempPath.toString().c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
+        LOG_TRC("Created temporary convert-to/insert path: " << tempPath.toString());
 
         // Prevent user inputting anything funny here.
         // A "filename" should always be a filename, not a path
         const Path filenameParam(params.get("filename"));
-        tempPath.setFileName(filenameParam.getFileName());
-        _filename = tempPath.toString(); // For convert-to this is bogus.
+        if (filenameParam.getFileName() == "callback:")
+            tempPath.setFileName("incoming_file"); // A sensible name.
+        else
+            tempPath.setFileName(filenameParam.getFileName()); //TODO: Sanitize.
+        _filename = tempPath.toString();
+        LOG_DBG("Storing incoming file to: " << _filename);
 
         // Copy the stream to _filename.
         std::ofstream fileStream;
@@ -2995,7 +2994,7 @@ private:
                 return;
             }
 
-            ConvertToPartHandler handler(/*convertTo =*/ true);
+            ConvertToPartHandler handler;
             HTMLForm form(request, message, handler);
 
             std::string format = (form.has("format") ? form.get("format") : "");
@@ -3076,6 +3075,12 @@ private:
                     LOG_INF("Perform insertfile: " << formChildid << ", " << formName << ", filename: " << fileName);
                     File(dirPath).createDirectories();
                     File(handler.getFilename()).moveTo(fileName);
+
+                    // Cleanup the directory after moving.
+                    const std::string dir = Poco::Path(handler.getFilename()).parent().toString();
+                    if (FileUtil::isEmptyDirectory(dir))
+                        FileUtil::removeFile(dir);
+
                     handler.takeFile();
                     response.setContentLength(0);
                     socket->send(response);

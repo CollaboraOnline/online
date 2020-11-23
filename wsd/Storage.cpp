@@ -334,6 +334,11 @@ std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/,
         {
             // Neither link nor copy, just move, it's a temporary file.
             Poco::File(publicFilePath).moveTo(getRootFilePath());
+
+            // Cleanup the directory after moving.
+            const std::string dir = Poco::Path(publicFilePath).parent().toString();
+            if (FileUtil::isEmptyDirectory(dir))
+                FileUtil::removeFile(dir);
         }
         catch (const Poco::Exception& exc)
         {

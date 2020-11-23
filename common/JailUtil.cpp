@@ -184,7 +184,7 @@ void setupJails(bool bindMount, const std::string& jailRoot, const std::string& 
 {
     // Start with a clean slate.
     cleanupJails(jailRoot);
-    Poco::File(jailRoot).createDirectories();
+    Poco::File(jailRoot + JAIL_TMP_INCOMING_PATH).createDirectories();
 
     disableBindMounting(); // Clear to avoid surprises.
 
