@@ -2959,7 +2959,7 @@ button.w2ui-btn-small:focus:before {
   vertical-align: top !important;
 }
 .w2ui-toolbar table.w2ui-button .w2ui-tb-caption {
-  color: #000000;
+  color: #444;
   padding: 0px 4px 0px 2px;
 }
 .w2ui-toolbar table.w2ui-button .w2ui-tb-count {
@@ -2989,7 +2989,7 @@ button.w2ui-btn-small:focus:before {
   background-color: #eeeeee;
 }
 .w2ui-toolbar table.w2ui-button.over .w2ui-tb-caption {
-  color: #000000;
+  color: #444444;
 }
 .w2ui-toolbar table.w2ui-button.down {
   border: 1px solid #aaaaaa;
