@@ -14,6 +14,10 @@
 
 namespace JailUtil
 {
+
+/// Files uploaded by users are stored in this sub-directory of child-root.
+constexpr const char JAIL_TMP_INCOMING_PATH[] = "/tmp/incoming";
+
 /// Bind mount a jail directory.
 bool bind(const std::string& source, const std::string& target);
 
