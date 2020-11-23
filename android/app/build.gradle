@@ -4,13 +4,13 @@ apply plugin: 'com.android.application'
 apply from: 'appSettings.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildDir = "${rootProject.getBuildDir()}/app"
 
     defaultConfig {
         // applicationId, versionCode and versionName are defined in appSettings.gradle
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
     }
 
     lintOptions {
