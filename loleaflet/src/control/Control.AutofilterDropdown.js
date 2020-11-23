@@ -52,7 +52,10 @@ L.Control.AutofilterDropdown = L.Control.extend({
 						(spreadsheetAreaOffset.y + (calcInputBar.top - 28) + (calcInputBar.height - 29))
 						: spreadsheetAreaOffset.y;
 
-		var corePoint = new L.Point(parseInt(data.posx) - offsetX, parseInt(data.posy) - offsetY);
+		if (parseInt(data.posx) === 0 && parseInt(data.posy) === 0)
+			var corePoint = new L.Point(this.position.x, this.position.y);
+		else
+			corePoint = new L.Point(parseInt(data.posx) - offsetX, parseInt(data.posy) - offsetY);
 
 		var left = corePoint.x * scale;
 		var top = corePoint.y * scale;
