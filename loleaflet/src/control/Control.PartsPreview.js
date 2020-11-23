@@ -472,6 +472,12 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_updatePreview: function (e) {
 		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing') {
+			this._map._previewRequestsOnFly--;
+			if (this._map._previewRequestsOnFly < 0) {
+				this._map._previewRequestsOnFly = 0;
+				this._map._timeToEmptyQueue = new Date();
+			}
+			this._map._processPreviewQueue();
 			if (!this._previewInitialized)
 				return;
 			if (this._previewTiles[e.id])
