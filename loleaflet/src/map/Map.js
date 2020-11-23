@@ -101,7 +101,7 @@ L.Map = L.Evented.extend({
 		// we are adding components like '/insertfile' at the end which would
 		// lead to URL's of the form <webserver>//insertfile/...
 		options.webserver = options.webserver.replace(/\/*$/, '');
-
+		/* private members */
 		this._handlers = [];
 		this._layers = {};
 		this._zoomBoundLayers = {};
@@ -115,7 +115,9 @@ L.Map = L.Evented.extend({
 		this._documentIdle = false;
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
 		this.showSidebar = false;
-
+		this._previewQueue = [];
+		this._previewRequestsOnFly = 0;
+		this._timeToEmptyQueue = new Date();
 		// Focusing:
 		//
 		// Cursor is visible or hidden (e.g. for graphic selection).
