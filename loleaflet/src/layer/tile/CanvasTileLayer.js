@@ -588,14 +588,14 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 	_twipsToCssPixels: function (twips) {
 		return new L.Point(
-			twips.x / this._tileWidthTwips * this._tileSize,
-			twips.y / this._tileHeightTwips * this._tileSize);
+			(twips.x / this._tileWidthTwips) * (this._tileSize / this._painter._dpiScale),
+			(twips.y / this._tileHeightTwips) * (this._tileSize / this._painter._dpiScale));
 	},
 
 	_cssPixelsToTwips: function (pixels) {
 		return new L.Point(
-			pixels.x / this._tileSize * this._tileWidthTwips,
-			pixels.y / this._tileSize * this._tileHeightTwips);
+			((pixels.x * this._painter._dpiScale) / this._tileSize) * this._tileWidthTwips,
+			((pixels.y * this._painter._dpiScale) / this._tileSize) * this._tileHeightTwips);
 	},
 
 	_twipsToLatLng: function (twips, zoom) {

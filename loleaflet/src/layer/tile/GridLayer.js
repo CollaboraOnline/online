@@ -489,6 +489,8 @@ L.GridLayer = L.Layer.extend({
 		];
 	},
 
+	/// Since we use tile size in Core's pixel size, when we want to use this size with CSS pixels, we have to divide this with window.devicePixelRatio (_dpiScale).
+	/// We can't do this here, but maybe we can add a variable like tileSizeCSS, that maybe an option if we will have to convert this in too many places.
 	_getTileSize: function () {
 		return this.options.tileSize;
 	},
