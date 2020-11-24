@@ -71,7 +71,8 @@ w2ui-toolbar {
 	box-shadow: inset 0px 0px 0px 10px #f2f2f2, 0px 0px 0px 2px #f2f2f2, 4px 0px 0px 1px #fff, -4px 0px 0px 1px #fff, 0px 0px 0px 5px #fff;
 }
 #tb_actionbar_item_LanguageStatus .w2ui-button.checked .w2ui-tb-down > div,
-#tb_actionbar_item_StateTableCellMenu .w2ui-button.checked .w2ui-tb-down > div {
+#tb_actionbar_item_StateTableCellMenu .w2ui-button.checked .w2ui-tb-down > div,
+#tb_actionbar_item_zoom .w2ui-button.checked .w2ui-tb-down > div {
 	border-color: transparent;
 	border-bottom: 5px solid #888;
 	margin-top: -5px;
