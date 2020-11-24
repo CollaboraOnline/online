@@ -350,8 +350,36 @@ L.TextInput = L.Layer.extend({
 		return value;
 	},
 
+	// Convert an array of Unicode code points to a string of UTF-16 code units. Workaround
+	// for String.fromCodePoint() that is missing in IE.
+	codePointsToString: function(codePoints) {
+		var result = '';
+		for (var i = 0; i < codePoints.length; ++i) {
+			if (codePoints[i] <= 0xFFFF)
+				result = (result +
+					  String.fromCharCode(codePoints[i]));
+			else
+				result = (result +
+					  String.fromCharCode(((codePoints[i] - 0x10000) >> 10) + 0xD800) +
+					  String.fromCharCode(((codePoints[i] - 0x10000) % 0x400) + 0xDC00));
+		}
+		return result;
+	},
+
+	// As the name says, this returns this._textArea.value as an array of numbers that are
+	// Unicode code points. *Not* UTF-16 code units.
 	getValueAsCodePoints: function() {
 		var value = this.getValue();
+		if (false) {
+			var s = '[';
+			for (var ii = 0; ii < value.length; ++ii) {
+				if (ii > 0)
+					s = s + ',';
+				s = s + '0x' + value.charCodeAt(ii).toString(16);
+			}
+			s = s + ']';
+			console.log('L.TextInput.getValueAsCodePoints: ' + s);
+		}
 		var arr = [];
 		var code;
 		for (var i = 0; i < value.length; ++i)
@@ -364,7 +392,7 @@ L.TextInput = L.Layer.extend({
 				// TESTME: harder ...
 				var high = (code - 0xd800) << 10;
 				code = value.charCodeAt(++i);
-				code = high + code - 0xdc00 + 0x100000;
+				code = high + code - 0xdc00 + 0x10000;
 			}
 			arr.push(code);
 		}
@@ -611,6 +639,7 @@ L.TextInput = L.Layer.extend({
 		this._ignoreNextBackspace = false;
 
 		var content = this.getValueAsCodePoints();
+		// Note that content is an array of Unicode code points
 
 		var preSpaceChar = this._preSpaceChar.charCodeAt(0);
 		var postSpaceChar = this._postSpaceChar.charCodeAt(0);
@@ -656,8 +685,8 @@ L.TextInput = L.Layer.extend({
 			matchTo++;
 
 		console.log('Comparison matchAt ' + matchTo + '\n' +
-			    '\tnew "' + String.fromCharCode.apply(null, content) + '" (' + content.length + ')' + '\n' +
-			    '\told "' + String.fromCharCode.apply(null, this._lastContent) + '" (' + this._lastContent.length + ')');
+			    '\tnew "' + this.codePointsToString(content) + '" (' + content.length + ')' + '\n' +
+			    '\told "' + this.codePointsToString(this._lastContent) + '" (' + this._lastContent.length + ')');
 
 		var removeBefore = this._lastContent.length - matchTo;
 		var removeAfter = 0;
@@ -687,7 +716,7 @@ L.TextInput = L.Layer.extend({
 			this._map.getWinId() === this._map.dialog._calcInputBar.id) {
 			this._sendKeyEvent(13, 5376);
 		} else if (newText.length > 0) {
-			this._sendText(String.fromCharCode.apply(null, newText));
+			this._sendText(this.codePointsToString(newText));
 		}
 
 		// was a 'delete' and we need to reset world.
@@ -698,6 +727,16 @@ L.TextInput = L.Layer.extend({
 	// Sends the given (UTF-8) string of text to loolwsd, as IME (text composition)
 	// messages
 	_sendText: function _sendText(text) {
+		if (false) {
+			var s = '[';
+			for (var ii = 0; ii < text.length; ++ii) {
+				if (ii > 0)
+					s = s + ',';
+				s = s + '0x' + text.charCodeAt(ii).toString(16);
+			}
+			s = s + ']';
+			console.log('L.TextInput._sendText: ' + s);
+		}
 		this._fancyLog('send-text-to-loolwsd', text);
 
 		// MSIE/Edge cannot compare a string to "\n" for whatever reason,
@@ -841,7 +880,16 @@ L.TextInput = L.Layer.extend({
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
 	// sends a pair of "input" for a composition update paird with an "end"
 	_sendCompositionEvent: function _sendCompositionEvent(text) {
-		console.log('sending to loolwsd: ', text);
+		if (false) {
+			var s = '[';
+			for (var ii = 0; ii < text.length; ++ii) {
+				if (ii > 0)
+					s = s + ',';
+				s = s + '0x' + text.charCodeAt(ii).toString(16);
+			}
+			s = s + ']';
+			console.log('L.TextInput._sendCompositionEvent: ' + s);
+		}
 
 		// We want to trigger auto-correction, but not if we may
 		// have to delete a count of characters in the future,
