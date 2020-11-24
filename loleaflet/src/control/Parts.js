@@ -119,9 +119,13 @@ L.Map.include({
 		}
 		// take 3 requests from the queue:
 		while (this._previewRequestsOnFly < 3) {
-			var tile = this._previewQueue.pop();
+			var tile = this._previewQueue.shift();
 			if (!tile)
 				break;
+			var isVisible = this.isPreviewVisible(tile[0], true);
+			if (isVisible != true)
+				// skip this! we can't see it
+				continue;
 			this._previewRequestsOnFly++;
 			this._socket.sendMessage(tile[1]);
 		}
