@@ -132,6 +132,11 @@ L.Control.Tabs = L.Control.extend({
 					var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
 				}
 
+				var frame = L.DomUtil.create('div', '', ssTabScroll);
+				frame.setAttribute('draggable', false);
+				frame.setAttribute('id', 'first-tab-drop-site');
+				this._addDnDHandlers(frame);
+
 				for (var i = 0; i < parts; i++) {
 					if (e.hiddenParts.indexOf(i) !== -1)
 						continue;
@@ -165,6 +170,7 @@ L.Control.Tabs = L.Control.extend({
 						.on(tab, 'click', L.DomEvent.stop)
 						.on(tab, 'click', this._setPart, this)
 						.on(tab, 'click', this._map.focus, this._map);
+					this._addDnDHandlers(tab);
 					this._spreadsheetTabs[id] = tab;
 				}
 			}
@@ -187,6 +193,18 @@ L.Control.Tabs = L.Control.extend({
 					scrollDiv.scrollLeft = horizScrollPos;
 				}
 			}
+		}
+	},
+
+	_addDnDHandlers: function(element) {
+		if (!this._map.isPermissionReadOnly()) {
+			element.setAttribute('draggable', true);
+			element.addEventListener('dragstart', this._handleDragStart.bind(this), false);
+			element.addEventListener('dragenter', this._handleDragEnter, false);
+			element.addEventListener('dragover', this._handleDragOver, false);
+			element.addEventListener('dragleave', this._handleDragLeave, false);
+			element.addEventListener('drop', this._handleDrop.bind(this), false);
+			element.addEventListener('dragend', this._handleDragEnd, false);
 		}
 	},
 
@@ -264,6 +282,46 @@ L.Control.Tabs = L.Control.extend({
 
 	_hideSheet: function() {
 		this._map.hidePage(this._tabForContextMenu);
+	},
+
+	_handleDragStart: function(e) {
+		this._setPart(e);
+		e.dataTransfer.effectAllowed = 'move';
+	},
+
+	_handleDragEnter: function() {
+
+	},
+
+	_handleDragOver: function(e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		}
+
+		// By default we move when dragging, but can
+		// support duplication with ctrl in the future.
+		e.dataTransfer.dropEffect = 'move';
+
+		this.classList.add('tab-dropsite');
+		return false;
+	},
+
+	_handleDragLeave: function() {
+		this.classList.remove('tab-dropsite');
+	},
+
+	_handleDrop: function(e) {
+		if (e.stopPropagation) {
+			e.stopPropagation();
+		}
+		e.target.classList.remove('tab-dropsite');
+		var targetIndex = this._map._docLayer._partNames.indexOf(e.target.innerText);
+
+		this._moveSheet(targetIndex+2);
+	},
+
+	_handleDragEnd: function() {
+		this.classList.remove('tab-dropsite');
 	}
 });
 
