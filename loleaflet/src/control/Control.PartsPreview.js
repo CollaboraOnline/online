@@ -39,6 +39,8 @@ L.Control.PartsPreview = L.Control.extend({
 			(!window.mode.isDesktop() && L.DomUtil.isPortrait() ? 'x' : 'y') :
 			this.options.axis;
 		this._scrollY = 0;
+		// Hack for access this function outside of this class
+		map.isPreviewVisible = L.bind(this._isPreviewVisible, this);
 
 		map.on('updateparts', this._updateDisabled, this);
 		map.on('updatepart', this._updatePart, this);
@@ -330,23 +332,11 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		//helper function to check if the view is in the scrollview visible area
-		function isVisible(el) {
-			var elemRect = el.getBoundingClientRect();
-			var elemTop = elemRect.top;
-			var elemBottom = elemRect.bottom;
-			var elemLeft = elemRect.left;
-			var elemRight = elemRect.right;
-			var isVisible = this._direction === 'x' ?
-				(elemLeft >= 0) && (elemRight <= window.innerWidth) :
-				(elemTop >= 0) && (elemBottom <= window.innerHeight);
-			return isVisible;
-		}
 		if (e === 'prev' || e === 'next') {
 			this._map.setPart(e);
 			var nodePos;
 			var node = $(this._partsPreviewCont).find('.mCSB_container .preview-frame')[this._map.getCurrentPartNumber()];
-			if (!isVisible(node)) {
+			if (!this._isPreviewVisible(this._map.getCurrentPartNumber())) {
 				if (e === 'prev') {
 					setTimeout(function () {
 						$(this._partsPreviewCont).mCustomScrollbar('scrollTo', node);
@@ -536,17 +526,45 @@ L.Control.PartsPreview = L.Control.extend({
 					if (this._direction === 'x') {
 						if ((previewFrameBB.left >= topBound && previewFrameBB.left <= bottomBound)
 						|| (previewFrameBB.right >= topBound && previewFrameBB.right <= bottomBound)) {
-							this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 							img.fetched = true;
+							this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 						}
 					} else if ((previewFrameBB.top >= topBound && previewFrameBB.top <= bottomBound)
 						|| (previewFrameBB.bottom >= topBound && previewFrameBB.bottom <= bottomBound)) {
-						this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 						img.fetched = true;
+						this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 					}
 				}
 			}
 		}, this, e), 0);
+	},
+
+	_isPreviewVisible: function(part, isFetching) {
+		isFetching = isFetching || false;
+		var el = this._previewTiles[part];
+		if (!el)
+			return true;
+		var elemRect = el.getBoundingClientRect();
+		var elemTop = elemRect.top;
+		var elemBottom = elemRect.bottom;
+		var elemLeft = elemRect.left;
+		var elemRight = elemRect.right;
+		var isVisible = false;
+		// dont skip the ones that are near visible or will be visible soon while scrolling.
+		if (isFetching)
+			isVisible = this._direction === 'x' ?
+				(0 - window.innerWidth / 3 <= elemLeft) && (elemRight <= window.innerWidth + window.innerWidth / 3) :
+				(0 - window.innerHeight / 3 <= elemTop) && (elemBottom <= window.innerHeight +  window.innerHeight / 3);
+		else
+			// this is for setPart function, should be completely visible for scrollto
+			isVisible = this._direction === 'x' ?
+				(elemLeft >= 0) && (elemRight <= window.innerWidth) :
+				(elemTop >= 0) && (elemBottom <= window.innerHeight);
+
+		if (!isVisible && isFetching)
+			// mark as false, this will be canceled
+			el.fetched = false;
+		return isVisible;
 	},
 
 	_addDnDHandlers: function (elem) {
