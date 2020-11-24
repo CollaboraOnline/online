@@ -62,6 +62,27 @@
 	border-top: 0px;
 }
 
+#first-tab-drop-site {
+	height: 20px;
+	width: 3px;
+	opacity: 0;
+	margin-top: 4px;
+	padding-top: 8px;
+	vertical-align: bottom;
+	display: inline-block;
+	background-color: gray;
+	padding-bottom: 5px;
+}
+
+.tab-dropsite {
+	border-right: gray solid 5px;
+}
+
+#first-tab-drop-site.tab-dropsite {
+	width: 0 !important;
+	opacity: 100% !important;
+}
+
 #spreadsheet-row-column-frame {
 	position: absolute;
 	left: 0;
