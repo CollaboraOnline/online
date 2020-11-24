@@ -75,6 +75,21 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'fill', 'rgb(255,1,27)');
 	});
 
+	it('Apply highlight color on text shape.', function() {
+		cy.get('#tb_editbar_item_backcolor')
+			.click();
+
+		desktopHelper.selectColorFromPalette('FF9838');
+
+		impressHelper.triggerNewSVGForShapeInTheCenter();
+
+		cy.wait(500);
+
+		//highlight color is not in the SVG
+		// that's why we didn't test there
+
+	});
+
 	it('Apply left/right alignment on text seleced text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
