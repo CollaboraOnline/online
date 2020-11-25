@@ -57,6 +57,7 @@ L.Control.PartsPreview = L.Control.extend({
 			axis: this._direction,
 			theme: 'dark-thick',
 			scrollInertia: 0,
+			mouseWheelPixels: 100,
 			alwaysShowScrollbar: 1,
 			callbacks:{
 				whileScrolling: function() {
@@ -217,7 +218,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var imgClassName = 'preview-img ' + this.options.imageClass;
 		var img = L.DomUtil.create('img', imgClassName, frame);
 		img.hash = hashCode;
-		img.src = L.Icon.Default.imagePath + '/preview_placeholder.png';
+		img.src = 'images/preview_placeholder.png';
 		img.fetched = false;
 		if (!window.mode.isDesktop()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
@@ -443,10 +444,9 @@ L.Control.PartsPreview = L.Control.extend({
 
 				for (it = 0; it < e.partNames.length; it++) {
 					this._previewTiles[it].hash = e.partNames[it];
-					this._previewTiles[it].src = L.Icon.Default.imagePath + '/preview_placeholder.png';
+					this._previewTiles[it].src = 'images/preview_placeholder.png';
 					this._previewTiles[it].fetched = false;
 				}
-				this._onScrollEnd();
 			}
 		}
 		else {
