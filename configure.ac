@@ -1089,9 +1089,26 @@ AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
 AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
 AC_CONFIG_LINKS([cypress_test/package.json:cypress_test/package.json])
 AC_CONFIG_LINKS([cypress_test/cypress.json:cypress_test/cypress.json])
-AC_LINK_FILES([cypress_test/plugins], [cypress_test/plugins])
-AC_LINK_FILES([loleaflet/archived-packages], [loleaflet/archived-packages])
-AC_LINK_FILES([cypress_test/eslint_plugin], [cypress_test/eslint_plugin])
+AC_CONFIG_COMMANDS_PRE([
+if test "$srcdir" != '.'; then
+   dst_dirs="cypress_test/plugins cypress_test/eslint_plugin loleaflet/archived-packages"
+   src_dir=
+   dir_name=
+   for dst_dir in $dst_dirs
+   do
+       dirname=`dirname -- "$dst_dir"`
+       mkdir -p $dirname ||
+             as_fn_error $? "cannot create directory $dirname"
+
+       rm -f "$dst_dir"
+       src_dir=$srcdir/$dst_dir
+       echo "linking $src_dir to $dst_dir"
+       ln -s "$src_dir" "$dst_dir" 2>/dev/null ||
+          ln "$src_dir" "$dst_dir" 2>/dev/null ||
+             cp -p "$src_dir" "$dst_dir" ||
+                as_fn_error $? "cannot link or copy $src_dir to $dst_dir"
+   done
+fi])
 
 APP_BRANDING_DIR=
 APP_IC_LAUNCHER="ic_launcher"
