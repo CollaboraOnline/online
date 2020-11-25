@@ -9,6 +9,20 @@
 	background-color: white !important;
 }
 
+.jsdialog.row {
+	display: table-row;
+}
+
+.jsdialog.cell {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 2px;
+}
+
+.jsdialog.vertical {
+	width: max-content;
+}
+
 /* Expander */
 .ui-expander-label::before {
 	content: '>';
