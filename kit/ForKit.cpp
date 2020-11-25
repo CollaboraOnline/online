@@ -446,19 +446,30 @@ int main(int argc, char** argv)
     // early check for avoiding the security check for username 'lool'
     // (deliberately only this, not moving the entire parameter parsing here)
     bool checkLoolUser = true;
-    for (int i = 0; i < argc; ++i)
+    std::string disableLoolUserChecking("--disable-lool-user-checking");
+    for (int i = 1; checkLoolUser && (i < argc); ++i)
     {
-        char *cmd = argv[i];
-        if (std::strstr(cmd, "--disable-lool-user-checking") == cmd)
-        {
-            std::cerr << "Security: Check for the 'lool' username overridden on the command line." << std::endl;
+        if (disableLoolUserChecking == argv[i])
             checkLoolUser = false;
-        }
     }
 
-    if (checkLoolUser && !hasCorrectUID("loolforkit"))
+    if (!hasCorrectUID("loolforkit"))
     {
-        return EX_SOFTWARE;
+        // don't allow if any capability is set
+        if (hasAnyCapability())
+        {
+            if (!checkLoolUser)
+                std::cerr << "Security: --disable-lool-user-checking failed, loolforkit has some capabilities set." << std::endl;
+
+            return EX_SOFTWARE;
+        }
+
+        // even without the capabilities, don't run unless the user really knows
+        // what they are doing, and provided a --disable-lool-user-checking
+        if (checkLoolUser)
+            return EX_SOFTWARE;
+
+        std::cerr << "Security: Check for the 'lool' username overridden on the command line." << std::endl;
     }
 
     if (std::getenv("SLEEPFORDEBUGGER"))
