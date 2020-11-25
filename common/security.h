@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include <sys/capability.h>
 #include <sys/mount.h>
 #include <sys/types.h>
 
@@ -38,6 +39,33 @@ static int hasCorrectUID(const char *appName)
         return 0;
     }
 #endif
+}
+
+/** Return 0 if no capability is set on the current binary. Positive number gives the bitfield of caps that are set, negative an error. */
+int hasAnyCapability()
+{
+    cap_t caps = cap_get_proc();
+    if (caps == nullptr)
+    {
+        fprintf(stderr, "Error: cap_get_proc() failed.\n");
+        return -1;
+    }
+
+    cap_t caps_none = cap_init();
+    if (caps == nullptr)
+    {
+        fprintf(stderr, "Error: cap_init() failed.\n");
+        cap_free(caps);
+        return -1;
+    }
+
+    // 0 = caps of this process equal to no caps
+    int result = cap_compare(caps, caps_none);
+
+    cap_free(caps_none);
+    cap_free(caps);
+
+    return result;
 }
 #endif
 
