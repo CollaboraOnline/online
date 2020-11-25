@@ -11,15 +11,17 @@
 #include <config.h>
 
 #include <stdio.h>
-#include <string.h>
 #include <errno.h>
 #include <sys/mount.h>
 #include <sys/stat.h>
+#include <sysexits.h>
 #include <unistd.h>
+
+#include <security.h>
 
 void usage(const char* program)
 {
-    fprintf(stderr, "Usage: %s <-s|-r> <source path> <target path>\n", program);
+    fprintf(stderr, "Usage: %s <-b|-r> <source path> <target path>\n", program);
     fprintf(stderr, "       %s -u <target>.\n", program);
     fprintf(stderr, "       -b bind and mount the source to target.\n");
     fprintf(stderr, "       -r bind and mount the source to target as readonly.\n");
@@ -30,10 +32,13 @@ int main(int argc, char** argv)
 {
     const char* program = argv[0];
 
+    if (!hasCorrectUID(/* appName = */"loolmount"))
+        return EX_SOFTWARE;
+
     if (argc < 3)
     {
         usage(program);
-        return 1;
+        return EX_USAGE;
     }
 
     const char* option = argv[1];
@@ -62,7 +67,7 @@ int main(int argc, char** argv)
             {
                 fprintf(stderr, "%s: forced unmount of [%s] failed: %s.\n", program, target,
                         strerror(errno));
-                return 1;
+                return EX_SOFTWARE;
             }
         }
     }
@@ -74,7 +79,7 @@ int main(int argc, char** argv)
         {
             fprintf(stderr, "%s: cannot mount from invalid source directory [%s].\n", program,
                     source);
-            return 1;
+            return EX_USAGE;
         }
 
         const char* target = argv[3];
@@ -83,7 +88,7 @@ int main(int argc, char** argv)
         {
             fprintf(stderr, "%s: cannot mount on invalid target directory [%s].\n", program,
                     target);
-            return 1;
+            return EX_USAGE;
         }
 
         // Mount the source path as the target path.
@@ -97,7 +102,7 @@ int main(int argc, char** argv)
             {
                 fprintf(stderr, "%s: mount failed to bind [%s] to [%s]: %s.\n", program, source,
                         target, strerror(errno));
-                return 1;
+                return EX_SOFTWARE;
             }
         }
         else if (strcmp(option, "-r") == 0) // Readonly Mount.
@@ -111,7 +116,7 @@ int main(int argc, char** argv)
             {
                 fprintf(stderr, "%s: mount failed remount [%s] readonly: %s.\n", program, target,
                         strerror(errno));
-                return 1;
+                return EX_SOFTWARE;
             }
 
             retval = mount(source, target, nullptr, (MS_UNBINDABLE | MS_REC), nullptr);
@@ -119,18 +124,18 @@ int main(int argc, char** argv)
             {
                 fprintf(stderr, "%s: mount failed make [%s] private: %s.\n", program, target,
                         strerror(errno));
-                return 1;
+                return EX_SOFTWARE;
             }
         }
     }
     else
     {
         usage(program);
-        return 1;
+        return EX_USAGE;
     }
 
     fflush(stderr);
-    return 0;
+    return EX_OK;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
