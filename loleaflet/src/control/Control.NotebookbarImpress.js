@@ -2364,6 +2364,29 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																				}
 																			],
 																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-Background',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'Section2',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'id': 'selectbackground',
+																							'type': 'menubartoolitem',
+																							'text': _UNO('.uno:SelectBackground', 'presentation'),
+																							'command': ''
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
 																		}
 																	],
 																	'vertical': 'false'
