@@ -10,8 +10,14 @@ describe('Change shape properties via mobile wizard.', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 
-		// Click on edit button
 		mobileHelper.enableEditingMobile();
+
+		// Make the cursor visible
+		cy.get('#document-container')
+			.click(20, 20);
+
+		cy.get('.blinking-cursor')
+			.should('be.visible');
 
 		helper.moveCursor('end');
 
