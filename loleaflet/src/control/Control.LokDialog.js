@@ -1654,6 +1654,8 @@ L.Control.LokDialog = L.Control.extend({
 		else
 			this._map.options.documentContainer.style.right = (width - 15).toString() + 'px';
 
+		this._map._onResize();
+
 		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 		if (spreadsheetRowColumnFrame)
 			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
