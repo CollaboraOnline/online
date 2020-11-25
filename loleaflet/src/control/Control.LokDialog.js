@@ -1649,9 +1649,22 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		var wrapper = L.DomUtil.get('sidebar-dock-wrapper');
-		if (wrapper && wrapper.offsetWidth)
-			this._map.options.documentContainer.style.right = wrapper.offsetWidth + 'px';
-		else
+		if (wrapper) {
+			var offsetWidth;
+			var panel = L.DomUtil.get('sidebar-panel');
+
+			if (panel.style.display !== 'none')
+				offsetWidth = wrapper.offsetWidth;
+			else {
+				panel.style.visibility = 'hidden';
+				panel.style.display = '';
+				offsetWidth = wrapper.offsetWidth;
+				panel.style.display = 'none';
+				panel.style.visibility = '';
+			}
+
+			this._map.options.documentContainer.style.right = offsetWidth + 'px';
+		} else
 			this._map.options.documentContainer.style.right = (width - 15).toString() + 'px';
 
 		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
