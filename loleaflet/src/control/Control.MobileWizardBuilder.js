@@ -14,7 +14,29 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		// eg. this._controlHandlers['combobox'] = this._comboboxControlHandler;
+		this._controlHandlers['grid'] = this._gridHandler;
+	},
+
+	_swapControls: function(controls, indexA, indexB) {
+		var tmp = controls[indexA];
+		controls[indexA] = controls[indexB];
+		controls[indexB] = tmp;
+	},
+
+	/// reorder widgets in case of vertical placement of labels and corresponding controls
+	/// current implementation fits for 2 column views
+	_gridHandler: function(parentContainer, data, builder) {
+		var children = data.children;
+		if (children) {
+			var count = children.length;
+			for (var i = 0; i < count - 2; i++) {
+				if (children[i].type == 'fixedtext' && children[i+1].type == 'fixedtext') {
+					builder._swapControls(children, i+1, i+2);
+				}
+			}
+		}
+
+		return true;
 	},
 
 	build: function(parent, data) {

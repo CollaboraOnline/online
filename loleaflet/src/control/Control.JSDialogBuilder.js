@@ -361,26 +361,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return null;
 	},
 
-	_swapControls: function(controls, indexA, indexB) {
-		var tmp = controls[indexA];
-		controls[indexA] = controls[indexB];
-		controls[indexB] = tmp;
-	},
-
-	/// reorder widgets in case of vertical placement of labels and corresponding controls
-	/// current implementation fits for 2 column views
 	_gridHandler: function(parentContainer, data, builder) {
-		var children = data.children;
-		if (children) {
-			var count = children.length;
-			for (var i = 0; i < count - 2; i++) {
-				if (children[i].type == 'fixedtext' && children[i+1].type == 'fixedtext') {
-					builder._swapControls(children, i+1, i+2);
-				}
+		var rows = builder._getGridRows(data.children);
+		var cols = builder._getGridColumns(data.children);
+
+		for (var row = 0; row < rows; row++) {
+			var rowNode = L.DomUtil.create('div', builder.options.cssClass + ' row', parentContainer);
+			for (var col = 0; col < cols; col++) {
+				var colNode = L.DomUtil.create('div', builder.options.cssClass + ' cell', rowNode);
+				builder.build(colNode, [builder._getGridChild(data.children, row, col)], builder);
 			}
 		}
 
-		return true;
+		return false;
 	},
 
 	_getListBoxUpdateType: function(id) {
@@ -2429,6 +2422,86 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		// so no need to recurse here over 'data'.
 		this._addMissingLabels(data);
 	},
+
+	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
+		this._amendJSDialogData(data);
+
+		if (hasVerticalParent === undefined) {
+			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
+			parent = L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);
+		}
+
+		var containerToInsert = parent;
+
+		for (var childIndex in data) {
+			var childData = data[childIndex];
+			if (!childData)
+				continue;
+
+			var childType = childData.type;
+			if (childType === 'toolbox' && !childData.id)
+				continue;
+
+			if (parentHasManyChildren) {
+				if (!hasVerticalParent)
+					var td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
+				else {
+					containerToInsert = L.DomUtil.create('div', 'row ' + this.options.cssClass, parent);
+					td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
+				}
+			} else {
+				td = containerToInsert;
+			}
+
+			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
+
+			this._parentize(childData);
+			var processChildren = true;
+
+			if ((childData.id === undefined || childData.id === '' || childData.id === null)
+				&& (childType == 'checkbox' || childType == 'radiobutton')) {
+				continue;
+			}
+
+			var hasManyChildren = childData.children && childData.children.length > 1;
+			if (hasManyChildren) {
+				var tableId = childData.id ? 'table-' + childData.id.replace(' ', '') : '';
+				var table = L.DomUtil.createWithId('div', tableId, td);
+				$(table).addClass(this.options.cssClass);
+				$(table).addClass('vertical');
+				var childObject = L.DomUtil.create('div', 'row ' + this.options.cssClass, table);
+			} else {
+				childObject = td;
+			}
+
+			var handler = this._controlHandlers[childType];
+			var twoPanelsAsChildren =
+			    childData.children && childData.children.length == 2
+			    && childData.children[0] && childData.children[0].type == 'panel'
+			    && childData.children[1] && childData.children[1].type == 'panel';
+
+			if (twoPanelsAsChildren) {
+				handler = this._controlHandlers['paneltabs'];
+				processChildren = handler(childObject, childData.children, this);
+			} else {
+				if (handler)
+					processChildren = handler(childObject, childData, this);
+				else
+					console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
+
+				if (childType === 'toolbox' && hasVerticalParent === true && childData.children.length === 1)
+					this.options.useInLineLabelsForUnoButtons = true;
+
+				if (processChildren && childData.children != undefined)
+					this.build(childObject, childData.children, isVertical, hasManyChildren);
+				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
+					$('#' + childData.id).addClass('hidden-from-event');
+				}
+
+				this.options.useInLineLabelsForUnoButtons = false;
+			}
+		}
+	}
 });
 
 L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainMenu, itemCommand) {
