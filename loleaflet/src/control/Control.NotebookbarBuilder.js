@@ -823,7 +823,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				td = containerToInsert;
 			}
 
-			var isVertical = childData.vertical === 'true' ? true : false;
+			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
 
 			this._parentize(childData);
 			var processChildren = true;

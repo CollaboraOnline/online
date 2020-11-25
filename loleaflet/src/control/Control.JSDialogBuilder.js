@@ -416,7 +416,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data && data.id)
 			sectionTitle.id = data.id;
 
-		if (data.enabled === 'false')
+		if (data.enabled === 'false' || data.enabled === false)
 			$(sectionTitle).addClass('disabled');
 
 		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
@@ -1356,7 +1356,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_multiLineEditControl: function(parentContainer, data, builder, callback) {
 		var controlType = 'textarea';
-		if (data.cursor && data.cursor === 'false')
+		if (data.cursor && (data.cursor === 'false' || data.cursor === false))
 			controlType = 'p';
 
 		var edit = L.DomUtil.create(controlType, '', parentContainer);
@@ -1572,14 +1572,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var expander = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander ', span);
 
-		if (entry.selected && entry.selected === 'true')
+		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
 			$(span).addClass('selected');
 
 		if (entry.state) {
 			var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', span);
 			checkbox.type = 'checkbox';
 
-			if (entry.state === 'true')
+			if (entry.state === 'true' || entry.state === true)
 				checkbox.checked = true;
 
 			$(checkbox).change(function() {
