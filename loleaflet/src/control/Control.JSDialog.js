@@ -43,7 +43,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', container);
 
-		var builder = new L.control.notebookbarBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
+		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
 		builder.build(content, [data]);
 
 		var that = this;

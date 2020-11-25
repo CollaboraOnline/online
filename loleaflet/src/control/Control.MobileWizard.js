@@ -397,7 +397,7 @@ L.Control.MobileWizard = L.Control.extend({
 				history.pushState({context: 'mobile-wizard', level: 0}, 'mobile-wizard-level-0');
 			}
 
-			var builder = L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
+			var builder = L.control.mobileWizardBuilder({mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
 			builder.build(this.content.get(0), [data]);
 
 			this._mainTitle = data.text ? data.text : '';
