@@ -60,14 +60,11 @@ describe('Change alignment settings.', function() {
 		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 
-		cy.get('#tb_editbar_item_togglemergecells')
-			.should('not.have.class', 'disabled');
-
 		// Select first cell by clicking on it.
 		calcHelper.clickOnFirstCell();
 
-		cy.get('#tb_editbar_item_togglemergecells')
-			.should('have.class', 'disabled');
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
+			.should('exist');
 
 		// Select a cell range again using address input.
 		cy.get('input#addressInput')
@@ -79,9 +76,6 @@ describe('Change alignment settings.', function() {
 
 		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
-
-		cy.get('#tb_editbar_item_togglemergecells')
-			.should('not.have.class', 'disabled');
 	});
 
 	it('Check input field content', function() {
