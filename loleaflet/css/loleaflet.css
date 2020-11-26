@@ -192,13 +192,14 @@ body {
 	position: absolute;
 	top: 77px;
 	right: 0px;
-	bottom: 72px;
 	border-top: 1px solid #b6b6b6;
 	border-left: 1px solid #b6b6b6;
 	overflow: hidden;
 	z-index: 990;
 }
-
+nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
+	bottom: 72px;
+}
 #sidebar-panel {
 	padding: 0px;
 	margin: 0px;
