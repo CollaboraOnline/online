@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include <string>
 #include <cmath>
+#include <unordered_map>
 
 class Watermark final
 {
@@ -26,8 +27,6 @@ public:
         , _text(Util::replace(text, "\\n", "\n"))
         , _font("Carlito")
         , _alphaLevel(opacity)
-        , _width(0)
-        , _height(0)
     {
         if (_loKitDoc == nullptr)
         {
@@ -51,12 +50,11 @@ public:
         if (pixmap && tilePixmap)
         {
             // center watermark
-            const int maxX = std::min(tileWidth, _width);
-            const int maxY = std::min(tileHeight, _height);
+            const int maxX = std::min(tileWidth, width);
+            const int maxY = std::min(tileHeight, height);
             offsetX += (tileWidth - maxX) / 2;
             offsetY += (tileHeight - maxY) / 2;
-
-            alphaBlend(*pixmap, _width, _height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight, false);
+            alphaBlend(*pixmap, width, height, offsetX, offsetY, tilePixmap, tilesPixmapWidth, tilesPixmapHeight, false);
         }
     }
 
@@ -99,24 +97,27 @@ private:
     /// Create bitmap that we later use as the watermark for every tile.
     const std::vector<unsigned char>* getPixmap(int width, int height)
     {
-        if (!_pixmap.empty() && width == _width && height == _height)
-            return &_pixmap;
-
-        _pixmap.clear();
-
-        _width = width;
-        _height = height;
-
         if (_loKitDoc == nullptr)
         {
             return nullptr;
         }
 
+        const size_t key = width + height * 10000;
+
+        if (_pixmaps.find(key) != _pixmaps.end())
+        {
+            return &_pixmaps[key];
+        }
+
+        _pixmaps[key] = std::vector<unsigned char>();
+
+        std::vector<unsigned char>& _pixmap = _pixmaps[key];
+
         // renderFont returns a buffer based on RGBA mode, where r, g, b
         // are always set to 0 (black) and the alpha level is 0 everywhere
         // except on the text area; the alpha level take into account of
         // performing anti-aliasing over the text edges.
-        unsigned char* textPixels = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &_width, &_height, 0);
+        unsigned char* textPixels = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &width, &height, 0);
 
         if (!textPixels)
         {
@@ -204,7 +205,7 @@ private:
         }
 
         // Now copy the (black) text over the (white) blur
-        alphaBlend(_rotatedText, _width, _height, 0, 0, _pixmap.data(), _width, _height, true);
+        alphaBlend(_rotatedText, width, height, 0, 0, _pixmap.data(), width, height, true);
 
         // Make the resulting pixmap semi-transparent
         for (unsigned char* p = _pixmap.data(); p < _pixmap.data() + pixel_count; p++)
@@ -220,9 +221,7 @@ private:
     const std::string _text;
     const std::string _font;
     const double _alphaLevel;
-    int _width;
-    int _height;
-    std::vector<unsigned char> _pixmap;
+    std::unordered_map<size_t, std::vector<unsigned char>> _pixmaps;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
