@@ -18,7 +18,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['tabcontrol'] = this._overridenTabsControlHandler;
 		this._controlHandlers['menubartoolitem'] = this._menubarToolItemHandler;
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
-		this._controlHandlers['frame'] = this._frameHandler;
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
 		this._controlHandlers['spinfield'] = function() { return false; };
@@ -336,26 +335,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			return false;
 
 		return builder._comboboxControl(parentContainer, data, builder);
-	},
-
-	_frameHandler: function(parentContainer, data, builder) {
-		if (data.children.length > 1) {
-			var frame = L.DomUtil.create('div', 'ui-frame ' + builder.options.cssClass, parentContainer);
-			frame.id = data.id;
-			var label = L.DomUtil.create('span', 'ui-frame-label ' + builder.options.cssClass, frame);
-			label.innerText = builder._cleanText(data.children[0].text);
-
-			var frameChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, parentContainer);
-
-			var children = [];
-			for (var i = 1; i < data.children.length; i++) {
-				children.push(data.children[i]);
-			}
-
-			builder.build(frameChildren, children);
-		}
-
-		return false;
 	},
 
 	// overriden
