@@ -226,6 +226,14 @@ function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 		.should('be.visible');
 }
 
+function waitForInterferingUser() {
+	cy.get('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
+		.should('be.visible');
+
+	// Make sure that the interfering user is loaded, before we start the actual test.
+	cy.wait(10000);
+}
+
 function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
@@ -269,6 +277,10 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 						});
 				});
 		});
+	}
+
+	if (Cypress.env('INTERFERENCE_TEST') === true) {
+		waitForInterferingUser();
 	}
 
 	cy.log('Loading test document - end.');
