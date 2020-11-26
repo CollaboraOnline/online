@@ -214,7 +214,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>6.4.1</string>
+	<string>6.4.2</string>
 	<key>CFBundleVersion</key>
 	<string>@IOSAPP_BUNDLE_VERSION@</string>
 	<key>LSRequiresIPhoneOS</key>
