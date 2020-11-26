@@ -9,22 +9,28 @@
 # 4) "name" is the name of part of the private/user/name remote branch, defaults to the current
 #    branch. You have to specify this explicitly if you want to update an existing PR.
 #
+# './g backport <branch> <PR number> [name]' to submit a pull request for a different branch:
+# 1) Checks out a local branch for the remote <branch>.
+# 2) Cherry-picks commits from <PR number>
+# 3) Uses './g review' to submit a pull request against <branch>.
+#
+
+if [ -z "$(type -p gh)" ]; then
+    echo "'gh' not found, install it from <https://github.com/cli/cli/blob/trunk/docs/install_linux.md>."
+    exit 1
+fi
+
+if ! gh auth status &>/dev/null; then
+    echo "'gh' thinks you are not logged into any GitHub hosts. Run 'gh auth login' to authenticate."
+    exit 1
+fi
+
+# e.g. co-4-2
+BRANCH=$(git symbolic-ref HEAD|sed 's|refs/heads/||')
+# e.g. origin
+REMOTE=$(git config branch.$BRANCH.remote)
 
 if [ "$1" == "review" ]; then
-    if [ -z "$(type -p gh)" ]; then
-        echo "'gh' not found, install it from <https://github.com/cli/cli/blob/trunk/docs/install_linux.md>."
-        exit 1
-    fi
-
-    if ! gh auth status &>/dev/null; then
-        echo "'gh' thinks you are not logged into any GitHub hosts. Run 'gh auth login' to authenticate."
-        exit 1
-    fi
-
-    # e.g. co-4-2
-    BRANCH=$(git symbolic-ref HEAD|sed 's|refs/heads/||')
-    # e.g. origin
-    REMOTE=$(git config branch.$BRANCH.remote)
     # e.g. distro/collabora/co-4-2
     TRACKED_BRANCH=$(git rev-parse --abbrev-ref --symbolic-full-name HEAD@{upstream}|sed "s|${REMOTE}/||")
     REMOTE_BRANCH=private/$USER/$TRACKED_BRANCH
@@ -55,6 +61,70 @@ if [ "$1" == "review" ]; then
         gh pr create --base $TRACKED_BRANCH --head $REMOTE_BRANCH --fill
         git branch -D $REMOTE_BRANCH
     fi
+    exit 0
+fi
+
+if [ "$1" == "backport" ]; then
+    if [ -z "$(type -p jq)" ]; then
+        echo "'jq' not found, install it with your package manager."
+        exit 1
+    fi
+
+    BACKPORT_BRANCH=$2
+    if [ -z "$BACKPORT_BRANCH" ]; then
+        echo "Error: backport branch is not specified"
+        echo "Usage: './g backport <branch> <PR number> [name]'"
+        echo "Example: './g backport distro/collabora/co-6-4 42'"
+        exit 1
+    fi
+    if ! git rev-parse --quiet --verify $REMOTE/$BACKPORT_BRANCH >/dev/null; then
+        echo "Error: backport branch does not exist"
+        exit 1
+    fi
+
+    PRNUM=$3
+    if [ -z "$PRNUM" ]; then
+        echo "Error: PR number is not specified"
+        exit 1
+    fi
+
+    # Optional.
+    CUSTOM_BRANCH=$4
+
+    JSON=$(mktemp)
+    gh api graphql -f query='
+{
+  repository(owner: "CollaboraOnline", name:"online")
+  {
+    pullRequest(number: '$PRNUM'){
+        baseRefOid
+        headRefOid
+    }
+  }
+}' > $JSON
+    BASE_COMMIT=$(cat $JSON | jq --raw-output ".data.repository.pullRequest.baseRefOid")
+    HEAD_COMMIT=$(cat $JSON | jq --raw-output ".data.repository.pullRequest.headRefOid")
+    COMMIT_RANGE=$BASE_COMMIT..$HEAD_COMMIT
+
+    # Create local branch if needed.
+    BRANCH_CREATED=
+    if git rev-parse --quiet --verify master2 >/dev/null; then
+        git checkout $BACKPORT_BRANCH
+    else
+        git checkout --track $REMOTE/$BACKPORT_BRANCH
+        BRANCH_CREATED=y
+    fi
+
+    git cherry-pick $COMMIT_RANGE
+
+    $0 review $CUSTOM_BRANCH
+
+    git checkout $BRANCH
+
+    if [ -n "$BRANCH_CREATED" ]; then
+        git branch -D $BACKPORT_BRANCH
+    fi
+
     exit 0
 fi
 
