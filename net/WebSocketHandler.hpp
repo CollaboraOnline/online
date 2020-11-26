@@ -574,6 +574,7 @@ protected:
             scratch[slen++] = static_cast<char>((len >> 0) & 0xff);
         }
 
+        assert(slen <= static_cast<int>(sizeof(scratch)));
         out.append(scratch, slen);
 
         if (_isMasking)
