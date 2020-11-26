@@ -145,7 +145,6 @@ L.Map.include({
 			this._docPreviews = {};
 		}
 		var autoUpdate = options ? !!options.autoUpdate : false;
-		var forAllClients = options ? !!options.broadcast : false;
 		var fetchThumbnail = options && options.fetchThumbnail ? options.fetchThumbnail : true;
 		this._docPreviews[id] = {id: id, index: index, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate, invalid: false};
 
@@ -171,9 +170,6 @@ L.Map.include({
 		}
 
 		var dpiscale = L.getDpiScaleFactor();
-		if (forAllClients) {
-			dpiscale = 2; // some may be hidpi, and it is fine to send the hi-dpi slide preview to non-hpi clients
-		}
 
 		if (fetchThumbnail) {
 			this._addPreviewToQueue(part, 'tile ' +
