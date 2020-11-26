@@ -18,7 +18,6 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
-#include <Poco/Buffer.h>
 #include <Poco/String.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>

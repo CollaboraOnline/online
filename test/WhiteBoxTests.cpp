@@ -25,6 +25,7 @@
 
 #include <common/Authorization.hpp>
 #include <wsd/FileServer.hpp>
+#include <net/Buffer.hpp>
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
@@ -45,6 +46,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testJson);
     CPPUNIT_TEST(testAnonymization);
     CPPUNIT_TEST(testTime);
+    CPPUNIT_TEST(testBufferClass);
     CPPUNIT_TEST(testStringVector);
     CPPUNIT_TEST(testRequestDetails_DownloadURI);
     CPPUNIT_TEST(testRequestDetails_loleafletURI);
@@ -70,6 +72,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testJson();
     void testAnonymization();
     void testTime();
+    void testBufferClass();
     void testStringVector();
     void testRequestDetails_DownloadURI();
     void testRequestDetails_loleafletURI();
@@ -969,6 +972,88 @@ void WhiteBoxTests::testTime()
         // Allow a small delay to get a different timestamp on next iteration.
         sleep(0);
     }
+}
+
+void WhiteBoxTests::testBufferClass()
+{
+    Buffer buf;
+    CPPUNIT_ASSERT_EQUAL(0UL, buf.size());
+    CPPUNIT_ASSERT_EQUAL(true, buf.empty());
+    CPPUNIT_ASSERT(buf.getBlock() == nullptr);
+    buf.eraseFirst(buf.size());
+    CPPUNIT_ASSERT_EQUAL(0UL, buf.size());
+    CPPUNIT_ASSERT_EQUAL(true, buf.empty());
+
+    // Small data.
+    const char data[] = "abcdefghijklmnop";
+    buf.append(data, sizeof(data));
+
+    CPPUNIT_ASSERT_EQUAL(static_cast<std::size_t>(sizeof(data)), buf.size());
+    CPPUNIT_ASSERT_EQUAL(false, buf.empty());
+    CPPUNIT_ASSERT(buf.getBlock() != nullptr);
+    CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data, buf.size()));
+
+    // Erase one char at a time.
+    for (std::size_t i = buf.size(); i > 0; --i)
+    {
+        buf.eraseFirst(1);
+        CPPUNIT_ASSERT_EQUAL(i - 1, buf.size());
+        CPPUNIT_ASSERT_EQUAL(i == 1, buf.empty()); // Not empty until the last element.
+        CPPUNIT_ASSERT(buf.getBlock() != nullptr);
+        CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data + (sizeof(data) - i) + 1, buf.size()));
+    }
+
+    // Large data.
+    constexpr std::size_t BlockSize = 512 * 1024; // We add twice this.
+    constexpr std::size_t BlockCount = 10;
+    for (std::size_t i = 0; i < BlockCount; ++i)
+    {
+        const auto prevSize = buf.size();
+
+        const std::vector<char> dataLarge(2 * BlockSize, 'a' + i); // Block of a single char.
+        buf.append(dataLarge.data(), dataLarge.size());
+        CPPUNIT_ASSERT_EQUAL(prevSize + (2 * BlockSize), buf.size());
+
+        // Remove half.
+        buf.eraseFirst(BlockSize);
+        CPPUNIT_ASSERT_EQUAL(prevSize + BlockSize, buf.size());
+        CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock() + prevSize, dataLarge.data(), BlockSize));
+    }
+
+    CPPUNIT_ASSERT_EQUAL(BlockSize * BlockCount, buf.size());
+    CPPUNIT_ASSERT_EQUAL(false, buf.empty());
+
+    // Remove each block of data and test.
+    for (std::size_t i = BlockCount / 2; i < BlockCount; ++i) // We removed half above.
+    {
+        CPPUNIT_ASSERT_EQUAL(false, buf.empty());
+        CPPUNIT_ASSERT_EQUAL(BlockSize * 2 * (BlockCount - i), buf.size());
+
+        const std::vector<char> dataLarge(BlockSize * 2, 'a' + i); // Block of a single char.
+        CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), dataLarge.data(), BlockSize));
+
+        buf.eraseFirst(BlockSize * 2);
+    }
+
+    CPPUNIT_ASSERT_EQUAL(0UL, buf.size());
+    CPPUNIT_ASSERT_EQUAL(true, buf.empty());
+
+    // Very large data.
+    const std::vector<char> dataLarge(20 * BlockSize, 'x'); // Block of a single char.
+    buf.append(dataLarge.data(), dataLarge.size());
+    CPPUNIT_ASSERT_EQUAL(dataLarge.size(), buf.size());
+
+    buf.append(data, sizeof(data)); // Add small data.
+    CPPUNIT_ASSERT_EQUAL(dataLarge.size() + sizeof(data), buf.size());
+
+    buf.eraseFirst(dataLarge.size()); // Remove large data.
+    CPPUNIT_ASSERT_EQUAL(sizeof(data), buf.size());
+    CPPUNIT_ASSERT_EQUAL(false, buf.empty());
+    CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data, buf.size()));
+
+    buf.eraseFirst(buf.size()); // Remove all.
+    CPPUNIT_ASSERT_EQUAL(0UL, buf.size());
+    CPPUNIT_ASSERT_EQUAL(true, buf.empty());
 }
 
 void WhiteBoxTests::testStringVector()
