@@ -142,6 +142,21 @@ do-multi-check: @JAILS_PATH@ $(NODE_BINS)
 		$(call run_all_multiuser_tests))
 	@$(KILL_COMMAND) || true
 
+check-interfer-mobile: do-interfer-mobile-check-log
+	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
+
+do-interfer-mobile-check-log: do-interfer-mobile-check
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
+
+do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
+	@rm -f $(ERROR_LOG)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(if $(spec), \
+		$(call run_mobile_interference_test,$(spec)), \
+		$(call run_mobile_interference_tests))
+	@$(KILL_COMMAND) || true
+
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
@@ -369,6 +384,47 @@ define run_multiuser_test
 		--browser $(BROWSER) \
 		--config $(MULTIUSER_CONFIG) \
 		--env $(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)) \
+		--spec $(USER2_SPEC) \
+		--type multi-user \
+		--log-file $(USER2_LOG) && \
+	wait # waits the background process to be finished
+endef
+
+INTERFER_MOBILE_CONFIG1 = \
+	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
+
+INTERFER_MOBILE_ENV1 = \
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+
+INTERFER_MOBILE_CONFIG2 = \
+	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
+
+INTERFER_MOBILE_ENV2 = \
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+
+define run_mobile_interference_tests
+	$(foreach test,$(MOBILE_TEST_FILES),$(call run_mobile_interference_test,$(test)))
+endef
+
+define run_mobile_interference_test
+	$(eval USER1_SPEC=$(1))
+	$(eval USER2_SPEC=interference_user_spec.js)
+	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
+	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
+	@echo "Running cypress mobile interference test: $(1)"
+	@echo
+	@$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(INTERFER_MOBILE_CONFIG1) \
+		--env $(INTERFER_MOBILE_ENV1) \
+		--spec $(USER1_SPEC) \
+		--type mobile \
+		--log-file $(USER1_LOG) & \
+	sleep 5 && \
+	$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(INTERFER_MOBILE_CONFIG2) \
+		--env $(INTERFER_MOBILE_ENV2) \
 		--spec $(USER2_SPEC) \
 		--type multi-user \
 		--log-file $(USER2_LOG) && \
