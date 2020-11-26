@@ -63,10 +63,24 @@ L.Control.Tabs = L.Control.extend({
 			'.uno:Hide': {
 				name: _UNO('.uno:Hide', 'spreadsheet', true),
 				callback: (this._hideSheet).bind(this)
+			},
+			'movesheetleft': {
+				name: _('Move Sheet Left'),
+				callback: (this._moveSheetLeft).bind(this)
+			},
+			'movesheetright': {
+				name: _('Move Sheet Right'),
+				callback: (this._moveSheetRight).bind(this)
 			}
 		};
 
 		if (!window.mode.isMobile()) {
+
+			// no blacklisting available for this context menu so only add when needed
+			this._menuItem['.uno:Move'] = {
+				name: _UNO('.uno:Move', 'spreadsheet', true),
+				callback: function() {this._map.sendUnoCommand('.uno:Move');}.bind(this)
+			};
 			L.installContextMenu({
 				selector: '.spreadsheet-tab',
 				className: 'loleaflet-font',
@@ -127,16 +141,18 @@ L.Control.Tabs = L.Control.extend({
 					if (window.mode.isMobile()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {
-								return function() {
+								return function(e) {
 									this._tabForContextMenu = j;
+									this._setPart(e);
 									window.contextMenuWizard = true;
 									if (!this._map.isPermissionReadOnly()) this._map.fire('mobilewizard', menuData);
 								};
 							}(i).bind(this));
 					} else {
 						L.DomEvent.on(tab, 'contextmenu', function(j) {
-							return function() {
+							return function(e) {
 								this._tabForContextMenu = j;
+								this._setPart(e);
 							};
 						}(i).bind(this));
 					}
@@ -180,6 +196,24 @@ L.Control.Tabs = L.Control.extend({
 			this._map._docLayer._clearReferences();
 			this._map.setPart(parseInt(part), /*external:*/ false, /*calledFromSetPartHandler:*/ true);
 		}
+	},
+
+	//selected sheet is moved to new index
+	_moveSheet: function (newIndex) {
+		this._map.sendUnoCommand('.uno:Move?Copy:bool=false&UseCurrentDocument:bool=true&Index=' + newIndex);
+	},
+
+	_moveSheetLeft: function () {
+		var targetIndex = this._map._docLayer._partNames.indexOf(this._map._docLayer._partNames[this._map._docLayer._selectedPart]);
+		//core handles sheet with 1 base indexing
+		// 0 index means last sheet
+		if (targetIndex <= 0) return;
+		this._moveSheet(targetIndex);
+	},
+
+	_moveSheetRight: function () {
+		var targetIndex = this._map._docLayer._partNames.indexOf(this._map._docLayer._partNames[this._map._docLayer._selectedPart]) + 3;
+		this._moveSheet(targetIndex);
 	},
 
 	_insertSheetBefore: function() {
