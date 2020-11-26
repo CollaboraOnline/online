@@ -15,6 +15,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 	_overrideHandlers: function() {
 		this._controlHandlers['grid'] = this._gridHandler;
+		this._controlHandlers['frame'] = this._frameHandler;
 	},
 
 	_swapControls: function(controls, indexA, indexB) {
@@ -37,6 +38,18 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		}
 
 		return true;
+	},
+
+	_frameHandler: function(parentContainer, data, builder) {
+		if (data.children.length > 1) {
+			data.text = builder._cleanText(data.children[0].text);
+			var contentNode = data.children[1];
+			builder._explorableEntry(parentContainer, data, contentNode, builder);
+		} else {
+			return true;
+		}
+
+		return false;
 	},
 
 	build: function(parent, data) {
