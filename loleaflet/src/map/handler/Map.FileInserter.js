@@ -75,6 +75,10 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	_onChildIdMsg: function (e) {
+		// When childId is not created (usually when we insert file/URL very first time), we send message to get child ID
+		// and store the file(s) into respective arrays (look at _onInsertFile, _onInsertURL, _onSelectBackground)
+		// When we receive the childId we empty all the array and insert respective file/URL from here
+
 		this._childId = e.id;
 		for (var name in this._toInsert) {
 			this._sendFile(name, this._toInsert[name], 'graphic');
@@ -85,6 +89,11 @@ L.Map.FileInserter = L.Handler.extend({
 			this._sendURL(name, this._toInsertURL[name]);
 		}
 		this._toInsertURL = {};
+
+		for (name in this._toInsertBackground) {
+			this._sendFile(name, this._toInsertBackground[name], 'selectbackground');
+		}
+		this._toInsertBackground = {};
 	},
 
 	_sendFile: function (name, file, type) {
