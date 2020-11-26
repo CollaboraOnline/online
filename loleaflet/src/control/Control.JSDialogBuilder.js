@@ -1504,53 +1504,38 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_listboxControl: function(parentContainer, data, builder) {
-		// TODO: event listener in the next level...
-
 		if (!data.entries || data.entries.length === 0)
 			return false;
 
-		builder._setIconAndNameForCombobox(data);
-
-		if (data.id === 'FontBox')
-			data.text = '';
-
 		var title = data.text;
-		var valueNode = null;
 		var selectedEntryIsString = false;
 		if (data.selectedEntries) {
 			selectedEntryIsString = isNaN(parseInt(data.selectedEntries[0]));
 			if (title && title.length) {
-				var value = data.entries[data.selectedEntries[0]];
-				valueNode = L.DomUtil.create('div', '', null);
-				valueNode.innerHTML = value;
+				// pass
 			} else if (selectedEntryIsString)
 				title = builder._cleanText(data.selectedEntries[0]);
 			else
 				title = data.entries[data.selectedEntries[0]];
 		}
 		title = builder._cleanText(title);
-		data.text = title;
 
-		var entries = [];
+		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', parentContainer);
+
 		for (var index in data.entries) {
-			var style = 'ui-combobox-text';
+			var isSelected = false;
 			if ((data.selectedEntries && index == data.selectedEntries[0])
 				|| (data.selectedEntries && selectedEntryIsString && data.entries[index] === data.selectedEntries[0])
 				|| data.entries[index] == title) {
-				style += ' selected';
+				isSelected = true;
 			}
 
-			var entry = { type: 'comboboxentry', text: data.entries[index], pos: index, parent: data, style: style };
-			entries.push(entry);
+			var option = L.DomUtil.create('option', '', listbox);
+			option.value = index;
+			option.innerText = data.entries[index];
+			if (isSelected)
+				option.selected = 'true';
 		}
-
-		var contentNode = {type: 'container', children: entries};
-
-		var iconPath = null;
-		if (data.command)
-			iconPath = builder._createIconURL(data.command);
-
-		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath);
 
 		return false;
 	},
