@@ -653,11 +653,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_frameHandler: function(parentContainer, data, builder) {
 		if (data.children.length > 1) {
-			data.text = builder._cleanText(data.children[0].text);
-			var contentNode = data.children[1];
-			builder._explorableEntry(parentContainer, data, contentNode, builder);
-		} else {
-			return true;
+			var frame = L.DomUtil.create('div', 'ui-frame ' + builder.options.cssClass, parentContainer);
+			frame.id = data.id;
+			var label = L.DomUtil.create('span', 'ui-frame-label ' + builder.options.cssClass, frame);
+			label.innerText = builder._cleanText(data.children[0].text);
+
+			var frameChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, parentContainer);
+
+			var children = [];
+			for (var i = 1; i < data.children.length; i++) {
+				children.push(data.children[i]);
+			}
+
+			builder.build(frameChildren, children);
 		}
 
 		return false;
