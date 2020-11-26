@@ -225,6 +225,7 @@ var unoCommandsArray = {
 	MasterSlidesPanel:{presentation:{menu:_('Master Slides'),},},
 	MergeCells:{presentation:{menu:_('Merge Cells'),},spreadsheet:{menu:_('Merge Cells'),},text:{menu:_('Merge Cells'),},},
 	ModifyPage:{presentation:{menu:_('Slide ~Layout'),},},
+	Move:{spreadsheet:{menu:_('~Move or Copy Sheet...'),},},
 	MoveDown:{text:{menu:_('Move Down'),},},
 	MoveDownSubItems:{text:{menu:_('Move Down with Subpoints'),},},
 	MoveUp:{text:{menu:_('Move Up'),},},
