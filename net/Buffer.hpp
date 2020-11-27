@@ -35,7 +35,9 @@ public:
 
     const char *getBlock() const
     {
-        return &_buffer[_offset];
+        if (_size)
+            return &_buffer[_offset];
+        return nullptr;
     }
 
     std::size_t getBlockSize() const
@@ -45,6 +47,9 @@ public:
 
     void eraseFirst(std::size_t len)
     {
+        if (len <= 0)
+            return;
+
         assert(_offset + len <= _buffer.size());
         assert(_offset + _size == _buffer.size());
 
