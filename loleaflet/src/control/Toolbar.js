@@ -531,7 +531,7 @@ L.Map.include({
 			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition';
 		}
 		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://collaboraonline.github.io/';
-		content.find('#product-name').text(productName);
+		content.find('#product-name').text(productName).addClass('product-' + productName.split(/[ ()]+/).join('-').toLowerCase());
 		var productString = _('This version of %productName is powered by');
 		var productNameWithURL;
 		if (!window.ThisIsAMobileApp)
