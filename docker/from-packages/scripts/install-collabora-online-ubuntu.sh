@@ -36,7 +36,7 @@ else
     echo "deb https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/CODE-ubuntu1804 /" > /etc/apt/sources.list.d/collabora.list
 fi
 
-if [ "$repo" == "snapshot" ]; then
+if [ "$repo" == "repos-snapshot" ]; then
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E79CEF780135B53B
 else
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0C54D189F4BA284D
@@ -44,7 +44,7 @@ fi
 apt-get update
 
 # Install the Collabora packages
-if [ "$version" == "4.2" && "$type" != "code" ]; then
+if [ "$version" == "4.2" ] && [ "$type" != "code" ]; then
     corever=6.2
 else
     corever=6.4
