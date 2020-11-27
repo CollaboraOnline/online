@@ -999,8 +999,9 @@ void WhiteBoxTests::testBufferClass()
         buf.eraseFirst(1);
         CPPUNIT_ASSERT_EQUAL(i - 1, buf.size());
         CPPUNIT_ASSERT_EQUAL(i == 1, buf.empty()); // Not empty until the last element.
-        CPPUNIT_ASSERT(buf.getBlock() != nullptr);
-        CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data + (sizeof(data) - i) + 1, buf.size()));
+        CPPUNIT_ASSERT_EQUAL(buf.getBlock() != nullptr, !buf.empty());
+        if (!buf.empty())
+            CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data + (sizeof(data) - i) + 1, buf.size()));
     }
 
     // Large data.
