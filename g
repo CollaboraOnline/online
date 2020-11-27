@@ -92,18 +92,21 @@ if [ "$1" == "backport" ]; then
     CUSTOM_BRANCH=$4
 
     JSON=$(mktemp)
-    gh api graphql -f query='
+    gh api graphql --field owner=":owner" --field repo=":repo" -f query='
+query($owner: String!, $repo: String!)
 {
-  repository(owner: "CollaboraOnline", name:"online")
+  repository(owner: $owner, name: $repo)
   {
-    pullRequest(number: '$PRNUM'){
-        baseRefOid
-        headRefOid
+    pullRequest(number: '$PRNUM')
+    {
+     baseRefOid
+     headRefOid
     }
   }
 }' > $JSON
     BASE_COMMIT=$(cat $JSON | jq --raw-output ".data.repository.pullRequest.baseRefOid")
     HEAD_COMMIT=$(cat $JSON | jq --raw-output ".data.repository.pullRequest.headRefOid")
+    rm $JSON
     COMMIT_RANGE=$BASE_COMMIT..$HEAD_COMMIT
 
     # Create local branch if needed.
