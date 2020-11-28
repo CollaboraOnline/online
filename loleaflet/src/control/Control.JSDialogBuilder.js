@@ -2376,7 +2376,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder._spinfieldControl(content, rowsData, builder, callbackFunction);
 		builder._spinfieldControl(content, colsData, builder, callbackFunction);
 
-		var buttonData = { text: _('Insert table') };
+		var buttonData = { text: _('Insert Table') };
 		builder._pushbuttonControl(content, buttonData, builder, function() {
 			var rowsCount = parseInt($('#rows > input.spinfield').get(0).value);
 			var colsCount = parseInt($('#cols > input.spinfield').get(0).value);
