@@ -292,7 +292,7 @@ L.Control.TopToolbar = L.Control.extend({
 		case 'text':
 			if (toolbarUp)
 				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
+					'breakspacing', 'defaultbullet', 'defaultnumbering', 'incrementindent', 'decrementindent',
 					'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
 
 			break;
