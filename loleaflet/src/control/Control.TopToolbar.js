@@ -93,14 +93,13 @@ L.Control.TopToolbar = L.Control.extend({
 	getToolItems: function() {
 		return [
 			{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
-			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
-			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false},
-			{type: 'break', id: 'savebreak', mobile: false},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
+			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false},
+			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
+			{type: 'break', id: 'savebreak', mobile: false},
 			{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: 'FormatPaintbrush', mobile: false},
 			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes', mobile: false},
-			{type: 'break', mobile: false, tablet: false,},
 			{type: 'html', id: 'styles',
 				html: '<select class="styles-select"><option>' + _('Default Style') + '</option></select>',
 				onRefresh: function (edata) {
@@ -137,7 +136,6 @@ L.Control.TopToolbar = L.Control.extend({
 						}});
 					}
 				}, mobile: false},
-			{type: 'break', id: 'breakstyles', mobile: false, tablet: false },
 			{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false},
 			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
 			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
@@ -204,8 +202,6 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatDecDecimals', disabled: true},
 			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: 'NumberFormatIncDecimals', disabled: true},
 			{type: 'break',   id: 'break-number', hidden: true},
-			{type: 'button',  id: 'inserttextbox', img: 'text', hint: _UNO('.uno:Text', '', true), uno: 'Text?CreateDirectly:bool=true', hidden: true},
-			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true},
 			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: window.insertTable}, html: window.getInsertTablePopupHtml()},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true)},
 			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true,
@@ -215,9 +211,13 @@ L.Control.TopToolbar = L.Control.extend({
 				]},
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: window.insertShapes}, html: window.getShapesPopupHtml()},
+			{type: 'break', id: 'breakannotion'},
+			{type: 'button',  id: 'inserttextbox', img: 'text', hint: _UNO('.uno:Text', '', true), uno: 'Text?CreateDirectly:bool=true', hidden: true},
+			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true},
 			{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog', '', true), disabled: true},
 			{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: 'InsertSymbol'},
 			{type: 'spacer'},
+			{type: 'break', id: 'breaksidebar', hidden: true},
 			{type: 'button',  id: 'edit',  img: 'edit'},
 			{type: 'button',  id: 'sidebar', img: 'sidebar_modify_page', hint: _UNO('.uno:Sidebar', '', true), uno: '.uno:Sidebar', hidden: true},
 			{type: 'button',  id: 'modifypage', img: 'sidebar_modify_page', hint: _UNO('.uno:ModifyPage', 'presentation', true), uno: '.uno:ModifyPage', hidden: true},
@@ -315,7 +315,7 @@ L.Control.TopToolbar = L.Control.extend({
 			}
 
 			if (toolbarUp) {
-				toolbarUp.show('breaksidebar', 'modifypage');
+				toolbarUp.show('breaksidebar', 'breakbullet', 'modifypage');
 			}
 
 			// FALLTHROUGH intended
