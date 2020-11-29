@@ -509,25 +509,27 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
 
 void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix)
 {
-    struct dirent *currentFile;
-    struct stat fileStat;
-    DIR *workingdir;
+    LOG_DBG("Caching files in [" << basePath + path << ']');
 
-    workingdir = opendir((basePath + path).c_str());
-
+    DIR* workingdir = opendir((basePath + path).c_str());
     if (!workingdir)
+    {
+        LOG_SYS("Failed to open directory [" << basePath + path << ']');
         return;
+    }
 
     size_t fileCount = 0;
     std::string filesRead;
     filesRead.reserve(1024);
 
+    struct dirent *currentFile;
     while ((currentFile = readdir(workingdir)) != nullptr)
     {
         if (currentFile->d_name[0] == '.')
             continue;
 
         const std::string relPath = path + '/' + currentFile->d_name;
+        struct stat fileStat;
         stat ((basePath + relPath).c_str(), &fileStat);
 
         if (S_ISDIR(fileStat.st_mode))
