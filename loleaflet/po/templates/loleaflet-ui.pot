@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-16 07:23+0200\n"
+"POT-Creation-Date: 2020-11-29 19:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,7 +121,7 @@ msgstr ""
 msgid "Network Graph"
 msgstr ""
 
-#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:254
+#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:259
 #: src/layer/tile/TileLayer.js:423
 msgid "Save"
 msgstr ""
@@ -192,17 +192,17 @@ msgstr ""
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1194
-#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:200
-#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:614
+#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:199
+#: src/control/Control.Tabs.js:216 src/control/Toolbar.js:614
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1195
 #: src/control/Control.MobileTopBar.js:45
-#: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:201
-#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:615
-#: src/layer/marker/Annotation.js:184 src/layer/tile/TileLayer.js:424
+#: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:200
+#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:615
+#: src/layer/marker/Annotation.js:189 src/layer/tile/TileLayer.js:424
 msgid "Cancel"
 msgstr ""
 
@@ -286,11 +286,11 @@ msgstr ""
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:187
+#: src/control/Control.ContextMenu.js:189
 msgid "Delete"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:271
+#: src/control/Control.ContextMenu.js:273
 msgid "Paste Special"
 msgstr ""
 
@@ -428,8 +428,7 @@ msgid "Columns"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2179
-#: src/control/Control.TopToolbar.js:209
-msgid "Insert table"
+msgid "Insert Table"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2208
@@ -561,7 +560,7 @@ msgid "About"
 msgstr ""
 
 #: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:369
-#: src/control/Control.Menubar.js:486 src/map/Map.js:398
+#: src/control/Control.Menubar.js:486 src/map/Map.js:400
 msgid "Last modification"
 msgstr ""
 
@@ -741,23 +740,23 @@ msgstr ""
 msgid "Insert sheet after this"
 msgstr ""
 
-#: src/control/Control.Tabs.js:198
+#: src/control/Control.Tabs.js:197
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr ""
 
-#: src/control/Control.Tabs.js:215
+#: src/control/Control.Tabs.js:214
 msgid "Enter new sheet name"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:899
+#: src/control/Control.Toolbar.js:911
 msgid "Previous slide"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:900
+#: src/control/Control.Toolbar.js:912
 msgid "Next slide"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:954
+#: src/control/Control.Toolbar.js:966
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
@@ -774,6 +773,10 @@ msgstr ""
 msgid "More..."
 msgstr ""
 
+#: src/control/Control.TopToolbar.js:209
+msgid "Insert table"
+msgstr ""
+
 #: src/control/Control.TopToolbar.js:213
 #: src/control/Control.NotebookbarBuilder.js:319
 msgid "Insert Local Image"
@@ -783,11 +786,11 @@ msgstr ""
 msgid "Insert shapes"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:450
+#: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:473
+#: src/control/Control.TopToolbar.js:483
 msgid "Font"
 msgstr ""
 
@@ -979,7 +982,7 @@ msgstr ""
 msgid "Downloading..."
 msgstr ""
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1461
+#: src/control/Toolbar.js:104 src/map/Map.js:1466
 msgid "Saving..."
 msgstr ""
 
@@ -1068,49 +1071,49 @@ msgid ""
 "history"
 msgstr ""
 
-#: src/core/Socket.js:559
+#: src/core/Socket.js:560
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:563
+#: src/core/Socket.js:564
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:568
+#: src/core/Socket.js:569
 msgid "Overwrite"
 msgstr ""
 
-#: src/core/Socket.js:573
+#: src/core/Socket.js:574
 msgid "Save to new file"
 msgstr ""
 
-#: src/core/Socket.js:643
+#: src/core/Socket.js:644
 msgid "Document requires password to view."
 msgstr ""
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:647
 msgid "Document requires password to modify."
 msgstr ""
 
-#: src/core/Socket.js:648
+#: src/core/Socket.js:649
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Wrong password provided. Please try again."
 msgstr ""
 
-#: src/core/Socket.js:788 src/map/Map.js:1464
+#: src/core/Socket.js:796 src/map/Map.js:1469
 msgid "Loading..."
 msgstr ""
 
-#: src/core/Socket.js:788
+#: src/core/Socket.js:796
 msgid "Connecting..."
 msgstr ""
 
-#: src/core/Socket.js:1065
+#: src/core/Socket.js:1073
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1249,19 +1252,19 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/marker/Annotation.js:222
+#: src/layer/marker/Annotation.js:227
 msgid "Accept change"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:227
+#: src/layer/marker/Annotation.js:232
 msgid "Reject change"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:236
+#: src/layer/marker/Annotation.js:241
 msgid "Open menu"
 msgstr ""
 
-#: src/layer/marker/Annotation.js:257 src/layer/tile/TileLayer.js:245
+#: src/layer/marker/Annotation.js:262 src/layer/tile/TileLayer.js:245
 msgid "Reply"
 msgstr ""
 
@@ -1293,30 +1296,30 @@ msgstr ""
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:836
+#: src/layer/tile/TileLayer.js:850
 msgid "Functions"
 msgstr ""
 
-#: src/map/Clipboard.js:137
+#: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr ""
 
-#: src/map/Clipboard.js:289
+#: src/map/Clipboard.js:290
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:838
+#: src/map/Clipboard.js:852
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:840
+#: src/map/Clipboard.js:854
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
 
-#: src/map/Clipboard.js:861
+#: src/map/Clipboard.js:875
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1325,7 +1328,7 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:877
+#: src/map/Clipboard.js:891
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -1336,17 +1339,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr ""
 
-#: src/map/Map.js:433
+#: src/map/Map.js:435
 #, javascript-format
 msgid "%d seconds ago"
 msgstr ""
 
-#: src/map/Map.js:436
+#: src/map/Map.js:438
 #, javascript-format
 msgid "%d minutes ago"
 msgstr ""
 
-#: src/map/Map.js:1315
+#: src/map/Map.js:1320
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
@@ -1370,10 +1373,10 @@ msgstr ""
 msgid "Uploading file to server failed with status: %0"
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:111
+#: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:426
+#: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
 msgstr ""

@@ -1,17 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-11 10:07+0200\n"
+"POT-Creation-Date: 2020-11-29 19:45+0100\n"
 "PO-Revision-Date: 2020-05-15 08:14+0000\n"
 "Last-Translator: Muhammet Kara <kara@libreoffice.org>\n"
 "Language-Team: Turkish <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/tr/>\n"
-"Language: tr\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -125,8 +120,8 @@ msgstr "İşlemci Grafiği"
 msgid "Network Graph"
 msgstr "Ağ Grafiği"
 
-#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:254
-#: src/layer/tile/TileLayer.js:404
+#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:259
+#: src/layer/tile/TileLayer.js:423
 msgid "Save"
 msgstr "Kaydet"
 
@@ -195,18 +190,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Bu oturumu kapatmak istediğinizden emin misiniz?"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1197
-#: src/control/Control.PresentationBar.js:86 src/control/Control.Tabs.js:200
-#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:614
+#: src/control/Control.Menubar.js:1194
+#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:199
+#: src/control/Control.Tabs.js:216 src/control/Toolbar.js:614
 msgid "OK"
 msgstr "Tamam"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1198
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1195
 #: src/control/Control.MobileTopBar.js:45
-#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:201
-#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:615
-#: src/layer/marker/Annotation.js:184 src/layer/tile/TileLayer.js:405
+#: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:200
+#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:615
+#: src/layer/marker/Annotation.js:189 src/layer/tile/TileLayer.js:424
 msgid "Cancel"
 msgstr "İptal"
 
@@ -290,11 +285,11 @@ msgstr "Bağlantıyı aç"
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Sunucu %1 komutunu ayrıştırırken %0 hatasıyla karşılaştı."
 
-#: src/control/Control.ContextMenu.js:187
+#: src/control/Control.ContextMenu.js:189
 msgid "Delete"
 msgstr "Sil"
 
-#: src/control/Control.ContextMenu.js:271
+#: src/control/Control.ContextMenu.js:273
 msgid "Paste Special"
 msgstr "Özel Yapıştır"
 
@@ -310,7 +305,7 @@ msgstr "Tür"
 msgid "Index"
 msgstr "Dizin"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:276
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:292
 msgid "Comment"
 msgstr "Yorum"
 
@@ -350,101 +345,101 @@ msgstr "Çapraz kopyala/yapıştırı başlat"
 msgid "Function Wizard"
 msgstr "İşlev Sihirbazı"
 
-#: src/control/Control.JSDialogBuilder.js:282
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.JSDialogBuilder.js:284
+#: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "Hiçbiri"
 
-#: src/control/Control.JSDialogBuilder.js:285
+#: src/control/Control.JSDialogBuilder.js:287
 msgid "Solid"
 msgstr "Katı"
 
-#: src/control/Control.JSDialogBuilder.js:288
+#: src/control/Control.JSDialogBuilder.js:290
 msgid "Linear"
 msgstr "Doğrusal"
 
-#: src/control/Control.JSDialogBuilder.js:291
+#: src/control/Control.JSDialogBuilder.js:293
 msgid "Axial"
 msgstr "Eksenel"
 
-#: src/control/Control.JSDialogBuilder.js:294
+#: src/control/Control.JSDialogBuilder.js:296
 msgid "Radial"
 msgstr "Dairesel"
 
-#: src/control/Control.JSDialogBuilder.js:297
+#: src/control/Control.JSDialogBuilder.js:299
 msgid "Ellipsoid"
 msgstr "Eliptik"
 
-#: src/control/Control.JSDialogBuilder.js:301
+#: src/control/Control.JSDialogBuilder.js:303
 msgid "Quadratic"
 msgstr "Karesel"
 
-#: src/control/Control.JSDialogBuilder.js:304
+#: src/control/Control.JSDialogBuilder.js:306
 msgid "Square"
 msgstr "Kare"
 
-#: src/control/Control.JSDialogBuilder.js:307
+#: src/control/Control.JSDialogBuilder.js:309
 msgid "Fixed size"
 msgstr "Sabit boyut"
 
-#: src/control/Control.JSDialogBuilder.js:1193
+#: src/control/Control.JSDialogBuilder.js:1195
 msgid "From"
 msgstr "Başlangıç"
 
-#: src/control/Control.JSDialogBuilder.js:1196
+#: src/control/Control.JSDialogBuilder.js:1198
 msgid "To"
 msgstr "Bitiş"
 
-#: src/control/Control.JSDialogBuilder.js:1321
+#: src/control/Control.JSDialogBuilder.js:1323
 #, fuzzy
 msgid "Select range"
 msgstr "Değişikliği reddet"
 
-#: src/control/Control.JSDialogBuilder.js:1350
+#: src/control/Control.JSDialogBuilder.js:1352
 msgid "Font Name"
 msgstr "Yazıtipi Adı"
 
-#: src/control/Control.JSDialogBuilder.js:1352
+#: src/control/Control.JSDialogBuilder.js:1354
 msgid "Font Size"
 msgstr "Yazıtipi Boyutu"
 
-#: src/control/Control.JSDialogBuilder.js:1929
+#: src/control/Control.JSDialogBuilder.js:1935
 msgid "Cell borders"
 msgstr "Hücre kenarlıkları"
 
-#: src/control/Control.JSDialogBuilder.js:1968
+#: src/control/Control.JSDialogBuilder.js:1974
 msgid "Background Color"
 msgstr "Arkaplan Rengi"
 
-#: src/control/Control.JSDialogBuilder.js:1970
+#: src/control/Control.JSDialogBuilder.js:1976
 msgid "Gradient Start"
 msgstr "Gradyan Başlangıcı"
 
-#: src/control/Control.JSDialogBuilder.js:1972
+#: src/control/Control.JSDialogBuilder.js:1978
 msgid "Gradient End"
 msgstr "Gradyan Sonu"
 
-#: src/control/Control.JSDialogBuilder.js:2152
+#: src/control/Control.JSDialogBuilder.js:2158
 msgid "Rows"
 msgstr "Satırlar"
 
-#: src/control/Control.JSDialogBuilder.js:2153
+#: src/control/Control.JSDialogBuilder.js:2159
 msgid "Columns"
 msgstr "Sütunlar"
 
-#: src/control/Control.JSDialogBuilder.js:2173
-#: src/control/Control.TopToolbar.js:209
-msgid "Insert table"
+#: src/control/Control.JSDialogBuilder.js:2179
+#, fuzzy
+msgid "Insert Table"
 msgstr "Tablo ekle"
 
-#: src/control/Control.JSDialogBuilder.js:2202
+#: src/control/Control.JSDialogBuilder.js:2208
 msgid "Line style:"
 msgstr "Çizgi biçemi:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:230
 #: src/control/Control.Menubar.js:232 src/control/Control.Menubar.js:234
 #: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:476
-#: src/control/Control.StatusBar.js:497
+#: src/control/Control.StatusBar.js:498
 msgid "None (Do not check spelling)"
 msgstr "Hiçbiri (İmla denetimi yok)"
 
@@ -566,7 +561,7 @@ msgid "About"
 msgstr "Hakkında"
 
 #: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:369
-#: src/control/Control.Menubar.js:486 src/map/Map.js:398
+#: src/control/Control.Menubar.js:486 src/map/Map.js:400
 msgid "Last modification"
 msgstr "Son değişiklik"
 
@@ -612,15 +607,15 @@ msgstr "Ara"
 msgid "Page Setup"
 msgstr "Sayfa Düzeni"
 
-#: src/control/Control.Menubar.js:793 src/control/Control.StatusBar.js:496
+#: src/control/Control.Menubar.js:793 src/control/Control.StatusBar.js:497
 msgid "Reset to Default Language"
 msgstr "Varsayılan Dile Sıfırla"
 
-#: src/control/Control.Menubar.js:1113
+#: src/control/Control.Menubar.js:1110
 msgid "Insert Shape"
 msgstr "Şekil Ekle"
 
-#: src/control/Control.Menubar.js:1195
+#: src/control/Control.Menubar.js:1192
 msgid "Are you sure you want to delete this slide?"
 msgstr "Bu slaytı silmek istediğinizden emin misiniz?"
 
@@ -634,7 +629,7 @@ msgstr "Aramayı çubuğunu göster"
 msgid "Accept"
 msgstr "Kabul Et"
 
-#: src/control/Control.PresentationBar.js:84
+#: src/control/Control.PresentationBar.js:85
 msgid "Are you sure you want to delete this page?"
 msgstr "Bu sayfayı silmek istediğinizden emin misiniz?"
 
@@ -678,63 +673,63 @@ msgstr "Çalışma sayfası ekle"
 msgid "Cancel the search"
 msgstr "Aramayı iptal et"
 
-#: src/control/Control.StatusBar.js:295
+#: src/control/Control.StatusBar.js:296
 msgid "Number of Sheets"
 msgstr "Çalışma sayfası sayısı"
 
-#: src/control/Control.StatusBar.js:300
+#: src/control/Control.StatusBar.js:301
 msgid "Selected range of cells"
 msgstr "Seçilen hücrelerin aralığı"
 
-#: src/control/Control.StatusBar.js:305 src/control/Control.StatusBar.js:354
+#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:355
 msgid "Entering text mode"
 msgstr "Metin kipine geçiliyor"
 
-#: src/control/Control.StatusBar.js:314 src/control/Control.StatusBar.js:359
+#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:360
 msgid "Selection Mode"
 msgstr "Seçim Kipi"
 
-#: src/control/Control.StatusBar.js:319
+#: src/control/Control.StatusBar.js:320
 msgid "Choice of functions"
 msgstr "Fonksiyonların seçimi"
 
-#: src/control/Control.StatusBar.js:323
+#: src/control/Control.StatusBar.js:324
 msgid "Average"
 msgstr "Ortalama"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:325
 msgid "CountA"
 msgstr "SayımA"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:326
 msgid "Count"
 msgstr "Sayım"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:327
 msgid "Maximum"
 msgstr "En Büyük"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:328
 msgid "Minimum"
 msgstr "En Küçük"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:329
 msgid "Sum"
 msgstr "Toplam"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:330
 msgid "Selection count"
 msgstr "Seçim sayısı"
 
-#: src/control/Control.StatusBar.js:344
+#: src/control/Control.StatusBar.js:345
 msgid "Number of Pages"
 msgstr "Sayfa Sayısı"
 
-#: src/control/Control.StatusBar.js:349
+#: src/control/Control.StatusBar.js:350
 msgid "Word Counter"
 msgstr "Sözcük Sayacı"
 
-#: src/control/Control.StatusBar.js:376
+#: src/control/Control.StatusBar.js:377
 msgid "Number of Slides"
 msgstr "Slayt Sayısı"
 
@@ -746,23 +741,23 @@ msgstr "Altına sayfa ekle"
 msgid "Insert sheet after this"
 msgstr "Bundan sonra sayfa ekle"
 
-#: src/control/Control.Tabs.js:198
+#: src/control/Control.Tabs.js:197
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "%sheet% sayfasını silmek istediğinizden emin misiniz?"
 
-#: src/control/Control.Tabs.js:215
+#: src/control/Control.Tabs.js:214
 msgid "Enter new sheet name"
 msgstr "Yeni sayfa adını girin"
 
-#: src/control/Control.Toolbar.js:899
+#: src/control/Control.Toolbar.js:911
 msgid "Previous slide"
 msgstr "Önceki slayt"
 
-#: src/control/Control.Toolbar.js:900
+#: src/control/Control.Toolbar.js:912
 msgid "Next slide"
 msgstr "Sonraki slayt"
 
-#: src/control/Control.Toolbar.js:954
+#: src/control/Control.Toolbar.js:966
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "Birden fazla kullanıcının Geri Al/Yeniden Yap eylemi çakıştı. Bunu çözmek için belge kurtarmayı kullanın"
 
@@ -778,6 +773,10 @@ msgstr "Kenarlık"
 msgid "More..."
 msgstr "Daha Fazla..."
 
+#: src/control/Control.TopToolbar.js:209
+msgid "Insert table"
+msgstr "Tablo ekle"
+
 #: src/control/Control.TopToolbar.js:213
 #: src/control/Control.NotebookbarBuilder.js:319
 msgid "Insert Local Image"
@@ -787,11 +786,11 @@ msgstr "Yerel Resim Ekle"
 msgid "Insert shapes"
 msgstr "Şekil ekle"
 
-#: src/control/Control.TopToolbar.js:449
+#: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "Biçem"
 
-#: src/control/Control.TopToolbar.js:472
+#: src/control/Control.TopToolbar.js:483
 msgid "Font"
 msgstr "Yazı tipi"
 
@@ -985,7 +984,7 @@ msgstr "İmzalı fakat bütün dosyalar imzalı değil"
 msgid "Downloading..."
 msgstr "İndiriliyor..."
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1461
+#: src/control/Toolbar.js:104 src/map/Map.js:1466
 msgid "Saving..."
 msgstr "Kaydediyor..."
 
@@ -1065,47 +1064,47 @@ msgstr "Belge depolandığı yerde değişti. Yeni belge yükleniyor. Kendi sür
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
 msgstr "Eski sürümü yükleniyor. Kaydedilmemiş değişiklikler sürüm geçmişinde bulunabilir"
 
-#: src/core/Socket.js:559
+#: src/core/Socket.js:560
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
 msgstr "Belge kaydedildiği yerde değiştirildi. Kaydedilmemiş değişiklikleri ne yapmak istiyorsunuz?"
 
-#: src/core/Socket.js:563
+#: src/core/Socket.js:564
 msgid "Discard"
 msgstr "Kaydetme"
 
-#: src/core/Socket.js:568
+#: src/core/Socket.js:569
 msgid "Overwrite"
 msgstr "Üstüne yaz"
 
-#: src/core/Socket.js:573
+#: src/core/Socket.js:574
 msgid "Save to new file"
 msgstr "Yeni dosyaya kaydet"
 
-#: src/core/Socket.js:643
+#: src/core/Socket.js:644
 msgid "Document requires password to view."
 msgstr "Belgenin görüntülenebilmesi için bir parola gerekiyor."
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:647
 msgid "Document requires password to modify."
 msgstr "Belgenin düzenlenebilmesi için parola gerekiyor."
 
-#: src/core/Socket.js:648
+#: src/core/Socket.js:649
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Sadece görüntüleme kipinde açmak için İptal'e tıklayın."
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Wrong password provided. Please try again."
 msgstr "Hatalı parola. Lütfen tekrar deneyin."
 
-#: src/core/Socket.js:788 src/map/Map.js:1464
+#: src/core/Socket.js:796 src/map/Map.js:1469
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
-#: src/core/Socket.js:788
+#: src/core/Socket.js:796
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
 
-#: src/core/Socket.js:1065
+#: src/core/Socket.js:1073
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "Utanç verici ama belgenize bağlanamadık. Lütfen tekrar deneyin."
 
@@ -1211,59 +1210,75 @@ msgstr "Dosya sunucuya yükleme başarısız, dosya bulunamadı."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Doya sunucuya yükleme başarısız oldu, dosya çok büyük."
 
-#: src/layer/marker/Annotation.js:222
+#: src/layer/marker/Annotation.js:227
 msgid "Accept change"
 msgstr "Değişikliği kabul et"
 
-#: src/layer/marker/Annotation.js:227
+#: src/layer/marker/Annotation.js:232
 msgid "Reject change"
 msgstr "Değişikliği reddet"
 
-#: src/layer/marker/Annotation.js:236
+#: src/layer/marker/Annotation.js:241
 msgid "Open menu"
 msgstr "Menüyü aç"
 
-#: src/layer/marker/Annotation.js:257 src/layer/tile/TileLayer.js:243
+#: src/layer/marker/Annotation.js:262 src/layer/tile/TileLayer.js:245
 msgid "Reply"
 msgstr "Yanıtla"
 
-#: src/layer/tile/TileLayer.js:237
+#: src/layer/tile/TileLayer.js:239
 msgid "Modify"
 msgstr "Değiştir"
 
-#: src/layer/tile/TileLayer.js:249
+#: src/layer/tile/TileLayer.js:251
 msgid "Remove"
 msgstr "Sil"
 
-#: src/layer/tile/TileLayer.js:255
+#: src/layer/tile/TileLayer.js:257
+msgid "Remove Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
 msgstr "Çöz"
 
-#: src/layer/tile/TileLayer.js:817
+#: src/layer/tile/TileLayer.js:263
+msgid "Unresolve"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:269
+msgid "Unresolve Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:269
+msgid "Resolve Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:850
 msgid "Functions"
 msgstr "Fonksiyonlar"
 
-#: src/map/Clipboard.js:137
+#: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "% ProductName dışına yapıştırmak için lütfen önce 'indir' düğmesini tıklayın"
 
-#: src/map/Clipboard.js:289
+#: src/map/Clipboard.js:290
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Pano indirilemedi, lütfen tekrar kopyalayın"
 
-#: src/map/Clipboard.js:838
+#: src/map/Clipboard.js:852
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Lütfen ekran klavyesindeki kopyala/yapıştır düğmelerini kullanın.</p>"
 
-#: src/map/Clipboard.js:840
+#: src/map/Clipboard.js:854
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr "<p>Tarayıcınızın panoya erişimi oldukça sınırlı, bu yüzden şu klavye kısayollarını kullanın:<ul><li>Kopyalamak için: <b>Ctrl+C</b>.</li><li>Kesmek için:<b>Ctrl+X</b>.</li><li>Yapıştırmak için: <b>Ctrl+P</b>.</li></ul></p>"
 
-#: src/map/Clipboard.js:861
+#: src/map/Clipboard.js:875
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr "<p>Belgenizin daha büyük öğelerini diğer uygulamalarla paylaşmak istiyorsanız, bunları önce cihazınıza indirmeniz gerekir.  Bunu yapmak için aşağıdaki \"İndirmeyi başlat\" düğmesine basın ve tamamlandığında \"Panoya kopyalamayı onayla\" yı tıklayın.</p> <p>%productName içindeki belgeler arasında kopyalayıp yapıştırma yapıyorsanız, indirmenize gerek yoktur. </p>"
 
-#: src/map/Clipboard.js:877
+#: src/map/Clipboard.js:891
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
 msgstr "<p>Büyük bir kopya/yapıştır işlemi nedeniyle indirme işlemi zaten başladı.  Lütfen yeni bir indirme işlemine başlamadan önce mevcut indirmeyi bekleyin veya iptal edin</p>"
 
@@ -1271,17 +1286,17 @@ msgstr "<p>Büyük bir kopya/yapıştır işlemi nedeniyle indirme işlemi zaten
 msgid "Initializing..."
 msgstr "Başlatılıyor..."
 
-#: src/map/Map.js:433
+#: src/map/Map.js:435
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d saniye önce"
 
-#: src/map/Map.js:436
+#: src/map/Map.js:438
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d dakika önce"
 
-#: src/map/Map.js:1315
+#: src/map/Map.js:1320
 msgid "Inactive document - please click to resume editing"
 msgstr "Etkin olmayan belge - düzenlemeye devam etmek için lütfen tıklayın"
 
@@ -1303,51 +1318,10 @@ msgstr "Yükleniyor..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Sunucuya dosya yükleme başarısız oldu. Durum: %0"
 
-#: src/map/handler/Map.WOPI.js:111
+#: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
 msgstr "Şablondan yeni dosya oluşturuluyor ..."
 
-#: src/map/handler/Map.WOPI.js:426
+#: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
 msgstr "Kopya oluşturuluyor..."
-
-#~ msgid "Edit"
-#~ msgstr "Düzenle"
-
-#, fuzzy
-#~| msgid "Refresh"
-#~ msgid "Refresh Log"
-#~ msgstr "Tazele"
-
-#~ msgid "First sheet"
-#~ msgstr "İlk sayfa"
-
-#~ msgid "Previous sheet"
-#~ msgstr "Önceki sayfa"
-
-#~ msgid "Next sheet"
-#~ msgstr "Sonraki sayfa"
-
-#~ msgid "Last sheet"
-#~ msgstr "Son sayfa"
-
-#~ msgid "Color"
-#~ msgstr "Renk"
-
-#~ msgid "Gradient"
-#~ msgstr "Geçiş"
-
-#~ msgid "Hatching"
-#~ msgstr "Tarama"
-
-#~ msgid "Pattern"
-#~ msgstr "Kalıp"
-
-#~ msgid "Portrait"
-#~ msgstr "Dikey"
-
-#~ msgid "Landscape"
-#~ msgstr "Yatay"
-
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "Sayfa Yönünü Değiştir"

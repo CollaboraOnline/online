@@ -1,17 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-11 10:07+0200\n"
+"POT-Creation-Date: 2020-11-29 19:45+0100\n"
 "PO-Revision-Date: 2020-06-10 10:34+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/he/>\n"
-"Language: he\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -124,8 +119,8 @@ msgstr "תרשים מעבד"
 msgid "Network Graph"
 msgstr "תרשים רשת"
 
-#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:254
-#: src/layer/tile/TileLayer.js:404
+#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:259
+#: src/layer/tile/TileLayer.js:423
 msgid "Save"
 msgstr "שמירה"
 
@@ -194,18 +189,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "לסיים את הפעילות הנוכחית?"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1197
-#: src/control/Control.PresentationBar.js:86 src/control/Control.Tabs.js:200
-#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:614
+#: src/control/Control.Menubar.js:1194
+#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:199
+#: src/control/Control.Tabs.js:216 src/control/Toolbar.js:614
 msgid "OK"
 msgstr "אישור"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1198
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1195
 #: src/control/Control.MobileTopBar.js:45
-#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:201
-#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:615
-#: src/layer/marker/Annotation.js:184 src/layer/tile/TileLayer.js:405
+#: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:200
+#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:615
+#: src/layer/marker/Annotation.js:189 src/layer/tile/TileLayer.js:424
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -289,11 +284,11 @@ msgstr "פתיחת קישור"
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "השרת נתקל בשגיאת %0 בעת פענוח הפקודה %1."
 
-#: src/control/Control.ContextMenu.js:187
+#: src/control/Control.ContextMenu.js:189
 msgid "Delete"
 msgstr "מחיקה"
 
-#: src/control/Control.ContextMenu.js:271
+#: src/control/Control.ContextMenu.js:273
 msgid "Paste Special"
 msgstr "הדבקה מיוחדת"
 
@@ -309,7 +304,7 @@ msgstr "סוג"
 msgid "Index"
 msgstr "מפתח"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:276
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:292
 msgid "Comment"
 msgstr "הערה"
 
@@ -349,100 +344,100 @@ msgstr "התחלת העתקה/הדבקה צולבת"
 msgid "Function Wizard"
 msgstr "אשף הפונקציות"
 
-#: src/control/Control.JSDialogBuilder.js:282
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.JSDialogBuilder.js:284
+#: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "ללא"
 
-#: src/control/Control.JSDialogBuilder.js:285
+#: src/control/Control.JSDialogBuilder.js:287
 msgid "Solid"
 msgstr "אחיד"
 
-#: src/control/Control.JSDialogBuilder.js:288
+#: src/control/Control.JSDialogBuilder.js:290
 msgid "Linear"
 msgstr "קווי"
 
-#: src/control/Control.JSDialogBuilder.js:291
+#: src/control/Control.JSDialogBuilder.js:293
 msgid "Axial"
 msgstr "צירי"
 
-#: src/control/Control.JSDialogBuilder.js:294
+#: src/control/Control.JSDialogBuilder.js:296
 msgid "Radial"
 msgstr "מעגלי"
 
-#: src/control/Control.JSDialogBuilder.js:297
+#: src/control/Control.JSDialogBuilder.js:299
 msgid "Ellipsoid"
 msgstr "סגלגלי"
 
-#: src/control/Control.JSDialogBuilder.js:301
+#: src/control/Control.JSDialogBuilder.js:303
 msgid "Quadratic"
 msgstr "ריבועי"
 
-#: src/control/Control.JSDialogBuilder.js:304
+#: src/control/Control.JSDialogBuilder.js:306
 msgid "Square"
 msgstr "ריבוע"
 
-#: src/control/Control.JSDialogBuilder.js:307
+#: src/control/Control.JSDialogBuilder.js:309
 msgid "Fixed size"
 msgstr "גודל קבוע"
 
-#: src/control/Control.JSDialogBuilder.js:1193
+#: src/control/Control.JSDialogBuilder.js:1195
 msgid "From"
 msgstr "מ־"
 
-#: src/control/Control.JSDialogBuilder.js:1196
+#: src/control/Control.JSDialogBuilder.js:1198
 msgid "To"
 msgstr "עד"
 
-#: src/control/Control.JSDialogBuilder.js:1321
+#: src/control/Control.JSDialogBuilder.js:1323
 msgid "Select range"
 msgstr "בחירת טווח"
 
-#: src/control/Control.JSDialogBuilder.js:1350
+#: src/control/Control.JSDialogBuilder.js:1352
 msgid "Font Name"
 msgstr "שם הגופן"
 
-#: src/control/Control.JSDialogBuilder.js:1352
+#: src/control/Control.JSDialogBuilder.js:1354
 msgid "Font Size"
 msgstr "גודל הגופן"
 
-#: src/control/Control.JSDialogBuilder.js:1929
+#: src/control/Control.JSDialogBuilder.js:1935
 msgid "Cell borders"
 msgstr "גבולות התא"
 
-#: src/control/Control.JSDialogBuilder.js:1968
+#: src/control/Control.JSDialogBuilder.js:1974
 msgid "Background Color"
 msgstr "צבע הרקע"
 
-#: src/control/Control.JSDialogBuilder.js:1970
+#: src/control/Control.JSDialogBuilder.js:1976
 msgid "Gradient Start"
 msgstr "התחלת מדרג"
 
-#: src/control/Control.JSDialogBuilder.js:1972
+#: src/control/Control.JSDialogBuilder.js:1978
 msgid "Gradient End"
 msgstr "סוף מדרג"
 
-#: src/control/Control.JSDialogBuilder.js:2152
+#: src/control/Control.JSDialogBuilder.js:2158
 msgid "Rows"
 msgstr "שורות"
 
-#: src/control/Control.JSDialogBuilder.js:2153
+#: src/control/Control.JSDialogBuilder.js:2159
 msgid "Columns"
 msgstr "עמודות"
 
-#: src/control/Control.JSDialogBuilder.js:2173
-#: src/control/Control.TopToolbar.js:209
-msgid "Insert table"
+#: src/control/Control.JSDialogBuilder.js:2179
+#, fuzzy
+msgid "Insert Table"
 msgstr "הוספת טבלה"
 
-#: src/control/Control.JSDialogBuilder.js:2202
+#: src/control/Control.JSDialogBuilder.js:2208
 msgid "Line style:"
 msgstr "סגנון קו:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:230
 #: src/control/Control.Menubar.js:232 src/control/Control.Menubar.js:234
 #: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:476
-#: src/control/Control.StatusBar.js:497
+#: src/control/Control.StatusBar.js:498
 msgid "None (Do not check spelling)"
 msgstr "ללא (לא לבדוק איות)"
 
@@ -564,7 +559,7 @@ msgid "About"
 msgstr "על אודות"
 
 #: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:369
-#: src/control/Control.Menubar.js:486 src/map/Map.js:398
+#: src/control/Control.Menubar.js:486 src/map/Map.js:400
 msgid "Last modification"
 msgstr "שינוי אחרון"
 
@@ -611,15 +606,15 @@ msgstr "חיפוש"
 msgid "Page Setup"
 msgstr "הגדרת עמוד"
 
-#: src/control/Control.Menubar.js:793 src/control/Control.StatusBar.js:496
+#: src/control/Control.Menubar.js:793 src/control/Control.StatusBar.js:497
 msgid "Reset to Default Language"
 msgstr "איפוס לשפת בררת מחדל"
 
-#: src/control/Control.Menubar.js:1113
+#: src/control/Control.Menubar.js:1110
 msgid "Insert Shape"
 msgstr "הוספת צורה"
 
-#: src/control/Control.Menubar.js:1195
+#: src/control/Control.Menubar.js:1192
 msgid "Are you sure you want to delete this slide?"
 msgstr "למחוק את השקופית הזו?"
 
@@ -633,7 +628,7 @@ msgstr "הצגת סרגל החיפוש"
 msgid "Accept"
 msgstr "אישור"
 
-#: src/control/Control.PresentationBar.js:84
+#: src/control/Control.PresentationBar.js:85
 msgid "Are you sure you want to delete this page?"
 msgstr "למחוק עמוד זה?"
 
@@ -677,63 +672,63 @@ msgstr "הוספת גיליון"
 msgid "Cancel the search"
 msgstr "ביטול החיפוש"
 
-#: src/control/Control.StatusBar.js:295
+#: src/control/Control.StatusBar.js:296
 msgid "Number of Sheets"
 msgstr "מספר גליונות"
 
-#: src/control/Control.StatusBar.js:300
+#: src/control/Control.StatusBar.js:301
 msgid "Selected range of cells"
 msgstr "טווח נבחר של תאים"
 
-#: src/control/Control.StatusBar.js:305 src/control/Control.StatusBar.js:354
+#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:355
 msgid "Entering text mode"
 msgstr "כניסה למצב טקסט"
 
-#: src/control/Control.StatusBar.js:314 src/control/Control.StatusBar.js:359
+#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:360
 msgid "Selection Mode"
 msgstr "מצב בחירה"
 
-#: src/control/Control.StatusBar.js:319
+#: src/control/Control.StatusBar.js:320
 msgid "Choice of functions"
 msgstr "בחירת פונקציות"
 
-#: src/control/Control.StatusBar.js:323
+#: src/control/Control.StatusBar.js:324
 msgid "Average"
 msgstr "ממוצע"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:325
 msgid "CountA"
 msgstr "כמות (לא ריקים)"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:326
 msgid "Count"
 msgstr "כמות"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:327
 msgid "Maximum"
 msgstr "מרבי"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:328
 msgid "Minimum"
 msgstr "מזערי"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:329
 msgid "Sum"
 msgstr "סכום"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:330
 msgid "Selection count"
 msgstr "מונה בחירות"
 
-#: src/control/Control.StatusBar.js:344
+#: src/control/Control.StatusBar.js:345
 msgid "Number of Pages"
 msgstr "מספר עמודים"
 
-#: src/control/Control.StatusBar.js:349
+#: src/control/Control.StatusBar.js:350
 msgid "Word Counter"
 msgstr "מונה מילים"
 
-#: src/control/Control.StatusBar.js:376
+#: src/control/Control.StatusBar.js:377
 msgid "Number of Slides"
 msgstr "מספר שקופיות"
 
@@ -745,23 +740,23 @@ msgstr "להוסיף גיליון לפני הנוכחי"
 msgid "Insert sheet after this"
 msgstr "להוסיף גיליון אחרי הנוכחי"
 
-#: src/control/Control.Tabs.js:198
+#: src/control/Control.Tabs.js:197
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "למחוק את הגיליון %sheet% ?"
 
-#: src/control/Control.Tabs.js:215
+#: src/control/Control.Tabs.js:214
 msgid "Enter new sheet name"
 msgstr "נא להקליד שם חדש לגיליון"
 
-#: src/control/Control.Toolbar.js:899
+#: src/control/Control.Toolbar.js:911
 msgid "Previous slide"
 msgstr "השקופית הקודמת"
 
-#: src/control/Control.Toolbar.js:900
+#: src/control/Control.Toolbar.js:912
 msgid "Next slide"
 msgstr "השקופית הבאה"
 
-#: src/control/Control.Toolbar.js:954
+#: src/control/Control.Toolbar.js:966
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "סתירת ביטול/שחזור בין מספר משתמשים. נא להשתמש בתיקון מסמכים כדי לפתור זאת."
 
@@ -777,6 +772,10 @@ msgstr "גבולות"
 msgid "More..."
 msgstr "עוד…"
 
+#: src/control/Control.TopToolbar.js:209
+msgid "Insert table"
+msgstr "הוספת טבלה"
+
 #: src/control/Control.TopToolbar.js:213
 #: src/control/Control.NotebookbarBuilder.js:319
 msgid "Insert Local Image"
@@ -786,11 +785,11 @@ msgstr "הוספת תמונה מקומית"
 msgid "Insert shapes"
 msgstr "הוספת צורות"
 
-#: src/control/Control.TopToolbar.js:449
+#: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "סגנון"
 
-#: src/control/Control.TopToolbar.js:472
+#: src/control/Control.TopToolbar.js:483
 msgid "Font"
 msgstr "גופן"
 
@@ -983,7 +982,7 @@ msgstr "חתום אבל לא כל הקבצים חתומים"
 msgid "Downloading..."
 msgstr "בהורדה…"
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1461
+#: src/control/Toolbar.js:104 src/map/Map.js:1466
 msgid "Saving..."
 msgstr "מתבצעת שמירה…"
 
@@ -1063,47 +1062,47 @@ msgstr "המסמך השתנה באחסון. המסמך החדש נטען. הגר
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
 msgstr "מהדורה ישנה משוחזרת. שינויים שלא יישמרו יהיו זמינים בהיסטוריית הגרסאות"
 
-#: src/core/Socket.js:559
+#: src/core/Socket.js:560
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
 msgstr "המסמך נערך באחסון. מה ברצונך לעשות בנוגע לשינויים שלא שמרת?"
 
-#: src/core/Socket.js:563
+#: src/core/Socket.js:564
 msgid "Discard"
 msgstr "התעלמות"
 
-#: src/core/Socket.js:568
+#: src/core/Socket.js:569
 msgid "Overwrite"
 msgstr "דריסה"
 
-#: src/core/Socket.js:573
+#: src/core/Socket.js:574
 msgid "Save to new file"
 msgstr "שמירה לקובץ חדש"
 
-#: src/core/Socket.js:643
+#: src/core/Socket.js:644
 msgid "Document requires password to view."
 msgstr "נדרשת ססמה כדי לצפות במסמך."
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:647
 msgid "Document requires password to modify."
 msgstr "נדרשת ססמה כדי לערוך את המסמך."
 
-#: src/core/Socket.js:648
+#: src/core/Socket.js:649
 msgid "Hit Cancel to open in view-only mode."
 msgstr "יש ללחוץ על ביטול כדי לפתוח במצב צפייה בלבד."
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Wrong password provided. Please try again."
 msgstr "הססמה שסופקה שגויה. נא לנסות שוב."
 
-#: src/core/Socket.js:788 src/map/Map.js:1464
+#: src/core/Socket.js:796 src/map/Map.js:1469
 msgid "Loading..."
 msgstr "בטעינה…"
 
-#: src/core/Socket.js:788
+#: src/core/Socket.js:796
 msgid "Connecting..."
 msgstr "מתבצעת התחברות…"
 
-#: src/core/Socket.js:1065
+#: src/core/Socket.js:1073
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "ובכן, לא נעים, לא הצלחנו להתחבר למסמך שלך. נא לנסות שוב מאוחר יותר."
 
@@ -1209,59 +1208,75 @@ msgstr "העלאת הקובץ לשרת נכשלה, הקובץ לא נמצא."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "העלאת הקובץ לשרת נכשלה, הקובץ גדול מדי."
 
-#: src/layer/marker/Annotation.js:222
+#: src/layer/marker/Annotation.js:227
 msgid "Accept change"
 msgstr "קבלת השינוי"
 
-#: src/layer/marker/Annotation.js:227
+#: src/layer/marker/Annotation.js:232
 msgid "Reject change"
 msgstr "דחיית השינוי"
 
-#: src/layer/marker/Annotation.js:236
+#: src/layer/marker/Annotation.js:241
 msgid "Open menu"
 msgstr "פתיחת תפריט"
 
-#: src/layer/marker/Annotation.js:257 src/layer/tile/TileLayer.js:243
+#: src/layer/marker/Annotation.js:262 src/layer/tile/TileLayer.js:245
 msgid "Reply"
 msgstr "תגובה"
 
-#: src/layer/tile/TileLayer.js:237
+#: src/layer/tile/TileLayer.js:239
 msgid "Modify"
 msgstr "שינוי"
 
-#: src/layer/tile/TileLayer.js:249
+#: src/layer/tile/TileLayer.js:251
 msgid "Remove"
 msgstr "הסרה"
 
-#: src/layer/tile/TileLayer.js:255
+#: src/layer/tile/TileLayer.js:257
+msgid "Remove Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
 msgstr "פתרון"
 
-#: src/layer/tile/TileLayer.js:817
+#: src/layer/tile/TileLayer.js:263
+msgid "Unresolve"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:269
+msgid "Unresolve Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:269
+msgid "Resolve Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:850
 msgid "Functions"
 msgstr "פונקציות"
 
-#: src/map/Clipboard.js:137
+#: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "כדי להדביק מחוץ ל־%productName, יש ללחוץ על תחילה על כפתור ה־‚הורדה’"
 
-#: src/map/Clipboard.js:289
+#: src/map/Clipboard.js:290
 msgid "Failed to download clipboard, please re-copy"
 msgstr "הורדת לוח הגזירים נכשלה, נא להעתיק מחדש"
 
-#: src/map/Clipboard.js:838
+#: src/map/Clipboard.js:852
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>נא להשתמש בכפתורים להעתקה/הדבקה שבמקלדת הצפה על גבי המסך.</p>"
 
-#: src/map/Clipboard.js:840
+#: src/map/Clipboard.js:854
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr "<p>הגישה של הדפדפן שלך ללוח הגזירים היא מוגבלת מאוד, לכן מוטב להשתמש בקיצורי מקלדת אלו:<ul><li><b>Ctrl+C</b>: להעתקה.</li><li><b>Ctrl+X</b>: לגזירה.</li><li><b>Ctrl+V</b>: להדבקה.</li></ul></p>"
 
-#: src/map/Clipboard.js:861
+#: src/map/Clipboard.js:875
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr "<p>אם ברצונך לשתף רכיבים גדולים יותר מהמסמך שלך עם יישומים אחרים צריך להוריד אותם למכשיר שלך קודם. כדי לעשות זאת, יש ללחוץ על הכפתור „התחלת הורדה” שלהלן, לאחר סיום ההורדה יש ללחוץ על „אישור העתקה ללוח הגזירים”.</p><p>אם העתקת והדבקת בין מסמכים בתוך %productName, אין צורך להוריד.</p>"
 
-#: src/map/Clipboard.js:877
+#: src/map/Clipboard.js:891
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
 msgstr "<p>כבר החלה הורדה עקב פעילות העתקה/הדבקה גדולה. נא להמתין לסיום ההורדה הנוכחית או לבטל אותה בטרם התחלת הורדה חדשה</p>"
 
@@ -1269,17 +1284,17 @@ msgstr "<p>כבר החלה הורדה עקב פעילות העתקה/הדבקה 
 msgid "Initializing..."
 msgstr "באתחול…"
 
-#: src/map/Map.js:433
+#: src/map/Map.js:435
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "לפני %d שניות"
 
-#: src/map/Map.js:436
+#: src/map/Map.js:438
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "לפני %d דקות"
 
-#: src/map/Map.js:1315
+#: src/map/Map.js:1320
 msgid "Inactive document - please click to resume editing"
 msgstr "מסמך בלתי פעיל - יש ללחוץ כדי להמשיך בעריכה"
 
@@ -1301,72 +1316,10 @@ msgstr "בהעלאה…"
 msgid "Uploading file to server failed with status: %0"
 msgstr "העלאת הקובץ לשרת נכשלה עם מצב השגיאה: %0"
 
-#: src/map/handler/Map.WOPI.js:111
+#: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
 msgstr "נוצר קובץ חדש מתבנית…"
 
-#: src/map/handler/Map.WOPI.js:426
+#: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
 msgstr "נוצר עותק…"
-
-#~ msgid "Edit"
-#~ msgstr "עריכה"
-
-#~ msgid "Refresh Log"
-#~ msgstr "רענון היומן"
-
-#~ msgid "Set Log Levels"
-#~ msgstr "הגדרת רמות תיעוד היומן"
-
-#~ msgid "Log Levels"
-#~ msgstr "רמות תיעוד ביומן"
-
-#~ msgid "Update Log Levels"
-#~ msgstr "עדכון רמות תיעוד ביומן"
-
-#~ msgid "First sheet"
-#~ msgstr "הגיליון הראשון"
-
-#~ msgid "Previous sheet"
-#~ msgstr "הגיליון הקודם"
-
-#~ msgid "Next sheet"
-#~ msgstr "הגיליון הבא"
-
-#~ msgid "Last sheet"
-#~ msgstr "הגיליון האחרון"
-
-#~ msgid "Confirmation"
-#~ msgstr "אישור"
-
-#~ msgid "Color"
-#~ msgstr "צבע"
-
-#~ msgid "Gradient"
-#~ msgstr "מדרג"
-
-#~ msgid "Hatching"
-#~ msgstr "הצללה בקווים"
-
-#~ msgid "Pattern"
-#~ msgstr "תבנית"
-
-#~ msgid "Portrait"
-#~ msgstr "אנכי"
-
-#~ msgid "Landscape"
-#~ msgstr "אופקי"
-
-#, fuzzy
-#~| msgid "Text orientation"
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "כיווניות טקסט"
-
-#~ msgid "Save as PDF"
-#~ msgstr "שמירה כ־PDF"
-
-#~ msgid "<p>Your browser has very limited access to the clipboard</p>"
-#~ msgstr "<p>הגישה של הדפדפן שלך ללוח הגזירים היא מוגבלת מאוד</p>"
-
-#~ msgid "Master Slides"
-#~ msgstr "שקופיות ראשיות"

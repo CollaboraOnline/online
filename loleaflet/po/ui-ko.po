@@ -1,17 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-11 10:07+0200\n"
+"POT-Creation-Date: 2020-11-29 19:45+0100\n"
 "PO-Revision-Date: 2020-03-05 12:13+0000\n"
 "Last-Translator: DaeHyun Sung(성대현, 成大鉉) <sungdh86@gmail.com>\n"
 "Language-Team: Korean <https://weblate.documentfoundation.org/projects/libo_online/loleaflet-ui/ko/>\n"
-"Language: ko\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -125,8 +120,8 @@ msgstr "CPU 그래프"
 msgid "Network Graph"
 msgstr "네트워크 그래프"
 
-#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:254
-#: src/layer/tile/TileLayer.js:404
+#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:259
+#: src/layer/tile/TileLayer.js:423
 msgid "Save"
 msgstr "저장"
 
@@ -195,18 +190,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "이 세션을 정말 종료하겠습니까?"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1197
-#: src/control/Control.PresentationBar.js:86 src/control/Control.Tabs.js:200
-#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:614
+#: src/control/Control.Menubar.js:1194
+#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:199
+#: src/control/Control.Tabs.js:216 src/control/Toolbar.js:614
 msgid "OK"
 msgstr "확인"
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1198
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1195
 #: src/control/Control.MobileTopBar.js:45
-#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:201
-#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:615
-#: src/layer/marker/Annotation.js:184 src/layer/tile/TileLayer.js:405
+#: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:200
+#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:615
+#: src/layer/marker/Annotation.js:189 src/layer/tile/TileLayer.js:424
 msgid "Cancel"
 msgstr "취소"
 
@@ -290,11 +285,11 @@ msgstr "링크 열기"
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "서버에서 %1 명령을 구문 분석하는 동안 %0 오류가 발생했습니다."
 
-#: src/control/Control.ContextMenu.js:187
+#: src/control/Control.ContextMenu.js:189
 msgid "Delete"
 msgstr "삭제"
 
-#: src/control/Control.ContextMenu.js:271
+#: src/control/Control.ContextMenu.js:273
 msgid "Paste Special"
 msgstr "선택적으로 붙여넣기"
 
@@ -310,7 +305,7 @@ msgstr "유형"
 msgid "Index"
 msgstr "차례"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:276
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:292
 msgid "Comment"
 msgstr "추가 설명"
 
@@ -350,102 +345,102 @@ msgstr "교차 복사/붙여넣기 시작"
 msgid "Function Wizard"
 msgstr "함수 마법사"
 
-#: src/control/Control.JSDialogBuilder.js:282
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.JSDialogBuilder.js:284
+#: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "없음"
 
-#: src/control/Control.JSDialogBuilder.js:285
+#: src/control/Control.JSDialogBuilder.js:287
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:288
+#: src/control/Control.JSDialogBuilder.js:290
 msgid "Linear"
 msgstr "선"
 
-#: src/control/Control.JSDialogBuilder.js:291
+#: src/control/Control.JSDialogBuilder.js:293
 msgid "Axial"
 msgstr "축"
 
-#: src/control/Control.JSDialogBuilder.js:294
+#: src/control/Control.JSDialogBuilder.js:296
 msgid "Radial"
 msgstr "방사형"
 
-#: src/control/Control.JSDialogBuilder.js:297
+#: src/control/Control.JSDialogBuilder.js:299
 msgid "Ellipsoid"
 msgstr "타원체"
 
-#: src/control/Control.JSDialogBuilder.js:301
+#: src/control/Control.JSDialogBuilder.js:303
 msgid "Quadratic"
 msgstr "입방형"
 
-#: src/control/Control.JSDialogBuilder.js:304
+#: src/control/Control.JSDialogBuilder.js:306
 msgid "Square"
 msgstr "정방형"
 
-#: src/control/Control.JSDialogBuilder.js:307
+#: src/control/Control.JSDialogBuilder.js:309
 msgid "Fixed size"
 msgstr "고정 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1193
+#: src/control/Control.JSDialogBuilder.js:1195
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1196
+#: src/control/Control.JSDialogBuilder.js:1198
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1321
+#: src/control/Control.JSDialogBuilder.js:1323
 #, fuzzy
 msgid "Select range"
 msgstr "변경 사항 거부"
 
-#: src/control/Control.JSDialogBuilder.js:1350
+#: src/control/Control.JSDialogBuilder.js:1352
 msgid "Font Name"
 msgstr "글꼴 이름"
 
-#: src/control/Control.JSDialogBuilder.js:1352
+#: src/control/Control.JSDialogBuilder.js:1354
 msgid "Font Size"
 msgstr "글꼴 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1929
+#: src/control/Control.JSDialogBuilder.js:1935
 #, fuzzy
 msgid "Cell borders"
 msgstr "테두리"
 
-#: src/control/Control.JSDialogBuilder.js:1968
+#: src/control/Control.JSDialogBuilder.js:1974
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1970
+#: src/control/Control.JSDialogBuilder.js:1976
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1972
+#: src/control/Control.JSDialogBuilder.js:1978
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2152
+#: src/control/Control.JSDialogBuilder.js:2158
 msgid "Rows"
 msgstr "열"
 
-#: src/control/Control.JSDialogBuilder.js:2153
+#: src/control/Control.JSDialogBuilder.js:2159
 msgid "Columns"
 msgstr "행"
 
-#: src/control/Control.JSDialogBuilder.js:2173
-#: src/control/Control.TopToolbar.js:209
-msgid "Insert table"
+#: src/control/Control.JSDialogBuilder.js:2179
+#, fuzzy
+msgid "Insert Table"
 msgstr "표 삽입"
 
-#: src/control/Control.JSDialogBuilder.js:2202
+#: src/control/Control.JSDialogBuilder.js:2208
 msgid "Line style:"
 msgstr "줄 양식:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:230
 #: src/control/Control.Menubar.js:232 src/control/Control.Menubar.js:234
 #: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:476
-#: src/control/Control.StatusBar.js:497
+#: src/control/Control.StatusBar.js:498
 msgid "None (Do not check spelling)"
 msgstr "없음 (맞춤법 검사 안함)"
 
@@ -567,7 +562,7 @@ msgid "About"
 msgstr "정보"
 
 #: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:369
-#: src/control/Control.Menubar.js:486 src/map/Map.js:398
+#: src/control/Control.Menubar.js:486 src/map/Map.js:400
 msgid "Last modification"
 msgstr "마지막 수정"
 
@@ -614,16 +609,16 @@ msgstr "검색"
 msgid "Page Setup"
 msgstr "페이지 설정"
 
-#: src/control/Control.Menubar.js:793 src/control/Control.StatusBar.js:496
+#: src/control/Control.Menubar.js:793 src/control/Control.StatusBar.js:497
 msgid "Reset to Default Language"
 msgstr "기본 언어로 다시 설정"
 
-#: src/control/Control.Menubar.js:1113
+#: src/control/Control.Menubar.js:1110
 #, fuzzy
 msgid "Insert Shape"
 msgstr "도형 삽입"
 
-#: src/control/Control.Menubar.js:1195
+#: src/control/Control.Menubar.js:1192
 msgid "Are you sure you want to delete this slide?"
 msgstr "이 슬라이드를 정말 삭제하겠습니까?"
 
@@ -637,7 +632,7 @@ msgstr "검색바를 보기"
 msgid "Accept"
 msgstr "수락"
 
-#: src/control/Control.PresentationBar.js:84
+#: src/control/Control.PresentationBar.js:85
 msgid "Are you sure you want to delete this page?"
 msgstr "이 페이지를 정말 삭제하겠습니까?"
 
@@ -681,63 +676,63 @@ msgstr "시트 삽입"
 msgid "Cancel the search"
 msgstr "검색 취소"
 
-#: src/control/Control.StatusBar.js:295
+#: src/control/Control.StatusBar.js:296
 msgid "Number of Sheets"
 msgstr "시트 수"
 
-#: src/control/Control.StatusBar.js:300
+#: src/control/Control.StatusBar.js:301
 msgid "Selected range of cells"
 msgstr "선택한 셀 범위"
 
-#: src/control/Control.StatusBar.js:305 src/control/Control.StatusBar.js:354
+#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:355
 msgid "Entering text mode"
 msgstr "텍스트 모드로 들어가기"
 
-#: src/control/Control.StatusBar.js:314 src/control/Control.StatusBar.js:359
+#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:360
 msgid "Selection Mode"
 msgstr "선택 모드"
 
-#: src/control/Control.StatusBar.js:319
+#: src/control/Control.StatusBar.js:320
 msgid "Choice of functions"
 msgstr "함수 선택"
 
-#: src/control/Control.StatusBar.js:323
+#: src/control/Control.StatusBar.js:324
 msgid "Average"
 msgstr "평균"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:325
 msgid "CountA"
 msgstr "CountA"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:326
 msgid "Count"
 msgstr "수"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:327
 msgid "Maximum"
 msgstr "Maximum"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:328
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:329
 msgid "Sum"
 msgstr "합계"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:330
 msgid "Selection count"
 msgstr "선택 수"
 
-#: src/control/Control.StatusBar.js:344
+#: src/control/Control.StatusBar.js:345
 msgid "Number of Pages"
 msgstr "페이지 수"
 
-#: src/control/Control.StatusBar.js:349
+#: src/control/Control.StatusBar.js:350
 msgid "Word Counter"
 msgstr "단어 수"
 
-#: src/control/Control.StatusBar.js:376
+#: src/control/Control.StatusBar.js:377
 msgid "Number of Slides"
 msgstr "슬라이드 수"
 
@@ -749,23 +744,23 @@ msgstr "현재 시트 앞에 시트 삽입"
 msgid "Insert sheet after this"
 msgstr "현재 시트 뒤에 시트 삽입"
 
-#: src/control/Control.Tabs.js:198
+#: src/control/Control.Tabs.js:197
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "%sheet% 시트를 정말 삭제하겠습니까?"
 
-#: src/control/Control.Tabs.js:215
+#: src/control/Control.Tabs.js:214
 msgid "Enter new sheet name"
 msgstr "새 시트 이름을 입력하십시오"
 
-#: src/control/Control.Toolbar.js:899
+#: src/control/Control.Toolbar.js:911
 msgid "Previous slide"
 msgstr "이전 슬라이드"
 
-#: src/control/Control.Toolbar.js:900
+#: src/control/Control.Toolbar.js:912
 msgid "Next slide"
 msgstr "다음 슬라이드"
 
-#: src/control/Control.Toolbar.js:954
+#: src/control/Control.Toolbar.js:966
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "여러 사용자에 의한 실행 취소/다시 실행이 서로 충돌했습니다. 이 문제를 해결하려면 문서 복구를 사용하십시오."
 
@@ -781,7 +776,10 @@ msgstr "테두리"
 msgid "More..."
 msgstr "더보기..."
 
-# local 로컬
+#: src/control/Control.TopToolbar.js:209
+msgid "Insert table"
+msgstr "표 삽입"
+
 #: src/control/Control.TopToolbar.js:213
 #: src/control/Control.NotebookbarBuilder.js:319
 msgid "Insert Local Image"
@@ -791,11 +789,11 @@ msgstr "로컬 이미지 삽입"
 msgid "Insert shapes"
 msgstr "도형 삽입"
 
-#: src/control/Control.TopToolbar.js:449
+#: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "스타일"
 
-#: src/control/Control.TopToolbar.js:472
+#: src/control/Control.TopToolbar.js:483
 msgid "Font"
 msgstr "글꼴"
 
@@ -990,7 +988,7 @@ msgstr "서명되었으나, 모든 파일이 서명되지 않았습니다"
 msgid "Downloading..."
 msgstr "내려 받는 중..."
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1461
+#: src/control/Toolbar.js:104 src/map/Map.js:1466
 msgid "Saving..."
 msgstr "저장 중..."
 
@@ -1070,47 +1068,47 @@ msgstr "저장소의 문서가 변경되었습니다. 새 문서를 불러 옵�
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
 msgstr "이전 버전으로 복구합니다. 저장되지 않은 변경 사항은 개정 내역에서 확인할 수 있습니다."
 
-#: src/core/Socket.js:559
+#: src/core/Socket.js:560
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
 msgstr "저장소에 있는 문서가 변경되었습니다. 변경 사항을 어떻게 처리하겠습니까?"
 
-#: src/core/Socket.js:563
+#: src/core/Socket.js:564
 msgid "Discard"
 msgstr "버리기"
 
-#: src/core/Socket.js:568
+#: src/core/Socket.js:569
 msgid "Overwrite"
 msgstr "덮어쓰기"
 
-#: src/core/Socket.js:573
+#: src/core/Socket.js:574
 msgid "Save to new file"
 msgstr "새 파일로 저장"
 
-#: src/core/Socket.js:643
+#: src/core/Socket.js:644
 msgid "Document requires password to view."
 msgstr "문서를 보려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:647
 msgid "Document requires password to modify."
 msgstr "문서를 수정하려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:648
+#: src/core/Socket.js:649
 msgid "Hit Cancel to open in view-only mode."
 msgstr "보기 전용 모드로 열려면 [취소]를 클릭하십시오."
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Wrong password provided. Please try again."
 msgstr "암호가 틀렸습니다. 다시 시도하십시오"
 
-#: src/core/Socket.js:788 src/map/Map.js:1464
+#: src/core/Socket.js:796 src/map/Map.js:1469
 msgid "Loading..."
 msgstr "불러오는 중..."
 
-#: src/core/Socket.js:788
+#: src/core/Socket.js:796
 msgid "Connecting..."
 msgstr "연결하는 중.."
 
-#: src/core/Socket.js:1065
+#: src/core/Socket.js:1073
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "문서에 연결할 수 없습니다. 다시 시도하십시오."
 
@@ -1216,59 +1214,75 @@ msgstr "서버로 파일 업로드가 실패하였습니다. 파일을 찾을 �
 msgid "Uploading file to server failed, the file is too large."
 msgstr "서버로 파일 업로드가 실패하였습니다. 파일이 너무 큽니다."
 
-#: src/layer/marker/Annotation.js:222
+#: src/layer/marker/Annotation.js:227
 msgid "Accept change"
 msgstr "변경 사항 적용"
 
-#: src/layer/marker/Annotation.js:227
+#: src/layer/marker/Annotation.js:232
 msgid "Reject change"
 msgstr "변경 사항 거부"
 
-#: src/layer/marker/Annotation.js:236
+#: src/layer/marker/Annotation.js:241
 msgid "Open menu"
 msgstr "메뉴 열기"
 
-#: src/layer/marker/Annotation.js:257 src/layer/tile/TileLayer.js:243
+#: src/layer/marker/Annotation.js:262 src/layer/tile/TileLayer.js:245
 msgid "Reply"
 msgstr "답변"
 
-#: src/layer/tile/TileLayer.js:237
+#: src/layer/tile/TileLayer.js:239
 msgid "Modify"
 msgstr "수정"
 
-#: src/layer/tile/TileLayer.js:249
+#: src/layer/tile/TileLayer.js:251
 msgid "Remove"
 msgstr "제거하기"
 
-#: src/layer/tile/TileLayer.js:255
+#: src/layer/tile/TileLayer.js:257
+msgid "Remove Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
 msgstr "해결"
 
-#: src/layer/tile/TileLayer.js:817
+#: src/layer/tile/TileLayer.js:263
+msgid "Unresolve"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:269
+msgid "Unresolve Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:269
+msgid "Resolve Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:850
 msgid "Functions"
 msgstr "함수"
 
-#: src/map/Clipboard.js:137
+#: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "%productName 밖으로 붙이려면, '다운로드' 버큰을 먼저 클릭하세요"
 
-#: src/map/Clipboard.js:289
+#: src/map/Clipboard.js:290
 msgid "Failed to download clipboard, please re-copy"
 msgstr "클립보드 다운로드 실패하였습니다, 다시 복사하세요"
 
-#: src/map/Clipboard.js:838
+#: src/map/Clipboard.js:852
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>화면 키보드의 복사/붙여넣기 버튼을 사용하세요.</p>"
 
-#: src/map/Clipboard.js:840
+#: src/map/Clipboard.js:854
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr "<p>브라우저가 클립보드 접근에 제한이 있으므로, 다음의 키보드 단축키를 이용하세요:<ul><li><b>Ctrl+C</b>: 복사.</li><li><b>Ctrl+X</b>: 잘라내기.</li><li><b>Ctrl+V</b>: 붙여넣기.</li></ul></p>"
 
-#: src/map/Clipboard.js:861
+#: src/map/Clipboard.js:875
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:877
+#: src/map/Clipboard.js:891
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
 msgstr "<p>대량의 복사/붙여넣기 작업에 따른 다운로드가 이미 시작되었습니다. 새 다운로드를 시작하기 전에 현재 다운로드를 기다리거나 취소하시기 바랍니다</p>"
 
@@ -1276,17 +1290,17 @@ msgstr "<p>대량의 복사/붙여넣기 작업에 따른 다운로드가 이미
 msgid "Initializing..."
 msgstr "초기화하는 중..."
 
-#: src/map/Map.js:433
+#: src/map/Map.js:435
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d 초 전"
 
-#: src/map/Map.js:436
+#: src/map/Map.js:438
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d 분 전"
 
-#: src/map/Map.js:1315
+#: src/map/Map.js:1320
 msgid "Inactive document - please click to resume editing"
 msgstr "비활성화된 문서 - 편집을 계속하려면 클릭하십시오."
 
@@ -1308,51 +1322,10 @@ msgstr "업로드 중..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "서버로 파일 업로드가 실패되었음, 상태: %0"
 
-#: src/map/handler/Map.WOPI.js:111
+#: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
 msgstr "템플릿으로 새로운 파일 만들기..."
 
-#: src/map/handler/Map.WOPI.js:426
+#: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
 msgstr "복사본 만드는 중..."
-
-#~ msgid "Edit"
-#~ msgstr "수정"
-
-#, fuzzy
-#~| msgid "Refresh"
-#~ msgid "Refresh Log"
-#~ msgstr "새로 고침"
-
-#~ msgid "First sheet"
-#~ msgstr "첫번째 시트"
-
-#~ msgid "Previous sheet"
-#~ msgstr "이전 시트"
-
-#~ msgid "Next sheet"
-#~ msgstr "다음 시트"
-
-#~ msgid "Last sheet"
-#~ msgstr "마지막 시트"
-
-#~ msgid "Color"
-#~ msgstr "색"
-
-#, fuzzy
-#~ msgid "Hatching"
-#~ msgstr "음영선"
-
-#~ msgid "Pattern"
-#~ msgstr "양식"
-
-#~ msgid "Portrait"
-#~ msgstr "세로방향"
-
-#~ msgid "Landscape"
-#~ msgstr "가로방향"
-
-#, fuzzy
-#~| msgid "Text orientation"
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "텍스트 방향"

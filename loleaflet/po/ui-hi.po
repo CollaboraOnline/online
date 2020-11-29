@@ -1,13 +1,8 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-11 10:07+0200\n"
+"POT-Creation-Date: 2020-11-29 19:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,8 +118,8 @@ msgstr "सीपीयू ग्राफ"
 msgid "Network Graph"
 msgstr "नेटवर्क ग्राफ"
 
-#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:254
-#: src/layer/tile/TileLayer.js:404
+#: admin/admin.strings.js:32 src/layer/marker/Annotation.js:259
+#: src/layer/tile/TileLayer.js:423
 msgid "Save"
 msgstr "सहेजें"
 
@@ -193,18 +188,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "क्या आप निश्चित हैं कि आप इस सत्र को खत्म करना चाहते हैं?"
 
 #: admin/src/AdminSocketOverview.js:107 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1197
-#: src/control/Control.PresentationBar.js:86 src/control/Control.Tabs.js:200
-#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:614
+#: src/control/Control.Menubar.js:1194
+#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:199
+#: src/control/Control.Tabs.js:216 src/control/Toolbar.js:614
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:108 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1198
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1195
 #: src/control/Control.MobileTopBar.js:45
-#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:201
-#: src/control/Control.Tabs.js:218 src/control/Toolbar.js:615
-#: src/layer/marker/Annotation.js:184 src/layer/tile/TileLayer.js:405
+#: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:200
+#: src/control/Control.Tabs.js:217 src/control/Toolbar.js:615
+#: src/layer/marker/Annotation.js:189 src/layer/tile/TileLayer.js:424
 msgid "Cancel"
 msgstr "रद्द करें"
 
@@ -288,11 +283,11 @@ msgstr ""
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "सर्वर में %1 कमांड की व्याख्या के दौरान %0 दोष पाया गया।"
 
-#: src/control/Control.ContextMenu.js:187
+#: src/control/Control.ContextMenu.js:189
 msgid "Delete"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:271
+#: src/control/Control.ContextMenu.js:273
 msgid "Paste Special"
 msgstr ""
 
@@ -308,7 +303,7 @@ msgstr "क़िस्म"
 msgid "Index"
 msgstr "सूची"
 
-#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:276
+#: src/control/Control.DocumentRepair.js:48 src/layer/tile/TileLayer.js:292
 msgid "Comment"
 msgstr "विषयसूची"
 
@@ -349,103 +344,103 @@ msgstr ""
 msgid "Function Wizard"
 msgstr "प्रकार्य"
 
-#: src/control/Control.JSDialogBuilder.js:282
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.JSDialogBuilder.js:284
+#: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "कुछ नहीं"
 
-#: src/control/Control.JSDialogBuilder.js:285
+#: src/control/Control.JSDialogBuilder.js:287
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:288
+#: src/control/Control.JSDialogBuilder.js:290
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:291
+#: src/control/Control.JSDialogBuilder.js:293
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:294
+#: src/control/Control.JSDialogBuilder.js:296
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:297
+#: src/control/Control.JSDialogBuilder.js:299
 msgid "Ellipsoid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:301
+#: src/control/Control.JSDialogBuilder.js:303
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:304
+#: src/control/Control.JSDialogBuilder.js:306
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:307
+#: src/control/Control.JSDialogBuilder.js:309
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1193
+#: src/control/Control.JSDialogBuilder.js:1195
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1196
+#: src/control/Control.JSDialogBuilder.js:1198
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1321
+#: src/control/Control.JSDialogBuilder.js:1323
 #, fuzzy
 msgid "Select range"
 msgstr "बदलाव त्याग दें"
 
-#: src/control/Control.JSDialogBuilder.js:1350
+#: src/control/Control.JSDialogBuilder.js:1352
 #, fuzzy
 msgid "Font Name"
 msgstr "फ़ॉन्ट"
 
-#: src/control/Control.JSDialogBuilder.js:1352
+#: src/control/Control.JSDialogBuilder.js:1354
 #, fuzzy
 msgid "Font Size"
 msgstr "फ़ॉन्ट"
 
-#: src/control/Control.JSDialogBuilder.js:1929
+#: src/control/Control.JSDialogBuilder.js:1935
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1968
+#: src/control/Control.JSDialogBuilder.js:1974
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1970
+#: src/control/Control.JSDialogBuilder.js:1976
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1972
+#: src/control/Control.JSDialogBuilder.js:1978
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2152
+#: src/control/Control.JSDialogBuilder.js:2158
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2153
+#: src/control/Control.JSDialogBuilder.js:2159
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2173
-#: src/control/Control.TopToolbar.js:209
-msgid "Insert table"
+#: src/control/Control.JSDialogBuilder.js:2179
+#, fuzzy
+msgid "Insert Table"
 msgstr "तालिका डालें"
 
-#: src/control/Control.JSDialogBuilder.js:2202
+#: src/control/Control.JSDialogBuilder.js:2208
 msgid "Line style:"
 msgstr ""
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:230
 #: src/control/Control.Menubar.js:232 src/control/Control.Menubar.js:234
 #: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:476
-#: src/control/Control.StatusBar.js:497
+#: src/control/Control.StatusBar.js:498
 msgid "None (Do not check spelling)"
 msgstr "कोई नहीं (हिज्जे नहीं जाँचें)"
 
@@ -567,7 +562,7 @@ msgid "About"
 msgstr "परिचय"
 
 #: src/control/Control.Menubar.js:248 src/control/Control.Menubar.js:369
-#: src/control/Control.Menubar.js:486 src/map/Map.js:398
+#: src/control/Control.Menubar.js:486 src/map/Map.js:400
 msgid "Last modification"
 msgstr ""
 
@@ -615,16 +610,16 @@ msgstr "खोजें:"
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:793 src/control/Control.StatusBar.js:496
+#: src/control/Control.Menubar.js:793 src/control/Control.StatusBar.js:497
 msgid "Reset to Default Language"
 msgstr "तयशुदा भाषा में फिर सेट करें"
 
-#: src/control/Control.Menubar.js:1113
+#: src/control/Control.Menubar.js:1110
 #, fuzzy
 msgid "Insert Shape"
 msgstr "पन्ना डालें"
 
-#: src/control/Control.Menubar.js:1195
+#: src/control/Control.Menubar.js:1192
 msgid "Are you sure you want to delete this slide?"
 msgstr "क्या आप निश्चित हैं कि आप इस पृष्ठ को मिटाना चाहते हैं?"
 
@@ -639,7 +634,7 @@ msgstr "खोज रद्द करें"
 msgid "Accept"
 msgstr "स्वीकारें"
 
-#: src/control/Control.PresentationBar.js:84
+#: src/control/Control.PresentationBar.js:85
 msgid "Are you sure you want to delete this page?"
 msgstr "क्या आप निश्चित हैं कि आप इस पृष्ठ को मिटाना चाहते हैं?"
 
@@ -685,63 +680,63 @@ msgstr "पन्ना डालें"
 msgid "Cancel the search"
 msgstr "खोज रद्द करें"
 
-#: src/control/Control.StatusBar.js:295
+#: src/control/Control.StatusBar.js:296
 msgid "Number of Sheets"
 msgstr "शीटों की संख्या"
 
-#: src/control/Control.StatusBar.js:300
+#: src/control/Control.StatusBar.js:301
 msgid "Selected range of cells"
 msgstr "खानों का चुना हुआ दायरा"
 
-#: src/control/Control.StatusBar.js:305 src/control/Control.StatusBar.js:354
+#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:355
 msgid "Entering text mode"
 msgstr "पाठ मोड में शामिल हो रहें हैं"
 
-#: src/control/Control.StatusBar.js:314 src/control/Control.StatusBar.js:359
+#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:360
 msgid "Selection Mode"
 msgstr "चयन मोड"
 
-#: src/control/Control.StatusBar.js:319
+#: src/control/Control.StatusBar.js:320
 msgid "Choice of functions"
 msgstr "कार्यों का विकल्प"
 
-#: src/control/Control.StatusBar.js:323
+#: src/control/Control.StatusBar.js:324
 msgid "Average"
 msgstr "औसत"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:325
 msgid "CountA"
 msgstr "गिनती अ"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:326
 msgid "Count"
 msgstr "गणना"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:327
 msgid "Maximum"
 msgstr "अधिकतम"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:328
 msgid "Minimum"
 msgstr "न्यूनतम"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:329
 msgid "Sum"
 msgstr "जोड़"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:330
 msgid "Selection count"
 msgstr "चुनाव गणना"
 
-#: src/control/Control.StatusBar.js:344
+#: src/control/Control.StatusBar.js:345
 msgid "Number of Pages"
 msgstr "पृष्ठो की संख्या"
 
-#: src/control/Control.StatusBar.js:349
+#: src/control/Control.StatusBar.js:350
 msgid "Word Counter"
 msgstr "शब्द काउंटर"
 
-#: src/control/Control.StatusBar.js:376
+#: src/control/Control.StatusBar.js:377
 msgid "Number of Slides"
 msgstr "स्लाइड संख्या"
 
@@ -753,23 +748,23 @@ msgstr "पृष्ठ को इससे पहले डालें"
 msgid "Insert sheet after this"
 msgstr "पृष्ठ को इसके बाद डालें"
 
-#: src/control/Control.Tabs.js:198
+#: src/control/Control.Tabs.js:197
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "क्या आप निश्चित हैं कि आप इस पृष्ठ, %sheet%, को मिटाना चाहते हैं?"
 
-#: src/control/Control.Tabs.js:215
+#: src/control/Control.Tabs.js:214
 msgid "Enter new sheet name"
 msgstr "नये पृष्ठ का नाम डालें"
 
-#: src/control/Control.Toolbar.js:899
+#: src/control/Control.Toolbar.js:911
 msgid "Previous slide"
 msgstr "पिछली स्लाइड"
 
-#: src/control/Control.Toolbar.js:900
+#: src/control/Control.Toolbar.js:912
 msgid "Next slide"
 msgstr "अगली स्लाइड"
 
-#: src/control/Control.Toolbar.js:954
+#: src/control/Control.Toolbar.js:966
 msgid "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "एकाधिक उपयोगकर्ता के कारण अंडु-रीडु टकराव पाया गया है। ठीक करने के लीये कृप्या दस्तावेज़ मरम्मत का उपयोग करें।"
 
@@ -785,6 +780,10 @@ msgstr ""
 msgid "More..."
 msgstr ""
 
+#: src/control/Control.TopToolbar.js:209
+msgid "Insert table"
+msgstr "तालिका डालें"
+
 #: src/control/Control.TopToolbar.js:213
 #: src/control/Control.NotebookbarBuilder.js:319
 msgid "Insert Local Image"
@@ -795,11 +794,11 @@ msgstr ""
 msgid "Insert shapes"
 msgstr "पन्ना डालें"
 
-#: src/control/Control.TopToolbar.js:449
+#: src/control/Control.TopToolbar.js:460
 msgid "Style"
 msgstr "शैली"
 
-#: src/control/Control.TopToolbar.js:472
+#: src/control/Control.TopToolbar.js:483
 msgid "Font"
 msgstr "फ़ॉन्ट"
 
@@ -994,7 +993,7 @@ msgstr ""
 msgid "Downloading..."
 msgstr "डाउनलोड कीया जा रहा है"
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1461
+#: src/control/Toolbar.js:104 src/map/Map.js:1466
 msgid "Saving..."
 msgstr "सहेजा जा रहा है..."
 
@@ -1074,47 +1073,47 @@ msgstr "दस्तावेज़ भंडारण में बदल ग�
 msgid "Restoring older revision. Any unsaved changes will be available in version history"
 msgstr "पुराना संशोधन खोला जा रहा है। कोइ भी ना सहेजा हुआ बदलाव संस्करण इतिहास मे उपलब्ध रहेगा।"
 
-#: src/core/Socket.js:559
+#: src/core/Socket.js:560
 msgid "Document has been changed in storage. What would you like to do with your unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:563
+#: src/core/Socket.js:564
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:568
+#: src/core/Socket.js:569
 msgid "Overwrite"
 msgstr ""
 
-#: src/core/Socket.js:573
+#: src/core/Socket.js:574
 msgid "Save to new file"
 msgstr ""
 
-#: src/core/Socket.js:643
+#: src/core/Socket.js:644
 msgid "Document requires password to view."
 msgstr "दस्तावेज़ को खोलने के लिये कूटशब्द चाहिये।"
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:647
 msgid "Document requires password to modify."
 msgstr "दस्तावेज़ को बदलने के लिये कूटशब्द चाहिये।"
 
-#: src/core/Socket.js:648
+#: src/core/Socket.js:649
 msgid "Hit Cancel to open in view-only mode."
 msgstr "केवल देकनें के लिये रद्द दबायें"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Wrong password provided. Please try again."
 msgstr "गलत कूटशब्द दिया गया है। कृप्या फिर प्रयास करें।"
 
-#: src/core/Socket.js:788 src/map/Map.js:1464
+#: src/core/Socket.js:796 src/map/Map.js:1469
 msgid "Loading..."
 msgstr "लोड कर रहा है..."
 
-#: src/core/Socket.js:788
+#: src/core/Socket.js:796
 msgid "Connecting..."
 msgstr "सर्वर से संपर्क हो रहा हैं ..."
 
-#: src/core/Socket.js:1065
+#: src/core/Socket.js:1073
 msgid "Well, this is embarrassing, we cannot connect to your document. Please try again."
 msgstr "बड़े ही दुःख की बात है की हम आपके दस्तवेज को नहीं खोल पा रहे हैंI कृपया पुनः प्रयास करें "
 
@@ -1221,59 +1220,75 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/marker/Annotation.js:222
+#: src/layer/marker/Annotation.js:227
 msgid "Accept change"
 msgstr "बदलाम मंजूर करें"
 
-#: src/layer/marker/Annotation.js:227
+#: src/layer/marker/Annotation.js:232
 msgid "Reject change"
 msgstr "बदलाव त्याग दें"
 
-#: src/layer/marker/Annotation.js:236
+#: src/layer/marker/Annotation.js:241
 msgid "Open menu"
 msgstr "मेन्यू खोलें"
 
-#: src/layer/marker/Annotation.js:257 src/layer/tile/TileLayer.js:243
+#: src/layer/marker/Annotation.js:262 src/layer/tile/TileLayer.js:245
 msgid "Reply"
 msgstr "जवाब दें"
 
-#: src/layer/tile/TileLayer.js:237
+#: src/layer/tile/TileLayer.js:239
 msgid "Modify"
 msgstr "बदलें"
 
-#: src/layer/tile/TileLayer.js:249
+#: src/layer/tile/TileLayer.js:251
 msgid "Remove"
 msgstr "मिटाएँ"
 
-#: src/layer/tile/TileLayer.js:255
+#: src/layer/tile/TileLayer.js:257
+msgid "Remove Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:817
+#: src/layer/tile/TileLayer.js:263
+msgid "Unresolve"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:269
+msgid "Unresolve Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:269
+msgid "Resolve Thread"
+msgstr ""
+
+#: src/layer/tile/TileLayer.js:850
 msgid "Functions"
 msgstr "प्रकार्य"
 
-#: src/map/Clipboard.js:137
+#: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr ""
 
-#: src/map/Clipboard.js:289
+#: src/map/Clipboard.js:290
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:838
+#: src/map/Clipboard.js:852
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:840
+#: src/map/Clipboard.js:854
 msgid "<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 msgstr ""
 
-#: src/map/Clipboard.js:861
+#: src/map/Clipboard.js:875
 msgid "<p>If you would like to share larger elements of your document with other applications it is necessary to first download them onto your device. To do that press the \"Start download\" button below, and when complete click \"Confirm copy to clipboard\".</p><p>If you are copy and pasting between documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:877
+#: src/map/Clipboard.js:891
 msgid "<p>A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one</p>"
 msgstr ""
 
@@ -1281,17 +1296,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr "आरंभ हो रहा है..."
 
-#: src/map/Map.js:433
+#: src/map/Map.js:435
 #, javascript-format
 msgid "%d seconds ago"
 msgstr ""
 
-#: src/map/Map.js:436
+#: src/map/Map.js:438
 #, javascript-format
 msgid "%d minutes ago"
 msgstr ""
 
-#: src/map/Map.js:1315
+#: src/map/Map.js:1320
 msgid "Inactive document - please click to resume editing"
 msgstr "निष्क्रिय दस्तावेज़ - संपादन करने के लिये कृप्या क्लिक करें।"
 
@@ -1313,32 +1328,10 @@ msgstr "अपलोडिंग ..."
 msgid "Uploading file to server failed with status: %0"
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:111
+#: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
 msgstr ""
 
-#: src/map/handler/Map.WOPI.js:426
+#: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
 msgstr ""
-
-#, fuzzy
-#~| msgid "Refresh"
-#~ msgid "Refresh Log"
-#~ msgstr "ताजा करें"
-
-#~ msgid "First sheet"
-#~ msgstr "पहला पन्ना"
-
-#~ msgid "Previous sheet"
-#~ msgstr "पिछला पन्ना"
-
-#~ msgid "Next sheet"
-#~ msgstr "अगला पन्ना"
-
-#~ msgid "Last sheet"
-#~ msgstr "पुराना पन्ना"
-
-#, fuzzy
-#~| msgid "Text orientation"
-#~ msgid "Toggle Page Orientation"
-#~ msgstr "पाठ अभिमुखन"
