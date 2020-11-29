@@ -2468,17 +2468,11 @@ ConvertToBroker::~ConvertToBroker()
 
 void ConvertToBroker::removeFile(const std::string &uriOrig)
 {
-    if (!uriOrig.empty())
-    {
-        try {
-            // Remove source file and directory
-            Poco::Path path = uriOrig;
-            Poco::File(path).remove();
-            Poco::File(path.makeParent()).remove();
-        } catch (const std::exception &ex) {
-            LOG_ERR("Error while removing conversion temporary: '" << uriOrig << "' - " << ex.what());
-        }
-    }
+    // Remove and report errors on failure.
+    FileUtil::removeFile(uriOrig);
+    const std::string dir = Poco::Path(uriOrig).parent().toString();
+    if (FileUtil::isEmptyDirectory(dir))
+        FileUtil::removeFile(dir);
 }
 
 void ConvertToBroker::setLoaded()
