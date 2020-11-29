@@ -99,7 +99,8 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
 			{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: 'FormatPaintbrush', mobile: false},
-			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes', mobile: false},
+			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), hidden: true, uno: 'ResetAttributes', mobile: false},
+			{type: 'button',  id: 'resetimpress',  img: 'deleteformat', hint: _UNO('.uno:SetDefault', 'presentation', 'true'), hidden: true, uno:'SetDefault', mobile: false},
 			{type: 'break', mobile: false, tablet: false,},
 			{type: 'html', id: 'styles',
 				html: '<select class="styles-select"><option>' + _('Default Style') + '</option></select>',
@@ -284,10 +285,10 @@ L.Control.TopToolbar = L.Control.extend({
 		switch (docType) {
 		case 'spreadsheet':
 			if (toolbarUp) {
-				toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
-				'numberformatcurrency', 'numberformatpercent',
-				'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
-				'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
+				toolbarUp.show('reset', 'textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
+					'numberformatcurrency', 'numberformatpercent',
+					'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
+					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
 				toolbarUp.remove('styles');
 			}
 
@@ -301,9 +302,9 @@ L.Control.TopToolbar = L.Control.extend({
 			break;
 		case 'text':
 			if (toolbarUp)
-				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-				'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
-				'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
+				toolbarUp.show('reset', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
+					'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
 
 			break;
 		case 'presentation':
@@ -325,7 +326,7 @@ L.Control.TopToolbar = L.Control.extend({
 			}
 
 			if (toolbarUp) {
-				toolbarUp.show('breaksidebar', 'modifypage');
+				toolbarUp.show('resetimpress', 'breaksidebar', 'modifypage');
 			}
 
 			// FALLTHROUGH intended
