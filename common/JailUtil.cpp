@@ -332,6 +332,13 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
     LOG_INF("Updating systemplate dynamic files in [" << sysTemplate << "].");
     for (const auto& dynFilename : DynamicFilePaths)
     {
+        if (!FileUtil::Stat(dynFilename).exists())
+        {
+            LOG_INF("Dynamic file [" << dynFilename
+                                     << "] does not exist. Some functionality may be affected.");
+            continue;
+        }
+
         const std::string srcFilename = FileUtil::realpath(dynFilename);
         if (srcFilename != dynFilename)
         {
