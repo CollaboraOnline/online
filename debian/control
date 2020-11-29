@@ -9,7 +9,7 @@ Package: loolwsd
 Section: web
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- adduser, expat, fontconfig, cpio, libcap2-bin, openssh-client,
+ adduser, expat, fontconfig, cpio, libcap2-bin, openssh-client, systemd,
  collaboraofficebasis6.4-calc,
  collaboraofficebasis6.4-core,
  collaboraofficebasis6.4-graphicfilter,
