@@ -2482,7 +2482,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (twoPanelsAsChildren) {
 				handler = this._controlHandlers['paneltabs'];
-				processChildren = handler(childObject, childData.children, this);
 			} else {
 				if (handler)
 					processChildren = handler(childObject, childData, this);
