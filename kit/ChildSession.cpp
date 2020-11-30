@@ -538,11 +538,11 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const St
         Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
         Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 
-        std::unique_ptr<Poco::Net::HTTPClientSession> psession;
-        psession.reset(new Poco::Net::HTTPSClientSession(
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession
+            = Util::make_unique<Poco::Net::HTTPSClientSession>(
                         uriObject.getHost(),
                         uriObject.getPort(),
-                        Poco::Net::SSLManager::instance().defaultClientContext()));
+                        Poco::Net::SSLManager::instance().defaultClientContext());
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", WOPI_AGENT_STRING);
@@ -1918,11 +1918,11 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
         Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslClientParams);
         Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 
-        std::unique_ptr<Poco::Net::HTTPClientSession> psession;
-        psession.reset(new Poco::Net::HTTPSClientSession(
+        std::unique_ptr<Poco::Net::HTTPClientSession> psession
+            = Util::make_unique<Poco::Net::HTTPSClientSession>(
                         uriObject.getHost(),
                         uriObject.getPort(),
-                        Poco::Net::SSLManager::instance().defaultClientContext()));
+                        Poco::Net::SSLManager::instance().defaultClientContext());
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, uriObject.getPathAndQuery(), Poco::Net::HTTPMessage::HTTP_1_1);
         request.set("User-Agent", WOPI_AGENT_STRING);
