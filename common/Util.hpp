@@ -918,6 +918,9 @@ int main(int argc, char**argv)
     /// After this, 'anonymize(plain)' will return 'anonymized'.
     void mapAnonymized(const std::string& plain, const std::string& anonymized);
 
+    /// Clears the shared state of mapAnonymized() / anonymize().
+    void clearAnonymized();
+
     /// Anonymize the basename of filenames only, preserving the path and extension.
     std::string anonymizeUrl(const std::string& url, const std::uint64_t nAnonymizationSalt);
 
