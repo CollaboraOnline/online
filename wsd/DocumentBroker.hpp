@@ -358,7 +358,7 @@ private:
     };
 
     bool handleUploadToStorageResponse(const StorageUploadDetails& details,
-                                       const StorageBase::SaveResult& storageSaveResult);
+                                       const StorageBase::UploadResult& storageSaveResult);
 
     /**
      * Report back the save result to PostMessage users (Action_Save_Resp)
