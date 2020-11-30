@@ -31,6 +31,7 @@
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "ProxyProtocol.hpp"
+#include "Util.hpp"
 #include <common/Log.hpp>
 #include <common/Message.hpp>
 #include <common/Clipboard.hpp>
@@ -1098,19 +1099,47 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         return;
     }
 
-    LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
+    LOG_DBG("Uploading [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
-    assert(_storage && _tileCache);
-    const StorageBase::UploadResult uploadResult = _storage->uploadLocalFileToStorage(
+    _uploadRequest = Util::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, it->second,
+                                                      isSaveAs, isRename);
+    const StorageBase::AsyncUpload asyncUp = _storage->uploadLocalFileToStorageAsync(
         auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
 
-    const StorageUploadDetails details { uriAnonym, newFileModifiedTime, it->second, isSaveAs, isRename };
-    handleUploadToStorageResponse(details, uploadResult);
+    switch (asyncUp.state())
+    {
+        case StorageBase::AsyncUpload::State::Running:
+            LOG_DBG("Async upload of [" << _docKey << "] is in progress.");
+            return;
+
+        case StorageBase::AsyncUpload::State::Complete:
+        {
+            LOG_DBG("Successfully uploaded [" << _docKey << "], processing results.");
+            const StorageBase::UploadResult& uploadResult = asyncUp.result();
+            return handleUploadToStorageResponse(uploadResult);
+        }
+
+        case StorageBase::AsyncUpload::State::None: // Unexpected: fallback.
+        case StorageBase::AsyncUpload::State::Error:
+        default:
+            break;
+    }
+
+    LOG_ERR("Failed to upload [" << _docKey
+                                 << "] asynchronously, will fallback to synchronous uploading.");
+    const StorageBase::UploadResult& uploadResult = _storage->uploadLocalFileToStorage(
+        auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
+    handleUploadToStorageResponse(uploadResult);
 }
 
-void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& details,
-                                                   const StorageBase::UploadResult& uploadResult)
+void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult)
 {
+    if (!_uploadRequest)
+    {
+        // We shouldn't get here if there is no active upload request.
+        return;
+    }
+
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
     _storageManager.setLastUploadResult(
@@ -1125,29 +1154,29 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
             Admin::instance().setDocWopiUploadDuration(_docKey, std::chrono::duration_cast<std::chrono::milliseconds>(wopiStorage->getWopiSaveDuration()));
 #endif
 
-        if (!details.isSaveAs && !details.isRename)
+        if (!_uploadRequest->isSaveAs() && !_uploadRequest->isRename())
         {
             // Saved and stored; update flags.
-            _saveManager.setLastModifiedTime(details.newFileModifiedTime);
+            _saveManager.setLastModifiedTime(_uploadRequest->newFileModifiedTime());
             _storageManager.markLastSaveTime();
 
             // Save the storage timestamp.
             _storageManager.setLastModifiedTime(_storage->getFileInfo().getModifiedTime());
 
             // Set the timestamp of the file we uploaded, to detect changes.
-            _storageManager.setLastUploadedFileModifiedTime(details.newFileModifiedTime);
+            _storageManager.setLastUploadedFileModifiedTime(_uploadRequest->newFileModifiedTime());
 
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
 
-            LOG_DBG("Uploaded docKey [" << _docKey << "] to URI [" << details.uriAnonym
+            LOG_DBG("Uploaded docKey [" << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
                                         << "] and updated timestamps. Document modified timestamp: "
                                         << _storageManager.getLastModifiedTime());
 
             // Resume polling.
             _poll->wakeup();
         }
-        else if (details.isRename)
+        else if (_uploadRequest->isRename())
         {
             // encode the name
             const std::string& filename = uploadResult.getSaveAsName();
@@ -1172,7 +1201,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
             Poco::URI::encode(filename, "", encodedName);
             const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
 
-            const auto session = details.session.lock();
+            const auto session = _uploadRequest->session();
             if (session)
             {
                 LOG_DBG("Uploaded SaveAs docKey [" << _docKey << "] to URI ["
@@ -1204,7 +1233,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
     {
         LOG_WRN("Disk full while uploading docKey ["
-                << _docKey << "] to URI [" << details.uriAnonym
+                << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
                 << "]. Making all sessions on doc read-only and notifying clients.");
 
         // Make everyone readonly and tell everyone that storage is low on diskspace.
@@ -1217,18 +1246,18 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::UNAUTHORIZED)
     {
-        const auto session = details.session.lock();
+        const auto session = _uploadRequest->session();
         if (session)
         {
             LOG_ERR("Cannot upload docKey ["
-                    << _docKey << "] to storage URI [" << details.uriAnonym
+                    << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym()
                     << "]. Invalid or expired access token. Notifying client.");
             session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
         }
         else
         {
             LOG_ERR("Cannot upload docKey ["
-                    << _docKey << "] to storage URI [" << details.uriAnonym
+                    << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym()
                     << "]. Invalid or expired access token. The client session is closed.");
         }
 
@@ -1237,18 +1266,18 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::FAILED)
     {
         //TODO: Should we notify all clients?
-        const auto session = details.session.lock();
+        const auto session = _uploadRequest->session();
         if (session)
         {
-            LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << details.uriAnonym
+            LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
                                                 << "]. Notifying client.");
             const std::string msg = std::string("error: cmd=storage kind=")
-                                    + (details.isRename ? "renamefailed" : "savefailed");
+                                    + (_uploadRequest->isRename() ? "renamefailed" : "savefailed");
             session->sendTextFrame(msg);
         }
         else
         {
-            LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << details.uriAnonym
+            LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
                                                 << "]. The client session is closed.");
         }
 
@@ -2360,7 +2389,6 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
 
     // try the not yet created sessions
     LOG_WRN("Child session [" << viewId << "] not found to forward message: " << getAbbreviatedMessage(message));
-
     return false;
 }
 
