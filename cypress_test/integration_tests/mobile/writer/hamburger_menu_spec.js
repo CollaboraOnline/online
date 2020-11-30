@@ -11,13 +11,6 @@ describe('Trigger hamburger menu options.', function() {
 		helper.beforeAll(testFileName, 'writer');
 
 		mobileHelper.enableEditingMobile();
-
-		// Make the cursor visible
-		cy.get('#document-container')
-			.click(20, 20);
-
-		cy.get('.blinking-cursor')
-			.should('be.visible');
 	});
 
 	afterEach(function() {
@@ -550,7 +543,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'A3');
 	});
 
-	it.skip('Page setup: change paper width.', function() {
+	it('Page setup: change paper width.', function() {
 		// We use the cursor horizontal position as indicator of document width change.
 		helper.moveCursor('end');
 
