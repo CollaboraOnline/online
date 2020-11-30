@@ -606,7 +606,7 @@ std::string Admin::getChannelLogLevels()
     unsigned int wsdLogLevel = Log::logger().get("wsd").getLevel();
     std::string result = "wsd=" + levelList[wsdLogLevel];
 
-    result += " kits=" + (_forkitLogLevel.empty() != true ? _forkitLogLevel: levelList[wsdLogLevel]);
+    result += " kit=" + (_forkitLogLevel.empty() != true ? _forkitLogLevel: levelList[wsdLogLevel]);
 
     return result;
 }
@@ -620,11 +620,11 @@ void Admin::setChannelLogLevel(const std::string& _channelName, std::string leve
     Log::logger().names(nameList);
 
     if (std::find(std::begin(levelList), std::end(levelList), level) == std::end(levelList))
-        level = "trace";
+        level = "debug";
 
     if (_channelName == "wsd")
         Log::logger().get("wsd").setLevel(level);
-    else if (_channelName == "kits")
+    else if (_channelName == "kit")
     {
         LOOLWSD::setLogLevelsOfKits(level); // For current kits.
         LOOLWSD::sendMessageToForKit("setloglevel " + level); // For forkit and future kits.
