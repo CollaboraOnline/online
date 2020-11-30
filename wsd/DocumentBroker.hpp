@@ -18,6 +18,7 @@
 #include <mutex>
 #include <string>
 #include <thread>
+#include <utility>
 
 #include <Poco/URI.h>
 
@@ -476,17 +477,7 @@ private:
                                  const std::string& saveAsFilename, const bool isRename,
                                  const bool force);
 
-    struct StorageUploadDetails
-    {
-        const std::string uriAnonym;
-        const std::chrono::system_clock::time_point newFileModifiedTime;
-        const std::weak_ptr<class ClientSession> session;
-        const bool isSaveAs;
-        const bool isRename;
-    };
-
-    void handleUploadToStorageResponse(const StorageUploadDetails& details,
-                                       const StorageBase::UploadResult& uploadResult);
+    void handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult);
 
     /**
      * Report back the save result to PostMessage users (Action_Save_Resp)
@@ -724,6 +715,48 @@ private:
         const bool _isAutosaveEnabled;
     };
 
+    /// Represents an upload request.
+    class UploadRequest final
+    {
+    public:
+        UploadRequest(std::string uriAnonym,
+                      std::chrono::system_clock::time_point newFileModifiedTime,
+                      const std::shared_ptr<class ClientSession>& session, bool isSaveAs,
+                      bool isRename)
+            : _startTime(std::chrono::steady_clock::now())
+            , _uriAnonym(std::move(uriAnonym))
+            , _newFileModifiedTime(newFileModifiedTime)
+            , _session(session)
+            , _isSaveAs(isSaveAs)
+            , _isRename(isRename)
+        {
+        }
+
+        const std::chrono::milliseconds timeSinceRequest() const
+        {
+            return std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - _startTime);
+        }
+
+        const std::string& uriAnonym() const { return _uriAnonym; }
+        const std::chrono::system_clock::time_point& newFileModifiedTime() const
+        {
+            return _newFileModifiedTime;
+        }
+
+        std::shared_ptr<class ClientSession> session() const { return _session.lock(); }
+        bool isSaveAs() const { return _isSaveAs; }
+        bool isRename() const { return _isRename; }
+
+    private:
+        const std::chrono::steady_clock::time_point _startTime; //< The time we made the request.
+        const std::string _uriAnonym;
+        const std::chrono::system_clock::time_point _newFileModifiedTime;
+        const std::weak_ptr<class ClientSession> _session;
+        const bool _isSaveAs;
+        const bool _isRename;
+    };
+
     /// Responsible for managing document uploading into storage.
     class StorageManager final
     {
@@ -903,6 +936,10 @@ private:
 
     /// Manage saving in Core.
     SaveManager _saveManager;
+
+    /// The current upload request, if any.
+    /// For now we can only have one at a time.
+    std::unique_ptr<UploadRequest> _uploadRequest;
 
     /// Manage uploading to Storage.
     StorageManager _storageManager;
