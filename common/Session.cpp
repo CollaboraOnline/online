@@ -20,7 +20,6 @@
 #include <iterator>
 #include <map>
 #include <memory>
-#include <mutex>
 #include <set>
 
 #include <Poco/Exception.h>

@@ -988,11 +988,6 @@ private:
         return _sessionUserInfo;
     }
 
-    std::mutex& getMutex() override
-    {
-        return _mutex;
-    }
-
     std::shared_ptr<TileQueue>& getTileQueue() override
     {
         return _tileQueue;
@@ -1659,7 +1654,6 @@ private:
     PasswordType _docPasswordType;
 
     std::atomic<bool> _stop;
-    mutable std::mutex _mutex;
 
     ThreadPool _pngPool;
 
