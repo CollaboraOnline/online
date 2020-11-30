@@ -803,6 +803,11 @@ namespace Util
         return res;
     }
 
+    void clearAnonymized()
+    {
+        AnonymizedStrings.clear();
+    }
+
     std::string getFilenameFromURL(const std::string& url)
     {
         std::string base;
