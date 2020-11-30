@@ -917,7 +917,8 @@ L.Socket = L.Class.extend({
 		var delayed = false;
 		if (textMsg.startsWith('window:') ||
 			textMsg.startsWith('celladdress:') ||
-			textMsg.startsWith('statechanged:')) {
+			textMsg.startsWith('statechanged:') ||
+			textMsg.startsWith('invalidatecursor:')) {
 			//console.log('_tryToDelayMessage: textMsg: ' + textMsg);
 			var message = {msg: textMsg};
 			this._delayedMessages.push(message);
