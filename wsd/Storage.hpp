@@ -97,7 +97,7 @@ public:
         std::chrono::system_clock::time_point _modifiedTime;
     };
 
-    class SaveResult final
+    class UploadResult final
     {
     public:
         enum class Result
@@ -110,7 +110,7 @@ public:
             FAILED
         };
 
-        SaveResult(Result result) : _result(result)
+        UploadResult(Result result) : _result(result)
         {
         }
 
@@ -242,18 +242,18 @@ public:
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
-    virtual std::string loadStorageFileToLocal(const Authorization& auth,
-                                               const std::string& /*cookies*/, LockContext& lockCtx,
-                                               const std::string& templateUri)
+    virtual std::string downloadStorageFileToLocal(const Authorization& auth,
+                                                   const std::string& cookies, LockContext& lockCtx,
+                                                   const std::string& templateUri)
         = 0;
 
     /// Writes the contents of the file back to the source.
     /// @param cookies A string representing key=value pairs that are set as cookies.
     /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
-    virtual SaveResult
-    saveLocalFileToStorage(const Authorization& auth, const std::string& /*cookies*/,
-                           LockContext& lockCtx, const std::string& saveAsPath,
-                           const std::string& saveAsFilename, const bool isRename)
+    virtual UploadResult
+    uploadLocalFileToStorage(const Authorization& auth, const std::string& cookies,
+                             LockContext& lockCtx, const std::string& saveAsPath,
+                             const std::string& saveAsFilename, const bool isRename)
         = 0;
 
     /// Must be called at startup to configure.
@@ -347,14 +347,14 @@ public:
         return true;
     }
 
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& /*cookies*/,
-                                       LockContext& lockCtx,
-                                       const std::string& templateUri) override;
+    std::string downloadStorageFileToLocal(const Authorization& auth,
+                                           const std::string& /*cookies*/, LockContext& lockCtx,
+                                           const std::string& templateUri) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& /*cookies*/,
-                                      LockContext& lockCtx, const std::string& saveAsPath,
-                                      const std::string& saveAsFilename,
-                                      const bool isRename) override;
+    UploadResult uploadLocalFileToStorage(const Authorization& auth, const std::string& /*cookies*/,
+                                          LockContext& lockCtx, const std::string& saveAsPath,
+                                          const std::string& saveAsFilename,
+                                          const bool isRename) override;
 
 private:
     /// True if the jailed file is not linked but copied.
@@ -511,14 +511,14 @@ public:
                          LockContext& lockCtx, bool lock) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
-    std::string loadStorageFileToLocal(const Authorization& auth, const std::string& /*cookies*/,
-                                       LockContext& lockCtx,
-                                       const std::string& templateUri) override;
+    std::string downloadStorageFileToLocal(const Authorization& auth,
+                                           const std::string& /*cookies*/, LockContext& lockCtx,
+                                           const std::string& templateUri) override;
 
-    SaveResult saveLocalFileToStorage(const Authorization& auth, const std::string& /*cookies*/,
-                                      LockContext& lockCtx, const std::string& saveAsPath,
-                                      const std::string& saveAsFilename,
-                                      const bool isRename) override;
+    UploadResult uploadLocalFileToStorage(const Authorization& auth, const std::string& /*cookies*/,
+                                          LockContext& lockCtx, const std::string& saveAsPath,
+                                          const std::string& saveAsFilename,
+                                          const bool isRename) override;
 
     /// Total time taken for making WOPI calls during load
     std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
@@ -537,7 +537,7 @@ protected:
     };
 
     /// Handles the response from the server when uploading the document.
-    SaveResult handleUploadToStorageResponse(const WopiUploadDetails& details,
+    UploadResult handleUploadToStorageResponse(const WopiUploadDetails& details,
                                              std::string responseString);
 
 private:

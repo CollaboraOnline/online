@@ -796,11 +796,11 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     // Let's load the document now, if not loaded.
     if (!_storage->isLoaded())
     {
-        std::string localPath = _storage->loadStorageFileToLocal(
+        std::string localPath = _storage->downloadStorageFileToLocal(
             session->getAuthorization(), session->getCookies(), *_lockCtx, templateSource);
 
         // Only lock the document on storage for editing sessions
-        // FIXME: why not lock before loadStorageFileToLocal? Would also prevent race conditions
+        // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
         if (!session->isReadOnly() &&
             !_storage->updateLockState(session->getAuthorization(), session->getCookies(), *_lockCtx, true))
         {
@@ -1071,7 +1071,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
     assert(_storage && _tileCache);
-    const StorageBase::SaveResult storageSaveResult = _storage->saveLocalFileToStorage(
+    const StorageBase::UploadResult storageSaveResult = _storage->uploadLocalFileToStorage(
         auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
 
     const StorageUploadDetails details { uriAnonym, newFileModifiedTime, it->second, isSaveAs, isRename };
@@ -1079,14 +1079,14 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
 }
 
 bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& details,
-                                                   const StorageBase::SaveResult& storageSaveResult)
+                                                   const StorageBase::UploadResult& storageSaveResult)
 {
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
     _lastStorageSaveSuccessful
-        = storageSaveResult.getResult() == StorageBase::SaveResult::Result::OK ||
-        storageSaveResult.getResult() == StorageBase::SaveResult::Result::DOC_CHANGED;
-    if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::OK)
+        = storageSaveResult.getResult() == StorageBase::UploadResult::Result::OK ||
+        storageSaveResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED;
+    if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::OK)
     {
 #if !MOBILEAPP
         WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
@@ -1106,8 +1106,9 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
 
-            LOG_DBG("Saved docKey [" << _docKey << "] to URI [" << details.uriAnonym << "] and updated timestamps. " <<
-                    " Document modified timestamp: " << _documentLastModifiedTime);
+            LOG_DBG("Uploaded docKey [" << _docKey << "] to URI [" << details.uriAnonym
+                                        << "] and updated timestamps. Document modified timestamp: "
+                                        << _documentLastModifiedTime);
 
             // Resume polling.
             _poll->wakeup();
@@ -1140,9 +1141,9 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
             const auto session = details.session.lock();
             if (session)
             {
-                LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url)
-                                            << "] with name [" << filenameAnonym
-                                            << "] successfully.");
+                LOG_DBG("Uploaded SaveAs docKey [" << _docKey << "] to URI ["
+                                                   << LOOLWSD::anonymizeUrl(url) << "] with name ["
+                                                   << filenameAnonym << "] successfully.");
 
                 std::ostringstream oss;
                 oss << "saveas: url=" << url << " filename=" << encodedName
@@ -1152,9 +1153,9 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
             }
             else
             {
-                LOG_DBG("Saved As docKey [" << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url)
-                                            << "] with name [" << filenameAnonym
-                                            << "] successfully, but the client session is closed.");
+                LOG_DBG("Uploaded SaveAs docKey ["
+                        << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url) << "] with name ["
+                        << filenameAnonym << "] successfully, but the client session is closed.");
             }
         }
 
@@ -1162,10 +1163,11 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
 
         return true;
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::DISKFULL)
+    else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
     {
-        LOG_WRN("Disk full while saving docKey [" << _docKey << "] to URI [" << details.uriAnonym <<
-                "]. Making all sessions on doc read-only and notifying clients.");
+        LOG_WRN("Disk full while uploading docKey ["
+                << _docKey << "] to URI [" << details.uriAnonym
+                << "]. Making all sessions on doc read-only and notifying clients.");
 
         // Make everyone readonly and tell everyone that storage is low on diskspace.
         for (const auto& sessionIt : _sessions)
@@ -1174,47 +1176,47 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         }
         broadcastSaveResult(false, "Disk full", storageSaveResult.getErrorMsg());
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::UNAUTHORIZED)
+    else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::UNAUTHORIZED)
     {
         const auto session = details.session.lock();
         if (session)
         {
-            LOG_ERR("Cannot save docKey ["
+            LOG_ERR("Cannot upload docKey ["
                     << _docKey << "] to storage URI [" << details.uriAnonym
                     << "]. Invalid or expired access token. Notifying client.");
             session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
         }
         else
         {
-            LOG_ERR("Cannot save docKey ["
+            LOG_ERR("Cannot upload docKey ["
                     << _docKey << "] to storage URI [" << details.uriAnonym
                     << "]. Invalid or expired access token. The client session is closed.");
         }
 
         broadcastSaveResult(false, "Invalid or expired access token");
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::FAILED)
+    else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::FAILED)
     {
         //TODO: Should we notify all clients?
         const auto session = details.session.lock();
         if (session)
         {
-            LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << details.uriAnonym
-                                              << "]. Notifying client.");
+            LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << details.uriAnonym
+                                                << "]. Notifying client.");
             const std::string msg = std::string("error: cmd=storage kind=")
                                     + (details.isRename ? "renamefailed" : "savefailed");
             session->sendTextFrame(msg);
         }
         else
         {
-            LOG_ERR("Failed to save docKey [" << _docKey << "] to URI [" << details.uriAnonym
-                                              << "]. The client session is closed.");
+            LOG_ERR("Failed to upload docKey [" << _docKey << "] to URI [" << details.uriAnonym
+                                                << "]. The client session is closed.");
         }
 
         broadcastSaveResult(false, "Save failed", storageSaveResult.getErrorMsg());
     }
-    else if (storageSaveResult.getResult() == StorageBase::SaveResult::Result::DOC_CHANGED
-             || storageSaveResult.getResult() == StorageBase::SaveResult::Result::CONFLICT)
+    else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED
+             || storageSaveResult.getResult() == StorageBase::UploadResult::Result::CONFLICT)
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;
