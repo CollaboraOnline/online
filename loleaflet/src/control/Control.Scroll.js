@@ -123,7 +123,8 @@ L.Control.Scroll = L.Control.extend({
 
 	_onScroll: function (e) {
 		if (this._map._docLayer._docType === 'spreadsheet') {
-			this._onCalcScroll(e);
+			if (window.mode.isDesktop())
+				this._onCalcScroll(e);
 			return;
 		}
 

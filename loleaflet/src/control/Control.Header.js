@@ -74,7 +74,7 @@ L.Control.Header = L.Control.extend({
 		var rate = fontHeight / fontSize;
 		this._font = {
 			_hdr: this,
-			_baseFontSize: fontSize * window.devicePixelRatio,
+			_baseFontSize: fontSize * this._dpiScale,
 			_fontSizeRate: rate,
 			_fontFamily: fontFamily,
 			getFont: function() {
@@ -93,7 +93,7 @@ L.Control.Header = L.Control.extend({
 		};
 		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
 		var borderWidth = L.DomUtil.getStyle(elem, 'border-top-width');
-		this._borderWidth = Math.round(parseFloat(borderWidth)) * window.devicePixelRatio;
+		this._borderWidth = Math.round(parseFloat(borderWidth)) * this._dpiScale;
 		this._cursor = L.DomUtil.getStyle(elem, 'cursor');
 		L.DomUtil.remove(elem);
 	},
@@ -802,17 +802,16 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 
 		this._hasSplits = false;
 		this._splitIndex = 0;
-		var splitPos = 0;
+		this._splitPos = 0;
 
 		if (splitPosContext) {
 
-			splitPos = this._isCol ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y;
-			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'corepixels');
+			this._splitPos = this._isCol ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y;
+			var splitIndex = this._dimGeom.getIndexFromPos(this._splitPos + 1, 'corepixels');
 
 			if (splitIndex) {
 				// Make sure splitPos is aligned to the cell boundary.
-				splitPos = this._dimGeom.getElementData(splitIndex).startpos;
-				this._splitPos = splitPos;
+				this._splitPos = this._dimGeom.getElementData(splitIndex).startpos;
 				this._dimGeom.forEachInRange(0, splitIndex - 1,
 					function (idx, data) {
 						this._elements[idx] = {
@@ -827,36 +826,29 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 				this._hasSplits = true;
 				this._splitIndex = splitIndex;
 
-				var freeStartPos = startPx + splitPos + 1;
-				var freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'corepixels');
-
-				startIdx = freeStartIndex;
+				var freeStartPos = startPx + this._splitPos + 1;
+				startIdx = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'corepixels');
 			}
 		}
 
 		// first free index
-		var dataFirstFree = this._dimGeom.getElementData(startIdx);
-		var firstFreeEnd = dataFirstFree.startpos + dataFirstFree.size - startPx;
-		var firstFreeStart = splitPos;
-		var firstFreeSize = Math.max(0, firstFreeEnd - firstFreeStart);
+		var firstVisibleHeader = this._dimGeom.getElementData(startIdx);
 		this._elements[startIdx] = {
 			index: startIdx,
-			pos: firstFreeEnd, // end position on the header canvas
-			size: firstFreeSize,
-			origsize: dataFirstFree.size,
+			pos: firstVisibleHeader.startpos + firstVisibleHeader.size - startPx, // end position on the header canvas
+			size: Math.min(firstVisibleHeader.startpos + firstVisibleHeader.size - startPx - this._splitPos, firstVisibleHeader.size),
+			origsize: firstVisibleHeader.size,
 		};
-
+		startPx = firstVisibleHeader.startpos + firstVisibleHeader.size - startPx;
 		this._dimGeom.forEachInRange(startIdx + 1,
 			endIdx, function (idx, data) {
-				var startpos = data.startpos - startPx;
-				var endpos = startpos + data.size;
-				var size = endpos - startpos;
 				this._elements[idx] = {
 					index: idx,
-					pos: endpos, // end position on the header canvas
-					size: size,
-					origsize: size,
+					pos: data.size + startPx, // end position on the header canvas
+					size: data.size,
+					origsize: data.size,
 				};
+				startPx += data.size;
 			}.bind(this));
 
 		this._startIndex = startIdx;

@@ -39,8 +39,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._setCanvasHeight();
 		this._canvasBaseHeight = this._canvasHeight;
 
-		this._canvasContext.scale(this._dpiScale, this._dpiScale);
-
 		this._headerHeight = this._canvasHeight;
 		L.Control.Header.colHeaderHeight = this._canvasHeight;
 
@@ -222,7 +220,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (width <= 0)
 			return;
 
-		ctx.save();
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
@@ -234,17 +231,18 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		// draw header/outline border separator
 		if (this._headerHeight !== this._canvasHeight) {
+			ctx.beginPath();
 			ctx.fillStyle = this._borderColor;
-			ctx.fillRect(startPar, startOrt - this._borderWidth, width, this._borderWidth);
+			ctx.rect(startPar, startOrt - this._borderWidth, width, this._borderWidth);
+			ctx.fill();
 		}
 
-		// clip mask
-		ctx.beginPath();
-		ctx.rect(startPar, startOrt, width, height);
-		ctx.clip();
 		// draw background
+		ctx.beginPath();
 		ctx.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
-		ctx.fillRect(startPar, startOrt, width, height);
+		ctx.rect(startPar, startOrt, width, height);
+		ctx.fill();
+
 		// draw resize handle
 		var handleSize = this._resizeHandleSize;
 		if (isCurrent && width > 2 * handleSize) {
@@ -254,9 +252,14 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			var size = 2;
 			var offset = 1;
 			ctx.fillStyle = '#BBBBBB';
-			ctx.fillRect(center - size - offset, y + 2, size, h - 4);
-			ctx.fillRect(center + offset, y + 2, size, h - 4);
+			ctx.beginPath();
+			ctx.rect(center - size - offset, y + 2, size, h - 4);
+			ctx.fill();
+			ctx.beginPath();
+			ctx.rect(center + offset, y + 2, size, h - 4);
+			ctx.fill();
 		}
+
 		// draw text content
 		ctx.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
 		ctx.font = this._font.getFont();
@@ -269,8 +272,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		ctx.fillText(content, endPar - (width / 2), startOrt + (height / 2) + 1);
 		// draw row separator
 		ctx.fillStyle = this._borderColor;
-		ctx.fillRect(endPar -1, startOrt, this._borderWidth, height);
-		ctx.restore();
+		ctx.beginPath();
+		ctx.rect(endPar -1, startOrt, this._borderWidth, height);
+		ctx.fill();
 	},
 
 	drawGroupControl: function (group) {
@@ -285,9 +289,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var startOrt = spacing + (headSize + spacing) * level;
 		var startPar = this._headerInfo.docToHeaderPos(group.startPos);
 		var height = group.endPos - group.startPos;
-
-		ctx.save();
-		ctx.scale(this._dpiScale, this._dpiScale);
 
 		// clip mask
 		ctx.beginPath();
@@ -328,7 +329,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			ctx.lineTo(startPar + headSize / 2, startOrt + 3 * headSize / 4);
 			ctx.stroke();
 		}
-		ctx.restore();
 	},
 
 	drawLevelHeader: function(level) {
@@ -339,8 +339,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var startOrt = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 		var startPar = this._cornerCanvas.width / this._dpiScale - (ctrlHeadSize + (L.Control.Header.rowHeaderWidth - ctrlHeadSize) / 2);
 
-		ctx.save();
-		ctx.scale(this._dpiScale, this._dpiScale);
 		ctx.fillStyle = this._hoverColor;
 		ctx.fillRect(startPar, startOrt, ctrlHeadSize, ctrlHeadSize);
 		ctx.strokeStyle = 'black';
@@ -352,7 +350,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText(level + 1, startPar + (ctrlHeadSize / 2), startOrt + (ctrlHeadSize / 2));
-		ctx.restore();
 	},
 
 	getHeaderEntryBoundingClientRect: function (index) {

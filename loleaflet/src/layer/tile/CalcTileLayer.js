@@ -736,7 +736,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			updatecolumns: updateCols,
 			cursor: this._getCursorPosSize(),
 			selection: this._getSelectionHeaderData(),
-			converter: this._twipsToPixels,
+			converter: this._twipsToCorePixels,
 			context: this
 		});
 	},
@@ -1122,7 +1122,7 @@ L.CalcSplitPanesContext = L.SplitPanesContext.extend({
 		return this._splitCell.y;
 	},
 
-	// Calculates the split position in (core-pixels) from the split-cell.
+	// Calculates the split position in core-pixels from the split-cell.
 	setSplitPosFromCell: function (forceSplittersUpdate) {
 		var newSplitPos = this._docLayer.sheetGeometry.getCellRect(this._splitCell.x, this._splitCell.y).min;
 
@@ -1585,6 +1585,7 @@ L.SheetDimension = L.Class.extend({
 
 		var posCorePx = 0; // position in core pixels.
 		var dimensionObj = this;
+		var finalPosTwips = 0;
 		this._visibleSizes.addCustomDataForEachSpan(function (
 			index,
 			size, /* size in twips of one element in the span */
@@ -1592,12 +1593,14 @@ L.SheetDimension = L.Class.extend({
 
 			// Important: rounding needs to be done in core pixels to match core.
 			var sizeCorePxOne = Math.floor(size / dimensionObj._twipsPerCorePixel);
-			posCorePx += (sizeCorePxOne * spanLength);
+			posCorePx += (sizeCorePxOne * spanLength); // Rounding errors (so the bugs) increase with every addition, we shouldn't use this variable.
 
+			finalPosTwips += size * spanLength;
 			var customData = {
 				sizecore: sizeCorePxOne,
 				poscorepx: posCorePx,
-				posTwips: size * spanLength
+				posTwips: size * spanLength,
+				finalPosTwips: finalPosTwips
 			};
 
 			return customData;
@@ -1662,20 +1665,15 @@ L.SheetDimension = L.Class.extend({
 			return undefined;
 		}
 
-		var numSizes = span.end - index + 1;
-		if (unitName === 'corepixels') {
-			return {
-				startpos: (span.data.poscorepx - span.data.sizecore * numSizes),
-				size: span.data.sizecore
-			};
-		}
-
-		if (unitName === 'twips') {
-			return {
-				startpos: (span.data.posTwips - span.size * numSizes),
-				size: span.size
-			};
-		}
+		var numSizes = span.end - span.start + 1;
+		var offset = index - span.start;
+		var offsetTwips = offset * span.size;
+		var startTwips = span.data.finalPosTwips - span.size * numSizes;
+		var finalPosElementTwips = startTwips + offsetTwips;
+		return {
+			startpos: Math.floor(finalPosElementTwips / (unitName === 'corepixels' ? this._twipsPerCorePixel: 1)),
+			size: Math.round(span.size / (unitName === 'corepixels' ? this._twipsPerCorePixel: 1))
+		};
 	},
 
 	forEachInRange: function (start, end, callback) {
@@ -1692,20 +1690,24 @@ L.SheetDimension = L.Class.extend({
 
 	// callback with a position for each grid line in this pixel range
 	forEachInCorePixelRange: function(startPix, endPix, callback) {
+		// Let's not use poscorepx variable.
+		var startTwips = startPix * this._twipsPerCorePixel;
+		var endTwips = endPix * this._twipsPerCorePixel;
+
 		this._visibleSizes.forEachSpan(function (spanData) {
 			// do we overlap ?
-			var spanFirstCorePx = spanData.data.poscorepx -
-			    (spanData.data.sizecore * (spanData.end - spanData.start + 1));
-			if (spanFirstCorePx < endPix && spanData.data.poscorepx > startPix)
-			{
-				var firstCorePx = Math.max(
-					spanFirstCorePx,
-					startPix + spanData.data.sizecore -
-						((startPix - spanFirstCorePx) % spanData.data.sizecore));
-				var lastCorePx = Math.min(endPix, spanData.data.poscorepx);
+			var firsSpanStartTwips = spanData.data.finalPosElementTwips - (spanData.size * (spanData.end - spanData.start + 1));
 
-				for (var pos = firstCorePx; pos <= lastCorePx; pos += spanData.data.sizecore) {
-					callback(pos);
+			if (firsSpanStartTwips < endTwips && spanData.data.finalPosElementTwips > startTwips)
+			{
+				var firstCoreTwips = Math.max(
+					firsSpanStartTwips,
+					startTwips + spanData.size -
+						((startTwips - firsSpanStartTwips) % spanData.size));
+				var spanEndTwips = Math.min(endTwips, spanData.data.finalPosElementTwips);
+
+				for (var pos = firstCoreTwips; pos <= spanEndTwips; pos += spanData.size) {
+					callback(pos / this._twipsPerCorePixel);
 				}
 			}
 		});
@@ -1720,7 +1722,7 @@ L.SheetDimension = L.Class.extend({
 	// an object with this index and the span data.
 	_getSpanAndIndexFromTwipsPos: function (pos) {
 		var result = {};
-		var span = this._visibleSizes.getSpanDataByCustomDataField(pos, 'posTwips');
+		var span = this._visibleSizes.getSpanDataByFinalPosTwips(pos, 'finalPosTwips');
 		result.span = span;
 		if (span === undefined) {
 			// enforce limits.
@@ -1729,7 +1731,7 @@ L.SheetDimension = L.Class.extend({
 			return result;
 		}
 		var elementCount = span.end - span.start + 1;
-		var posStart = (span.data.posTwips - span.size * elementCount);
+		var posStart = (span.data.finalPosTwips - span.size * elementCount);
 		var sizeOne = span.size;
 
 		// always round down as relativeIndex is zero-based.
@@ -1952,13 +1954,13 @@ L.SpanList = L.Class.extend({
 		return this._getSpanData(spanid);
 	},
 
-	getSpanDataByCustomDataField: function (value, fieldName) {
+	getSpanDataByFinalPosTwips: function (value, fieldName) {
 
-		if (typeof value != 'number' || typeof fieldName != 'string' || !fieldName) {
+		if (typeof value !== 'number' || typeof fieldName !== 'string' || !fieldName) {
 			return undefined;
 		}
 
-		var spanid = this._searchByCustomDataField(value, fieldName);
+		var spanid = this._searchByFinalPosTwips(value, fieldName);
 		if (spanid == -1) {
 			return undefined;
 		}
@@ -2022,6 +2024,54 @@ L.SpanList = L.Class.extend({
 			});
 	},
 
+	/// value should be number, values should be ordered by asc.
+	_searchByFinalPosTwips: function (value, fieldName) {
+		var startIndex = 0;
+		var endIndex = this._spanlist.length - 1;
+		var currentIndex;
+		var currentValue;
+		var spanid = -1;
+		while (startIndex <= endIndex) {
+			currentIndex = Math.floor((startIndex + endIndex) / 2);
+			currentValue = this._spanlist[currentIndex].data[fieldName];
+			if (value <= currentValue) {
+				if (currentIndex > 0) {
+					if (value > this._spanlist[currentIndex - 1].data[fieldName]) {
+						spanid = currentIndex;
+						break;
+					}
+					else {
+						endIndex = currentIndex;
+					}
+				}
+				else {
+					spanid = currentIndex;
+					break;
+				}
+			}
+			else if (value > currentValue) {
+				startIndex = currentIndex + 1;
+			}
+		}
+
+		// Now if we have a spanid, let's check if its pos is the same with the previous. If so, we will take the previous.
+		if (spanid !== -1 && spanid > 0) {
+			var go = true;
+			while (go === true) {
+				if (this._spanlist[spanid].data[fieldName] === this._spanlist[spanid - 1].data[fieldName])
+					spanid--;
+				else
+					go = false;
+
+				if (spanid === 0)
+					go = false;
+			}
+		}
+
+		return spanid;
+	},
+
+	// TODO: To be removed. If another field other than finalPosTwips should be searched, "above" function may be generalized.
 	_searchByCustomDataField: function (value, fieldName) {
 
 		// All custom searchable data values are assumed to start
@@ -2318,6 +2368,7 @@ L.DimensionOutlines = L.Class.extend({
 	}
 });
 
+//TODO:  Remove (or solve the bug) below. It mis-calculates span.
 
 // Does binary search on array for key, possibly using a custom direction provider.
 // Of course, this assumes that the array is sorted (w.r.t to the semantics of
