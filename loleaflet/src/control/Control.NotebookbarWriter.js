@@ -106,7 +106,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
@@ -418,7 +418,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
@@ -565,7 +565,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
@@ -1947,7 +1947,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
@@ -2101,7 +2101,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
