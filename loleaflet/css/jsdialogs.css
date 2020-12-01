@@ -46,7 +46,8 @@
 
 .ui-treeview-body {
 	display: block;
-	height: 150px;
+	min-height: 50px;
+	min-width: 50px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	width: 100%;
@@ -121,6 +122,16 @@
 
 /* Autofilter dropdown */
 
+.autofilter.row {
+	display: table-row;
+}
+
+.autofilter.cell {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 2px;
+}
+
 .autofilter-container {
 	background-color: white;
 	border: solid 1px silver;
@@ -143,31 +154,25 @@
 }
 
 #mobile-wizard #toggle_all.checkbutton + #select_current,
-.autofilter-container #toggle_all.checkbutton + #select_current {
+.autofilter-container #select_current {
 	background: url('images/select_current.svg') no-repeat center;
 }
 
-.autofilter-container #toggle_all.checkbutton + #select_current {
+.autofilter-container #select_current {
 	height: 25px;
 	width: 25px;
 	border: none;
-	margin: 10px 5px 5px;
-	position: absolute;
-	right: 40px;
 }
 
 #mobile-wizard #toggle_all.checkbutton + #select_current + #unselect_current,
-.autofilter-container #toggle_all.checkbutton + #select_current + #unselect_current {
+.autofilter-container #unselect_current {
 	background: url('images/unselect_current.svg') no-repeat center;
 }
 
-.autofilter-container #toggle_all.checkbutton + #select_current + #unselect_current {
+.autofilter-container #unselect_current {
 	height: 25px;
 	width: 25px;
 	border: none;
-	margin: 10px 5px 5px;
-	position: absolute;
-	right: 5px;
 }
 
 
@@ -182,6 +187,7 @@
 .autofilter-container #check_list_box.ui-treeview .ui-treeview-body {
 	width: 100%;
 	min-width: 200px;
+	min-height: 150px;
 }
 
 /* Word count dialog */

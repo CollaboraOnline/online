@@ -104,7 +104,7 @@ L.Control.AutofilterDropdown = L.Control.extend({
 			this.position.y = top;
 		}
 
-		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'dockingwindow'});
+		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'autofilter'});
 		builder.build(mainContainer, [data]);
 	},
 
