@@ -27,6 +27,7 @@ var unoCommandsArray = {
 	ChangesMenu:{global:{menu:_('Track Chan~ges'),},},
 	CharmapControl:{global:{context:_('Insert Special Characters'),menu:_('Symbol'),},},
 	ClearOutline:{global:{menu:_('~Remove Outline'),},},
+	Calculate:{spreadsheet:{menu:_('~Recalculate'),},},
 	ColorScaleFormatDialog:{spreadsheet:{menu:_('Color Scale...'),},},
 	CommonAlignBottom:{global:{menu:_('Bottom'),},},
 	CommonAlignHorizontalCenter:{global:{menu:_('Centered'),},},
