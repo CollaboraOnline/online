@@ -38,7 +38,7 @@ L.Control.JSDialog = L.Control.extend({
 		var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
 		var title = L.DomUtil.create('span', 'ui-dialog-title', titlebar);
 		title.innerText = data.title;
-		var button = L.DomUtil.create('button', 'ui-dialog-titlebar-close', titlebar);
+		var button = L.DomUtil.create('span', 'ui-dialog-titlebar-close', titlebar);
 		L.DomUtil.create('button', 'ui-button-icon ui-icon ui-icon-closethick', button);
 
 		var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', container);
