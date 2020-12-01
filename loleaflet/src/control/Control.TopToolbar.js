@@ -93,13 +93,15 @@ L.Control.TopToolbar = L.Control.extend({
 	getToolItems: function() {
 		return [
 			{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
+			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
+			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false},
+			{type: 'break', id: 'savebreak', mobile: false},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
-			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false},
-			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
-			{type: 'break', id: 'savebreak', mobile: false},
+			{type: 'break', mobile: false, tablet: false,},
 			{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: 'FormatPaintbrush', mobile: false},
-			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), uno: 'ResetAttributes', mobile: false},
+			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), hidden: true, uno: 'ResetAttributes', mobile: false},
+			{type: 'button',  id: 'resetimpress',  img: 'deleteformat', hint: _UNO('.uno:SetDefault', 'presentation', 'true'), hidden: true, uno:'SetDefault', mobile: false},
 			{type: 'html', id: 'styles',
 				html: '<select class="styles-select"><option>' + _('Default Style') + '</option></select>',
 				onRefresh: function (edata) {
@@ -224,7 +226,6 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'slidechangewindow', img: 'sidebar_slide_change', hint: _UNO('.uno:SlideChangeWindow', 'presentation', true), uno: '.uno:SlideChangeWindow', hidden: true},
 			{type: 'button',  id: 'customanimation', img: 'sidebar_custom_animation', hint: _UNO('.uno:CustomAnimation', 'presentation', true), uno: '.uno:CustomAnimation', hidden: true},
 			{type: 'button',  id: 'masterslidespanel', img: 'sidebar_master_slides', hint: _UNO('.uno:MasterSlidesPanel', 'presentation', true), uno: '.uno:MasterSlidesPanel', hidden: true},
-			{type: 'break', id: 'breaksidebar', hidden: true},
 			{type: 'button',  id: 'fold',  img: 'fold', desktop: true, mobile: false, hidden: true},
 			{type: 'button',  id: 'hamburger-tablet',  img: 'hamburger', desktop: false, mobile: false, tablet: true, iosapptablet: false, hidden: true},
 			{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false}
@@ -274,7 +275,7 @@ L.Control.TopToolbar = L.Control.extend({
 		switch (docType) {
 		case 'spreadsheet':
 			if (toolbarUp) {
-				toolbarUp.show('textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
+				toolbarUp.show('reset', 'textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
 					'numberformatcurrency', 'numberformatpercent',
 					'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
 					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
@@ -291,8 +292,8 @@ L.Control.TopToolbar = L.Control.extend({
 			break;
 		case 'text':
 			if (toolbarUp)
-				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-					'breakspacing', 'defaultbullet', 'defaultnumbering', 'incrementindent', 'decrementindent',
+				toolbarUp.show('reset', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
+					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 					'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
 
 			break;
@@ -315,7 +316,7 @@ L.Control.TopToolbar = L.Control.extend({
 			}
 
 			if (toolbarUp) {
-				toolbarUp.show('breaksidebar', 'breakbullet', 'modifypage');
+				toolbarUp.show('resetimpress', 'breaksidebar', 'modifypage');
 			}
 
 			// FALLTHROUGH intended
