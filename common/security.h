@@ -10,7 +10,9 @@
 
 #pragma once
 
+#ifdef __linux__
 #include <sys/capability.h>
+#endif
 #include <sys/types.h>
 
 #include <pwd.h>
@@ -41,6 +43,7 @@ static int hasCorrectUID(const char *appName)
 /** Return 0 if no capability is set on the current binary. Positive number gives the bitfield of caps that are set, negative an error. */
 int hasAnyCapability()
 {
+#ifdef __linux__
     cap_t caps = cap_get_proc();
     if (caps == nullptr)
     {
@@ -63,6 +66,9 @@ int hasAnyCapability()
     cap_free(caps);
 
     return result;
+#else
+    return 0;
+#endif
 }
 #endif
 
