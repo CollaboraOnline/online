@@ -87,7 +87,31 @@ describe('Top toolbar tests.', function() {
 
 		//highlight color is not in the SVG
 		// that's why we didn't test there
+	});
 
+	it('Apply a selected font name on the text shape', function() {
+		cy.get('#tb_editbar_item_fonts')
+			.click();
+		
+		desktopHelper.selectFromListbox('Liberation Mono');		
+		
+		impressHelper.triggerNewSVGForShapeInTheCenter();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape .TextParagraph')
+			.should('have.attr', 'font-family', 'Liberation Mono');
+	});
+
+	it('Apply a selected font size on the text shape', function() {
+
+		cy.get('#tb_editbar_item_fontsizes')
+			.click();
+		
+		desktopHelper.selectFromListbox('22');
+
+		impressHelper.triggerNewSVGForShapeInTheCenter();
+		
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape .TextParagraph')
+			.should('have.attr', 'font-size', '776px'); 
 	});
 
 	it('Apply left/right alignment on text seleced text.', function() {
