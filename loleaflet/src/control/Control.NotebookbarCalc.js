@@ -88,7 +88,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
@@ -330,7 +330,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
@@ -1844,7 +1844,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
@@ -2174,7 +2174,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'NotebookBar',
-							'type': 'grid',
+							'type': 'container',
 							'text': '',
 							'enabled': 'true',
 							'children': [
