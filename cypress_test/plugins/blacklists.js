@@ -30,7 +30,8 @@ var nextcloudBlackList = [
 	['mobile/writer/hamburger_menu_spec.js',
 		[
 			'Print',
-			'Save'
+			'Save',
+			'Automatic spell checking.'
 		]
 	],
 	['mobile/writer/spellchecking_spec.js',
