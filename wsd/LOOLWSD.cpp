@@ -2814,9 +2814,9 @@ private:
         LOG_INF("Sent robots.txt response successfully.");
     }
 
-    static std::string getContentType(const std::string& fileName)
+    static const std::unordered_map<std::string, std::string>& getExtContentTypeMap()
     {
-        static std::unordered_map<std::string, std::string> aContentTypes{
+        static const std::unordered_map<std::string, std::string> aContentTypes{
             { "svg", "image/svg+xml" },
             { "pot", "application/vnd.ms-powerpoint" },
             { "xla", "application/vnd.ms-excel" },
@@ -2947,11 +2947,27 @@ private:
             { "jpeg", "image/jpeg" },
             { "pdf", "application/pdf" },
         };
+        return aContentTypes;
+    }
 
+    static const std::unordered_map<std::string, std::string>& getContentTypeExtMap()
+    {
+        static const std::unordered_map<std::string, std::string> aMap = [] {
+            std::unordered_map<std::string, std::string> aTmp;
+            for (const auto& rSrcPair : getExtContentTypeMap())
+                aTmp.insert({ rSrcPair.second, rSrcPair.first });
+            return aTmp;
+        }();
+        return aMap;
+    }
+
+    static std::string getContentType(const std::string& fileName)
+    {
+        const auto& rContentTypes = getExtContentTypeMap();
         const std::string sExt = Poco::Path(fileName).getExtension();
 
-        const auto it = aContentTypes.find(sExt);
-        if (it != aContentTypes.end())
+        const auto it = rContentTypes.find(sExt);
+        if (it != rContentTypes.end())
             return it->second;
 
         return "application/octet-stream";
@@ -3551,6 +3567,13 @@ private:
 
         // Set that this is a proxy.php-enabled instance
         capabilities->set("hasProxyPrefix", LOOLWSD::IsProxyPrefixEnabled);
+
+#if !MOBILEAPP
+        Poco::JSON::Object::Ptr mime_to_ext = new Poco::JSON::Object;
+        for (const auto& rPair : getContentTypeExtMap())
+            mime_to_ext->set(rPair.first, rPair.second);
+        capabilities->set("supportedMIMEtoExt", mime_to_ext);
+#endif
 
         std::ostringstream ostrJSON;
         capabilities->stringify(ostrJSON);
