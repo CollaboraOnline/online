@@ -2,7 +2,7 @@
 	border-top: 1px solid #B6B6B6;
 	top: 137px;
 	left: 49px;
-	bottom: 75px;
+	bottom: 68px;
 }
 
 #document-container.spreadsheet-document.readonly {
@@ -18,7 +18,7 @@
 	padding: 0;
 	left: 142px;
 	right: 0;
-	bottom: 33px;
+	bottom: 36px;
 	position: absolute;
 	cursor: pointer;
 	height: 39px;
@@ -37,13 +37,9 @@
 }
 
 .spreadsheet-tab {
-	margin: 0px;
-	margin-top: 4px;
-	margin-right: 3px;
-	padding-left: 9px;
-	padding-right: 9px;
-	padding-top: 8px;
-	padding-bottom: 5px;
+	margin: 5px 3px 0px 0px !important;
+	padding: 8px 9px 5px !important;
+	text-decoration: none;
 
 	font: 12px/1.5 var(--loleaflet-font);
 	display: inline-block;
@@ -52,10 +48,10 @@
 	color: black;
 }
 
-.spreadsheet-tab-selected {
+.spreadsheet-tab.spreadsheet-tab-selected {
 	background: white !important;
 	color: black !important;
-	padding-top: 9px;
+	padding-top: 7px;
 	padding-bottom: 5px;
 	margin-top: 2px;
 	border: 1px solid #dfdfdf;
