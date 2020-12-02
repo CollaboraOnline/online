@@ -1008,8 +1008,8 @@ L.Socket = L.Class.extend({
 			if (command.type === 'text') {
 				docLayer = new L.WriterTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
+					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
+					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
 					docType: command.type
 				});
 			}
@@ -1046,8 +1046,8 @@ L.Socket = L.Class.extend({
 				}
 				docLayer = new L.ImpressTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
+					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
+					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
 					docType: command.type
 				});
 			}
