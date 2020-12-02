@@ -67,7 +67,7 @@
 .notebookbar-shortcuts-bar {
 	display: inline-block;
 	position: relative;
-	z-index: 10000;
+	z-index: 1000;
 }
 
 .notebookbar-shortcuts-bar > table {
