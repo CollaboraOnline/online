@@ -1522,6 +1522,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', parentContainer);
 		listbox.id = data.id;
 
+		if (data.enabled === false || data.enabled === 'false')
+			listbox.disabled = 'disabled';
+
+		$(listbox).change(function() {
+			builder.callback('combobox', 'selected', data, $(this).val()+ ';' + $(this).text(), builder);
+		});
+
 		if (typeof(data.entries) === 'object') {
 			for (var index in data.entries) {
 				var isSelected = false;
