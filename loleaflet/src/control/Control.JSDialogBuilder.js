@@ -367,11 +367,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var rows = builder._getGridRows(data.children);
 		var cols = builder._getGridColumns(data.children);
 
+		L.DomUtil.create('table', builder.options.cssClass + ' ui-grid', parentContainer);
 		for (var row = 0; row < rows; row++) {
-			var rowNode = L.DomUtil.create('div', builder.options.cssClass + ' row', parentContainer);
+			var rowNode = L.DomUtil.create('tr', builder.options.cssClass, parentContainer);
 			for (var col = 0; col < cols; col++) {
-				var colNode = L.DomUtil.create('div', builder.options.cssClass + ' cell', rowNode);
-				builder.build(colNode, [builder._getGridChild(data.children, row, col)], builder);
+				var colNode = L.DomUtil.create('td', builder.options.cssClass, rowNode);
+				builder.build(colNode, [builder._getGridChild(data.children, row, col)], false, false);
 			}
 		}
 
