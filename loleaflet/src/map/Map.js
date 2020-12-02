@@ -848,6 +848,13 @@ L.Map = L.Evented.extend({
 		return new L.Bounds(topLeftPoint, topLeftPoint.add(this.getSize()));
 	},
 
+	getPixelBoundsCore: function (center, zoom) {
+		var bounds = this.getPixelBounds(center, zoom);
+		bounds.min = bounds.min.multiplyBy(L.Util.getDpiScaleFactor(true));
+		bounds.max = bounds.max.multiplyBy(L.Util.getDpiScaleFactor(true));
+		return bounds;
+	},
+
 	getPixelOrigin: function () {
 		this._checkIfLoaded();
 		return this._pixelOrigin;
