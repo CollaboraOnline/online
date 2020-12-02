@@ -17,6 +17,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['grid'] = this._gridHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['listbox'] = this._listboxControl;
+		this._controlHandlers['checkbox'] = this._checkboxControl;
 	},
 
 	_swapControls: function(controls, indexA, indexB) {
@@ -101,6 +102,56 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			iconPath = builder._createIconURL(data.command);
 
 		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath);
+
+		return false;
+	},
+
+	_checkboxControl: function(parentContainer, data, builder) {
+		var div = L.DomUtil.createWithId('div', data.id, parentContainer);
+		L.DomUtil.addClass(div, 'checkbutton');
+
+		var checkboxLabel = L.DomUtil.create('label', '', div);
+		checkboxLabel.innerHTML = builder._cleanText(data.text);
+		checkboxLabel.for = data.id;
+		var checkbox = L.DomUtil.createWithId('input', data.id, div);
+		checkbox.type = 'checkbox';
+
+		if (data.enabled == 'false') {
+			$(checkboxLabel).addClass('disabled');
+			$(checkbox).attr('disabled', 'disabled');
+		}
+
+		checkbox.addEventListener('change', function() {
+			builder.callback('checkbox', 'change', div, this.checked, builder);
+		});
+
+		var customCommand = builder._mapWindowIdToUnoCommand(data.id);
+
+		var updateFunction = function() {
+			var state = builder._getUnoStateForItemId(data.id, builder);
+
+			if (!state) {
+				var items = builder.map['stateChangeHandler'];
+				state = items.getItemValue(data.command);
+			}
+			if (!state)
+				state = data.checked;
+
+			if (state && state === 'true' || state === 1 || state === '1')
+				$(checkbox).prop('checked', true);
+			else if (state)
+				$(checkbox).prop('checked', false);
+		};
+
+		updateFunction();
+
+		builder.map.on('commandstatechanged', function(e) {
+			if (e.commandName === customCommand ? customCommand : data.command)
+				updateFunction();
+		}, this);
+
+		if (data.hidden)
+			$(checkbox).hide();
 
 		return false;
 	},
