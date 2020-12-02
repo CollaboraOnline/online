@@ -119,6 +119,7 @@ L.Map = L.Evented.extend({
 		this._previewQueue = [];
 		this._previewRequestsOnFly = 0;
 		this._timeToEmptyQueue = new Date();
+		this._partsDirection = 1; // For pre-fetching the slides in the direction of travel.
 		// Focusing:
 		//
 		// Cursor is visible or hidden (e.g. for graphic selection).
