@@ -1507,9 +1507,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_listboxControl: function(parentContainer, data, builder) {
-		if (!data.entries || data.entries.length === 0)
-			return false;
-
 		var title = data.text;
 		var selectedEntryIsString = false;
 		if (data.selectedEntries) {
@@ -1518,26 +1515,29 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				// pass
 			} else if (selectedEntryIsString)
 				title = builder._cleanText(data.selectedEntries[0]);
-			else
+			else if (data.entries && data.entries.length > data.selectedEntries[0])
 				title = data.entries[data.selectedEntries[0]];
 		}
 		title = builder._cleanText(title);
 
 		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', parentContainer);
+		listbox.id = data.id;
 
-		for (var index in data.entries) {
-			var isSelected = false;
-			if ((data.selectedEntries && index == data.selectedEntries[0])
-				|| (data.selectedEntries && selectedEntryIsString && data.entries[index] === data.selectedEntries[0])
-				|| data.entries[index] == title) {
-				isSelected = true;
+		if (typeof(data.entries) === 'object') {
+			for (var index in data.entries) {
+				var isSelected = false;
+				if ((data.selectedEntries && index == data.selectedEntries[0])
+					|| (data.selectedEntries && selectedEntryIsString && data.entries[index] === data.selectedEntries[0])
+					|| data.entries[index] == title) {
+					isSelected = true;
+				}
+
+				var option = L.DomUtil.create('option', '', listbox);
+				option.value = index;
+				option.innerText = data.entries[index];
+				if (isSelected)
+					option.selected = 'true';
 			}
-
-			var option = L.DomUtil.create('option', '', listbox);
-			option.value = index;
-			option.innerText = data.entries[index];
-			if (isSelected)
-				option.selected = 'true';
 		}
 
 		return false;
