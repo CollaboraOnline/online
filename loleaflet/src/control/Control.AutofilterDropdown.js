@@ -26,7 +26,9 @@ L.Control.AutofilterDropdown = L.Control.extend({
 	},
 
 	onAutofilterDropdown: function(data) {
-		var isSubMenu = data.children && data.children[0].children[0].children.length === 1;
+		var isSubMenu = data.children && data.children.length && data.children[0].children &&
+						data.children[0].children.length &&
+						data.children[0].children[0].children.length === 1;
 
 		if (!isSubMenu && this.container)
 			L.DomUtil.remove(this.container);
