@@ -13,14 +13,17 @@ L.Map.include({
 		if (part === 'prev') {
 			if (docLayer._selectedPart > 0) {
 				docLayer._selectedPart -= 1;
+				this._partsDirection = -1;
 			}
 		}
 		else if (part === 'next') {
 			if (docLayer._selectedPart < docLayer._parts - 1) {
 				docLayer._selectedPart += 1;
+				this._partsDirection = 1;
 			}
 		}
 		else if (typeof (part) === 'number' && part >= 0 && part < docLayer._parts) {
+			this._partsDirection = (part >= docLayer._selectedPart) ? 1 : -1;
 			docLayer._selectedPart = part;
 			docLayer._updateReferenceMarks();
 		}

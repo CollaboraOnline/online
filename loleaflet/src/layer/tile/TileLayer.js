@@ -2147,6 +2147,11 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			tile.el.src = img;
 		}
+		// cache the following parts tiles
+		// this will help avoiding the tear effect when switching to the next part
+		if (this._selectedPart !== coords.part && !this._tileCache[key]) {
+			this._tileCache[key] = img;
+		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
 		// Send acknowledgment, that the tile message arrived
