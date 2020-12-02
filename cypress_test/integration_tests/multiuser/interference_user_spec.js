@@ -2,8 +2,18 @@
 
 var helper = require('../common/helper');
 var mobileHelper = require('../common/mobile_helper');
+var calcHelper = require('../common/calc_helper');
 
 describe('Interfering second user.', function() {
+	function getComponent(fileName) {
+		if (fileName.endsWith('.odt'))
+			return 'writer';
+		else if (fileName.endsWith('.ods'))
+			return 'calc';
+		else if (fileName.endsWith('.odp'))
+			return 'impress';
+	}
+
 	it('Spaming keyboard input.', function() {
 		cy.waitUntil(function() {
 			// Wait for the user-1 to open the document
@@ -20,7 +30,7 @@ describe('Interfering second user.', function() {
 				.then(function(text) {
 
 					// We open the same document
-					helper.beforeAll(text, 'writer', true);
+					helper.beforeAll(text, getComponent(text), true);
 				});
 
 			cy.get('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
@@ -28,6 +38,10 @@ describe('Interfering second user.', function() {
 
 			helper.doIfOnMobile(function() {
 				mobileHelper.enableEditingMobile();
+			});
+
+			helper.doIfInCalc(function() {
+				calcHelper.dblClickOnFirstCell();
 			});
 
 			// We are doing some keyboard input activity here.
