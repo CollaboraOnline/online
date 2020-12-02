@@ -120,6 +120,17 @@
 	border: 2px dashed darkslateblue;
 }
 
+/* checkbox */
+
+.jsdialog.checkbutton {
+	white-space: nowrap;
+}
+
+.jsdialog.checkbutton input,
+.jsdialog.checkbutton label {
+	vertical-align: middle;
+}
+
 /* Autofilter dropdown */
 
 .autofilter.row {
