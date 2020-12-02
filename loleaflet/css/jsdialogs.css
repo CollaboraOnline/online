@@ -132,6 +132,12 @@
 	vertical-align: middle;
 }
 
+/* listbox */
+
+.jsdialog.ui-listbox {
+	min-width: 100px;
+}
+
 /* Autofilter dropdown */
 
 .autofilter.row {
