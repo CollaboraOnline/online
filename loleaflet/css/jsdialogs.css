@@ -48,6 +48,7 @@
 	display: block;
 	min-height: 50px;
 	min-width: 50px;
+	max-height: 150px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	width: 100%;
@@ -140,7 +141,7 @@
 	padding: 10px;
 }
 
-#menu.ui-treeview .ui-treeview-body {
+.autofilter-container #menu.ui-treeview .ui-treeview-body {
 	height: 140px;
 	width: 100%;
 }
@@ -187,7 +188,7 @@
 .autofilter-container #check_list_box.ui-treeview .ui-treeview-body {
 	width: 100%;
 	min-width: 200px;
-	min-height: 150px;
+	max-height: 150px;
 }
 
 /* Word count dialog */
