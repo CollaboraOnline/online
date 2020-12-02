@@ -713,6 +713,9 @@ button.leaflet-control-search-next
 .w2ui-icon.alignhorizontal{ background: url('images/lc_alignhorizontalcenter.svg') no-repeat center !important; }
 .w2ui-icon.alignright{ background: url('images/lc_alignright.svg') no-repeat center !important; }
 .w2ui-icon.alignblock{ background: url('images/lc_alignblock.svg') no-repeat center !important; }
+.w2ui-icon.aligntop{ background: url('images/lc_aligntop.svg') no-repeat center !important; }
+.w2ui-icon.alignvcenter{ background: url('images/lc_alignvcenter.svg') no-repeat center !important; }
+.w2ui-icon.alignbottom{ background: url('images/lc_alignbottom.svg') no-repeat center !important; }
 .w2ui-icon.linespacing{ background: url('images/lc_linespacing.svg') no-repeat center !important; }
 .w2ui-icon.numbering{ background: url('images/lc_defaultnumbering.svg') no-repeat center !important; }
 .w2ui-icon.bullet{ background: url('images/lc_defaultbullet.svg') no-repeat center !important; }
