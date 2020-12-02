@@ -208,6 +208,23 @@
 	max-height: 150px;
 }
 
+/* Pivot Table dialog */
+
+.jsdialog-container .ui-expander + .ui-expander-content #source-button,
+.jsdialog-container .ui-expander + .ui-expander-content #destination-button {
+	background: url('images/refinp1.svg') no-repeat center;
+}
+
+.jsdialog-container #source-button,
+.jsdialog-container #destination-button {
+	background: url('images/refinp2.svg') no-repeat center;
+	height: 25px;
+	width: 25px;
+	border: 1px solid silver;
+	vertical-align: middle;
+	padding: 15px;
+}
+
 /* Word count dialog */
 
 #label9, #documentlabel-mobile {
