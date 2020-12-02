@@ -634,8 +634,8 @@ L.GridLayer = L.Layer.extend({
 
 			// create DOM fragment to append tiles in one batch
 			var fragment = document.createDocumentFragment();
-			var tilePositionsX = '';
-			var tilePositionsY = '';
+			var tilePositionsX = [];
+			var tilePositionsY = [];
 
 			for (i = 0; i < queue.length; i++) {
 				coords = queue[i];
@@ -674,32 +674,16 @@ L.GridLayer = L.Layer.extend({
 				}
 				if (!this._tileCache[key]) {
 					var twips = this._coordsToTwips(coords);
-					if (tilePositionsX !== '') {
-						tilePositionsX += ',';
-					}
-					tilePositionsX += twips.x;
-					if (tilePositionsY !== '') {
-						tilePositionsY += ',';
-					}
-					tilePositionsY += twips.y;
+					tilePositionsX.push(twips.x);
+					tilePositionsY.push(twips.y);
 				}
 				else {
 					tile.src = this._tileCache[key];
 				}
 			}
 
-			if (tilePositionsX !== '' && tilePositionsY !== '') {
-				var message = 'tilecombine ' +
-					'nviewid=0 ' +
-					'part=' + this._selectedPart + ' ' +
-					'width=' + this._tileWidthPx + ' ' +
-					'height=' + this._tileHeightPx + ' ' +
-					'tileposx=' + tilePositionsX + ' ' +
-					'tileposy=' + tilePositionsY + ' ' +
-					'tilewidth=' + this._tileWidthTwips + ' ' +
-					'tileheight=' + this._tileHeightTwips;
-
-				this._map._socket.sendMessage(message, '');
+			if (tilePositionsX.length > 0 && tilePositionsY.length > 0) {
+				this._sendTileCombineRequest(this._selectedPart, tilePositionsX, tilePositionsY);
 			}
 
 			this._level.el.appendChild(fragment);
@@ -718,6 +702,7 @@ L.GridLayer = L.Layer.extend({
 			// this._cellCursorXY = new L.Point(-1, -1);
 			// this._prevCellCursorXY = new L.Point(0, 0);
 		}
+		this._initPreFetchPartTiles();
 	},
 
 	_requestNewTiles: function () {
@@ -1018,38 +1003,20 @@ L.GridLayer = L.Layer.extend({
 			rectangles.push(rectQueue);
 		}
 
-		var twips, msg;
+		var twips;
 		for (var r = 0; r < rectangles.length; ++r) {
 			rectQueue = rectangles[r];
-			var tilePositionsX = '';
-			var tilePositionsY = '';
+			var tilePositionsX = [];
+			var tilePositionsY = [];
 			for (i = 0; i < rectQueue.length; i++) {
 				coords = rectQueue[i];
 				twips = this._coordsToTwips(coords);
-
-				if (tilePositionsX !== '') {
-					tilePositionsX += ',';
-				}
-				tilePositionsX += twips.x;
-
-				if (tilePositionsY !== '') {
-					tilePositionsY += ',';
-				}
-				tilePositionsY += twips.y;
+				tilePositionsX.push(twips.x);
+				tilePositionsY.push(twips.y);
 			}
-
-			twips = this._coordsToTwips(coords);
-			msg = 'tilecombine ' +
-				'nviewid=0 ' +
-				'part=' + coords.part + ' ' +
-				'width=' + this._tileWidthPx + ' ' +
-				'height=' + this._tileHeightPx + ' ' +
-				'tileposx=' + tilePositionsX + ' '	+
-				'tileposy=' + tilePositionsY + ' ' +
-				'tilewidth=' + this._tileWidthTwips + ' ' +
-				'tileheight=' + this._tileHeightTwips;
-			this._map._socket.sendMessage(msg, '');
+			this._sendTileCombineRequest(coords.part, tilePositionsX, tilePositionsY);
 		}
+		this._initPreFetchPartTiles();
 	},
 
 	_tileReady: function (coords, err, tile) {
@@ -1175,6 +1142,63 @@ L.GridLayer = L.Layer.extend({
 			if (!this._tiles[key].loaded) { return false; }
 		}
 		return true;
+	},
+
+	_initPreFetchPartTiles: function() {
+		// check existing timeout and clear it before the new one
+		if (this._partTilePreFetcher)
+			clearTimeout(this._partTilePreFetcher);
+		this._partTilePreFetcher =
+			setTimeout(
+				L.bind(function() {
+					this._preFetchPartTiles(this._selectedPart + this._map._partsDirection);
+				},
+				this),
+			100 /*ms*/);
+	},
+
+	_preFetchPartTiles: function(part) {
+		var center = this._map.getCenter();
+		var zoom = this._map.getZoom();
+		var pixelBounds = this._map.getPixelBounds(center, zoom);
+		var tileRange = this._pxBoundsToTileRange(pixelBounds);
+		var tilePositionsX = [];
+		var tilePositionsY = [];
+		for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
+			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
+				var coords = new L.Point(i, j);
+				coords.z = zoom;
+				coords.part = part;
+
+				if (!this._isValidTile(coords))
+					continue;
+
+				var key = this._tileCoordsToKey(coords);
+				if (this._tileCache[key])
+					continue;
+
+				var twips = this._coordsToTwips(coords);
+				tilePositionsX.push(twips.x);
+				tilePositionsY.push(twips.y);
+			}
+		}
+		if (tilePositionsX.length <= 0 || tilePositionsY.length <= 0) {
+			return;
+		}
+		this._sendTileCombineRequest(part, tilePositionsX, tilePositionsY);
+	},
+
+	_sendTileCombineRequest: function(part, tilePositionsX, tilePositionsY) {
+		var msg = 'tilecombine ' +
+			'nviewid=0 ' +
+			'part=' + part + ' ' +
+			'width=' + this._tileWidthPx + ' ' +
+			'height=' + this._tileHeightPx + ' ' +
+			'tileposx=' + tilePositionsX.join() + ' '	+
+			'tileposy=' + tilePositionsY.join() + ' ' +
+			'tilewidth=' + this._tileWidthTwips + ' ' +
+			'tileheight=' + this._tileHeightTwips;
+		this._map._socket.sendMessage(msg, '');
 	},
 
 	_preFetchTiles: function (forceBorderCalc) {
