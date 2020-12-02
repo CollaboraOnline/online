@@ -243,9 +243,9 @@ L.Socket = L.Class.extend({
 	_logSocket: function(type, msg) {
 		var fullDebug = this._map._docLayer && this._map._docLayer._debug;
 
-		if (fullDebug) 
+		if (fullDebug)
 			this._map._docLayer._debugSetPostMessage(type,msg);
-		
+
 		if (!window.protocolDebug && !fullDebug)
 			return;
 
@@ -997,16 +997,16 @@ L.Socket = L.Class.extend({
 			if (command.type === 'text') {
 				docLayer = new L.WriterTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
+					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
+					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
 					docType: command.type
 				});
 			}
 			else if (command.type === 'spreadsheet') {
 				docLayer = new L.CalcTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
+					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
+					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
 					docType: command.type
 				});
 
@@ -1035,8 +1035,8 @@ L.Socket = L.Class.extend({
 				}
 				docLayer = new L.ImpressTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
+					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
+					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
 					docType: command.type
 				});
 			}

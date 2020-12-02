@@ -489,6 +489,7 @@ L.GridLayer = L.Layer.extend({
 		];
 	},
 
+	/// Tile size (256px) is in core pixels. When we want to convert tileSize from core pixels to CSS pixels, we have to divide it with _dpiScale.
 	_getTileSize: function () {
 		return this.options.tileSize;
 	},
