@@ -3,6 +3,8 @@
 require('cypress-wait-until');
 require('cypress-file-upload');
 
+var mobileWizardIdleTime = 1250;
+
 function loadTestDocLocal(fileName, subFolder, noFileCopy) {
 	cy.log('Loading test document with a local build - start.');
 	cy.log('Param - fileName: ' + fileName);
@@ -616,7 +618,7 @@ function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 		});
 }
 
-function waitUntilIdle(selector, content, waitingTime = 1000) {
+function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Waiting item to be idle - start.');
 	cy.log('Param - selector: ' + selector);
 	cy.log('Param - content: ' + content);
@@ -681,7 +683,7 @@ function waitUntilIdle(selector, content, waitingTime = 1000) {
 // IMPORTANT: don't use this if there is no
 // flickering. Use simple click() instead. This method
 // is much slower.
-function clickOnIdle(selector, content, waitingTime = 1000) {
+function clickOnIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Clicking on item when idle - start.');
 
 	waitUntilIdle(selector, content, waitingTime);
@@ -697,7 +699,7 @@ function clickOnIdle(selector, content, waitingTime = 1000) {
 }
 
 // See comments at clickOnIdle() method.
-function inputOnIdle(selector, input, waitingTime = 1000) {
+function inputOnIdle(selector, input, waitingTime = mobileWizardIdleTime) {
 	cy.log('Type into an input item when idle - start.');
 
 	waitUntilIdle(selector, undefined, waitingTime);
