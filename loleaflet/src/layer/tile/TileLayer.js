@@ -3624,6 +3624,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._debugInfo2 = new L.LayerGroup();
 			this._debugAlwaysActive = new L.LayerGroup();
 			this._debugShowClipboard = new L.LayerGroup();
+			this._canvasDevicePixelGrid = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
 			this._map.addLayer(this._debugInfo);
 			this._map.addLayer(this._debugInfo2);
@@ -3632,7 +3633,8 @@ L.TileLayer = L.GridLayer.extend({
 				'Screen overlays': this._debugInfo2,
 				'Show Clipboard': this._debugShowClipboard,
 				'Always active': this._debugAlwaysActive,
-				'Typing': this._debugTyper
+				'Typing': this._debugTyper,
+				'Canvas device pixel grid': this._canvasDevicePixelGrid
 			};
 			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(this._map);
 
@@ -3647,7 +3649,8 @@ L.TileLayer = L.GridLayer.extend({
 					for (var i = 0; i < this._debugDataNames.length; i++) {
 						this._debugData[this._debugDataNames[i]].addTo(this._map);
 					}
-				}
+				} else if (e.layer === this._canvasDevicePixelGrid)
+					this._map._canvasDevicePixelGrid = true;
 			}, this);
 			this._map.on('layerremove', function(e) {
 				if (e.layer === this._debugAlwaysActive) {
@@ -3660,7 +3663,8 @@ L.TileLayer = L.GridLayer.extend({
 					for (var i in this._debugData) {
 						this._debugData[i].remove();
 					}
-				}
+				} else if (e.layer === this._canvasDevicePixelGrid)
+					this._map._canvasDevicePixelGrid = false;
 			}, this);
 		}
 		this._debugTimePING = this._debugGetTimeArray();
@@ -3773,7 +3777,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._debugLoremPos++;
 		this._debugTypeTimeoutId = setTimeout(L.bind(this._debugTypeTimeout, this), 50);
 	},
-	
+
 	getCommentWizardStructure: function(menuStructure) {
 		if (menuStructure === undefined) {
 			menuStructure = {
