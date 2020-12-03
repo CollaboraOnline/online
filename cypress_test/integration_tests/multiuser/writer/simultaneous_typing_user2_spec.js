@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Simultaneous typing: user-2.', function() {
+describe.skip('Simultaneous typing: user-2.', function() {
 	var testFileName = 'simultaneous_typing.odt';
 
 	beforeEach(function() {
