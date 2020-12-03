@@ -22,14 +22,14 @@ L.Control.Header = L.Control.extend({
 		this._canvasHeight = 0;
 		this._clicks = 0;
 		this._current = -1;
-		this._resizeHandleSize = 15;
+		this._dpiScale = L.Util.getDpiScaleFactor(true);
+		this._resizeHandleSize = 15 * this._dpiScale;
 		this._selection = {start: -1, end: -1};
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
 		this._hitResizeArea = false;
 		this._overHeaderArea = false;
 		this._hammer = null;
-		this._dpiScale = L.Util.getDpiScaleFactor(true);
 
 		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
 
@@ -74,7 +74,7 @@ L.Control.Header = L.Control.extend({
 		var rate = fontHeight / fontSize;
 		this._font = {
 			_hdr: this,
-			_baseFontSize: fontSize,
+			_baseFontSize: fontSize * this._dpiScale,
 			_fontSizeRate: rate,
 			_fontFamily: fontFamily,
 			getFont: function() {
