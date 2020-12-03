@@ -1045,6 +1045,12 @@ L.TileLayer = L.GridLayer.extend({
 	_onJSDialogMsg: function (textMsg) {
 		if (window.mode.isMobile()) {
 			var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
+
+			if (msgData.children && !L.Util.isArray(msgData.children)) {
+				console.warn('_onJSDialogMsg: The children\'s data should be created of array type');
+				return;
+			}
+
 			if (msgData.type == 'borderwindow')
 				return;
 			if (msgData.enabled) {
