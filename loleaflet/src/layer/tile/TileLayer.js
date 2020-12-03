@@ -3649,8 +3649,10 @@ L.TileLayer = L.GridLayer.extend({
 					for (var i = 0; i < this._debugDataNames.length; i++) {
 						this._debugData[this._debugDataNames[i]].addTo(this._map);
 					}
-				} else if (e.layer === this._canvasDevicePixelGrid)
+				} else if (e.layer === this._canvasDevicePixelGrid) {
 					this._map._canvasDevicePixelGrid = true;
+					this._map._docLayer._painter._paintWholeCanvas();
+				}
 			}, this);
 			this._map.on('layerremove', function(e) {
 				if (e.layer === this._debugAlwaysActive) {
@@ -3663,8 +3665,10 @@ L.TileLayer = L.GridLayer.extend({
 					for (var i in this._debugData) {
 						this._debugData[i].remove();
 					}
-				} else if (e.layer === this._canvasDevicePixelGrid)
+				} else if (e.layer === this._canvasDevicePixelGrid) {
 					this._map._canvasDevicePixelGrid = false;
+					this._map._docLayer._painter._paintWholeCanvas();
+				}
 			}, this);
 		}
 		this._debugTimePING = this._debugGetTimeArray();
