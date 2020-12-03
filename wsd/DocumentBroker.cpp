@@ -280,6 +280,7 @@ void DocumentBroker::pollThread()
         return;
     }
 
+    // We have a child process.
     _childProcess->setDocumentBroker(shared_from_this());
     LOG_INF("Doc [" << _docKey << "] attached to child [" << _childProcess->getPid() << "].");
 
@@ -332,7 +333,7 @@ void DocumentBroker::pollThread()
             if (_childProcess)
                 _childProcess->terminate();
 
-            stop("Load timed out");
+            stop("Doc lifetime expired");
             continue;
         }
 

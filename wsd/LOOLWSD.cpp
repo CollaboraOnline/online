@@ -2395,7 +2395,7 @@ private:
         }
 
         Poco::MemoryInputStream startmessage(&socket->getInBuffer()[0],
-                                             socket->getInBuffer().size());;
+                                             socket->getInBuffer().size());
 
 #if 0 // debug a specific command's payload
         if (Util::findInVector(socket->getInBuffer(), "insertfile") != std::string::npos)
