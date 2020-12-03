@@ -2209,6 +2209,28 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																	'enabled': 'true',
 																	'children': [
 																		{
+																			'id': 'Insert-Section-PivotTable',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'SectionPivotTable',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:DataDataPilotRun', 'spreadsheet'),
+																							'command': '.uno:DataDataPilotRun'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
 																			'id': 'Insert-Section-Image',
 																			'type': 'container',
 																			'text': '',
