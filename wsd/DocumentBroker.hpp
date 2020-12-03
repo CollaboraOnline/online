@@ -105,12 +105,132 @@ class ClientSession;
 
 /// There is one DocumentBroker object in the WSD process for each document that is open (in 1..n sessions).
 
-
+/// The Document State:
+///
+/// The Document lifecycle is managed through
+/// the DocumentState class, which encapsulates
+/// the different stages of the Document's
+/// main-sequence events:
+///
 /// To disambiguate between Storage and Core, we
 /// use 'Download' for Reading from the Storage,
 /// and 'Load' for Loading a document in Core.
 /// Similarly, we 'Upload' to Storage after we
 /// 'Save' the document in Core.
+///
+/// None: the Document doesn't exist, pending downloading.
+/// Downloading: the Document is being downloaded from Storage.
+/// Loading: the Document is being loaded into Core.
+/// Live: Steady-state; the document is available (see below).
+/// Destroying: End-of-life, marked to save/upload and destroy.
+/// Destroyed: Unloading complete, destruction of class pending.
+///
+
+/// The Document Data State:
+///
+/// There are three locations to track:
+/// 1) the Storage (wopi host)
+/// 2) the Local file on disk (in jail)
+/// 3) in memory (in Core).
+///
+/// We download the document from Storage to disk, then
+/// we load it in memory (Core). From then on, we track the
+/// state after modification (in memory), saving (to disk),
+/// and uploading (to Storage).
+///
+/// Download: Storage -> Local
+///     Load: Local -> Core
+///     Save: Core -> Local
+///   Upload: Local -> Storage
+///
+/// This is the state matrix during the key operations:
+/// |-------------------------------------------|
+/// | State       | Storage | Local   | Core    |
+/// |-------------|---------|---------|---------|
+/// | Downloading | Reading | Writing | Idle    |
+/// | Loading     | Idle    | Reading | Writing |
+/// | Saving      | Idle    | Writing | Reading |
+/// | Uploading   | Writing | Reading | Idle    |
+/// |-------------------------------------------|
+///
+/// Downloading is done synchronously, for now, but
+/// is provisioned for async in the state machine.
+/// Similarly, we could download asynchronously,
+/// but there is little to gain by doing that,
+/// since nothing much can happen without, or
+/// before, loading a document.
+///
+/// The decision for Saving and Uploading are separate.
+/// Without the user's intervention, we auto-save
+/// when the user has been idle for some configurable
+/// time, or when a certain configurable minimum time
+/// has elapsed since the last save (regardless of user
+/// activity). Once we get the save result from Core
+/// (and ideally with success), we upload the document
+/// immediately. Previously, this was a synchronous
+/// process, which is now being reworked into an asynch.
+///
+/// The user can invoke both Save and Upload operations
+/// however, and in more than one way.
+/// Saving can of course be done by simply invoking the
+/// command, which also uploads.
+/// Forced Uploading has a narrower use-case: when the
+/// Storage has a newer version of the document,
+/// uploading fails with 'document conflict' error, which
+/// the user can override by forcing uploading to Storage,
+/// thereby overwriting the Storage version with the
+/// current one.
+/// Then there are the Save-As and Rename commands, which
+/// only affect the document in Storage by invoking
+/// the upload functionality with special headers.
+///
+/// When either of these operations fails, the next
+/// opportunity to review potential actions is during
+/// the next poll cycle.
+/// To separate these two operations in code and in time,
+/// we need to track the document version in each of
+/// Core and Storage. That is, when the document is saved
+/// a newer 'version number' is assigned, so that it would
+/// be different from the 'version number' of the document
+/// in Storage. The easiest way to achieve this is by
+/// using the modified time on the file on disk. While
+/// this has certain limitations, in practice it's a
+/// good solution. We expect each time Core saves the
+/// Document to disk, the file's timestamp will change.
+/// Each time we Upload a version of the Document to
+/// Storage, we track the local file's timestamp that we
+/// uploaded. We then need to Upload only when the last
+/// Uploaded timestamp is different from that on disk.
+/// Although it's technically possible for the system
+/// clock to change, it's unlikely for the timestamp to
+/// be identical to the last Uploaded one, down to the
+/// millisecond.
+///
+/// This way, if, say, Uploading fails after
+/// Saving, if the subsequent Save fails, we don't skip
+/// Uploading, since the Storage would still be outdated.
+/// Similarly, if after Saving we fail to Upload, a
+/// subsequent Save might yield 'unmodified' result and
+/// fail to Save a new copy of the document. This should
+/// not skip Uploading, since the document on disk is
+/// still newer than the one in Storage.
+///
+/// Notice that we cannot compare the timestamp of the
+/// file on disk to the timestamp returned from Storage.
+/// For one, the Storage might not even provide a
+/// timestamp (or a valid one). But more importantly,
+/// the timestamp on disk might not be comparable to
+/// that in Storage (due to timezone and/or precision
+/// differences).
+///
+/// Two new managers are provisioned to mind about these
+/// two domains: SaveManager and StorageManager.
+/// SaveManager is reponsible for tracking the operations
+/// between Core and local disk, while StorageManager
+/// for those between Storage and local disk.
+/// In practice, each represents and tracks the state of
+/// the Document in Core and Storage, respectively.
+///
 
 class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 {
