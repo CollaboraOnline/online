@@ -173,9 +173,9 @@ L.CanvasTilePainter = L.Class.extend({
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
-			var paneBounds = this._layer._cssBoundsToCore(ctx.paneBoundsList[i]);
+			var paneBounds = ctx.paneBoundsList[i];
 			// co-ordinates of the main-(bottom right) pane in core document pixels
-			var viewBounds = this._layer._cssBoundsToCore(ctx.viewBounds);
+			var viewBounds = ctx.viewBounds;
 
 			// into real pixel-land ...
 			paneBounds.round();
