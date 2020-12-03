@@ -280,8 +280,6 @@ void DocumentBroker::pollThread()
 
     setupPriorities();
 
-    static const bool AutoSaveEnabled = !std::getenv("LOOL_NO_AUTOSAVE");
-
 #if !MOBILEAPP
     static const size_t IdleDocTimeoutSecs = LOOLWSD::getConfigValue<int>(
                                                       "per_document.idle_timeout_secs", 3600);
@@ -302,7 +300,6 @@ void DocumentBroker::pollThread()
 
     auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
-    auto last30SecCheckTime = std::chrono::steady_clock::now();
 
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
@@ -404,12 +401,10 @@ void DocumentBroker::pollThread()
                 stop(reason);
             }
         }
-        else if (AutoSaveEnabled && !_stop &&
-                 std::chrono::duration_cast<std::chrono::seconds>(now - last30SecCheckTime).count() >= 30)
+        else if (!_stop && _saveManager.needAutosaveCheck())
         {
             LOG_TRC("Triggering an autosave.");
             autoSave(false);
-            last30SecCheckTime = std::chrono::steady_clock::now();
         }
 
 #if !MOBILEAPP
@@ -1315,6 +1310,8 @@ void DocumentBroker::refreshLock()
 bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 {
     assertCorrectThread();
+
+    _saveManager.autosaveChecked();
 
     LOG_TRC("autoSave(): forceful? " << force);
     if (_sessions.empty() || _storage == nullptr || !isLoaded() ||
