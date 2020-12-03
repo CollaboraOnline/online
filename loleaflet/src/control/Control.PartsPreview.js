@@ -48,6 +48,7 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('insertpage', this._insertPreview, this);
 		map.on('deletepage', this._deletePreview, this);
 		map.on('docsize', this._updateAllPreview, this);
+		map.on('scrolltopart', this._scrollToPart, this);
 	},
 
 	createScrollbar: function () {
@@ -98,24 +99,6 @@ L.Control.PartsPreview = L.Control.extend({
 
 				this.createScrollbar();
 				var bottomBound = this._getBottomBound();
-
-				this._map.on('click', function() {
-					this.partsFocused = false;
-				}, this);
-
-				this._map.on('keydown', function(e) {
-					if (this.partsFocused === true) {
-						switch (e.originalEvent.keyCode) {
-						case 38:
-							this._setPart('prev');
-							break;
-						case 40:
-							this._setPart('next');
-							break;
-						}
-					}
-				}, this);
-
 				this._scrollContainer = $(this._partsPreviewCont).find('.mCSB_container').get(0);
 
 				// Add a special frame just as a drop-site for reordering.
@@ -332,34 +315,29 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
-	_setPart: function (e) {
-		if (e === 'prev' || e === 'next') {
-			this._map.setPart(e);
-			var nodePos;
-			var node = $(this._partsPreviewCont).find('.mCSB_container .preview-frame')[this._map.getCurrentPartNumber()];
-			if (!this._isPreviewVisible(this._map.getCurrentPartNumber())) {
-				if (e === 'prev') {
-					setTimeout(function () {
-						$(this._partsPreviewCont).mCustomScrollbar('scrollTo', node);
-					}, 50);
-				} else if (this._direction === 'x') {
-					var nodeWidth = $(node).width();
-					var sliderWidth = $(this._partsPreviewCont).width();
-					nodePos = $(node).position().left;
-					setTimeout(function () {
-						$(this._partsPreviewCont).mCustomScrollbar('scrollTo', nodePos-(sliderWidth-nodeWidth-nodeWidth/2));
-					}, 50);
-				} else {
-					var nodeHeight = $(node).height();
-					var sliderHeight= $(this._partsPreviewCont).height();
-					nodePos = $(node).position().top;
-					setTimeout(function () {
-						$(this._partsPreviewCont).mCustomScrollbar('scrollTo', nodePos-(sliderHeight-nodeHeight-nodeHeight/2));
-					}, 50);
-				}
+	_scrollToPart: function() {
+		var partNo = this._map.getCurrentPartNumber();
+		var sliderSize, nodePos, nodeOffset, nodeMargin;
+		var node = $(this._partsPreviewCont).find('.mCSB_container .preview-frame')[partNo];
+
+		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo, false))) {
+			nodePos = this._direction === 'x' ? $(node).position().left : $(node).position().top;
+			nodeMargin = this._direction === 'x' ? parseInt($(node).css('margin-right')) : parseInt($(node).css('margin-bottom')); 
+			nodeOffset = (this._direction === 'x' ? $(node).width() : $(node).height()) + nodeMargin;
+			sliderSize = this._direction === 'x' ? $(this._partsPreviewCont).width() : $(this._partsPreviewCont).height();
+			if (this._map._partsDirection < 0) {
+				setTimeout(function() {
+					$(this._partsPreviewCont).mCustomScrollbar('scrollTo', nodePos + nodeOffset);
+				}, 50);
+			} else {
+				setTimeout(function() {
+					$(this._partsPreviewCont).mCustomScrollbar('scrollTo', (nodePos + nodeOffset) - (sliderSize - nodeOffset - nodeMargin));
+				}, 50);
 			}
-			return;
 		}
+	},
+
+	_setPart: function (e) {
 		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
