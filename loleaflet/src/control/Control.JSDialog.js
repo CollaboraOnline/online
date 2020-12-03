@@ -29,7 +29,11 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		if (data.action === 'close')
+		{
+			if (data.id && this.dialogs[data.id])
+				L.DomUtil.remove(this.dialogs[data.id]);
 			return;
+		}
 
 		var container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
 		container.id = data.id;
