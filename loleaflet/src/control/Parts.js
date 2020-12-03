@@ -31,6 +31,8 @@ L.Map.include({
 			return;
 		}
 
+		this.fire('scrolltopart');
+
 		docLayer._selectedParts.push(docLayer._selectedPart);
 
 		if (docLayer.isCursorVisible()) {
