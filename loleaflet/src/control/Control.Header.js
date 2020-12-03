@@ -29,6 +29,7 @@ L.Control.Header = L.Control.extend({
 		this._hitResizeArea = false;
 		this._overHeaderArea = false;
 		this._hammer = null;
+		this._dpiScale = L.Util.getDpiScaleFactor(true);
 
 		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
 
@@ -585,12 +586,6 @@ L.Control.Header = L.Control.extend({
 		return Math.round(this._getParallelPos(this.converter(point)));
 	},
 
-	canvasDPIScale: function () {
-		var docLayer = this._map && this._map._docLayer;
-		var scale = docLayer && docLayer.canvasDPIScale ? docLayer.canvasDPIScale() : L.getDpiScaleFactor();
-		return scale;
-	},
-
 	_setCanvasSizeImpl: function (container, canvas, property, value, isCorner) {
 		if (!value) {
 			value = parseInt(L.DomUtil.getStyle(container, property));
@@ -599,15 +594,14 @@ L.Control.Header = L.Control.extend({
 			L.DomUtil.setStyle(container, property, value + 'px');
 		}
 
-		var scale = this.canvasDPIScale();
 		if (property === 'width') {
-			canvas.width = Math.floor(value * scale);
+			canvas.width = Math.floor(value * this._dpiScale);
 			if (!isCorner)
 				this._canvasWidth = value;
 			// console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
-			canvas.height = Math.floor(value * scale);
+			canvas.height = Math.floor(value * this._dpiScale);
 			if (!isCorner)
 				this._canvasHeight = value;
 			// console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
@@ -730,17 +724,16 @@ L.Control.Header = L.Control.extend({
 			return;
 
 		ctx.save();
-		var scale = this.canvasDPIScale();
-		ctx.scale(scale, scale);
+		ctx.scale(this._dpiScale, this._dpiScale);
 
 		ctx.fillStyle = this._borderColor;
 		if (this._isColumn) {
-			var startY = this._cornerCanvas.height / scale - (L.Control.Header.colHeaderHeight + this._borderWidth);
+			var startY = this._cornerCanvas.height / this._dpiScale - (L.Control.Header.colHeaderHeight + this._borderWidth);
 			if (startY > 0)
 				ctx.fillRect(0, startY, this._cornerCanvas.width, this._borderWidth);
 		}
 		else {
-			var startX = this._cornerCanvas.width / scale - (L.Control.Header.rowHeaderWidth + this._borderWidth);
+			var startX = this._cornerCanvas.width / this._dpiScale - (L.Control.Header.rowHeaderWidth + this._borderWidth);
 			if (startX > 0)
 				ctx.fillRect(startX, 0, this._borderWidth, this._cornerCanvas.height);
 		}

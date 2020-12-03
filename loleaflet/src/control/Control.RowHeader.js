@@ -39,8 +39,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._setCanvasWidth();
 		this._setCanvasHeight();
 
-		var scale = this.canvasDPIScale();
-		this._canvasContext.scale(scale, scale);
+		this._canvasContext.scale(this._dpiScale, this._dpiScale);
 		this._headerWidth = this._canvasWidth;
 		L.Control.Header.rowHeaderWidth = this._canvasWidth;
 
@@ -217,8 +216,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			return;
 
 		ctx.save();
-		var scale = this.canvasDPIScale();
-		ctx.scale(scale, scale);
+		ctx.scale(this._dpiScale, this._dpiScale);
 		// background gradient
 		var selectionBackgroundGradient = null;
 		if (isHighlighted) {
@@ -279,8 +277,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var height = group.endPos - group.startPos;
 
 		ctx.save();
-		var scale = this.canvasDPIScale();
-		ctx.scale(scale, scale);
+		ctx.scale(this._dpiScale, this._dpiScale);
 
 		// clip mask
 		ctx.beginPath();
@@ -328,13 +325,12 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var ctx = this._cornerCanvasContext;
 		var ctrlHeadSize = this._groupHeadSize;
 		var levelSpacing = this._levelSpacing;
-		var scale = this.canvasDPIScale();
 
 		var startOrt = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
-		var startPar = this._cornerCanvas.height / scale - (ctrlHeadSize + (L.Control.Header.colHeaderHeight - ctrlHeadSize) / 2);
+		var startPar = this._cornerCanvas.height / this._dpiScale - (ctrlHeadSize + (L.Control.Header.colHeaderHeight - ctrlHeadSize) / 2);
 
 		ctx.save();
-		ctx.scale(scale, scale);
+		ctx.scale(this._dpiScale, this._dpiScale);
 		ctx.fillStyle = this._hoverColor;
 		ctx.fillRect(startOrt, startPar, ctrlHeadSize, ctrlHeadSize);
 		ctx.strokeStyle = 'black';
