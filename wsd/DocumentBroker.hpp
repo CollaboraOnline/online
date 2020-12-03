@@ -540,6 +540,46 @@ private:
     /// a convert-to request or doctored to look like one.
     virtual bool isConvertTo() const { return false; }
 
+private:
+    /// Responsible for managing document saving.
+    /// Tracks auto-saveing and its frequency.
+    class SaveManager final
+    {
+    public:
+        SaveManager()
+            : _lastAutosaveCheckTime(std::chrono::steady_clock::now())
+            , _isAutosaveEnabled(std::getenv("LOOL_NO_AUTOSAVE") == nullptr)
+        {
+        }
+
+        /// Return true iff auto save is enabled.
+        bool isAutosaveEnabled() const { return _isAutosaveEnabled; }
+
+        /// Returns true if we should issue an auto-save.
+        bool needAutosaveCheck() const
+        {
+            return isAutosaveEnabled()
+                   && std::chrono::duration_cast<std::chrono::seconds>(now()
+                                                                       - _lastAutosaveCheckTime)
+                          >= std::chrono::seconds(30);
+        }
+
+        /// Marks autosave check done.
+        void autosaveChecked() { _lastAutosaveCheckTime = now(); }
+
+        static std::chrono::steady_clock::time_point now()
+        {
+            return std::chrono::steady_clock::now();
+        }
+
+    private:
+        /// The time we last did an auto-save check, regarldess of outcome.
+        std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
+
+        /// Whether auto-saving is enabled at all or not.
+        const bool _isAutosaveEnabled;
+    };
+
 protected:
     /// Seconds to live for, or 0 forever
     std::chrono::seconds _limitLifeSeconds;
@@ -652,6 +692,9 @@ private:
 
     /// Indicates whether the last uploadToStorage operation was successful.
     bool _lastStorageUploadSuccessful;
+
+    /// Manage saving in Core.
+    SaveManager _saveManager;
 
     /// The last time we tried saving, regardless of whether the
     /// document was modified and saved or not.
