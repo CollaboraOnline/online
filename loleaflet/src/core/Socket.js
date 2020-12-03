@@ -1010,8 +1010,8 @@ L.Socket = L.Class.extend({
 			else if (command.type === 'spreadsheet') {
 				docLayer = new L.CalcTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips,
-					tileHeightTwips: tileHeightTwips,
+					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
+					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
 					docType: command.type
 				});
 
