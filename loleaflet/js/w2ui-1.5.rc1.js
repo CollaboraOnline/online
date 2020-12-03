@@ -421,8 +421,6 @@ var w2utils = (function ($) {
     }
 
     function formatTime (dateStr, format) { // IMPORTANT dateStr HAS TO BE valid JavaScript Date String
-        var months = w2utils.settings.shortmonths;
-        var fullMonths = w2utils.settings.fullmonths;
         if (!format) format = this.settings.timeFormat;
         if (dateStr === '' || dateStr == null || (typeof dateStr == 'object' && !dateStr.getMonth)) return '';
 
@@ -2763,7 +2761,6 @@ w2utils.event = {
     };
 
     $.fn.w2color = function (options, callBack) {
-        var obj   = this;
         var el    = $(this)[0];
         var index = [-1, -1];
         if ($.fn.w2colorPalette == null) {
@@ -2868,7 +2865,6 @@ w2utils.event = {
         };
 
         function getColorHTML(options) {
-            var color = options.color;
             var html  = '<div class="w2ui-color" onmousedown="event.stopPropagation(); event.preventDefault()">'+ // prevent default is needed otherwiser selection gets unselected
                         '<table cellspacing="5"><tbody>';
             for (var i = 0; i < pal.length - 1; i++) {
@@ -3414,7 +3410,6 @@ w2utils.event = {
         },
 
         clear: function () {
-            var obj        = this;
             var options    = this.options;
             // if money then clear value
             if (['money', 'currency'].indexOf(this.type) != -1) {
@@ -4660,7 +4655,6 @@ w2utils.event = {
                             var selHour, selMin;
                             if ($("#w2ui-overlay").length > 0) $('#w2ui-overlay')[0].hide();
                             $(obj.el).w2overlay('<div class="w2ui-reset w2ui-calendar-time"></div>', { css: { "background-color": "#fff" } });
-                            var h24 = (obj.options.format == 'h24');
                             $('#w2ui-overlay > div').html(obj.getHourHTML());
                             $('#w2ui-overlay .w2ui-time')
                                 .on('mousedown', function (event) {
@@ -5012,7 +5006,6 @@ w2utils.event = {
                         '        <div class="arrow-down" type="down"></div>'+
                         '    </div>'+
                         '</div>');
-                    var height = w2utils.getSize(obj.el, 'height');
                     helper = $(obj.el).next();
                     helper.css({
                             'color'         : $(obj.el).css('color'),
@@ -6293,7 +6286,6 @@ w2utils.event = {
             if (window.ThisIsTheiOSApp) return;
             if (this.tooltip == null) return;
             var $el  = $(this.box).find('#tb_'+ this.name + '_item_'+ w2utils.escapeId(id));
-            var item = this.get(id);
             $el.removeProp('_mouse_over');
             setTimeout(function () {
                 if ($el.prop('_mouse_over') !== true && $el.prop('_mouse_tooltip') === true) {
