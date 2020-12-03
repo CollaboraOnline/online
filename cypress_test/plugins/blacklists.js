@@ -116,9 +116,6 @@ var phpProxyBlackList = [
 			'Insert local image.'
 		]
 	],
-	['mobile/writer/table_properties_spec.js',
-		[]
-	],
 	['mobile/calc/hamburger_menu_spec.js',
 		[
 			'Save'
