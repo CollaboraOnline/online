@@ -368,7 +368,6 @@ def parseUnocommandsJS(onlineDir):
 
     f = open(onlineDir + '/loleaflet/src/unocommands.js', 'r',
              encoding='utf-8')
-    readingCommands = False
     for line in f:
         m = re.match(r"\t([^:]*):.*", line)
         if m:
