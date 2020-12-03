@@ -215,29 +215,6 @@ L.CanvasTilePainter = L.Class.extend({
 				this._canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
 			}
 		}
-
-		if (this._map._canvasDevicePixelGrid === true) {
-			var offset = 8;
-			var lineCount = Math.round(this._canvas.height / offset);
-			var columnCount = Math.round(this._canvas.width / offset);
-			this._canvasCtx.lineWidth = 1;
-			var currentX = 0;
-			var currentY = 0;
-			for (var i = 0; i < lineCount; i++) {
-				this._canvasCtx.beginPath();
-				this._canvasCtx.moveTo(0.5, currentY + 0.5);
-				this._canvasCtx.lineTo(this._canvas.width + 0.5, currentY + 0.5);
-				this._canvasCtx.stroke();
-				currentY += offset;
-			}
-			for (var i = 0; i < columnCount; i++) {
-				this._canvasCtx.beginPath();
-				this._canvasCtx.moveTo(currentX + 0.5, 0.5);
-				this._canvasCtx.lineTo(currentX + 0.5, this._canvas.height + 0.5);
-				this._canvasCtx.stroke();
-				currentX += offset;
-			}
-		}
 	},
 
 	_paintSimple: function (tile, ctx) {
@@ -253,6 +230,37 @@ L.CanvasTilePainter = L.Class.extend({
 			this._paintWithPanes(tile, ctx);
 		else
 			this._paintSimple(tile, ctx);
+
+		if (this._map._canvasDevicePixelGrid === true)
+			this._drawDebuggingGrid();
+	},
+
+	_drawDebuggingGrid: function() {
+		var offset = 8;
+		var count;
+		this._canvasCtx.lineWidth = 1;
+		var currentPos;
+		this._canvasCtx.strokeStyle = '#ff0000';
+
+		currentPos = 0;
+		count = Math.round(this._canvas.height / offset);
+		for (var i = 0; i < count; i++) {
+			this._canvasCtx.beginPath();
+			this._canvasCtx.moveTo(0.5, currentPos + 0.5);
+			this._canvasCtx.lineTo(this._canvas.width + 0.5, currentPos + 0.5);
+			this._canvasCtx.stroke();
+			currentPos += offset;
+		}
+
+		currentPos = 0;
+		count = Math.round(this._canvas.width / offset);
+		for (var i = 0; i < count; i++) {
+			this._canvasCtx.beginPath();
+			this._canvasCtx.moveTo(currentPos + 0.5, 0.5);
+			this._canvasCtx.lineTo(currentPos + 0.5, this._canvas.height + 0.5);
+			this._canvasCtx.stroke();
+			currentPos += offset;
+		}
 	},
 
 	_drawSplits: function () {
