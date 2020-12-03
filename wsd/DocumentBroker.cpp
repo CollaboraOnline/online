@@ -170,7 +170,6 @@ DocumentBroker::DocumentBroker(ChildType type,
     _documentChangedInStorage(false),
     _lastStorageUploadSuccessful(true),
     _lastSaveTime(std::chrono::steady_clock::now()),
-    _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
     _isModified(false),
     _interactive(false),
     _cursorPosX(0),
@@ -383,9 +382,8 @@ void DocumentBroker::pollThread()
             refreshLock();
 #endif
 
-        if (isSaving() &&
-            std::chrono::duration_cast<std::chrono::milliseconds>
-                    (now - _lastSaveRequestTime).count() <= COMMAND_TIMEOUT_MS)
+        //TODO: Review if we need this here.
+        if (_saveManager.isSaving() && !_saveManager.hasSavingTimedOut())
         {
             // We are saving, nothing more to do but wait (until we save or we timeout).
             continue;
@@ -433,8 +431,7 @@ void DocumentBroker::pollThread()
         if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
         {
             // Don't hammer on saving.
-            if (std::chrono::duration_cast<std::chrono::seconds>(now - _lastSaveRequestTime).count()
-                >= 5)
+            if (_saveManager.timeSinceLastSaveRequest() >= std::chrono::seconds(5))
             {
                 // Stop if there is nothing to save.
                 LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey()
@@ -998,7 +995,7 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     assertCorrectThread();
 
     // Record that we got a response to avoid timing out on saving.
-    _lastSaveResponseTime = std::chrono::steady_clock::now();
+    _saveManager.markLastSaveResponseTime();
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
@@ -1393,7 +1390,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
 {
     assertCorrectThread();
 
-    LOG_INF("Saving doc [" << _docKey << "].");
+    LOG_INF("Saving doc [" << _docKey << "] using session [" << sessionId << "].");
 
     if (_sessions.find(sessionId) != _sessions.end())
     {
@@ -1439,11 +1436,11 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         LOG_TRC(".uno:Save arguments: " << saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
         forwardToChild(sessionId, command);
-        _lastSaveRequestTime = std::chrono::steady_clock::now();
+        _saveManager.markLastSaveRequestTime(); //TODO: Don't update when forwarding fails!
         return true;
     }
 
-    LOG_ERR("Failed to save doc [" << _docKey << "]: No valid sessions.");
+    LOG_ERR("Failed to save doc [" << _docKey << "]: No valid session [" << sessionId << "].");
     return false;
 }
 
@@ -2642,8 +2639,10 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  thread start: " << Util::getSteadyClockAsString(_threadStart);
     os << "\n  last saved: " << Util::getSteadyClockAsString(_lastSaveTime);
-    os << "\n  last save request: " << Util::getSteadyClockAsString(_lastSaveRequestTime);
-    os << "\n  last save response: " << Util::getSteadyClockAsString(_lastSaveResponseTime);
+    os << "\n  last save request: "
+       << Util::getSteadyClockAsString(_saveManager.lastSaveRequestTime());
+    os << "\n  last save response: "
+       << Util::getSteadyClockAsString(_saveManager.lastSaveResponseTime());
     os << "\n  last storage save was successful: " << isLastStorageUploadSuccessful();
     os << "\n  last modified: " << Util::getHttpTime(_documentLastModifiedTime);
     os << "\n  file last modified: " << Util::getHttpTime(_lastFileModifiedTime);
