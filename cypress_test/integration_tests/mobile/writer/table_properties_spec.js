@@ -31,6 +31,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	function selectFullTable() {
 		helper.typeIntoDocument('{downarrow}{downarrow}{downarrow}{downarrow}');
 
+		// TODO: solve this better.
+		cy.wait(1000);
+
 		writerHelper.selectAllTextOfDoc();
 	}
 
