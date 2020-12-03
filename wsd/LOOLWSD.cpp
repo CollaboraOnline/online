@@ -2744,6 +2744,25 @@ private:
         }
         LOG_TRC("Clipboard request for us: " << serverId << " with tag " << tag);
 
+        if (serverId != Util::getProcessIdentifier())
+        {
+            std::string errMsg = "Cluster configuration error: mis-matching "
+                "serverid " + serverId + " vs. " + Util::getProcessIdentifier() +
+                "on request to URL: "+ request.getURI();
+            LOG_ERR(errMsg);
+            // we got the wrong request.
+            std::ostringstream oss;
+            oss << "HTTP/1.1 400\r\n"
+                << "Date: " << Util::getHttpTimeNow() << "\r\n"
+                << "User-Agent: LOOLWSD WOPI Agent\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n"
+                << errMsg;
+            socket->send(oss.str());
+            socket->shutdown();
+            return;
+        }
+
         const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(WOPISrc));
 
         std::shared_ptr<DocumentBroker> docBroker;
@@ -2753,7 +2772,7 @@ private:
             if (it != DocBrokers.end())
                 docBroker = it->second;
         }
-        if (docBroker && serverId == Util::getProcessIdentifier())
+        if (docBroker)
         {
             std::shared_ptr<std::string> data;
             DocumentBroker::ClipboardRequest type;
@@ -2789,11 +2808,7 @@ private:
             LOG_ERR("Invalid clipboard request: " << serverId << " with tag " << tag <<
                     " and broker: " << (docBroker ? "" : "not ") << "found");
 
-            std::string errMsg;
-            if (serverId != Util::getProcessIdentifier())
-                errMsg = "Cluster configuration error: mis-matching serverid " + serverId + " vs. " + Util::getProcessIdentifier();
-            else
-                errMsg = "Empty clipboard item / session tag " + tag;
+            std::string errMsg = "Empty clipboard item / session tag " + tag;
 
             // Bad request.
             HttpHelper::sendErrorAndShutdown(400, socket, errMsg);
