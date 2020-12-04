@@ -118,10 +118,6 @@ L.CanvasTilePainter = L.Class.extend({
 		this._lastSize = new L.Point(widthCSSPx, heightCSSPx);
 	},
 
-	canvasDPIScale: function () {
-		return parseInt(this._canvas.width) / this._width;
-	},
-
 	_syncTileContainerSize: function () {
 		var tileContainer = this._layer._container;
 		if (tileContainer) {
@@ -623,10 +619,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._wrapY ? L.Util.wrapNum(coords.y, this._wrapY) : coords.y,
 			coords.z,
 			coords.part);
-	},
-
-	canvasDPIScale: function () {
-		return this._painter.canvasDPIScale();
 	},
 
 	_pxBoundsToTileRanges: function (bounds) {
