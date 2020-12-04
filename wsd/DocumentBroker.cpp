@@ -212,9 +212,10 @@ void DocumentBroker::setupPriorities()
 #endif
 }
 
-void DocumentBroker::startThread()
+void DocumentBroker::setupTransfer(SocketDisposition &disposition,
+                                   SocketDisposition::MoveFunction transferFn)
 {
-    _poll->startThread();
+    disposition.setTransfer(*_poll.get(), transferFn);
 }
 
 void DocumentBroker::assertCorrectThread() const
@@ -2454,36 +2455,22 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
     if (!_clientSession)
         return false;
 
-    disposition.setMove([docBroker] (const std::shared_ptr<Socket> &moveSocket)
+    docBroker->setupTransfer(disposition, [docBroker] (const std::shared_ptr<Socket> &moveSocket)
         {
-            // Perform all of this after removing the socket
+            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+            docBroker->_clientSession->setSaveAsSocket(streamSocket);
 
-            // Make sure the thread is running before adding callback.
-            docBroker->startThread();
+            // First add and load the session.
+            docBroker->addSession(docBroker->_clientSession);
 
-            // We no longer own this socket.
-            moveSocket->setThreadOwner(std::thread::id());
+            // Load the document manually and request saving in the target format.
+            std::string encodedFrom;
+            Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
+            const std::string _load = "load url=" + encodedFrom;
+            std::vector<char> loadRequest(_load.begin(), _load.end());
+            docBroker->_clientSession->handleMessage(loadRequest);
 
-            docBroker->addCallback([docBroker, moveSocket]()
-                 {
-                     auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-                     docBroker->_clientSession->setSaveAsSocket(streamSocket);
-
-                     // Move the socket into DocBroker.
-                     docBroker->addSocketToPoll(moveSocket);
-
-                     // First add and load the session.
-                     docBroker->addSession(docBroker->_clientSession);
-
-                     // Load the document manually and request saving in the target format.
-                     std::string encodedFrom;
-                     Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
-                     const std::string _load = "load url=" + encodedFrom;
-                     std::vector<char> loadRequest(_load.begin(), _load.end());
-                     docBroker->_clientSession->handleMessage(loadRequest);
-
-                     // Save is done in the setLoaded
-                 });
+            // Save is done in the setLoaded
         });
     return true;
 }

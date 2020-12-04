@@ -875,11 +875,6 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::
     socket->shutdown();
 }
 
-void Admin::sendMetricsAsync(const std::shared_ptr<StreamSocket>& socket, const std::shared_ptr<Poco::Net::HTTPResponse>& response)
-{
-    addCallback([this, socket, response]{ sendMetrics(socket, response); });
-}
-
 void Admin::start()
 {
     bool haveMonitors = false;

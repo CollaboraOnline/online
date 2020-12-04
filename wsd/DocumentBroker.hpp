@@ -135,8 +135,9 @@ public:
     /// Called when removed from the DocBrokers list
     virtual void dispose() {}
 
-    /// Start processing events
-    void startThread();
+    /// setup the transfer of a socket into this DocumentBroker poll.
+    void setupTransfer(SocketDisposition &disposition,
+                       SocketDisposition::MoveFunction transferFn);
 
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
