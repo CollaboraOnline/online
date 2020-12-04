@@ -1622,8 +1622,6 @@ L.SheetDimension = L.Class.extend({
 		this._coreZoomFactor = this._tileSizePixels * 15.0 / this._tileSizeTwips;
 		this._twipsPerCorePixel = this._tileSizeTwips / this._tileSizePixels;
 
-		this._corePixelsPerCssPixel = this._dpiScale;
-
 		if (updatePositions) {
 			// We need to compute positions data for every zoom change.
 			this._updatePositions();
@@ -1650,7 +1648,7 @@ L.SheetDimension = L.Class.extend({
 			// Important: rounding needs to be done in core pixels to match core.
 			var sizeCorePxOne = Math.floor(size / dimensionObj._twipsPerCorePixel);
 			posCorePx += (sizeCorePxOne * spanLength);
-			var posCssPx = posCorePx / dimensionObj._corePixelsPerCssPixel;
+			var posCssPx = posCorePx / dimensionObj._dpiScale;
 			// position in core-pixel aligned twips.
 			var posTileTwips = Math.floor(posCorePx * dimensionObj._twipsPerCorePixel);
 			posPrintTwips += (size * spanLength);
@@ -1687,8 +1685,8 @@ L.SheetDimension = L.Class.extend({
 
 			if (!useCorePixels) {
 				// startpos and size are now in core pixels, so convert to css pixels.
-				startpos = Math.floor(startpos / this._corePixelsPerCssPixel);
-				size = Math.floor(size / this._corePixelsPerCssPixel);
+				startpos = Math.floor(startpos / this._dpiScale);
+				size = Math.floor(size / this._dpiScale);
 			}
 
 			return {
@@ -1737,7 +1735,7 @@ L.SheetDimension = L.Class.extend({
 		var inPixels = (unitName === 'csspixels' || unitName === 'corepixels');
 		if (inPixels) {
 			var useCorePixels = (unitName === 'corepixels');
-			var pixelScale = useCorePixels ? 1 : this._corePixelsPerCssPixel;
+			var pixelScale = useCorePixels ? 1 : this._dpiScale;
 			return {
 				startpos: (span.data.poscorepx - span.data.sizecore * numSizes) / pixelScale,
 				size: span.data.sizecore / pixelScale
@@ -1989,7 +1987,7 @@ L.SheetDimension = L.Class.extend({
 			unit = 'tiletwips';
 		}
 		else if (unit === 'csspixels') {
-			pos = pos * this._corePixelsPerCssPixel * this._twipsPerCorePixel;
+			pos = pos * this._dpiScale * this._twipsPerCorePixel;
 			unit = 'tiletwips';
 		}
 
@@ -2010,7 +2008,7 @@ L.SheetDimension = L.Class.extend({
 			unit = 'tiletwips';
 		}
 		else if (unit === 'csspixels') {
-			pos = pos * this._corePixelsPerCssPixel * this._twipsPerCorePixel;
+			pos = pos * this._dpiScale * this._twipsPerCorePixel;
 			unit = 'tiletwips';
 		}
 
