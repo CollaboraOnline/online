@@ -417,9 +417,9 @@ protected:
     /// Seconds to live for, or 0 forever
     std::chrono::seconds _limitLifeSeconds;
     std::string _uriOrig;
+private:
     /// What type are we: affects priority.
     ChildType _type;
-private:
     const Poco::URI _uriPublic;
     /// URL-based key. May be repeated during the lifetime of WSD.
     const std::string _docKey;
