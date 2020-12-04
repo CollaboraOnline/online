@@ -730,7 +730,7 @@ function doIfOnDesktop(callback) {
 		});
 }
 
-function moveCursor(direction) {
+function moveCursor(direction, checkCursorVis = true) {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
 
@@ -758,8 +758,10 @@ function moveCursor(direction) {
 	}
 	typeIntoDocument(key);
 
-	cy.get('.blinking-cursor')
-		.should('be.visible');
+	if (checkCursorVis === true) {
+		cy.get('.blinking-cursor')
+			.should('be.visible');
+	}
 
 	cy.get('@origCursorPos')
 		.then(function(origCursorPos) {
