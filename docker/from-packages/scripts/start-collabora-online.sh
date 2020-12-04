@@ -8,8 +8,8 @@ cp /etc/resolv.conf /etc/hosts /opt/lool/systemplate/etc/
 
 if test "${DONT_GEN_SSL_CERT-set}" == set; then
 # Generate new SSL certificate instead of using the default
-mkdir -p /opt/ssl/
-cd /opt/ssl/
+mkdir -p /tmp/ssl/
+cd /tmp/ssl/
 mkdir -p certs/ca
 openssl rand -writerand /opt/lool/.rnd
 openssl genrsa -out certs/ca/root.key.pem 2048
