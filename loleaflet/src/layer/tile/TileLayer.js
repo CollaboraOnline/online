@@ -3428,6 +3428,9 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onCurrentPageUpdate: function () {
+		if (!this._map)
+			return;
+
 		var mapCenter = this._map.project(this._map.getCenter());
 		if (!this._partPageRectanglesPixels || !(this._currentPage >= 0) || this._currentPage >= this._partPageRectanglesPixels.length ||
 				this._partPageRectanglesPixels[this._currentPage].contains(mapCenter)) {
