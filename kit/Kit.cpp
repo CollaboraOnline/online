@@ -1160,7 +1160,7 @@ private:
         const bool haveDocPassword = session->getHaveDocPassword();
         const std::string& lang = session->getLang();
         const std::string& deviceFormFactor = session->getDeviceFormFactor();
-        std::string spellOnline = "";
+        std::string spellOnline;
 
         std::string options;
         if (!lang.empty())

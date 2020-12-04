@@ -495,7 +495,7 @@ static void addStorageReuseCookie(Poco::Net::HTTPRequest& request, const std::st
         StringVector cookies = Util::tokenize(reuseStorageCookies, ':');
         LOG_TRC("Parsing reuse cookies to set in Wopi request ["
                 << reuseStorageCookies << "], found " << cookies.size() << " cookies.");
-        for (auto cookie : cookies)
+        for (const auto& cookie : cookies)
         {
             StringVector cookieTokens = Util::tokenize(cookies.getParam(cookie), '=');
             if (cookieTokens.size() == 2)
@@ -802,7 +802,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     if (JsonUtil::findJSONValue(object, "HideChangeTrackingControls", booleanFlag))
         _hideChangeTrackingControls = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
 
-    std::string overrideWatermarks = LOOLWSD::getConfigValue<std::string>("watermark.text", "");
+    static const std::string overrideWatermarks
+        = LOOLWSD::getConfigValue<std::string>("watermark.text", "");
     if (!overrideWatermarks.empty())
         _watermarkText = overrideWatermarks;
 }

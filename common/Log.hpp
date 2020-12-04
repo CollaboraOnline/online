@@ -56,7 +56,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::millisecond
     return os;
 }
 
-/// Format microeconds with the units suffix until we migrate to C++20.
+/// Format microseconds with the units suffix until we migrate to C++20.
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::microseconds& ms)
 {
     os << ms.count() << "us";

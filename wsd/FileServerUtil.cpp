@@ -111,7 +111,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
 std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
 {
     static std::string previousVars;
-    static std::string previousStyle("");
+    static std::string previousStyle;
 
     // early exit if we are serving the same thing
     if (cssVars == previousVars)
