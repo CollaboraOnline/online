@@ -49,35 +49,42 @@ namespace Poco
 }
 
 class Socket;
+class SocketPoll;
 
 /// Helper to allow us to easily defer the movement of a socket
 /// between polls to clarify thread ownership.
 class SocketDisposition final
 {
-    typedef std::function<void(const std::shared_ptr<Socket> &)> MoveFunction;
-    enum class Type { CONTINUE, CLOSED, MOVE };
-
-    Type _disposition;
-    MoveFunction _socketMove;
-    std::shared_ptr<Socket> _socket;
+    enum class Type { CONTINUE, CLOSED, MOVE, TRANSFER };
 
 public:
+    typedef std::function<void(const std::shared_ptr<Socket> &)> MoveFunction;
+
     SocketDisposition(const std::shared_ptr<Socket> &socket) :
         _disposition(Type::CONTINUE),
+        _toPoll(nullptr),
         _socket(socket)
     {}
     ~SocketDisposition()
     {
         assert (!_socketMove);
     }
-    void setMove()
-    {
-        _disposition = Type::MOVE;
-    }
+    // not the method you want.
     void setMove(MoveFunction moveFn)
     {
         _socketMove = std::move(moveFn);
         _disposition = Type::MOVE;
+    }
+    /** move, correctly change ownership of and insert into a new poll.
+     * @transferFn is called as a callback inside the new poll, which
+     * has its thread started if it is not already.
+     * @moveFn can be used for optional setup.
+     */
+    void setTransfer(SocketPoll &poll, MoveFunction transferFn)
+    {
+        _socketMove = std::move(transferFn);
+        _disposition = Type::TRANSFER;
+        _toPoll = &poll; // rely on the closure to ensure lifetime
     }
     void setClosed()
     {
@@ -89,9 +96,17 @@ public:
     }
     bool isMove() const { return _disposition == Type::MOVE; }
     bool isClosed() const { return _disposition == Type::CLOSED; }
+    bool isTransfer() const { return  _disposition == Type::TRANSFER; }
+    bool isContinue() const { return _disposition == Type::CONTINUE; }
 
     /// Perform the queued up work.
     void execute();
+
+private:
+    Type _disposition;
+    MoveFunction _socketMove;
+    SocketPoll *_toPoll;
+    std::shared_ptr<Socket> _socket;
 };
 
 /// A non-blocking, streaming socket.
@@ -1113,7 +1128,7 @@ protected:
         {
             oldSize = _inBuffer.size();
             _socketHandler->handleIncomingMessage(disposition);
-            if (disposition.isMove())
+            if (disposition.isMove() || disposition.isTransfer())
                 return;
         }
 

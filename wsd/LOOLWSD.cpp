@@ -2441,7 +2441,6 @@ private:
                             Admin::instance().insertNewSocket(moveSocket);
                         });
                 }
-
             }
             else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
                      requestDetails.equals(1, "getMetrics"))
@@ -2480,10 +2479,12 @@ private:
                 response->add("Content-Type", "text/plain");
                 response->add("X-Content-Type-Options", "nosniff");
 
-                disposition.setMove([response](const std::shared_ptr<Socket> &moveSocket){
-                            const std::shared_ptr<StreamSocket> streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-                            Admin::instance().sendMetricsAsync(streamSocket, response);
-                        });
+                disposition.setTransfer(Admin::instance(),
+                                        [response](const std::shared_ptr<Socket> &moveSocket){
+                                            const std::shared_ptr<StreamSocket> streamSocket =
+                                                std::static_pointer_cast<StreamSocket>(moveSocket);
+                                            Admin::instance().sendMetrics(streamSocket, response);
+                                        });
             }
             else if (requestDetails.isGetOrHead("/"))
                 handleRootRequest(requestDetails, socket);
@@ -2754,19 +2755,12 @@ private:
                     LOG_ERR("Invalid zero size set clipboard content");
             }
             // Do things in the right thread.
-            disposition.setMove([=] (const std::shared_ptr<Socket> &moveSocket)
+            LOG_TRC("Move clipboard request " << tag << " to docbroker thread with data: " <<
+                    (data ? data->length() : 0) << " bytes");
+            docBroker->setupTransfer(disposition, [=] (const std::shared_ptr<Socket> &moveSocket)
                 {
-                    LOG_TRC("Move clipboard request " << tag << " to docbroker thread with data: " <<
-                            (data ? data->length() : 0) << " bytes");
-                    // We no longer own this socket.
-                    moveSocket->setThreadOwner(std::thread::id());
-
-                    // Perform all of this after removing the socket
-                    docBroker->addCallback([=]()
-                        {
-                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-                            docBroker->handleClipboardRequest(type, streamSocket, viewId, tag, data);
-                        });
+                    auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                    docBroker->handleClipboardRequest(type, streamSocket, viewId, tag, data);
                 });
             LOG_TRC("queued clipboard command " << type << " on docBroker fetch");
         }
@@ -3220,46 +3214,35 @@ private:
         {
             // need to move into the DocumentBroker context before doing session lookup / creation etc.
             std::string id = _id;
-            disposition.setMove([docBroker, id, uriPublic,
-                                 isReadOnly, requestDetails]
-                                (const std::shared_ptr<Socket> &moveSocket)
+            docBroker->setupTransfer(disposition, [docBroker, id, uriPublic,
+                                     isReadOnly, requestDetails]
+                                    (const std::shared_ptr<Socket> &moveSocket)
                 {
-                    LOG_TRC("Setting up docbroker thread for " << docBroker->getDocKey());
-                    // Make sure the thread is running before adding callback.
-                    docBroker->startThread();
+                    // Now inside the document broker thread ...
+                    LOG_TRC("In the docbroker thread for " << docBroker->getDocKey());
 
-                    // We no longer own this socket.
-                    moveSocket->setThreadOwner(std::thread::id());
-
-                    docBroker->addCallback([docBroker, id, uriPublic, isReadOnly,
-                                            requestDetails, moveSocket]()
-                        {
-                            // Now inside the document broker thread ...
-                            LOG_TRC("In the docbroker thread for " << docBroker->getDocKey());
-
-                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-                            try
-                            {
-                                docBroker->handleProxyRequest(
-                                    id, uriPublic, isReadOnly,
-                                    requestDetails, streamSocket);
-                                return;
-                            }
-                            catch (const UnauthorizedRequestException& exc)
-                            {
-                                LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
-                            }
-                            catch (const StorageConnectionException& exc)
-                            {
-                                LOG_ERR("Error while loading : " << exc.what());
-                            }
-                            catch (const std::exception& exc)
-                            {
-                                LOG_ERR("Error while loading : " << exc.what());
-                            }
-                            // badness occurred:
-                            HttpHelper::sendErrorAndShutdown(400, streamSocket);
-                        });
+                    auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                    try
+                    {
+                        docBroker->handleProxyRequest(
+                            id, uriPublic, isReadOnly,
+                            requestDetails, streamSocket);
+                        return;
+                    }
+                    catch (const UnauthorizedRequestException& exc)
+                    {
+                        LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
+                    }
+                    catch (const StorageConnectionException& exc)
+                    {
+                        LOG_ERR("Error while loading : " << exc.what());
+                    }
+                    catch (const std::exception& exc)
+                    {
+                        LOG_ERR("Error while loading : " << exc.what());
+                    }
+                    // badness occurred:
+                    HttpHelper::sendErrorAndShutdown(400, streamSocket);
                 });
         }
         else
@@ -3342,62 +3325,51 @@ private:
                 if (clientSession)
                 {
                     // Transfer the client socket to the DocumentBroker when we get back to the poll:
-                    disposition.setMove([docBroker, clientSession, ws]
-                                        (const std::shared_ptr<Socket> &moveSocket)
+                    docBroker->setupTransfer(disposition, [docBroker, clientSession, ws]
+                                            (const std::shared_ptr<Socket> &moveSocket)
                     {
-                        // Make sure the thread is running before adding callback.
-                        docBroker->startThread();
-
-                        // We no longer own this socket.
-                        moveSocket->setThreadOwner(std::thread::id());
-
-                        docBroker->addCallback([docBroker, moveSocket, clientSession, ws]()
+                        try
                         {
-                            try
-                            {
-                                auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
 
-                                // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
-                                streamSocket->setHandler(ws);
+                            // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
+                            streamSocket->setHandler(ws);
 
-                                LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
-                                // Move the socket into DocBroker.
-                                docBroker->addSocketToPoll(moveSocket);
+                            LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
 
-                                // Add and load the session.
-                                docBroker->addSession(clientSession);
+                            // Add and load the session.
+                            docBroker->addSession(clientSession);
 
-                                LOOLWSD::checkDiskSpaceAndWarnClients(true);
-                                // Users of development versions get just an info
-                                // when reaching max documents or connections
-                                LOOLWSD::checkSessionLimitsAndWarnClients();
+                            LOOLWSD::checkDiskSpaceAndWarnClients(true);
+                            // Users of development versions get just an info
+                            // when reaching max documents or connections
+                            LOOLWSD::checkSessionLimitsAndWarnClients();
 
-                                sendLoadResult(clientSession, true, "");
-                            }
-                            catch (const UnauthorizedRequestException& exc)
-                            {
-                                LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
-                                sendLoadResult(clientSession, false, "Unauthorized Request");
-                                const std::string msg = "error: cmd=internal kind=unauthorized";
-                                clientSession->sendMessage(msg);
-                            }
-                            catch (const StorageConnectionException& exc)
-                            {
-                                sendLoadResult(clientSession, false, exc.what());
-                                // Alert user about failed load
-                                const std::string msg = "error: cmd=storage kind=loadfailed";
-                                clientSession->sendMessage(msg);
-                            }
-                            catch (const std::exception& exc)
-                            {
-                                LOG_ERR("Error while loading : " << exc.what());
+                            sendLoadResult(clientSession, true, "");
+                        }
+                        catch (const UnauthorizedRequestException& exc)
+                        {
+                            LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
+                            sendLoadResult(clientSession, false, "Unauthorized Request");
+                            const std::string msg = "error: cmd=internal kind=unauthorized";
+                            clientSession->sendMessage(msg);
+                        }
+                        catch (const StorageConnectionException& exc)
+                        {
+                            sendLoadResult(clientSession, false, exc.what());
+                            // Alert user about failed load
+                            const std::string msg = "error: cmd=storage kind=loadfailed";
+                            clientSession->sendMessage(msg);
+                        }
+                        catch (const std::exception& exc)
+                        {
+                            LOG_ERR("Error while loading : " << exc.what());
 
-                                // Alert user about failed load
-                                const std::string msg = "error: cmd=storage kind=loadfailed";
-                                clientSession->sendMessage(msg);
-                                sendLoadResult(clientSession, false, exc.what());
-                            }
-                        });
+                            // Alert user about failed load
+                            const std::string msg = "error: cmd=storage kind=loadfailed";
+                            clientSession->sendMessage(msg);
+                            sendLoadResult(clientSession, false, exc.what());
+                        }
                     });
                 }
                 else

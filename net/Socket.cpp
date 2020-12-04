@@ -1,3 +1,4 @@
+
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -135,6 +136,7 @@ bool SocketPoll::startThread()
         _stop = false;
         try
         {
+            LOG_TRC("starting thread for poll " << _name);
             _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
             return true;
         }
@@ -317,7 +319,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             rc = -1;
         }
 
-        if (disposition.isMove() || disposition.isClosed())
+        if (!disposition.isContinue())
         {
             LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
                     _pollSockets.size() << ") from " << _name);
@@ -522,9 +524,26 @@ void SocketDisposition::execute()
     {
         // Drop pretentions of ownership before _socketMove.
         _socket->setThreadOwner(std::thread::id());
-        _socketMove(_socket);
+
+        if (!_toPoll) {
+            assert (isMove());
+            _socketMove(_socket);
+        } else {
+            assert (isTransfer());
+            // Ensure the thread is running before adding callback.
+            _toPoll->startThread();
+            auto pollCopy = _toPoll;
+            auto socket = _socket;
+            auto socketMoveFn = std::move(_socketMove);
+            _toPoll->addCallback([pollCopy, socket, socketMoveFn]()
+                {
+                    pollCopy->insertNewSocket(socket);
+                    socketMoveFn(socket);
+                });
+        }
+        _socketMove = nullptr;
+        _toPoll = nullptr;
     }
-    _socketMove = nullptr;
 }
 
 const int WebSocketHandler::InitialPingDelayMicroS = 25 * 1000;
