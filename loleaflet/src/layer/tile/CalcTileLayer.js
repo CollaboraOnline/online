@@ -484,7 +484,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._sendClientZoom();
 		if (this.sheetGeometry) {
 			this.sheetGeometry.setTileGeometryData(this._tileWidthTwips, this._tileHeightTwips,
-				this._tileSize, this.canvasDPIScale());
+				this._tileSize);
 		}
 		this._restrictDocumentSize();
 		this._replayPrintTwipsMsgs();
@@ -750,10 +750,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
 		if (!this.sheetGeometry) {
 			this._sheetGeomFirstWait = false;
-			var dpiScale = this.canvasDPIScale();
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
 				this._tileWidthTwips, this._tileHeightTwips,
-				this._tileSize, dpiScale, this._selectedPart);
+				this._tileSize, this._selectedPart);
 		}
 		else {
 			this.sheetGeometry.update(jsonMsgObj, /* checkCompleteness */ false, this._selectedPart);
@@ -1268,13 +1267,12 @@ L.SheetGeometry = L.Class.extend({
 	// all flags (ie 'columns', 'rows', 'sizes', 'hidden', 'filtered',
 	// 'groups') enabled.
 	initialize: function (sheetGeomJSON, tileWidthTwips, tileHeightTwips,
-		tileSizePixels, dpiScale, part) {
+		tileSizePixels, part) {
 
 		if (typeof sheetGeomJSON !== 'object' ||
 			typeof tileWidthTwips !== 'number' ||
 			typeof tileHeightTwips !== 'number' ||
 			typeof tileSizePixels !== 'number' ||
-			typeof dpiScale !== 'number' ||
 			typeof part !== 'number') {
 			console.error('Incorrect constructor argument types or missing required arguments');
 			return;
@@ -1287,7 +1285,7 @@ L.SheetGeometry = L.Class.extend({
 
 		// Set various unit conversion info early on because on update() call below, these info are needed.
 		this.setTileGeometryData(tileWidthTwips, tileHeightTwips, tileSizePixels,
-			dpiScale, false /* update position info ?*/);
+			false /* update position info ?*/);
 
 		this.update(sheetGeomJSON, /* checkCompleteness */ true, part);
 	},
@@ -1331,9 +1329,9 @@ L.SheetGeometry = L.Class.extend({
 	},
 
 	setTileGeometryData: function (tileWidthTwips, tileHeightTwips, tileSizePixels,
-		dpiScale, updatePositions) {
-		this._columns.setTileGeometryData(tileWidthTwips, tileSizePixels, dpiScale, updatePositions);
-		this._rows.setTileGeometryData(tileHeightTwips, tileSizePixels, dpiScale, updatePositions);
+		updatePositions) {
+		this._columns.setTileGeometryData(tileWidthTwips, tileSizePixels, updatePositions);
+		this._rows.setTileGeometryData(tileHeightTwips, tileSizePixels, updatePositions);
 	},
 
 	setViewArea: function (topLeftTwipsPoint, sizeTwips) {
@@ -1638,7 +1636,7 @@ L.SheetDimension = L.Class.extend({
 		this._maxIndex = maxIndex;
 	},
 
-	setTileGeometryData: function (tileSizeTwips, tileSizePixels, dpiScale, updatePositions) {
+	setTileGeometryData: function (tileSizeTwips, tileSizePixels, updatePositions) {
 
 		if (updatePositions === undefined) {
 			updatePositions = true;
@@ -1646,14 +1644,13 @@ L.SheetDimension = L.Class.extend({
 
 		// Avoid position re-computations if no change in Zoom/dpiScale.
 		if (this._tileSizeTwips === tileSizeTwips &&
-			this._tileSizePixels === tileSizePixels &&
-			this._dpiScale === dpiScale) {
+			this._tileSizePixels === tileSizePixels) {
 			return;
 		}
 
 		this._tileSizeTwips = tileSizeTwips;
 		this._tileSizePixels = tileSizePixels;
-		this._dpiScale = dpiScale;
+		this._dpiScale = L.Util.getDpiScaleFactor(true);
 
 		// number of core-pixels in the tile is the same as the number of device pixels used to render the tile.
 		// (Note that when not using L.CanvasTileLayer, we do not use the exact window.devicePixelRatio
