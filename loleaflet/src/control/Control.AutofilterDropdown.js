@@ -36,6 +36,9 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		if (data.action === 'close')
 			return;
 
+		if (!isSubMenu && this.subMenu)
+			L.DomUtil.remove(this.subMenu);
+
 		var scale = this._map.getZoomScale(this._map.getZoom(), this._map.options.defaultZoom);
 		var origin = this._map.getPixelOrigin();
 		var panePos = this._map._getMapPanePos();
