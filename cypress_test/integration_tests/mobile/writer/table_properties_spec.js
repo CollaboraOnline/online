@@ -28,11 +28,11 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('be.visible');
 	}
 
-	function selectFullTable() {
-		helper.typeIntoDocument('{downarrow}{downarrow}{downarrow}{downarrow}');
-
-		// TODO: solve this better.
-		cy.wait(1000);
+	function selectFullTable(cursorMovementCount, checkCursorVisibility = true) {
+		// Move cursor out of the table.
+		for (var i = 0; i < cursorMovementCount; i++) {
+			helper.moveCursor('down', checkCursorVisibility);
+		}
 
 		writerHelper.selectAllTextOfDoc();
 	}
@@ -47,7 +47,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
-		selectFullTable();
+		selectFullTable(3);
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -70,7 +70,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
-		selectFullTable();
+		selectFullTable(4);
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -93,7 +93,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
-		selectFullTable();
+		selectFullTable(3);
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -116,7 +116,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
-		selectFullTable();
+		selectFullTable(3);
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -139,7 +139,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
 
-		selectFullTable();
+		selectFullTable(2);
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -204,7 +204,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('#MergeCells');
 
-		selectFullTable();
+		selectFullTable(2);
 
 		// Check rows / columns
 		cy.get('#copy-paste-container tr')
@@ -229,7 +229,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#rowheight .spinfield')
 			.should('have.attr', 'value', '1.4');
 
-		selectFullTable();
+		selectFullTable(3);
 
 		// Check row height
 		cy.get('#copy-paste-container td')
@@ -249,7 +249,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#columnwidth .spinfield')
 			.should('have.attr', 'value', '1.6');
 
-		selectFullTable();
+		selectFullTable(3);
 
 		// Check row height
 		cy.get('#copy-paste-container td')
@@ -265,7 +265,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('#SetMinimalRowHeight');
 
-		selectFullTable();
+		selectFullTable(1);
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -281,7 +281,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('#SetOptimalRowHeight');
 
-		selectFullTable();
+		selectFullTable(1);
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -307,7 +307,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('#DistributeRows');
 
-		selectFullTable();
+		selectFullTable(1);
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -333,7 +333,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('#SetMinimalColumnWidth');
 
-		selectFullTable();
+		selectFullTable(1);
 
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '24');
@@ -348,7 +348,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('#SetOptimalColumnWidth');
 
-		selectFullTable();
+		// TODO: issue here, view is not moved with the cursor
+		selectFullTable(1, false);
 
 		cy.get('#copy-paste-container td:nth-of-type(1n)')
 			.should('have.attr', 'width', '324');
@@ -365,7 +366,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('#DistributeColumns');
 
-		selectFullTable();
+		// TODO: issue here, view is not moved with the cursor
+		selectFullTable(1, false);
 
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '323');
