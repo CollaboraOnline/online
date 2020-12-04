@@ -172,7 +172,7 @@
 
 #mobile-wizard #toggle_all.checkbutton + #select_current,
 .autofilter-container #select_current {
-	background: url('images/select_current.svg') no-repeat center;
+	background: url('images/popup_select_current.svg') no-repeat center;
 }
 
 .autofilter-container #select_current {
@@ -183,7 +183,7 @@
 
 #mobile-wizard #toggle_all.checkbutton + #select_current + #unselect_current,
 .autofilter-container #unselect_current {
-	background: url('images/unselect_current.svg') no-repeat center;
+	background: url('images/popup_unselect_current.svg') no-repeat center;
 }
 
 .autofilter-container #unselect_current {
