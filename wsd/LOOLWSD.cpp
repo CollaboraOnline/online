@@ -2765,6 +2765,7 @@ private:
                     docBroker->addCallback([=]()
                         {
                             auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+                            docBroker->addSocketToPoll(moveSocket);
                             docBroker->handleClipboardRequest(type, streamSocket, viewId, tag, data);
                         });
                 });
