@@ -1402,9 +1402,8 @@ private:
         // Append name of the user, if any, who opened the document to rendering options
         if (!userName.empty())
         {
-            std::string decodedUserName;
-            URI::decode(userName, decodedUserName);
-            renderOptsObj->set(".uno:Author", makePropertyValue("string", decodedUserName));
+            // userName must be decoded already.
+            renderOptsObj->set(".uno:Author", makePropertyValue("string", userName));
         }
 
         if (!spellOnline.empty())
