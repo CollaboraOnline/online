@@ -44,14 +44,25 @@ describe('Interfering second user.', function() {
 				calcHelper.dblClickOnFirstCell();
 			});
 
-			// We are doing some keyboard input activity here.
+			// Do some interfering activity.
 			cy.waitUntil(function() {
-				for (var i = 0; i < 3; i++) {
-					helper.typeIntoDocument('{rightArrow}');
-				}
-				for (var i = 0; i < 3; i++) {
-					helper.typeIntoDocument('{leftArrow}');
-				}
+				// We are doing some keyboard input activity for non impress test cases.
+				helper.doIfNotInImpress(function() {
+					for (var i = 0; i < 3; i++) {
+						helper.typeIntoDocument('{rightArrow}');
+					}
+					for (var i = 0; i < 3; i++) {
+						helper.typeIntoDocument('{leftArrow}');
+					}
+				});
+
+				// In Impress we do some mouse activity.
+				helper.doIfInImpress(function() {
+					for (var i = 0; i < 5; i++) {
+						cy.get('body')
+							.click(50, 50);
+					}
+				});
 
 				return cy.get('#tb_actionbar_item_userlist')
 					.then(function(userlist) {
