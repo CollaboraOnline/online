@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-29 19:21+0100\n"
-"PO-Revision-Date: 2020-11-04 00:09+0000\n"
-"Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
+"PO-Revision-Date: 2020-12-01 00:29+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -228,7 +228,7 @@ msgstr "Gönderilmiş"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shutdown, please reload the page"
-msgstr ""
+msgstr "Sunucu kapatıldı, lütfen sayfayı yeniden yükleyin"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -476,9 +476,8 @@ msgid "Columns"
 msgstr "Sütunlar"
 
 #: src/control/Control.JSDialogBuilder.js:2366
-#, fuzzy
 msgid "Insert Table"
-msgstr "Tablo ekle"
+msgstr "Tablo Ekle"
 
 #: src/control/Control.JSDialogBuilder.js:2395
 msgid "Line style:"
@@ -850,11 +849,11 @@ msgstr "Bundan sonra sayfa ekle"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Sayfayı Sola Taşı"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Sayfayı Sağa Taşı"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1017,15 +1016,15 @@ msgstr "~Yardım"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Metin Gövdesi"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "Başlık"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "Alt Yazı"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
