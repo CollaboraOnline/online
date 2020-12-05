@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-29 19:21+0100\n"
-"PO-Revision-Date: 2020-10-31 17:26+0000\n"
-"Last-Translator: Lukáš Jelínek <devel@aiken.cz>\n"
+"PO-Revision-Date: 2020-12-05 22:26+0000\n"
+"Last-Translator: Jan Holesovsky <kendy@collabora.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -227,7 +227,7 @@ msgstr "Odeslané"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shutdown, please reload the page"
-msgstr ""
+msgstr "Server byl vypnut, prosím načtěte stránku znovu"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -476,7 +476,6 @@ msgid "Columns"
 msgstr "Sloupce"
 
 #: src/control/Control.JSDialogBuilder.js:2366
-#, fuzzy
 msgid "Insert Table"
 msgstr "Vložit tabulku"
 
@@ -850,11 +849,11 @@ msgstr "Vložit list za tento"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Přesunout list doleva"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Přesunout list doprava"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
