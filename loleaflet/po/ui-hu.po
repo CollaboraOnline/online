@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-29 19:21+0100\n"
-"PO-Revision-Date: 2020-11-04 00:09+0000\n"
+"PO-Revision-Date: 2020-12-01 00:29+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
 "X-Pootle-Revision: 3939165\n"
 
@@ -227,7 +227,7 @@ msgstr "Elküldött"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shutdown, please reload the page"
-msgstr ""
+msgstr "A kiszolgáló leállt, töltse be újra az oldalt"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -477,7 +477,6 @@ msgid "Columns"
 msgstr "Oszlopok"
 
 #: src/control/Control.JSDialogBuilder.js:2366
-#, fuzzy
 msgid "Insert Table"
 msgstr "Táblázat beszúrása"
 
@@ -852,11 +851,11 @@ msgstr "Munkalap beillesztése e mögé"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Munkalap áthelyezése balra"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Munkalap áthelyezése jobbra"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1019,15 +1018,15 @@ msgstr "~Súgó"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Szövegtörzs"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "Cím"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "Alcím"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
