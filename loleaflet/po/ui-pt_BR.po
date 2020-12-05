@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-29 19:21+0100\n"
-"PO-Revision-Date: 2020-11-12 12:34+0000\n"
-"Last-Translator: thais-dev <thais.vieira@collabora.com>\n"
+"PO-Revision-Date: 2020-12-05 22:26+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -229,7 +229,7 @@ msgstr "Enviado"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shutdown, please reload the page"
-msgstr ""
+msgstr "O servidor foi desligado, recarregue a página"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -479,9 +479,8 @@ msgid "Columns"
 msgstr "Colunas"
 
 #: src/control/Control.JSDialogBuilder.js:2366
-#, fuzzy
 msgid "Insert Table"
-msgstr "Inserir tabela"
+msgstr "Inserir Tabela"
 
 #: src/control/Control.JSDialogBuilder.js:2395
 msgid "Line style:"
@@ -853,11 +852,11 @@ msgstr "Inserir planilha depois desta"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Mover planilhas para a esquerda"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Mover planilhas para a direita"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1020,15 +1019,15 @@ msgstr "~Ajuda"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Corpo do texto"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "Subtítulo"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"

@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-29 19:21+0100\n"
 "PO-Revision-Date: 2020-12-05 22:26+0000\n"
-"Last-Translator: Jan Holesovsky <kendy@collabora.com>\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
 "Language: cs\n"
@@ -829,7 +829,7 @@ msgstr "Počet snímků"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Vyberte více buněk"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
@@ -1016,15 +1016,15 @@ msgstr "~Nápověda"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Tělo textu"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "Název"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "Podtitul"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
