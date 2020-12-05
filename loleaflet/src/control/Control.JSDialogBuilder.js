@@ -280,7 +280,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_cleanText: function(text) {
 		if (!text)
 			return '';
-		return text.replace('~', '');
+		return _(text);
 	},
 
 	_cleanValueFromUnits: function(text) {
