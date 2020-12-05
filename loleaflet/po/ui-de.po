@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-29 19:21+0100\n"
 "PO-Revision-Date: 2020-12-05 22:26+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -228,7 +228,7 @@ msgstr "Gesendet"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shutdown, please reload the page"
-msgstr ""
+msgstr "Der Server wurde heruntergefahren, bitte laden Sie die Seite neu"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -852,11 +852,11 @@ msgstr "Tabelle nach dieser einfügen"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Tabelle nach links bewegen"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Tabelle nach rechts bewegen"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1019,15 +1019,15 @@ msgstr "~Hilfe"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Textkörper"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "Untertitel"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
