@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-29 19:21+0100\n"
-"PO-Revision-Date: 2020-11-04 00:09+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2020-12-01 00:29+0000\n"
+"Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-ui-ca.po\n"
 "X-Pootle-Revision: 3939538\n"
 
@@ -227,7 +227,7 @@ msgstr "Enviats"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shutdown, please reload the page"
-msgstr ""
+msgstr "El servidor ha caigut. Torneu a carregar la pàgina"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -477,7 +477,6 @@ msgid "Columns"
 msgstr "Columnes"
 
 #: src/control/Control.JSDialogBuilder.js:2366
-#, fuzzy
 msgid "Insert Table"
 msgstr "Insereix una taula"
 
@@ -851,11 +850,11 @@ msgstr "Insereix el full després d'aquest"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Mou el full cap a l'esquerra"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Mou el full cap a la dreta"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1018,15 +1017,15 @@ msgstr "~Ajuda"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Cos del text"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "Títol"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "Subtítol"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
