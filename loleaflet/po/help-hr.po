@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-11-18 13:39+0000\n"
+"PO-Revision-Date: 2020-12-05 22:26+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/help/hr/>\n"
@@ -84,7 +84,7 @@ msgstr "Ctrl + Shift + ?"
 #: html/loleaflet-help.html%2Bdiv.div.h2:33-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:155-9
 msgid "Text formatting"
-msgstr "Oblikovanje teksta"
+msgstr "Formatiranje teksta"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:35-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
@@ -166,7 +166,7 @@ msgstr "Ctrl + Shift + B"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid "Remove direct formatting"
-msgstr "Uklanjanje izravnog oblikovanja"
+msgstr "Uklanjanje izravnog formatiranja"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-69
@@ -176,7 +176,7 @@ msgstr "Ctrl + M"
 #: html/loleaflet-help.html%2Bdiv.div.h2:44-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:165-9
 msgid "Paragraph formatting"
-msgstr "Oblikovanje odlomka"
+msgstr "Formatiranje odlomka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
@@ -537,7 +537,7 @@ msgstr "Ctrl + Shift + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Move the view up one page"
-msgstr "Pomakni prikaz na prethodnu stranicu"
+msgstr "Premještanje prikaza na prethodnu stranicu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-70
 msgid "PageUp"
@@ -853,7 +853,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Cell formatting"
-msgstr "Oblikovanje ćelije"
+msgstr "Formatiranje ćelije"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid "Display comment"
@@ -926,7 +926,7 @@ msgstr "Spuštanje razine stavke popisa (stavka mora biti odabrana)"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-92
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-99
 msgid "Tab"
-msgstr "Kartica"
+msgstr "Tabulator"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-18
 msgid "Promote list item (list item has to be selected)"
@@ -935,7 +935,7 @@ msgstr "Dizanje razine stavke popisa (stavka mora biti odabrana)"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-107
 msgid "Shift + Tab"
-msgstr "Shift+Tab"
+msgstr "Shift + Tabulator"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:174-9
 msgid "Text selection and navigation in a textbox"
@@ -1032,7 +1032,7 @@ msgstr "Formule"
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 msgid "Formatting spreadsheets"
-msgstr "Oblikovanje proračunskih tablica"
+msgstr "Formatiranje proračunskih tablica"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:227-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:386-5
@@ -1186,7 +1186,7 @@ msgstr "Pretraživanje prema naprijed"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:271-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Prekini pretraživanje (pojavljuje se samo kad je jeki tekst pretražen)"
 
 #: html/loleaflet-help.html%2Bdiv.p:273-5
 msgid ""
@@ -1381,24 +1381,29 @@ msgid ""
 "<span class=\"productname\">%productName</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
+"<span class=\"productname\">%productName</span> omogućuje umetanje i "
+"prikazivanje dijagrama u dokumentima. Za dodavanje dijagrama:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:312-11
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
 msgstr ""
-"Označivanje tablice u tekstualnom dokumentu, raspona u proračunskoj tablici "
-"ili tablice u prezentaciji."
+"Označi tablicu u tekstualnom dokumentu, raspon u proračunskoj tablici ili "
+"tablicu u prezentaciji."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:314-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
 msgstr ""
+"Odaberi <span class=\"ui\">Umetni</span> → <span class=\"ui\">Dijagrami</"
+"span>. Prilagodi dijagram u bočnoj traci:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:317-11
 msgid "If no table or range was selected, a prototype chart is displayed."
 msgstr ""
+"Ako nije odabrana nijedna tablica ili raspon, prikazuje se prototip tablice."
 
 #: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid ""
@@ -1407,22 +1412,31 @@ msgid ""
 "Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart "
 "Type</span> to edit chart data and select chart type."
 msgstr ""
+"<span class=\"def\">Uređivanje dijagrama: </span> Dvoklikom odaberi "
+"dijagram. Koristi kontekstne izbornike za dodavanje elemenata dijagrama kao "
+"što su naslov, os i drugo. Odaberi <span class=\"ui\">Raspon podataka</span> "
+"i <span class=\"ui\">Vrsta dijagrama</span> za uređivanje podataka dijagrama "
+"i za biranje vrste dijagrama."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
 msgstr ""
+"<span class=\"def\">Formatiranje dijagrama:</span> Isti kontekstni izbornik "
+"vodi k tablici podataka dijagrama i odabiru vrste grafikona."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
 msgstr ""
+"<span class=\"def\">Formatiranje niza podataka:</span> Otvori kontekstni "
+"izbornik i odaberi <span class=\"ui\">Formatiraj niz podataka</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:323-5
 msgid "Handling images"
-msgstr "Rukovanje slikama"
+msgstr "Baratanje slikama"
 
 #: html/loleaflet-help.html%2Bdiv.p:324-5
 msgid ""
@@ -1461,6 +1475,9 @@ msgid ""
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
+"Umetni komentare u <span class=\"productname\">%productName</span> pri "
+"mjestima koja zahtijevaju posebnu pažnju čitatelja. Komentari se prikazuju s "
+"desne strane i sadrže ime komentatora i datum."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:331-5
 msgid ""
@@ -1643,7 +1660,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:394-5
 msgid "Formatting text"
-msgstr "Oblikovanje teksta"
+msgstr "Formatiranje teksta"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:395-5
 msgid ""
@@ -1682,7 +1699,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Handling Tables"
-msgstr "Rukovanje tablicama"
+msgstr "Baratanje tablicama"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid ""
@@ -2106,6 +2123,8 @@ msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"Odaberi <span class=\"ui\">Format</span> → <span class=\"ui\">Stranica</"
+"span> i odaberi karticu <span class=\"ui\">Stranica</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:508-11
 msgid "Set the page margins in the dialog."
@@ -2128,6 +2147,8 @@ msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>"
 ", <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
+"Odaberi <span class=\"ui\">Format</span> → <span class=\"ui\">Odlomak</"
+"span>, kartica <span class=\"ui\">Tok teksta</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:515-11
 msgid ""
@@ -2168,6 +2189,9 @@ msgid ""
 "alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
 "a paint bucket."
 msgstr ""
+"Pritisni ikonu za kloniranje formata <img style=\"height:0.6cm;width:0.6cm;\""
+" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Kursor miša se mijenja u "
+"kanticu boje."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:525-11
 msgid "Select the text you want to apply the new format."
@@ -2179,7 +2203,7 @@ msgstr "Primjena stila odlomka:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:529-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr "Postavljanje kursora na odlomak koji će se oblikovati"
+msgstr "Postavljanje kursora na odlomak koji će se formatirati"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:530-11
 msgid ""
@@ -2252,7 +2276,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h4:551-5
 msgid "How can I copy the formatting of existing cells to new ones?"
 msgstr ""
-"Kako kopirati formatiranje postojećih ćelija i koristiti ga za nove ćelije?"
+"Kako kopirati formatiranje postojećih ćelija i primijeniti na nove ćelije?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:552-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
@@ -2260,15 +2284,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:554-11
 msgid "Format the source cell with the font, color background and more."
-msgstr "Oblikovanje izvorne ćelije s fontom, bojom pozadine i drugim."
+msgstr "Formatiranje izvorne ćelije s fontom, bojom pozadine i još više."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:556-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr "Odaberi ćelije, koje želiš formatirati. Otpusti gumb miša."
+msgstr "Odaberi ćelije koje želiš formatirati. Otpusti gumb miša."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:558-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "Čemu služi ikona „Ukloni izravno formatiranje”?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:559-5
 msgid ""
@@ -2321,6 +2345,9 @@ msgid ""
 "<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
 "Size</span>). A dialog opens."
 msgstr ""
+"Odaberi <span class=\"ui\">Format</span> → <span class=\"ui\">Redak</span> ("
+"ili <span class=\"ui\">Područje</span> ili <span class=\"ui\">Položaj i "
+"veličina</span>). Otvara dijaloški okvir."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:578-11
 msgid "Set the properties of the element of the object."
