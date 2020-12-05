@@ -880,7 +880,6 @@ private:
         }
         else if (!out.empty())
         {
-            LOG_TRC("Sending\n" << std::string(out.getBlock(), out.getBlockSize()));
             _socket->writeOutgoingData();
         }
     }

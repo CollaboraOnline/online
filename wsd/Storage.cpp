@@ -1106,7 +1106,8 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
     const std::size_t size = (fileStat.good() ? fileStat.size() : 0);
 
     Poco::URI uriObject(getUri());
-    uriObject.setPath(isSaveAs || isRename? uriObject.getPath(): uriObject.getPath() + "/contents");
+    uriObject.setPath(isSaveAs || isRename ? uriObject.getPath()
+                                           : uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
 
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
@@ -1117,29 +1118,30 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
     const auto startTime = std::chrono::steady_clock::now();
     try
     {
-        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
+        std::shared_ptr<http::Session> httpSession = getHttpSession(uriObject);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST,
-                                       uriObject.getPathAndQuery(),
-                                       Poco::Net::HTTPMessage::HTTP_1_1);
-        initHttpRequest(request, uriObject, auth, cookies);
+        http::Request httpRequest = initHttpRequest(uriObject, auth, cookies);
+        httpRequest.setVerb(http::Request::VERB_POST);
+
+        http::Header& httpHeader = httpRequest.header();
 
         if (!isSaveAs && !isRename)
         {
             // normal save
-            request.set("X-WOPI-Override", "PUT");
+            httpHeader.set("X-WOPI-Override", "PUT");
             if (lockCtx._supportsLocks)
-                request.set("X-WOPI-Lock", lockCtx._lockToken);
-            request.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified()? "true": "false");
-            request.set("X-LOOL-WOPI-IsAutosave", isAutosave()? "true": "false");
-            request.set("X-LOOL-WOPI-IsExitSave", isExitSave()? "true": "false");
+                httpHeader.set("X-WOPI-Lock", lockCtx._lockToken);
+            httpHeader.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified() ? "true" : "false");
+            httpHeader.set("X-LOOL-WOPI-IsAutosave", isAutosave() ? "true" : "false");
+            httpHeader.set("X-LOOL-WOPI-IsExitSave", isExitSave() ? "true" : "false");
             if (!getExtendedData().empty())
-                request.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
+                httpHeader.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
 
             if (!getForceSave())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
-                request.set("X-LOOL-WOPI-Timestamp", Util::getIso8601FracformatTime(getFileInfo().getModifiedTime()));
+                httpHeader.set("X-LOOL-WOPI-Timestamp",
+                               Util::getIso8601FracformatTime(getFileInfo().getModifiedTime()));
             }
         }
         else
@@ -1177,39 +1179,40 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
             if (isRename)
             {
                 // rename file
-                request.set("X-WOPI-Override", "RENAME_FILE");
-                request.set("X-WOPI-RequestedName", suggestedTarget);
+                httpHeader.set("X-WOPI-Override", "RENAME_FILE");
+                httpHeader.set("X-WOPI-RequestedName", suggestedTarget);
             }
             else
             {
                 // save as
-                request.set("X-WOPI-Override", "PUT_RELATIVE");
-                request.set("X-WOPI-Size", std::to_string(size));
-                request.set("X-WOPI-SuggestedTarget", suggestedTarget);
+                httpHeader.set("X-WOPI-Override", "PUT_RELATIVE");
+                httpHeader.set("X-WOPI-Size", std::to_string(size));
+                httpHeader.set("X-WOPI-SuggestedTarget", suggestedTarget);
             }
         }
 
-        request.setContentType("application/octet-stream");
-        request.setContentLength(size);
+        httpHeader.setContentType("application/octet-stream");
+        httpHeader.setContentLength(size);
 
-        std::ostream& os = psession->sendRequest(request);
+        httpRequest.setBodyFile(filePath);
 
-        std::ifstream ifs(filePath);
-        Poco::StreamCopier::copyStream(ifs, os);
+        // Make the request.
+        httpSession->syncRequest(httpRequest);
 
-        Poco::Net::HTTPResponse response;
-        std::istream& rs = psession->receiveResponse(response);
+        const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - startTime);
 
-        WopiUploadDetails details
-            = { filePathAnonym, uriAnonym, response.getReason(), response.getStatus(), size,
-                isSaveAs,       isRename };
+        WopiUploadDetails details = { filePathAnonym,
+                                      uriAnonym,
+                                      httpResponse->statusLine().reasonPhrase(),
+                                      httpResponse->statusLine().statusCode(),
+                                      size,
+                                      isSaveAs,
+                                      isRename };
 
-        std::ostringstream oss;
-        Poco::StreamCopier::copyStream(rs, oss);
-        return handleUploadToStorageResponse(details, oss.str());
+        return handleUploadToStorageResponse(details, httpResponse->getBody());
     }
     catch (const Poco::Exception& ex)
     {
