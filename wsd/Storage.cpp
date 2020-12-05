@@ -644,19 +644,16 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     std::chrono::milliseconds callDurationMs;
     try
     {
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET,
-                                       uriObject.getPathAndQuery(),
-                                       Poco::Net::HTTPMessage::HTTP_1_1);
-        initHttpRequest(request, uriObject, auth, cookies);
+        std::shared_ptr<http::Session> httpSession = getHttpSession(uriObject);
+        http::Request httpRequest = initHttpRequest(uriObject, auth, cookies);
 
         const auto startTime = std::chrono::steady_clock::now();
 
-        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
         Log::StreamLogger logger = Log::trace();
         if (logger.enabled())
         {
             logger << "WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n";
-            for (const auto& pair : request)
+            for (const auto& pair : httpRequest.header())
             {
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
             }
@@ -664,33 +661,39 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             LOG_END(logger, true);
         }
 
-        psession->sendRequest(request);
+        httpSession->syncRequest(httpRequest);
 
-        Poco::Net::HTTPResponse response;
-        std::istream& rs = psession->receiveResponse(response);
+        std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+
         callDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - startTime);
 
-        Log::StreamLogger logRes = Log::trace();
+        // Note: we don't log the response if obfuscation is enabled, except for failures.
+        wopiResponse = httpResponse->getBody();
+        const bool failed
+            = (httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
+
+        Log::StreamLogger logRes = failed ? Log::error() : Log::trace();
         if (logRes.enabled())
         {
-            logRes << "WOPI::CheckFileInfo response header for URI [" << uriAnonym
-                   << "]: " << response.getStatus() << '\n';
-            for (const auto& pair : response)
+            logRes << "WOPI::CheckFileInfo " << (failed ? "failed" : "returned") << " for URI ["
+                   << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
+                   << httpResponse->statusLine().reasonPhrase() << ". Headers: ";
+            for (const auto& pair : httpResponse->header())
             {
                 logRes << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
+            if (failed)
+                logRes << "\tBody: [" << wopiResponse << "]";
+
             LOG_END(logRes, true);
         }
 
-        if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
+        if (failed)
         {
-            LOG_ERR("WOPI::CheckFileInfo failed with " << response.getStatus() << ' ' << response.getReason());
-            throw StorageConnectionException("WOPI::CheckFileInfo failed");
+            throw StorageConnectionException("WOPI::CheckFileInfo failed: " + wopiResponse);
         }
-
-        Poco::StreamCopier::copyToString(rs, wopiResponse);
     }
     catch (const Poco::Exception& pexc)
     {
