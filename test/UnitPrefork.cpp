@@ -15,7 +15,7 @@ const int NumToPrefork = 20;
 // Inside the WSD process
 class UnitPrefork : public UnitWSD
 {
-    std::chrono::system_clock::time_point _startTime = std::chrono::system_clock::now();
+    std::chrono::steady_clock::time_point _startTime = std::chrono::steady_clock::now();
     std::atomic< int > _childSockets;
 
 public:
@@ -38,9 +38,8 @@ public:
 
         if (_childSockets >= NumToPrefork)
         {
-            const auto duration = std::chrono::system_clock::now() - _startTime;
-            const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
-            const double totalTime = elapsed/1000.;
+            const auto duration = std::chrono::steady_clock::now() - _startTime;
+            const auto totalTime = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 
             LOG_INF("Launched " << _childSockets << " in " << totalTime);
             std::cerr << "Launch time total   " << totalTime << " ms" << std::endl;
