@@ -233,11 +233,12 @@ void DocumentBroker::pollThread()
 #if !MOBILEAPP
     do
     {
-        static const int timeoutMs = COMMAND_TIMEOUT_MS * 5;
+        static constexpr std::chrono::milliseconds timeoutMs(COMMAND_TIMEOUT_MS * 5);
         _childProcess = getNewChild_Blocks();
-        if (_childProcess ||
-            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
-                                                                  _threadStart).count() > timeoutMs)
+        if (_childProcess
+            || std::chrono::duration_cast<std::chrono::milliseconds>(
+                   std::chrono::steady_clock::now() - _threadStart)
+                   > timeoutMs)
             break;
 
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
@@ -1338,25 +1339,38 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     }
     else if (isModified())
     {
-        const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-        const std::chrono::milliseconds::rep inactivityTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime).count();
-        const std::chrono::milliseconds::rep timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSaveTime).count();
-        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs <<
-                "ms and most recent activity was " << inactivityTimeMs << "ms ago.");
+        // The configured maximum idle duration before saving. Zero to disable.
+        static const std::chrono::milliseconds MaxIdleSaveDurationMs = std::chrono::seconds(
+            LOOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30));
 
-        static const int idleSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30) * 1000;
-        static const int autoSaveDurationMs = LOOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300) * 1000;
+        // The configured maximum duration before saving. Zero to disable.
+        static const std::chrono::milliseconds MaxAutoSaveDurationMs = std::chrono::seconds(
+            LOOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300));
+
+        const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+        const std::chrono::milliseconds inactivityTimeMs
+            = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
+        const std::chrono::milliseconds timeSinceLastSaveMs
+            = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSaveTime);
+        LOG_TRC("Time since last save of docKey ["
+                << _docKey << "] is " << timeSinceLastSaveMs.count()
+                << " ms and most recent activity was " << inactivityTimeMs.count() << " ms ago.");
+
         bool save = false;
         // Zero or negative config value disables save.
         // Either we've been idle long enough, or it's auto-save time.
-        if (idleSaveDurationMs > 0 && inactivityTimeMs >= idleSaveDurationMs)
+        if (MaxIdleSaveDurationMs > std::chrono::milliseconds::zero()
+            && inactivityTimeMs >= MaxIdleSaveDurationMs)
         {
             save = true;
         }
-        if (autoSaveDurationMs > 0 && timeSinceLastSaveMs >= autoSaveDurationMs)
+
+        if (MaxAutoSaveDurationMs > std::chrono::milliseconds::zero()
+            && timeSinceLastSaveMs >= MaxAutoSaveDurationMs)
         {
             save = true;
         }
+
         if (save)
         {
             LOG_TRC("Sending timed save command for [" << _docKey << "].");
