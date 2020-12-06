@@ -413,7 +413,7 @@ private:
 
 protected:
     /// Seconds to live for, or 0 forever
-    int64_t _limitLifeSeconds;
+    std::chrono::seconds _limitLifeSeconds;
     std::string _uriOrig;
     /// What type are we: affects priority.
     ChildType _type;
