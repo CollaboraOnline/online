@@ -161,7 +161,7 @@ DocumentBroker::DocumentBroker(ChildType type,
                                const Poco::URI& uriPublic,
                                const std::string& docKey,
                                unsigned mobileAppDocId) :
-    _limitLifeSeconds(0),
+    _limitLifeSeconds(std::chrono::seconds::zero()),
     _uriOrig(uri),
     _type(type),
     _uriPublic(uriPublic),
@@ -340,19 +340,22 @@ void DocumentBroker::pollThread()
             continue;
         }
 
-        if (_limitLifeSeconds > 0 &&
-            std::chrono::duration_cast<std::chrono::seconds>(now - _threadStart).count() > _limitLifeSeconds)
+        // Check if we had a sunset time and expired.
+        if (_limitLifeSeconds > std::chrono::seconds::zero()
+            && std::chrono::duration_cast<std::chrono::seconds>(now - _threadStart)
+                   > _limitLifeSeconds)
         {
             LOG_WRN("Doc [" << _docKey << "] is taking too long to convert. Will kill process ["
-                            << _childProcess->getPid() << "]. per_document.limit_convert_secs set to "
-                            << _limitLifeSeconds << " secs.");
+                            << _childProcess->getPid()
+                            << "]. per_document.limit_convert_secs set to "
+                            << _limitLifeSeconds.count() << " secs.");
             broadcastMessage("error: cmd=load kind=docexpired");
 
             // Brutal but effective.
             if (_childProcess)
                 _childProcess->terminate();
 
-            stop("Load timed out");
+            stop("Convert-to timed out");
             continue;
         }
 
@@ -2498,7 +2501,7 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
 {
     static const int limit_convert_secs = LOOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100);
     NumConverters++;
-    _limitLifeSeconds = limit_convert_secs;
+    _limitLifeSeconds = std::chrono::seconds(limit_convert_secs);
 }
 
 bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std::string &id)
@@ -2640,8 +2643,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  last storage save was successful: " << isLastStorageSaveSuccessful();
     os << "\n  last modified: " << Util::getHttpTime(_documentLastModifiedTime);
     os << "\n  file last modified: " << Util::getHttpTime(_lastFileModifiedTime);
-    if (_limitLifeSeconds)
-        os << "\n  life limit in seconds: " << _limitLifeSeconds;
+    if (_limitLifeSeconds > std::chrono::seconds::zero())
+        os << "\n  life limit in seconds: " << _limitLifeSeconds.count();
     os << "\n  idle time: " << getIdleTimeSecs();
     os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
       << "( " << _cursorWidth << ',' << _cursorHeight << ")\n";
