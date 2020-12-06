@@ -175,12 +175,14 @@ public:
     bool isLastStorageSaveSuccessful() { return _lastStorageSaveSuccessful; }
 
     /// Save the document to Storage if it needs persisting.
-    bool saveToStorage(const std::string& sesionId, bool success, const std::string& result,
+    /// Results are logged and broadcast to users.
+    void saveToStorage(const std::string& sesionId, bool success, const std::string& result,
                        bool force);
 
     /// Save As the document to Storage.
     /// @param saveAsPath Absolute path to the jailed file.
-    bool saveAsToStorage(const std::string& sesionId, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename);
+    void saveAsToStorage(const std::string& sesionId, const std::string& saveAsPath,
+                         const std::string& saveAsFilename, const bool isRename);
 
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
@@ -346,7 +348,7 @@ private:
     void terminateChild(const std::string& closeReason);
 
     /// Saves the doc to the storage.
-    bool saveToStorageInternal(const std::string& sesionId, bool success,
+    void saveToStorageInternal(const std::string& sesionId, bool success,
                                const std::string& result = std::string(),
                                const std::string& saveAsPath = std::string(),
                                const std::string& saveAsFilename = std::string(),
@@ -361,7 +363,7 @@ private:
         const bool isRename;
     };
 
-    bool handleUploadToStorageResponse(const StorageUploadDetails& details,
+    void handleUploadToStorageResponse(const StorageUploadDetails& details,
                                        const StorageBase::UploadResult& storageSaveResult);
 
     /**

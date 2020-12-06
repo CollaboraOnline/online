@@ -937,7 +937,7 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
     return bResult;
 }
 
-bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
+void DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
                                    const std::string& result, bool force)
 {
     assertCorrectThread();
@@ -965,8 +965,8 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
     }
 
     constexpr bool isRename = false;
-    const bool res = saveToStorageInternal(sessionId, success, result, /*saveAsPath*/ std::string(),
-                                           /*saveAsFilename*/ std::string(), isRename, force);
+    saveToStorageInternal(sessionId, success, result, /*saveAsPath*/ std::string(),
+                          /*saveAsFilename*/ std::string(), isRename, force);
 
     // If marked to destroy, or session is disconnected, remove.
     const auto it = _sessions.find(sessionId);
@@ -979,18 +979,17 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
         // Stop so we get cleaned up and removed.
         _stop = true;
     }
-
-    return res;
 }
 
-bool DocumentBroker::saveAsToStorage(const std::string& sessionId, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename)
+void DocumentBroker::saveAsToStorage(const std::string& sessionId, const std::string& saveAsPath,
+                                     const std::string& saveAsFilename, const bool isRename)
 {
     assertCorrectThread();
 
-    return saveToStorageInternal(sessionId, true, "", saveAsPath, saveAsFilename, isRename);
+    saveToStorageInternal(sessionId, true, "", saveAsPath, saveAsFilename, isRename);
 }
 
-bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool success,
+void DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool success,
                                            const std::string& result, const std::string& saveAsPath,
                                            const std::string& saveAsFilename, const bool isRename,
                                            const bool force)
@@ -1010,7 +1009,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         _lastSaveTime = std::chrono::steady_clock::now();
         broadcastSaveResult(true, "unmodified");
         _poll->wakeup();
-        return true;
+        return;
     }
 
     const auto it = _sessions.find(sessionId);
@@ -1020,7 +1019,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
                 << sessionId << "] not found while storing document docKey [" << _docKey
                 << "]. The document will not be uploaded to storage at this time.");
         broadcastSaveResult(false, "Session not found");
-        return false;
+        return;
     }
 
     // Check that we are actually about to upload a successfully saved document.
@@ -1029,7 +1028,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         LOG_ERR("Cannot store docKey [" << _docKey << "] as .uno:Save has failed in LOK.");
         it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
         broadcastSaveResult(false, "Could not save document in LibreOfficeKit");
-        return false;
+        return;
     }
 
     if (force)
@@ -1066,7 +1065,7 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
                 "]. File last modified " << timeInSec.count() << " seconds ago, timestamp unchanged.");
         _poll->wakeup();
         broadcastSaveResult(true, "unmodified");
-        return true;
+        return;
     }
 
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
@@ -1076,11 +1075,11 @@ bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
         auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
 
     const StorageUploadDetails details { uriAnonym, newFileModifiedTime, it->second, isSaveAs, isRename };
-    return handleUploadToStorageResponse(details, storageSaveResult);
+    handleUploadToStorageResponse(details, storageSaveResult);
 }
 
-bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& details,
-                                                   const StorageBase::UploadResult& storageSaveResult)
+void DocumentBroker::handleUploadToStorageResponse(
+    const StorageUploadDetails& details, const StorageBase::UploadResult& storageSaveResult)
 {
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
@@ -1161,8 +1160,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         }
 
         broadcastLastModificationTime();
-
-        return true;
+        return;
     }
     else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
     {
@@ -1175,6 +1173,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         {
             sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savediskfull");
         }
+
         broadcastSaveResult(false, "Disk full", storageSaveResult.getErrorMsg());
     }
     else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::UNAUTHORIZED)
@@ -1227,8 +1226,6 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         broadcastMessage(message);
         broadcastSaveResult(false, "Conflict: Document changed in storage", storageSaveResult.getErrorMsg());
     }
-
-    return false;
 }
 
 void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
