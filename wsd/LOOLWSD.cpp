@@ -759,7 +759,7 @@ unsigned LOOLWSD::MaxConnections;
 unsigned LOOLWSD::MaxDocuments;
 std::string LOOLWSD::OverrideWatermark;
 std::set<const Poco::Util::AbstractConfiguration*> LOOLWSD::PluginConfigurations;
-std::chrono::time_point<std::chrono::system_clock> LOOLWSD::StartTime;
+std::chrono::steady_clock::time_point LOOLWSD::StartTime;
 
 // If you add global state please update dumpState below too
 
@@ -892,7 +892,7 @@ void LOOLWSD::initialize(Application& self)
         throw std::runtime_error("Failed to load wsd unit test library.");
     }
 
-    StartTime = std::chrono::system_clock::now();
+    StartTime = std::chrono::steady_clock::now();
 
     auto& conf = config();
 
