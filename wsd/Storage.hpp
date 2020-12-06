@@ -370,8 +370,6 @@ public:
                 const std::string& localStorePath,
                 const std::string& jailPath) :
         StorageBase(uri, localStorePath, jailPath),
-        _wopiLoadDuration(0),
-        _wopiSaveDuration(0),
         _reuseCookies(false)
     {
         const auto& app = Poco::Util::Application::instance();
@@ -394,8 +392,8 @@ public:
         };
 
         /// warning - removes items from object.
-        WOPIFileInfo(const FileInfo &fileInfo, std::chrono::duration<double> callDuration,
-                     Poco::JSON::Object::Ptr &object);
+        WOPIFileInfo(const FileInfo& fileInfo, std::chrono::milliseconds callDurationMs,
+                     Poco::JSON::Object::Ptr& object);
 
         const std::string& getUserId() const { return _userId; }
         const std::string& getUsername() const { return _username; }
@@ -429,7 +427,7 @@ public:
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
         TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
-        std::chrono::duration<double> getCallDuration() const { return _callDuration; }
+        std::chrono::milliseconds getCallDurationMs() const { return _callDurationMs; }
     private:
         /// User id of the user accessing the file
         std::string _userId;
@@ -495,7 +493,7 @@ public:
         bool _userCanRename;
 
         /// Time it took to call WOPI's CheckFileInfo
-        std::chrono::duration<double> _callDuration;
+        std::chrono::milliseconds _callDurationMs;
     };
 
     /// Returns the response of CheckFileInfo WOPI call for URI that was
@@ -521,8 +519,8 @@ public:
                                           const bool isRename) override;
 
     /// Total time taken for making WOPI calls during load
-    std::chrono::duration<double> getWopiLoadDuration() const { return _wopiLoadDuration; }
-    std::chrono::duration<double> getWopiSaveDuration() const { return _wopiSaveDuration; }
+    std::chrono::milliseconds getWopiLoadDuration() const { return _wopiLoadDuration; }
+    std::chrono::milliseconds getWopiSaveDuration() const { return _wopiSaveDuration; }
 
 protected:
     struct WopiUploadDetails
@@ -556,8 +554,8 @@ private:
     std::string _fileUrl;
 
     // Time spend in loading the file from storage
-    std::chrono::duration<double> _wopiLoadDuration;
-    std::chrono::duration<double> _wopiSaveDuration;
+    std::chrono::milliseconds _wopiLoadDuration;
+    std::chrono::milliseconds _wopiSaveDuration;
     /// Whether or not to re-use cookies from the browser for the WOPI requests.
     bool _reuseCookies;
 };

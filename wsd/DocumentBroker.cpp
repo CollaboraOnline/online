@@ -627,7 +627,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     std::string templateSource;
 
 #if !MOBILEAPP
-    std::chrono::duration<double> getInfoCallDuration(0);
+    std::chrono::milliseconds checkFileInfoCallDurationMs;
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
@@ -717,7 +717,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
             session->setDocumentOwner(true);
         }
 
-        getInfoCallDuration = wopifileinfo->getCallDuration();
+        checkFileInfoCallDurationMs = wopifileinfo->getCallDurationMs();
 
         // Pass the ownership to client session
         session->setWopiFileInfo(wopifileinfo);
@@ -920,11 +920,10 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
     if (wopiStorage != nullptr)
     {
         // Get the time taken to load the file from storage
-        auto callDuration = wopiStorage->getWopiLoadDuration();
         // Add the time taken to check file info
-        callDuration += getInfoCallDuration;
-        _wopiLoadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(callDuration);
-        const std::string msg = "stats: wopiloadduration " + std::to_string(callDuration.count());
+        _wopiLoadDuration = wopiStorage->getWopiLoadDuration() + checkFileInfoCallDurationMs;
+        const std::string msg
+            = "stats: wopiloadduration " + std::to_string(_wopiLoadDuration.count() / 1000.); // In seconds.
         LOG_TRC("Sending to Client [" << msg << "].");
         session->sendTextFrame(msg);
     }
