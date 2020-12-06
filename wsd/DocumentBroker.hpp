@@ -476,7 +476,7 @@ private:
     void terminateChild(const std::string& closeReason);
 
     /// Upload the doc to the storage.
-    bool uploadToStorageInternal(const std::string& sessionId, bool success,
+    void uploadToStorageInternal(const std::string& sessionId, bool success,
                                  const std::string& result, const std::string& saveAsPath,
                                  const std::string& saveAsFilename, const bool isRename,
                                  const bool force);
@@ -490,7 +490,7 @@ private:
         const bool isRename;
     };
 
-    bool handleUploadToStorageResponse(const StorageUploadDetails& details,
+    void handleUploadToStorageResponse(const StorageUploadDetails& details,
                                        const StorageBase::UploadResult& uploadResult);
 
     /**

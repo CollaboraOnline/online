@@ -1021,10 +1021,10 @@ void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
                             /*force=*/false);
 }
 
-bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool success,
-                                           const std::string& result, const std::string& saveAsPath,
-                                           const std::string& saveAsFilename, const bool isRename,
-                                           const bool force)
+void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool success,
+                                             const std::string& result, const std::string& saveAsPath,
+                                             const std::string& saveAsFilename, const bool isRename,
+                                             const bool force)
 {
     assertCorrectThread();
 
@@ -1038,7 +1038,7 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         _storageManager.markLastSaveTime(); // Mark that the storage is up-to-date.
         broadcastSaveResult(true, "unmodified");
         _poll->wakeup();
-        return true;
+        return;
     }
 
     const auto it = _sessions.find(sessionId);
@@ -1048,7 +1048,7 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
                 << sessionId << "] not found while storing document docKey [" << _docKey
                 << "]. The document will not be uploaded to storage at this time.");
         broadcastSaveResult(false, "Session not found");
-        return false;
+        return;
     }
 
     // Check that we are actually about to upload a successfully saved document.
@@ -1057,7 +1057,7 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         LOG_ERR("Cannot store docKey [" << _docKey << "] as .uno:Save has failed in LOK.");
         it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
         broadcastSaveResult(false, "Could not save document in LibreOfficeKit");
-        return false;
+        return;
     }
 
     if (force)
@@ -1095,7 +1095,7 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
                 "]. File last modified " << timeInSec.count() << " seconds ago, timestamp unchanged.");
         _poll->wakeup();
         broadcastSaveResult(true, "unmodified");
-        return true;
+        return;
     }
 
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
@@ -1105,10 +1105,10 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
 
     const StorageUploadDetails details { uriAnonym, newFileModifiedTime, it->second, isSaveAs, isRename };
-    return handleUploadToStorageResponse(details, uploadResult);
+    handleUploadToStorageResponse(details, uploadResult);
 }
 
-bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& details,
+void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& details,
                                                    const StorageBase::UploadResult& uploadResult)
 {
     // Storage save is considered successful when either storage returns OK or the document on the storage
@@ -1199,8 +1199,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         }
 
         broadcastLastModificationTime();
-
-        return true;
+        return;
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
     {
@@ -1267,8 +1266,6 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         broadcastSaveResult(false, "Conflict: Document changed in storage",
                             uploadResult.getReason());
     }
-
-    return false;
 }
 
 void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
@@ -2363,6 +2360,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
 
     // try the not yet created sessions
     LOG_WRN("Child session [" << viewId << "] not found to forward message: " << getAbbreviatedMessage(message));
+
     return false;
 }
 
