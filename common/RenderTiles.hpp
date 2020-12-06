@@ -516,14 +516,14 @@ namespace RenderTiles
 
         // Render the whole area
         const double area = pixmapWidth * pixmapHeight;
-        auto start = std::chrono::system_clock::now();
+        const auto start = std::chrono::steady_clock::now();
         LOG_TRC("Calling paintPartTile(" << (void*)pixmap.data() << ')');
         document->paintPartTile(pixmap.data(),
                                 tileCombined.getPart(),
                                 pixmapWidth, pixmapHeight,
                                 renderArea.getLeft(), renderArea.getTop(),
                                 renderArea.getWidth(), renderArea.getHeight());
-        auto duration = std::chrono::system_clock::now() - start;
+        auto duration = std::chrono::steady_clock::now() - start;
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
         double totalTime = elapsed/1000.;
         LOG_DBG("paintPartTile at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
@@ -731,7 +731,7 @@ namespace RenderTiles
 
         pngCache.balanceCache();
 
-        duration = std::chrono::system_clock::now() - start;
+        duration = std::chrono::steady_clock::now() - start;
         elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
         totalTime = elapsed/1000.;
         LOG_DBG("rendering tiles at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<

@@ -233,7 +233,7 @@ private:
     size_t _memoryDirty;
     /// Last noted Jiffy count
     unsigned _lastJiffy;
-    std::chrono::time_point<std::chrono::system_clock> _lastJiffyTime;
+    std::chrono::steady_clock::time_point _lastJiffyTime;
     unsigned _lastCpuPercentage;
 
     std::time_t _start;
@@ -362,7 +362,7 @@ public:
     uint64_t getSentBytesTotal() { return _sentBytesTotal; }
     uint64_t getRecvBytesTotal() { return _recvBytesTotal; }
 
-    double getServerUptime();
+    static double getServerUptimeSecs();
 
     /// Document basic info list sorted by most idle time
     std::vector<DocBasicInfo> getDocumentsSortedByIdle() const;

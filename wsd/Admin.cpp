@@ -146,7 +146,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         sendTextFrame("recv_bytes " + std::to_string(model.getRecvBytesTotal() / 1024));
 
     else if (tokens.equals(0, "uptime"))
-        sendTextFrame("uptime " + std::to_string(model.getServerUptime()));
+        sendTextFrame("uptime " + std::to_string(model.getServerUptimeSecs()));
 
     else if (tokens.equals(0, "log_lines"))
         sendTextFrame("log_lines " + _admin->getLogLines());

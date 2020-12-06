@@ -1275,15 +1275,14 @@ private:
 
             const char *pURL = uri.c_str();
             LOG_DBG("Calling lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ", \"" << options << "\").");
-            const auto start = std::chrono::system_clock::now();
+            const auto start = std::chrono::steady_clock::now();
             _loKitDocument.reset(_loKit->documentLoad(pURL, options.c_str()));
 #ifdef __ANDROID__
             _loKitDocumentForAndroidOnly = _loKitDocument;
 #endif
-            const auto duration = std::chrono::system_clock::now() - start;
-            const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
-            const double totalTime = elapsed/1000.;
-            LOG_DBG("Returned lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ") in " << totalTime << "ms.");
+            const auto duration = std::chrono::steady_clock::now() - start;
+            const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+            LOG_DBG("Returned lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ") in " << elapsed << "ms.");
 #ifdef IOS
             getDocumentDataForMobileAppDocId(_mobileAppDocId).loKitDocument = _loKitDocument.get();
 #endif

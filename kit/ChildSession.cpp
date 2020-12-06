@@ -724,7 +724,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
     output.resize(response.size());
     std::memcpy(output.data(), response.data(), response.size());
 
-    const auto start = std::chrono::system_clock::now();
+    const auto start = std::chrono::steady_clock::now();
     // renderFont use a default font size (25) when width and height are 0
     int width = 0, height = 0;
     unsigned char* ptrFont = nullptr;
@@ -733,8 +733,8 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
 
     ptrFont = getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height);
 
-    const auto duration = std::chrono::system_clock::now() - start;
-    const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
+    const auto duration = std::chrono::steady_clock::now() - start;
+    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
     LOG_TRC("renderFont [" << font << "] rendered in " << elapsed << "ms");
 
     if (!ptrFont)
@@ -1648,22 +1648,22 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
             dpiScale = 1.0;
     }
 
-    size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
+    const size_t pixmapDataSize = 4 * bufferWidth * bufferHeight;
     std::vector<unsigned char> pixmap(pixmapDataSize);
-    int width = bufferWidth, height = bufferHeight;
-    std::string response;
-    const auto start = std::chrono::system_clock::now();
-    getLOKitDocument()->paintWindow(winId, pixmap.data(), startX, startY, width, height, dpiScale, _viewId);
+    const int width = bufferWidth;
+    const int height = bufferHeight;
+    const auto start = std::chrono::steady_clock::now();
+    getLOKitDocument()->paintWindow(winId, pixmap.data(), startX, startY, width, height, dpiScale,
+                                    _viewId);
     const double area = width * height;
 
-    const auto duration = std::chrono::system_clock::now() - start;
-    const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
-    const double totalTime = elapsed/1000.;
-    LOG_TRC("paintWindow for " << winId << " returned " << width << "X" << height
-            << "@(" << startX << ',' << startY << ','
-            << " with dpi scale: " << dpiScale
-            << " and rendered in " << totalTime
-            << "ms (" << area / elapsed << " MP/s).");
+    const auto elapsedMics = std::chrono::duration_cast<std::chrono::microseconds>(
+                                 std::chrono::steady_clock::now() - start)
+                                 .count();
+    LOG_TRC("paintWindow for " << winId << " returned " << width << "X" << height << "@(" << startX
+                               << ',' << startY << ',' << " with dpi scale: " << dpiScale
+                               << " and rendered in " << elapsedMics / 1000. << "ms ("
+                               << area / elapsedMics << " MP/s).");
 
     uint64_t pixmapHash = Png::hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight) + getViewId();
 
@@ -1707,8 +1707,8 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
 
     assert(_pixmapCache.size() <= LOKitHelper::tunnelledDialogImageCacheSize);
 
-    response = "windowpaint: id=" + tokens[1] +
-        " width=" + std::to_string(width) + " height=" + std::to_string(height);
+    std::string response = "windowpaint: id=" + tokens[1] + " width=" + std::to_string(width)
+                           + " height=" + std::to_string(height);
 
     if (!paintRectangle.empty())
         response += " rectangle=" + paintRectangle;

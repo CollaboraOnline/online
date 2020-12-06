@@ -148,7 +148,7 @@ void Document::updateMemoryDirty()
 
 void Document::setLastJiffies(size_t newJ)
 {
-    auto now = std::chrono::system_clock::now();
+    const auto now = std::chrono::steady_clock::now();
     if (_lastJiffy)
         _lastCpuPercentage = (100 * 1000 * (newJ - _lastJiffy) / ::sysconf(_SC_CLK_TCK))
                             / std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastJiffyTime).count();
@@ -813,11 +813,12 @@ void AdminModel::updateLastActivityTime(const std::string& docKey)
     }
 }
 
-double AdminModel::getServerUptime()
+double AdminModel::getServerUptimeSecs()
 {
-    auto currentTime = std::chrono::system_clock::now();
-    std::chrono::duration<double> uptime = currentTime - LOOLWSD::StartTime;
-    return uptime.count();
+    const auto currentTime = std::chrono::steady_clock::now();
+    const std::chrono::milliseconds uptime
+        = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - LOOLWSD::StartTime);
+    return uptime.count() / 1000.0; // Convert to seconds and fractions.
 }
 
 void AdminModel::setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
