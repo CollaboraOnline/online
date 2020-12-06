@@ -75,9 +75,9 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	_onChildIdMsg: function (e) {
-		//When childId is not created(usually when we insert file/URL very first time), we send message to get child ID
-		//and store the file(s) into respective arrays (look at _onInsertFile, _onInsertURL, _onSelectBackground)
-		//When we recieve the cildId we empty all the array and insert respective file/URL from here
+		// When childId is not created (usually when we insert file/URL very first time), we send message to get child ID
+		// and store the file(s) into respective arrays (look at _onInsertFile, _onInsertURL, _onSelectBackground)
+		// When we receive the childId we empty all the array and insert respective file/URL from here
 
 		this._childId = e.id;
 		for (var name in this._toInsert) {
