@@ -1627,11 +1627,38 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 	},
 
+	_headerlistboxEntry: function (parentContainer, treeViewData, entry, builder) {
+		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
+			$(parentContainer).addClass('selected');
+
+		for (var i in entry.columns) {
+			var td = L.DomUtil.create('td', '', parentContainer);
+			td.innerText = entry.columns[i].text;
+
+			$(td).click(function() {
+				console.error('click');
+				$('#' + treeViewData.id + ' .ui-listview-entry').removeClass('selected');
+				$(parentContainer).addClass('selected');
+
+				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+			});
+		}
+	},
+
 	_treelistboxControl: function (parentContainer, data, builder) {
 		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
 		table.id = data.id;
 
 		var tbody = L.DomUtil.create('tbody', builder.options.cssClass + ' ui-treeview-body', table);
+
+		var isHeaderListBox = data.headers && data.headers.length !== 0;
+		if (isHeaderListBox) {
+			var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
+			for (var h in data.headers) {
+				var header = L.DomUtil.create('th', builder.options.cssClass, headers);
+				header.innerText = data.headers[h].text;
+			}
+		}
 
 		tbody.ondrop = function (ev) {
 			ev.preventDefault();
@@ -1645,10 +1672,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!data.entries || data.entries.length === 0)
 			return false;
 
-		var ul = L.DomUtil.create('ul', builder.options.cssClass, tbody);
+		if (isHeaderListBox) {
+			// list view with headers
+			for (var i in data.entries) {
+				var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
+				builder._headerlistboxEntry(tr, data, data.entries[i], builder);
+			}
+		} else {
+			// tree view
+			var ul = L.DomUtil.create('ul', builder.options.cssClass, tbody);
 
-		for (var i in data.entries) {
-			builder._treelistboxEntry(ul, data, data.entries[i], builder);
+			for (i in data.entries) {
+				builder._treelistboxEntry(ul, data, data.entries[i], builder);
+			}
 		}
 
 		return false;
