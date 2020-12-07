@@ -326,7 +326,7 @@ private:
     };
 
 private:
-    const Poco::Int64 _epochStart;
+    const int64_t _epochStart;
     const bool _recordOutgoing;
     const bool _compress;
     const bool _takeSnapshot;
@@ -361,8 +361,8 @@ public:
         _stream.close();
     }
 
-    Poco::Int64 getEpochStart() const { return _epochStart; }
-    Poco::Int64 getEpochEnd() const { return _epochEnd; }
+    int64_t getEpochStart() const { return _epochStart; }
+    int64_t getEpochEnd() const { return _epochEnd; }
 
     TraceFileRecord getNextRecord()
     {
@@ -381,7 +381,7 @@ public:
         {
             if (_indexIn < _records.size())
             {
-                const TraceFileRecord rec = _records[_indexIn];
+                TraceFileRecord rec = _records[_indexIn];
                 _indexIn = advance(_indexIn, dir);
                 return rec;
             }
@@ -390,7 +390,7 @@ public:
         {
             if (_indexOut < _records.size())
             {
-                const TraceFileRecord rec = _records[_indexOut];
+                TraceFileRecord rec = _records[_indexOut];
                 _indexOut = advance(_indexOut, dir);
                 return rec;
             }
@@ -499,8 +499,8 @@ private:
 
 private:
     const bool _compressed;
-    Poco::Int64 _epochStart;
-    Poco::Int64 _epochEnd;
+    int64_t _epochStart;
+    int64_t _epochEnd;
     std::ifstream _stream;
     Poco::InflatingInputStream _inflater;
     std::vector<TraceFileRecord> _records;
