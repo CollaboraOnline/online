@@ -123,7 +123,6 @@ public:
     static std::pair<int, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
 
     void forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
-    double getTileBeingRenderedElapsedTimeMs(const TileDesc &tileDesc) const;
 
     size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session,
                                              const std::chrono::steady_clock::time_point& now);

@@ -125,7 +125,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
     if (tokens.size() > 0 && tokens.equals(0, "useractive") && getLOKitDocument() != nullptr)
     {
-        LOG_DBG("Handling message after inactivity of " << getInactivityMS() << "ms.");
+        LOG_DBG("Handling message after inactivity of " << getInactivityMS());
         setIsActive(true);
 
         // Client is getting active again.
@@ -734,8 +734,8 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
     ptrFont = getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height);
 
     const auto duration = std::chrono::steady_clock::now() - start;
-    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-    LOG_TRC("renderFont [" << font << "] rendered in " << elapsed << "ms");
+    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+    LOG_TRC("renderFont [" << font << "] rendered in " << elapsed);
 
     if (!ptrFont)
     {
@@ -1657,13 +1657,13 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
                                     _viewId);
     const double area = width * height;
 
-    const auto elapsedMics = std::chrono::duration_cast<std::chrono::microseconds>(
-                                 std::chrono::steady_clock::now() - start)
-                                 .count();
+    const auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - start);
+    const double elapsedMics = elapsedMs.count() * 1000.; // Need MPixels/second, use Pixels/mics.
     LOG_TRC("paintWindow for " << winId << " returned " << width << "X" << height << "@(" << startX
                                << ',' << startY << ',' << " with dpi scale: " << dpiScale
-                               << " and rendered in " << elapsedMics / 1000. << "ms ("
-                               << area / elapsedMics << " MP/s).");
+                               << " and rendered in " << elapsedMs << " (" << area / elapsedMics
+                               << " MP/s).");
 
     uint64_t pixmapHash = Png::hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight) + getViewId();
 

@@ -524,11 +524,12 @@ namespace RenderTiles
                                 renderArea.getLeft(), renderArea.getTop(),
                                 renderArea.getWidth(), renderArea.getHeight());
         auto duration = std::chrono::steady_clock::now() - start;
-        auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
-        double totalTime = elapsed/1000.;
-        LOG_DBG("paintPartTile at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
-                renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
-                " rendered in " << totalTime << " ms (" << area / elapsed << " MP/s).");
+        const auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+        const double elapsedMics = elapsedMs.count() * 1000.; // Need MPixels/sec, use Pixels/mics.
+        LOG_DBG("paintPartTile at ("
+                << renderArea.getLeft() << ", " << renderArea.getTop() << "), ("
+                << renderArea.getWidth() << ", " << renderArea.getHeight() << ") "
+                << " rendered in " << elapsedMs << " (" << area / elapsedMics << " MP/s).");
 
 #ifdef IOS
 
@@ -732,11 +733,11 @@ namespace RenderTiles
         pngCache.balanceCache();
 
         duration = std::chrono::steady_clock::now() - start;
-        elapsed = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
-        totalTime = elapsed/1000.;
-        LOG_DBG("rendering tiles at (" << renderArea.getLeft() << ", " << renderArea.getTop() << "), (" <<
-                renderArea.getWidth() << ", " << renderArea.getHeight() << ") " <<
-                " took " << totalTime << " ms (including the paintPartTile).");
+        const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+        LOG_DBG("rendering tiles at (" << renderArea.getLeft() << ", " << renderArea.getTop()
+                                       << "), (" << renderArea.getWidth() << ", "
+                                       << renderArea.getHeight() << ") "
+                                       << " took " << elapsed << " (including the paintPartTile).");
 
         if (tileIndex == 0)
             return false;

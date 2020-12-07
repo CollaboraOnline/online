@@ -76,11 +76,18 @@ struct TileCache::TileBeingRendered
     void setVersion(int version) { _tile.setVersion(version); }
 
     std::chrono::steady_clock::time_point getStartTime() const { return _startTime; }
-    double getElapsedTimeMs(const std::chrono::steady_clock::time_point *now = nullptr) const
-        { return std::chrono::duration_cast<std::chrono::milliseconds>
-                ((now ? *now : std::chrono::steady_clock::now()) - _startTime).count(); }
-    bool isStale(const std::chrono::steady_clock::time_point *now = nullptr) const
-        { return getElapsedTimeMs(now) > COMMAND_TIMEOUT_MS; }
+    std::chrono::milliseconds getElapsedTimeMs(const std::chrono::steady_clock::time_point* now
+                                               = nullptr) const
+    {
+        return std::chrono::duration_cast<std::chrono::milliseconds>(
+            (now ? *now : std::chrono::steady_clock::now()) - _startTime);
+    }
+
+    bool isStale(const std::chrono::steady_clock::time_point* now = nullptr) const
+    {
+        return getElapsedTimeMs(now) > std::chrono::milliseconds(COMMAND_TIMEOUT_MS);
+    }
+
     std::vector<std::weak_ptr<ClientSession>>& getSubscribers() { return _subscribers; }
 
     void dumpState(std::ostream& os);
@@ -136,17 +143,6 @@ void TileCache::forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBei
 
     LOG_TRC("Removing all subscribers for " << tileBeingRendered->getTile().serialize());
     _tilesBeingRendered.erase(tileBeingRendered->getTile());
-}
-
-double TileCache::getTileBeingRenderedElapsedTimeMs(const TileDesc &tileDesc) const
-{
-    auto it = _tilesBeingRendered.find(tileDesc);
-    if (it == _tilesBeingRendered.end())
-    {
-        return -1.0; // Negative value means that we did not find tileBeingRendered object
-    }
-
-    return it->second->getElapsedTimeMs();
 }
 
 int TileCache::getTileBeingRenderedVersion(const TileDesc& tile)
@@ -240,7 +236,7 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
         if (tileBeingRendered->getVersion() <= tile.getVersion())
         {
             LOG_DBG("STATISTICS: tile " << tile.getVersion() << " internal roundtrip " <<
-                    tileBeingRendered->getElapsedTimeMs() << " ms.");
+                    tileBeingRendered->getElapsedTimeMs());
             forgetTileBeingRendered(tileBeingRendered);
         }
     }
@@ -659,7 +655,8 @@ void TileCache::saveDataToStreamCache(StreamType type, const std::string &fileNa
 
 void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 {
-    os << "    " << _tile.serialize() << ' ' << std::setw(4) << getElapsedTimeMs() << "ms " << _subscribers.size() << " subscribers\n";
+    os << "    " << _tile.serialize() << ' ' << std::setw(4) << getElapsedTimeMs()
+       << _subscribers.size() << " subscribers\n";
     for (const auto& it : _subscribers)
     {
         std::shared_ptr<ClientSession> session = it.lock();
