@@ -77,7 +77,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
 
-		writerHelper.selectAllTextOfDoc();
+		helper.typeIntoDocument('{ctrl}a');
 
 		// Two rows
 		cy.get('#copy-paste-container tr')
@@ -111,7 +111,7 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
 
-		writerHelper.selectAllTextOfDoc();
+		helper.typeIntoDocument('{ctrl}a');
 
 		// Three rows
 		cy.get('#copy-paste-container tr')

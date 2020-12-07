@@ -332,8 +332,7 @@ function selectAllText(assertFocus = true) {
 	// Trigger select all
 	typeIntoDocument('{ctrl}a');
 
-	cy.get('.leaflet-marker-icon')
-		.should('exist');
+	textSelectionShouldExist();
 }
 
 // Clear all text by selecting all and deleting.
@@ -345,14 +344,12 @@ function clearAllText() {
 	// Trigger select all
 	typeIntoDocument('{ctrl}a');
 
-	cy.get('.leaflet-marker-icon')
-		.should('exist');
+	textSelectionShouldExist();
 
 	// Then remove
 	typeIntoDocument('{del}');
 
-	cy.get('.leaflet-marker-icon')
-		.should('not.exist');
+	textSelectionShouldNotExist();
 }
 
 // Check that the clipboard text matches with the specified text.
@@ -851,6 +848,34 @@ function getCursorPos(offsetProperty, aliasName) {
 		.should('be.greaterThan', 0);
 }
 
+function textSelectionShouldExist() {
+	cy.log('Make sure text selection exists - start.');
+
+	cy.get('.leaflet-selection-marker-start')
+		.should('exist');
+
+	cy.get('.leaflet-selection-marker-end')
+		.should('exist');
+
+	// One of the marker should be visible at least (if not both).
+	cy.get('.leaflet-selection-marker-start, .leaflet-selection-marker-end')
+		.should('be.visible');
+
+	cy.log('Make sure text selection exists - end.');
+}
+
+function textSelectionShouldNotExist() {
+	cy.log('Make sure there is no text selection - start.');
+
+	cy.get('.leaflet-selection-marker-start')
+		.should('not.exist');
+
+	cy.get('.leaflet-selection-marker-end')
+		.should('not.exist');
+
+	cy.log('Make sure there is no text selection - end.');
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -882,3 +907,5 @@ module.exports.moveCursor = moveCursor;
 module.exports.typeIntoDocument = typeIntoDocument;
 module.exports.loadFileToNextCloud = loadFileToNextCloud;
 module.exports.getCursorPos = getCursorPos;
+module.exports.textSelectionShouldExist = textSelectionShouldExist;
+module.exports.textSelectionShouldNotExist = textSelectionShouldNotExist;
