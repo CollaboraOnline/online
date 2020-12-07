@@ -138,9 +138,6 @@ describe('Apply font on selected shape.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('not.have.attr', 'font-color');
-
 		helper.clickOnIdle('#Color');
 
 		mobileHelper.selectFromColorPalette(0, 5, 2);
