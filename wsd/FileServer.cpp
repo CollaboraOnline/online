@@ -707,6 +707,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%SOCKET_PROXY%"), socketProxy);
 
     std::string responseRoot = cnxDetails.getResponseRoot();
+    std::string userInterfaceMode;
 
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
@@ -714,7 +715,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
-    Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults));
+    Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults, userInterfaceMode));
 
     const auto& config = Application::instance().config();
     std::string protocolDebug = "false";
@@ -769,7 +770,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         enableWelcomeMessageButton = "true";
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG_BTN%"), enableWelcomeMessageButton);
 
-    std::string userInterfaceMode = config.getString("user_interface.mode", "classic");
+    if (userInterfaceMode.empty())
+        userInterfaceMode = config.getString("user_interface.mode", "classic");
     Poco::replaceInPlace(preprocess, std::string("%USER_INTERFACE_MODE%"), userInterfaceMode);
 
     // Capture cookies so we can optionally reuse them for the storage requests.

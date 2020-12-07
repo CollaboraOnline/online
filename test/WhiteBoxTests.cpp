@@ -1680,14 +1680,19 @@ void WhiteBoxTests::testRequestDetails()
 
 void WhiteBoxTests::testUIDefaults()
 {
+    std::string uiMode;
+
     LOK_ASSERT_EQUAL(std::string("{\"uiMode\":\"classic\"}"),
-                     FileServerRequestHandler::uiDefaultsToJSON("UIMode=classic;huh=bleh;"));
+                     FileServerRequestHandler::uiDefaultsToJSON("UIMode=classic;huh=bleh;", uiMode));
+    LOK_ASSERT_EQUAL(std::string("classic"), uiMode);
 
     LOK_ASSERT_EQUAL(std::string("{\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true}}"),
-                     FileServerRequestHandler::uiDefaultsToJSON("TextRuler=true;SpreadsheetSidebar=false"));
+                     FileServerRequestHandler::uiDefaultsToJSON("TextRuler=true;SpreadsheetSidebar=false", uiMode));
+    LOK_ASSERT_EQUAL(std::string(""), uiMode);
 
     LOK_ASSERT_EQUAL(std::string("{\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}"),
-                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false"));
+                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false", uiMode));
+    LOK_ASSERT_EQUAL(std::string("notebookbar"), uiMode);
 }
 
 void WhiteBoxTests::testCSSVars()

@@ -31,7 +31,8 @@ class FileServerRequestHandler
     /// Construct a JSON to be accepted by the loleflet.html from a list like
     /// UIMode=classic;TextRuler=true;PresentationStatusbar=false
     /// that is passed as "ui_defaults" hidden input during the iframe setup.
-    static std::string uiDefaultsToJSON(const std::string& uiDefaults);
+    /// Also returns the UIMode from uiDefaults in uiMode output param
+    static std::string uiDefaultsToJSON(const std::string& uiDefaults, std::string& uiMode);
 
     static std::string cssVarsToStyle(const std::string& cssVars);
 
