@@ -611,7 +611,7 @@ std::string Admin::getChannelLogLevels()
     return result;
 }
 
-void Admin::setChannelLogLevel(const std::string& _channelName, std::string level)
+void Admin::setChannelLogLevel(const std::string& channelName, std::string level)
 {
     assertCorrectThread();
 
@@ -622,9 +622,9 @@ void Admin::setChannelLogLevel(const std::string& _channelName, std::string leve
     if (std::find(std::begin(levelList), std::end(levelList), level) == std::end(levelList))
         level = "debug";
 
-    if (_channelName == "wsd")
+    if (channelName == "wsd")
         Log::logger().get("wsd").setLevel(level);
-    else if (_channelName == "kit")
+    else if (channelName == "kit")
     {
         LOOLWSD::setLogLevelsOfKits(level); // For current kits.
         LOOLWSD::sendMessageToForKit("setloglevel " + level); // For forkit and future kits.
