@@ -31,6 +31,12 @@ var AdminSocketBase = Base.extend({
 			this.socket.onerror = this.onSocketError.bind(this);
 			this.socket.binaryType = 'arraybuffer';
 		}
+
+		this.pageWillBeRefreshed = false;
+		var onBeforeFunction = function() {
+			this.pageWillBeRefreshed = true;
+		};
+		window.onbeforeunload = onBeforeFunction.bind(this);
 	},
 
 	onSocketOpen: function () {
@@ -47,15 +53,17 @@ var AdminSocketBase = Base.extend({
 		this.socket.onerror = function () { };
 		this.socket.onclose = function () { };
 		this.socket.onmessage = function () { };
-
-		this.vexInstance = vex.open({
-			content: _('Server has been shut down; please reload the page.'),
-			contentClassName: 'loleaflet-user-idle',
-			showCloseButton: false,
-			overlayClosesOnClick: false,
-			escapeButtonCloses: false,
-		});
 		this.socket.close();
+
+		if (this.pageWillBeRefreshed === false) {
+			this.vexInstance = vex.open({
+				content: _('Server has been shut down; please reload the page.'),
+				contentClassName: 'loleaflet-user-idle',
+				showCloseButton: false,
+				overlayClosesOnClick: false,
+				escapeButtonCloses: false,
+			});
+		}
 	},
 
 	onSocketError: function () {
