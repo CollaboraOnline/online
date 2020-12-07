@@ -152,6 +152,14 @@
 	padding: 2px;
 }
 
+#table-buttonbox .autofilter.cell:first-child {
+	float: right;
+}
+
+#table-buttonbox .autofilter.cell:last-child {
+	float: left;
+}
+
 .autofilter-container {
 	background-color: white;
 	border: solid 1px silver;
@@ -179,8 +187,9 @@
 }
 
 .autofilter-container #select_current {
-	height: 25px;
-	width: 25px;
+	height: 16px;
+	width: 16px;
+	margin: 8px;
 	border: none;
 }
 
@@ -190,8 +199,9 @@
 }
 
 .autofilter-container #unselect_current {
-	height: 25px;
-	width: 25px;
+	height: 16px;
+	width: 16px;
+	margin: 8px 8px 8px 0px;
 	border: none;
 }
 
