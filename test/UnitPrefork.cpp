@@ -39,11 +39,12 @@ public:
         if (_childSockets >= NumToPrefork)
         {
             const auto duration = std::chrono::steady_clock::now() - _startTime;
-            const auto totalTime = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+            const auto totalTime = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
 
             LOG_INF("Launched " << _childSockets << " in " << totalTime);
-            std::cerr << "Launch time total   " << totalTime << " ms" << std::endl;
-            std::cerr << "Launch time average " << (totalTime / _childSockets) << " ms" << std::endl;
+            std::cerr << "Launch time total   " << totalTime << std::endl;
+            std::cerr << "Launch time average " << (totalTime.count() / _childSockets) << "ms"
+                      << std::endl;
 
             exitTest(TestResult::Ok);
         }

@@ -103,9 +103,9 @@ static void testNoExtraLoolKitsLeft()
     LOK_ASSERT_EQUAL(InitialLoolKitCount, countNow);
 
     const auto duration = (std::chrono::steady_clock::now() - TestStartTime);
-    const std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
 
-    TST_LOG(" (" << durationMs << " ms)");
+    TST_LOG(" (" << durationMs << ')');
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
