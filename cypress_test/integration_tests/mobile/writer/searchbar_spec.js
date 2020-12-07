@@ -24,8 +24,7 @@ describe('Searching via search bar.', function() {
 		searchHelper.tpyeIntoSearchField('a');
 
 		// Part of the text should be selected
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');
@@ -34,21 +33,15 @@ describe('Searching via search bar.', function() {
 	it('Search not existing word.', function() {
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
-
 		searchHelper.tpyeIntoSearchField('q');
 
-		// Should be no selection
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
+		helper.textSelectionShouldNotExist();
 	});
 
 	it('Search next / prev instance.', function() {
 		searchHelper.tpyeIntoSearchField('a');
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');
@@ -62,8 +55,7 @@ describe('Searching via search bar.', function() {
 		cy.get('#copy-paste-container p b')
 			.should('exist');
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');
@@ -74,8 +66,7 @@ describe('Searching via search bar.', function() {
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');
@@ -84,8 +75,7 @@ describe('Searching via search bar.', function() {
 	it('Search at the document end.', function() {
 		searchHelper.tpyeIntoSearchField('a');
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');
@@ -99,8 +89,7 @@ describe('Searching via search bar.', function() {
 		cy.get('#copy-paste-container p b')
 			.should('exist');
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');
@@ -111,8 +100,7 @@ describe('Searching via search bar.', function() {
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');
@@ -122,8 +110,7 @@ describe('Searching via search bar.', function() {
 		searchHelper.tpyeIntoSearchField('a');
 
 		// Part of the text should be selected
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');
@@ -131,8 +118,7 @@ describe('Searching via search bar.', function() {
 		// Cancel search -> selection removed
 		searchHelper.cancelSearch();
 
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
+		helper.textSelectionShouldNotExist();
 
 		cy.get('input#search-input')
 			.should('be.visible');
@@ -142,8 +128,7 @@ describe('Searching via search bar.', function() {
 		searchHelper.tpyeIntoSearchField('a');
 
 		// Part of the text should be selected
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');

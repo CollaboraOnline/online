@@ -30,8 +30,7 @@ describe('Spell checking menu.', function() {
 
 		helper.typeIntoDocument('{leftArrow}');
 
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
+		helper.textSelectionShouldNotExist();
 
 		// Open context menu
 		cy.get('g path.leaflet-interactive')

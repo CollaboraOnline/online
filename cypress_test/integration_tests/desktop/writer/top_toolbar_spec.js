@@ -497,13 +497,11 @@ describe('Top toolbar tests.', function() {
 		// Select one character at the beginning of the text.
 		helper.typeIntoDocument('{home}');
 
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
+		helper.textSelectionShouldNotExist();
 
 		helper.typeIntoDocument('{shift}{rightArrow}');
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		// Apply bold and try to clone it to the whole word.
 		cy.get('#tb_editbar_item_bold')

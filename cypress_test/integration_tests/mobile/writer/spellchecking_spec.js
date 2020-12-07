@@ -36,8 +36,8 @@ describe('Spell checking menu.', function() {
 
 				// Remove selection
 				helper.typeIntoDocument('{downarrow}');
-				cy.get('.leaflet-marker-icon')
-					.should('not.exist');
+
+				helper.textSelectionShouldNotExist();
 
 				var XPos = startPos.right + 10;
 				var YPos = endPos.top - 10;
