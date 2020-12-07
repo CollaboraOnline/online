@@ -426,13 +426,13 @@ static int rebalanceChildren(int balance)
     const bool rebalance = cleanupChildren();
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTime);
-    const std::chrono::milliseconds::rep durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-    if (OutstandingForks != 0 && durationMs >= ChildSpawnTimeoutMs)
+    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+    if (OutstandingForks != 0 && durationMs >= std::chrono::milliseconds(ChildSpawnTimeoutMs))
     {
         // Children taking too long to spawn.
         // Forget we had requested any, and request anew.
-        LOG_WRN("ForKit not responsive for " << durationMs << " ms forking " <<
-                OutstandingForks << " children. Resetting.");
+        LOG_WRN("ForKit not responsive for " << durationMs << " forking " << OutstandingForks
+                                             << " children. Resetting.");
         OutstandingForks = 0;
     }
 
@@ -513,8 +513,8 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId)
     }
 
     // With valgrind we need extended time to spawn kits.
-    const size_t timeoutMs = ChildSpawnTimeoutMs / 2;
-    LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
+    const auto timeoutMs = std::chrono::milliseconds(ChildSpawnTimeoutMs / 2);
+    LOG_TRC("Waiting for a new child for a max of " << timeoutMs);
     const auto timeout = std::chrono::milliseconds(timeoutMs);
 #else
     const auto timeout = std::chrono::hours(100);
@@ -552,11 +552,11 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId)
         // Validate before returning.
         if (child && child->isAlive())
         {
-            LOG_DBG("getNewChild: Have " << available << " spare " <<
-                    (available == 1 ? "child" : "children") <<
-                    " after popping [" << child->getPid() << "] to return in " <<
-                    std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
-                                                                          startTime).count() << "ms.");
+            LOG_DBG("getNewChild: Have "
+                    << available << " spare " << (available == 1 ? "child" : "children")
+                    << " after popping [" << child->getPid() << "] to return in "
+                    << std::chrono::duration_cast<std::chrono::milliseconds>(
+                           std::chrono::steady_clock::now() - startTime));
             return child;
         }
 
@@ -3938,7 +3938,7 @@ int LOOLWSD::innerMain()
         {
             const int timeoutMs = ChildSpawnTimeoutMs * (LOOLWSD::NoCapsForKit ? 150 : 50);
             const auto timeout = std::chrono::milliseconds(timeoutMs);
-            LOG_TRC("Waiting for a new child for a max of " << timeoutMs << " ms.");
+            LOG_TRC("Waiting for a new child for a max of " << timeout);
             if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
             {
                 const char* msg = "Failed to fork child processes.";
