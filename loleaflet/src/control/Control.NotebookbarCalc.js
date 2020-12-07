@@ -2082,6 +2082,41 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																						}
 																					]
 																				},
+																				{
+																					'id': 'namedranges-Section',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'vertical': 'true',
+																					'children': [
+																						{
+																							'id': 'Section71',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:AddName', 'spreadsheet'),
+																									'command': '.uno:AddName'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'Section101',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:DefineName', 'spreadsheet'),
+																									'command': '.uno:DefineName'
+																								}
+																							]
+																						}
+																					]
+																				},
 																				window.mode.isDesktop()? {
 																					'id': 'freeze-section1',
 																					'type': 'container',
