@@ -517,14 +517,14 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const St
     }
     const std::string tmpDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
     const Poco::Path filenameParam(filename);
-    const std::string url = JAILED_DOCUMENT_ROOT + tmpDir + "/" + filenameParam.getFileName();
+    const std::string url = JAILED_DOCUMENT_ROOT + tmpDir + '/' + filenameParam.getFileName();
 
     getLOKitDocument()->saveAs(url.c_str(),
                                filetype.empty() ? nullptr : filetype.c_str(),
                                nullptr);
 
     Authorization authorization(Authorization::Type::Token, token);
-    Poco::URI uriObject(wopiUrl + "/" + filename + "/contents");
+    Poco::URI uriObject(wopiUrl + '/' + filename + "/contents");
 
     authorization.authorizeURI(uriObject);
 
@@ -962,9 +962,9 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
 
     // The file is removed upon downloading.
     const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
-    const std::string urlToSend = tmpDir + "/" + filenameParam.getFileName();
+    const std::string urlToSend = tmpDir + '/' + filenameParam.getFileName();
     const std::string url = jailDoc + urlToSend;
-    const std::string urlAnonym = jailDoc + tmpDir + "/" + Poco::Path(nameAnonym).getFileName();
+    const std::string urlAnonym = jailDoc + tmpDir + '/' + Poco::Path(nameAnonym).getFileName();
 
     LOG_DBG("Calling LOK's saveAs with: url='" << urlAnonym << "', format='" <<
             (format.empty() ? "(nullptr)" : format.c_str()) << "', ' filterOptions=" <<
@@ -1653,7 +1653,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
     const auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - start);
     const double elapsedMics = elapsedMs.count() * 1000.; // Need MPixels/second, use Pixels/mics.
-    LOG_TRC("paintWindow for " << winId << " returned " << width << "X" << height << "@(" << startX
+    LOG_TRC("paintWindow for " << winId << " returned " << width << 'X' << height << "@(" << startX
                                << ',' << startY << ',' << " with dpi scale: " << dpiScale
                                << " and rendered in " << elapsedMs << " (" << area / elapsedMics
                                << " MP/s).");
@@ -1882,7 +1882,8 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
     // export document to a temp file
     const std::string aTempDir = FileUtil::createRandomDir(JAILED_DOCUMENT_ROOT);
     const Poco::Path filenameParam(filename);
-    const std::string aTempDocumentURL = JAILED_DOCUMENT_ROOT + aTempDir + "/" + filenameParam.getFileName();
+    const std::string aTempDocumentURL
+        = JAILED_DOCUMENT_ROOT + aTempDir + '/' + filenameParam.getFileName();
 
     getLOKitDocument()->saveAs(aTempDocumentURL.c_str(), filetype.c_str(), nullptr);
 
@@ -1904,7 +1905,7 @@ bool ChildSession::exportSignAndUploadDocument(const char* buffer, int length, c
 
     // upload
     Authorization authorization(Authorization::Type::Token, token);
-    Poco::URI uriObject(wopiUrl + "/" + filename + "/contents");
+    Poco::URI uriObject(wopiUrl + '/' + filename + "/contents");
 
     authorization.authorizeURI(uriObject);
 
@@ -2082,7 +2083,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
 
         const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
         const Poco::Path filenameParam(pathSegments[pathSegments.size() - 1]);
-        url = std::string("file://") + jailDoc + tmpDir + "/" + filenameParam.getFileName();
+        url = std::string("file://") + jailDoc + tmpDir + '/' + filenameParam.getFileName();
         wopiFilename = wopiURL.getPath();
     }
 

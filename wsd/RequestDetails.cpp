@@ -54,7 +54,7 @@ template <typename T> bool equal(const T& lhs, const T& rhs)
 
         if (subLeft != subRight)
         {
-            LOG_ERR("!!! Data mismatch: [" << subLeft << "] != [" << subRight << "]");
+            LOG_ERR("!!! Data mismatch: [" << subLeft << "] != [" << subRight << ']');
             return false;
         }
     }
