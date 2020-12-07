@@ -107,7 +107,7 @@ public:
     std::string getChannelLogLevels();
 
     /// Sets the specified channel's log level (wsd or forkit and kits).
-    void setChannelLogLevel(const std::string& _channelName, std::string _level);
+    void setChannelLogLevel(const std::string& channelName, std::string level);
 
     std::string getLogLines();
 
