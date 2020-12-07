@@ -210,17 +210,17 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
     {
         const auto end = std::chrono::steady_clock::now();
 
-        std::chrono::milliseconds::rep duration
-            = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+        std::chrono::milliseconds duration
+            = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-        static std::chrono::milliseconds::rep totalDuration = 0;
+        static std::chrono::milliseconds totalDuration;
         static int nCalls = 0;
 
         totalDuration += duration;
         ++nCalls;
         LOG_TRC("PNG compression took "
-                << duration << " ms (" << output.size() << " bytes). Average after " << nCalls
-                << " calls: " << (totalDuration / static_cast<double>(nCalls)) << " ms.");
+                << duration << " (" << output.size() << " bytes). Average after " << nCalls
+                << " calls: " << (totalDuration.count() / static_cast<double>(nCalls)) << "ms.");
     }
 
     return res;

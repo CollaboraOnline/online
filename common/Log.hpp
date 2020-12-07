@@ -42,6 +42,27 @@ inline std::ostream& operator<< (std::ostream& os, const std::chrono::system_clo
     return os;
 }
 
+/// Format seconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& s)
+{
+    os << s.count() << 's';
+    return os;
+}
+
+/// Format milliseconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::milliseconds& ms)
+{
+    os << ms.count() << "ms";
+    return os;
+}
+
+/// Format microeconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::microseconds& ms)
+{
+    os << ms.count() << "us";
+    return os;
+}
+
 namespace Log
 {
     /// Initialize the logging system.

@@ -1251,7 +1251,7 @@ void DocumentBroker::setLoaded()
         _isLoaded = true;
         _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
                                 std::chrono::steady_clock::now() - _threadStart);
-        LOG_TRC("Document loaded in " << _loadDuration.count() << "ms");
+        LOG_TRC("Document loaded in " << _loadDuration);
     }
 }
 
@@ -1354,9 +1354,9 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
         const std::chrono::milliseconds timeSinceLastSaveMs
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSaveTime);
-        LOG_TRC("Time since last save of docKey ["
-                << _docKey << "] is " << timeSinceLastSaveMs.count()
-                << " ms and most recent activity was " << inactivityTimeMs.count() << " ms ago.");
+        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs
+                                                   << " and most recent activity was "
+                                                   << inactivityTimeMs << " ago.");
 
         bool save = false;
         // Zero or negative config value disables save.
@@ -2620,7 +2620,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     else
         os << " has live sessions";
     if (_isLoaded)
-        os << "\n  loaded in: " << _loadDuration.count() << "ms";
+        os << "\n  loaded in: " << _loadDuration;
     else
         os << "\n  still loading... " <<
             std::chrono::duration_cast<std::chrono::seconds>(

@@ -1281,8 +1281,9 @@ private:
             _loKitDocumentForAndroidOnly = _loKitDocument;
 #endif
             const auto duration = std::chrono::steady_clock::now() - start;
-            const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-            LOG_DBG("Returned lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ") in " << elapsed << "ms.");
+            const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+            LOG_DBG("Returned lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ") in "
+                                                    << elapsed);
 #ifdef IOS
             getDocumentDataForMobileAppDocId(_mobileAppDocId).loKitDocument = _loKitDocument.get();
 #endif
@@ -2344,9 +2345,8 @@ void lokit_main(
             ::setenv("HOME", HomePathInJail, 1);
 
             const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-                                std::chrono::steady_clock::now() - jailSetupStartTime)
-                                .count();
-            LOG_DBG("Initialized jail files in " << ms << " ms.");
+                std::chrono::steady_clock::now() - jailSetupStartTime);
+            LOG_DBG("Initialized jail files in " << ms);
 
             ProcSMapsFile = open("/proc/self/smaps", O_RDONLY);
             if (ProcSMapsFile < 0)
@@ -2703,9 +2703,9 @@ bool globalPreinit(const std::string &loTemplate)
         return false;
     }
 
-    LOG_TRC("Finished lok_preinit(" << loTemplate << "/program\", \"file:///tmp/user\") in " <<
-            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count() <<
-            " ms.");
+    LOG_TRC("Finished lok_preinit(" << loTemplate << "/program\", \"file:///tmp/user\") in "
+                                    << std::chrono::duration_cast<std::chrono::milliseconds>(
+                                           std::chrono::steady_clock::now() - start));
     return true;
 }
 
