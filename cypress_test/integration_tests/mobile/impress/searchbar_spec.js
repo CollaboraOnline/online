@@ -41,16 +41,13 @@ describe('Searching via search bar.', function() {
 
 		helper.selectAllText();
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		searchHelper.tpyeIntoSearchField('q');
 
 		searchHelper.searchNext();
 
-		// Should be no selection
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
+		helper.textSelectionShouldNotExist();
 	});
 
 	it('Search next / prev instance.', function() {

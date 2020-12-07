@@ -293,8 +293,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 
-		cy.get('.leaflet-marker-icon')
-			.should('be.visible');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', 'xxxxxx');
@@ -308,8 +307,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Previous']);
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		// We should have 'q' selected.
 		cy.get('#copy-paste-container p')
@@ -322,8 +320,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Previous']);
 
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		// We should have 'q' selected.
 		cy.get('#copy-paste-container p')
@@ -342,18 +339,14 @@ describe('Trigger hamburger menu options.', function() {
 		// By default track changed are shown.
 		writerHelper.selectAllTextOfDoc();
 
-		// We have selection markers.
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
-
 		// No actual text sent from core because of the removal.
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\n\n\n');
 
 		// We have a multiline selection
-		cy.get('.leaflet-marker-icon:nth-of-type(1)')
+		cy.get('.leaflet-selection-marker-start')
 			.then(function(firstMarker) {
-				cy.get('.leaflet-marker-icon:nth-of-type(2)')
+				cy.get('.leaflet-selection-marker-end')
 					.then(function(secondMarker) {
 						expect(firstMarker.offset().top).to.be.lessThan(secondMarker.offset().top);
 						expect(firstMarker.offset().left).to.be.lessThan(secondMarker.offset().left);
@@ -370,9 +363,9 @@ describe('Trigger hamburger menu options.', function() {
 		helper.typeIntoDocument('{ctrl}a');
 
 		// Both selection markers should be in the same line
-		cy.get('.leaflet-marker-icon:nth-of-type(1)')
+		cy.get('.leaflet-selection-marker-start')
 			.then(function(firstMarker) {
-				cy.get('.leaflet-marker-icon:nth-of-type(2)')
+				cy.get('.leaflet-selection-marker-end')
 					.then(function(secondMarker) {
 						expect(firstMarker.offset().top).to.be.equal(secondMarker.offset().top);
 						expect(firstMarker.offset().left).to.be.lessThan(secondMarker.offset().left);
@@ -398,8 +391,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.wait(1000);
 
 		// No selection
-		cy.get('.leaflet-marker-icon')
-			.should('not.exist');
+		helper.textSelectionShouldNotExist();
 	});
 
 	it('Reject all changes.', function() {
@@ -471,8 +463,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.clickOnIdle('#search');
 
 		// Part of the text should be selected
-		cy.get('.leaflet-marker-icon')
-			.should('exist');
+		helper.textSelectionShouldExist();
 
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\na');

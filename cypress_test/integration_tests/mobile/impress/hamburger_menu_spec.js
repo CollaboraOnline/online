@@ -260,8 +260,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 
-		cy.get('.leaflet-marker-icon')
-			.should('be.visible');
+		helper.textSelectionShouldExist();
 
 		helper.expectTextForClipboard('X');
 	});
