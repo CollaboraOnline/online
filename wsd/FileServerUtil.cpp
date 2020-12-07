@@ -133,7 +133,7 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
             LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it has more than one '=' pair");
             continue;
         }
-        styleOSS << keyValue[0] << ":" << keyValue[1] << ";";
+        styleOSS << keyValue[0] << ':' << keyValue[1] << ';';
     }
     styleOSS << "}</style>";
 

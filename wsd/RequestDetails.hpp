@@ -213,7 +213,7 @@ public:
         oss << ", host: " << _hostUntrusted;
         oss << ", path: " << _pathSegs.size();
         for (std::size_t i = 0; i < _pathSegs.size(); ++i)
-            oss << "\n[" << i << "] '" << _pathSegs[i] << "'";
+            oss << "\n[" << i << "] '" << _pathSegs[i] << '\'';
         oss << "\nfull URI: " << _uriString;
         return oss.str();
     }

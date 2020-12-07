@@ -62,7 +62,7 @@ protected:
 
         for (const auto& pair : Headers)
         {
-            LOK_ASSERT_MESSAGE("Request must have [" + pair.first + "]", request.has(pair.first));
+            LOK_ASSERT_MESSAGE("Request must have [" + pair.first + ']', request.has(pair.first));
             LOK_ASSERT_EQUAL(pair.second, request[pair.first]);
         }
     }

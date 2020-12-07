@@ -82,7 +82,7 @@ T getJSONValue(const Poco::JSON::Object::Ptr &object, const std::string& key)
     catch (const Poco::Exception& exc)
     {
         LOG_ERR("getJSONValue for [" << key << "]: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+                (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
     }
 
     return T();

@@ -201,7 +201,7 @@ namespace FileUtil
         std::string newTmp = root + "/lool-" + Util::rng::getFilename(16);
         if (::mkdir(newTmp.c_str(), S_IRWXU) < 0)
         {
-            LOG_SYS("Failed to create random temp directory [" << newTmp << "]");
+            LOG_SYS("Failed to create random temp directory [" << newTmp << ']');
             return root;
         }
         return newTmp;
@@ -295,7 +295,7 @@ namespace FileUtil
             return real;
         }
 
-        LOG_SYS("Failed to get the realpath of [" << path << "]");
+        LOG_SYS("Failed to get the realpath of [" << path << ']');
         return path;
     }
 
@@ -344,7 +344,7 @@ namespace FileUtil
                           };
         if (utimes(filename.c_str(), timestamps) != 0)
         {
-            LOG_SYS("Failed to update the timestamp of [" << filename << "]");
+            LOG_SYS("Failed to update the timestamp of [" << filename << ']');
             return false;
         }
 

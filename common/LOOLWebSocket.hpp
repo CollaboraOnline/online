@@ -139,7 +139,7 @@ public:
         catch (const Poco::Exception& exc)
         {
             LOG_WRN("LOOLWebSocket::shutdown: Exception: " << exc.displayText() <<
-                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+                    (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
 
             // Just close it.
             try
