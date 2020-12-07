@@ -108,7 +108,9 @@
 }
 
 .ui-treeview-entry:hover,
-.ui-treeview-entry.selected {
+.ui-treeview-entry.selected,
+.ui-listview-entry:hover,
+.ui-listview-entry.selected {
 	background-color: silver;
 }
 
