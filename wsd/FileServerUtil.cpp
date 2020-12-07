@@ -11,20 +11,25 @@
 
 #include "FileServer.hpp"
 
-std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefaults)
+std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefaults, std::string& uiMode)
 {
     static std::string previousUIDefaults;
     static std::string previousJSON("{}");
+    static std::string previousUIMode;
 
     // early exit if we are serving the same thing
     if (uiDefaults == previousUIDefaults)
+    {
+        uiMode = previousUIMode;
         return previousJSON;
+    }
 
     Poco::JSON::Object json;
     Poco::JSON::Object textDefs;
     Poco::JSON::Object spreadsheetDefs;
     Poco::JSON::Object presentationDefs;
 
+    uiMode = "";
     StringVector tokens(Util::tokenize(uiDefaults, ';'));
     for (const auto& token : tokens)
     {
@@ -36,7 +41,10 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
         if (keyValue[0] == "UIMode")
         {
             if (keyValue[1] == "classic" || keyValue[1] == "notebookbar")
+            {
                 json.set("uiMode", keyValue[1]);
+                uiMode = keyValue[1];
+            }
             else
                 LOG_WRN("unknown UIMode value " << keyValue[1]);
 
@@ -95,6 +103,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
 
     previousUIDefaults = uiDefaults;
     previousJSON = oss.str();
+    previousUIMode = uiMode;
 
     return previousJSON;
 }
