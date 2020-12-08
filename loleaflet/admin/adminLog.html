@@ -5,8 +5,8 @@
     <h3 class="title is-3"><script>document.write(l10nstrings.strLog)</script></h3>
 
     <div class="buttons is-fullwidth is-right">
-      <button type="button" class="button is-info" id="refresh-log" style="width:120px;"><script>document.write(l10nstrings.strRefreshLog)</script></button>
-      <button type="button" id="button-open-log-list-modal" class="button is-info" style="width:120px;">
+      <button type="button" class="button is-info" id="refresh-log" style="min-width:120px;"><script>document.write(l10nstrings.strRefreshLog)</script></button>
+      <button type="button" id="button-open-log-list-modal" class="button is-info" style="min-width:120px;">
         <script>document.write(l10nstrings.strSetLogLevels)</script>
       </button>
     </div>
@@ -36,8 +36,8 @@
       <form class="form-horizontal" id="form-channel-list"></form>
     </section>
     <footer class="modal-card-foot is-fullwidth has-text-right">
-        <button type="button" onclick="document.getElementById('channel-list-modal').classList.remove('is-active');" class="button" style="width:120px;" data-dismiss="modal"><script>document.write(l10nstrings.strCloseModal)</script></button>
-        <button type="button" form="form-channel-list" id="update-log-levels" class="button is-primary" style="width:140px;"><script>document.write(l10nstrings.strUpdateLogLevels)</script></button>
+        <button type="button" onclick="document.getElementById('channel-list-modal').classList.remove('is-active');" class="button" style="min-width:120px;" data-dismiss="modal"><script>document.write(l10nstrings.strCloseModal)</script></button>
+        <button type="button" form="form-channel-list" id="update-log-levels" class="button is-primary" style="min-width:140px;"><script>document.write(l10nstrings.strUpdateLogLevels)</script></button>
     </footer>
   </div>
 </div>
