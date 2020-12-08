@@ -58,7 +58,7 @@ L.Socket = L.Class.extend({
 				if (isIE11)
 					msgHint = _('IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections');
 
-				this._map.fire('error', {msg: _('Oops, there is a problem connecting to Collabora Online : ').replace('Collabora Online', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
+				this._map.fire('error', {msg: _('Oops, there is a problem connecting to %productName: ').replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
 				return;
 			}
 		}
