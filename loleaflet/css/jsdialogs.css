@@ -168,6 +168,12 @@ td.jsdialog > [id^='table-box'] {
 	border: 2px dashed darkslateblue;
 }
 
+/* input text */
+
+.jsdialog.ui-edit {
+	line-height: 18px;
+}
+
 /* checkbox */
 
 .jsdialog.checkbutton {
@@ -276,11 +282,10 @@ td.jsdialog > [id^='table-box'] {
 .jsdialog-container #refbutton,
 .jsdialog-container #assign {
 	background: url('images/refinp1.svg') no-repeat center;
-	height: 25px;
-	width: 25px;
+	height: 24px;
+	width: 24px;
 	border: 1px solid silver;
 	vertical-align: middle;
-	padding: 15px;
 }
 
 .jsdialog-container.collapsed #source-button,
