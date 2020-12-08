@@ -46,8 +46,8 @@
 
 .ui-treeview-body {
 	display: block;
-	min-height: 50px;
-	min-width: 50px;
+	min-height: 100px;
+	min-width: 100px;
 	max-height: 150px;
 	overflow-y: auto;
 	overflow-x: hidden;
