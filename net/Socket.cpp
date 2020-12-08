@@ -1,4 +1,3 @@
-
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -57,6 +56,32 @@ int Socket::createSocket(Socket::Type type)
     return fakeSocketSocket();
 #endif
 }
+
+#if ENABLE_DEBUG
+static std::atomic<long> socketErrorCount;
+
+bool StreamSocket::simulateSocketError(bool)
+{
+    if ((socketErrorCount++ % 7) == 0)
+    {
+        errno = EAGAIN;
+        return true;
+    }
+    else
+        return false;
+}
+
+bool SslStreamSocket::simulateSocketError(bool read)
+{
+    if ((socketErrorCount++ % 7) == 0)
+    {
+        _sslWantsTo = read ? SslWantsTo::Read : SslWantsTo::Write;
+        return true;
+    }
+    else
+        return false;
+}
+#endif
 
 // help with initialization order
 namespace {
@@ -200,6 +225,11 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         checkAndReThread();
     else
         assertCorrectThread();
+
+#if ENABLE_DEBUG
+    // perturb - to rotate errors among several busy sockets.
+    socketErrorCount++;
+#endif
 
     std::chrono::steady_clock::time_point now =
         std::chrono::steady_clock::now();
