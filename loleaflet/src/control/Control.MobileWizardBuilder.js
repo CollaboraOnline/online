@@ -18,6 +18,84 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['listbox'] = this._listboxControl;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
+		this._controlHandlers['basespinfield'] = this.baseSpinField;
+	},
+
+	baseSpinField: function(parentContainer, data, builder, customCallback) {
+		var controls = {};
+		if (data.label) {
+			var fixedTextData = { text: data.label };
+			builder._fixedtextControl(parentContainer, fixedTextData, builder);
+		}
+
+		console.debug('baseSpinField: ' + data.id);
+
+		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
+		div.id = data.id;
+		controls['container'] = div;
+
+		var commandName = data.id ? data.id.substring('.uno:'.length) : data.id;
+		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
+			var image = L.DomUtil.create('img', 'spinfieldimage', div);
+			var icon = (data.id === 'Transparency') ? builder._createIconURL('settransparency') : builder._createIconURL(data.id);
+			image.src = icon;
+			icon.alt = '';
+		}
+
+		var spinfield = L.DomUtil.create('input', 'spinfield', div);
+		spinfield.type = 'number';
+		controls['spinfield'] = spinfield;
+
+		if (data.unit) {
+			var unit = L.DomUtil.create('span', 'spinfieldunit', div);
+			unit.innerHTML = builder._unitToVisibleString(data.unit);
+		}
+
+		var controlsContainer = L.DomUtil.create('div', 'spinfieldcontrols', div);
+		var minus = L.DomUtil.create('div', 'minus', controlsContainer);
+		minus.innerHTML = '-';
+
+		var plus = L.DomUtil.create('div', 'plus', controlsContainer);
+		plus.innerHTML = '+';
+
+		if (data.min != undefined)
+			$(spinfield).attr('min', data.min);
+
+		if (data.max != undefined)
+			$(spinfield).attr('max', data.max);
+
+		if (data.enabled == 'false') {
+			$(spinfield).attr('disabled', 'disabled');
+			$(image).addClass('disabled');
+		}
+
+		if (data.readOnly === true)
+			$(spinfield).attr('readOnly', 'true');
+
+		if (data.hidden)
+			$(spinfield).hide();
+
+		plus.addEventListener('click', function() {
+			var attrdisabled = $(spinfield).attr('disabled');
+			if (attrdisabled !== 'disabled') {
+				if (customCallback)
+					customCallback('spinfield', 'plus', div, this.value, builder);
+				else
+					builder.callback('spinfield', 'plus', div, this.value, builder);
+			}
+		});
+
+		minus.addEventListener('click', function() {
+			var attrdisabled = $(spinfield).attr('disabled');
+			if (attrdisabled !== 'disabled') {
+				if (customCallback)
+					customCallback('spinfield', 'minus', div, this.value, builder);
+				else
+					builder.callback('spinfield', 'minus', div, this.value, builder);
+			}
+		});
+
+		return controls;
 	},
 
 	_swapControls: function(controls, indexA, indexB) {
