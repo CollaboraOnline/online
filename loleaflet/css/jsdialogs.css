@@ -10,6 +10,10 @@
 	font-family: var(--jquery-ui-font);
 }
 
+.jsdialog.vertical p {
+	margin-bottom: 2px;
+}
+
 .jsdialog.row {
 	display: table-row;
 }
@@ -22,6 +26,12 @@
 
 .jsdialog.vertical {
 	width: max-content;
+}
+
+.jsdialog.vertical:not([id^='table-dialog-action_area']) > .jsdialog.row,
+td.jsdialog > [id^='table-box'] {
+	display: table;
+	width: 100%;
 }
 
 /* Expander */
