@@ -561,7 +561,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 .spinfieldcontainer input.spinfield {
 	padding-top: 0px;
 }
-input.spinfield:disabled {
+.mobile-wizard input.spinfield:disabled {
 	background: linear-gradient(to right, white 0%, #ebebe4 15%, #ebebe4 40%, white 100%);
 	color: #bbb !important;
 }
