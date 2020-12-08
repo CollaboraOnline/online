@@ -13,6 +13,12 @@ describe('Form field button tests.', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();
 		}
+
+		// Blinking cursor is not visible for some reason.
+		helper.typeIntoDocument('x');
+
+		cy.get('.blinking-cursor')
+			.should('be.visible');
 	}
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
