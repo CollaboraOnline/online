@@ -29,9 +29,6 @@ describe('Calc focus tests', function() {
 		// One tap on another cell -> no focus on the document
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.leaflet-marker-icon')
-			.should('be.visible');
-
 		// No focus
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
@@ -61,9 +58,6 @@ describe('Calc focus tests', function() {
 
 		// One tap on a cell -> no document focus
 		calcHelper.clickOnFirstCell();
-
-		cy.get('.leaflet-marker-icon')
-			.should('be.visible');
 
 		// No focus
 		cy.document().its('activeElement.tagName')
