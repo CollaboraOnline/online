@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-11-17 09:52+0000\n"
+"PO-Revision-Date: 2020-12-08 12:29+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/help/uk/>\n"
@@ -1539,7 +1539,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:323-5
 msgid "Handling images"
-msgstr ""
+msgstr "Обробка зображень"
 
 #: html/loleaflet-help.html%2Bdiv.p:324-5
 msgid ""
@@ -1587,7 +1587,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:332-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Перевірка правопису"
 
 #: html/loleaflet-help.html%2Bdiv.p:333-5
 msgid ""
@@ -1797,7 +1797,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Робота з таблицями"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid ""
@@ -1816,7 +1816,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:406-5
 msgid "Track changes"
-msgstr ""
+msgstr "Відстеження змін"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -1834,7 +1834,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:410-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Інші розширені функції"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid ""
@@ -1961,38 +1961,44 @@ msgstr ""
 msgid ""
 "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
 msgstr ""
+"Текстові документи: Microsoft формати DOC, DOCX, RTF. Формат openDocument ODT"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:447-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
 msgstr ""
+"Електронні таблиці: Формати Microsoft XLS, XLSX, Формат OpenDocument ODS"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:448-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Презентації: Microsoft формати PPT, PPTX, OpenDocument формат ODP"
 
 #: html/loleaflet-help.html%2Bdiv.h4:450-5
 msgid "How do I save a document with another name?"
-msgstr ""
+msgstr "Як зберегти документ з іншою назвою?"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:452-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr ""
+msgstr "Наведіть курсор миші на назву документа на панелі меню."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:453-11
 msgid ""
 "Type the new file name in the text box and press <span class=\"kbd\""
 ">Enter</span>."
 msgstr ""
+"Введіть нову назву файлу у текстовому полі та натисніть <span class=\"kbd\""
+">Enter</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:455-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "Копія документа зберігається з новою назвою в тій же теці."
 
 #: html/loleaflet-help.html%2Bdiv.h4:456-5
 msgid ""
 "How can I quit <span class=\"productname\">%productName</span> without "
 "saving my edits?"
 msgstr ""
+"Як вийти з <span class=\"productname\">%productName</span> без збереження "
+"змін?"
 
 #: html/loleaflet-help.html%2Bdiv.p:457-5
 msgid ""
@@ -2007,6 +2013,8 @@ msgid ""
 "Can <span class=\"productname\">%productName</span> open a password-"
 "protected document?"
 msgstr ""
+"Чи може <span class=\"productname\">%productName</span> відкрити захищений "
+"паролем документ?"
 
 #: html/loleaflet-help.html%2Bdiv.p:459-5
 msgid ""
@@ -2014,10 +2022,13 @@ msgid ""
 "protected documents, but it is necessary to supply the password in the “"
 "Enter password” prompt at load time."
 msgstr ""
+"Так. <span class=\"productname\">%productName</span> відкриває захищені "
+"паролем документи, але необхідно вказати пароль у запиті «Ввести пароль» під "
+"час завантаження."
 
 #: html/loleaflet-help.html%2Bdiv.h4:460-5
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "Як перевірити орфографію своєю мовою?"
 
 #: html/loleaflet-help.html%2Bdiv.p:461-5
 msgid ""
@@ -2028,7 +2039,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:462-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Як прибрати червоні хвилясті лінії в документі?"
 
 #: html/loleaflet-help.html%2Bdiv.p:463-5
 msgid ""
@@ -2038,7 +2049,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:464-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "Що означає синє хвилясте підкреслення в деяких словах у тексті?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
 msgid ""
@@ -2050,7 +2061,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:466-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Чи є тут словник синонімів?"
 
 #: html/loleaflet-help.html%2Bdiv.p:467-5
 msgid ""
@@ -2064,6 +2075,8 @@ msgid ""
 "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove "
 "from my text document?"
 msgstr ""
+"Що означає синій символ <span class=\"blue\">¶</span> і як його прибрати з "
+"текстового документа?"
 
 #: html/loleaflet-help.html%2Bdiv.p:470-5
 msgid ""
@@ -2095,16 +2108,20 @@ msgstr ""
 msgid ""
 "How can I insert a currency, copyright or trademark symbol in the document?"
 msgstr ""
+"Як вставити в документ символ грошової одиниці, авторського права або "
+"товарного знака?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:479-5
 msgid ""
 "You can insert these special characters in the document using the <span "
 "class=\"ui\">Special Character</span> dialog."
 msgstr ""
+"Ці спеціальні символи можна вставити в документ за допомогою діалогового "
+"вікна <span class=\"ui\">Спеціальні символи</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:481-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Помістіть курсор туди, куди потрібно вставити символ."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-9
 msgid ""
@@ -2112,6 +2129,9 @@ msgid ""
 "Characters </span> or click the corresponding icon in the toolbar. A dialog "
 "shows."
 msgstr ""
+"Виберіть <span class=\"ui\">Вставити</span> → <span class=\"ui\">Спеціальні "
+"символи</span> або клацніть відповідну піктограму на панелі інструментів. "
+"З'явиться діалогове вікно."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:486-11
 msgid ""
@@ -2129,7 +2149,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:489-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "Чому не вдається видалити текст? Він просто перекреслюється?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:490-5
 msgid ""
@@ -2142,29 +2162,29 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "With track changes enabled your document is shown the following manner:"
-msgstr ""
+msgstr "Якщо ввімкнено відстеження змін, ваш документ показується таким чином:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "Видалення позначаються кольоровими закресленими символами."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:494-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "Доповнення позначено кольоровими підкресленими символами."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:495-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "Усі зміни позначено вертикальною смугою у правому полі."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:496-11
 msgid "Changes are displayed as comment in the right of the document area."
-msgstr ""
+msgstr "Зміни показано примітками у правій частині документа."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:499-5
 msgid ""
 "The color assigned to the changes depends on the user that changes the "
 "document."
-msgstr ""
+msgstr "Колір забарвлення змін, залежить від користувача, який змінює документ."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:500-5
 msgid ""
@@ -2188,43 +2208,51 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
 msgid "How do I set the margins of the document?"
-msgstr "Як мені задати розмір полів документа?"
+msgstr "Як вказати розмір полів документа?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:504-5
 msgid ""
 "Using the ruler drag the leftmost edge of the ruler to adjust the left "
 "margin, or the rightmost for the right margin."
 msgstr ""
+"За допомогою лінійки перетягніть крайній лівий край лінійки, щоб вказати "
+"лівий край, або крайній правий для правого поля."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:505-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Використання стилю сторінки"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:507-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"Виберіть <span class=\"ui\">Format</span> → <span class=\"ui\">Сторінка</"
+"span> та виберіть вкладку <span class=\"ui\">Сторінка</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:508-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Вкажіть поля сторінки у діалоговому вікні."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:511-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
+msgstr "Як змінити орієнтацію сторінки на альбомну в документі"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid ""
 "Place the cursor at the place where the page orientation is to change. Add "
 "an empty paragraph."
 msgstr ""
+"Перемістіть курсор на місце, де потрібно змінити орієнтацію сторінки. "
+"Додайте порожній абзац."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:514-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>"
 ", <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
+"Виберіть <span class=\"ui\">Формат</span> → <span class=\"ui\">Абзац</span>, "
+"вкладку <span class=\"ui\">Потік тексту</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:515-11
 msgid ""
@@ -2248,15 +2276,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:520-5
 msgid "How can I make the new text look like other existing text?"
-msgstr ""
+msgstr "Як зробити новий текст схожим на інший наявний текст?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:521-5
 msgid "Directly:"
-msgstr ""
+msgstr "Безпосередньо:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:523-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Виділіть текст із наявним форматуванням"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:524-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:555-11
@@ -2311,7 +2339,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:540-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "Як імпортувати дані CSV?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:542-11
 msgid ""
@@ -2346,7 +2374,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:551-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "Як копіювати форматування наявних комірок до нових?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:552-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
