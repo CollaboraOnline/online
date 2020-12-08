@@ -257,7 +257,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 
-		cy.get('.leaflet-marker-icon')
+		cy.get('.spreadsheet-cell-resize-marker')
 			.should('be.visible');
 
 		cy.get('#copy-paste-container table td')
