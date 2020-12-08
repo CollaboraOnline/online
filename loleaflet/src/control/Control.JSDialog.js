@@ -38,6 +38,8 @@ L.Control.JSDialog = L.Control.extend({
 		var container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
 		container.id = data.id;
 		this.dialogs[data.id] = container;
+		if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
+			L.DomUtil.addClass(container, 'collapsed');
 
 		var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
 		var title = L.DomUtil.create('span', 'ui-dialog-title', titlebar);
