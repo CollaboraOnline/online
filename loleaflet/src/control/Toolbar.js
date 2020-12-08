@@ -544,9 +544,6 @@ L.Map.include({
 		if (window.socketProxy)
 			content.find('#slow-proxy').text(_('"Slow Proxy"'));
 
-		if (typeof brandProductName === 'undefined')
-			content.find('#personal').text(_('The Personal edition is supported by volunteers and intended for individual use.'));
-
 		var w;
 		var iw = window.innerWidth;
 		if (iw < 768) {
