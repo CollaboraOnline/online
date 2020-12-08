@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-29 19:21+0100\n"
-"PO-Revision-Date: 2020-10-28 04:26+0000\n"
+"PO-Revision-Date: 2020-12-08 13:30+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
-"Language: \n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
 "X-Pootle-Revision: 3940107\n"
 
@@ -1302,6 +1302,7 @@ msgstr ""
 "connections"
 
 #: src/core/Socket.js:61
+#, fuzzy
 msgid "Oops, there is a problem connecting to Collabora Online : "
 msgstr "Όπα, υπάρχει πρόβλημα στη σύνδεση με το διαδικτυακό LibreOffice : "
 
