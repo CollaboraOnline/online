@@ -549,7 +549,7 @@ function getColorPickerData(type) {
 	var data = {
 		id: 'colorpicker',
 		type: 'window',
-		text: type,
+		text: _(type),
 		enabled: 'true',
 		children: [
 			{
