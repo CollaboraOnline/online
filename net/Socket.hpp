@@ -1252,6 +1252,11 @@ protected:
         if (_readType == UseRecvmsgExpectFD)
             return readFD(buf, len, _incomingFD);
 
+#if ENABLE_DEBUG
+        if (simulateSocketError(true))
+            return -1;
+#endif
+
         return ::read(getFD(), buf, len);
 #else
         return fakeSocketRead(getFD(), buf, len);
@@ -1263,6 +1268,10 @@ protected:
     {
         assertCorrectThread();
 #if !MOBILEAPP
+#if ENABLE_DEBUG
+        if (simulateSocketError(false))
+            return -1;
+#endif
         return ::write(getFD(), buf, len);
 #else
         return fakeSocketWrite(getFD(), buf, len);
@@ -1283,6 +1292,12 @@ protected:
     {
         return _socketHandler;
     }
+
+protected:
+#if ENABLE_DEBUG
+    /// Return true and set errno to simulate an error
+    virtual bool simulateSocketError(bool read);
+#endif
 
   private:
     /// Client handling the actual data.

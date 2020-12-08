@@ -113,6 +113,10 @@ public:
     {
         assertCorrectThread();
 
+#if ENABLE_DEBUG
+        if (simulateSocketError(true))
+            return -1;
+#endif
         return handleSslState(SSL_read(_ssl, buf, len));
     }
 
@@ -121,6 +125,11 @@ public:
         assertCorrectThread();
 
         assert (len > 0); // Never write 0 bytes.
+
+#if ENABLE_DEBUG
+        if (simulateSocketError(false))
+            return -1;
+#endif
         return handleSslState(SSL_write(_ssl, buf, len));
     }
 
@@ -136,6 +145,10 @@ public:
     }
 
 private:
+#if ENABLE_DEBUG
+    /// Return true and set errno to simulate an error
+    virtual bool simulateSocketError(bool read) override;
+#endif
 
     /// The possible next I/O operation that SSL want to do.
     enum class SslWantsTo
