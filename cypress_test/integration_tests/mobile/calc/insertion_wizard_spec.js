@@ -17,9 +17,6 @@ describe('Calc insertion wizard.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.leaflet-marker-icon')
-			.should('be.visible');
-
 		mobileHelper.openInsertionWizard();
 	});
 

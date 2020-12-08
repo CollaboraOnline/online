@@ -15,9 +15,6 @@ describe('Apply number formatting.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.leaflet-marker-icon')
-			.should('be.visible');
-
 		mobileHelper.openMobileWizard();
 
 		helper.clickOnIdle('#ScNumberFormatPropertyPanel');
