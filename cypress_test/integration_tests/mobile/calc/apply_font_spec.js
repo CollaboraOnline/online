@@ -15,9 +15,6 @@ describe('Apply font changes.', function() {
 
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.leaflet-marker-icon')
-			.should('be.visible');
-
 		// Open character properties
 		mobileHelper.openTextPropertiesPanel();
 	});
