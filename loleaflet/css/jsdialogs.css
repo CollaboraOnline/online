@@ -1,4 +1,7 @@
 /* JSDialog */
+.jsdialog.root-container {
+	margin: .5em 1em; /*same as in .ui-dialog */
+}
 
 .jsdialog-container {
 	position: absolute;
@@ -11,7 +14,16 @@
 }
 
 .jsdialog.vertical p {
-	margin-bottom: 2px;
+	margin-bottom: 0px;
+	color: #666;
+	font-size: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+td.jsdialog:hover *,
+#table-box3:hover p {
+	color: #333;
 }
 
 .jsdialog.row {
@@ -21,7 +33,11 @@
 .jsdialog.cell {
 	display: table-cell;
 	vertical-align: middle;
-	padding: 2px;
+}
+
+td.jsdialog .jsdialog.cell,
+[id^='table-dialog-action_area'] .jsdialog.cell{
+	padding: 4px;
 }
 
 .jsdialog.vertical {
@@ -35,6 +51,10 @@ td.jsdialog > [id^='table-box'] {
 }
 
 /* Expander */
+
+.jsdialog.ui-expander {
+	box-shadow: 0 1px 0px 0 #f1f1f1;
+}
 .ui-expander-label::before {
 	content: '>';
 	color: transparent;
@@ -47,7 +67,7 @@ td.jsdialog > [id^='table-box'] {
 	margin: 0px;
 	position: absolute;
 	transform: rotate(90deg);
-	left: 4px;
+	left: 16px;
 	background: transparent url('images/lc_menu_chevron.svg') no-repeat center;
 }
 
@@ -59,6 +79,9 @@ td.jsdialog > [id^='table-box'] {
 	cursor: pointer;
 }
 
+.ui-expander-content > .root-container.jsdialog {
+	margin: 4px;
+}
 /* TreeView */
 
 .ui-treeview {
@@ -154,6 +177,10 @@ td.jsdialog > [id^='table-box'] {
 .jsdialog.checkbutton input,
 .jsdialog.checkbutton label {
 	vertical-align: middle;
+}
+
+.jsdialog.checkbutton label {
+	padding: 0px 2px;
 }
 
 /* listbox */
