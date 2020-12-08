@@ -203,6 +203,7 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 		--spec $(BACKGROUND_USER_SPEC) \
 		--type multi-user \
 		--log-file $(BACKGROUND_USER_LOG) &
+	@sleep 5
 	$(call run_interactive_multi,$(INTERACTIVE_USER_SPEC)) || true
 	@$(KILL_COMMAND) || true
 
@@ -216,8 +217,8 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(eval BACKGROUND_USER_SPEC=interference_user_spec.js)
 	$(eval INTERACTIVE_USER_SPEC=$(spec))
 	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
-	$(call run_interactive_interfer_mobile,$(INTERACTIVE_USER_SPEC)) & \
-	sleep 5
+	$(call run_interactive_interfer_mobile,$(INTERACTIVE_USER_SPEC)) &
+	@sleep 5
 	@$(PARALLEL_SCRIPT) \
 		--browser $(BROWSER) \
 		--config $(INTERFER_MOBILE_CONFIG2) \
