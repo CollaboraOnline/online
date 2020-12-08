@@ -170,6 +170,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['paneltabs'] = this._panelTabsHandler;
 		this._controlHandlers['singlepanel'] = this._singlePanelHandler;
 		this._controlHandlers['container'] = this._containerHandler;
+		this._controlHandlers['dialog'] = this._containerHandler;
 		this._controlHandlers['window'] = this._containerHandler;
 		this._controlHandlers['borderwindow'] = this._containerHandler;
 		this._controlHandlers['control'] = this._containerHandler;
