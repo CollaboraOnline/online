@@ -75,7 +75,7 @@ for MODULE in lxml polib; do
         AC_MSG_RESULT([yes])
     else
         AC_MSG_RESULT([no])
-        AS_IF([test `uname -s` = Linux],
+        AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
               [AC_MSG_ERROR([${MODULE} for python3 is needed. It might be in a package called python3-${MODULE}.])],
               [AC_MSG_WARN([${MODULE} for python3 is needed. It might be in a package called python3-${MODULE}. But
                if you are building the JS bits on another (Linux) machine, that doesn't matter])])
@@ -872,11 +872,11 @@ AS_IF([test -n "$with_cppunit_includes"],
 AS_IF([test -n "$with_cppunit_libs"],
       [LDFLAGS="$LDFLAGS -L${with_cppunit_libs}"])
 
-AS_IF([test `uname -s` = Linux],
+AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
       [AS_IF([test -n "$with_poco_libs"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_poco_libs}"])])
 
-AS_IF([test `uname -s` = Linux],
+AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
       [AS_IF([test -n "$with_cppunit_libs"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_cppunit_libs}"])])
 
@@ -1025,7 +1025,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
 
        ])
 
-AS_IF([test `uname -s` = "Linux"],
+AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD"],
       # We need npm and node only on Linux, both in the normal Online case,
       # and when only building JS for the iOS app. When building the iOS app itself on macOS,
       # don't do this.
