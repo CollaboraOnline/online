@@ -18,9 +18,10 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.off('jsdialog', this.onJSDialog, this);
 	},
 
-	onJSDialog: function(data) {
+	onJSDialog: function(e) {
 		var posX = 0;
 		var posY = 0;
+		var data = e.data;
 
 		if (this.dialogs[data.id]) {
 			posX = this.dialogs[data.id].startX;
