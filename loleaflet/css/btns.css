@@ -1,0 +1,24 @@
+.loleaflet-annotation-edit #annotation-cancel,
+#table-buttonbox #cancel,
+.cell.jsdialog > button:not(#ok) {
+	height: 32px;
+	line-height: 0em;
+	color: #222;
+	min-width: 62px;
+	background-color: #f1f1f1;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.loleaflet-annotation-edit #annotation-save,
+#annotation-reply,
+#table-buttonbox #ok,
+.cell.jsdialog > button {
+	height: 32px;
+	line-height: 0em;
+	color: #111;
+	min-width: 62px;
+	background-color: #f4f4f4;
+	border: 1px solid #777;
+	border-radius: 3px;
+}
