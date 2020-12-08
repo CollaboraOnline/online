@@ -40,106 +40,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_currentDepth: 0,
 
-	statics: {
-		baseSpinField: function(parentContainer, data, builder, customCallback) {
-			var controls = {};
-			if (data.label) {
-				var fixedTextData = { text: data.label };
-				builder._fixedtextControl(parentContainer, fixedTextData, builder);
-			}
-
-			console.debug('baseSpinField: ' + data.id);
-
-			var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
-			div.id = data.id;
-			controls['container'] = div;
-
-			var commandName = data.id ? data.id.substring('.uno:'.length) : data.id;
-			if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
-				var image = L.DomUtil.create('img', 'spinfieldimage', div);
-				var icon = (data.id === 'Transparency') ? builder._createIconURL('settransparency') : builder._createIconURL(data.id);
-				image.src = icon;
-				icon.alt = '';
-			}
-
-			var spinfield = L.DomUtil.create('input', 'spinfield', div);
-			spinfield.type = 'number';
-			controls['spinfield'] = spinfield;
-
-			if (data.unit) {
-				var unit = L.DomUtil.create('span', 'spinfieldunit', div);
-				unit.innerHTML = builder._unitToVisibleString(data.unit);
-			}
-
-			var controlsContainer = L.DomUtil.create('div', 'spinfieldcontrols', div);
-			var minus = L.DomUtil.create('div', 'minus', controlsContainer);
-			minus.innerHTML = '-';
-
-			var plus = L.DomUtil.create('div', 'plus', controlsContainer);
-			plus.innerHTML = '+';
-
-			if (data.min != undefined)
-				$(spinfield).attr('min', data.min);
-
-			if (data.max != undefined)
-				$(spinfield).attr('max', data.max);
-
-			if (data.enabled == 'false') {
-				$(spinfield).attr('disabled', 'disabled');
-				$(image).addClass('disabled');
-			}
-
-			if (data.readOnly === true)
-				$(spinfield).attr('readOnly', 'true');
-
-			if (data.hidden)
-				$(spinfield).hide();
-
-			plus.addEventListener('click', function() {
-				var attrdisabled = $(spinfield).attr('disabled');
-				if (attrdisabled !== 'disabled') {
-					if (customCallback)
-						customCallback('spinfield', 'plus', div, this.value, builder);
-					else
-						builder.callback('spinfield', 'plus', div, this.value, builder);
-				}
-			});
-
-			minus.addEventListener('click', function() {
-				var attrdisabled = $(spinfield).attr('disabled');
-				if (attrdisabled !== 'disabled') {
-					if (customCallback)
-						customCallback('spinfield', 'minus', div, this.value, builder);
-					else
-						builder.callback('spinfield', 'minus', div, this.value, builder);
-				}
-			});
-
-			return controls;
-		},
-
-		listenNumericChanges: function (data, builder, controls, customCallback) {
-			// It listens server state changes using GetControlState
-			// to avoid unit conversion
-			builder.map.on('commandstatechanged', function(e) {
-				var value = e.state[builder._getFieldFromId(data.id)];
-				if (value) {
-					if (customCallback)
-						customCallback();
-					else
-						builder.callback('spinfield', 'value', controls.container, this.value, builder);
-				}
-			}, this);
-
-			controls.spinfield.addEventListener('change', function() {
-				if (customCallback)
-					customCallback();
-				else
-					builder.callback('spinfield', 'value', controls.container, this.value, builder);
-			});
-		}
-	},
-
 	_setup: function(options) {
 		this._clearColorPickers();
 		this.wizard = options.mobileWizard;
@@ -148,6 +48,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
+		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['spinfield'] = this._spinfieldControl;
 		this._controlHandlers['metricfield'] = this._metricfieldControl;
 		this._controlHandlers['formattedfield'] = this._formattedfieldControl;
@@ -251,6 +152,78 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				+ '\", \"type\": \"' + objectType + '\"}';
 			builder.map._socket.sendMessage(message);
 		}
+	},
+
+	baseSpinField: function(parentContainer, data, builder, customCallback) {
+		var controls = {};
+		if (data.label) {
+			var fixedTextData = { text: data.label };
+			builder._fixedtextControl(parentContainer, fixedTextData, builder);
+		}
+
+		console.debug('baseSpinField: ' + data.id);
+
+		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
+		div.id = data.id;
+		controls['container'] = div;
+
+		var spinfield = L.DomUtil.create('input', 'spinfield', div);
+		spinfield.type = 'number';
+		controls['spinfield'] = spinfield;
+
+		if (data.unit) {
+			var unit = L.DomUtil.create('span', 'spinfieldunit', div);
+			unit.innerHTML = builder._unitToVisibleString(data.unit);
+		}
+
+		if (data.min != undefined)
+			$(spinfield).attr('min', data.min);
+
+		if (data.max != undefined)
+			$(spinfield).attr('max', data.max);
+
+		if (data.enabled == 'false') {
+			$(spinfield).attr('disabled', 'disabled');
+		}
+
+		if (data.readOnly === true)
+			$(spinfield).attr('readOnly', 'true');
+
+		if (data.hidden)
+			$(spinfield).hide();
+
+		spinfield.addEventListener('change', function() {
+			var attrdisabled = $(spinfield).attr('disabled');
+			if (attrdisabled !== 'disabled') {
+				if (customCallback)
+					customCallback('spinfield', 'change', div, this.value, builder);
+				else
+					builder.callback('spinfield', 'change', div, this.value, builder);
+			}
+		});
+
+		return controls;
+	},
+
+	listenNumericChanges: function (data, builder, controls, customCallback) {
+		// It listens server state changes using GetControlState
+		// to avoid unit conversion
+		builder.map.on('commandstatechanged', function(e) {
+			var value = e.state[builder._getFieldFromId(data.id)];
+			if (value) {
+				if (customCallback)
+					customCallback();
+				else
+					builder.callback('spinfield', 'value', controls.container, this.value, builder);
+			}
+		}, this);
+
+		controls.spinfield.addEventListener('change', function() {
+			if (customCallback)
+				customCallback();
+			else
+				builder.callback('spinfield', 'value', controls.container, this.value, builder);
+		});
 	},
 
 	_setupHandlers: function (controlElement, handlers) {
@@ -1279,7 +1252,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_spinfieldControl: function(parentContainer, data, builder, customCallback) {
-		var controls = L.Control.JSDialogBuilder.baseSpinField(parentContainer, data, builder, customCallback);
+		var controls = builder._controlHandlers['basespinfield'](parentContainer, data, builder, customCallback);
 
 		var updateFunction = function() {
 			var value = builder._getUnoStateForItemId(data.id, builder);
@@ -1318,9 +1291,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.unit = units[1];
 		}
 
-		controls = L.Control.JSDialogBuilder.baseSpinField(parentContainer, data, builder, customCallback);
+		controls = builder._controlHandlers['basespinfield'](parentContainer, data, builder, customCallback);
 
-		L.Control.JSDialogBuilder.listenNumericChanges(data, builder, controls, customCallback);
+		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
 		$(controls.spinfield).attr('value', value);
@@ -1331,8 +1304,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_metricfieldControl: function(parentContainer, data, builder, customCallback) {
 		var value;
-		var controls = L.Control.JSDialogBuilder.baseSpinField(parentContainer, data, builder, customCallback);
-		L.Control.JSDialogBuilder.listenNumericChanges(data, builder, controls, customCallback);
+		var controls = builder._controlHandlers['basespinfield'](parentContainer, data, builder, customCallback);
+		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
 		$(controls.spinfield).attr('value', value);
