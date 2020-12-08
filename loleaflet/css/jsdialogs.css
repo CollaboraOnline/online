@@ -26,11 +26,22 @@
 /* Expander */
 .ui-expander-label::before {
 	content: '>';
-	margin-right: 10px;
+	color: transparent;
+	margin-right: 5px;
+	background: transparent url('images/lc_menu_chevron.svg') no-repeat center right;
 }
 
 .ui-expander-label.expanded::before {
 	content: 'V';
+	margin: 0px;
+	position: absolute;
+	transform: rotate(90deg);
+	left: 4px;
+	background: transparent url('images/lc_menu_chevron.svg') no-repeat center;
+}
+
+.ui-expander-label.expanded {
+	padding-left: 14px; /*adding extra padding to account for image absolute position*/
 }
 
 .ui-expander:hover {
