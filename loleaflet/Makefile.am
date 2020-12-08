@@ -136,6 +136,7 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/menubar.css \
 	$(srcdir)/css/mobilewizard.css \
 	$(srcdir)/css/jsdialogs.css \
+	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
 	$(srcdir)/css/vex.css \
 	$(srcdir)/css/jquery-ui-lightness.css
