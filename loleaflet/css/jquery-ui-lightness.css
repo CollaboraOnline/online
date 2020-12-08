@@ -906,6 +906,7 @@ button.ui-button::-moz-focus-inner {
 	background: #f6a828 url("images/ui-bg_gloss-wave_35_f6a828_500x100.png") 50% 50% repeat-x;
 	color: #ffffff;
 	font-weight: bold;
+	font-family: var(--jquery-ui-font);
 }
 .ui-widget-header a {
 	color: #ffffff;
