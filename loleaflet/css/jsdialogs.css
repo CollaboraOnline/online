@@ -277,13 +277,22 @@ td.jsdialog > [id^='table-box'] {
 
 /* Pivot Table dialog */
 
-.jsdialog-container .ui-expander + .ui-expander-content #source-button,
-.jsdialog-container .ui-expander + .ui-expander-content #destination-button {
+.jsdialog-container #source-button,
+.jsdialog-container #destination-button,
+.jsdialog-container #refbutton,
+.jsdialog-container #assign {
 	background: url('images/refinp1.svg') no-repeat center;
 	height: 24px;
 	width: 24px;
 	border: 1px solid silver;
 	vertical-align: middle;
+}
+
+.jsdialog-container.collapsed #source-button,
+.jsdialog-container.collapsed #destination-button,
+.jsdialog-container.collapsed #refbutton,
+.jsdialog-container.collapsed #assign {
+	background: url('images/refinp2.svg') no-repeat center;
 }
 
 /* Word count dialog */
