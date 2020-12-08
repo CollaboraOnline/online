@@ -197,6 +197,26 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_interactive_multi,$(INTERACTIVE_USER_SPEC)) || true
 	@$(KILL_COMMAND) || true
 
+run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	@echo
+	@echo "Running interfer mobile test in interactive test runner..."
+	@echo
+	$(eval BACKGROUND_USER_SPEC=interference_user_spec.js)
+	$(eval INTERACTIVE_USER_SPEC=$(spec))
+	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
+	$(call run_interactive_interfer_mobile,$(INTERACTIVE_USER_SPEC)) & \
+	sleep 5
+	@$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(INTERFER_MOBILE_CONFIG2) \
+		--env $(INTERFER_MOBILE_ENV2) \
+		--spec $(BACKGROUND_USER_SPEC) \
+		--type multi-user \
+		--log-file $(BACKGROUND_USER_LOG) || true
+	@$(KILL_COMMAND) || true
+
 run-cov: do-run-cov
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
@@ -314,6 +334,15 @@ define run_interactive_multi
 		--config $(MULTIUSER_CONFIG) \
 		--env $(MULTIUSER_ENV) \
 		--spec=$(abs_dir)/integration_tests/multiuser/$(1)
+endef
+
+define run_interactive_interfer_mobile
+	$(CYPRESS_BINARY) run \
+		--browser $(BROWSER) \
+		--headed --no-exit \
+		--config $(INTERFER_MOBILE_CONFIG1) \
+		--env $(INTERFER_MOBILE_ENV1) \
+		--spec=$(abs_dir)/integration_tests/mobile/$(1)
 endef
 
 define run_desktop_tests
