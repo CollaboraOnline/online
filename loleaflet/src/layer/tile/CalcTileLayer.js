@@ -1624,6 +1624,15 @@ L.SheetDimension = L.Class.extend({
 		var invisibleSpanList = this._hidden.union(this._filtered); // this._hidden is not modified.
 		this._visibleSizes = this._sizes.applyZeroValues(invisibleSpanList); // this._sizes is not modified.
 		this._updatePositions();
+		this._addGeneralVariables();
+	},
+
+	_addGeneralVariables: function() {
+		for (var i = 0; i < this._visibleSizes._spanlist.length; i++) {
+			this._visibleSizes._spanlist[i].start = i > 0 ? this._visibleSizes._spanlist[i - 1].index + 1: 0;
+			this._visibleSizes._spanlist[i].end = this._visibleSizes._spanlist[i].index; // Todo: Remove data duplication by renaming "index & value" to "end & size" or vice versa.
+			this._visibleSizes._spanlist[i].size = this._visibleSizes._spanlist[i].value;
+		}
 	},
 
 	_updatePositions: function() {
@@ -2150,22 +2159,13 @@ L.SpanList = L.Class.extend({
 	},
 
 	_getSpanData: function (spanid) {
-
+		// TODO: Check if data is changed by the callers. If not, return the pointer instead.
+		var clone = {};
 		var span = this._spanlist[spanid];
-		var dataClone = undefined;
-		if (span.data) {
-			dataClone = {};
-			Object.keys(span.data).forEach(function (key) {
-				dataClone[key] = span.data[key];
-			});
-		}
-
-		return {
-			start: spanid ? this._spanlist[spanid - 1].index + 1 : 0,
-			end: span.index,
-			size: span.value,
-			data: dataClone
-		};
+		Object.keys(span).forEach(function (key) {
+			clone[key] = span[key];
+		});
+		return clone;
 	},
 
 	_searchByIndex: function (index) {
