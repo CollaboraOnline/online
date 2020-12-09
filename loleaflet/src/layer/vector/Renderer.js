@@ -25,10 +25,6 @@ L.Renderer = L.Layer.extend({
 	onAdd: function () {
 		if (!this._container) {
 			this._initContainer(); // defined by renderer implementations
-
-			if (this._zoomAnimated && this.rendererId !== 'fixed') {
-				L.DomUtil.addClass(this._container, 'leaflet-zoom-animated');
-			}
 		}
 
 		if (this._parentRenderer) {
@@ -49,17 +45,7 @@ L.Renderer = L.Layer.extend({
 		var events = {
 			moveend: this._update
 		};
-		if (this._zoomAnimated && this.rendererId !== 'fixed') {
-			events.zoomanim = this._animateZoom;
-		}
 		return events;
-	},
-
-	_animateZoom: function (e) {
-		var origin = e.origin.subtract(this._map._getCenterLayerPoint()),
-		    offset = this._bounds.min.add(origin.multiplyBy(1 - e.scale)).add(e.offset).round();
-
-		L.DomUtil.setTransform(this._container, offset, e.scale);
 	},
 
 	_update: function () {

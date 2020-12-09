@@ -41,9 +41,6 @@ L.SplitPanesRenderer = L.Layer.extend({
 		return {};
 	},
 
-	_animateZoom: function () {
-	},
-
 	_update: function () {
 	},
 

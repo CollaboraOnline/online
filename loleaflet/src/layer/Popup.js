@@ -26,7 +26,6 @@ L.Popup = L.Layer.extend({
 		autoClose: true,
 		// keepInView: false,
 		// className: '',
-		zoomAnimation: true
 	},
 
 	initialize: function (options, source) {
@@ -36,8 +35,6 @@ L.Popup = L.Layer.extend({
 	},
 
 	onAdd: function (map) {
-		this._zoomAnimated = this._zoomAnimated && this.options.zoomAnimation;
-
 		if (!this._container) {
 			this._initLayout();
 		}
@@ -122,9 +119,6 @@ L.Popup = L.Layer.extend({
 		var events = {viewreset: this._updatePosition},
 		    options = this.options;
 
-		if (this._zoomAnimated) {
-			events.zoomanim = this._animateZoom;
-		}
 		if ('closeOnClick' in options ? options.closeOnClick : this._map.options.closePopupOnClick) {
 			events.preclick = this._close;
 		}
@@ -148,7 +142,7 @@ L.Popup = L.Layer.extend({
 		var prefix = 'leaflet-popup',
 		    container = this._container = L.DomUtil.create('div',
 			prefix + ' ' + (this.options.className || '') +
-			' leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide'));
+			' leaflet-zoom-hide');
 
 		if (this.options.closeButton) {
 			var closeButton = this._closeButton = L.DomUtil.create('a', prefix + '-close-button', container);
@@ -231,11 +225,7 @@ L.Popup = L.Layer.extend({
 		var pos = this._map.latLngToLayerPoint(this._latlng),
 		    offset = L.point(this.options.offset);
 
-		if (this._zoomAnimated) {
-			L.DomUtil.setPosition(this._container, pos);
-		} else {
-			offset = offset.add(pos);
-		}
+		offset = offset.add(pos);
 
 		var bottom = this._containerBottom = -offset.y,
 		    left = this._containerLeft = -Math.round(this._containerWidth / 2) + offset.x;
@@ -245,11 +235,6 @@ L.Popup = L.Layer.extend({
 		this._container.style.left = left + 'px';
 	},
 
-	_animateZoom: function (e) {
-		var pos = this._map._latLngToNewLayerPoint(this._latlng, e.zoom, e.center);
-		L.DomUtil.setPosition(this._container, pos);
-	},
-
 	_adjustPan: function () {
 		if (!this.options.autoPan) { return; }
 
@@ -257,10 +242,6 @@ L.Popup = L.Layer.extend({
 		    containerHeight = this._container.offsetHeight,
 		    containerWidth = this._containerWidth,
 		    layerPos = new L.Point(this._containerLeft, -containerHeight - this._containerBottom);
-
-		if (this._zoomAnimated) {
-			layerPos._add(L.DomUtil.getPosition(this._container));
-		}
 
 		var containerPos = map.layerPointToContainerPoint(layerPos),
 		    padding = L.point(this.options.autoPanPadding),
