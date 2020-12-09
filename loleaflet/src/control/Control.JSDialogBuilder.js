@@ -64,6 +64,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['htmlcontrol'] = this._htmlControl;
 		this._controlHandlers['expander'] = this._expanderHandler;
 		this._controlHandlers['grid'] = this._gridHandler;
+		this._controlHandlers['buttonbox'] = this._buttonBox;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
@@ -355,6 +356,41 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					builder.build(colNode, [child], false, false);
 				}
 			}
+		}
+
+		return false;
+	},
+
+	_buttonBox: function(parentContainer, data, builder) {
+		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box '
+												+ (data.layoutstyle ? data.layoutstyle : ''), parentContainer);
+
+		var leftAlignButtons = [];
+		var rightAlignButton = [];
+
+		for (var i in data.children) {
+			var child = data.children[i];
+			if (child.id === 'help')
+				leftAlignButtons.push(child);
+			else
+				rightAlignButton.push(child);
+		}
+
+		var left = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-left', container);
+		$(left).css('float', 'left');
+
+		for (i in leftAlignButtons) {
+			child = leftAlignButtons[i];
+			builder._controlHandlers['pushbutton'](left, child, builder);
+		}
+
+		var right = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-right', container);
+		if (data.layoutstyle && data.layoutstyle === 'end')
+			$(right).css('float', 'right');
+
+		for (i in rightAlignButton) {
+			child = rightAlignButton[i];
+			builder._controlHandlers['pushbutton'](right, child, builder);
 		}
 
 		return false;
@@ -2636,7 +2672,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
-			if (hasManyChildren) {
+			if (hasManyChildren && childData.type !== 'buttonbox') {
 				var tableId = childData.id ? 'table-' + childData.id.replace(' ', '') : '';
 				var table = L.DomUtil.createWithId('div', tableId, td);
 				$(table).addClass(this.options.cssClass);
