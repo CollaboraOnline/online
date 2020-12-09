@@ -2648,6 +2648,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				this.options.useInLineLabelsForUnoButtons = false;
 			}
 		}
+		$('#listbox-fields').parents().eq(4).addClass('divider-left');
 	}
 });
 
