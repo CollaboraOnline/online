@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:32+0100\n"
+"POT-Creation-Date: 2020-12-09 19:01+0100\n"
 "PO-Revision-Date: 2020-03-12 11:37+0000\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: Finnish <https://weblate.documentfoundation.org/projects/"
@@ -205,7 +205,7 @@ msgstr "Päivitä"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:296
+#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "Ei mitään"
@@ -236,7 +236,7 @@ msgid "Sent"
 msgstr "Lähetetty"
 
 #: admin/src/AdminSocketBase.js:52
-msgid "Server has been shutdown, please reload the page"
+msgid "Server has been shut down; please reload the page."
 msgstr ""
 
 #: admin/src/AdminSocketBase.js:62
@@ -365,8 +365,8 @@ msgid "Index"
 msgstr "Hakemisto"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:1895 src/layer/tile/TileLayer.js:292
-#: src/layer/tile/TileLayer.js:3800
+#: src/control/Control.JSDialogBuilder.js:1868 src/layer/tile/TileLayer.js:292
+#: src/layer/tile/TileLayer.js:3793
 msgid "Comment"
 msgstr "Huomautus"
 
@@ -406,107 +406,107 @@ msgstr "Aloita leikkaa/liitä ristiin"
 msgid "Function Wizard"
 msgstr "Funktioapuri"
 
-#: src/control/Control.JSDialogBuilder.js:299
+#: src/control/Control.JSDialogBuilder.js:273
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:302
+#: src/control/Control.JSDialogBuilder.js:276
 msgid "Linear"
 msgstr "Lineaarinen"
 
-#: src/control/Control.JSDialogBuilder.js:305
+#: src/control/Control.JSDialogBuilder.js:279
 msgid "Axial"
 msgstr "Aksiaalinen"
 
-#: src/control/Control.JSDialogBuilder.js:308
+#: src/control/Control.JSDialogBuilder.js:282
 msgid "Radial"
 msgstr "Radiaalinen"
 
-#: src/control/Control.JSDialogBuilder.js:311
+#: src/control/Control.JSDialogBuilder.js:285
 msgid "Ellipsoid"
 msgstr "Ellipsoidi"
 
-#: src/control/Control.JSDialogBuilder.js:315
+#: src/control/Control.JSDialogBuilder.js:289
 msgid "Quadratic"
 msgstr "Neliömäinen"
 
-#: src/control/Control.JSDialogBuilder.js:318
+#: src/control/Control.JSDialogBuilder.js:292
 msgid "Square"
 msgstr "Neliö"
 
-#: src/control/Control.JSDialogBuilder.js:321
+#: src/control/Control.JSDialogBuilder.js:295
 msgid "Fixed size"
 msgstr "Kiinteämittainen"
 
-#: src/control/Control.JSDialogBuilder.js:1274
+#: src/control/Control.JSDialogBuilder.js:1248
 msgid "From"
 msgstr "Aloitus"
 
-#: src/control/Control.JSDialogBuilder.js:1277
+#: src/control/Control.JSDialogBuilder.js:1251
 msgid "To"
 msgstr "Loppu"
 
-#: src/control/Control.JSDialogBuilder.js:1405
+#: src/control/Control.JSDialogBuilder.js:1379
 #, fuzzy
 msgid "Select range"
 msgstr "Hylkää muutos"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1408
 msgid "Font Name"
 msgstr "Kirjasinlaji"
 
-#: src/control/Control.JSDialogBuilder.js:1436
+#: src/control/Control.JSDialogBuilder.js:1410
 msgid "Font Size"
 msgstr "Kirjasinkoko"
 
-#: src/control/Control.JSDialogBuilder.js:1845
+#: src/control/Control.JSDialogBuilder.js:1819
 #: src/layer/marker/Annotation.js:247
 msgid "Accept change"
 msgstr "Hyväksy muutos"
 
-#: src/control/Control.JSDialogBuilder.js:1850
+#: src/control/Control.JSDialogBuilder.js:1824
 #: src/layer/marker/Annotation.js:248
 msgid "Reject change"
 msgstr "Hylkää muutos"
 
-#: src/control/Control.JSDialogBuilder.js:1859
+#: src/control/Control.JSDialogBuilder.js:1833
 #: src/layer/marker/Annotation.js:266
 msgid "Open menu"
 msgstr "Avaa valikko"
 
-#: src/control/Control.JSDialogBuilder.js:2293
+#: src/control/Control.JSDialogBuilder.js:2271
 #, fuzzy
 msgid "Cell borders"
 msgstr "Reunat"
 
-#: src/control/Control.JSDialogBuilder.js:2332
+#: src/control/Control.JSDialogBuilder.js:2310
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2334
+#: src/control/Control.JSDialogBuilder.js:2312
 #, fuzzy
 msgid "Gradient Start"
 msgstr "Gradientti"
 
-#: src/control/Control.JSDialogBuilder.js:2336
+#: src/control/Control.JSDialogBuilder.js:2314
 #, fuzzy
 msgid "Gradient End"
 msgstr "Gradientti"
 
-#: src/control/Control.JSDialogBuilder.js:2518
+#: src/control/Control.JSDialogBuilder.js:2496
 msgid "Rows"
 msgstr "Rivejä"
 
-#: src/control/Control.JSDialogBuilder.js:2519
+#: src/control/Control.JSDialogBuilder.js:2497
 msgid "Columns"
 msgstr "Sarakkeita"
 
-#: src/control/Control.JSDialogBuilder.js:2539
+#: src/control/Control.JSDialogBuilder.js:2517
 #, fuzzy
 msgid "Insert Table"
 msgstr "Lisää taulukko"
 
-#: src/control/Control.JSDialogBuilder.js:2568
+#: src/control/Control.JSDialogBuilder.js:2546
 msgid "Line style:"
 msgstr "Viivatyylit:"
 
@@ -1432,15 +1432,15 @@ msgstr "Napsauta Peruuta avataksesi katselutilassa."
 msgid "Wrong password provided. Please try again."
 msgstr "Väärä salasana, yritä uudelleen."
 
-#: src/core/Socket.js:822 src/map/Map.js:1551
+#: src/core/Socket.js:823 src/map/Map.js:1551
 msgid "Loading..."
 msgstr "Ladataan..."
 
-#: src/core/Socket.js:822
+#: src/core/Socket.js:823
 msgid "Connecting..."
 msgstr "Yhdistetään..."
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1102
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1645,7 +1645,7 @@ msgstr ""
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:855
+#: src/layer/tile/TileLayer.js:851
 #, fuzzy
 msgid "Functions"
 msgstr "Funktioapuri"
