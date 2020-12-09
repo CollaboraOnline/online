@@ -568,20 +568,11 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._zoom = this._map._limitZoom(this._map.getScaleZoom(e.scale));
 		this._center = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
 						      this._zoom, this._map.options.maxBounds);
-
-		L.Util.cancelAnimFrame(this._animRequest);
-		this._animRequest = L.Util.requestAnimFrame(function () {
-			this._map._animateZoom(this._center, this._zoom, false, true);
-		}, this, true, this._map._container);
 	},
 
 	_onPinchEnd: function () {
 		if (!this._pinchStartCenter)
 			return;
-
-		var oldZoom = this._map.getZoom(),
-		    zoomDelta = this._zoom - oldZoom,
-		    finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
 
 		if (this._map._docLayer.isCursorVisible()) {
 			this._map._docLayer._cursorMarker.setOpacity(1);
@@ -594,11 +585,6 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 		if (this._map._docLayer._selectionHandles['end']) {
 			this._map._docLayer._selectionHandles['end'].setOpacity(1);
-		}
-
-		if (this._center) {
-			L.Util.cancelAnimFrame(this._animRequest);
-			this._map._animateZoom(this._center, finalZoom, true, true);
 		}
 
 		if (this._map._docLayer && this._map._docLayer._annotations) {

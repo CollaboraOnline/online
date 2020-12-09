@@ -91,10 +91,6 @@ L.ImageOverlay = L.Layer.extend({
 			viewreset: this._reset
 		};
 
-		if (this._zoomAnimated) {
-			events.zoomanim = this._animateZoom;
-		}
-
 		return events;
 	},
 
@@ -103,8 +99,7 @@ L.ImageOverlay = L.Layer.extend({
 	},
 
 	_initImage: function () {
-		var img = this._image = L.DomUtil.create('img',
-			'leaflet-image-layer ' + (this._zoomAnimated ? 'leaflet-zoom-animated' : ''));
+		var img = this._image = L.DomUtil.create('img', 'leaflet-image-layer');
 
 		img.onselectstart = L.Util.falseFn;
 		img.onmousemove = L.Util.falseFn;
@@ -112,16 +107,6 @@ L.ImageOverlay = L.Layer.extend({
 		img.onload = L.bind(this.fire, this, 'load');
 		img.src = this._url;
 		img.alt = this.options.alt;
-	},
-
-	_animateZoom: function (e) {
-		var bounds = new L.Bounds(
-			this._map._latLngToNewLayerPoint(this._bounds.getNorthWest(), e.zoom, e.center),
-		    this._map._latLngToNewLayerPoint(this._bounds.getSouthEast(), e.zoom, e.center));
-
-		var offset = bounds.min.add(bounds.getSize()._multiplyBy((1 - 1 / e.scale) / 2));
-
-		L.DomUtil.setTransform(this._image, offset, e.scale);
 	},
 
 	_reset: function () {

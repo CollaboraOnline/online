@@ -504,10 +504,6 @@ L.TileLayer = L.GridLayer.extend({
 			events.move = L.Util.throttle(this._move, this.options.updateInterval, this);
 		}
 
-		if (this._zoomAnimated) {
-			events.zoomanim = this._animateZoom;
-		}
-
 		return events;
 	},
 
