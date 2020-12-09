@@ -2159,7 +2159,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var container = L.DomUtil.create('div',  'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
-		container.setAttribute('style', 'padding: 5px 10px 10px !important; display: table !important;width: -webkit-fill-available !important');
 		container.annotation = data.annotation;
 		container.id = data.id;
 		builder._createComment(container, data, true);
@@ -2179,7 +2178,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(replyCountNode).text(replyCountText);
 			}
 			var childContainer = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
-			childContainer.setAttribute('style', 'padding: 5px 10px 10px !important; display: table !important;width: -webkit-fill-available !important');
+			childContainer.id = 'comment-thread' + data.id;
 			childContainer.title = _('Comment');
 
 			builder._currentDepth++;
