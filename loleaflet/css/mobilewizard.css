@@ -949,5 +949,13 @@ input[type='checkbox'][disabled] {
 .wizard-comment-box {
 	padding: 5px 10px 10px !important;
 	display: table !important;
-	width: -webkit-fill-available !important
+	width: 100% !important;
+	width: -webkit-fill-available !important;
+	width: -moz-available !important;
+}
+#mobile-wizard .ui-header[id^='comment'] {
+	padding: 5px 10px 10px !important;
+	display: table;
+	width: -moz-available !important;
+	box-sizing: border-box !important;
 }
