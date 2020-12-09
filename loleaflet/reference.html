@@ -2717,7 +2717,7 @@ The <code>id</code> property of ErrorEvent can have the following values:
 
 <p>PostMessage API is used to interact with parent frame when loleaflet is
   enclosed in one. This is useful for hosts wanting to
-  integrate LibreOffice Online in them.</p>
+  integrate Collabora Online in them.</p>
 
 <p>This API is mostly based
   on <a href="https://wopi.readthedocs.io/en/latest/scenarios/postmessage.html">WOPI
@@ -3036,22 +3036,43 @@ Editor to WOPI host
 		<th>Description</th>
 	</tr>
 	<tr>
+		<td><code><b>Action_Load_Resp</b></code></td>
+		<td><code>
+			<nobr>success: &lt;boolean&gt;</nobr>
+			<nobr>result: &lt;string&gt;</nobr>
+			<nobr>errorMsg: &lt;string&gt;</nobr>
+		</code></td>
+		<td>Acknowledgement when load finishes.<br/>
+		<code>success</code> tells if LOOL was able to load the document
+		successfully.<br/>
+		<code>result</code> contains the reason the document was not loaded.<br/>
+		<code>errorMsg</code> contains a detailed error message in case loading failed.
+		Probably it will contain the error message returned from the WOPI/Webdav host.
+		</td>
+	</tr>
+
+	<tr>
 		<td><code><b>Action_Save_Resp</b></code></td>
 		<td><code>
 		    <nobr>success: &lt;boolean&gt;</nobr>
 		    <nobr>result: &lt;string&gt;</nobr>
+			<nobr>errorMsg: &lt;string&gt;</nobr>
+			<nobr>fileName: &lt;string&gt;</nobr>
 		</code></td>
 		<td>Acknowledgement when save finishes.<br/>
+		<i>This response is only emitted if <code>Notify</code> parameter
+		is mentioned by <code>Action_Save</code> PostMessage API.</i>
+		<br/>
 		<code>success</code> tells if LOOL was able to save the document
-		successfully. When this is false, then another
-		parameter, <code>result</code> is present which contains the
-		reason that document was not saved.
+		successfully.<br/>
+		<code>result</code> contains the reason the document was not saved.<br/>
 		In case, document was not saved because it was not modified,
 		then this parameter contains the string 'unmodified'. In this
 		case, WOPI hosts can be sure that there are no changes pending
-		in the document to be saved to the storage.
-		This response is only emitted if <code>Notify</code> parameter
-		is mentioned by <code>Action_Save</code> PostMessage API.
+		in the document to be saved to the storage.<br/>
+		<code>errorMsg</code> contains a detailed error message in case saving failed.
+		Probably it will contain the error message returned from the WOPI/Webdav host.<br/>
+		<code>fileName</code> if success equals true then contains saved file name.
 		</td>
 	</tr>
 	<tr>
@@ -3249,9 +3270,7 @@ Editor to WOPI host
 		</td>
 		<td>
 			Hides a button from the toolbar.<br/>
-		    <code>id</code> is the button ID as defined in the
-		    <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-		    function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+		    <code>id</code> is the button ID, see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3261,9 +3280,7 @@ Editor to WOPI host
 		</td>
 		<td>
 			Shows a button from the toolbar.<br/>
-			<code>id</code> is the button ID as defined in the
-			<a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-			function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/js/toolbar.js">loleaflet/js/toolbar.js</a>.
+		    <code>id</code> is the button ID, see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3274,7 +3291,7 @@ Editor to WOPI host
 		<td>
 			Hides an item from the menu.<br/>
 			<code>id</code> is the item ID as defined in the
-			<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
+			<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3285,7 +3302,7 @@ Editor to WOPI host
 		<td>
 			Shows an item from the menu.<br/>
 			<code>id</code> is the item ID as defined in the
-			<a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
+			<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
 		</td>
 	</tr>
 	<tr>
@@ -3332,13 +3349,26 @@ Editor to WOPI host
 </table>
 
 <h5><a name="toolbar-button-ids">Finding toolbar button IDs</a></h5>
-<p>Toolbar button IDs are defined in the <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=createToolbar">createToolbar</a>
-function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Toolbar.js">Control.Toolbar.js</a>.
+<p>Toolbar button IDs are defined in getToolItems/create functions in:
+<ul>
+	<li>
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.TopToolbar.js">Control.TopToolbar.js</a> for the top toolbar on desktop or tablet.
+	</li>
+	<li>
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.MobileTopBar.js">Control.MobileTopBar.js</a> for the top toolbar on smartphone.
+	</li>
+	<li>
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.MobileBottomBar.js">Control.MobileBottomBar.js</a> for the bottom toolbar on smartphone.
+	</li>
+	<li>
+		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a> for the statusbar on desktop.
+	</li>
+</ul>
 Note that they usually don't change but there is no guarantee that they are stable.</p>
 
 <h5><a name="statusbar-element-ids">Finding statusbar element IDs</a></h5>
-<p>Statusbar button IDs are defined in the <a href="https://opengrok.libreoffice.org/search?project=online&q=&defs=onDocLayerInit">onDocLayerInit</a>
-function in <a href="https://opengrok.libreoffice.org/xref/online/loleaflet/src/control/Control.Toolbar.js">Control.Toolbar.js</a>.
+<p>Statusbar button IDs are defined in the onDocLayerInit function in
+<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a>.
 Note that they usually don't change but there is no guarantee that they are stable.</p>
 
 <h4>Editor to WOPI host</h4>
@@ -3429,7 +3459,7 @@ Note that they usually don't change but there is no guarantee that they are stab
 
 		Note that this notification may be published without a change
 		from the prior value, so care must be taken to check the Values.Modified
-		value and not assume the notifiaction itself implies the
+		value and not assume the notification itself implies the
 		modified state of the document on its own.
 		</td>
 	</tr>
