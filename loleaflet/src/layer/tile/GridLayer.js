@@ -121,10 +121,6 @@ L.GridLayer = L.Layer.extend({
 			events.move = L.Util.throttle(this._move, this.options.updateInterval, this);
 		}
 
-		if (this._zoomAnimated) {
-			events.zoomanim = this._animateZoom;
-		}
-
 		return events;
 	},
 
@@ -319,10 +315,6 @@ L.GridLayer = L.Layer.extend({
 		if (this._docType === 'spreadsheet' && this._annotations !== 'undefined') {
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		}
-	},
-
-	_animateZoom: function (e) {
-		this._reset(e.center, e.zoom, false, true, e.noUpdate);
 	},
 
 	_reset: function (center, zoom, hard, noPrune, noUpdate) {

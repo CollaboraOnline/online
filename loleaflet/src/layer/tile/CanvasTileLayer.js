@@ -549,10 +549,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			splitposchanged: this._move,
 		};
 
-		if (this._zoomAnimated) {
-			events.zoomanim = this._animateZoom;
-		}
-
 		return events;
 	},
 
@@ -602,9 +598,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				this._removeTile(key);
 			}
 		}
-	},
-
-	_animateZoom: function () {
 	},
 
 	_setZoomTransforms: function () {
