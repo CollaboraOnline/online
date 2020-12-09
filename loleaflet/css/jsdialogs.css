@@ -64,6 +64,15 @@ td.jsdialog > [id^='table-box'] {
 .jsdialog.ui-expander {
 	box-shadow: 0 1px 0px 0 #f1f1f1;
 }
+
+#options.ui-expander {
+	margin-top: 8px;
+}
+
+.ui-expander-label {
+	color: #666;
+}
+
 .ui-expander-label::before {
 	content: '>';
 	color: transparent;
@@ -78,10 +87,12 @@ td.jsdialog > [id^='table-box'] {
 	transform: rotate(90deg);
 	left: 16px;
 	background: transparent url('images/lc_menu_chevron.svg') no-repeat center;
+	filter: brightness(0.5);
 }
 
 .ui-expander-label.expanded {
 	padding-left: 14px; /*adding extra padding to account for image absolute position*/
+	color: #444;
 }
 
 .ui-expander:hover {
@@ -96,6 +107,7 @@ td.jsdialog > [id^='table-box'] {
 .ui-treeview {
 	display: block;
 	border: 1px solid silver;
+	border-radius: 2px;
 }
 
 .ui-treeview-body {
