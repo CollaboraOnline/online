@@ -3078,7 +3078,8 @@ Editor to WOPI host
 		<td><code>
 		    <nobr>success: &lt;boolean&gt;</nobr>
 		    <nobr>result: &lt;string&gt;</nobr>
-		    <nobr>errorMsg: &lt;string&gt;</nobr>
+			<nobr>errorMsg: &lt;string&gt;</nobr>
+			<nobr>fileName: &lt;string&gt;</nobr>
 		</code></td>
 		<td>Acknowledgement when save finishes.<br/>
 		<i>This response is only emitted if <code>Notify</code> parameter
@@ -3092,7 +3093,8 @@ Editor to WOPI host
 		case, WOPI hosts can be sure that there are no changes pending
 		in the document to be saved to the storage.<br/>
 		<code>errorMsg</code> contains a detailed error message in case saving failed.
-		Probably it will contain the error message returned from the WOPI host.
+		Probably it will contain the error message returned from the WOPI host.<br/>
+		<code>fileName</code> if success equals true then contains saved file name.
 		</td>
 	</tr>
 	<tr>

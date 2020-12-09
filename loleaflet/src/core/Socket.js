@@ -810,7 +810,8 @@ L.Socket = L.Class.extend({
 					this._map.fire('postMessage', {
 						msgId: 'Action_Save_Resp',
 						args: {
-							success: true
+							success: true,
+							fileName: decodeURIComponent(command.filename)
 						}
 					});
 				}
