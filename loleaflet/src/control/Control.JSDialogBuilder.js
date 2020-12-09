@@ -1844,11 +1844,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			$(childContainer).hide();
 
-			if (builder.wizard)
+			if (builder.wizard) {
+				L.DomUtil.remove($(container).find('td')[3]);
+				var arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('div')[0]);
+				arrowSpan.innerHTML = '>';
+
 				$(container).click(function() {
 					builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
 					builder.wizard.goLevelDown(childContainer);
 				});
+			}
 		} else {
 			$(container).click(function() {
 				builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
