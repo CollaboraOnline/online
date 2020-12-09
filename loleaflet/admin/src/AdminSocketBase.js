@@ -49,7 +49,7 @@ var AdminSocketBase = Base.extend({
 		this.socket.onmessage = function () { };
 
 		this.vexInstance = vex.open({
-			content: _('Server has been shutdown, please reload the page'),
+			content: _('Server has been shut down; please reload the page.'),
 			contentClassName: 'loleaflet-user-idle',
 			showCloseButton: false,
 			overlayClosesOnClick: false,
