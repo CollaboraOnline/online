@@ -1620,6 +1620,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_treelistboxEntry: function (parentContainer, treeViewData, entry, builder) {
+		if (entry.text == '<dummy>')
+			return;
+
 		var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
 
 		var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
