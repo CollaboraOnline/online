@@ -6,12 +6,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:32+0100\n"
-"PO-Revision-Date: 2020-12-05 22:26+0000\n"
-"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
+"POT-Creation-Date: 2020-11-29 19:21+0100\n"
+"PO-Revision-Date: 2020-12-09 17:58+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -201,7 +201,7 @@ msgstr "Actualizar registro"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Filtro de canal:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:296
 #: src/control/Control.StatusBar.js:331
@@ -235,7 +235,7 @@ msgstr "Enviados"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shutdown, please reload the page"
-msgstr "El servidor se ha apagado, vuelva a cargar la página"
+msgstr "El servidor se ha apagado; vuelva a cargar la página"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -875,7 +875,7 @@ msgstr "Mover hoja a la izquierda"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr "Mover hoja a la izquierda"
+msgstr "Mover hoja a la derecha"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1038,11 +1038,11 @@ msgstr "Ay~uda"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr "Cuerpo de Texto"
+msgstr "Cuerpo de texto"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr "Título"
+msgstr "Título general"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
@@ -1320,9 +1320,8 @@ msgstr ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Se produjo un problema al conectar con el documento"
+msgstr "Se produjo un problema al conectar con %productName: "
 
 #: src/core/Socket.js:305
 msgid "Served by:"
