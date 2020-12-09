@@ -1874,8 +1874,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(childContainer).hide();
 
 			if (builder.wizard) {
-				L.DomUtil.remove($(container).find('td')[3]);
-				var arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('div')[0]);
+				L.DomUtil.remove($(container).find('.loleaflet-annotation-menubar')[0]);
+				var arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
 				arrowSpan.innerHTML = '>';
 
 				$(container).click(function() {
