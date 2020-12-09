@@ -8,8 +8,7 @@ L.Cursor = L.Layer.extend({
 
 	options: {
 		opacity: 1,
-		zIndex: 1000,
-		zoomAnimation: true
+		zIndex: 1000
 	},
 
 	initialize: function (latlng, size, options) {
@@ -29,10 +28,6 @@ L.Cursor = L.Layer.extend({
 			} else {
 				$('.leaflet-pane.leaflet-map-pane').css('cursor', 'text');
 			}
-		}
-		this._zoomAnimated = this._zoomAnimated && this.options.zoomAnimation;
-		if (this._zoomAnimated) {
-			L.DomUtil.addClass(this._container, 'leaflet-zoom-animated');
 		}
 
 		this.update();
@@ -54,10 +49,6 @@ L.Cursor = L.Layer.extend({
 
 	getEvents: function () {
 		var events = {viewreset: this.update};
-
-		if (this._zoomAnimated) {
-			events.zoomanim = this._animateZoom;
-		}
 
 		return events;
 	},
@@ -142,11 +133,6 @@ L.Cursor = L.Layer.extend({
 	_setSize: function () {
 		this._cursor.style.height = this._size.y + 'px';
 		this._container.style.top = '-' + (this._container.clientHeight - this._size.y - 2) / 2 + 'px';
-	},
-
-	_animateZoom: function (opt) {
-		var pos = this._map._latLngToNewLayerPoint(this._latlng, opt.zoom, opt.center).round();
-		L.DomUtil.setPosition(this._container, pos);
 	}
 });
 

@@ -38,9 +38,7 @@ L.Marker = L.Layer.extend({
 		}
 	},
 
-	onAdd: function (map) {
-		this._zoomAnimated = this._zoomAnimated && map.options.markerZoomAnimation;
-
+	onAdd: function () {
 		this._initIcon();
 		this.update();
 	},
@@ -62,10 +60,6 @@ L.Marker = L.Layer.extend({
 			events.moveend = this.update;
 			events.drag = this.update;
 			events.splitposchanged = this.update;
-		}
-
-		if (this._zoomAnimated && !splitPanesPossible) {
-			events.zoomanim = this._animateZoom;
 		}
 
 		return events;
@@ -183,7 +177,7 @@ L.Marker = L.Layer.extend({
 
 	_initIcon: function () {
 		var options = this.options,
-		    classToAdd = 'leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide');
+		    classToAdd = 'leaflet-zoom-hide';
 
 		var icon = options.icon.createIcon(this._icon),
 		    addIcon = false;
@@ -281,12 +275,6 @@ L.Marker = L.Layer.extend({
 
 	_updateZIndex: function (offset) {
 		this._icon.style.zIndex = this._zIndex + offset;
-	},
-
-	_animateZoom: function (opt) {
-		var pos = this._map._latLngToNewLayerPoint(this._latlng, opt.zoom, opt.center).round();
-
-		this._setPos(pos);
 	},
 
 	_initInteraction: function () {
