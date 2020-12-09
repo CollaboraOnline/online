@@ -2409,7 +2409,10 @@ L.TileLayer = L.GridLayer.extend({
 			if (!window.mobileWizard && !window.pageMobileWizard && !window.insertionMobileWizard) {
 				// If the user is editing, show the keyboard, but don't change
 				// anything if nothing is changed.
-				this._map.focus(true);
+
+				// We will focus map if no comment is being edited (writer only for now).
+				if (this._docType === 'text' && (this._annotations._selected === null || !this._annotations._selected.isEdit()))
+					this._map.focus(true);
 			}
 		} else {
 			this._map._textInput.hideCursor();
