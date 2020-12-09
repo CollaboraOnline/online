@@ -145,6 +145,7 @@ td.jsdialog > [id^='table-box'] {
 .ui-treeview-entry {
 	display: flex;
 	width: 100%;
+	padding-left: 2px;
 }
 
 .ui-treeview-entry input[type='checkbox'] {
@@ -174,9 +175,12 @@ td.jsdialog > [id^='table-box'] {
 }
 
 .ui-treeview.droptarget {
-	border: 2px dashed darkslateblue;
+	border: 1px solid #888;
 }
-
+.ui-treeview.droptarget:hover{
+	border: 1px solid #888;
+	box-shadow: 0 0 2px 0 #777;
+}
 /* input text */
 
 .jsdialog.ui-edit {
