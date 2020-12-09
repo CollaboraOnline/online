@@ -145,6 +145,9 @@ td.jsdialog > [id^='table-box'] {
 .ui-treeview-entry {
 	display: flex;
 	width: 100%;
+}
+
+.ui-treeview-entry:not(.autofilter) {
 	padding-left: 2px;
 }
 
@@ -187,6 +190,12 @@ td.jsdialog > [id^='table-box'] {
 	line-height: 18px;
 }
 
+#search_edit.ui-edit.autofilter {
+	width: 100%;
+	width: -moz-available;
+	width: -webkit-fill-available;
+	width: fill-available;
+}
 /* checkbox */
 
 .jsdialog.checkbutton {
@@ -234,11 +243,13 @@ td.jsdialog > [id^='table-box'] {
 	position: absolute;
 	z-index: 1105;
 	padding: 10px;
+	font-family: var(--jquery-ui-font);
 }
 
 .autofilter-container #menu.ui-treeview .ui-treeview-body {
-	height: 140px;
+	height: auto;
 	width: 100%;
+	padding: 8px 1px;
 }
 
 .autofilter-container #toggle_all.checkbutton {
@@ -286,6 +297,14 @@ td.jsdialog > [id^='table-box'] {
 	width: 100%;
 	min-width: 200px;
 	max-height: 150px;
+}
+
+.autofilter-container-submenu > .autofilter-container {
+	padding: 0px;
+}
+
+.autofilter-container-submenu .autofilter.root-container .ui-treeview {
+	border-color: transparent;
 }
 
 /* Reference buttons */
