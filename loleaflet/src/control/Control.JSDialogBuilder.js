@@ -342,8 +342,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		for (var row = 0; row < rows; row++) {
 			var rowNode = L.DomUtil.create('tr', builder.options.cssClass, parentContainer);
 			for (var col = 0; col < cols; col++) {
+				var child = builder._getGridChild(data.children, row, col);
 				var colNode = L.DomUtil.create('td', builder.options.cssClass, rowNode);
-				builder.build(colNode, [builder._getGridChild(data.children, row, col)], false, false);
+
+				if (child) {
+					if (child.width)
+						$(colNode).attr('colspan', parseInt(child.width));
+
+					builder.build(colNode, [child], false, false);
+				}
 			}
 		}
 
