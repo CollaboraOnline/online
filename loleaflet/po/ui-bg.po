@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:32+0100\n"
+"POT-Creation-Date: 2020-12-09 19:01+0100\n"
 "PO-Revision-Date: 2020-10-08 21:00+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/"
@@ -200,7 +200,7 @@ msgstr "Опресняване на дневника"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:296
+#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "Няма"
@@ -231,7 +231,7 @@ msgid "Sent"
 msgstr "Изпратени"
 
 #: admin/src/AdminSocketBase.js:52
-msgid "Server has been shutdown, please reload the page"
+msgid "Server has been shut down; please reload the page."
 msgstr ""
 
 #: admin/src/AdminSocketBase.js:62
@@ -360,8 +360,8 @@ msgid "Index"
 msgstr "Индекс"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:1895 src/layer/tile/TileLayer.js:292
-#: src/layer/tile/TileLayer.js:3800
+#: src/control/Control.JSDialogBuilder.js:1868 src/layer/tile/TileLayer.js:292
+#: src/layer/tile/TileLayer.js:3793
 msgid "Comment"
 msgstr "Коментар"
 
@@ -401,103 +401,103 @@ msgstr "Започване на копиране/поставяне"
 msgid "Function Wizard"
 msgstr "Помощник за функции"
 
-#: src/control/Control.JSDialogBuilder.js:299
+#: src/control/Control.JSDialogBuilder.js:273
 msgid "Solid"
 msgstr "Плътен"
 
-#: src/control/Control.JSDialogBuilder.js:302
+#: src/control/Control.JSDialogBuilder.js:276
 msgid "Linear"
 msgstr "Линеен"
 
-#: src/control/Control.JSDialogBuilder.js:305
+#: src/control/Control.JSDialogBuilder.js:279
 msgid "Axial"
 msgstr "Осев"
 
-#: src/control/Control.JSDialogBuilder.js:308
+#: src/control/Control.JSDialogBuilder.js:282
 msgid "Radial"
 msgstr "Радиален"
 
-#: src/control/Control.JSDialogBuilder.js:311
+#: src/control/Control.JSDialogBuilder.js:285
 msgid "Ellipsoid"
 msgstr "Елиптичен"
 
-#: src/control/Control.JSDialogBuilder.js:315
+#: src/control/Control.JSDialogBuilder.js:289
 msgid "Quadratic"
 msgstr "Квадратен"
 
-#: src/control/Control.JSDialogBuilder.js:318
+#: src/control/Control.JSDialogBuilder.js:292
 msgid "Square"
 msgstr "Правоъгълен"
 
-#: src/control/Control.JSDialogBuilder.js:321
+#: src/control/Control.JSDialogBuilder.js:295
 msgid "Fixed size"
 msgstr "Фиксиран размер"
 
-#: src/control/Control.JSDialogBuilder.js:1274
+#: src/control/Control.JSDialogBuilder.js:1248
 msgid "From"
 msgstr "От"
 
-#: src/control/Control.JSDialogBuilder.js:1277
+#: src/control/Control.JSDialogBuilder.js:1251
 msgid "To"
 msgstr "До"
 
-#: src/control/Control.JSDialogBuilder.js:1405
+#: src/control/Control.JSDialogBuilder.js:1379
 msgid "Select range"
 msgstr "Избиране на диапазон"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1408
 msgid "Font Name"
 msgstr "Име на шрифт"
 
-#: src/control/Control.JSDialogBuilder.js:1436
+#: src/control/Control.JSDialogBuilder.js:1410
 msgid "Font Size"
 msgstr "Размер на шрифта"
 
-#: src/control/Control.JSDialogBuilder.js:1845
+#: src/control/Control.JSDialogBuilder.js:1819
 #: src/layer/marker/Annotation.js:247
 msgid "Accept change"
 msgstr "Приемане на промяната"
 
-#: src/control/Control.JSDialogBuilder.js:1850
+#: src/control/Control.JSDialogBuilder.js:1824
 #: src/layer/marker/Annotation.js:248
 msgid "Reject change"
 msgstr "Отхвърляне на промяната"
 
-#: src/control/Control.JSDialogBuilder.js:1859
+#: src/control/Control.JSDialogBuilder.js:1833
 #: src/layer/marker/Annotation.js:266
 msgid "Open menu"
 msgstr "Отваряне на менюто"
 
-#: src/control/Control.JSDialogBuilder.js:2293
+#: src/control/Control.JSDialogBuilder.js:2271
 msgid "Cell borders"
 msgstr "Кантове на клетки"
 
-#: src/control/Control.JSDialogBuilder.js:2332
+#: src/control/Control.JSDialogBuilder.js:2310
 msgid "Background Color"
 msgstr "Цвят на фона"
 
-#: src/control/Control.JSDialogBuilder.js:2334
+#: src/control/Control.JSDialogBuilder.js:2312
 msgid "Gradient Start"
 msgstr "Начало на градиента"
 
-#: src/control/Control.JSDialogBuilder.js:2336
+#: src/control/Control.JSDialogBuilder.js:2314
 msgid "Gradient End"
 msgstr "Край на градиента"
 
-#: src/control/Control.JSDialogBuilder.js:2518
+#: src/control/Control.JSDialogBuilder.js:2496
 msgid "Rows"
 msgstr "Редове"
 
-#: src/control/Control.JSDialogBuilder.js:2519
+#: src/control/Control.JSDialogBuilder.js:2497
 msgid "Columns"
 msgstr "Колони"
 
-#: src/control/Control.JSDialogBuilder.js:2539
+#: src/control/Control.JSDialogBuilder.js:2517
 #, fuzzy
 msgid "Insert Table"
 msgstr "Вмъкване на таблица"
 
-#: src/control/Control.JSDialogBuilder.js:2568
+#: src/control/Control.JSDialogBuilder.js:2546
 msgid "Line style:"
 msgstr "Стил за линии:"
 
@@ -1402,15 +1402,15 @@ msgstr "Изберете Отказ, за да го отворите само з
 msgid "Wrong password provided. Please try again."
 msgstr "Въведена е погрешна парола. Моля, опитайте отново."
 
-#: src/core/Socket.js:822 src/map/Map.js:1551
+#: src/core/Socket.js:823 src/map/Map.js:1551
 msgid "Loading..."
 msgstr "Протича зареждане..."
 
-#: src/core/Socket.js:822
+#: src/core/Socket.js:823
 msgid "Connecting..."
 msgstr "Протича свързване..."
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1102
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1617,7 +1617,7 @@ msgstr ""
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:855
+#: src/layer/tile/TileLayer.js:851
 msgid "Functions"
 msgstr "Функции"
 

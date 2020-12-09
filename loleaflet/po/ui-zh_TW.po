@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:32+0100\n"
+"POT-Creation-Date: 2020-12-09 19:01+0100\n"
 "PO-Revision-Date: 2020-07-08 12:37+0000\n"
 "Last-Translator: Andrew Lee (李健秋) <alee@collabora.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/"
@@ -203,7 +203,7 @@ msgstr "重新整理紀錄"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:296
+#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "無"
@@ -234,7 +234,7 @@ msgid "Sent"
 msgstr "已送出"
 
 #: admin/src/AdminSocketBase.js:52
-msgid "Server has been shutdown, please reload the page"
+msgid "Server has been shut down; please reload the page."
 msgstr ""
 
 #: admin/src/AdminSocketBase.js:62
@@ -362,8 +362,8 @@ msgid "Index"
 msgstr "索引"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:1895 src/layer/tile/TileLayer.js:292
-#: src/layer/tile/TileLayer.js:3800
+#: src/control/Control.JSDialogBuilder.js:1868 src/layer/tile/TileLayer.js:292
+#: src/layer/tile/TileLayer.js:3793
 msgid "Comment"
 msgstr "評註"
 
@@ -403,103 +403,103 @@ msgstr "開始交叉複製/貼上"
 msgid "Function Wizard"
 msgstr "函式精靈"
 
-#: src/control/Control.JSDialogBuilder.js:299
+#: src/control/Control.JSDialogBuilder.js:273
 msgid "Solid"
 msgstr "實心"
 
-#: src/control/Control.JSDialogBuilder.js:302
+#: src/control/Control.JSDialogBuilder.js:276
 msgid "Linear"
 msgstr "線形"
 
-#: src/control/Control.JSDialogBuilder.js:305
+#: src/control/Control.JSDialogBuilder.js:279
 msgid "Axial"
 msgstr "軸向"
 
-#: src/control/Control.JSDialogBuilder.js:308
+#: src/control/Control.JSDialogBuilder.js:282
 msgid "Radial"
 msgstr "放射"
 
-#: src/control/Control.JSDialogBuilder.js:311
+#: src/control/Control.JSDialogBuilder.js:285
 msgid "Ellipsoid"
 msgstr "橢圓體"
 
-#: src/control/Control.JSDialogBuilder.js:315
+#: src/control/Control.JSDialogBuilder.js:289
 msgid "Quadratic"
 msgstr "立方形"
 
-#: src/control/Control.JSDialogBuilder.js:318
+#: src/control/Control.JSDialogBuilder.js:292
 msgid "Square"
 msgstr "正方形"
 
-#: src/control/Control.JSDialogBuilder.js:321
+#: src/control/Control.JSDialogBuilder.js:295
 msgid "Fixed size"
 msgstr "固定大小"
 
-#: src/control/Control.JSDialogBuilder.js:1274
+#: src/control/Control.JSDialogBuilder.js:1248
 msgid "From"
 msgstr "從"
 
-#: src/control/Control.JSDialogBuilder.js:1277
+#: src/control/Control.JSDialogBuilder.js:1251
 msgid "To"
 msgstr "到"
 
-#: src/control/Control.JSDialogBuilder.js:1405
+#: src/control/Control.JSDialogBuilder.js:1379
 msgid "Select range"
 msgstr "選取範圍"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1408
 msgid "Font Name"
 msgstr "字型名稱"
 
-#: src/control/Control.JSDialogBuilder.js:1436
+#: src/control/Control.JSDialogBuilder.js:1410
 msgid "Font Size"
 msgstr "字型大小"
 
-#: src/control/Control.JSDialogBuilder.js:1845
+#: src/control/Control.JSDialogBuilder.js:1819
 #: src/layer/marker/Annotation.js:247
 msgid "Accept change"
 msgstr "接受更改"
 
-#: src/control/Control.JSDialogBuilder.js:1850
+#: src/control/Control.JSDialogBuilder.js:1824
 #: src/layer/marker/Annotation.js:248
 msgid "Reject change"
 msgstr "拒絕更改"
 
-#: src/control/Control.JSDialogBuilder.js:1859
+#: src/control/Control.JSDialogBuilder.js:1833
 #: src/layer/marker/Annotation.js:266
 msgid "Open menu"
 msgstr "開啟選單"
 
-#: src/control/Control.JSDialogBuilder.js:2293
+#: src/control/Control.JSDialogBuilder.js:2271
 msgid "Cell borders"
 msgstr "儲存格邊框"
 
-#: src/control/Control.JSDialogBuilder.js:2332
+#: src/control/Control.JSDialogBuilder.js:2310
 msgid "Background Color"
 msgstr "背景色彩"
 
-#: src/control/Control.JSDialogBuilder.js:2334
+#: src/control/Control.JSDialogBuilder.js:2312
 msgid "Gradient Start"
 msgstr "漸層起始"
 
-#: src/control/Control.JSDialogBuilder.js:2336
+#: src/control/Control.JSDialogBuilder.js:2314
 msgid "Gradient End"
 msgstr "漸層終止"
 
-#: src/control/Control.JSDialogBuilder.js:2518
+#: src/control/Control.JSDialogBuilder.js:2496
 msgid "Rows"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:2519
+#: src/control/Control.JSDialogBuilder.js:2497
 msgid "Columns"
 msgstr "欄"
 
-#: src/control/Control.JSDialogBuilder.js:2539
+#: src/control/Control.JSDialogBuilder.js:2517
 #, fuzzy
 msgid "Insert Table"
 msgstr "插入表格"
 
-#: src/control/Control.JSDialogBuilder.js:2568
+#: src/control/Control.JSDialogBuilder.js:2546
 msgid "Line style:"
 msgstr "線條樣式:"
 
@@ -1405,15 +1405,15 @@ msgstr "點按「取消」以唯讀模式開啟。"
 msgid "Wrong password provided. Please try again."
 msgstr "提供的密碼錯誤。請重試。"
 
-#: src/core/Socket.js:822 src/map/Map.js:1551
+#: src/core/Socket.js:823 src/map/Map.js:1551
 msgid "Loading..."
 msgstr "載入中..."
 
-#: src/core/Socket.js:822
+#: src/core/Socket.js:823
 msgid "Connecting..."
 msgstr "連接中..."
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1102
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1586,7 +1586,7 @@ msgstr ""
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:855
+#: src/layer/tile/TileLayer.js:851
 #, fuzzy
 msgid "Functions"
 msgstr "函式精靈"

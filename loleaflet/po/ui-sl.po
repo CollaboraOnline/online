@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:32+0100\n"
+"POT-Creation-Date: 2020-12-09 19:01+0100\n"
 "PO-Revision-Date: 2020-12-09 17:58+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: sl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.4-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -202,7 +202,7 @@ msgstr "Osveži dnevnik"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:296
+#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "Brez"
@@ -233,7 +233,7 @@ msgid "Sent"
 msgstr "poslano"
 
 #: admin/src/AdminSocketBase.js:52
-msgid "Server has been shutdown, please reload the page"
+msgid "Server has been shut down; please reload the page."
 msgstr ""
 
 #: admin/src/AdminSocketBase.js:62
@@ -362,8 +362,8 @@ msgid "Index"
 msgstr "Kazalo"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:1895 src/layer/tile/TileLayer.js:292
-#: src/layer/tile/TileLayer.js:3800
+#: src/control/Control.JSDialogBuilder.js:1868 src/layer/tile/TileLayer.js:292
+#: src/layer/tile/TileLayer.js:3793
 msgid "Comment"
 msgstr "Komentar"
 
@@ -403,102 +403,102 @@ msgstr "Začni križno kopirati/lepiti"
 msgid "Function Wizard"
 msgstr "Čarovnik za funkcije"
 
-#: src/control/Control.JSDialogBuilder.js:299
+#: src/control/Control.JSDialogBuilder.js:273
 msgid "Solid"
 msgstr "Polno"
 
-#: src/control/Control.JSDialogBuilder.js:302
+#: src/control/Control.JSDialogBuilder.js:276
 msgid "Linear"
 msgstr "Linearno"
 
-#: src/control/Control.JSDialogBuilder.js:305
+#: src/control/Control.JSDialogBuilder.js:279
 msgid "Axial"
 msgstr "Osno"
 
-#: src/control/Control.JSDialogBuilder.js:308
+#: src/control/Control.JSDialogBuilder.js:282
 msgid "Radial"
 msgstr "Radialno"
 
-#: src/control/Control.JSDialogBuilder.js:311
+#: src/control/Control.JSDialogBuilder.js:285
 msgid "Ellipsoid"
 msgstr "Elipsoidno"
 
-#: src/control/Control.JSDialogBuilder.js:315
+#: src/control/Control.JSDialogBuilder.js:289
 msgid "Quadratic"
 msgstr "Pravokotno"
 
-#: src/control/Control.JSDialogBuilder.js:318
+#: src/control/Control.JSDialogBuilder.js:292
 msgid "Square"
 msgstr "Kvadratno"
 
-#: src/control/Control.JSDialogBuilder.js:321
+#: src/control/Control.JSDialogBuilder.js:295
 msgid "Fixed size"
 msgstr "Fiksna velikost"
 
-#: src/control/Control.JSDialogBuilder.js:1274
+#: src/control/Control.JSDialogBuilder.js:1248
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1277
+#: src/control/Control.JSDialogBuilder.js:1251
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1405
+#: src/control/Control.JSDialogBuilder.js:1379
 msgid "Select range"
 msgstr "Izberite obseg"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1408
 msgid "Font Name"
 msgstr "Ime pisave"
 
-#: src/control/Control.JSDialogBuilder.js:1436
+#: src/control/Control.JSDialogBuilder.js:1410
 msgid "Font Size"
 msgstr "Velikost pisave"
 
-#: src/control/Control.JSDialogBuilder.js:1845
+#: src/control/Control.JSDialogBuilder.js:1819
 #: src/layer/marker/Annotation.js:247
 msgid "Accept change"
 msgstr "Sprejmi spremembo"
 
-#: src/control/Control.JSDialogBuilder.js:1850
+#: src/control/Control.JSDialogBuilder.js:1824
 #: src/layer/marker/Annotation.js:248
 msgid "Reject change"
 msgstr "Zavrni spremembo"
 
-#: src/control/Control.JSDialogBuilder.js:1859
+#: src/control/Control.JSDialogBuilder.js:1833
 #: src/layer/marker/Annotation.js:266
 msgid "Open menu"
 msgstr "Odpri meni"
 
-#: src/control/Control.JSDialogBuilder.js:2293
+#: src/control/Control.JSDialogBuilder.js:2271
 msgid "Cell borders"
 msgstr "Obrobe celic"
 
-#: src/control/Control.JSDialogBuilder.js:2332
+#: src/control/Control.JSDialogBuilder.js:2310
 msgid "Background Color"
 msgstr "Barva ozadja"
 
-#: src/control/Control.JSDialogBuilder.js:2334
+#: src/control/Control.JSDialogBuilder.js:2312
 msgid "Gradient Start"
 msgstr "Začetek preliva"
 
-#: src/control/Control.JSDialogBuilder.js:2336
+#: src/control/Control.JSDialogBuilder.js:2314
 msgid "Gradient End"
 msgstr "Konec preliva"
 
-#: src/control/Control.JSDialogBuilder.js:2518
+#: src/control/Control.JSDialogBuilder.js:2496
 msgid "Rows"
 msgstr "Vrstice"
 
-#: src/control/Control.JSDialogBuilder.js:2519
+#: src/control/Control.JSDialogBuilder.js:2497
 msgid "Columns"
 msgstr "Stolpci"
 
-#: src/control/Control.JSDialogBuilder.js:2539
+#: src/control/Control.JSDialogBuilder.js:2517
 msgid "Insert Table"
 msgstr "Vstavi tabelo"
 
-#: src/control/Control.JSDialogBuilder.js:2568
+#: src/control/Control.JSDialogBuilder.js:2546
 msgid "Line style:"
 msgstr "Slog črte:"
 
@@ -1402,15 +1402,15 @@ msgstr "Pritisnite Prekliči za odpiranje v oglednem načinu."
 msgid "Wrong password provided. Please try again."
 msgstr "Vnesli ste napačno geslo. Poskusite znova."
 
-#: src/core/Socket.js:822 src/map/Map.js:1551
+#: src/core/Socket.js:823 src/map/Map.js:1551
 msgid "Loading..."
 msgstr "Nalaganje ..."
 
-#: src/core/Socket.js:822
+#: src/core/Socket.js:823
 msgid "Connecting..."
 msgstr "Povezovanje ..."
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1102
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1616,7 +1616,7 @@ msgstr "Razreši nit"
 msgid "Resolve Thread"
 msgstr "Razreši nit"
 
-#: src/layer/tile/TileLayer.js:855
+#: src/layer/tile/TileLayer.js:851
 msgid "Functions"
 msgstr "Funkcije"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:32+0100\n"
+"POT-Creation-Date: 2020-12-09 19:01+0100\n"
 "PO-Revision-Date: 2020-07-22 21:02+0000\n"
 "Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: Catalan <https://weblate.documentfoundation.org/projects/"
@@ -205,7 +205,7 @@ msgstr "Actualitza el registre"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:296
+#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "Cap"
@@ -236,7 +236,7 @@ msgid "Sent"
 msgstr "Enviats"
 
 #: admin/src/AdminSocketBase.js:52
-msgid "Server has been shutdown, please reload the page"
+msgid "Server has been shut down; please reload the page."
 msgstr ""
 
 #: admin/src/AdminSocketBase.js:62
@@ -366,8 +366,8 @@ msgid "Index"
 msgstr "Índex"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:1895 src/layer/tile/TileLayer.js:292
-#: src/layer/tile/TileLayer.js:3800
+#: src/control/Control.JSDialogBuilder.js:1868 src/layer/tile/TileLayer.js:292
+#: src/layer/tile/TileLayer.js:3793
 msgid "Comment"
 msgstr "Comentari"
 
@@ -407,103 +407,103 @@ msgstr "Inicia el copiar i enganxar creuat"
 msgid "Function Wizard"
 msgstr "Auxiliar de funcions"
 
-#: src/control/Control.JSDialogBuilder.js:299
+#: src/control/Control.JSDialogBuilder.js:273
 msgid "Solid"
 msgstr "Sòlid"
 
-#: src/control/Control.JSDialogBuilder.js:302
+#: src/control/Control.JSDialogBuilder.js:276
 msgid "Linear"
 msgstr "Lineal"
 
-#: src/control/Control.JSDialogBuilder.js:305
+#: src/control/Control.JSDialogBuilder.js:279
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:308
+#: src/control/Control.JSDialogBuilder.js:282
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:311
+#: src/control/Control.JSDialogBuilder.js:285
 msgid "Ellipsoid"
 msgstr "El·lipsoidal"
 
-#: src/control/Control.JSDialogBuilder.js:315
+#: src/control/Control.JSDialogBuilder.js:289
 msgid "Quadratic"
 msgstr "Quadràtic"
 
-#: src/control/Control.JSDialogBuilder.js:318
+#: src/control/Control.JSDialogBuilder.js:292
 msgid "Square"
 msgstr "Quadrat"
 
-#: src/control/Control.JSDialogBuilder.js:321
+#: src/control/Control.JSDialogBuilder.js:295
 msgid "Fixed size"
 msgstr "Mida fixa"
 
-#: src/control/Control.JSDialogBuilder.js:1274
+#: src/control/Control.JSDialogBuilder.js:1248
 msgid "From"
 msgstr "De"
 
-#: src/control/Control.JSDialogBuilder.js:1277
+#: src/control/Control.JSDialogBuilder.js:1251
 msgid "To"
 msgstr "A"
 
-#: src/control/Control.JSDialogBuilder.js:1405
+#: src/control/Control.JSDialogBuilder.js:1379
 msgid "Select range"
 msgstr "Selecciona l'interval"
 
-#: src/control/Control.JSDialogBuilder.js:1434
+#: src/control/Control.JSDialogBuilder.js:1408
 msgid "Font Name"
 msgstr "Tipus de lletra"
 
-#: src/control/Control.JSDialogBuilder.js:1436
+#: src/control/Control.JSDialogBuilder.js:1410
 msgid "Font Size"
 msgstr "Mida de la lletra"
 
-#: src/control/Control.JSDialogBuilder.js:1845
+#: src/control/Control.JSDialogBuilder.js:1819
 #: src/layer/marker/Annotation.js:247
 msgid "Accept change"
 msgstr "Accepta el canvi"
 
-#: src/control/Control.JSDialogBuilder.js:1850
+#: src/control/Control.JSDialogBuilder.js:1824
 #: src/layer/marker/Annotation.js:248
 msgid "Reject change"
 msgstr "Rebutja el canvi"
 
-#: src/control/Control.JSDialogBuilder.js:1859
+#: src/control/Control.JSDialogBuilder.js:1833
 #: src/layer/marker/Annotation.js:266
 msgid "Open menu"
 msgstr "Obri el menú"
 
-#: src/control/Control.JSDialogBuilder.js:2293
+#: src/control/Control.JSDialogBuilder.js:2271
 msgid "Cell borders"
 msgstr "Vores de les cel·les"
 
-#: src/control/Control.JSDialogBuilder.js:2332
+#: src/control/Control.JSDialogBuilder.js:2310
 msgid "Background Color"
 msgstr "Color de fons"
 
-#: src/control/Control.JSDialogBuilder.js:2334
+#: src/control/Control.JSDialogBuilder.js:2312
 msgid "Gradient Start"
 msgstr "Inici del degradat"
 
-#: src/control/Control.JSDialogBuilder.js:2336
+#: src/control/Control.JSDialogBuilder.js:2314
 msgid "Gradient End"
 msgstr "Fi del degradat"
 
-#: src/control/Control.JSDialogBuilder.js:2518
+#: src/control/Control.JSDialogBuilder.js:2496
 msgid "Rows"
 msgstr "Files"
 
-#: src/control/Control.JSDialogBuilder.js:2519
+#: src/control/Control.JSDialogBuilder.js:2497
 msgid "Columns"
 msgstr "Columnes"
 
-#: src/control/Control.JSDialogBuilder.js:2539
+#: src/control/Control.JSDialogBuilder.js:2517
 #, fuzzy
 msgid "Insert Table"
 msgstr "Insereix una taula"
 
-#: src/control/Control.JSDialogBuilder.js:2568
+#: src/control/Control.JSDialogBuilder.js:2546
 msgid "Line style:"
 msgstr "Estil de línia:"
 
@@ -1421,15 +1421,15 @@ msgstr "Premeu Cancel·la per a obrir-lo en el mode de només lectura."
 msgid "Wrong password provided. Please try again."
 msgstr "Heu indicat una contrasenya errònia. Torneu-ho a intentar."
 
-#: src/core/Socket.js:822 src/map/Map.js:1551
+#: src/core/Socket.js:823 src/map/Map.js:1551
 msgid "Loading..."
 msgstr "S'està carregant..."
 
-#: src/core/Socket.js:822
+#: src/core/Socket.js:823
 msgid "Connecting..."
 msgstr "S'està connectant…"
 
-#: src/core/Socket.js:1101
+#: src/core/Socket.js:1102
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1637,7 +1637,7 @@ msgstr ""
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:855
+#: src/layer/tile/TileLayer.js:851
 #, fuzzy
 msgid "Functions"
 msgstr "Auxiliar de funcions"
