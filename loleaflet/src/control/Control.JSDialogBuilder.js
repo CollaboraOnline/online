@@ -1537,6 +1537,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_treelistboxEntry: function (parentContainer, treeViewData, entry, builder) {
+		if (entry.text == '<dummy>')
+			return;
+
 		var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
 		li.draggable = true;
 
