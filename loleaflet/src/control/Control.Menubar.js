@@ -524,16 +524,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:DeleteColumns'},
 				{name: _UNO('.uno:DelBreakMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:DeleteRowbreak'},
-					{uno: '.uno:DeleteColumnbreak'}]},
-				{type: 'separator'},
-				{uno: '.uno:Delete'},
-				{name: _UNO('.uno:NamesMenu', 'spreadsheet'), type: 'menu', menu: [
-					{uno: '.uno:AddName'},
-					{uno: '.uno:DefineName'},
-					{uno: '.uno:SheetInsertName'},
-					{type: 'separator'},
-					{uno: '.uno:CreateNames'},
-					{uno: '.uno:DefineLabelRange'}]}
+					{uno: '.uno:DeleteColumnbreak'}]}
 			]},
 			{name: _UNO('.uno:DataMenu', 'spreadsheet'), type: 'menu', menu: [
 				{uno: '.uno:DataSort'},
@@ -554,6 +545,10 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:InsertPivotTable', 'spreadsheet'), uno: '.uno:DataDataPilotRun'},
 					{name: _UNO('.uno:RecalcPivotTable', 'spreadsheet'), uno: '.uno:RecalcPivotTable'},
 					{name: _UNO('.uno:DeletePivotTable', 'spreadsheet'), uno: '.uno:DeletePivotTable'}]},
+				{type: 'separator'},
+				{name: _UNO('.uno:NamesMenu', 'spreadsheet'), type: 'menu', menu: [
+					{name: _UNO('.uno:AddName', 'spreadsheet'), uno: '.uno:AddName'},
+					{name: _UNO('.uno:DefineName', 'spreadsheet'), uno: '.uno:DefineName'}]},
 				{type: 'separator'},
 				{name: _UNO('.uno:GroupOutlineMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:Group'},
