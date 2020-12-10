@@ -84,6 +84,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['borderstyle'] = this._borderControl;
 		this._controlHandlers['treelistbox'] = this._treelistboxControl;
 		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
+		this._controlHandlers['separator'] = this._separatorControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -1769,6 +1770,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_separatorControl: function(parentContainer, data) {
+		// don't create new control, style current parent
+
+		L.DomUtil.addClass(parentContainer, 'ui-separator');
+		if (data.orientation && data.orientation === 'vertical') {
+			L.DomUtil.addClass(parentContainer, 'vertical');
+		} else {
+			L.DomUtil.addClass(parentContainer, 'horizontal');
+		}
+
+		return false;
+	},
+
 	_drawingAreaControl: function(parentContainer, data, builder) {
 		if (data.image) {
 			var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-drawing-area-container', parentContainer);
@@ -2566,7 +2580,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				this.options.useInLineLabelsForUnoButtons = false;
 			}
 		}
-		$('#listbox-fields').parents().eq(4).addClass('divider-left');
 	}
 });
 
