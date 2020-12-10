@@ -1,5 +1,5 @@
 .loleaflet-annotation-edit #annotation-cancel,
-#table-buttonbox #cancel,
+.ui-button-box #cancel,
 .cell.jsdialog > button:not(#ok),
 .ui-button-box.jsdialog button:not(#ok) {
 	height: 32px;
@@ -14,7 +14,7 @@
 
 .loleaflet-annotation-edit #annotation-save,
 #annotation-reply,
-#table-buttonbox #ok,
+.ui-button-box #ok,
 .cell.jsdialog > button,
 .ui-button-box.jsdialog button {
 	height: 32px;
