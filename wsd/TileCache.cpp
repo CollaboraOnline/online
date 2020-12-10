@@ -566,7 +566,7 @@ size_t TileCache::itemCacheSize(const Tile &tile)
 
 void TileCache::assertCacheSize()
 {
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
     size_t recalcSize = 0;
     for (const auto& it : _cache)
     {
