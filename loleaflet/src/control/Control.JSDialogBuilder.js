@@ -2532,6 +2532,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				td = containerToInsert;
 			}
 
+			if (childData.dialogid)
+				td.id = childData.dialogid;
+
 			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
 
 			this._parentize(childData);
