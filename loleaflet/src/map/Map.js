@@ -497,7 +497,7 @@ L.Map = L.Evented.extend({
 					var col = cellRange.columnrange.start, row = cellRange.rowrange.start;
 					var zoomScaleAbs = this.zoomToFactor(zoom);
 
-					var newTopLeftPx = sheetGeom.getCellRect(col, row, zoomScaleAbs).getTopLeft();
+					var newTopLeftPx = sheetGeom.getCellRect(col, row, zoomScaleAbs).getTopLeft().divideBy(window.devicePixelRatio);
 					var moveByPoint = this._getTopLeftPoint(curCenter, zoom).subtract(newTopLeftPx);
 
 					// move the center (which is in LatLng) by the computed amount of pixels
