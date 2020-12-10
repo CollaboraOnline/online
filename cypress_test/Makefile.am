@@ -146,22 +146,6 @@ do-multi-check: @JAILS_PATH@ $(NODE_BINS)
 		$(call run_all_multiuser_tests))
 	@$(KILL_COMMAND) || true
 
-check-interfer-mobile: do-interfer-mobile-check-log
-	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
-
-do-interfer-mobile-check-log: do-interfer-mobile-check
-	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
-
-do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(ERROR_LOG)
-	@rm -f $(LOOLWSD_LOG)
-	$(call run_JS_error_check)
-	$(call start_loolwsd)
-	$(if $(spec), \
-		$(call run_mobile_interference_test,$(spec)), \
-		$(call run_mobile_interference_tests))
-	@$(KILL_COMMAND) || true
-
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(LOOLWSD_LOG)
 	$(call run_JS_error_check)
@@ -205,27 +189,6 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 		--log-file $(BACKGROUND_USER_LOG) &
 	@sleep 5
 	$(call run_interactive_multi,$(INTERACTIVE_USER_SPEC)) || true
-	@$(KILL_COMMAND) || true
-
-run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(LOOLWSD_LOG)
-	$(call run_JS_error_check)
-	$(call start_loolwsd)
-	@echo
-	@echo "Running interfer mobile test in interactive test runner..."
-	@echo
-	$(eval BACKGROUND_USER_SPEC=interference_user_spec.js)
-	$(eval INTERACTIVE_USER_SPEC=$(spec))
-	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
-	$(call run_interactive_interfer_mobile,$(INTERACTIVE_USER_SPEC)) &
-	@sleep 5
-	@$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(INTERFER_MOBILE_CONFIG2) \
-		--env $(INTERFER_MOBILE_ENV2) \
-		--spec $(BACKGROUND_USER_SPEC) \
-		--type multi-user \
-		--log-file $(BACKGROUND_USER_LOG) || true
 	@$(KILL_COMMAND) || true
 
 run-cov: do-run-cov
@@ -348,15 +311,6 @@ define run_interactive_multi
 		--spec=$(abs_dir)/integration_tests/multiuser/$(1)
 endef
 
-define run_interactive_interfer_mobile
-	$(CYPRESS_BINARY) run \
-		--browser $(BROWSER) \
-		--headed --no-exit \
-		--config $(INTERFER_MOBILE_CONFIG1) \
-		--env $(INTERFER_MOBILE_ENV1) \
-		--spec=$(abs_dir)/integration_tests/mobile/$(1)
-endef
-
 define run_desktop_tests
 	@echo $(if $(1),"Running cypress desktop test: $(1)","Running cypress desktop tests...")
 	@echo
@@ -428,6 +382,56 @@ define run_multiuser_test
 		--type multi-user \
 		--log-file $(USER2_LOG) && \
 	wait # waits the background process to be finished
+endef
+
+############################
+# Mobile interference tests.
+############################
+
+check-interfer-mobile: do-interfer-mobile-check-log
+	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
+
+do-interfer-mobile-check-log: do-interfer-mobile-check
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
+
+do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
+	@rm -f $(ERROR_LOG)
+	@rm -f $(LOOLWSD_LOG)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(if $(spec), \
+		$(call run_mobile_interference_test,$(spec)), \
+		$(call run_mobile_interference_tests))
+	@$(KILL_COMMAND) || true
+
+run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
+	@rm -f $(LOOLWSD_LOG)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	@echo
+	@echo "Running interfer mobile test in interactive test runner..."
+	@echo
+	$(eval BACKGROUND_USER_SPEC=interference_user_spec.js)
+	$(eval INTERACTIVE_USER_SPEC=$(spec))
+	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
+	$(call run_interactive_interfer_mobile,$(INTERACTIVE_USER_SPEC)) &
+	@sleep 5
+	@$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(INTERFER_MOBILE_CONFIG2) \
+		--env $(INTERFER_MOBILE_ENV2) \
+		--spec $(BACKGROUND_USER_SPEC) \
+		--type multi-user \
+		--log-file $(BACKGROUND_USER_LOG) || true
+	@$(KILL_COMMAND) || true
+
+define run_interactive_interfer_mobile
+	$(CYPRESS_BINARY) run \
+		--browser $(BROWSER) \
+		--headed --no-exit \
+		--config $(INTERFER_MOBILE_CONFIG1) \
+		--env $(INTERFER_MOBILE_ENV1) \
+		--spec=$(abs_dir)/integration_tests/mobile/$(1)
 endef
 
 INTERFER_MOBILE_CONFIG1 = \
