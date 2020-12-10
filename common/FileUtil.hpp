@@ -70,7 +70,7 @@ namespace FileUtil
     bool isEmptyDirectory(const char* path);
     inline bool isEmptyDirectory(const std::string& path) { return isEmptyDirectory(path.c_str()); }
 
-    /// Returns truee iff the path given is writable by our *real* UID.
+    /// Returns true iff the path given is writable by our *real* UID.
     bool isWritable(const char* path);
     inline bool isWritable(const std::string& path) { return isWritable(path.c_str()); }
 
@@ -99,7 +99,7 @@ namespace FileUtil
                                 const std::string& dstFilenamePrefix);
 
     /// Make a temp copy of a file.
-    /// Primarily used by tests to avoid tainting the originals.
+    /// Used by tests to avoid tainting the originals.
     /// srcDir shouldn't end with '/' and srcFilename shouldn't contain '/'.
     /// Returns the created file path.
     inline std::string getTempFilePath(const std::string& srcDir, const std::string& srcFilename)
@@ -169,10 +169,7 @@ namespace FileUtil
             // and if they aren't, we still need to rely on the following.
             // Finally, compare the contents, to avoid costly copying if we fail to update.
             if (exists() && other.exists() && !isDirectory() && !other.isDirectory()
-                && size() == other.size() && modifiedTime().tv_sec == other.modifiedTime().tv_sec
-                && (modifiedTime().tv_nsec / 1000000) // Millisecond precision.
-                       == (other.modifiedTime().tv_nsec / 1000000)
-                && compareFileContents(_path, other._path))
+                && size() == other.size() && compareFileContents(_path, other._path))
             {
                 return true;
             }
