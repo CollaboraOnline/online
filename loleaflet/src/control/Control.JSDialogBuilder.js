@@ -1686,6 +1686,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (entry.state)
 					$(checkbox).click(toggleFunction);
 			}
+
+			if (entry.ondemand)
+				L.DomUtil.addClass(span, 'collapsed');
 		}
 
 		if (!disabled && entry.state == null) {
