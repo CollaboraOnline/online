@@ -128,20 +128,8 @@ public:
                       int64_t & timeoutMaxMicroS) override
     {
         assertCorrectThread();
-        int events = getSocketHandler()->getPollEvents(now, timeoutMaxMicroS);
-
-        if (_sslWantsTo == SslWantsTo::Read)
-        {
-            // Must read next before attempting to write.
-            return POLLIN;
-        }
-        else if (_sslWantsTo == SslWantsTo::Write)
-        {
-            // Must write next before attempting to read.
-            return POLLOUT;
-        }
-
-        if (!getOutBuffer().empty() || isShutdownSignalled())
+        int events = StreamSocket::getPollEvents(now, timeoutMaxMicroS); // Default to base.
+        if (_sslWantsTo == SslWantsTo::Write) // If OpenSSL wants to write (and we don't).
             events |= POLLOUT;
 
         return events;
