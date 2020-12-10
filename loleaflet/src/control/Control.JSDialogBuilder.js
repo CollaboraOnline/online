@@ -1586,7 +1586,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(span).toggleClass('collapsed');
 			};
 
-			$(expander).click(toggleFunction);
+			L.DomEvent.on(expander, 'click', function() {
+				if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
+					builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+				toggleFunction();
+			});
 
 			// block expand/collapse on checkbox
 			if (entry.state)
