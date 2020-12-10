@@ -499,7 +499,22 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:ClearOutline'},
 					{type: 'separator'},
 					{uno: '.uno:HideDetail'},
-					{uno: '.uno:ShowDetail'}]}
+					{uno: '.uno:ShowDetail'}]},
+				{type: 'separator'},
+				{name: _UNO('.uno:StatisticsMenu', 'spreadsheet'), type: 'menu', menu: [
+					{name: _UNO('.uno:SamplingDialog', 'spreadsheet'), uno: '.uno:SamplingDialog'},
+					{name: _UNO('.uno:DescriptiveStatisticsDialog', 'spreadsheet'), uno: '.uno:DescriptiveStatisticsDialog'},
+					{name: _UNO('.uno:AnalysisOfVarianceDialog', 'spreadsheet'), uno: '.uno:AnalysisOfVarianceDialog'},
+					{name: _UNO('.uno:CorrelationDialog', 'spreadsheet'), uno: '.uno:CorrelationDialog'},
+					{name: _UNO('.uno:CovarianceDialog', 'spreadsheet'), uno: '.uno:CovarianceDialog'},
+					{name: _UNO('.uno:ExponentialSmoothingDialog', 'spreadsheet'), uno: '.uno:ExponentialSmoothingDialog'},
+					{name: _UNO('.uno:MovingAverageDialog', 'spreadsheet'), uno: '.uno:MovingAverageDialog'},
+					{name: _UNO('.uno:RegressionDialog', 'spreadsheet'), uno: '.uno:RegressionDialog'},
+					{name: _UNO('.uno:TTestDialog', 'spreadsheet'), uno: '.uno:TTestDialog'},
+					{name: _UNO('.uno:FTestDialog', 'spreadsheet'), uno: '.uno:FTestDialog'},
+					{name: _UNO('.uno:ZTestDialog', 'spreadsheet'), uno: '.uno:ZTestDialog'},
+					{name: _UNO('.uno:ChiSquareTestDialog', 'spreadsheet'), uno: '.uno:ChiSquareTestDialog'},
+					{name: _UNO('.uno:FourierAnalysisDialog', 'spreadsheet'), uno: '.uno:FourierAnalysisDialog'}]},
 			]},
 			{name: _UNO('.uno:ToolsMenu', 'spreadsheet'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellDialog'},
