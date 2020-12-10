@@ -241,14 +241,6 @@ td.jsdialog > [id^='table-box'] {
 	padding: 2px;
 }
 
-#table-buttonbox .autofilter.cell:first-child {
-	float: right;
-}
-
-#table-buttonbox .autofilter.cell:last-child {
-	float: left;
-}
-
 .autofilter-container {
 	background-color: white;
 	border: solid 1px silver;
