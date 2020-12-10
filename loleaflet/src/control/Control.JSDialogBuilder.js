@@ -36,6 +36,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_controlHandlers: {},
 	_toolitemHandlers: {},
 	_menuItemHandlers: {},
+	_menus: {},
 	_colorPickers: [],
 
 	_currentDepth: 0,
@@ -85,6 +86,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['treelistbox'] = this._treelistboxControl;
 		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
 		this._controlHandlers['separator'] = this._separatorControl;
+		this._controlHandlers['menubutton'] = this._menubuttonControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -1813,6 +1815,46 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_menubuttonControl: function(parentContainer, data, builder) {
+		var ids = data.id.split(':');
+
+		var menuId = null;
+		if (ids.length > 1)
+			menuId = ids[1];
+
+		data.id = ids[0];
+
+		if (menuId && builder._menus[menuId]) {
+			var noLabels = builder.options.noLabelsForUnoButtons;
+			builder.options.noLabelsForUnoButtons = false;
+
+			// command is needed to generate image
+			if (!data.command)
+				data.command = menuId;
+
+			var options = {hasDropdownArrow: true};
+			var control = builder._unoToolButton(parentContainer, data, builder, options);
+
+			$(control.container).tooltip({disabled: true});
+
+			$(control.container).unbind('click');
+			$(control.container).click(function () {
+				$(control.container).w2menu({
+					items: builder._menus[menuId],
+					onSelect: function (event) {
+						builder.map.sendUnoCommand('.uno:' + event.item.uno);
+					}
+				});
+			});
+
+			builder.options.noLabelsForUnoButtons = noLabels;
+		} else {
+			console.warn('Not found menu "' + menuId + '"');
+		}
+
+		return false;
+	},
+
 	_htmlControl: function(parentContainer, data, builder) {
 		var container = L.DomUtil.create('div', builder.options.cssClass, parentContainer);
 		container.appendChild(data.content);
@@ -1881,7 +1923,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (builder.options.noLabelsForUnoButtons !== true) {
 				var label = L.DomUtil.create('span', 'ui-content unolabel', div);
 				label.for = buttonId;
-				label.innerHTML = data.text;
+				label.innerHTML = builder._cleanText(data.text);
 
 				controls['label'] = label;
 				$(div).addClass('has-label');
