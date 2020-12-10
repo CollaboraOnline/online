@@ -1679,6 +1679,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(span).toggleClass('collapsed');
 			};
 
+			L.DomEvent.on(expander, 'click', function() {
+				if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
+					builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+				toggleFunction();
+			});
+
 			if (!disabled) {
 				$(expander).click(toggleFunction);
 
