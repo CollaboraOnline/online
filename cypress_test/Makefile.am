@@ -475,6 +475,67 @@ define run_mobile_interference_test
 	wait # waits the background process to be finished
 endef
 
+#############################
+# Desktop interference tests.
+#############################
+
+check-interfer-desktop: do-interfer-desktop-check-log
+	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
+
+do-interfer-desktop-check-log: do-interfer-desktop-check
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
+
+do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
+	@rm -f $(ERROR_LOG)
+	@rm -f $(LOOLWSD_LOG)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(if $(spec), \
+		$(call run_desktop_interference_test,$(spec)), \
+		$(call run_desktop_interference_tests))
+	@$(KILL_COMMAND) || true
+
+INTERFER_DESKTOP_CONFIG1 = \
+	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
+
+INTERFER_DESKTOP_ENV1 = \
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+
+INTERFER_DESKTOP_CONFIG2 = \
+	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
+
+INTERFER_DESKTOP_ENV2 = \
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+
+define run_desktop_interference_tests
+	$(foreach test,$(DESKTOP_TEST_FILES),$(call run_desktop_interference_test,$(test)))
+endef
+
+define run_desktop_interference_test
+	$(eval USER1_SPEC=$(1))
+	$(eval USER2_SPEC=interference_user_spec.js)
+	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
+	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
+	@echo "Running cypress desktop interference test: $(1)"
+	@echo
+	@$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(INTERFER_DESKTOP_CONFIG1) \
+		--env $(INTERFER_DESKTOP_ENV1) \
+		--spec $(USER1_SPEC) \
+		--type desktop \
+		--log-file $(USER1_LOG) & \
+	sleep 5 && \
+	$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(INTERFER_DESKTOP_CONFIG2) \
+		--env $(INTERFER_DESKTOP_ENV2) \
+		--spec $(USER2_SPEC) \
+		--type multi-user \
+		--log-file $(USER2_LOG) && \
+	wait # waits the background process to be finished
+endef
+
 NODE_BINS = \
 	$(CYPRESS_BINARY) \
 	$(ESLINT_BINARY) \
