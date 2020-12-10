@@ -25,8 +25,6 @@ L.Canvas = L.Renderer.extend({
 	},
 
 	_update: function () {
-		if (this._map._animatingZoom && this._bounds) { return; }
-
 		L.Renderer.prototype._update.call(this);
 
 		var b = this._bounds,
@@ -196,7 +194,7 @@ L.Canvas = L.Renderer.extend({
 	},
 
 	_onMouseMove: function (e) {
-		if (!this._map || this._map._animatingZoom) { return; }
+		if (!this._map) { return; }
 
 		var point = this._map.mouseEventToLayerPoint(e);
 
