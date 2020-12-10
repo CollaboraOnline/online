@@ -11,8 +11,7 @@ L.Annotation = L.Layer.extend({
 		maxHeight: 50,
 		imgSize: L.point([32, 32]),
 		margin: L.point([40, 40]),
-		noMenu: false,
-		draft: false
+		noMenu: false
 	},
 
 	initialize: function (latlng, data, options) {
@@ -96,18 +95,14 @@ L.Annotation = L.Layer.extend({
 
 		this._container.style.visibility = '';
 		this._contentNode.style.display = '';
-		if (this.options.draft === false) {
-			this._nodeModify.style.display = 'none';
-		}
+		this._nodeModify.style.display = 'none';
 		this._nodeReply.style.display = 'none';
 	},
 
 	hide: function () {
 		this._container.style.visibility = 'hidden';
 		this._contentNode.style.display = 'none';
-		if (this.options.draft === false) {
-			this._nodeModify.style.display = 'none';
-		}
+		this._nodeModify.style.display = 'none';
 		this._nodeReply.style.display = 'none';
 		if (this._data.textSelected && this._map.hasLayer(this._data.textSelected)) {
 			this._map.removeLayer(this._data.textSelected);
@@ -329,17 +324,13 @@ L.Annotation = L.Layer.extend({
 	},
 
 	_onLostFocus: function (e) {
-		// On mobile view, a vex dialog opens and covers entire screen. So we can not allow user to make their comment open & waiting when it loses focus.
-		// On mobile or tablet view, when comment loses focus, comment has to be cancelled.
-		if (this.options.draft === false || window.mode.isMobile() || window.mode.isTablet()) {
-			L.DomUtil.removeClass(this._container, 'annotation-active');
-			if (this._contentText.origText !== this._nodeModifyText.value) {
-				this._onSaveComment(e);
-			}
-			else if (this._nodeModifyText.value === '') {
-				// Implies that this._contentText.origText == ''
-				this._onCancelClick(e);
-			}
+		$(this._container).removeClass('annotation-active');
+		if (this._contentText.origText !== this._nodeModifyText.value) {
+			this._onSaveComment(e);
+		}
+		else if (this._nodeModifyText.value == '') {
+			// Implies that this._contentText.origText == ''
+			this._onCancelClick(e);
 		}
 	},
 
