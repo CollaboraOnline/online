@@ -1,7 +1,11 @@
 .loleaflet-annotation-edit #annotation-cancel,
 .ui-button-box #cancel,
 .cell.jsdialog > button:not(#ok),
-.ui-button-box.jsdialog button:not(#ok) {
+.ui-button-box.jsdialog button:not(#ok),
+.jsdialog-container #source-button,
+.jsdialog-container #destination-button,
+.jsdialog-container #refbutton,
+.jsdialog-container #assign {
 	height: 32px;
 	line-height: 0em;
 	color: #222;
@@ -10,6 +14,7 @@
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	margin: 5px;
+	vertical-align: middle;
 }
 
 .loleaflet-annotation-edit #annotation-save,
@@ -25,4 +30,9 @@
 	border: 1px solid #777;
 	border-radius: 3px;
 	margin: 5px;
+	vertical-align: middle;
+}
+
+.jsdialog.ui-button-box.end {
+	margin-top: 8px;
 }
