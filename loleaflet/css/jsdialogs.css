@@ -249,6 +249,7 @@ td.jsdialog > [id^='table-box'] {
 	border-radius: 3px;
 	padding-right: 2em;
 	padding-left: 0.4em;
+	margin: 2px 0px 14px;
 	background-color: #F1F1F1;
 }
 
@@ -358,10 +359,6 @@ td.jsdialog > [id^='table-box'] {
 .jsdialog-container #refbutton,
 .jsdialog-container #assign {
 	background: url('images/refinp1.svg') no-repeat center;
-	height: 24px;
-	width: 24px;
-	border: 1px solid silver;
-	vertical-align: middle;
 }
 
 .jsdialog-container.collapsed #source-button,
@@ -410,4 +407,14 @@ td.jsdialog > [id^='table-box'] {
 	width: 20%;
 	border-bottom: none;
 	color: #636363 !important;
+}
+
+/* Dialog-specific excelptions*/
+#DefineNameDialog .cell.jsdialog,
+#ManageNamesDialog .cell.jsdialog {
+	padding-left: 0px;
+}
+
+#table-Selection .jsdialog.ui-listbox {
+	margin: 8px 2px 2px;
 }
