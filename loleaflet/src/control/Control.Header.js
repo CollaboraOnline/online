@@ -798,8 +798,8 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		var startPx = this._isCol ? bounds.getTopLeft().x : bounds.getTopLeft().y;
 		this._docVisStart = startPx;
 		var endPx = this._isCol ? bounds.getBottomRight().x : bounds.getBottomRight().y;
-		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'csspixels');
-		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'csspixels');
+		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'corepixels');
+		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'corepixels');
 		this._elements = [];
 
 		var splitPosContext = this._map.getSplitPanesContext();
@@ -811,7 +811,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		if (splitPosContext) {
 
 			splitPos = this._isCol ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y;
-			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'csspixels');
+			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'corepixels');
 
 			if (splitIndex) {
 				// Make sure splitPos is aligned to the cell boundary.
@@ -832,7 +832,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 				this._splitIndex = splitIndex;
 
 				var freeStartPos = startPx + splitPos + 1;
-				var freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'csspixels');
+				var freeStartIndex = this._dimGeom.getIndexFromPos(freeStartPos + 1, 'corepixels');
 
 				startIdx = freeStartIndex;
 			}
