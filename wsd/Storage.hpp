@@ -374,6 +374,8 @@ public:
                 const std::string& localStorePath,
                 const std::string& jailPath) :
         StorageBase(uri, localStorePath, jailPath),
+        _wopiLoadDuration(0),
+        _wopiSaveDuration(0),
         _reuseCookies(false)
     {
         const auto& app = Poco::Util::Application::instance();
