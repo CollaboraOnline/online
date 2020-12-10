@@ -1637,6 +1637,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// block expand/collapse on checkbox
 			if (entry.state)
 				$(checkbox).click(toggleFunction);
+
+			if (entry.ondemand)
+				L.DomUtil.addClass(span, 'collapsed');
 		}
 
 		$(text).click(function() {
