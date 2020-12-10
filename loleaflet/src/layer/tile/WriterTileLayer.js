@@ -7,25 +7,23 @@
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
-		if (this._annotations.hasDraftComment() === false || comment.id !== 'new') {
-			if (!comment.anchorPos && this._map._isCursorVisible) {
-				comment.anchorPos = L.bounds(this._latLngToTwips(this._visibleCursor.getSouthWest()),
-					this._latLngToTwips(this._visibleCursor.getNorthEast()));
-				comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
-			} else if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
-				// An image is selected, then guess the anchor based on the graphic
-				// selection.
-				comment.anchorPos = L.bounds(this._latLngToTwips(this._graphicSelection.getSouthWest()),
-					this._latLngToTwips(this._graphicSelection.getNorthEast()));
-				comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
-			}
-			if (comment.anchorPos) {
-				this._annotations.modify(this._annotations.add(comment));
-			}
-			if (window.mode.isMobile() || window.mode.isTablet()) {
-				var that = this;
-				this.newAnnotationVex(comment, function(annotation) { that._annotations._onAnnotationSave(annotation); });
-			}
+		if (!comment.anchorPos && this._map._isCursorVisible) {
+			comment.anchorPos = L.bounds(this._latLngToTwips(this._visibleCursor.getSouthWest()),
+				this._latLngToTwips(this._visibleCursor.getNorthEast()));
+			comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
+		} else if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
+			// An image is selected, then guess the anchor based on the graphic
+			// selection.
+			comment.anchorPos = L.bounds(this._latLngToTwips(this._graphicSelection.getSouthWest()),
+				this._latLngToTwips(this._graphicSelection.getNorthEast()));
+			comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
+		}
+		if (comment.anchorPos) {
+			this._annotations.modify(this._annotations.add(comment));
+		}
+		if (window.mode.isMobile() || window.mode.isTablet()) {
+			var that = this;
+			this.newAnnotationVex(comment, function(annotation) { that._annotations._onAnnotationSave(annotation); });
 		}
 	},
 
