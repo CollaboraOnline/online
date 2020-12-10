@@ -601,14 +601,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
 				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
-				// when using the pinch to zoom, set additional translation based
-				// on the pinch movement
-				if (that._map._animatingZoom) {
-					var centerOffset = this._map._getCenterOffset(this._map._animateToCenter);
-					paneOffset.x += Math.round(centerOffset.x);
-					paneOffset.y += Math.round(centerOffset.y);
-				}
-
 				// URGH -> zooming etc. (!?) ...
 				if (that.sheetGeometry._columns)
 					that.sheetGeometry._columns.forEachInCorePixelRange(

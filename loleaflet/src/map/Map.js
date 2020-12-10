@@ -757,10 +757,7 @@ L.Map = L.Evented.extend({
 	},
 
 	getZoom: function () {
-		if (this._animatingZoom) // use animation target zoom
-			return this._animateToZoom;
-		else
-			return this._zoom;
+		return this._zoom;
 	},
 
 	getBounds: function () {

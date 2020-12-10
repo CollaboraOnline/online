@@ -30,7 +30,6 @@ L.SVG.include(!L.Browser.vml ? {} : {
 	},
 
 	_update: function () {
-		if (this._map._animatingZoom) { return; }
 		L.Renderer.prototype._update.call(this);
 	},
 
