@@ -206,8 +206,7 @@ namespace FileUtil
             // and if they aren't, we still need to rely on the following.
             // Finally, compare the contents, to avoid costly copying if we fail to update.
             if (exists() && other.exists() && !isDirectory() && !other.isDirectory()
-                && size() == other.size() && modifiedTimeMs() == other.modifiedTimeMs()
-                && compareFileContents(_path, other._path))
+                && size() == other.size() && compareFileContents(_path, other._path))
             {
                 return true;
             }
