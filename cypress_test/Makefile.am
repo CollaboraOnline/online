@@ -495,6 +495,36 @@ do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
 		$(call run_desktop_interference_tests))
 	@$(KILL_COMMAND) || true
 
+run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
+	@rm -f $(LOOLWSD_LOG)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	@echo
+	@echo "Running interfer desktop test in interactive test runner..."
+	@echo
+	$(eval BACKGROUND_USER_SPEC=interference_user_spec.js)
+	$(eval INTERACTIVE_USER_SPEC=$(spec))
+	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
+	$(call run_interactive_interfer_desktop,$(INTERACTIVE_USER_SPEC)) &
+	@sleep 5
+	@$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(INTERFER_DESKTOP_CONFIG2) \
+		--env $(INTERFER_DESKTOP_ENV2) \
+		--spec $(BACKGROUND_USER_SPEC) \
+		--type multi-user \
+		--log-file $(BACKGROUND_USER_LOG) || true
+	@$(KILL_COMMAND) || true
+
+define run_interactive_interfer_desktop
+	$(CYPRESS_BINARY) run \
+		--browser $(BROWSER) \
+		--headed --no-exit \
+		--config $(INTERFER_DESKTOP_CONFIG1) \
+		--env $(INTERFER_DESKTOP_ENV1) \
+		--spec=$(abs_dir)/integration_tests/desktop/$(1)
+endef
+
 INTERFER_DESKTOP_CONFIG1 = \
 	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
