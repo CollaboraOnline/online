@@ -65,6 +65,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['htmlcontrol'] = this._htmlControl;
 		this._controlHandlers['expander'] = this._expanderHandler;
 		this._controlHandlers['grid'] = this._gridHandler;
+		this._controlHandlers['alignment'] = this._alignmentHandler;
 		this._controlHandlers['buttonbox'] = this._buttonBox;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
@@ -324,6 +325,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		return true;
+	},
+
+	_alignmentHandler: function(parentContainer, data, builder) {
+		L.DomUtil.addClass(parentContainer, 'ui-alignment');
+		return builder._containerHandler(parentContainer, data, builder);
 	},
 
 	_ignoreHandler: function() {
