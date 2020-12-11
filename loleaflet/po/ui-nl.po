@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-11-18 13:39+0000\n"
+"PO-Revision-Date: 2020-12-09 22:52+0000\n"
 "Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -62,7 +62,6 @@ msgid "User Name"
 msgstr "Gebruikersnaam"
 
 #: admin/admin.strings.js:16
-#, fuzzy
 msgid "Documents open"
 msgstr "Geopende documenten"
 
@@ -101,7 +100,7 @@ msgstr "Document"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Weergaven"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -159,7 +158,7 @@ msgstr "Tijdsinterval van CPU-statistieken (in ms)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Beëindig sessie."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -204,7 +203,7 @@ msgstr "Aanmelding vernieuwen"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanaal filter:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
@@ -238,7 +237,7 @@ msgstr "Verzonden"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "De server is gestopt; laad de pagina ajb opnieuw."
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -614,7 +613,7 @@ msgstr "Toon liniaal"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:307
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Toon Statusbalk"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:310
 #: src/control/Control.Menubar.js:430 src/control/Control.Menubar.js:748
@@ -669,9 +668,8 @@ msgid "Last modification"
 msgstr "Laatste aanpassing"
 
 #: src/control/Control.Menubar.js:266
-#, fuzzy
 msgid "Save Comments"
-msgstr "Opmerking"
+msgstr "Opmerkingen opslaan"
 
 #: src/control/Control.Menubar.js:271 src/control/Control.Menubar.js:644
 #: src/control/Control.NotebookbarImpress.js:294
@@ -700,7 +698,7 @@ msgstr "Presentatie volledig scherm"
 
 #: src/control/Control.Menubar.js:369
 msgid "Present current slide"
-msgstr ""
+msgstr "Presenteer huidige dia"
 
 #: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:692
 #: src/control/Control.NotebookbarCalc.js:214
@@ -770,19 +768,19 @@ msgstr "De zoekbalk verbergen"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Scroll naar het eerste blad"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "Scroll links"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "Scroll rechts"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Scroll naar het laaste blad"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
@@ -854,15 +852,15 @@ msgstr "Aantal dia's"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Meedere cellen selecteren"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Insert modus: inactief"
 
 #: src/control/Control.StatusBar.js:466
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Selectie modus: inactief"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -874,11 +872,11 @@ msgstr "Blad invoegen na deze"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Blad naar links verplaatsen"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Blad naar rechts verplaatsen"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -975,7 +973,7 @@ msgstr "Huidig"
 #: src/control/Control.NotebookbarBuilder.js:688
 #: src/control/Control.NotebookbarBuilder.js:713
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/control/Control.Notebookbar.js:157
 #: src/control/Control.NotebookbarImpress.js:32
@@ -991,7 +989,7 @@ msgstr "Opnieuw"
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "~Bestand"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
@@ -1022,7 +1020,7 @@ msgstr "Be~oordelen"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Formaat"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
@@ -1031,79 +1029,73 @@ msgstr "~Tabel"
 
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
-msgstr ""
+msgstr "~Draw"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "~Help"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Tekstblok"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "Subtitel"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~Blad"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~Gegevens"
 
 #: src/control/Control.NotebookbarCalc.js:1925
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Tabel invoegen"
+msgstr "Rijen boven invoegen"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
 msgid "Insert Rows Below"
-msgstr "Blad invoegen"
+msgstr "Rijen onder invoegen"
 
 #: src/control/Control.NotebookbarCalc.js:1960
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "Blad invoegen voor deze"
+msgstr "Kolommen ervoor invoegen"
 
 #: src/control/Control.NotebookbarCalc.js:1973
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "Blad invoegen na deze"
+msgstr "Kolommen erna invoegen"
 
 #: src/control/Control.NotebookbarCalc.js:1995
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Rij-afbreking invoegen"
 
 #: src/control/Control.NotebookbarCalc.js:2008
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Kolom-afbreking invoegen"
 
 #: src/control/Control.NotebookbarCalc.js:2030
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Verwijderen"
+msgstr "Rijen verwijderen"
 
 #: src/control/Control.NotebookbarCalc.js:2043
-#, fuzzy
 msgid "Delete Columns"
-msgstr "Kolommen"
+msgstr "Kolommen verwijderen"
 
 #: src/control/Control.NotebookbarCalc.js:2065
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Rij-afbreking verwijderen"
 
 #: src/control/Control.NotebookbarCalc.js:2078
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Kolom-afbreking verwijderen"
 
 #: src/control/Control.NotebookbarImpress.js:27
 msgid "Start Presentation"
@@ -1111,20 +1103,21 @@ msgstr "Presentatie starten"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Toon geslecteerde bladen"
 
 #: src/control/Permission.js:48
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
+"Het document kon niet worden beveiligd en wordt geopend in alleen-lezen "
+"modus."
 
 #: src/control/Permission.js:50 src/control/Permission.js:68
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "De server gaf deze reden terug:"
 
 #: src/control/Permission.js:66
-#, fuzzy
 msgid "The document could not be locked."
-msgstr "Document kan niet worden opgeslagen."
+msgstr "Document kan niet worden beveiligd."
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1330,9 +1323,8 @@ msgstr ""
 "general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Oeps, er is een probleem met de toegang tot het document"
+msgstr "Oeps, er is een probleem met het verbinden met %productName: "
 
 #: src/core/Socket.js:305
 msgid "Served by:"
@@ -1351,9 +1343,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
 
 #: src/core/Socket.js:411
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "Niet actief document - klik om het bewerken te hervatten"
+msgstr "Niet actief document - tap om het bewerken te hervatten"
 
 #: src/core/Socket.js:419
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1623,7 +1614,7 @@ msgstr "Verwijderen"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Draad verwijderen"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1631,20 +1622,19 @@ msgstr "Oplossen"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Niet opgelost"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Draad niet opgelost"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Opgeloste draad"
 
 #: src/layer/tile/TileLayer.js:851
-#, fuzzy
 msgid "Functions"
-msgstr "Functie-assistent"
+msgstr "Functies"
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
