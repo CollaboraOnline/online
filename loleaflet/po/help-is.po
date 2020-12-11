@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-10-30 16:26+0000\n"
+"PO-Revision-Date: 2020-12-11 12:47+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/help/is/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-help-is.po\n"
 "X-Pootle-Revision: 2357047\n"
 
@@ -1162,6 +1162,8 @@ msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
+"<span class=\"def\">Stöðustikan:</span> Stöðustikan er birt neðst á skjánum "
+"og munu ýmsar nytsamlegar upplýsingar verða sýndar þar."
 
 #: html/loleaflet-help.html%2Bdiv.p:267-5
 msgid ""
@@ -1881,6 +1883,8 @@ msgid ""
 "How can I quit <span class=\"productname\">%productName</span> without "
 "saving my edits?"
 msgstr ""
+"Hvernig get ég hætt í <span class=\"productname\">%productName</span> án "
+"þess að vista breytingar sem ég hef gert?"
 
 #: html/loleaflet-help.html%2Bdiv.p:457-5
 msgid ""
@@ -1895,6 +1899,8 @@ msgid ""
 "Can <span class=\"productname\">%productName</span> open a password-"
 "protected document?"
 msgstr ""
+"Getur <span class=\"productname\">%productName</span> opnað skjal sem er "
+"varið með lykilorði?"
 
 #: html/loleaflet-help.html%2Bdiv.p:459-5
 msgid ""
@@ -1902,6 +1908,9 @@ msgid ""
 "protected documents, but it is necessary to supply the password in the “"
 "Enter password” prompt at load time."
 msgstr ""
+"Já. <span class=\"productname\">%productName</span> opnar skjöl sem varin "
+"eru með lykilorði, en þá þarf að setja inn rétt lykilorð í “Setja inn "
+"lykilorð” gluggann þegar skjalinu er hlaðið inn."
 
 #: html/loleaflet-help.html%2Bdiv.h4:460-5
 msgid "How can I check spelling in my language?"
@@ -2128,7 +2137,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:516-11
 msgid "Select Landscape in “With Page Style”"
-msgstr ""
+msgstr "Veldu lárétta stefnu í \"Með síðustíl”"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:517-11
 msgid "Select if you want to change page numbering."
@@ -2139,6 +2148,8 @@ msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
 msgstr ""
+"Til að snúa aftur í lárétta stefnu, endurtaktu ferlið og veldu lárétta "
+"stefnu í \"Með síðustíl”."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:520-5
 msgid "How can I make the new text look like other existing text?"
@@ -2316,7 +2327,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:578-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Stilltu eiginleika fyrir einindi hlutarins."
 
 #~ msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
 #~ msgstr "Að auki er stuðningur við skoðun á Visio, Keynote, Numbers og Pages skráasniðum."
