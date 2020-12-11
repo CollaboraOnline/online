@@ -35,12 +35,12 @@ L.SplitPanesContext = L.Class.extend({
 	},
 
 	getMaxSplitPosX: function () {
-		var rawMax = Math.floor(this._map.getSize().x * this.options.maxHorizontalSplitPercent / 100);
+		var rawMax = Math.floor(window.devicePixelRatio * this._map.getSize().x * this.options.maxHorizontalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosX(rawMax);
 	},
 
 	getMaxSplitPosY: function () {
-		var rawMax = Math.floor(this._map.getSize().y * this.options.maxVerticalSplitPercent / 100);
+		var rawMax = Math.floor(window.devicePixelRatio * this._map.getSize().y * this.options.maxVerticalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosY(rawMax);
 	},
 
