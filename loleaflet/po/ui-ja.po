@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-10-23 21:26+0000\n"
+"PO-Revision-Date: 2020-12-11 12:47+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
-"Language: \n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.3.1\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-ui-ja.po\n"
 "X-Pootle-Revision: 3937895\n"
 
@@ -451,14 +451,12 @@ msgid "Select range"
 msgstr "変更の却下"
 
 #: src/control/Control.JSDialogBuilder.js:1408
-#, fuzzy
 msgid "Font Name"
-msgstr "フォント"
+msgstr "フォント名"
 
 #: src/control/Control.JSDialogBuilder.js:1410
-#, fuzzy
 msgid "Font Size"
-msgstr "フォント"
+msgstr "フォントサイズ"
 
 #: src/control/Control.JSDialogBuilder.js:1819
 #: src/layer/marker/Annotation.js:247
@@ -611,11 +609,11 @@ msgstr "表示倍率をリセット"
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.NotebookbarBuilder.js:652
 msgid "Show Ruler"
-msgstr ""
+msgstr "ルーラーの表示"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:307
 msgid "Show Status Bar"
-msgstr ""
+msgstr "ステータスバーの表示"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:310
 #: src/control/Control.Menubar.js:430 src/control/Control.Menubar.js:748
@@ -670,9 +668,8 @@ msgid "Last modification"
 msgstr ""
 
 #: src/control/Control.Menubar.js:266
-#, fuzzy
 msgid "Save Comments"
-msgstr "コメント"
+msgstr "コメントの保存"
 
 #: src/control/Control.Menubar.js:271 src/control/Control.Menubar.js:644
 #: src/control/Control.NotebookbarImpress.js:294
@@ -691,9 +688,8 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:647
 #: src/control/Control.NotebookbarImpress.js:316
-#, fuzzy
 msgid "ODF Drawing (.odg)"
-msgstr "ODFプレゼンテーション(.odp)"
+msgstr "ODF 図形描画 (.odg)"
 
 #: src/control/Control.Menubar.js:368 src/control/Control.Menubar.js:677
 #: src/control/Control.PresentationBar.js:33
@@ -734,7 +730,6 @@ msgid "Reset to Default Language"
 msgstr "既定の言語に戻す"
 
 #: src/control/Control.Menubar.js:1229
-#, fuzzy
 msgid "Insert Shape"
 msgstr "シェイプの挿入"
 
@@ -745,9 +740,8 @@ msgstr "このスライドを本当に削除してよろしいですか？"
 #: src/control/Control.MobileBottomBar.js:27
 #: src/control/Control.MobileBottomBar.js:55
 #: src/control/Control.MobileBottomBar.js:84
-#, fuzzy
 msgid "Show the search bar"
-msgstr "検索のキャンセル"
+msgstr "検索バーの表示"
 
 #: src/control/Control.MobileTopBar.js:44
 msgid "Accept"
@@ -1007,9 +1001,8 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:23
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:97
-#, fuzzy
 msgid "~Insert"
-msgstr "表の挿入"
+msgstr "挿入(~I)"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
@@ -1082,34 +1075,32 @@ msgid "Insert Columns Before"
 msgstr "シートを前に挿入"
 
 #: src/control/Control.NotebookbarCalc.js:1973
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "シートを後ろに挿入"
+msgstr "列を右に挿入"
 
 #: src/control/Control.NotebookbarCalc.js:1995
 msgid "Insert Row Break"
-msgstr ""
+msgstr "行の区切りの挿入"
 
 #: src/control/Control.NotebookbarCalc.js:2008
 msgid "Insert Column Break"
-msgstr ""
+msgstr "列の区切りの挿入"
 
 #: src/control/Control.NotebookbarCalc.js:2030
-#, fuzzy
 msgid "Delete Rows"
-msgstr "表の挿入"
+msgstr "行の削除"
 
 #: src/control/Control.NotebookbarCalc.js:2043
 msgid "Delete Columns"
-msgstr ""
+msgstr "列の削除"
 
 #: src/control/Control.NotebookbarCalc.js:2065
 msgid "Remove Row Break"
-msgstr ""
+msgstr "行の区切りの削除"
 
 #: src/control/Control.NotebookbarCalc.js:2078
 msgid "Remove Column Break"
-msgstr ""
+msgstr "列の区切りの削除"
 
 #: src/control/Control.NotebookbarImpress.js:27
 #, fuzzy
@@ -1134,11 +1125,11 @@ msgstr ""
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
-msgstr ""
+msgstr "左余白"
 
 #: src/control/Ruler.js:370
 msgid "Right Margin"
-msgstr ""
+msgstr "右余白"
 
 #: src/control/Ruler.js:646
 #, fuzzy
@@ -1146,9 +1137,8 @@ msgid "Insert tabstop"
 msgstr "表の挿入"
 
 #: src/control/Ruler.js:653
-#, fuzzy
 msgid "Delete tabstop"
-msgstr "表の挿入"
+msgstr "タブストップの削除"
 
 #: src/control/Signing.js:195
 msgid "Please enter the PIN Code"
@@ -1352,9 +1342,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "アイドルのドキュメント - リロードをクリックして編集を継続してください"
 
 #: src/core/Socket.js:411
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "アイドルのドキュメント - リロードをクリックして編集を継続してください"
+msgstr "アイドルのドキュメント - リロードをタップして編集を継続してください"
 
 #: src/core/Socket.js:419
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1602,7 +1591,6 @@ msgid "Resolve Thread"
 msgstr ""
 
 #: src/layer/tile/TileLayer.js:851
-#, fuzzy
 msgid "Functions"
 msgstr "関数"
 
