@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-09 17:58+0000\n"
+"PO-Revision-Date: 2020-12-09 22:52+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -235,9 +235,8 @@ msgid "Sent"
 msgstr "Elküldött"
 
 #: admin/src/AdminSocketBase.js:52
-#, fuzzy
 msgid "Server has been shut down; please reload the page."
-msgstr "A kiszolgáló leállt, töltse be újra az oldalt"
+msgstr "A kiszolgáló leállt, töltse be újra az oldalt."
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
