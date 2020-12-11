@@ -71,6 +71,11 @@ td.jsdialog > [id^='table-box'] {
 	width: 100%;
 }
 
+.jsdialog.ui-alignment {
+	margin: 6px 12px;
+	display: block;
+}
+
 /* Expander */
 
 .jsdialog.ui-expander {
