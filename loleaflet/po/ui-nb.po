@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-11-16 05:28+0000\n"
+"PO-Revision-Date: 2020-12-09 22:52+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "collabora-online/ui/nb_NO/>\n"
-"Language: \n"
+"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -199,7 +199,7 @@ msgstr "Oppdater"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanalfilter:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
@@ -233,7 +233,7 @@ msgstr "Sendt"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Tjeneren har blitt avskrudd; gjeninnlast siden"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -867,11 +867,11 @@ msgstr "Sett inn ark etter dette"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Flytt arket til venstre"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Flytt arket til høyre"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1034,15 +1034,17 @@ msgstr "Hjelp"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Skrivefelt"
 
 #: src/control/Control.NotebookbarWriter.js:1539
+#, fuzzy
 msgid "Title"
-msgstr ""
+msgstr "Tittel"
 
 #: src/control/Control.NotebookbarWriter.js:1548
+#, fuzzy
 msgid "Subtitle"
-msgstr ""
+msgstr "Undertittel"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1314,9 +1316,8 @@ msgstr ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Oops, problem med å koble til dokumentet"
+msgstr "Oops, problem med å koble dokumentet til %productName: "
 
 #: src/core/Socket.js:305
 msgid "Served by:"
