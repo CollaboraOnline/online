@@ -203,10 +203,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var ctx = this._canvasContext;
 		var content = entry.index + 1;
 		var startX = this._canvasWidth - this._headerWidth;
-		var startY = (entry.pos - entry.size) * this._dpiScale;
-		var endY = entry.pos * this._dpiScale;
+		var startY = entry.pos - entry.size;
+		var endY = entry.pos;
 		var height = endY - startY;
-		var width = this._headerWidth * this._dpiScale;
+		var width = this._headerWidth;
 
 		if (isHighlighted !== true && isHighlighted !== false) {
 			isHighlighted = this.isHighlighted(entry.index);

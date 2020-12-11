@@ -597,13 +597,13 @@ L.Control.Header = L.Control.extend({
 		if (property === 'width') {
 			canvas.width = Math.floor(value * this._dpiScale);
 			if (!isCorner)
-				this._canvasWidth = value;
+				this._canvasWidth = value * this._dpiScale;
 			// console.log('Header._setCanvasSizeImpl: _canvasWidth' + this._canvasWidth);
 		}
 		else if (property === 'height') {
 			canvas.height = Math.floor(value * this._dpiScale);
 			if (!isCorner)
-				this._canvasHeight = value;
+				this._canvasHeight = value * this._dpiScale;
 			// console.log('Header._setCanvasSizeImpl: _canvasHeight' + this._canvasHeight);
 		}
 	},
@@ -794,7 +794,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 	},
 
 	update: function () {
-		var bounds = this._map.getPixelBounds();
+		var bounds = this._map.getPixelBoundsCore();
 		var startPx = this._isCol ? bounds.getTopLeft().x : bounds.getTopLeft().y;
 		this._docVisStart = startPx;
 		var endPx = this._isCol ? bounds.getBottomRight().x : bounds.getBottomRight().y;

@@ -210,10 +210,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var ctx = this._canvasContext;
 		var content = this._colIndexToAlpha(entry.index + 1);
 		var startY = this._canvasHeight - this._headerHeight;
-		var startX = (entry.pos - entry.size) * this._dpiScale;
-		var endPar = entry.pos * this._dpiScale;
+		var startX = entry.pos - entry.size;
+		var endPar = entry.pos;
 		var width = endPar - startX;
-		var height = this._headerHeight * this._dpiScale;
+		var height = this._headerHeight;
 
 		if (isHighlighted !== true && isHighlighted !== false) {
 			isHighlighted = this.isHighlighted(entry.index);
