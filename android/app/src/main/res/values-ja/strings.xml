@@ -22,4 +22,8 @@
     <string name="sort_za">Z-A</string>
     <string name="app_vendor">このリリースは $VENDOR が提供しました。</string>
     <string name="loading">読み込み中...</string>
+    <string name="sort_az">A-Z</string>
+    <string name="app_version_and_hash">Version: %1$s
+\nonline git-hash: %2$s
+\ncore git-hash: %3$s</string>
 </resources>

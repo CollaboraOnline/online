@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2020-12-11 12:47+0000\n"
+"Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
 "Language: ja\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-help-ja.po\n"
 "X-Pootle-Revision: 3446209\n"
 
@@ -53,7 +53,6 @@ msgid "Paste as unformatted text"
 msgstr "書式設定されていないテキストを貼り付け"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
 msgid "Ctrl + Shift + V"
 msgstr "Ctrl + Shift + V"
 
@@ -940,11 +939,11 @@ msgstr "Esc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 msgid "Select objects in the order in which they were created"
-msgstr "オブジェクトを、作成した順番に選択します。"
+msgstr "オブジェクトを、作成した順番に選択します"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr "オブジェクトを、作成した逆順に選択します。"
+msgstr "オブジェクトを、作成した逆順に選択します"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
 msgid "Move to next text object on slide / drawing page"
@@ -1931,9 +1930,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:474-5
-#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr "ドキュメントの始めにジャンプ"
+msgstr "ドキュメントの単語数を取得するにはどうすればよいですか？"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:475-5
 msgid ""
@@ -2045,9 +2043,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
-#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr "ドキュメントの始めにジャンプ"
+msgstr "ドキュメントの余白を設定するにはどうすればよいですか？"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:504-5
 msgid ""
@@ -2130,9 +2127,8 @@ msgid "Select the text you want to apply the new format."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:527-5
-#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr "段落スタイル「見出し 1」を適用する"
+msgstr "段落スタイルを適用する:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:529-11
 msgid "Place the cursor at the paragraph to be formatted"
