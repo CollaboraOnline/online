@@ -361,7 +361,9 @@ td.jsdialog > [id^='table-box'] {
 .jsdialog-container #source-button,
 .jsdialog-container #destination-button,
 .jsdialog-container #refbutton,
-.jsdialog-container #assign {
+.jsdialog-container #assign,
+.jsdialog-container #output-range-button,
+.jsdialog-container #input-range-button {
 	background: url('images/refinp1.svg') no-repeat center;
 	height: 24px;
 	width: 24px;
@@ -372,7 +374,9 @@ td.jsdialog > [id^='table-box'] {
 .jsdialog-container.collapsed #source-button,
 .jsdialog-container.collapsed #destination-button,
 .jsdialog-container.collapsed #refbutton,
-.jsdialog-container.collapsed #assign {
+.jsdialog-container.collapsed #assign,
+.jsdialog-container.collapsed #output-range-button,
+.jsdialog-container.collapsed #input-range-button {
 	background: url('images/refinp2.svg') no-repeat center;
 }
 
