@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-08 13:30+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2020-12-10 08:58+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -63,20 +63,17 @@ msgid "User Name"
 msgstr "שם משתמש"
 
 #: admin/admin.strings.js:16
-#, fuzzy
 msgid "Documents open"
-msgstr "מסמכים שנפתחו"
+msgstr "מסמכים פתוחים"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
 msgid " user(s)."
-msgstr "אין משתמשים"
+msgstr " משתמשים."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
 msgid " document(s) open."
-msgstr "מסמכים שנפתחו"
+msgstr " מסמכים פתוחים."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -104,7 +101,7 @@ msgstr "מסמך"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "צפיות"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -162,7 +159,7 @@ msgstr "הפרש זמן של סטטיסטיקת מעבד (במילישניות)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "חיסול הפעלה."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -202,7 +199,7 @@ msgstr "רענון היומן"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "מסנן ערוצים:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
@@ -236,7 +233,7 @@ msgstr "נשלח"
 
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "השרת נכבה, נא לרענן את העמוד."
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -331,9 +328,8 @@ msgid "No color"
 msgstr "אין צבע"
 
 #: src/control/ColorPicker.js:123
-#, fuzzy
 msgid "Automatic color"
-msgstr "אין צבע"
+msgstr "צבע אוטומטי"
 
 #: src/control/Control.AlertDialog.js:61
 msgid "Open link"
@@ -497,7 +493,6 @@ msgid "Columns"
 msgstr "עמודות"
 
 #: src/control/Control.JSDialogBuilder.js:2517
-#, fuzzy
 msgid "Insert Table"
 msgstr "הוספת טבלה"
 
@@ -612,7 +607,7 @@ msgstr "הצגת סרגל"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:307
 msgid "Show Status Bar"
-msgstr ""
+msgstr "הצגת שורת מצב"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:310
 #: src/control/Control.Menubar.js:430 src/control/Control.Menubar.js:748
@@ -667,9 +662,8 @@ msgid "Last modification"
 msgstr "שינוי אחרון"
 
 #: src/control/Control.Menubar.js:266
-#, fuzzy
 msgid "Save Comments"
-msgstr "הערה"
+msgstr "שמירת הערות"
 
 #: src/control/Control.Menubar.js:271 src/control/Control.Menubar.js:644
 #: src/control/Control.NotebookbarImpress.js:294
@@ -688,9 +682,8 @@ msgstr "מצגת PowerPoint‏ (‎.pptx)"
 
 #: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:647
 #: src/control/Control.NotebookbarImpress.js:316
-#, fuzzy
 msgid "ODF Drawing (.odg)"
-msgstr "מצגת ODF ‏(‎.odp)"
+msgstr "ציור ODF‏ (‎.odg)"
 
 #: src/control/Control.Menubar.js:368 src/control/Control.Menubar.js:677
 #: src/control/Control.PresentationBar.js:33
@@ -699,7 +692,7 @@ msgstr "מצגת במסך מלא"
 
 #: src/control/Control.Menubar.js:369
 msgid "Present current slide"
-msgstr ""
+msgstr "הצגת השקופית הנוכחית"
 
 #: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:692
 #: src/control/Control.NotebookbarCalc.js:214
@@ -769,19 +762,19 @@ msgstr "הסתרת סרגל החיפוש"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "גלילה לגיליון הראשון"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "גלילה שמאלה"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "גלילה ימינה"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "גלילה לגיליון האחרון"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
@@ -853,15 +846,15 @@ msgstr "מספר שקופיות"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "בחירת מגוון תאים"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "מצב הוספה: בלתי פעיל"
 
 #: src/control/Control.StatusBar.js:466
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "מצב בחירה: בלתי פעיל"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -873,11 +866,11 @@ msgstr "להוסיף גיליון אחרי הנוכחי"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "העברת הגיליון שמאלה"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "העברת הגיליון ימינה"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -973,159 +966,149 @@ msgstr "נוכחי"
 #: src/control/Control.NotebookbarBuilder.js:688
 #: src/control/Control.NotebookbarBuilder.js:713
 msgid "Menu"
-msgstr ""
+msgstr "תפריט"
 
 #: src/control/Control.Notebookbar.js:157
 #: src/control/Control.NotebookbarImpress.js:32
 msgid "Undo"
-msgstr ""
+msgstr "החזרה"
 
 #: src/control/Control.Notebookbar.js:162
 #: src/control/Control.NotebookbarImpress.js:37
 msgid "Redo"
-msgstr ""
+msgstr "ביצוע שוב"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "~קובץ"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarImpress.js:91
 msgid "~Home"
-msgstr ""
+msgstr "~בית"
 
 #: src/control/Control.NotebookbarWriter.js:23
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:97
-#, fuzzy
 msgid "~Insert"
-msgstr "הוספת טבלה"
+msgstr "הו~ספה"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
-msgstr ""
+msgstr "~פריסה"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
-msgstr ""
+msgstr "ה~פניות"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarImpress.js:102
-#, fuzzy
 msgid "~Review"
-msgstr "סקירה"
+msgstr "~סקירה"
 
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "עיצוב"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Table"
-msgstr ""
+msgstr "~טבלה"
 
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
-msgstr ""
+msgstr "~ציור"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "ע~זרה"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "גוף הטקסט"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "כותרת"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "כותרת משנה"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "~גיליון"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~נתונים"
 
 #: src/control/Control.NotebookbarCalc.js:1925
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "הוספת טבלה"
+msgstr "הוספת שורות מעל"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
 msgid "Insert Rows Below"
-msgstr "הוספת גיליון"
+msgstr "הוספת שורות מתחת"
 
 #: src/control/Control.NotebookbarCalc.js:1960
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "להוסיף גיליון לפני הנוכחי"
+msgstr "הוספת עמודות לפני"
 
 #: src/control/Control.NotebookbarCalc.js:1973
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "להוסיף גיליון אחרי הנוכחי"
+msgstr "הוספת עמודות אחרי"
 
 #: src/control/Control.NotebookbarCalc.js:1995
 msgid "Insert Row Break"
-msgstr ""
+msgstr "הוספת מעבר שורה"
 
 #: src/control/Control.NotebookbarCalc.js:2008
 msgid "Insert Column Break"
-msgstr ""
+msgstr "הוספת מעבר עמודה"
 
 #: src/control/Control.NotebookbarCalc.js:2030
-#, fuzzy
 msgid "Delete Rows"
-msgstr "מחיקה"
+msgstr "מחיקת שורות"
 
 #: src/control/Control.NotebookbarCalc.js:2043
-#, fuzzy
 msgid "Delete Columns"
-msgstr "עמודות"
+msgstr "מחיקת עמודות"
 
 #: src/control/Control.NotebookbarCalc.js:2065
 msgid "Remove Row Break"
-msgstr ""
+msgstr "הסרת מעבר שורה"
 
 #: src/control/Control.NotebookbarCalc.js:2078
 msgid "Remove Column Break"
-msgstr ""
+msgstr "הסרת מעבר עמודה"
 
 #: src/control/Control.NotebookbarImpress.js:27
-#, fuzzy
 msgid "Start Presentation"
-msgstr "כיווניות טקסט"
+msgstr "התחלת מצגת"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "הצגת הגיליונות הנבחרים"
 
 #: src/control/Permission.js:48
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "לא ניתן לנעול את המסמך כיוון שהוא פתוח במצב לקריאה בלבד."
 
 #: src/control/Permission.js:50 src/control/Permission.js:68
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "השרת החזיר את הסיבה הזאת:"
 
 #: src/control/Permission.js:66
-#, fuzzy
 msgid "The document could not be locked."
-msgstr "לא ניתן לשמור את המסמך."
+msgstr "לא ניתן לנעול את המסמך."
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1300,7 +1283,7 @@ msgstr "„מתווך אטי”"
 msgid ""
 "The Personal edition is supported by volunteers and intended for individual "
 "use."
-msgstr ""
+msgstr "הגרסה האישית נתמכת על ידי מתנדבים עצמאיים ומיועדת לשימוש עצמי."
 
 #: src/control/Toolbar.js:635
 msgid "Insert hyperlink"
@@ -1327,9 +1310,8 @@ msgstr ""
 "maximum-server-connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "אופס, אירעה תקלה בעת התחברות למסמך"
+msgstr "אופס, אירעה תקלה בעת התחברות אל %productName: "
 
 #: src/core/Socket.js:305
 msgid "Served by:"
@@ -1348,9 +1330,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "מסמך מושהה - יש ללחוץ כדי לטעון מחדש ולהמשיך בעריכה"
 
 #: src/core/Socket.js:411
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "מסמך מושהה - יש ללחוץ כדי לטעון מחדש ולהמשיך בעריכה"
+msgstr "מסמך מושהה - יש לגעת כדי לטעון מחדש ולהמשיך בעריכה"
 
 #: src/core/Socket.js:419
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1595,7 +1576,7 @@ msgstr "הסרה"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "הסרת שרשור"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1603,20 +1584,19 @@ msgstr "פתרון"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "ביטול פתרון"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "ביטול פתרון שרשור"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "פתרון שרשור"
 
 #: src/layer/tile/TileLayer.js:851
-#, fuzzy
 msgid "Functions"
-msgstr "אשף הפונקציות"
+msgstr "פונקציות"
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
