@@ -163,7 +163,7 @@ namespace
     };
     LinkOrCopyType linkOrCopyType;
     std::string sourceForLinkOrCopy;
-    Path destinationForLinkOrCopy;
+    Poco::Path destinationForLinkOrCopy;
     bool forceInitialCopy; // some stackable file-systems have very slow first hard link creation
     std::string linkableForLinkOrCopy; // Place to stash copies that we can hard-link from
     std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
@@ -382,13 +382,13 @@ namespace
 
         assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
         const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
-        const Path newPath(destinationForLinkOrCopy, Path(relativeOldPath));
+        const Poco::Path newPath(destinationForLinkOrCopy, Poco::Path(relativeOldPath));
 
         switch (typeflag)
         {
         case FTW_F:
         case FTW_SLN:
-            File(newPath.parent()).createDirectories();
+            Poco::File(newPath.parent()).createDirectories();
 
             if (shouldLinkFile(relativeOldPath))
                 linkOrCopyFile(fpath, newPath.toString());
@@ -406,7 +406,8 @@ namespace
                     LOG_TRC("nftw: Skipping redundant path: " << relativeOldPath);
                     return FTW_SKIP_SUBTREE;
                 }
-                File(newPath).createDirectories();
+
+                Poco::File(newPath).createDirectories();
                 struct utimbuf ut;
                 ut.actime = st.st_atime;
                 ut.modtime = st.st_mtime;
@@ -430,7 +431,7 @@ namespace
                 }
                 target[written] = '\0';
 
-                File(newPath.parent()).createDirectories();
+                Poco::File(newPath.parent()).createDirectories();
                 if (symlink(target, newPath.toString().c_str()) == -1)
                 {
                     LOG_SYS("nftw: symlink(\"" << target << "\", \"" << newPath.toString()
@@ -455,7 +456,7 @@ namespace
     }
 
     void linkOrCopy(std::string source,
-                    const Path& destination,
+                    const Poco::Path& destination,
                     std::string linkable,
                     LinkOrCopyType type)
     {
@@ -539,10 +540,10 @@ namespace
         cap_free(caps);
     }
 #endif // __FreeBSD__
-#endif
-}
+#endif // BUILDING_TESTS
+} // namespace
 
-#endif
+#endif // !MOBILEAPP
 
 /// A document container.
 /// Owns LOKitDocument instance and connections.
@@ -615,6 +616,7 @@ public:
 #ifdef IOS
         DocumentData::deallocate(_mobileAppDocId);
 #endif
+
     }
 
     const std::string& getUrl() const { return _url; }
@@ -2834,6 +2836,7 @@ void lokit_main(
         }
 
         LOG_INF("Kit unipoll loop run");
+
         loKit->runLoop(pollCallback, wakeCallback, mainKit.get());
 
         LOG_INF("Kit unipoll loop run terminated.");
@@ -2961,6 +2964,7 @@ bool globalPreinit(const std::string &loTemplate)
         LOG_FTL("No lok_preinit_2 symbol in " << loadedLibrary << ": " << dlerror());
         return false;
     }
+
     initFunction = reinterpret_cast<LokHookFunction2 *>(dlsym(handle, "libreofficekit_hook_2"));
     if (!initFunction)
     {
