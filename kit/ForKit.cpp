@@ -366,7 +366,6 @@ static void cleanupChildren()
 static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
-                                const std::string& loSubPath,
                                 bool queryVersion = false)
 {
     // Generate a jail ID to be used for in the jail path.
@@ -405,7 +404,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
             }
         }
 
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, NoSeccomp,
+        lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
                    queryVersion, DisplayVersion, spareKitId);
     }
     else
@@ -432,7 +431,6 @@ static int createLibreOfficeKit(const std::string& childRoot,
 void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& sysTemplate,
                         const std::string& loTemplate,
-                        const std::string& loSubPath,
                         int limit)
 {
     LOG_TRC("forkLibreOfficeKit limit: " << limit);
@@ -455,8 +453,7 @@ void forkLibreOfficeKit(const std::string& childRoot,
         const size_t retry = count * 2;
         for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
         {
-            if (ForkCounter-- <= 0
-                || createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
+            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate) < 0)
             {
                 LOG_ERR("Failed to create a kit process.");
                 ++ForkCounter;
@@ -567,7 +564,6 @@ int main(int argc, char** argv)
     }
 
     std::string childRoot;
-    std::string loSubPath;
     std::string sysTemplate;
     std::string loTemplate;
 
@@ -575,12 +571,7 @@ int main(int argc, char** argv)
     {
         char *cmd = argv[i];
         char *eq;
-        if (std::strstr(cmd, "--losubpath=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            loSubPath = std::string(eq+1);
-        }
-        else if (std::strstr(cmd, "--systemplate=") == cmd)
+        if (std::strstr(cmd, "--systemplate=") == cmd)
         {
             eq = std::strchr(cmd, '=');
             sysTemplate = std::string(eq+1);
@@ -646,7 +637,6 @@ int main(int argc, char** argv)
             SingleKit = true;
         }
 #endif
-
         // we are running in a lower-privilege mode - with no chroot
         else if (std::strstr(cmd, "--nocaps") == cmd)
         {
@@ -670,8 +660,7 @@ int main(int argc, char** argv)
         }
     }
 
-    if (loSubPath.empty() || sysTemplate.empty() ||
-        loTemplate.empty() || childRoot.empty())
+    if (sysTemplate.empty() || loTemplate.empty() || childRoot.empty())
     {
         printArgumentHelp();
         return EX_USAGE;
@@ -728,8 +717,7 @@ int main(int argc, char** argv)
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process and trace startup.
     ::setenv("COOL_TRACE_STARTUP", "1", 1);
-    const pid_t forKitPid
-        = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true);
+    const pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, true);
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
@@ -781,7 +769,7 @@ int main(int argc, char** argv)
 #if ENABLE_DEBUG
         if (!SingleKit)
 #endif
-            forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath);
+            forkLibreOfficeKit(childRoot, sysTemplate, loTemplate);
     }
 
     int returnValue = EX_OK;

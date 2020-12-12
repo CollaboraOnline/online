@@ -428,8 +428,7 @@ static int forkChildren(const int number)
         COOLWSD::checkDiskSpaceAndWarnClients(false);
 
 #ifdef KIT_IN_PROCESS
-        forkLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate,
-                           JailUtil::LO_JAIL_SUBPATH, number);
+        forkLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate, number);
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
@@ -2877,7 +2876,6 @@ bool COOLWSD::createForKit()
     FileUtil::copy(parentPath + "coolforkit", nocapsCopy, true, true);
     args.push_back(nocapsCopy);
 #endif
-    args.push_back("--losubpath=" + std::string(JailUtil::LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
