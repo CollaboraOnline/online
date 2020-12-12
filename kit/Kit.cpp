@@ -142,39 +142,45 @@ static LokHookFunction2* initFunction = nullptr;
 namespace
 {
 #ifndef BUILDING_TESTS
-    enum class LinkOrCopyType
+class LinkOrCopy
+{
+public:
+    enum class Type
     {
         All,
         LO
     };
-    LinkOrCopyType linkOrCopyType;
-    std::string sourceForLinkOrCopy;
-    Poco::Path destinationForLinkOrCopy;
-    std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
-    bool linkOrCopyVerboseLogging = false;
-    unsigned linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
-    constexpr unsigned SlowLinkOrCopyLimitInSecs = 2; // After this many seconds, start spamming the logs.
 
-    /// Returns the LinkOrCopyType as a human-readable string (for logging).
-    std::string linkOrCopyTypeString(LinkOrCopyType type)
+private:
+
+    static Type linkOrCopyType;
+    static std::string sourceForLinkOrCopy;
+    static Poco::Path destinationForLinkOrCopy;
+    static std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
+    static bool linkOrCopyVerboseLogging;
+    static unsigned linkOrCopyFileCount; // Track to help quantify the link-or-copy performance.
+    static constexpr unsigned SlowLinkOrCopyLimitInSecs = 2; // After this many seconds, start spamming the logs.
+
+    /// Returns the Type as a human-readable string (for logging).
+    static std::string linkOrCopyTypeString(Type type)
     {
         switch (type)
         {
-            case LinkOrCopyType::LO:
+            case Type::LO:
                 return "LibreOffice";
-            case LinkOrCopyType::All:
+            case Type::All:
                 return "all";
             default:
-                assert(!"Unknown LinkOrCopyType.");
+                assert(!"Unknown Type.");
                 return "unknown";
         }
     }
 
-    bool shouldCopyDir(const char *path)
+    static bool shouldCopyDir(const char *path)
     {
         switch (linkOrCopyType)
         {
-        case LinkOrCopyType::LO:
+        case Type::LO:
             return
                 strcmp(path, "program/wizards") != 0 &&
                 strcmp(path, "sdk") != 0 &&
@@ -186,16 +192,16 @@ namespace
                 strcmp(path, "share/Scripts/javascript") != 0 &&
                 strcmp(path, "share/config/wizard") != 0 &&
                 strcmp(path, "readmes") != 0;
-        default: // LinkOrCopyType::All
+        default: // Type::All
             return true;
         }
     }
 
-    bool shouldLinkFile(const char *path)
+    static bool shouldLinkFile(const char *path)
     {
         switch (linkOrCopyType)
         {
-        case LinkOrCopyType::LO:
+        case Type::LO:
         {
             const char *dot = strrchr(path, '.');
             if (!dot)
@@ -236,12 +242,12 @@ namespace
             }
             return true;
         }
-        default: // LinkOrCopyType::All
+        default: // Type::All
             return true;
         }
     }
 
-    void linkOrCopyFile(const char* fpath, const std::string& newPath)
+    static void linkOrCopyFile(const char* fpath, const std::string& newPath)
     {
         ++linkOrCopyFileCount;
         if (linkOrCopyVerboseLogging)
@@ -255,7 +261,7 @@ namespace
         }
     }
 
-    int linkOrCopyFunction(const char *fpath,
+    static int linkOrCopyFunction(const char *fpath,
                            const struct stat* sb,
                            int typeflag,
                            struct FTW* /*ftwbuf*/)
@@ -354,9 +360,10 @@ namespace
         return FTW_CONTINUE;
     }
 
-    void linkOrCopy(std::string source,
+public:
+    static void linkOrCopy(std::string source,
                     const Poco::Path& destination,
-                    LinkOrCopyType type)
+                    Type type)
     {
         std::string resolved = FileUtil::realpath(source);
         if (resolved != source)
@@ -395,6 +402,15 @@ namespace
                                           << " files / second.");
         }
     }
+};
+
+LinkOrCopy::Type LinkOrCopy::linkOrCopyType;
+std::string LinkOrCopy::sourceForLinkOrCopy;
+Poco::Path LinkOrCopy::destinationForLinkOrCopy;
+std::chrono::time_point<std::chrono::steady_clock> LinkOrCopy::linkOrCopyStartTime;
+bool LinkOrCopy::linkOrCopyVerboseLogging = false;
+unsigned LinkOrCopy::linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
+
 #ifndef __FreeBSD__
     void dropCapability(cap_value_t capability)
     {
@@ -2234,9 +2250,9 @@ void lokit_main(
                 LOG_INF("Mounting is disabled, will link/copy " << sysTemplate << " -> "
                                                                 << jailPathStr);
 
-                linkOrCopy(sysTemplate, jailPath, LinkOrCopyType::All);
+                LinkOrCopy::linkOrCopy(sysTemplate, jailPath, LinkOrCopy::Type::All);
 
-                linkOrCopy(loTemplate, loJailDestPath, LinkOrCopyType::LO);
+                LinkOrCopy::linkOrCopy(loTemplate, loJailDestPath, LinkOrCopy::Type::LO);
 
                 // Update the dynamic files inside the jail.
                 if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
