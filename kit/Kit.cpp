@@ -2086,7 +2086,6 @@ void lokit_main(
                 const std::string& jailId,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
-                const std::string& loSubPath,
                 bool noCapabilities,
                 bool noSeccomp,
                 bool queryVersion,
@@ -2140,7 +2139,6 @@ void lokit_main(
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
     assert(!loTemplate.empty());
-    assert(!loSubPath.empty());
 
     LOG_DBG("Process started.");
 
@@ -2170,9 +2168,9 @@ void lokit_main(
                 = std::chrono::steady_clock::now();
 
             userdir_url = "file:///tmp/user";
-            instdir_path = '/' + loSubPath + "/program";
+            instdir_path = '/' + std::string(JailUtil::LO_JAIL_SUBPATH) + "/program";
 
-            Poco::Path jailLOInstallation(jailPath, loSubPath);
+            Poco::Path jailLOInstallation(jailPath, JailUtil::LO_JAIL_SUBPATH);
             jailLOInstallation.makeDirectory();
             const std::string loJailDestPath = jailLOInstallation.toString();
 
