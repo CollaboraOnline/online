@@ -666,7 +666,7 @@ public:
         // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
         // Always create a random sub-directory to avoid file-name collision.
         Path tempPath = Path::forDirectory(
-            FileUtil::createRandomTmpDir(COOLWSD::ChildRoot + JailUtil::JAIL_TMP_INCOMING_PATH)
+            FileUtil::createRandomTmpDir(COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH)
             + '/');
         LOG_TRC("Created temporary convert-to/insert path: " << tempPath.toString());
 
@@ -735,9 +735,10 @@ public:
 
             // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
             // Always create a random sub-directory to avoid file-name collision.
-            Path tempPath = Path::forDirectory(
-                FileUtil::createRandomTmpDir(COOLWSD::ChildRoot + JailUtil::JAIL_TMP_INCOMING_PATH)
-                + '/');
+            Path tempPath =
+                Path::forDirectory(FileUtil::createRandomTmpDir(
+                                       COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH) +
+                                   '/');
 
             LOG_TRC("Created temporary render-search-result file path: " << tempPath.toString());
 
@@ -2197,8 +2198,8 @@ void COOLWSD::innerInitialize(Application& self)
     config::initialize(&config());
 
     // Setup the jails.
-    JailUtil::setupJails(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
-                         SysTemplate);
+    JailUtil::setupChildRoot(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
+                             SysTemplate);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
