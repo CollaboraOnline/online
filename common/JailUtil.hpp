@@ -21,6 +21,9 @@ constexpr const char CHILDROOT_TMP_PATH[] = "/tmp";
 /// Files uploaded by users are stored in this sub-directory of child-root.
 constexpr const char CHILDROOT_TMP_INCOMING_PATH[] = "/tmp/incoming";
 
+/// The LO installation directory with jail.
+constexpr const char LO_JAIL_SUBPATH[] = "lo";
+
 /// Bind mount a jail directory.
 bool bind(const std::string& source, const std::string& target);
 

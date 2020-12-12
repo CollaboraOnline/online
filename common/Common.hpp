@@ -46,7 +46,6 @@ constexpr int MAX_MESSAGE_SIZE = 2 * 1024 * READ_BUFFER_SIZE;
 constexpr const char JAILED_DOCUMENT_ROOT[] = "/tmp/user/docs/";
 constexpr const char CHILD_URI[] = "/coolws/child?";
 constexpr const char NEW_CHILD_URI[] = "/coolws/newchild";
-constexpr const char LO_JAIL_SUBPATH[] = "lo";
 constexpr const char FORKIT_URI[] = "/coolws/forkit";
 
 constexpr const char CAPABILITIES_END_POINT[] = "/hosting/capabilities";

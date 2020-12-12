@@ -429,7 +429,7 @@ static int forkChildren(const int number)
 
 #ifdef KIT_IN_PROCESS
         forkLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate,
-                           LO_JAIL_SUBPATH, number);
+                           JailUtil::LO_JAIL_SUBPATH, number);
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
@@ -663,7 +663,7 @@ public:
         if (!params.has("filename"))
             return;
 
-        // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
+        // The temporary directory is child-root/<CHILDROOT_TMP_INCOMING_PATH>.
         // Always create a random sub-directory to avoid file-name collision.
         Path tempPath = Path::forDirectory(
             FileUtil::createRandomTmpDir(COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH)
@@ -2877,7 +2877,7 @@ bool COOLWSD::createForKit()
     FileUtil::copy(parentPath + "coolforkit", nocapsCopy, true, true);
     args.push_back(nocapsCopy);
 #endif
-    args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
+    args.push_back("--losubpath=" + std::string(JailUtil::LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
