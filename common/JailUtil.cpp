@@ -156,8 +156,7 @@ void cleanupJails(const std::string& root)
         return;
     }
 
-    // FIXME: technically, the loTemplate directory may have any name.
-    if (FileUtil::Stat(root + "/lo").exists())
+    if (FileUtil::Stat(root + '/' + LO_JAIL_SUBPATH).exists())
     {
         // This is a jail.
         removeJail(root);
