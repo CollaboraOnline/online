@@ -613,10 +613,10 @@ public:
         if (!params.has("filename"))
             return;
 
-        // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
+        // The temporary directory is child-root/<CHILDROOT_TMP_INCOMING_PATH>.
         // Always create a random sub-directory to avoid file-name collision.
         Path tempPath = Path::forDirectory(
-            FileUtil::createRandomTmpDir(LOOLWSD::ChildRoot + JailUtil::JAIL_TMP_INCOMING_PATH)
+            FileUtil::createRandomTmpDir(LOOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH)
             + '/');
         LOG_TRC("Created temporary convert-to/insert path: " << tempPath.toString());
 
@@ -1230,9 +1230,9 @@ void LOOLWSD::initialize(Application& self)
     }
 
 #if !MOBILEAPP
-    // Setup the jails.
-    JailUtil::setupJails(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
-                         SysTemplate);
+    // Setup the Child-Root directory.
+    JailUtil::setupChildRoot(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
+                             SysTemplate);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
