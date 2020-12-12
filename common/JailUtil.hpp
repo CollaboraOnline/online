@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <assert.h>
+#include <chrono>
 #include <string>
 
 #include <Poco/File.h>
@@ -23,6 +25,16 @@ constexpr const char CHILDROOT_TMP_INCOMING_PATH[] = "/tmp/incoming";
 
 /// The LO installation directory with jail.
 constexpr const char LO_JAIL_SUBPATH[] = "lo";
+
+#ifndef BUILDING_TESTS
+
+/// Link or copy the SysTemplate directory into a jail.
+void linkOrCopySysTemplate(const std::string& sysTemplate, const std::string& jailPath);
+
+/// Link or copy the LoTemplate directory into a jail.
+void linkOrCopyLoTemplate(const std::string& loTemplate, const std::string& jailPath);
+
+#endif // BUILDING_TESTS
 
 /// Bind mount a jail directory.
 bool bind(const std::string& source, const std::string& target);
