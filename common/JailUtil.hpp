@@ -23,8 +23,19 @@ constexpr const char CHILDROOT_TMP_PATH[] = "/tmp";
 /// Files uploaded by users are stored in this sub-directory of child-root.
 constexpr const char CHILDROOT_TMP_INCOMING_PATH[] = "/tmp/incoming";
 
+/// The template directory path within the childroot..
+constexpr const char CHILDROOT_TEMPLATE_PATH[] = "/template";
+
 /// The LO installation directory with jail.
 constexpr const char LO_JAIL_SUBPATH[] = "lo";
+
+/// Returns the template path, given the Child-Root path.
+static inline std::string getTemplatePath(const std::string& childRoot)
+{
+    const Poco::Path templatePath
+        = Poco::Path::forDirectory(childRoot).pushDirectory(CHILDROOT_TEMPLATE_PATH);
+    return templatePath.toString();
+}
 
 #ifndef BUILDING_TESTS
 
@@ -58,7 +69,12 @@ void removeJail(const std::string& root);
 void cleanupJails(const std::string& jailRoot);
 
 /// Setup the Child-Root directory.
-void setupChildRoot(bool bindMount, const std::string& jailRoot, const std::string& sysTemplate);
+/// The directory structure of Child-Root is as follows:
+/// child-root/
+///     template/
+///     tmp/
+void setupChildRoot(bool bindMount, const std::string& jailRoot, const std::string& sysTemplate,
+                    const std::string& loTemplate);
 
 /// Setup /dev/random and /dev/urandom in the given jail path.
 void setupJailDevNodes(const std::string& root);
@@ -74,9 +90,6 @@ bool isBindMountingEnabled();
 
 namespace SysTemplate
 {
-/// Setup links for /dev/random and /dev/urandom in systemplate.
-void setupRandomDeviceLinks(const std::string& root);
-
 /// Setup the dynamic files within the sysTemplate by either
 /// copying or linking. See updateJail_DynamicFilesInSysTemplate.
 /// If the dynamic files need updating and systemplate is read-only,

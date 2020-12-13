@@ -451,7 +451,8 @@ void cleanupJails(const std::string& root)
         LOG_WRN("Jails root directory [" << root << "] is not empty. Will not remove it.");
 }
 
-void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate)
+void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate,
+                    const std::string& loTemplate)
 {
     // Start with a clean slate.
     cleanupJails(childRoot);
@@ -479,11 +480,20 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
     else
         LOG_INF("Disabling Bind-Mounting of jail contents per "
                 "mount_jail_tree config in loolwsd.xml.");
+
+    // Now setup the template.
+
+    const std::string templatePath = JailUtil::getTemplatePath(childRoot);
+    LOG_INF("Creating Template [" << templatePath << ']');
+
+    linkOrCopySysTemplate(sysTemplate, templatePath);
+    linkOrCopyLoTemplate(loTemplate, templatePath);
+
+    // Link the network and system files in Template, if possible.
+    SysTemplate::setupDynamicFiles(templatePath);
 }
 
-// This is the second stage of setting up /dev/[u]random
-// in the jails. Here we create the random devices in
-// /tmp/dev/ in the jail chroot. See setupRandomDeviceLinks().
+// Create the random devices in dev/ in the jail chroot.
 void setupJailDevNodes(const std::string& root)
 {
     if (!FileUtil::isWritable(root))
@@ -700,51 +710,6 @@ bool updateDynamicFiles(const std::string& sysTemplate)
 {
     // If the files are linked, they are always up-to-date.
     return LinkDynamicFiles ? true : updateDynamicFilesImpl(sysTemplate);
-}
-
-void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& name)
-{
-    const std::string path = sysTemplate + "/dev/";
-    try
-    {
-        // Create the path first.
-        Poco::File(path).createDirectories();
-    }
-    catch (const std::exception& ex)
-    {
-        LOG_WRN("Failed to create [" << path << "]: " << ex.what());
-        return;
-    }
-
-    const std::string linkpath = path + name;
-    const std::string target = "../tmp/dev/" + name;
-    LOG_DBG("Linking symbolically [" << linkpath << "] to [" << target << "].");
-
-    const FileUtil::Stat stLink(linkpath, true); // The file is a link.
-    if (stLink.exists())
-    {
-        if (!stLink.isLink())
-            LOG_WRN("Random device link [" << linkpath << "] exists but isn't a link.");
-        else
-            LOG_TRC("Random device link [" << linkpath << "] already exists.");
-
-        return;
-    }
-
-    if (symlink(target.c_str(), linkpath.c_str()) == -1)
-        LOG_SYS("Failed to symlink(\"" << target << "\", \"" << linkpath << "\")");
-}
-
-// The random devices are setup in two stages.
-// This is the first stage, where we create symbolic links
-// in sysTemplate/dev/[u]random pointing to ../tmp/dev/[u]random
-// when we setup sysTemplate in forkit.
-// In the second stage, during jail creation, we create the dev
-// nodes in /tmp/dev/[u]random inside the jail chroot.
-void setupRandomDeviceLinks(const std::string& sysTemplate)
-{
-    setupRandomDeviceLink(sysTemplate, "random");
-    setupRandomDeviceLink(sysTemplate, "urandom");
 }
 
 } // namespace SysTemplate

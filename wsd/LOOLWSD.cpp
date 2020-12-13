@@ -1232,7 +1232,7 @@ void LOOLWSD::initialize(Application& self)
 #if !MOBILEAPP
     // Setup the Child-Root directory.
     JailUtil::setupChildRoot(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
-                             SysTemplate);
+                             SysTemplate, LoTemplate);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
