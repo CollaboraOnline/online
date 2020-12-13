@@ -382,6 +382,7 @@ namespace FileUtil
 
     bool linkOrCopyFile(const char* source, const char* target)
     {
+        unlink(target); // Remove, in case it's a link to the source.
         if (link(source, target) == -1)
         {
             LOG_DBG("link(\"" << source << "\", \"" << target << "\") failed: " << strerror(errno)
