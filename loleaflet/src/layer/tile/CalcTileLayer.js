@@ -511,7 +511,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return;
 		}
 
-		var newSizePx = this._twipsToCorePixels(new L.Point(newDocWidth, newDocHeight));
+		// When there will be a latlng conversion, we should use CSS pixels.
+		var newSizePx = this._twipsToPixels(new L.Point(newDocWidth, newDocHeight));
 
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 		var bottomRight = this._map.unproject(newSizePx);
