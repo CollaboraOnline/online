@@ -743,7 +743,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			updatecolumns: updateCols,
 			cursor: this._getCursorPosSize(),
 			selection: this._getSelectionHeaderData(),
-			converter: this._twipsToPixels,
+			converter: this._twipsToCorePixels,
 			context: this
 		});
 	},
