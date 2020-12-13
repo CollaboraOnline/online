@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-09-16 10:39+0000\n"
+"PO-Revision-Date: 2020-12-12 15:29+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
-"Language-Team: Slovak <https://weblate.documentfoundation.org/projects/"
-"libo_online/loleaflet-help/sk/>\n"
+"Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
+"help/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.4-dev\n"
 "X-Pootle-Path: /sk/libo_online/loleaflet-help-sk.po\n"
 "X-Pootle-Revision: 837826\n"
 
@@ -955,7 +955,7 @@ msgid ""
 "from object selection mode switch to view mode."
 msgstr ""
 "Opustiť aktuálny režim, napr. z režimu úpravy do režimu výberu objektov "
-"alebo z režimu výberu objektov do režimu prezerania"
+"alebo z režimu výberu objektov do režimu prezerania."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-166
 msgid "Esc"
@@ -2462,7 +2462,7 @@ msgid ""
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
 "Zvolte <span class=\"ui\">Formát</span> → <span class=\"ui\">Strana</span> a "
-"vyberte kartu <span class=\"ui\">Strana</span>."
+"vyberte kartu <span class=\"ui\">Strana</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:508-11
 msgid "Set the page margins in the dialog."
@@ -2470,7 +2470,7 @@ msgstr "Nastavte okraje strany v dialógovom okne."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:511-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr "Ako zmením orientáciu strany tak, aby bola na šírku?"
+msgstr "Ako zmeniť orientáciu strany tak, aby bola na šírku"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid ""
@@ -2486,7 +2486,7 @@ msgid ""
 ", <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
 "Zvoľte <span class=\"ui\">Formát</span> → <span class=\"ui\">Odsek</span>, "
-"kartu <span class=\"ui\">Tok textu</span>."
+"kartu <span class=\"ui\">Tok textu</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:515-11
 msgid ""
@@ -2498,7 +2498,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:516-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "V časti „So štýlom stránky“ vyberte Na šírku."
+msgstr "V časti „So štýlom stránky“ vyberte Na šírku"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:517-11
 msgid "Select if you want to change page numbering."
@@ -2522,7 +2522,7 @@ msgstr "Priamo:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:523-11
 msgid "Select the text with the existing format"
-msgstr "Vyberte text s existujúcim formátom."
+msgstr "Vyberte text s existujúcim formátom"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:524-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:555-11
@@ -2545,7 +2545,7 @@ msgstr "Použitie štýlu odseku:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:529-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr "Umiestnite kurzor do odseku, ktorý chcete formátovať."
+msgstr "Umiestnite kurzor do odseku, ktorý chcete formátovať"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:530-11
 msgid ""
@@ -2597,7 +2597,7 @@ msgid ""
 "to the clipboard"
 msgstr ""
 "Načítajte dáta v CSV do nejakej natívnej aplikácie operačného systému, "
-"vyberte ich a skopírujte do schránky."
+"vyberte ich a skopírujte do schránky"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:543-11
 msgid ""
@@ -2687,7 +2687,7 @@ msgstr "Ako môžem spustiť prezentáciu?"
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:568-11
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr "Otvorte v <span class=\"productname\">%productName</span> prezentáciu."
+msgstr "Otvorte v <span class=\"productname\">%productName</span> prezentáciu"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:569-11
 msgid ""
