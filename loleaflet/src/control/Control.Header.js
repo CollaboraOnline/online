@@ -287,7 +287,7 @@ L.Control.Header = L.Control.extend({
 		if (!this._headerInfo)
 			return false;
 
-		var position = this._getParallelPos(point);
+		var position = this._headerInfo._isCol ? point.x: point.y;
 
 		var that = this;
 		var result = null;
@@ -356,16 +356,16 @@ L.Control.Header = L.Control.extend({
 	_mouseEventToCanvasPos: function(canvas, evt) {
 		var rect = canvas.getBoundingClientRect();
 		return {
-			x: evt.clientX - rect.left,
-			y: evt.clientY - rect.top
+			x: (evt.clientX - rect.left) * window.devicePixelRatio,
+			y: (evt.clientY - rect.top) * window.devicePixelRatio
 		};
 	},
 
 	_hammerEventToCanvasPos: function(canvas, event) {
 		var rect = canvas.getBoundingClientRect();
 		return {
-			x: event.center.x - rect.left,
-			y: event.center.y - rect.top
+			x: (event.center.x - rect.left) * window.devicePixelRatio,
+			y: (event.center.y - rect.top) * window.devicePixelRatio
 		};
 	},
 
