@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-12-09 22:52+0000\n"
+"PO-Revision-Date: 2020-12-13 17:14+0000\n"
 "Last-Translator: Piotr Rudzki <ryba.lodz@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "help/pl/>\n"
@@ -1320,7 +1320,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:285-5
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
-msgstr "Dokument jest automatycznie zapisywany jeśli dokonono w nim zmian."
+msgstr "Dokument jest automatycznie zapisywany jeśli dokonano w nim zmian."
 
 #: html/loleaflet-help.html%2Bdiv.p:288-5
 msgid ""
@@ -1372,6 +1372,13 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
+"Aby skopiować większe fragmenty zawartości do innych aplikacji na Twoim "
+"urządzeniu, użytkownicy muszą wcisnąć przycisk <span class=\"ui\">Start "
+"download</span>, i ponownie skopiować zawartość aby ją udostępnić do odczytu "
+"przez docelową aplikację. Jest to możliwe za pomocą małego widżetu, który "
+"pokaże się w prawym dolnym rogu i jest to tylko wymagane aby wkleić "
+"zawartość do zewnętrznej aplikacji. Ten krok dodatkowo zmienia złożone "
+"obiekty w statyczne obrazy."
 
 #: html/loleaflet-help.html%2Bdiv.h4:292-5
 msgid "Document repair"
@@ -1390,7 +1397,6 @@ msgstr ""
 "innych osób edytujących dokument do poprzedniego stanu."
 
 #: html/loleaflet-help.html%2Bdiv.p:294-5
-#, fuzzy
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
@@ -1412,7 +1418,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:297-5
 msgid "Inactive document"
-msgstr "Niekatywny dokument"
+msgstr "Nieaktywny dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid ""
@@ -1424,7 +1430,7 @@ msgstr ""
 "Kiedy <span class=\"productname\">%productName</span> wykryje brak "
 "aktywności w przeglądarce przez dłuższy czas, ustawi dokument w stan "
 "nieaktywny. Dokument jest wyświetlany z półprzezroczystą szarą nakładką, z "
-"wiadomością \"Niektywny dokument - kliknij aby powrócić do edycji\"."
+"wiadomością \"Nieaktywny dokument - kliknij aby powrócić do edycji\"."
 
 #: html/loleaflet-help.html%2Bdiv.p:300-5
 msgid ""
@@ -1476,7 +1482,7 @@ msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application, it will be pasted as rich text."
 msgstr ""
-"Kiedy wklejasz text spoza dokumentu (z innego okna przeglądarki lub innej "
+"Kiedy wklejasz tekst spoza dokumentu (z innego okna przeglądarki lub innej "
 "aplikacji), to zostanie on wklejony jako Rich Text."
 
 #: html/loleaflet-help.html%2Bdiv.p:306-5
@@ -1530,7 +1536,7 @@ msgid ""
 msgstr ""
 "<span class=\"def\">Edycja wykresów:</span> Kliknij dwukrotnie wykres aby "
 "zaznaczyć. Użyj menu kontekstowego aby dodać elementy takie jak tytuł, osie "
-"i inne. Wybież <span class=\"ui\">Zakresy danych</span> i <span class=\"ui\""
+"i inne. Wybierz <span class=\"ui\">Zakresy danych</span> i <span class=\"ui\""
 ">Typ wykresu</span> aby edytować dane i typ wykresu."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
@@ -1577,6 +1583,9 @@ msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
+"<span class=\"def\">Wstaw</span> → <span class=\"ui\">Obraz z dysku...</"
+"span> otwiera okno wyboru pliku do wysłania z lokalnego dysku i wstawia go w "
+"dokumencie."
 
 #: html/loleaflet-help.html%2Bdiv.p:327-5
 msgid ""
@@ -1584,6 +1593,9 @@ msgid ""
 "image. Select the image and open the context menu. Use the images handles to "
 "resize the image with the mouse."
 msgstr ""
+"Obrazy mogą być skalowane, obracane i zakotwiczone. Tekst może być zawijany "
+"wokół obrazu. Wybierz obraz i otwórz menu kontekstowe. Użyj uchwytów obrazu "
+"aby skalować go za pomocą myszy."
 
 #: html/loleaflet-help.html%2Bdiv.h4:328-5
 msgid "Comments in documents"
@@ -1609,7 +1621,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:332-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Sprawdzanie pisowni"
 
 #: html/loleaflet-help.html%2Bdiv.p:333-5
 msgid ""
@@ -1618,12 +1630,18 @@ msgid ""
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
+"<span class=\"productname\">%productName</span> potrafi sprawdzać pisownię w "
+"dokumentach tekstowych, arkuszach i prezentacjach. Czerwone faliste "
+"podkreślenie wskazuje słowa z błędami. Kliknij prawym klawiszem myszy aby "
+"otworzyć menu kontekstowe z sugestiami dotyczącymi błędu."
 
 #: html/loleaflet-help.html%2Bdiv.p:335-5
 msgid ""
 "To systematically spell-check the whole document use the <span class=\"ui\""
 ">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
+"Aby systematycznie sprawdzać pisownię w całym dokumencie użyj menu <span "
+"class=\"ui\">Narzędzia</span> → <span class=\"ui\">Pisownia</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:341-5
 msgid ""
@@ -1636,6 +1654,15 @@ msgid ""
 "will move the cursor to the next cell to the right, and with an <span class="
 "\"kbd\">Enter</span> to the cell below for easy further data entry."
 msgstr ""
+"Możesz edytować arkusz online w ten sam sposób w jaki edytujesz go w "
+"aplikacji desktopowej. Operacje wprowadzania danych, zaznaczania zakresów, "
+"kolumn, wierszy lub arkuszy są takie same. Używaj klawiatury, menu i paska "
+"narzędzi aby wykonywać zadania w arkuszu. Przeciąganie zawartości komórek w "
+"celu wypełnienia danymi jest także wspierane. Kopiowanie, wycinanie i "
+"wklejanie jest dostępne z menu kontekstowego. Potwierdzanie wprowadzonych "
+"danych klawiszem <span class=\"kbd\">Tab</span> przesunie kursor do "
+"następnej komórki po prawo, a potwierdzanie klawiszem <span class=\"kbd\""
+">Enter</span> do komórki poniżej."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:344-5
 msgid ""
@@ -1653,6 +1680,10 @@ msgid ""
 "committees/download.php/16826/openformula-spec-20060221.html\">OASIS "
 "OpenFormula specification</a>."
 msgstr ""
+"Język formuł powinien być znany każdemu użytkownikowi arkusza. Jego "
+"specyfikację opisuje <a href=\"https://www.oasis-open.org/committees/download"
+".php/16826/openformula-spec-20060221.html\">OASIS OpenFormula "
+"specification</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:350-5
 msgid ""
@@ -1664,6 +1695,13 @@ msgid ""
 "and custom number formatting, as well as font, complex border, background, "
 "cell protection and other options."
 msgstr ""
+"<span class=\"def\">Bezpośrednie formatowanie:</span> Możesz formatować "
+"komórki, kolumny, wiersze i arkusze używając menu, paska narzędzi lub menu "
+"kontekstowego. Bezpośrednie formatowanie jest stosowane tylko do "
+"zaznaczenia. Aby ustawić formatowanie komórki użyj menu lub wciśnij <span "
+"class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. Okno formatowania "
+"pozwala na złożone i spersonalizowane formatowanie liczb, czcionek, "
+"obramowań, tła, ochrony komórek i innych opcji."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:354-5
 msgid ""
@@ -1672,6 +1710,10 @@ msgid ""
 " automatically detects cells that are headers, and adjoining columns, to "
 "extend the selection."
 msgstr ""
+"<span class=\"def\">Sortowanie danych:</span> Możesz posortować liczby lub "
+"tekst rosnąco lub malejąco. <span class=\"productname\">%productName</span> "
+"automatycznie wykryje komórki, które są nagłówkami wraz z przylegającymi "
+"komórkami rozszerzając zaznaczenie."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:355-5
 msgid ""
@@ -1680,6 +1722,10 @@ msgid ""
 "spreadsheets in <span class=\"productname\">%productName</span> there are "
 "various possibilities for applying filters."
 msgstr ""
+"<span class=\"def\">Filtrowanie danych:</span> Filtry oraz filtry "
+"zaawansowane pozwalają pracować na filtrowanych wierszach (rekordach) "
+"zakresu danych. W <span class=\"productname\">%productName</span> jest wiele "
+"możliwości filtrowania."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:358-10
 msgid ""
@@ -1707,6 +1753,9 @@ msgid ""
 "filter conditions. With advanced filters you enter the conditions directly "
 "into the sheet."
 msgstr ""
+"<span class=\"ui\">Filtr zaawansowany</span> pozwala na użycie do ośmiu "
+"warunków. Za pomocą zaawansowanych filtrów możesz wstawiać warunki "
+"bezpośrednio w arkuszu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:364-5
 msgid ""
@@ -1714,6 +1763,9 @@ msgid ""
 "and group rows and columns together so that you can collapse and expand the "
 "groups with a single click making it easy to represent hierarchical data."
 msgstr ""
+"<span class=\"def\">Grupa i konspekt:</span> Możesz tworzyć konspekty danych "
+"oraz grupy wierszy i kolumn dzięki czemu można będzie je zwijać i rozwijać "
+"pojedynczym kliknięciem. Ułatwi to hierarchiczną prezentację danych."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:366-5
 msgid ""
@@ -1721,6 +1773,9 @@ msgid ""
 "entries to be valid. Invalid entries to a cell will be rejected. To enable "
 "data validation:"
 msgstr ""
+"<span class=\"def\">Sprawdzanie poprawności danych:</span> Dla każdej "
+"komórki możesz zdefiniować kryteria danych. Niewłaściwe dane wpisane do "
+"komórki zostaną odrzucone. Aby włączyć sprawdzanie poprawności danych:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:369-9
 msgid ""
@@ -1737,6 +1792,9 @@ msgid ""
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
+"Wybierz kryteria poprawności danych w liście <span class=\"ui\">Zezwól</"
+"span>. W zależności od wybranego rodzaju, pojawi się więcej opcji. Wypełnij "
+"potrzebne dane."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:374-9
 msgid ""
@@ -1744,12 +1802,18 @@ msgid ""
 "Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
 ">OK</span> to close the dialog."
 msgstr ""
+"Użyj zakładek <span class=\"ui\">Pomoc przy wprowadzaniu</span> i <span "
+"class=\"ui\">Komunikat o błędzie</span> aby rozszerzyć interakcje z "
+"użytkownikiem. Kliknij <span class=\"ui\">OK</span> aby zamknąć okno."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:377-11
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
 msgstr ""
+"Aby usunąć sprawdzanie poprawności danych w komórce, otwórz okno „Poprawność "
+"danych” i ustaw listę <span class=\"ui\">Zezwól</span> na „Wszystkie "
+"wartości”."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:379-5
 msgid ""
@@ -1773,6 +1837,11 @@ msgid ""
 "Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
+"<span class=\"def\">Formatowanie warunkowe:</span> <span class=\"productname"
+"\">%productName</span> dodaje symbole do każdej komórki z zakresu bazując na "
+"warunkach komórki. Wybierz zakres komórek i kliknij ikonę <span class=\"ui\""
+">Formatowanie warunkowe</span> na pasku narzędzi. Wybierz zestaw symboli aby "
+"zastosować na zakresie."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:389-5
 msgid ""
@@ -1784,6 +1853,13 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
+"Edycja dokumentu tekstowego w <span class=\"productname\">%productName</"
+"span> odbywa się w ten sam sposób jak w desktopowej wersji aplikacji. Edytor "
+"udostępnia układ (WYSIWYG) – wyświetla dokument tak jak będzie wydrukowany. "
+"Operacje takie jak pisanie tekstu, wycinanie, kopiowanie i wklejanie "
+"zawartości, zaznaczanie tekstu, wstawianie, skalowanie, kotwiczenie obrazów, "
+"dodawanie i obsługa tabel i wykresów, są podobne do destopowego edytora "
+"tekstu. Używaj klawiatury, menu i pasków narzędzi aby edytować swój dokument."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:392-5
 msgid ""
@@ -1809,6 +1885,14 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
+"<span class=\"productname\">%productName</span> wspiera nowoczesne "
+"formatowanie akapitów za pomocą stylów. Styl to zestaw właściwości tekstu ("
+"czcionka, kolor, tło i wiele więcej) oznaczonych nazwą stylu. Używaj stylów "
+"aby ustawić ten sam zestaw właściwości do wielu akapitów w dokumencie. "
+"Pozwala to na tworzenie uniwersalnego i profesjonalnego wyglądu. Dodatkowo, "
+"jeśli zmienisz właściwości jakiegoś stylu, wszystkie akapity z tym stylem "
+"zmienią swoje formatowanie. Ułatwia to formatowanie w odróżnieniu od "
+"formatowania bezpośredniego."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:396-5
 msgid ""
@@ -1817,6 +1901,9 @@ msgid ""
 "in every text excerpt, turning text formatting a long task, subject to "
 "errors and delays."
 msgstr ""
+"Bezpośrednie formatowanie ma zastosowanie tylko do wybranych fragmentów "
+"dokumentu. W dużym dokumencie, ten sposób formatowania jest uciążliwym "
+"zadaniem z dużą możliwością popełnienia błędów."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:397-5
 msgid ""
@@ -1824,6 +1911,10 @@ msgid ""
 "objects by formatting directly from the menus, toolbar or context menus. "
 "Direct formatting applies only to the current object selected."
 msgstr ""
+"<span class=\"def\">Bezpośrednie formatowanie:</span> Możesz formatować "
+"obiekty bezpośrednio w dokumencie tekstowym używając menu, paska narzędzi "
+"lub menu kontekstowego. Bezpośrednie formatowanie zostanie zastosowane tylko "
+"do aktualnie wybranych obiektów."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:398-5
 msgid ""
@@ -1832,10 +1923,14 @@ msgid ""
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
+"<span class=\"def\">Formatowanie stylów:</span> <span class=\"productname\""
+">%productName</span> wspiera style akapitów. Możesz zastosować istniejący "
+"styl do akapitu. Wybierz z menu <span class=\"ui\">Edycja</span> → <span "
+"class=\"ui\">Edycja stylu...</span> aby zmienić styl."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:402-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Obsługa tabel"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
 msgid ""
@@ -1844,6 +1939,10 @@ msgid ""
 "cells with the <span class=\"ui\">Table</span> menu. The default paragraph "
 "style inside cells is “Table contents”."
 msgstr ""
+"Wstaw tabele za pomocą odpowiedniej ikony z paska narzędzi. Wybierz "
+"początkową ilość wierszy i kolumn. Dodaj wiersze i kolumny za pomocą menu "
+"kontekstowego. Łącz komórki za pomocą menu <span class=\"ui\">Tabela</span>. "
+"Standardowy styl akapitu w komórkach tabeli to „Zawartość tabeli”."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:405-5
 msgid ""
@@ -1865,6 +1964,9 @@ msgid ""
 ">%productName</span> marks up new changes made to the document. Select this "
 "option again to turn it off."
 msgstr ""
+"Jeśli włączysz śledzenie zmian, <span class=\"productname\">%productName</"
+"span> będzie zaznaczał wszystkie nowe zmiany dokonane w dokumencie. Wybierz "
+"ponownie tą opcję aby wyłączyć."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:409-5
 msgid ""
@@ -1872,6 +1974,9 @@ msgid ""
 "tracked change can be accepted or rejected, using the box the appears on the "
 "right. You can also add a comment there."
 msgstr ""
+"Zmiany dokonane przez różne osoby są pokazywane różnymi kolorami, a każda "
+"zmiana może być zaakceptowana lub odrzucona za pomocą okna, które pojawia "
+"się po prawej. Możesz także dodać komentarz w tym oknie."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:410-5
 msgid "Other advanced features"
@@ -1891,18 +1996,25 @@ msgid ""
 "spaces are shown as marks to assisting text alignment, editing and "
 "formatting."
 msgstr ""
+"<span class=\"def\">Znaczniki formatowania:</span> Akapit, strona i odstępy "
+"są pokazywane jako znaczniki aby wspomóc justowanie, edycję i formatowanie "
+"tekstu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:413-5
 msgid ""
 "<span class=\"def\">Fields:</span> A basic set of fields is available to "
 "insert in the document."
 msgstr ""
+"<span class=\"def\">Pola:</span> Standardowy zestaw pól dostępnych do "
+"wstawienia w dokumencie."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:414-5
 msgid ""
 "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index "
 "can be updated with new entries."
 msgstr ""
+"<span class=\"def\">Index alfabetyczny:</span> Istniejący index alfabetyczny "
+"może być aktualizowany o nowe wpisy."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:415-5
 msgid ""
@@ -1919,6 +2031,8 @@ msgid ""
 "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes "
 "are supported."
 msgstr ""
+"<span class=\"def\">Przypisy:</span> Przypisy początkowe i końcowe są "
+"wspierane."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:423-5
 msgid ""
@@ -1929,6 +2043,12 @@ msgid ""
 "presentation application. Use the keyboard, menus and toolbars to perform "
 "actions in your document."
 msgstr ""
+"<span class=\"productname\">%productName</span> Impress pozwala na edycję "
+"prezentacji w znajomy sposób. Operacje takie jak pisanie tekstu, kopiowanie "
+"i wklejanie zawartości, zaznaczanie tekstu, wstawianie, zmiana rozmiaru, "
+"kotwiczenie obrazów, dodawanie i obsługa tabel, są podobne do wersji "
+"desktopowej aplikacji. Używaj klawiatury, menu i pasków narzędzi aby "
+"edytować swój dokument."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:426-5
 msgid ""
@@ -1937,6 +2057,10 @@ msgid ""
 "the slide show from the menu or click on icon in the bottom left toolbar in "
 "the slide pane."
 msgstr ""
+"<span class=\"productname\">%productName</span> wyświetla pokazy slajdów "
+"prezentacji, włączając w to przejścia pomiędzy slajdami i animacje obiektów. "
+"Wybierz pokaz slajdów z menu, albo kliknij ikonę po lewej na dole panelu "
+"slajdów."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:427-5
 msgid ""
@@ -1953,12 +2077,16 @@ msgid ""
 "Click on any slide thumbnail in the pane to switch to this slide to view or "
 "edit it."
 msgstr ""
+"Kliknij dowolną miniaturę slajdu w panelu aby przełączyć wyświetlanie lub "
+"edycję do tego slajdu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:431-5
 msgid ""
 "Use the slide pane toolbar in the bottom to start the slideshow, add slide, "
 "duplicate or delete the current slide."
 msgstr ""
+"Użyj ikon panelu slajdów na dole aby uruchomić pokaz, dodać slajd, sklonować "
+"lub usunąć aktualny slajd."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:434-5
 msgid ""
@@ -1966,12 +2094,17 @@ msgid ""
 ">%productName</span> Impress let you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
+"<span class=\"def\">Układ slajdu:</span> <span class=\"productname\""
+">%productName</span> Impress pozwala na zmianę układu slajdów. Wybierz "
+"właściwy układ z listy."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:436-5
 msgid ""
 "<span class=\"def\">Master slide:</span> Select the master slide associated "
 "to the current slide. Format and arrange slide elements in the master slide."
 msgstr ""
+"<span class=\"def\">Główny slajd:</span> Wybierz główny slajd powiązany z "
+"aktualnym slajdem. Formatuj i rozmieszczaj elementy w głównym slajdzie."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:437-5
 msgid ""
@@ -1980,6 +2113,11 @@ msgid ""
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
+"<span class=\"def\">Przejścia slajdów:</span> <span class=\"productname\""
+">%productName</span> Impress zapewnia efekty wizualne podczas wyświetlania "
+"kolejnego slajdu. Przejścia między slajdami należą do właściwości slajdu. "
+"Użyj paska narzędzi slajdów aby ustawić przejście kiedy jesteś w trybie "
+"edycji."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:438-5
 msgid ""
@@ -1987,6 +2125,9 @@ msgid ""
 "can have animation. Use the side bar to configure the slide transition for a "
 "selected object or set of objects."
 msgstr ""
+"<span class=\"def\">Animacja obiektów:</span> Każdy obiekt w slajdzie może "
+"posiadać animację. Użyj panelu bocznego aby skonfigurować przejście między "
+"slajdami dla zaznaczonych obiektów."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:439-5
 msgid ""
@@ -2020,11 +2161,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:447-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "Arkusze: formaty Microsoft XLS, XLSX, format OpenDocument ODF"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:448-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Prezentacje: formaty Microsoft PPT, PPTX, format OpenDocument ODP"
 
 #: html/loleaflet-help.html%2Bdiv.h4:450-5
 msgid "How do I save a document with another name?"
@@ -2032,7 +2173,7 @@ msgstr "Jak mam zapisać dokument pod inną nazwą?"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:452-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr ""
+msgstr "Ustaw kursor myszy nad nazwą dokumentu w pasku menu."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:453-11
 msgid ""
@@ -2044,13 +2185,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:455-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "Kopia dokumentu jest zapisywana spod nową nazwą w tym samym katalogu."
 
 #: html/loleaflet-help.html%2Bdiv.h4:456-5
 msgid ""
 "How can I quit <span class=\"productname\">%productName</span> without "
 "saving my edits?"
 msgstr ""
+"Jak mogę wyjść z <span class=\"productname\">%productName</span> bez "
+"zapisywania zmian?"
 
 #: html/loleaflet-help.html%2Bdiv.p:457-5
 msgid ""
@@ -2059,12 +2202,18 @@ msgid ""
 "your changes, you must either undo them, or use the <span class=\"ui\">"
 "Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
+"<span class=\"productname\">%productName</span> zapisuje dokument regularnie "
+"w tle, nie da się zamknąć dokumentu bez jego zapisania. Aby porzucić zmiany, "
+"musisz je cofnąć, albo użyć <span class=\"ui\">Obejrzyj historię zmian</"
+"span> w menu <span class=\"ui\">Plik</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:458-5
 msgid ""
 "Can <span class=\"productname\">%productName</span> open a password-"
 "protected document?"
 msgstr ""
+"Czy <span class=\"productname\">%productName</span> potrafi otwierać "
+"dokumenty zabezpieczone hasłem?"
 
 #: html/loleaflet-help.html%2Bdiv.p:459-5
 msgid ""
@@ -2077,7 +2226,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:460-5
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "Jak mogę sprawdzić pisownię w moim języku?"
 
 #: html/loleaflet-help.html%2Bdiv.p:461-5
 msgid ""
@@ -2085,10 +2234,13 @@ msgid ""
 ">Languages</span> and select the language for the whole document. Optionally "
 "you can set languages for the selected text and for the current paragraph."
 msgstr ""
+"Z menu <span class=\"ui\">Narzędzia</span> → <span class=\"ui\">Język</span> "
+"wybierz język dla całego dokumentu. Opcjonalnie możesz wybrać język dla "
+"zaznaczonego tekstu lub aktualnego akapitu."
 
 #: html/loleaflet-help.html%2Bdiv.h4:462-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Jak mogę usunąć czerwone faliste podkreślenia w moim dokumencie?"
 
 #: html/loleaflet-help.html%2Bdiv.p:463-5
 msgid ""
@@ -2101,6 +2253,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.h4:464-5
 msgid "What is the blue wavy underline in some words in the text?"
 msgstr ""
+"Co oznacza niebieskie faliste podkreślenie pod niektórymi słowami w tekście?"
 
 #: html/loleaflet-help.html%2Bdiv.p:465-5
 msgid ""
@@ -2133,6 +2286,8 @@ msgid ""
 "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove "
 "from my text document?"
 msgstr ""
+"Co to za niebieskie symbole <span class=\"blue\">¶</span> i jak je usunąć z "
+"mojego dokumentu?"
 
 #: html/loleaflet-help.html%2Bdiv.p:470-5
 msgid ""
@@ -2158,7 +2313,7 @@ msgid ""
 "whole document."
 msgstr ""
 "Licznik słów jest dostępny w <span class=\"ui\">Narzędzia</span> → <span "
-"class=\"ui\">Licznik słów</span>. Okno dialogowe pokaże licznik słów sla "
+"class=\"ui\">Licznik słów</span>. Okno dialogowe pokaże licznik słów dla "
 "zaznaczenia i dla całego dokumentu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:477-5
@@ -2175,16 +2330,20 @@ msgstr ""
 msgid ""
 "How can I insert a currency, copyright or trademark symbol in the document?"
 msgstr ""
+"Jak mogę wstawić symbol waluty, praw autorskich lub znaku towarowego w "
+"dokumencie?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:479-5
 msgid ""
 "You can insert these special characters in the document using the <span "
 "class=\"ui\">Special Character</span> dialog."
 msgstr ""
+"Możesz wstawić znaki specjalne do dokumentu używając okna <span class=\"ui\""
+">Znaki specjalne</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:481-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Ustaw kursor w pozycji aby wstawić znak."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:483-9
 msgid ""
@@ -2192,6 +2351,9 @@ msgid ""
 "Characters </span> or click the corresponding icon in the toolbar. A dialog "
 "shows."
 msgstr ""
+"Wybierz <span class=\"ui\">Wstaw</span> → <span class=\"ui\">Znak specjalny</"
+"span> albo kliknij właściwą ikonę na pasku narzędzi. Pojawi się okno z "
+"możliwością wyboru znaku do wstawienia."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:486-11
 msgid ""
@@ -2200,16 +2362,21 @@ msgid ""
 "Unicode numeric code of the special character, enter in the boxes on the "
 "right."
 msgstr ""
+"Możesz przeglądać znaki wyświetlane za pomocą listy, lub wpisać klucz "
+"wyszukiwania w oknie <span class=\"ui\">Szukaj</span>. Jeśli znasz kod znaku "
+"specjalnego, wpisz go w oknie po prawej."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:487-11
 msgid ""
 "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <"
 "span class=\"ui\">Cancel</span>."
 msgstr ""
+"Naciśnij przycisk <span class=\"ui\">Wstaw</span>. Aby zamknąć okno naciśnij "
+"<span class=\"ui\">Anuluj</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:489-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "Dlaczego nie mogę skasować tekstu? Tekst zostaje tylko przekreślony?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:490-5
 msgid ""
@@ -2228,6 +2395,8 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr ""
+"Z włączonym śledzeniem zmian twój dokument jest pokazywany w następujący "
+"sposób:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:493-11
 msgid "Deletions are marked with colored strike-through characters."
@@ -2275,6 +2444,14 @@ msgid ""
 "\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog "
 "shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
+"Zmiany mogą zostać zaakceptowane lub odrzucone. Aby zaakceptować lub "
+"odrzucić zmiany, kliknij odpowiednią ikonę w oknie komentarza po prawej "
+"stronie dokumentu, lub wybierz <span class=\"ui\">Edycja</span> → <span "
+"class=\"ui\">Śledź zmiany</span> → <span class=\"ui\">Akceptuj wszystko</"
+"span> lub <span class=\"ui\">Odrzuć wszystko</span>. Jeśli chcesz wybrać "
+"tylko część zmian wybierz <span class=\"ui\">Edycja</span> → <span class=\"ui"
+"\">Śledź zmiany</span> → <span class=\"ui\">Zarządzaj</span>. Okno dialogowe "
+"pokaże listę wszystkich zmian. Użyj przycisków odpowiednio do potrzeb."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:503-5
 msgid "How do I set the margins of the document?"
@@ -2290,39 +2467,47 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:505-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Używając stylu strony"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:507-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"Wybierz <span class=\"ui\">Format</span> → <span class=\"ui\">Styl strony</"
+"span> i wybierz zakładkę <span class=\"ui\">Strona</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:508-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Ustaw marginesy strony w oknie dialogowym."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:511-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
+msgstr "Jak mogę zmienić orientację strony na poziomą w moim dokumencie?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid ""
 "Place the cursor at the place where the page orientation is to change. Add "
 "an empty paragraph."
 msgstr ""
+"Ustaw kursor w miejscu, gdzie ma zostać zmieniona orientacja strony. Dodaj "
+"pusty akapit."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:514-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>"
 ", <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
+"Wybierz z menu <span class=\"ui\">Format</span> → <span class=\"ui\">Akapit</"
+"span>, w oknie wybierz zakładkę <span class=\"ui\">Przepływ tekstu</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:515-11
 msgid ""
 "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, "
 "Position: Before."
 msgstr ""
+"W obszarze <span class=\"ui\">Podziały</span>, zaznacz „Wstaw”, wybierz typ "
+"„Strona” i wybierz pozycję „Przed”."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:516-11
 msgid "Select Landscape in “With Page Style”"
@@ -2337,10 +2522,12 @@ msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
 msgstr ""
+"Aby przywrócić orientację pionową, powtórz procedurę, wybierając pionowa w „"
+"Styl strony”."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:520-5
 msgid "How can I make the new text look like other existing text?"
-msgstr ""
+msgstr "Jak mogę sprawić by nowy tekst wyglądał jak istniejący?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:521-5
 msgid "Directly:"
@@ -2348,7 +2535,7 @@ msgstr "Bezpośrednio:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:523-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Zaznacz tekst z istniejącym formatowaniem"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:524-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:555-11
@@ -2374,18 +2561,18 @@ msgid "Place the cursor at the paragraph to be formatted"
 msgstr "Ustaw kursor w akapicie, który ma być sformatowany"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:530-11
-#, fuzzy
 msgid ""
 "Select the style to apply in the style dropdown list. The paragraph displays "
 "the styles attributes."
 msgstr ""
-"Wybierz styl do zastosowania z rozwijanej listy stylów. Akapit wyświetli "
-"atrybuty stylu."
+"Wybierz styl do zastosowania z rozwijanej listy. Akapit przyjmie atrybuty "
+"stylu."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:532-5
 msgid ""
 "Why did the text I just typed change automatically? How can I revert it?"
 msgstr ""
+"Dlaczego tekst, który wpisałem zmienił się automatycznie? Jak go przywrócić?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:533-5
 msgid ""
@@ -2395,10 +2582,15 @@ msgid ""
 "necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
 ">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
+"Masz włączoną Autokorektę. Autokorekta zmienia wpisywany tekst w wewnętrzną "
+"tabelę zawierającą wpisywany tekst. Autokorekta w większości poprawia "
+"literówki podczas pisania. Jeśli nie jest potrzebna, możesz ją wyłączyć w "
+"<span class=\"ui\">Narzędzia</span> → <span class=\"ui\">Autokorekta</span> →"
+" <span class=\"ui\">Podczas pisania</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:538-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Jak mogę wybrać dane do wydrukowania?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:539-5
 msgid ""
@@ -2406,6 +2598,9 @@ msgid ""
 "and print the document to download. On printing the PDF, select the pages of "
 "interest."
 msgstr ""
+"Wstaw podziały kolumn i wierszy w arkuszu, aby sprecyzować zakres wydruku. "
+"Wydrukuj plik aby go pobrać. Podczas drukowania pliku PDF, wybierz "
+"interesujące Cię strony."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:540-5
 msgid "How can I import CSV data?"
@@ -2416,12 +2611,14 @@ msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
 msgstr ""
+"Wczytaj swój plik CSV w narzędzie dostępne dla platformy, z której "
+"korzystasz, zaznacz i skopiuj go do schowka"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:543-11
 msgid ""
 "Activate the <span class=\"productname\">%productName</span> spreadsheet "
 "window."
-msgstr ""
+msgstr "Aktywuj okno arkusza <span class=\"productname\">%productName</span> ."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:545-9
 msgid ""
@@ -2430,17 +2627,23 @@ msgid ""
 ">V</span>. The <span class=\"ui\">Text Import</span> dialog opens to let you "
 "describe the precise format of the CSV data."
 msgstr ""
+"Wklejanie z przeglądarki <span class=\"ui\">Edycja</span> → <span class=\"ui"
+"\">Wklej</span> lub wciśnij <span class=\"kbd\">Ctrl</span> + <span class="
+"\"kbd\">V</span>. Otworzy się okno <span class=\"ui\">Import tekstu</span> "
+"pozwalając na precyzyjne określenie formatu danych CSV."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:548-11
 msgid ""
 "Select the character set, language and separator options for the CSV file."
-msgstr ""
+msgstr "Wybierz zestaw znaków, język i opcje separatora dla pliku CSV."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:550-5
 msgid ""
 "The CSV data is loaded into the selected cell where you pasted, according to "
 "these settings."
 msgstr ""
+"Dane CSV są wczytane do komórki w której zostały wklejone, zgodnie z tymi "
+"ustawieniami."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:551-5
 msgid "How can I copy the formatting of existing cells to new ones?"
@@ -2448,19 +2651,19 @@ msgstr "Jak mogę skopiować formatowanie istniejących komórek do nowych?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:552-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
-msgstr ""
+msgstr "Jest to możliwe za pomocą narzędzia Pędzel na pasku."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:554-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "Ustaw czcionkę, kolor tła i więcej w komórce źródłowej."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:556-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "Zaznacz komórki, które chcesz sformatować. Puść przycisk myszy."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:558-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "Co to za ikona „Usuń formatowanie bezpośrednie”?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:559-5
 msgid ""
@@ -2478,7 +2681,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:560-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Jak zmienić nazwę arkusza?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:561-5
 msgid ""
@@ -2486,10 +2689,12 @@ msgid ""
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
 "name in the dialog that follows."
 msgstr ""
+"Zmień nazwę arkusza używając menu kontekstowego zakładki arkusza znajdującej "
+"się na dole. Wpisz nową nazwę w oknie dialogowym."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:566-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Jak mogę uruchomić pokaz slajdów?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:568-11
 msgid ""
@@ -2503,13 +2708,13 @@ msgid ""
 "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
 "images/lc_dia.svg\">"
 msgstr ""
-"Either choose <span class=\"ui\">Slajd</span> → <span class=\"ui\""
-">Prezentacja pełno ekranowa</span> lub kliknij lewą ikonę na panelu slajdów: "
-"<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
+"Wybierz <span class=\"ui\">Slajd</span> → <span class=\"ui\">Prezentacja "
+"pełno ekranowa</span> lub kliknij lewą ikonę na panelu slajdów: <img style="
+"\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:571-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr ""
+msgstr "Jak mogę zmienić linię, pole i pozycję kształtu w moich slajdach?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:573-11
 msgid "Select the shape in your slide. A set of handles shows."
@@ -2521,6 +2726,9 @@ msgid ""
 "<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
 "Size</span>). A dialog opens."
 msgstr ""
+"Wybierz <span class=\"ui\">Format</span> → <span class=\"ui\">Linia</span> ("
+"lub <span class=\"ui\">Obszar</span>, lub <span class=\"ui\">Pozycja i "
+"Rozmiar</span>). Pojawi się okno dialogowe."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:578-11
 msgid "Set the properties of the element of the object."
