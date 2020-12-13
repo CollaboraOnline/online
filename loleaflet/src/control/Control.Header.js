@@ -787,6 +787,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		console.assert(map && isCol !== undefined, 'map and isCol required');
 		this._map = map;
 		this._isCol = isCol;
+		this._dpiScale = L.Util.getDpiScaleFactor(true);
 		console.assert(this._map._docLayer.sheetGeometry, 'no sheet geometry data-structure found!');
 		var sheetGeom = this._map._docLayer.sheetGeometry;
 		this._dimGeom = this._isCol ? sheetGeom.getColumnsGeometry() : sheetGeom.getRowsGeometry();
@@ -810,7 +811,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 
 		if (splitPosContext) {
 
-			splitPos = this._isCol ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y;
+			splitPos = (this._isCol ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y) * this._dpiScale;
 			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'corepixels');
 
 			if (splitIndex) {
