@@ -39,8 +39,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._setCanvasHeight();
 		this._canvasBaseHeight = this._canvasHeight;
 
-		this._canvasContext.scale(this._dpiScale, this._dpiScale);
-
 		this._headerHeight = this._canvasHeight;
 		L.Control.Header.colHeaderHeight = this._canvasHeight;
 
