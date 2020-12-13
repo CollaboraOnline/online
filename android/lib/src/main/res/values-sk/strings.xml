@@ -14,4 +14,8 @@
     <string name="later">Neskôr</string>
     <string name="rate_now">Ohodnotiť teraz</string>
     <string name="file_chromeos_read_only">Súbor sa nedá v tomto umiestnení uložiť, je preto otvorený iba na čítanie. Ak chcete využiť prístup na čítanie aj zápis, presuňte ho medzi súbory Play.</string>
+    <string name="ask_for_copy">Tento dokument je len na čítanie. Chcete vytvoriť kópiu na úpravu\?</string>
+    <string name="edit_copy">Upraviť kópiu</string>
+    <string name="view_only">Len prehliadanie</string>
+    <string name="restarting">Reštartovanie...</string>
 </resources>
