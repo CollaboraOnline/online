@@ -3585,13 +3585,14 @@ L.TileLayer = L.GridLayer.extend({
 			return [ map.getBounds() ];
 		}
 
+		// These paneRects are in core pixels.
 		var paneRects = this._splitPanesContext.getPxBoundList();
 		console.assert(paneRects.length, 'number of panes cannot be zero!');
 
 		return paneRects.map(function (pxBound) {
 			return new L.LatLngBounds(
-				map.unproject(pxBound.getTopLeft()),
-				map.unproject(pxBound.getBottomRight())
+				map.unproject(pxBound.getTopLeft().divideBy(window.devicePixelRatio)),
+				map.unproject(pxBound.getBottomRight().divideBy(window.devicePixelRatio))
 			);
 		});
 	},

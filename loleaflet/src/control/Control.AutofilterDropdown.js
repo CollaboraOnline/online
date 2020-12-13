@@ -44,7 +44,7 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		var scale = this._map.getZoomScale(this._map.getZoom(), this._map.options.defaultZoom);
 		var origin = this._map.getPixelOrigin();
 		var panePos = this._map._getMapPanePos();
-		var cursorPos = this._map._docLayer.getCursorPos();
+		var cursorPos = this._map._docLayer.getCursorPos().divideBy(window.devicePixelRatio);
 
 		// autofilter docking window position is relative to the main window
 		// we have to take into account calc input bar and notebookbar height (where spreadsheet starts)
@@ -69,7 +69,7 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		var splitPos = new L.Point(0, 0);
 
 		if (splitPanesContext)
-			splitPos = splitPanesContext.getSplitPos();
+			splitPos = splitPanesContext.getSplitPos().divideBy(window.devicePixelRatio);
 
 		var newLeft = left + panePos.x - origin.x;
 		if (left >= splitPos.x && newLeft >= 0)

@@ -78,7 +78,7 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 		var renderer = this._childRenderers[rendererId];
 		console.assert(renderer && L.stamp(renderer) === L.stamp(childRenderer), 'Child renderer does not belong to parent!');
 
-		var splitPos = this._map.getSplitPanesContext().getSplitPos();
+		var splitPos = this._map.getSplitPanesContext().getSplitPos().divideBy(window.devicePixelRatio);
 		var size = this._map.getSize();
 		var pixelOrigin = this._map.getPixelOrigin();
 		// Container coordinates.

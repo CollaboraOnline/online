@@ -511,7 +511,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return;
 		}
 
-		var newSizePx = this._twipsToCorePixels(new L.Point(newDocWidth, newDocHeight));
+		// When there will be a latlng conversion, we should use CSS pixels.
+		var newSizePx = this._twipsToPixels(new L.Point(newDocWidth, newDocHeight));
 
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 		var bottomRight = this._map.unproject(newSizePx);
@@ -1040,7 +1041,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	getCursorPos: function () {
-		return this._twipsToPixels(this._cellCursorTwips.getTopLeft());
+		return this._twipsToCorePixels(this._cellCursorTwips.getTopLeft());
 	},
 
 	_calculateScrollForNewCellCursor: function () {
@@ -1059,7 +1060,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		var freePaneBounds = paneRectsInLatLng[paneRectsInLatLng.length - 1];
-		var splitPoint = map.unproject(this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0));
+		var splitPoint = map.unproject(this._splitPanesContext ? this._splitPanesContext.getSplitPos().divideBy(this._painter._dpiScale) : new L.Point(0, 0));
 
 		if (this._cellCursor.getEast() > splitPoint.lng) {
 
