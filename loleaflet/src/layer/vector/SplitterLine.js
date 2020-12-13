@@ -57,10 +57,9 @@ L.SplitterLine = L.Rectangle.extend({
 			ymin = 0;
 			ymax = 0;
 		}
-		var dpiScale = window.devicePixelRatio;
 		return new L.LatLngBounds(
-			map.unproject(new L.Point(xmin / dpiScale, ymin / dpiScale)),
-			map.unproject(new L.Point(xmax / dpiScale, ymax / dpiScale))
+			map.unproject(new L.Point(xmin, ymin)),
+			map.unproject(new L.Point(xmax, ymax))
 		);
 	},
 

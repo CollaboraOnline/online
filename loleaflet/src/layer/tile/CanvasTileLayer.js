@@ -264,7 +264,7 @@ L.CanvasTilePainter = L.Class.extend({
 		if (!splitPanesContext) {
 			return;
 		}
-		var splitPos = this._layer._cssPixelsToCore(splitPanesContext.getSplitPos());
+		var splitPos = splitPanesContext.getSplitPos();
 		this._canvasCtx.strokeStyle = 'red';
 		this._canvasCtx.strokeRect(0, 0, splitPos.x, splitPos.y);
 	},
@@ -843,7 +843,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._pixelsToTwips(visibleArea.min),
 			this._pixelsToTwips(visibleArea.max)
 		);
-		splitPos = this._pixelsToTwips(splitPos);
+		splitPos = this._corePixelsToTwips(splitPos);
 		var size = visibleArea.getSize();
 		var visibleTopLeft = visibleArea.min;
 		var newClientVisibleArea = 'clientvisiblearea x=' + Math.round(visibleTopLeft.x)

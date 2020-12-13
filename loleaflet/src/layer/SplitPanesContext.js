@@ -58,7 +58,7 @@ L.SplitPanesContext = L.Class.extend({
 	},
 
 	getSplitPos: function () {
-		return this._splitPos.clone();
+		return this._splitPos.divideBy(window.devicePixelRatio);
 	},
 
 	getSplitPosX: function () {
@@ -193,10 +193,10 @@ L.SplitPanesContext = L.Class.extend({
 		return paneStatusList;
 	},
 
-	// returns all the pane rectangles for the provided full-map area (all in CSS pixels).
+	// returns all the pane rectangles for the provided full-map area (all in core pixels).
 	getPxBoundList: function (pxBounds) {
 		if (!pxBounds) {
-			pxBounds = this._map.getPixelBounds();
+			pxBounds = this._map.getPixelBoundsCore();
 		}
 		var topLeft = pxBounds.getTopLeft();
 		var bottomRight = pxBounds.getBottomRight();
@@ -240,16 +240,16 @@ L.SplitPanesContext = L.Class.extend({
 		var docLayer = this._docLayer;
 		return bounds.map(function (bound) {
 			return new L.Bounds(
-				docLayer._pixelsToTwips(bound.min),
-				docLayer._pixelsToTwips(bound.max)
+				docLayer._corePixelsToTwips(bound.min),
+				docLayer._corePixelsToTwips(bound.max)
 			);
 		});
 	},
 
 	getClientVisibleArea: function () {
-		var pixelBounds = this._map.getPixelBounds();
+		var pixelBounds = this._map.getPixelBoundsCore();
 		var fullSize = pixelBounds.getSize();
-		var cursorPos = this._docLayer.getCursorPos();
+		var cursorPos = this._docLayer.getCursorPos().multiplyBy(window.devicePixelRatio);
 		cursorPos._floor();
 		var oneone = new L.Point(1, 1);
 		var topLeft = pixelBounds.getTopLeft()._add(this._splitPos)._add(oneone);
@@ -277,7 +277,7 @@ L.SplitPanesContext = L.Class.extend({
 	},
 
 	intersectsVisible: function (areaPx) {
-		var pixBounds = this._map.getPixelBounds();
+		var pixBounds = this._map.getPixelBoundsCore();
 		var boundList = this.getPxBoundList(pixBounds);
 		for (var i = 0; i < boundList.length; ++i) {
 			if (areaPx.intersects(boundList[i])) {
