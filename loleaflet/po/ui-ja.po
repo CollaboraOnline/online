@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-11 12:47+0000\n"
+"PO-Revision-Date: 2020-12-13 17:14+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
@@ -296,23 +296,23 @@ msgstr "TB"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:14
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:14
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -344,7 +344,7 @@ msgstr "サーバーでの %1 コマンドの解析中に %0 エラーが発生�
 
 #: src/control/Control.ContextMenu.js:183
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #: src/control/Control.ContextMenu.js:267
 msgid "Paste Special"
@@ -401,9 +401,8 @@ msgid "Start cross copy/paste"
 msgstr ""
 
 #: src/control/Control.FormulaBar.js:34
-#, fuzzy
 msgid "Function Wizard"
-msgstr "関数"
+msgstr "関数ウィザード"
 
 #: src/control/Control.JSDialogBuilder.js:273
 msgid "Solid"
@@ -446,9 +445,8 @@ msgid "To"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1379
-#, fuzzy
 msgid "Select range"
-msgstr "変更の却下"
+msgstr "範囲を選択"
 
 #: src/control/Control.JSDialogBuilder.js:1408
 msgid "Font Name"
@@ -498,7 +496,6 @@ msgid "Columns"
 msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2517
-#, fuzzy
 msgid "Insert Table"
 msgstr "表の挿入"
 
@@ -717,9 +714,8 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:611 src/control/Control.Menubar.js:659
 #: src/control/Control.Menubar.js:706 src/control/Control.StatusBar.js:190
-#, fuzzy
 msgid "Search"
-msgstr "検索:"
+msgstr "検索"
 
 #: src/control/Control.Menubar.js:622
 msgid "Page Setup"
@@ -974,7 +970,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:688
 #: src/control/Control.NotebookbarBuilder.js:713
 msgid "Menu"
-msgstr ""
+msgstr "メニュー"
 
 #: src/control/Control.Notebookbar.js:157
 #: src/control/Control.NotebookbarImpress.js:32
@@ -990,13 +986,13 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "ファイル(~F)"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarImpress.js:91
 msgid "~Home"
-msgstr ""
+msgstr "ホーム(~H)"
 
 #: src/control/Control.NotebookbarWriter.js:23
 #: src/control/Control.NotebookbarCalc.js:23
@@ -1006,28 +1002,27 @@ msgstr "挿入(~I)"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
-msgstr ""
+msgstr "レイアウト(~L)"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
-msgstr ""
+msgstr "参照(~S)"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarImpress.js:102
-#, fuzzy
 msgid "~Review"
-msgstr "目次"
+msgstr "検査(~R)"
 
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "書式"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Table"
-msgstr ""
+msgstr "表(~T)"
 
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
@@ -1037,42 +1032,39 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "ヘルプ(~H)"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "本文"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "タイトル"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "サブタイトル"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "シート(~S)"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "データ(~D)"
 
 #: src/control/Control.NotebookbarCalc.js:1925
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "表の挿入"
+msgstr "行を上に挿入"
 
 #: src/control/Control.NotebookbarCalc.js:1938
-#, fuzzy
 msgid "Insert Rows Below"
-msgstr "シートの挿入"
+msgstr "行を下に挿入"
 
 #: src/control/Control.NotebookbarCalc.js:1960
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "シートを前に挿入"
+msgstr "列を左に挿入"
 
 #: src/control/Control.NotebookbarCalc.js:1973
 msgid "Insert Columns After"
@@ -1103,9 +1095,8 @@ msgid "Remove Column Break"
 msgstr "列の区切りの削除"
 
 #: src/control/Control.NotebookbarImpress.js:27
-#, fuzzy
 msgid "Start Presentation"
-msgstr "文字の方向"
+msgstr "プレゼンテーションの開始"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
@@ -1132,9 +1123,8 @@ msgid "Right Margin"
 msgstr "右余白"
 
 #: src/control/Ruler.js:646
-#, fuzzy
 msgid "Insert tabstop"
-msgstr "表の挿入"
+msgstr "タブストップの挿入"
 
 #: src/control/Ruler.js:653
 msgid "Delete tabstop"
@@ -1177,9 +1167,8 @@ msgid "Select document type to upload"
 msgstr ""
 
 #: src/control/Signing.js:330
-#, fuzzy
 msgid "Type:"
-msgstr "タイプ"
+msgstr "タイプ:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
