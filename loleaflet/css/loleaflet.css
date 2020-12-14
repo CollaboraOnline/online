@@ -367,6 +367,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	line-height: 1.4;
 }
 
+.loleaflet-annotation-reply-count {
+	float: right;
+}
+
 .loleaflet-dont-break {
 	/* These are technically the same, but use both */
 	overflow-wrap: break-word;

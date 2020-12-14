@@ -1863,6 +1863,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder._createComment(container, data, true);
 		if (data.children.length > 0)
 		{
+			var numberOfReplies = data.children.length - 1;
+			if (numberOfReplies > 0)
+			{
+				var replyCountNode = L.DomUtil.create('div','loleaflet-annotation-reply-count loleaflet-annotation-content',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
+				var replyCountText;
+				if (numberOfReplies == 1) {
+					replyCountText = numberOfReplies + ' ' + _('reply');
+				}
+				else {
+					replyCountText = numberOfReplies + ' ' + _('replies');
+				}
+				$(replyCountNode).text(replyCountText);
+			}
 			var childContainer = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
 			childContainer.id = 'comment-thread' + data.id;
 			childContainer.title = _('Comment');
@@ -1877,6 +1890,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				L.DomUtil.remove($(container).find('.loleaflet-annotation-menubar')[0]);
 				var arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
 				arrowSpan.innerHTML = '>';
+				arrowSpan.style.padding = '0px';
 
 				$(container).click(function() {
 					builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
