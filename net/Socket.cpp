@@ -36,7 +36,8 @@
 #endif
 #include "WebSocketHandler.hpp"
 
-int SocketPoll::DefaultPollTimeoutMicroS = 5000 * 1000;
+// Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
+constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
@@ -596,8 +597,8 @@ void WebSocketHandler::dumpState(std::ostream& os)
 
 void StreamSocket::dumpState(std::ostream& os)
 {
-    int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS;
-    int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
+    int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS.count();
+    const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << '\t' << getFD() << '\t' << events << '\t'
        << _inBuffer.size() << '\t' << _outBuffer.size() << '\t'
        << " r: " << _bytesRecvd << "\t w: " << _bytesSent << '\t'
