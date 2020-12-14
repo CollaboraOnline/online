@@ -5,6 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <chrono>
 #include <config.h>
 
 #include <cassert>
@@ -506,10 +507,10 @@ void Admin::pollingThread()
         }
 
         // Handle websockets & other work.
-        const int timeout = capAndRoundInterval(
-            std::min(std::min(std::min(cpuWait, memWait), netWait), cleanupWait));
-        LOG_TRC("Admin poll for " << timeout << "ms.");
-        poll(timeout * 1000); // continue with ms for admin, settings etc.
+        const auto timeout = std::chrono::milliseconds(capAndRoundInterval(
+            std::min(std::min(std::min(cpuWait, memWait), netWait), cleanupWait)));
+        LOG_TRC("Admin poll for " << timeout);
+        poll(timeout); // continue with ms for admin, settings etc.
     }
 }
 

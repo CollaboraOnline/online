@@ -709,7 +709,7 @@ int main(int argc, char** argv)
     {
         UnitKit::get().invokeForKitTest();
 
-        mainPoll.poll(POLL_TIMEOUT_MICRO_S);
+        mainPoll.poll(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
 
         SigUtil::checkDumpGlobalState(dump_forkit_state);
 

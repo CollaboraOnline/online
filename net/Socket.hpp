@@ -540,7 +540,7 @@ public:
     virtual ~SocketPoll();
 
     /// Default poll time - useful to increase for debugging.
-    static int DefaultPollTimeoutMicroS;
+    static constexpr std::chrono::microseconds DefaultPollTimeoutMicroS = std::chrono::seconds(5);
     static std::atomic<bool> InhibitThreadChecks;
 
     /// Stop the polling thread.
@@ -640,7 +640,7 @@ public:
     /// Poll the sockets for available data to read or buffer to write.
     /// Returns the return-value of poll(2): 0 on timeout,
     /// -1 for error, and otherwise the number of events signalled.
-    int poll(int64_t timeoutMaxMicroS);
+    int poll(std::chrono::microseconds timeoutMax) { return poll(timeoutMax.count()); }
 
     /// Write to a wakeup descriptor
     static void wakeup (int fd)
@@ -756,6 +756,9 @@ protected:
     }
 
 private:
+    /// Actual poll implementation
+    int poll(int64_t timeoutMaxMicroS);
+
     /// Generate the request to connect & upgrade this socket to a given path
     /// and sends a file descriptor along request if is != -1.
     void clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocket>& socket,
