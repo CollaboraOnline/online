@@ -515,7 +515,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			if (!$('.insertshape-grid').length) {
 				$(control.container).w2overlay(window.getShapesPopupHtml());
-				window.insertShapes();
+				window.insertShapes('insertshapes');
 
 				$('.insertshape-grid .row .col').click(function () {
 					$(control.container).w2overlay();
