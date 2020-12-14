@@ -38,6 +38,7 @@ bool loolmount(const std::string& arg, std::string source, std::string target)
 
 bool bind(const std::string& source, const std::string& target)
 {
+    LOG_DBG("Mounting [" << source << "] -> [" << target << "].");
     Poco::File(target).createDirectory();
     const bool res = loolmount("-b", source, target);
     if (res)
@@ -49,6 +50,7 @@ bool bind(const std::string& source, const std::string& target)
 
 bool remountReadonly(const std::string& source, const std::string& target)
 {
+    LOG_DBG("Remounting [" << source << "] -> [" << target << "].");
     Poco::File(target).createDirectory();
     const bool res = loolmount("-r", source, target);
     if (res)
@@ -60,12 +62,12 @@ bool remountReadonly(const std::string& source, const std::string& target)
 
 bool unmount(const std::string& target)
 {
-    LOG_DBG("Unmounting [" << target << "].");
+    LOG_DBG("Unmounting [" << target << ']');
     const bool res = loolmount("-u", "", target);
     if (res)
         LOG_TRC("Unmounted [" << target << "] successfully.");
     else
-        LOG_ERR("Failed to unmount [" << target << "].");
+        LOG_ERR("Failed to unmount [" << target << ']');
     return res;
 }
 
@@ -357,7 +359,7 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
         // Is it outdated?
         if (dstStat.isUpToDate(srcStat))
         {
-            LOG_INF("File [" << dstFilename << "] is already up-to-date.");
+            LOG_DBG("File [" << dstFilename << "] is already up-to-date.");
             continue;
         }
 
