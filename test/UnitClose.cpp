@@ -5,6 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <chrono>
 #include <memory>
 #include <ostream>
 #include <set>
@@ -210,8 +211,8 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
 
 UnitClose::UnitClose()
 {
-    int timeout_minutes = 2;
-    setTimeout(timeout_minutes * 60 * 1000);
+    constexpr std::chrono::minutes timeout_minutes(2);
+    setTimeout(timeout_minutes);
 }
 
 void UnitClose::invokeTest()

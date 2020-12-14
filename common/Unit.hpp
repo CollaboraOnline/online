@@ -9,6 +9,7 @@
 
 #include <atomic>
 #include <cassert>
+#include <chrono>
 #include <memory>
 #include <string>
 
@@ -59,7 +60,7 @@ class UnitBase
 protected:
     // ---------------- Helper API ----------------
     /// After this time we invoke 'timeout' default 30 seconds
-    void setTimeout(int timeoutMilliSeconds);
+    void setTimeout(std::chrono::milliseconds timeoutMilliSeconds);
 
     enum class TestResult
     {
@@ -143,7 +144,7 @@ public:
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 
-    int getTimeoutMilliSeconds() const
+    std::chrono::milliseconds getTimeoutMilliSeconds() const
     {
         return _timeoutMilliSeconds;
     }
@@ -167,7 +168,7 @@ private:
     static char *UnitLibPath;
     bool _setRetValue;
     int _retValue;
-    int _timeoutMilliSeconds;
+    std::chrono::milliseconds _timeoutMilliSeconds;
     static UnitBase *Global;
     UnitType _type;
 };

@@ -131,7 +131,7 @@ bool UnitBase::isUnitTesting()
     return Global && Global->_dlHandle;
 }
 
-void UnitBase::setTimeout(int timeoutMilliSeconds)
+void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
 {
     assert(!TimeoutThreadRunning);
     _timeoutMilliSeconds = timeoutMilliSeconds;
@@ -141,7 +141,7 @@ UnitBase::UnitBase()
     : _dlHandle(nullptr),
       _setRetValue(false),
       _retValue(0),
-      _timeoutMilliSeconds(30 * 1000),
+      _timeoutMilliSeconds(std::chrono::seconds(30)),
       _type(UnitType::Wsd)
 {
 }

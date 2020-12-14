@@ -22,7 +22,7 @@ public:
     UnitPrefork()
         : _childSockets(0)
     {
-        setTimeout(60 * 1000);
+        setTimeout(std::chrono::seconds(60));
     }
 
     virtual void configure(Poco::Util::LayeredConfiguration& config) override

@@ -33,9 +33,10 @@ public:
     UnitTyping() :
         _workerStarted(false)
     {
-        int timeout_minutes = 5;
-        setTimeout(timeout_minutes * 60 * 1000);
+        constexpr std::chrono::minutes timeout_minutes(5);
+        setTimeout(timeout_minutes);
     }
+
     ~UnitTyping()
     {
         LOG_INF("Joining test worker thread\n");

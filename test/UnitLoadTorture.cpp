@@ -197,8 +197,8 @@ UnitBase::TestResult UnitLoadTorture::testLoadTorture()
 UnitLoadTorture::UnitLoadTorture()
 {
     // Double of the default.
-    int timeout_minutes = 1;
-    setTimeout(timeout_minutes * 60 * 1000);
+    constexpr std::chrono::minutes timeout_minutes(1);
+    setTimeout(timeout_minutes);
 }
 
 void UnitLoadTorture::invokeTest()
