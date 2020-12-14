@@ -11,7 +11,7 @@ AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
 AC_CONFIG_MACRO_DIR([m4])
 
 # We don't want to require pkg-config and PKG_CHECK_MODULES on macOS
-m4_if(m4_esyscmd_s([uname -s]),Linux,[],[m4_define([PKG_CHECK_MODULES],[])])
+m4_if(m4_esyscmd_s([uname -s]),Darwin,[m4_define([PKG_CHECK_MODULES],[])],[])
 
 LOOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
 LOOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
