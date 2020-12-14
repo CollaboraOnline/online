@@ -504,11 +504,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	height: 32px;
 }
 
-.spinfieldcontainer {
-	display: inline-block;
-	overflow: hidden;
-}
-
 .spinfieldcontrols {
 	background-color: #eee;
 	text-align: center;
@@ -727,6 +722,8 @@ div#mobile-wizard-content .spinfieldcontainer{
 	border: 1px solid #ccc;
 	border-radius: 2px;
 	background-size: 28px;
+	display: inline-block;
+	overflow: hidden;
 }
 div#mobile-wizard-content .spinfieldcontainer .spinfieldimage {
 	opacity: 0.5;
