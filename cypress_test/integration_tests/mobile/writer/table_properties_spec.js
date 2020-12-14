@@ -200,9 +200,22 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.typeIntoDocument('{shift}{downarrow}{rightarrow}');
 
+		// We use cursor position as the indicator of layout change.
+		helper.getCursorPos('top', 'origCursorPos');
+
 		openTablePanel();
 
 		helper.clickOnIdle('#MergeCells');
+
+		// Cursor was in the second row originally.
+		// With merging two rows, the cursor is moved into the first row.
+		cy.get('@origCursorPos')
+			.then(function(origCursorPos) {
+				cy.get('.blinking-cursor')
+					.should(function(cursor) {
+						expect(cursor.offset().top).to.be.lessThan(origCursorPos);
+					});
+			});
 
 		selectFullTable(2);
 
