@@ -11,7 +11,7 @@ describe('Slide operations: user-2.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert/delete slide.', function() {
