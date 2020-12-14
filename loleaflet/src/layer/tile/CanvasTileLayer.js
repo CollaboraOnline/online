@@ -91,6 +91,17 @@ L.CanvasTilePainter = L.Class.extend({
 		this._canvasCtx.msImageSmoothingEnabled = false;
 		var mapSize = this._map.getPixelBoundsCore().getSize();
 		this._lastMapSize = mapSize;
+
+		this._offscreenCanvases = [];
+		this._oscCtxs = [];
+		for (var i = 0; i < 4; i++) {
+			this._offscreenCanvases.push(document.createElement('canvas'));
+			this._oscCtxs.push(this._offscreenCanvases[i].getContext('2d', { alpha: false }));
+			this._oscCtxs[i].imageSmoothingEnabled = false;
+			this._oscCtxs[i].msImageSmoothingEnabled = false;
+		}
+
+
 		this._setCanvasSize(mapSize.x, mapSize.y);
 		this._canvasCtx.setTransform(1,0,0,1,0,0);
 	},
@@ -102,6 +113,13 @@ L.CanvasTilePainter = L.Class.extend({
 		// real pixels have to be integral
 		this._canvas.width = this._pixWidth;
 		this._canvas.height = this._pixHeight;
+		var tileSize = this._layer._getTileSize();
+		var borderSize = 3;
+		this._osCanvasExtraSize = 2 * borderSize * tileSize;
+		for (var i = 0; i < 4; ++i) {
+			this._offscreenCanvases[i].width = this._pixWidth + this._osCanvasExtraSize;
+			this._offscreenCanvases[i].height = this._pixHeight + this._osCanvasExtraSize;
+		}
 
 		// CSS pixels can be fractional, but need to round to the same real pixels
 		var cssWidth = this._pixWidth / this._dpiScale; // NB. beware
@@ -127,20 +145,28 @@ L.CanvasTilePainter = L.Class.extend({
 	},
 
 	clear: function (ctx) {
+		if (!ctx)
+			ctx = this._paintContext();
 		// First render the background / sheet grid if we can
-		if (this.renderBackground)
-		{
-			if (!ctx)
-				ctx = this._paintContext();
+		if (this.renderBackground) {
 			this.renderBackground(this._canvasCtx, ctx);
 		}
 		else
 		{
-			if (this._layer._debug)
+			if (this._layer._debug) {
 				this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+				for (var i = 0; i < ctx.paneBoundsList.length; ++i)
+					this._oscCtxs[i].fillStyle = 'rgba(255, 0, 0, 0.5)';
+			}
 			else
+			{
 				this._canvasCtx.fillStyle = 'white';
+				for (var i = 0; i < ctx.paneBoundsList.length; ++i)
+					this._oscCtxs[i].fillStyle = 'white';
+			}
 			this._canvasCtx.fillRect(0, 0, this._pixWidth, this._pixHeight);
+			for (var i = 0; i < ctx.paneBoundsList.length; ++i)
+				this._oscCtxs[i].fillRect(0, 0, this._offscreenCanvases[i].width, this._offscreenCanvases[i].height);
 		}
 	},
 
@@ -163,6 +189,22 @@ L.CanvasTilePainter = L.Class.extend({
 		};
 	},
 
+	_extendedPaneBounds: function (paneBounds) {
+		var extendedBounds = paneBounds.clone();
+		var halfExtraSize = this._osCanvasExtraSize / 2; // This is always an integer.
+		if (paneBounds.min.x) { // pane can move in x direction.
+			extendedBounds.min.x = Math.max(0, extendedBounds.min.x - halfExtraSize);
+			extendedBounds.max.x += halfExtraSize;
+		}
+
+		if (paneBounds.min.y) { // pane can move in y direction.
+			extendedBounds.min.y = Math.max(0, extendedBounds.min.y - halfExtraSize);
+			extendedBounds.max.y += halfExtraSize;
+		}
+
+		return extendedBounds;
+	},
+
 	_paintWithPanes: function (tile, ctx) {
 		var tileTopLeft = tile.coords.getPos();
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
@@ -172,44 +214,57 @@ L.CanvasTilePainter = L.Class.extend({
 			var paneBounds = ctx.paneBoundsList[i];
 			// co-ordinates of the main-(bottom right) pane in core document pixels
 			var viewBounds = ctx.viewBounds;
+			// Extended pane bounds
+			var extendedBounds = this._extendedPaneBounds(paneBounds);
 
 			// into real pixel-land ...
 			paneBounds.round();
 			viewBounds.round();
+			extendedBounds.round();
 
-			if (!paneBounds.intersects(tileBounds))
-				continue;
+			if (paneBounds.intersects(tileBounds)) {
+				var paneOffset = paneBounds.getTopLeft(); // allocates
+				// Cute way to detect the in-canvas pixel offset of each pane
+				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
+				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
-			var paneOffset = paneBounds.getTopLeft(); // allocates
-			// Cute way to detect the in-canvas pixel offset of each pane
-			paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
-			paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
-
-			// intersect - to avoid state thrash through clipping
-			var crop = new L.Bounds(tileBounds.min, tileBounds.max);
-			crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
-			crop.min.y = Math.max(paneBounds.min.y, tileBounds.min.y);
-			crop.max.x = Math.min(paneBounds.max.x, tileBounds.max.x);
-			crop.max.y = Math.min(paneBounds.max.y, tileBounds.max.y);
-
-			var cropWidth = crop.max.x - crop.min.x;
-			var cropHeight = crop.max.y - crop.min.y;
-
-			if (cropWidth && cropHeight) {
-				this._canvasCtx.drawImage(tile.el,
-					crop.min.x - tileBounds.min.x,
-					crop.min.y - tileBounds.min.y,
-					cropWidth, cropHeight,
-					crop.min.x - paneOffset.x,
-					crop.min.y - paneOffset.y,
-					cropWidth, cropHeight);
+				this._drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this._canvasCtx);
 			}
 
-			if (this._layer._debug)
-			{
-				this._canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-				this._canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
+			if (extendedBounds.intersects(tileBounds)) {
+				var offset = extendedBounds.getTopLeft();
+				viewBounds.x = Math.min(offset.x, viewBounds.min.x);
+				viewBounds.y = Math.min(offset.y, viewBounds.min.y);
+				this._drawTileInPane(tile, tileBounds, extendedBounds, extendedBounds.getTopLeft(), this._oscCtxs[i]);
 			}
+		}
+	},
+
+	_drawTileInPane: function (tile, tileBounds, paneBounds, paneOffset, canvasCtx) {
+		// intersect - to avoid state thrash through clipping
+		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+		crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
+		crop.min.y = Math.max(paneBounds.min.y, tileBounds.min.y);
+		crop.max.x = Math.min(paneBounds.max.x, tileBounds.max.x);
+		crop.max.y = Math.min(paneBounds.max.y, tileBounds.max.y);
+
+		var cropWidth = crop.max.x - crop.min.x;
+		var cropHeight = crop.max.y - crop.min.y;
+
+		if (cropWidth && cropHeight) {
+			canvasCtx.drawImage(tile.el,
+				crop.min.x - tileBounds.min.x,
+				crop.min.y - tileBounds.min.y,
+				cropWidth, cropHeight,
+				crop.min.x - paneOffset.x,
+				crop.min.y - paneOffset.y,
+				cropWidth, cropHeight);
+		}
+
+		if (this._layer._debug)
+		{
+			canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+			canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
 		}
 	},
 
@@ -384,6 +439,81 @@ L.CanvasTilePainter = L.Class.extend({
 		if (this._layer._debug && this.renderBackground)
 			this.renderBackground(this._canvasCtx, ctx);
 	},
+
+	_viewReset: function () {
+		var ctx = this._paintContext();
+		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+			this._oscCtxs[i].fillStyle = 'white';
+			this._oscCtxs[i].fillRect(0, 0, this._offscreenCanvases[i].width, this._offscreenCanvases[i].height);
+		}
+	},
+
+	_zoomAnimation: function () {
+		var painter = this;
+		// TODO: do for all panes and for zoom-out case.
+		var ctx = this._paintContext();
+		var paneBoundsList = ctx.paneBoundsList;
+		var splitPos = ctx.paneBoundsActive ? this._splitPos.multiplyBy(this._dpiScale) : new L.Point(0, 0);
+
+		var rafFunc = function () {
+
+			for (var i = 0; i < paneBoundsList.length; ++i) {
+				var paneBounds = paneBoundsList[i];
+				var paneSize = paneBounds.getSize();
+				var extendedBounds = painter._extendedPaneBounds(paneBounds);
+				var paneBoundsOffset = paneBounds.min.subtract(extendedBounds.min);
+
+				var inXBounds = (painter._newCenter.x >= paneBounds.min.x) && (painter._newCenter.x <= paneBounds.max.x);
+				var inYBounds = (painter._newCenter.y >= paneBounds.min.y) && (painter._newCenter.y <= paneBounds.max.y);
+
+				// Calculate the pinch-center in off-screen canvas coordinates.
+				var center = new L.Point(0, 0);
+				if (inXBounds)
+					center.x = painter._newCenter.x - paneBounds.min.x;
+				if (inYBounds)
+					center.y = painter._newCenter.y - paneBounds.min.y;
+
+				var sourceTopLeft = new L.Point(
+					Math.max(0, center.x + (-center.x / painter._zoomFrameScale) + paneBoundsOffset.x),
+					Math.max(0, center.y + (-center.y / painter._zoomFrameScale) + paneBoundsOffset.y));
+
+				painter._canvasCtx.drawImage(painter._offscreenCanvases[i],
+					sourceTopLeft.x, sourceTopLeft.y,
+					// sourceWidth, sourceHeight
+					paneSize.x / painter._zoomFrameScale, paneSize.y / painter._zoomFrameScale,
+					// destX, destY
+					paneBounds.min.x ? splitPos.x + 1 : 0, paneBounds.min.y ? splitPos.y + 1 : 0,
+					// destWidth, destHeight
+					paneSize.x, paneSize.y);
+			}
+
+			painter._zoomRAF = requestAnimationFrame(rafFunc);
+		};
+		rafFunc();
+	},
+
+	zoomStep: function (zoom, newCenter) {
+		zoom = this._map._limitZoom(zoom);
+		var origZoom = this._map.getZoom();
+		// Compute relative-multiplicative scale of this zoom-frame w.r.t the starting zoom(ie the current Map's zoom).
+		this._zoomFrameScale = this._map.zoomToFactor(zoom - origZoom + this._map.options.zoom);
+
+		this._newCenter = this._map.project(newCenter).multiplyBy(this._dpiScale); // in core pixels
+		if (!this._inZoomAnim) {
+			this._inZoomAnim = true;
+			this._layer._prefetchTilesSync();
+			// Start RAF loop for zoom-animation
+			this._zoomAnimation();
+		}
+	},
+
+	zoomStepEnd: function () {
+		this._zoomFrameScale = undefined;
+		if (this._inZoomAnim) {
+			cancelAnimationFrame(this._zoomRAF);
+			this._inZoomAnim = false;
+		}
+	}
 });
 
 L.CanvasTileLayer = L.TileLayer.extend({
@@ -546,6 +676,20 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		};
 
 		return events;
+	},
+
+	// zoom is the new intermediate zoom level (log scale : 1 to 14)
+	zoomStep: function (zoom, newCenter) {
+		this._painter.zoomStep(zoom, newCenter);
+	},
+
+	zoomStepEnd: function () {
+		this._painter.zoomStepEnd();
+	},
+
+	_viewReset: function (e) {
+		L.TileLayer.prototype._viewReset.call(this, e);
+		this._painter._viewReset();
 	},
 
 	_removeSplitters: function () {
@@ -1317,6 +1461,12 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		});
 	},
 
+	_prefetchTilesSync: function () {
+		if (!this._prefetcher)
+			this._prefetcher = new L.TilesPreFetcher(this, this._map);
+		this._prefetcher.preFetchTiles(true /* forceBorderCalc */, true /* immediate */);
+	},
+
 	_preFetchTiles: function (forceBorderCalc) {
 		if (this._prefetcher) {
 			this._prefetcher.preFetchTiles(forceBorderCalc);
@@ -1462,7 +1612,7 @@ L.TilesPreFetcher = L.Class.extend({
 		this._map = map;
 	},
 
-	preFetchTiles: function (forceBorderCalc) {
+	preFetchTiles: function (forceBorderCalc, immediate) {
 
 		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer) {
 			return;
@@ -1563,7 +1713,7 @@ L.TilesPreFetcher = L.Class.extend({
 			)
 		);
 
-		var tilesToFetch = maxTilesToFetch; // total tile limit per call of preFetchTiles()
+		var tilesToFetch = immediate ? Infinity : maxTilesToFetch; // total tile limit per call of preFetchTiles()
 		var doneAllPanes = true;
 
 		for (paneIdx = 0; paneIdx < this._borders.length; ++paneIdx) {
@@ -1685,8 +1835,9 @@ L.TilesPreFetcher = L.Class.extend({
 			}
 		} // pane loop end
 
-		console.assert(finalQueue.length <= maxTilesToFetch,
-			'finalQueue length(' + finalQueue.length + ') exceeded maxTilesToFetch(' + maxTilesToFetch + ')');
+		if (!immediate)
+			console.assert(finalQueue.length <= maxTilesToFetch,
+				'finalQueue length(' + finalQueue.length + ') exceeded maxTilesToFetch(' + maxTilesToFetch + ')');
 
 		var tilesRequested = false;
 
