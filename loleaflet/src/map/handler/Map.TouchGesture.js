@@ -568,11 +568,23 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._zoom = this._map._limitZoom(this._map.getScaleZoom(e.scale));
 		this._center = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
 						      this._zoom, this._map.options.maxBounds);
+
+		var origCenter = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
+							  this._map.getZoom(), this._map.options.maxBounds);
+
+		if (this._map._docLayer.zoomStep) {
+			this._map._docLayer.zoomStep(this._zoom, origCenter);
+		}
 	},
 
 	_onPinchEnd: function () {
 		if (!this._pinchStartCenter)
 			return;
+
+		var oldZoom = this._map.getZoom();
+		var zoomDelta = this._zoom - oldZoom;
+		var finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
+
 
 		if (this._map._docLayer.isCursorVisible()) {
 			this._map._docLayer._cursorMarker.setOpacity(1);
@@ -596,6 +608,12 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 
 		this._pinchStartCenter = undefined;
+
+		if (this._map._docLayer.zoomStepEnd) {
+			this._map._docLayer.zoomStepEnd();
+		}
+
+		this._map.setView(this._center, finalZoom);
 	},
 
 	_constructFakeEvent: function (evt, type) {
