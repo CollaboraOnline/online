@@ -5,12 +5,16 @@
 .jsdialog-container #source-button,
 .jsdialog-container #destination-button,
 .jsdialog-container #refbutton,
-.jsdialog-container #assign {
+.jsdialog-container #assign,
+.jsdialog-container #input-range-button,
+.jsdialog-container #output-range-button,
+.jsdialog-container #variable1-range-button,
+.jsdialog-container #variable2-range-button {
 	height: 32px;
 	line-height: 0em;
 	color: #222;
 	min-width: 62px;
-	background-color: #f1f1f1;
+	background-color: #f1f1f1 !important;
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	margin: 5px;
