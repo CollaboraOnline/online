@@ -31,7 +31,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	function selectFullTable(cursorMovementCount, checkCursorVisibility = true) {
 		// Move cursor out of the table.
 		for (var i = 0; i < cursorMovementCount; i++) {
-			helper.moveCursor('down', checkCursorVisibility);
+			helper.moveCursor('down', '', checkCursorVisibility);
 		}
 
 		writerHelper.selectAllTextOfDoc();

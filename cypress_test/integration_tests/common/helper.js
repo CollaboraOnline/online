@@ -747,36 +747,43 @@ function doIfOnDesktop(callback) {
 		});
 }
 
-function moveCursor(direction, checkCursorVis = true) {
+function moveCursor(direction, modifier, checkCursorVis = true) {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
+	cy.log('Param - modifier: ' + modifier);
+	cy.log('Param - checkCursorVis: ' + checkCursorVis);
 
-	if (direction === 'up' || direction === 'down'
-		|| direction === 'ctrl-home' || direction === 'ctrl-end') {
+	if (direction === 'up' ||
+		direction === 'down' ||
+		(direction === 'home' && modifier === 'ctrl') ||
+		(direction === 'end' && modifier === 'ctrl')) {
 		getCursorPos('top', 'origCursorPos');
-	} else if (direction === 'left' || direction === 'right'
-		|| direction === 'home' || direction === 'end') {
+	} else if (direction === 'left' ||
+		direction === 'right' ||
+		direction === 'home' ||
+		direction === 'end') {
 		getCursorPos('left', 'origCursorPos');
 	}
 
 	var key = '';
-	if (direction === 'up') {
-		key = '{uparrow}';
-	} else if (direction === 'down') {
-		key = '{downarrow}';
-	} else if (direction === 'left') {
-		key = '{leftarrow}';
-	} else if (direction === 'right') {
-		key = '{rightarrow}';
-	} else if (direction === 'home') {
-		key = '{home}';
-	} else if (direction === 'end') {
-		key = '{end}';
-	} else if (direction === 'ctrl-home') {
-		key = '{ctrl}{home}';
-	} else if (direction === 'ctrl-end') {
-		key = '{ctrl}{end}';
+	if (modifier === 'ctrl') {
+		key = '{ctrl}';
 	}
+
+	if (direction === 'up') {
+		key += '{uparrow}';
+	} else if (direction === 'down') {
+		key += '{downarrow}';
+	} else if (direction === 'left') {
+		key += '{leftarrow}';
+	} else if (direction === 'right') {
+		key += '{rightarrow}';
+	} else if (direction === 'home') {
+		key += '{home}';
+	} else if (direction === 'end') {
+		key += '{end}';
+	}
+
 	typeIntoDocument(key);
 
 	if (checkCursorVis === true) {
@@ -788,9 +795,11 @@ function moveCursor(direction, checkCursorVis = true) {
 		.then(function(origCursorPos) {
 			cy.get('.blinking-cursor')
 				.should(function(cursor) {
-					if (direction === 'up' || direction === 'ctrl-home') {
+					if (direction === 'up' ||
+						(direction === 'home' && modifier === 'ctrl')) {
 						expect(cursor.offset().top).to.be.lessThan(origCursorPos);
-					} else if (direction === 'down' || direction === 'ctrl-end') {
+					} else if (direction === 'down' ||
+						(direction === 'end' && modifier === 'ctrl')) {
 						expect(cursor.offset().top).to.be.greaterThan(origCursorPos);
 					} else if (direction === 'left' || direction === 'home') {
 						expect(cursor.offset().left).to.be.lessThan(origCursorPos);
