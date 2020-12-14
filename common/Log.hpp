@@ -29,13 +29,6 @@
 
 #include "Util.hpp"
 
-inline std::ostream& operator<< (std::ostream& os, const Poco::Timestamp& ts)
-{
-    os << Poco::DateTimeFormatter::format(Poco::DateTime(ts),
-                                          Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
-    return os;
-}
-
 inline std::ostream& operator<< (std::ostream& os, const std::chrono::system_clock::time_point& ts)
 {
     os << Util::getIso8601FracformatTime(ts);
@@ -225,17 +218,6 @@ namespace Log
         if (lhs.enabled())
         {
             lhs.getStream() << rhs;
-        }
-
-        return lhs;
-    }
-
-    inline StreamLogger& operator<<(StreamLogger& lhs, const Poco::Timestamp& rhs)
-    {
-        if (lhs.enabled())
-        {
-            lhs.getStream() << Poco::DateTimeFormatter::format(Poco::DateTime(rhs),
-                                                           Poco::DateTimeFormat::ISO8601_FRAC_FORMAT);
         }
 
         return lhs;
