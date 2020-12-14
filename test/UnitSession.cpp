@@ -61,6 +61,8 @@ public:
 
 UnitBase::TestResult UnitSession::testBadRequest()
 {
+    const char* testname = "badrequest ";
+    TST_LOG("Starting Test: " << testname);
     try
     {
         // Try to load a bogus url.
@@ -92,6 +94,7 @@ UnitBase::TestResult UnitSession::testBadRequest()
 UnitBase::TestResult UnitSession::testHandshake()
 {
     const char* testname = "handshake ";
+    TST_LOG("Starting Test: " << testname);
     try
     {
         std::string documentPath, documentURL;
@@ -159,6 +162,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 UnitBase::TestResult UnitSession::testSlideShow()
 {
     const char* testname = "slideshow ";
+    TST_LOG("Starting Test: " << testname);
     try
     {
         // Load a document

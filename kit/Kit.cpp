@@ -471,7 +471,6 @@ public:
         _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
         _tileQueue(std::move(tileQueue)),
         _websocketHandler(websocketHandler),
-        _docPassword(""),
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
@@ -2144,7 +2143,7 @@ void lokit_main(
     assert(!loTemplate.empty());
     assert(!loSubPath.empty());
 
-    LOG_DBG("Process started.");
+    LOG_INF("Kit process for Jail [" << jailId << "] started.");
 
     std::string userdir_url;
     std::string instdir_path;
@@ -2373,7 +2372,7 @@ void lokit_main(
         else
             LOG_SYS("Failed to get RLIMIT_NOFILE.");
 
-        LOG_INF("Process is ready.");
+        LOG_INF("Kit process for Jail [" << jailId << "] is ready.");
 
         std::string pathAndQuery(NEW_CHILD_URI);
         pathAndQuery.append("?jailid=");
@@ -2465,7 +2464,7 @@ void lokit_main(
 #else
         // Trap the signal handler, if invoked,
         // to prevent exiting.
-        LOG_INF("Process finished.");
+        LOG_INF("Kit process for Jail [" << jailId << "] finished.");
         Log::shutdown();
 
         // Let forkit handle the jail cleanup.
@@ -2488,7 +2487,7 @@ void lokit_main(
 
 #if !MOBILEAPP
 
-    LOG_INF("Process finished.");
+    LOG_INF("Kit process for Jail [" << jailId << "] finished.");
     Log::shutdown();
     // Wait for the signal handler, if invoked, to prevent exiting until done.
     SigUtil::waitSigHandlerTrap();

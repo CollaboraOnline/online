@@ -3135,7 +3135,7 @@ private:
             {
                 LOG_INF("HTTP request for: " << filePathAnonym);
 
-                std::string fileName = filePath.getFileName();
+                const std::string& fileName = filePath.getFileName();
                 const Poco::URI postRequestUri(request.getURI());
                 const Poco::URI::QueryParameters postRequestQueryParams = postRequestUri.getQueryParameters();
 
