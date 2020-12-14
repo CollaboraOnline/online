@@ -11,7 +11,7 @@ describe('Sidebar visibility: user-1.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Show/hide sidebar.', function() {

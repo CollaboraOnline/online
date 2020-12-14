@@ -10,7 +10,7 @@ describe('Sheet operations: user-1.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Insert/delete sheet.', function() {
