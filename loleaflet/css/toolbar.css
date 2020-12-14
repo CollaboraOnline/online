@@ -592,6 +592,18 @@ button.leaflet-control-search-next
 .w2ui-icon.flowchartshapes_flowchart-direct-access-storage { background: url('images/lc_flowchartshapes.flowchart-direct-access-storage.svg') no-repeat center !important; }
 .w2ui-icon.flowchartshapes_flowchart-display { background: url('images/lc_flowchartshapes.flowchart-display.svg') no-repeat center !important; }
 
+.w2ui-icon.connectors_connector { background: url('images/lc_connector.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorarrows { background: url('images/lc_connectorarrows.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorarrowend { background: url('images/lc_connectorarrowend.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorlinearrowend { background: url('images/lc_connectorlinearrowend.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorcurvearrowend { background: url('images/lc_connectorcurvearrowend.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorlinesarrowend { background: url('images/lc_connectorlinesarrowend.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorline { background: url('images/lc_connectorline.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorcurve { background: url('images/lc_connectorcurve.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorlines { background: url('images/lc_connectorlines.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorlinearrows { background: url('images/lc_connectorlinearrows.svg') no-repeat center !important; }
+.w2ui-icon.connectors_connectorcurvearrows { background: url('images/lc_connectorcurvearrows.svg') no-repeat center !important; }
+
 .w2ui-icon.frame01 { background: url('images/fr01.svg') no-repeat center !important; }
 .w2ui-icon.frame02 { background: url('images/fr02.svg') no-repeat center !important; }
 .w2ui-icon.frame03 { background: url('images/fr03.svg') no-repeat center !important; }
