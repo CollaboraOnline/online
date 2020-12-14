@@ -39,7 +39,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._setCanvasWidth();
 		this._setCanvasHeight();
 
-		this._canvasContext.scale(this._dpiScale, this._dpiScale);
 		this._headerWidth = this._canvasWidth;
 		L.Control.Header.rowHeaderWidth = this._canvasWidth;
 
@@ -358,8 +357,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		var rect = this._canvas.getBoundingClientRect();
 
-		var rowStart = entry.pos - entry.size;
-		var rowEnd = entry.pos;
+		var rowStart = (entry.pos - entry.size) / this._dpiScale;
+		var rowEnd = entry.pos / this._dpiScale;
 
 		var left = rect.left;
 		var right = rect.right;
@@ -516,7 +515,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 	_getHorzLatLng: function (start, offset, e) {
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = this._dragEntry.pos - this._dragEntry.size;
+		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
 		var ypos = Math.max(drag.y, entryStart);
 		return [
 			this._map.unproject(new L.Point(0, ypos)),
@@ -536,12 +535,14 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	onDragMove: function (item, start, offset, e) {
-		if (this._horzLine) {
+		if (this._horzLine && offset) {
 			this._horzLine.setLatLngs(this._getHorzLatLng(start, offset, e));
 		}
 	},
 
 	onDragEnd: function (item, start, offset, e) {
+		if (!offset)
+			return;
 		var end = new L.Point(e.clientX, e.clientY + offset.y);
 		var distance = this._map._docLayer._pixelsToTwips(end.subtract(start));
 
