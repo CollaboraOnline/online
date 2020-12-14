@@ -364,8 +364,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		var rect = this._canvas.getBoundingClientRect();
 
-		var colStart = entry.pos - entry.size;
-		var colEnd = entry.pos;
+		var colStart = (entry.pos - entry.size) / this._dpiScale;
+		var colEnd = entry.pos / this._dpiScale;
 
 		var left = rect.left + colStart;
 		var right = rect.left + colEnd;
@@ -554,7 +554,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	_getVertLatLng: function (start, offset, e) {
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = this._dragEntry.pos - this._dragEntry.size;
+		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
 		var xpos = Math.max(drag.x, entryStart);
 		return [
 			this._map.unproject(new L.Point(xpos, 0)),

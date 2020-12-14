@@ -273,12 +273,12 @@ L.Control.Header = L.Control.extend({
 		if (event.pointerType !== 'touch' || !this._map.isPermissionEdit())
 			return;
 
-		if (event.type == 'panstart')
+		if (event.type === 'panstart')
 			this._onPanStart(event);
-		else if (event.type == 'panmove') {
+		else if (event.type === 'panmove') {
 			this._onPanMove(event);
 		}
-		else if (event.type == 'panend') {
+		else if (event.type === 'panend') {
 			this._onPanEnd(event);
 		}
 	},
@@ -295,7 +295,7 @@ L.Control.Header = L.Control.extend({
 			var end = entry.pos;
 			var start = end - entry.size;
 			if (position >= start && position < end) {
-				var resizeAreaStart = Math.max(start, end - 3);
+				var resizeAreaStart = Math.max(start, end - 3 * this._dpiScale);
 				if (that.isHeaderSelected(entry.index) || window.mode.isMobile()) {
 					resizeAreaStart = end - that._resizeHandleSize;
 				}
@@ -356,16 +356,16 @@ L.Control.Header = L.Control.extend({
 	_mouseEventToCanvasPos: function(canvas, evt) {
 		var rect = canvas.getBoundingClientRect();
 		return {
-			x: (evt.clientX - rect.left) * window.devicePixelRatio,
-			y: (evt.clientY - rect.top) * window.devicePixelRatio
+			x: (evt.clientX - rect.left) * this._dpiScale,
+			y: (evt.clientY - rect.top) * this._dpiScale
 		};
 	},
 
 	_hammerEventToCanvasPos: function(canvas, event) {
 		var rect = canvas.getBoundingClientRect();
 		return {
-			x: (event.center.x - rect.left) * window.devicePixelRatio,
-			y: (event.center.y - rect.top) * window.devicePixelRatio
+			x: (event.center.x - rect.left) * this._dpiScale,
+			y: (event.center.y - rect.top) * this._dpiScale
 		};
 	},
 
