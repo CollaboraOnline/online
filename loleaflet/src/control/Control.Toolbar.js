@@ -3,7 +3,7 @@
  * Collabora Online toolbar
  */
 
-/* global $ w2ui vex _ */
+/* global $ w2ui _ */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function(global) {
 
@@ -308,162 +308,180 @@ function insertTable() {
 }
 
 var shapes = {
-	'Basic Shapes': [
-		{img: 'basicshapes_rectangle', uno: 'BasicShapes.rectangle'},
-		{img: 'basicshapes_round-rectangle', uno: 'BasicShapes.round-rectangle'},
-		{img: 'basicshapes_quadrat', uno: 'BasicShapes.quadrat'},
-		{img: 'basicshapes_round-quadrat', uno: 'BasicShapes.round-quadrat'},
-		{img: 'basicshapes_circle', uno: 'BasicShapes.circle'},
-		{img: 'basicshapes_ellipse', uno: 'BasicShapes.ellipse'},
+	'insertshapes': {
+		'Basic Shapes': [
+			{img: 'basicshapes_rectangle', uno: 'BasicShapes.rectangle'},
+			{img: 'basicshapes_round-rectangle', uno: 'BasicShapes.round-rectangle'},
+			{img: 'basicshapes_quadrat', uno: 'BasicShapes.quadrat'},
+			{img: 'basicshapes_round-quadrat', uno: 'BasicShapes.round-quadrat'},
+			{img: 'basicshapes_circle', uno: 'BasicShapes.circle'},
+			{img: 'basicshapes_ellipse', uno: 'BasicShapes.ellipse'},
 
-		{img: 'basicshapes_circle-pie', uno: 'BasicShapes.circle-pie'},
-		{img: 'basicshapes_isosceles-triangle', uno: 'BasicShapes.isosceles-triangle'},
-		{img: 'basicshapes_right-triangle', uno: 'BasicShapes.right-triangle'},
-		{img: 'basicshapes_trapezoid', uno: 'BasicShapes.trapezoid'},
-		{img: 'basicshapes_diamond', uno: 'BasicShapes.diamond'},
-		{img: 'basicshapes_parallelogram', uno: 'BasicShapes.parallelogram'},
+			{img: 'basicshapes_circle-pie', uno: 'BasicShapes.circle-pie'},
+			{img: 'basicshapes_isosceles-triangle', uno: 'BasicShapes.isosceles-triangle'},
+			{img: 'basicshapes_right-triangle', uno: 'BasicShapes.right-triangle'},
+			{img: 'basicshapes_trapezoid', uno: 'BasicShapes.trapezoid'},
+			{img: 'basicshapes_diamond', uno: 'BasicShapes.diamond'},
+			{img: 'basicshapes_parallelogram', uno: 'BasicShapes.parallelogram'},
 
-		{img: 'basicshapes_pentagon', uno: 'BasicShapes.pentagon'},
-		{img: 'basicshapes_hexagon', uno: 'BasicShapes.hexagon'},
-		{img: 'basicshapes_octagon', uno: 'BasicShapes.octagon'},
-		{img: 'basicshapes_cross', uno: 'BasicShapes.cross'},
-		{img: 'basicshapes_ring', uno: 'BasicShapes.ring'},
-		{img: 'basicshapes_block-arc', uno: 'BasicShapes.block-arc'},
+			{img: 'basicshapes_pentagon', uno: 'BasicShapes.pentagon'},
+			{img: 'basicshapes_hexagon', uno: 'BasicShapes.hexagon'},
+			{img: 'basicshapes_octagon', uno: 'BasicShapes.octagon'},
+			{img: 'basicshapes_cross', uno: 'BasicShapes.cross'},
+			{img: 'basicshapes_ring', uno: 'BasicShapes.ring'},
+			{img: 'basicshapes_block-arc', uno: 'BasicShapes.block-arc'},
 
-		{img: 'basicshapes_can', uno: 'BasicShapes.can'},
-		{img: 'basicshapes_cube', uno: 'BasicShapes.cube'},
-		{img: 'basicshapes_paper', uno: 'BasicShapes.paper'},
-		{img: 'basicshapes_frame', uno: 'BasicShapes.frame'}
-	],
+			{img: 'basicshapes_can', uno: 'BasicShapes.can'},
+			{img: 'basicshapes_cube', uno: 'BasicShapes.cube'},
+			{img: 'basicshapes_paper', uno: 'BasicShapes.paper'},
+			{img: 'basicshapes_frame', uno: 'BasicShapes.frame'}
+		],
 
-	'Symbol Shapes':  [
-		{img: 'symbolshapes', uno: 'SymbolShapes.smiley'},
-		{img: 'symbolshapes_sun', uno: 'SymbolShapes.sun'},
-		{img: 'symbolshapes_moon', uno: 'SymbolShapes.moon'},
-		{img: 'symbolshapes_lightning', uno: 'SymbolShapes.lightning'},
-		{img: 'symbolshapes_heart', uno: 'SymbolShapes.heart'},
-		{img: 'symbolshapes_flower', uno: 'SymbolShapes.flower'},
+		'Symbol Shapes':  [
+			{img: 'symbolshapes', uno: 'SymbolShapes.smiley'},
+			{img: 'symbolshapes_sun', uno: 'SymbolShapes.sun'},
+			{img: 'symbolshapes_moon', uno: 'SymbolShapes.moon'},
+			{img: 'symbolshapes_lightning', uno: 'SymbolShapes.lightning'},
+			{img: 'symbolshapes_heart', uno: 'SymbolShapes.heart'},
+			{img: 'symbolshapes_flower', uno: 'SymbolShapes.flower'},
 
-		{img: 'symbolshapes_cloud', uno: 'SymbolShapes.cloud'},
-		{img: 'symbolshapes_forbidden', uno: 'SymbolShapes.forbidden'},
-		{img: 'symbolshapes_puzzle', uno: 'SymbolShapes.puzzle'},
-		{img: 'symbolshapes_bracket-pair', uno: 'SymbolShapes.bracket-pair'},
-		{img: 'symbolshapes_left-bracket', uno: 'SymbolShapes.left-bracket'},
-		{img: 'symbolshapes_right-bracket', uno: 'SymbolShapes.right-bracket'},
+			{img: 'symbolshapes_cloud', uno: 'SymbolShapes.cloud'},
+			{img: 'symbolshapes_forbidden', uno: 'SymbolShapes.forbidden'},
+			{img: 'symbolshapes_puzzle', uno: 'SymbolShapes.puzzle'},
+			{img: 'symbolshapes_bracket-pair', uno: 'SymbolShapes.bracket-pair'},
+			{img: 'symbolshapes_left-bracket', uno: 'SymbolShapes.left-bracket'},
+			{img: 'symbolshapes_right-bracket', uno: 'SymbolShapes.right-bracket'},
 
-		{img: 'symbolshapes_brace-pair', uno: 'SymbolShapes.brace-pair'},
-		{img: 'symbolshapes_left-brace', uno: 'SymbolShapes.left-brace'},
-		{img: 'symbolshapes_right-brace', uno: 'SymbolShapes.right-brace'},
-		{img: 'symbolshapes_quad-bevel', uno: 'SymbolShapes.quad-bevel'},
-		{img: 'symbolshapes_octagon-bevel', uno: 'SymbolShapes.octagon-bevel'},
-		{img: 'symbolshapes_diamond-bevel', uno: 'SymbolShapes.diamond-bevel'}
-	],
+			{img: 'symbolshapes_brace-pair', uno: 'SymbolShapes.brace-pair'},
+			{img: 'symbolshapes_left-brace', uno: 'SymbolShapes.left-brace'},
+			{img: 'symbolshapes_right-brace', uno: 'SymbolShapes.right-brace'},
+			{img: 'symbolshapes_quad-bevel', uno: 'SymbolShapes.quad-bevel'},
+			{img: 'symbolshapes_octagon-bevel', uno: 'SymbolShapes.octagon-bevel'},
+			{img: 'symbolshapes_diamond-bevel', uno: 'SymbolShapes.diamond-bevel'}
+		],
 
-	'Block Arrows': [
-		{img: 'arrowshapes_left-arrow', uno: 'ArrowShapes.left-arrow'},
-		{img: 'arrowshapes_right-arrow', uno: 'ArrowShapes.right-arrow'},
-		{img: 'arrowshapes_up-arrow', uno: 'ArrowShapes.up-arrow'},
-		{img: 'arrowshapes_down-arrow', uno: 'ArrowShapes.down-arrow'},
-		{img: 'arrowshapes_left-right-arrow', uno: 'ArrowShapes.left-right-arrow'},
-		{img: 'arrowshapes_up-down-arrow', uno: 'ArrowShapes.up-down-arrow'},
+		'Block Arrows': [
+			{img: 'arrowshapes_left-arrow', uno: 'ArrowShapes.left-arrow'},
+			{img: 'arrowshapes_right-arrow', uno: 'ArrowShapes.right-arrow'},
+			{img: 'arrowshapes_up-arrow', uno: 'ArrowShapes.up-arrow'},
+			{img: 'arrowshapes_down-arrow', uno: 'ArrowShapes.down-arrow'},
+			{img: 'arrowshapes_left-right-arrow', uno: 'ArrowShapes.left-right-arrow'},
+			{img: 'arrowshapes_up-down-arrow', uno: 'ArrowShapes.up-down-arrow'},
 
-		{img: 'arrowshapes_up-right-arrow', uno: 'ArrowShapes.up-right-arrow'},
-		{img: 'arrowshapes_up-right-down-arrow', uno: 'ArrowShapes.up-right-down-arrow'},
-		{img: 'arrowshapes_quad-arrow', uno: 'ArrowShapes.quad-arrow'},
-		{img: 'arrowshapes_corner-right-arrow', uno: 'ArrowShapes.corner-right-arrow'},
-		{img: 'arrowshapes_split-arrow', uno: 'ArrowShapes.split-arrow'},
-		{img: 'arrowshapes_striped-right-arrow', uno: 'ArrowShapes.striped-right-arrow'},
+			{img: 'arrowshapes_up-right-arrow', uno: 'ArrowShapes.up-right-arrow'},
+			{img: 'arrowshapes_up-right-down-arrow', uno: 'ArrowShapes.up-right-down-arrow'},
+			{img: 'arrowshapes_quad-arrow', uno: 'ArrowShapes.quad-arrow'},
+			{img: 'arrowshapes_corner-right-arrow', uno: 'ArrowShapes.corner-right-arrow'},
+			{img: 'arrowshapes_split-arrow', uno: 'ArrowShapes.split-arrow'},
+			{img: 'arrowshapes_striped-right-arrow', uno: 'ArrowShapes.striped-right-arrow'},
 
-		{img: 'arrowshapes_notched-right-arrow', uno: 'ArrowShapes.notched-right-arrow'},
-		{img: 'arrowshapes_pentagon-right', uno: 'ArrowShapes.pentagon-right'},
-		{img: 'arrowshapes_chevron', uno: 'ArrowShapes.chevron'},
-		{img: 'arrowshapes_right-arrow-callout', uno: 'ArrowShapes.right-arrow-callout'},
-		{img: 'arrowshapes_left-arrow-callout', uno: 'ArrowShapes.left-arrow-callout'},
-		{img: 'arrowshapes_up-arrow-callout', uno: 'ArrowShapes.up-arrow-callout'},
+			{img: 'arrowshapes_notched-right-arrow', uno: 'ArrowShapes.notched-right-arrow'},
+			{img: 'arrowshapes_pentagon-right', uno: 'ArrowShapes.pentagon-right'},
+			{img: 'arrowshapes_chevron', uno: 'ArrowShapes.chevron'},
+			{img: 'arrowshapes_right-arrow-callout', uno: 'ArrowShapes.right-arrow-callout'},
+			{img: 'arrowshapes_left-arrow-callout', uno: 'ArrowShapes.left-arrow-callout'},
+			{img: 'arrowshapes_up-arrow-callout', uno: 'ArrowShapes.up-arrow-callout'},
 
-		{img: 'arrowshapes_down-arrow-callout', uno: 'ArrowShapes.down-arrow-callout'},
-		{img: 'arrowshapes_left-right-arrow-callout', uno: 'ArrowShapes.left-right-arrow-callout'},
-		{img: 'arrowshapes_up-down-arrow-callout', uno: 'ArrowShapes.up-down-arrow-callout'},
-		{img: 'arrowshapes_up-right-arrow-callout', uno: 'ArrowShapes.up-right-arrow-callout'},
-		{img: 'arrowshapes_quad-arrow-callout', uno: 'ArrowShapes.quad-arrow-callout'},
-		{img: 'arrowshapes_circular-arrow', uno: 'ArrowShapes.circular-arrow'},
+			{img: 'arrowshapes_down-arrow-callout', uno: 'ArrowShapes.down-arrow-callout'},
+			{img: 'arrowshapes_left-right-arrow-callout', uno: 'ArrowShapes.left-right-arrow-callout'},
+			{img: 'arrowshapes_up-down-arrow-callout', uno: 'ArrowShapes.up-down-arrow-callout'},
+			{img: 'arrowshapes_up-right-arrow-callout', uno: 'ArrowShapes.up-right-arrow-callout'},
+			{img: 'arrowshapes_quad-arrow-callout', uno: 'ArrowShapes.quad-arrow-callout'},
+			{img: 'arrowshapes_circular-arrow', uno: 'ArrowShapes.circular-arrow'},
 
-		{img: 'arrowshapes_split-round-arrow', uno: 'ArrowShapes.split-round-arrow'},
-		{img: 'arrowshapes_s-sharped-arrow', uno: 'ArrowShapes.s-sharped-arrow'}
-	],
+			{img: 'arrowshapes_split-round-arrow', uno: 'ArrowShapes.split-round-arrow'},
+			{img: 'arrowshapes_s-sharped-arrow', uno: 'ArrowShapes.s-sharped-arrow'}
+		],
 
-	'Stars and Banners': [
-		{img: 'starshapes_bang', uno: 'StarShapes.bang'},
-		{img: 'starshapes_star4', uno: 'StarShapes.star4'},
-		{img: 'starshapes_star5', uno: 'StarShapes.star5'},
-		{img: 'starshapes_star6', uno: 'StarShapes.star6'},
-		{img: 'starshapes_star8', uno: 'StarShapes.star8'},
-		{img: 'starshapes_star12', uno: 'StarShapes.star12'},
+		'Stars and Banners': [
+			{img: 'starshapes_bang', uno: 'StarShapes.bang'},
+			{img: 'starshapes_star4', uno: 'StarShapes.star4'},
+			{img: 'starshapes_star5', uno: 'StarShapes.star5'},
+			{img: 'starshapes_star6', uno: 'StarShapes.star6'},
+			{img: 'starshapes_star8', uno: 'StarShapes.star8'},
+			{img: 'starshapes_star12', uno: 'StarShapes.star12'},
 
-		{img: 'starshapes_star24', uno: 'StarShapes.star24'},
-		{img: 'starshapes_concave-star6', uno: 'StarShapes.concave-star6'},
-		{img: 'starshapes_vertical-scroll', uno: 'StarShapes.vertical-scroll'},
-		{img: 'starshapes_horizontal-scroll', uno: 'StarShapes.horizontal-scroll'},
-		{img: 'starshapes_signet', uno: 'StarShapes.signet'},
-		{img: 'starshapes_doorplate', uno: 'StarShapes.doorplate'}
-	],
+			{img: 'starshapes_star24', uno: 'StarShapes.star24'},
+			{img: 'starshapes_concave-star6', uno: 'StarShapes.concave-star6'},
+			{img: 'starshapes_vertical-scroll', uno: 'StarShapes.vertical-scroll'},
+			{img: 'starshapes_horizontal-scroll', uno: 'StarShapes.horizontal-scroll'},
+			{img: 'starshapes_signet', uno: 'StarShapes.signet'},
+			{img: 'starshapes_doorplate', uno: 'StarShapes.doorplate'}
+		],
 
-	'Callouts': [
-		{img: 'calloutshapes_rectangular-callout', uno: 'CalloutShapes.rectangular-callout'},
-		{img: 'calloutshapes_round-rectangular-callout', uno: 'CalloutShapes.round-rectangular-callout'},
-		{img: 'calloutshapes_round-callout', uno: 'CalloutShapes.round-callout'},
-		{img: 'calloutshapes_cloud-callout', uno: 'CalloutShapes.cloud-callout'},
-		{img: 'calloutshapes_line-callout-1', uno: 'CalloutShapes.line-callout-1'},
-		{img: 'calloutshapes_line-callout-2', uno: 'CalloutShapes.line-callout-2'},
-		{img: 'calloutshapes_line-callout-3', uno: 'CalloutShapes.line-callout-3'}
-	],
+		'Callouts': [
+			{img: 'calloutshapes_rectangular-callout', uno: 'CalloutShapes.rectangular-callout'},
+			{img: 'calloutshapes_round-rectangular-callout', uno: 'CalloutShapes.round-rectangular-callout'},
+			{img: 'calloutshapes_round-callout', uno: 'CalloutShapes.round-callout'},
+			{img: 'calloutshapes_cloud-callout', uno: 'CalloutShapes.cloud-callout'},
+			{img: 'calloutshapes_line-callout-1', uno: 'CalloutShapes.line-callout-1'},
+			{img: 'calloutshapes_line-callout-2', uno: 'CalloutShapes.line-callout-2'},
+			{img: 'calloutshapes_line-callout-3', uno: 'CalloutShapes.line-callout-3'}
+		],
 
-	'Flowchart': [
-		{img: 'flowchartshapes_flowchart-process', uno: 'FlowchartShapes.flowchart-process'},
-		{img: 'flowchartshapes_flowchart-alternate-process', uno: 'FlowchartShapes.flowchart-alternate-process'},
-		{img: 'flowchartshapes_flowchart-decision', uno: 'FlowchartShapes.flowchart-decision'},
-		{img: 'flowchartshapes_flowchart-data', uno: 'FlowchartShapes.flowchart-data'},
-		{img: 'flowchartshapes_flowchart-predefined-process', uno: 'FlowchartShapes.flowchart-predefined-process'},
-		{img: 'flowchartshapes_flowchart-internal-storage', uno: 'FlowchartShapes.flowchart-internal-storage'},
+		'Flowchart': [
+			{img: 'flowchartshapes_flowchart-process', uno: 'FlowchartShapes.flowchart-process'},
+			{img: 'flowchartshapes_flowchart-alternate-process', uno: 'FlowchartShapes.flowchart-alternate-process'},
+			{img: 'flowchartshapes_flowchart-decision', uno: 'FlowchartShapes.flowchart-decision'},
+			{img: 'flowchartshapes_flowchart-data', uno: 'FlowchartShapes.flowchart-data'},
+			{img: 'flowchartshapes_flowchart-predefined-process', uno: 'FlowchartShapes.flowchart-predefined-process'},
+			{img: 'flowchartshapes_flowchart-internal-storage', uno: 'FlowchartShapes.flowchart-internal-storage'},
 
-		{img: 'flowchartshapes_flowchart-document', uno: 'FlowchartShapes.flowchart-document'},
-		{img: 'flowchartshapes_flowchart-multidocument', uno: 'FlowchartShapes.flowchart-multidocument'},
-		{img: 'flowchartshapes_flowchart-terminator', uno: 'FlowchartShapes.flowchart-terminator'},
-		{img: 'flowchartshapes_flowchart-preparation', uno: 'FlowchartShapes.flowchart-preparation'},
-		{img: 'flowchartshapes_flowchart-manual-input', uno: 'FlowchartShapes.flowchart-manual-input'},
-		{img: 'flowchartshapes_flowchart-manual-operation', uno: 'FlowchartShapes.flowchart-manual-operation'},
+			{img: 'flowchartshapes_flowchart-document', uno: 'FlowchartShapes.flowchart-document'},
+			{img: 'flowchartshapes_flowchart-multidocument', uno: 'FlowchartShapes.flowchart-multidocument'},
+			{img: 'flowchartshapes_flowchart-terminator', uno: 'FlowchartShapes.flowchart-terminator'},
+			{img: 'flowchartshapes_flowchart-preparation', uno: 'FlowchartShapes.flowchart-preparation'},
+			{img: 'flowchartshapes_flowchart-manual-input', uno: 'FlowchartShapes.flowchart-manual-input'},
+			{img: 'flowchartshapes_flowchart-manual-operation', uno: 'FlowchartShapes.flowchart-manual-operation'},
 
-		{img: 'flowchartshapes_flowchart-connector', uno: 'FlowchartShapes.flowchart-connector'},
-		{img: 'flowchartshapes_flowchart-off-page-connector', uno: 'FlowchartShapes.flowchart-off-page-connector'},
-		{img: 'flowchartshapes_flowchart-card', uno: 'FlowchartShapes.flowchart-card'},
-		{img: 'flowchartshapes_flowchart-punched-tape', uno: 'FlowchartShapes.flowchart-punched-tape'},
-		{img: 'flowchartshapes_flowchart-summing-junction', uno: 'FlowchartShapes.flowchart-summing-junction'},
-		{img: 'flowchartshapes_flowchart-or', uno: 'FlowchartShapes.flowchart-or'},
+			{img: 'flowchartshapes_flowchart-connector', uno: 'FlowchartShapes.flowchart-connector'},
+			{img: 'flowchartshapes_flowchart-off-page-connector', uno: 'FlowchartShapes.flowchart-off-page-connector'},
+			{img: 'flowchartshapes_flowchart-card', uno: 'FlowchartShapes.flowchart-card'},
+			{img: 'flowchartshapes_flowchart-punched-tape', uno: 'FlowchartShapes.flowchart-punched-tape'},
+			{img: 'flowchartshapes_flowchart-summing-junction', uno: 'FlowchartShapes.flowchart-summing-junction'},
+			{img: 'flowchartshapes_flowchart-or', uno: 'FlowchartShapes.flowchart-or'},
 
-		{img: 'flowchartshapes_flowchart-collate', uno: 'FlowchartShapes.flowchart-collate'},
-		{img: 'flowchartshapes_flowchart-sort', uno: 'FlowchartShapes.flowchart-sort'},
-		{img: 'flowchartshapes_flowchart-extract', uno: 'FlowchartShapes.flowchart-extract'},
-		{img: 'flowchartshapes_flowchart-merge', uno: 'FlowchartShapes.flowchart-merge'},
-		{img: 'flowchartshapes_flowchart-stored-data', uno: 'FlowchartShapes.flowchart-stored-data'},
-		{img: 'flowchartshapes_flowchart-delay', uno: 'FlowchartShapes.flowchart-delay'},
+			{img: 'flowchartshapes_flowchart-collate', uno: 'FlowchartShapes.flowchart-collate'},
+			{img: 'flowchartshapes_flowchart-sort', uno: 'FlowchartShapes.flowchart-sort'},
+			{img: 'flowchartshapes_flowchart-extract', uno: 'FlowchartShapes.flowchart-extract'},
+			{img: 'flowchartshapes_flowchart-merge', uno: 'FlowchartShapes.flowchart-merge'},
+			{img: 'flowchartshapes_flowchart-stored-data', uno: 'FlowchartShapes.flowchart-stored-data'},
+			{img: 'flowchartshapes_flowchart-delay', uno: 'FlowchartShapes.flowchart-delay'},
 
-		{img: 'flowchartshapes_flowchart-sequential-access', uno: 'FlowchartShapes.flowchart-sequential-access'},
-		{img: 'flowchartshapes_flowchart-magnetic-disk', uno: 'FlowchartShapes.flowchart-magnetic-disk'},
-		{img: 'flowchartshapes_flowchart-direct-access-storage', uno: 'FlowchartShapes.flowchart-direct-access-storage'},
-		{img: 'flowchartshapes_flowchart-display', uno: 'FlowchartShapes.flowchart-display'}
-	]
+			{img: 'flowchartshapes_flowchart-sequential-access', uno: 'FlowchartShapes.flowchart-sequential-access'},
+			{img: 'flowchartshapes_flowchart-magnetic-disk', uno: 'FlowchartShapes.flowchart-magnetic-disk'},
+			{img: 'flowchartshapes_flowchart-direct-access-storage', uno: 'FlowchartShapes.flowchart-direct-access-storage'},
+			{img: 'flowchartshapes_flowchart-display', uno: 'FlowchartShapes.flowchart-display'}
+		]
+	},
+	'insertconnectors': {
+		'Connectors': [
+			{img: 'connectors_connector', uno: 'Connector'},
+			{img: 'connectors_connectorarrows', uno: 'ConnectorArrows'},
+			{img: 'connectors_connectorarrowend', uno: 'ConnectorArrowEnd'},
+			{img: 'connectors_connectorlinearrowend', uno: 'ConnectorLineArrowEnd'},
+			{img: 'connectors_connectorcurvearrowend', uno: 'ConnectorCurveArrowEnd'},
+			{img: 'connectors_connectorlinesarrowend', uno: 'ConnectorLinesArrowEnd'},
+			{img: 'connectors_connectorline', uno: 'ConnectorLine'},
+			{img: 'connectors_connectorcurve', uno: 'ConnectorCurve'},
+			{img: 'connectors_connectorlines', uno: 'ConnectorLines'},
+			{img: 'connectors_connectorlinearrows', uno: 'ConnectorLineArrows'},
+			{img: 'connectors_connectorcurvearrows', uno: 'ConnectorCurvearrows'}
+		]
+	}
 };
 
-function createShapesPanel() {
+function createShapesPanel(shapeType) {
 	var $grid = $('<div/>').addClass('insertshape-grid');
+	var collection = shapes[shapeType];
 
-	for (var s in shapes) {
+	for (var s in collection) {
 		var $rowHeader = $('<div/>').addClass('row-header loleaflet-font').append(_(s));
 		$grid.append($rowHeader);
 		var $row = $('<div/>').addClass('row');
 		$grid.append($row);
-		for (var idx = 0; idx < shapes[s].length; ++idx) {
-			var shape = shapes[s][idx];
+		for (var idx = 0; idx < collection[s].length; ++idx) {
+			var shape = collection[s][idx];
 			var $col = $('<div/>').addClass('col w2ui-icon').addClass(shape.img);
 			$col.data('uno', shape.uno);
 			$row.append($col);
@@ -480,33 +498,38 @@ function createShapesPanel() {
 	return $grid.get(0);
 }
 
-function insertShapes(mobile) {
+function insertShapes(shapeType) {
 	var width = 10;
 	var $grid = $('.insertshape-grid');
+
+	if (window.mode.isDesktop() || window.mode.isTablet())
+		$grid.css('margin-botttom', '0px');
 
 	if ($grid.children().length > 0)
 		return;
 
-	for (var s in shapes) {
+	var collection = shapes[shapeType];
+
+	for (var s in collection) {
 		var $rowHeader = $('<div/>').addClass('row-header loleaflet-font').append(_(s));
 		$grid.append($rowHeader);
 
-		var rows = Math.ceil(shapes[s].length / width);
+		var rows = Math.ceil(collection[s].length / width);
 		var idx = 0;
 		for (var r = 0; r < rows; r++) {
 			var $row = $('<div/>').addClass('row');
 			$grid.append($row);
 			for (var c = 0; c < width; c++) {
-				if (idx >= shapes[s].length) {
+				if (idx >= collection[s].length) {
 					break;
 				}
-				var shape = shapes[s][idx++];
+				var shape = collection[s][idx++];
 				var $col = $('<div/>').addClass('col w2ui-icon').addClass(shape.img);
 				$col.data('uno', shape.uno);
 				$row.append($col);
 			}
 
-			if (idx >= shapes[s].length)
+			if (idx >= collection[s].length)
 				break;
 		}
 	}
@@ -514,10 +537,7 @@ function insertShapes(mobile) {
 	$grid.on({
 		click: function(e) {
 			map.sendUnoCommand('.uno:' + $(e.target).data().uno);
-			if (mobile)
-				vex.closeAll();
-			else
-				closePopup();
+			closePopup();
 		}
 	});
 }

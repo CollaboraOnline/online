@@ -240,8 +240,9 @@ L.Control.TopToolbar = L.Control.extend({
 					{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)},
 				]},
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
-			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: window.insertShapes}, html: window.getShapesPopupHtml()},
+			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: function() {window.insertShapes('insertshapes'); }}, html: window.getShapesPopupHtml()},
 			{type: 'button',  id: 'insertline', img: 'line', hint: _UNO('.uno:Line', '', true), uno: 'Line'},
+			{type: 'drop',  id: 'insertconnectors',  img: 'connectors_connector', hint: _('Insert connectors'), overlay: {onShow: function() {window.insertShapes('insertconnectors'); }}, html: window.getShapesPopupHtml(), hidden: true},
 			{type: 'break',   id: 'breakinsert', desktop: true},
 			{type: 'button',  id: 'inserttextbox', img: 'text', hint: _UNO('.uno:Text', '', true), uno: 'Text?CreateDirectly:bool=true', hidden: true},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true},
@@ -284,8 +285,8 @@ L.Control.TopToolbar = L.Control.extend({
 				if (event.target === 'inserttable')
 					window.insertTable();
 
-				if (event.target === 'insertshapes')
-					window.insertShapes();
+				if (event.target === 'insertshapes' || event.target === 'insertconnectors')
+					window.insertShapes(event.target);
 			}
 		});
 		if (window.mode.isDesktop())
@@ -355,7 +356,7 @@ L.Control.TopToolbar = L.Control.extend({
 			if (toolbarUp) {
 				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
-					'breaksidebar', 'modifypage');
+					'breaksidebar', 'modifypage', 'insertconnectors');
 			}
 			break;
 		}
