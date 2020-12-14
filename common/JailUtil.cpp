@@ -9,6 +9,7 @@
 
 #include "FileUtil.hpp"
 #include "JailUtil.hpp"
+#include "Util.hpp"
 
 #include <sys/types.h>
 #include <sysexits.h>
@@ -31,6 +32,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
+#include <fstream>
 
 #include "Log.hpp"
 
@@ -333,6 +335,49 @@ bool unmount(const std::string& target)
     return res;
 }
 
+/// Get a list of all the mountpoints inside the given root path.
+std::vector<std::string> getMountPoints(std::string root)
+{
+    std::vector<std::string> list;
+
+    if (root.empty())
+        return list;
+
+    if (root[root.size() - 1] == '/')
+        root.erase(root.size() - 1);
+
+    // The format of the mounts file is documented in fstab(5).
+    std::ifstream mounts("/proc/self/mounts");
+    std::string line;
+    while (std::getline(mounts, line, '\n'))
+    {
+        Util::trim(line);
+        if (line.empty() || line[0] == '#') // Empty or comment line, skip.
+            continue;
+
+        const StringVector tokens = Util::tokenizeAnyOf(line, "\t "); // Tab or Space.
+        if (tokens.size() > 2) // The line should have 6 fields.
+        {
+            // Filter only mount-points in the root path of interest.
+            if (Util::startsWith(tokens[1], root))
+                list.emplace_back(tokens[1]);
+        }
+    }
+
+    return list;
+}
+
+/// Get a list of all the mountpoints inside
+/// the given root path and unmount them.
+void cleanupMountPoints(const std::string& root)
+{
+    LOG_INF("Cleaning up mount-points in [" << root << ']');
+    for (const std::string& mountPoint : getMountPoints(root))
+    {
+        unmount(mountPoint);
+    }
+}
+
 // This file signifies that we copied instead of mounted.
 // NOTE: jail cleanup helpers are called from forkit and
 // loolwsd, and they may have bind-mounting enabled, but the
@@ -362,9 +407,6 @@ bool isJailCopied(const std::string& root)
 
 bool safeRemoveDir(const std::string& path)
 {
-    // Always unmount, just in case.
-    unmount(path);
-
     // Regardless of the bind flag, check if the jail is marked as copied.
     const bool copied = isJailCopied(path);
 
@@ -385,14 +427,8 @@ void removeJail(const std::string& root)
 {
     LOG_INF("Removing jail [" << root << "].");
 
-    // Unmount the tmp directory. Don't care if we fail.
-    const std::string tmpPath = Poco::Path(root, "tmp").toString();
-    FileUtil::removeFile(tmpPath, true); // Delete tmp contents with prejudice.
-    unmount(tmpPath);
-
-    // Unmount the loTemplate directory.
-    //FIXME: technically, the loTemplate directory may have any name.
-    unmount(Poco::Path(root, "lo").toString());
+    // Unmount all mount-points within us, if any.
+    cleanupMountPoints(root);
 
     // Unmount/delete the jail (sysTemplate).
     safeRemoveDir(root);
@@ -405,7 +441,7 @@ void removeJail(const std::string& root)
 /// inadvertently delete the contents of the mount-points.
 void cleanupJails(const std::string& root)
 {
-    LOG_INF("Cleaning up childroot directory [" << root << "].");
+    LOG_INF("Cleaning up jails directory [" << root << "].");
 
     FileUtil::Stat stRoot(root);
     if (!stRoot.exists() || !stRoot.isDirectory())
@@ -429,7 +465,8 @@ void cleanupJails(const std::string& root)
         for (const auto& jail : jails)
         {
             const Poco::Path path(root, jail);
-            if (jail == "tmp") // Delete tmp with prejeduce.
+            // Delete tmp and template with prejeduce.
+            if (jail == JailUtil::CHILDROOT_TMP_DIR || jail == JailUtil::CHILDROOT_TEMPLATE_DIR)
                 FileUtil::removeFile(path.toString(), true);
             else
                 cleanupJails(path.toString());
@@ -443,11 +480,58 @@ void cleanupJails(const std::string& root)
         LOG_WRN("Jails root directory [" << root << "] is not empty. Will not remove it.");
 }
 
+void cleanupChildRoot(const std::string& childRoot)
+{
+    LOG_INF("Cleaning up child-root directory [" << childRoot << "].");
+
+    FileUtil::Stat stRoot(childRoot);
+    if (!stRoot.exists() || !stRoot.isDirectory())
+    {
+        LOG_TRC("Directory [" << childRoot << "] is not a directory or doesn't exist.");
+        return;
+    }
+
+    // First, we must unmount so we can rm directories.
+    cleanupMountPoints(childRoot);
+
+    // Remove the jails. They could be mounting template/ and tmp/.
+    cleanupJails(getJailsPath(childRoot));
+
+    // Remove the tmp directory.
+    FileUtil::removeFile(getChildRootTmpPath(childRoot), true);
+
+    // Remove the template directory.
+    FileUtil::removeFile(getTemplatePath(childRoot), true);
+
+    // Backwards compatibility cleanup (typically nothing to do).
+    try
+    {
+        std::vector<std::string> subdirs;
+        Poco::File(childRoot).list(subdirs);
+        for (const auto& subdir : subdirs)
+        {
+            // Treat each sub-dir as a child-root, recursively.
+            cleanupChildRoot(Poco::Path(childRoot, subdir).toString());
+        }
+    }
+    catch (const std::exception&)
+    {
+        // Nothing to do.
+    }
+
+    // Remove empty directories.
+    if (FileUtil::isEmptyDirectory(childRoot))
+        safeRemoveDir(childRoot);
+    else
+        LOG_WRN("Child-Root directory [" << childRoot << "] is not empty. Will not remove it.");
+}
+
 void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate,
                     const std::string& loTemplate)
 {
     // Start with a clean slate.
-    cleanupJails(childRoot);
+    cleanupChildRoot(childRoot);
+
     Poco::File(childRoot + CHILDROOT_TMP_INCOMING_PATH).createDirectories();
 
     disableBindMounting(); // Clear to avoid surprises.
@@ -461,7 +545,7 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
         if (bind(sysTemplate, target))
         {
             enableBindMounting();
-            safeRemoveDir(target);
+            removeJail(target);
             LOG_INF("Enabling Bind-Mounting of jail contents for better performance per "
                     "mount_jail_tree config in loolwsd.xml.");
         }

@@ -1212,7 +1212,7 @@ void LOOLWSD::initialize(Application& self)
         if (CleanupOnly)
         {
             // Cleanup and exit.
-            JailUtil::cleanupJails(ChildRoot);
+            JailUtil::cleanupChildRoot(ChildRoot);
             std::exit(EX_OK);
         }
 #endif
@@ -1222,8 +1222,8 @@ void LOOLWSD::initialize(Application& self)
         // Create a custom sub-path for parallelized unit tests.
         if (UnitBase::isUnitTesting())
         {
-            ChildRoot += Util::rng::getHardRandomHexString(8) + '/';
-            LOG_INF("Creating sub-childroot: " + ChildRoot);
+            ChildRoot += "ut_" + Util::rng::getHardRandomHexString(8) + '/';
+            LOG_INF("Creating sub-childroot for unit-tests: " + ChildRoot);
         }
         else
             LOG_INF("Creating childroot: " + ChildRoot);
@@ -4117,7 +4117,7 @@ int LOOLWSD::innerMain()
     ForKitProc.reset();
 #endif
 
-    JailUtil::cleanupJails(ChildRoot);
+    JailUtil::cleanupChildRoot(ChildRoot);
 #endif // !MOBILEAPP
 
     return EX_OK;

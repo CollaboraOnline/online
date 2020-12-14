@@ -389,7 +389,7 @@ static int createLibreOfficeKit(const std::string& childRoot, bool queryVersion 
         else
         {
             LOG_INF("Forked kit [" << pid << "].");
-            childJails[pid] = childRoot + jailId;
+            childJails[pid] = JailUtil::getJailPath(childRoot, jailId);
         }
 
 #ifndef KIT_IN_PROCESS

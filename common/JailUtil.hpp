@@ -121,8 +121,8 @@ bool isJailCopied(const std::string& root);
 /// Remove the jail directory and all its contents.
 void removeJail(const std::string& root);
 
-/// Remove all jails.
-void cleanupJails(const std::string& jailRoot);
+/// Cleanup the Child-Root directory.
+void cleanupChildRoot(const std::string& childRoot);
 
 /// Setup the Child-Root directory.
 /// The directory structure of Child-Root is as follows:
