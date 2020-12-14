@@ -10,7 +10,7 @@ describe('Change paragraph properties: user-1.', function() {
 	});
 
 	afterEach(function() {
-		helper.afterAll(testFileName);
+		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
 	it('Change paragraph alignment.', function() {
