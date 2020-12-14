@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 srcdir=`dirname $0`
 test -n "$srcdir" || srcdir=.
