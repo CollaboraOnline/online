@@ -26,6 +26,7 @@
 #include "Admin.hpp"
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
+#include "JailUtil.hpp"
 #include "LOOLWSD.hpp"
 #include "SenderQueue.hpp"
 #include "Storage.hpp"
@@ -561,7 +562,8 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
     const std::string sessionId = session->getId();
 
-    LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] and jail [" << jailId << "].");
+    LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] in jail [" << jailId
+                        << ']');
 
     {
         bool result;
@@ -583,7 +585,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
     // user/doc/jailId
     const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, jailId);
-    std::string jailRoot = getJailRoot();
+    const std::string jailRoot = getJailRoot();
 
     LOG_INF("jailPath: " << jailPath.toString() << ", jailRoot: " << jailRoot);
 

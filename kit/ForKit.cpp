@@ -347,7 +347,8 @@ static int createLibreOfficeKit(const std::string& childRoot, bool queryVersion 
     // Used to label the spare kit instances
     static size_t spareKitId = 0;
     ++spareKitId;
-    LOG_DBG("Forking a loolkit process with jailId: " << jailId << " as spare loolkit #" << spareKitId << '.');
+    LOG_DBG("Forking a loolkit process with jailId: " << jailId << " as spare loolkit #"
+                                                      << spareKitId << '.');
 
     const pid_t pid = fork();
     if (!pid)

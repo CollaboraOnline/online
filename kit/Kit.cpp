@@ -212,7 +212,6 @@ public:
         _obfuscatedFileId(Util::getFilenameFromURL(docKey)),
         _tileQueue(std::move(tileQueue)),
         _websocketHandler(websocketHandler),
-        _docPassword(""),
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
@@ -1879,7 +1878,7 @@ void lokit_main(
 
     assert(!childRoot.empty());
 
-    LOG_DBG("Process started.");
+    LOG_DBG("Kit process [" << jailId << "] started.");
 
     std::string userdir_url;
     std::string instdir_path;
