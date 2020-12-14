@@ -205,7 +205,7 @@ static std::mutex DocBrokersMutex;
 extern "C" { void dump_state(void); /* easy for gdb */ }
 
 #if ENABLE_DEBUG
-static int careerSpanMs = 0;
+static std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
 #endif
 
 /// The timeout for a child to spawn, initially high, then reset to the default.
@@ -1631,7 +1631,7 @@ void LOOLWSD::handleOption(const std::string& optionName,
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
     else if (optionName == "careerspan")
-        careerSpanMs = std::stoi(value) * 1000; // Convert second to ms
+        careerSpanMs = std::chrono::seconds(std::stoi(value)); // Convert second to ms
     else if (optionName == "singlekit")
     {
         SingleKit = true;
@@ -4000,25 +4000,28 @@ int LOOLWSD::innerMain()
         UnitWSD::get().invokeTest();
 
         // This timeout affects the recovery time of prespawned children.
-        const long waitMicroS = UnitWSD::isUnitTesting() ?
-            static_cast<long>(UnitWSD::get().getTimeoutMilliSeconds()) * 1000 / 4 :
-            SocketPoll::DefaultPollTimeoutMicroS * 4;
+        const long waitMicroS
+            = UnitWSD::isUnitTesting()
+                  ? std::chrono::microseconds(UnitWSD::get().getTimeoutMilliSeconds()).count() / 4
+                  : std::chrono::microseconds(SocketPoll::DefaultPollTimeoutMicroS * 4).count();
         mainWait.poll(waitMicroS);
 
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll.wakeup();
 
-        const std::chrono::milliseconds::rep timeSinceStartMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-                                            std::chrono::steady_clock::now() - startStamp).count();
+        const std::chrono::milliseconds timeSinceStartMs
+            = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()
+                                                                    - startStamp);
 
         // Unit test timeout
         if (timeSinceStartMs > UnitWSD::get().getTimeoutMilliSeconds())
             UnitWSD::get().timeout();
 
 #if ENABLE_DEBUG && !MOBILEAPP
-        if (careerSpanMs > 0 && timeSinceStartMs > careerSpanMs)
+        if (careerSpanMs > std::chrono::milliseconds::zero() && timeSinceStartMs > careerSpanMs)
         {
-            LOG_INF(timeSinceStartMs << " milliseconds gone, finishing as requested. Setting ShutdownRequestFlag.");
+            LOG_INF(timeSinceStartMs
+                    << " gone, finishing as requested. Setting ShutdownRequestFlag.");
             SigUtil::requestShutdown();
         }
 #endif

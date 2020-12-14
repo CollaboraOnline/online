@@ -370,13 +370,12 @@ private:
 class WopiStorage : public StorageBase
 {
 public:
-    WopiStorage(const Poco::URI& uri,
-                const std::string& localStorePath,
-                const std::string& jailPath) :
-        StorageBase(uri, localStorePath, jailPath),
-        _wopiLoadDuration(0),
-        _wopiSaveDuration(0),
-        _reuseCookies(false)
+    WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
+                const std::string& jailPath)
+        : StorageBase(uri, localStorePath, jailPath)
+        , _wopiLoadDuration(std::chrono::milliseconds::zero())
+        , _wopiSaveDuration(std::chrono::milliseconds::zero())
+        , _reuseCookies(false)
     {
         const auto& app = Poco::Util::Application::instance();
         _reuseCookies = app.config().getBool("storage.wopi.reuse_cookies", false);

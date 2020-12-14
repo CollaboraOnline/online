@@ -5,6 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <chrono>
 #include <config.h>
 
 #include <cassert>
@@ -21,13 +22,15 @@ public:
     UnitTimeout()
         : _timedOut(false)
     {
-        setTimeout(10);
+        setTimeout(std::chrono::milliseconds(10));
     }
+
     virtual void timeout() override
     {
         _timedOut = true;
         UnitBase::timeout();
     }
+
     virtual void returnValue(int & retValue) override
     {
         if (!_timedOut)
