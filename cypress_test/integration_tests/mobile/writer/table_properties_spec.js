@@ -198,7 +198,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Merge cells.', function() {
 		before('table_properties.odt');
 
-		helper.typeIntoDocument('{shift}{downarrow}{rightarrow}');
+		// Select 2x2 part of the table.
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('right', 'shift');
 
 		// We use cursor position as the indicator of layout change.
 		helper.getCursorPos('top', 'origCursorPos');
@@ -272,7 +274,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set minimal row height.', function() {
 		before('table_with_text.odt');
 
-		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		// Select full table (3x2)
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('right', 'shift');
 
 		openTablePanel();
 
@@ -288,7 +293,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set optimal row height.', function() {
 		before('table_with_text.odt');
 
-		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		// Select full table (3x2)
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('right', 'shift');
 
 		openTablePanel();
 
@@ -314,7 +322,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Distribute rows.', function() {
 		before('table_with_text.odt');
 
-		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		// Select full table (3x2)
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('right', 'shift');
 
 		openTablePanel();
 
@@ -340,7 +351,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set minimal column width.', function() {
 		before('table_with_text.odt');
 
-		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		// Select full table (3x2)
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('right', 'shift');
 
 		openTablePanel();
 
@@ -355,7 +369,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Set optimal column width.', function() {
 		before('table_with_text.odt');
 
-		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		// Select full table (3x2)
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('right', 'shift');
 
 		openTablePanel();
 
@@ -373,7 +390,10 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	it('Distribute columns.', function() {
 		before('table_with_text.odt');
 
-		helper.typeIntoDocument('{leftarrow}{shift}{downarrow}{downarrow}{downarrow}{rightarrow}');
+		// Select full table (3x2)
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('down', 'shift');
+		helper.moveCursor('right', 'shift');
 
 		openTablePanel();
 
