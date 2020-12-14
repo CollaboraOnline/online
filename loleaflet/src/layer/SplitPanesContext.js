@@ -58,7 +58,7 @@ L.SplitPanesContext = L.Class.extend({
 	},
 
 	getSplitPos: function () {
-		return this._splitPos.clone();
+		return this._splitPos.divideBy(window.devicePixelRatio);
 	},
 
 	getSplitPosX: function () {
@@ -249,7 +249,7 @@ L.SplitPanesContext = L.Class.extend({
 	getClientVisibleArea: function () {
 		var pixelBounds = this._map.getPixelBoundsCore();
 		var fullSize = pixelBounds.getSize();
-		var cursorPos = this._docLayer.getCursorPos();
+		var cursorPos = this._docLayer.getCursorPos().multiplyBy(window.devicePixelRatio);
 		cursorPos._floor();
 		var oneone = new L.Point(1, 1);
 		var topLeft = pixelBounds.getTopLeft()._add(this._splitPos)._add(oneone);

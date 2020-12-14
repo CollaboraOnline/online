@@ -110,7 +110,7 @@ L.Marker = L.Layer.extend({
 			return;
 		}
 
-		var splitPos = splitPanesContext.getSplitPos().divideBy(window.devicePixelRatio);
+		var splitPos = splitPanesContext.getSplitPos();
 		var docPos = this._map.project(this._latlng);
 		var pixelOrigin = this._map.getPixelOrigin();
 		var mapPanePos = this._map._getMapPanePos();

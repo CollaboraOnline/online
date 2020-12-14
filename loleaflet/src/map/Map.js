@@ -951,7 +951,7 @@ L.Map = L.Evented.extend({
 		if (!splitPanesContext) {
 			return this.containerPointToLayerPointIgnoreSplits(point);
 		}
-		var splitPos = splitPanesContext.getSplitPos().divideBy(window.devicePixelRatio);
+		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
 		var result = L.point(point).clone();
@@ -982,7 +982,7 @@ L.Map = L.Evented.extend({
 			return this.layerPointToContainerPointIgnoreSplits(point);
 		}
 
-		var splitPos = splitPanesContext.getSplitPos().divideBy(window.devicePixelRatio);
+		var splitPos = splitPanesContext.getSplitPos();
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
 		var result = L.point(point).add(pixelOrigin);

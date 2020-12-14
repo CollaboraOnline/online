@@ -34,7 +34,7 @@ L.SplitterLine = L.Rectangle.extend({
 
 		var size = map._docLayer.getMaxDocSize();
 		var isHoriz = this.options.isHoriz;
-		var splitPos = splitPanesContext.getSplitPos().divideBy(window.devicePixelRatio);
+		var splitPos = splitPanesContext.getSplitPos();
 
 		this._lastPos = isHoriz ? splitPos.x : splitPos.y;
 
@@ -159,7 +159,7 @@ L.SplitterLine = L.Rectangle.extend({
 				splitPanesContext.setVertSplitPos(this._curPos);
 			}
 
-			var newPoint = splitPanesContext.getSplitPos().divideBy(window.devicePixelRatio);
+			var newPoint = splitPanesContext.getSplitPos();
 			var newPos = this.options.isHoriz ? newPoint.x : newPoint.y;
 			if (newPos == this._lastPos) {
 				splitPanesContext.updateSplitters();
