@@ -569,7 +569,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Page setup: change paper height.', function() {
 		// We use the cursor vertical position as indicator of document size change.
-		helper.moveCursor('ctrl-end');
+		helper.moveCursor('end', 'ctrl');
 
 		helper.getCursorPos('top', 'cursorOrigTop');
 
@@ -612,7 +612,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		// We got some extra tiles horizontally.
 		// TODO: issue here, view is not moved with the cursor
-		helper.moveCursor('end', false);
+		helper.moveCursor('end', '', false);
 
 		// Cursor postion changes because of the bigger document width.
 		cy.get('@cursorOrigLeft')
