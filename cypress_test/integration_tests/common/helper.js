@@ -768,6 +768,8 @@ function moveCursor(direction, modifier, checkCursorVis = true) {
 	var key = '';
 	if (modifier === 'ctrl') {
 		key = '{ctrl}';
+	} else if (modifier === 'shift') {
+		key = '{shift}';
 	}
 
 	if (direction === 'up') {
