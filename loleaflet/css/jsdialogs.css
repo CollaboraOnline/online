@@ -240,6 +240,16 @@ td.jsdialog > [id^='table-box'] {
 	padding: 0px 2px;
 }
 
+/* Radio button */
+
+.jsdialog input[type='radio'] {
+	vertical-align: middle;
+	margin: 0px 2px 0px 12px;
+}
+
+.jsdialog .radiobutton > label {
+	vertical-align: middle;
+}
 /* listbox */
 .jsdialog.ui-listbox {
 	-webkit-appearance: none;
