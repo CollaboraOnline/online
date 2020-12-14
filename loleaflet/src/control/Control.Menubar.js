@@ -1355,7 +1355,7 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_openInsertShapesWizard: function() {
-		var content = window.createShapesPanel();
+		var content = window.createShapesPanel('insertshapes');
 		var data = {
 			id: 'insertshape',
 			type: '',
