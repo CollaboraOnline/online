@@ -347,6 +347,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				if (obj.comment.tab === this._selectedPart) {
 					this.showAnnotation(this._annotations[obj.comment.tab][obj.comment.id]);
 				}
+				if (window.mode.isMobile())
+					this._map._docLayer._openCommentWizard();
 			} else if (obj.comment.action === 'Remove') {
 				var removed = this._annotations[obj.comment.tab][obj.comment.id];
 				if (removed) {
