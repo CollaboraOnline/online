@@ -39,8 +39,6 @@ function plugin(on, config) {
 
 	if (process.env.CYPRESS_INTEGRATION === 'php-proxy') {
 		config.defaultCommandTimeout = 10000;
-		config.retries.runMode = 0;
-		config.retries.openMode = 0;
 	}
 
 	if (process.env.CYPRESS_INTEGRATION === 'nextcloud') {
