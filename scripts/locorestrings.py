@@ -71,7 +71,6 @@ if __name__ == "__main__":
             poFile,
             ["STR_POOL",
              "STR_PAGE_COUNT",
-             "STR_STATUSBAR_WORDCOUNT_NO_SELECTION",
              "STR_LANGSTATUS_NONE"], translations)
 
         # extract Impress/Draw style names,

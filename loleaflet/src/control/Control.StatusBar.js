@@ -488,7 +488,8 @@ L.Control.StatusBar = L.Control.extend({
 			this.updateToolbarItem(statusbar, 'StatePageNumber', $('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 		}
 		else if (commandName === '.uno:StateWordCount') {
-			state = this.toLocalePattern('%1 words, %2 characters', '([\\d,]+) words, ([\\d,]+) characters', state, '%1', '%2');
+			var wordCount = _('%1 words, %2 characters'); // we do not localize the rare cases of '1 word, 1 character' & '1 word, x characters'
+			state = this.toLocalePattern(wordCount, '([\\d,]+) words, ([\\d,]+) characters', state, '%1', '%2');
 			this.updateToolbarItem(statusbar, 'StateWordCount', $('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 		}
 		else if (commandName === '.uno:PageStatus') {
