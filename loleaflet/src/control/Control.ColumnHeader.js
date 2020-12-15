@@ -18,8 +18,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	_initialize: function () {
 		this._initialized = true;
 		this._isColumn = true;
-		this._map.on('scrolloffset', this.offsetScrollPosition, this);
-		this._map.on('updatescrolloffset', this.setScrollPosition, this);
 		this._map.on('viewrowcolumnheaders', this.viewRowColumnHeaders, this);
 		this._map.on('updateselectionheader', this._onUpdateSelection, this);
 		this._map.on('clearselectionheader', this._onClearSelection, this);
@@ -55,9 +53,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				}
 			},
 			this);
-
-		this._startOffset = 0;
-		this._position = 0;
 
 		L.DomEvent.addListener(this._cornerCanvas, 'click', this._onCornerHeaderClick, this);
 
@@ -162,16 +157,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			this._headerInfo.update();
 			this._redrawHeaders();
 		}
-	},
-
-	setScrollPosition: function (e) {
-		var position = -e.x;
-		this._position = Math.min(0, position);
-	},
-
-	offsetScrollPosition: function (e) {
-		var offset = e.x;
-		this._position = Math.min(0, this._position- offset);
 	},
 
 	_onClearSelection: function () {
