@@ -380,7 +380,7 @@ static int forkChildren(const int number)
         LOOLWSD::checkDiskSpaceAndWarnClients(false);
 
 #ifdef KIT_IN_PROCESS
-        forkLibreOfficeKit(LOOLWSD::ChildRoot, LOOLWSD::SysTemplate, LOOLWSD::LoTemplate, number);
+        forkLibreOfficeKit(LOOLWSD::ChildRoot, number);
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
@@ -1876,7 +1876,6 @@ bool LOOLWSD::createForKit()
     args.push_back("256");
     args.push_back(Path(Application::instance().commandPath()).parent().toString() + "loolforkit");
 #endif
-    args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));

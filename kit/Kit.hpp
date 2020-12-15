@@ -27,8 +27,6 @@ void lokit_main(
 #if !MOBILEAPP
                 const std::string& childRoot,
                 const std::string& jailId,
-                const std::string& sysTemplate,
-                const std::string& loTemplate,
                 bool noCapabilities,
                 bool noSeccomp,
                 bool queryVersionInfo,
@@ -125,10 +123,7 @@ private:
 
 /// Check the ForkCounter, and if non-zero, fork more of them accordingly.
 /// @param limit If non-zero, set the ForkCounter to this limit.
-void forkLibreOfficeKit(const std::string& childRoot,
-                        const std::string& sysTemplate,
-                        const std::string& loTemplate,
-                        int limit = 0);
+void forkLibreOfficeKit(const std::string& childRoot, int limit = 0);
 
 /// Anonymize the basename of filenames, preserving the path and extension.
 std::string anonymizeUrl(const std::string& url);

@@ -1827,8 +1827,6 @@ void lokit_main(
 #if !MOBILEAPP
                 const std::string& childRoot,
                 const std::string& jailId,
-                const std::string& sysTemplate,
-                const std::string& loTemplate,
                 bool noCapabilities,
                 bool noSeccomp,
                 bool queryVersion,
@@ -1880,8 +1878,6 @@ void lokit_main(
     LOG_INF("User-data anonymization is " << (AnonymizeUserData ? "enabled." : "disabled."));
 
     assert(!childRoot.empty());
-    assert(!sysTemplate.empty());
-    assert(!loTemplate.empty());
 
     LOG_DBG("Process started.");
 
@@ -1916,27 +1912,17 @@ void lokit_main(
             Poco::Path jailLOInstallation(jailPath, JailUtil::LO_JAIL_SUBPATH);
             jailLOInstallation.makeDirectory();
             const std::string loJailDestPath = jailLOInstallation.toString();
+            const std::string templatePath = JailUtil::getTemplatePath(childRoot);
 
             // The bind-mount implementation: inlined here to mirror
             // the fallback link/copy version bellow.
             const auto mountJail = [&]() -> bool {
                 // Mount sysTemplate for the jail directory.
-                LOG_INF("Mounting " << sysTemplate << " -> " << jailPathStr);
-                if (!JailUtil::bind(sysTemplate, jailPathStr)
-                    || !JailUtil::remountReadonly(sysTemplate, jailPathStr))
+                LOG_INF("Mounting " << templatePath << " -> " << jailPathStr);
+                if (!JailUtil::bind(templatePath, jailPathStr)
+                    || !JailUtil::remountReadonly(templatePath, jailPathStr))
                 {
-                    LOG_WRN("Failed to mount [" << sysTemplate << "] -> [" << jailPathStr
-                                                << "], will link/copy contents.");
-                    return false;
-                }
-
-                // Mount loTemplate inside it.
-                LOG_INF("Mounting " << loTemplate << " -> " << loJailDestPath);
-                Poco::File(loJailDestPath).createDirectories();
-                if (!JailUtil::bind(loTemplate, loJailDestPath)
-                    || !JailUtil::remountReadonly(loTemplate, loJailDestPath))
-                {
-                    LOG_WRN("Failed to mount [" << loTemplate << "] -> [" << loJailDestPath
+                    LOG_WRN("Failed to mount [" << templatePath << "] -> [" << jailPathStr
                                                 << "], will link/copy contents.");
                     return false;
                 }
@@ -1972,22 +1958,10 @@ void lokit_main(
 
             if (!bindMount)
             {
-                LOG_INF("Mounting is disabled, will link/copy " << sysTemplate << " -> "
+                LOG_INF("Mounting is disabled, will link/copy " << templatePath << " -> "
                                                                 << jailPathStr);
 
-                JailUtil::linkOrCopySysTemplate(sysTemplate, jailPathStr);
-                JailUtil::linkOrCopyLoTemplate(loTemplate, jailPathStr);
-
-                // Update the dynamic files inside the jail.
-                if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
-                {
-                    LOG_WRN(
-                        "Failed to update the dynamic files in the jail ["
-                        << jailPathStr
-                        << "]. If the systemplate directory is owned by a superuser or is "
-                           "read-only, running the installation scripts with the owner's account "
-                           "should update these files. Some functionality may be missing.");
-                }
+                JailUtil::linkOrCopySysTemplate(templatePath, jailPathStr);
 
                 // Create a file to mark this a copied jail.
                 JailUtil::markJailCopied(jailPathStr);
@@ -2038,10 +2012,13 @@ void lokit_main(
         else // noCapabilities set
         {
             LOG_WRN("Security warning: running without chroot jails is insecure.");
+            const std::string templateLOPath = Poco::Path::forDirectory(childRoot)
+                                                   .pushDirectory(JailUtil::LO_JAIL_SUBPATH)
+                                                   .toString();
             LOG_INF("Using template ["
-                    << loTemplate << "] as install subpath directly, without chroot jail setup.");
+                    << templateLOPath << "] as install subpath directly, without chroot jail setup.");
             userdir_url = "file:///" + jailPathStr + "/tmp/user";
-            instdir_path = '/' + loTemplate + "/program";
+            instdir_path = templateLOPath + "/program";
             JailRoot = jailPathStr;
         }
 

@@ -336,16 +336,13 @@ static void cleanupChildren()
     }
 }
 
-static int createLibreOfficeKit(const std::string& childRoot,
-                                const std::string& sysTemplate,
-                                const std::string& loTemplate,
-                                bool queryVersion = false)
+static int createLibreOfficeKit(const std::string& childRoot, bool queryVersion = false)
 {
     // Generate a jail ID to be used for in the jail path.
     const std::string jailId = Util::rng::getFilename(16);
 
     // Update the dynamic files as necessary.
-    JailUtil::SysTemplate::updateDynamicFiles(sysTemplate);
+    JailUtil::SysTemplate::updateDynamicFiles(JailUtil::getTemplatePath(childRoot));
 
     // Used to label the spare kit instances
     static size_t spareKitId = 0;
@@ -377,9 +374,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
         }
 
 #ifndef KIT_IN_PROCESS
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp, queryVersion, DisplayVersion, spareKitId);
+        lokit_main(childRoot, jailId, NoCapsForKit, NoSeccomp, queryVersion, DisplayVersion, spareKitId);
 #else
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, true, true, queryVersion, DisplayVersion, spareKitId);
+        lokit_main(childRoot, jailId, true, true, queryVersion, DisplayVersion, spareKitId);
 #endif
     }
     else
@@ -403,10 +400,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     return pid;
 }
 
-void forkLibreOfficeKit(const std::string& childRoot,
-                        const std::string& sysTemplate,
-                        const std::string& loTemplate,
-                        int limit)
+void forkLibreOfficeKit(const std::string& childRoot, int limit)
 {
     // Cleanup first, to reduce disk load.
     cleanupChildren();
@@ -426,7 +420,7 @@ void forkLibreOfficeKit(const std::string& childRoot,
         const size_t retry = count * 2;
         for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
         {
-            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate) < 0)
+            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot) < 0)
             {
                 LOG_ERR("Failed to create a kit process.");
                 ++ForkCounter;
@@ -515,19 +509,13 @@ int main(int argc, char** argv)
     }
 
     std::string childRoot;
-    std::string sysTemplate;
     std::string loTemplate;
 
     for (int i = 0; i < argc; ++i)
     {
         char *cmd = argv[i];
         char *eq;
-        if (std::strstr(cmd, "--systemplate=") == cmd)
-        {
-            eq = std::strchr(cmd, '=');
-            sysTemplate = std::string(eq+1);
-        }
-        else if (std::strstr(cmd, "--lotemplate=") == cmd)
+        if (std::strstr(cmd, "--lotemplate=") == cmd)
         {
             eq = std::strchr(cmd, '=');
             loTemplate = std::string(eq+1);
@@ -605,9 +593,7 @@ int main(int argc, char** argv)
         }
     }
 
-    sysTemplate = JailUtil::getTemplatePath(childRoot);
-
-    if (sysTemplate.empty() || loTemplate.empty() || childRoot.empty())
+    if (childRoot.empty())
     {
         printArgumentHelp();
         return EX_USAGE;
@@ -649,7 +635,7 @@ int main(int argc, char** argv)
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process and trace startup.
     ::setenv("LOOL_TRACE_STARTUP", "1", 1);
-    pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, true);
+    const pid_t forKitPid = createLibreOfficeKit(childRoot, true);
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
@@ -689,7 +675,7 @@ int main(int argc, char** argv)
 #if ENABLE_DEBUG
         if (!SingleKit)
 #endif
-        forkLibreOfficeKit(childRoot, sysTemplate, loTemplate);
+            forkLibreOfficeKit(childRoot);
     }
 
     int returnValue = EX_OK;
