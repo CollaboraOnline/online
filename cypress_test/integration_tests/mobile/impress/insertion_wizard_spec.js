@@ -70,7 +70,7 @@ describe('Impress insertion wizard.', function() {
 			.should('exist');
 	});
 
-	it('Insert comment.', function() {
+	it.skip('Insert comment.', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'Comment')
@@ -510,7 +510,7 @@ describe('Impress insertion wizard.', function() {
 
 		cy.contains('.leaflet-control-zoom-in', '+')
 			.should('be.visible');
-			
+
 		cy.contains('.leaflet-control-zoom-in', '+')
 			.click();
 
