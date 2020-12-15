@@ -39,11 +39,8 @@ static inline std::string getTemplatePath(const std::string& childRoot)
 
 #ifndef BUILDING_TESTS
 
-/// Link or copy the SysTemplate directory into a jail.
-void linkOrCopySysTemplate(const std::string& sysTemplate, const std::string& jailPath);
-
-/// Link or copy the LoTemplate directory into a jail.
-void linkOrCopyLoTemplate(const std::string& loTemplate, const std::string& jailPath);
+/// Link or copy the Template directory into a jail.
+void linkOrCopyTemplateToJail(const std::string& templatePath, const std::string& jailPath);
 
 #endif // BUILDING_TESTS
 

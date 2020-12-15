@@ -283,16 +283,9 @@ std::chrono::time_point<std::chrono::steady_clock> LinkOrCopy::StartTime;
 bool LinkOrCopy::VerboseLogging = false;
 unsigned LinkOrCopy::FileCount = 0;
 
-void linkOrCopySysTemplate(const std::string& sysTemplate, const std::string& jailPath)
+void linkOrCopyTemplateToJail(const std::string& templatePath, const std::string& jailPath)
 {
-    LinkOrCopy::linkOrCopy(sysTemplate, jailPath, LinkOrCopy::OperationType::All);
-}
-
-void linkOrCopyLoTemplate(const std::string& loTemplate, const std::string& jailPath)
-{
-    Poco::Path jailLOPath = Poco::Path::forDirectory(jailPath);
-    jailLOPath.pushDirectory(JailUtil::LO_JAIL_SUBPATH);
-    LinkOrCopy::linkOrCopy(loTemplate, jailLOPath.toString(), LinkOrCopy::OperationType::LO);
+    LinkOrCopy::linkOrCopy(templatePath, jailPath, LinkOrCopy::OperationType::All);
 }
 
 #endif // BUILDING_TESTS
@@ -486,8 +479,13 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
     const std::string templatePath = JailUtil::getTemplatePath(childRoot);
     LOG_INF("Creating Template [" << templatePath << ']');
 
-    linkOrCopySysTemplate(sysTemplate, templatePath);
-    linkOrCopyLoTemplate(loTemplate, templatePath);
+    // Copy SysTemplate to Template.
+    LinkOrCopy::linkOrCopy(sysTemplate, templatePath, LinkOrCopy::OperationType::All);
+
+    // Copy LoTemplate to Template.
+    Poco::Path jailLOPath = Poco::Path::forDirectory(templatePath);
+    jailLOPath.pushDirectory(JailUtil::LO_JAIL_SUBPATH);
+    LinkOrCopy::linkOrCopy(loTemplate, jailLOPath.toString(), LinkOrCopy::OperationType::LO);
 
     // Link the network and system files in Template, if possible.
     SysTemplate::setupDynamicFiles(templatePath);

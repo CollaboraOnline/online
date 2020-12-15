@@ -1961,7 +1961,8 @@ void lokit_main(
                 LOG_INF("Mounting is disabled, will link/copy " << templatePath << " -> "
                                                                 << jailPathStr);
 
-                JailUtil::linkOrCopySysTemplate(templatePath, jailPathStr);
+                // The template include both systemplate and LO template.
+                JailUtil::linkOrCopyTemplateToJail(templatePath, jailPathStr);
 
                 // Create a file to mark this a copied jail.
                 JailUtil::markJailCopied(jailPathStr);
