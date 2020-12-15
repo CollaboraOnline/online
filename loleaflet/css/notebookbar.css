@@ -260,10 +260,21 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 .unotoolbutton.notebookbar .unoarrow {
+	width: 0px;
+	height: 0px;
+	font-size: 0;
+	line-height: 0;
 	border: 4px solid transparent;
 	border-top: 5px solid #8D99A7;
 	display: inline-block;
 	margin-left: 3px;
+}
+
+/*Adjust arrow for statistics menu (has icon, label stacked up)*/
+.unospan-Data-StatisticsMenu .unoarrow {
+	display: block;
+	float: right;
+	margin-top: -28px;
 }
 
 .unotoolbutton.notebookbar:hover .unoarrow {
@@ -337,7 +348,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 .unotoolbutton.notebookbar.has-label:not(.inline) img {
 	width: 32px !important;
 	height: 32px !important;
-	padding-left: 25%;
+	margin: auto !important;
 }
 
 /* unobuttons with inline labels */
