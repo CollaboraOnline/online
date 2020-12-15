@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
         # extract Writer style names and status bar strings
         poFile = dir + lang + '/sw/messages.po'
-        extractFromPo(poFile, ["STR_POOL", "STR_PAGE_COUNT", "STR_STATUSBAR_WORDCOUNT_NO_SELECTION", "STR_LANGSTATUS_NONE"], translations)
+        extractFromPo(poFile, ["STR_POOL", "STR_PAGE_COUNT", "STR_LANGSTATUS_NONE"], translations)
 
         # extract Impress/Draw style names, layout names and 'Slide %1 of %2'
         poFile = dir + lang + '/sd/messages.po'
