@@ -398,8 +398,10 @@ function afterAll(fileName, testState) {
 	cy.log('Waiting for closing the document - start.');
 
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
-		if (testState === 'failed')
+		if (testState === 'failed') {
+			Cypress.env('IFRAME_LEVEL', '');
 			return;
+		}
 
 		if (Cypress.env('IFRAME_LEVEL') === '2') {
 			// Close the document
