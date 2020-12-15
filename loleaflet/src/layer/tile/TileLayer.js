@@ -235,37 +235,37 @@ L.TileLayer = L.GridLayer.extend({
 			build: function($trigger) {
 				return {
 					items: {
-						modify: $trigger.get(0).isRoot === true ? undefined : {
+						modify: {
 							name: _('Modify'),
 							callback: function (key, options) {
 								that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
 							}
 						},
-						reply: (that._docType !== 'text' && that._docType !== 'presentation') || $trigger.get(0).isRoot === true ? undefined : {
+						reply: (that._docType !== 'text' && that._docType !== 'presentation') ? undefined : {
 							name: _('Reply'),
 							callback: function (key, options) {
 								that.onAnnotationReply.call(that, options.$trigger.get(0).annotation);
 							}
 						},
-						remove: $trigger.get(0).isRoot === true ? undefined : {
+						remove: {
 							name: _('Remove'),
 							callback: function (key, options) {
 								that.onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
 							}
 						},
-						removeThread: that._docType !== 'text' ? undefined : {
+						removeThread: that._docType !== 'text' || $trigger.get(0).isRoot === true ? undefined : {
 							name: _('Remove Thread'),
 							callback: function (key, options) {
 								that.onAnnotationRemoveThread.call(that, options.$trigger.get(0).annotation._data.id);
 							}
 						},
-						resolve: that._docType !== 'text' || $trigger.get(0).isRoot === true ? undefined : {
+						resolve: that._docType !== 'text' ? undefined : {
 							name: $trigger.get(0).annotation._data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
 							callback: function (key, options) {
 								that.onAnnotationResolve.call(that, options.$trigger.get(0).annotation);
 							}
 						},
-						resolveThread: that._docType !== 'text' ? undefined : {
+						resolveThread: that._docType !== 'text' || $trigger.get(0).isRoot === true ? undefined : {
 							name: that.isThreadResolved($trigger.get(0).annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
 							callback: function (key, options) {
 								that.onAnnotationResolveThread.call(that, options.$trigger.get(0).annotation);

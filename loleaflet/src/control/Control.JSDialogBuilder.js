@@ -2027,7 +2027,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{
 				var replyCountNode = L.DomUtil.create('div','loleaflet-annotation-reply-count loleaflet-annotation-content',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
 				var replyCountText;
-				if (numberOfReplies == 1) {
+				if (numberOfReplies === 1) {
 					replyCountText = numberOfReplies + ' ' + _('reply');
 				}
 				else {
@@ -2046,22 +2046,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(childContainer).hide();
 
 			if (builder.wizard) {
-				L.DomUtil.remove($(container).find('.loleaflet-annotation-menubar')[0]);
-				var arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
-				arrowSpan.innerHTML = '>';
-				arrowSpan.style.padding = '0px';
+				if (data.children.length >= 2) {
+					L.DomUtil.remove($(container).find('.loleaflet-annotation-menubar')[0]);
+					var arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
+					arrowSpan.innerHTML = '>';
+					arrowSpan.style.padding = '0px';
 
-				$(container).click(function() {
-					builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
-					builder.wizard.goLevelDown(childContainer);
-				});
+					$(container).click(function() {
+						builder.wizard.goLevelDown(childContainer);
+					});
+				}
 			}
-		} else {
-			$(container).click(function() {
-				builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
-			});
 		}
-
+		$(container).click(function() {
+			builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
+		});
 		return false;
 	},
 
