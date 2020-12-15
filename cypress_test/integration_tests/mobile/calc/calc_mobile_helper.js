@@ -1,6 +1,4 @@
-/* global cy expect require */
-
-require('cypress-wait-until');
+/* global cy expect */
 
 function selectFirstRow() {
 	cy.get('.spreadsheet-header-rows')
