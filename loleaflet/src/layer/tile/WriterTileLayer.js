@@ -290,6 +290,10 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_addHighlightSelectedWizardComment: function(annotation) {
+		var map = this._map;
+		$('.ui-header.level-0.mobile-wizard').each(function() {
+			map._docLayer._removeHighlightSelectedWizardComment(this.annotation);
+		});
 		var annotations = this._map._docLayer._annotations;
 		var annotationList = annotations._items;
 		var lastChild = annotations.getLastChildIndexOf(annotation._data.id);
@@ -303,7 +307,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 			lastChild = annotations.getIndexOf(annotationList[lastChild]._data.parent);
 		}
-
 	},
 
 	_removeHighlightSelectedWizardComment: function(annotation) {
