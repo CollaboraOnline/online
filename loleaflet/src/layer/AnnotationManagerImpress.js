@@ -461,6 +461,8 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 			this._topAnnotation[this.getSelectedPart()] = Math.min(this._topAnnotation[this.getSelectedPart()], this._annotations[this.getSelectedPartHash()].length - 1);
 			this.updateDocBounds(1, this.extraSize);
 			this.layoutAnnotations();
+			if (window.mode.isMobile())
+				this._map._docLayer._openCommentWizard();
 		} else if (comment.action === 'Remove') {
 			var pageIndex = this.removeAnnotation(comment.id);
 			if (pageIndex != -1) {
