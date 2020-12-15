@@ -1,5 +1,7 @@
 /* global describe it cy beforeEach require afterEach Cypress */
 
+require('cypress-file-upload');
+
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var writerHelper = require('../../common/writer_helper');
