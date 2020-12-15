@@ -41,6 +41,10 @@
 	margin-top: 8px;
 }
 
+.jsdialog *[disabled] {
+	color: var(--gray-light-txt--color) !important;
+}
+
 .jsdialog.ui-button-box button[disabled='disabled'] {
 	color: var(--gray-light-txt--color) !important;
 	background-color: #fafafa !important;
