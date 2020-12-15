@@ -414,8 +414,7 @@ void cleanupJails(const std::string& root)
         return;
     }
 
-    //FIXME: technically, the loTemplate directory may have any name.
-    if (FileUtil::Stat(root + "/lo").exists())
+    if (FileUtil::Stat(JailUtil::getLoPath(root)).exists())
     {
         // This is a jail.
         removeJail(root);
@@ -483,9 +482,8 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
     LinkOrCopy::linkOrCopy(sysTemplate, templatePath, LinkOrCopy::OperationType::All);
 
     // Copy LoTemplate to Template.
-    Poco::Path jailLOPath = Poco::Path::forDirectory(templatePath);
-    jailLOPath.pushDirectory(JailUtil::LO_JAIL_SUBPATH);
-    LinkOrCopy::linkOrCopy(loTemplate, jailLOPath.toString(), LinkOrCopy::OperationType::LO);
+    LinkOrCopy::linkOrCopy(loTemplate, JailUtil::getLoPath(templatePath),
+                           LinkOrCopy::OperationType::LO);
 
     // Link the network and system files in Template, if possible.
     SysTemplate::setupDynamicFiles(templatePath);

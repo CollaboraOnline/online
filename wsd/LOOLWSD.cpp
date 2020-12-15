@@ -616,7 +616,7 @@ public:
         // The temporary directory is child-root/<CHILDROOT_TMP_INCOMING_PATH>.
         // Always create a random sub-directory to avoid file-name collision.
         Path tempPath = Path::forDirectory(
-            FileUtil::createRandomTmpDir(LOOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH)
+            FileUtil::createRandomTmpDir(JailUtil::getChildRootTmpIncomingPath(LOOLWSD::ChildRoot))
             + '/');
         LOG_TRC("Created temporary convert-to/insert path: " << tempPath.toString());
 
@@ -3126,7 +3126,9 @@ private:
             std::string decoded;
             Poco::URI::decode(url, decoded);
 
-            const Path filePath(LOOLWSD::ChildRoot + jailId + JAILED_DOCUMENT_ROOT + decoded);
+            // Construct the full document path where 'decoded' is directory and filename.
+            const Poco::Path filePath(JailUtil::getJailPath(LOOLWSD::ChildRoot, jailId)
+                                      + JAILED_DOCUMENT_ROOT + decoded);
             const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath.toString());
 
             if (foundDownloadId && filePath.isAbsolute() && File(filePath).exists())

@@ -16,25 +16,84 @@
 
 namespace JailUtil
 {
+// The Child-Root directory structure looks like this:
+//
+// child-root/
+// ├── jails
+// │   ├── <jail-id-1>
+// │   └── <jail-id-N>
+// ├── template
+// │   ├── dev
+// │   ├── etc
+// │   ├── lo
+// │   └── ...
+// └── tmp
+//     └── incoming
+
+/// The jails directory within Child-Root.
+constexpr const char CHILDROOT_JAILS_DIR[] = "jails";
 
 /// General temporary directory owned by us.
-constexpr const char CHILDROOT_TMP_PATH[] = "/tmp";
+constexpr const char CHILDROOT_TMP_DIR[] = "tmp";
 
 /// Files uploaded by users are stored in this sub-directory of child-root.
 constexpr const char CHILDROOT_TMP_INCOMING_PATH[] = "/tmp/incoming";
 
 /// The template directory path within the childroot..
-constexpr const char CHILDROOT_TEMPLATE_PATH[] = "/template";
+constexpr const char CHILDROOT_TEMPLATE_DIR[] = "template";
 
 /// The LO installation directory with jail.
 constexpr const char LO_JAIL_SUBPATH[] = "lo";
 
-/// Returns the template path, given the Child-Root path.
-static inline std::string getTemplatePath(const std::string& childRoot)
+/// Returns the jails path within the Child-Root.
+/// Child-Root/jails
+inline std::string getJailsPath(const std::string& childRoot)
 {
-    const Poco::Path templatePath
-        = Poco::Path::forDirectory(childRoot).pushDirectory(CHILDROOT_TEMPLATE_PATH);
-    return templatePath.toString();
+    return Poco::Path::forDirectory(childRoot).pushDirectory(CHILDROOT_JAILS_DIR).toString();
+}
+
+/// Returns a jail's path, given it's Jail-ID.
+/// Child-Root/Jails/<jailId>
+inline std::string getJailPath(const std::string& childRoot, const std::string& jailId)
+{
+    return Poco::Path::forDirectory(getJailsPath(childRoot)).pushDirectory(jailId).toString();
+}
+
+/// Returns the temp directory path in the Child-Root.
+/// Child-Root/Tmp
+inline std::string getChildRootTmpPath(const std::string& childRoot)
+{
+    return Poco::Path::forDirectory(childRoot).pushDirectory(CHILDROOT_TMP_DIR).toString();
+}
+
+/// Returns the temp incoming-files directory path in the Child-Root.
+/// Child-Root/Tmp/Incoming
+inline std::string getChildRootTmpIncomingPath(const std::string& childRoot)
+{
+    return Poco::Path::forDirectory(childRoot)
+        .pushDirectory(CHILDROOT_TMP_INCOMING_PATH)
+        .toString();
+}
+
+/// Returns the template path, given the Child-Root path.
+/// Child-Root/Template
+inline std::string getTemplatePath(const std::string& childRoot)
+{
+    return Poco::Path::forDirectory(childRoot).pushDirectory(CHILDROOT_TEMPLATE_DIR).toString();
+}
+
+/// Returns the LO path for the given root path.
+/// Root/Lo
+inline std::string getLoPath(const std::string& root)
+{
+    return Poco::Path::forDirectory(root).pushDirectory(LO_JAIL_SUBPATH).toString();
+}
+
+/// Returns the template/LO path, given the Child-Root path.
+/// Child-Root/Template/Lo
+inline std::string getTemplateLoPath(const std::string& childRoot)
+{
+    return getLoPath(getTemplatePath(childRoot));
 }
 
 #ifndef BUILDING_TESTS

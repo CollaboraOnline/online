@@ -1895,7 +1895,7 @@ void lokit_main(
     try
     {
 #if !MOBILEAPP
-        const Path jailPath = Path::forDirectory(childRoot + '/' + jailId);
+        const Path jailPath = JailUtil::getJailPath(childRoot, jailId);
         const std::string jailPathStr = jailPath.toString();
         LOG_INF("Jail path: " << jailPathStr);
         File(jailPath).createDirectories();
@@ -1909,9 +1909,7 @@ void lokit_main(
             userdir_url = "file:///tmp/user";
             instdir_path = '/' + std::string(JailUtil::LO_JAIL_SUBPATH) + "/program";
 
-            Poco::Path jailLOInstallation(jailPath, JailUtil::LO_JAIL_SUBPATH);
-            jailLOInstallation.makeDirectory();
-            const std::string loJailDestPath = jailLOInstallation.toString();
+            const std::string loJailDestPath = JailUtil::getLoPath(jailPathStr);
             const std::string templatePath = JailUtil::getTemplatePath(childRoot);
 
             // The bind-mount implementation: inlined here to mirror
@@ -2013,9 +2011,7 @@ void lokit_main(
         else // noCapabilities set
         {
             LOG_WRN("Security warning: running without chroot jails is insecure.");
-            const std::string templateLOPath = Poco::Path::forDirectory(childRoot)
-                                                   .pushDirectory(JailUtil::LO_JAIL_SUBPATH)
-                                                   .toString();
+            const std::string templateLOPath = JailUtil::getTemplateLoPath(childRoot);
             LOG_INF("Using template ["
                     << templateLOPath << "] as install subpath directly, without chroot jail setup.");
             userdir_url = "file:///" + jailPathStr + "/tmp/user";

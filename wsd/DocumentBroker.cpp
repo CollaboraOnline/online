@@ -37,6 +37,7 @@
 #include <common/Protocol.hpp>
 #include <common/Unit.hpp>
 #include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -1434,7 +1435,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
 std::string DocumentBroker::getJailRoot() const
 {
     assert(!_jailId.empty());
-    return Poco::Path(LOOLWSD::ChildRoot, _jailId).toString();
+    return JailUtil::getJailPath(LOOLWSD::ChildRoot, _jailId);
 }
 
 std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
