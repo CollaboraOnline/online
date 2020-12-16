@@ -2073,10 +2073,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var span = L.DomUtil.create('span', 'ui-drawing-area-placeholder', spanContainer);
 				span.innerText = data.text;
 			}
+			L.DomEvent.on(image, 'click touchend', function(e) {
+				var x = 0;
+				var y = 0;
 
-			$(container).click(function () {
-				builder.callback('drawingarea', 'click', container, null, builder);
-			});
+				if (e.offsetX) {
+					x = e.offsetX;
+					y = e.offsetY;
+				} else if (e.changedTouches && e.changedTouches.length) {
+					x = e.changedTouches[e.changedTouches.length-1].pageX - $(image).offset().left;
+					y = e.changedTouches[e.changedTouches.length-1].pageY - $(image).offset().top;
+				}
+
+				var coordinates = (x / image.offsetWidth) + ';' + (y / image.offsetHeight);
+				builder.callback('drawingarea', 'click', container, coordinates, builder);
+			}, this);
 		}
 		return false;
 	},
