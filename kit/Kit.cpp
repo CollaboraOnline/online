@@ -184,7 +184,8 @@ namespace
                 strcmp(path, "share/Scripts/java") != 0 &&
                 strcmp(path, "share/Scripts/javascript") != 0 &&
                 strcmp(path, "share/config/wizard") != 0 &&
-                strcmp(path, "readmes") != 0;
+                strcmp(path, "readmes") != 0 &&
+                strcmp(path, "help") != 0;
         default: // LinkOrCopyType::All
             return true;
         }
@@ -196,7 +197,11 @@ namespace
         {
         case LinkOrCopyType::LO:
         {
-            const char *dot = strrchr(path, '.');
+            if (strstr(path, "LICENSE") || strstr(path, "EULA") || strstr(path, "CREDITS")
+                || strstr(path, "NOTICE"))
+                return false;
+
+            const char* dot = strrchr(path, '.');
             if (!dot)
                 return true;
 
