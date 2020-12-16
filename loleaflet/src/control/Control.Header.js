@@ -33,12 +33,6 @@ L.Control.Header = L.Control.extend({
 
 		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
 
-		this._groups = null;
-
-		// group control styles
-		this._groupHeadSize = 12;
-		this._levelSpacing = 1;
-
 		// set up corner header
 		var cornerHeader = L.DomUtil.get('spreadsheet-header-corner-container');
 		if (cornerHeader) {
@@ -291,11 +285,12 @@ L.Control.Header = L.Control.extend({
 
 		var that = this;
 		var result = null;
+		var dpiScale = this._dpiScale;
 		this._headerInfo.forEachElement(function(entry) {
 			var end = entry.pos;
 			var start = end - entry.size;
 			if (position >= start && position < end) {
-				var resizeAreaStart = Math.max(start, end - 3 * this._dpiScale);
+				var resizeAreaStart = Math.max(start, end - 3 * dpiScale);
 				if (that.isHeaderSelected(entry.index) || window.mode.isMobile()) {
 					resizeAreaStart = end - that._resizeHandleSize;
 				}
@@ -308,9 +303,6 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_onPanStart: function (event) {
-		if (this._hitOutline(event))
-			return;
-
 		var target = event.target || event.srcElement;
 		if (!target)
 			return false;
@@ -370,9 +362,6 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_onMouseOut: function (e) {
-		if (this._hitOutline(e))
-			return;
-
 		this._onHeaderMouseOut(e);
 	},
 
@@ -392,10 +381,6 @@ L.Control.Header = L.Control.extend({
 	},
 
 	_onMouseMove: function (e) {
-		if (this._hitOutline(e)) {
-			this._onHeaderMouseOut(e);
-			return false;
-		}
 		if (!this._overHeaderArea) {
 			L.DomUtil.setStyle(this._canvas, 'cursor', this._cursor);
 			this._overHeaderArea = true;
@@ -440,77 +425,7 @@ L.Control.Header = L.Control.extend({
 		}
 	},
 
-
-	_onOutlineMouseEvent: function (e, eventHandler) {
-		// check if the group controls area has been hit
-		if (!this._hitOutline(e))
-			return false;
-
-		var pos = this._mouseEventToCanvasPos(this._canvas, e);
-		var level = this._getGroupLevel(this._getOrthogonalPos(pos));
-		if (level < 0 || level >= this._groups.length)
-			return true;
-
-		// when 2 collapsed group controls overlaps completely,
-		// clicking on the control should expand the lower/rightmost group
-		var groups = this._groups[level];
-		var indexes = Object.keys(groups);
-		var len = indexes.length;
-		for (var i = len - 1; i >= 0; --i) {
-			e.group = groups[indexes[i]];
-			if (eventHandler.call(this, e))
-				break;
-		}
-
-		return true;
-	},
-
-	_onGroupControlClick: function (e) {
-		var group = e.group;
-		if (!group)
-			return false;
-
-		var pos = this._headerInfo.headerToDocPos(
-			this._getParallelPos(this._mouseEventToCanvasPos(this._canvas, e)));
-		if (group.startPos < pos && pos < group.startPos + this._groupHeadSize) {
-			this._updateOutlineState(/*isColumnOutline: */ this._isColumn, group);
-			return true;
-		}
-		return false;
-	},
-
-	_onDoubleClick: function (e) {
-		this._onOutlineMouseEvent(e, this._onGroupControlDoubleClick);
-	},
-
-	_onGroupControlDoubleClick: function (e) {
-		var group = e.group;
-		if (!group && !group.hidden)
-			return false;
-
-		var pos = this._headerInfo.headerToDocPos(
-			this._getParallelPos(this._mouseEventToCanvasPos(this._canvas, e)));
-		if (group.startPos + this._groupHeadSize < pos && pos < group.endPos) {
-			this._updateOutlineState(/*isColumnOutline: */ this._isColumn, group);
-			return true;
-		}
-		return false;
-	},
-
-	_updateOutlineState: function (column, group) {
-		if (!group)
-			return;
-
-		var type = column ? 'column' : 'row';
-		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
-		var payload = 'outlinestate type='+ type + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
-		this._map._socket.sendMessage(payload);
-	},
-
 	_onMouseDown: function (e) {
-		if (this._hitOutline(e))
-			return;
-
 		var target = e.target || e.srcElement;
 		if (!target || this._dragging) {
 			return false;
@@ -624,134 +539,6 @@ L.Control.Header = L.Control.extend({
 		this._setCanvasSizeImpl(this._cornerHeaderContainer, this._cornerCanvas, 'height', height, /*isCorner: */ true);
 	},
 
-	_hitOutline: function (e) {
-		var pos = this._mouseEventToCanvasPos(this._canvas, e);
-		return this._getOrthogonalPos(pos) <= this.getOutlineWidth();
-	},
-
-	_getGroupLevel: function (pos) {
-		var levels = this._groups.length;
-		var size = this._levelSpacing + this._groupHeadSize;
-
-		var level = (pos + 1) / size | 0;
-		var relPos = pos % size;
-
-		if (level <= levels && relPos > this._levelSpacing) {
-			return level;
-		}
-		else {
-			return -1;
-		}
-	},
-
-	_computeOutlineWidth: function () {
-		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
-	},
-
-	getOutlineWidth: function () {
-		if (this._isColumn)
-			return this._canvasHeight - this._borderWidth - this._headerHeight;
-		else
-			return this._canvasWidth - this._borderWidth - this._headerWidth;
-	},
-
-	_collectGroupsData: function(groups) {
-		var level, groupEntry;
-
-		var lastGroupIndex = new Array(groups.length);
-		var firstChildGroupIndex = new Array(groups.length);
-		var lastLevel = -1;
-		for (var i = 0; i < groups.length; ++i) {
-			// a new group start
-			var groupData = groups[i];
-			level = parseInt(groupData.level) - 1;
-			if (!this._groups[level]) {
-				this._groups[level] = {};
-			}
-			var startPos = parseInt(groupData.startPos) / this._map._docLayer._tilePixelScale;
-			var endPos = parseInt(groupData.endPos) / this._map._docLayer._tilePixelScale;
-			var isHidden = !!parseInt(groupData.hidden);
-			if (isHidden || startPos === endPos) {
-				startPos -= this._groupHeadSize / 2;
-				endPos = startPos + this._groupHeadSize;
-			}
-			else {
-				var moved = false;
-				// if the first child is collapsed the parent head has to be top-aligned with the child
-				if (level < lastLevel && firstChildGroupIndex[lastLevel] !== undefined) {
-					var childGroupEntry = this._groups[lastLevel][firstChildGroupIndex[lastLevel]];
-					if (childGroupEntry.hidden) {
-						if (startPos > childGroupEntry.startPos && startPos < childGroupEntry.endPos) {
-							startPos = childGroupEntry.startPos;
-							moved = true;
-						}
-					}
-				}
-				// if 2 groups belonging to the same level are contiguous and the first group is collapsed,
-				// the second one has to be shifted as much as possible in order to avoiding overlapping.
-				if (!moved && lastGroupIndex[level] !== undefined) {
-					var prevGroupEntry = this._groups[level][lastGroupIndex[level]];
-					if (prevGroupEntry.hidden) {
-						if (startPos > prevGroupEntry.startPos && startPos < prevGroupEntry.endPos) {
-							startPos = prevGroupEntry.endPos;
-						}
-					}
-				}
-			}
-			groupEntry = {
-				level: level,
-				index: groupData.index,
-				startPos: startPos,
-				endPos: endPos,
-				hidden: isHidden
-			};
-			this._groups[level][groupData.index] = groupEntry;
-			lastGroupIndex[level] = groupData.index;
-			if (level > lastLevel) {
-				firstChildGroupIndex[level] = groupData.index;
-				lastLevel = level;
-			}
-			else if (level === lastLevel) {
-				firstChildGroupIndex[level + 1] = undefined;
-			}
-		}
-	},
-
-	drawCornerHeader: function() {
-		var ctx = this._cornerCanvasContext;
-
-		if (!this._groups)
-			return;
-
-		ctx.fillStyle = this._borderColor;
-		if (this._isColumn) {
-			var startY = this._cornerCanvas.height - (L.Control.Header.colHeaderHeight + this._borderWidth);
-			if (startY > 0)
-				ctx.fillRect(0, startY, this._cornerCanvas.width, this._borderWidth);
-		}
-		else {
-			var startX = this._cornerCanvas.width - (L.Control.Header.rowHeaderWidth + this._borderWidth);
-			if (startX > 0)
-				ctx.fillRect(startX, 0, this._borderWidth, this._cornerCanvas.height);
-		}
-
-		var levels = this._groups.length + 1;
-		for (var i = 0; i < levels; ++i) {
-			this.drawLevelHeader(i);
-		}
-	},
-
-	drawOutline: function() {
-		if (this._groups) {
-			for (var itLevel = 0; itLevel < this._groups.length; ++itLevel) {
-				for (var groupIndex in this._groups[itLevel]) {
-					if (Object.prototype.hasOwnProperty.call(this._groups[itLevel], groupIndex))
-						this.drawGroupControl(this._groups[itLevel][groupIndex]);
-				}
-			}
-		}
-	},
-
 	getHeaderZoomScale : function(lowerBound, upperBound) {
 		if (typeof lowerBound === 'undefined' || lowerBound < 0)
 			lowerBound = 0.5;
@@ -772,7 +559,6 @@ L.Control.Header = L.Control.extend({
 	onDragClick: function () {},
 	getHeaderEntryBoundingClientRect: function () {},
 	drawHeaderEntry: function () {},
-	drawGroupControl: function () {},
 	_getParallelPos: function () {},
 	_getOrthogonalPos: function () {}
 

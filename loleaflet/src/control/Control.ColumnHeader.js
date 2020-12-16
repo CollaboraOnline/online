@@ -22,7 +22,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._map.on('updateselectionheader', this._onUpdateSelection, this);
 		this._map.on('clearselectionheader', this._onClearSelection, this);
 		this._map.on('updatecurrentheader', this._onUpdateCurrentColumn, this);
-		this._map.on('updatecornerheader', this.drawCornerHeader, this);
 		var rowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
 		this._headerContainer = L.DomUtil.createWithId('div', 'spreadsheet-header-columns-container', rowColumnFrame);
 
@@ -45,7 +44,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		L.DomEvent.on(this._canvas, 'mousemove', this._onMouseMove, this);
 		L.DomEvent.on(this._canvas, 'mouseout', this._onMouseOut, this);
 		L.DomEvent.on(this._canvas, 'click', this._onClick, this);
-		L.DomEvent.on(this._canvas, 'dblclick', this._onDoubleClick, this);
 		L.DomEvent.on(this._canvas, 'touchstart',
 			function (e) {
 				if (e && e.touches.length > 1) {
@@ -256,88 +254,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		ctx.fillRect(endPar -1, startY, this._borderWidth, height);
 	},
 
-	drawGroupControl: function (group) {
-		if (!group)
-			return;
-
-		var ctx = this._canvasContext;
-		var headSize = this._groupHeadSize;
-		var spacing = this._levelSpacing;
-		var level = group.level;
-
-		var startOrt = spacing + (headSize + spacing) * level;
-		var startPar = this._headerInfo.docToHeaderPos(group.startPos);
-		var height = group.endPos - group.startPos;
-
-		ctx.save();
-		ctx.scale(this._dpiScale, this._dpiScale);
-
-		// clip mask
-		ctx.beginPath();
-		ctx.rect(startPar, startOrt, height, headSize);
-		ctx.clip();
-		if (!group.hidden) {
-			//draw tail
-			ctx.strokeStyle = 'black';
-			ctx.lineWidth = 1.5;
-			ctx.beginPath();
-			ctx.moveTo(startPar + headSize, startOrt + 2);
-			ctx.lineTo(startPar + height - 1, startOrt + 2);
-			ctx.lineTo(startPar + height - 1, startOrt + 2 + headSize / 2);
-			ctx.stroke();
-			// draw head
-			ctx.fillStyle = this._hoverColor;
-			ctx.fillRect(startPar, startOrt, headSize, headSize);
-			ctx.strokeStyle = 'black';
-			ctx.lineWidth = 0.5;
-			ctx.strokeRect(startPar, startOrt, headSize, headSize);
-			// draw '-'
-			ctx.lineWidth = 1;
-			ctx.strokeRect(startPar + headSize / 4, startOrt + headSize / 2, headSize / 2, 1);
-		}
-		else {
-			// draw head
-			ctx.fillStyle = this._hoverColor;
-			ctx.fillRect(startPar, startOrt, headSize, headSize);
-			ctx.strokeStyle = 'black';
-			ctx.lineWidth = 0.5;
-			ctx.strokeRect(startPar, startOrt, headSize, headSize);
-			// draw '+'
-			ctx.lineWidth = 1;
-			ctx.beginPath();
-			ctx.moveTo(startPar + headSize / 4, startOrt + headSize / 2);
-			ctx.lineTo(startPar + 3 * headSize / 4, startOrt + headSize / 2);
-			ctx.moveTo(startPar + headSize / 2, startOrt + headSize / 4);
-			ctx.lineTo(startPar + headSize / 2, startOrt + 3 * headSize / 4);
-			ctx.stroke();
-		}
-		ctx.restore();
-	},
-
-	drawLevelHeader: function(level) {
-		var ctx = this._cornerCanvasContext;
-		var ctrlHeadSize = this._groupHeadSize;
-		var levelSpacing = this._levelSpacing;
-
-		var startOrt = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
-		var startPar = this._cornerCanvas.width / this._dpiScale - (ctrlHeadSize + (L.Control.Header.rowHeaderWidth - ctrlHeadSize) / 2);
-
-		ctx.save();
-		ctx.scale(this._dpiScale, this._dpiScale);
-		ctx.fillStyle = this._hoverColor;
-		ctx.fillRect(startPar, startOrt, ctrlHeadSize, ctrlHeadSize);
-		ctx.strokeStyle = 'black';
-		ctx.lineWidth = 0.5;
-		ctx.strokeRect(startPar, startOrt, ctrlHeadSize, ctrlHeadSize);
-		// draw level number
-		ctx.fillStyle = this._textColor;
-		ctx.font = this._font.getFont();
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'middle';
-		ctx.fillText(level + 1, startPar + (ctrlHeadSize / 2), startOrt + (ctrlHeadSize / 2));
-		ctx.restore();
-	},
-
 	getHeaderEntryBoundingClientRect: function (index) {
 		var entry = this._mouseOverEntry;
 		if (index) {
@@ -362,8 +278,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	viewRowColumnHeaders: function (e) {
 		var dataInEvent = (e.data && e.data.columns && e.data.columns.length > 0);
 		if (dataInEvent || e.updatecolumns) {
-			dataInEvent ? this.fillColumns(e.data.columns, e.data.columnGroups, e.converter, e.context) :
-				this.fillColumns(undefined, undefined, e.converter, e.context);
+			this.fillColumns(e.converter, e.context);
 			this._onUpdateCurrentColumn(e.cursor);
 			if (e.selection && e.selection.hasSelection) {
 				this._onUpdateSelection(e.selection);
@@ -374,14 +289,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 	},
 
-	fillColumns: function (columns, colGroups, converter, context) {
-		if (columns && columns.length < 2)
-			return;
-
-		var canvas = this._canvas;
+	fillColumns: function (converter, context) {
 		this._setCanvasWidth();
 		this._setCanvasHeight();
-		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+		this._canvasContext.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
 		// Reset state
 		this._current = -1;
@@ -390,8 +301,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (!window.contextMenuWizard) {
 			this._lastMouseOverIndex = undefined;
 		}
-
-		var sheetGeometry = this._map._docLayer.sheetGeometry;
 
 		if (!this._headerInfo) {
 			// create data structure for column widths
@@ -402,29 +311,13 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// setup conversion routine
 		this.converter = L.Util.bind(converter, context);
 
-		// create group array
-		this._groupLevels = columns ? parseInt(columns[0].groupLevels):
-			sheetGeometry.getColumnGroupLevels();
-		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
-
-		// collect group controls data
-		if (colGroups !== undefined && this._groups) {
-			this._collectGroupsData(colGroups);
-		}
-		else if (sheetGeometry) {
-			this._collectGroupsData(sheetGeometry.getColumnGroupsDataInView());
-		}
-
-		if (this._groups) {
-			this.resize(this._computeOutlineWidth() + this._borderWidth + this._headerHeight);
-		}
-		else if (this._canvasHeight !== this._headerHeight) {
+		if (this._canvasHeight !== this._headerHeight) {
 			this.resize(this._headerHeight);
 		}
 
 		this._redrawHeaders();
 
-		this.mouseInit(canvas);
+		this.mouseInit(this._canvas);
 
 		if ($('.spreadsheet-header-columns').length > 0) {
 			$('.spreadsheet-header-columns').contextMenu(this._map.isPermissionEdit());
@@ -436,9 +329,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._headerInfo.forEachElement(function(elemData) {
 			this.drawHeaderEntry(elemData, false);
 		}.bind(this));
-
-		// draw group controls
-		this.drawOutline();
 	},
 
 	_colAlphaToNumber: function(alpha) {
@@ -483,9 +373,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	_onClick: function (e) {
-		if (this._onOutlineMouseEvent(e, this._onGroupControlClick))
-			return;
-
 		if (!this._mouseOverEntry)
 			return;
 
@@ -502,23 +389,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._selectColumn(col, modifier);
 	},
 
-	_onCornerHeaderClick: function(e) {
-		var pos = this._mouseEventToCanvasPos(this._cornerCanvas, e);
-
-		if (pos.y > this.getOutlineWidth()) {
-			this._map.fire('cornerheaderclicked', e);
-			return;
-		}
-
-		var rowOutlineWidth = this._cornerCanvas.width / this._dpiScale - L.Control.Header.rowHeaderWidth - this._borderWidth;
-		if (pos.x <= rowOutlineWidth) {
-			// empty rectangle on the left select all
-			this._map.sendUnoCommand('.uno:SelectAll');
-			return;
-		}
-
-		var level = this._getGroupLevel(pos.y);
-		this._updateOutlineState(/*is column: */ true, {column: true, level: level, index: -1});
+	_onCornerHeaderClick: function() {
+		this._map.sendUnoCommand('.uno:SelectAll');
 	},
 
 	_onDialogResult: function (e) {
@@ -665,8 +537,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		document.style.setProperty('top', docTop + 'px', 'important');
 
 		this._setCanvasHeight(height);
-
-		this._map.fire('updatecornerheader');
 	},
 
 	_insertColBefore: function() {

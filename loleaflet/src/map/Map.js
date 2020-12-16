@@ -491,7 +491,7 @@ L.Map = L.Evented.extend({
 			this._docLayer._checkSpreadSheetBounds(zoom);
 			if (window.mode.isDesktop()) {
 				var calcLayer = this._docLayer;
-				if (calcLayer.options.sheetGeometryDataEnabled && calcLayer.sheetGeometry) {
+				if (calcLayer.sheetGeometry) {
 					var sheetGeom = calcLayer.sheetGeometry;
 					var cellRange = sheetGeom.getViewCellRange();
 					var col = cellRange.columnrange.start, row = cellRange.rowrange.start;

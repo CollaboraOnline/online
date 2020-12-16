@@ -382,8 +382,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y,
 				offset: {x: undefined, y: undefined}}, true /* compatDataSrcOnly */);
 			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
-		} else if (this.options.sheetGeometryDataEnabled &&
-				textMsg.startsWith('invalidatesheetgeometry:')) {
+		} else if (textMsg.startsWith('invalidatesheetgeometry:')) {
 			var params = textMsg.substring('invalidatesheetgeometry:'.length).trim().split(' ');
 			var flags = {};
 			params.forEach(function (param) {
@@ -621,7 +620,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	// view area's data or the global data on geometry changes.
 	refreshViewData: function (coordinatesData, compatDataSrcOnly, sheetGeometryChanged) {
 
-		if (this.options.sheetGeometryDataEnabled && compatDataSrcOnly) {
+		if (compatDataSrcOnly) {
 			return;
 		}
 		// There are places that call this function with no arguments to indicate that the
@@ -647,26 +646,13 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		if (offset.x === 0) {
 			updateCols = false;
-			if (!this.options.sheetGeometryDataEnabled) {
-				topLeftPoint.x = -1;
-				sizePx.x = 0;
-			}
 		}
 		if (offset.y === 0) {
 			updateRows = false;
-			if (!this.options.sheetGeometryDataEnabled) {
-				topLeftPoint.y = -1;
-				sizePx.y = 0;
-			}
 		}
 
 		var pos = this._pixelsToTwips(topLeftPoint);
 		var size = this._pixelsToTwips(sizePx);
-
-		if (!this.options.sheetGeometryDataEnabled) {
-			this.requestViewRowColumnData(pos, size);
-			return;
-		}
 
 		if (sheetGeometryChanged || !this.sheetGeometry) {
 			this.requestSheetGeometryData(
@@ -1006,20 +992,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	getSnapDocPosX: function (docPosX, unit) {
-		if (!this.options.sheetGeometryDataEnabled) {
-			return docPosX;
-		}
-
 		unit = unit || 'corepixels';
 
 		return this.sheetGeometry.getSnapDocPosX(docPosX, unit);
 	},
 
 	getSnapDocPosY: function (docPosY, unit) {
-		if (!this.options.sheetGeometryDataEnabled) {
-			return docPosY;
-		}
-
 		unit = unit || 'corepixels';
 
 		return this.sheetGeometry.getSnapDocPosY(docPosY, unit);
@@ -1420,14 +1398,6 @@ L.SheetGeometry = L.Class.extend({
 
 	getRowGroupLevels: function () {
 		return this._rows.getGroupLevels();
-	},
-
-	getColumnGroupsDataInView: function () {
-		return this._columns.getGroupsDataInView();
-	},
-
-	getRowGroupsDataInView: function () {
-		return this._rows.getGroupsDataInView();
 	},
 
 	// accepts a point in print twips coordinates and returns the equivalent point
@@ -1884,31 +1854,6 @@ L.SheetDimension = L.Class.extend({
 
 	getGroupLevels: function () {
 		return this._outlines.getLevels();
-	},
-
-	getGroupsDataInView: function () {
-		var groupsData = [];
-		var levels = this._outlines.getLevels();
-		if (!levels) {
-			return groupsData;
-		}
-
-		var dimensionObj = this;
-		this._outlines.forEachGroupInRange(this._viewStartIndex, this._viewEndIndex,
-			function (levelIdx, groupIdx, start, end, hidden) {
-
-				var startElementData = dimensionObj.getElementData(start);
-				var endElementData = dimensionObj.getElementData(end);
-				groupsData.push({
-					level: (levelIdx + 1).toString(),
-					index: groupIdx.toString(),
-					startPos: startElementData.startpos.toString(),
-					endPos: (endElementData.startpos + endElementData.size).toString(),
-					hidden: hidden ? '1' : '0'
-				});
-			});
-
-		return groupsData;
 	},
 
 	getMaxIndex: function () {

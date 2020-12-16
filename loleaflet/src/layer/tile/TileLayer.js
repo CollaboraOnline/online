@@ -3447,7 +3447,7 @@ L.TileLayer = L.GridLayer.extend({
 	// Cells can change position during changes of zoom level in calc
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (force) {
-		if ((this._cellCursorMarker && !this.options.sheetGeometryDataEnabled) || force) {
+		if (force) {
 			this._map._socket.sendMessage('commandvalues command=.uno:CellCursor'
 			                     + '?outputHeight=' + this._tileWidthPx
 			                     + '&outputWidth=' + this._tileHeightPx
