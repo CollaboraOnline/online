@@ -76,6 +76,10 @@ td.jsdialog > [id^='table-box'] {
 	display: block;
 }
 
+.jsdialog.ui-grid {
+	border-spacing: 0px;
+}
+
 /* Expander */
 
 .jsdialog.ui-expander {
