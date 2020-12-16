@@ -127,6 +127,11 @@ td.jsdialog > [id^='table-box'] {
 	border-radius: 2px;
 }
 
+.ui-treeview.disabled {
+	background-color: silver;
+	color: var(--gray-light-txt--color) !important;
+}
+
 .ui-treeview-body {
 	display: block;
 	min-height: 100px;
