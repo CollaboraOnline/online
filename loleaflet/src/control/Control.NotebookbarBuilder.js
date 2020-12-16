@@ -204,7 +204,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				$('#table-fontnamecombobox').addClass('select2 select2-container select2-container--default');
 				$('#table-fontnamecombobox > .row.notebookbar').addClass('select2-selection select2-selection--single');
 				$('#fontnamecombobox').addClass('select2-selection__rendered');
-				$('#fontnamecombobox').html(state);
+				if (state === '')
+					$('#fontnamecombobox').html(_('Font Name'));
+				else
+					$('#fontnamecombobox').html(state);
 				window.LastSetiOSFontNameButtonFont = state;
 			} else {
 				$('#fontnamecombobox').val(state).trigger('change');
