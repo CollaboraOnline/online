@@ -13,13 +13,14 @@
 	font-family: var(--jquery-ui-font);
 }
 
-.jsdialog.vertical p {
+.jsdialog.vertical p, .ui-frame-label {
 	margin-bottom: 0px;
 	color: #666;
 	font-size: 10px;
 	font-weight: bold;
 	text-transform: uppercase;
 }
+
 .jsdialog.ui-separator.vertical {
 	height: 100%;
 	padding-left: 6px;
@@ -72,7 +73,7 @@ td.jsdialog > [id^='table-box'] {
 }
 
 .jsdialog.ui-alignment {
-	margin: 6px 12px;
+	margin: 0px;
 	display: block;
 }
 
@@ -117,7 +118,7 @@ td.jsdialog > [id^='table-box'] {
 }
 
 .ui-expander-content > .root-container.jsdialog {
-	margin: 4px;
+	margin: 4px 0px;
 }
 /* TreeView */
 
@@ -140,6 +141,10 @@ td.jsdialog > [id^='table-box'] {
 	overflow-y: auto;
 	overflow-x: hidden;
 	width: 100%;
+}
+
+.ui-treeview-cell.with-sub-dialog {
+	cursor: context-menu;
 }
 
 .ui-treeview-expandable > .ui-treeview-expander::before {
@@ -187,7 +192,7 @@ td.jsdialog > [id^='table-box'] {
 
 .ui-treeview-entry input[type='checkbox'] {
 	width: 20px;
-	vertical-align: middle;
+	margin: 0px 5px;
 }
 
 .ui-treeview-entry span {
@@ -221,7 +226,8 @@ td.jsdialog > [id^='table-box'] {
 /* input text */
 
 .jsdialog.ui-edit {
-	line-height: 18px;
+	line-height: 28px;
+	max-height: 32px;
 }
 
 #search_edit.ui-edit.autofilter {
@@ -249,7 +255,7 @@ td.jsdialog > [id^='table-box'] {
 
 .jsdialog input[type='radio'] {
 	vertical-align: middle;
-	margin: 0px 2px 0px 12px;
+	margin: 0px 4px 0px 0px;
 }
 
 .jsdialog .radiobutton > label {
@@ -450,4 +456,12 @@ td.jsdialog > [id^='table-box'] {
 
 #table-Selection .jsdialog.ui-listbox {
 	margin: 8px 2px 2px;
+}
+
+#SelectSourceDialog .ui-frame-label {
+	display: none;
+}
+
+#hideitems {
+	border: none;
 }
