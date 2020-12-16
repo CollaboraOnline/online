@@ -1613,7 +1613,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
 
-		if (!disabled) {
+		if (!disabled && entry.state == null) {
 			li.draggable = true;
 
 			li.ondragstart = function drag(ev) {
@@ -1686,7 +1686,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		if (!disabled) {
+		if (!disabled && entry.state == null) {
 			$(text).click(function() {
 				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
 				$(span).addClass('selected');
