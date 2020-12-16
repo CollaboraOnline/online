@@ -943,6 +943,9 @@ bool ClientSession::filterMessage(const std::string& message) const
     bool allowed = true;
     StringVector tokens(Util::tokenize(message, ' '));
 
+    static const bool allowScripting
+        = LOOLWSD::getConfigValue<bool>("security.allow_external_scripting", false);
+
     // Set allowed flag to false depending on if particular WOPI properties are set
     if (tokens.equals(0, "downloadas"))
     {
@@ -973,6 +976,12 @@ bool ClientSession::filterMessage(const std::string& message) const
             allowed = false;
             LOG_WRN("WOPI host has disabled copying from the document");
         }
+    }
+    else if (!allowScripting && tokens.size() > 1
+             && Util::startsWith(tokens[1], "vnd.sun.star.script"))
+    {
+        allowed = false;
+        LOG_WRN("Scripting is disabled by config.");
     }
     else if (isReadOnly())
     {

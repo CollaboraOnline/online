@@ -958,6 +958,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_view.out_of_focus_timeout_secs", "120" },
             { "security.capabilities", "true" },
             { "security.seccomp", "true" },
+            { "security.allow_external_scripting", "false" },
             { "server_name", "" },
             { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
             { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
@@ -1278,6 +1279,8 @@ void LOOLWSD::initialize(Application& self)
     NoSeccomp = !getConfigValue<bool>(conf, "security.seccomp", true);
     NoCapsForKit = !getConfigValue<bool>(conf, "security.capabilities", true);
     AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
+    if (getConfigValue<bool>(conf, "security.allow_external_scripting", false))
+        setenv("ALLOW_EXTERNAL_SCRIPTING", "1", 1); //FIXME: Pass as argument.
 #endif
 
 #if ENABLE_SUPPORT_KEY

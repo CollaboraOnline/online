@@ -122,6 +122,7 @@
     <security desc="Altering these defaults potentially opens you to significant risk">
       <seccomp desc="Should we use the seccomp system call filtering." type="bool" default="true">true</seccomp>
       <capabilities desc="Should we require capabilities to isolate processes into chroot jails" type="bool" default="true">true</capabilities>
+      <allow_external_scripting desc="When enabled, allows the execution of script files stored in the lotemplate/share/Scripts, including python scripts" type="bool" default="false">false</allow_external_scripting>
     </security>
 
     <watermark>

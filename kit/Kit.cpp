@@ -152,6 +152,7 @@ namespace
     Path destinationForLinkOrCopy;
     std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
     bool linkOrCopyVerboseLogging = false;
+    bool linkOrCopyAllowScripting = false;
     unsigned linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
     constexpr unsigned SlowLinkOrCopyLimitInSecs = 2; // After this many seconds, start spamming the logs.
 
@@ -185,7 +186,9 @@ namespace
                 strcmp(path, "share/Scripts/java") != 0 &&
                 strcmp(path, "share/Scripts/javascript") != 0 &&
                 strcmp(path, "share/config/wizard") != 0 &&
-                strcmp(path, "readmes") != 0;
+                strcmp(path, "readmes") != 0 &&
+                (linkOrCopyAllowScripting
+                    || (strcmp(path, "share/Scripts") != 0 && !strstr(path, "python")));
         default: // LinkOrCopyType::All
             return true;
         }
@@ -197,11 +200,17 @@ namespace
         {
         case LinkOrCopyType::LO:
         {
+            if (!linkOrCopyAllowScripting && strstr(path, "python"))
+                return false;
+
             const char *dot = strrchr(path, '.');
             if (!dot)
                 return true;
 
             if (!strcmp(dot, ".dbg"))
+                return false;
+
+            if (!linkOrCopyAllowScripting && !strcmp(dot, ".py"))
                 return false;
 
             if (!strcmp(dot, ".so"))
@@ -375,6 +384,8 @@ namespace
         destinationForLinkOrCopy = destination;
         linkOrCopyFileCount = 0;
         linkOrCopyStartTime = std::chrono::steady_clock::now();
+        static const bool allowScripting = std::getenv("ALLOW_EXTERNAL_SCRIPTING");
+        linkOrCopyAllowScripting = allowScripting;
 
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
         {
