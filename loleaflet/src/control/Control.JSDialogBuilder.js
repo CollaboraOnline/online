@@ -1604,18 +1604,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_treelistboxEntry: function (parentContainer, treeViewData, entry, builder) {
+		var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
+
 		var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
-		li.draggable = true;
 
-		li.ondragstart = function drag(ev) {
-			ev.dataTransfer.setData('text', entry.row);
-			builder.callback('treeview', 'dragstart', treeViewData, entry.row, builder);
+		if (!disabled) {
+			li.draggable = true;
 
-			$('.ui-treeview').addClass('droptarget');
-		};
+			li.ondragstart = function drag(ev) {
+				ev.dataTransfer.setData('text', entry.row);
+				builder.callback('treeview', 'dragstart', treeViewData, entry.row, builder);
 
-		li.ondragend = function () { $('.ui-treeview').removeClass('droptarget'); };
-		li.ondragover = function (event) { event.preventDefault(); };
+				$('.ui-treeview').addClass('droptarget');
+			};
+
+			li.ondragend = function () { $('.ui-treeview').removeClass('droptarget'); };
+			li.ondragover = function (event) { event.preventDefault(); };
+		}
 
 		var span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-entry ' + (entry.children ? ' ui-treeview-expandable' : 'ui-treeview-notexpandable'), li);
 
@@ -1631,13 +1636,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (entry.state === 'true' || entry.state === true)
 				checkbox.checked = true;
 
-			$(checkbox).change(function() {
-				if (this.checked) {
-					builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
-				} else {
-					builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
-				}
-			});
+			if (!disabled) {
+				$(checkbox).change(function() {
+					if (this.checked) {
+						builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
+					} else {
+						builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
+					}
+				});
+			}
 		}
 
 		var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
@@ -1653,22 +1660,28 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(span).toggleClass('collapsed');
 			};
 
-			$(expander).click(toggleFunction);
+			if (!disabled) {
+				$(expander).click(toggleFunction);
 
-			// block expand/collapse on checkbox
-			if (entry.state)
-				$(checkbox).click(toggleFunction);
+				// block expand/collapse on checkbox
+				if (entry.state)
+					$(checkbox).click(toggleFunction);
+			}
 		}
 
-		$(text).click(function() {
-			$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
-			$(span).addClass('selected');
+		if (!disabled) {
+			$(text).click(function() {
+				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
+				$(span).addClass('selected');
 
-			builder.callback('treeview', 'select', treeViewData, entry.row, builder);
-		});
+				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+			});
+		}
 	},
 
 	_headerlistboxEntry: function (parentContainer, treeViewData, entry, builder) {
+		var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
+
 		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
 			$(parentContainer).addClass('selected');
 
@@ -1676,19 +1689,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var td = L.DomUtil.create('td', '', parentContainer);
 			td.innerText = entry.columns[i].text;
 
-			$(td).click(function() {
-				console.error('click');
-				$('#' + treeViewData.id + ' .ui-listview-entry').removeClass('selected');
-				$(parentContainer).addClass('selected');
+			if (!disabled) {
+				$(td).click(function() {
+					$('#' + treeViewData.id + ' .ui-listview-entry').removeClass('selected');
+					$(parentContainer).addClass('selected');
 
-				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
-			});
+					builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+				});
+			}
 		}
 	},
 
 	_treelistboxControl: function (parentContainer, data, builder) {
 		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
 		table.id = data.id;
+
+		var disabled = data.enabled === 'false' || data.enabled === false;
+		if (disabled)
+			L.DomUtil.addClass(table, 'disabled');
 
 		var tbody = L.DomUtil.create('tbody', builder.options.cssClass + ' ui-treeview-body', table);
 
@@ -1701,14 +1719,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		tbody.ondrop = function (ev) {
-			ev.preventDefault();
-			var row = ev.dataTransfer.getData('text');
-			builder.callback('treeview', 'dragend', data, row, builder);
-			$('.ui-treeview').removeClass('droptarget');
-		};
+		if (!disabled) {
+			tbody.ondrop = function (ev) {
+				ev.preventDefault();
+				var row = ev.dataTransfer.getData('text');
+				builder.callback('treeview', 'dragend', data, row, builder);
+				$('.ui-treeview').removeClass('droptarget');
+			};
 
-		tbody.ondragover = function (event) { event.preventDefault(); };
+			tbody.ondragover = function (event) { event.preventDefault(); };
+		}
 
 		if (!data.entries || data.entries.length === 0)
 			return false;
