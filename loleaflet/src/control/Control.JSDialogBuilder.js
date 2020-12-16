@@ -1868,10 +1868,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var span = L.DomUtil.create('span', 'ui-drawing-area-placeholder', spanContainer);
 				span.innerText = data.text;
 			}
-
-			$(image).click(function () {
-				builder.callback('drawingarea', 'click', image, null, builder);
-			});
+			L.DomEvent.on(image, 'click touchend', function(e) {
+				builder.callback('drawingarea', 'click', image, e.offsetX + ';' + e.offsetY, builder);
+			}, this);
 		}
 		return false;
 	},
