@@ -64,6 +64,9 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		if (data.max != undefined)
 			$(spinfield).attr('max', data.max);
 
+		if (data.step != undefined)
+			$(spinfield).attr('step', data.step);
+
 		if (data.enabled == 'false') {
 			$(spinfield).attr('disabled', 'disabled');
 			$(image).addClass('disabled');
