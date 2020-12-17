@@ -1,6 +1,8 @@
 /* global require */
 
 var process = require('process');
+var uuid = require('uuid');
+
 var tasks = require('./tasks');
 var blacklists = require('./blacklists');
 var selectTests = require('cypress-select-tests');
@@ -41,7 +43,16 @@ function plugin(on, config) {
 		config.defaultCommandTimeout = 10000;
 	}
 
-	on('file:preprocessor', selectTests(config, pickTests));
+	on('file:preprocessor', (file) => {
+		if (file.outputPath.endsWith('support/index.js')) {
+			var runUuid = uuid.v4();
+			var truncLength = file.outputPath.length - ('index.js').length;
+			file.outputPath = file.outputPath.substring(0, truncLength);
+			file.outputPath += runUuid + 'index.js';
+		}
+
+		return selectTests(config, pickTests)(file);
+	});
 
 	return config;
 }
