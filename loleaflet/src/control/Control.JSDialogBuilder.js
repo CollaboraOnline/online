@@ -1416,7 +1416,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.cursor && (data.cursor === 'false' || data.cursor === false))
 			controlType = 'p';
 
-		var edit = L.DomUtil.create(controlType, '', parentContainer);
+		var edit = L.DomUtil.create(controlType, 'ui-textarea ' + builder.options.cssClass, parentContainer);
 
 		if (controlType === 'textarea')
 			edit.value = builder._cleanText(data.text);
