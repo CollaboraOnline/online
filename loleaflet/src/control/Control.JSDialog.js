@@ -60,12 +60,33 @@ L.Control.JSDialog = L.Control.extend({
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 		};
 
-		var hammerContent = new Hammer(titlebar);
+		var hammerTitlebar = new Hammer(titlebar);
+		hammerTitlebar.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
+
+		hammerTitlebar.on('panstart', this.onPan.bind(this));
+		hammerTitlebar.on('panmove', this.onPan.bind(this));
+		hammerTitlebar.on('hammer.input', function(ev) {
+			if (ev.isFirst)
+				that.draggingObject = container;
+
+			if (ev.isFinal && that.draggingObject) {
+				that.draggingObject.startX = that.draggingObject.translateX;
+				that.draggingObject.startY = that.draggingObject.translateY;
+				that.draggingObject.translateX = 0;
+				that.draggingObject.translateY = 0;
+				that.draggingObject = null;
+			}
+		});
+
+		var hammerContent = new Hammer(content);
 		hammerContent.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
 
 		hammerContent.on('panstart', this.onPan.bind(this));
 		hammerContent.on('panmove', this.onPan.bind(this));
 		hammerContent.on('hammer.input', function(ev) {
+			if (ev.isFirst)
+				that.draggingObject = container;
+
 			if (ev.isFinal && that.draggingObject) {
 				that.draggingObject.startX = that.draggingObject.translateX;
 				that.draggingObject.startY = that.draggingObject.translateY;
@@ -86,10 +107,8 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	onPan: function (ev) {
-		if (ev.target && ev.target.parentNode && ev.target.parentNode.id) {
-			var target = ev.target.parentNode;
-			this.draggingObject = target;
-
+		var target = this.draggingObject;
+		if (target) {
 			var startX = target.startX ? target.startX : 0;
 			var startY = target.startY ? target.startY : 0;
 
@@ -97,7 +116,7 @@ L.Control.JSDialog = L.Control.extend({
 			var newY = startY + ev.deltaY;
 
 			// Don't allow to put dialog outside the view
-			if (window.mode.isDesktop() && !(newX < 0 || newY < 0
+			if (!(newX < 0 || newY < 0
 				|| newX > window.innerWidth - target.offsetWidth/2
 				|| newY > window.innerHeight - target.offsetHeight/2)) {
 				target.translateX = newX;
