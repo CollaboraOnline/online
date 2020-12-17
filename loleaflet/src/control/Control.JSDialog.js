@@ -59,41 +59,34 @@ L.Control.JSDialog = L.Control.extend({
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 		};
 
-		var hammerTitlebar = new Hammer(titlebar);
-		hammerTitlebar.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
-
-		hammerTitlebar.on('panstart', this.onPan.bind(this));
-		hammerTitlebar.on('panmove', this.onPan.bind(this));
-		hammerTitlebar.on('hammer.input', function(ev) {
+		var onInput = function(ev) {
 			if (ev.isFirst)
 				that.draggingObject = container;
 
-			if (ev.isFinal && that.draggingObject) {
+			if (ev.isFinal && that.draggingObject
+				&& that.draggingObject.translateX
+				&& that.draggingObject.translateY) {
 				that.draggingObject.startX = that.draggingObject.translateX;
 				that.draggingObject.startY = that.draggingObject.translateY;
 				that.draggingObject.translateX = 0;
 				that.draggingObject.translateY = 0;
 				that.draggingObject = null;
 			}
-		});
+		};
+
+		var hammerTitlebar = new Hammer(titlebar);
+		hammerTitlebar.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
+
+		hammerTitlebar.on('panstart', this.onPan.bind(this));
+		hammerTitlebar.on('panmove', this.onPan.bind(this));
+		hammerTitlebar.on('hammer.input', onInput);
 
 		var hammerContent = new Hammer(content);
 		hammerContent.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
 
 		hammerContent.on('panstart', this.onPan.bind(this));
 		hammerContent.on('panmove', this.onPan.bind(this));
-		hammerContent.on('hammer.input', function(ev) {
-			if (ev.isFirst)
-				that.draggingObject = container;
-
-			if (ev.isFinal && that.draggingObject) {
-				that.draggingObject.startX = that.draggingObject.translateX;
-				that.draggingObject.startY = that.draggingObject.translateY;
-				that.draggingObject.translateX = 0;
-				that.draggingObject.translateY = 0;
-				that.draggingObject = null;
-			}
-		});
+		hammerContent.on('hammer.input', onInput);
 
 		if (posX === 0 && posY === 0) {
 			posX = window.innerWidth/2 - container.offsetWidth/2;
