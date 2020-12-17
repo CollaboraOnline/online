@@ -402,7 +402,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var left = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-left', container);
-		$(left).css('float', 'left');
 
 		for (i in leftAlignButtons) {
 			child = leftAlignButtons[i];
@@ -411,7 +410,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var right = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-right', container);
 		if (data.layoutstyle && data.layoutstyle === 'end')
-			$(right).css('float', 'right');
+			L.DomUtil.addClass(container, 'end');
 
 		for (i in rightAlignButton) {
 			child = rightAlignButton[i];

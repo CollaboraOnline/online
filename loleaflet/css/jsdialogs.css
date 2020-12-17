@@ -309,6 +309,16 @@ td.jsdialog > [id^='table-box'] {
 	cursor: auto;
 }
 
+/* button box */
+
+.jsdialog.ui-button-box.end .ui-button-box-right {
+	float: right;
+}
+
+.jsdialog.ui-button-box-left {
+	float: left;
+}
+
 /* Autofilter dropdown */
 
 .autofilter.row {
