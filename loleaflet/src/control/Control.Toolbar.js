@@ -954,10 +954,22 @@ function onCommandResult(e) {
 
 		map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
 	}
-	else if ((commandName === '.uno:Undo' || commandName === '.uno:Redo') &&
-		e.success === true && e.result.value && !isNaN(e.result.value)) { /*UNDO_CONFLICT*/
-		$('#tb_editbar_item_repair').w2overlay({ html: '<div style="padding: 10px; line-height: 150%">' +
+	else if (commandName === '.uno:Undo' || commandName === '.uno:Redo') {
+		if (e.success === true && e.result.value && !isNaN(e.result.value)) { /*UNDO_CONFLICT*/
+			$('#tb_editbar_item_repair').w2overlay({ html: '<div style="padding: 10px; line-height: 150%">' +
 			_('Conflict Undo/Redo with multiple users. Please use document repair to resolve') + '</div>'});
+		}
+		else if (window.mode.isMobile()) {
+			//undoing something on mobile does not trigger any input method
+			//this causes problem in mobile working with suggestions
+			//i.e: type "than" and then select "thank" from suggestion
+			//now undo and then again select "thanks" from suggestions
+			//final output is "thans"
+			//this happens because undo doesn't change the textArea value
+			//and no other way to maintain the history
+			//So better to clean the textarea so no suggestions appear
+			map._textInput._textArea.value = map._textInput._preSpaceChar;
+		}
 	}
 }
 
