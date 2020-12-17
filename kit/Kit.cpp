@@ -184,7 +184,8 @@ namespace
                 strcmp(path, "share/Scripts/java") != 0 &&
                 strcmp(path, "share/Scripts/javascript") != 0 &&
                 strcmp(path, "share/config/wizard") != 0 &&
-                strcmp(path, "readmes") != 0;
+                strcmp(path, "readmes") != 0 &&
+                strstr(path, "fonts") == 0;
         default: // LinkOrCopyType::All
             return true;
         }
