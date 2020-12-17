@@ -105,23 +105,33 @@ done
 
 cd $CHROOT || exit 1
 
+# Copy fonts directories, recursively, with filters.
+# copy_fonts_dir <source_dir> <target_dir>
+function copy_fonts_dir
+{
+    # All the font files are cached in Core at pre-init
+    # from the system, so we don't need them in the jail.
+    # Not having the .ttf files gives us transparent text!
+    find $1 -not -iname "*.ttc" \
+            -not -iname "*.pcf" -not -iname "*.pcf.gz" \
+            -not -iname "*.bdf" -not -iname "*.otf" \
+            -not -type d \
+            -exec cp -r --parents -p -L {} $2 \;
+}
+
 mkdir -p usr/share || exit 1
-cp -r -p -L /usr/share/fonts usr/share
+copy_fonts_dir /usr/share/fonts .
 
-if [ -h usr/share/fonts/ghostscript ]; then
-    mkdir usr/share/ghostscript || exit 1
-    cp -r -p -L /usr/share/ghostscript/fonts usr/share/ghostscript
+if [ -d /usr/share/ghostscript/fonts ]; then
+    mkdir -p usr/share/ghostscript/fonts || exit 1
+    copy_fonts_dir /usr/share/ghostscript/fonts usr/share/ghostscript
 fi
-
-# Remove obsolete & unused bitmap fonts
-find usr/share -name '*.pcf' | xargs rm -f
-find usr/share -name '*.pcf.gz' | xargs rm -f
 
 # Debugging only hackery to avoid confusion.
 if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     echo "Copying development users's fonts into systemplate"
     mkdir -p $CHROOT/$HOME
-    test -d $HOME/.fonts && cp -r -p -L $HOME/.fonts $CHROOT/$HOME
+    test -d $HOME/.fonts && copy_fonts_dir $HOME/.fonts $CHROOT/$HOME
 fi
 
 exit 0
