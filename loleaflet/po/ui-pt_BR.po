@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-05 22:26+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2020-12-18 10:43+0000\n"
+"Last-Translator: LL Magical <lolayami2004@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -74,7 +74,7 @@ msgstr " Usuário(s)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
-msgstr " documento(s) aberto(s)"
+msgstr " documento(s) aberto(s)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -204,7 +204,7 @@ msgstr "Atualizar registro"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Filtro de canal:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
@@ -237,9 +237,8 @@ msgid "Sent"
 msgstr "Enviado"
 
 #: admin/src/AdminSocketBase.js:52
-#, fuzzy
 msgid "Server has been shut down; please reload the page."
-msgstr "O servidor foi desligado, recarregue a página"
+msgstr "O servidor foi desligado; por favor, recarregue a página."
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -329,7 +328,7 @@ msgstr " min"
 
 #: admin/src/Util.js:54
 msgid " s"
-msgstr "s"
+msgstr " s"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -1178,7 +1177,7 @@ msgstr "Tipo:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
 msgid "Document uploaded."
-msgstr "Documento gravado"
+msgstr "Documento carregado."
 
 #: src/control/Signing.js:488
 msgid "Select identity:"
@@ -1322,9 +1321,8 @@ msgstr ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Há um problema ao conectar o documento"
+msgstr "Opa, há um problema de conexão com %productName: "
 
 #: src/core/Socket.js:305
 msgid "Served by:"
@@ -1372,7 +1370,7 @@ msgid ""
 "history"
 msgstr ""
 "Restaurando a revisão anterior. Quaisquer alterações não salvas estarão "
-"disponíveis no histórico da versão."
+"disponíveis no histórico da versão"
 
 #: src/core/Socket.js:581
 msgid ""
@@ -1447,10 +1445,10 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
-"Esta é uma versão não suportada do {productname}. Para evitar dar a "
-"impressão de que é adequada para utilização empresarial, esta mensagem "
-"aparece sempre que estiverem abertos mais do que {docs} documentos ou mais "
-"do que {connections} conexões em simultâneo."
+"Esta é uma versão sem suporte de {productname}. Para evitar a impressão de "
+"que é adequado para implantação em empresas, esta mensagem aparece quando "
+"mais de documentos {docs} ou conexões {connections} estão em uso "
+"simultaneamente"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1461,7 +1459,7 @@ msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"Este serviço é limitado pelo administrador a um total de  %0 documentos e %1 "
+"Este serviço é limitado pelo administrador a um total de %0 documentos e %1 "
 "conexões. Este limite foi alcançado. Tente de novo mais tarde."
 
 #: src/errormessages.js:18
@@ -1490,7 +1488,7 @@ msgid ""
 "session (or webpage) to continue."
 msgstr ""
 "Sua sessão expirará em %time. Salve seu trabalho e atualize a sessão (ou "
-"página web) para continuar"
+"página web) para continuar."
 
 #: src/errormessages.js:22
 msgid ""
@@ -1586,7 +1584,7 @@ msgstr ""
 
 #: src/errormessages.js:47
 msgid "Uploading file to server failed, file not found."
-msgstr "Falhou ao fazer upload do arquivo, arquivo não encontrado."
+msgstr "Falha ao fazer upload do arquivo, arquivo não encontrado."
 
 #: src/errormessages.js:48
 msgid "Uploading file to server failed, the file is too large."
