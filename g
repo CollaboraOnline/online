@@ -49,7 +49,9 @@ if [ "$1" == "review" ]; then
     fi
     if [ -n "$HAS_REMOTE_BRANCH" ] && [ -z "$CUSTOM_BRANCH" ]; then
         echo "Error: default remote branch would be '$REMOTE_BRANCH', but it already exists."
-        echo "To update the existing PR: type './g review $BRANCH' explicitly."
+        # Use $TRACKED_BRANCH, because we push to $REMOTE_BRANCH, which derives from
+        # $TRACKED_BRANCH, not $BRANCH.
+        echo "To update the existing PR: type './g review $TRACKED_BRANCH' explicitly."
         exit 1
     elif [ -n "$HAS_REMOTE_BRANCH" ] && [ -n "$CUSTOM_BRANCH" ]; then
         # PR is open, same branch is explicitly specified, just update it.
