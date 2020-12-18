@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <mutex>
 #include <unordered_map>
 #include <queue>
 
@@ -60,7 +59,6 @@ public:
 
     /// Get a view ID <-> UserInfo map.
     virtual std::map<int, UserInfo> getViewInfo() = 0;
-    virtual std::mutex& getMutex() = 0;
 
     virtual std::string getObfuscatedFileId() = 0;
 
