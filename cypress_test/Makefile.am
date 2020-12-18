@@ -14,6 +14,7 @@ PARALLEL_SCRIPT = $(abs_srcdir)/run_parallel.sh
 PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
 ERROR_LOG=$(abs_builddir)/workdir/error.log
 LOOLWSD_LOG=$(abs_builddir)/workdir/loolwsd.log
+LOOLWSD_OUTPUT=$(abs_builddir)/workdir/loolwsd_output.log
 
 SUPPORT_FILE_ABS = $(abs_srcdir)/support/index.js
 SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(SUPPORT_FILE_ABS))
@@ -88,6 +89,7 @@ do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TESTS
 $(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(ERROR_LOG)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_loolwsd)
@@ -118,6 +120,7 @@ $(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
 
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,$(spec))
@@ -125,6 +128,7 @@ check-desktop: @JAILS_PATH@ $(NODE_BINS)
 
 check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_mobile_tests,$(spec))
@@ -139,6 +143,7 @@ do-multi-check-log: do-multi-check
 do-multi-check: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(ERROR_LOG)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(if $(spec), \
@@ -148,6 +153,7 @@ do-multi-check: @JAILS_PATH@ $(NODE_BINS)
 
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
@@ -158,6 +164,7 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 
 run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
@@ -168,6 +175,7 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 
 run-multi: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
@@ -245,7 +253,7 @@ define start_loolwsd
 			--pidfile=$(PID_FILE) \
 			--o:logging.file.property[0]=$(LOOLWSD_LOG) \
 			$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),--o:net.proxy_prefix=true) \
-			 > /dev/null 2>&1 &
+			 > $(LOOLWSD_OUTPUT) 2>&1 &
 	@$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000
 	@echo
 endef
@@ -397,6 +405,7 @@ do-interfer-mobile-check-log: do-interfer-mobile-check
 do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(ERROR_LOG)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(if $(spec), \
@@ -406,6 +415,7 @@ do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
 
 run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
@@ -488,6 +498,7 @@ do-interfer-desktop-check-log: do-interfer-desktop-check
 do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(ERROR_LOG)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(if $(spec), \
@@ -497,6 +508,7 @@ do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
 
 run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
