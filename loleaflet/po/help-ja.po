@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-12-11 12:47+0000\n"
+"PO-Revision-Date: 2020-12-16 22:30+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -955,7 +955,7 @@ msgstr "スライド/図面ページ内のすべてのオブジェクトを選�
 
 #: html/loleaflet-help.html%2Bdiv.h1:213-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> ヘルプ"
 
 #: html/loleaflet-help.html%2Bdiv.p:214-5
 #: html/loleaflet-help.html%2Bdiv.h3:252-5
@@ -966,7 +966,7 @@ msgstr "セル書式"
 #: html/loleaflet-help.html%2Bdiv.p:215-5
 #: html/loleaflet-help.html%2Bdiv.h3:259-5
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> ユーザーインターフェイス"
 
 #: html/loleaflet-help.html%2Bdiv.p:216-5
 #: html/loleaflet-help.html%2Bdiv.h3:279-5
@@ -976,7 +976,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:217-5
 #: html/loleaflet-help.html%2Bdiv.h3:287-5
 msgid "Editing documents"
-msgstr ""
+msgstr "ドキュメントの編集"
 
 #: html/loleaflet-help.html%2Bdiv.p:218-5
 #: html/loleaflet-help.html%2Bdiv.div.p:224-9
@@ -990,37 +990,37 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:220-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:338-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> 表計算ドキュメント"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:221-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:340-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "表計算ドキュメントの編集"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:222-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:343-5
 msgid "Formulas"
-msgstr ""
+msgstr "数式"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:223-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:349-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "表計算ドキュメントの書式設定"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:227-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:386-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> テキスト文書"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:228-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:388-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "テキスト文書の編集"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:229-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:391-5
 msgid "Context menus"
-msgstr ""
+msgstr "コンテキストメニュー"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:230-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:401-5
@@ -1030,27 +1030,27 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:233-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:420-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> プレゼンテーション"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:234-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:422-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "プレゼンテーションの編集"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:235-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:425-5
 msgid "Slide show"
-msgstr ""
+msgstr "スライドショー"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:236-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:429-5
 msgid "Slide pane"
-msgstr ""
+msgstr "スライド ペイン"
 
 #: html/loleaflet-help.html%2Bdiv.p:239-5
 #: html/loleaflet-help.html%2Bdiv.h2:442-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "よくある質問"
 
 #: html/loleaflet-help.html%2Bdiv.p:240-5
 msgid "General"
@@ -1059,17 +1059,17 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:242-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:473-5
 msgid "Text documents"
-msgstr ""
+msgstr "テキスト文書"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:245-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:537-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "表計算ドキュメント"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:248-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:565-5
 msgid "Presentations"
-msgstr ""
+msgstr "プレゼンテーション"
 
 #: html/loleaflet-help.html%2Bdiv.p:250-5
 msgid ""

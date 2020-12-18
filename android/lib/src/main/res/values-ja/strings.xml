@@ -4,4 +4,10 @@
     <string name="temp_file_saving_disabled">読み取り専用です。保存できません。</string>
     <string name="storage_permission_required">ストレージの権限が必要です</string>
     <string name="failed_to_insert_image">画像の挿入に失敗しました</string>
+    <string name="view_only">表示のみ</string>
+    <string name="edit_copy">コピーを編集する</string>
+    <string name="ask_for_copy">このドキュメントは読み取り専用です。編集用にコピーを作成しますか？</string>
+    <string name="restarting">再起動しています...</string>
+    <string name="exiting">終了しています...</string>
+    <string name="rate_our_app_title">%1$s をご利用いただきありがとうございます！</string>
 </resources>
