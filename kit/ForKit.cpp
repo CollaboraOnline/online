@@ -433,34 +433,47 @@ static void printArgumentHelp()
 
 int main(int argc, char** argv)
 {
-    // early check for avoiding the security check for username 'lool'
-    // (deliberately only this, not moving the entire parameter parsing here)
-    bool checkLoolUser = true;
-    std::string disableLoolUserChecking("--disable-lool-user-checking");
-    for (int i = 1; checkLoolUser && (i < argc); ++i)
-    {
-        if (disableLoolUserChecking == argv[i])
-            checkLoolUser = false;
-    }
+    /*WARNING: PRIVILEGED CODE CHECKING START */
 
-    if (!hasCorrectUID("loolforkit"))
-    {
-        // don't allow if any capability is set
-        if (hasAnyCapability())
-        {
-            if (!checkLoolUser)
-                std::cerr << "Security: --disable-lool-user-checking failed, loolforkit has some capabilities set." << std::endl;
+    /*WARNING*/ // early check for avoiding the security check for username 'lool'
+    /*WARNING*/ // (deliberately only this, not moving the entire parameter parsing here)
+    /*WARNING*/ bool checkLoolUser = true;
+    /*WARNING*/ std::string disableLoolUserChecking("--disable-lool-user-checking");
+    /*WARNING*/ for (int i = 1; checkLoolUser && (i < argc); ++i)
+    /*WARNING*/ {
+    /*WARNING*/     if (disableLoolUserChecking == argv[i])
+    /*WARNING*/         checkLoolUser = false;
+    /*WARNING*/ }
 
-            return EX_SOFTWARE;
-        }
+    /*WARNING*/ if (!hasCorrectUID("loolforkit"))
+    /*WARNING*/ {
+    /*WARNING*/     // don't allow if any capability is set (unless root; who runs this
+    /*WARNING*/     // as root and provides --disable-lool-user-checking knows what they
+    /*WARNING*/     // are doing)
+    /*WARNING*/     if (hasAnyCapability() && !hasUID("root"))
+    /*WARNING*/     {
+    /*WARNING*/         if (!checkLoolUser)
+    /*WARNING*/             std::cerr << "Security: --disable-lool-user-checking failed, loolforkit has some capabilities set." << std::endl;
 
-        // even without the capabilities, don't run unless the user really knows
-        // what they are doing, and provided a --disable-lool-user-checking
-        if (checkLoolUser)
-            return EX_SOFTWARE;
+    /*WARNING*/         return EX_SOFTWARE;
+    /*WARNING*/     }
 
-        std::cerr << "Security: Check for the 'lool' username overridden on the command line." << std::endl;
-    }
+    /*WARNING*/     // even without the capabilities, don't run unless the user really knows
+    /*WARNING*/     // what they are doing, and provided a --disable-lool-user-checking
+    /*WARNING*/     if (checkLoolUser)
+    /*WARNING*/         return EX_SOFTWARE;
+
+    /*WARNING*/     std::cerr << "Security: Check for the 'lool' username overridden on the command line." << std::endl;
+    /*WARNING*/ }
+
+    /*WARNING: PRIVILEGED CODE CHECKING END */
+
+    // Continue in privileged mode, but only if:
+    // * the user is 'lool' (privileged user)
+    // * the user is 'root', and --disable-lool-user-checking was provided
+    // Alternatively allow running in non-privileged mode (with --nocaps), if:
+    // * the user is a non-priviled user, the binary is not privileged
+    //   either (no caps set), and --disable-lool-user-checking was provided
 
     if (std::getenv("SLEEPFORDEBUGGER"))
     {
