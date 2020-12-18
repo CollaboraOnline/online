@@ -23,25 +23,32 @@
 #define LOOL_USER_ID "lool"
 
 #ifndef KIT_IN_PROCESS
-static int hasCorrectUID(const char *appName)
+inline int hasUID(const char *userId)
+{
+    struct passwd *pw = getpwuid(getuid());
+    if (pw && pw->pw_name && !strcmp(pw->pw_name, userId))
+        return 1;
+
+    return 0;
+}
+
+inline int hasCorrectUID(const char *appName)
 {
 #if ENABLE_DEBUG
     (void)appName;
     return 1; // insecure but easy to use.
 #else
-    struct passwd *pw = getpwuid(getuid());
-    if (pw && pw->pw_name && !strcmp(pw->pw_name, LOOL_USER_ID))
+    if (hasUID(LOOL_USER_ID))
         return 1;
     else {
-        fprintf(stderr, "Error: %s incorrect user-name: %s - aborting\n",
-                appName, pw && pw->pw_name ? pw->pw_name : "<null>");
+        fprintf(stderr, "Error: %s incorrect user-name, other than '" LOOL_USER_ID "' - aborting\n", appName);
         return 0;
     }
 #endif
 }
 
 /** Return 0 if no capability is set on the current binary. Positive number gives the bitfield of caps that are set, negative an error. */
-int hasAnyCapability()
+inline int hasAnyCapability()
 {
 #ifdef __linux__
     cap_t caps = cap_get_proc();
