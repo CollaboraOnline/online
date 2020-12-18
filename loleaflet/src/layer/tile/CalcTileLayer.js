@@ -872,6 +872,11 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._splitCellState = new L.Point(-1, -1);
 		}
 
+		if (!e.state || e.state.length === 0) {
+			console.warn('Empty argument for ' + e.commandName);
+			return;
+		}
+
 		var newSplitIndex = Math.floor(parseInt(e.state));
 		console.assert(!isNaN(newSplitIndex) && newSplitIndex >= 0, 'invalid argument for ' + e.commandName);
 
