@@ -450,7 +450,6 @@ L.CanvasTilePainter = L.Class.extend({
 
 	_zoomAnimation: function () {
 		var painter = this;
-		// TODO: do for all panes and for zoom-out case.
 		var ctx = this._paintContext();
 		var paneBoundsList = ctx.paneBoundsList;
 		var splitPos = ctx.paneBoundsActive ? this._splitPos.multiplyBy(this._dpiScale) : new L.Point(0, 0);
