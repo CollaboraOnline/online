@@ -1,3 +1,9 @@
+loolwsd (6.4.2-3) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-6.4.2-3
+
+ -- Andras Timar <andras.timar@collabora.com>  Fri, 18 Dec 2020 22:45:00 +0100
+
 loolwsd (6.4.2-2) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-6.4.2-2
