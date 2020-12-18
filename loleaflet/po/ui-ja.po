@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-14 01:42+0000\n"
-"Last-Translator: Masa Murakami <mucky85236@gmail.com>\n"
+"PO-Revision-Date: 2020-12-16 22:30+0000\n"
+"Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
 "Language: ja\n"
@@ -69,7 +69,7 @@ msgstr "開いているドキュメント"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
 msgid " user(s)."
-msgstr " ユーザー"
+msgstr " ユーザー。"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 #, fuzzy
@@ -219,7 +219,7 @@ msgstr ""
 #: admin/admin.strings.js:53 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:376 src/control/Signing.js:608
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #: admin/admin.strings.js:54
 msgid "Update Log Levels"
@@ -254,7 +254,7 @@ msgstr "本当にこのセッションを終了しますか？"
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:233
 #: src/control/Control.Tabs.js:250 src/control/Toolbar.js:641
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1325
@@ -476,7 +476,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2310
 msgid "Background Color"
-msgstr ""
+msgstr "背景色"
 
 #: src/control/Control.JSDialogBuilder.js:2312
 msgid "Gradient Start"
@@ -488,11 +488,11 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2496
 msgid "Rows"
-msgstr ""
+msgstr "行"
 
 #: src/control/Control.JSDialogBuilder.js:2497
 msgid "Columns"
-msgstr ""
+msgstr "列"
 
 #: src/control/Control.JSDialogBuilder.js:2517
 msgid "Insert Table"
@@ -512,7 +512,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:698
 #: src/control/Control.NotebookbarBuilder.js:730
 msgid "None (Do not check spelling)"
-msgstr "なし(スペルチェックを行わない)"
+msgstr "なし（スペルチェックを行わない）"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:267
 #: src/control/Control.Menubar.js:391 src/control/Control.Menubar.js:588
@@ -542,7 +542,7 @@ msgstr "形式を指定してダウンロード"
 #: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:593
 #: src/control/Control.Menubar.js:642 src/control/Control.Menubar.js:690
 msgid "Export as"
-msgstr ""
+msgstr "形式を指定してエクスポート"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:270
 #: src/control/Control.Menubar.js:394 src/control/Control.Menubar.js:594
@@ -561,22 +561,22 @@ msgstr "ODF 文書ドキュメント (.odt)"
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:596
 #: src/control/Control.NotebookbarWriter.js:285
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "ワード 2003 文書 (.doc)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:597
 #: src/control/Control.NotebookbarWriter.js:307
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "ワード文書 (.docx)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:598
 #: src/control/Control.NotebookbarWriter.js:254
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "リッチテキスト (.rtf)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:599
 #: src/control/Control.NotebookbarWriter.js:360
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:591
 #: src/control/Control.NotebookbarWriter.js:379 src/control/Signing.js:601
@@ -620,7 +620,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:94 src/control/Control.Menubar.js:96
 #: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:766
 msgid "All"
-msgstr "全て"
+msgstr "すべて"
 
 #: src/control/Control.Menubar.js:149
 msgid "Text orientation"
