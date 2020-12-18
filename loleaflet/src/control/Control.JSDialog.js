@@ -12,10 +12,12 @@ L.Control.JSDialog = L.Control.extend({
 		this.map = map;
 
 		this.map.on('jsdialog', this.onJSDialog, this);
+		this.map.on('commandresult', this.onJSUpdate, this);
 	},
 
 	onRemove: function() {
 		this.map.off('jsdialog', this.onJSDialog, this);
+		this.map.off('commandresult', this.onJSUpdate, this);
 	},
 
 	onJSDialog: function(e) {
@@ -99,6 +101,32 @@ L.Control.JSDialog = L.Control.extend({
 		container.startX = posX;
 		container.startY = posY;
 		this.updatePosition(container, posX, posY);
+	},
+
+	onJSUpdate: function (e) {
+		if (e.commandName === '.uno:jsdialog' && e.success) {
+			var data = e.result;
+			var dialog = this.dialogs[data.dialog_id];
+			if (!dialog)
+				return;
+
+			var control = dialog.querySelector('#' + data.control_id);
+			if (!control)
+				return;
+
+			var parent = control.parentNode;
+			if (!parent)
+				return;
+
+			control.style.visibility = 'hidden';
+			var builder = new L.control.jsDialogBuilder({windowId: data.dialog_id,
+								     mobileWizard: this,
+								     map: this.map,
+								     cssClass: 'jsdialog'});
+
+			builder.build(parent, [data.control], false);
+			L.DomUtil.remove(control);
+		}
 	},
 
 	onPan: function (ev) {
