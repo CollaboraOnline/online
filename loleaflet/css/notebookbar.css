@@ -454,12 +454,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 #table-Insert-Section-Pagebreak #InsertPagebreak.notebookbar img,
-#table-Insert-Section-Table #InsertTable.notebookbar img,
-#InsertObjectChart.notebookbar img,
 #table-Insert-Section-Image #InsertGraphic.notebookbar img,
 #HyperlinkDialog.notebookbar img,
 #InsertFieldCtrl.notebookbar img,
-#BasicShapes.notebookbar img,
+#DrawText.notebookbar img,
 #table-Insert-Section-Symbol #CharmapControl.notebookbar img
 {
 	height: 32px !important;
@@ -500,7 +498,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #table-Reference-Section-Reference #InsertReferenceField.notebookbar img,
 #InsertAuthoritiesEntry.notebookbar img,
 #UpdateAll.notebookbar img,
-#InsertReferenceField.notebookbar img
 {
 	height: 32px !important;
 	width: 32px !important;
