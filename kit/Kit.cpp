@@ -145,42 +145,43 @@ namespace
 class LinkOrCopy
 {
 public:
-    enum class Type
+    enum class OperationType
     {
         All,
         LO
     };
 
 private:
+    static OperationType Type;
+    static std::string SourcePath;
+    static std::string DestPath;
+    static std::chrono::steady_clock::time_point StartTime;
+    static bool VerboseLogging;
+    /// Track to help quantify the link-or-copy performance.
+    static unsigned FileCount;
+    /// After this many seconds, start spamming the logs.
+    static constexpr unsigned SlowLinkOrCopyLimitInSecs = 2;
 
-    static Type linkOrCopyType;
-    static std::string sourceForLinkOrCopy;
-    static Poco::Path destinationForLinkOrCopy;
-    static std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
-    static bool linkOrCopyVerboseLogging;
-    static unsigned linkOrCopyFileCount; // Track to help quantify the link-or-copy performance.
-    static constexpr unsigned SlowLinkOrCopyLimitInSecs = 2; // After this many seconds, start spamming the logs.
-
-    /// Returns the Type as a human-readable string (for logging).
-    static std::string linkOrCopyTypeString(Type type)
+    /// Returns the OperationType as a human-readable string (for logging).
+    static std::string linkOrCopyTypeString(OperationType type)
     {
         switch (type)
         {
-            case Type::LO:
+            case OperationType::LO:
                 return "LibreOffice";
-            case Type::All:
+            case OperationType::All:
                 return "all";
             default:
-                assert(!"Unknown Type.");
+                assert(!"Unknown OperationType.");
                 return "unknown";
         }
     }
 
-    static bool shouldCopyDir(const char *path)
+    static bool shouldCopyDir(const char* path)
     {
-        switch (linkOrCopyType)
+        switch (Type)
         {
-        case Type::LO:
+        case OperationType::LO:
             return
                 strcmp(path, "program/wizards") != 0 &&
                 strcmp(path, "sdk") != 0 &&
@@ -199,9 +200,9 @@ private:
 
     static bool shouldLinkFile(const char *path)
     {
-        switch (linkOrCopyType)
+        switch (Type)
         {
-        case Type::LO:
+        case OperationType::LO:
         {
             const char *dot = strrchr(path, '.');
             if (!dot)
@@ -249,8 +250,8 @@ private:
 
     static void linkOrCopyFile(const char* fpath, const std::string& newPath)
     {
-        ++linkOrCopyFileCount;
-        if (linkOrCopyVerboseLogging)
+        ++FileCount;
+        if (VerboseLogging)
             LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath << '"');
 
         if (!FileUtil::linkOrCopyFile(fpath, newPath.c_str()))
@@ -261,33 +262,31 @@ private:
         }
     }
 
-    static int linkOrCopyFunction(const char *fpath,
-                           const struct stat* sb,
-                           int typeflag,
-                           struct FTW* /*ftwbuf*/)
+    static int linkOrCopyFunction(const char* fpath, const struct stat* sb, int typeflag,
+                                  struct FTW* /*ftwbuf*/)
     {
-        if (strcmp(fpath, sourceForLinkOrCopy.c_str()) == 0)
+        if (strcmp(fpath, SourcePath.c_str()) == 0)
         {
             LOG_TRC("nftw: Skipping redundant path: " << fpath);
             return FTW_CONTINUE;
         }
 
-        if (!linkOrCopyVerboseLogging)
+        if (!VerboseLogging)
         {
             const auto durationInSecs = std::chrono::duration_cast<std::chrono::seconds>(
-                std::chrono::steady_clock::now() - linkOrCopyStartTime);
+                std::chrono::steady_clock::now() - StartTime);
             if (durationInSecs.count() > SlowLinkOrCopyLimitInSecs)
             {
                 LOG_WRN("Linking/copying files from "
-                        << sourceForLinkOrCopy << " to " << destinationForLinkOrCopy.toString()
+                        << SourcePath << " to " << DestPath
                         << " is taking too much time. Enabling verbose link/copy logging.");
-                linkOrCopyVerboseLogging = true;
+                VerboseLogging = true;
             }
         }
 
-        assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
-        const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
-        const Poco::Path newPath(destinationForLinkOrCopy, Poco::Path(relativeOldPath));
+        assert(fpath[strlen(SourcePath.c_str())] == '/');
+        const char* relativeOldPath = fpath + strlen(SourcePath.c_str()) + 1;
+        const Poco::Path newPath(DestPath, Poco::Path(relativeOldPath));
 
         switch (typeflag)
         {
@@ -300,12 +299,6 @@ private:
             break;
         case FTW_D:
             {
-                struct stat st;
-                if (stat(fpath, &st) == -1)
-                {
-                    LOG_SYS("nftw: stat(\"" << fpath << "\") failed");
-                    return FTW_STOP;
-                }
                 if (!shouldCopyDir(relativeOldPath))
                 {
                     LOG_TRC("nftw: Skipping redundant path: " << relativeOldPath);
@@ -314,8 +307,8 @@ private:
 
                 Poco::File(newPath).createDirectories();
                 struct utimbuf ut;
-                ut.actime = st.st_atime;
-                ut.modtime = st.st_mtime;
+                ut.actime = sb->st_atime;
+                ut.modtime = sb->st_mtime;
                 if (utime(newPath.toString().c_str(), &ut) == -1)
                 {
                     LOG_SYS("nftw: utime(\"" << newPath.toString() << "\") failed");
@@ -352,7 +345,7 @@ private:
                 LOG_ERR("nftw: stat failed for '" << fpath << '\'');
                 return FTW_STOP;
             default:
-                LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
+                LOG_FTL("nftw: unexpected typeflag: " << typeflag);
                 assert(!"nftw: unexpected typeflag.");
                 break;
         }
@@ -361,9 +354,7 @@ private:
     }
 
 public:
-    static void linkOrCopy(std::string source,
-                    const Poco::Path& destination,
-                    Type type)
+    static void linkOrCopy(std::string source, const std::string& destination, OperationType type)
     {
         std::string resolved = FileUtil::realpath(source);
         if (resolved != source)
@@ -374,42 +365,39 @@ public:
         }
 
         LOG_INF("linkOrCopy " << linkOrCopyTypeString(type) << " from [" << source << "] to ["
-                              << destination.toString() << "].");
+                              << destination << "].");
 
-        linkOrCopyType = type;
-        sourceForLinkOrCopy = source;
-        if (sourceForLinkOrCopy.back() == '/')
-            sourceForLinkOrCopy.pop_back();
-        destinationForLinkOrCopy = destination;
-        linkOrCopyFileCount = 0;
-        linkOrCopyStartTime = std::chrono::steady_clock::now();
+        Type = type;
+        SourcePath = source;
+        if (SourcePath.back() == '/')
+            SourcePath.pop_back();
+        DestPath = destination;
+        FileCount = 0;
+        StartTime = std::chrono::steady_clock::now();
 
-        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
+        if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL | FTW_PHYS) == -1)
         {
             LOG_SYS("linkOrCopy: nftw() failed for '" << source << '\'');
         }
 
-        if (linkOrCopyVerboseLogging)
-        {
-            linkOrCopyVerboseLogging = false;
-            const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - linkOrCopyStartTime).count();
-            const double seconds = (ms + 1) / 1000.; // At least 1ms to avoid div-by-zero.
-            const auto rate = linkOrCopyFileCount / seconds;
-            LOG_INF("Linking/Copying of " << linkOrCopyFileCount << " files from " << source
-                                          << " to " << destinationForLinkOrCopy.toString()
-                                          << " finished in " << seconds << " seconds, or " << rate
-                                          << " files / second.");
-        }
+        VerboseLogging = false;
+        const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                            std::chrono::steady_clock::now() - StartTime)
+                            .count();
+        const double seconds = (ms + 1) / 1000.; // At least 1ms to avoid div-by-zero.
+        const auto rate = FileCount / seconds;
+        LOG_INF("Linking/Copying of " << FileCount << " files from " << source << " to " << DestPath
+                                      << " finished in " << seconds << " seconds, or " << rate
+                                      << " files / second.");
     }
 };
 
-LinkOrCopy::Type LinkOrCopy::linkOrCopyType;
-std::string LinkOrCopy::sourceForLinkOrCopy;
-Poco::Path LinkOrCopy::destinationForLinkOrCopy;
-std::chrono::time_point<std::chrono::steady_clock> LinkOrCopy::linkOrCopyStartTime;
-bool LinkOrCopy::linkOrCopyVerboseLogging = false;
-unsigned LinkOrCopy::linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
+LinkOrCopy::OperationType LinkOrCopy::Type;
+std::string LinkOrCopy::SourcePath;
+std::string LinkOrCopy::DestPath;
+std::chrono::time_point<std::chrono::steady_clock> LinkOrCopy::StartTime;
+bool LinkOrCopy::VerboseLogging = false;
+unsigned LinkOrCopy::FileCount = 0;
 
 #ifndef __FreeBSD__
     void dropCapability(cap_value_t capability)
@@ -2250,9 +2238,10 @@ void lokit_main(
                 LOG_INF("Mounting is disabled, will link/copy " << sysTemplate << " -> "
                                                                 << jailPathStr);
 
-                LinkOrCopy::linkOrCopy(sysTemplate, jailPath, LinkOrCopy::Type::All);
+                LinkOrCopy::linkOrCopy(sysTemplate, jailPath.toString(),
+                                       LinkOrCopy::OperationType::All);
 
-                LinkOrCopy::linkOrCopy(loTemplate, loJailDestPath, LinkOrCopy::Type::LO);
+                LinkOrCopy::linkOrCopy(loTemplate, loJailDestPath, LinkOrCopy::OperationType::LO);
 
                 // Update the dynamic files inside the jail.
                 if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
