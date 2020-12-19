@@ -8,7 +8,7 @@ test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to
 CHROOT=$1
 INSTDIR=$2
 
-test -d "$INSTDIR" || { echo "No such directory: $INSTDIR"; exit 1; }
+test -d "$INSTDIR" || { echo "$0: No such directory: $INSTDIR"; exit 1; }
 
 mkdir -p $CHROOT || exit 1
 
@@ -73,7 +73,7 @@ do
     # Prefer hard-linking, fallback to just copying (do *not* use soft-linking because that would be relative to the jail).
     # When copying, we must make sure that we copy the source and not a symlink. Otherwise, the source won't be accessible from the jail.
     # In addition, we flag that at least one file is copied by creating the 'copied' file, so that we do check for updates.
-    ln -f `realpath /etc/$file` $CHROOT/etc/$file || (cp --dereference --preserve=all /etc/$file $CHROOT/etc/$file && touch $CHROOT/etc/copied) || echo "Failed to link or copy $file"
+    ln -f `realpath /etc/$file` $CHROOT/etc/$file 2> /dev/null || (cp --dereference --preserve=all /etc/$file $CHROOT/etc/$file && touch $CHROOT/etc/copied) || echo "$0: Failed to link or copy /etc/$file"
 done
 
 # Link dev/random and dev/urandom to ../tmp/dev/.
@@ -83,7 +83,7 @@ mkdir -p $CHROOT/tmp/dev
 for file in random urandom
 do
     # This link is relative anyway, so can be soft.
-    ln -f ../tmp/dev/$file $CHROOT/dev/ 2> /dev/null || ln -f -s ../tmp/dev/$file $CHROOT/dev/ || echo "Failed to link dev/$file"
+    ln -f ../tmp/dev/$file $CHROOT/dev/ 2> /dev/null || ln -f -s ../tmp/dev/$file $CHROOT/dev/ || echo "$0: Failed to link dev/$file"
 done
 
 # Create a relative symbolic link within systemplate that points from
@@ -119,7 +119,7 @@ find usr/share -name '*.pcf.gz' | xargs rm -f
 
 # Debugging only hackery to avoid confusion.
 if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
-    echo "Copying development users's fonts into systemplate"
+    echo "$0: Copying development users's fonts into systemplate"
     mkdir -p $CHROOT/$HOME
     test -d $HOME/.fonts && cp -r -p -L $HOME/.fonts $CHROOT/$HOME
 fi
