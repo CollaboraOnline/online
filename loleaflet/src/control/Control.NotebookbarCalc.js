@@ -2231,23 +2231,45 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																			'vertical': 'false'
 																		},
 																		{
-																			'id': 'Insert-Section-Image',
+																			'id': 'Insert-Section-PivotTable-Ext',
 																			'type': 'container',
 																			'text': '',
 																			'enabled': 'true',
 																			'children': [
 																				{
-																					'id': 'SectionBottom65',
-																					'type': 'toolbox',
+																					'id': 'GroupB292',
+																					'type': 'container',
 																					'text': '',
 																					'enabled': 'true',
 																					'children': [
 																						{
-																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:InsertGraphic'),
-																							'command': '.uno:InsertGraphic'
+																							'id': 'LineA152',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:RecalcPivotTable', 'spreadsheet'),
+																									'command': '.uno:RecalcPivotTable'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'LineB162',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:DeletePivotTable', 'spreadsheet'),
+																									'command': '.uno:DeletePivotTable'
+																								}
+																							]
 																						}
-																					]
+																					],
+																					'vertical': 'true'
 																				}
 																			],
 																			'vertical': 'false'
@@ -2275,7 +2297,51 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																			'vertical': 'false'
 																		},
 																		{
-																			'id': 'Insert-Section-Bookmark',
+																			'id': 'Insert-Section-PivotTable-Ext',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'GroupB292',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'id': 'LineA152',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:InsertGraphic'),
+																									'command': '.uno:InsertGraphic'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'LineB162',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:FunctionDialog', 'spreadsheet'),
+																									'command': '.uno:FunctionDialog'
+																								}
+																							]
+																						}
+																					],
+																					'vertical': 'true'
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-Hyperlink',
 																			'type': 'container',
 																			'text': '',
 																			'enabled': 'true',
@@ -2297,7 +2363,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																			'vertical': 'false'
 																		},
 																		{
-																			'id': 'Insert-Section-Draw2',
+																			'id': 'Insert-Text',
 																			'type': 'container',
 																			'text': '',
 																			'enabled': 'true',
@@ -2309,14 +2375,58 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																					'enabled': 'true',
 																					'children': [
 																						{
-																							'type': 'toolitem',
-																							'text': _UNO('.uno:BasicShapes'),
-																							'command': '.uno:BasicShapes'
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:DrawText'),
+																							'command': '.uno:DrawText'
 																						}
 																					]
 																				}
 																			],
-																			'vertical': 'true'
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-BasicShapes-VerticalText',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'GroupB293',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'id': 'LineA153',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:BasicShapes'),
+																									'command': '.uno:BasicShapes'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'LineB163',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:VerticalText', 'text'),
+																									'command': '.uno:VerticalText'
+																								}
+																							]
+																						}
+																					],
+																					'vertical': 'true'
+																				}
+																			],
+																			'vertical': 'false'
 																		},
 																		{
 																			'id': 'Insert-Section-Symbol',
@@ -2325,7 +2435,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																			'enabled': 'true',
 																			'children': [
 																				{
-																					'id': 'SectionBottom105',
+																					'id': 'shapes6',
 																					'type': 'toolbox',
 																					'text': '',
 																					'enabled': 'true',
@@ -2356,28 +2466,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																							'type': 'bigtoolitem',
 																							'text': _UNO('.uno:EditHeaderAndFooter', 'spreadsheet'),
 																							'command': '.uno:EditHeaderAndFooter'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Insert-Section-Annotation',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'Annotation',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:InsertAnnotation', 'spreadsheet'),
-																							'command': '.uno:InsertAnnotation'
 																						}
 																					]
 																				}
