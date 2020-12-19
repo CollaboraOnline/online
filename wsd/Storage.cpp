@@ -739,6 +739,20 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "TemplateSaveAs", _templateSaveAs);
     JsonUtil::findJSONValue(object, "TemplateSource", _templateSource);
 
+    // UserFriendlyName is used as the Author when loading the document.
+    // If it's missing, document loading fails. Since the UserFriendlyName
+    // field is optional in WOPI specs, it's often left out by integrators.
+    if (_username.empty())
+    {
+        _username = "UnknownUser"; // Default to something sensible yet friendly.
+        if (!_userId.empty())
+            _username += '_' + _userId;
+
+        LOG_WRN("WOPI::CheckFileInfo does not specify a valid UserFriendlyName for the current "
+                "user. Temporarily ["
+                << _username << "] will be used until a valid name is specified.");
+    }
+
     std::ostringstream wopiResponse;
 
     // Anonymize key values.
