@@ -2039,6 +2039,28 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																			'enabled': 'true',
 																			'children': [
 																				{
+																					'id': 'SectionBottom13',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:InsertPage', 'presentation'),
+																							'command': '.uno:InsertPage'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Section-Pages',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
 																					'id': 'GroupB29',
 																					'type': 'container',
 																					'text': '',
@@ -2052,8 +2074,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																							'children': [
 																								{
 																									'type': 'toolitem',
-																									'text': _UNO('.uno:InsertPage', 'presentation'),
-																									'command': '.uno:InsertPage'
+																									'text': _UNO('.uno:DuplicatePage', 'presentation'),
+																									'command': '.uno:DuplicatePage'
 																								}
 																							]
 																						},
@@ -2064,9 +2086,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																							'enabled': 'true',
 																							'children': [
 																								{
-																									'type': 'toolitem',
-																									'text': _UNO('.uno:DuplicatePage', 'presentation'),
-																									'command': '.uno:DuplicatePage'
+																									'id': 'selectbackground',
+																									'type': 'menubartoolitem',
+																									'text': _UNO('.uno:SelectBackground', 'presentation'),
+																									'command': ''
 																								}
 																							]
 																						}
@@ -2075,28 +2098,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																				}
 																			],
 																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Insert-Section-Table',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'SectionBottom12',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'toolitem',
-																							'text': _UNO('.uno:InsertTable', 'presentation'),
-																							'command': '.uno:InsertTable'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'true'
 																		},
 																		{
 																			'id': 'Insert-Section-Image',
@@ -2121,29 +2122,51 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																			'vertical': 'false'
 																		},
 																		{
-																			'id': 'Insert-Section-Table1',
+																			'id': 'Insert-Section-Table',
 																			'type': 'container',
 																			'text': '',
 																			'enabled': 'true',
 																			'children': [
 																				{
-																					'id': 'LineA11',
-																					'type': 'toolbox',
+																					'id': 'GroupB29',
+																					'type': 'container',
 																					'text': '',
 																					'enabled': 'true',
 																					'children': [
 																						{
-																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:InsertObjectChart'),
-																							'command': '.uno:InsertObjectChart'
+																							'id': 'LineA15',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:InsertTable', 'presentation'),
+																									'command': '.uno:InsertTable'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'LineB16',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:InsertObjectChart', 'presentation'),
+																									'command': '.uno:InsertObjectChart'
+																								}
+																							]
 																						}
-																					]
+																					],
+																					'vertical': 'true'
 																				}
 																			],
 																			'vertical': 'false'
 																		},
 																		{
-																			'id': 'Insert-Section-Bookmark',
+																			'id': 'Insert-Section-Hyperlink',
 																			'type': 'container',
 																			'text': '',
 																			'enabled': 'true',
@@ -2163,94 +2186,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																				}
 																			],
 																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Insert-Section-Annotation',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'SectionBottom15',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:InsertAnnotation', 'presentation'),
-																							'command': '.uno:InsertAnnotation'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Insert-Text',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'GroupB293',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'LineA153',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': _UNO('.uno:Text', 'presentation'),
-																									'command': '.uno:Text'
-																								}
-																							]
-																						},
-																						{
-																							'id': 'LineB163',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': _UNO('.uno:VerticalText', 'presentation'),
-																									'command': '.uno:VerticalText'
-																								}
-																							]
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Insert-Section-Draw2',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'shapes6',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'toolitem',
-																							'text': _UNO('.uno:BasicShapes'),
-																							'command': '.uno:BasicShapes'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'true'
 																		},
 																		{
 																			'id': 'Insert-Text',
@@ -2322,6 +2257,72 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																			'vertical': 'false'
 																		},
 																		{
+																			'id': 'Insert-Section-Text',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'shapes6',
+																					'type': 'toolbox',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'type': 'bigtoolitem',
+																							'text': _UNO('.uno:Text'),
+																							'command': '.uno:Text'
+																						}
+																					]
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
+																			'id': 'Insert-Text',
+																			'type': 'container',
+																			'text': '',
+																			'enabled': 'true',
+																			'children': [
+																				{
+																					'id': 'GroupB293',
+																					'type': 'container',
+																					'text': '',
+																					'enabled': 'true',
+																					'children': [
+																						{
+																							'id': 'LineA153',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:BasicShapes', 'presentation'),
+																									'command': '.uno:BasicShapes'
+																								}
+																							]
+																						},
+																						{
+																							'id': 'LineB163',
+																							'type': 'toolbox',
+																							'text': '',
+																							'enabled': 'true',
+																							'children': [
+																								{
+																									'type': 'toolitem',
+																									'text': _UNO('.uno:VerticalText', 'presentation'),
+																									'command': '.uno:VerticalText'
+																								}
+																							]
+																						}
+																					],
+																					'vertical': 'true'
+																				}
+																			],
+																			'vertical': 'false'
+																		},
+																		{
 																			'id': 'Insert-Section-Symbol',
 																			'type': 'container',
 																			'text': '',
@@ -2359,29 +2360,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																							'type': 'bigtoolitem',
 																							'text': _UNO('.uno:HeaderAndFooter', 'presentation'),
 																							'command': '.uno:HeaderAndFooter'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Insert-Section-Background',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'Section2',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'selectbackground',
-																							'type': 'menubartoolitem',
-																							'text': _UNO('.uno:SelectBackground', 'presentation'),
-																							'command': ''
 																						}
 																					]
 																				}
