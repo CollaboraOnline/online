@@ -1,0 +1,81 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+#pragma once
+
+#include <Log.hpp>
+
+//FIXME: use LOG_ macros and unify with the existing logging system.
+// Oh dear std::cerr and/or its re-direction is not
+// necessarily thread safe on Linux
+// This is the canonical test log function.
+inline void writeTestLog(const char* const p)
+{
+    fputs(p, stderr);
+    fflush(stderr);
+}
+
+inline void writeTestLog(const std::string& s) { writeTestLog(s.c_str()); }
+
+#ifdef TST_LOG_REDIRECT
+void tstLog(const std::ostringstream& stream);
+#else
+inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()); }
+#endif
+
+#define TST_LOG_NAME_BEGIN(OSS, NAME, X, FLUSH)                                                    \
+    do                                                                                             \
+    {                                                                                              \
+        char b_[1024];                                                                             \
+        OSS << Log::prefix<sizeof(b_) - 1>(b_, "TST") << NAME << " (+"                             \
+            << helpers::timeSinceTestStartMs() << "): " << X;                                      \
+        if (FLUSH)                                                                                 \
+            tstLog(OSS);                                                                           \
+    } while (false)
+
+#define TST_LOG_BEGIN(X)                                                                           \
+    do                                                                                             \
+    {                                                                                              \
+        std::ostringstream oss;                                                                    \
+        TST_LOG_NAME_BEGIN(oss, testname, X, true);                                                \
+    } while (false)
+
+#define TST_LOG_APPEND(X)                                                                          \
+    do                                                                                             \
+    {                                                                                              \
+        std::ostringstream str;                                                                    \
+        str << X;                                                                                  \
+        tstLog(str);                                                                               \
+    } while (false)
+
+#define TST_LOG_END_X(OSS)                                                                         \
+    do                                                                                             \
+    {                                                                                              \
+        OSS << "| " __FILE__ ":" << __LINE__ << '\n';                                              \
+        tstLog(OSS);                                                                               \
+    } while (false)
+
+#define TST_LOG_END                                                                                \
+    do                                                                                             \
+    {                                                                                              \
+        std::ostringstream oss_log_end;                                                            \
+        TST_LOG_END_X(oss_log_end);                                                                \
+    } while (false)
+
+#define TST_LOG_NAME(NAME, X)                                                                      \
+    do                                                                                             \
+    {                                                                                              \
+        std::ostringstream oss_log_name;                                                           \
+        TST_LOG_NAME_BEGIN(oss_log_name, NAME, X, false);                                          \
+        TST_LOG_END_X(oss_log_name);                                                               \
+    } while (false)
+
+#define TST_LOG(X) TST_LOG_NAME(testname, X)
+
+#define LOG_TST TST_LOG
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */

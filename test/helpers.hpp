@@ -7,7 +7,8 @@
 
 #pragma once
 
-#include <iterator>
+#include <test/testlog.hpp>
+#include <test/lokassert.hpp>
 
 #include <Poco/BinaryReader.h>
 #include <Poco/Dynamic/Var.h>
@@ -24,87 +25,17 @@
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 
-#include <test/lokassert.hpp>
-
 #include <Common.hpp>
 #include "common/FileUtil.hpp"
 #include <LOOLWebSocket.hpp>
 #include <Util.hpp>
 
+#include <iterator>
+#include <fstream>
+
 #ifndef TDOC
 #error TDOC must be defined (see Makefile.am)
 #endif
-
-// Oh dear std::cerr and/or its re-direction is not
-// necessarily thread safe on Linux
-// This is the canonical test log function.
-inline void writeTestLog(const char* const p)
-{
-    fputs(p, stderr);
-    fflush(stderr);
-}
-
-inline void writeTestLog(const std::string& s) { writeTestLog(s.c_str()); }
-
-#ifdef TST_LOG_REDIRECT
-void tstLog(const std::ostringstream& stream);
-#else
-inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()); }
-#endif
-
-#define TST_LOG_NAME_BEGIN(OSS, NAME, X, FLUSH)                                                    \
-    do                                                                                             \
-    {                                                                                              \
-        char t[64];                                                                                \
-        Poco::DateTime time;                                                                       \
-        snprintf(t, sizeof(t), "%.2u:%.2u:%.2u.%.6u (@%zums) ", time.hour(), time.minute(),        \
-                 time.second(), time.millisecond() * 1000 + time.microsecond(),                    \
-                 helpers::timeSinceTestStartMs());                                                 \
-        OSS << NAME << t << X;                                                                     \
-        if (FLUSH)                                                                                 \
-            tstLog(OSS);                                                                           \
-    } while (false)
-
-#define TST_LOG_BEGIN(X)                                                                           \
-    do                                                                                             \
-    {                                                                                              \
-        std::ostringstream oss;                                                                    \
-        TST_LOG_NAME_BEGIN(oss, testname, X, true);                                                \
-    } while (false)
-
-#define TST_LOG_APPEND(X)                                                                          \
-    do                                                                                             \
-    {                                                                                              \
-        std::ostringstream str;                                                                    \
-        str << X;                                                                                  \
-        tstLog(str);                                                                               \
-    } while (false)
-
-#define TST_LOG_END_X(OSS)                                                                         \
-    do                                                                                             \
-    {                                                                                              \
-        OSS << "| " __FILE__ ":" << __LINE__ << '\n';                                              \
-        tstLog(OSS);                                                                               \
-    } while (false)
-
-#define TST_LOG_END                                                                                \
-    do                                                                                             \
-    {                                                                                              \
-        std::ostringstream oss_log_end;                                                            \
-        TST_LOG_END_X(oss_log_end);                                                                \
-    } while (false)
-
-#define TST_LOG_NAME(NAME, X)                                                                      \
-    do                                                                                             \
-    {                                                                                              \
-        std::ostringstream oss_log_name;                                                           \
-        TST_LOG_NAME_BEGIN(oss_log_name, NAME, X, false);                                          \
-        TST_LOG_END_X(oss_log_name);                                                               \
-    } while (false)
-
-#define TST_LOG(X) TST_LOG_NAME(testname, X)
-
-#define LOG_TST TST_LOG
 
 // Sometimes we need to retry some commands as they can (due to timing or load) soft-fail.
 constexpr int COMMAND_RETRY_COUNT = 5;
