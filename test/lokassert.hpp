@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "testlog.hpp"
+
 #include <assert.h>
 
 #include <cppunit/extensions/HelperMacros.h>
