@@ -128,6 +128,8 @@ gtk/mobile
 .eclipsesettingfile
 eclipsesettingfile.xml
 .clang_complete
+.clangd
+.cache
 .cxx_tags
 .yavide_proj
 .yavide_session
