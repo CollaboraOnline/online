@@ -45,25 +45,19 @@ constexpr int COMMAND_RETRY_COUNT = 5;
 /// These are supposed to be testing the latter.
 namespace helpers
 {
-inline
-std::chrono::time_point<std::chrono::steady_clock>& getTestStartTime()
+inline std::chrono::steady_clock::time_point& getTestStartTime()
 {
     static auto TestStartTime = std::chrono::steady_clock::now();
 
     return TestStartTime;
 }
 
-inline
-void resetTestStartTime()
-{
-    getTestStartTime() = std::chrono::steady_clock::now();
-}
+inline void resetTestStartTime() { getTestStartTime() = std::chrono::steady_clock::now(); }
 
-inline
-size_t timeSinceTestStartMs()
+inline std::chrono::milliseconds timeSinceTestStartMs()
 {
-    return std::chrono::duration_cast<std::chrono::milliseconds>(
-                            std::chrono::steady_clock::now() - getTestStartTime()).count();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()
+                                                                 - getTestStartTime());
 }
 
 inline
