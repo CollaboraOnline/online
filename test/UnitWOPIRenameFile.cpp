@@ -25,8 +25,9 @@ class UnitWOPIRenameFile : public WopiTestServer
     } _phase;
 
 public:
-    UnitWOPIRenameFile() :
-        _phase(Phase::Load)
+    UnitWOPIRenameFile()
+        : WopiTestServer("UnitWOPIRenameFile")
+        , _phase(Phase::Load)
     {
     }
 

@@ -35,10 +35,11 @@ class UnitWOPI : public WopiTestServer
     bool _finishedSaveModified;
 
 public:
-    UnitWOPI() :
-        _phase(Phase::LoadAndSave),
-        _finishedSaveUnmodified(false),
-        _finishedSaveModified(false)
+    UnitWOPI()
+        : WopiTestServer("UnitWOPI")
+        , _phase(Phase::LoadAndSave)
+        , _finishedSaveUnmodified(false)
+        , _finishedSaveModified(false)
     {
     }
 

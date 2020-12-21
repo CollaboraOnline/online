@@ -154,8 +154,9 @@ UnitBase::~UnitBase()
     _dlHandle = nullptr;
 }
 
-UnitWSD::UnitWSD()
-    : _hasKitHooks(false)
+UnitWSD::UnitWSD(std::string testname)
+    : UnitBase(std::move(testname))
+    , _hasKitHooks(false)
 {
 }
 

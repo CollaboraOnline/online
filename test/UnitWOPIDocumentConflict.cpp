@@ -38,11 +38,10 @@ class UnitWOPIDocumentConflict : public WopiTestServer
         Doc2
     } _docLoaded;
 
-    const std::string _testName = "UnitWOPIDocumentConflict";
-
 public:
     UnitWOPIDocumentConflict()
-        : _phase(Phase::Load)
+        : WopiTestServer("UnitWOPIDocumentConflict")
+        , _phase(Phase::Load)
     {
     }
 
@@ -67,7 +66,7 @@ public:
         {
             // we don't want to save current changes because doing so would
             // overwrite the document which was changed underneath us
-            helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", _testName);
+            helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", getTestname());
             _phase = Phase::LoadNewDocument;
         }
 
@@ -84,7 +83,7 @@ public:
                 _docLoaded = DocLoaded::Doc1;
 
                 helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(),
-                                       _testName);
+                                       getTestname());
 
                 _phase = Phase::ModifyAndChangeStorageDoc;
                 break;
@@ -93,9 +92,9 @@ public:
             {
                 // modify the currently opened document; type 'a'
                 helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0",
-                                       _testName);
+                                       getTestname());
                 helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512",
-                                       _testName);
+                                       getTestname());
                 SocketPoll::wakeupWorld();
 
                 // ModifiedStatus=true is a bit slow; let's sleep and hope that
@@ -108,7 +107,7 @@ public:
                 // save the document; wsd should detect now that document has
                 // been changed underneath it and send us:
                 // "error: cmd=storage kind=documentconflict"
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "save", _testName);
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "save", getTestname());
 
                 _phase = Phase::Polling;
 
