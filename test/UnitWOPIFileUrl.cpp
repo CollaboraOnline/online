@@ -68,7 +68,7 @@ class UnitWOPIFileUrl : public WopiTestServer
 
 public:
     UnitWOPIFileUrl()
-        : WopiTestServer()
+        : WopiTestServer("UnitWOPIFileUrl")
         , _phase(Phase::Load)
         , _fileUrlState(FileUrlState::Valid)
         , _docId(1)

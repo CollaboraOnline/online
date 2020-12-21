@@ -27,8 +27,9 @@ class UnitWOPITemplate : public WopiTestServer
     } _phase;
 
 public:
-    UnitWOPITemplate() :
-        _phase(Phase::LoadTemplate)
+    UnitWOPITemplate()
+        : WopiTestServer("UnitWOPITemplate")
+        , _phase(Phase::LoadTemplate)
     {
     }
 

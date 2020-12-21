@@ -58,8 +58,9 @@ protected:
     const std::chrono::system_clock::time_point& getFileLastModifiedTime() const { return _fileLastModifiedTime; }
 
 public:
-    WopiTestServer(std::string fileContent = "Hello, world")
-        : _fileContent(std::move(fileContent))
+    WopiTestServer(std::string testname, std::string fileContent = "Hello, world")
+        : UnitWSD(std::move(testname))
+        , _fileContent(std::move(fileContent))
     {
     }
 
@@ -67,7 +68,7 @@ public:
     {
         Poco::URI wopiURL(helpers::getTestServerURI() + wopiName);
 
-        _wopiSrc = "";
+        _wopiSrc.clear();
         Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
 
         LOG_INF("Connecting to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
