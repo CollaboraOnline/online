@@ -25,8 +25,9 @@ class UnitWOPIWatermark : public WopiTestServer
     } _phase;
 
 public:
-    UnitWOPIWatermark() :
-        _phase(Phase::Load)
+    UnitWOPIWatermark()
+        : WopiTestServer("UnitWOPIWatermark")
+        , _phase(Phase::Load)
     {
     }
 
