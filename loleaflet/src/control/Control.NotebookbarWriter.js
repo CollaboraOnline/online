@@ -51,6 +51,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'context': 'Table'
 			},
 			{
+				'text': _('~Graphic'),
+				'id': '9',
+				'name': 'GraphicLabel',
+				'context': 'Graphic'
+			},
+			{
 				'text': _('~Draw'),
 				'id': '10',
 				'name': 'DrawLabel',
