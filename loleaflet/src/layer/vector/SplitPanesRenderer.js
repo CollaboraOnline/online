@@ -47,8 +47,4 @@ L.SplitPanesRenderer = L.Layer.extend({
 	getContainer: function () {
 		return this._container;
 	},
-
-	getBoundsList: function () {
-		return undefined;
-	},
 });

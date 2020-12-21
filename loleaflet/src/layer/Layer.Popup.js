@@ -68,17 +68,6 @@ L.Layer.include({
 		return this;
 	},
 
-	setPopupContent: function (content) {
-		if (this._popup) {
-			this._popup.setContent(content);
-		}
-		return this;
-	},
-
-	getPopup: function () {
-		return this._popup;
-	},
-
 	_openPopup: function (e) {
 		this._map.openPopup(this._popup, e.latlng);
 	},

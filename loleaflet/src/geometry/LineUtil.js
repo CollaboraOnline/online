@@ -30,10 +30,6 @@ L.LineUtil = {
 		return Math.sqrt(this._sqClosestPointOnSegment(p, p1, p2, true));
 	},
 
-	closestPointOnSegment: function (p, p1, p2) {
-		return this._sqClosestPointOnSegment(p, p1, p2);
-	},
-
 	// Douglas-Peucker simplification, see http://en.wikipedia.org/wiki/Douglas-Peucker_algorithm
 	_simplifyDP: function (points, sqTolerance) {
 

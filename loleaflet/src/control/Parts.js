@@ -176,12 +176,6 @@ L.Map.include({
 							'broadcast=no');
 	},
 
-	removePreviewUpdate: function (id) {
-		if (this._docPreviews && this._docPreviews[id]) {
-			this._docPreviews[id].autoUpdate = false;
-		}
-	},
-
 	goToPage: function (page) {
 		var docLayer = this._docLayer;
 		if (page === 'prev') {
@@ -411,30 +405,12 @@ L.Map.include({
 		return this._docLayer.hasAnyHiddenPart();
 	},
 
-	getNumberOfPages: function () {
-		return this._docLayer._pages;
-	},
-
 	getNumberOfParts: function () {
 		return this._docLayer._parts;
 	},
 
 	getNumberOfVisibleParts: function () {
 		return this.getNumberOfParts() - this._docLayer.hiddenParts();
-	},
-
-	getHiddenPartNames: function () {
-		var partNames = this._docLayer._partNames;
-		var names = [];
-		for (var i = 0; i < partNames.length; ++i) {
-			if (this.isHiddenPart(i))
-				names.push(partNames[i]);
-		}
-		return names.join(',');
-	},
-
-	getCurrentPageNumber: function () {
-		return this._docLayer._currentPage;
 	},
 
 	getCurrentPartNumber: function () {

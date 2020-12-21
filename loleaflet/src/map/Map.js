@@ -465,11 +465,6 @@ L.Map = L.Evented.extend({
 		return Math.pow(1.2, (zoom - this.options.zoom));
 	},
 
-	factorToZoom: function (zoomFactor) {
-		var relzoom = Math.log(zoomFactor) / Math.log(1.2);
-		return Math.round(relzoom) + this.options.zoom;
-	},
-
 	setZoom: function (zoom, options) {
 
 		if (this._docLayer instanceof L.CanvasTileLayer) {
@@ -537,31 +532,6 @@ L.Map = L.Evented.extend({
 		    newCenter = this.containerPointToLatLngIgnoreSplits(viewHalf.add(centerOffset));
 
 		return this.setView(newCenter, zoom, {zoom: options});
-	},
-
-	fitBounds: function (bounds, options) {
-
-		options = options || {};
-		bounds = bounds.getBounds ? bounds.getBounds() : L.latLngBounds(bounds);
-
-		var paddingTL = L.point(options.paddingTopLeft || options.padding || [0, 0]),
-		    paddingBR = L.point(options.paddingBottomRight || options.padding || [0, 0]),
-
-		    zoom = this.getBoundsZoom(bounds, false, paddingTL.add(paddingBR));
-
-		zoom = options.maxZoom ? Math.min(options.maxZoom, zoom) : zoom;
-
-		var paddingOffset = paddingBR.subtract(paddingTL).divideBy(2),
-
-		    swPoint = this.project(bounds.getSouthWest(), zoom),
-		    nePoint = this.project(bounds.getNorthEast(), zoom),
-		    center = this.unproject(swPoint.add(nePoint).divideBy(2).add(paddingOffset), zoom);
-
-		return this.setView(center, zoom, options);
-	},
-
-	fitWorld: function (options) {
-		return this.fitBounds([[-90, -180], [90, 180]], options);
 	},
 
 	panTo: function (center, options) { // (LatLng)
@@ -674,28 +644,6 @@ L.Map = L.Evented.extend({
 		return this;
 	},
 
-	removeHandler: function(name) {
-		var handler = this[name];
-
-		if (!handler) {
-			return;
-		}
-
-		handler.disable();
-		for (var it = 0, len = this._handlers.length; it < len; ++it) {
-			if (this._handlers[it] == handler) {
-				this._handlers.splice(it, 1);
-				break;
-			}
-		}
-
-		if (this.options[name]) {
-			delete this.options[name];
-		}
-
-		delete this[name];
-	},
-
 	remove: function () {
 
 		this._initEvents(true);
@@ -788,35 +736,6 @@ L.Map = L.Evented.extend({
 			this.latLngToLayerPoint(this.options.docBounds.getSouthEast()));
 	},
 
-	getBoundsZoom: function (bounds, inside, padding) { // (LatLngBounds[, Boolean, Point]) -> Number
-		bounds = L.latLngBounds(bounds);
-
-		var zoom = this.getMinZoom() - (inside ? 1 : 0),
-		    maxZoom = this.getMaxZoom(),
-		    size = this.getSize(),
-
-		    nw = bounds.getNorthWest(),
-		    se = bounds.getSouthEast(),
-
-		    zoomNotFound = true,
-		    boundsSize;
-
-		padding = L.point(padding || [0, 0]);
-
-		do {
-			zoom++;
-			boundsSize = this.project(se, zoom).subtract(this.project(nw, zoom)).add(padding).floor();
-			zoomNotFound = !inside ? size.contains(boundsSize) : boundsSize.x < size.x || boundsSize.y < size.y;
-
-		} while (zoomNotFound && zoom <= maxZoom);
-
-		if (zoomNotFound && inside) {
-			return null;
-		}
-
-		return inside ? zoom : zoom - 1;
-	},
-
 	getSize: function () {
 		var clientWidth = this._container.clientWidth;
 		var clientHeight = this._container.clientHeight;
@@ -863,10 +782,6 @@ L.Map = L.Evented.extend({
 
 	getPane: function (pane) {
 		return typeof pane === 'string' ? this._panes[pane] : pane;
-	},
-
-	getPanes: function () {
-		return this._panes;
 	},
 
 	getContainer: function () {
@@ -997,11 +912,6 @@ L.Map = L.Evented.extend({
 
 	layerPointToContainerPointIgnoreSplits: function (point) { // (Point)
 		return L.point(point).add(this._getMapPanePos());
-	},
-
-	containerPointToLatLng: function (point) {
-		var layerPoint = this.containerPointToLayerPoint(L.point(point));
-		return this.layerPointToLatLng(layerPoint);
 	},
 
 	containerPointToLatLngIgnoreSplits: function (point) {
@@ -1703,11 +1613,6 @@ L.Map = L.Evented.extend({
 		return this.project(center, zoom)._subtract(viewHalf)._add(this._getMapPanePos())._floor();
 	},
 
-	_latLngToNewLayerPoint: function (latlng, zoom, center) {
-		var topLeft = this._getNewPixelOrigin(center, zoom);
-		return this.project(latlng, zoom)._subtract(topLeft);
-	},
-
 	// layer point of the current center
 	_getCenterLayerPoint: function () {
 		return this.containerPointToLayerPointIgnoreSplits(this.getSize()._divideBy(2));
@@ -1729,16 +1634,6 @@ L.Map = L.Evented.extend({
 		    offset = this._getBoundsOffset(viewBounds, bounds, zoom);
 
 		return this.unproject(centerPoint.add(offset), zoom);
-	},
-
-	// adjust offset for view to get inside bounds
-	_limitOffset: function (offset, bounds) {
-		if (!bounds) { return offset; }
-
-		var viewBounds = this.getPixelBounds(),
-		    newBounds = new L.Bounds(viewBounds.min.add(offset), viewBounds.max.add(offset));
-
-		return offset.add(this._getBoundsOffset(newBounds, bounds));
 	},
 
 	// returns offset needed for pxBounds to get inside maxBounds at a specified zoom

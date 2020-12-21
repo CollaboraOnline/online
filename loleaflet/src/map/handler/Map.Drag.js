@@ -52,14 +52,6 @@ L.Map.Drag = L.Handler.extend({
 		    .fire('drag', e);
 	},
 
-	_onViewReset: function () {
-		var pxCenter = this._map.getSize().divideBy(2),
-		    pxWorldCenter = this._map.latLngToLayerPoint([0, 0]);
-
-		this._initialWorldOffset = pxWorldCenter.subtract(pxCenter).x;
-		this._worldWidth = this._map.getPixelWorldBounds().getSize().x;
-	},
-
 	_onPreDrag: function () {
 		var org = this._map.getPixelOrigin();
 		var pos = this._map._getMapPanePos();

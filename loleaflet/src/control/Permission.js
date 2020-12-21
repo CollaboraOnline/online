@@ -148,14 +148,6 @@ L.Map.include({
 		this.dragging.enable();
 	},
 
-	isSelectionEnabled: function () {
-		return !this.dragging.enabled();
-	},
-
-	getPermission: function () {
-		return this._permission;
-	},
-
 	isPermissionEditForComments: function() {
 		return true;
 	},

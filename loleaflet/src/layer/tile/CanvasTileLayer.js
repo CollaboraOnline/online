@@ -55,10 +55,6 @@ L.CanvasTilePainter = L.Class.extend({
 		this._updatesRunning = false;
 	},
 
-	isUpdatesRunning: function () {
-		return this._updatesRunning;
-	},
-
 	startUpdates: function () {
 		if (this._updatesRunning === true) {
 			return false;
@@ -762,12 +758,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		return new L.Bounds(
 			bounds.min.divideBy(this._tileSize).floor(),
 			bounds.max.divideBy(this._tileSize).floor());
-	},
-
-	_getCoreZoomFactor: function () {
-		return new L.Point(
-			this._tileSize * 15.0 / this._tileWidthTwips,
-			this._tileSize * 15.0 / this._tileHeightTwips);
 	},
 
 	_corePixelsToCss: function (corePixels) {

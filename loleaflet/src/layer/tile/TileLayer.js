@@ -1264,18 +1264,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_onSpecialChar: function(fontList, selectedIndex) {
-		if (!this._specialChar) {
-			this._specialChar = L.control.characterMap();
-		}
-		if (!this._specialChar.isVisible()) {
-			this._specialChar.addTo(this._map);
-			this._specialChar.fillFontNames(fontList, selectedIndex);
-			this._map.enable(false);
-			this._specialChar.show();
-		}
-	},
-
 	_onMousePointerMsg: function (textMsg) {
 		textMsg = textMsg.substring(14); // "mousepointer: "
 		textMsg = L.Cursor.getCustomCursor(textMsg) || textMsg;
@@ -2306,11 +2294,6 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
-	_postSelectGraphicEvent: function(type, x, y) {
-		this._map._socket.sendMessage('selectgraphic type=' + type +
-				' x=' + x + ' y=' + y);
-	},
-
 	_postSelectTextEvent: function(type, x, y) {
 		this._map._socket.sendMessage('selecttext type=' + type +
 				' x=' + x + ' y=' + y);
@@ -2478,10 +2461,6 @@ L.TileLayer = L.GridLayer.extend({
 
 	isCursorVisible: function() {
 		return this._map.hasLayer(this._cursorMarker);
-	},
-
-	isGraphicVisible: function() {
-		return this._graphicMarker && this._map.hasLayer(this._graphicMarker);
 	},
 
 	goToViewCursor: function(viewId) {
@@ -3354,12 +3333,6 @@ L.TileLayer = L.GridLayer.extend({
 	hasGraphicSelection: function() {
 		return (this._graphicSelection !== null &&
 			!this._isEmptyRectangle(this._graphicSelection));
-	},
-
-	// Returns true iff there is a text selection.
-	hasTextSelection: function() {
-		return (!this._isEmptyRectangle(this._textSelectionStart) &&
-			!this._isEmptyRectangle(this._textSelectionEnd));
 	},
 
 	_onDragOver: function (e) {

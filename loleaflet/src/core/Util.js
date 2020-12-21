@@ -118,15 +118,6 @@ L.Util = {
 		return obj.options;
 	},
 
-	// make a URL with GET parameters out of a set of properties/values
-	getParamString: function (obj, existingUrl, uppercase) {
-		var params = [];
-		for (var i in obj) {
-			params.push(encodeURIComponent(uppercase ? i.toUpperCase() : i) + '=' + encodeURIComponent(obj[i]));
-		}
-		return ((!existingUrl || existingUrl.indexOf('?') === -1) ? '?' : '&') + params.join('&');
-	},
-
 	round: function(x, e) {
 		if (!e) {
 			return Math.round(x);

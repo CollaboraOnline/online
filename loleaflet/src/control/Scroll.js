@@ -11,14 +11,6 @@ L.Map.include({
 		this.panBy(new L.Point(x, y), {animate: false});
 	},
 
-	scrollDown: function (y, options) {
-		this.scroll(0, y, options);
-	},
-
-	scrollRight: function (x, options) {
-		this.scroll(x, 0, options);
-	},
-
 	scrollOffset: function () {
 		var center = this.project(this.getCenter());
 		var centerOffset = center.subtract(this.getSize().divideBy(2));
@@ -49,10 +41,4 @@ L.Map.include({
 			this.off('moveend', this._docLayer._updateScrollOffset, this._docLayer);
 		}
 	},
-
-	fitWidthZoom: function (maxZoom) {
-		if (this._docLayer) {
-			this._docLayer._fitWidthZoom(null, maxZoom);
-		}
-	}
 });
