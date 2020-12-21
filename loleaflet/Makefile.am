@@ -321,7 +321,6 @@ LOLEAFLET_JS =\
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
-	src/map/anim/Map.FlyTo.js \
 	src/layer/AnnotationManagerBase.js \
 	src/layer/AnnotationManager.js \
 	src/layer/AnnotationManagerImpress.js \

@@ -157,13 +157,6 @@ L.Annotation = L.Layer.extend({
 		return this._data.id === comment._data.parent;
 	},
 
-	onZoom: function(scaleFactor) {
-		var authorImageWidth = Math.round(this.options.imgSize.x * scaleFactor);
-		var authorImageHeight = Math.round(this.options.imgSize.y * scaleFactor);
-		this._authorAvatarImg.setAttribute('width', authorImageWidth);
-		this._authorAvatarImg.setAttribute('height', authorImageHeight);
-	},
-
 	_checkBounds: function () {
 		if (this._skipCheckBounds || !this._map || this._map.animatingZoom || !this.isVisible()) {
 			return;
@@ -385,11 +378,6 @@ L.Annotation = L.Layer.extend({
 			this._checkBounds();
 			this._map.fire('AnnotationReply', {annotation: this});
 		}
-	},
-
-	_onResolveClick: function (e) {
-		L.DomEvent.stopPropagation(e);
-		this._map.fire('AnnotationResolve', {annotation: this});
 	},
 
 	_updateLayout: function () {

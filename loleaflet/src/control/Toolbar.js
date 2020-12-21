@@ -219,25 +219,6 @@ L.Map.include({
 		this.fire('selectbackground', {file: file});
 	},
 
-	cellEnterString: function (string) {
-		var command = {
-			'StringName': {
-				type: 'string',
-				value: string
-			},
-			'DontCommit': {
-				type: 'boolean',
-				value: true
-			}
-		};
-
-		this.sendUnoCommand('.uno:EnterString ', command);
-	},
-
-	renderFont: function (fontName) {
-		this._socket.sendMessage('renderfont font=' + window.encodeURIComponent(fontName));
-	},
-
 	showHelp: function(id) {
 		var w;
 		var iw = window.innerWidth;

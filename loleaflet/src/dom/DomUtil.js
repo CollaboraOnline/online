@@ -202,10 +202,6 @@ L.DomUtil = {
 		return el._leaflet_pos;
 	},
 
-	isLandscape: function() {
-		return window.matchMedia && window.matchMedia('(orientation: landscape)').matches;
-	},
-
 	isPortrait: function() {
 		return window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
 	},

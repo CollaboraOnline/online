@@ -92,14 +92,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		return this._annotations._isThreadResolved(annotation);
 	},
 
-	onChangeAccept: function(id) {
-		this._annotations.acceptChange(id);
-	},
-
-	onChangeReject: function(id) {
-		this._annotations.rejectChange(id);
-	},
-
 	_onCommandValuesMsg: function (textMsg) {
 		var braceIndex = textMsg.indexOf('{');
 		if (braceIndex < 0) {

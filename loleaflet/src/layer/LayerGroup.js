@@ -87,10 +87,6 @@ L.LayerGroup = L.Layer.extend({
 		return this;
 	},
 
-	getLayer: function (id) {
-		return this._layers[id];
-	},
-
 	getLayers: function () {
 		var layers = [];
 

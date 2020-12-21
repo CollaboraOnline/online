@@ -1138,11 +1138,6 @@ L.CalcSplitPanesContext = L.SplitPanesContext.extend({
 		this._splitCell = new L.Point(0, 0);
 	},
 
-	setSplitCell: function (splitCell) {
-		console.assert(splitCell instanceof L.Point, 'invalid argument type');
-		 return this._splitCell.assign(splitCell);
-	},
-
 	setSplitCol: function (splitCol) {
 		console.assert(typeof splitCol === 'number', 'invalid argument type');
 		return this._splitCell.setX(splitCol);
@@ -1151,18 +1146,6 @@ L.CalcSplitPanesContext = L.SplitPanesContext.extend({
 	setSplitRow: function (splitRow) {
 		console.assert(typeof splitRow === 'number', 'invalid argument type');
 		return this._splitCell.setY(splitRow);
-	},
-
-	getSplitCell: function () {
-		return this._splitCell.clone();
-	},
-
-	getSplitCol: function () {
-		return this._splitCell.x;
-	},
-
-	getSplitRow: function () {
-		return this._splitCell.y;
 	},
 
 	// Calculates the split position in (core-pixels) from the split-cell.
@@ -1327,10 +1310,6 @@ L.SheetGeometry = L.Class.extend({
 		return updateOK;
 	},
 
-	getPart: function () {
-		return this._part;
-	},
-
 	setTileGeometryData: function (tileWidthTwips, tileHeightTwips, tileSizePixels,
 		updatePositions) {
 		this._columns.setTileGeometryData(tileWidthTwips, tileSizePixels, updatePositions);
@@ -1383,35 +1362,11 @@ L.SheetGeometry = L.Class.extend({
 	},
 
 	// Returns an object with the following fields:
-	// columnIndex should be zero based.
-	// 'startpos' (start position of the column in core pixels), 'size' (column size in core pixels).
-	// Note: All these fields are computed by assuming zero sizes for hidden/filtered columns.
-	getColumnData: function (columnIndex) {
-		return this._columns.getElementData(columnIndex);
-	},
-
-	// Returns an object with the following fields:
 	// rowIndex should be zero based.
 	// 'startpos' (start position of the row in core pixels), 'size' (row size in core pixels).
 	// Note: All these fields are computed by assuming zero sizes for hidden/filtered rows.
 	getRowData: function (rowIndex) {
 		return this._rows.getElementData(rowIndex);
-	},
-
-	// Runs the callback for every column in the inclusive range [columnStart, columnEnd].
-	// callback is expected to have a signature of (column, columnData)
-	// where 'column' will contain the column index(zero based) and 'columnData' will be an object with
-	// the same fields as returned by getColumnData().
-	forEachColumnInRange: function (columnStart, columnEnd, callback) {
-		this._columns.forEachInRange(columnStart, columnEnd, callback);
-	},
-
-	// Runs the callback for every row in the inclusive range [rowStart, rowEnd].
-	// callback is expected to have a signature of (row, rowData)
-	// where 'row' will contain the row index(zero based) and 'rowData' will be an object with
-	// the same fields as returned by getRowData().
-	forEachRowInRange: function (rowStart, rowEnd, callback) {
-		this._rows.forEachInRange(rowStart, rowEnd, callback);
 	},
 
 	getColumnGroupLevels: function () {

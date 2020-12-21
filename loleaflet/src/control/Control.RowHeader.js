@@ -176,10 +176,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this.updateCurrent(y, slim);
 	},
 
-	_updateRowHeader: function () {
-		this._map._docLayer.refreshViewData({x: 0, y: this._map._getTopLeftPoint().y, offset: {x: 0, y: undefined}});
-	},
-
 	drawHeaderEntry: function (entry, isOver, isHighlighted, isCurrent) {
 		if (!entry)
 			return;

@@ -25,19 +25,6 @@ L.Marker = L.Layer.extend({
 		this._latlng = L.latLng(latlng);
 	},
 
-	setDraggable: function(val) {
-		if (!this.dragging) {
-			this.options.draggable = val;
-			return;
-		}
-
-		if (val) {
-			this.dragging.enable();
-		} else {
-			this.dragging.disable();
-		}
-	},
-
 	onAdd: function () {
 		this._initIcon();
 		this.update();
@@ -74,11 +61,6 @@ L.Marker = L.Layer.extend({
 		this._latlng = L.latLng(latlng);
 		this.update();
 		return this.fire('move', {oldLatLng: oldLatLng, latlng: this._latlng});
-	},
-
-	setZIndexOffset: function (offset) {
-		this.options.zIndexOffset = offset;
-		return this.update();
 	},
 
 	setIcon: function (icon) {
