@@ -34,16 +34,6 @@ L.Control.Layers = L.Control.extend({
 		return this._container;
 	},
 
-	addBaseLayer: function (layer, name) {
-		this._addLayer(layer, name);
-		return this._update();
-	},
-
-	addOverlay: function (layer, name) {
-		this._addLayer(layer, name, true);
-		return this._update();
-	},
-
 	removeLayer: function (layer) {
 		layer.off('add remove', this._onLayerChange, this);
 

@@ -29,11 +29,6 @@ L.SplitPanesContext = L.Class.extend({
 		this._splitPos = new L.Point(0, 0);
 	},
 
-	setDefaults: function () {
-		this._setDefaults();
-		this.updateSplitters();
-	},
-
 	getMaxSplitPosX: function () {
 		var rawMax = Math.floor(window.devicePixelRatio * this._map.getSize().x * this.options.maxHorizontalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosX(rawMax);
@@ -52,21 +47,8 @@ L.SplitPanesContext = L.Class.extend({
 			this._map.fire('splitposchanged');
 	},
 
-	alignSplitPos: function () {
-		this.alignHorizSplitPos();
-		this.alignVertSplitPos();
-	},
-
 	getSplitPos: function () {
 		return this._splitPos.divideBy(window.devicePixelRatio);
-	},
-
-	getSplitPosX: function () {
-		return this._splitPos.x;
-	},
-
-	getSplitPosY: function () {
-		return this._splitPos.y;
 	},
 
 	justifySplitPos: function (split, isHoriz) {
@@ -133,16 +115,6 @@ L.SplitPanesContext = L.Class.extend({
 			this._map.fire('splitposchanged');
 
 		return changed;
-	},
-
-	alignHorizSplitPos: function () {
-		this._splitPos.x = this._docLayer.getSnapDocPosX(this._splitPos.x);
-		this._updateXSplitter();
-	},
-
-	alignVertSplitPos: function () {
-		this._splitPos.y = this._docLayer.getSnapDocPosY(this._splitPos.y);
-		this._updateYSplitter();
 	},
 
 	updateSplitters: function () {
@@ -244,36 +216,6 @@ L.SplitPanesContext = L.Class.extend({
 				docLayer._corePixelsToTwips(bound.max)
 			);
 		});
-	},
-
-	getClientVisibleArea: function () {
-		var pixelBounds = this._map.getPixelBoundsCore();
-		var fullSize = pixelBounds.getSize();
-		var cursorPos = this._docLayer.getCursorPos().multiplyBy(window.devicePixelRatio);
-		cursorPos._floor();
-		var oneone = new L.Point(1, 1);
-		var topLeft = pixelBounds.getTopLeft()._add(this._splitPos)._add(oneone);
-		var size = fullSize.subtract(this._splitPos);
-
-		if (this._splitPos.x) {
-			size.x -= 1;
-		}
-
-		if (this._splitPos.y) {
-			size.y -= 1;
-		}
-
-		if (cursorPos.x <= this._splitPos.x) {
-			topLeft.x = 0;
-			size.x = fullSize.x;
-		}
-
-		if (cursorPos.y <= this._splitPos.y) {
-			topLeft.y = 0;
-			size.y = fullSize.y;
-		}
-
-		return new L.Bounds(topLeft, topLeft.add(size));
 	},
 
 	intersectsVisible: function (areaPx) {

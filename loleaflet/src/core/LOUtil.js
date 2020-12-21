@@ -53,11 +53,6 @@ L.LOUtil = {
 		return '#' + ('000000' + color.toString(16)).slice(-6);
 	},
 
-	stringToPoint: function(point) {
-		var numbers = point.match(/\d+/g);
-		return L.point(parseInt(numbers[0]), parseInt(numbers[1]));
-	},
-
 	stringToBounds: function(bounds) {
 		var numbers = bounds.match(/\d+/g);
 		var topLeft = L.point(parseInt(numbers[0]), parseInt(numbers[1]));

@@ -441,17 +441,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this.drawOutline();
 	},
 
-	_colAlphaToNumber: function(alpha) {
-		var res = 0;
-		var offset = 'A'.charCodeAt();
-		for (var i = 0; i < alpha.length; i++) {
-			var chr = alpha[alpha.length - i - 1];
-			res += (chr.charCodeAt() - offset + 1) * Math.pow(26, i);
-		}
-
-		return res;
-	},
-
 	_colIndexToAlpha: function(columnNumber) {
 		var offset = 'A'.charCodeAt();
 		var dividend = columnNumber;
