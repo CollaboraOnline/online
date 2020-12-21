@@ -894,31 +894,10 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		return hdrPos + this._docVisStart;
 	},
 
-	getStartOffset: function() {
-		return 0;
-	},
-
 	isZeroSize: function (i) {
 		var elem = this._elements[i];
 		console.assert(elem, 'queried a non existent row/col in the header : ' + i);
 		return elem.size === 0;
-	},
-
-	hasSplits: function () {
-		return this._hasSplits;
-	},
-
-	// Index after the split.
-	getSplitIndex: function () {
-		return this._splitIndex;
-	},
-
-	getStartIndex: function () {
-		return this._startIndex;
-	},
-
-	getEndIndex: function () {
-		return this._endIndex;
 	},
 
 	getMinIndex: function () {
