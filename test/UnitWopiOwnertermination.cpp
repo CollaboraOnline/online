@@ -26,8 +26,9 @@ class UnitWopiOwnertermination : public WopiTestServer
     } _phase;
 
 public:
-    UnitWopiOwnertermination() :
-        _phase(Phase::Load)
+    UnitWopiOwnertermination()
+        : WopiTestServer("UnitWOPIOwnerTermination")
+        , _phase(Phase::Load)
     {
     }
 

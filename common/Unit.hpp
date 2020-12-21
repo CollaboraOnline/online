@@ -89,6 +89,12 @@ protected:
     void exitTest(TestResult result);
 
     UnitBase();
+    UnitBase(std::string name)
+        : UnitBase()
+    {
+        _testname = std::move(name);
+    }
+
     virtual ~UnitBase();
 
 public:
@@ -157,6 +163,9 @@ public:
 
     static std::string getUnitLibPath() { return std::string(UnitLibPath); }
 
+    const std::string& getTestname() const { return _testname; }
+    void setTestname(const std::string& testname) { _testname = testname; }
+
 private:
     void setHandle(void *dlHandle)
     {
@@ -171,6 +180,9 @@ private:
     std::chrono::milliseconds _timeoutMilliSeconds;
     static UnitBase *Global;
     UnitType _type;
+
+    /// The name of the current test.
+    std::string _testname;
 };
 
 /// Derive your WSD unit test / hooks from me.
@@ -179,7 +191,8 @@ class UnitWSD : public UnitBase
     bool _hasKitHooks;
 
 public:
-    UnitWSD();
+    UnitWSD(std::string testname = std::string());
+
     virtual ~UnitWSD();
 
     static UnitWSD& get()

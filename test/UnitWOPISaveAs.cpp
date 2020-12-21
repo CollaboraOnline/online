@@ -24,8 +24,9 @@ class UnitWOPISaveAs : public WopiTestServer
     } _phase;
 
 public:
-    UnitWOPISaveAs() :
-        _phase(Phase::LoadAndSaveAs)
+    UnitWOPISaveAs()
+        : WopiTestServer("UnitWOPISaveAs")
+        , _phase(Phase::LoadAndSaveAs)
     {
     }
 

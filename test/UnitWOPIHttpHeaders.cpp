@@ -69,7 +69,8 @@ protected:
 
 public:
     UnitWopiHttpHeaders()
-        : _phase(Phase::Load)
+        : WopiTestServer("UnitWOPIHttpHeaders")
+        , _phase(Phase::Load)
     {
     }
 
