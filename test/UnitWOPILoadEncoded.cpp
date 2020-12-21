@@ -25,8 +25,9 @@ class UnitWOPILoadEncoded : public WopiTestServer
     } _phase;
 
 public:
-    UnitWOPILoadEncoded() :
-        _phase(Phase::LoadEncoded)
+    UnitWOPILoadEncoded()
+        : WopiTestServer("UnitWOPILoadEncoded")
+        , _phase(Phase::LoadEncoded)
     {
     }
 

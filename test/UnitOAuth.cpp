@@ -31,10 +31,11 @@ class UnitOAuth : public WopiTestServer
     bool _finishedHeader;
 
 public:
-    UnitOAuth() :
-        _phase(Phase::LoadToken),
-        _finishedToken(false),
-        _finishedHeader(false)
+    UnitOAuth()
+        : WopiTestServer("UnitOAuth")
+        , _phase(Phase::LoadToken)
+        , _finishedToken(false)
+        , _finishedHeader(false)
     {
     }
 

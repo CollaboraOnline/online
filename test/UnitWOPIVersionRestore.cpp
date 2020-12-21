@@ -37,8 +37,9 @@ class UnitWOPIVersionRestore : public WopiTestServer
     bool _isDocumentSaved = false;
 
 public:
-    UnitWOPIVersionRestore() :
-        _phase(Phase::Load)
+    UnitWOPIVersionRestore()
+        : WopiTestServer("UnitWOPIVersionRestore")
+        , _phase(Phase::Load)
     {
     }
 
