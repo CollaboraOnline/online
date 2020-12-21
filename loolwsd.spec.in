@@ -38,7 +38,7 @@ BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros
 BuildRequires:  libcap-progs
 %endif
 
-Requires:       collaboraoffice6.0 = 6.0.10.29-20200902 collaboraoffice6.0-ure = 6.0.10.29-20200902 collaboraofficebasis6.0-core = 6.0.10.29-20200902 collaboraofficebasis6.0-writer = 6.0.10.29-20200902 collaboraofficebasis6.0-impress = 6.0.10.29-20200902 collaboraofficebasis6.0-graphicfilter = 6.0.10.29-20200902 collaboraofficebasis6.0-en-US = 6.0.10.29-20200902 collaboraofficebasis6.0-calc = 6.0.10.29-20200902 collaboraofficebasis6.0-ooofonts = 6.0.10.29-20200902 collaboraofficebasis6.0-images = 6.0.10.29-20200902 collaboraofficebasis6.0-draw = 6.0.10.29-20200902 collaboraofficebasis6.0-extension-pdf-import = 6.0.10.29-20200902 collaboraofficebasis6.0-ooolinguistic = 6.0.10.29-20200902
+Requires:       collaboraoffice6.0 = 6.0.10.29-20201221 collaboraoffice6.0-ure = 6.0.10.29-20201221 collaboraofficebasis6.0-core = 6.0.10.29-20201221 collaboraofficebasis6.0-writer = 6.0.10.29-20201221 collaboraofficebasis6.0-impress = 6.0.10.29-20201221 collaboraofficebasis6.0-graphicfilter = 6.0.10.29-20201221 collaboraofficebasis6.0-en-US = 6.0.10.29-20201221 collaboraofficebasis6.0-calc = 6.0.10.29-20201221 collaboraofficebasis6.0-ooofonts = 6.0.10.29-20201221 collaboraofficebasis6.0-images = 6.0.10.29-20201221 collaboraofficebasis6.0-draw = 6.0.10.29-20201221 collaboraofficebasis6.0-extension-pdf-import = 6.0.10.29-20201221 collaboraofficebasis6.0-ooolinguistic = 6.0.10.29-20201221
 Conflicts:      collaboraofficebasis6.0-kde-integration collaboraofficebasis6.0-gnome-integration
 Requires(post): coreutils grep sed
 %if 0%{?rhel} == 6
