@@ -28,6 +28,11 @@ L.Annotation = L.Layer.extend({
 			this._initLayout();
 		}
 
+		L.DomEvent.on(this._container, {
+			mousewheel: this._map.scrollHandler._onWheelScroll,
+			MozMousePixelScroll: L.DomEvent.preventDefault
+		}, this._map.scrollHandler);
+
 		map._panes.popupPane.appendChild(this._container);
 		this.update();
 	},
