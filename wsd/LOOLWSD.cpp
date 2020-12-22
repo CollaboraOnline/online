@@ -4008,8 +4008,9 @@ int LOOLWSD::innerMain()
 
         // This timeout affects the recovery time of prespawned children.
         const std::chrono::microseconds waitMicroS
-            = UnitWSD::isUnitTesting() ? UnitWSD::get().getTimeoutMilliSeconds() / 4
-                                       : SocketPoll::DefaultPollTimeoutMicroS * 4;
+            = UnitWSD::isUnitTesting()
+                  ? std::min(UnitWSD::get().getTimeoutMilliSeconds(), std::chrono::milliseconds(1000)) / 4
+                  : SocketPoll::DefaultPollTimeoutMicroS * 4;
         mainWait.poll(waitMicroS);
 
         // Wake the prisoner poll to spawn some children, if necessary.
