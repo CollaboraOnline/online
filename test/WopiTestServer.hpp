@@ -4,6 +4,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+#include "Util.hpp"
 #include "config.h"
 
 #include "helpers.hpp"
@@ -52,17 +53,22 @@ protected:
     /// Sets the file content to a given value and update the last file modified time
     void setFileContent(const std::string& fileContent)
     {
+        LOG_TST("setFileContent: [" << fileContent << ']');
         _fileContent = fileContent;
         _fileLastModifiedTime = std::chrono::system_clock::now();
     }
 
-    const std::chrono::system_clock::time_point& getFileLastModifiedTime() const { return _fileLastModifiedTime; }
+    const std::chrono::system_clock::time_point& getFileLastModifiedTime() const
+    {
+        return _fileLastModifiedTime;
+    }
 
 public:
-    WopiTestServer(std::string testname, std::string fileContent = "Hello, world")
+    WopiTestServer(std::string testname, const std::string& fileContent = "Hello, world")
         : UnitWSD(std::move(testname))
-        , _fileContent(std::move(fileContent))
     {
+        LOG_TST("WopiTestServer created for [" << testname << ']');
+        setFileContent(fileContent);
     }
 
     void initWebsocket(const std::string& wopiName)
@@ -108,11 +114,11 @@ public:
 protected:
     /// Here we act as a WOPI server, so that we have a server that responds to
     /// the wopi requests without additional expensive setup.
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message, std::shared_ptr<StreamSocket>& socket) override
+    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
+                                   Poco::MemoryInputStream& message,
+                                   std::shared_ptr<StreamSocket>& socket) override
     {
         Poco::URI uriReq(request.getURI());
-        Poco::RegularExpression regInfo("/wopi/files/[0-9]");
-        Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
 
         {
             std::ostringstream oss;
@@ -124,6 +130,9 @@ protected:
 
             LOG_TST(oss.str());
         }
+
+        static const Poco::RegularExpression regInfo("/wopi/files/[0-9]");
+        static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
 
         // CheckFileInfo
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
@@ -263,6 +272,11 @@ protected:
             socket->shutdown();
 
             return true;
+        }
+        else if (!Util::startsWith(uriReq.getPath(), "/lool/")) // Skip requests to the websrv.
+        {
+            // Complain if we are expected to handle something that we don't.
+            LOG_TST("ERROR: Fake wopi host request, cannot handle request: " << uriReq.getPath());
         }
 
         return false;
