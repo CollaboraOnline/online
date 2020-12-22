@@ -20,6 +20,7 @@
 #include <Poco/URI.h>
 #include <Poco/Timestamp.h>
 #include <Poco/Util/LayeredConfiguration.h>
+#include <sstream>
 
 class WopiTestServer : public UnitWSD
 {
@@ -71,7 +72,7 @@ public:
         _wopiSrc.clear();
         Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
 
-        LOG_INF("Connecting to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
+        LOG_TST("Connecting to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
 
         _ws.reset(new UnitWebSocket("/lool/" + _wopiSrc + "/ws"));
         assert(_ws.get());
@@ -113,22 +114,21 @@ protected:
         Poco::RegularExpression regInfo("/wopi/files/[0-9]");
         Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
 
-        Log::StreamLogger logger = Log::info();
-        if (logger.enabled())
         {
-            logger << "Fake wopi host request URI [" << uriReq.toString() << "]:\n";
+            std::ostringstream oss;
+            oss << "Fake wopi host request URI [" << uriReq.toString() << "]:\n";
             for (const auto& pair : request)
             {
-                logger << '\t' << pair.first << ": " << pair.second << " / ";
+                oss << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-            LOG_END(logger, true);
+            LOG_TST(oss.str());
         }
 
         // CheckFileInfo
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
 
             assertCheckFileInfoRequest(request);
 
@@ -169,7 +169,7 @@ protected:
         // GetFile
         else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling GetFile: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
 
             assertGetFileRequest(request);
 
@@ -191,7 +191,7 @@ protected:
         }
         else if (request.getMethod() == "POST" && regInfo.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling PutRelativeFile: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling PutRelativeFile: " << uriReq.getPath());
             std::string wopiURL = helpers::getTestServerURI() + "/something wopi/files/1?access_token=anything&reuse_cookies=cook=well";
             std::string content;
 
@@ -225,7 +225,7 @@ protected:
         }
         else if (request.getMethod() == "POST" && regContent.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling PutFile: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
 
             std::string wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp");
             if (!wopiTimestamp.empty())
