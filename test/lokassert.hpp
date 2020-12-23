@@ -35,7 +35,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!(condition))                                                                          \
         {                                                                                          \
-            std::cerr << "Assertion failure: " << (#condition) << std::endl;                       \
+            TST_LOG_NAME("unittest", "Assertion failure: " << (#condition));                       \
             LOK_ASSERT_IMPL(condition);                                                            \
             CPPUNIT_ASSERT(condition);                                                             \
         }                                                                                          \
@@ -46,8 +46,8 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!((expected) == (actual)))                                                             \
         {                                                                                          \
-            std::cerr << "Assertion failure: Expected [" << (expected) << "] but got ["            \
-                      << (actual) << ']' << std::endl;                                             \
+            TST_LOG_NAME("unittest", "Assertion failure: Expected ["                               \
+                                         << (expected) << "] but got [" << (actual) << ']');       \
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL((expected), (actual));                                            \
         }                                                                                          \
@@ -58,8 +58,9 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!((expected) == (actual)))                                                             \
         {                                                                                          \
-            std::cerr << "Assertion failure: " << (message) << ". Expected [" << (expected)        \
-                      << "] but got [" << (actual) << "]: " << std::endl;                          \
+            TST_LOG_NAME("unittest", "Assertion failure: " << (message) << ". Expected ["          \
+                                                           << (expected) << "] but got ["          \
+                                                           << (actual) << "]: ");                  \
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL_MESSAGE((message), (expected), (actual));                         \
         }                                                                                          \
@@ -70,8 +71,8 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!(condition))                                                                          \
         {                                                                                          \
-            std::cerr << "Assertion failure: " << (message) << ". Condition: " << (#condition)     \
-                      << std::endl;                                                                \
+            TST_LOG_NAME("unittest",                                                               \
+                         "Assertion failure: " << (message) << ". Condition: " << (#condition));   \
             LOK_ASSERT_IMPL(condition);                                                            \
             CPPUNIT_ASSERT_MESSAGE((message), (condition));                                        \
         }                                                                                          \
@@ -80,7 +81,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
 #define LOK_ASSERT_FAIL(message)                                                                   \
     do                                                                                             \
     {                                                                                              \
-        std::cerr << "Forced failure: " << (message) << std::endl;                                 \
-        LOK_ASSERT_IMPL(!"Forced failure");                                                               \
+        TST_LOG_NAME("unittest", "Forced failure: " << (message));                                 \
+        LOK_ASSERT_IMPL(!"Forced failure");                                                        \
         CPPUNIT_FAIL((message));                                                                   \
     } while (false)
