@@ -102,9 +102,9 @@ L.CanvasTilePainter = L.Class.extend({
 		this._canvasCtx.setTransform(1,0,0,1,0,0);
 	},
 
-	_setCanvasSize: function (widthCSSPx, heightCSSPx) {
-		this._pixWidth = Math.floor(widthCSSPx * this._dpiScale);
-		this._pixHeight = Math.floor(heightCSSPx * this._dpiScale);
+	_setCanvasSize: function (widthCorePx, heightCorePx) {
+		this._pixWidth = Math.floor(widthCorePx);
+		this._pixHeight = Math.floor(heightCorePx);
 
 		// real pixels have to be integral
 		this._canvas.width = this._pixWidth;
@@ -129,7 +129,7 @@ L.CanvasTilePainter = L.Class.extend({
 		this.clear();
 		this._syncTileContainerSize();
 
-		this._lastSize = new L.Point(widthCSSPx, heightCSSPx);
+		this._lastSize = new L.Point(widthCorePx, heightCorePx);
 	},
 
 	_syncTileContainerSize: function () {
