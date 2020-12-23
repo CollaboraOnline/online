@@ -229,9 +229,9 @@ L.CanvasTilePainter = L.Class.extend({
 
 			if (extendedBounds.intersects(tileBounds)) {
 				var offset = extendedBounds.getTopLeft();
-				viewBounds.x = Math.min(offset.x, viewBounds.min.x);
-				viewBounds.y = Math.min(offset.y, viewBounds.min.y);
-				this._drawTileInPane(tile, tileBounds, extendedBounds, extendedBounds.getTopLeft(), this._oscCtxs[i]);
+				offset.x = Math.min(offset.x, viewBounds.min.x);
+				offset.y = Math.min(offset.y, viewBounds.min.y);
+				this._drawTileInPane(tile, tileBounds, extendedBounds, offset, this._oscCtxs[i]);
 			}
 		}
 	},
