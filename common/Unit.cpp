@@ -202,7 +202,11 @@ void UnitBase::exitTest(TestResult result)
         return;
     }
 
-    LOG_INF("exitTest: " << testResultAsString(result) << ". Flagging to shutdown.");
+    if (result == TestResult::Ok)
+        LOG_INF("SUCCESS: exitTest: " << testResultAsString(result) << ". Flagging to shutdown.");
+    else
+        LOG_ERR("FAILURE: exitTest: " << testResultAsString(result) << ". Flagging to shutdown.");
+
     _setRetValue = true;
     _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;
 #if !MOBILEAPP
