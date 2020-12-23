@@ -182,12 +182,13 @@
 	overflow-y: hidden;
 	scrollbar-width: none; /* Firefox */
 	-ms-overflow-style: none;  /* Internet Explorer 10+ */
-
+	display: table;
 	height: 84px;
 }
 
 .root-container.notebookbar {
-	display: table;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .notebookbar-scroll-wrapper::-webkit-scrollbar { /* WebKit */
@@ -449,10 +450,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Insert Tab */
 
-#table-Insert {
-	margin-top: 10px;
-}
-
 #table-Insert-Section-Pagebreak #InsertPagebreak.notebookbar img,
 #table-Insert-Section-Image #InsertGraphic.notebookbar img,
 #HyperlinkDialog.notebookbar img,
@@ -489,9 +486,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 /* References Tab */
 
 #table-ReferencesTab
-{
-	margin-top: 10px;
-}
 
 #InsertMultiIndex.notebookbar img,
 #table-Reference-Section-Reference #InsertFootnote.notebookbar img,
@@ -509,9 +503,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 /* Format Tab */
-#table-Format-Section.notebookbar {
-	margin-top: 15px;
-}
 
 /* Table Tab */
 
@@ -546,10 +537,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Review Tab */
 
-#table-ReviewTab {
-	margin-top: 10px;
-}
-
 #SpellingAndGrammarDialog.notebookbar img,
 #ThesaurusDialog.notebookbar img,
 #TrackChanges.notebookbar img,
@@ -563,14 +550,8 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 /* Help tab */
-#table-Help-Section {
-	margin-top: 30px;
-}
 
 /* File tab */
-#table-File-Section {
-	margin-top: 10px;
-}
 
 /* Draw tab */
 #table-Draw #table-box16 #table-first16.notebookbar,
@@ -617,10 +598,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 /* Data Tab */
-
-#table-DataTab {
-	margin-top: 10px;
-}
 
 #table-DataTab #table-ViewMenu3.notebookbar {
 	display: none;
