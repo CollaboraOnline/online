@@ -192,13 +192,21 @@ L.CanvasTilePainter = L.Class.extend({
 	_extendedPaneBounds: function (paneBounds) {
 		var extendedBounds = paneBounds.clone();
 		var halfExtraSize = this._osCanvasExtraSize / 2; // This is always an integer.
-		if (paneBounds.min.x) { // pane can move in x direction.
-			extendedBounds.min.x = Math.max(0, extendedBounds.min.x - halfExtraSize);
-			extendedBounds.max.x += halfExtraSize;
-		}
+		if (this._layer.getSplitPanesContext()) {
+			if (paneBounds.min.x) { // pane can move in x direction.
+				extendedBounds.min.x = Math.max(0, extendedBounds.min.x - halfExtraSize);
+				extendedBounds.max.x += halfExtraSize;
+			}
 
-		if (paneBounds.min.y) { // pane can move in y direction.
-			extendedBounds.min.y = Math.max(0, extendedBounds.min.y - halfExtraSize);
+			if (paneBounds.min.y) { // pane can move in y direction.
+				extendedBounds.min.y = Math.max(0, extendedBounds.min.y - halfExtraSize);
+				extendedBounds.max.y += halfExtraSize;
+			}
+		}
+		else {
+			extendedBounds.min.x -= halfExtraSize;
+			extendedBounds.max.x += halfExtraSize;
+			extendedBounds.min.y -= halfExtraSize;
 			extendedBounds.max.y += halfExtraSize;
 		}
 
@@ -270,7 +278,10 @@ L.CanvasTilePainter = L.Class.extend({
 
 	_paintSimple: function (tile, ctx) {
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
+		var halfExtraSize = this._osCanvasExtraSize / 2;
+		var extendedOffset = offset.add(new L.Point(halfExtraSize, halfExtraSize));
 		this._canvasCtx.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+		this._oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
 	},
 
 	paint: function(tile, ctx) {
