@@ -45,20 +45,6 @@ constexpr int COMMAND_RETRY_COUNT = 5;
 /// These are supposed to be testing the latter.
 namespace helpers
 {
-inline std::chrono::steady_clock::time_point& getTestStartTime()
-{
-    static auto TestStartTime = std::chrono::steady_clock::now();
-
-    return TestStartTime;
-}
-
-inline void resetTestStartTime() { getTestStartTime() = std::chrono::steady_clock::now(); }
-
-inline std::chrono::milliseconds timeSinceTestStartMs()
-{
-    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()
-                                                                 - getTestStartTime());
-}
 
 inline
 std::vector<char> genRandomData(const size_t size)
