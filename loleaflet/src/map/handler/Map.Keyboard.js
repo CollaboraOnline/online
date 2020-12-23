@@ -326,6 +326,11 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
+		if (this._map.stateChangeHandler._items['.uno:SlideMasterPage'] === 'true') {
+			ev.preventDefault();
+			return;
+		}
+
 		if (this._map.isPermissionEdit()) {
 			docLayer._resetPreFetching();
 
