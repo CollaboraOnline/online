@@ -332,7 +332,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 .unotoolbutton.notebookbar.has-label:not(.inline) img {
 	width: 32px !important;
 	height: 32px !important;
-	padding-left: 25%;
 }
 
 /* unobuttons with inline labels */
