@@ -9,6 +9,25 @@
 
 #include <Log.hpp>
 
+namespace helpers
+{
+inline std::chrono::steady_clock::time_point& getTestStartTime()
+{
+    static auto TestStartTime = std::chrono::steady_clock::now();
+
+    return TestStartTime;
+}
+
+inline void resetTestStartTime() { getTestStartTime() = std::chrono::steady_clock::now(); }
+
+inline std::chrono::milliseconds timeSinceTestStartMs()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()
+                                                                 - getTestStartTime());
+}
+
+} // namespace helpers
+
 //FIXME: use LOG_ macros and unify with the existing logging system.
 // Oh dear std::cerr and/or its re-direction is not
 // necessarily thread safe on Linux
