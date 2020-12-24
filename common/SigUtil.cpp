@@ -272,7 +272,7 @@ namespace SigUtil
             backtrace_symbols_fd(backtraceBuffer, numSlots, STDERR_FILENO);
         }
 #else
-        LOG_SYS("Backtrace not available on Android.");
+        LOG_INF("Backtrace not available on Android.");
 #endif
 
         if (std::getenv("LOOL_DEBUG"))

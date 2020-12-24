@@ -404,7 +404,7 @@ namespace
         caps = cap_get_proc();
         if (caps == nullptr)
         {
-            LOG_SFL("cap_get_proc() failed.");
+            LOG_SFL("cap_get_proc() failed");
             Log::shutdown();
             std::_Exit(1);
         }
@@ -416,14 +416,14 @@ namespace
         if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
-            LOG_SFL("cap_set_flag() failed.");
+            LOG_SFL("cap_set_flag() failed");
             Log::shutdown();
             std::_Exit(1);
         }
 
         if (cap_set_proc(caps) == -1)
         {
-            LOG_SFL("cap_set_proc() failed.");
+            LOG_SFL("cap_set_proc() failed");
             Log::shutdown();
             std::_Exit(1);
         }
@@ -2275,14 +2275,14 @@ void lokit_main(
             LOG_INF("chroot(\"" << jailPathStr << "\")");
             if (chroot(jailPathStr.c_str()) == -1)
             {
-                LOG_SFL("chroot(\"" << jailPathStr << "\") failed.");
+                LOG_SFL("chroot(\"" << jailPathStr << "\") failed");
                 Log::shutdown();
                 std::_Exit(EX_SOFTWARE);
             }
 
             if (chdir("/") == -1)
             {
-                LOG_SFL("chdir(\"/\") in jail failed.");
+                LOG_SFL("chdir(\"/\") in jail failed");
                 Log::shutdown();
                 std::_Exit(EX_SOFTWARE);
             }
@@ -2356,22 +2356,22 @@ void lokit_main(
         if (getrlimit(RLIMIT_AS, &rlim) == 0)
             LOG_INF("RLIMIT_AS is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
         else
-            LOG_SYS("Failed to get RLIMIT_AS.");
+            LOG_SYS("Failed to get RLIMIT_AS");
 
         if (getrlimit(RLIMIT_STACK, &rlim) == 0)
             LOG_INF("RLIMIT_STACK is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
         else
-            LOG_SYS("Failed to get RLIMIT_STACK.");
+            LOG_SYS("Failed to get RLIMIT_STACK");
 
         if (getrlimit(RLIMIT_FSIZE, &rlim) == 0)
             LOG_INF("RLIMIT_FSIZE is " << Util::getHumanizedBytes(rlim.rlim_max) << " (" << rlim.rlim_max << " bytes)");
         else
-            LOG_SYS("Failed to get RLIMIT_FSIZE.");
+            LOG_SYS("Failed to get RLIMIT_FSIZE");
 
         if (getrlimit(RLIMIT_NOFILE, &rlim) == 0)
             LOG_INF("RLIMIT_NOFILE is " << rlim.rlim_max << " files.");
         else
-            LOG_SYS("Failed to get RLIMIT_NOFILE.");
+            LOG_SYS("Failed to get RLIMIT_NOFILE");
 
         LOG_INF("Kit process for Jail [" << jailId << "] is ready.");
 

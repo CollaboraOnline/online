@@ -370,18 +370,18 @@ namespace Log
         }                                                                                          \
     } while (false)
 
-#define LOG_SYS(X)                                                                                 \
+/// Log an ERR entry with the given errno appended.
+#define LOG_SYS_ERRNO(ERRNO, X)                                                                    \
     do                                                                                             \
     {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.error())                                              \
-        {                                                                                          \
-            LOG_BODY_(log_, ERROR, "ERR",                                                          \
-                      X << " (" << Util::symbolicErrno(errno) << ": " << std::strerror(errno)      \
-                        << ')',                                                                    \
-                      true);                                                                       \
-        }                                                                                          \
+        const auto onrre = ERRNO; /* Save errno immediately while avoiding name clashes*/          \
+        LOG_ERR(X << " (" << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre) << ')');   \
     } while (false)
+
+/// Log an ERR entry with errno appended.
+/// NOTE: Must be called immediately after an API that sets errno.
+/// Use LOG_SYS_ERRNO to pass errno explicitly.
+#define LOG_SYS(X) LOG_SYS_ERRNO(errno, X)
 
 #define LOG_FTL(X)                                                                                 \
     do                                                                                             \
@@ -394,17 +394,13 @@ namespace Log
         }                                                                                          \
     } while (false)
 
+/// Log an FTL (fatal) entry with errno appended.
+/// NOTE: Must be called immediately after an API that sets errno.
 #define LOG_SFL(X)                                                                                 \
     do                                                                                             \
     {                                                                                              \
-        auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.error())                                              \
-        {                                                                                          \
-            LOG_BODY_(log_, FATAL, "FTL",                                                          \
-                      X << " (" << Util::symbolicErrno(errno) << ": " << std::strerror(errno)      \
-                        << ')',                                                                    \
-                      true);                                                                       \
-        }                                                                                          \
+        const auto onrre = errno; /* Save errno immediately while avoiding name clashes*/          \
+        LOG_FTL(X << " (" << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre) << ')');   \
     } while (false)
 
 #define LOG_CHECK(X)                                                                               \
