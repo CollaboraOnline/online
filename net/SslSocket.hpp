@@ -188,6 +188,8 @@ private:
     /// Handles the state of SSL after read or write.
     int handleSslState(const int rc)
     {
+        const auto last_errno = errno;
+
         assertCorrectThread();
 
         if (rc > 0)
@@ -234,7 +236,8 @@ private:
             if (errno != 0)
             {
                 // Posix API error, let the caller handle.
-                LOG_SYS("Socket #" << getFD() << " SSL error: SYSCALL (" << sslError << ").");
+                LOG_SYS_ERRNO(last_errno,
+                              "Socket #" << getFD() << " SSL error: SYSCALL (" << sslError << ')');
                 return rc;
             }
 
@@ -274,20 +277,25 @@ private:
                     }
                     else if (rc == -1)
                     {
-                        LOG_SYS("Socket #" << getFD() << " SSL BIO error: closed unexpectedly (-1).");
+                        LOG_SYS_ERRNO(last_errno,
+                                      "Socket #" << getFD()
+                                                 << " SSL BIO error: closed unexpectedly (-1)");
                         throw std::runtime_error("SSL Socket closed unexpectedly.");
                     }
                     else
                     {
-                        LOG_SYS("Socket #" << getFD() << " SSL BIO error: unknown (" << rc << ").");
-                        throw std::runtime_error("SSL BIO reported error [" + std::to_string(rc) + "].");
+                        LOG_SYS_ERRNO(last_errno, "Socket #" << getFD()
+                                                             << " SSL BIO error: unknown (" << rc
+                                                             << ')');
+                        throw std::runtime_error("SSL BIO reported error [" + std::to_string(rc)
+                                                 + ']');
                     }
                 }
                 else
                 {
                     char buf[512];
                     ERR_error_string_n(bioError, buf, sizeof(buf));
-                    LOG_SYS("Socket #" << getFD() << " SSL BIO error: " << buf);
+                    LOG_SYS_ERRNO(last_errno, "Socket #" << getFD() << " SSL BIO error: " << buf);
                     throw std::runtime_error(buf);
                 }
             }

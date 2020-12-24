@@ -678,7 +678,8 @@ bool ServerSocket::bind(Type type, int port)
     }
 
     if (rc)
-        LOG_SYS("Failed to bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6") << " port: " << port);
+        LOG_SYS("Failed to bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6")
+                                      << " port: " << port);
 
     return rc == 0;
 #else
@@ -734,7 +735,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
     }
     catch (const std::exception& ex)
     {
-        LOG_SYS("Failed to create client socket #" << rc << ". Error: " << ex.what());
+        LOG_ERR("Failed to create client socket #" << rc << ". Error: " << ex.what());
     }
 
     return nullptr;
@@ -835,7 +836,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
     }
     catch (const std::exception& ex)
     {
-        LOG_SYS("Failed to create client socket #" << rc << ". Error: " << ex.what());
+        LOG_ERR("Failed to create client socket #" << rc << ". Error: " << ex.what());
         return std::shared_ptr<Socket>(nullptr);
     }
 }

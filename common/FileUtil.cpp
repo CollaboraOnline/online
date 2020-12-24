@@ -158,7 +158,7 @@ namespace FileUtil
             oss << "Error while copying from " << anonymizeUrl(fromPath) << " to "
                 << anonymizeUrl(toPath) << ": " << ex.what();
             const std::string err = oss.str();
-            LOG_SYS(err);
+            LOG_ERR(err);
             close(from);
             close(to);
             unlink(toPath.c_str());
