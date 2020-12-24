@@ -28,7 +28,7 @@ public:
     {
     }
 
-    virtual void invokeTest() override
+    virtual void invokeWSDTest() override
     {
         UnitHTTPServerResponse response;
         UnitHTTPServerRequest request(response, "nonsense URI");

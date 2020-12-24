@@ -23,12 +23,12 @@ class UnitLargePaste : public UnitWSD
 public:
     UnitLargePaste();
 
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitLargePaste::UnitLargePaste() {}
 
-void UnitLargePaste::invokeTest()
+void UnitLargePaste::invokeWSDTest()
 {
     const char testname[] = "UnitLargePaste";
 

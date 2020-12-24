@@ -86,7 +86,7 @@ public:
             exitTest(TestResult::Ok);
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         constexpr char testName[] = "UnitOAuth";
 

@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#define TST_LOG_REDIRECT
 #include <Unit.hpp>
 #include <wsd/LOOLWSD.hpp>
 
@@ -48,7 +49,7 @@ public:
         config.setBool("ssl.enable", true);
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         // this method gets called every few seconds.
         if (_workerStarted)
