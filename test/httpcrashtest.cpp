@@ -135,20 +135,14 @@ void HTTPCrashTest::testCrashKit()
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
         TST_LOG("Allowing time for kits to spawn and connect to wsd to get cleanly killed");
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
 
         TST_LOG("Killing loolkit instances.");
 
         killLoKitProcesses();
         countLoolKitProcesses(0);
 
-        // We expect the client connection to close.
-        // In the future we might restore the kit, but currently we don't.
-        TST_LOG("Reading after kill.");
-
-        // Drain the socket.
-        getResponseMessage(socket, "", testname, 1000);
-
+        TST_LOG("Reading the error code from the socket.");
         std::string message;
         const int statusCode = getErrorCode(socket, message, testname);
         LOK_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::WS_ENDPOINT_GOING_AWAY), statusCode);
