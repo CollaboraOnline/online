@@ -415,13 +415,9 @@ class CanvasSectionContainer {
 	}
 
 	onResize (e: Event) {
+		// canvas.style.width, canvas.width and height counterparts are handled outside for now.
+		// TODO: Move canvas.width and canvas.height handling here, keep canvas.style.width and canvas.style.height handling outside.
 		this.clearMousePositions();
-		var width = window.innerWidth - 10;
-		var height = window.innerHeight - 100;
-		this.canvas.style.width = width + 'px';
-		this.canvas.style.height = height + 'px';
-		this.canvas.width = (width) * this.dpiScale;
-		this.canvas.height = (height) * this.dpiScale;
 		this.right = this.canvas.width;
 		this.bottom = this.canvas.height;
 		for (var i: number = 0; i < this.sections.length; i++) {
