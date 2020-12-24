@@ -27,6 +27,12 @@ $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10
 	done
 endif
 
+SRC_TS = $(wildcard src/layer/tile/*.ts)
+SRC_TS_JS = $(patsubst src/layer/tile/%.ts,$(DIST_FOLDER)/src/layer/tile/%.js,$(SRC_TS))
+
+dist/src/layer/tile/%.js: src/layer/tile/%.ts
+	$(srcdir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
+
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
 JQUERY_LIGHTNESS_DIST_IMAGES = $(patsubst $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_LIGHTNESS_IMAGES))
@@ -199,6 +205,7 @@ LOLEAFLET_JS =\
 	src/map/Map.js \
 	src/map/Clipboard.js \
 	src/layer/Layer.js \
+	src/layer/tile/CanvasSectionContainer.js \
 	src/layer/tile/GridLayer.js \
 	src/layer/tile/TileLayer.js \
 	src/layer/tile/CanvasTileLayer.js \
@@ -409,6 +416,7 @@ $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 build-loleaflet: \
 	$(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
+	$(SRC_TS_JS) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(LOLEAFLET_IMAGES_CUSTOM_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
