@@ -21,10 +21,10 @@ class LOOLWebSocket;
 class UnitPaste : public UnitWSD
 {
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
-void UnitPaste::invokeTest()
+void UnitPaste::invokeWSDTest()
 {
     const char testname[] = "UnitPaste";
 

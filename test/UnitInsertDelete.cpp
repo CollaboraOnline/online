@@ -81,7 +81,7 @@ class UnitInsertDelete : public UnitWSD
     TestResult testCursorPosition();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitInsertDelete::testInsertDelete()
@@ -305,7 +305,7 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
     return TestResult::Ok;
 }
 
-void UnitInsertDelete::invokeTest()
+void UnitInsertDelete::invokeWSDTest()
 {
     UnitBase::TestResult result = testInsertDelete();
     if (result != TestResult::Ok)
