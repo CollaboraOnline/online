@@ -3,6 +3,7 @@
     "compilerOptions": {
       "target": "es5",
       "module": "commonjs",
+      "lib": ["dom", "es2016"],
       "sourceMap": false,
       "moduleResolution": "classic",
       "noImplicitAny": true,
@@ -10,9 +11,6 @@
       "preserveConstEnums": false,
       "watch": false
     },
-    "files": [
-      "admin/src/ModalDialogCreator.ts"
-    ],
     "exclude": [
       "node_modules"
     ]
