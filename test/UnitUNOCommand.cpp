@@ -63,7 +63,7 @@ class UnitUNOCommand : public UnitWSD
     TestResult testStateUnoCommandImpress();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitUNOCommand::testStateUnoCommandWriter()
@@ -255,7 +255,7 @@ UnitBase::TestResult UnitUNOCommand::testStateUnoCommandImpress()
     return TestResult::Ok;
 }
 
-void UnitUNOCommand::invokeTest()
+void UnitUNOCommand::invokeWSDTest()
 {
     UnitBase::TestResult result = testStateUnoCommandWriter();
     if (result != TestResult::Ok)

@@ -63,11 +63,11 @@ public:
         return false;
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         constexpr char testName[] = "UnitWOPIVersionRestore";
 
-        LOG_TRC("invokeTest " << (int)_phase);
+        LOG_TRC("invokeWSDTest " << (int)_phase);
         switch (_phase)
         {
             case Phase::Load:

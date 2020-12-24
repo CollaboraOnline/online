@@ -56,7 +56,7 @@ class UnitSession : public UnitWSD
     TestResult testSlideShow();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitSession::testBadRequest()
@@ -239,7 +239,7 @@ UnitBase::TestResult UnitSession::testSlideShow()
     return TestResult::Ok;
 }
 
-void UnitSession::invokeTest()
+void UnitSession::invokeWSDTest()
 {
     UnitBase::TestResult result = testBadRequest();
     if (result != TestResult::Ok)

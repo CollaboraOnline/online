@@ -29,7 +29,7 @@ class UnitLoadTorture : public UnitWSD
 
 public:
     UnitLoadTorture();
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 int UnitLoadTorture::loadTorture(const std::string& testname, const std::string& docName,
@@ -201,7 +201,7 @@ UnitLoadTorture::UnitLoadTorture()
     setTimeout(timeout_minutes * 60 * 1000);
 }
 
-void UnitLoadTorture::invokeTest()
+void UnitLoadTorture::invokeWSDTest()
 {
     UnitBase::TestResult result = testLoadTortureODT();
     if (result != TestResult::Ok)

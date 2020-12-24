@@ -426,7 +426,7 @@ public:
     }
 
     // Runs tests sequentially in _tests
-    virtual void invokeTest()
+    virtual void invokeWSDTest()
     {
         if (!_isTestRunning)
         {

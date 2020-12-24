@@ -218,7 +218,7 @@ public:
         }
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         testChunks();
         testContinue();

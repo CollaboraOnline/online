@@ -216,7 +216,7 @@ public:
         return clipData.str();
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         std::string testname = "copypaste";
 

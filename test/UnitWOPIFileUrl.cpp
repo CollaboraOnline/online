@@ -254,7 +254,7 @@ public:
         return true;
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         switch (_phase)
         {

@@ -35,7 +35,7 @@ class UnitHosting : public UnitWSD
     TestResult testCapabilities();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitHosting::testDiscovery()
@@ -130,7 +130,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
     return TestResult::Ok;
 }
 
-void UnitHosting::invokeTest()
+void UnitHosting::invokeWSDTest()
 {
     UnitBase::TestResult result = testDiscovery();
     if (result != TestResult::Ok)

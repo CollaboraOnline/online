@@ -68,7 +68,7 @@ class UnitCalc : public UnitWSD
     TestResult testOptimalResize();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitCalc::testCalcEditRendering()
@@ -454,7 +454,7 @@ UnitBase::TestResult UnitCalc::testOptimalResize()
     return TestResult::Ok;
 }
 
-void UnitCalc::invokeTest()
+void UnitCalc::invokeWSDTest()
 {
     UnitBase::TestResult result = testCalcEditRendering();
     if (result != TestResult::Ok)

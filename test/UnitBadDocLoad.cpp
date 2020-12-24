@@ -33,7 +33,7 @@ class UnitBadDocLoad : public UnitWSD
     TestResult testMaxViews();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
@@ -247,7 +247,7 @@ UnitBase::TestResult UnitBadDocLoad::testMaxViews()
     return TestResult::Ok;
 }
 
-void UnitBadDocLoad::invokeTest()
+void UnitBadDocLoad::invokeWSDTest()
 {
     UnitBase::TestResult result = testBadDocLoadFail();
     if (result != TestResult::Ok)
