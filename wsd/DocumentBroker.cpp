@@ -396,7 +396,9 @@ void DocumentBroker::pollThread()
         if (SigUtil::getShutdownRequestFlag() || _closeRequest)
         {
             const std::string reason = SigUtil::getShutdownRequestFlag() ? "recycling" : _closeReason;
-            LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] for " << reason);
+            LOG_INF("Autosaving DocumentBroker for docKey ["
+                    << getDocKey() << "] for " << reason
+                    << ". PossiblyModified: " << isPossiblyModified());
             if (!autoSave(isPossiblyModified()))
             {
                 LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey() << "].");
@@ -1011,8 +1013,10 @@ void DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool su
             "]. Success: " << success << ", result: " << result << ", force: " << force);
     if (!success && result == "unmodified" && !isRename && !force)
     {
-        LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
+        LOG_DBG("Skipped uploading as document [" << _docKey << "] was not modified.");
         _lastSaveTime = std::chrono::steady_clock::now();
+        // Modified if we had some activity after we sent the save request.
+        setModified(_lastSaveRequestTime < _lastActivityTime);
         broadcastSaveResult(true, "unmodified");
         _poll->wakeup();
         return;
@@ -2228,6 +2232,7 @@ void DocumentBroker::setModified(const bool value)
 
     // Set the X-LOOL-WOPI-IsModifiedByUser header flag sent to storage.
     _storage->setUserModified(value);
+    LOG_TRC("Modified state set to " << value << " for Doc [" << _docId << ']');
 }
 
 bool DocumentBroker::isInitialSettingSet(const std::string& name) const
