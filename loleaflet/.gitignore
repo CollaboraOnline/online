@@ -8,6 +8,8 @@ index.html
 bower.json
 component.json
 
+src/layer/tile/CanvasSectionContainer.js
+
 _site
 dist/*.js
 dist/*.map
