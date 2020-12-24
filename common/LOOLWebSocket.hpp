@@ -162,19 +162,24 @@ public:
         std::ostringstream result;
         switch (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
         {
-#define CASE(x) case Poco::Net::WebSocket::FRAME_OP_##x: result << #x; break
-        CASE(CONT);
-        CASE(TEXT);
-        CASE(BINARY);
-        CASE(CLOSE);
-        CASE(PING);
-        CASE(PONG);
+#define CASE(x)                                                                                    \
+    case Poco::Net::WebSocket::FRAME_OP_##x:                                                       \
+        result << #x << " (0x" << std::hex << flags << ')';                                        \
+        break
+            CASE(CONT);
+            CASE(TEXT);
+            CASE(BINARY);
+            CASE(CLOSE);
+            CASE(PING);
+            CASE(PONG);
 #undef CASE
-        default:
-            result << Poco::format("%#x", flags);
-            break;
+            default:
+                result << "UNKNOWN (0x" << std::hex << flags << ')';
+                break;
         }
-        result << ' ' << std::setw(3) << length << " bytes";
+
+        result << ' ' << std::setw(3) << length << " bytes"
+               << (flags & Poco::Net::WebSocket::FRAME_FLAG_FIN ? " (FIN)" : "");
 
         if (length > 0 &&
             ((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_TEXT ||
