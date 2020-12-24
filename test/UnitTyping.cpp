@@ -287,7 +287,7 @@ public:
         return res;
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         // this method gets called every few seconds.
         if (_workerStarted)

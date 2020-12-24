@@ -72,7 +72,7 @@ class UnitRenderShape : public UnitWSD
     TestResult testRenderShapeSelectionWriterImage();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionImpress()
@@ -152,7 +152,7 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionWriterImage()
     return TestResult::Ok;
 }
 
-void UnitRenderShape::invokeTest()
+void UnitRenderShape::invokeWSDTest()
 {
     UnitBase::TestResult result = testRenderShapeSelectionImpress();
     if (result != TestResult::Ok)

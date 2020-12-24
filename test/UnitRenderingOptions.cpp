@@ -21,10 +21,10 @@ class LOOLWebSocket;
 class UnitRenderingOptions : public UnitWSD
 {
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
-void UnitRenderingOptions::invokeTest()
+void UnitRenderingOptions::invokeWSDTest()
 {
     const char testname[] = "UnitRenderingOptions";
 

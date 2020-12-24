@@ -75,7 +75,7 @@ public:
         return response.getStatus() == Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK;
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         if (_workerStarted)
             return;

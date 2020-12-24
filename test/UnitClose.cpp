@@ -48,7 +48,7 @@ class UnitClose : public UnitWSD
 
 public:
     UnitClose();
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitClose::testCloseAfterClose()
@@ -214,7 +214,7 @@ UnitClose::UnitClose()
     setTimeout(timeout_minutes * 60 * 1000);
 }
 
-void UnitClose::invokeTest()
+void UnitClose::invokeWSDTest()
 {
     UnitBase::TestResult result = testCloseAfterClose();
     if (result != TestResult::Ok)

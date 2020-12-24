@@ -45,7 +45,7 @@ public:
         exitTest(TestResult::Ok);
     }
 
-    virtual void invokeTest()
+    virtual void invokeWSDTest()
     {
         switch (_phase)
         {

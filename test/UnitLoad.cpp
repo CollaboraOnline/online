@@ -53,7 +53,7 @@ class UnitLoad : public UnitWSD
     TestResult testReload();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitLoad::testConnectNoLoad()
@@ -180,7 +180,7 @@ UnitBase::TestResult UnitLoad::testReload()
     return TestResult::Ok;
 }
 
-void UnitLoad::invokeTest()
+void UnitLoad::invokeWSDTest()
 {
     // FIXME fails on Jenkins for some reason.
 #if 0

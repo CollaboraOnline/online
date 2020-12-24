@@ -113,7 +113,7 @@ class UnitEachView : public UnitWSD
 
 public:
     UnitEachView();
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitEachView::testInvalidateViewCursor()
@@ -163,7 +163,7 @@ UnitEachView::UnitEachView()
     setTimeout(240 * 1000);
 }
 
-void UnitEachView::invokeTest()
+void UnitEachView::invokeWSDTest()
 {
     UnitBase::TestResult result = testInvalidateViewCursor();
     if (result != TestResult::Ok)

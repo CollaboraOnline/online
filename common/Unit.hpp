@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <test/testlog.hpp>
+
 #include <atomic>
 #include <cassert>
 #include <memory>
@@ -271,8 +273,28 @@ public:
 
     /// Manipulate and modify the configuration before any usage.
     virtual void configure(Poco::Util::LayeredConfiguration& /* config */);
-    /// Main-loop reached, time for testing
-    virtual void invokeTest() {}
+
+    /// Main-loop reached, time for testing.
+    /// Invoked from loolwsd's main thread.
+    void invokeTest()
+    {
+        try
+        {
+            // Invoke the test, expect no exceptions.
+            invokeWSDTest();
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_TST("ERROR: unexpected exception while invoking WSD Test: " << ex.what());
+            exitTest(TestResult::Failed);
+        }
+        catch (...)
+        {
+            LOG_TST("ERROR: unexpected unknown exception while invoking WSD Test");
+            exitTest(TestResult::Failed);
+        }
+    }
+
     /// When a new child kit process reports
     virtual void newChild(WebSocketHandler &/* socket */) {}
     /// Intercept createStorage
@@ -332,6 +354,9 @@ public:
     virtual void onTileCacheSubscribe(int /*part*/, int /*width*/, int /*height*/,
                                       int /*tilePosX*/, int /*tilePosY*/,
                                       int /*tileWidth*/, int /*tileHeight*/) {}
+private:
+    /// The actual test implementation.
+    virtual void invokeWSDTest() {}
 };
 
 /// Derive your Kit unit test / hooks from me.

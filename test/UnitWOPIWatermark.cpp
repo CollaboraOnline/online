@@ -107,7 +107,7 @@ public:
         return false;
     }
 
-    void invokeTest() override
+    void invokeWSDTest() override
     {
         constexpr char testName[] = "UnitWOPIWatermark";
 
