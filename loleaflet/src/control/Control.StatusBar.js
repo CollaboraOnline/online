@@ -57,7 +57,7 @@ L.Control.StatusBar = L.Control.extend({
 	toLocalePattern: function(pattern, regex, text, sub1, sub2) {
 		var matches = new RegExp(regex, 'g').exec(text);
 		if (matches) {
-			text = pattern.toLocaleString().replace(sub1, parseInt(matches[1].replace(',','')).toLocaleString(String.locale)).replace(sub2, parseInt(matches[2].replace(',','')).toLocaleString(String.locale));
+			text = pattern.toLocaleString().replace(sub1, parseInt(matches[1].replace(/,/g,'')).toLocaleString(String.locale)).replace(sub2, parseInt(matches[2].replace(/,/g,'')).toLocaleString(String.locale));
 		}
 		return text;
 	},
