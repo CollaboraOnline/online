@@ -28,7 +28,7 @@ class UnitPasswordProtected : public UnitWSD
     TestResult testPasswordProtectedBinaryMSOfficeDocument();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithoutPassword()
@@ -192,7 +192,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedBinaryMSOfficeD
     return TestResult::Ok;
 }
 
-void UnitPasswordProtected::invokeTest()
+void UnitPasswordProtected::invokeWSDTest()
 {
     UnitBase::TestResult result = testPasswordProtectedDocumentWithoutPassword();
     if (result != TestResult::Ok)

@@ -23,12 +23,12 @@ class UnitTiffLoad : public UnitWSD
 public:
     UnitTiffLoad();
 
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitTiffLoad::UnitTiffLoad() {}
 
-void UnitTiffLoad::invokeTest()
+void UnitTiffLoad::invokeWSDTest()
 {
     const char testname[] = "UnitTiffLoad";
 

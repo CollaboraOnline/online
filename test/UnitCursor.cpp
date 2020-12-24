@@ -115,7 +115,7 @@ class UnitCursor : public UnitWSD
     TestResult testInsertAnnotationCalc();
 
 public:
-    void invokeTest() override;
+    void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitCursor::testMaxColumn()
@@ -378,7 +378,7 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationCalc()
     return TestResult::Ok;
 }
 
-void UnitCursor::invokeTest()
+void UnitCursor::invokeWSDTest()
 {
     UnitBase::TestResult result = testMaxColumn();
     if (result != TestResult::Ok)
