@@ -374,8 +374,6 @@ L.CanvasTilePainter = L.Class.extend({
 			!splitPosChanged &&
 			!scaleChanged);
 
-		//console.debug('Tile size: ' + this._layer._getTileSize());
-
 		if (skipUpdate)
 			return;
 
@@ -428,14 +426,9 @@ L.CanvasTilePainter = L.Class.extend({
 
 					var key = coords.key();
 					var tile = this._layer._tiles[key];
-					//var invalid = tile && tile._invalidCount && tile._invalidCount > 0;
 					if (tile && tile.loaded) {
 						this.paint(tile, ctx);
 					}
-					/*else
-						console.log('missing tile at ' + i + ', ' + j + ' ' +
-							    tile + ' ' + (tile && tile.loaded) + ' ' +
-							    (tile ? tile._invalidCount : -42) + ' ' + invalid); */
 				}
 			}
 		}
