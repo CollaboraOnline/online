@@ -237,17 +237,23 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& tes
     ws.setReceiveTimeout(Poco::Timespan(5000000));
     do
     {
+        // Read next WS frame and log it.
         bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags);
-        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer.begin(), bytes, flags));
-        std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
     while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
 
     if (bytes > 0)
     {
+        TST_LOG("Got Close Frame: " << LOOLWebSocket::getAbbreviatedFrameDump(buffer.begin(), bytes,
+                                                                              flags));
         Poco::MemoryBinaryReader reader(buffer, Poco::BinaryReader::NETWORK_BYTE_ORDER);
         reader >> statusCode;
-        message.append(buffer.begin() + 2, bytes - 2);
+        if (reader.available() > 0)
+        {
+            // An optional message after the status code.
+            message.append(buffer.begin() + bytes - reader.available(), reader.available());
+        }
     }
 
     return statusCode;
