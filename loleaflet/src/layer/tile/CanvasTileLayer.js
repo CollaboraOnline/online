@@ -3,6 +3,8 @@
  * L.CanvasTileLayer is a L.TileLayer with canvas based rendering.
  */
 
+/* global L CanvasSectionContainer */
+
 L.TileCoordData = L.Class.extend({
 
 	initialize: function (left, top, zoom, part) {
@@ -360,10 +362,6 @@ L.CanvasTilePainter = L.Class.extend({
 		var partChanged = (part !== this._lastPart);
 
 		var mapSizeChanged = !newMapSize.equals(this._lastMapSize);
-		// To avoid flicker, only resize the canvas element if width or height of the map increases.
-		var newSize = new L.Point(Math.max(newMapSize.x, this._lastSize ? this._lastSize.x : 0),
-					  Math.max(newMapSize.y, this._lastSize ? this._lastSize.y : 0));
-		var resizeCanvas = !this._lastSize || !newSize.equals(this._lastSize);
 
 		var topLeftChanged = this._topLeft === undefined || !newTopLeft.equals(this._topLeft);
 		var splitPosChanged = !newSplitPos.equals(this._splitPos);
@@ -372,7 +370,7 @@ L.CanvasTilePainter = L.Class.extend({
 			!topLeftChanged &&
 			!zoomChanged &&
 			!partChanged &&
-			!resizeCanvas &&
+			!mapSizeChanged &&
 			!splitPosChanged &&
 			!scaleChanged);
 
@@ -382,8 +380,8 @@ L.CanvasTilePainter = L.Class.extend({
 			return;
 
 		var ctx;
-		if (resizeCanvas || scaleChanged) {
-			this._setCanvasSize(newSize.x, newSize.y);
+		if (mapSizeChanged || scaleChanged) {
+			this._setCanvasSize(newMapSize.x, newMapSize.y);
 		}
 		else if (mapSizeChanged && topLeftChanged) {
 			ctx = this._paintContext();
