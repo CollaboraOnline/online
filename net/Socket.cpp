@@ -75,8 +75,9 @@ bool StreamSocket::simulateSocketError(bool)
         errno = EAGAIN;
         return true;
     }
-    else
-        return false;
+
+    LOG_DBG("Simulating socket error.");
+    return false;
 }
 
 #if ENABLE_SSL
@@ -87,8 +88,9 @@ bool SslStreamSocket::simulateSocketError(bool read)
         _sslWantsTo = read ? SslWantsTo::Read : SslWantsTo::Write;
         return true;
     }
-    else
-        return false;
+
+    LOG_DBG("Simulating socket error.");
+    return false;
 }
 #endif
 #endif
