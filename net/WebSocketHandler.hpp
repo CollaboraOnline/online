@@ -620,7 +620,7 @@ protected:
     /// 0 for closed/invalid socket, and -1 for other errors.
     int sendFrame(const std::shared_ptr<StreamSocket>& socket,
                   const char* data, const uint64_t len,
-                  unsigned char flags, const bool flush = true) const
+                  unsigned char flags, bool flush = true) const
     {
         if (!socket || data == nullptr || len == 0)
             return -1;
@@ -644,19 +644,56 @@ protected:
 
         // Return the number of bytes we wrote to the *buffer*.
         const size_t size = out.size() - oldSize;
-
-        if (flush)
-            socket->writeOutgoingData();
 #else
         // We ignore the flush parameter and always flush in the MOBILEAPP case because there is no
         // WebSocket framing, we put the messages as such into the FakeSocket queue.
-
-        (void) flush;
+        flush = true;
         out.append(data, len);
         const size_t size = out.size();
-
-        socket->writeOutgoingData();
 #endif
+
+        if (flush || _shuttingDown)
+        {
+            socket->writeOutgoingData();
+
+            // Retry if we are shutting down and failed.
+            // This is particularly relevant when we simulate socket error
+            // during unit-tests. Dropping WS frames results in random test failures.
+            // But more important is to flush the data we have before closing the socket.
+            // There is a FIXME item in Session::shutdown specifically to address this case.
+            // When we terminte a client's connection in DocumentBroker::finalRemoveSession,
+            // we send the close frame and close the socket via Socket::closeConnection(),
+            // which is called immediately after *this* function (see shutdown() above).
+            // So, a common scenario is when we want to shutdown all clients. The stack
+            // trace looks like this:
+            //
+            // WebSocketHandler::sendFrame at ./net/WebSocketHandler.hpp:678 (this function)
+            // WebSocketHandler::sendCloseFrame at ./net/WebSocketHandler.hpp:149
+            // WebSocketHandler::shutdown at ./net/WebSocketHandler.hpp:175
+            // WebSocketHandler::shutdown at ./net/WebSocketHandler.hpp:155
+            // Session::shutdown at common/Session.cpp:235
+            // Session::shutdownGoingAway at ./common/Session.hpp:152 (this will close the socket)
+            // DocumentBroker::shutdownClients at wsd/DocumentBroker.cpp:2386
+            // DocumentBroker::terminateChild at wsd/DocumentBroker.cpp:2421
+            //
+            // The proper fix is to flag the socket(s) for shutdown, but continue
+            // polling until we completly flush the buffered data, then we close
+            // the socket in question. This isn't possible in the above scenario,
+            // and a proper fix is to modify DocumentBroker's poll to take this
+            // flushing into account (note that currently terminateChild is called
+            // *after* the poll loop exists). This will be done in a follow up later.
+            // For now, we just do a second write, and hope for the best.
+            if (_shuttingDown && !out.empty())
+            {
+                socket->writeOutgoingData();
+                if (!out.empty())
+                {
+                    LOG_WRN("Socket #"
+                            << socket->getFD() << " is shutting down but " << out.size()
+                            << " bytes couldn't be flushed and still remain in the output buffer.");
+                }
+            }
+        }
 
         return size;
     }
