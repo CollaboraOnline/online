@@ -97,7 +97,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
                     }
                     else
                     {
-                        LOG_ERR("Unit test timeout");
+                        LOG_ERR("Unit test timeout after " << Global->_timeoutMilliSeconds);
                         Global->timeout();
                     }
                     TimeoutThreadRunning = false;
@@ -217,7 +217,8 @@ void UnitBase::exitTest(TestResult result)
 
 void UnitBase::timeout()
 {
-    if (isUnitTesting())
+    // Don't timeout if we had already finished.
+    if (isUnitTesting() && !_setRetValue)
     {
         LOG_ERR("Timed out waiting for unit test to complete");
         exitTest(TestResult::TimedOut);
