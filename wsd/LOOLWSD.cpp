@@ -4014,7 +4014,12 @@ int LOOLWSD::innerMain()
 
         // Unit test timeout
         if (timeSinceStartMs > UnitWSD::get().getTimeoutMilliSeconds())
+        {
+            LOG_ERR("Test exceeded its time limit of " << UnitWSD::get().getTimeoutMilliSeconds()
+                                                       << ". It's been running for "
+                                                       << timeSinceStartMs);
             UnitWSD::get().timeout();
+        }
 
 #if ENABLE_DEBUG && !MOBILEAPP
         if (careerSpanMs > std::chrono::milliseconds::zero() && timeSinceStartMs > careerSpanMs)
