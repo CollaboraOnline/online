@@ -545,6 +545,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._painter = new L.CanvasTilePainter(this);
 		this._container.style.position = 'absolute';
 
+		this._sectionContainer = new CanvasSectionContainer(this._canvas);
+		this._addTilesSection();
+
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
 		// Using L.CanvasTilePainter's own requestAnimationFrame loop to do the updates in that case does not perform well.
 		if (window.mode.isMobile() || window.mode.isTablet()) {
@@ -572,6 +575,39 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			L.DomUtil.setPosition(tilePane, new L.Point(-mapPanePos.x , -mapPanePos.y));
 		}
 	},
+
+	_addTilesSection: function () {
+		var that = this;
+		var added = this._sectionContainer.addSection({
+			name: 'tiles',
+			anchor: 'top left',
+			position: [250 * that._dpiScale, 250 * that._dpiScale], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
+			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
+			expand: 'top left bottom right', // Expand to all directions.
+			drawingOrder: 1,
+			zIndex: 1,
+			interactable: true,
+			myProperties: { docLayer: that },
+			onMouseMove: function () { },
+			onMouseDown: function () {},
+			onMouseUp: function () {},
+			onClick: function () {},
+			onDoubleClick: function () {},
+			onMouseWheel: function () {},
+			onLongPress: function () {},
+			onMultiTouchStart: function () {},
+			onMultiTouchMove: function () {},
+			onMultiTouchEnd: function () {},
+			onResize: function () {},
+			onNewDocumentTopLeft: function () {},
+			onDraw: function () {}
+		});
+
+		if (added) {
+			console.log('test');
+		}
+	},
+
 
 	_updateRenderBackground: function() {
 		var that = this;

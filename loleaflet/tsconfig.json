@@ -2,7 +2,7 @@
   "compileOnSave": false,
     "compilerOptions": {
       "target": "es5",
-      "module": "commonjs",
+      "module": "none",
       "lib": ["dom", "es2016"],
       "sourceMap": false,
       "moduleResolution": "classic",
