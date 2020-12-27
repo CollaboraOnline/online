@@ -38,6 +38,9 @@
 
 // Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
 constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
+constexpr std::chrono::microseconds WebSocketHandler::InitialPingDelayMicroS;
+constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
+
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
@@ -578,9 +581,6 @@ void SocketDisposition::execute()
         _toPoll = nullptr;
     }
 }
-
-const int WebSocketHandler::InitialPingDelayMicroS = 25 * 1000;
-const int WebSocketHandler::PingFrequencyMicroS = 18 * 1000 * 1000;
 
 void WebSocketHandler::dumpState(std::ostream& os)
 {

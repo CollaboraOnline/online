@@ -45,8 +45,8 @@ protected:
         static constexpr unsigned char Mask = 0x80;
     };
 
-    static const int InitialPingDelayMicroS;
-    static const int PingFrequencyMicroS;
+    static constexpr std::chrono::microseconds InitialPingDelayMicroS = std::chrono::milliseconds(25);
+    static constexpr std::chrono::microseconds PingFrequencyMicroS = std::chrono::seconds(18);
 
 public:
     /// Perform upgrade ourselves, or select a client web socket.
@@ -423,9 +423,10 @@ public:
 #if !MOBILEAPP
         if (!_isClient)
         {
-            const int64_t timeSincePingMicroS =
-                std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime).count();
-            timeoutMaxMicroS = std::min(timeoutMaxMicroS, PingFrequencyMicroS - timeSincePingMicroS);
+            const auto timeSincePingMicroS
+                = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime);
+            timeoutMaxMicroS
+                = std::min(timeoutMaxMicroS, (PingFrequencyMicroS - timeSincePingMicroS).count());
         }
 #endif
         int events = POLLIN;
@@ -482,8 +483,8 @@ private:
         if (_isClient)
             return;
 
-        const int64_t timeSincePingMicroS =
-            std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime).count();
+        const auto timeSincePingMicroS
+            = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime);
         if (timeSincePingMicroS >= PingFrequencyMicroS)
         {
             const std::shared_ptr<StreamSocket> socket = _socket.lock();
