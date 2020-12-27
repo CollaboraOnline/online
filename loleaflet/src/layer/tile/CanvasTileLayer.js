@@ -36,7 +36,7 @@ L.TileCoordData.parseKey = function (keyString) {
 	return new L.TileCoordData(+k[0], +k[1], +k[2], +k[3]);
 };
 
-L.CanvasTilePainter = L.Class.extend({
+L.TileSectionManager = L.Class.extend({
 
 	initialize: function (layer) {
 		this._layer = layer;
@@ -542,14 +542,14 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 
 		this._canvas = L.DomUtil.create('canvas', '', this._canvasContainer);
-		this._painter = new L.CanvasTilePainter(this);
+		this._painter = new L.TileSectionManager(this);
 		this._container.style.position = 'absolute';
 
 		this._sectionContainer = new CanvasSectionContainer(this._canvas);
 		this._addTilesSection();
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
-		// Using L.CanvasTilePainter's own requestAnimationFrame loop to do the updates in that case does not perform well.
+		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this._map.on('move', this._painter.update, this._painter);
 			this._map.on('moveend', function () {
