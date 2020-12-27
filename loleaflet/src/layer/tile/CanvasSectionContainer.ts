@@ -219,7 +219,7 @@ class CanvasSectionContainer {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].onNewDocumentTopLeft(this.getDocumentTopLeft());
 		}
-		this.drawSections();
+		//this.drawSections();
 	}
 
 	requestReDraw() {
@@ -768,8 +768,8 @@ class CanvasSectionContainer {
 			newSection.boundToSection = parentSectionName;
 
 			this.sections.push(newSection);
-			this.reNewAllSections(false);
 			newSection.onInitialize();
+			this.reNewAllSections(false);
 			this.drawSections();
 
 			return true;
