@@ -403,7 +403,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 #ControlCodes.notebookbar {
-	margin-left: 35px !important;
+	margin-left: 62px !important;
 }
 
 #fontnamecombobox.notebookbar ~ .select2 {
@@ -424,7 +424,8 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 #table-GroupB19 #table-GroupB93.notebookbar {
-	margin-left: -60px;
+	margin-left: -84px;
+	margin-bottom: -8px !important;
 }
 
 #table-stylescontainer #style1,
