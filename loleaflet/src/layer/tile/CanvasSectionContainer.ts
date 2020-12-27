@@ -51,6 +51,9 @@
 	* onMultiTouchEnd
 	* onLongPress (available as touch event)
 	* onMouseWheel
+
+	parentSectionName property (parameter of addSection): New section is added and its size and myTopLeft properties are mirrored from its parent section.
+		All other properties and behaviours are the same with any section.
 */
 
 // This class will be used internally by CanvasSectionContainer.
@@ -61,6 +64,7 @@ class CanvasSectionObject {
 	containerObject: CanvasSectionContainer = null;
 	dpiScale: number = null;
 	name: string = null;
+	boundToSection: string = null;
 	anchor: Array<string> = new Array(0);
 	position: Array<number> = new Array(0);
 	size: Array<number> = new Array(0);
@@ -69,6 +73,7 @@ class CanvasSectionObject {
 	zIndex: number = null;
 	interactable: boolean = true;
 	myProperties: any = {};
+	onInitialize: Function; // Paramaters: null (use myProperties).
 	onMouseMove: Function; // Parameters: Point [x, y], DragDistance [x, y] (null when not dragging)
 	onMouseDown: Function; // Parameters: Point [x, y]
 	onMouseUp: Function; // Parameters: Point [x, y]
@@ -93,6 +98,7 @@ class CanvasSectionObject {
 		this.zIndex = options.zIndex;
 		this.interactable = options.interactable;
 		this.myProperties = options.myProperties;
+		this.onInitialize = options.onInitialize;
 		this.onMouseMove = options.onMouseMove;
 		this.onMouseDown = options.onMouseDown;
 		this.onMouseUp = options.onMouseUp;
@@ -137,6 +143,7 @@ class CanvasSectionContainer {
 	constructor (canvasDOMElement: HTMLCanvasElement) {
 		this.canvas = canvasDOMElement;
 		this.context = canvasDOMElement.getContext('2d');
+		this.context.setTransform(1,0,0,1,0,0);
 		this.canvas.onmousemove = this.onMouseMove.bind(this)
 		this.canvas.onmousedown = this.onMouseDown.bind(this);
 		this.canvas.onmouseup = this.onMouseUp.bind(this);
@@ -148,7 +155,6 @@ class CanvasSectionContainer {
 		this.canvas.ontouchmove = this.onTouchMove.bind(this);
 		this.canvas.ontouchend = this.onTouchEnd.bind(this);
 		this.canvas.ontouchcancel = this.onTouchCancel.bind(this);
-		this.canvas.onresize = this.onResize.bind(this);
 	}
 
 	private clearMousePositions () {
@@ -189,7 +195,7 @@ class CanvasSectionContainer {
 		return [Math.round(x * this.dpiScale), Math.round(y * this.dpiScale)];
 	}
 
-	private getSectionWithName (name: string): CanvasSectionObject {
+	getSectionWithName (name: string): CanvasSectionObject {
 		if (name) {
 			for (var i: number = 0; i < this.sections.length; i++) {
 				if (this.sections[i].name === name) {
@@ -414,9 +420,17 @@ class CanvasSectionContainer {
 		this.potentialLongPress = false;
 	}
 
-	onResize (e: Event) {
-		// canvas.style.width, canvas.width and height counterparts are handled outside for now.
-		// TODO: Move canvas.width and canvas.height handling here, keep canvas.style.width and canvas.style.height handling outside.
+	onResize (newWidth: number, newHeight: number) {
+		this.dpiScale = window.devicePixelRatio;
+		this.canvas.width = newWidth;
+		this.canvas.height = newHeight;
+
+		// CSS pixels can be fractional, but need to round to the same real pixels
+		var cssWidth: number = newWidth / this.dpiScale; // NB. beware
+		var cssHeight = newHeight / this.dpiScale;
+		this.canvas.style.width = cssWidth.toFixed(4) + 'px';
+		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
+
 		this.clearMousePositions();
 		this.right = this.canvas.width;
 		this.bottom = this.canvas.height;
@@ -543,13 +557,14 @@ class CanvasSectionContainer {
 			return minY - 1; // Don't overlap with the section on the bottom.
 	}
 
-	reNewAllSections() {
+	reNewAllSections(redraw: boolean = true) {
 		this.orderSections();
 		this.locateSections();
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].onResize();
 		}
-		this.drawSections();
+		if (redraw)
+			this.drawSections();
 	}
 
 	private locateSections () {
@@ -558,19 +573,24 @@ class CanvasSectionContainer {
 			section.myTopLeft = null;
 			var x = section.anchor[1] === 'left' ? section.position[0]: (this.right - (section.position[0] + section.size[0]));
 			var y = section.anchor[0] === 'top' ? section.position[1]: (this.bottom - (section.position[1] + section.size[1]));
-			section.myTopLeft = [x, y];
-			if (section.expand[0] !== '') {
-				if (section.expand.includes('left') || section.expand.includes('right'))
-					section.size[0] = 0;
-				if (section.expand.includes('top') || section.expand.includes('bottom'))
-					section.size[1] = 0;
+			if (!section.boundToSection)
+				section.myTopLeft = [x, y];
+				if (section.expand[0] !== '') {
+					if (section.expand.includes('left') || section.expand.includes('right'))
+						section.size[0] = 0;
+					if (section.expand.includes('top') || section.expand.includes('bottom'))
+						section.size[1] = 0;
+				}
+			else {
+				section.myTopLeft = [0, 0];
+				section.size = [0, 0];
 			}
 		}
 
 		// We have initial positions, now we'll expand them.
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section: CanvasSectionObject = this.sections[i];
-			if (section.expand) {
+			if (section.expand && !section.boundToSection) {
 				if (section.expand.includes('left')) {
 					var initialX = section.myTopLeft[0];
 					section.myTopLeft[0] = this.hitLeft(section);
@@ -589,6 +609,20 @@ class CanvasSectionContainer {
 
 				if (section.expand.includes('bottom')) {
 					section.size[1] = this.hitBottom(section) - section.myTopLeft[1];
+				}
+			}
+		}
+
+		// Set location and size of bound sections.
+		for (var i: number = 0; i < this.sections.length; i++) {
+			var section: CanvasSectionObject = this.sections[i];
+			if (section.boundToSection) {
+				var parentSection = this.getSectionWithName(section.boundToSection);
+				if (parentSection) {
+					section.size[0] = parentSection.size[0];
+					section.size[1] = parentSection.size[1];
+					section.myTopLeft[0] = parentSection.myTopLeft[0];
+					section.myTopLeft[1] = parentSection.myTopLeft[1];
 				}
 			}
 		}
@@ -661,8 +695,7 @@ class CanvasSectionContainer {
 			this.sections[i].onDraw();
 			this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
 		}
-
-		this.drawSectionBorders();
+		//this.drawSectionBorders();
 	}
 
 	doesSectionExist (name: string): boolean {
@@ -700,6 +733,7 @@ class CanvasSectionContainer {
 			|| options.zIndex === undefined
 			|| options.interactable === undefined
 			|| options.myProperties === undefined
+			|| options.onInitialize === undefined
 			|| options.onMouseMove === undefined
 			|| options.onMouseDown === undefined
 			|| options.onMouseUp === undefined
@@ -721,7 +755,7 @@ class CanvasSectionContainer {
 		return true;
 	}
 
-	addSection (options: any) {
+	addSection (options: any, parentSectionName: string = null) {
 		if (this.newSectionChecks(options)) {
 			// Every section can draw from Point(0, 0), their drawings will be translated to myTopLeft position.
 			var newSection: CanvasSectionObject = new CanvasSectionObject(options);
@@ -730,9 +764,13 @@ class CanvasSectionContainer {
 			newSection.documentTopLeft = this.documentTopLeft;
 			newSection.containerObject = this;
 			newSection.dpiScale = this.dpiScale;
+			newSection.myProperties.section = newSection;
+			newSection.boundToSection = parentSectionName;
 
 			this.sections.push(newSection);
-			this.reNewAllSections();
+			this.reNewAllSections(false);
+			newSection.onInitialize();
+			this.drawSections();
 
 			return true;
 		}
@@ -742,7 +780,7 @@ class CanvasSectionContainer {
 	}
 
 	removeSection (name: string) {
-		var found = false;
+		var found: boolean = false;
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].name === name) {
 				this.sections.splice(i, 1);
