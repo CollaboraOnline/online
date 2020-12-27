@@ -1969,15 +1969,15 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																					]
 																				},
 																				{
-																					'id': 'Section4',
+																					'id': 'Section7',
 																					'type': 'toolbox',
 																					'text': '',
 																					'enabled': 'true',
 																					'children': [
 																						{
 																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:TransformDialog'),
-																							'command': '.uno:TransformDialog'
+																							'text': _UNO('.uno:OutlineBullet'),
+																							'command': '.uno:OutlineBullet'
 																						}
 																					]
 																				},
@@ -2008,15 +2008,15 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 																					]
 																				},
 																				{
-																					'id': 'Section7',
+																					'id': 'Section4',
 																					'type': 'toolbox',
 																					'text': '',
 																					'enabled': 'true',
 																					'children': [
 																						{
 																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:OutlineBullet'),
-																							'command': '.uno:OutlineBullet'
+																							'text': _UNO('.uno:TransformDialog'),
+																							'command': '.uno:TransformDialog'
 																						}
 																					]
 																				},
