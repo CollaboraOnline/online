@@ -428,6 +428,15 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-bottom: -8px !important;
 }
 
+#table-GroupB85 {
+	margin-left: -12px;
+}
+
+#table-GroupB80 {
+	margin-left: -19px;
+	margin-bottom: -4px !important;
+}
+
 #table-stylescontainer #style1,
 #table-stylescontainer #style2,
 #table-stylescontainer #style3,
