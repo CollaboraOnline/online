@@ -41,55 +41,22 @@ L.TileSectionManager = L.Class.extend({
 	initialize: function (layer) {
 		this._layer = layer;
 		this._canvas = this._layer._canvas;
+		this._map = this._layer._map;
+		var mapSize = this._map.getPixelBoundsCore().getSize();
+		this._offscreenCanvases = [];
+		this._oscCtxs = [];
+		this._tilesSection = null; // Shortcut.
+
+		this._sectionContainer = new CanvasSectionContainer(this._canvas);
+		this._sectionContainer.onResize(mapSize.x, mapSize.y);
 
 		var dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
 		this._dpiScale = dpiScale;
 
-		this._map = this._layer._map;
-		this._setupCanvas();
-
-		this._topLeft = undefined;
-		this._lastZoom = undefined;
-		this._lastPart = undefined;
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		this._splitPos = splitPanesContext ?
 			splitPanesContext.getSplitPos() : new L.Point(0, 0);
 		this._updatesRunning = false;
-
-		this._sectionContainer = new CanvasSectionContainer(this._canvas);
-		//this._addTilesSection();
-	},
-
-	_addTilesSection: function () {
-		var that = this;
-		var added = this._sectionContainer.addSection({
-			name: 'tiles',
-			anchor: 'top left',
-			position: [250 * that._dpiScale, 250 * that._dpiScale], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
-			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
-			expand: 'top left bottom right', // Expand to all directions.
-			drawingOrder: 1,
-			zIndex: 1,
-			interactable: true,
-			myProperties: { docLayer: that },
-			onMouseMove: function () { },
-			onMouseDown: function () {},
-			onMouseUp: function () {},
-			onClick: function () {},
-			onDoubleClick: function () {},
-			onMouseWheel: function () {},
-			onLongPress: function () {},
-			onMultiTouchStart: function () {},
-			onMultiTouchMove: function () {},
-			onMultiTouchEnd: function () {},
-			onResize: function () {},
-			onNewDocumentTopLeft: function () {},
-			onDraw: function () {}
-		});
-
-		if (added) {
-			console.log('test');
-		}
 	},
 
 	startUpdates: function () {
@@ -115,61 +82,6 @@ L.TileSectionManager = L.Class.extend({
 
 	dispose: function () {
 		this.stopUpdates();
-	},
-
-	_setupCanvas: function () {
-		console.assert(this._canvas, 'no canvas element');
-		this._canvasCtx = this._canvas.getContext('2d', { alpha: false });
-		var mapSize = this._map.getPixelBoundsCore().getSize();
-		this._lastMapSize = mapSize;
-
-		this._offscreenCanvases = [];
-		this._oscCtxs = [];
-		for (var i = 0; i < 4; i++) {
-			this._offscreenCanvases.push(document.createElement('canvas'));
-			this._oscCtxs.push(this._offscreenCanvases[i].getContext('2d', { alpha: false }));
-		}
-
-		this._setCanvasSize(mapSize.x, mapSize.y);
-		this._canvasCtx.setTransform(1,0,0,1,0,0);
-	},
-
-	_setCanvasSize: function (widthCorePx, heightCorePx) {
-		this._pixWidth = Math.floor(widthCorePx);
-		this._pixHeight = Math.floor(heightCorePx);
-
-		// real pixels have to be integral
-		this._canvas.width = this._pixWidth;
-		this._canvas.height = this._pixHeight;
-		var tileSize = this._layer._getTileSize();
-		var borderSize = 3;
-		this._osCanvasExtraSize = 2 * borderSize * tileSize;
-		for (var i = 0; i < 4; ++i) {
-			this._offscreenCanvases[i].width = this._pixWidth + this._osCanvasExtraSize;
-			this._offscreenCanvases[i].height = this._pixHeight + this._osCanvasExtraSize;
-		}
-
-		// CSS pixels can be fractional, but need to round to the same real pixels
-		var cssWidth = this._pixWidth / this._dpiScale; // NB. beware
-		var cssHeight = this._pixHeight / this._dpiScale;
-		this._canvas.style.width = cssWidth.toFixed(4) + 'px';
-		this._canvas.style.height = cssHeight.toFixed(4) + 'px';
-
-		// FIXME: is this a good idea ? :
-		this._width = parseInt(this._canvas.style.width);
-		this._height = parseInt(this._canvas.style.height);
-		this.clear();
-		this._syncTileContainerSize();
-
-		this._lastSize = new L.Point(widthCorePx, heightCorePx);
-	},
-
-	_syncTileContainerSize: function () {
-		var tileContainer = this._layer._container;
-		if (tileContainer) {
-			tileContainer.style.width = this._width + 'px';
-			tileContainer.style.height = this._height + 'px';
-		}
 	},
 
 	clear: function (ctx) {
@@ -225,7 +137,6 @@ L.TileSectionManager = L.Class.extend({
 				extendedBounds.min.x = Math.max(0, extendedBounds.min.x - halfExtraSize);
 				extendedBounds.max.x += halfExtraSize;
 			}
-
 			if (paneBounds.min.y) { // pane can move in y direction.
 				extendedBounds.min.y = Math.max(0, extendedBounds.min.y - halfExtraSize);
 				extendedBounds.max.y += halfExtraSize;
@@ -264,13 +175,13 @@ L.TileSectionManager = L.Class.extend({
 				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
 				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
-				this._drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this._canvasCtx);
+				this._drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this._tilesSection.context);
 			}
 
 			if (extendedBounds.intersects(tileBounds)) {
 				var offset = extendedBounds.getTopLeft();
-				offset.x = Math.min(offset.x, viewBounds.min.x);
-				offset.y = Math.min(offset.y, viewBounds.min.y);
+				viewBounds.x = Math.min(offset.x, viewBounds.min.x);
+				viewBounds.y = Math.min(offset.y, viewBounds.min.y);
 				this._drawTileInPane(tile, tileBounds, extendedBounds, offset, this._oscCtxs[i]);
 			}
 		}
@@ -308,7 +219,7 @@ L.TileSectionManager = L.Class.extend({
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 		var halfExtraSize = this._osCanvasExtraSize / 2;
 		var extendedOffset = offset.add(new L.Point(halfExtraSize, halfExtraSize));
-		this._canvasCtx.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+		this._tilesSection.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		this._oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
 	},
 
@@ -320,9 +231,39 @@ L.TileSectionManager = L.Class.extend({
 			this._paintWithPanes(tile, ctx);
 		else
 			this._paintSimple(tile, ctx);
+	},
 
-		if (this._map._canvasDevicePixelGrid === true)
-			this._drawDebuggingGrid();
+	_addTilesSection: function () {
+		var that = this;
+		this._sectionContainer.addSection({
+			name: 'tiles',
+			anchor: 'top left',
+			position: [250 * that._dpiScale, 250 * that._dpiScale], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
+			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
+			expand: 'top left bottom right', // Expand to all directions.
+			drawingOrder: 1,
+			zIndex: 5,
+			interactable: true,
+			myProperties: {
+				docLayer: that._layer,
+				tsManager: that
+			},
+			onInitialize: that._onTilesSectionInitialize,
+			onMouseMove: function () {},
+			onMouseDown: function () {},
+			onMouseUp: function () {},
+			onClick: function () {},
+			onDoubleClick: function () {},
+			onMouseWheel: function () {},
+			onLongPress: function () {},
+			onMultiTouchStart: function () {},
+			onMultiTouchMove: function () {},
+			onMultiTouchEnd: function () {},
+			onResize: that._onTilesSectionResize,
+			onNewDocumentTopLeft: function () {},
+			onDraw: that._onTilesSectionDraw.bind(that)
+		});
+		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
 	},
 
 	_drawDebuggingGrid: function() {
@@ -366,82 +307,16 @@ L.TileSectionManager = L.Class.extend({
 	_updateWithRAF: function () {
 		// update-loop with requestAnimationFrame
 		this._canvasRAF = L.Util.requestAnimFrame(this._updateWithRAF, this, false /* immediate */);
-		this.update();
+		this._sectionContainer.requestReDraw();
 	},
 
-	update: function () {
-
-		var newDpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
-		var scaleChanged = this._dpiScale != newDpiScale;
-
-		if (scaleChanged) {
-			this._dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
-			this._map.setZoom();
-		}
-
-		var splitPanesContext = this._layer.getSplitPanesContext();
+	_onTilesSectionDraw: function () {
 		var zoom = Math.round(this._map.getZoom());
-		var pixelBounds = this._map.getPixelBoundsCore();
-		var newMapSize = pixelBounds.getSize();
-		var newTopLeft = pixelBounds.getTopLeft();
 		var part = this._layer._selectedPart;
-		var newSplitPos = splitPanesContext ?
-		    splitPanesContext.getSplitPos(): this._splitPos;
-
-		var zoomChanged = (zoom !== this._lastZoom);
-		var partChanged = (part !== this._lastPart);
-
-		var mapSizeChanged = !newMapSize.equals(this._lastMapSize);
-
-		var topLeftChanged = this._topLeft === undefined || !newTopLeft.equals(this._topLeft);
-		var splitPosChanged = !newSplitPos.equals(this._splitPos);
-
-		var skipUpdate = (
-			!topLeftChanged &&
-			!zoomChanged &&
-			!partChanged &&
-			!mapSizeChanged &&
-			!splitPosChanged &&
-			!scaleChanged);
-
-		if (skipUpdate)
-			return;
-
-		var ctx;
-		if (mapSizeChanged || scaleChanged) {
-			this._setCanvasSize(newMapSize.x, newMapSize.y);
-		}
-		else if (mapSizeChanged && topLeftChanged) {
-			ctx = this._paintContext();
-			this.clear(ctx);
-		}
-
-		if (mapSizeChanged)
-			this._lastMapSize = newMapSize;
-
-		if (splitPosChanged)
-			this._splitPos = newSplitPos;
-
-		this._lastZoom = zoom;
-		this._lastPart = part;
-
-		this._topLeft = newTopLeft;
-		this._paintWholeCanvas(ctx);
-
-		if (this._layer._debug)
-			this._drawSplits();
-	},
-
-	_paintWholeCanvas: function(ctx) {
-
-		var zoom = this._lastZoom || Math.round(this._map.getZoom());
-		var part = this._lastPart || this._layer._selectedPart;
 
 		// Calculate all this here intead of doing it per tile.
-		if (!ctx)
-			ctx = this._paintContext();
+		var ctx = this._paintContext();
 
-		this.clear(ctx);
 		var tileRanges = ctx.paneBoundsList.map(this._layer._pxBoundsToTileRange, this._layer);
 
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
@@ -462,7 +337,33 @@ L.TileSectionManager = L.Class.extend({
 				}
 			}
 		}
+	},
 
+	_onTilesSectionResize: function () {
+		var tileSize = this.myProperties.docLayer._getTileSize();
+		var borderSize = 3;
+		this.myProperties.tsManager._osCanvasExtraSize = 2 * borderSize * tileSize;
+		for (var i = 0; i < 4; ++i) {
+			this.myProperties.tsManager._offscreenCanvases[i].width = this.size[0] + this.myProperties.tsManager._osCanvasExtraSize;
+			this.myProperties.tsManager._offscreenCanvases[i].height = this.size[1] + this.myProperties.tsManager._osCanvasExtraSize;
+		}
+	},
+
+	_onTilesSectionInitialize: function () {
+		for (var i = 0; i < 4; i++) {
+			this.myProperties.tsManager._offscreenCanvases.push(document.createElement('canvas'));
+			this.myProperties.tsManager._oscCtxs.push(this.myProperties.tsManager._offscreenCanvases[i].getContext('2d', { alpha: false }));
+		}
+		this.onResize();
+	},
+
+	update: function () {
+		this._sectionContainer.requestReDraw();
+		if (this._layer._debug)
+			this._drawSplits();
+	},
+
+	_paintWholeCanvas: function(ctx) {
 		// Render on top to check matchup
 		if (this._layer._debug && this.renderBackground)
 			this.renderBackground(this._canvasCtx, ctx);
@@ -480,9 +381,9 @@ L.TileSectionManager = L.Class.extend({
 		var painter = this;
 		var ctx = this._paintContext();
 		var paneBoundsList = ctx.paneBoundsList;
-		var splitPos = ctx.paneBoundsActive ? this._splitPos.multiplyBy(this._dpiScale) : new L.Point(0, 0);
+		var splitPos = ctx.paneBoundsActive ? this._splitPos.multiplyBy(this._tilesSection.dpiScale) : new L.Point(0, 0);
 
-		this._rafFunc = function () {
+		var rafFunc = function () {
 
 			for (var i = 0; i < paneBoundsList.length; ++i) {
 				var paneBounds = paneBoundsList[i];
@@ -504,7 +405,7 @@ L.TileSectionManager = L.Class.extend({
 					Math.max(0, center.x + (-center.x / painter._zoomFrameScale) + paneBoundsOffset.x),
 					Math.max(0, center.y + (-center.y / painter._zoomFrameScale) + paneBoundsOffset.y));
 
-				painter._canvasCtx.drawImage(painter._offscreenCanvases[i],
+				painter._tilesSection.context.drawImage(painter._offscreenCanvases[i],
 					sourceTopLeft.x, sourceTopLeft.y,
 					// sourceWidth, sourceHeight
 					paneSize.x / painter._zoomFrameScale, paneSize.y / painter._zoomFrameScale,
@@ -514,18 +415,19 @@ L.TileSectionManager = L.Class.extend({
 					paneSize.x, paneSize.y);
 			}
 
-			painter._zoomRAF = requestAnimationFrame(painter._rafFunc);
+			painter._zoomRAF = requestAnimationFrame(rafFunc);
 		};
-		this._rafFunc();
+		this.rafFunc = rafFunc;
+		rafFunc();
 	},
 
 	_calcZoomFrameScale: function (zoom, newCenter) {
-		zoom = this._map._limitZoom(zoom);
-		var origZoom = this._map.getZoom();
+		zoom = this._layer._map._limitZoom(zoom);
+		var origZoom = this._layer._map.getZoom();
 		// Compute relative-multiplicative scale of this zoom-frame w.r.t the starting zoom(ie the current Map's zoom).
-		this._zoomFrameScale = this._map.zoomToFactor(zoom - origZoom + this._map.options.zoom);
+		this._zoomFrameScale = this._layer._map.zoomToFactor(zoom - origZoom + this._layer._map.options.zoom);
 
-		this._newCenter = this._map.project(newCenter).multiplyBy(this._dpiScale); // in core pixels
+		this._newCenter = this._layer._map.project(newCenter).multiplyBy(this._tilesSection.dpiScale); // in core pixels
 	},
 
 	zoomStep: function (zoom, newCenter) {
@@ -540,10 +442,11 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	zoomStepEnd: function (zoom, newCenter) {
+		this._zoomFrameScale = undefined;
 		if (this._inZoomAnim) {
 			cancelAnimationFrame(this._zoomRAF);
 			this._calcZoomFrameScale(zoom, newCenter);
-			this._rafFunc();
+			this.rafFunc();
 			this._zoomFrameScale = undefined;
 			this._inZoomAnim = false;
 		}
@@ -572,10 +475,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 
 		this._canvas = L.DomUtil.create('canvas', '', this._canvasContainer);
-		this._painter = new L.TileSectionManager(this);
 		this._container.style.position = 'absolute';
-
-		this._tileSectionManager = new L.TileSectionManager(this);
+		this._painter = new L.TileSectionManager(this);
+		this._painter._addTilesSection();
+		this._painter._sectionContainer.getSectionWithName('tiles').onResize();
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
 		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
@@ -589,7 +492,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._map.on('movestart', this._painter.startUpdates, this._painter);
 			this._map.on('moveend', this._painter.stopUpdates, this._painter);
 		}
-		this._map.on('resize zoomend', this._painter.update, this._painter);
+		this._map.on('resize', this._syncTileContainerSize, this);
+		this._map.on('zoomend', this._painter.update, this._painter);
 		this._map.on('splitposchanged', this._painter.update, this._painter);
 		this._map.on('sheetgeometrychanged', this._painter.update, this._painter);
 		this._map.on('move', this._syncTilePanePos, this);
@@ -602,6 +506,18 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		if (tilePane) {
 			var mapPanePos = this._map._getMapPanePos();
 			L.DomUtil.setPosition(tilePane, new L.Point(-mapPanePos.x , -mapPanePos.y));
+			var documentPos = this._map.getPixelBoundsCore().min;
+			this._painter._sectionContainer.setDocumentTopLeft([documentPos.x, documentPos.y]);
+		}
+	},
+
+	_syncTileContainerSize: function () {
+		var tileContainer = this._container;
+		if (tileContainer) {
+			var size = this._map.getPixelBoundsCore().getSize();
+			this._painter._sectionContainer.onResize(size.x, size.y);
+			tileContainer.style.width = this._painter._sectionContainer.canvas.style.width;
+			tileContainer.style.height = this._painter._sectionContainer.canvas.style.height;
 		}
 	},
 
