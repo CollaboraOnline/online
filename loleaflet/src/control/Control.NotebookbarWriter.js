@@ -675,7 +675,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'id': 'SectionBottom81',
 								'type': 'toolbox',
 								'children': [
-									
+
 									{
 										'type': 'toolitem',
 										'text': _UNO('.uno:ControlCodes', 'text'),
@@ -704,7 +704,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'id': 'SectionBottom125',
 								'type': 'toolbox',
 								'children': [
-									
+
 									{
 										'type': 'toolitem',
 										'text': _UNO('.uno:BackgroundColor'),
@@ -853,9 +853,30 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:ParagraphDialog'
 			},
 			{
+				'id': 'FormatBulletsMenu:FormatBulletsMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:FormatBulletsMenu', 'text'),
+				'command': '.uno:FormatBulletsMenu'
+			},
+			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:OutlineBullet'),
 				'command': '.uno:OutlineBullet'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageDialog', 'text'),
+				'command': '.uno:PageDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatColumns', 'text'),
+				'command': '.uno:FormatColumns'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:EditRegion', 'text'),
+				'command': '.uno:EditRegion'
 			},
 			{
 				'type': 'bigtoolitem',
@@ -871,22 +892,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FormatColumns', 'text'),
-				'command': '.uno:FormatColumns'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:EditRegion', 'text'),
-				'command': '.uno:EditRegion'
-			},
-			{
-				'id': 'FormatBulletsMenu:FormatBulletsMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:FormatBulletsMenu', 'text'),
-				'command': '.uno:FormatBulletsMenu'
 			},
 		];
 
