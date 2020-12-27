@@ -85,8 +85,6 @@ L.TileSectionManager = L.Class.extend({
 	_setupCanvas: function () {
 		console.assert(this._canvas, 'no canvas element');
 		this._canvasCtx = this._canvas.getContext('2d', { alpha: false });
-		this._canvasCtx.imageSmoothingEnabled = false;
-		this._canvasCtx.msImageSmoothingEnabled = false;
 		var mapSize = this._map.getPixelBoundsCore().getSize();
 		this._lastMapSize = mapSize;
 
@@ -95,10 +93,7 @@ L.TileSectionManager = L.Class.extend({
 		for (var i = 0; i < 4; i++) {
 			this._offscreenCanvases.push(document.createElement('canvas'));
 			this._oscCtxs.push(this._offscreenCanvases[i].getContext('2d', { alpha: false }));
-			this._oscCtxs[i].imageSmoothingEnabled = false;
-			this._oscCtxs[i].msImageSmoothingEnabled = false;
 		}
-
 
 		this._setCanvasSize(mapSize.x, mapSize.y);
 		this._canvasCtx.setTransform(1,0,0,1,0,0);
