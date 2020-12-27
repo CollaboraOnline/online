@@ -928,13 +928,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:PageSetup', 'presentation'),
-				'command': '.uno:PageSetup'
+				'text': _UNO('.uno:OutlineBullet'),
+				'command': '.uno:OutlineBullet'
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:OutlineBullet'),
-				'command': '.uno:OutlineBullet'
+				'text': _UNO('.uno:PageSetup', 'presentation'),
+				'command': '.uno:PageSetup'
 			},
 			{
 				'type': 'bigtoolitem',
