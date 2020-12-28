@@ -809,6 +809,21 @@ public:
             }
             return;
         }
+        else if (type == LOK_CALLBACK_JSDIALOG)
+        {
+            if (self->_sessions.size() == 1)
+            {
+                auto it = self->_sessions.begin();
+                std::shared_ptr<ChildSession> session = it->second;
+                if (session && !session->isCloseFrame())
+                {
+                    session->loKitCallback(type, payload);
+                    // TODO.  It should filter some messages
+                    // before loading the document
+                    session->getProtocol()->enableProcessInput(true);
+                }
+            }
+        }
         else if (type == LOK_CALLBACK_PROFILE_FRAME)
             return; // already trace dumped above.
 
