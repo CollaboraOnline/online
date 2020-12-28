@@ -18,4 +18,5 @@
     <string name="view_only">View only</string>
     <string name="edit_copy">Edit a copy</string>
     <string name="ask_for_copy">This document is read-only. Do you want to make a copy for editing\?</string>
+    <string name="cant_open_de_document">Couldn\'t open the document</string>
 </resources>
