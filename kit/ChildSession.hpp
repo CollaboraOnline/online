@@ -315,6 +315,11 @@ private:
         return _docManager->getLOKitDocument();
     }
 
+    std::shared_ptr<lok::Office> getLOKit() const
+    {
+        return _docManager->getLOKit();
+    }
+
     std::string getLOKitLastError() const
     {
         char *lastErr = _docManager->getLOKit()->getError();
