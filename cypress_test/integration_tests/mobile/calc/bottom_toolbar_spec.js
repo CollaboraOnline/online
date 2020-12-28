@@ -5,8 +5,6 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcMobileHelper = require('./calc_mobile_helper');
 
-require('cypress-wait-until');
-
 describe('Interact with bottom toolbar.', function() {
 	var testFileName;
 

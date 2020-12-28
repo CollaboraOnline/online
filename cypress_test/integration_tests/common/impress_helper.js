@@ -1,7 +1,5 @@
 /* global cy require expect */
 
-require('cypress-wait-until');
-
 var helper = require('./helper');
 
 // Assert that Impress is *not* in Text Edit Mode.
