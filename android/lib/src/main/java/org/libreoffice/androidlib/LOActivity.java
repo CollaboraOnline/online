@@ -301,8 +301,9 @@ public class LOActivity extends AppCompatActivity {
                     urlToLoad = documentUri.toString();
                     Log.d(TAG, "SCHEME_CONTENT: getPath(): " + getIntent().getData().getPath());
                 } else {
-                    // TODO: can't open the file
                     Log.e(TAG, "couldn't create temporary file from " + getIntent().getData());
+                    Toast.makeText(this, R.string.cant_open_de_document, Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             } else if (getIntent().getData().getScheme().equals(ContentResolver.SCHEME_FILE)) {
                 isDocEditable = true;
@@ -333,64 +334,66 @@ public class LOActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.failed_to_load_file), Toast.LENGTH_SHORT).show();
             finish();
         }
+        if (mTempFile != null)
+        {
+            mWebView = findViewById(R.id.browser);
 
-        mWebView = findViewById(R.id.browser);
+            WebSettings webSettings = mWebView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            mWebView.addJavascriptInterface(this, "LOOLMessageHandler");
 
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        mWebView.addJavascriptInterface(this, "LOOLMessageHandler");
-
-        // allow debugging (when building the debug version); see details in
-        // https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews
-        boolean isChromeDebugEnabled = sPrefs.getBoolean("ENABLE_CHROME_DEBUGGING", false);
-        if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 || isChromeDebugEnabled) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }
-
-        getMainHandler();
-
-        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        nativeMsgThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                nativeLooper = Looper.myLooper();
-                nativeHandler = new Handler(nativeLooper);
-                Looper.loop();
+            // allow debugging (when building the debug version); see details in
+            // https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews
+            boolean isChromeDebugEnabled = sPrefs.getBoolean("ENABLE_CHROME_DEBUGGING", false);
+            if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 || isChromeDebugEnabled) {
+                WebView.setWebContentsDebuggingEnabled(true);
             }
-        });
-        nativeMsgThread.start();
 
-        mWebView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public boolean onShowFileChooser(WebView mWebView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
-                if (valueCallback != null) {
-                    valueCallback.onReceiveValue(null);
-                    valueCallback = null;
+            getMainHandler();
+
+            clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            nativeMsgThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Looper.prepare();
+                    nativeLooper = Looper.myLooper();
+                    nativeHandler = new Handler(nativeLooper);
+                    Looper.loop();
                 }
+            });
+            nativeMsgThread.start();
 
-                valueCallback = filePathCallback;
-                Intent intent = fileChooserParams.createIntent();
+            mWebView.setWebChromeClient(new WebChromeClient() {
+                @Override
+                public boolean onShowFileChooser(WebView mWebView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
+                    if (valueCallback != null) {
+                        valueCallback.onReceiveValue(null);
+                        valueCallback = null;
+                    }
 
-                try {
-                    intent.setType("image/*");
-                    startActivityForResult(intent, REQUEST_SELECT_IMAGE_FILE);
-                } catch (ActivityNotFoundException e) {
-                    valueCallback = null;
-                    Toast.makeText(LOActivity.this, getString(R.string.cannot_open_file_chooser), Toast.LENGTH_LONG).show();
-                    return false;
+                    valueCallback = filePathCallback;
+                    Intent intent = fileChooserParams.createIntent();
+
+                    try {
+                        intent.setType("image/*");
+                        startActivityForResult(intent, REQUEST_SELECT_IMAGE_FILE);
+                    } catch (ActivityNotFoundException e) {
+                        valueCallback = null;
+                        Toast.makeText(LOActivity.this, getString(R.string.cannot_open_file_chooser), Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                    return true;
                 }
-                return true;
+            });
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "asking for read storage permission");
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSION_WRITE_EXTERNAL_STORAGE);
+            } else {
+                loadDocument();
             }
-        });
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TAG, "asking for read storage permission");
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSION_WRITE_EXTERNAL_STORAGE);
-        } else {
-            loadDocument();
         }
     }
 
@@ -562,6 +565,10 @@ public class LOActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if (!documentLoaded) {
+            super.onDestroy();
+            return;
+        }
         nativeLooper.quit();
 
         // Remove the webview from the hierarchy & destroy
@@ -724,6 +731,10 @@ public class LOActivity extends AppCompatActivity {
 
     /** Show the Saving progress and finish the app. */
     private void finishWithProgress(final boolean restartApp) {
+        if (!documentLoaded) {
+            finishAndRemoveTask();
+            return;
+        }
         mProgressDialog.indeterminate(restartApp ? R.string.restarting : R.string.exiting);
 
         // The 'BYE' takes a considerable amount of time, we need to post it
@@ -751,8 +762,12 @@ public class LOActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mMobileWizardVisible)
-        {
+        if (documentLoaded) {
+            finishAndRemoveTask();
+            return;
+        }
+
+        if (mMobileWizardVisible) {
             // just return one level up in the mobile-wizard (or close it)
             callFakeWebsocketOnMessage("'mobile: mobilewizardback'");
             return;
