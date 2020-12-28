@@ -72,6 +72,7 @@
 .notebookbar-shortcuts-bar {
 	display: inline-block;
 	position: relative;
+	top: -4px;
 	z-index: 1000;
 }
 
