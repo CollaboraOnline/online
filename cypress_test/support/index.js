@@ -1,6 +1,8 @@
 /* global require Cypress Promise */
 
 require('cypress-failed-log');
+require('cypress-wait-until');
+require('cypress-file-upload');
 
 if (Cypress.env('INTEGRATION') === 'php-proxy') {
 	Cypress.Server.defaults({

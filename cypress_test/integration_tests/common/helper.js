@@ -1,7 +1,4 @@
-/* global cy Cypress expect require */
-
-require('cypress-wait-until');
-require('cypress-file-upload');
+/* global cy Cypress expect */
 
 var mobileWizardIdleTime = 1250;
 
