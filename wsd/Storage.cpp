@@ -1104,14 +1104,54 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
         return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
 }
 
-StorageBase::UploadResult
-WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::string& cookies,
-                                      LockContext& lockCtx, const std::string& saveAsPath,
-                                      const std::string& saveAsFilename, const bool isRename)
+/// A helper class to invoke the AsyncUploadCallback
+/// when it exits its scope.
+/// By default it invokes the callback with a failure state.
+class ScopedInvokeAsyncUploadCallback
+{
+public:
+    ScopedInvokeAsyncUploadCallback(StorageBase::AsyncUploadCallback asyncUploadCallback)
+        : _asyncUploadCallback(std::move(asyncUploadCallback))
+        , _arg(StorageBase::AsyncUpload(
+              StorageBase::AsyncUpload::State::Error,
+              StorageBase::UploadResult(StorageBase::UploadResult::Result::FAILED)))
+    {
+    }
+
+    ~ScopedInvokeAsyncUploadCallback()
+    {
+        if (_asyncUploadCallback)
+            _asyncUploadCallback(_arg);
+    }
+
+    /// Set a new callback argument.
+    void setArg(StorageBase::AsyncUpload arg) { _arg = std::move(arg); }
+
+private:
+    StorageBase::AsyncUploadCallback _asyncUploadCallback;
+    StorageBase::AsyncUpload _arg;
+};
+
+void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth,
+                                                const std::string& cookies, LockContext& lockCtx,
+                                                const std::string& saveAsPath,
+                                                const std::string& saveAsFilename,
+                                                const bool isRename, SocketPoll& socketPoll,
+                                                const AsyncUploadCallback& asyncUploadCallback)
 {
     ProfileZone profileZone("WopiStorage::uploadLocalFileToStorage", { {"url", _fileUrl} });
 
     // TODO: Check if this URI has write permission (canWrite = true)
+
+    // Always invoke the callback with the result of the async upload.
+    ScopedInvokeAsyncUploadCallback scopedInvokeCallback(asyncUploadCallback);
+
+    //TODO: replace with state machine.
+    if (_uploadHttpSession)
+    {
+        LOG_ERR("Upload is already in progress.");
+        return;
+    }
 
     const bool isSaveAs = !saveAsPath.empty() && !saveAsFilename.empty();
     const std::string filePath(isSaveAs ? saveAsPath : getRootFilePath());
@@ -1121,7 +1161,10 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
     if (!fileStat.good())
     {
         LOG_ERR("Cannot access file [" << filePathAnonym << "] to upload to wopi storage.");
-        return UploadResult(UploadResult::Result::FAILED, "File not found.");
+        scopedInvokeCallback.setArg(
+            AsyncUpload(AsyncUpload::State::Error,
+                        UploadResult(UploadResult::Result::FAILED, "File not found.")));
+        return;
     }
 
     const std::size_t size = (fileStat.good() ? fileStat.size() : 0);
@@ -1139,7 +1182,7 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
     const auto startTime = std::chrono::steady_clock::now();
     try
     {
-        std::shared_ptr<http::Session> httpSession = getHttpSession(uriObject);
+        _uploadHttpSession = getHttpSession(uriObject);
 
         http::Request httpRequest = initHttpRequest(uriObject, auth, cookies);
         httpRequest.setVerb(http::Request::VERB_POST);
@@ -1217,22 +1260,43 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
 
         httpRequest.setBodyFile(filePath);
 
+        http::Session::FinishedCallback finishedCallback =
+            [=](const std::shared_ptr<http::Session>& httpSession)
+        {
+            const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+
+            _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - startTime);
+
+            WopiUploadDetails details = { filePathAnonym,
+                                          uriAnonym,
+                                          httpResponse->statusLine().reasonPhrase(),
+                                          httpResponse->statusLine().statusCode(),
+                                          size,
+                                          isSaveAs,
+                                          isRename };
+
+            // Handle the response.
+            const StorageBase::UploadResult res =
+                handleUploadToStorageResponse(details, httpResponse->getBody());
+
+            // Fire the callback to our client (DocBroker, typically).
+            asyncUploadCallback(AsyncUpload(AsyncUpload::State::Complete, res));
+
+            // Retire.
+            _uploadHttpSession.reset(); //FIXME: use a state machine.
+        };
+
+        _uploadHttpSession->setFinishedHandler(finishedCallback);
+
+        LOG_DBG("Async upload request: " << httpRequest.header().toString());
+
         // Make the request.
-        const std::shared_ptr<const http::Response> httpResponse
-            = httpSession->syncRequest(httpRequest);
+        _uploadHttpSession->asyncRequest(httpRequest, socketPoll);
 
-        _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - startTime);
-
-        WopiUploadDetails details = { filePathAnonym,
-                                      uriAnonym,
-                                      httpResponse->statusLine().reasonPhrase(),
-                                      httpResponse->statusLine().statusCode(),
-                                      size,
-                                      isSaveAs,
-                                      isRename };
-
-        return handleUploadToStorageResponse(details, httpResponse->getBody());
+        scopedInvokeCallback.setArg(
+            AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK)));
+        return;
     }
     catch (const Poco::Exception& ex)
     {
@@ -1245,7 +1309,16 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
         LOG_ERR("Cannot upload file to WOPI storage uri [" + uriAnonym + "]. Error: " << ex.what());
     }
 
-    return UploadResult(UploadResult::Result::FAILED, "Internal error.");
+    scopedInvokeCallback.setArg(AsyncUpload(
+        AsyncUpload::State::Error, UploadResult(UploadResult::Result::FAILED, "Internal error.")));
+}
+
+StorageBase::UploadResult WopiStorage::uploadLocalFileToStorage(const Authorization&,
+                                                                const std::string&, LockContext&,
+                                                                const std::string&,
+                                                                const std::string&, const bool)
+{
+    return UploadResult(UploadResult::Result::FAILED);
 }
 
 StorageBase::UploadResult
@@ -1295,8 +1368,8 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                 }
             }
 
-            LOG_INF(wopiLog << " uploaded " << details.size << " bytes from ["
-                            << details.filePathAnonym << "] -> [" << details.uriAnonym
+            LOG_INF(wopiLog << " uploaded " << details.size << " bytes in " << _wopiSaveDuration
+                            << " from [" << details.filePathAnonym << "] -> [" << details.uriAnonym
                             << "]: " << details.httpResponseCode << ' '
                             << details.httpResponseReason << ": " << responseString);
         }
