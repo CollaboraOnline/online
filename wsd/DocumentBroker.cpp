@@ -1180,7 +1180,7 @@ void DocumentBroker::handleUploadToStorageResponse(
             sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savediskfull");
         }
 
-        broadcastSaveResult(false, "Disk full", storageSaveResult.getErrorMsg());
+        broadcastSaveResult(false, "Disk full", storageSaveResult.getReason());
     }
     else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::UNAUTHORIZED)
     {
@@ -1219,7 +1219,7 @@ void DocumentBroker::handleUploadToStorageResponse(
                                                 << "]. The client session is closed.");
         }
 
-        broadcastSaveResult(false, "Save failed", storageSaveResult.getErrorMsg());
+        broadcastSaveResult(false, "Save failed", storageSaveResult.getReason());
     }
     else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED
              || storageSaveResult.getResult() == StorageBase::UploadResult::Result::CONFLICT)
@@ -1230,7 +1230,8 @@ void DocumentBroker::handleUploadToStorageResponse(
             = isModified() ? "error: cmd=storage kind=documentconflict" : "close: documentconflict";
 
         broadcastMessage(message);
-        broadcastSaveResult(false, "Conflict: Document changed in storage", storageSaveResult.getErrorMsg());
+        broadcastSaveResult(false, "Conflict: Document changed in storage",
+                            storageSaveResult.getReason());
     }
 }
 
