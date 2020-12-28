@@ -201,6 +201,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         return getCommandValues(buffer, length, tokens);
     }
+    else if (tokens.equals(0, "dialogevent"))
+    {
+        return dialogEvent(buffer, length, tokens);
+    }
     else if (tokens.equals(0, "load"))
     {
         if (_isDocLoaded)
@@ -444,10 +448,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "removetextcontext"))
         {
             return removeTextContext(buffer, length, tokens);
-        }
-        else if (tokens.equals(0, "dialogevent"))
-        {
-            return dialogEvent(buffer, length, tokens);
         }
         else if (tokens.equals(0, "completefunction"))
         {
@@ -1474,11 +1474,17 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
         return false;
     }
 
-    getLOKitDocument()->setView(_viewId);
-
     unsigned long long int nLOKWindowId = std::stoull(tokens[1].c_str());
-    getLOKitDocument()->sendDialogEvent(nLOKWindowId,
-        tokens.cat(' ', 2).c_str());
+    if (_isDocLoaded)
+    {
+        getLOKitDocument()->setView(_viewId);
+        getLOKitDocument()->sendDialogEvent(nLOKWindowId,
+                                            tokens.cat(' ', 2).c_str());
+    }
+    else
+    {
+        getLOKit()->sendDialogEvent(nLOKWindowId, tokens.cat(' ', 2).c_str());
+    }
 
     return true;
 }
