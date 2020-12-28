@@ -129,125 +129,68 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																			'text': '',
 																			'enabled': 'true',
 																			'children': [
-																				{
-																					'id': 'File-Section-Save',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'SectionBottom65',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'bigtoolitem',
-																									'text': _UNO('.uno:Save'),
-																									'command': '.uno:Save'
-																								}
-																							]
-																						}
-																					],
-																					'vertical': 'false'
-																				},
 																				hasSaveAs ?
 																					{
-																						'id': 'File-Section-Saveas',
-																						'type': 'container',
+																						'id': 'Section2',
+																						'type': 'toolbox',
 																						'text': '',
 																						'enabled': 'true',
 																						'children': [
 																							{
-																								'id': 'SectionBottom61',
-																								'type': 'toolbox',
-																								'text': '',
-																								'enabled': 'true',
-																								'children': [
-																									{
-																										'id': 'saveas',
-																										'type': 'bigtoolitem',
-																										'text': _UNO('.uno:SaveAs', 'spreadsheet'),
-																										'command': ''
-																									}
-																								]
+																								'id': 'saveas',
+																								'type': 'menubartoolitem',
+																								'text': _UNO('.uno:SaveAs', 'spreadsheet'),
+																								'command': ''
 																							}
-																						],
-																						'vertical': 'false'
+																						]
 																					} : {},
 																				hasShare ?
 																					{
-																						'id': 'File-Section-Share',
-																						'type': 'container',
+																						'id': 'Section3',
+																						'type': 'toolbox',
 																						'text': '',
 																						'enabled': 'true',
 																						'children': [
 																							{
-																								'id': 'SectionBottom62',
-																								'type': 'toolbox',
-																								'text': '',
-																								'enabled': 'true',
-																								'children': [
-																									{
-																										'id': 'shareas',
-																										'type': 'bigtoolitem',
-																										'text': _('Share...'),
-																										'command': ''
-																									}
-																								]
+																								'id': 'shareas',
+																								'type': 'menubartoolitem',
+																								'text': _('Share...'),
+																								'command': ''
 																							}
-																						],
-																						'vertical': 'false'
+																						]
 																					} : {},
 																				hasPrint ?
 																					{
-																						'id': 'File-Section-Print',
-																						'type': 'container',
+																						'id': 'Section4',
+																						'type': 'toolbox',
 																						'text': '',
 																						'enabled': 'true',
 																						'children': [
 																							{
-																								'id': 'SectionBottom66',
-																								'type': 'toolbox',
-																								'text': '',
-																								'enabled': 'true',
-																								'children': [
-																									{
-																										'type': 'bigtoolitem',
-																										'text': _UNO('.uno:Print', 'spreadsheet'),
-																										'command': '.uno:Print'
-																									}
-																								]
+																								'id': 'print',
+																								'type': 'menubartoolitem',
+																								'text': _UNO('.uno:Print', 'spreadsheet'),
+																								'command': ''
 																							}
-																						],
-																						'vertical': 'false'
+																						]
 																					} : {},
 																				hasRevisionHistory ?
 																					{
-																						'id': 'File-Section-Revision',
-																						'type': 'container',
+																						'id': 'Section5',
+																						'type': 'toolbox',
 																						'text': '',
 																						'enabled': 'true',
 																						'children': [
 																							{
-																								'id': 'SectionBottom66',
-																								'type': 'toolbox',
-																								'text': '',
-																								'enabled': 'true',
-																								'children': [
-																									{
-																										'id': 'rev-history',
-																										'type': 'bigtoolitem',
-																										'text': _('See revision history'),
-																										'command': ''
-																									}
-																								]
+																								'id': 'rev-history',
+																								'type': 'menubartoolitem',
+																								'text': _('See revision history'),
+																								'command': ''
 																							}
-																						],
-																						'vertical': 'false'
+																						]
 																					} : {},
 																				{
-																					'id': 'File-Section-Export',
+																					'id': 'saveas-Section',
 																					'type': 'container',
 																					'text': '',
 																					'enabled': 'true',
@@ -300,7 +243,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																					]
 																				},
 																				{
-																					'id': 'File-Section-Export-2',
+																					'id': 'saveas-Section',
 																					'type': 'container',
 																					'text': '',
 																					'enabled': 'true',
