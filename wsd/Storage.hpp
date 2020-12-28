@@ -97,6 +97,9 @@ public:
         std::chrono::system_clock::time_point _modifiedTime;
     };
 
+    /// Represents the upload request result, with a Result code
+    /// and a reason message (typically for errors).
+    /// Note: the reason message may be displayed to the clients.
     class UploadResult final
     {
     public:
@@ -110,19 +113,20 @@ public:
             FAILED
         };
 
-        UploadResult(Result result) : _result(result)
+        explicit UploadResult(Result result)
+            : _result(result)
         {
         }
 
-        void setResult(Result result)
+        UploadResult(Result result, std::string reason)
+            : _result(result)
+            , _reason(std::move(reason))
         {
-            _result = result;
         }
 
-        Result getResult() const
-        {
-            return _result;
-        }
+        void setResult(Result result) { _result = result; }
+
+        Result getResult() const { return _result; }
 
         void setSaveAsResult(const std::string& name, const std::string& url)
         {
@@ -130,31 +134,19 @@ public:
             _saveAsUrl = url;
         }
 
-        const std::string& getSaveAsName() const
-        {
-            return _saveAsName;
-        }
+        const std::string& getSaveAsName() const { return _saveAsName; }
 
-        const std::string& getSaveAsUrl() const
-        {
-            return _saveAsUrl;
-        }
+        const std::string& getSaveAsUrl() const { return _saveAsUrl; }
 
-        void setErrorMsg(const std::string &msg)
-        {
-            _errorMsg = msg;
-        }
+        void setReason(const std::string& msg) { _reason = msg; }
 
-        const std::string &getErrorMsg() const
-        {
-            return _errorMsg;
-        }
+        const std::string& getReason() const { return _reason; }
 
     private:
         Result _result;
         std::string _saveAsName;
         std::string _saveAsUrl;
-        std::string _errorMsg;
+        std::string _reason;
     };
 
     enum class LOOLStatusCode
