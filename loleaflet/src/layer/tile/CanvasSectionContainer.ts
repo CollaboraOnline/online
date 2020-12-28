@@ -139,6 +139,7 @@ class CanvasSectionContainer {
 	private draggingTolerance: number = 5; // This is for only desktop, mobile browsers seem to distinguish dragging and clicking nicely.
 	private multiTouch: boolean = false;
 	private potentialLongPress: boolean = false;
+	private clearColor: string = 'white';
 
 	constructor (canvasDOMElement: HTMLCanvasElement) {
 		this.canvas = canvasDOMElement;
@@ -155,6 +156,14 @@ class CanvasSectionContainer {
 		this.canvas.ontouchmove = this.onTouchMove.bind(this);
 		this.canvas.ontouchend = this.onTouchEnd.bind(this);
 		this.canvas.ontouchcancel = this.onTouchCancel.bind(this);
+	}
+
+	setClearColor (color: string) {
+		this.clearColor = color;
+	}
+
+	getClearColor () {
+		return this.clearColor;
 	}
 
 	private clearMousePositions () {
@@ -686,8 +695,9 @@ class CanvasSectionContainer {
 	}
 
 	private drawSections () {
-		this.context.fillStyle = "white";
+		this.context.fillStyle = this.clearColor;
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
 		this.context.font = String(20 * this.dpiScale) + "px Verdana";
 		for (var i: number = 0; i < this.sections.length; i++) {
