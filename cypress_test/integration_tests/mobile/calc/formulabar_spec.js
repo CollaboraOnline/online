@@ -4,8 +4,6 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-require('cypress-wait-until');
-
 describe('Change alignment settings.', function() {
 	var testFileName = 'formulabar.ods';
 

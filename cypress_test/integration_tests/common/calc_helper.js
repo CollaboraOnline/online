@@ -1,7 +1,5 @@
 /* global cy expect Cypress require */
 
-require('cypress-wait-until');
-
 var helper = require('./helper');
 
 // Click on the formula bar.

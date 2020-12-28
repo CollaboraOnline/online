@@ -1,7 +1,5 @@
 /* global describe it cy beforeEach require expect afterEach Cypress*/
 
-require('cypress-file-upload');
-
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
