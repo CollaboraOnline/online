@@ -899,6 +899,9 @@ L.Socket = L.Class.extend({
 				return;
 			}
 		}
+		else if (textMsg.startsWith('jsdialog:')) {
+			this._onJSDialog(textMsg);
+		}
 
 		var msgDelayed = false;
 		if (!this._isReady() || !this._map._docLayer || this._delayedMessages.length || this._handlingDelayedMessages) {
@@ -1056,6 +1059,37 @@ L.Socket = L.Class.extend({
 		this._map.fire('docloaded', {status: true});
 		if (this._map._docLayer) {
 			this._map._docLayer._onMessage(textMsg);
+		}
+	},
+
+	_onJSDialog: function(textMsg) {
+		var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
+
+		if (msgData.children && !L.Util.isArray(msgData.children)) {
+			console.warn('_onJSDialogMsg: The children\'s data should be created of array type');
+			return;
+		}
+
+		if (window.mode.isMobile()) {
+			if (msgData.type == 'borderwindow')
+				return;
+			if (msgData.enabled) {
+				this._map.fire('mobilewizard', msgData);
+			} else {
+				this._map.fire('closemobilewizard');
+			}
+		} else if (msgData.jsontype === 'autofilter') {
+			this._map.fire('autofilterdropdown', msgData);
+		} else if (msgData.jsontype === 'dialog') {
+			this._map.fire('jsdialog', {data: msgData});
+		} else if (msgData.jsontype === 'notebookbar' || msgData.type === 'borderwindow') {
+			window.notebookbarId = msgData.id;
+			for (var i = 0; i < msgData.children.length; i++) {
+				if (msgData.children[i].type === 'control') {
+					this._map.fire('notebookbar', msgData.children[i]);
+					return;
+				}
+			}
 		}
 	},
 
