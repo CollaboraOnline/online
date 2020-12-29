@@ -473,7 +473,7 @@ L.Map.include({
 	},
 
 	shouldWelcome: function() {
-		if (!window.isLocalStorageAllowed || !window.enableWelcomeMessage || L.Browser.cypressTest)
+		if (!window.isLocalStorageAllowed || !window.enableWelcomeMessage)
 			return false;
 
 		var storedVersion = localStorage.getItem('WSDWelcomeVersion');
