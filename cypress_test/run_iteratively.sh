@@ -8,15 +8,7 @@ if [ "$#" -ne 2 ]; then
 fi
 
 loop_count=10
-
-if [ $1 = "mobile" ];
-then
-    command="make check-mobile spec="$2
-elif [ $1 = "desktop" ]; then
-    command="make check-desktop spec="$2
-else
-    command="make check-multi spec="$2
-fi
+command="make check-"$1" spec="$2
 
 i=0
 while $command
