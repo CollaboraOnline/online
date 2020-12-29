@@ -1757,6 +1757,20 @@ L.Map = L.Evented.extend({
 		}
 
 		return undefined;
+	},
+
+	_setPaneOpacity: function(paneClassString, opacity) {
+		var panes = document.getElementsByClassName(paneClassString);
+		if (panes.length)
+			panes[0].style.opacity = opacity;
+	},
+
+	setOverlaysOpacity: function(opacity) {
+		this._setPaneOpacity('leaflet-pane leaflet-overlay-pane', opacity);
+	},
+
+	setMarkersOpacity: function(opacity) {
+		this._setPaneOpacity('leaflet-pane leaflet-marker-pane', opacity);
 	}
 });
 

@@ -544,6 +544,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map._textInput._cursorHandler) {
 			this._map._textInput._cursorHandler.setOpacity(0);
 		}
+		if (this._map._docLayer._cellCursorMarker) {
+			this._map.setOverlaysOpacity(0);
+			this._map.setMarkersOpacity(0);
+		}
 		if (this._map._docLayer._selectionHandles['start']) {
 			this._map._docLayer._selectionHandles['start'].setOpacity(0);
 		}
@@ -591,6 +595,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		}
 		if (this._map._textInput._cursorHandler) {
 			this._map._textInput._cursorHandler.setOpacity(1);
+		}
+		if (this._map._docLayer._cellCursorMarker) {
+			this._map.setOverlaysOpacity(1);
+			this._map.setMarkersOpacity(1);
 		}
 		if (this._map._docLayer._selectionHandles['start']) {
 			this._map._docLayer._selectionHandles['start'].setOpacity(1);
