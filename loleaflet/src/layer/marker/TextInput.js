@@ -90,6 +90,7 @@ L.TextInput = L.Layer.extend({
 		this._emptyArea();
 
 		this._map.on('updatepermission', this._onPermission, this);
+		this._map.on('commandresult', this._onCommandResult, this);
 		L.DomEvent.on(this._textArea, 'focus blur', this._onFocusBlur, this);
 
 		// Do not wait for a 'focus' event to attach events if the
@@ -137,6 +138,20 @@ L.TextInput = L.Layer.extend({
 			this._textArea.removeAttribute('disabled');
 		} else {
 			this._textArea.setAttribute('disabled', true);
+		}
+	},
+
+	_onCommandResult: function(e) {
+		if ((e.commandName === '.uno:Undo' || e.commandName === '.uno:Redo') && window.mode.isMobile()) {
+			//undoing something on mobile does not trigger any input method
+			//this causes problem in mobile working with suggestions
+			//i.e: type "than" and then select "thank" from suggestion
+			//now undo and then again select "thanks" from suggestions
+			//final output is "thans"
+			//this happens because undo doesn't change the textArea value
+			//and no other way to maintain the history
+			//So better to clean the textarea so no suggestions appear
+			this._map._textInput._textArea.value = this._map._textInput._preSpaceChar;
 		}
 	},
 
