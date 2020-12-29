@@ -461,7 +461,7 @@ L.CanvasTilePainter = L.Class.extend({
 		var paneBoundsList = ctx.paneBoundsList;
 		var splitPos = ctx.paneBoundsActive ? this._splitPos.multiplyBy(this._dpiScale) : new L.Point(0, 0);
 
-		var rafFunc = function () {
+		this._rafFunc = function () {
 
 			for (var i = 0; i < paneBoundsList.length; ++i) {
 				var paneBounds = paneBoundsList[i];
@@ -493,18 +493,23 @@ L.CanvasTilePainter = L.Class.extend({
 					paneSize.x, paneSize.y);
 			}
 
-			painter._zoomRAF = requestAnimationFrame(rafFunc);
+			painter._zoomRAF = requestAnimationFrame(painter._rafFunc);
 		};
-		rafFunc();
+		this._rafFunc();
 	},
 
-	zoomStep: function (zoom, newCenter) {
+	_calcZoomFrameScale: function (zoom, newCenter) {
 		zoom = this._map._limitZoom(zoom);
 		var origZoom = this._map.getZoom();
 		// Compute relative-multiplicative scale of this zoom-frame w.r.t the starting zoom(ie the current Map's zoom).
 		this._zoomFrameScale = this._map.zoomToFactor(zoom - origZoom + this._map.options.zoom);
 
 		this._newCenter = this._map.project(newCenter).multiplyBy(this._dpiScale); // in core pixels
+	},
+
+	zoomStep: function (zoom, newCenter) {
+		this._calcZoomFrameScale(zoom, newCenter);
+
 		if (!this._inZoomAnim) {
 			this._inZoomAnim = true;
 			this._layer._prefetchTilesSync();
@@ -513,10 +518,12 @@ L.CanvasTilePainter = L.Class.extend({
 		}
 	},
 
-	zoomStepEnd: function () {
-		this._zoomFrameScale = undefined;
+	zoomStepEnd: function (zoom, newCenter) {
 		if (this._inZoomAnim) {
 			cancelAnimationFrame(this._zoomRAF);
+			this._calcZoomFrameScale(zoom, newCenter);
+			this._rafFunc();
+			this._zoomFrameScale = undefined;
 			this._inZoomAnim = false;
 		}
 	}
@@ -681,8 +688,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._painter.zoomStep(zoom, newCenter);
 	},
 
-	zoomStepEnd: function () {
-		this._painter.zoomStepEnd();
+	zoomStepEnd: function (zoom, newCenter) {
+		this._painter.zoomStepEnd(zoom, newCenter);
 	},
 
 	_viewReset: function (e) {
