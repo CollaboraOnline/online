@@ -569,11 +569,11 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._center = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
 						      this._zoom, this._map.options.maxBounds);
 
-		var origCenter = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
+		this._origCenter = this._map._limitCenter(this._map.mouseEventToLatLng({clientX: center.x, clientY: center.y}),
 							  this._map.getZoom(), this._map.options.maxBounds);
 
 		if (this._map._docLayer.zoomStep) {
-			this._map._docLayer.zoomStep(this._zoom, origCenter);
+			this._map._docLayer.zoomStep(this._zoom, this._origCenter);
 		}
 	},
 
@@ -610,7 +610,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._pinchStartCenter = undefined;
 
 		if (this._map._docLayer.zoomStepEnd) {
-			this._map._docLayer.zoomStepEnd();
+			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter);
 		}
 
 		this._map.setView(this._center, finalZoom);
