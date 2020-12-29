@@ -87,9 +87,7 @@ do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TESTS
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
 $(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(ERROR_LOG)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_loolwsd)
@@ -119,16 +117,14 @@ $(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
 	@mkdir -p $(dir $@) && touch $@
 
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,$(spec))
 	@$(KILL_COMMAND) || true
 
 check-mobile: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(call run_mobile_tests,$(spec))
@@ -141,9 +137,7 @@ do-multi-check-log: do-multi-check
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
 do-multi-check: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(ERROR_LOG)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(if $(spec), \
@@ -152,8 +146,7 @@ do-multi-check: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
@@ -163,8 +156,7 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 run-mobile: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
@@ -174,8 +166,7 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 run-multi: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
@@ -215,7 +206,7 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Run all tests..."
 	@echo
-	@rm -f $(ERROR_LOG)
+	$(call cleanup_before_run)
 	$(call start_loolwsd)
 	$(call run_desktop_tests,,,COVERAGE_RUN="1")
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
@@ -264,6 +255,13 @@ define start_Xvfb
 	Xvfb :$(DISPLAY_NUMBER) -screen 0 1280x800x24 &
 	while [ ! -f /tmp/.X$(DISPLAY_NUMBER)-lock ] ; do sleep 1; done
 	@echo
+endef
+
+define cleanup_before_run
+	@rm -f $(ERROR_LOG)
+	@rm -f $(LOOLWSD_LOG)
+	@rm -f $(LOOLWSD_OUTPUT)
+	@rm -f $(PID_FILE)
 endef
 
 DESKTOP_CONFIG = \
@@ -403,9 +401,7 @@ do-interfer-mobile-check-log: do-interfer-mobile-check
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
 do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(ERROR_LOG)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(if $(spec), \
@@ -414,8 +410,7 @@ do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
@@ -496,9 +491,7 @@ do-interfer-desktop-check-log: do-interfer-desktop-check
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
 do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(ERROR_LOG)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	$(if $(spec), \
@@ -507,8 +500,7 @@ do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
+	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
 	@echo
