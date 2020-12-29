@@ -240,6 +240,7 @@ define start_loolwsd
 			--disable-ssl \
 			--o:admin_console.username=admin --o:admin_console.password=admin \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
+			--o:welcome.enable=false \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
 			--o:logging.file.property[0]=$(LOOLWSD_LOG) \
