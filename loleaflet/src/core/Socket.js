@@ -1075,6 +1075,12 @@ L.Socket = L.Class.extend({
 			return;
 		}
 
+		if (msgData.action && msgData.action === 'update') {
+			this._map.fire('jsdialogupdate', {data: msgData});
+			return;
+		}
+
+		// re/create
 		if (window.mode.isMobile()) {
 			if (msgData.type == 'borderwindow')
 				return;

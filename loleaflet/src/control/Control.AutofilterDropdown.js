@@ -16,6 +16,7 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		this.map.on('closepopup', this.onClosePopup, this);
 		this.map.on('closepopups', this.onClosePopup, this);
 		L.DomEvent.on(this.map, 'mouseup', this.onClosePopup, this);
+		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 	},
 
 	onRemove: function() {
@@ -23,6 +24,7 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		this.map.off('closepopup', this.onClosePopup, this);
 		this.map.off('closepopups', this.onClosePopup, this);
 		L.DomEvent.off(this.map, 'mouseup', this.onClosePopup, this);
+		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 	},
 
 	onAutofilterDropdown: function(data) {
@@ -125,6 +127,33 @@ L.Control.AutofilterDropdown = L.Control.extend({
 			L.DomUtil.setStyle(mainContainer, 'margin-left', newLeftPosition + 'px');
 			this.position.x = newLeftPosition;
 		}
+	},
+
+	onJSUpdate: function (e) {
+		var data = e.data;
+
+		if (data.jsontype !== 'autofilter')
+			return;
+
+		if (!this.container)
+			return;
+
+		var control = this.container.querySelector('#' + data.control.id);
+		if (!control)
+			return;
+
+		var parent = control.parentNode;
+		if (!parent)
+			return;
+
+		control.style.visibility = 'hidden';
+		var builder = new L.control.jsDialogBuilder({windowId: data.id,
+			mobileWizard: this,
+			map: this.map,
+			cssClass: 'autofilter'});
+
+		builder.build(parent, [data.control], false);
+		L.DomUtil.remove(control);
 	},
 
 	onClosePopup: function() {
