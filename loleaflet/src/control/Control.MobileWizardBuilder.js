@@ -19,6 +19,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['listbox'] = this._listboxControl;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
+		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 	},
 
 	baseSpinField: function(parentContainer, data, builder, customCallback) {
@@ -243,6 +244,38 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		if (data.hidden)
 			$(checkbox).hide();
+
+		return false;
+	},
+
+	// TODO: use the same handler as desktop one
+	_radiobuttonControl: function(parentContainer, data, builder) {
+		var container = L.DomUtil.createWithId('div', data.id + '-container', parentContainer);
+		L.DomUtil.addClass(container, 'radiobutton');
+		L.DomUtil.addClass(container, builder.options.cssClass);
+
+		var radiobutton = L.DomUtil.createWithId('input', data.id, container);
+		radiobutton.type = 'radio';
+
+		if (data.group)
+			radiobutton.name = data.group;
+
+		var radiobuttonLabel = L.DomUtil.create('label', '', container);
+		radiobuttonLabel.innerHTML = builder._cleanText(data.text);
+		radiobuttonLabel.for = data.id;
+
+		if (data.enabled === 'false' || data.enabled === false)
+			$(radiobutton).attr('disabled', 'disabled');
+
+		if (data.checked === 'true' || data.checked === true)
+			$(radiobutton).prop('checked', true);
+
+		radiobutton.addEventListener('change', function() {
+			builder.callback('radiobutton', 'change', radiobutton, this.checked, builder);
+		});
+
+		if (data.hidden)
+			$(radiobutton).hide();
 
 		return false;
 	},
