@@ -102,56 +102,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 	},
 
-	optimalWidth: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectColumn(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:SetOptimalColumnWidth');
-	},
-
-	insertColumnBefore: function(index) {
-		// First select the corresponding column because
-		// .uno:InsertColumn doesn't accept any column number
-		// as argument and just inserts before the selected column
-		if (!this.isHighlighted(index)) {
-			this._selectColumn(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:InsertColumns');
-		this._updateColumnHeader();
-	},
-
-	insertColumnAfter: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectColumn(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:InsertColumnsAfter');
-		this._updateColumnHeader();
-	},
-
-	deleteColumn: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectColumn(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:DeleteColumns');
-		this._updateColumnHeader();
-	},
-
-	hideColumn: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectColumn(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:HideColumn');
-		this._updateColumnHeader();
-	},
-
-	showColumn: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectColumn(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:ShowColumn');
-		this._updateColumnHeader();
-	},
-
 	_updateCanvas: function () {
 		if (this._headerInfo) {
 			this._headerInfo.update();
@@ -173,17 +123,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			end = this._twipsToPixels(end);
 		}
 		this.updateSelection(start, end);
-	},
-
-	_onUpdateCurrentColumn: function (e) {
-		var x = e.curX - 1; // 1-based to 0-based.
-		var w = this._twipsToPixels(e.width);
-		var slim = w <= 1;
-		this.updateCurrent(x, slim);
-	},
-
-	_updateColumnHeader: function () {
-		this._map._docLayer.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
 	},
 
 	drawHeaderEntry: function (entry, isOver, isHighlighted, isCurrent) {
@@ -374,63 +313,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 	},
 
-	fillColumns: function (columns, colGroups, converter, context) {
-		if (columns && columns.length < 2)
-			return;
-
-		var canvas = this._canvas;
-		this._setCanvasWidth();
-		this._setCanvasHeight();
-		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-
-		// Reset state
-		this._current = -1;
-		this._selection.start = this._selection.end = -1;
-		this._mouseOverEntry = null;
-		if (!window.contextMenuWizard) {
-			this._lastMouseOverIndex = undefined;
-		}
-
-		var sheetGeometry = this._map._docLayer.sheetGeometry;
-
-		if (!this._headerInfo) {
-			// create data structure for column widths
-			this._headerInfo = new L.Control.Header.HeaderInfo(this._map, true /* isCol */);
-			this._map._colHdr = this._headerInfo;
-		}
-
-		// setup conversion routine
-		this.converter = L.Util.bind(converter, context);
-
-		// create group array
-		this._groupLevels = columns ? parseInt(columns[0].groupLevels):
-			sheetGeometry.getColumnGroupLevels();
-		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
-
-		// collect group controls data
-		if (colGroups !== undefined && this._groups) {
-			this._collectGroupsData(colGroups);
-		}
-		else if (sheetGeometry) {
-			this._collectGroupsData(sheetGeometry.getColumnGroupsDataInView());
-		}
-
-		if (this._groups) {
-			this.resize(this._computeOutlineWidth() + this._borderWidth + this._headerHeight);
-		}
-		else if (this._canvasHeight !== this._headerHeight) {
-			this.resize(this._headerHeight);
-		}
-
-		this._redrawHeaders();
-
-		this.mouseInit(canvas);
-
-		if ($('.spreadsheet-header-columns').length > 0) {
-			$('.spreadsheet-header-columns').contextMenu(this._map.isPermissionEdit());
-		}
-	},
-
 	_redrawHeaders: function () {
 		this._canvasContext.clearRect(0, 0, this._canvas.width, this._canvas.height);
 		this._headerInfo.forEachElement(function(elemData) {
@@ -439,36 +321,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		// draw group controls
 		this.drawOutline();
-	},
-
-	_colIndexToAlpha: function(columnNumber) {
-		var offset = 'A'.charCodeAt();
-		var dividend = columnNumber;
-		var columnName = '';
-		var modulo;
-
-		while (dividend > 0) {
-			modulo = (dividend - 1) % 26;
-			columnName = String.fromCharCode(offset + modulo) + columnName;
-			dividend = Math.floor((dividend - modulo) / 26);
-		}
-
-		return columnName;
-	},
-
-	_selectColumn: function(colNumber, modifier) {
-		var command = {
-			Col: {
-				type: 'unsigned short',
-				value: colNumber
-			},
-			Modifier: {
-				type: 'unsigned short',
-				value: modifier
-			}
-		};
-
-		this._map.sendUnoCommand('.uno:SelectColumn ', command);
 	},
 
 	_onClick: function (e) {
@@ -523,17 +375,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 
 		this._map.enable(true);
-	},
-
-	_getVertLatLng: function (start, offset, e) {
-		var size = this._map.getSize();
-		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
-		var xpos = Math.max(drag.x, entryStart);
-		return [
-			this._map.unproject(new L.Point(xpos, 0)),
-			this._map.unproject(new L.Point(xpos, size.y)),
-		];
 	},
 
 	onDragStart: function (item, start, offset, e) {
@@ -657,48 +498,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		this._map.fire('updatecornerheader');
 	},
-
-	_insertColBefore: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.insertColumnBefore.call(this, index);
-		}
-	},
-
-	_insertColAfter: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.insertColumnAfter.call(this, index);
-		}
-	},
-
-	_deleteSelectedCol: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.deleteColumn.call(this, index);
-		}
-	},
-
-	_optimalWidth: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.optimalWidth.call(this, index);
-		}
-	},
-
-	_hideColumn: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.hideColumn.call(this, index);
-		}
-	},
-
-	_showColumn: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.showColumn.call(this, index);
-		}
-	}
 });
 
 L.control.columnHeader = function (options) {

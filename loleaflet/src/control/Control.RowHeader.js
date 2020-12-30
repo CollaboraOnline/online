@@ -101,51 +101,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 	},
 
-	optimalHeight: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectRow(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:SetOptimalRowHeight');
-	},
-
-	insertRowAbove: function(index) {
-		// First select the corresponding row because
-		// .uno:InsertRows doesn't accept any row number
-		// as argument and just inserts before the selected row
-		if (!this.isHighlighted(index)) {
-			this._selectRow(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:InsertRows');
-	},
-
-	insertRowBelow: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectRow(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:InsertRowsAfter');
-	},
-
-	deleteRow: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectRow(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:DeleteRows');
-	},
-
-	hideRow: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectRow(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:HideRow');
-	},
-
-	showRow: function(index) {
-		if (!this.isHighlighted(index)) {
-			this._selectRow(index, 0);
-		}
-		this._map.sendUnoCommand('.uno:ShowRow');
-	},
-
 	_updateCanvas: function () {
 		if (this._headerInfo) {
 			this._headerInfo.update();
@@ -167,13 +122,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 			end = this._twipsToPixels(end);
 		}
 		this.updateSelection(start, end);
-	},
-
-	_onUpdateCurrentRow: function (e) {
-		var y = e.curY - 1; // 1-based to 0-based.
-		var h = this._twipsToPixels(e.height);
-		var slim = h <= 1;
-		this.updateCurrent(y, slim);
 	},
 
 	drawHeaderEntry: function (entry, isOver, isHighlighted, isCurrent) {
@@ -363,63 +311,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		}
 	},
 
-	fillRows: function (rows, rowGroups, converter, context) {
-		if (rows && rows.length < 2)
-			return;
-
-		var canvas = this._canvas;
-		this._setCanvasWidth();
-		this._setCanvasHeight();
-		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-
-		// Reset state
-		this._current = -1;
-		this._selection.start = this._selection.end = -1;
-		this._mouseOverEntry = null;
-		if (!window.contextMenuWizard) {
-			this._lastMouseOverIndex = undefined;
-		}
-
-		var sheetGeometry = this._map._docLayer.sheetGeometry;
-
-		if (!this._headerInfo) {
-			// create data structure for row heights
-			this._headerInfo = new L.Control.Header.HeaderInfo(this._map, false /* isCol */);
-			this._map._rowHdr = this._headerInfo;
-		}
-
-		// setup conversion routine
-		this.converter = L.Util.bind(converter, context);
-
-		// create group array
-		this._groupLevels = rows ? parseInt(rows[0].groupLevels) :
-			sheetGeometry.getRowGroupLevels();
-		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
-
-		// collect group controls data
-		if (rowGroups !== undefined && this._groups) {
-			this._collectGroupsData(rowGroups);
-		}
-		else if (sheetGeometry) {
-			this._collectGroupsData(sheetGeometry.getRowGroupsDataInView());
-		}
-
-		if (this._groups) {
-			this.resize(this._computeOutlineWidth() + this._borderWidth + this._headerWidth);
-		}
-		else if (this._canvasWidth !== this._headerWidth) {
-			this.resize(this._headerWidth);
-		}
-
-		this._redrawHeaders();
-
-		this.mouseInit(canvas);
-
-		if ($('.spreadsheet-header-rows').length > 0) {
-			$('.spreadsheet-header-rows').contextMenu(this._map.isPermissionEdit());
-		}
-	},
-
 	_redrawHeaders: function () {
 		this._canvasContext.clearRect(0, 0, this._canvas.width, this._canvas.height);
 		this._headerInfo.forEachElement(function(elemData) {
@@ -428,21 +319,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		// draw group controls
 		this.drawOutline();
-	},
-
-	_selectRow: function(row, modifier) {
-		var command = {
-			Row: {
-				type: 'long',
-				value: row
-			},
-			Modifier: {
-				type: 'unsigned short',
-				value: modifier
-			}
-		};
-
-		this._map.sendUnoCommand('.uno:SelectRow ', command);
 	},
 
 	_onClick: function (e) {
@@ -491,17 +367,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 		}
 
 		this._map.enable(true);
-	},
-
-	_getHorzLatLng: function (start, offset, e) {
-		var size = this._map.getSize();
-		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
-		var ypos = Math.max(drag.y, entryStart);
-		return [
-			this._map.unproject(new L.Point(0, ypos)),
-			this._map.unproject(new L.Point(size.x, ypos)),
-		];
 	},
 
 	onDragStart: function (item, start, offset, e) {
@@ -629,48 +494,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		this._map.fire('updatecornerheader');
 	},
-
-	_insertRowAbove: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.insertRowAbove.call(this, index);
-		}
-	},
-
-	_insertRowBelow: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.insertRowBelow.call(this, index);
-		}
-	},
-
-	_deleteSelectedRow: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.deleteRow.call(this, index);
-		}
-	},
-
-	_optimalHeight: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.optimalHeight.call(this, index);
-		}
-	},
-
-	_hideRow: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.hideRow.call(this, index);
-		}
-	},
-
-	_showRow: function() {
-		var index = this._lastMouseOverIndex;
-		if (index) {
-			this.showRow.call(this, index);
-		}
-	}
 });
 
 L.control.rowHeader = function (options) {
