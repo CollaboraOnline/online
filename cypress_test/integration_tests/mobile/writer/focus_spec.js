@@ -49,7 +49,7 @@ describe('Focus tests', function() {
 		// Close the dialog
 		cy.get('.vex-dialog-button-secondary')
 			.click();
-		cy.get('.loleaflet-annotation-table').should('be.not.visible');
+		cy.get('.loleaflet-annotation-table').should('not.exist');
 
 		// Body should have the focus again (no focus on document)
 		cy.document().its('activeElement.tagName')

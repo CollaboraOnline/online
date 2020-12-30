@@ -199,7 +199,7 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		cy.get('.vex-dialog-form')
-			.should('not.be.visible');
+			.should('not.exist');
 	});
 
 	it('Copy.', function() {
@@ -222,7 +222,7 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		cy.get('.vex-dialog-form')
-			.should('not.be.visible');
+			.should('not.exist');
 	});
 
 	it('Paste.', function() {
@@ -245,7 +245,7 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		cy.get('.vex-dialog-form')
-			.should('not.be.visible');
+			.should('not.exist');
 	});
 
 	it('Select all.', function() {

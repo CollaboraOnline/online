@@ -158,6 +158,6 @@ describe('Toolbar tests', function() {
 			.click();
 
 		cy.get('.loleaflet-annotation-table')
-			.should('be.not.visible');
+			.should('not.exist');
 	});
 });

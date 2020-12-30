@@ -241,8 +241,13 @@ function selectHamburgerMenuItem(menuItems) {
 			.click();
 
 		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
-			cy.contains('.menu-entry-with-icon', menuItems[i])
-				.should('not.be.visible');
+			if (i === menuItems.length - 1) {
+				cy.contains('.menu-entry-with-icon', menuItems[i])
+					.should('not.exist');
+			} else {
+				cy.contains('.menu-entry-with-icon', menuItems[i])
+					.should('not.be.visible');
+			}
 		}
 	}
 
