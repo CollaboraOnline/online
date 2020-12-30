@@ -28,9 +28,9 @@ $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10
 endif
 
 SRC_TS = $(wildcard src/layer/tile/*.ts)
-SRC_TS_JS = $(patsubst src/layer/tile/%.ts,$(DIST_FOLDER)/src/layer/tile/%.js,$(SRC_TS))
+SRC_TS_JS = $(patsubst src/layer/tile/%.ts,src/layer/tile/%.js,$(SRC_TS))
 
-dist/src/layer/tile/%.js: src/layer/tile/%.ts
+src/layer/tile/%.js: src/layer/tile/%.ts
 	$(srcdir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness

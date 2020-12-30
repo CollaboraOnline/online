@@ -5,7 +5,7 @@
 * Abstract class, basis for ColumnHeader and RowHeader controls.
 * Used only in spreadsheets, implements the row/column headers.
 */
-/* global L Hammer */
+/* global $ L Hammer */
 
 L.Control.Header = L.Control.extend({
 	options: {
@@ -267,6 +267,385 @@ L.Control.Header = L.Control.extend({
 				this.select(entry, true);
 		}
 		this._current = entry && !zeroSizeEntry ? entry.index : -1;
+	},
+
+	optimalHeight: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectRow(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:SetOptimalRowHeight');
+	},
+
+	insertRowAbove: function(index) {
+		// First select the corresponding row because
+		// .uno:InsertRows doesn't accept any row number
+		// as argument and just inserts before the selected row
+		if (!this.isHighlighted(index)) {
+			this._selectRow(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:InsertRows');
+	},
+
+	insertRowBelow: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectRow(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:InsertRowsAfter');
+	},
+
+	deleteRow: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectRow(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:DeleteRows');
+	},
+
+	hideRow: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectRow(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:HideRow');
+	},
+
+	showRow: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectRow(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:ShowRow');
+	},
+
+	_onUpdateCurrentRow: function (e) {
+		var y = e.curY - 1; // 1-based to 0-based.
+		var h = this._twipsToPixels(e.height);
+		var slim = h <= 1;
+		this.updateCurrent(y, slim);
+	},
+
+
+	fillRows: function (rows, rowGroups, converter, context) {
+		if (rows && rows.length < 2)
+			return;
+
+		var canvas = this._canvas;
+		this._setCanvasWidth();
+		this._setCanvasHeight();
+		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+		// Reset state
+		this._current = -1;
+		this._selection.start = this._selection.end = -1;
+		this._mouseOverEntry = null;
+		if (!window.contextMenuWizard) {
+			this._lastMouseOverIndex = undefined;
+		}
+
+		var sheetGeometry = this._map._docLayer.sheetGeometry;
+
+		if (!this._headerInfo) {
+			// create data structure for row heights
+			this._headerInfo = new L.Control.Header.HeaderInfo(this._map, false /* isCol */);
+			this._map._rowHdr = this._headerInfo;
+		}
+
+		// setup conversion routine
+		this.converter = L.Util.bind(converter, context);
+
+		// create group array
+		this._groupLevels = rows ? parseInt(rows[0].groupLevels) :
+			sheetGeometry.getRowGroupLevels();
+		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
+
+		// collect group controls data
+		if (rowGroups !== undefined && this._groups) {
+			this._collectGroupsData(rowGroups);
+		}
+		else if (sheetGeometry) {
+			this._collectGroupsData(sheetGeometry.getRowGroupsDataInView());
+		}
+
+		if (this._groups) {
+			this.resize(this._computeOutlineWidth() + this._borderWidth + this._headerWidth);
+		}
+		else if (this._canvasWidth !== this._headerWidth) {
+			this.resize(this._headerWidth);
+		}
+
+		this._redrawHeaders();
+
+		this.mouseInit(canvas);
+
+		if ($('.spreadsheet-header-rows').length > 0) {
+			$('.spreadsheet-header-rows').contextMenu(this._map.isPermissionEdit());
+		}
+	},
+
+	_selectRow: function(row, modifier) {
+		var command = {
+			Row: {
+				type: 'long',
+				value: row
+			},
+			Modifier: {
+				type: 'unsigned short',
+				value: modifier
+			}
+		};
+
+		this._map.sendUnoCommand('.uno:SelectRow ', command);
+	},
+
+	_insertRowAbove: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.insertRowAbove.call(this, index);
+		}
+	},
+
+	_insertRowBelow: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.insertRowBelow.call(this, index);
+		}
+	},
+
+	_deleteSelectedRow: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.deleteRow.call(this, index);
+		}
+	},
+
+	_optimalHeight: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.optimalHeight.call(this, index);
+		}
+	},
+
+	_hideRow: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.hideRow.call(this, index);
+		}
+	},
+
+	_showRow: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.showRow.call(this, index);
+		}
+	},
+
+	_getHorzLatLng: function (start, offset, e) {
+		var size = this._map.getSize();
+		var drag = this._map.mouseEventToContainerPoint(e);
+		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
+		var ypos = Math.max(drag.y, entryStart);
+		return [
+			this._map.unproject(new L.Point(0, ypos)),
+			this._map.unproject(new L.Point(size.x, ypos)),
+		];
+	},
+
+	optimalWidth: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectColumn(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:SetOptimalColumnWidth');
+	},
+
+	insertColumnBefore: function(index) {
+		// First select the corresponding column because
+		// .uno:InsertColumn doesn't accept any column number
+		// as argument and just inserts before the selected column
+		if (!this.isHighlighted(index)) {
+			this._selectColumn(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:InsertColumns');
+		this._updateColumnHeader();
+	},
+
+	insertColumnAfter: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectColumn(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:InsertColumnsAfter');
+		this._updateColumnHeader();
+	},
+
+	deleteColumn: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectColumn(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:DeleteColumns');
+		this._updateColumnHeader();
+	},
+
+	hideColumn: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectColumn(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:HideColumn');
+		this._updateColumnHeader();
+	},
+
+	showColumn: function(index) {
+		if (!this.isHighlighted(index)) {
+			this._selectColumn(index, 0);
+		}
+		this._map.sendUnoCommand('.uno:ShowColumn');
+		this._updateColumnHeader();
+	},
+
+	_onUpdateCurrentColumn: function (e) {
+		var x = e.curX - 1; // 1-based to 0-based.
+		var w = this._twipsToPixels(e.width);
+		var slim = w <= 1;
+		this.updateCurrent(x, slim);
+	},
+
+	_updateColumnHeader: function () {
+		this._map._docLayer.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0, offset: {x: undefined, y: 0}});
+	},
+
+	fillColumns: function (columns, colGroups, converter, context) {
+		if (columns && columns.length < 2)
+			return;
+
+		var canvas = this._canvas;
+		this._setCanvasWidth();
+		this._setCanvasHeight();
+		this._canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+		// Reset state
+		this._current = -1;
+		this._selection.start = this._selection.end = -1;
+		this._mouseOverEntry = null;
+		if (!window.contextMenuWizard) {
+			this._lastMouseOverIndex = undefined;
+		}
+
+		var sheetGeometry = this._map._docLayer.sheetGeometry;
+
+		if (!this._headerInfo) {
+			// create data structure for column widths
+			this._headerInfo = new L.Control.Header.HeaderInfo(this._map, true /* isCol */);
+			this._map._colHdr = this._headerInfo;
+		}
+
+		// setup conversion routine
+		this.converter = L.Util.bind(converter, context);
+
+		// create group array
+		this._groupLevels = columns ? parseInt(columns[0].groupLevels):
+			sheetGeometry.getColumnGroupLevels();
+		this._groups = this._groupLevels ? new Array(this._groupLevels) : null;
+
+		// collect group controls data
+		if (colGroups !== undefined && this._groups) {
+			this._collectGroupsData(colGroups);
+		}
+		else if (sheetGeometry) {
+			this._collectGroupsData(sheetGeometry.getColumnGroupsDataInView());
+		}
+
+		if (this._groups) {
+			this.resize(this._computeOutlineWidth() + this._borderWidth + this._headerHeight);
+		}
+		else if (this._canvasHeight !== this._headerHeight) {
+			this.resize(this._headerHeight);
+		}
+
+		this._redrawHeaders();
+
+		this.mouseInit(canvas);
+
+		if ($('.spreadsheet-header-columns').length > 0) {
+			$('.spreadsheet-header-columns').contextMenu(this._map.isPermissionEdit());
+		}
+	},
+
+	_colIndexToAlpha: function(columnNumber) {
+		var offset = 'A'.charCodeAt();
+		var dividend = columnNumber;
+		var columnName = '';
+		var modulo;
+
+		while (dividend > 0) {
+			modulo = (dividend - 1) % 26;
+			columnName = String.fromCharCode(offset + modulo) + columnName;
+			dividend = Math.floor((dividend - modulo) / 26);
+		}
+
+		return columnName;
+	},
+
+	_selectColumn: function(colNumber, modifier) {
+		var command = {
+			Col: {
+				type: 'unsigned short',
+				value: colNumber
+			},
+			Modifier: {
+				type: 'unsigned short',
+				value: modifier
+			}
+		};
+
+		this._map.sendUnoCommand('.uno:SelectColumn ', command);
+	},
+
+	_getVertLatLng: function (start, offset, e) {
+		var size = this._map.getSize();
+		var drag = this._map.mouseEventToContainerPoint(e);
+		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
+		var xpos = Math.max(drag.x, entryStart);
+		return [
+			this._map.unproject(new L.Point(xpos, 0)),
+			this._map.unproject(new L.Point(xpos, size.y)),
+		];
+	},
+
+	_insertColBefore: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.insertColumnBefore.call(this, index);
+		}
+	},
+
+	_insertColAfter: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.insertColumnAfter.call(this, index);
+		}
+	},
+
+	_deleteSelectedCol: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.deleteColumn.call(this, index);
+		}
+	},
+
+	_optimalWidth: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.optimalWidth.call(this, index);
+		}
+	},
+
+	_hideColumn: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.hideColumn.call(this, index);
+		}
+	},
+
+	_showColumn: function() {
+		var index = this._lastMouseOverIndex;
+		if (index) {
+			this.showColumn.call(this, index);
+		}
 	},
 
 	_onPan: function (event) {
