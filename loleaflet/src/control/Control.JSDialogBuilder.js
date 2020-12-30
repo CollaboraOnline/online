@@ -960,15 +960,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var radiobutton = L.DomUtil.create('input', '', container);
 		radiobutton.type = 'radio';
 
+		if (data.group)
+			radiobutton.name = data.group;
+
 		var radiobuttonLabel = L.DomUtil.create('label', '', container);
 		radiobuttonLabel.innerHTML = builder._cleanText(data.text);
 		radiobuttonLabel.for = data.id;
 
-		if (data.enabled == 'false')
+		if (data.enabled === 'false' || data.enabled === false)
 			$(radiobutton).attr('disabled', 'disabled');
 
-		if (data.checked == 'true')
-			$(radiobutton).attr('checked', 'checked');
+		if (data.checked === 'true' || data.checked === true)
+			$(radiobutton).prop('checked', true);
 
 		radiobutton.addEventListener('change', function() {
 			builder.callback('radiobutton', 'change', container, this.checked, builder);
