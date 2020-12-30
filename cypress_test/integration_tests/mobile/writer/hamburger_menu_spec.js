@@ -244,7 +244,7 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		cy.get('.vex-dialog-form')
-			.should('not.be.visible');
+			.should('not.exist');
 	});
 
 	it('Copy.', function() {
@@ -264,7 +264,7 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		cy.get('.vex-dialog-form')
-			.should('not.be.visible');
+			.should('not.exist');
 	});
 
 	it('Paste.', function() {
@@ -284,13 +284,10 @@ describe('Trigger hamburger menu options.', function() {
 			.click();
 
 		cy.get('.vex-dialog-form')
-			.should('not.be.visible');
+			.should('not.exist');
 	});
 
 	it('Select all.', function() {
-		cy.get('#copy-paste-container p')
-			.should('not.contain.text', 'xxxxxx');
-
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Select All']);
 
 		helper.textSelectionShouldExist();

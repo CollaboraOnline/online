@@ -400,7 +400,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		mobileHelper.selectListBoxItem2('#transtype', 'Linear');
 
 		cy.get('#settransparency .spinfield')
-			.should('not.be.visible');
+			.should('not.exist');
 
 		triggerNewSVG();
 

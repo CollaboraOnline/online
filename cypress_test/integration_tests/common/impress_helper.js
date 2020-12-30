@@ -76,7 +76,7 @@ function selectTextShapeInTheCenter() {
 		.should('be.visible');
 
 	cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Page g')
-		.should('be.visible');
+		.should('exist');
 
 	cy.log('Selecting text shape - end.');
 }
