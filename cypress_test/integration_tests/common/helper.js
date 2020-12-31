@@ -765,28 +765,28 @@ function moveCursor(direction, modifier, checkCursorVis = true) {
 
 	typeIntoDocument(key);
 
-	if (checkCursorVis === true) {
-		cy.get('.blinking-cursor')
-			.should('be.visible');
-	}
-
 	cy.get('@origCursorPos')
 		.then(function(origCursorPos) {
 			cy.get('.blinking-cursor')
 				.should(function(cursor) {
 					if (direction === 'up' ||
-						(direction === 'home' && modifier === 'ctrl')) {
-						expect(cursor.offset().top).to.be.lessThan(origCursorPos);
-					} else if (direction === 'down' ||
+						direction === 'down' ||
+						(direction === 'home' && modifier === 'ctrl') ||
 						(direction === 'end' && modifier === 'ctrl')) {
-						expect(cursor.offset().top).to.be.greaterThan(origCursorPos);
-					} else if (direction === 'left' || direction === 'home') {
-						expect(cursor.offset().left).to.be.lessThan(origCursorPos);
-					} else if (direction === 'right' || direction === 'end') {
-						expect(cursor.offset().left).to.be.greaterThan(origCursorPos);
+						expect(cursor.offset().top).to.not.equal(origCursorPos);
+					} else if (direction === 'left' ||
+								direction === 'right' ||
+								direction === 'end' ||
+								direction === 'home') {
+						expect(cursor.offset().left).to.not.equal(origCursorPos);
 					}
 				});
 		});
+
+	if (checkCursorVis === true) {
+		cy.get('.blinking-cursor')
+			.should('be.visible');
+	}
 
 	cy.log('Moving text cursor - end.');
 }
