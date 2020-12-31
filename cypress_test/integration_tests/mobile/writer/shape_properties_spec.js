@@ -16,10 +16,6 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		helper.moveCursor('home');
 
-		if (Cypress.env('INTEGRATION') === 'php-proxy') {
-			cy.wait(1000);
-		}
-
 		mobileHelper.openInsertionWizard();
 
 		// Do insertion
