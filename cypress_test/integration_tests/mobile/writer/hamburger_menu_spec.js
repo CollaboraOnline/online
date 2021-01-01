@@ -694,7 +694,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
 	});
 
-	it.skip('Resolved comments.', function() {
+	it('Resolved comments.', function() {
 		// Insert comment first
 		mobileHelper.openInsertionWizard();
 
@@ -710,21 +710,22 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('have.attr', 'style')
 			.should('not.contain', 'visibility: hidden');
 
 		// Resolve comment
 		mobileHelper.selectAnnotationMenuItem('Resolve');
 
-		cy.get('.loleaflet-annotation')
-			.should('have.attr', 'style')
-			.should('contain', 'visibility: hidden');
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
+			.should('not.exist');
 
 		// Show resolved comments
 		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
 
-		cy.get('.loleaflet-annotation')
+		mobileHelper.openCommentWizard();
+
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('have.attr', 'style')
 			.should('not.contain', 'visibility: hidden');
 

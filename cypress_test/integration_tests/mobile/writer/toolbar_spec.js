@@ -40,16 +40,16 @@ describe('Toolbar tests', function() {
 			.should('not.have.class', 'disabled');
 	});
 
-	it.skip('State of insert comment toolbar item.', function() {
+	it('State of comment wizard toolbar item.', function() {
 		// Insertion mobile wizard toolbar button is disabled by default
-		cy.get('#tb_actionbar_item_insertcomment')
-			.should('have.class', 'disabled');
+		cy.get('#tb_actionbar_item_comment_wizard')
+			.should('not.have.class', 'disabled');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
 		// Button should be enabled now
-		cy.get('#tb_actionbar_item_insertcomment')
+		cy.get('#tb_actionbar_item_comment_wizard')
 			.should('not.have.class', 'disabled');
 	});
 
@@ -140,24 +140,30 @@ describe('Toolbar tests', function() {
 		mobileHelper.openInsertionWizard();
 	});
 
-	it.skip('Open insert comment dialog by toolbar item.', function() {
+	it('Open comment wizard by toolbar item.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Click on toolbar item
-		cy.get('#tb_actionbar_item_insertcomment')
+		// Click on mobile wizard toolbar item
+		cy.get('#tb_actionbar_item_comment_wizard')
 			.should('not.have.class', 'disabled')
 			.click();
 
-		// Comment insertion dialog is opened
-		cy.get('.loleaflet-annotation-table')
-			.should('be.visible');
+		// Mobile wizard is opened and it has any content
+		cy.get('#mobile-wizard-content')
+			.should('not.be.empty');
 
-		// Close the dialog
-		cy.get('.vex-dialog-button-secondary')
+		// Toolbar button is checked
+		cy.get('#tb_actionbar_item_comment_wizard table')
+			.should('have.class', 'checked');
+
+		cy.get('#tb_actionbar_item_comment_wizard')
 			.click();
 
-		cy.get('.loleaflet-annotation-table')
-			.should('be.not.visible');
+		// Mobile wizard is closed
+		cy.get('#mobile-wizard').should('not.be.visible');
+
+		cy.get('#tb_actionbar_item_comment_wizard table')
+			.should('not.have.class', 'checked');
 	});
 });

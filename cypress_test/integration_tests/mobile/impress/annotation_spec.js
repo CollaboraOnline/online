@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe.skip('Annotation tests.', function() {
+describe('Annotation tests.', function() {
 	var testFileName = 'annotation.odp';
 
 	beforeEach(function() {
@@ -31,10 +31,10 @@ describe.skip('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
@@ -50,7 +50,9 @@ describe.skip('Annotation tests.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		cy.get('.loleaflet-annotation-content')
+		mobileHelper.openCommentWizard();
+
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
@@ -74,10 +76,10 @@ describe.skip('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'modified some text');
 	});
 
@@ -112,12 +114,12 @@ describe.skip('Annotation tests.', function() {
 	it('Remove comment.', function() {
 		insertComment();
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Remove');
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.loleaflet-annotation-content .wizard-comment-box')
 			.should('not.exist');
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
@@ -142,10 +144,10 @@ describe.skip('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-secondary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.loleaflet-annotation-content-wrapper.wizard-comment-box')
 			.should('not.exist');
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('not.exist');
 	});
 });
