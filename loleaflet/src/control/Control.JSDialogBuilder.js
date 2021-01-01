@@ -2020,7 +2020,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		container.annotation = data.annotation;
 		container.id = data.id;
 		builder._createComment(container, data, true);
-		if (data.children.length > 0)
+		if (data.children.length > 1)
 		{
 			var numberOfReplies = data.children.length - 1;
 			if (numberOfReplies > 0)
