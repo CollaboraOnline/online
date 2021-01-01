@@ -263,6 +263,7 @@ define cleanup_before_run
 	@rm -f $(LOOLWSD_LOG)
 	@rm -f $(LOOLWSD_OUTPUT)
 	@rm -f $(PID_FILE)
+	@rm -rf cypress
 endef
 
 DESKTOP_CONFIG = \
