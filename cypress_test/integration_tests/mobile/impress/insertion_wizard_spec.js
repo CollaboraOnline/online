@@ -68,7 +68,7 @@ describe('Impress insertion wizard.', function() {
 			.should('exist');
 	});
 
-	it.skip('Insert comment.', function() {
+	it('Insert comment.', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'Comment')
@@ -85,10 +85,10 @@ describe('Impress insertion wizard.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation-content.loleaflet-dont-break')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 	});
 

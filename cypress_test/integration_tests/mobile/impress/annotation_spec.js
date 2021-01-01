@@ -119,7 +119,7 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.selectAnnotationMenuItem('Remove');
 
-		cy.get('.loleaflet-annotation-content .wizard-comment-box')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('not.exist');
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
