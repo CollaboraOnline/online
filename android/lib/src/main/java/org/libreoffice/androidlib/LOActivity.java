@@ -762,7 +762,7 @@ public class LOActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (documentLoaded) {
+        if (!documentLoaded) {
             finishAndRemoveTask();
             return;
         }
