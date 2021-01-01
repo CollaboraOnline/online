@@ -604,6 +604,8 @@ button.leaflet-control-search-next
 .w2ui-icon.connectors_connectorlinearrows { background: url('images/lc_connectorlinearrows.svg') no-repeat center !important; }
 .w2ui-icon.connectors_connectorcurvearrows { background: url('images/lc_connectorcurvearrows.svg') no-repeat center !important; }
 
+.w2ui-icon.fontworkgalleryfloater { background: url('images/lc_fontworkgalleryfloater.svg') no-repeat center !important; }
+
 .w2ui-icon.frame01 { background: url('images/fr01.svg') no-repeat center !important; }
 .w2ui-icon.frame02 { background: url('images/fr02.svg') no-repeat center !important; }
 .w2ui-icon.frame03 { background: url('images/fr03.svg') no-repeat center !important; }

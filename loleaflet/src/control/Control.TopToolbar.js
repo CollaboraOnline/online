@@ -218,6 +218,7 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'insertobjectchart',  img: 'insertobjectchart', hint: _UNO('.uno:InsertObjectChart', '', true), uno: 'InsertObjectChart'},
 			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: function() {window.insertShapes('insertshapes'); }}, html: window.getShapesPopupHtml()},
 			{type: 'drop',  id: 'insertconnectors',  img: 'connectors_connector', hint: _('Insert connectors'), overlay: {onShow: function() {window.insertShapes('insertconnectors'); }}, html: window.getShapesPopupHtml(), hidden: true},
+			{type: 'button',  id: 'fontworkgalleryfloater', img: 'fontworkgalleryfloater', hint: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', hidden: true},
 			{type: 'break',   id: 'breakinsert', desktop: true},
 			{type: 'button',  id: 'inserttextbox', img: 'text', hint: _UNO('.uno:Text', '', true), uno: 'Text?CreateDirectly:bool=true', hidden: true},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true},
@@ -331,7 +332,8 @@ L.Control.TopToolbar = L.Control.extend({
 			if (toolbarUp) {
 				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
-					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel', 'insertconnectors');
+					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel', 'insertconnectors', 'fontworkgalleryfloater');
+					'breaksidebar', 'modifypage', 'insertconnectors');
 			}
 			break;
 		}
