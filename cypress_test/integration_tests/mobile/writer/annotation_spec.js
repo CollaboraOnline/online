@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe.skip('Annotation tests.', function() {
+describe('Annotation tests.', function() {
 	var testFileName = 'annotation.odt';
 
 	beforeEach(function() {
@@ -32,10 +32,10 @@ describe.skip('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 	}
 
@@ -48,7 +48,9 @@ describe.skip('Annotation tests.', function() {
 
 		mobileHelper.enableEditingMobile();
 
-		cy.get('.loleaflet-annotation-content')
+		mobileHelper.openCommentWizard();
+
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 	});
 
@@ -72,10 +74,10 @@ describe.skip('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'modified some text');
 	});
 
@@ -96,25 +98,25 @@ describe.skip('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation:nth-of-type(1) .loleaflet-annotation-content')
+		cy.get('.ui-content .wizard-comment-box.loleaflet-annotation-content-wrapper:nth-of-type(1) .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
-		cy.get('.loleaflet-annotation:nth-of-type(2) .loleaflet-annotation-content')
+		cy.get('.ui-content .wizard-comment-box.loleaflet-annotation-content-wrapper:nth-of-type(2) .loleaflet-annotation-content')
 			.should('have.text', 'reply');
 	});
 
 	it('Remove comment.', function() {
 		insertComment();
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Remove');
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('not.exist');
 
 	});
@@ -137,10 +139,10 @@ describe.skip('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-secondary')
 			.click();
 
-		cy.get('.loleaflet-annotation')
+		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('not.exist');
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('not.exist');
 	});
 
@@ -150,15 +152,15 @@ describe.skip('Annotation tests.', function() {
 
 		insertComment();
 
-		cy.get('.loleaflet-annotation-content')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Resolve');
 
-		cy.get('.loleaflet-annotation-content-resolved')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content-resolved')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation-content-resolved')
+		cy.get('.wizard-comment-box .loleaflet-annotation-content-resolved')
 			.should('have.text', 'Resolved');
 	});
 });

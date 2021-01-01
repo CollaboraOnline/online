@@ -186,6 +186,19 @@ function openInsertionWizard() {
 	cy.log('Opening insertion wizard - end.');
 }
 
+function openCommentWizard() {
+	cy.log('Opening Comment wizard - start.');
+
+	cy.get('#tb_actionbar_item_comment_wizard')
+		.should('not.have.class', 'disabled')
+		.click();
+
+	cy.get('#tb_actionbar_item_comment_wizard table')
+		.should('have.class', 'checked');
+
+	cy.log('Opening Comment wizard - end.');
+}
+
 function closeInsertionWizard() {
 	cy.log('Closing insertion wizard - start.');
 
@@ -257,7 +270,7 @@ function selectHamburgerMenuItem(menuItems) {
 function selectAnnotationMenuItem(menuItem) {
 	cy.log('Selecting annotation menu item - start.');
 
-	cy.get('.loleaflet-annotation-menu')
+	cy.get('.wizard-comment-box .loleaflet-annotation-menu')
 		.click({force: true});
 
 	cy.get('.context-menu-list')
@@ -313,3 +326,4 @@ module.exports.selectFromColorPalette = selectFromColorPalette;
 module.exports.openTextPropertiesPanel = openTextPropertiesPanel;
 module.exports.selectListBoxItem = selectListBoxItem;
 module.exports.selectListBoxItem2 = selectListBoxItem2;
+module.exports.openCommentWizard = openCommentWizard;
