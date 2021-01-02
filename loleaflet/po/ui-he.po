@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-10 08:58+0000\n"
+"PO-Revision-Date: 2020-12-28 11:29+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-ui-he.po\n"
 "X-Pootle-Revision: 3939478\n"
 
@@ -746,11 +746,11 @@ msgstr "למחוק עמוד זה?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "גלילת ההערות למעלה"
 
 #: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "גלילת ההערות למטה"
 
 #: src/control/Control.SearchBar.js:30
 msgid "Clear the search field"
@@ -892,7 +892,7 @@ msgstr "השקופית הבאה"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
-"סתירת ביטול/שחזור בין מספר משתמשים. נא להשתמש בתיקון מסמכים כדי לפתור זאת."
+"סתירת ביטול/שחזור בין מספר משתמשים. נא להשתמש בתיקון מסמכים כדי לפתור זאת"
 
 #: src/control/Control.TopToolbar.js:106
 #: src/control/Control.NotebookbarWriter.js:1521
