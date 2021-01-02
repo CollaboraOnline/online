@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-12-16 22:30+0000\n"
+"PO-Revision-Date: 2021-01-02 21:57+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-help-ja.po\n"
 "X-Pootle-Revision: 3446209\n"
 
@@ -58,7 +58,7 @@ msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
-msgstr ""
+msgstr "形式を選択して貼り付け"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
 msgid "Ctrl + Alt + Shift + V"
