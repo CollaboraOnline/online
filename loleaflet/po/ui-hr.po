@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-09 22:52+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2020-12-23 23:07+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
 "Language: hr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-ui-hr.po\n"
 "X-Pootle-Revision: 3937859\n"
 
@@ -186,7 +186,7 @@ msgstr "Isteklo:"
 
 #: admin/admin.strings.js:45
 msgid "Refresh"
-msgstr "Osvježi"
+msgstr "Aktualiziraj"
 
 #: admin/admin.strings.js:46
 msgid "Shutdown Server"
@@ -202,7 +202,7 @@ msgstr "Aktualiziraj dnevnik"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Filtar kanala:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
@@ -1317,9 +1317,8 @@ msgstr ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Ups, postoji problem s povezivanjem dokumenta"
+msgstr "Ups, postoji problem s povezivanjem na %productName: "
 
 #: src/core/Socket.js:305
 msgid "Served by:"
