@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-16 22:30+0000\n"
+"PO-Revision-Date: 2021-01-02 21:57+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-ui-ja.po\n"
 "X-Pootle-Revision: 3937895\n"
 
@@ -347,7 +347,7 @@ msgstr "削除"
 
 #: src/control/Control.ContextMenu.js:267
 msgid "Paste Special"
-msgstr ""
+msgstr "形式を選択して貼り付け"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -405,31 +405,31 @@ msgstr "関数ウィザード"
 
 #: src/control/Control.JSDialogBuilder.js:273
 msgid "Solid"
-msgstr ""
+msgstr "実線"
 
 #: src/control/Control.JSDialogBuilder.js:276
 msgid "Linear"
-msgstr ""
+msgstr "線形"
 
 #: src/control/Control.JSDialogBuilder.js:279
 msgid "Axial"
-msgstr ""
+msgstr "軸"
 
 #: src/control/Control.JSDialogBuilder.js:282
 msgid "Radial"
-msgstr ""
+msgstr "放射状"
 
 #: src/control/Control.JSDialogBuilder.js:285
 msgid "Ellipsoid"
-msgstr ""
+msgstr "楕円"
 
 #: src/control/Control.JSDialogBuilder.js:289
 msgid "Quadratic"
-msgstr ""
+msgstr "放物線"
 
 #: src/control/Control.JSDialogBuilder.js:292
 msgid "Square"
-msgstr ""
+msgstr "正方形"
 
 #: src/control/Control.JSDialogBuilder.js:295
 msgid "Fixed size"
@@ -1290,7 +1290,7 @@ msgstr ""
 
 #: src/control/Toolbar.js:635
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "ハイパーリンクの挿入"
 
 #: src/control/Toolbar.js:637
 msgid "Text"

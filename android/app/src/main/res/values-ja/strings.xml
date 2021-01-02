@@ -10,7 +10,7 @@
     <string name="pref_sort_title">ファイルオーダー</string>
     <string name="pref_file_explorer_title">ファイルマネージャーのレイアウト</string>
     <string name="pref_category_explorer">ファイルマネージャーの設定</string>
-    <string name="list_view">リスト</string>
+    <string name="list_view">リスト表示</string>
     <string name="storage_permission_required">ストレージの権限が必要です</string>
     <string name="file_creation_failed">ファイルの作成に失敗しました</string>
     <string name="no_items">アイテムはありません</string>
@@ -18,7 +18,7 @@
     <string name="app_version">バージョン: %1$s, ビルド ID: %2$s</string>
     <string name="new_textdocument">新規文書ドキュメント</string>
     <string name="new_presentation">新規プレゼンテーション</string>
-    <string name="new_spreadsheet">新規表計算</string>
+    <string name="new_spreadsheet">新規表計算ドキュメント</string>
     <string name="sort_za">Z-A</string>
     <string name="app_vendor">このリリースは $VENDOR が提供しました。</string>
     <string name="loading">読み込み中...</string>
@@ -27,9 +27,27 @@
 \nonline git-hash: %2$s
 \ncore git-hash: %3$s</string>
     <string name="pref_viewmode_summary">ファイルをグリッドまたはリストとして表示します。</string>
-    <string name="grid_view">グリッド</string>
+    <string name="grid_view">グリッド表示</string>
     <string name="pref_show_hidden_files_summary">隠しファイル/フォルダを表示する</string>
     <string name="title_browser">すべてのファイル</string>
     <string name="filter_presentations">プレゼンテーション</string>
     <string name="filter_spreadsheets">表計算ドキュメント</string>
+    <string name="title_recents">最近使用したファイル</string>
+    <string name="positive_ok">OK</string>
+    <string name="current_dir">現在のディレクトリ: %1$s</string>
+    <string name="directory_browser_label">ディレクトリの選択</string>
+    <string name="confirm_label">確認</string>
+    <string name="up_description">親ディレクトリへ</string>
+    <string name="password">パスワード</string>
+    <string name="theme">テーマ</string>
+    <string name="sort_smallest">小さい順</string>
+    <string name="sort_largest">大きい順</string>
+    <string name="app_description">$APP_NAME はワードプロセッサー、表計算、プレゼンテーションやその他を含む、モダンで使いやすいオープンソースのオフィススイートです。</string>
+    <string name="about_moreinfo">詳細情報</string>
+    <string name="about_license">ライセンスを表示</string>
+    <string name="sort_newest">新しい順</string>
+    <string name="sort_oldest">古い順</string>
+    <string name="filter_documents">文書ドキュメント</string>
+    <string name="open">開く</string>
+    <string name="filter_everything">すべての形式</string>
 </resources>
