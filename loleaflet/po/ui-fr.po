@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-01 00:29+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2020-12-23 23:07+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-ui-fr.po\n"
 "X-Pootle-Revision: 3937804\n"
 
@@ -204,7 +204,7 @@ msgstr "Actualiser le journal"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Filtre de canal :"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
@@ -237,9 +237,8 @@ msgid "Sent"
 msgstr "Envoyé"
 
 #: admin/src/AdminSocketBase.js:52
-#, fuzzy
 msgid "Server has been shut down; please reload the page."
-msgstr "Le serveur a été arrêté, veuillez recharger la page"
+msgstr "Le serveur a été arrêté, veuillez recharger la page."
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -1326,9 +1325,8 @@ msgstr ""
 "connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Oups, il y a un problème de connexion au document"
+msgstr "Oups, il y a un problème de connexion au %productName : "
 
 #: src/core/Socket.js:305
 msgid "Served by:"

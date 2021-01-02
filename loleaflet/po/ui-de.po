@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2020-12-05 22:26+0000\n"
-"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
+"PO-Revision-Date: 2020-12-23 23:07+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -203,7 +203,7 @@ msgstr "Logging aktualisieren"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanalfilter:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
@@ -236,9 +236,8 @@ msgid "Sent"
 msgstr "Gesendet"
 
 #: admin/src/AdminSocketBase.js:52
-#, fuzzy
 msgid "Server has been shut down; please reload the page."
-msgstr "Der Server wurde heruntergefahren, bitte laden Sie die Seite neu"
+msgstr "Der Server wurde heruntergefahren, bitte laden Sie die Seite neu."
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -1326,9 +1325,8 @@ msgstr ""
 "connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Es besteht ein Problem bei der Verbindung zum Dokument"
+msgstr "Es besteht ein Problem bei der Verbindung zum %productName: "
 
 #: src/core/Socket.js:305
 msgid "Served by:"
