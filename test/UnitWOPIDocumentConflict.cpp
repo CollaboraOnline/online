@@ -78,45 +78,45 @@ public:
         }
     }
 
-    bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */,
-                           const bool /* flush */, int& /*unitReturn*/) override
+    bool onFilterSendMessage(const char* data, const size_t len, const WSOpCode /* code */,
+                             const bool /* flush */, int& /*unitReturn*/) override
     {
         const std::string message(data, len);
         switch (_phase)
         {
             case Phase::WaitLoadStatus:
             {
-                LOG_TST("filterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
+                LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
                                                   << "(WaitLoadStatus): [" << message << ']');
                 if (_docLoaded == DocLoaded::Doc1 && Util::startsWith(message, "status:"))
                 {
                     _phase = Phase::ModifyDoc;
-                    LOG_TST("filterSendMessage: Switching to Phase::ModifyDoc");
+                    LOG_TST("onFilterSendMessage: Switching to Phase::ModifyDoc");
                     SocketPoll::wakeupWorld();
                 }
             }
             break;
             case Phase::WaitModifiedStatus:
             {
-                LOG_TST("filterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
+                LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
                                                   << "(WaitModifiedStatus): [" << message << ']');
                 if (_docLoaded == DocLoaded::Doc1
                     && message == "statechanged: .uno:ModifiedStatus=true")
                 {
                     _phase = Phase::ChangeStorageDoc;
-                    LOG_TST("filterSendMessage: Switching to Phase::ChangeStorageDoc");
+                    LOG_TST("onFilterSendMessage: Switching to Phase::ChangeStorageDoc");
                     SocketPoll::wakeupWorld();
                 }
             }
             break;
             case Phase::WaitSaveResponse:
             {
-                LOG_TST("filterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
+                LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
                                                   << "(WaitSaveResponse): [" << message << ']');
                 if (message == "error: cmd=storage kind=documentconflict")
                 {
                     _phase = Phase::WaitDocClose;
-                    LOG_TST("filterSendMessage: Switching to Phase::WaitDocClose");
+                    LOG_TST("onFilterSendMessage: Switching to Phase::WaitDocClose");
 
                     // we don't want to save current changes because doing so would
                     // overwrite the document which was changed underneath us
@@ -127,12 +127,12 @@ public:
             break;
             case Phase::WaitDocClose:
             {
-                LOG_TST("filterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
+                LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
                                                   << "(WaitDocClose): [" << message << ']');
                 if (message == "exit")
                 {
                     _phase = Phase::LoadNewDocument;
-                    LOG_TST("filterSendMessage: Switching to Phase::LoadNewDocument");
+                    LOG_TST("onFilterSendMessage: Switching to Phase::LoadNewDocument");
                     SocketPoll::wakeupWorld();
                 }
             }
