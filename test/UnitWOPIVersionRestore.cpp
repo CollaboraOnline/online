@@ -52,7 +52,8 @@ public:
         }
     }
 
-    bool filterSendMessage(const char* data, const size_t len, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/) override
+    bool onFilterSendMessage(const char* data, const size_t len, const WSOpCode /* code */,
+                             const bool /* flush */, int& /*unitReturn*/) override
     {
         std::string message(data, len);
         if (message == "close: versionrestore: prerestore_ack")

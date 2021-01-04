@@ -137,8 +137,8 @@ public:
 
     /// Message that is about to be sent via the websocket.
     /// To override, handle onFilterSendMessage or any of the onDocument...() handlers.
-    virtual bool filterSendMessage(const char* data, const std::size_t len, const WSOpCode code,
-                                   const bool flush, int& unitReturn)
+    bool filterSendMessage(const char* data, const std::size_t len, const WSOpCode code,
+                           const bool flush, int& unitReturn)
     {
         const std::string message(data, len);
 
