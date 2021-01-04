@@ -204,6 +204,7 @@ LOLEAFLET_JS =\
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/SplitPanesContext.js \
 	src/layer/tile/TileLayer.TableOverlay.js \
+	src/layer/tile/TileLayer.ConnectorOverlay.js \
 	src/layer/ObjectFocusDarkOverlay.js \
 	src/layer/tile/WriterTileLayer.js \
 	src/layer/tile/ImpressTileLayer.js \

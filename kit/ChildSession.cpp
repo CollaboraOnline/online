@@ -2487,6 +2487,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_GRAPHIC_SELECTION:
         sendTextFrame("graphicselection: " + payload);
         break;
+    case LOK_CALLBACK_CONNECTOR_SELECTED:
+        sendTextFrame("connectorselected: " + payload);
+        break;
     case LOK_CALLBACK_CELL_CURSOR:
         sendTextFrame("cellcursor: " + payload);
         break;

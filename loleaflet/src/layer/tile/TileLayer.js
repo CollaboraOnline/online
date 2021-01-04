@@ -184,6 +184,7 @@ L.TileLayer = L.GridLayer.extend({
 		});
 
 		this._initializeTableOverlay();
+		this._initializeConnectorOverlay();
 
 		this._emptyTilesCount = 0;
 		this._msgQueue = [];
@@ -585,6 +586,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
+		}
+		else if (textMsg.startsWith('connectorselected:')) {
+			this._onConnectorSelectedMsg(textMsg);
 		}
 		else if (textMsg.startsWith('cellcursor:')) {
 			this._onCellCursorMsg(textMsg);
