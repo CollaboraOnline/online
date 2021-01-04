@@ -87,8 +87,8 @@ test/tags
 TAGS
 test/TAGS
 
-docker/instdir
-docker/builddir
+docker/from-source/instdir
+docker/from-source/builddir
 
 ios/Mobile/Info.plist
 ios/Mobile/Fonts
