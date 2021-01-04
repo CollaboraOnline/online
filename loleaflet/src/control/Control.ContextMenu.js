@@ -21,6 +21,7 @@ L.Control.ContextMenu = L.Control.extend({
 			 * from context menu structure.
 			 */
 			general: ['Cut', 'Copy', 'Paste', 'Delete',
+					  'FormatPaintbrush', 'ResetAttributes',
 					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
 					  'OpenHyperlinkOnCursor', 'EditHyperlink', 'CopyHyperlinkLocation', 'RemoveHyperlink',
 					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
