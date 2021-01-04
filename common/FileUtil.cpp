@@ -380,18 +380,6 @@ namespace FileUtil
         return false;
     }
 
-    bool linkOrCopyFile(const char* source, const char* target)
-    {
-        if (link(source, target) == -1)
-        {
-            LOG_DBG("link(\"" << source << "\", \"" << target << "\") failed: " << strerror(errno)
-                              << ". Will copy.");
-            return copy(source, target, /*log=*/false, /*throw_on_error=*/false);
-        }
-
-        return true;
-    }
-
     bool compareFileContents(const std::string& rhsPath, const std::string& lhsPath)
     {
         std::ifstream rhs(rhsPath, std::ifstream::binary | std::ifstream::ate);
