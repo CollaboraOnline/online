@@ -13,6 +13,8 @@ describe('Calc spell checking menu.', function() {
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
+
+		cy.wait(2000);
 	});
 
 	afterEach(function() {
