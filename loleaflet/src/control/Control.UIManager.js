@@ -320,9 +320,11 @@ L.Control.UIManager = L.Control.extend({
 			if (e.perm === 'edit') {
 				this.makeSpaceForNotebookbar(this.map._docLayer._docType);
 			} else if (e.perm === 'readonly' && $('#mobile-edit-button').is(':hidden')) {
-				var menubar = L.control.menubar();
-				this.map.menubar = menubar;
-				this.map.addControl(menubar);
+				if (!this.map.menubar) {
+					var menubar = L.control.menubar();
+					this.map.menubar = menubar;
+					this.map.addControl(menubar);
+				}
 
 				if (this.notebookbar) {
 					this.map.removeControl(this.notebookbar);
