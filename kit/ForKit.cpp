@@ -250,6 +250,8 @@ static bool haveCorrectCapabilities()
         result = false;
     if (!haveCapability(CAP_FOWNER))
         result = false;
+    if (!haveCapability(CAP_CHOWN))
+        result = false;
 
     return result;
 }

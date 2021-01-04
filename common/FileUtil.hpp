@@ -107,9 +107,6 @@ namespace FileUtil
         return getTempFilePath(srcDir, srcFilename, std::string());
     }
 
-    /// Link source to target, and copy if linking fails.
-    bool linkOrCopyFile(const char* source, const char* target);
-
     /// Returns the realpath(3) of the provided path.
     std::string realpath(const char* path);
     inline std::string realpath(const std::string& path)
