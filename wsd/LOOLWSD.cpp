@@ -3975,6 +3975,9 @@ int LOOLWSD::innerMain()
         Log::logger().setLevel(LogLevel);
     }
 
+    if (Log::logger().getLevel() >= Poco::Message::Priority::PRIO_INFORMATION)
+        LOG_ERR("Log level is set very high to '" << LogLevel << "' this will have a "
+                "significant performance impact. Do not use this in production.");
 #endif
 
     // URI with /contents are public and we don't need to anonymize them.
