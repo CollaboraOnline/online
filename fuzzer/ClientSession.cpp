@@ -39,7 +39,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
     }
 
     // Make sure SocketPoll::_newCallbacks does not grow forever, leading to OOM.
-    Admin::instance().poll(0);
+    Admin::instance().poll(std::chrono::microseconds(0));
 
     // Make sure the anon map does not grow forever, leading to OOM.
     Util::clearAnonymized();
