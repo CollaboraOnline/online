@@ -249,10 +249,10 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& tes
                                                                               flags));
         Poco::MemoryBinaryReader reader(buffer, Poco::BinaryReader::NETWORK_BYTE_ORDER);
         reader >> statusCode;
-        if (reader.available() > 0)
+        if (static_cast<unsigned>(bytes) > sizeof(statusCode))
         {
             // An optional message after the status code.
-            message.append(buffer.begin() + bytes - reader.available(), reader.available());
+            message.append(buffer.begin() + sizeof(statusCode), bytes - sizeof(statusCode));
         }
     }
 
