@@ -142,6 +142,7 @@ namespace
     LinkOrCopyType linkOrCopyType;
     std::string sourceForLinkOrCopy;
     Path destinationForLinkOrCopy;
+    std::string linkableForLinkOrCopy; // Place to stash copies that we can hard-link from
     std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
     bool linkOrCopyVerboseLogging = false;
     unsigned linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
@@ -239,7 +240,56 @@ namespace
         if (linkOrCopyVerboseLogging)
             LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath << '"');
 
-        if (!FileUtil::linkOrCopyFile(fpath, newPath.c_str()))
+        // first try a simple hard-link
+        if (link(fpath, newPath.c_str()) == 0)
+            return;
+
+        // incrementally build our 'linkable/' copy nearby
+        static bool canChown = true; // only if we can get permissions right
+        if (errno == EXDEV && canChown)
+        {
+            // then copy somewhere closer and hard link from there
+            LOG_TRC("link(\"" << fpath << "\", \"" << newPath << "\") failed: " << strerror(errno)
+                    << ". Will try to link template.");
+
+            std::string linkableCopy = linkableForLinkOrCopy + fpath;
+            if (::link(linkableCopy.c_str(), newPath.c_str()) == 0)
+                return;
+
+            if (errno == ENOENT)
+            {
+                File(Path(linkableCopy).parent()).createDirectories();
+                if (!FileUtil::copy(fpath, linkableCopy.c_str(), /*log=*/false, /*throw_on_error=*/false))
+                    LOG_TRC("Failed to create linkable copy [" << fpath << "] to [" << linkableCopy.c_str() << "]");
+                else {
+                    // Match system permissions, so a file we can write is not shared across jails.
+                    struct stat ownerInfo;
+                    if (::stat(fpath, &ownerInfo) != 0 ||
+                        ::chown(linkableCopy.c_str(), ownerInfo.st_uid, ownerInfo.st_gid) != 0)
+                    {
+                        LOG_WRN("Failed to stat or chown " << ownerInfo.st_uid << ":" << ownerInfo.st_gid <<
+                                " " << linkableCopy << ": " << strerror(errno) << " missing cap_chown?, disabling linkable");
+                        unlink(linkableCopy.c_str());
+                        canChown = false;
+                    }
+                    else if (::link(linkableCopy.c_str(), newPath.c_str()) == 0)
+                        return;
+                }
+            }
+            LOG_TRC("link(\"" << linkableCopy << "\", \"" << newPath << "\") failed: " << strerror(errno)
+                    << ". Cannot create linkable copy.");
+        }
+
+        static bool warned = false;
+        if (!warned)
+        {
+            LOG_ERR("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: " << strerror(errno)
+                    << ". Very slow copying path triggered.");
+            warned = true;
+        } else
+            LOG_TRC("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: " << strerror(errno)
+                    << ". Will copy.");
+        if (!FileUtil::copy(fpath, newPath.c_str(), /*log=*/false, /*throw_on_error=*/false))
         {
             LOG_FTL("Failed to copy or link [" << fpath << "] to [" << newPath << "]. Exiting.");
             Log::shutdown();
@@ -347,6 +397,7 @@ namespace
 
     void linkOrCopy(std::string source,
                     const Path& destination,
+                    std::string linkable,
                     LinkOrCopyType type)
     {
         std::string resolved = FileUtil::realpath(source);
@@ -365,6 +416,7 @@ namespace
         if (sourceForLinkOrCopy.back() == '/')
             sourceForLinkOrCopy.pop_back();
         destinationForLinkOrCopy = destination;
+        linkableForLinkOrCopy = linkable;
         linkOrCopyFileCount = 0;
         linkOrCopyStartTime = std::chrono::steady_clock::now();
 
@@ -2226,9 +2278,11 @@ void lokit_main(
                 LOG_INF("Mounting is disabled, will link/copy " << sysTemplate << " -> "
                                                                 << jailPathStr);
 
-                linkOrCopy(sysTemplate, jailPath, LinkOrCopyType::All);
+                const std::string linkablePath = childRoot + "/linkable";
 
-                linkOrCopy(loTemplate, loJailDestPath, LinkOrCopyType::LO);
+                linkOrCopy(sysTemplate, jailPath, linkablePath, LinkOrCopyType::All);
+
+                linkOrCopy(loTemplate, loJailDestPath, linkablePath, LinkOrCopyType::LO);
 
                 // Update the dynamic files inside the jail.
                 if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
