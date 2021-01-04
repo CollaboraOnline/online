@@ -1867,7 +1867,7 @@ bool LOOLWSD::createForKit()
 
     StringVector args;
 #ifdef STRACE_LOOLFORKIT
-    // if you want to use this, you need to setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/strace
+    // if you want to use this, you need to setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/strace
     args.push_back("-o");
     args.push_back("strace.log");
     args.push_back("-f");

@@ -152,7 +152,7 @@ void cleanupJails(const std::string& root)
         return;
     }
 
-    //FIXME: technically, the loTemplate directory may have any name.
+    // FIXME: technically, the loTemplate directory may have any name.
     if (FileUtil::Stat(root + "/lo").exists())
     {
         // This is a jail.
@@ -168,7 +168,8 @@ void cleanupJails(const std::string& root)
         for (const auto& jail : jails)
         {
             const Poco::Path path(root, jail);
-            if (jail == "tmp") // Delete tmp with prejeduce.
+            // Delete tmp and link cache with prejudice.
+            if (jail == "tmp" || jail == "linkable")
                 FileUtil::removeFile(path.toString(), true);
             else
                 cleanupJails(path.toString());
