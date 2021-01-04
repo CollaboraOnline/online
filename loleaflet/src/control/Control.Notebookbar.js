@@ -41,14 +41,15 @@ L.Control.Notebookbar = L.Control.extend({
 			if (!that._isLoaded) {
 				console.error('notebookbar is not initialized, retrying');
 				that.map.sendUnoCommand('.uno:Notebookbar?File:string=notebookbar.ui');
-				setTimeout(retryNotebookbarInit, 10000);
+				that.retry = setTimeout(retryNotebookbarInit, 10000);
 			}
 		};
 
-		setTimeout(retryNotebookbarInit, 3000);
+		this.retry = setTimeout(retryNotebookbarInit, 3000);
 	},
 
 	onRemove: function() {
+		clearTimeout(this.retry);
 		this.map.off('contextchange', this.onContextChange, this);
 		this.map.off('updatepermission', this.onUpdatePermission, this);
 		this.map.off('notebookbar');
