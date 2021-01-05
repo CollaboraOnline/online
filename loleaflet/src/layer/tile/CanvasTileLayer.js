@@ -241,7 +241,7 @@ L.TileSectionManager = L.Class.extend({
 			position: [250 * that._dpiScale, 250 * that._dpiScale], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
 			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
 			expand: 'top left bottom right', // Expand to all directions.
-			drawingOrder: 1,
+			processingOrder: 1,
 			zIndex: 5,
 			interactable: true,
 			myProperties: {
@@ -274,7 +274,7 @@ L.TileSectionManager = L.Class.extend({
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			drawingOrder: 1,
+			processingOrder: 1,
 			zIndex: 4,
 			// Even if this one is drawn on top, won't be able to catch events.
 			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
@@ -355,7 +355,7 @@ L.TileSectionManager = L.Class.extend({
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			drawingOrder: 1,
+			processingOrder: 1,
 			zIndex: 8, // Above all.
 			// Even if this one is drawn on top, won't be able to catch events.
 			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
@@ -389,7 +389,7 @@ L.TileSectionManager = L.Class.extend({
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			drawingOrder: 1,
+			processingOrder: 1,
 			zIndex: 6, // Above tile layer.
 			interactable: false,
 			myProperties: {},
