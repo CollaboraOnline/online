@@ -710,14 +710,13 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
-			.should('have.attr', 'style')
-			.should('not.contain', 'visibility: hidden');
+		cy.get('.wizard-comment-box')
+			.should('exist');
 
 		// Resolve comment
 		mobileHelper.selectAnnotationMenuItem('Resolve');
 
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
+		cy.get('.wizard-comment-box')
 			.should('not.exist');
 
 		// Show resolved comments
@@ -725,17 +724,17 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.openCommentWizard();
 
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
-			.should('have.attr', 'style')
-			.should('not.contain', 'visibility: hidden');
+		cy.get('.wizard-comment-box')
+			.should('exist');
 
 		// Hide resolved comments
 		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
 
-		// TODO: can't hide resolved comments again.
-		//cy.get('.loleaflet-annotation:nth-of-type(2)')
-		//	.should('have.attr', 'style')
-		//	.should('contain', 'visibility: hidden');
+		mobileHelper.openCommentWizard();
+
+		// TODO: can't hide resolved comments again
+		//cy.get('.wizard-comment-box')
+		//	.should('exist');
 	});
 
 	it('Check version information.', function() {
