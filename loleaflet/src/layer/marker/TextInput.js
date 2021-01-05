@@ -151,7 +151,7 @@ L.TextInput = L.Layer.extend({
 			//this happens because undo doesn't change the textArea value
 			//and no other way to maintain the history
 			//So better to clean the textarea so no suggestions appear
-			this._map._textInput._textArea.value = this._map._textInput._preSpaceChar;
+			this._emptyArea();
 		}
 	},
 
