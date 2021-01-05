@@ -37,5 +37,8 @@
     "lool",
     "collabora"
   ],
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "jsdom": "^16.4.0"
+  }
 }
