@@ -74,16 +74,16 @@ class CanvasSectionObject {
 	interactable: boolean = true;
 	myProperties: any = {};
 	onInitialize: Function; // Paramaters: null (use myProperties).
-	onMouseMove: Function; // Parameters: Point [x, y], DragDistance [x, y] (null when not dragging)
-	onMouseDown: Function; // Parameters: Point [x, y]
-	onMouseUp: Function; // Parameters: Point [x, y]
-	onClick: Function; // Parameters: Point [x, y]
-	onDoubleClick: Function; // Parameters: Point [x, y]
-	onMouseWheel: Function; // Parameters: Point [x, y], DeltaY
-	onLongPress: Function; // Parameters: Point [x, y]
-	onMultiTouchStart: Function; // Parameters: null
-	onMultiTouchMove: Function; // Parameters: Point [x, y], DragDistance [x, y]
-	onMultiTouchEnd: Function; // Parameters: null
+	onMouseMove: Function; // Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
+	onMouseDown: Function; // Parameters: Point [x, y], e (native event object)
+	onMouseUp: Function; // Parameters: Point [x, y], e (native event object)
+	onClick: Function; // Parameters: Point [x, y], e (native event object)
+	onDoubleClick: Function; // Parameters: Point [x, y], e (native event object)
+	onMouseWheel: Function; // Parameters: Point [x, y], DeltaY, e (native event object)
+	onLongPress: Function; // Parameters: Point [x, y], e (native event object)
+	onMultiTouchStart: Function; // Parameters: e (native event object)
+	onMultiTouchMove: Function; // Parameters: Point [x, y], DragDistance [x, y], e (native event object)
+	onMultiTouchEnd: Function; // Parameters: e (native event object)
 	onResize: Function; // Parameters: null (Section's size is up to date when this callback is called.)
 	onDraw: Function; // Parameters: null
 	onNewDocumentTopLeft: Function; // Parameters: Size [x, y]
@@ -138,6 +138,7 @@ class CanvasSectionContainer {
 	private sectionOnMouseDown: string = null; // (Will contain section name) When dragging, user can leave section borders, dragging will continue. Target section will be informed.
 	private draggingTolerance: number = 5; // This is for only desktop, mobile browsers seem to distinguish dragging and clicking nicely.
 	private multiTouch: boolean = false;
+	private touchCenter: Array<number> = null;
 	private potentialLongPress: boolean = false;
 	private clearColor: string = 'white';
 
@@ -168,6 +169,7 @@ class CanvasSectionContainer {
 
 	private clearMousePositions () {
 		this.positionOnClick = this.positionOnDoubleClick = this.positionOnMouseDown = this.positionOnMouseUp = this.dragDistance = this.sectionOnMouseDown = null;
+		this.touchCenter = null;
 		this.draggingSomething = false;
 	}
 
@@ -228,7 +230,6 @@ class CanvasSectionContainer {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].onNewDocumentTopLeft(this.getDocumentTopLeft());
 		}
-		//this.drawSections();
 	}
 
 	requestReDraw() {
@@ -241,10 +242,10 @@ class CanvasSectionContainer {
 
 			var s1 = this.findSectionContainingPoint(this.positionOnMouseDown);
 			var s2 = this.findSectionContainingPoint(this.positionOnMouseUp);
-			if (s1 && s2 && s1 == s2) {
+			if (s1 && s2 && s1 == s2) { // Allow click event if only mouse was above same section while clicking.
 				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnClick);
-				if (section.interactable) {
-					section.onClick(this.convertPositionToSectionLocale(section, this.positionOnClick));
+				if (section) { // "interactable" property is also checked inside function "findSectionContainingPoint".
+					section.onClick(this.convertPositionToSectionLocale(section, this.positionOnClick), e);
 				}
 			}
 			this.clearMousePositions(); // Drawing takes place after cleaning mouse positions. Sections should overcome this evil.
@@ -259,8 +260,8 @@ class CanvasSectionContainer {
 		this.positionOnDoubleClick = this.convertPositionToCanvasLocale(e);
 
 		var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnDoubleClick);
-		if (section && section.interactable) {
-			section.onDoubleClick(this.convertPositionToSectionLocale(section, this.positionOnDoubleClick));
+		if (section) {
+			section.onDoubleClick(this.convertPositionToSectionLocale(section, this.positionOnDoubleClick), e);
 		}
 		this.clearMousePositions();
 		this.drawSections();
@@ -287,14 +288,14 @@ class CanvasSectionContainer {
 			}
 
 			if (section) {
-				section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance);
+				section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
 			}
 		}
 		else {
 			this.mousePosition = this.convertPositionToCanvasLocale(e);
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.mousePosition);
 			if (section) {
-				section.onLongPress(this.convertPositionToSectionLocale(section, this.mousePosition));
+				section.onLongPress(this.convertPositionToSectionLocale(section, this.mousePosition), e);
 			}
 			this.potentialLongPress = false;
 		}
@@ -307,7 +308,7 @@ class CanvasSectionContainer {
 		var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseDown);
 		if (section) {
 			this.sectionOnMouseDown = section.name;
-			section.onMouseDown(this.convertPositionToSectionLocale(section, this.positionOnMouseDown));
+			section.onMouseDown(this.convertPositionToSectionLocale(section, this.positionOnMouseDown), e);
 		}
 	}
 
@@ -317,13 +318,13 @@ class CanvasSectionContainer {
 		if (!this.draggingSomething) {
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
 			if (section) {
-				section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp));
+				section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
 			}
 		}
 		else {
 			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section) {
-				section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp));
+				section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
 				this.drawSections();
 			}
 		}
@@ -334,7 +335,7 @@ class CanvasSectionContainer {
 		var delta = e.deltaY;
 		var section: CanvasSectionObject = this.findSectionContainingPoint(point);
 		if (section)
-			section.onMouseWheel(this.convertPositionToSectionLocale(section, point), delta);
+			section.onMouseWheel(this.convertPositionToSectionLocale(section, point), delta, e);
 	}
 
 	onMouseLeave (e: MouseEvent) {
@@ -352,7 +353,7 @@ class CanvasSectionContainer {
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseDown);
 			if (section) {
 				this.sectionOnMouseDown = section.name;
-				section.onMouseDown(this.convertPositionToSectionLocale(section, this.positionOnMouseDown));
+				section.onMouseDown(this.convertPositionToSectionLocale(section, this.positionOnMouseDown), e);
 			}
 		}
 		else if (!this.multiTouch) {
@@ -360,7 +361,7 @@ class CanvasSectionContainer {
 			this.multiTouch = true;
 			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section)
-				section.onMultiTouchStart();
+				section.onMultiTouchStart(e);
 		}
 	}
 
@@ -373,8 +374,7 @@ class CanvasSectionContainer {
 
 			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section) {
-				section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance);
-				this.drawSections();
+				section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
 			}
 		}
 		else if (e.touches.length === 2) {
@@ -382,10 +382,13 @@ class CanvasSectionContainer {
 			if (section) {
 				var diffX = Math.abs(e.touches[0].clientX - e.touches[1].clientX);
 				var diffY = Math.abs(e.touches[0].clientY - e.touches[1].clientY);
-				var center = [(e.touches[0].clientX + e.touches[1].clientX) * 0.5, (e.touches[0].clientY + e.touches[1].clientY) * 0.5];
+				// Let's keep "touchCenter" variable "static" for now. When we want to allow move & drag at the same time, we should make it dynamic again.
+				if (!this.touchCenter) {
+					this.touchCenter = [(e.touches[0].clientX + e.touches[1].clientX) * 0.5, (e.touches[0].clientY + e.touches[1].clientY) * 0.5];
+					this.touchCenter = this.convertPointToCanvasLocale(this.touchCenter);
+				}
 				var distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
-				center = this.convertPointToCanvasLocale(center);
-				section.onMultiTouchMove(this.convertPositionToSectionLocale(section, center), distance);
+				section.onMultiTouchMove(this.convertPositionToSectionLocale(section, this.touchCenter), distance, e);
 			}
 		}
 	}
@@ -397,16 +400,15 @@ class CanvasSectionContainer {
 			if (!this.draggingSomething) {
 				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
 				if (section)
-					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp));
+					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
 
 				this.clearMousePositions();
 			}
 			else {
 				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 				if (section) {
-					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp));
+					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
 					this.clearMousePositions();
-					this.drawSections();
 				}
 				else {
 					this.clearMousePositions();
@@ -418,7 +420,7 @@ class CanvasSectionContainer {
 				this.multiTouch = false;
 				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 				if (section) {
-					section.onMultiTouchEnd();
+					section.onMultiTouchEnd(e);
 				}
 			}
 		}
