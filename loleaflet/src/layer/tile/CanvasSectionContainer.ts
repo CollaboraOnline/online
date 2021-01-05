@@ -15,9 +15,9 @@
 	zIndex: Elements with highest zIndex will be drawn on top.
 	expand: '' | 'right' | 'left' | 'top' | 'bottom' | 'left right top bottom' (any combination)
 	interactable: true | false // If false, only general events will be fired (onDraw, newDocumentTopLeft, onResize). Example: editing mode, background drawings etc.
-	drawingOrder:
+	processingOrder:
 
-	Drawing order feature is tricky, let's say you want something like this:
+	Processing order feature is tricky, let's say you want something like this:
 
 	--------------------
 	|     top bar      |
@@ -30,7 +30,7 @@
 	Top bar's height will be static most probably. It needs to be drawn first, so it can be expanded to right.
 	If top bar is drawn after tiles area, since "tiles area" will most probably be expanded to all directions, it will leave no space for top bar.
 	So, tiles area will be drawn last.
-	For above situation, drawing orders would be (with the same zIndex):
+	For above situation, processing orders would be (with the same zIndex):
 	* top bar -> 1
 	* left bar -> 2
 	* tiles area -> 3
@@ -69,7 +69,7 @@ class CanvasSectionObject {
 	position: Array<number> = new Array(0);
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
-	drawingOrder: number = null;
+	processingOrder: number = null;
 	zIndex: number = null;
 	interactable: boolean = true;
 	myProperties: any = {};
@@ -94,7 +94,7 @@ class CanvasSectionObject {
 		this.position = options.position;
 		this.size = options.size;
 		this.expand = options.expand.split(' ');
-		this.drawingOrder = options.drawingOrder;
+		this.processingOrder = options.processingOrder;
 		this.zIndex = options.zIndex;
 		this.interactable = options.interactable;
 		this.myProperties = options.myProperties ? options.myProperties: {};
@@ -651,11 +651,11 @@ class CanvasSectionContainer {
 			}
 		}
 
-		// According to drawing order. Section with the highest drawing order will be drawn last.
+		// According to processing order. Section with the highest processing order will be calculated last.
 		for (var i: number = 0; i < this.sections.length - 1; i++) {
 			var zIndex = this.sections[i].zIndex;
 			while (i < this.sections.length - 1 && zIndex === this.sections[i + 1].zIndex) {
-				if (this.sections[i].drawingOrder > this.sections[i + 1].drawingOrder) {
+				if (this.sections[i].processingOrder > this.sections[i + 1].processingOrder) {
 					var temp = this.sections[i + 1];
 					this.sections[i + 1] = this.sections[i];
 					this.sections[i] = temp;
@@ -741,7 +741,7 @@ class CanvasSectionContainer {
 			|| options.position === undefined
 			|| options.size === undefined
 			|| options.expand === undefined
-			|| options.drawingOrder === undefined
+			|| options.processingOrder === undefined
 			|| options.zIndex === undefined
 			|| options.interactable === undefined
 		) {
