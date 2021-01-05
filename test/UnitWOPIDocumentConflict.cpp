@@ -16,7 +16,7 @@
 #include "lokassert.hpp"
 
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Timestamp.h>
+#include <string>
 
 /**
  * This test asserts that the unsaved changes in the opened document are
@@ -47,6 +47,30 @@ class UnitWOPIDocumentConflict : public WopiTestServer
         Polling
     } _phase;
 
+    /// Return the name of the given Phase.
+    static std::string toString(Phase phase)
+    {
+#define ENUM_CASE(X)                                                                               \
+    case X:                                                                                        \
+        return #X
+
+        switch (phase)
+        {
+            ENUM_CASE(Phase::Load);
+            ENUM_CASE(Phase::WaitLoadStatus);
+            ENUM_CASE(Phase::ModifyDoc);
+            ENUM_CASE(Phase::WaitModifiedStatus);
+            ENUM_CASE(Phase::ChangeStorageDoc);
+            ENUM_CASE(Phase::WaitSaveResponse);
+            ENUM_CASE(Phase::WaitDocClose);
+            ENUM_CASE(Phase::LoadNewDocument);
+            ENUM_CASE(Phase::Polling);
+            default:
+                return "Unknown";
+        }
+#undef ENUM_CASE
+    }
+
     enum class DocLoaded
     {
         Doc1,
@@ -65,6 +89,9 @@ public:
     void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         LOG_TST("assertGetFileRequest: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2"));
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus but was " + toString(_phase),
+                           _phase == Phase::WaitLoadStatus);
+
         if (_docLoaded == DocLoaded::Doc2)
         {
             // On second doc load, we should have the document in storage which
@@ -72,10 +99,61 @@ public:
             LOK_ASSERT_EQUAL_MESSAGE("File contents not modified in storage",
                                      std::string(ExpectedDocContent), getFileContent());
             if (getFileContent() != ExpectedDocContent)
-                exitTest(TestResult::Failed);
+                failTest("The file is stale and not the one in storage.");
             else
-                exitTest(TestResult::Ok);
+                passTest("The file reloaded from the storage as expected.");
         }
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
+                                         << "(WaitLoadStatus): [" << message << ']');
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus but was " + toString(_phase),
+                           _phase == Phase::WaitLoadStatus);
+
+        if (_docLoaded == DocLoaded::Doc1)
+        {
+            _phase = Phase::ModifyDoc;
+            LOG_TST("onDocumentLoaded: Switching to Phase::ModifyDoc");
+            SocketPoll::wakeupWorld();
+        }
+
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        LOG_TST("onDocumentModified: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
+                                           << "(WaitModifiedStatus): [" << message << ']');
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModifiedStatus but was "
+                               + toString(_phase),
+                           _phase == Phase::WaitModifiedStatus);
+
+        if (_docLoaded == DocLoaded::Doc1)
+        {
+            _phase = Phase::ChangeStorageDoc;
+            LOG_TST("onDocumentModified: Switching to Phase::ChangeStorageDoc");
+            SocketPoll::wakeupWorld();
+        }
+
+        return true;
+    }
+
+    bool onDocumentError(const std::string& message) override
+    {
+        LOG_TST("onDocumentError: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
+                                        << "(WaitSaveResponse): [" << message << ']');
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitSaveResponse but was " + toString(_phase),
+                           _phase == Phase::WaitSaveResponse);
+
+        _phase = Phase::WaitDocClose;
+        LOG_TST("onDocumentError: Switching to Phase::WaitDocClose");
+
+        // we don't want to save current changes because doing so would
+        // overwrite the document which was changed underneath us
+        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", getTestname());
+        return true;
     }
 
     bool onFilterSendMessage(const char* data, const size_t len, const WSOpCode /* code */,
@@ -84,47 +162,6 @@ public:
         const std::string message(data, len);
         switch (_phase)
         {
-            case Phase::WaitLoadStatus:
-            {
-                LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
-                                                  << "(WaitLoadStatus): [" << message << ']');
-                if (_docLoaded == DocLoaded::Doc1 && Util::startsWith(message, "status:"))
-                {
-                    _phase = Phase::ModifyDoc;
-                    LOG_TST("onFilterSendMessage: Switching to Phase::ModifyDoc");
-                    SocketPoll::wakeupWorld();
-                }
-            }
-            break;
-            case Phase::WaitModifiedStatus:
-            {
-                LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
-                                                  << "(WaitModifiedStatus): [" << message << ']');
-                if (_docLoaded == DocLoaded::Doc1
-                    && message == "statechanged: .uno:ModifiedStatus=true")
-                {
-                    _phase = Phase::ChangeStorageDoc;
-                    LOG_TST("onFilterSendMessage: Switching to Phase::ChangeStorageDoc");
-                    SocketPoll::wakeupWorld();
-                }
-            }
-            break;
-            case Phase::WaitSaveResponse:
-            {
-                LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
-                                                  << "(WaitSaveResponse): [" << message << ']');
-                if (message == "error: cmd=storage kind=documentconflict")
-                {
-                    _phase = Phase::WaitDocClose;
-                    LOG_TST("onFilterSendMessage: Switching to Phase::WaitDocClose");
-
-                    // we don't want to save current changes because doing so would
-                    // overwrite the document which was changed underneath us
-                    helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument",
-                                           getTestname());
-                }
-            }
-            break;
             case Phase::WaitDocClose:
             {
                 LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
@@ -221,7 +258,7 @@ public:
                 // DocBroker, but a short wait will do for now.
                 LOG_TST("Phase::LoadNewDocument: Reloading.");
                 _docLoaded = DocLoaded::Doc2; // Update before loading!
-                _phase = Phase::Polling;
+                _phase = Phase::WaitLoadStatus;
 
                 std::this_thread::sleep_for(std::chrono::seconds(1));
                 initWebsocket("/wopi/files/0?access_token=anything");
