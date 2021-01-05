@@ -28,8 +28,6 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			builder._fixedtextControl(parentContainer, fixedTextData, builder);
 		}
 
-		console.debug('baseSpinField: ' + data.id);
-
 		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
 		div.id = data.id;
 		controls['container'] = div;
@@ -68,7 +66,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		if (data.step != undefined)
 			$(spinfield).attr('step', data.step);
 
-		if (data.enabled == 'false') {
+		if (data.enabled === 'false' || data.enabled === false) {
 			$(spinfield).attr('disabled', 'disabled');
 			$(image).addClass('disabled');
 		}
