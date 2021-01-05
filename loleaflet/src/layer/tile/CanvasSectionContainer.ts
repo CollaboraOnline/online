@@ -97,21 +97,21 @@ class CanvasSectionObject {
 		this.drawingOrder = options.drawingOrder;
 		this.zIndex = options.zIndex;
 		this.interactable = options.interactable;
-		this.myProperties = options.myProperties;
-		this.onInitialize = options.onInitialize;
-		this.onMouseMove = options.onMouseMove;
-		this.onMouseDown = options.onMouseDown;
-		this.onMouseUp = options.onMouseUp;
-		this.onClick = options.onClick;
-		this.onDoubleClick = options.onDoubleClick;
-		this.onMouseWheel = options.onMouseWheel;
-		this.onLongPress = options.onLongPress;
-		this.onMultiTouchStart = options.onMultiTouchStart;
-		this.onMultiTouchMove = options.onMultiTouchMove;
-		this.onMultiTouchEnd = options.onMultiTouchEnd;
-		this.onResize = options.onResize;
-		this.onDraw = options.onDraw;
-		this.onNewDocumentTopLeft = options.onNewDocumentTopLeft;
+		this.myProperties = options.myProperties ? options.myProperties: {};
+		this.onInitialize = options.onInitialize ? options.onInitialize: function() {};
+		this.onMouseMove = options.onMouseMove ? options.onMouseMove: function() {};
+		this.onMouseDown = options.onMouseDown ? options.onMouseDown: function() {};
+		this.onMouseUp = options.onMouseUp ? options.onMouseUp: function() {};
+		this.onClick = options.onClick ? options.onClick: function() {};
+		this.onDoubleClick = options.onDoubleClick ? options.onDoubleClick: function() {};
+		this.onMouseWheel = options.onMouseWheel ? options.onMouseWheel: function() {};
+		this.onLongPress = options.onLongPress ? options.onLongPress: function() {};
+		this.onMultiTouchStart = options.onMultiTouchStart ? options.onMultiTouchStart: function() {};
+		this.onMultiTouchMove = options.onMultiTouchMove ? options.onMultiTouchMove: function() {};
+		this.onMultiTouchEnd = options.onMultiTouchEnd ? options.onMultiTouchEnd: function() {};
+		this.onResize = options.onResize ? options.onResize: function() {};
+		this.onDraw = options.onDraw ? options.onDraw: function() {};
+		this.onNewDocumentTopLeft = options.onNewDocumentTopLeft ? options.onNewDocumentTopLeft: function() {};
 	}
 }
 
@@ -744,21 +744,6 @@ class CanvasSectionContainer {
 			|| options.drawingOrder === undefined
 			|| options.zIndex === undefined
 			|| options.interactable === undefined
-			|| options.myProperties === undefined
-			|| options.onInitialize === undefined
-			|| options.onMouseMove === undefined
-			|| options.onMouseDown === undefined
-			|| options.onMouseUp === undefined
-			|| options.onClick === undefined
-			|| options.onDoubleClick === undefined
-			|| options.onMouseWheel === undefined
-			|| options.onLongPress === undefined
-			|| options.onMultiTouchStart === undefined
-			|| options.onMultiTouchMove === undefined
-			|| options.onMultiTouchEnd === undefined
-			|| options.onResize === undefined
-			|| options.onNewDocumentTopLeft === undefined
-			|| options.onDraw === undefined
 		) {
 				console.error('Section has missing properties. See "newSectionChecks" function.');
 				return false;
