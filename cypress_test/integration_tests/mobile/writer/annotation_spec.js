@@ -86,7 +86,7 @@ describe('Annotation tests.', function() {
 
 		// TODO: we wait for a focus event before replying because
 		// it would grab the focus from the dialog otherwise.
-		if (Cypress.env('CYPRESS_INTEGRATION') === 'php-proxy') {
+		if (Cypress.env('INTEGRATION') === 'php-proxy') {
 			cy.wait(2000);
 		}
 
