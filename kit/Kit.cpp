@@ -2360,6 +2360,7 @@ void lokit_main(
             dropCapability(CAP_SYS_CHROOT);
             dropCapability(CAP_MKNOD);
             dropCapability(CAP_FOWNER);
+            dropCapability(CAP_CHOWN);
 #else
             cap_enter();
 #endif
