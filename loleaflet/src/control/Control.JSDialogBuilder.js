@@ -46,8 +46,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder._fixedtextControl(parentContainer, fixedTextData, builder);
 			}
 
-			console.debug('baseSpinField: ' + data.id);
-
 			var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
 			div.id = data.id;
 			controls['container'] = div;
@@ -83,7 +81,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (data.max != undefined)
 				$(spinfield).attr('max', data.max);
 
-			if (data.enabled == 'false') {
+			if (data.enabled == 'false' || data.enabled == false) {
 				$(spinfield).attr('disabled', 'disabled');
 				$(image).addClass('disabled');
 			}
@@ -322,6 +320,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return '';
 	},
 
+	_toolboxHandler: function(parentContainer, data) {
+		if (data.enabled === false || data.enabled === 'false') {
+			for (var index in data.children) {
+				data.children[index].enabled = false;
+			}
+		}
+
+		return true;
+	},
+
 	_containerHandler: function(parentContainer, data, builder) {
 		if (data.cols && data.rows) {
 			return builder._gridHandler(parentContainer, data, builder);
@@ -421,7 +429,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
 		var titleClass = '';
-		console.debug('sectionTitle.id' + sectionTitle.id);
+
 		if (sectionTitle.id === 'paperformat' || sectionTitle.id === 'orientation' || sectionTitle.id === 'masterslide' || sectionTitle.id === 'SdTableDesignPanel')
 			iconURL = L.LOUtil.getImageURL('lc_'+ sectionTitle.id.toLowerCase() +'.svg');
 		if (iconURL) {
@@ -489,12 +497,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!data.nosubmenu)
 		{
 			$(contentDiv).hide();
-			if (builder.wizard && data.enabled !== 'false') {
-				$(sectionTitle).click(function(event, data) {
-					builder.wizard.goLevelDown(contentDiv, data);
-					if (contentNode && contentNode.onshow)
-						contentNode.onshow();
-				});
+			if (builder.wizard) {
+				if (data.enabled !== 'false' && data.enabled !== false) {
+					$(sectionTitle).click(function(event, data) {
+						builder.wizard.goLevelDown(contentDiv, data);
+						if (contentNode && contentNode.onshow)
+							contentNode.onshow();
+					});
+				} else {
+					$(arrowSpan).hide();
+				}
 			} else {
 				console.debug('Builder used outside of mobile wizard: please implement the click handler');
 			}
@@ -2032,7 +2044,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var currentWidth = parseInt(builder.map['stateChangeHandler'].getItemValue('.uno:LineWidth'));
 		var currentWidthText = currentWidth ? String(parseFloat(currentWidth)/100.0) : '0.5';
 
-		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: currentWidthText, readOnly: true };
+		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: currentWidthText, enabled: data.enabled, readOnly: true };
 
 		var callbackFunction = function(objectType, eventType, object) {
 			var newValue = 0;
