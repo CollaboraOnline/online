@@ -91,6 +91,7 @@ L.Control.TopToolbar = L.Control.extend({
 	// tablet:false means hide it in normal Online used from a tablet browser, and in a mobile app on a tablet
 
 	getToolItems: function() {
+		var that = this;
 		return [
 			{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
 			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save')},
@@ -179,7 +180,7 @@ L.Control.TopToolbar = L.Control.extend({
 					{id: 'alignright', text: _UNO('.uno:AlignRight', 'spreadsheet', true), icon: 'alignright', uno: 'AlignRight'},
 					{id: 'alignblock', text: _UNO('.uno:AlignBlock', 'spreadsheet', true), icon: 'alignblock', uno: 'AlignBlock'},
 				]},
-			{type: 'menu',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'), hidden: true,
+			{type: 'menu-radio',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'), hidden: true,
 				items: [
 					{id: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1'},
 					{id: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: 'SpacePara15'},
@@ -187,7 +188,30 @@ L.Control.TopToolbar = L.Control.extend({
 					{type: 'break'},
 					{id: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: 'ParaspaceIncrease'},
 					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
-				]},
+				],
+				onRefresh: function (event) {
+					var isChecked = function(command) {
+						var items = that.map['stateChangeHandler'];
+						var val = items.getItemValue(command);
+						if (val && (val === 'true' || val === true))
+							return true;
+						else
+							return false;
+					};
+
+					event.item.selected = null;
+
+					for (var i in event.item.items) {
+						var item = event.item.items[i];
+						item.checked = false;
+
+						if (item.id && item.id.indexOf('spacepara') !== -1) {
+							item.checked = isChecked('.uno:' + item.uno);
+							if (item.checked)
+								event.item.selected = item.id;
+						}
+					}
+				}},
 			{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _UNO('.uno:WrapText', 'spreadsheet', true), hidden: true, uno: 'WrapText', disabled: true},
 			{type: 'break', id: 'breakspacing', hidden: true},
 			{type: 'button',  id: 'defaultnumbering',  img: 'numbering', hint: _UNO('.uno:DefaultNumbering', '', true), hidden: true, uno: 'DefaultNumbering', disabled: true},
