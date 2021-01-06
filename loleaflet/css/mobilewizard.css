@@ -765,6 +765,15 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	vertical-align: top;
 	padding-left: 4%;
 }
+#tsbshow.checkbutton {
+	display: table;
+	width: 100%;
+}
+#tsbshow.checkbutton label {
+	display: table-cell;
+	line-height: normal;
+	padding: 10px 2px 10px 15px;
+}
 #mobile-wizard input[type='checkbox']:disabled{
 	border: 2px solid #ddd;
 	box-shadow: none;
