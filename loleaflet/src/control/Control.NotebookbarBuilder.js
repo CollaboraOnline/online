@@ -588,15 +588,25 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
+			var isChecked = function(command) {
+				var items = builder.map['stateChangeHandler'];
+				var val = items.getItemValue(command);
+				if (val && (val === 'true' || val === true))
+					return true;
+				else
+					return false;
+			};
+
 			$(control.container).w2menu({
 				items: [
-					{id: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1'},
-					{id: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: 'SpacePara15'},
-					{id: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: 'SpacePara2'},
+					{id: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1', checked: isChecked('.uno:SpacePara1')},
+					{id: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: 'SpacePara15', checked: isChecked('.uno:SpacePara15')},
+					{id: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: 'SpacePara2', checked: isChecked('.uno:SpacePara2')},
 					{type: 'break'},
 					{id: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: 'ParaspaceIncrease'},
 					{id: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
 				],
+				type: 'radio',
 				onSelect: function (event) {
 					builder.map.sendUnoCommand('.uno:' + event.item.uno);
 				}
