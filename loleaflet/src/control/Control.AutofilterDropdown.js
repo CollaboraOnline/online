@@ -96,21 +96,35 @@ L.Control.AutofilterDropdown = L.Control.extend({
 			var innerContainer = L.DomUtil.create('div', 'autofilter-container', this.subMenu);
 			mainContainer = innerContainer;
 
-			L.DomUtil.setStyle(mainContainer, 'margin-left', this.position.x + this.container.offsetWidth - 30 + 'px');
-			L.DomUtil.setStyle(mainContainer, 'margin-top', this.position.y + 50 + 'px');
+			left = this.position.x + this.container.offsetWidth - 30;
+			top = this.position.y + 50;
 		} else {
 			this.container = L.DomUtil.create('div', 'autofilter-container', $('#document-container').get(0));
 			mainContainer = this.container;
-
-			L.DomUtil.setStyle(mainContainer, 'margin-left', left + 'px');
-			L.DomUtil.setStyle(mainContainer, 'margin-top', top + 'px');
 
 			this.position.x = left;
 			this.position.y = top;
 		}
 
+		L.DomUtil.setStyle(mainContainer, 'margin-left', left + 'px');
+		L.DomUtil.setStyle(mainContainer, 'margin-top', top + 'px');
+
 		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'autofilter'});
 		builder.build(mainContainer, [data]);
+
+		var height = $(mainContainer).height();
+		if (top + height > $('#document-container').height()) {
+			var newTopPosition = top - height;
+			L.DomUtil.setStyle(mainContainer, 'margin-top', newTopPosition + 'px');
+			this.position.y = newTopPosition;
+		}
+
+		var width = $(mainContainer).width();
+		if (left + width > $('#document-container').width()) {
+			var newLeftPosition = left - width;
+			L.DomUtil.setStyle(mainContainer, 'margin-left', newLeftPosition + 'px');
+			this.position.x = newLeftPosition;
+		}
 	},
 
 	onClosePopup: function() {
