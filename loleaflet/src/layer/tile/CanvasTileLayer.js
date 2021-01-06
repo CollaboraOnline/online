@@ -249,18 +249,7 @@ L.TileSectionManager = L.Class.extend({
 				tsManager: that
 			},
 			onInitialize: that._onTilesSectionInitialize,
-			onMouseMove: function () {},
-			onMouseDown: function () {},
-			onMouseUp: function () {},
-			onClick: function () {},
-			onDoubleClick: function () {},
-			onMouseWheel: function () {},
-			onLongPress: function () {},
-			onMultiTouchStart: function () {},
-			onMultiTouchMove: function () {},
-			onMultiTouchEnd: function () {},
 			onResize: that._onTilesSectionResize,
-			onNewDocumentTopLeft: function () {},
 			onDraw: that._onTilesSectionDraw.bind(that)
 		});
 		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
@@ -284,19 +273,6 @@ L.TileSectionManager = L.Class.extend({
 				tsManager: that,
 				strokeStyle: '#c0c0c0'
 			},
-			onInitialize: function () {},
-			onMouseMove: function () {},
-			onMouseDown: function () {},
-			onMouseUp: function () {},
-			onClick: function () {},
-			onDoubleClick: function () {},
-			onMouseWheel: function () {},
-			onLongPress: function () {},
-			onMultiTouchStart: function () {},
-			onMultiTouchMove: function () {},
-			onMultiTouchEnd: function () {},
-			onResize: function () {},
-			onNewDocumentTopLeft: function () {},
 			onDraw: that._onDrawGridSection
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
 	},
@@ -363,19 +339,6 @@ L.TileSectionManager = L.Class.extend({
 			myProperties: {
 				docLayer: that._layer
 			},
-			onInitialize: function () {},
-			onMouseMove: function () {},
-			onMouseDown: function () {},
-			onMouseUp: function () {},
-			onClick: function () {},
-			onDoubleClick: function () {},
-			onMouseWheel: function () {},
-			onLongPress: function () {},
-			onMultiTouchStart: function () {},
-			onMultiTouchMove: function () {},
-			onMultiTouchEnd: function () {},
-			onResize: function () {},
-			onNewDocumentTopLeft: function () {},
 			onDraw: that._onDrawSplitsSection
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
 	},
@@ -393,19 +356,6 @@ L.TileSectionManager = L.Class.extend({
 			zIndex: 6, // Above tile layer.
 			interactable: false,
 			myProperties: {},
-			onInitialize: function () {},
-			onMouseMove: function () {},
-			onMouseDown: function () {},
-			onMouseUp: function () {},
-			onClick: function () {},
-			onDoubleClick: function () {},
-			onMouseWheel: function () {},
-			onLongPress: function () {},
-			onMultiTouchStart: function () {},
-			onMultiTouchMove: function () {},
-			onMultiTouchEnd: function () {},
-			onResize: function () {},
-			onNewDocumentTopLeft: function () {},
 			onDraw: that._onDrawTilePixelGrid
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
 	},
