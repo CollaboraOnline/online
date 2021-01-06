@@ -207,6 +207,7 @@ var unoCommandsArray = {
 	InsertPageHeader:{text:{menu:_('He~ader'),},},
 	InsertPageNumberField:{global:{menu:_('~Page Numbers...'),},text:{menu:_('~Page Number'),},},
 	InsertPagebreak:{text:{context:_('Insert Page Break'),menu:_('~Page Break'),},},
+	InsertPivotTable:{spreadsheet:{menu:_('~Insert or Edit...'),},},
 	InsertRLM:{global:{menu:_('~Right-to-left Mark'),},},
 	InsertReferenceField:{text:{context:_('Insert Cross-reference'),menu:_('Cross-reference...'),},},
 	InsertRemoveAxes:{global:{menu:_('Insert/Delete Axes...'),},},
