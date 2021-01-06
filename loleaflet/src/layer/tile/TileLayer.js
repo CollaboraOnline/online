@@ -796,6 +796,16 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._debugInfo);
 			this._map.removeLayer(this._debugInfo2);
 			$('.leaflet-control-layers-expanded').css('display', 'none');
+
+			if (this._map._docLayer._docType === 'spreadsheet') {
+				var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
+				if (section) {
+					section.zIndex = 4;
+					section.myProperties.strokeStyle = '#c0c0c0';
+				}
+				this._map._docLayer._painter._sectionContainer.removeSection('splits');
+				this._map._docLayer._painter._sectionContainer.reNewAllSections(true /* redraw */);
+			}
 		} else {
 			if (this._debugInfo) {
 				this._map.addLayer(this._debugInfo);
@@ -3603,7 +3613,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._debugInfo2 = new L.LayerGroup();
 			this._debugAlwaysActive = new L.LayerGroup();
 			this._debugShowClipboard = new L.LayerGroup();
-			this._canvasDevicePixelGrid = new L.LayerGroup();
+			this._tilesDevicePixelGrid = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
 			this._map.addLayer(this._debugInfo);
 			this._map.addLayer(this._debugInfo2);
@@ -3613,7 +3623,7 @@ L.TileLayer = L.GridLayer.extend({
 				'Show Clipboard': this._debugShowClipboard,
 				'Always active': this._debugAlwaysActive,
 				'Typing': this._debugTyper,
-				'Canvas device pixel grid': this._canvasDevicePixelGrid
+				'Tiles device pixel grid': this._tilesDevicePixelGrid
 			};
 			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(this._map);
 
@@ -3628,9 +3638,9 @@ L.TileLayer = L.GridLayer.extend({
 					for (var i = 0; i < this._debugDataNames.length; i++) {
 						this._debugData[this._debugDataNames[i]].addTo(this._map);
 					}
-				} else if (e.layer === this._canvasDevicePixelGrid) {
-					this._map._canvasDevicePixelGrid = true;
-					this._map._docLayer._painter._paintWholeCanvas();
+				} else if (e.layer === this._tilesDevicePixelGrid) {
+					this._map._docLayer._painter._addTilePixelGridSection();
+					this._map._docLayer._painter._sectionContainer.reNewAllSections(true);
 				}
 			}, this);
 			this._map.on('layerremove', function(e) {
@@ -3644,9 +3654,9 @@ L.TileLayer = L.GridLayer.extend({
 					for (var i in this._debugData) {
 						this._debugData[i].remove();
 					}
-				} else if (e.layer === this._canvasDevicePixelGrid) {
-					this._map._canvasDevicePixelGrid = false;
-					this._map._docLayer._painter._paintWholeCanvas();
+				} else if (e.layer === this._tilesDevicePixelGrid) {
+					this._map._docLayer._painter._sectionContainer.removeSection('tile pixel grid');
+					this._map._docLayer._painter._sectionContainer.reNewAllSections(true);
 				}
 			}, this);
 		}
@@ -3657,6 +3667,16 @@ L.TileLayer = L.GridLayer.extend({
 		this._debugLorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 		this._debugLorem += ' ' + this._debugLorem + '\n';
 		this._debugLoremPos = 0;
+
+		if (this._map._docLayer._docType === 'spreadsheet') {
+			var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
+			if (section) {
+				section.zIndex = 7;
+				section.myProperties.strokeStyle = 'blue';
+			}
+			this._map._docLayer._painter._addSplitsSection();
+			this._map._docLayer._painter._sectionContainer.reNewAllSections(true /* redraw */);
+		}
 	},
 
 	_debugSetTimes: function(times, value) {
