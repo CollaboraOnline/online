@@ -84,32 +84,6 @@ L.TileSectionManager = L.Class.extend({
 		this.stopUpdates();
 	},
 
-	clear: function (ctx) {
-		if (!ctx)
-			ctx = this._paintContext();
-		// First render the background / sheet grid if we can
-		if (this.renderBackground) {
-			this.renderBackground(this._canvasCtx, ctx);
-		}
-		else
-		{
-			if (this._layer._debug) {
-				this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-				for (var i = 0; i < ctx.paneBoundsList.length; ++i)
-					this._oscCtxs[i].fillStyle = 'rgba(255, 0, 0, 0.5)';
-			}
-			else
-			{
-				this._canvasCtx.fillStyle = 'white';
-				for (var i = 0; i < ctx.paneBoundsList.length; ++i)
-					this._oscCtxs[i].fillStyle = 'white';
-			}
-			this._canvasCtx.fillRect(0, 0, this._pixWidth, this._pixHeight);
-			for (var i = 0; i < ctx.paneBoundsList.length; ++i)
-				this._oscCtxs[i].fillRect(0, 0, this._offscreenCanvases[i].width, this._offscreenCanvases[i].height);
-		}
-	},
-
 	// Details of tile areas to render
 	_paintContext: function() {
 		var tileSize = new L.Point(this._layer._getTileSize(), this._layer._getTileSize());
@@ -410,12 +384,17 @@ L.TileSectionManager = L.Class.extend({
 		// Calculate all this here intead of doing it per tile.
 		var ctx = this._paintContext();
 
+		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+			this._oscCtxs[i].fillStyle = 'white';
+			this._oscCtxs[i].fillRect(0, 0, this._offscreenCanvases[i].width, this._offscreenCanvases[i].height);
+		}
+
 		var tileRanges = ctx.paneBoundsList.map(this._layer._pxBoundsToTileRange, this._layer);
 
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
-				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
+				for (i = tileRange.min.x; i <= tileRange.max.x; ++i) {
 					var coords = new L.TileCoordData(
 						i * ctx.tileSize.x,
 						j * ctx.tileSize.y,
