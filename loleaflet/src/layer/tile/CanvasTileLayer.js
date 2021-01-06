@@ -266,42 +266,185 @@ L.TileSectionManager = L.Class.extend({
 		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
 	},
 
-	_drawDebuggingGrid: function() {
+	_addGridSection: function () {
+		var that = this;
+		this._sectionContainer.addSection({
+			name: 'calc grid',
+			anchor: 'top left',
+			position: [0, 0],
+			size: [0, 0],
+			expand: '',
+			drawingOrder: 1,
+			zIndex: 4,
+			// Even if this one is drawn on top, won't be able to catch events.
+			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
+			interactable: false,
+			myProperties: {
+				docLayer: that._layer,
+				tsManager: that,
+				strokeStyle: '#c0c0c0'
+			},
+			onInitialize: function () {},
+			onMouseMove: function () {},
+			onMouseDown: function () {},
+			onMouseUp: function () {},
+			onClick: function () {},
+			onDoubleClick: function () {},
+			onMouseWheel: function () {},
+			onLongPress: function () {},
+			onMultiTouchStart: function () {},
+			onMultiTouchMove: function () {},
+			onMultiTouchEnd: function () {},
+			onResize: function () {},
+			onNewDocumentTopLeft: function () {},
+			onDraw: that._onDrawGridSection
+		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
+	},
+
+	_onDrawGridSection: function () {
+		if (!this.myProperties.docLayer.sheetGeometry)
+			return;
+
+		this.context.strokeStyle = this.myProperties.strokeStyle;
+		this.context.lineWidth = 1.0;
+
+		var ctx = this.myProperties.tsManager._paintContext();
+		var context = this.context;
+
+		this.context.beginPath();
+		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+			// co-ordinates of this pane in core document pixels
+			var paneBounds = this.myProperties.docLayer._cssBoundsToCore(ctx.paneBoundsList[i]);
+			// co-ordinates of the main-(bottom right) pane in core document pixels
+			var viewBounds = this.myProperties.docLayer._cssBoundsToCore(ctx.viewBounds);
+			// into real pixel-land ...
+			paneBounds.round();
+			viewBounds.round();
+
+			var paneOffset = paneBounds.getTopLeft(); // allocates
+			// Cute way to detect the in-canvas pixel offset of each pane
+			paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
+			paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
+
+			// URGH -> zooming etc. (!?) ...
+			this.myProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
+				paneBounds.min.x, paneBounds.max.x,
+				function(pos) {
+					context.moveTo(pos - paneOffset.x - 0.5, paneBounds.min.y - paneOffset.y - 0.5);
+					context.lineTo(pos - paneOffset.x - 0.5, paneBounds.max.y - paneOffset.y - 0.5);
+					context.stroke();
+				});
+
+			this.myProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
+				paneBounds.min.y, paneBounds.max.y,
+				function(pos) {
+					context.moveTo(paneBounds.min.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+					context.lineTo(paneBounds.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+					context.stroke();
+				});
+		}
+		this.context.closePath();
+	},
+
+	// This section is added when debug is enabled. Splits are enabled for only Calc for now.
+	_addSplitsSection: function () {
+		var that = this;
+		this._sectionContainer.addSection({
+			name: 'splits',
+			anchor: 'top left',
+			position: [0, 0],
+			size: [0, 0],
+			expand: '',
+			drawingOrder: 1,
+			zIndex: 8, // Above all.
+			// Even if this one is drawn on top, won't be able to catch events.
+			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
+			interactable: false,
+			myProperties: {
+				docLayer: that._layer
+			},
+			onInitialize: function () {},
+			onMouseMove: function () {},
+			onMouseDown: function () {},
+			onMouseUp: function () {},
+			onClick: function () {},
+			onDoubleClick: function () {},
+			onMouseWheel: function () {},
+			onLongPress: function () {},
+			onMultiTouchStart: function () {},
+			onMultiTouchMove: function () {},
+			onMultiTouchEnd: function () {},
+			onResize: function () {},
+			onNewDocumentTopLeft: function () {},
+			onDraw: that._onDrawSplitsSection
+		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
+	},
+
+	// This section is added when debug is enabled.
+	_addTilePixelGridSection: function () {
+		var that = this;
+		this._sectionContainer.addSection({
+			name: 'tile pixel grid',
+			anchor: 'top left',
+			position: [0, 0],
+			size: [0, 0],
+			expand: '',
+			drawingOrder: 1,
+			zIndex: 6, // Above tile layer.
+			interactable: false,
+			myProperties: {},
+			onInitialize: function () {},
+			onMouseMove: function () {},
+			onMouseDown: function () {},
+			onMouseUp: function () {},
+			onClick: function () {},
+			onDoubleClick: function () {},
+			onMouseWheel: function () {},
+			onLongPress: function () {},
+			onMultiTouchStart: function () {},
+			onMultiTouchMove: function () {},
+			onMultiTouchEnd: function () {},
+			onResize: function () {},
+			onNewDocumentTopLeft: function () {},
+			onDraw: that._onDrawTilePixelGrid
+		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
+	},
+
+	_onDrawTilePixelGrid: function() {
 		var offset = 8;
 		var count;
-		this._canvasCtx.lineWidth = 1;
+		this.context.lineWidth = 1;
 		var currentPos;
-		this._canvasCtx.strokeStyle = '#ff0000';
+		this.context.strokeStyle = '#ff0000';
 
 		currentPos = 0;
-		count = Math.round(this._canvas.height / offset);
+		count = Math.round(this.context.canvas.height / offset);
 		for (var i = 0; i < count; i++) {
-			this._canvasCtx.beginPath();
-			this._canvasCtx.moveTo(0.5, currentPos + 0.5);
-			this._canvasCtx.lineTo(this._canvas.width + 0.5, currentPos + 0.5);
-			this._canvasCtx.stroke();
+			this.context.beginPath();
+			this.context.moveTo(0.5, currentPos + 0.5);
+			this.context.lineTo(this.context.canvas.width + 0.5, currentPos + 0.5);
+			this.context.stroke();
 			currentPos += offset;
 		}
 
 		currentPos = 0;
-		count = Math.round(this._canvas.width / offset);
+		count = Math.round(this.context.canvas.width / offset);
 		for (var i = 0; i < count; i++) {
-			this._canvasCtx.beginPath();
-			this._canvasCtx.moveTo(currentPos + 0.5, 0.5);
-			this._canvasCtx.lineTo(currentPos + 0.5, this._canvas.height + 0.5);
-			this._canvasCtx.stroke();
+			this.context.beginPath();
+			this.context.moveTo(currentPos + 0.5, 0.5);
+			this.context.lineTo(currentPos + 0.5, this.context.canvas.height + 0.5);
+			this.context.stroke();
 			currentPos += offset;
 		}
 	},
 
-	_drawSplits: function () {
-		var splitPanesContext = this._layer.getSplitPanesContext();
-		if (!splitPanesContext) {
-			return;
+	_onDrawSplitsSection: function () {
+		var splitPanesContext = this.myProperties.docLayer.getSplitPanesContext();
+		if (splitPanesContext) {
+			var splitPos = splitPanesContext.getSplitPos();
+			this.context.strokeStyle = 'red';
+			this.context.strokeRect(0, 0, splitPos.x * this.dpiScale, splitPos.y * this.dpiScale);
 		}
-		var splitPos = splitPanesContext.getSplitPos();
-		this._canvasCtx.strokeStyle = 'red';
-		this._canvasCtx.strokeRect(0, 0, splitPos.x, splitPos.y);
 	},
 
 	_updateWithRAF: function () {
@@ -359,14 +502,6 @@ L.TileSectionManager = L.Class.extend({
 
 	update: function () {
 		this._sectionContainer.requestReDraw();
-		if (this._layer._debug)
-			this._drawSplits();
-	},
-
-	_paintWholeCanvas: function(ctx) {
-		// Render on top to check matchup
-		if (this._layer._debug && this.renderBackground)
-			this.renderBackground(this._canvasCtx, ctx);
 	},
 
 	_viewReset: function () {
@@ -498,7 +633,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._map.on('sheetgeometrychanged', this._painter.update, this._painter);
 		this._map.on('move', this._syncTilePanePos, this);
 
-		this._map.on('viewrowcolumnheaders', this._updateRenderBackground, this);
+		this._map.on('viewrowcolumnheaders', this._painter.update, this._painter);
+
+		if (this._docType === 'spreadsheet') {
+			this._painter._addGridSection();
+		}
 	},
 
 	_syncTilePanePos: function () {
@@ -519,63 +658,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			tileContainer.style.width = this._painter._sectionContainer.canvas.style.width;
 			tileContainer.style.height = this._painter._sectionContainer.canvas.style.height;
 		}
-	},
-
-	_updateRenderBackground: function() {
-		var that = this;
-		this._painter.renderBackground = function(canvas, ctx)
-		{
-			if (this._layer._debug)
-				this._canvasCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-			else
-				this._canvasCtx.fillStyle = 'white'; // FIXME: sheet bg color
-			this._canvasCtx.fillRect(0, 0, ctx.canvasSize.x, ctx.canvasSize.y);
-
-			if (that._debug)
-				canvas.strokeStyle = 'blue';
-			else // now fr some grid-lines ...
-				canvas.strokeStyle = '#c0c0c0';
-			canvas.lineWidth = 1.0;
-
-			canvas.beginPath();
-			for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-				// FIXME: de-duplicate before firing myself:
-
-				// co-ordinates of this pane in core document pixels
-				var paneBounds = that._cssBoundsToCore(ctx.paneBoundsList[i]);
-				// co-ordinates of the main-(bottom right) pane in core document pixels
-				var viewBounds = that._cssBoundsToCore(ctx.viewBounds);
-				// into real pixel-land ...
-				paneBounds.round();
-				viewBounds.round();
-
-				var paneOffset = paneBounds.getTopLeft(); // allocates
-				// Cute way to detect the in-canvas pixel offset of each pane
-				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
-				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
-
-				// URGH -> zooming etc. (!?) ...
-				if (that.sheetGeometry._columns)
-					that.sheetGeometry._columns.forEachInCorePixelRange(
-						paneBounds.min.x, paneBounds.max.x,
-						function(pos) {
-							canvas.moveTo(pos - paneOffset.x - 0.5, paneBounds.min.y - paneOffset.y - 0.5);
-							canvas.lineTo(pos - paneOffset.x - 0.5, paneBounds.max.y - paneOffset.y - 0.5);
-							canvas.stroke();
-						});
-
-				if (that.sheetGeometry._rows)
-					that.sheetGeometry._rows.forEachInCorePixelRange(
-						paneBounds.min.y, paneBounds.max.y,
-						function(pos) {
-							canvas.moveTo(paneBounds.min.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
-							canvas.lineTo(paneBounds.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
-							canvas.stroke();
-						});
-			}
-			canvas.closePath();
-		};
-		this._painter.update();
 	},
 
 	hasSplitPanesSupport: function () {
