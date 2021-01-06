@@ -60,11 +60,11 @@ def commandsFromLine(line):
 
 # Extract uno commands name from lines like "  {uno: '.uno:Command3',"
 def commandFromMenuLine(line):
-    m = re.search(r"\buno: *'\.uno:([^']*)'", line)
+    m = re.search(r"\b_UNO\('.uno:([^']*)'", line)
     if m:
         return [m.group(1)]
 
-    m = re.search(r"\b_UNO\('.uno:([^']*)'", line)
+    m = re.search(r"\buno: *'\.uno:([^']*)'", line)
     if m:
         return [m.group(1)]
 
