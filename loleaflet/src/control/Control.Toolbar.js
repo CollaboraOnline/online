@@ -860,6 +860,10 @@ function onCommandStateChanged(e) {
 		else
 			$('.leaflet-pane.leaflet-map-pane').removeClass('bucket-cursor');
 	}
+	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara15'
+		|| commandName === '.uno:SpacePara2') {
+		toolbar.refresh();
+	}
 
 	var id = unoCmdToToolbarId(commandName);
 	// id is set to '' by unoCmdToToolbarId() if the statechange message should be ignored.
