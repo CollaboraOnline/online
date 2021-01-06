@@ -18,7 +18,7 @@ ReadWritePaths=/opt/lool /var/log
 ProtectHome=yes
 PrivateTmp=yes
 ProtectControlGroups=yes
-CapabilityBoundingSet=CAP_FOWNER CAP_MKNOD CAP_SYS_CHROOT CAP_SYS_ADMIN
+CapabilityBoundingSet=CAP_FOWNER CAP_CHOWN CAP_MKNOD CAP_SYS_CHROOT CAP_SYS_ADMIN
 
 [Install]
 WantedBy=multi-user.target
