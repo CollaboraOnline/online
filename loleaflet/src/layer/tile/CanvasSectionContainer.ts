@@ -42,15 +42,14 @@
 
 	Expandable sections' dimensions are calculated according to other sections with the same zIndex.
 
-	For below events, reDraw is "not" triggered, sections should call requestReDraw if they want a re-draw.
-	* onMouseMove
-	* onMouseDown
-	* onMouseUp (when not dragging)
-	* onMultiTouchStart
-	* onMultiTouchMove
-	* onMultiTouchEnd
-	* onLongPress (available as touch event)
-	* onMouseWheel
+	Below events trigger a redraw:
+	* Adding a new section.
+	* Click.
+	* Double click.
+	* Renewing all sections (optional redraw).
+	* Requesting a redraw.
+
+	Every section has a "section" property inside "myProperties".
 
 	parentSectionName property (parameter of addSection): New section is added and its size and myTopLeft properties are mirrored from its parent section.
 		All other properties and behaviours are the same with any section.
@@ -325,7 +324,6 @@ class CanvasSectionContainer {
 			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section) {
 				section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
-				this.drawSections();
 			}
 		}
 	}
@@ -341,7 +339,6 @@ class CanvasSectionContainer {
 	onMouseLeave (e: MouseEvent) {
 		this.clearMousePositions();
 		this.mousePosition = null; // This variable is set to null if only mouse is outside canvas area.
-		this.drawSections();
 	}
 
 	onTouchStart (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
