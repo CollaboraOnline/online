@@ -783,7 +783,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._map._docLayer._docType === 'spreadsheet') {
 				var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
 				if (section) {
-					section.zIndex = 4;
+					section.drawingOrder = 4;
 					section.myProperties.strokeStyle = '#c0c0c0';
 				}
 				this._map._docLayer._painter._sectionContainer.removeSection('splits');
@@ -3646,7 +3646,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._map._docLayer._docType === 'spreadsheet') {
 			var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
 			if (section) {
-				section.zIndex = 7;
+				section.drawingOrder = 7;
 				section.myProperties.strokeStyle = 'blue';
 			}
 			this._map._docLayer._painter._addSplitsSection();

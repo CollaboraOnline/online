@@ -15,6 +15,9 @@
 	zIndex: Elements with highest zIndex will be drawn on top.
 	expand: '' | 'right' | 'left' | 'top' | 'bottom' | 'left right top bottom' (any combination)
 	interactable: true | false // If false, only general events will be fired (onDraw, newDocumentTopLeft, onResize). Example: editing mode, background drawings etc.
+	drawingOrder: Sections with the same zIndex value are drawn according to their drawing order values.
+		Section with the highest drawing order is drawn on top (for specific zIndex).
+		So, in terms of being drawn on top, priority is: zIndex > drawingOrder.
 	processingOrder:
 
 	Processing order feature is tricky, let's say you want something like this:
@@ -69,6 +72,7 @@ class CanvasSectionObject {
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
 	processingOrder: number = null;
+	drawingOrder: number = null;
 	zIndex: number = null;
 	interactable: boolean = true;
 	myProperties: any = {};
@@ -94,6 +98,7 @@ class CanvasSectionObject {
 		this.size = options.size;
 		this.expand = options.expand.split(' ');
 		this.processingOrder = options.processingOrder;
+		this.drawingOrder = options.drawingOrder;
 		this.zIndex = options.zIndex;
 		this.interactable = options.interactable;
 		this.myProperties = options.myProperties ? options.myProperties: {};
@@ -571,6 +576,7 @@ class CanvasSectionContainer {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].onResize();
 		}
+		this.applyDrawingOrders();
 		if (redraw)
 			this.drawSections();
 	}
@@ -662,6 +668,21 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private applyDrawingOrders () {
+		// According to drawing order. Section with the highest drawing order will be drawn on top.
+		for (var i: number = 0; i < this.sections.length - 1; i++) {
+			var zIndex = this.sections[i].zIndex;
+			while (i < this.sections.length - 1 && zIndex === this.sections[i + 1].zIndex) {
+				if (this.sections[i].drawingOrder > this.sections[i + 1].drawingOrder) {
+					var temp = this.sections[i + 1];
+					this.sections[i + 1] = this.sections[i];
+					this.sections[i] = temp;
+				}
+				i++;
+			}
+		}
+	}
+
 	private drawSectionBorders () {
 		this.context.lineWidth = 2 * this.dpiScale;
 		this.context.strokeStyle = 'blue';
@@ -739,6 +760,7 @@ class CanvasSectionContainer {
 			|| options.size === undefined
 			|| options.expand === undefined
 			|| options.processingOrder === undefined
+			|| options.drawingOrder === undefined
 			|| options.zIndex === undefined
 			|| options.interactable === undefined
 		) {

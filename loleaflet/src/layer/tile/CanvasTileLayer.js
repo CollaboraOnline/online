@@ -216,6 +216,7 @@ L.TileSectionManager = L.Class.extend({
 			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
 			expand: 'top left bottom right', // Expand to all directions.
 			processingOrder: 1,
+			drawingOrder: 5,
 			zIndex: 5,
 			interactable: true,
 			myProperties: {
@@ -237,8 +238,9 @@ L.TileSectionManager = L.Class.extend({
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			processingOrder: 1,
-			zIndex: 4,
+			processingOrder: 2, // Size and position will be copied, this value is not important.
+			drawingOrder: 4,
+			zIndex: 5,
 			// Even if this one is drawn on top, won't be able to catch events.
 			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
 			interactable: false,
@@ -305,8 +307,9 @@ L.TileSectionManager = L.Class.extend({
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			processingOrder: 1,
-			zIndex: 8, // Above all.
+			processingOrder: 3, // Size and position will be copied, this value is not important.
+			drawingOrder: 8, // Above tiles section (same zIndex, higher drawing order).
+			zIndex: 5,
 			// Even if this one is drawn on top, won't be able to catch events.
 			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
 			interactable: false,
@@ -326,8 +329,9 @@ L.TileSectionManager = L.Class.extend({
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			processingOrder: 1,
-			zIndex: 6, // Above tile layer.
+			processingOrder: 4, // Size and position will be copied, this value is not important.
+			drawingOrder: 6,
+			zIndex: 5,
 			interactable: false,
 			myProperties: {},
 			onDraw: that._onDrawTilePixelGrid
