@@ -219,7 +219,7 @@ L.TileSectionManager = L.Class.extend({
 			drawingOrder: 5,
 			zIndex: 5,
 			interactable: true,
-			myProperties: {
+			sectionProperties: {
 				docLayer: that._layer,
 				tsManager: that
 			},
@@ -244,7 +244,7 @@ L.TileSectionManager = L.Class.extend({
 			// Even if this one is drawn on top, won't be able to catch events.
 			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
 			interactable: false,
-			myProperties: {
+			sectionProperties: {
 				docLayer: that._layer,
 				tsManager: that,
 				strokeStyle: '#c0c0c0'
@@ -254,21 +254,21 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_onDrawGridSection: function () {
-		if (!this.myProperties.docLayer.sheetGeometry)
+		if (!this.sectionProperties.docLayer.sheetGeometry)
 			return;
 
-		this.context.strokeStyle = this.myProperties.strokeStyle;
+		this.context.strokeStyle = this.sectionProperties.strokeStyle;
 		this.context.lineWidth = 1.0;
 
-		var ctx = this.myProperties.tsManager._paintContext();
+		var ctx = this.sectionProperties.tsManager._paintContext();
 		var context = this.context;
 
 		this.context.beginPath();
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
-			var paneBounds = this.myProperties.docLayer._cssBoundsToCore(ctx.paneBoundsList[i]);
+			var paneBounds = this.sectionProperties.docLayer._cssBoundsToCore(ctx.paneBoundsList[i]);
 			// co-ordinates of the main-(bottom right) pane in core document pixels
-			var viewBounds = this.myProperties.docLayer._cssBoundsToCore(ctx.viewBounds);
+			var viewBounds = this.sectionProperties.docLayer._cssBoundsToCore(ctx.viewBounds);
 			// into real pixel-land ...
 			paneBounds.round();
 			viewBounds.round();
@@ -279,7 +279,7 @@ L.TileSectionManager = L.Class.extend({
 			paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
 			// URGH -> zooming etc. (!?) ...
-			this.myProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
+			this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
 				paneBounds.min.x, paneBounds.max.x,
 				function(pos) {
 					context.moveTo(pos - paneOffset.x - 0.5, paneBounds.min.y - paneOffset.y - 0.5);
@@ -287,7 +287,7 @@ L.TileSectionManager = L.Class.extend({
 					context.stroke();
 				});
 
-			this.myProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
+			this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
 				paneBounds.min.y, paneBounds.max.y,
 				function(pos) {
 					context.moveTo(paneBounds.min.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
@@ -313,7 +313,7 @@ L.TileSectionManager = L.Class.extend({
 			// Even if this one is drawn on top, won't be able to catch events.
 			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
 			interactable: false,
-			myProperties: {
+			sectionProperties: {
 				docLayer: that._layer
 			},
 			onDraw: that._onDrawSplitsSection
@@ -333,7 +333,7 @@ L.TileSectionManager = L.Class.extend({
 			drawingOrder: 6,
 			zIndex: 5,
 			interactable: false,
-			myProperties: {},
+			sectionProperties: {},
 			onDraw: that._onDrawTilePixelGrid
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
 	},
@@ -367,7 +367,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_onDrawSplitsSection: function () {
-		var splitPanesContext = this.myProperties.docLayer.getSplitPanesContext();
+		var splitPanesContext = this.sectionProperties.docLayer.getSplitPanesContext();
 		if (splitPanesContext) {
 			var splitPos = splitPanesContext.getSplitPos();
 			this.context.strokeStyle = 'red';
@@ -416,19 +416,19 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_onTilesSectionResize: function () {
-		var tileSize = this.myProperties.docLayer._getTileSize();
+		var tileSize = this.sectionProperties.docLayer._getTileSize();
 		var borderSize = 3;
-		this.myProperties.tsManager._osCanvasExtraSize = 2 * borderSize * tileSize;
+		this.sectionProperties.tsManager._osCanvasExtraSize = 2 * borderSize * tileSize;
 		for (var i = 0; i < 4; ++i) {
-			this.myProperties.tsManager._offscreenCanvases[i].width = this.size[0] + this.myProperties.tsManager._osCanvasExtraSize;
-			this.myProperties.tsManager._offscreenCanvases[i].height = this.size[1] + this.myProperties.tsManager._osCanvasExtraSize;
+			this.sectionProperties.tsManager._offscreenCanvases[i].width = this.size[0] + this.sectionProperties.tsManager._osCanvasExtraSize;
+			this.sectionProperties.tsManager._offscreenCanvases[i].height = this.size[1] + this.sectionProperties.tsManager._osCanvasExtraSize;
 		}
 	},
 
 	_onTilesSectionInitialize: function () {
 		for (var i = 0; i < 4; i++) {
-			this.myProperties.tsManager._offscreenCanvases.push(document.createElement('canvas'));
-			this.myProperties.tsManager._oscCtxs.push(this.myProperties.tsManager._offscreenCanvases[i].getContext('2d', { alpha: false }));
+			this.sectionProperties.tsManager._offscreenCanvases.push(document.createElement('canvas'));
+			this.sectionProperties.tsManager._oscCtxs.push(this.sectionProperties.tsManager._offscreenCanvases[i].getContext('2d', { alpha: false }));
 		}
 		this.onResize();
 	},

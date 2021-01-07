@@ -52,7 +52,7 @@
 	* Renewing all sections (optional redraw).
 	* Requesting a redraw.
 
-	Every section has a "section" property inside "myProperties".
+	Every section has a "section" property inside "sectionProperties".
 
 	parentSectionName property (parameter of addSection): New section is added and its size and myTopLeft properties are mirrored from its parent section.
 		All other properties and behaviours are the same with any section.
@@ -92,8 +92,8 @@ class CanvasSectionObject {
 	drawingOrder: number = null;
 	zIndex: number = null;
 	interactable: boolean = true;
-	myProperties: any = {};
-	onInitialize: Function; // Paramaters: null (use myProperties).
+	sectionProperties: any = {};
+	onInitialize: Function; // Paramaters: null (use sectionProperties).
 	onMouseMove: Function; // Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
 	onMouseDown: Function; // Parameters: Point [x, y], e (native event object)
 	onMouseUp: Function; // Parameters: Point [x, y], e (native event object)
@@ -120,7 +120,7 @@ class CanvasSectionObject {
 		this.drawingOrder = options.drawingOrder;
 		this.zIndex = options.zIndex;
 		this.interactable = options.interactable;
-		this.myProperties = options.myProperties ? options.myProperties: {};
+		this.sectionProperties = options.sectionProperties ? options.sectionProperties: {};
 		this.onInitialize = options.onInitialize ? options.onInitialize: function() {};
 		this.onMouseMove = options.onMouseMove ? options.onMouseMove: function() {};
 		this.onMouseDown = options.onMouseDown ? options.onMouseDown: function() {};
@@ -823,7 +823,7 @@ class CanvasSectionContainer {
 			newSection.documentTopLeft = this.documentTopLeft;
 			newSection.containerObject = this;
 			newSection.dpiScale = this.dpiScale;
-			newSection.myProperties.section = newSection;
+			newSection.sectionProperties.section = newSection;
 			newSection.boundToSection = parentSectionName;
 
 			this.sections.push(newSection);
