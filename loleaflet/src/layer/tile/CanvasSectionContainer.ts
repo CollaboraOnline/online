@@ -65,6 +65,8 @@
 			mouse move (if mouse is down, "draggingSomething" = true)
 			mouse down + mouse move (dragging) + mouse up
 			mouse wheel
+			mouse enter
+			mouse leave
 
 		Touch event combinations:
 			mouse down + mouse up + click
@@ -95,6 +97,8 @@ class CanvasSectionObject {
 	onMouseMove: Function; // Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
 	onMouseDown: Function; // Parameters: Point [x, y], e (native event object)
 	onMouseUp: Function; // Parameters: Point [x, y], e (native event object)
+	onMouseEnter: Function; // Parameters: Point [x, y], e (native event object)
+	onMouseLeave: Function; // Parameters: Point [x, y], e (native event object)
 	onClick: Function; // Parameters: Point [x, y], e (native event object)
 	onDoubleClick: Function; // Parameters: Point [x, y], e (native event object)
 	onMouseWheel: Function; // Parameters: Point [x, y], DeltaY, e (native event object)
@@ -121,6 +125,8 @@ class CanvasSectionObject {
 		this.onMouseMove = options.onMouseMove ? options.onMouseMove: function() {};
 		this.onMouseDown = options.onMouseDown ? options.onMouseDown: function() {};
 		this.onMouseUp = options.onMouseUp ? options.onMouseUp: function() {};
+		this.onMouseEnter = options.onMouseEnter ? options.onMouseEnter: function() {};
+		this.onMouseLeave = options.onMouseLeave ? options.onMouseLeave: function() {};
 		this.onClick = options.onClick ? options.onClick: function() {};
 		this.onDoubleClick = options.onDoubleClick ? options.onDoubleClick: function() {};
 		this.onMouseWheel = options.onMouseWheel ? options.onMouseWheel: function() {};
@@ -155,6 +161,7 @@ class CanvasSectionContainer {
 	private dragDistance: Array<number> = null;
 	private draggingSomething: boolean = false; // This will be managed by container, used by sections.
 	private sectionOnMouseDown: string = null; // (Will contain section name) When dragging, user can leave section borders, dragging will continue. Target section will be informed.
+	private sectionUnderMouse: string = null; // For mouse enter & leave events.
 	private draggingTolerance: number = 5; // This is for only desktop, mobile browsers seem to distinguish dragging and clicking nicely.
 	private multiTouch: boolean = false;
 	private touchCenter: Array<number> = null;
@@ -310,7 +317,22 @@ class CanvasSectionContainer {
 				}
 
 				if (section) {
+					if (section.name !== this.sectionUnderMouse) {
+						if (this.sectionUnderMouse !== null) {
+							var previousSection: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
+							if (previousSection)
+								previousSection.onMouseLeave(this.convertPositionToSectionLocale(previousSection, this.mousePosition), e);
+						}
+						this.sectionUnderMouse = section.name;
+						section.onMouseEnter(this.convertPositionToSectionLocale(section, this.mousePosition), e);
+					}
 					section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
+				}
+				else if (this.sectionUnderMouse !== null) {
+					var previousSection: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
+					if (previousSection)
+						previousSection.onMouseLeave(this.convertPositionToSectionLocale(previousSection, this.mousePosition), e);
+					this.sectionUnderMouse = null;
 				}
 			}
 		}
@@ -365,6 +387,10 @@ class CanvasSectionContainer {
 	}
 
 	onMouseLeave (e: MouseEvent) {
+		if (this.sectionUnderMouse !== null) {
+			this.getSectionWithName(this.sectionUnderMouse).onMouseLeave(null, e);
+			this.sectionUnderMouse = null;
+		}
 		this.clearMousePositions();
 		this.mousePosition = null; // This variable is set to null if only mouse is outside canvas area.
 	}
