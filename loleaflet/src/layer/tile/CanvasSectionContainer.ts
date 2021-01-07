@@ -56,6 +56,21 @@
 
 	parentSectionName property (parameter of addSection): New section is added and its size and myTopLeft properties are mirrored from its parent section.
 		All other properties and behaviours are the same with any section.
+
+
+	Event handling:
+		Mouse event combinations:
+			mouse down + mouse up + click
+			mouse down + mouse up + click + mouse down + mouse up + click + double click
+			mouse move (if mouse is down, "draggingSomething" = true)
+			mouse down + mouse move (dragging) + mouse up
+			mouse wheel
+
+		Touch event combinations:
+			mouse down + mouse up + click
+			mouse down + long press + mouse up
+			mouse down + mouse move (it means dragging, "draggingSomething" = true) + mouse up // There is no "mouse move" event without dragging (for touch events)
+			mouse down + multi touch start + multi touch move + multi touch end
 */
 
 // This class will be used internally by CanvasSectionContainer.
@@ -145,6 +160,7 @@ class CanvasSectionContainer {
 	private touchCenter: Array<number> = null;
 	private potentialLongPress: boolean = false;
 	private clearColor: string = 'white';
+	private touchEventInProgress: boolean = false; // This prevents multiple calling of mouse down and up events.
 
 	constructor (canvasDOMElement: HTMLCanvasElement) {
 		this.canvas = canvasDOMElement;
@@ -175,6 +191,7 @@ class CanvasSectionContainer {
 		this.positionOnClick = this.positionOnDoubleClick = this.positionOnMouseDown = this.positionOnMouseUp = this.dragDistance = this.sectionOnMouseDown = null;
 		this.touchCenter = null;
 		this.draggingSomething = false;
+		this.touchEventInProgress = false;
 	}
 
 	private convertPositionToSectionLocale (section: CanvasSectionObject, point: Array<number>): Array<number> {
@@ -273,26 +290,28 @@ class CanvasSectionContainer {
 
 	private onMouseMove (e: MouseEvent) {
 		if (!this.potentialLongPress) {
-			this.mousePosition = this.convertPositionToCanvasLocale(e);
-			if (this.positionOnMouseDown !== null && !this.draggingSomething) {
-				var dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
-				if (dragDistance[0] >= this.draggingTolerance || dragDistance[1] >= this.draggingTolerance) {
-					this.draggingSomething = true;
+			if (!this.touchEventInProgress) {
+				this.mousePosition = this.convertPositionToCanvasLocale(e);
+				if (this.positionOnMouseDown !== null && !this.draggingSomething) {
+					var dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
+					if (dragDistance[0] >= this.draggingTolerance || dragDistance[1] >= this.draggingTolerance) {
+						this.draggingSomething = true;
+					}
 				}
-			}
 
-			var section: CanvasSectionObject;
+				var section: CanvasSectionObject;
 
-			if (this.draggingSomething) {
-				this.dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
-				section = this.getSectionWithName(this.sectionOnMouseDown);
-			}
-			else {
-				section = this.findSectionContainingPoint(this.mousePosition);
-			}
+				if (this.draggingSomething) {
+					this.dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
+					section = this.getSectionWithName(this.sectionOnMouseDown);
+				}
+				else {
+					section = this.findSectionContainingPoint(this.mousePosition);
+				}
 
-			if (section) {
-				section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
+				if (section) {
+					section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
+				}
 			}
 		}
 		else {
@@ -306,29 +325,33 @@ class CanvasSectionContainer {
 	}
 
 	private onMouseDown (e: MouseEvent) { // Ignore this event, just rely on this.draggingSomething variable.
-		this.clearMousePositions();
-		this.positionOnMouseDown = this.convertPositionToCanvasLocale(e);
+		if (!this.touchEventInProgress) {
+			this.clearMousePositions();
+			this.positionOnMouseDown = this.convertPositionToCanvasLocale(e);
 
-		var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseDown);
-		if (section) {
-			this.sectionOnMouseDown = section.name;
-			section.onMouseDown(this.convertPositionToSectionLocale(section, this.positionOnMouseDown), e);
+			var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseDown);
+			if (section) {
+				this.sectionOnMouseDown = section.name;
+				section.onMouseDown(this.convertPositionToSectionLocale(section, this.positionOnMouseDown), e);
+			}
 		}
 	}
 
 	private onMouseUp (e: MouseEvent) { // Should be ignored unless this.draggingSomething = true.
-		this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
+		if (!this.touchEventInProgress) {
+			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
 
-		if (!this.draggingSomething) {
-			var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
-			if (section) {
-				section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
+			if (!this.draggingSomething) {
+				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
+				if (section) {
+					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
+				}
 			}
-		}
-		else {
-			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
-			if (section) {
-				section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
+			else {
+				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
+				if (section) {
+					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
+				}
 			}
 		}
 	}
@@ -403,18 +426,11 @@ class CanvasSectionContainer {
 				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
 				if (section)
 					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
-
-				this.clearMousePositions();
 			}
 			else {
 				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
-				if (section) {
+				if (section)
 					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
-					this.clearMousePositions();
-				}
-				else {
-					this.clearMousePositions();
-				}
 			}
 		}
 		else {
@@ -426,6 +442,7 @@ class CanvasSectionContainer {
 				}
 			}
 		}
+		this.touchEventInProgress = true;
 	}
 
 	private onTouchCancel (e: TouchEvent) {
