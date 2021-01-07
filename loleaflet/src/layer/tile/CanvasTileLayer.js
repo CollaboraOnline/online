@@ -190,6 +190,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_paintSimple: function (tile, ctx) {
+		ctx.viewBounds.round();
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 		var halfExtraSize = this._osCanvasExtraSize / 2;
 		var extendedOffset = offset.add(new L.Point(halfExtraSize, halfExtraSize));
@@ -586,7 +587,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	_syncTileContainerSize: function () {
 		var tileContainer = this._container;
 		if (tileContainer) {
-			var size = this._map.getPixelBoundsCore().getSize();
+			var size = this._map.getPixelBounds().getSize();
 			this._painter._sectionContainer.onResize(size.x, size.y);
 			tileContainer.style.width = this._painter._sectionContainer.canvas.style.width;
 			tileContainer.style.height = this._painter._sectionContainer.canvas.style.height;
