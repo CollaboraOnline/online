@@ -478,12 +478,15 @@ class CanvasSectionContainer {
 
 	onResize (newWidth: number, newHeight: number) {
 		this.dpiScale = window.devicePixelRatio;
+		newWidth = Math.floor(newWidth * this.dpiScale);
+		newHeight = Math.floor(newHeight * this.dpiScale);
+
 		this.canvas.width = newWidth;
 		this.canvas.height = newHeight;
 
 		// CSS pixels can be fractional, but need to round to the same real pixels
 		var cssWidth: number = newWidth / this.dpiScale; // NB. beware
-		var cssHeight = newHeight / this.dpiScale;
+		var cssHeight: number = newHeight / this.dpiScale;
 		this.canvas.style.width = cssWidth.toFixed(4) + 'px';
 		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
 
