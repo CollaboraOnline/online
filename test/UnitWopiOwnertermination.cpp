@@ -20,10 +20,27 @@ class UnitWopiOwnertermination : public WopiTestServer
     enum class Phase
     {
         Load,
-        Modify,
-        OwnerTermination,
+        WaitLoadStatus,
         Polling
     } _phase;
+
+    /// Return the name of the given Phase.
+    static std::string toString(Phase phase)
+    {
+#define ENUM_CASE(X)                                                                               \
+    case X:                                                                                        \
+        return #X
+
+        switch (phase)
+        {
+            ENUM_CASE(Phase::Load);
+            ENUM_CASE(Phase::WaitLoadStatus);
+            ENUM_CASE(Phase::Polling);
+            default:
+                return "Unknown";
+        }
+#undef ENUM_CASE
+    }
 
 public:
     UnitWopiOwnertermination()
@@ -37,38 +54,52 @@ public:
         if (_phase == Phase::Polling)
         {
             // Document got saved, that's what we wanted
-            exitTest(TestResult::Ok);
+            passTest("Document saved on closing after modification.");
         }
+        else
+        {
+            failTest("Saving in an unexpected phase: " + toString(_phase));
+        }
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus but was " + toString(_phase),
+                           _phase == Phase::WaitLoadStatus);
+
+        // Modify the document.
+        LOG_TST("onDocumentLoaded: Modifying");
+        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0",
+                               getTestname());
+        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512",
+                               getTestname());
+
+        // And close. We expect the document to be marked as modified and saved.
+        LOG_TST("onDocumentLoaded: Closing");
+        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", getTestname());
+
+        _phase = Phase::Polling;
+        SocketPoll::wakeupWorld();
+        return true;
     }
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWopiOwnertermination";
-
         switch (_phase)
         {
             case Phase::Load:
             {
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                _phase = Phase::WaitLoadStatus;
 
-                _phase = Phase::Modify;
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), getTestname());
                 break;
             }
-            case Phase::Modify:
+            case Phase::WaitLoadStatus:
             {
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0", testName);
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512", testName);
-
-                _phase = Phase::OwnerTermination;
-                SocketPoll::wakeupWorld();
-                break;
-            }
-	        case Phase::OwnerTermination:
-            {
-                _phase = Phase::Polling;
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", testName);
+                // Wait for onDocumentLoaded.
                 break;
             }
             case Phase::Polling:
