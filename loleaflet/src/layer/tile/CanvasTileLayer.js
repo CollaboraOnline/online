@@ -813,7 +813,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		return true;
 	},
 
-	_updateMaxBounds: function (sizeChanged, extraSize, options, zoom) {
+	_updateMaxBounds: function (sizeChanged, options, zoom) {
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
 		}
@@ -822,6 +822,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 
 		var dpiScale = this._painter._dpiScale;
+		var extraSize = options ? options.extraSize : null;
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
 			this._docHeightTwips / this.options.tileHeightTwips);
 		// docPixelLimits should be in csspx.

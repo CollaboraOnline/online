@@ -85,13 +85,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	onAdd: function (map) {
-		L.TileLayer.prototype.onAdd.call(this, map);
-		map.on('updatemaxbounds', this._onUpdateMaxBounds, this);
-	},
-
-	onRemove: function (map) {
-		map.off('updatemaxbounds', this._onUpdateMaxBounds, this);
+	onRemove: function () {
 		clearTimeout(this._previewInvalidator);
 	},
 
@@ -309,15 +303,12 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	_updateMaxBounds: function (sizeChanged, extraSize) {
+	_updateMaxBounds: function (sizeChanged, options) {
+		var extraSize = options ? options.extraSize : null;
 		if (!extraSize) {
 			extraSize = this._annotationManager.allocateExtraSize();
 		}
-		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, extraSize, {panInside: false});
-	},
-
-	_onUpdateMaxBounds: function (e) {
-		this._updateMaxBounds(e.sizeChanged, e.extraSize);
+		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, {panInside: false, extraSize: extraSize});
 	},
 
 	_createCommentStructure: function (menuStructure) {
