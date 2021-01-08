@@ -363,13 +363,15 @@ L.GridLayer = L.Layer.extend({
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
 	},
 
-	_updateMaxBounds: function (sizeChanged, extraSize, options, zoom) {
+	_updateMaxBounds: function (sizeChanged, options, zoom) {
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
 		}
 		if (!zoom) {
 			zoom = this._map.getZoom();
 		}
+
+		var extraSize = options ? options.extraSize : null;
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
 			this._docHeightTwips / this.options.tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
