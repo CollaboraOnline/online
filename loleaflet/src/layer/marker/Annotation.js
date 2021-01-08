@@ -45,7 +45,8 @@ L.Annotation = L.Layer.extend({
 	},
 
 	onRemove: function (map) {
-		map._panes.popupPane.removeChild(this._container);
+		L.DomUtil.remove(this._container);
+
 		if (this._data.textSelected) {
 			this._data.textSelected.removeEventParent(map);
 			map.removeLayer(this._data.textSelected);
