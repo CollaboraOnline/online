@@ -217,10 +217,16 @@ MOBILE_CONFIG = \
 MOBILE_ENV = \
 	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
+# Run one mobile test / all mobile tests in interactive test runner.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all mobile tests are run.
 define run_interactive_mobile
 	$(if $(1),\
-		$(call run_interactive_single,$(MOBILE_CONFIG),$(MOBILE_ENV),$(abs_dir)/integration_tests/mobile/$(1)),\
-		$(call run_interactive_all,$(MOBILE_CONFIG),$(MOBILE_ENV)))
+		$(eval SPEC_FILE=$(abs_dir)/integration_tests/mobile/$(1))\
+		$(call run_interactive_single,$(MOBILE_CONFIG),$(MOBILE_ENV),$(SPEC_FILE))\
+	,\
+		$(call run_interactive_all,$(MOBILE_CONFIG),$(MOBILE_ENV))\
+	)
 endef
 
 define run_mobile_tests
