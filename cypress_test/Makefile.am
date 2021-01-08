@@ -275,10 +275,16 @@ DESKTOP_CONFIG = \
 DESKTOP_ENV = \
 	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
+# Run one desktop test / all desktop tests in interactive test runner.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all desktop tests are run.
 define run_interactive_desktop
+	$(eval SPEC_FILE=$(abs_dir)/integration_tests/desktop/$(1))\
 	$(if $(1),\
-		$(call run_interactive_single,$(DESKTOP_CONFIG),$(DESKTOP_ENV),$(abs_dir)/integration_tests/desktop/$(1)),\
-		$(call run_interactive_all,$(DESKTOP_CONFIG),$(DESKTOP_ENV)))
+		$(call run_interactive_single,$(DESKTOP_CONFIG),$(DESKTOP_ENV),$(SPEC_FILE))\
+	,\
+		$(call run_interactive_all,$(DESKTOP_CONFIG),$(DESKTOP_ENV))\
+	)
 endef
 
 define run_desktop_tests
