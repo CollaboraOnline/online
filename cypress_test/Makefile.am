@@ -357,18 +357,23 @@ define run_all_multiuser_tests
 	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test),$(1)))
 endef
 
+# Run one multi-user test in headless mode.
+# Parameters:
+# 1 - test name:	test name to run. This test name means to test files (user1, user2).
+# 2 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
 define run_multiuser_test
 	$(eval USER1_SPEC=$(strip $(1))_user1_spec.js)
 	$(eval USER2_SPEC=$(strip $(1))_user2_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
-	@echo "Running cypress multi-user test: $(USER1_SPEC) - $(USER2_SPEC)"
+	@echo "Running cypress multi-user test: $(1)"
 	@echo
+	$(eval ENV_EXTENDED=$(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)))
 	@$(call run_test_parallel,\
-		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)),$(USER1_SPEC),multi-user,$(USER1_LOG)) & \
+		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(USER1_SPEC),multi-user,$(USER1_LOG)) & \
 	sleep 5 && \
 	$(call run_test_parallel,\
-		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
+		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
 
