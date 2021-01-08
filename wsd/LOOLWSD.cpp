@@ -1027,8 +1027,12 @@ void LOOLWSD::initialize(Application& self)
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = getConfigValue<std::string>(conf, "logging.level", "trace");
     setenv("LOOL_LOGLEVEL", LogLevel.c_str(), true);
+
+#if !ENABLE_DEBUG
     std::string SalLog = getConfigValue<std::string>(conf, "logging.lokit_sal_log", "-INFO-WARN");
     setenv("SAL_LOG", SalLog.c_str(), 0);
+#endif
+
     const bool withColor = getConfigValue<bool>(conf, "logging.color", true) && isatty(fileno(stderr));
     if (withColor)
     {
