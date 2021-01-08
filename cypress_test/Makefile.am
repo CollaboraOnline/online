@@ -230,13 +230,8 @@ define run_mobile_tests
 		@$(call run_test_parallel,\
 			$(MOBILE_CONFIG),$(MOBILE_ENV)$(if $(3),$(COMMA)$(3)),$(1),mobile,$(2))\
 		,\
-		$(CYPRESS_BINARY) run \
-			--browser $(BROWSER) \
-			--headless \
-			--config $(MOBILE_CONFIG) \
-			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
-			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
-			|| ($(KILL_COMMAND) && false) \
+		$(call run_test_headless,\
+			$(MOBILE_CONFIG),$(MOBILE_ENV)$(if $(3),$(COMMA)$(3)),$(if $(1),$(abs_dir)/integration_tests/mobile/$(1)))\
 	)
 endef
 
@@ -280,13 +275,8 @@ define run_desktop_tests
 		@$(call run_test_parallel,\
 			$(DESKTOP_CONFIG),$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)),$(1),desktop,$(2))\
 		,\
-		$(CYPRESS_BINARY) run \
-			--browser $(BROWSER) \
-			--headless \
-			--config $(DESKTOP_CONFIG) \
-			--env $(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)) \
-			$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)) \
-			|| ($(KILL_COMMAND) && false) \
+		$(call run_test_headless,\
+			$(DESKTOP_CONFIG),$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)),$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)))\
 	)
 endef
 
@@ -571,6 +561,22 @@ define run_test_parallel
 		--spec $(3) \
 		--type $(4) \
 		--log-file $(5)
+endef
+
+# Run one test \ tests in headless mode.
+#
+# Parameters:
+# 1 - config:		 cypress configuration (e.g. cypress' --config argument).
+# 2 - env:		 list of environment variables (e.g. cypress' --env argument).
+# 3 - spec (optional):   test file path (e.g. cypress' --spec argument)
+define run_test_headless
+	$(CYPRESS_BINARY) run \
+		--browser $(BROWSER) \
+		--headless \
+		--config $(1) \
+		--env $(2) \
+		--spec=$(3) \
+		|| ($(KILL_COMMAND) && false)
 endef
 
 else
