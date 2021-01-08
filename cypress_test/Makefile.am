@@ -229,15 +229,22 @@ define run_interactive_mobile
 	)
 endef
 
+# Run one mobile test / all mobile tests in headless mode.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all mobile tests are run.
+# 2 - log (optional):	log file for cypress run, needed for parallel build only.
+# 3 - +env (optional):	additional env variables (will be appended to $(MOBILE_ENV).
 define run_mobile_tests
 	@echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
 	@echo
+	$(eval ENV_EXTENDED=$(MOBILE_ENV)$(if $(3),$(COMMA)$(3)))
 	$(if $(and $(PARALLEL_BUILD), $(1)),\
 		@$(call run_test_parallel,\
-			$(MOBILE_CONFIG),$(MOBILE_ENV)$(if $(3),$(COMMA)$(3)),$(1),mobile,$(2))\
-		,\
+			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(1),mobile,$(2))\
+	,\
+		$(eval SPEC_FILE=$(if $(1),$(abs_dir)/integration_tests/mobile/$(1)))\
 		$(call run_test_headless,\
-			$(MOBILE_CONFIG),$(MOBILE_ENV)$(if $(3),$(COMMA)$(3)),$(if $(1),$(abs_dir)/integration_tests/mobile/$(1)))\
+			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
 endef
 
