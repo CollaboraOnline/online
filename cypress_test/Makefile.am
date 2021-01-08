@@ -205,9 +205,6 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
-	@echo
-	@echo "Open cypress with mobile tests..."
-	@echo
 	$(call run_interactive_mobile,$(spec)) || true
 	@$(KILL_COMMAND) || true
 
@@ -221,6 +218,8 @@ MOBILE_ENV = \
 # Parameters:
 # 1 - spec (optional):	test file to run, if not specified all mobile tests are run.
 define run_interactive_mobile
+	@echo "Open cypress with mobile tests..."
+	@echo
 	$(if $(1),\
 		$(eval SPEC_FILE=$(abs_dir)/integration_tests/mobile/$(1))\
 		$(call run_interactive_single,$(MOBILE_CONFIG),$(MOBILE_ENV),$(SPEC_FILE))\
@@ -263,9 +262,6 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
-	@echo
-	@echo "Open cypress with desktop tests..."
-	@echo
 	$(call run_interactive_desktop,$(spec)) || true
 	@$(KILL_COMMAND) || true
 
@@ -279,6 +275,8 @@ DESKTOP_ENV = \
 # Parameters:
 # 1 - spec (optional):	test file to run, if not specified all desktop tests are run.
 define run_interactive_desktop
+	@echo "Open cypress with desktop tests..."
+	@echo
 	$(eval SPEC_FILE=$(abs_dir)/integration_tests/desktop/$(1))\
 	$(if $(1),\
 		$(call run_interactive_single,$(DESKTOP_CONFIG),$(DESKTOP_ENV),$(SPEC_FILE))\
