@@ -227,13 +227,8 @@ define run_mobile_tests
 	@echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
 	@echo
 	$(if $(PARALLEL_BUILD),\
-		@$(PARALLEL_SCRIPT) \
-			--browser $(BROWSER) \
-			--config $(MOBILE_CONFIG) \
-			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
-			--spec $(1) \
-			--type mobile \
-			--log-file $(2) \
+		@$(call run_test_parallel,\
+			$(MOBILE_CONFIG),$(MOBILE_ENV)$(if $(3),$(COMMA)$(3)),$(1),mobile,$(2))\
 		,\
 		$(CYPRESS_BINARY) run \
 			--browser $(BROWSER) \
@@ -282,13 +277,8 @@ define run_desktop_tests
 	@echo $(if $(1),"Running cypress desktop test: $(1)","Running cypress desktop tests...")
 	@echo
 	$(if $(PARALLEL_BUILD),\
-		@$(PARALLEL_SCRIPT) \
-			--browser $(BROWSER) \
-			--config $(DESKTOP_CONFIG) \
-			--env $(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)) \
-			--spec $(1) \
-			--type desktop \
-			--log-file $(2) \
+		@$(call run_test_parallel,\
+			$(DESKTOP_CONFIG),$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)),$(1),desktop,$(2))\
 		,\
 		$(CYPRESS_BINARY) run \
 			--browser $(BROWSER) \
@@ -333,13 +323,8 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 		$(eval INTERACTIVE_USER_SPEC=$(spec)_user1_spec.js), \
 		$(eval INTERACTIVE_USER_SPEC=$(spec)_user2_spec.js))
 	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
-	@$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(MULTIUSER_CONFIG) \
-		--env $(MULTIUSER_ENV) \
-		--spec $(BACKGROUND_USER_SPEC) \
-		--type multi-user \
-		--log-file $(BACKGROUND_USER_LOG) &
+	@$(call run_test_parallel,\
+		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) &
 	@sleep 5
 	$(call run_interactive_multi,$(INTERACTIVE_USER_SPEC)) || true
 	@$(KILL_COMMAND) || true
@@ -365,21 +350,11 @@ define run_multiuser_test
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@echo "Running cypress multi-user test: $(USER1_SPEC) - $(USER2_SPEC)"
 	@echo
-	@$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(MULTIUSER_CONFIG) \
-		--env $(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)) \
-		--spec $(USER1_SPEC) \
-		--type multi-user \
-		--log-file $(USER1_LOG) & \
+	@$(call run_test_parallel,\
+		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)),$(USER1_SPEC),multi-user,$(USER1_LOG)) & \
 	sleep 5 && \
-	$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(MULTIUSER_CONFIG) \
-		--env $(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)) \
-		--spec $(USER2_SPEC) \
-		--type multi-user \
-		--log-file $(USER2_LOG) && \
+	$(call run_test_parallel,\
+		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
 
@@ -414,13 +389,8 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
 	$(call run_interactive_interfer_mobile,$(INTERACTIVE_USER_SPEC)) &
 	@sleep 5
-	@$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(INTERFER_MOBILE_CONFIG2) \
-		--env $(INTERFER_MOBILE_ENV2) \
-		--spec $(BACKGROUND_USER_SPEC) \
-		--type multi-user \
-		--log-file $(BACKGROUND_USER_LOG) || true
+	@$(call run_test_parallel,\
+		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) || true
 	@$(KILL_COMMAND) || true
 
 define run_interactive_interfer_mobile
@@ -450,21 +420,11 @@ define run_mobile_interference_test
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@echo "Running cypress mobile interference test: $(1)"
 	@echo
-	@$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(INTERFER_MOBILE_CONFIG1) \
-		--env $(INTERFER_MOBILE_ENV1) \
-		--spec $(USER1_SPEC) \
-		--type mobile \
-		--log-file $(USER1_LOG) & \
+	@$(call run_test_parallel,\
+		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC),mobile,$(USER1_LOG)) & \
 	sleep 5 && \
-	$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(INTERFER_MOBILE_CONFIG2) \
-		--env $(INTERFER_MOBILE_ENV2) \
-		--spec $(USER2_SPEC) \
-		--type multi-user \
-		--log-file $(USER2_LOG) && \
+	$(call run_test_parallel,\
+		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
 
@@ -499,13 +459,8 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
 	$(call run_interactive_interfer_desktop,$(INTERACTIVE_USER_SPEC)) &
 	@sleep 5
-	@$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(INTERFER_DESKTOP_CONFIG2) \
-		--env $(INTERFER_DESKTOP_ENV2) \
-		--spec $(BACKGROUND_USER_SPEC) \
-		--type multi-user \
-		--log-file $(BACKGROUND_USER_LOG) || true
+	@$(call run_test_parallel,\
+		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) || true
 	@$(KILL_COMMAND) || true
 
 define run_interactive_interfer_desktop
@@ -535,21 +490,11 @@ define run_desktop_interference_test
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@echo "Running cypress desktop interference test: $(1)"
 	@echo
-	@$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(INTERFER_DESKTOP_CONFIG1) \
-		--env $(INTERFER_DESKTOP_ENV1) \
-		--spec $(USER1_SPEC) \
-		--type desktop \
-		--log-file $(USER1_LOG) & \
+	@$(call run_test_parallel,\
+		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC),desktop,$(USER1_LOG)) & \
 	sleep 5 && \
-	$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(INTERFER_DESKTOP_CONFIG2) \
-		--env $(INTERFER_DESKTOP_ENV2) \
-		--spec $(USER2_SPEC) \
-		--type multi-user \
-		--log-file $(USER2_LOG) && \
+	$(call run_test_parallel,\
+		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
 
@@ -608,6 +553,24 @@ define run_interactive_single
 		--config $(1) \
 		--env $(2) \
 		--spec=$(3)
+endef
+
+# Run one test in parallel mode, using parallel running script.
+#
+# Parameters:
+# 1 - config: cypress configuration (e.g. cypress' --config argument).
+# 2 - env:    list of environment variables (e.g. cypress' --env argument).
+# 3 - spec:   test file path (e.g. cypress' --spec argument)
+# 4 - type:   test type (e.g. mobile, desktop, multi-user)
+# 5 - log:    log file path
+define run_test_parallel
+	$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(1) \
+		--env $(2) \
+		--spec $(3) \
+		--type $(4) \
+		--log-file $(5)
 endef
 
 else
