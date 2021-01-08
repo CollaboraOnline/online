@@ -226,7 +226,7 @@ endef
 define run_mobile_tests
 	@echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
 	@echo
-	$(if $(PARALLEL_BUILD),\
+	$(if $(and $(PARALLEL_BUILD), $(1)),\
 		@$(call run_test_parallel,\
 			$(MOBILE_CONFIG),$(MOBILE_ENV)$(if $(3),$(COMMA)$(3)),$(1),mobile,$(2))\
 		,\
@@ -276,7 +276,7 @@ endef
 define run_desktop_tests
 	@echo $(if $(1),"Running cypress desktop test: $(1)","Running cypress desktop tests...")
 	@echo
-	$(if $(PARALLEL_BUILD),\
+	$(if $(and $(PARALLEL_BUILD), $(1)),\
 		@$(call run_test_parallel,\
 			$(DESKTOP_CONFIG),$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)),$(1),desktop,$(2))\
 		,\
