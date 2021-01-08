@@ -1194,6 +1194,7 @@ if test "$enable_androidapp" = "yes"; then
 fi
 
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
+AC_CONFIG_FILES([coolstress],[chmod +x coolstress])
 
 AC_OUTPUT
 
