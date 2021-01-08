@@ -243,6 +243,7 @@ var unoCommandsArray = {
 	LanguageStatus:{global:{menu:_('Language Status'),},},
 	LayoutStatus:{presentation:{menu:_('Layout'),},},
 	LeftPara:{global:{context:_('Align Left'),menu:_('Left'),},},
+	Line:{global:{context:_('Insert Line'),menu:_('Line'),},},
 	LineNumberingDialog:{text:{menu:_('~Line Numbering...'),},},
 	MasterSlidesPanel:{presentation:{menu:_('Master Slides'),},},
 	MergeCells:{presentation:{menu:_('Merge Cells'),},spreadsheet:{menu:_('Merge Cells'),},text:{menu:_('Merge Cells'),},},
