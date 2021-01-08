@@ -170,7 +170,7 @@
 			if (global.mode.isChromebook())
 				return false;
 
-			if (L.Browser.mobile && L.Browser.cypressTest) {
+			if (global.L.Browser.mobile && L.Browser.cypressTest) {
 				return true;
 			}
 
@@ -653,10 +653,11 @@
 	// If not debug, don't print anything on the console
 	// except in tile debug mode (Ctrl-Shift-Alt-d)
 	console.log2 = console.log;
+	console.log('skip foo? ' + global.loleafletLogging);
 	if (global.loleafletLogging !== 'true') {
 		var methods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
 		for (var i = 0; i < methods.length; i++) {
-			console[methods[i]] = function() {};
+//			console[methods[i]] = function() {};
 		}
 	} else {
 		window.onerror = function (msg, src, row, col, err) {

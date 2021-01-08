@@ -1,55 +1,78 @@
-console.log('Startup')
-
 var vm = require("vm");
 var fs = require("fs");
 
-// stubs
-/*navigator = {
-	userAgent: 'loadtest',
-	vendor: 'collabora',
-	platform: 'Linux'
-}; */
+var top_srcdir = process.argv[2];
+var top_builddir = process.argv[3];
 
 // jsdom for browser emulation
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
-window = new JSDOM(`...`).window;
-window.host = 'localhost';
-window.location = 'https://localhost:9980';
 
-// cf. loleaflet.hml - Window properties:
-window.host = '';
-window.serviceRoot = '';
-window.versionPath = '6.4.3';
-window.accessToken = '';
-window.accessTokenTTL = '';
-window.accessHeader = '';
-window.loleafletLogging = 'true';
-window.enableWelcomeMessage = false;
-window.enableWelcomeMessageButton = false;
-window.outOfFocusTimeoutSecs = 1000000;
-window.idleTimeoutSecs = 1000000;
-window.reuseCookies = '';
-window.protocolDebug = false;
-window.frameAncestors = '';
-window.socketProxy = false;
-window.tileSize = 256;
-window.uiDefaults = {};
+var data = fs.readFileSync('../dist/loleaflet.html', {encoding: 'utf8'});
 
-// stub the DOM left and right:
+data = data.replace(/%SERVICE_ROOT%\/loleaflet\/%VERSION%/g, top_builddir + '/loleaflet/dist');
+data = data.replace(/%SERVICE_ROOT%/g, '');
+data = data.replace(/%VERSION%/g, 'dist');
+data = data.replace(/%HOST%/g, 'wss://localhost:9980');
+data = data.replace(/%ACCESS_TOKEN%/g, '');
+data = data.replace(/%ACCESS_TOKEN_TTL%/g, '0');
+data = data.replace(/%ACCESS_HEADER%/g, '');
+data = data.replace(/%LOLEAFLET_LOGGING%/g, 'true');
+data = data.replace(/%ENABLE_WELCOME_MSG%/g, 'false');
+data = data.replace(/%ENABLE_WELCOME_MSG%/g, 'false');
+data = data.replace(/%ENABLE_WELCOME_MSG_BTN%/g, 'false');
+data = data.replace(/%USER_INTERFACE_MODE%/g, '');
+data = data.replace(/%OUT_OF_FOCUS_TIMEOUT_SECS%/g, '1000000');
+data = data.replace(/%IDLE_TIMEOUT_SECS%/g, '1000000');
+data = data.replace(/%REUSE_COOKIES%/g, 'false');
+data = data.replace(/%PROTOCOL_DEBUG%/g, 'true');
+data = data.replace(/%FRAME_ANCESTORS%/g, '');
+data = data.replace(/%SOCKET_PROXY%/g, 'false');
+data = data.replace(/%UI_DEFAULTS%/g, '{}');
 
-context = vm.createContext(window, {name: 'simulation' })
+window = new JSDOM(data,
+		   { runScripts: 'dangerously',
+		     pretendToBeVisual: true,
+		     includeNodeLocations: true,
+		     url: 'file:///tmp/notthere/loleaflet.html?file_path=file:///' +
+			top_srcdir + '/test/data/hello-world.ods',
+		     resources: 'usable',
+		     beforeParse(window) {
+			     console.debug('Before script parsing');
+		     },
+		     done(errors, window) {
+			     console.debug('Errors ' + errors);
+		     }
+		   }).window;
 
-L = { Browser: {} };
+// Make it possible to mock sizing properties
+Object.defineProperty(window.HTMLElement.prototype, "clientWidth", {
+	get: function() {
+		return this.___clientWidth || 0;
+	}
+});
+Object.defineProperty(window.HTMLElement.prototype, "clientHeight", {
+	get: function() {
+		return this.___clientHeight || 0;
+	}
+});
 
-for (var i = 2; i < process.argv.length; ++i)
-{
-	console.log('load "' + process.argv[i] + '"');
+console.log('Finished bootstrapping: ' + window.L.Browser.mobile + ' desktop ' + window.mode.isDesktop() + ' now running');
+console.debug('Window size ' + window.innerWidth + 'x' + window.innerHeight);
 
-	var data = fs.readFileSync(process.argv[i]);
-	const script = new vm.Script(data);
-	script.runInContext(context);
-}
+window.HTMLElement.prototype.getBoundingClientRect = function() {
+	console.debug('getBoundingClientRect for ' + this.id);
+	return {
+		width: 0, height: 0, top: 0, left: 0
+	};
+};
+window.onload = function() {
+	console.debug('socket ' + window.socket);
+	map = window.socket._map;
 
-console.log('Bootstrapped mobile: ' + L.Browser.mobile + ' desktop ' + window.mode.isDesktop());
+	console.debug('Initialize / size map pieces ' + map);
 
+	// Force some sizes onto key pieces:
+	map._container.___clientWidth = 1024;
+	map._container.___clientHeight = 768;
+};

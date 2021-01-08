@@ -686,8 +686,4 @@ $(abs_srcdir)/admin/jsconfig.json:
 jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 
 load-test: $(LOLEAFLET_JS)
-	@(cd test ; node ./load.js \
-		$(abspath $(srcdir)/js/global.js) \
-		$(abspath $(NODE_MODULES_JS_SRC)) \
-		$(abspath $(LOLEAFLET_LIBS_JS_SRC)) \
-		$(abspath $(LOLEAFLET_JS)))
+	@(cd test ; node --inspect ./load.js $(abspath $(top_srcdir)) $(abspath $(top_builddir)))

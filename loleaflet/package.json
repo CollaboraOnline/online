@@ -39,6 +39,7 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
+    "canvas": "^2.6.1",
     "jsdom": "^16.4.0"
   }
 }
