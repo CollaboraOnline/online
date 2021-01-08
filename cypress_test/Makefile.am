@@ -287,15 +287,22 @@ define run_interactive_desktop
 	)
 endef
 
+# Run one desktop test / all desktop tests in headless mode.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all desktop tests are run.
+# 2 - log (optional):	log file for cypress run, needed for parallel build only.
+# 3 - +env (optional):	additional env variables (will be appended to $(DESKTOP_ENV).
 define run_desktop_tests
 	@echo $(if $(1),"Running cypress desktop test: $(1)","Running cypress desktop tests...")
 	@echo
+	$(eval ENV_EXTENDED=$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)))
 	$(if $(and $(PARALLEL_BUILD), $(1)),\
 		@$(call run_test_parallel,\
-			$(DESKTOP_CONFIG),$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)),$(1),desktop,$(2))\
-		,\
+			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(1),desktop,$(2))\
+	,\
+		$(eval SPEC_FILE=$(if $(1),$(abs_dir)/integration_tests/desktop/$(1)))\
 		$(call run_test_headless,\
-			$(DESKTOP_CONFIG),$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)),$(if $(1), --spec=$(abs_dir)/integration_tests/desktop/$(1)))\
+			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
 endef
 
