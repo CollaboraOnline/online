@@ -337,10 +337,12 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 		$(eval INTERACTIVE_USER_SPEC=$(spec)_user1_spec.js), \
 		$(eval INTERACTIVE_USER_SPEC=$(spec)_user2_spec.js))
 	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
+	$(eval INTERACTIVE_USER_SPEC=$(abs_dir)/integration_tests/multiuser/$(INTERACTIVE_USER_SPEC))
 	@$(call run_test_parallel,\
 		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) &
 	@sleep 5
-	$(call run_interactive_multi,$(INTERACTIVE_USER_SPEC)) || true
+	$(call run_interactive_single,\
+		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(INTERACTIVE_USER_SPEC)) || true
 	@$(KILL_COMMAND) || true
 
 MULTIUSER_CONFIG = \
@@ -348,14 +350,6 @@ MULTIUSER_CONFIG = \
 
 MULTIUSER_ENV = \
 	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
-
-# Run one multi-user test in interactive test runner.
-# Parameters:
-# 1 - spec:	test file to run, relative path to multi-user test folder.
-define run_interactive_multi
-	$(eval SPEC_FILE=$(abs_dir)/integration_tests/multiuser/$(1))
-	$(call run_interactive_single,$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(SPEC_FILE))
-endef
 
 # Run all multi-user tests in headless mode.
 # Parameters:
