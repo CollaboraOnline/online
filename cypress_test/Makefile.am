@@ -277,7 +277,7 @@ DESKTOP_ENV = \
 define run_interactive_desktop
 	@echo "Open cypress with desktop tests..."
 	@echo
-	$(eval SPEC_FILE=$(abs_dir)/integration_tests/desktop/$(1))\
+	$(eval SPEC_FILE=$(abs_dir)/integration_tests/desktop/$(1))
 	$(if $(1),\
 		$(call run_interactive_single,$(DESKTOP_CONFIG),$(DESKTOP_ENV),$(SPEC_FILE))\
 	,\
