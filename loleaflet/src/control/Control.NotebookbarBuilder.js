@@ -66,7 +66,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:InsertObject'] = function() {};
 		this._toolitemHandlers['.uno:Gallery'] = function() {};
 		this._toolitemHandlers['.uno:InsertAVMedia'] = function() {};
-		this._toolitemHandlers['.uno:Line'] = function() {};
 		this._toolitemHandlers['.uno:Polygon_Unfilled'] = function() {};
 		this._toolitemHandlers['.uno:Bezier_Unfilled'] = function() {};
 		this._toolitemHandlers['.uno:ArrowsToolbox'] = function() {};
