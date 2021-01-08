@@ -86,6 +86,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['colorlistbox'] = this._colorControl;
 		this._controlHandlers['borderstyle'] = this._borderControl;
 		this._controlHandlers['treelistbox'] = this._treelistboxControl;
+		this._controlHandlers['iconview'] = this._iconViewControl;
 		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
 		this._controlHandlers['rootcomment'] = this._rootCommentControl;
 		this._controlHandlers['comment'] = this._commentControl;
@@ -1781,6 +1782,47 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			for (i in data.entries) {
 				builder._treelistboxEntry(ul, data, data.entries[i], builder);
 			}
+		}
+
+		return false;
+	},
+
+	_iconViewEntry: function (parentContainer, parentData, entry, builder) {
+		var disabled = parentData.enabled === 'false' || parentData.enabled === false;
+
+		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
+			$(parentContainer).addClass('selected');
+
+		var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', parentContainer);
+		var img = L.DomUtil.create('img', builder.options.cssClass, icon);
+		img.src = entry.image;
+
+		var text = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-text', parentContainer);
+		text.innerText = entry.text;
+
+		if (!disabled) {
+			$(parentContainer).click(function() {
+				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
+				builder.callback('iconview', 'select', parentData, entry.row, builder);
+			});
+			$(parentContainer).dblclick(function() {
+				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
+				builder.callback('iconview', 'activate', parentData, entry.row, builder);
+			});
+		}
+	},
+
+	_iconViewControl: function (parentContainer, data, builder) {
+		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview', parentContainer);
+		container.id = data.id;
+
+		var disabled = data.enabled === 'false' || data.enabled === false;
+		if (disabled)
+			L.DomUtil.addClass(container, 'disabled');
+
+		for (var i in data.entries) {
+			var entry = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-entry', container);
+			builder._iconViewEntry(entry, data, data.entries[i], builder);
 		}
 
 		return false;
