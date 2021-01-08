@@ -34,19 +34,13 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	onRemove: function (map) {
-		map.off('updatemaxbounds', this._onUpdateMaxBounds, this);
-	},
-
 	beforeAdd: function (map) {
 		map.uiManager.initializeSpecializedUI('text');
 	},
 
 	onAdd: function (map) {
-
 		L.TileLayer.prototype.onAdd.call(this, map);
 		this._annotations = L.annotationManager(map);
-		map.on('updatemaxbounds', this._onUpdateMaxBounds, this);
 	},
 
 	onAnnotationModify: function (annotation) {
@@ -245,10 +239,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		});
 		this._resetPreFetching(true);
 		this._update();
-	},
-
-	_onUpdateMaxBounds: function (e) {
-		this._updateMaxBounds(e.sizeChanged, e.extraSize);
 	},
 
 	_createCommentStructure: function (menuStructure) {
