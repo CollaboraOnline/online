@@ -410,18 +410,15 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Running interfer mobile test in interactive test runner..."
 	@echo
-	$(eval BACKGROUND_USER_SPEC=interference_user_spec.js)
-	$(eval INTERACTIVE_USER_SPEC=$(spec))
-	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
-	$(call run_interactive_interfer_mobile,$(INTERACTIVE_USER_SPEC)) &
+	$(eval USER1_SPEC=$(abs_dir)/integration_tests/mobile/$(spec))
+	$(eval USER2_SPEC=interference_user_spec.js)
+	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
+	$(call run_interactive_single,\
+		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC)) &
 	@sleep 5
 	@$(call run_test_parallel,\
-		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) || true
+		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) || true
 	@$(KILL_COMMAND) || true
-
-define run_interactive_interfer_mobile
-	$(call run_interactive_single,$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(abs_dir)/integration_tests/mobile/$(1))
-endef
 
 INTERFER_MOBILE_CONFIG1 = \
 	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
@@ -435,17 +432,21 @@ INTERFER_MOBILE_CONFIG2 = \
 INTERFER_MOBILE_ENV2 = \
 	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
+# Run all mobile interference tests in headless mode.
 define run_mobile_interference_tests
 	$(foreach test,$(MOBILE_TEST_FILES),$(call run_mobile_interference_test,$(test)))
 endef
 
+# Run one mobile interference test in headless mode.
+# Parameters:
+# 1 - mobile test file:	  test file to run parallel with the interference user spec file.
 define run_mobile_interference_test
+	@echo "Running cypress mobile interference test: $(1)"
+	@echo
 	$(eval USER1_SPEC=$(1))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
-	@echo "Running cypress mobile interference test: $(1)"
-	@echo
 	@$(call run_test_parallel,\
 		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC),mobile,$(USER1_LOG)) & \
 	sleep 5 && \
