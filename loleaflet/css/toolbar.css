@@ -487,6 +487,8 @@ button.leaflet-control-search-next
 .w2ui-icon.basicshapes_paper { background: url('images/lc_basicshapes.paper.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_frame { background: url('images/lc_rect_unfilled.svg') no-repeat center !important; }
 
+.w2ui-icon.line { background: url('images/lc_line.svg') no-repeat center !important; }
+
 .w2ui-icon.symbolshapes { background: url('images/lc_symbolshapes.svg') no-repeat center !important; }
 .w2ui-icon.symbolshapes_sun { background: url('images/lc_symbolshapes.sun.svg') no-repeat center !important; }
 .w2ui-icon.symbolshapes_moon { background: url('images/lc_symbolshapes.moon.svg') no-repeat center !important; }
