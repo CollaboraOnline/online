@@ -284,7 +284,7 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 
 	updateDocBounds: function () {
 		if (this._items.length === 0 || this._items.length === this._hiddenItems) {
-			this._map.fire('updatemaxbounds', {sizeChanged: true});
+			this._map._docLayer._updateMaxBounds(true);
 		}
 	},
 
@@ -308,10 +308,7 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 			if (delta.y > 0) {
 				delta.y += margin.y;
 			}
-			this._map.fire('updatemaxbounds', {
-				sizeChanged: true,
-				extraSize: delta
-			});
+			this._map._docLayer._updateMaxBounds(true, {extraSize: delta});
 		}
 	},
 
@@ -954,7 +951,7 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 	},
 
 	_onAnnotationZoom: function () {
-		this._map.fire('updatemaxbounds', {sizeChanged: true});
+		this._map._docLayer._updateMaxBounds(true);
 		this.layout(true);
 	},
 
