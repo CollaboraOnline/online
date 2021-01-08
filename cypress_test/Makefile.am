@@ -116,103 +116,6 @@ $(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
 	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test),$(1)))
 	@mkdir -p $(dir $@) && touch $@
 
-check-desktop: @JAILS_PATH@ $(NODE_BINS)
-	$(call cleanup_before_run)
-	$(call run_JS_error_check)
-	$(call start_loolwsd)
-	$(call run_desktop_tests,$(spec))
-	@$(KILL_COMMAND) || true
-
-check-mobile: @JAILS_PATH@ $(NODE_BINS)
-	$(call cleanup_before_run)
-	$(call run_JS_error_check)
-	$(call start_loolwsd)
-	$(call run_mobile_tests,$(spec))
-	@$(KILL_COMMAND) || true
-
-check-multi: do-multi-check-log
-	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
-
-do-multi-check-log: do-multi-check
-	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
-
-do-multi-check: @JAILS_PATH@ $(NODE_BINS)
-	$(call cleanup_before_run)
-	$(call run_JS_error_check)
-	$(call start_loolwsd)
-	$(if $(spec), \
-		$(call run_multiuser_test,$(spec)), \
-		$(call run_all_multiuser_tests))
-	@$(KILL_COMMAND) || true
-
-run-desktop: @JAILS_PATH@ $(NODE_BINS)
-	$(call cleanup_before_run)
-	$(call run_JS_error_check)
-	$(call start_loolwsd)
-	@echo
-	@echo "Open cypress with desktop tests..."
-	@echo
-	$(call run_interactive_desktop,$(spec)) || true
-	@$(KILL_COMMAND) || true
-
-run-mobile: @JAILS_PATH@ $(NODE_BINS)
-	$(call cleanup_before_run)
-	$(call run_JS_error_check)
-	$(call start_loolwsd)
-	@echo
-	@echo "Open cypress with mobile tests..."
-	@echo
-	$(call run_interactive_mobile,$(spec)) || true
-	@$(KILL_COMMAND) || true
-
-run-multi: @JAILS_PATH@ $(NODE_BINS)
-	$(call cleanup_before_run)
-	$(call run_JS_error_check)
-	$(call start_loolwsd)
-	@echo
-	@echo "Running multi-user test in interactive test runner..."
-	@echo
-	$(if $(filter 1,$(user)), \
-		$(eval BACKGROUND_USER_SPEC=$(spec)_user2_spec.js), \
-		$(eval BACKGROUND_USER_SPEC=$(spec)_user1_spec.js))
-	$(if $(filter 1,$(user)), \
-		$(eval INTERACTIVE_USER_SPEC=$(spec)_user1_spec.js), \
-		$(eval INTERACTIVE_USER_SPEC=$(spec)_user2_spec.js))
-	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
-	@$(PARALLEL_SCRIPT) \
-		--browser $(BROWSER) \
-		--config $(MULTIUSER_CONFIG) \
-		--env $(MULTIUSER_ENV) \
-		--spec $(BACKGROUND_USER_SPEC) \
-		--type multi-user \
-		--log-file $(BACKGROUND_USER_LOG) &
-	@sleep 5
-	$(call run_interactive_multi,$(INTERACTIVE_USER_SPEC)) || true
-	@$(KILL_COMMAND) || true
-
-run-cov: do-run-cov
-	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
-
-do-run-cov: @JAILS_PATH@ $(NODE_BINS)
-	@echo
-	@echo "Setup coverage tools..."
-	@echo
-	rm -rf .nyc_output
-	rm -rf coverage
-	npm install @cypress/code-coverage --no-save
-	@echo "import '@cypress/code-coverage/support';" >> $(SUPPORT_FILE_ABS)
-	@echo "" >> $(SUPPORT_FILE_ABS)
-	cd .. && npx nyc instrument --compact=false loleaflet/src loleaflet/dist/src && cd cypress_test
-	@echo
-	@echo "Run all tests..."
-	@echo
-	$(call cleanup_before_run)
-	$(call start_loolwsd)
-	$(call run_desktop_tests,,,COVERAGE_RUN="1")
-	$(call run_mobile_tests,,,COVERAGE_RUN="1")
-	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
-	@$(KILL_COMMAND) || true
-
 @JAILS_PATH@:
 	mkdir -p $@
 
@@ -266,36 +169,53 @@ define cleanup_before_run
 	@rm -rf cypress
 endef
 
-DESKTOP_CONFIG = \
-	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
+NODE_BINS = \
+	$(CYPRESS_BINARY) \
+	$(ESLINT_BINARY) \
+	$(WAIT_ON_BINARY) \
+	$(GET_PORT_BINARY)
 
-DESKTOP_ENV = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+$(NODE_BINS): $(NPM_INSTALLED);
+
+$(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
+	@npm install
+	@mkdir -p $(dir $(NPM_INSTALLED))
+	@touch $(NPM_INSTALLED)
+
+clean-local:
+	rm -rf node_modules
+	rm -rf workdir
+	rm -rf cypress
+	rm -rf package-lock.json
+	rm -rf .nyc_output
+	rm -rf coverage
+
+###############
+# Mobile tests.
+###############
+
+check-mobile: @JAILS_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(call run_mobile_tests,$(spec))
+	@$(KILL_COMMAND) || true
+
+run-mobile: @JAILS_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	@echo
+	@echo "Open cypress with mobile tests..."
+	@echo
+	$(call run_interactive_mobile,$(spec)) || true
+	@$(KILL_COMMAND) || true
 
 MOBILE_CONFIG = \
 	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
 
 MOBILE_ENV = \
 	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
-
-MULTIUSER_CONFIG = \
-	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
-
-MULTIUSER_ENV = \
-	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
-
-define run_interactive_desktop
-	$(if $(1),\
-		$(CYPRESS_BINARY) run \
-			--browser $(BROWSER) \
-			--headed --no-exit \
-			--config $(DESKTOP_CONFIG) \
-			--env $(DESKTOP_ENV) \
-			--spec=$(abs_dir)/integration_tests/desktop/$(1),\
-		$(CYPRESS_BINARY) open \
-			--config $(DESKTOP_CONFIG) \
-			--env $(DESKTOP_ENV))
-endef
 
 define run_interactive_mobile
 	$(if $(1),\
@@ -310,13 +230,66 @@ define run_interactive_mobile
 			--env $(MOBILE_ENV))
 endef
 
-define run_interactive_multi
-	$(CYPRESS_BINARY) run \
-		--browser $(BROWSER) \
-		--headed --no-exit \
-		--config $(MULTIUSER_CONFIG) \
-		--env $(MULTIUSER_ENV) \
-		--spec=$(abs_dir)/integration_tests/multiuser/$(1)
+define run_mobile_tests
+	@echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
+	@echo
+	$(if $(PARALLEL_BUILD),\
+		@$(PARALLEL_SCRIPT) \
+			--browser $(BROWSER) \
+			--config $(MOBILE_CONFIG) \
+			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
+			--spec $(1) \
+			--type mobile \
+			--log-file $(2) \
+		,\
+		$(CYPRESS_BINARY) run \
+			--browser $(BROWSER) \
+			--headless \
+			--config $(MOBILE_CONFIG) \
+			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
+			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
+			|| ($(KILL_COMMAND) && false) \
+	)
+endef
+
+################
+# Desktop tests.
+################
+
+check-desktop: @JAILS_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(call run_desktop_tests,$(spec))
+	@$(KILL_COMMAND) || true
+
+run-desktop: @JAILS_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	@echo
+	@echo "Open cypress with desktop tests..."
+	@echo
+	$(call run_interactive_desktop,$(spec)) || true
+	@$(KILL_COMMAND) || true
+
+DESKTOP_CONFIG = \
+	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
+
+DESKTOP_ENV = \
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+
+define run_interactive_desktop
+	$(if $(1),\
+		$(CYPRESS_BINARY) run \
+			--browser $(BROWSER) \
+			--headed --no-exit \
+			--config $(DESKTOP_CONFIG) \
+			--env $(DESKTOP_ENV) \
+			--spec=$(abs_dir)/integration_tests/desktop/$(1),\
+		$(CYPRESS_BINARY) open \
+			--config $(DESKTOP_CONFIG) \
+			--env $(DESKTOP_ENV))
 endef
 
 define run_desktop_tests
@@ -341,26 +314,63 @@ define run_desktop_tests
 	)
 endef
 
-define run_mobile_tests
-	@echo $(if $(1),"Running cypress mobile test: $(1)","Running cypress mobile tests...")
+###################
+# Multi-user tests.
+###################
+
+check-multi: do-multi-check-log
+	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
+
+do-multi-check-log: do-multi-check
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
+
+do-multi-check: @JAILS_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
+	$(if $(spec), \
+		$(call run_multiuser_test,$(spec)), \
+		$(call run_all_multiuser_tests))
+	@$(KILL_COMMAND) || true
+
+run-multi: @JAILS_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(call start_loolwsd)
 	@echo
-	$(if $(PARALLEL_BUILD),\
-		@$(PARALLEL_SCRIPT) \
-			--browser $(BROWSER) \
-			--config $(MOBILE_CONFIG) \
-			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
-			--spec $(1) \
-			--type mobile \
-			--log-file $(2) \
-		,\
-		$(CYPRESS_BINARY) run \
-			--browser $(BROWSER) \
-			--headless \
-			--config $(MOBILE_CONFIG) \
-			--env $(MOBILE_ENV)$(if $(3),$(COMMA)$(3)) \
-			$(if $(1), --spec=$(abs_dir)/integration_tests/mobile/$(1)) \
-			|| ($(KILL_COMMAND) && false) \
-	)
+	@echo "Running multi-user test in interactive test runner..."
+	@echo
+	$(if $(filter 1,$(user)), \
+		$(eval BACKGROUND_USER_SPEC=$(spec)_user2_spec.js), \
+		$(eval BACKGROUND_USER_SPEC=$(spec)_user1_spec.js))
+	$(if $(filter 1,$(user)), \
+		$(eval INTERACTIVE_USER_SPEC=$(spec)_user1_spec.js), \
+		$(eval INTERACTIVE_USER_SPEC=$(spec)_user2_spec.js))
+	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
+	@$(PARALLEL_SCRIPT) \
+		--browser $(BROWSER) \
+		--config $(MULTIUSER_CONFIG) \
+		--env $(MULTIUSER_ENV) \
+		--spec $(BACKGROUND_USER_SPEC) \
+		--type multi-user \
+		--log-file $(BACKGROUND_USER_LOG) &
+	@sleep 5
+	$(call run_interactive_multi,$(INTERACTIVE_USER_SPEC)) || true
+	@$(KILL_COMMAND) || true
+
+MULTIUSER_CONFIG = \
+	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
+
+MULTIUSER_ENV = \
+	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+
+define run_interactive_multi
+	$(CYPRESS_BINARY) run \
+		--browser $(BROWSER) \
+		--headed --no-exit \
+		--config $(MULTIUSER_CONFIG) \
+		--env $(MULTIUSER_ENV) \
+		--spec=$(abs_dir)/integration_tests/multiuser/$(1)
 endef
 
 define run_all_multiuser_tests
@@ -572,31 +582,36 @@ define run_desktop_interference_test
 	wait # waits the background process to be finished
 endef
 
-NODE_BINS = \
-	$(CYPRESS_BINARY) \
-	$(ESLINT_BINARY) \
-	$(WAIT_ON_BINARY) \
-	$(GET_PORT_BINARY)
+################
+# Test coverage.
+################
 
-$(NODE_BINS): $(NPM_INSTALLED);
+run-cov: do-run-cov
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
 
-$(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
-	@npm install
-	@mkdir -p $(dir $(NPM_INSTALLED))
-	@touch $(NPM_INSTALLED)
-
+do-run-cov: @JAILS_PATH@ $(NODE_BINS)
+	@echo
+	@echo "Setup coverage tools..."
+	@echo
+	rm -rf .nyc_output
+	rm -rf coverage
+	npm install @cypress/code-coverage --no-save
+	@echo "import '@cypress/code-coverage/support';" >> $(SUPPORT_FILE_ABS)
+	@echo "" >> $(SUPPORT_FILE_ABS)
+	cd .. && npx nyc instrument --compact=false loleaflet/src loleaflet/dist/src && cd cypress_test
+	@echo
+	@echo "Run all tests..."
+	@echo
+	$(call cleanup_before_run)
+	$(call start_loolwsd)
+	$(call run_desktop_tests,,,COVERAGE_RUN="1")
+	$(call run_mobile_tests,,,COVERAGE_RUN="1")
+	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
+	@$(KILL_COMMAND) || true
 else
 
 check-local:
 	$(error CypressError: Can't find LibreOffice core installation!)
 
 endif
-
-clean-local:
-	rm -rf node_modules
-	rm -rf workdir
-	rm -rf cypress
-	rm -rf package-lock.json
-	rm -rf .nyc_output
-	rm -rf coverage
 endif
