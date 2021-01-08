@@ -349,10 +349,17 @@ MULTIUSER_CONFIG = \
 MULTIUSER_ENV = \
 	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
+# Run one multi-user test in interactive test runner.
+# Parameters:
+# 1 - spec:	test file to run, relative path to multi-user test folder.
 define run_interactive_multi
-	$(call run_interactive_single,$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(abs_dir)/integration_tests/multiuser/$(1))
+	$(eval SPEC_FILE=$(abs_dir)/integration_tests/multiuser/$(1))
+	$(call run_interactive_single,$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(SPEC_FILE))
 endef
 
+# Run all multi-user tests in headless mode.
+# Parameters:
+# 1 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
 define run_all_multiuser_tests
 	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test),$(1)))
 endef
