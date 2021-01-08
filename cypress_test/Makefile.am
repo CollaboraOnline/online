@@ -481,18 +481,15 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Running interfer desktop test in interactive test runner..."
 	@echo
-	$(eval BACKGROUND_USER_SPEC=interference_user_spec.js)
-	$(eval INTERACTIVE_USER_SPEC=$(spec))
-	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
-	$(call run_interactive_interfer_desktop,$(INTERACTIVE_USER_SPEC)) &
+	$(eval USER1_SPEC=$(abs_dir)/integration_tests/desktop/$(spec))
+	$(eval USER2_SPEC=interference_user_spec.js)
+	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
+	$(call run_interactive_single,\
+		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC)) &
 	@sleep 5
 	@$(call run_test_parallel,\
-		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) || true
+		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) || true
 	@$(KILL_COMMAND) || true
-
-define run_interactive_interfer_desktop
-	$(call run_interactive_single,$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(abs_dir)/integration_tests/desktop/$(1))
-endef
 
 INTERFER_DESKTOP_CONFIG1 = \
 	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
@@ -506,17 +503,21 @@ INTERFER_DESKTOP_CONFIG2 = \
 INTERFER_DESKTOP_ENV2 = \
 	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
+# Run all desktop interference test in headless mode.
 define run_desktop_interference_tests
 	$(foreach test,$(DESKTOP_TEST_FILES),$(call run_desktop_interference_test,$(test)))
 endef
 
+# Run one desktop interference test in headless mode.
+# Parameters:
+# 1 - desktop test file:    test file to run parallel with the interference user spec file.
 define run_desktop_interference_test
+	@echo "Running cypress desktop interference test: $(1)"
+	@echo
 	$(eval USER1_SPEC=$(1))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
-	@echo "Running cypress desktop interference test: $(1)"
-	@echo
 	@$(call run_test_parallel,\
 		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC),desktop,$(USER1_LOG)) & \
 	sleep 5 && \
