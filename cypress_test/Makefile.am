@@ -219,12 +219,7 @@ MOBILE_ENV = \
 
 define run_interactive_mobile
 	$(if $(1),\
-		$(CYPRESS_BINARY) run \
-			--browser $(BROWSER) \
-			--headed --no-exit \
-			--config $(MOBILE_CONFIG) \
-			--env $(MOBILE_ENV) \
-			--spec=$(abs_dir)/integration_tests/mobile/$(1),\
+		$(call run_interactive_single,$(MOBILE_CONFIG),$(MOBILE_ENV),$(abs_dir)/integration_tests/mobile/$(1)),\
 		$(call run_interactive_all,$(MOBILE_CONFIG),$(MOBILE_ENV)))
 endef
 
@@ -279,12 +274,7 @@ DESKTOP_ENV = \
 
 define run_interactive_desktop
 	$(if $(1),\
-		$(CYPRESS_BINARY) run \
-			--browser $(BROWSER) \
-			--headed --no-exit \
-			--config $(DESKTOP_CONFIG) \
-			--env $(DESKTOP_ENV) \
-			--spec=$(abs_dir)/integration_tests/desktop/$(1),\
+		$(call run_interactive_single,$(DESKTOP_CONFIG),$(DESKTOP_ENV),$(abs_dir)/integration_tests/desktop/$(1)),\
 		$(call run_interactive_all,$(DESKTOP_CONFIG),$(DESKTOP_ENV)))
 endef
 
@@ -361,12 +351,7 @@ MULTIUSER_ENV = \
 	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 define run_interactive_multi
-	$(CYPRESS_BINARY) run \
-		--browser $(BROWSER) \
-		--headed --no-exit \
-		--config $(MULTIUSER_CONFIG) \
-		--env $(MULTIUSER_ENV) \
-		--spec=$(abs_dir)/integration_tests/multiuser/$(1)
+	$(call run_interactive_single,$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(abs_dir)/integration_tests/multiuser/$(1))
 endef
 
 define run_all_multiuser_tests
@@ -439,12 +424,7 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 define run_interactive_interfer_mobile
-	$(CYPRESS_BINARY) run \
-		--browser $(BROWSER) \
-		--headed --no-exit \
-		--config $(INTERFER_MOBILE_CONFIG1) \
-		--env $(INTERFER_MOBILE_ENV1) \
-		--spec=$(abs_dir)/integration_tests/mobile/$(1)
+	$(call run_interactive_single,$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(abs_dir)/integration_tests/mobile/$(1))
 endef
 
 INTERFER_MOBILE_CONFIG1 = \
@@ -529,12 +509,7 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 define run_interactive_interfer_desktop
-	$(CYPRESS_BINARY) run \
-		--browser $(BROWSER) \
-		--headed --no-exit \
-		--config $(INTERFER_DESKTOP_CONFIG1) \
-		--env $(INTERFER_DESKTOP_ENV1) \
-		--spec=$(abs_dir)/integration_tests/desktop/$(1)
+	$(call run_interactive_single,$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(abs_dir)/integration_tests/desktop/$(1))
 endef
 
 INTERFER_DESKTOP_CONFIG1 = \
@@ -612,12 +587,27 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 # Open cypress interactive test runner window with all tests in it.
 #
 # Parameters:
-# 1 - config: cypress configuration (passed to cypress directly).
-# 2 - env:    list of environment variables (passed to cypress directly).
+# 1 - config: cypress configuration (e.g. cypress' --config argument).
+# 2 - env:    list of environment variables (e.g. cypress' --env argument).
 define run_interactive_all
 	$(CYPRESS_BINARY) open \
 		--config $(1) \
 		--env $(2)
+endef
+
+# Run single test in cypress interactive test runner.
+#
+# Parameters:
+# 1 - config: cypress configuration (e.g. cypress' --config argument).
+# 2 - env:    list of environment variables (e.g. cypress' --env argument).
+# 3 - spec:   test file path (e.g. cypress' --spec argument)
+define run_interactive_single
+	$(CYPRESS_BINARY) run \
+		--browser $(BROWSER) \
+		--headed --no-exit \
+		--config $(1) \
+		--env $(2) \
+		--spec=$(3)
 endef
 
 else
