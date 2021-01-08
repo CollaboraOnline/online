@@ -97,463 +97,340 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
 
-
-		return {
-			'id': '',
-			'type': 'control',
-			'text': '',
-			'enabled': 'true',
-			'children': [
-				{
-					'id': '',
-					'type': 'container',
-					'text': '',
-					'enabled': 'true',
-					'children': [
+		var content = [
+			{
+				'id': 'File-Section',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					hasSaveAs ?
 						{
-							'id': 'NotebookBar',
-							'type': 'container',
+							'id': 'Section2',
+							'type': 'toolbox',
 							'text': '',
 							'enabled': 'true',
 							'children': [
 								{
-									'id': 'box',
-									'type': 'container',
-									'text': '',
-									'enabled': 'true',
-									'children': [
-										{
-											'id': 'ContextContainer',
-											'type': 'tabcontrol',
-											'text': '',
-											'enabled': 'true',
-											'selected': '-1',
-											'children': [
-												{
-													'id': '',
-													'type': 'tabpage',
-													'text': '',
-													'enabled': 'true',
-													'children': [
-														{
-															'id': 'File Tab',
-															'type': 'container',
-															'text': '',
-															'enabled': 'true',
-															'children': [
-																{
-																	'id': 'File',
-																	'type': 'container',
-																	'text': '',
-																	'enabled': 'true',
-																	'children': [
-																		{
-																			'id': 'File-Section',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				hasSaveAs ?
-																					{
-																						'id': 'Section2',
-																						'type': 'toolbox',
-																						'text': '',
-																						'enabled': 'true',
-																						'children': [
-																							{
-																								'id': 'saveas',
-																								'type': 'menubartoolitem',
-																								'text': _UNO('.uno:SaveAs', 'text'),
-																								'command': ''
-																							}
-																						]
-																					} : {},
-																				hasShare ?
-																					{
-																						'id': 'Section3',
-																						'type': 'toolbox',
-																						'text': '',
-																						'enabled': 'true',
-																						'children': [
-																							{
-																								'id': 'shareas',
-																								'type': 'menubartoolitem',
-																								'text': _('Share...'),
-																								'command': ''
-																							}
-																						]
-																					} : {},
-																				hasPrint ?
-																					{
-																						'id': 'Section4',
-																						'type': 'toolbox',
-																						'text': '',
-																						'enabled': 'true',
-																						'children': [
-																							{
-																								'id': 'print',
-																								'type': 'menubartoolitem',
-																								'text': _UNO('.uno:Print', 'text'),
-																								'command': ''
-																							}
-																						]
-																					} : {},
-																				hasRevisionHistory ?
-																					{
-																						'id': 'Section5',
-																						'type': 'toolbox',
-																						'text': '',
-																						'enabled': 'true',
-																						'children': [
-																							{
-																								'id': 'rev-history',
-																								'type': 'menubartoolitem',
-																								'text': _('See revision history'),
-																								'command': ''
-																							}
-																						]
-																					} : {},
-																				{
-																					'id': 'saveas-Section',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'vertical': 'true',
-																					'children': [
-																						{
-																							'id': 'saveas-Section1',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'Section7',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'id': 'downloadas-odt',
-																											'type': 'menubartoolitem',
-																											'text': _('ODF text document (.odt)'),
-																											'command': ''
-																										}
-																									]
-																								}
-																							]
-																						},
-																						{
-																							'id': 'saveas-Section2',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'Section10',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'id': 'downloadas-rtf',
-																											'type': 'menubartoolitem',
-																											'text': _('Rich Text (.rtf)'),
-																											'command': ''
-																										}
-																									]
-																								}
-																							]
-																						}
-																					]
-																				},
-																				{
-																					'id': 'saveas-Section',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'vertical': 'true',
-																					'children': [
-																						{
-																							'id': 'saveas-Section1',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'Section8',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'id': 'downloadas-doc',
-																											'type': 'menubartoolitem',
-																											'text': _('Word 2003 Document (.doc)'),
-																											'command': ''
-																										}
-																									]
-																								}
-																							]
-																						},
-																						{
-																							'id': 'saveas-Section2',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'Section9',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'id': 'downloadas-docx',
-																											'type': 'menubartoolitem',
-																											'text': _('Word Document (.docx)'),
-																											'command': ''
-																										}
-																									]
-																								}
-																							]
-																						}
-																					]
-																				},
-																				{
-																					'id': 'saveas-Section',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'vertical': 'true',
-																					'children': [
-																						{
-																							'id': 'saveas-Section1',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'Section6',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'id': 'downloadas-pdf',
-																											'type': 'menubartoolitem',
-																											'text': _('PDF Document (.pdf)'),
-																											'command': ''
-																										}
-																									]
-																								}
-																							]
-																						},
-																						{
-																							'id': 'saveas-Section2',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'Section11',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'id': 'downloadas-epub',
-																											'type': 'menubartoolitem',
-																											'text': _('EPUB (.epub)'),
-																											'command': ''
-																										}
-																									]
-																								}
-																							]
-																						}
-																					]
-																				},
-																				hasSigning ?
-																					{
-																						'id': 'Section12',
-																						'type': 'toolbox',
-																						'text': '',
-																						'enabled': 'true',
-																						'children': [
-																							{
-																								'id': 'signdocument',
-																								'type': 'menubartoolitem',
-																								'text': _('Sign document'),
-																								'command': ''
-																							}
-																						]
-																					} : {}
-																			]
-																		}
-																	]
-																}
-															]
-														}
-													]
-												}
-											]
-										}
-									]
+									'id': 'saveas',
+									'type': 'menubartoolitem',
+									'text': _UNO('.uno:SaveAs', 'text'),
+									'command': ''
 								}
 							]
-						}
-					]
-				}
-			]
-		};
+						} : {},
+					hasShare ?
+						{
+							'id': 'Section3',
+							'type': 'toolbox',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'shareas',
+									'type': 'menubartoolitem',
+									'text': _('Share...'),
+									'command': ''
+								}
+							]
+						} : {},
+					hasPrint ?
+						{
+							'id': 'Section4',
+							'type': 'toolbox',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'print',
+									'type': 'menubartoolitem',
+									'text': _UNO('.uno:Print', 'text'),
+									'command': ''
+								}
+							]
+						} : {},
+					hasRevisionHistory ?
+						{
+							'id': 'Section5',
+							'type': 'toolbox',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'rev-history',
+									'type': 'menubartoolitem',
+									'text': _('See revision history'),
+									'command': ''
+								}
+							]
+						} : {},
+					{
+						'id': 'saveas-Section',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'vertical': 'true',
+						'children': [
+							{
+								'id': 'saveas-Section1',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'Section7',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'downloadas-odt',
+												'type': 'menubartoolitem',
+												'text': _('ODF text document (.odt)'),
+												'command': ''
+											}
+										]
+									}
+								]
+							},
+							{
+								'id': 'saveas-Section2',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'Section10',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'downloadas-rtf',
+												'type': 'menubartoolitem',
+												'text': _('Rich Text (.rtf)'),
+												'command': ''
+											}
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						'id': 'saveas-Section',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'vertical': 'true',
+						'children': [
+							{
+								'id': 'saveas-Section1',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'Section8',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'downloadas-doc',
+												'type': 'menubartoolitem',
+												'text': _('Word 2003 Document (.doc)'),
+												'command': ''
+											}
+										]
+									}
+								]
+							},
+							{
+								'id': 'saveas-Section2',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'Section9',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'downloadas-docx',
+												'type': 'menubartoolitem',
+												'text': _('Word Document (.docx)'),
+												'command': ''
+											}
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						'id': 'saveas-Section',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'vertical': 'true',
+						'children': [
+							{
+								'id': 'saveas-Section1',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'Section6',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'downloadas-pdf',
+												'type': 'menubartoolitem',
+												'text': _('PDF Document (.pdf)'),
+												'command': ''
+											}
+										]
+									}
+								]
+							},
+							{
+								'id': 'saveas-Section2',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'Section11',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'downloadas-epub',
+												'type': 'menubartoolitem',
+												'text': _('EPUB (.epub)'),
+												'command': ''
+											}
+										]
+									}
+								]
+							}
+						]
+					},
+					hasSigning ?
+						{
+							'id': 'Section12',
+							'type': 'toolbox',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'signdocument',
+									'type': 'menubartoolitem',
+									'text': _('Sign document'),
+									'command': ''
+								}
+							]
+						} : {}
+				]
+			}
+		];
+
+		return this.getNotebookbar([this.getTabPage('File', content)]);
 	},
 
 	getHelpTab: function() {
 		var hasLatestUpdates = window.enableWelcomeMessage;
 
-		return {
-			'id': '',
-			'type': 'control',
-			'text': '',
-			'enabled': 'true',
-			'children': [
-				{
-					'id': '',
-					'type': 'container',
-					'text': '',
-					'enabled': 'true',
-					'children': [
+		var content = [
+			{
+				'id': 'Help-Section',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'Section1',
+						'type': 'toolbox',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'online-help',
+								'type': 'menubartoolitem',
+								'text': _('Online Help'),
+								'command': ''
+							}
+						]
+					},
+					{
+						'id': 'Section2',
+						'type': 'toolbox',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'keyboard-shortcuts',
+								'type': 'menubartoolitem',
+								'text': _('Keyboard shortcuts'),
+								'command': ''
+							}
+						]
+					},
+					{
+						'id': 'Section3',
+						'type': 'toolbox',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'report-an-issue',
+								'type': 'menubartoolitem',
+								'text': _('Report an issue'),
+								'command': ''
+							}
+						]
+					},
+					hasLatestUpdates ?
 						{
-							'id': 'NotebookBar',
-							'type': 'container',
+							'id': 'Section4',
+							'type': 'toolbox',
 							'text': '',
 							'enabled': 'true',
 							'children': [
 								{
-									'id': 'box',
-									'type': 'container',
-									'text': '',
-									'enabled': 'true',
-									'children': [
-										{
-											'id': 'ContextContainer',
-											'type': 'tabcontrol',
-											'text': '',
-											'enabled': 'true',
-											'selected': '-2',
-											'children': [
-												{
-													'id': '',
-													'type': 'tabpage',
-													'text': '',
-													'enabled': 'true',
-													'children': [
-														{
-															'id': 'Help Tab',
-															'type': 'container',
-															'text': '',
-															'enabled': 'true',
-															'children': [
-																{
-																	'id': 'Help',
-																	'type': 'container',
-																	'text': '',
-																	'enabled': 'true',
-																	'children': [
-																		{
-																			'id': 'Help-Section',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'Section1',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'online-help',
-																							'type': 'menubartoolitem',
-																							'text': _('Online Help'),
-																							'command': ''
-																						}
-																					]
-																				},
-																				{
-																					'id': 'Section2',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'keyboard-shortcuts',
-																							'type': 'menubartoolitem',
-																							'text': _('Keyboard shortcuts'),
-																							'command': ''
-																						}
-																					]
-																				},
-																				{
-																					'id': 'Section3',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'report-an-issue',
-																							'type': 'menubartoolitem',
-																							'text': _('Report an issue'),
-																							'command': ''
-																						}
-																					]
-																				},
-																				hasLatestUpdates ?
-																					{
-																						'id': 'Section4',
-																						'type': 'toolbox',
-																						'text': '',
-																						'enabled': 'true',
-																						'children': [
-																							{
-																								'id': 'latest-updates',
-																								'type': 'menubartoolitem',
-																								'text': _('Latest Updates'),
-																								'command': ''
-																							}
-																						]
-																					} : {},
-																				{
-																					'id': 'Section5',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'about',
-																							'type': 'menubartoolitem',
-																							'text': _('About'),
-																							'command': ''
-																						}
-																					]
-																				}
-																			]
-																		}
-																	]
-																}
-															]
-														}
-													]
-												}
-											]
-										}
-									]
+									'id': 'latest-updates',
+									'type': 'menubartoolitem',
+									'text': _('Latest Updates'),
+									'command': ''
 								}
 							]
-						}
-					]
-				}
-			]
-		};
+						} : {},
+					{
+						'id': 'Section5',
+						'type': 'toolbox',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'about',
+								'type': 'menubartoolitem',
+								'text': _('About'),
+								'command': ''
+							}
+						]
+					}
+				]
+			}
+		];
+
+		return this.getNotebookbar([this.getTabPage('Help', content)]);
 	},
 
 	getHomeTab: function() {
@@ -2509,6 +2386,75 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						}
 					],
 					'vertical': 'true'
+				}
+			]
+		};
+	},
+
+	getNotebookbar: function(tabPages) {
+		return {
+			'id': '',
+			'type': 'control',
+			'text': '',
+			'enabled': 'true',
+			'children': [
+				{
+					'id': '',
+					'type': 'container',
+					'text': '',
+					'enabled': 'true',
+					'children': [
+						{
+							'id': 'NotebookBar',
+							'type': 'container',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'box',
+									'type': 'container',
+									'text': '',
+									'enabled': 'true',
+									'children': [
+										{
+											'id': 'ContextContainer',
+											'type': 'tabcontrol',
+											'text': '',
+											'enabled': 'true',
+											'selected': '-1',
+											'children': tabPages
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		};
+	},
+
+	getTabPage: function(tabName, content) {
+		return {
+			'id': '',
+			'type': 'tabpage',
+			'text': '',
+			'enabled': 'true',
+			'children': [
+				{
+					'id': tabName + ' Tab',
+					'type': 'container',
+					'text': '',
+					'enabled': 'true',
+					'children': [
+						{
+							'id': tabName,
+							'type': 'container',
+							'text': '',
+							'enabled': 'true',
+							'children': content
+						}
+					]
 				}
 			]
 		};
