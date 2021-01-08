@@ -144,7 +144,7 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/jsdialogs.css \
 	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
-	$(srcdir)/css/vex.css \
+	$(srcdir)/css/override-vex.css \
 	$(srcdir)/css/jquery-ui-lightness.css
 
 LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(DIST_FOLDER)/$(notdir $(file)))
