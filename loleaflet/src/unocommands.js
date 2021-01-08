@@ -245,6 +245,7 @@ var unoCommandsArray = {
 	LayoutStatus:{presentation:{menu:_('Layout'),},},
 	LeftPara:{global:{context:_('Align Left'),menu:_('Left'),},},
 	ChapterNumberingDialog:{text:{menu:_('Chapter ~Numbering...'),},},
+	Line:{global:{context:_('Insert Line'),menu:_('Line'),},},
 	LineNumberingDialog:{text:{menu:_('~Line Numbering...'),},},
 	FootnoteDialog:{text:{menu:_('F~ootnote or Endnote...'),},},
 	MasterSlidesPanel:{presentation:{menu:_('Master Slides'),},},
