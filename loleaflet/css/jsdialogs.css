@@ -333,6 +333,27 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	float: left;
 }
 
+/* Icon View */
+
+.ui-iconview {
+	overflow: scroll;
+	display: inline-flex;
+	flex-wrap: wrap;
+}
+
+.ui-iconview-entry {
+	float: left;
+	position: relative;
+	flex-direction: column;
+	margin-left: 10px;
+	margin-top: 10px;
+	flex: 1;
+}
+
+.ui-iconview-entry.selected {
+	border: 5px solid silver;
+}
+
 /* Autofilter dropdown */
 
 .autofilter.row {
@@ -491,4 +512,11 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 #hideitems {
 	border: none;
+}
+
+/* Fontwork dialog */
+
+#FontworkGalleryDialog #ctlFavoriteswin {
+	max-width: 400px;
+	max-height: 400px;
 }
