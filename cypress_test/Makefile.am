@@ -225,9 +225,7 @@ define run_interactive_mobile
 			--config $(MOBILE_CONFIG) \
 			--env $(MOBILE_ENV) \
 			--spec=$(abs_dir)/integration_tests/mobile/$(1),\
-		$(CYPRESS_BINARY) open \
-			--config $(MOBILE_CONFIG) \
-			--env $(MOBILE_ENV))
+		$(call run_interactive_all,$(MOBILE_CONFIG),$(MOBILE_ENV)))
 endef
 
 define run_mobile_tests
@@ -287,9 +285,7 @@ define run_interactive_desktop
 			--config $(DESKTOP_CONFIG) \
 			--env $(DESKTOP_ENV) \
 			--spec=$(abs_dir)/integration_tests/desktop/$(1),\
-		$(CYPRESS_BINARY) open \
-			--config $(DESKTOP_CONFIG) \
-			--env $(DESKTOP_ENV))
+		$(call run_interactive_all,$(DESKTOP_CONFIG),$(DESKTOP_ENV)))
 endef
 
 define run_desktop_tests
@@ -608,6 +604,22 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
 	$(call run_all_multiuser_tests,COVERAGE_RUN="1")
 	@$(KILL_COMMAND) || true
+
+####################
+# General functions.
+####################
+
+# Open cypress interactive test runner window with all tests in it.
+#
+# Parameters:
+# 1 - config: cypress configuration (passed to cypress directly).
+# 2 - env:    list of environment variables (passed to cypress directly).
+define run_interactive_all
+	$(CYPRESS_BINARY) open \
+		--config $(1) \
+		--env $(2)
+endef
+
 else
 
 check-local:
