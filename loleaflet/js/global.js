@@ -170,7 +170,7 @@
 			if (global.mode.isChromebook())
 				return false;
 
-			if (L.Browser.mobile && L.Browser.cypressTest) {
+			if (global.L.Browser.mobile && L.Browser.cypressTest) {
 				return true;
 			}
 

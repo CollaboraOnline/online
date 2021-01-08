@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# This is a wrapper - please edit coolstress.in
+
+prefix="@prefix@"
+datadir="@datadir@"
+datarootdir="@datarootdir@"
+pkgdatadir="$(datadir)/@PACKAGE@"
+
+# to allow runnning when not installed
+abs_top_builddir="@abs_top_builddir@"
+abs_top_srcdir="@abs_top_srcdir@"
+
+node --inspect $abs_top_srcdir/loleaflet/test/load.js "$abs_top_srcdir" "$abs_top_builddir" $*
