@@ -32,6 +32,31 @@ inline int hasUID(const char *userId)
     return 0;
 }
 
+inline int isInContainer()
+{
+#ifdef __linux__
+    FILE *cgroup;
+    char line[80];
+    const char *docker = ":/docker/";
+    cgroup = fopen("/proc/self/cgroup", "r");
+    if(!cgroup)
+    {
+        fprintf(stderr, "Error: cannot open /proc/self/cgroup\n");
+        return 0;
+    }
+    while (fgets(line, sizeof(line), cgroup) != NULL)
+    {
+        if (strstr(line, docker) != NULL)
+        {
+            fclose(cgroup);
+            return 1;
+        }
+    }
+    fclose(cgroup);
+#endif
+    return 0;
+}
+
 inline int hasCorrectUID(const char *appName)
 {
 #if ENABLE_DEBUG
@@ -41,7 +66,7 @@ inline int hasCorrectUID(const char *appName)
     if (hasUID(LOOL_USER_ID))
         return 1;
     else {
-        fprintf(stderr, "Error: %s incorrect user-name, other than '" LOOL_USER_ID "' - aborting\n", appName);
+        fprintf(stderr, "Security: %s incorrect user-name, other than '" LOOL_USER_ID "'\n", appName);
         return 0;
     }
 #endif
