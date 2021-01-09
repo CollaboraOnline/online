@@ -289,7 +289,7 @@ protected:
     do                                                                                             \
     {                                                                                              \
         LOG_TST(": Sending: " << MSG);                                                             \
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), MSG, testname);                       \
+        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), MSG, getTestname());                  \
     } while (false)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
