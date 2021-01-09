@@ -383,7 +383,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('File', content)]);
+		return this.getNotebookbar([this.getTabPage('File', content)], '-1');
 	},
 
 	getHomeTab: function() {
@@ -1858,7 +1858,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Format', content)]);
+		return this.getNotebookbar([this.getTabPage('Format', content)], '-3');
 	},
 
 	getInsertTab: function() {
@@ -2212,7 +2212,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Insert', content)]);
+		return this.getNotebookbar([this.getTabPage('Insert', content)], '-4');
 	}
 });
 
