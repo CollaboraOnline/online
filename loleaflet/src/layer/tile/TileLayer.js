@@ -175,6 +175,22 @@ L.TileLayer = L.GridLayer.extend({
 			draggable: true
 		});
 
+		this._referenceMarkerStart = L.marker(new L.LatLng(0, 0), {
+			icon: L.divIcon({
+				className: 'spreadsheet-cell-resize-marker',
+				iconSize: null
+			}),
+			draggable: true
+		});
+
+		this._referenceMarkerEnd = L.marker(new L.LatLng(0, 0), {
+			icon: L.divIcon({
+				className: 'spreadsheet-cell-resize-marker',
+				iconSize: null
+			}),
+			draggable: true
+		});
+
 		this._cellAutofillMarker = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
 				className: 'spreadsheet-cell-autofill-marker',
@@ -353,6 +369,8 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._cellResizeMarkerStart.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._cellResizeMarkerEnd.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
+		this._referenceMarkerStart.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
+		this._referenceMarkerEnd.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
 		this._cellAutofillMarker.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._dropDownButton.on('click', this._onDropDownButtonClick, this);
 		// The 'tap' events are not broadcasted by L.Map.TouchGesture, A specialized 'dropdownmarkertapped' event is
@@ -1809,6 +1827,25 @@ L.TileLayer = L.GridLayer.extend({
 				&& this._selectedPart === this._referencesAll[i].part) {
 				this._references.addLayer(this._referencesAll[i].mark);
 			}
+			if (!window.mode.isDesktop()) {
+				if (!this._referenceMarkerStart.isDragged) {
+					this._map.addLayer(this._referenceMarkerStart);
+					var sizeStart = this._referenceMarkerStart._icon.getBoundingClientRect();
+					var posStart = this._map.project(this._referencesAll[i].mark._bounds.getNorthWest());
+					posStart = posStart.subtract(new L.Point(sizeStart.width / 2, sizeStart.height / 2));
+					posStart = this._map.unproject(posStart);
+					this._referenceMarkerStart.setLatLng(posStart);
+				}
+
+				if (!this._referenceMarkerEnd.isDragged) {
+					this._map.addLayer(this._referenceMarkerEnd);
+					var sizeEnd = this._referenceMarkerEnd._icon.getBoundingClientRect();
+					var posEnd = this._map.project(this._referencesAll[i].mark._bounds.getSouthEast());
+					posEnd = posEnd.subtract(new L.Point(sizeEnd.width / 2, sizeEnd.height / 2));
+					posEnd = this._map.unproject(posEnd);
+					this._referenceMarkerEnd.setLatLng(posEnd);
+				}
+			}
 		}
 	},
 
@@ -2187,6 +2224,11 @@ L.TileLayer = L.GridLayer.extend({
 
 	_clearReferences: function () {
 		this._references.clearLayers();
+
+		if (!this._referenceMarkerStart.isDragged)
+			this._map.removeLayer(this._referenceMarkerStart);
+		if (!this._referenceMarkerEnd.isDragged)
+			this._map.removeLayer(this._referenceMarkerEnd);
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
@@ -2309,8 +2351,20 @@ L.TileLayer = L.GridLayer.extend({
 		}
 	},
 
+	_allowViewJump: function() {
+		return (!this._map._clip || this._map._clip._selectionType !== 'complex') &&
+		!this._referenceMarkerStart.isDragged && !this._referenceMarkerEnd.isDragged;
+	},
+
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function (scroll, zoom) {
+
+		if (!this._visibleCursor ||
+			this._referenceMarkerStart.isDragged ||
+			this._referenceMarkerEnd.isDragged) {
+			return;
+		}
+
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 
@@ -2318,7 +2372,7 @@ L.TileLayer = L.GridLayer.extend({
 		&& scroll !== false
 		&& !this._map.getBounds().contains(this._visibleCursor)
 		&& this._map._isCursorVisible
-		&& (!this._map._clip || this._map._clip._selectionType !== 'complex')) {
+		&& this._allowViewJump()) {
 
 			var center = this._map.project(cursorPos);
 			center = center.subtract(this._map.getSize().divideBy(2));
@@ -2946,6 +3000,60 @@ L.TileLayer = L.GridLayer.extend({
 		else if (this._cellAutofillMarker === e.target) {
 			this._postMouseEvent(buttonType, aMousePosition.x, aMousePosition.y, 1, 1, 0);
 		}
+	},
+
+	_onReferenceMarkerDrag: function(e) {
+		if (e.type === 'dragstart') {
+			e.target.isDragged = true;
+			window.IgnorePanning = true;
+		}
+		else if (e.type === 'drag') {
+			var startPos = this._map.project(this._referenceMarkerStart.getLatLng());
+			var startSize = this._referenceMarkerStart._icon.getBoundingClientRect();
+			startPos = startPos.add(new L.Point(startSize.width, startSize.height));
+
+			var endPos = this._map.project(this._referenceMarkerEnd.getLatLng());
+			var endSize = this._referenceMarkerEnd._icon.getBoundingClientRect();
+			endPos = endPos.subtract(new L.Point(endSize.width / 2, endSize.height / 2));
+
+			var columnStart, columnEnd, rowStart, rowEnd;
+			// for columns
+			for (var idx = this._map._columnHeader._tickMap._minTickIdx+1; idx <= this._map._columnHeader._tickMap._maxTickIdx; idx++) {
+				var gap = this._map._columnHeader._tickMap.getGap(idx);
+				if (startPos.x >= gap.start && startPos.x <= gap.end)
+					columnStart = gap.index - 1;
+
+				if (endPos.x >= gap.start && endPos.x <= gap.end)
+					columnEnd = gap.index - 1;
+			}
+
+			// for rows
+			for (idx = this._map._rowHeader._tickMap._minTickIdx+1; idx <= this._map._rowHeader._tickMap._maxTickIdx; idx++) {
+				gap = this._map._rowHeader._tickMap.getGap(idx);
+				if (startPos.y >= gap.start && startPos.y <= gap.end)
+					rowStart = gap.index - 1;
+
+				if (endPos.y >= gap.start && endPos.y <= gap.end)
+					rowEnd = gap.index - 1;
+			}
+
+			this._sendReferenceRangeCommand(columnStart, rowStart, columnEnd, rowEnd);
+		}
+		else if (e.type === 'dragend') {
+			e.target.isDragged = false;
+			window.IgnorePanning = undefined;
+			this._updateReferenceMarks();
+		}
+	},
+
+	_sendReferenceRangeCommand: function(startCol, startRow, endCol, endRow) {
+		this._map.sendUnoCommand(
+			'.uno:CurrentFormulaRange?StartCol=' + startCol +
+			'&StartRow=' + startRow +
+			'&EndCol=' + endCol +
+			'&EndRow=' + endRow +
+			'&Table=' + this._map._docLayer._selectedPart
+		);
 	},
 
 	_onDropDownButtonClick: function () {

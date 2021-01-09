@@ -12,6 +12,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 	onAdd: function (map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
 		this._initialized = false;
+		map._rowHeader = this;
 	},
 
 	_initialize: function () {
