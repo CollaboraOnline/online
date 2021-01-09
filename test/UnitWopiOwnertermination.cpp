@@ -70,14 +70,12 @@ public:
 
         // Modify the document.
         LOG_TST("onDocumentLoaded: Modifying");
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0",
-                               getTestname());
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512",
-                               getTestname());
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
 
         // And close. We expect the document to be marked as modified and saved.
         LOG_TST("onDocumentLoaded: Closing");
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", getTestname());
+        WSD_CMD("closedocument");
 
         _phase = Phase::Polling;
         SocketPoll::wakeupWorld();
@@ -94,7 +92,7 @@ public:
 
                 _phase = Phase::WaitLoadStatus;
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), getTestname());
+                WSD_CMD("load url=" + getWopiSrc());
                 break;
             }
             case Phase::WaitLoadStatus:

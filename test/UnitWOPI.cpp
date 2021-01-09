@@ -99,8 +99,7 @@ public:
         _savingPhase = SavingPhase::Unmodified;
         _phase = Phase::Modify;
 
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(),
-                               "save dontTerminateEdit=1 dontSaveIfUnmodified=0", getTestname());
+        WSD_CMD("save dontTerminateEdit=1 dontSaveIfUnmodified=0");
 
         SocketPoll::wakeupWorld();
         return true;
@@ -116,11 +115,8 @@ public:
             _phase = Phase::Polling;
             _savingPhase = SavingPhase::Modified;
 
-            helpers::sendTextFrame(
-                *getWs()->getLOOLWebSocket(),
-                "save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
-                "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue",
-                getTestname());
+            WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
+                    "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
 
             SocketPoll::wakeupWorld();
         }
@@ -139,8 +135,7 @@ public:
                 LOG_TST("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(),
-                                       getTestname());
+                WSD_CMD("load url=" + getWopiSrc());
                 break;
             }
             case Phase::Modify:
@@ -148,11 +143,8 @@ public:
                 LOG_TST("Modify => WaitModified");
                 _phase = Phase::WaitModifiedStatus;
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0",
-                                       getTestname());
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512",
-                                       getTestname());
-
+                WSD_CMD("key type=input char=97 key=0");
+                WSD_CMD("key type=up char=0 key=512");
                 break;
             }
             case Phase::WaitLoadStatus:
