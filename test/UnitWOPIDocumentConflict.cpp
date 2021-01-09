@@ -152,7 +152,7 @@ public:
 
         // we don't want to save current changes because doing so would
         // overwrite the document which was changed underneath us
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", getTestname());
+        WSD_CMD("closedocument");
         return true;
     }
 
@@ -196,8 +196,7 @@ public:
 
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(),
-                                       getTestname());
+                WSD_CMD("load url=" + getWopiSrc());
             }
             break;
             case Phase::WaitLoadStatus:
@@ -211,10 +210,8 @@ public:
                 _phase = Phase::WaitModifiedStatus;
 
                 // modify the currently opened document; type 'a'
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0",
-                                       getTestname());
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512",
-                                       getTestname());
+                WSD_CMD("key type=input char=97 key=0");
+                WSD_CMD("key type=up char=0 key=512");
                 SocketPoll::wakeupWorld();
             }
             break;
@@ -237,7 +234,7 @@ public:
                 // When we get it (in filterSendMessage, above),
                 // we will switch to Phase::LoadNewDocument.
                 LOG_TST("Phase::ChangeStorageDoc: saving");
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "save", getTestname());
+                WSD_CMD("save");
             }
             break;
             case Phase::WaitSaveResponse:

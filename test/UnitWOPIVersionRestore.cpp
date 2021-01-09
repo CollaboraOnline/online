@@ -63,14 +63,11 @@ public:
         _phase = Phase::WaitPutFile;
 
         // Modify the document.
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0",
-                               getTestname());
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512",
-                               getTestname());
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
 
         // tell wsd that we are about to restore
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "versionrestore prerestore",
-                               getTestname());
+        WSD_CMD("versionrestore prerestore");
 
         SocketPoll::wakeupWorld();
         return true;
@@ -105,8 +102,7 @@ public:
                 LOG_TST("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(),
-                                       getTestname());
+                WSD_CMD("load url=" + getWopiSrc());
                 break;
             }
             case Phase::WaitLoadStatus:
