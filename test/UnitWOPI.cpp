@@ -5,6 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "lokassert.hpp"
 #include <config.h>
 
 #include <WopiTestServer.hpp>
@@ -19,9 +20,10 @@ class UnitWOPI : public WopiTestServer
 {
     enum class Phase
     {
-        LoadAndSave,
+        Load,
+        WaitLoadStatus,
         Modify,
-        SaveModified,
+        WaitModifiedStatus,
         Polling
     } _phase;
 
@@ -37,7 +39,8 @@ class UnitWOPI : public WopiTestServer
 public:
     UnitWOPI()
         : WopiTestServer("UnitWOPI")
-        , _phase(Phase::LoadAndSave)
+        , _phase(Phase::Load)
+        , _savingPhase(SavingPhase::Unmodified)
         , _finishedSaveUnmodified(false)
         , _finishedSaveModified(false)
     {
@@ -46,13 +49,17 @@ public:
     bool isAutosave() override
     {
         // we fake autosave when saving the modified document
-        return _savingPhase == SavingPhase::Modified;
+        const bool res = _savingPhase == SavingPhase::Modified;
+        LOG_TST("isAutosave: " << std::boolalpha << res);
+        return res;
     }
 
     void assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         if (_savingPhase == SavingPhase::Unmodified)
         {
+            LOG_TST("assertPutFileRequest: SavingPhase::Unmodified");
+
             // the document is not modified
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
 
@@ -63,6 +70,8 @@ public:
         }
         else if (_savingPhase == SavingPhase::Modified)
         {
+            LOG_TST("assertPutFileRequest: SavingPhase::Modified");
+
             // the document is modified
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
 
@@ -71,53 +80,83 @@ public:
 
             // Check that we get the extended data.
             LOK_ASSERT_EQUAL(std::string("CustomFlag=Custom Value;AnotherFlag=AnotherValue"),
-                                 request.get("X-LOOL-WOPI-ExtendedData"));
+                             request.get("X-LOOL-WOPI-ExtendedData"));
 
             _finishedSaveModified = true;
         }
 
         if (_finishedSaveUnmodified && _finishedSaveModified)
-            exitTest(TestResult::Ok);
+            passTest("Headers for both modified and unmodified received as expected.");
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
+                           _phase == Phase::WaitLoadStatus);
+
+        LOG_TST("onDocumentModified: Switching to Phase::Modify, SavingPhase::Unmodified");
+        _savingPhase = SavingPhase::Unmodified;
+        _phase = Phase::Modify;
+
+        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(),
+                               "save dontTerminateEdit=1 dontSaveIfUnmodified=0", getTestname());
+
+        SocketPoll::wakeupWorld();
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        LOG_TST("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModified",
+                           _phase == Phase::WaitModifiedStatus);
+        {
+            LOG_TST("onDocumentModified: Switching to Phase::Polling, SavingPhase::Modified");
+            _phase = Phase::Polling;
+            _savingPhase = SavingPhase::Modified;
+
+            helpers::sendTextFrame(
+                *getWs()->getLOOLWebSocket(),
+                "save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
+                "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue",
+                getTestname());
+
+            SocketPoll::wakeupWorld();
+        }
+
+        return true;
     }
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWOPI";
-
         switch (_phase)
         {
-            case Phase::LoadAndSave:
+            case Phase::Load:
             {
+                _phase = Phase::WaitLoadStatus;
+
+                LOG_TST("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "save dontTerminateEdit=1 dontSaveIfUnmodified=0", testName);
-
-                _phase = Phase::Modify;
-                _savingPhase = SavingPhase::Unmodified;
-                SocketPoll::wakeupWorld();
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(),
+                                       getTestname());
                 break;
             }
             case Phase::Modify:
             {
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0", testName);
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512", testName);
+                LOG_TST("Modify => WaitModified");
+                _phase = Phase::WaitModifiedStatus;
 
-                _phase = Phase::SaveModified;
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=input char=97 key=0",
+                                       getTestname());
+                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "key type=up char=0 key=512",
+                                       getTestname());
+
                 break;
             }
-            case Phase::SaveModified:
-            {
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(),
-                                       "save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
-                                       "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%"
-                                       "3DAnotherValue",
-                                       testName);
-
-                _phase = Phase::Polling;
-                _savingPhase = SavingPhase::Modified;
-                break;
-            }
+            case Phase::WaitLoadStatus:
+            case Phase::WaitModifiedStatus:
             case Phase::Polling:
             {
                 // just wait for the results
@@ -127,9 +166,6 @@ public:
     }
 };
 
-UnitBase *unit_create_wsd(void)
-{
-    return new UnitWOPI();
-}
+UnitBase* unit_create_wsd(void) { return new UnitWOPI(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
