@@ -336,7 +336,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('File', content)]);
+		return this.getNotebookbar([this.getTabPage('File', content)], '-1');
 	},
 
 	getHelpTab: function() {
@@ -424,7 +424,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Help', content)]);
+		return this.getNotebookbar([this.getTabPage('Help', content)], '-2');
 	},
 
 	getHomeTab: function() {
@@ -1838,7 +1838,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Format', content)]);
+		return this.getNotebookbar([this.getTabPage('Format', content)], '-3');
 	},
 
 	getInsertTab: function() {
@@ -2236,10 +2236,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Insert', content)]);
+		return this.getNotebookbar([this.getTabPage('Insert', content)], '-4');
 	},
 
-	getNotebookbar: function(tabPages) {
+	getNotebookbar: function(tabPages, selectedPage) {
 		return {
 			'id': '',
 			'type': 'control',
@@ -2269,7 +2269,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 											'type': 'tabcontrol',
 											'text': '',
 											'enabled': 'true',
-											'selected': '-1',
+											'selected': selectedPage,
 											'children': tabPages
 										}
 									]
