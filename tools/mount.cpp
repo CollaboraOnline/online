@@ -33,7 +33,10 @@ int main(int argc, char** argv)
     const char* program = argv[0];
 
     if (!hasCorrectUID(/* appName = */"loolmount"))
+    {
+        fprintf(stderr, "Aborting.\n");
         return EX_SOFTWARE;
+    }
 
     if (argc < 3)
     {
