@@ -456,20 +456,32 @@ int main(int argc, char** argv)
     /*WARNING*/ if (!hasCorrectUID("loolforkit"))
     /*WARNING*/ {
     /*WARNING*/     // don't allow if any capability is set (unless root; who runs this
-    /*WARNING*/     // as root and provides --disable-lool-user-checking knows what they
+    /*WARNING*/     // as root or runs this in a container and provides --disable-lool-user-checking knows what they
     /*WARNING*/     // are doing)
-    /*WARNING*/     if (hasAnyCapability() && !hasUID("root"))
+    /*WARNING*/     if (hasUID("root"))
+    /*WARNING*/     {
+    /*WARNING*/        // This is fine, the 'root' can do anything anyway
+    /*WARNING*/     }
+    /*WARNING*/     else if (isInContainer())
+    /*WARNING*/     {
+    /*WARNING*/         // This is fine, we are confined in the container anyway
+    /*WARNING*/     }
+    /*WARNING*/     else if (hasAnyCapability())
     /*WARNING*/     {
     /*WARNING*/         if (!checkLoolUser)
     /*WARNING*/             std::cerr << "Security: --disable-lool-user-checking failed, loolforkit has some capabilities set." << std::endl;
 
+    /*WARNING*/         std::cerr << "Aborting." << std::endl;
     /*WARNING*/         return EX_SOFTWARE;
     /*WARNING*/     }
 
     /*WARNING*/     // even without the capabilities, don't run unless the user really knows
     /*WARNING*/     // what they are doing, and provided a --disable-lool-user-checking
     /*WARNING*/     if (checkLoolUser)
+    /*WARNING*/     {
+    /*WARNING*/         std::cerr << "Aborting." << std::endl;
     /*WARNING*/         return EX_SOFTWARE;
+    /*WARNING*/     }
 
     /*WARNING*/     std::cerr << "Security: Check for the 'lool' username overridden on the command line." << std::endl;
     /*WARNING*/ }
