@@ -4184,7 +4184,7 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     UnitWSD::get().returnValue(returnValue);
 
-    LOG_INF("Process [loolwsd] finished.");
+    LOG_INF("Process [loolwsd] finished with exit status: " << returnValue);
     return returnValue;
 }
 
