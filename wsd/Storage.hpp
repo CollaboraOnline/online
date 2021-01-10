@@ -18,6 +18,7 @@
 #include <Poco/JSON/Object.h>
 
 #include "Auth.hpp"
+#include "HttpRequest.hpp"
 #include "LOOLWSD.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
@@ -152,6 +153,35 @@ public:
         std::string _reason;
     };
 
+    /// The state of an asynchronous upload request.
+    class AsyncUpload final
+    {
+    public:
+        enum class State
+        {
+            None, //< No async upload in progress or isn't supported.
+            Running, //< An async upload request is in progress.
+            Error, //< Failed to make an async upload request or timed out, no UploadResult.
+            Complete //< The last async upload request completed (regardless of the server's response).
+        };
+
+        AsyncUpload(State state, UploadResult result = UploadResult(UploadResult::Result::FAILED))
+            : _state(state)
+            , _result(std::move(result))
+        {
+        }
+
+        /// Returns the state of the async upload.
+        State state() const { return _state; }
+
+        /// Returns the result of the async upload.
+        const UploadResult& result() const { return _result; }
+
+    private:
+        const State _state;
+        UploadResult _result;
+    };
+
     enum class LOOLStatusCode
     {
         DOC_CHANGED = 1010 // Document changed externally in storage
@@ -250,6 +280,33 @@ public:
                              LockContext& lockCtx, const std::string& saveAsPath,
                              const std::string& saveAsFilename, const bool isRename)
         = 0;
+
+    /// Writes the contents of the file back to the source asynchronously, if possible.
+    /// @param cookies A string representing key=value pairs that are set as cookies.
+    /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
+    virtual AsyncUpload
+    uploadLocalFileToStorageAsync(const Authorization& auth, const std::string& cookies,
+                                  LockContext& lockCtx, const std::string& saveAsPath,
+                                  const std::string& saveAsFilename, const bool isRename)
+    {
+        // By default do a synchronous save.
+        const UploadResult res = uploadLocalFileToStorage(auth, cookies, lockCtx, saveAsPath,
+                                                          saveAsFilename, isRename);
+        return AsyncUpload(AsyncUpload::State::Complete, res);
+    }
+
+    /// Get the progress state of an asynchronous LocalFileToStorage upload.
+    virtual AsyncUpload queryLocalFileToStorageAsyncUploadState()
+    {
+        // Unsupported.
+        return AsyncUpload(AsyncUpload::State::None);
+    }
+
+    /// Cancels an active asynchronous LocalFileToStorage upload.
+    virtual void cancelLocalFileToStorageAsyncUpload()
+    {
+        // By default, nothing to do.
+    }
 
     /// Must be called at startup to configure.
     static void initialize();
