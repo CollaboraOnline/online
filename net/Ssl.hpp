@@ -36,6 +36,9 @@ public:
 
     static void uninitialize();
 
+    /// Returns true iff the SslContext has been initialized.
+    static bool isInitialized() { return !!Instance; }
+
     static SSL* newSsl()
     {
         return SSL_new(Instance->_ctx);
