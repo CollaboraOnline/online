@@ -121,7 +121,10 @@ void usage(const char* program)
 int main(int argc, char** argv)
 {
     if (!hasCorrectUID(/* appName = */"loolmount"))
+    {
+        fprintf(stderr, "Aborting.\n");
         return EX_SOFTWARE;
+    }
 
     const char* program = argv[0];
     if (argc < 3)

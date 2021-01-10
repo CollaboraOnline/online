@@ -474,13 +474,17 @@ int main(int argc, char** argv)
     /*WARNING*/         if (!checkLoolUser)
     /*WARNING*/             std::cerr << "Security: --disable-lool-user-checking failed, loolforkit has some capabilities set." << std::endl;
 
+    /*WARNING*/         std::cerr << "Aborting." << std::endl;
     /*WARNING*/         return EX_SOFTWARE;
     /*WARNING*/     }
 
     /*WARNING*/     // even without the capabilities, don't run unless the user really knows
     /*WARNING*/     // what they are doing, and provided a --disable-lool-user-checking
     /*WARNING*/     if (checkLoolUser)
+    /*WARNING*/     {
+    /*WARNING*/         std::cerr << "Aborting." << std::endl;
     /*WARNING*/         return EX_SOFTWARE;
+    /*WARNING*/     }
 
     /*WARNING*/     std::cerr << "Security: Check for the 'lool' username overridden on the command line." << std::endl;
     /*WARNING*/ }

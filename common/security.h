@@ -41,7 +41,7 @@ inline int hasCorrectUID(const char *appName)
     if (hasUID(LOOL_USER_ID))
         return 1;
     else {
-        fprintf(stderr, "Error: %s incorrect user-name, other than '" LOOL_USER_ID "' - aborting\n", appName);
+        fprintf(stderr, "Security: %s incorrect user-name, other than '" LOOL_USER_ID "'\n", appName);
         return 0;
     }
 #endif
