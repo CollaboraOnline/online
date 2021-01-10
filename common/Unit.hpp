@@ -89,6 +89,20 @@ protected:
     /// Encourages the process to exit with this value (unless hooked)
     void exitTest(TestResult result);
 
+    /// Fail the test with the given reason.
+    void failTest(const std::string& reason)
+    {
+        LOG_TST("FAILURE: " << getTestname() << " finished: " << reason);
+        exitTest(TestResult::Failed);
+    }
+
+    /// Pass the test with the given optional reason.
+    void passTest(const std::string& reason = std::string())
+    {
+        LOG_TST("SUCCESS: " << getTestname() << " finished: " << reason);
+        exitTest(TestResult::Ok);
+    }
+
     UnitBase();
     UnitBase(std::string name)
         : UnitBase()
