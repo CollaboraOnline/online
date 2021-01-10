@@ -22,6 +22,7 @@
 #include "Log.hpp"
 #include "Util.hpp"
 #include <common/Authorization.hpp>
+#include <net/HttpRequest.hpp>
 
 namespace Poco
 {
@@ -258,6 +259,7 @@ public:
 
     static bool allowedWopiHost(const std::string& host);
     static Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri);
+    static std::shared_ptr<http::Session> getHttpSession(const Poco::URI& uri);
 
 protected:
 
@@ -535,6 +537,10 @@ private:
     /// Older Poco versions don't support copying HTTPRequest objects, so we can't generate them.
     void initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
                          const Authorization& auth, const std::string& cookies) const;
+
+    /// Create an http::Request with the common headers.
+    http::Request initHttpRequest(const Poco::URI& uri, const Authorization& auth,
+                                  const std::string& cookies) const;
 
     /// Download the document from the given URI.
     /// Does not add authorization tokens or any other logic.
