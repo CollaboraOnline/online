@@ -102,6 +102,7 @@ shared_sources = common/FileUtil.cpp \
                  common/Util.cpp \
                  common/Authorization.cpp \
                  net/DelaySocket.cpp \
+                 net/HttpRequest.cpp \
                  net/HttpHelper.cpp \
                  net/NetUtil.cpp \
                  net/Socket.cpp
@@ -266,6 +267,7 @@ shared_headers = common/Common.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
+                 net/HttpRequest.hpp \
                  net/HttpHelper.hpp \
                  net/NetUtil.hpp \
                  net/ServerSocket.hpp \

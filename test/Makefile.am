@@ -76,6 +76,7 @@ test_base_source = \
 	TileQueueTests.cpp \
 	WhiteBoxTests.cpp \
 	DeltaTests.cpp \
+	HttpRequestTests.cpp \
 	WopiProofTests.cpp \
 	$(wsd_sources)
 
@@ -88,6 +89,7 @@ unittest_SOURCES = \
     ../common/SigUtil.cpp \
     ../common/Unit.cpp \
     ../common/StringVector.cpp \
+    ../net/HttpRequest.cpp \
     ../net/Socket.cpp \
     ../net/NetUtil.cpp \
     ../wsd/Auth.cpp \
