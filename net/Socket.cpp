@@ -29,8 +29,8 @@
 
 #include <SigUtil.hpp>
 #include "ServerSocket.hpp"
-#if !MOBILEAPP
-#include "SslSocket.hpp"
+#if !MOBILEAPP && ENABLE_SSL
+#include <net/SslSocket.hpp>
 #endif
 #include "WebSocketHandler.hpp"
 
