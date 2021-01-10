@@ -31,7 +31,10 @@
 #include <helpers.hpp>
 #include <Unit.hpp>
 #include <wsd/LOOLWSD.hpp>
-
+#if ENABLE_SSL
+#include <Ssl.hpp>
+#include <SslSocket.hpp>
+#endif
 #include <Log.hpp>
 
 #include "common/Protocol.hpp"
@@ -73,6 +76,7 @@ static bool IsDebugrun = false;
 int main(int argc, char** argv)
 {
     bool verbose = false;
+    std::string cert_path = "/etc/loolwsd/";
     for (int i = 1; i < argc; ++i)
     {
         const std::string arg(argv[i]);
@@ -84,10 +88,37 @@ int main(int argc, char** argv)
         {
             IsDebugrun = true;
         }
+        else if (arg == "--cert-path" && ++i < argc)
+        {
+            cert_path = argv[i];
+        }
     }
 
     const char* loglevel = verbose ? "trace" : "warning";
     Log::initialize("tst", loglevel, true, false, {});
+
+#if ENABLE_SSL
+    try
+    {
+        // The most likely place. If not found, SSL will be disabled in the tests.
+        const std::string ssl_cert_file_path = cert_path + "/cert.pem";
+        const std::string ssl_key_file_path = cert_path + "/key.pem";
+        const std::string ssl_ca_file_path = cert_path + "/ca-chain.cert.pem";
+        const std::string ssl_cipher_list = "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH";
+
+        // Initialize the non-blocking socket SSL.
+        SslContext::initialize(ssl_cert_file_path, ssl_key_file_path, ssl_ca_file_path,
+                               ssl_cipher_list);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Exception while initializing SslContext: " << ex.what());
+    }
+
+    if (!SslContext::isInitialized())
+        LOG_ERR("Failed to initialize SSL. Set the path to the certificates via --cert-path. "
+                "HTTPS tests will be disabled in unit-tests.");
+#endif
 
     return runClientTests(true, verbose)? 0: 1;
 }

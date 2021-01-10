@@ -29,7 +29,9 @@
 #include <Util.hpp>
 
 #include <net/Socket.hpp>
-#include <net/SslSocket.hpp>
+#if ENABLE_SSL
+#include <SslSocket.hpp>
+#endif
 #include <net/WebSocketHandler.hpp>
 
 #include <common/SigUtil.hpp>
