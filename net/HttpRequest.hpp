@@ -774,7 +774,6 @@ private:
 
         SocketPoll poller("HttpSessionPoll");
 
-        LOG_ERR("insertNewsocket");
         poller.insertNewSocket(_socket);
         poller.poll(timeout.count());
         while (!_response->done())
@@ -824,7 +823,7 @@ private:
 
     void shutdown(bool /*goingAway*/, const std::string& /*statusMessage*/) override
     {
-        LOG_ERR("shutdown");
+        LOG_TRC("shutdown");
     }
 
     void getIOStats(uint64_t& sent, uint64_t& recv) override
