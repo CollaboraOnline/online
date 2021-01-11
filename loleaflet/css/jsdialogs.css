@@ -194,9 +194,22 @@ td.jsdialog > [id^='table-box'] {
 	padding-left: 2px;
 }
 
-.ui-treeview-entry input[type='checkbox'] {
+input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	appearance: none;
 	width: 20px;
-	margin: 0px 5px;
+	height: 20px;
+	background: #f4f4f4;
+	margin: 1px 8px;
+	box-shadow: inset 0px 0px 0px 1px gray;
+}
+
+input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:checked {
+	border-color: transparent;
+	background: url('images/popup_select_current.svg') no-repeat center;
+	box-shadow: none;
 }
 
 .ui-treeview-entry span {
@@ -369,7 +382,7 @@ td.jsdialog > [id^='table-box'] {
 }
 
 .autofilter-container #toggle_all.checkbutton {
-	display: inline-table;
+	display: flex;
 }
 
 .autofilter-container #menu + #search_edit {
@@ -403,9 +416,8 @@ td.jsdialog > [id^='table-box'] {
 
 .autofilter-container #toggle_all.checkbutton > label,
 .autofilter-container #toggle_all.checkbutton > input {
-	display: table-cell;
-	vertical-align: middle;
-	height: 40px;
+	height: 18px;
+	line-height: normal;
 }
 
 .autofilter-container #check_tree_box.ui-treeview .ui-treeview-body,
