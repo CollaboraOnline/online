@@ -111,7 +111,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ConnectorToolbox'] = function() {};
 		this._toolitemHandlers['.uno:PresentationCurrentSlide'] = function() {};
 		this._toolitemHandlers['.uno:PresentationLayout'] = function() {};
-		this._toolitemHandlers['.uno:FontworkGalleryFloater'] = function() {};
 		this._toolitemHandlers['.uno:CapturePoint'] = function() {};
 		this._toolitemHandlers['.uno:Objects3DToolbox'] = function() {};
 		this._toolitemHandlers['.uno:InsertMath'] = function() {};
