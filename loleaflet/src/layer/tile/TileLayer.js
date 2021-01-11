@@ -1276,13 +1276,10 @@ L.TileLayer = L.GridLayer.extend({
 
 	_movePopUpBelow: function() {
 		var popUp = $('.hyperlink-popup').first();
-		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
-			this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
-		var cursorSize = pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom()));
-		var bottom = cursorSize.y + popUp.height();
+		var bottom = parseInt(popUp.css('bottom')) - popUp.height();
 
 		popUp.css({
-			'bottom': bottom ? -bottom + 'px': '',
+			'bottom': bottom ? bottom + 'px': '',
 			'display': 'flex',
 			'flex-direction': 'column-reverse'
 		});
@@ -1292,7 +1289,7 @@ L.TileLayer = L.GridLayer.extend({
 	_movePopUpRight: function() {
 		$('.leaflet-popup-content-wrapper').first().css({
 			'position': 'relative',
-			'left': this._map.hyperlinkPopup._containerLeft * -1
+			'left': (this._map.hyperlinkPopup._containerWidth / 2)
 		});
 		$('.leaflet-popup-tip-container').first().css({
 			'left': '25px'
