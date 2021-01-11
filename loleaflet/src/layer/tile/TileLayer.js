@@ -934,6 +934,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onCursorVisibleMsg: function(textMsg) {
 		var command = textMsg.match('cursorvisible: true');
 		this._map._isCursorVisible = command ? true : false;
+		this._removeSelection();
 		this._onUpdateCursor();
 	},
 
@@ -1209,7 +1210,6 @@ L.TileLayer = L.GridLayer.extend({
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
-		this._removeSelection();
 	},
 
 	_removeInputHelpMarker: function() {
@@ -3266,6 +3266,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._updateMarkers();
 		}
 		else {
+			this._updateMarkers();
 			this._removeSelection();
 		}
 	},
@@ -3282,6 +3283,9 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_updateMarkers: function() {
+		if (!this._map._isCursorVisible)
+			return;
+
 		var startMarker, endMarker;
 		for (var key in this._selectionHandles) {
 			if (key === 'start') {
