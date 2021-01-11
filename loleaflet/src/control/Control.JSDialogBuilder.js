@@ -2471,6 +2471,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				else
 					$('#border-' + i).addClass('selected');
 			}
+
+			if (builder.wizard && builder.wizard._refreshSidebar) {
+				builder.wizard._refreshSidebar(0);
+				builder.refreshSidebar = false;
+			}
 		};
 
 		builder.map.on('commandstatechanged', function(e) {
