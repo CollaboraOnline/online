@@ -73,6 +73,18 @@ cd "$BUILDDIR"
 rm -rf "$INSTDIR" || true
 mkdir -p "$INSTDIR"
 
+##### build static poco #####
+
+if test ! -f poco/lib/libPocoFoundation.a ; then
+    wget https://github.com/pocoproject/poco/archive/poco-1.10.1-release.tar.gz
+    tar -xzf poco-1.10.1-release.tar.gz
+    cd poco-poco-1.10.1-release/
+    ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings --prefix=$BUILDDIR/poco
+    make -j 8
+    make install
+fi
+
+
 ##### cloning & updating #####
 
 # core repo
@@ -108,7 +120,7 @@ cp -a core/instdir "$INSTDIR"/opt/lokit
 
 # build
 ( cd online && ./autogen.sh ) || exit 1
-( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/core/include --with-lo-path=/opt/lokit $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
+( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --with-lokit-path="$BUILDDIR"/core/include --with-lo-path=/opt/lokit --with-poco-includes=$BUILDDIR/poco/include --with-poco-libs=$BUILDDIR/poco/lib $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
 ( cd online && make -j 8) || exit 1
 
 # copy stuff
