@@ -35,9 +35,7 @@ var nextcloudBlackList = [
 		]
 	],
 	['mobile/writer/spellchecking_spec.js',
-		[
-			'Set None Language for selection.'
-		]
+		[]
 	],
 	['mobile/impress/hamburger_menu_spec.js',
 		[
