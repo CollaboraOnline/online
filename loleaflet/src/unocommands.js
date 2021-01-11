@@ -111,6 +111,7 @@ var unoCommandsArray = {
 	FilterMenu:{spreadsheet:{menu:_('More ~Filters'),},},
 	FontColor:{global:{menu:_('Font Color'),},text:{menu:_('Font Color'),},},
 	FontDialog:{global:{menu:_('C~haracter...'),},},
+	FontworkGalleryFloater:{global:{menu:_('Fontwork...'),},},
 	FootnoteDialog:{text:{menu:_('~Footnotes and Endnotes...'),},},
 	FormatArea:{global:{menu:_('A~rea...'),},},
 	FormatAxis:{global:{menu:_('Format Axis...'),},},
