@@ -81,15 +81,6 @@ L.Control.JSDialog = L.Control.extend({
 		hammerTitlebar.on('panmove', this.onPan.bind(this));
 		hammerTitlebar.on('hammer.input', onInput);
 
-		if (window.mode.isTablet()) {
-			var hammerContent = new Hammer(content);
-			hammerContent.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
-
-			hammerContent.on('panstart', this.onPan.bind(this));
-			hammerContent.on('panmove', this.onPan.bind(this));
-			hammerContent.on('hammer.input', onInput);
-		}
-
 		if (posX === 0 && posY === 0) {
 			posX = window.innerWidth/2 - container.offsetWidth/2;
 			posY = window.innerHeight/2 - container.offsetHeight/2;
