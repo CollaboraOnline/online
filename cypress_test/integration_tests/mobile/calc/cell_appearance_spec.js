@@ -271,6 +271,9 @@ describe('Change cell appearance.', function() {
 		cy.get('#border-2')
 			.click();
 
+		// We wait for async update
+		cy.wait(500);
+
 		// Then apply border color
 		cy.get('#FrameLineColor')
 			.click();
