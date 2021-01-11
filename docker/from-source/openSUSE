@@ -2,19 +2,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-FROM debian:stable
+FROM opensuse/leap
 
-# get the latest fixes
+# refresh repos otherwise installations later may fail
 # install LibreOffice run-time dependencies
-# install adduser, findutils, openssl and cpio that we need later
 # install an editor
 # tdf#117557 - Add CJK Fonts to Collabora Online Docker Image
-RUN apt-get update && \
-    apt-get -y install libpng16-16 fontconfig adduser cpio \
-               findutils nano libcap2-bin openssl inotify-tools \
-               procps libubsan0 libubsan1 openssh-client fonts-wqy-zenhei \
-               fonts-wqy-microhei fonts-droid-fallback fonts-noto-cjk
-
+RUN zypper ref && \
+    zypper --non-interactive install libcap-progs libpng16-16 fontconfig nano openssh inotify-tools
 
 # copy freshly built LOKit and Collabora Online
 COPY /instdir /
@@ -26,7 +21,8 @@ COPY /start-collabora-online.sh /
 # Fix permissions
 RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit && \
     setcap cap_sys_admin=ep /usr/bin/loolmount && \
-    adduser --quiet --system --group --home /opt/lool lool && \
+    groupadd -r lool && \
+    useradd -g lool -r lool -d /opt/lool -s /bin/bash && \
     mkdir -p /var/cache/loolwsd && chown lool: /var/cache/loolwsd && \
     rm -rf /var/cache/loolwsd/* && \
     rm -rf /opt/lool && \
@@ -40,6 +36,6 @@ RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit 
 EXPOSE 9980
 
 # switch to lool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
-USER 101
+USER 481
 
 CMD bash /start-collabora-online.sh
