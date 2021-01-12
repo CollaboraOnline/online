@@ -113,9 +113,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'children': [
 								{
 									'id': 'saveas',
-									'type': 'menubartoolitem',
+									'type': 'bigtoolitem',
 									'text': _UNO('.uno:SaveAs', 'text'),
-									'command': ''
+									'command': '.uno:SaveAs'
 								}
 							]
 						} : {},

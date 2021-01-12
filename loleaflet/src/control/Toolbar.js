@@ -672,4 +672,8 @@ L.Map.include({
 		var map = this;
 		map.fire('postMessage', {msgId: 'UI_Share'});
 	},
+	openSaveAs: function () {
+		var map = this;
+		map.fire('postMessage', {msgId: 'UI_SaveAs'});
+	},
 });

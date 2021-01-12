@@ -1276,7 +1276,7 @@ L.Control.Menubar = L.Control.extend({
 				}
 			}
 		} else if (id === 'saveas') {
-			this._map.fire('postMessage', {msgId: 'UI_SaveAs'});
+			this._map.openSaveAs();
 		} else if (id === 'savecomments') {
 			if (this._map.isPermissionEditForComments()) {
 				this._map.fire('postMessage', {msgId: 'UI_Save'});
