@@ -1355,10 +1355,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
 			this._map.showHelp(id);
 		} else if (L.Params.revHistoryEnabled && (id === 'rev-history' || id === 'last-mod')) {
-			// if we are being loaded inside an iframe, ask
-			// our host to show revision history mode
-			this._map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
-			this._map.fire('postMessage', {msgId: 'UI_FileVersions'});
+			this._map.openRevisionHistory();
 		} else if (id === 'closedocument') {
 			window.onClose();
 		} else if (id === 'repair') {

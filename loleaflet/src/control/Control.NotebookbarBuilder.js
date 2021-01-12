@@ -655,11 +655,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
-			if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
-				window.postMobileMessage('PRINT');
-			} else {
-				builder.map.print();
-			}
+			builder.map.print();
 		});
 	},
 
@@ -668,10 +664,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
-			if (L.Params.revHistoryEnabled) {
-				builder.map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
-				builder.map.fire('postMessage', {msgId: 'UI_FileVersions'});
-			}
+			builder.map.openRevisionHistory();
 		});
 	},
 
