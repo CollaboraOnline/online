@@ -16,7 +16,45 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
+	function getTextEndPosForFirstCell() {
+		calcHelper.dblClickOnFirstCell();
 
+		helper.getCursorPos('left', 'currentTextEndPos');
+	}
+
+	it('Enable text wrapping.', function() {
+		calcHelper.clickOnFirstCell(true, false);
+		calcHelper.typeIntoFormulabar('_This_is_a_really_long_text');
+		helper.initAliasToNegative('originalTextEndPos');
+
+		getTextEndPosForFirstCell();
+		cy.get('@currentTextEndPos')
+			.as('originalTextEndPos');
+
+		cy.get('@currentTextEndPos')
+			.should('be.greaterThan', 0);
+
+		calcHelper.selectFirstColumn();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.wraptext')
+			.click();
+
+		calcHelper.clickOnFirstCell(true, false);
+
+		// We use the text position as indicator
+		cy.waitUntil(function() {
+			getTextEndPosForFirstCell();
+
+			return cy.get('@currentTextEndPos')
+				.then(function(currentTextEndPos) {
+					return cy.get('@originalTextEndPos')
+						.then(function(originalTextEndPos) {
+							return originalTextEndPos > currentTextEndPos;
+						});
+				});
+		});
+	});
+	
 	it('Merge cells', function() {
 
 		// Select the full column
