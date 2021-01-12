@@ -1285,7 +1285,7 @@ L.Control.Menubar = L.Control.extend({
 				}
 			}
 		} else if (id === 'shareas') {
-			this._map.fire('postMessage', {msgId: 'UI_Share'});
+			this._map.openShare();
 		} else if (id === 'print') {
 			this._map.print();
 		} else if (id.startsWith('downloadas-')) {

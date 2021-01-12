@@ -334,7 +334,7 @@ L.Map.include({
 					for (i = 0, max = translatableContent.length; i < max; i++) {
 						translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
 					}
-					
+
 					//translatable screenshots
 					var supportedLanguage = ['fr', 'it', 'de', 'es', 'pt-BR'];
 					var currentLanguage = String.locale;
@@ -667,5 +667,9 @@ L.Map.include({
 		// our host to show revision history mode
 		map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
 		map.fire('postMessage', {msgId: 'UI_FileVersions'});
+	},
+	openShare: function () {
+		var map = this;
+		map.fire('postMessage', {msgId: 'UI_Share'});
 	},
 });
