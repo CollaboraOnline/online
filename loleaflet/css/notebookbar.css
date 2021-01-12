@@ -227,6 +227,7 @@
 
 .hasnotebookbar .ui-content.unobutton.selected {
 	border-radius: 2px;
+	box-shadow: 0px 0px 0px 3px var(--gray-bg-color);
 	background-color: var(--gray-bg-color);
 }
 
