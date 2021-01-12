@@ -237,7 +237,7 @@ define start_loolwsd
 	@echo
 	../loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			--disable-ssl \
+			--o:ssl.termination=false \
 			--o:admin_console.username=admin --o:admin_console.password=admin \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--o:welcome.enable=false \
