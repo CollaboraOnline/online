@@ -484,10 +484,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 /* Layout Tab */
 
 #FormatGroup.notebookbar img,
-#BringToFront.notebookbar img,
-#ObjectForwardOne.notebookbar img,
-#SendToBack.notebookbar img,
-#ObjectBackOne.notebookbar img,
 #PageDialog.notebookbar img
 {
 	height: 32px !important;
