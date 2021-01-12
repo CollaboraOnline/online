@@ -119,9 +119,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							'children': [
 								{
 									'id': 'print',
-									'type': 'menubartoolitem',
+									'type': 'bigtoolitem',
 									'text': _UNO('.uno:Print', 'spreadsheet'),
-									'command': ''
+									'command': '.uno:Print'
 								}
 							]
 						} : {},
