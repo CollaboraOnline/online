@@ -48,6 +48,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Presentation'] = this._startPresentationControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
 		this._toolitemHandlers['.uno:Print'] = this._printControl;
+		this._toolitemHandlers['.uno:rev-history'] = this._revHistoryControl;
 		this._toolitemHandlers['.uno:Menubar'] = this._menubarControl;
 		this._toolitemHandlers['.uno:InsertPageHeader'] = this._headerFooterControl;
 		this._toolitemHandlers['.uno:InsertPageFooter'] = this._headerFooterControl;
@@ -658,6 +659,18 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				window.postMobileMessage('PRINT');
 			} else {
 				builder.map.print();
+			}
+		});
+	},
+
+	_revHistoryControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			if (L.Params.revHistoryEnabled) {
+				builder.map.fire('postMessage', {msgId: 'rev-history', args: {Deprecated: true}});
+				builder.map.fire('postMessage', {msgId: 'UI_FileVersions'});
 			}
 		});
 	},
