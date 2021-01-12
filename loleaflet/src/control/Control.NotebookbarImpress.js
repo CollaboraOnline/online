@@ -187,9 +187,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'saveas',
-								'type': 'menubartoolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:SaveAs', 'presentation'),
-								'command': ''
+								'command': '.uno:SaveAs'
 							}
 						]
 					} : {},
