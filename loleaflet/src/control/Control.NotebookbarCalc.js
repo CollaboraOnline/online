@@ -89,9 +89,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							'children': [
 								{
 									'id': 'saveas',
-									'type': 'menubartoolitem',
+									'type': 'bigtoolitem',
 									'text': _UNO('.uno:SaveAs', 'spreadsheet'),
-									'command': ''
+									'command': '.uno:SaveAs'
 								}
 							]
 						} : {},
