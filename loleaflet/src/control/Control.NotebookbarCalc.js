@@ -142,9 +142,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'rev-history',
-								'type': 'menubartoolitem',
-								'text': _('See revision history'),
-								'command': ''
+								'type': 'bigtoolitem',
+								'text': _('See history'),
+								'command': '.uno:rev-history'
 							}
 						]
 					} : {},
