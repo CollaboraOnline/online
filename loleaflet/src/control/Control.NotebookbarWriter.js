@@ -157,9 +157,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'print',
-								'type': 'menubartoolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:Print', 'text'),
-								'command': ''
+								'command': '.uno:Print'
 							}
 						]
 					} : {},
@@ -2960,8 +2960,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineA20',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -2973,8 +2973,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineB21',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -3087,8 +3087,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineA21',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -3100,8 +3100,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineB22',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -3127,8 +3127,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineB38',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -3140,8 +3140,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineA38',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -3167,8 +3167,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineB42',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -3180,8 +3180,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineA42',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -3207,8 +3207,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineB27',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
@@ -3220,8 +3220,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'LineA26',
 								'type': 'toolbox',
-			
-			
+
+
 								'children': [
 									{
 										'type': 'toolitem',
