@@ -46,8 +46,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'text': _('~Table'),
-				'id': '8',
-				'name': 'TableLabel',
+				'id': '-8',
+				'name': 'Table',
 				'context': 'Table'
 			},
 			{
@@ -98,6 +98,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		case 'Review':
 			this.loadTab(this.getReviewTab());
+			break;
+
+		case 'Table':
+			this.loadTab(this.getTableTab());
 			break;
 		}
 	},
@@ -3285,6 +3289,350 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		];
 
 		return this.getNotebookbar([this.getTabPage('Review', content)], '-7');
+	},
+
+	getTableTab: function() {
+		var content = [
+			{
+				'id': 'Table-Section-Layout',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'SectionBottom62',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertCaptionDialog', 'text'),
+								'command': '.uno:InsertCaptionDialog'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Table-Section-Layout1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB61',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'SectionBottom39',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertColumnsBefore', 'text'),
+										'command': '.uno:InsertColumnsBefore'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertColumnsAfter', 'text'),
+										'command': '.uno:InsertColumnsAfter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeleteColumns', 'text'),
+										'command': '.uno:DeleteColumns'
+									}
+								]
+							},
+							{
+								'id': 'SectionBottom41',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertRowsBefore', 'text'),
+										'command': '.uno:InsertRowsBefore'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertRowsAfter', 'text'),
+										'command': '.uno:InsertRowsAfter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeleteRows', 'text'),
+										'command': '.uno:DeleteRows'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Table-Section-Merge',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator45',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom37',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:MergeCells', 'text'),
+								'command': '.uno:MergeCells'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Table-Section-Merge1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB62',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LineA25',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:SplitCell', 'text'),
+										'command': '.uno:SplitCell'
+									}
+								]
+							},
+							{
+								'id': 'LineB26',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:SplitTable', 'text'),
+										'command': '.uno:SplitTable'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Table-Section-Select',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator51',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom43',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:EntireCell', 'text'),
+								'command': '.uno:EntireCell'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Table-Section-Select1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB66',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'SectionBottom84',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:EntireColumn', 'text'),
+										'command': '.uno:EntireColumn'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:SelectTable', 'text'),
+										'command': '.uno:SelectTable'
+									}
+								]
+							},
+							{
+								'id': 'SectionBottom85',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:EntireRow', 'text'),
+										'command': '.uno:EntireRow'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeleteTable', 'text'),
+										'command': '.uno:DeleteTable'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Table-Section-Optimize1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB63',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'SectionBottom44',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertTop'),
+										'command': '.uno:CellVertTop'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertCenter'),
+										'command': '.uno:CellVertCenter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertBottom'),
+										'command': '.uno:CellVertBottom'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaRightToLeft'),
+										'command': '.uno:ParaRightToLeft'
+									}
+								]
+							},
+							{
+								'id': 'SectionBottom101',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:LeftPara'),
+										'command': '.uno:LeftPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CenterPara'),
+										'command': '.uno:CenterPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:RightPara'),
+										'command': '.uno:RightPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:JustifyPara'),
+										'command': '.uno:JustifyPara'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Table-Section-Calc',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator53',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom35',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:TableSort', 'text'),
+								'command': '.uno:TableSort'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Table-Section-FormatCalc1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB97',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'SectionBottom109',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatCurrency', 'text'),
+										'command': '.uno:NumberFormatCurrency'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatDecimal', 'text'),
+										'command': '.uno:NumberFormatDecimal'
+									}
+								]
+							},
+							{
+								'id': 'SectionBottom110',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatPercent', 'text'),
+										'command': '.uno:NumberFormatPercent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatDate', 'text'),
+										'command': '.uno:NumberFormatDate'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			}
+		];
+
+		return this.getNotebookbar([this.getTabPage('Table', content)], '-8');
 	},
 
 	getNotebookbar: function(tabPages, selectedPage) {
