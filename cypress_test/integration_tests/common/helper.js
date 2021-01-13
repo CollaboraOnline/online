@@ -816,19 +816,6 @@ function moveCursor(direction, modifier, checkCursorVis = true) {
 function typeIntoDocument(text) {
 	cy.log('Typing into document - start.');
 
-	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
-		cy.document()
-			.then(function(doc) {
-				if (doc.activeElement.className !== 'clipboard') {
-					cy.get('textarea.clipboard')
-						.focus();
-
-					cy.document().its('activeElement.className')
-						.should('be.eq', 'clipboard');
-				}
-			});
-	}
-
 	cy.get('textarea.clipboard')
 		.type(text, {force: true});
 
