@@ -36,8 +36,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'text': _('~Review'),
-				'id': '6',
-				'name': 'ReviewLabel'
+				'id': '-7',
+				'name': 'Review'
 			},
 			{
 				'text': _('Format'),
@@ -94,6 +94,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		case 'References':
 			this.loadTab(this.getReferencesTab());
+			break;
+
+		case 'Review':
+			this.loadTab(this.getReviewTab());
 			break;
 		}
 	},
@@ -2933,10 +2937,354 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'false'
-			}			
+			}
 		];
 
 		return this.getNotebookbar([this.getTabPage('References', content)], '-6');
+	},
+
+	getReviewTab: function() {
+		var content = [
+			{
+				'id': 'Review-Section-Language',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'SectionBottom67',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SpellingAndGrammarDialog'),
+								'command': '.uno:SpellingAndGrammarDialog'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ThesaurusDialog'),
+								'command': '.uno:ThesaurusDialog'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-Language1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB41',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LineA20',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:SpellOnline'),
+										'command': '.uno:SpellOnline'
+									}
+								]
+							},
+							{
+								'id': 'LineB21',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:WordCountDialog', 'text'),
+										'command': '.uno:WordCountDialog'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-Annotation',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator109',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom69',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertAnnotation'),
+								'command': '.uno:InsertAnnotation'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-Annotation1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB42',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LeftParaMargin9',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ReplyComment'),
+										'command': '.uno:ReplyComment'
+									}
+								]
+							},
+							{
+								'id': 'belowspacing9',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeleteComment'),
+										'command': '.uno:DeleteComment'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-TrackChanges',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator112',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom72',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:TrackChanges', 'text'),
+								'command': '.uno:TrackChanges'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ShowTrackedChanges', 'text'),
+								'command': '.uno:ShowTrackedChanges'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-TrackChanges1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB43',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LineA21',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NextTrackedChange', 'text'),
+										'command': '.uno:NextTrackedChange'
+									}
+								]
+							},
+							{
+								'id': 'LineB22',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:PreviousTrackedChange', 'text'),
+										'command': '.uno:PreviousTrackedChange'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-TrackChanges2',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB84',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LineB38',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:AcceptTrackedChange', 'text'),
+										'command': '.uno:AcceptTrackedChange'
+									}
+								]
+							},
+							{
+								'id': 'LineA38',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:RejectTrackedChange', 'text'),
+										'command': '.uno:RejectTrackedChange'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-TrackChanges3',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB95',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LineB42',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:AcceptTrackedChangeToNext', 'text'),
+										'command': '.uno:AcceptTrackedChangeToNext'
+									}
+								]
+							},
+							{
+								'id': 'LineA42',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:RejectTrackedChangeToNext', 'text'),
+										'command': '.uno:RejectTrackedChangeToNext'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-TrackChanges4',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB65',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LineB27',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:AcceptAllTrackedChanges', 'text'),
+										'command': '.uno:AcceptAllTrackedChanges'
+									}
+								]
+							},
+							{
+								'id': 'LineA26',
+								'type': 'toolbox',
+			
+			
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:RejectAllTrackedChanges', 'text'),
+										'command': '.uno:RejectAllTrackedChanges'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Review-Section-Document',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator24',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom82',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ProtectTraceChangeMode', 'text'),
+								'command': '.uno:ProtectTraceChangeMode'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+		];
+
+		return this.getNotebookbar([this.getTabPage('Review', content)], '-7');
 	},
 
 	getNotebookbar: function(tabPages, selectedPage) {
