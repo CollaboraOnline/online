@@ -10,6 +10,7 @@ L.Control.Notebookbar = L.Control.extend({
 	_showNotebookbar: false,
 	/// do we use cached JSON or already received something from the core
 	_isLoaded: false,
+	container: null,
 
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
@@ -24,6 +25,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('contextchange', this.onContextChange, this);
 		this.map.on('notebookbar', this.onNotebookbar, this);
 		this.map.on('updatepermission', this.onUpdatePermission, this);
+		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
@@ -53,7 +55,35 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.off('contextchange', this.onContextChange, this);
 		this.map.off('updatepermission', this.onUpdatePermission, this);
 		this.map.off('notebookbar');
+		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.clearNotebookbar();
+	},
+
+	onJSUpdate: function (e) {
+		var data = e.data;
+
+		if (data.jsontype !== 'notebookbar')
+			return;
+
+		if (!this.container)
+			return;
+
+		var control = this.container.querySelector('#' + data.control.id);
+		if (!control)
+			return;
+
+		var parent = control.parentNode;
+		if (!parent)
+			return;
+
+		control.style.visibility = 'hidden';
+		var builder = new L.control.notebookbarBuilder({windowId: data.id,
+			mobileWizard: this,
+			map: this.map,
+			cssClass: 'notebookbar'});
+
+		builder.build(parent, [data.control], false);
+		L.DomUtil.remove(control);
 	},
 
 	onUpdatePermission: function(e) {
@@ -108,9 +138,9 @@ L.Control.Notebookbar = L.Control.extend({
 		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
 
 		var parent = $('#toolbar-up').get(0);
-		var container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', parent);
+		this.container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', parent);
 
-		builder.build(container, [tabJSON]);
+		builder.build(this.container, [tabJSON]);
 
 		if (this._showNotebookbar === false)
 			this.hideTabs();
