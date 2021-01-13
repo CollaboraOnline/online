@@ -10,13 +10,16 @@ L.Control.Notebookbar = L.Control.extend({
 	_showNotebookbar: false,
 	/// do we use cached JSON or already received something from the core
 	_isLoaded: false,
+
 	container: null,
+	builder: null,
 
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
 		this.map = map;
 		this._currentScrollPosition = 0;
 
+		this.builder = new L.control.notebookbarBuilder({mobileWizard: this, map: map, cssClass: 'notebookbar'});
 		this.loadTab(this.getHomeTab());
 
 		this.createScrollButtons();
@@ -76,13 +79,12 @@ L.Control.Notebookbar = L.Control.extend({
 		if (!parent)
 			return;
 
-		control.style.visibility = 'hidden';
-		var builder = new L.control.notebookbarBuilder({windowId: data.id,
-			mobileWizard: this,
-			map: this.map,
-			cssClass: 'notebookbar'});
+		if (!this.builder)
+			return;
 
-		builder.build(parent, [data.control], false);
+		control.style.visibility = 'hidden';
+
+		this.builder.build(parent, [data.control], false);
 		L.DomUtil.remove(control);
 	},
 
@@ -98,6 +100,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 	onNotebookbar: function(data) {
 		this._isLoaded = true;
+		// setup id for events
+		this.builder.setWindowId(data.id);
 		this.loadTab(data);
 	},
 
@@ -135,12 +139,11 @@ L.Control.Notebookbar = L.Control.extend({
 
 	loadTab: function(tabJSON) {
 		this.clearNotebookbar();
-		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
 
 		var parent = $('#toolbar-up').get(0);
 		this.container = L.DomUtil.create('div', 'notebookbar-scroll-wrapper', parent);
 
-		builder.build(this.container, [tabJSON]);
+		this.builder.build(this.container, [tabJSON]);
 
 		if (this._showNotebookbar === false)
 			this.hideTabs();
@@ -201,8 +204,7 @@ L.Control.Notebookbar = L.Control.extend({
 	createShortcutsBar: function() {
 		var shortcutsBar = L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
 		$('#main-menu').after(shortcutsBar);
-		var builder = new L.control.notebookbarBuilder({mobileWizard: this, map: this.map, cssClass: 'notebookbar'});
-		builder.build(shortcutsBar, this.getShortcutsBarData());
+		this.builder.build(shortcutsBar, this.getShortcutsBarData());
 	},
 
 	setCurrentScrollPosition: function() {
