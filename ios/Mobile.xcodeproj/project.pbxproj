@@ -82,6 +82,33 @@
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BE017B6925AE879800244ED8 /* docfuncutil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docfuncutil.cxx; path = "../../ios-device/sc/source/ui/docshell/docfuncutil.cxx"; sourceTree = "<group>"; };
+		BE017B6A25AE879800244ED8 /* docsh4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh4.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh4.cxx"; sourceTree = "<group>"; };
+		BE017B6B25AE879800244ED8 /* editable.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editable.cxx; path = "../../ios-device/sc/source/ui/docshell/editable.cxx"; sourceTree = "<group>"; };
+		BE017B6C25AE879800244ED8 /* externalrefmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = externalrefmgr.cxx; path = "../../ios-device/sc/source/ui/docshell/externalrefmgr.cxx"; sourceTree = "<group>"; };
+		BE017B6D25AE879800244ED8 /* docsh6.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh6.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh6.cxx"; sourceTree = "<group>"; };
+		BE017B6E25AE879800244ED8 /* tpstat.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tpstat.cxx; path = "../../ios-device/sc/source/ui/docshell/tpstat.cxx"; sourceTree = "<group>"; };
+		BE017B6F25AE879800244ED8 /* dbdocimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbdocimp.cxx; path = "../../ios-device/sc/source/ui/docshell/dbdocimp.cxx"; sourceTree = "<group>"; };
+		BE017B7025AE879800244ED8 /* dbdocfun.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dbdocfun.cxx; path = "../../ios-device/sc/source/ui/docshell/dbdocfun.cxx"; sourceTree = "<group>"; };
+		BE017B7125AE879800244ED8 /* datastream.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = datastream.cxx; path = "../../ios-device/sc/source/ui/docshell/datastream.cxx"; sourceTree = "<group>"; };
+		BE017B7225AE879800244ED8 /* docsh.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh.cxx"; sourceTree = "<group>"; };
+		BE017B7325AE879800244ED8 /* sizedev.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sizedev.cxx; path = "../../ios-device/sc/source/ui/docshell/sizedev.cxx"; sourceTree = "<group>"; };
+		BE017B7425AE879800244ED8 /* impex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impex.cxx; path = "../../ios-device/sc/source/ui/docshell/impex.cxx"; sourceTree = "<group>"; };
+		BE017B7525AE879800244ED8 /* autostyl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = autostyl.cxx; path = "../../ios-device/sc/source/ui/docshell/autostyl.cxx"; sourceTree = "<group>"; };
+		BE017B7625AE879800244ED8 /* pagedata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pagedata.cxx; path = "../../ios-device/sc/source/ui/docshell/pagedata.cxx"; sourceTree = "<group>"; };
+		BE017B7725AE879800244ED8 /* olinefun.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olinefun.cxx; path = "../../ios-device/sc/source/ui/docshell/olinefun.cxx"; sourceTree = "<group>"; };
+		BE017B7825AE879800244ED8 /* tablink.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tablink.cxx; path = "../../ios-device/sc/source/ui/docshell/tablink.cxx"; sourceTree = "<group>"; };
+		BE017B7925AE879800244ED8 /* documentlinkmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = documentlinkmgr.cxx; path = "../../ios-device/sc/source/ui/docshell/documentlinkmgr.cxx"; sourceTree = "<group>"; };
+		BE017B7A25AE879900244ED8 /* docsh3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh3.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh3.cxx"; sourceTree = "<group>"; };
+		BE017B7B25AE879900244ED8 /* macromgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = macromgr.cxx; path = "../../ios-device/sc/source/ui/docshell/macromgr.cxx"; sourceTree = "<group>"; };
+		BE017B7C25AE879900244ED8 /* servobj.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = servobj.cxx; path = "../../ios-device/sc/source/ui/docshell/servobj.cxx"; sourceTree = "<group>"; };
+		BE017B7D25AE879900244ED8 /* docsh5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh5.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh5.cxx"; sourceTree = "<group>"; };
+		BE017B7E25AE879900244ED8 /* pntlock.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pntlock.cxx; path = "../../ios-device/sc/source/ui/docshell/pntlock.cxx"; sourceTree = "<group>"; };
+		BE017B7F25AE879900244ED8 /* arealink.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = arealink.cxx; path = "../../ios-device/sc/source/ui/docshell/arealink.cxx"; sourceTree = "<group>"; };
+		BE017B8025AE879900244ED8 /* docshimp.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = docshimp.hxx; path = "../../ios-device/sc/source/ui/docshell/docshimp.hxx"; sourceTree = "<group>"; };
+		BE017B8125AE879900244ED8 /* docfunc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docfunc.cxx; path = "../../ios-device/sc/source/ui/docshell/docfunc.cxx"; sourceTree = "<group>"; };
+		BE017B8225AE879900244ED8 /* docsh2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh2.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh2.cxx"; sourceTree = "<group>"; };
+		BE017B8325AE879900244ED8 /* docsh8.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh8.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh8.cxx"; sourceTree = "<group>"; };
 		BE18C7DD226DE09A001AD27E /* Branding */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Branding; path = Mobile/Branding; sourceTree = SOURCE_ROOT; };
 		BE28F880228CE04600C00C48 /* langselect.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = langselect.hxx; path = "../../ios-device/desktop/source/app/langselect.hxx"; sourceTree = "<group>"; };
 		BE28F881228CE04600C00C48 /* officeipcthread.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = officeipcthread.hxx; path = "../../ios-device/desktop/source/app/officeipcthread.hxx"; sourceTree = "<group>"; };
@@ -1462,6 +1489,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE017B6825AE876B00244ED8 /* docshell */ = {
+			isa = PBXGroup;
+			children = (
+				BE017B7F25AE879900244ED8 /* arealink.cxx */,
+				BE017B7525AE879800244ED8 /* autostyl.cxx */,
+				BE017B7125AE879800244ED8 /* datastream.cxx */,
+				BE017B7025AE879800244ED8 /* dbdocfun.cxx */,
+				BE017B6F25AE879800244ED8 /* dbdocimp.cxx */,
+				BE017B8125AE879900244ED8 /* docfunc.cxx */,
+				BE017B6925AE879800244ED8 /* docfuncutil.cxx */,
+				BE017B7225AE879800244ED8 /* docsh.cxx */,
+				BE017B8225AE879900244ED8 /* docsh2.cxx */,
+				BE017B7A25AE879900244ED8 /* docsh3.cxx */,
+				BE017B6A25AE879800244ED8 /* docsh4.cxx */,
+				BE017B7D25AE879900244ED8 /* docsh5.cxx */,
+				BE017B6D25AE879800244ED8 /* docsh6.cxx */,
+				BE017B8325AE879900244ED8 /* docsh8.cxx */,
+				BE017B8025AE879900244ED8 /* docshimp.hxx */,
+				BE017B7925AE879800244ED8 /* documentlinkmgr.cxx */,
+				BE017B6B25AE879800244ED8 /* editable.cxx */,
+				BE017B6C25AE879800244ED8 /* externalrefmgr.cxx */,
+				BE017B7425AE879800244ED8 /* impex.cxx */,
+				BE017B7B25AE879900244ED8 /* macromgr.cxx */,
+				BE017B7725AE879800244ED8 /* olinefun.cxx */,
+				BE017B7625AE879800244ED8 /* pagedata.cxx */,
+				BE017B7E25AE879900244ED8 /* pntlock.cxx */,
+				BE017B7C25AE879900244ED8 /* servobj.cxx */,
+				BE017B7325AE879800244ED8 /* sizedev.cxx */,
+				BE017B7825AE879800244ED8 /* tablink.cxx */,
+				BE017B6E25AE879800244ED8 /* tpstat.cxx */,
+			);
+			name = docshell;
+			sourceTree = "<group>";
+		};
 		BE28F87F228CE02500C00C48 /* app */ = {
 			isa = PBXGroup;
 			children = (
@@ -1712,6 +1773,7 @@
 		BE34D18B2190715400815297 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				BE017B6825AE876B00244ED8 /* docshell */,
 				BE34D18A2190713900815297 /* dbgui */,
 				BE34D1AC2190769E00815297 /* view */,
 			);
