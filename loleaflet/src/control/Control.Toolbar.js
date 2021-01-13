@@ -788,10 +788,8 @@ function onWopiProps(e) {
 	}
 }
 
-function onCommandStateChanged(e) {
+function processStateChangedCommand(commandName, state) {
 	var toolbar = w2ui['editbar'];
-	var commandName = e.commandName;
-	var state = e.state;
 	var color, div;
 
 	if (!commandName)
@@ -802,7 +800,7 @@ function onCommandStateChanged(e) {
 	}
 	else if (commandName === '.uno:FontColor' || commandName === '.uno:Color') {
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
-		color = parseInt(e.state);
+		color = parseInt(state);
 		if (color === -1) {
 			color = 'transparent';
 		}
@@ -821,7 +819,7 @@ function onCommandStateChanged(e) {
 	}
 	else if (commandName === '.uno:BackColor' || commandName === '.uno:BackgroundColor' || commandName === '.uno:CharBackColor') {
 		// confusingly, the .uno: command is named differently in Writer, Calc and Impress
-		color = parseInt(e.state);
+		color = parseInt(state);
 		if (color === -1) {
 			color = 'transparent';
 		}
@@ -852,7 +850,7 @@ function onCommandStateChanged(e) {
 		w2ui['editbar'].set('languagecode', {text: code});
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
-		if (e.state === 'true') {
+		if (state === 'true') {
 			w2ui['editbar'].set('save', {img:'savemodified'});
 		}
 		else {
@@ -905,6 +903,10 @@ function onCommandStateChanged(e) {
 			toolbarUp.disable(id);
 		}
 	}
+}
+
+function onCommandStateChanged(e) {
+	processStateChangedCommand(e.commandName, e.state);
 }
 
 function onUpdateParts(e) {
@@ -1127,5 +1129,6 @@ global.setupSearchInput = setupSearchInput;
 global.getUNOCommand = getUNOCommand;
 global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
+global.processStateChangedCommand = processStateChangedCommand;
 
 }(window));

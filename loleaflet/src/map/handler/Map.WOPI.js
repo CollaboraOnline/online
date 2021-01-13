@@ -490,6 +490,11 @@ L.Map.WOPI = L.Handler.extend({
 				this._map._socket.sendMessage('removesession ' + msg.Values.ViewId);
 			}
 		}
+		else if (msg.MessageId === 'Action_ChangeUIMode') {
+			if (msg.Values && msg.Values.Mode !== null && msg.Values.Mode !== undefined) {
+				this._map.fire('changeuimode', {mode: msg.Values.Mode, force: false});
+			}
+		}
 	},
 
 	_postMessage: function(e) {

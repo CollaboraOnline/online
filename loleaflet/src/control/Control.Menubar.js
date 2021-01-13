@@ -969,6 +969,12 @@ L.Control.Menubar = L.Control.extend({
 		this._initialized = false;
 		this._hiddenItems = [];
 		this._menubarCont = L.DomUtil.get('main-menu');
+		// In case it contains garbage
+		if (this._menubarCont)
+			this._menubarCont.remove();
+		// Use original template as provided by server
+		this._menubarCont = map.mainMenuTemplate.cloneNode(true);
+		$('#main-menu-state').after(this._menubarCont);
 		this._initializeMenu(this.options.initial);
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
@@ -976,6 +982,17 @@ L.Control.Menubar = L.Control.extend({
 		map.on('addmenu', this._addMenu, this);
 		map.on('commandvalues', this._onInitLanguagesMenu, this);
 		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
+	},
+
+	onRemove: function() {
+		this._map.off('doclayerinit', this._onDocLayerInit, this);
+		this._map.off('updatepermission', this._onRefresh, this);
+		this._map.off('addmenu', this._addMenu, this);
+		this._map.off('commandvalues', this._onInitLanguagesMenu, this);
+		this._map.off('updatetoolbarcommandvalues', this._onStyleMenu, this);
+
+		this._menubarCont.remove();
+		this._menubarCont = null;
 	},
 
 	_addMenu: function (e) {
@@ -1537,7 +1554,7 @@ L.Control.Menubar = L.Control.extend({
 			self._executeAction(item);
 		}
 
-		if (!window.mode.isMobile() && $(item).data('id') !== 'insertcomment')
+		if (!window.mode.isMobile() && $(item).data('id') !== 'insertcomment' && self && self._map)
 			self._map.focus();
 	},
 
