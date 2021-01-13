@@ -1908,9 +1908,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_drawingAreaControl: function(parentContainer, data, builder) {
 		if (data.image) {
 			var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-drawing-area-container', parentContainer);
+			container.id = data.id;
+
 			var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-drawing-area', container);
 			image.src = data.image.replace('\\', '');
-			image.id = data.id;
 			image.alt = data.text;
 			image.title = data.text;
 			if (!window.ThisIsAMobileApp)
@@ -1926,8 +1927,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				span.innerText = data.text;
 			}
 
-			$(image).click(function () {
-				builder.callback('drawingarea', 'click', image, null, builder);
+			$(container).click(function () {
+				builder.callback('drawingarea', 'click', container, null, builder);
 			});
 		}
 		return false;
