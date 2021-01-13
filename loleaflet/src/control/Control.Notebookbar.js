@@ -102,7 +102,6 @@ L.Control.Notebookbar = L.Control.extend({
 		this._isLoaded = true;
 		// setup id for events
 		this.builder.setWindowId(data.id);
-		this.loadTab(data);
 	},
 
 	showTabs: function() {
