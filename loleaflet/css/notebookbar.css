@@ -327,6 +327,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	color: var(--blue1-txt-primary-color) !important;
 }
 
+.unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox), .mobile-wizard-widebutton.disabled {
+	opacity: 0.65;
+}
+
 .unotoolbutton.notebookbar.disabled img, .mobile-wizard-widebutton.disabled img {
 	-webkit-filter: grayscale(100%) brightness(100%);
 	filter: grayscale(100%) brightness(100%);
