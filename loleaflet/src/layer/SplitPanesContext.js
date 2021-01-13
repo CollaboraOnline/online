@@ -198,11 +198,19 @@ L.SplitPanesContext = L.Class.extend({
 			));
 		}
 
-		// bottom-right/bottom-half/right-half pane or the full pane (when there are no split-panes active)
-		boundList.push(new L.Bounds(
-			topLeft.add(this._splitPos).add(new L.Point(1, 1)),
-			bottomRight
-		));
+		if (!boundList.length) {
+			// the full pane (when there are no split-panes active)
+			boundList.push(new L.Bounds(
+				topLeft,
+				bottomRight
+			));
+		} else {
+			// bottom-right/bottom-half/right-half pane
+			boundList.push(new L.Bounds(
+				topLeft.add(this._splitPos).add(new L.Point(1, 1)),
+				bottomRight
+			));
+		}
 
 		return boundList;
 	},
