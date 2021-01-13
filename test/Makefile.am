@@ -89,6 +89,7 @@ unittest_SOURCES = \
     ../common/Unit.cpp \
     ../common/StringVector.cpp \
     ../net/Socket.cpp \
+    ../net/NetUtil.cpp \
     ../wsd/Auth.cpp \
     ../wsd/TestStubs.cpp \
     test.cpp
