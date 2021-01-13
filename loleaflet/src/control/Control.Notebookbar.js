@@ -8,8 +8,6 @@ L.Control.Notebookbar = L.Control.extend({
 
 	_currentScrollPosition: 0,
 	_showNotebookbar: false,
-	/// do we use cached JSON or already received something from the core
-	_isLoaded: false,
 
 	container: null,
 	builder: null,
@@ -20,6 +18,13 @@ L.Control.Notebookbar = L.Control.extend({
 		this._currentScrollPosition = 0;
 
 		this.builder = new L.control.notebookbarBuilder({mobileWizard: this, map: map, cssClass: 'notebookbar'});
+		var toolbar = L.DomUtil.get('toolbar-up');
+		// In case it contains garbage
+		if (toolbar)
+			toolbar.remove();
+		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
+		toolbar = $('#toolbar-up');
+
 		this.loadTab(this.getHomeTab());
 
 		this.createScrollButtons();
@@ -43,9 +48,10 @@ L.Control.Notebookbar = L.Control.extend({
 
 		var that = this;
 		var retryNotebookbarInit = function() {
-			if (!that._isLoaded) {
+			if (!that.map._isNotebookbarLoadedOnCore) {
 				console.error('notebookbar is not initialized, retrying');
 				that.map.sendUnoCommand('.uno:Notebookbar?File:string=notebookbar.ui');
+				that.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar.ui');
 				that.retry = setTimeout(retryNotebookbarInit, 10000);
 			}
 		};
@@ -59,6 +65,11 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.off('updatepermission', this.onUpdatePermission, this);
 		this.map.off('notebookbar');
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
+		$('.main-nav #document-header').remove();
+		$('.main-nav').removeClass('hasnotebookbar');
+		$('#toolbar-wrapper').removeClass('hasnotebookbar');
+		$('.main-nav').removeClass(this._map.getDocType() + '-color-indicator');
+		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
 	},
 
@@ -107,7 +118,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onNotebookbar: function(data) {
-		this._isLoaded = true;
+		this.map._isNotebookbarLoadedOnCore = true;
 		// setup id for events
 		this.builder.setWindowId(data.id);
 		this.loadTab(data);
@@ -211,7 +222,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 	createShortcutsBar: function() {
 		var shortcutsBar = L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
-		$('#main-menu').after(shortcutsBar);
+		$('#main-menu-state').after(shortcutsBar);
 		this.builder.build(shortcutsBar, this.getShortcutsBarData());
 	},
 
