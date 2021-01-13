@@ -41,6 +41,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_currentDepth: 0,
 
+	setWindowId: function (id) {
+		this.options.windowId = id;
+	},
+
 	_setup: function(options) {
 		this._clearColorPickers();
 		this.wizard = options.mobileWizard;
@@ -173,8 +177,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
 			var windowId = builder.options.windowId !== null && builder.options.windowId !== undefined ? builder.options.windowId :
 								(window.mobileDialogId !== undefined ? window.mobileDialogId :
-								(window.notebookbarId !== undefined ? window.notebookbarId :
-								(window.sidebarId !== undefined ? window.sidebarId : -1)));
+								(window.sidebarId !== undefined ? window.sidebarId : -1));
 			var message = 'dialogevent ' + windowId
 					+ ' {\"id\":\"' + object.id
 				+ '\", \"cmd\": \"' + eventType

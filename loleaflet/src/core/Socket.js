@@ -1093,10 +1093,10 @@ L.Socket = L.Class.extend({
 			this._map.fire('autofilterdropdown', msgData);
 		} else if (msgData.jsontype === 'dialog') {
 			this._map.fire('jsdialog', {data: msgData});
-		} else if (msgData.jsontype === 'notebookbar' || msgData.type === 'borderwindow') {
-			window.notebookbarId = msgData.id;
+		} else if (msgData.jsontype === 'notebookbar') {
 			for (var i = 0; i < msgData.children.length; i++) {
 				if (msgData.children[i].type === 'control') {
+					msgData.children[i].id = msgData.id;
 					this._map.fire('notebookbar', msgData.children[i]);
 					return;
 				}
