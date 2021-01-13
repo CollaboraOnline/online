@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Trigger hamburger menu options.', function() {
 	var testFileName = '';
@@ -485,7 +484,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu_sort.ods');
 
 		// Sort the first column's data
-		calcMobileHelper.selectFirstColumn();
+		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Sort Ascending']);
 
@@ -508,7 +507,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu_sort.ods');
 
 		// Sort the first column's data
-		calcMobileHelper.selectFirstColumn();
+		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Sort Descending']);
 
@@ -541,7 +540,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('be.greaterThan', 0);
 
 		// Group first
-		calcMobileHelper.selectFirstColumn();
+		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
@@ -579,7 +578,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('be.greaterThan', 0);
 
 		// Group first
-		calcMobileHelper.selectFirstColumn();
+		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
@@ -617,7 +616,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('be.greaterThan', 0);
 
 		// Group first
-		calcMobileHelper.selectFirstColumn();
+		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
