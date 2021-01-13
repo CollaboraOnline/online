@@ -7,12 +7,14 @@
 
 #include <config.h>
 
+#include "NetUtil.hpp"
 #include "Socket.hpp"
 
 #include <cstring>
 #include <ctype.h>
 #include <iomanip>
 #include <stdio.h>
+#include <string>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -372,18 +374,7 @@ void SocketPoll::insertNewWebSocketSync(
     const Poco::URI &uri,
     const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler)
 {
-    LOG_INF("Connecting to " << uri.getHost() << " : " << uri.getPort() << " : " << uri.getPath());
-
-    // FIXME: put this in a ClientSocket class ?
-    // FIXME: store the address there - and ... (so on) ...
-    struct addrinfo* ainfo = nullptr;
-    struct addrinfo hints;
-    std::memset(&hints, 0, sizeof(hints));
-    int rc = getaddrinfo(uri.getHost().c_str(),
-                         std::to_string(uri.getPort()).c_str(),
-                         &hints, &ainfo);
-    std::string canonicalName;
-    bool isSSL = uri.getScheme() != "ws";
+    const bool isSSL = uri.getScheme() != "ws";
 #if !ENABLE_SSL
     if (isSSL)
     {
@@ -392,53 +383,14 @@ void SocketPoll::insertNewWebSocketSync(
     }
 #endif
 
-    if (!rc && ainfo)
+    std::shared_ptr<StreamSocket> socket
+        = net::connect(uri.getHost(), std::to_string(uri.getPort()), isSSL, websocketHandler);
+    if (socket)
     {
-        for (struct addrinfo* ai = ainfo; ai; ai = ai->ai_next)
-        {
-            if (ai->ai_canonname)
-                canonicalName = ai->ai_canonname;
-
-            if (ai->ai_addrlen && ai->ai_addr)
-            {
-                int fd = socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK, 0);
-                int res = connect(fd, ai->ai_addr, ai->ai_addrlen);
-                if (fd < 0 || (res < 0 && errno != EINPROGRESS))
-                {
-                    LOG_ERR("Failed to connect to " << uri.getHost());
-                    ::close(fd);
-                }
-                else
-                {
-                    std::shared_ptr<StreamSocket> socket;
-#if ENABLE_SSL
-                    if (isSSL)
-                        socket = StreamSocket::create<SslStreamSocket>(fd, true, websocketHandler);
-#endif
-                    if (!socket && !isSSL)
-                        socket = StreamSocket::create<StreamSocket>(fd, true, websocketHandler);
-
-                    if (socket)
-                    {
-                        LOG_DBG("Connected to client websocket " << uri.getHost() << " #" << socket->getFD());
-                        clientRequestWebsocketUpgrade(socket, websocketHandler, uri.getPathAndQuery());
-                        insertNewSocket(socket);
-                    }
-                    else
-                    {
-                        LOG_ERR("Failed to allocate socket for client websocket " << uri.getHost());
-                        ::close(fd);
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        freeaddrinfo(ainfo);
+        LOG_DBG("Connected to client websocket " << uri.getHost() << " #" << socket->getFD());
+        clientRequestWebsocketUpgrade(socket, websocketHandler, uri.getPathAndQuery());
+        insertNewSocket(socket);
     }
-    else
-        LOG_ERR("Failed to lookup client websocket host '" << uri.getHost() << "' skipping");
 }
 
 // should this be a static method in the WebsocketHandler(?)
