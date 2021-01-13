@@ -528,7 +528,6 @@ public:
         _isDocPasswordProtected(false),
         _docPasswordType(PasswordType::ToView),
         _stop(false),
-        _isLoading(0),
         _editorId(-1),
         _editorChangeWarning(false),
         _mobileAppDocId(mobileAppDocId),
@@ -932,8 +931,7 @@ private:
                 const std::string& docTemplate) override
     {
         LOG_INF("Loading url [" << uriAnonym << "] for session [" << sessionId <<
-                "] which has " << (_sessions.size() - 1) <<
-                " sessions. Another load in progress: " << _isLoading);
+                "] which has " << (_sessions.size() - 1) << " sessions.");
 
         // This shouldn't happen, but for sanity.
         const auto it = _sessions.find(sessionId);
@@ -944,15 +942,6 @@ private:
         }
 
         std::shared_ptr<ChildSession> session = it->second;
-
-        ++_isLoading;
-
-        Util::ScopeGuard g([this]() {
-            // Not loading.
-            --_isLoading;
-            _cvLoading.notify_one();
-        });
-
         try
         {
             if (!load(session, renderOpts, docTemplate))
@@ -1631,7 +1620,6 @@ public:
     {
         oss << "Kit Document:\n"
             << "\n\tstop: " << _stop
-            << "\n\tisLoading: " << _isLoading
             << "\n\tjailId: " << _jailId
             << "\n\tdocKey: " << _docKey
             << "\n\tdocId: " << _docId
@@ -1698,7 +1686,6 @@ private:
     ThreadPool _pngPool;
 
     std::condition_variable _cvLoading;
-    std::atomic_size_t _isLoading;
     int _editorId;
     bool _editorChangeWarning;
     std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
