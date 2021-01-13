@@ -440,10 +440,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-left: -12px;
 }
 
-#table-stylescontainer #style1,
-#table-stylescontainer #style2,
-#table-stylescontainer #style3,
-#table-stylescontainer #style4
+#table-stylescontainer #style1 img,
+#table-stylescontainer #style2 img,
+#table-stylescontainer #style3 img,
+#table-stylescontainer #style4 img
 {
 	border: 1px dashed lightgray;
 	cursor: pointer;
@@ -453,10 +453,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	border-right: 1px dashed transparent;
 }
 
-#table-stylescontainer #style1:hover,
-#table-stylescontainer #style2:hover,
-#table-stylescontainer #style3:hover,
-#table-stylescontainer #style4:hover
+#table-stylescontainer #style1 img:hover,
+#table-stylescontainer #style2 img:hover,
+#table-stylescontainer #style3 img:hover,
+#table-stylescontainer #style4 img:hover
 {
 	border: 1px solid lightgray;
 }
@@ -730,23 +730,23 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	text-align: center;
 }
 
-#style1 ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
+#style1 img ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
 	font-family: Liberation Serif;
 	font-size: 12pt;
 }
 
-#style2 ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
+#style2 img ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
 	font-family: Liberation Serif;
 	font-size: 12pt;
 }
 
-#style3 ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
+#style3 img ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
 	font-family: Liberation Sans;
 	font-size: 28pt;
 	font-weight: bold;
 }
 
-#style4 ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
+#style4 img ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
 	font-family: Liberation Sans;
 	font-size: 18pt;
 }
