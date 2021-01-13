@@ -694,7 +694,8 @@ L.GridLayer = L.Layer.extend({
 			// this._cellCursorXY = new L.Point(-1, -1);
 			// this._prevCellCursorXY = new L.Point(0, 0);
 		}
-		this._initPreFetchPartTiles();
+		if (this._docType === 'presentation' || this._docType === 'drawing')
+			this._initPreFetchPartTiles();
 	},
 
 	_requestNewTiles: function () {
@@ -1008,7 +1009,8 @@ L.GridLayer = L.Layer.extend({
 			}
 			this._sendTileCombineRequest(coords.part, tilePositionsX, tilePositionsY);
 		}
-		this._initPreFetchPartTiles();
+		if (this._docType === 'presentation' || this._docType === 'drawing')
+			this._initPreFetchPartTiles();
 	},
 
 	_tileReady: function (coords, err, tile) {
