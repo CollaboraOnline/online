@@ -185,7 +185,7 @@ L.TileSectionManager = L.Class.extend({
 		if (this._layer._debug)
 		{
 			canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-			canvasCtx.strokeRect(tile.coords.x, tile.coords.y, 256, 256);
+			canvasCtx.strokeRect(tile.coords.x - paneBounds.min.x, tile.coords.y - paneBounds.min.y, 256, 256);
 		}
 	},
 
