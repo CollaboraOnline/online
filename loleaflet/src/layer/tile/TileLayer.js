@@ -1288,8 +1288,10 @@ L.TileLayer = L.GridLayer.extend({
 	_showURLPopUp: function(position, url) {
 		// # for internal links
 		if (!url.startsWith('#')) {
+			var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up');
+			link.innerText = url;
 			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
-			.setContent('<a id="hyperlink-pop-up">' + url + '</a>')
+			.setContent(link.outerHTML)
 			.setLatLng(position)
 			.openOn(this._map);
 			var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
