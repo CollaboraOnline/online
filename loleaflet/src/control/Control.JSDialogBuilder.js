@@ -1704,6 +1704,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
 			});
+
+			$(text).dblclick(function() {
+				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
+				$(span).addClass('selected');
+
+				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+			});
 		}
 	},
 
