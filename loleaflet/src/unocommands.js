@@ -2,6 +2,7 @@
 
 var unoCommandsArray = {
 	'AcceptAllTrackedChanges':{text:{context:_('Accept All Changes'),menu:_('Accept All'),},},
+	'AcceptChanges':{spreadsheet:{context:_('Manage Track Changes'),menu:_('~Manage...'),},},
 	'AcceptTrackedChange':{text:{context:_('Accept Change'),menu:_('Accept'),},},
 	'AcceptTrackedChangeToNext':{text:{context:_('Accept Track Change and select the next one'),menu:_('Accept and Move to Next'),},},
 	'AcceptTrackedChanges':{text:{menu:_('~Manage...'),},},
@@ -461,6 +462,7 @@ var unoCommandsArray = {
 	'TitlePageDialog':{text:{menu:_('Title Page...'),},},
 	'ToggleMergeCells':{spreadsheet:{menu:_('M~erge and Center Cells'),},},
 	'ToolsMenu':{global:{menu:_('~Tools'),},},
+	'TraceChangeMode':{spreadsheet:{context:_('Record Track Changes'),menu:_('~Record'),},},
 	'TrackChanges':{text:{context:_('Record Track Changes'),menu:_('~Record'),},},
 	'TransformDialog':{global:{menu:_('Position and Si~ze...'),},},
 	'Underline':{global:{menu:_('Underline'),},},
