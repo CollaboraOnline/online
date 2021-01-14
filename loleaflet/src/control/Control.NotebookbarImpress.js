@@ -89,8 +89,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'text': _('~Home'),
-				'id': '2',
-				'name': 'HomeLabel',
+				'id': '-6',
+				'name': 'Home',
 				'context': 'default|DrawText'
 			},
 			{
@@ -130,6 +130,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
 	selectedTab: function(tabName) {
 		switch (tabName) {
+		case 'Home':
+			this.loadTab(this.getHomeTab());
+			break;
+
 		case 'File':
 			this.loadTab(this.getFileTab());
 			break;
@@ -399,1385 +403,1129 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	},
 
 	getHomeTab: function() {
-		return {
-			'id': '',
-			'type': 'control',
-			'text': '',
-			'enabled': 'true',
-			'children': [
-				{
-					'id': '',
-					'type': 'container',
-					'text': '',
-					'enabled': 'true',
-					'children': [
-						{
-							'id': 'NotebookBar',
-							'type': 'container',
-							'text': '',
-							'enabled': 'true',
-							'children': [
-								{
-									'id': 'box1',
-									'type': 'container',
-									'text': '',
-									'enabled': 'true',
-									'children': [
-										{
-											'id': 'ContextContainer',
-											'type': 'tabcontrol',
-											'text': '',
-											'enabled': 'true',
-											'children': [
-												{
-													'id': '',
-													'type': 'pushbutton',
-													'text': '',
-													'enabled': 'true'
-												},
-												{
-													'id': '',
-													'type': 'toolbox',
-													'text': '',
-													'enabled': 'true',
-													'children': [
-														{
-															'type': 'toolitem',
-															'text': 'Menubar',
-															'command': '.uno:Menubar'
-														},
-														{
-															'type': 'toolitem',
-															'text': 'Open',
-															'command': '.uno:Open'
-														},
-														{
-															'type': 'toolitem',
-															'text': 'Save',
-															'command': '.uno:Save'
-														},
-														{
-															'type': 'toolitem',
-															'text': 'Undo',
-															'command': '.uno:Undo'
-														},
-														{
-															'type': 'toolitem',
-															'text': 'Redo',
-															'command': '.uno:Redo'
-														},
-														{
-															'type': 'toolitem',
-															'text': 'Start from First Slide',
-															'command': '.uno:Presentation'
-														}
-													]
-												},
-												{
-													'id': '',
-													'type': 'tabpage',
-													'text': '',
-													'enabled': 'true',
-													'children': [
-														{
-															'id': 'Home Tab',
-															'type': 'container',
-															'text': '',
-															'enabled': 'true',
-															'children': [
-																{
-																	'id': 'Home',
-																	'type': 'container',
-																	'text': '',
-																	'enabled': 'true',
-																	'children': [
-																		{
-																			'id': 'Home-Section-Clipboard',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'SectionBottom87',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'toolitem',
-																							'text': 'Paste',
-																							'command': '.uno:Paste'
-																						}
-																					]
-																				},
-																				{
-																					'id': 'GroupB9',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'LineA6',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Cut',
-																									'command': '.uno:Cut'
-																								}
-																							]
-																						},
-																						{
-																							'id': 'LineB7',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Copy',
-																									'command': '.uno:Copy'
-																								}
-																							]
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-Slide',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'separator107',
-																					'type': 'fixedline',
-																					'text': '',
-																					'enabled': 'true'
-																				},
-																				{
-																					'id': 'GroupB20',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'LineA8',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'New Page',
-																									'command': '.uno:InsertPage'
-																								}
-																							]
-																						},
-																						{
-																							'id': 'LineB9',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Duplicate Page',
-																									'command': '.uno:DuplicatePage'
-																								},
-																								{
-																									'type': 'toolitem',
-																									'text': 'Delete Page',
-																									'command': '.uno:DeletePage'
-																								},
-																								{
-																									'type': 'toolitem',
-																									'text': 'Slide Layout',
-																									'command': '.uno:AssignLayout'
-																								}
-																							]
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-Style',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'separator7',
-																					'type': 'fixedline',
-																					'text': '',
-																					'enabled': 'true'
-																				},
-																				{
-																					'id': 'GroupB13',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'LineA7',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Clone',
-																									'command': '.uno:FormatPaintbrush'
-																								}
-																							]
-																						},
-																						{
-																							'id': 'LineB8',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Clear',
-																									'command': '.uno:SetDefault'
-																								}
-																							]
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-Format',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'GroupB10',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'box76',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'font',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'id': '',
-																											'type': 'borderwindow',
-																											'text': '',
-																											'enabled': 'true',
-																											'children': [
-																												{
-																													'id': 'fontnamecombobox',
-																													'type': 'combobox',
-																													'text': 'Carlito',
-																													'enabled': 'true',
-																													'children': [
-																														{
-																															'id': '',
-																															'type': 'pushbutton',
-																															'text': '',
-																															'enabled': 'true'
-																														},
-																														{
-																															'id': '',
-																															'type': 'edit',
-																															'text': 'Carlito',
-																															'enabled': 'true'
-																														}
-																													],
-																													'entries': [
-																														'Alef',
-																														'Amiri',
-																														'Amiri Quran',
-																														'Baekmuk Batang',
-																														'Baekmuk Dotum',
-																														'Baekmuk Gulim',
-																														'Baekmuk Headline',
-																														'Bandal',
-																														'Bangwool',
-																														'Caladea',
-																														'Cantarell',
-																														'Carlito',
-																														'David CLM',
-																														'David Libre',
-																														'DejaVu Math TeX Gyre',
-																														'DejaVu Sans',
-																														'DejaVu Sans Condensed',
-																														'DejaVu Sans Light',
-																														'DejaVu Sans Mono',
-																														'DejaVu Serif',
-																														'DejaVu Serif Condensed',
-																														'Droid Arabic Kufi',
-																														'Droid Arabic Naskh',
-																														'Droid Naskh Shift Alt',
-																														'Droid Sans',
-																														'Droid Sans Armenian',
-																														'Droid Sans Devanagari',
-																														'Droid Sans Ethiopic',
-																														'Droid Sans Fallback',
-																														'Droid Sans Georgian',
-																														'Droid Sans Hebrew',
-																														'Droid Sans Japanese',
-																														'Droid Sans Mono',
-																														'Droid Sans Tamil',
-																														'Droid Sans Thai',
-																														'Droid Serif',
-																														'East Syriac Adiabene',
-																														'East Syriac Ctesiphon',
-																														'EmojiOne Color',
-																														'Estrangelo Antioch',
-																														'Estrangelo Edessa',
-																														'Estrangelo Midyat',
-																														'Estrangelo Nisibin',
-																														'Estrangelo Nisibin Outline',
-																														'Estrangelo Quenneshrin',
-																														'Estrangelo Talada',
-																														'Estrangelo TurAbdin',
-																														'Eunjin',
-																														'Eunjin Nakseo',
-																														'Frank Ruehl CLM',
-																														'Frank Ruhl Hofshi',
-																														'Gentium Basic',
-																														'Gentium Book Basic',
-																														'Goha-Tibeb Zemen',
-																														'Guseul',
-																														'KacstBook',
-																														'KacstOffice',
-																														'Karla',
-																														'Khmer OS',
-																														'Khmer OS Battambang',
-																														'Khmer OS Bokor',
-																														'Khmer OS Content',
-																														'Khmer OS Fasthand',
-																														'Khmer OS Freehand',
-																														'Khmer OS Metal Chrieng',
-																														'Khmer OS Muol',
-																														'Khmer OS Muol Light',
-																														'Khmer OS Muol Pali',
-																														'Khmer OS Siemreap',
-																														'Khmer OS System',
-																														'Liberation Mono',
-																														'Liberation Sans',
-																														'Liberation Sans Narrow',
-																														'Liberation Serif',
-																														'Linux Biolinum G',
-																														'Linux Libertine Display G',
-																														'Linux Libertine G',
-																														'LM Mono 10',
-																														'LM Mono 12',
-																														'LM Mono 8',
-																														'LM Mono 9',
-																														'LM Mono Caps 10',
-																														'LM Mono Light 10',
-																														'LM Mono Light Cond 10',
-																														'LM Mono Prop 10',
-																														'LM Mono Prop Light 10',
-																														'LM Mono Slanted 10',
-																														'LM Roman 10',
-																														'LM Roman 12',
-																														'LM Roman 17',
-																														'LM Roman 5',
-																														'LM Roman 6',
-																														'LM Roman 7',
-																														'LM Roman 8',
-																														'LM Roman 9',
-																														'LM Roman Caps 10',
-																														'LM Roman Demi 10',
-																														'LM Roman Dunhill 10',
-																														'LM Roman Slanted 10',
-																														'LM Roman Slanted 12',
-																														'LM Roman Slanted 17',
-																														'LM Roman Slanted 8',
-																														'LM Roman Slanted 9',
-																														'LM Roman Unslanted 10',
-																														'LM Sans 10',
-																														'LM Sans 12',
-																														'LM Sans 17',
-																														'LM Sans 8',
-																														'LM Sans 9',
-																														'LM Sans Demi Cond 10',
-																														'LM Sans Quot 8',
-																														'Luxi Mono',
-																														'Luxi Sans',
-																														'Luxi Serif',
-																														'Miriam CLM',
-																														'Miriam Libre',
-																														'Miriam Mono CLM',
-																														'Nachlieli CLM',
-																														'Noto Color Emoji',
-																														'Noto Kufi Arabic',
-																														'Noto Mono',
-																														'Noto Naskh Arabic',
-																														'Noto Naskh Arabic UI',
-																														'Noto Sans',
-																														'Noto Sans Arabic',
-																														'Noto Sans Arabic UI',
-																														'Noto Sans Armenian',
-																														'Noto Sans Blk',
-																														'Noto Sans Cond',
-																														'Noto Sans Cond Blk',
-																														'Noto Sans Cond ExtBd',
-																														'Noto Sans Cond ExtLt',
-																														'Noto Sans Cond Light',
-																														'Noto Sans Cond Med',
-																														'Noto Sans Cond SemBd',
-																														'Noto Sans Cond Thin',
-																														'Noto Sans ExtBd',
-																														'Noto Sans ExtCond',
-																														'Noto Sans ExtCond Blk',
-																														'Noto Sans ExtCond ExtBd',
-																														'Noto Sans ExtCond ExtLt',
-																														'Noto Sans ExtCond Light',
-																														'Noto Sans ExtCond Med',
-																														'Noto Sans ExtCond SemBd',
-																														'Noto Sans ExtCond Thin',
-																														'Noto Sans ExtLt',
-																														'Noto Sans Georgian',
-																														'Noto Sans Hebrew',
-																														'Noto Sans JP Bold',
-																														'Noto Sans JP Regular',
-																														'Noto Sans KR Bold',
-																														'Noto Sans KR Regular',
-																														'Noto Sans Lao',
-																														'Noto Sans Light',
-																														'Noto Sans Lisu',
-																														'Noto Sans Med',
-																														'Noto Sans SC Bold',
-																														'Noto Sans SC Regular',
-																														'Noto Sans SemBd',
-																														'Noto Sans SemCond',
-																														'Noto Sans SemCond Blk',
-																														'Noto Sans SemCond ExtBd',
-																														'Noto Sans SemCond ExtLt',
-																														'Noto Sans SemCond Light',
-																														'Noto Sans SemCond Med',
-																														'Noto Sans SemCond SemBd',
-																														'Noto Sans SemCond Thin',
-																														'Noto Sans TC Bold',
-																														'Noto Sans TC Regular',
-																														'Noto Sans Thin',
-																														'Noto Serif',
-																														'Noto Serif Armenian',
-																														'Noto Serif Cond',
-																														'Noto Serif Georgian',
-																														'Noto Serif Hebrew',
-																														'Noto Serif Lao',
-																														'Noto Serif Light',
-																														'Open Sans',
-																														'Open Sans Condensed',
-																														'Open Sans Condensed Light',
-																														'Open Sans Extrabold',
-																														'Open Sans Light',
-																														'Open Sans Semibold',
-																														'OpenDyslexic',
-																														'OpenSymbol',
-																														'Reem Kufi',
-																														'Roboto',
-																														'Roboto Black',
-																														'Roboto Condensed',
-																														'Roboto Condensed Light',
-																														'Roboto Light',
-																														'Roboto Medium',
-																														'Roboto Slab',
-																														'Roboto Thin',
-																														'Rubik',
-																														'Scheherazade',
-																														'Serto Batnan',
-																														'Serto Jerusalem',
-																														'Serto Jerusalem Outline',
-																														'Serto Kharput',
-																														'Serto Malankara',
-																														'Serto Mardin',
-																														'Serto Urhoy',
-																														'Source Code Pro',
-																														'Source Code Pro Black',
-																														'Source Code Pro ExtraLight',
-																														'Source Code Pro Light',
-																														'Source Code Pro Medium',
-																														'Source Code Pro Semibold',
-																														'Source Sans Pro',
-																														'Source Sans Pro Black',
-																														'Source Sans Pro ExtraLight',
-																														'Source Sans Pro Light',
-																														'Source Sans Pro Semibold',
-																														'Source Serif Pro',
-																														'Source Serif Pro Black',
-																														'Source Serif Pro ExtraLight',
-																														'Source Serif Pro Light',
-																														'Source Serif Pro Semibold',
-																														'STIXGeneral'
-																													],
-																													'selectedCount': '1',
-																													'selectedEntries': [
-																														'71'
-																													],
-																													'command': '.uno:CharFontName'
-																												}
-																											]
-																										}
-																									]
-																								},
-																								{
-																									'id': 'fontheight',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'id': 'fontsize',
-																											'type': 'combobox',
-																											'text': '18 pt',
-																											'enabled': 'true',
-																											'children': [
-																												{
-																													'id': '',
-																													'type': 'pushbutton',
-																													'text': '',
-																													'enabled': 'true'
-																												},
-																												{
-																													'id': '',
-																													'type': 'edit',
-																													'text': '18 pt',
-																													'enabled': 'true'
-																												},
-																												{
-																													'id': '',
-																													'type': 'borderwindow',
-																													'text': '',
-																													'enabled': 'true',
-																													'children': [
-																														{
-																															'id': '',
-																															'type': 'edit',
-																															'text': '',
-																															'enabled': 'true'
-																														}
-																													]
-																												}
-																											],
-																											'entries': [
-																												'6 pt',
-																												'7 pt',
-																												'8 pt',
-																												'9 pt',
-																												'10 pt',
-																												'10.5 pt',
-																												'11 pt',
-																												'12 pt',
-																												'13 pt',
-																												'14 pt',
-																												'15 pt',
-																												'16 pt',
-																												'18 pt',
-																												'20 pt',
-																												'22 pt',
-																												'24 pt',
-																												'26 pt',
-																												'28 pt',
-																												'32 pt',
-																												'36 pt',
-																												'40 pt',
-																												'44 pt',
-																												'48 pt',
-																												'54 pt',
-																												'60 pt',
-																												'66 pt',
-																												'72 pt',
-																												'80 pt',
-																												'88 pt',
-																												'96 pt'
-																											],
-																											'selectedCount': '1',
-																											'selectedEntries': [
-																												'12'
-																											],
-																											'command': '.uno:FontHeight'
-																										}
-																									]
-																								},
-																								{
-																									'id': 'ExtTop6',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Increase',
-																											'command': '.uno:Grow'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Decrease',
-																											'command': '.uno:Shrink'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						},
-																						{
-																							'id': 'GroupB11',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'ExtTop4',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Bold',
-																											'command': '.uno:Bold'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Italic',
-																											'command': '.uno:Italic'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Underline',
-																											'command': '.uno:Underline'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Strikethrough',
-																											'command': '.uno:Strikeout'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Shadow',
-																											'command': '.uno:Shadowed'
-																										}
-																									]
-																								},
-																								{
-																									'id': 'separator78',
-																									'type': 'fixedline',
-																									'text': '',
-																									'enabled': 'true'
-																								},
-																								{
-																									'id': 'ExtTop2',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Character Spacing',
-																											'command': '.uno:Spacing'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Highlight Color',
-																											'command': '.uno:CharBackColor'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Font Color',
-																											'command': '.uno:Color'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-Paragraph',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'separator102',
-																					'type': 'fixedline',
-																					'text': '',
-																					'enabled': 'true'
-																				},
-																				{
-																					'id': 'GroupB14',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'GroupB16',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'SectionBottom9',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Top',
-																											'command': '.uno:CellVertTop'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Center',
-																											'command': '.uno:CellVertCenter'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Bottom',
-																											'command': '.uno:CellVertBottom'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						},
-																						{
-																							'id': 'GroupB15',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'SectionBottom13',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Left',
-																											'command': '.uno:LeftPara'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Center',
-																											'command': '.uno:CenterPara'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Right',
-																											'command': '.uno:RightPara'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-Paragraph2',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'GroupB31',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'GroupB95',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'separator64',
-																									'type': 'fixedline',
-																									'text': '',
-																									'enabled': 'true'
-																								},
-																								{
-																									'id': 'SectionBottom98',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Bullets',
-																											'command': '.uno:DefaultBullet'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Numbering',
-																											'command': '.uno:DefaultNumbering'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						},
-																						{
-																							'id': 'GroupB97',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'SectionBottom143',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Justified',
-																											'command': '.uno:JustifyPara'
-																										}
-																									]
-																								},
-																								{
-																									'id': 'separator99',
-																									'type': 'fixedline',
-																									'text': '',
-																									'enabled': 'true'
-																								},
-																								{
-																									'id': 'SectionBottom144',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Line Spacing',
-																											'command': '.uno:LineSpacing'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-Paragraph3',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'GroupB98',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'SectionBottom145',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Increase',
-																									'command': '.uno:IncrementIndent'
-																								},
-																								{
-																									'type': 'toolitem',
-																									'text': 'Decrease',
-																									'command': '.uno:DecrementIndent'
-																								},
-																								{
-																									'type': 'toolitem',
-																									'text': 'Left-To-Right',
-																									'command': '.uno:ParaLeftToRight'
-																								}
-																							]
-																						},
-																						{
-																							'id': 'SectionBottom146',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Increase',
-																									'command': '.uno:ParaspaceIncrease'
-																								},
-																								{
-																									'type': 'toolitem',
-																									'text': 'Decrease',
-																									'command': '.uno:ParaspaceDecrease'
-																								},
-																								{
-																									'type': 'toolitem',
-																									'text': 'Right-To-Left',
-																									'command': '.uno:ParaRightToLeft'
-																								}
-																							]
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-DrawSection',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'separator69',
-																					'type': 'fixedline',
-																					'text': '',
-																					'enabled': 'true'
-																				},
-																				{
-																					'id': 'SectionBottom5',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'toolitem',
-																							'text': 'Text Box',
-																							'command': '.uno:Text'
-																						},
-																						{
-																							'type': 'toolitem',
-																							'text': 'Vertical Text',
-																							'command': '.uno:VerticalText'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-DrawSection1',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'GroupB43',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'GroupB12',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'shapes12',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Line',
-																											'command': '.uno:Line'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Curves and Polygons',
-																											'command': '.uno:LineToolbox'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						},
-																						{
-																							'id': 'GroupB38',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'shapes15',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': '',
-																											'command': '.uno:BasicShapes.rectangle'
-																										},
-																										{
-																											'type': 'toolitem',
-																											'text': 'Basic Shapes',
-																											'command': '.uno:BasicShapes'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-DrawSection2',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'GroupB92',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'GroupB93',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'shapes1',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Connectors',
-																											'command': '.uno:ConnectorToolbox'
-																										}
-																									]
-																								},
-																								{
-																									'id': 'separator95',
-																									'type': 'fixedline',
-																									'text': '',
-																									'enabled': 'true'
-																								},
-																								{
-																									'id': 'LineA28',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Line Color',
-																											'command': '.uno:XLineColor'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						},
-																						{
-																							'id': 'GroupB94',
-																							'type': 'container',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'id': 'shapes3',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Flowchart Shapes',
-																											'command': '.uno:FlowChartShapes'
-																										}
-																									]
-																								},
-																								{
-																									'id': 'separator98',
-																									'type': 'fixedline',
-																									'text': '',
-																									'enabled': 'true'
-																								},
-																								{
-																									'id': 'LineB29',
-																									'type': 'toolbox',
-																									'text': '',
-																									'enabled': 'true',
-																									'children': [
-																										{
-																											'type': 'toolitem',
-																											'text': 'Fill Color',
-																											'command': '.uno:FillColor'
-																										}
-																									]
-																								}
-																							],
-																							'vertical': 'false'
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Home-Section-Slideshow',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'separator94',
-																					'type': 'fixedline',
-																					'text': '',
-																					'enabled': 'true'
-																				},
-																				{
-																					'id': 'GroupB39',
-																					'type': 'container',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'id': 'LineA9',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Start from First Slide',
-																									'command': '.uno:Presentation'
-																								}
-																							]
-																						},
-																						{
-																							'id': 'LineB21',
-																							'type': 'toolbox',
-																							'text': '',
-																							'enabled': 'true',
-																							'children': [
-																								{
-																									'type': 'toolitem',
-																									'text': 'Start from Current Slide',
-																									'command': '.uno:PresentationCurrentSlide'
-																								}
-																							]
-																						}
-																					],
-																					'vertical': 'true'
-																				}
-																			],
-																			'vertical': 'false'
-																		}
-																	],
-																	'vertical': 'false'
-																},
-																{
-																	'id': 'separator9',
-																	'type': 'fixedline',
-																	'text': '',
-																	'enabled': 'true'
-																},
-																{
-																	'id': 'Home-Menu',
-																	'type': 'container',
-																	'text': '',
-																	'enabled': 'true',
-																	'children': [
-																		{
-																			'id': 'PasteBox1',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'Home-HomeButton:Menu Home',
-																					'type': 'menubutton',
-																					'text': '~Home',
-																					'enabled': 'true'
-																				},
-																				{
-																					'id': 'SectionBottom10',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'toolitem',
-																							'text': 'Find & Replace',
-																							'command': '.uno:SearchDialog'
-																						},
-																						{
-																							'type': 'toolitem',
-																							'text': 'Start from First Slide',
-																							'command': '.uno:Presentation'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'true'
-																		}
-																	],
-																	'vertical': 'false'
-																}
-															],
-															'vertical': 'false'
-														}
-													]
-												}
-											],
-											'tabs': [
-												{
-													'text': '~File',
-													'id': '1',
-													'name': 'FileLabel'
-												},
-												{
-													'text': '~Home',
-													'id': '2',
-													'name': 'HomeLabel'
-												},
-												{
-													'text': '~Insert',
-													'id': '3',
-													'name': 'InsertLabel'
-												},
-												{
-													'text': '~Layout',
-													'id': '4',
-													'name': 'LayoutLabel'
-												},
-												{
-													'text': '~Slide Show',
-													'id': '5',
-													'name': 'SlideShowLabel'
-												},
-												{
-													'text': '~Review',
-													'id': '6',
-													'name': 'ReviewLabel'
-												},
-												{
-													'text': '~View',
-													'id': '7',
-													'name': 'ViewLabel'
-												},
-												{
-													'text': '~Table',
-													'id': '8',
-													'name': 'TableLabel'
-												},
-												{
-													'text': 'Ima~ge',
-													'id': '9',
-													'name': 'ImageLabel'
-												},
-												{
-													'text': '~Draw',
-													'id': '10',
-													'name': 'DrawLabel'
-												},
-												{
-													'text': '~Object',
-													'id': '11',
-													'name': 'ObjectLabel'
-												},
-												{
-													'text': '~Media',
-													'id': '12',
-													'name': 'MediaLabel'
-												},
-												{
-													'text': 'Fo~rm',
-													'id': '13',
-													'name': 'FormLabel'
-												},
-												{
-													'text': '~Master',
-													'id': '14',
-													'name': 'MasterLabel'
-												},
-												{
-													'text': '~Outline',
-													'id': '15',
-													'name': 'OutlineLabel'
-												},
-												{
-													'text': '3~d',
-													'id': '16',
-													'name': '3DObjectLabel'
-												},
-												{
-													'text': 'E~xtension',
-													'id': '17',
-													'name': 'ExtensionLabel'
-												},
-												{
-													'text': '~Tools',
-													'id': '18',
-													'name': 'DevLabel'
-												}
-											],
-											'selected': '2'
-										}
-									],
-									'vertical': 'true',
-									'left': '0',
-									'top': '0'
-								}
-							]
-						}
-					],
-					'vertical': 'true'
-				}
-			]
-		};
+		var content = [
+			{
+				'id': 'Home-Section-Clipboard',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'SectionBottom87',
+						'type': 'toolbox',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Paste'),
+								'command': '.uno:Paste'
+							}
+						]
+					},
+					{
+						'id': 'GroupB9',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'LineA6',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Cut'),
+										'command': '.uno:Cut'
+									}
+								]
+							},
+							{
+								'id': 'LineB7',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Copy'),
+										'command': '.uno:Copy'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-Slide',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'separator107',
+						'type': 'fixedline',
+						'text': '',
+						'enabled': 'true'
+					},
+					{
+						'id': 'GroupB20',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'LineA8',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertPage', 'presentation'),
+										'command': '.uno:InsertPage'
+									}
+								]
+							},
+							{
+								'id': 'LineB9',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DuplicatePage', 'presentation'),
+										'command': '.uno:DuplicatePage'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeletePage', 'presentation'),
+										'command': '.uno:DeletePage'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:AssignLayout', 'presentation'),
+										'command': '.uno:AssignLayout'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-Style',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'separator7',
+						'type': 'fixedline',
+						'text': '',
+						'enabled': 'true'
+					},
+					{
+						'id': 'GroupB13',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'LineA7',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:FormatPaintbrush'),
+										'command': '.uno:FormatPaintbrush'
+									}
+								]
+							},
+							{
+								'id': 'LineB8',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:SetDefault'),
+										'command': '.uno:SetDefault'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-Format',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'GroupB10',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'box76',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'font',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': '',
+												'type': 'borderwindow',
+												'text': '',
+												'enabled': 'true',
+												'children': [
+													{
+														'id': 'fontnamecombobox',
+														'type': 'combobox',
+														'text': 'Carlito',
+														'enabled': 'true',
+														'children': [
+															{
+																'id': '',
+																'type': 'pushbutton',
+																'text': '',
+																'enabled': 'true'
+															},
+															{
+																'id': '',
+																'type': 'edit',
+																'text': 'Carlito',
+																'enabled': 'true'
+															}
+														],
+														'entries': [
+															'Alef',
+															'Amiri',
+															'Amiri Quran',
+															'Baekmuk Batang',
+															'Baekmuk Dotum',
+															'Baekmuk Gulim',
+															'Baekmuk Headline',
+															'Bandal',
+															'Bangwool',
+															'Caladea',
+															'Cantarell',
+															'Carlito',
+															'David CLM',
+															'David Libre',
+															'DejaVu Math TeX Gyre',
+															'DejaVu Sans',
+															'DejaVu Sans Condensed',
+															'DejaVu Sans Light',
+															'DejaVu Sans Mono',
+															'DejaVu Serif',
+															'DejaVu Serif Condensed',
+															'Droid Arabic Kufi',
+															'Droid Arabic Naskh',
+															'Droid Naskh Shift Alt',
+															'Droid Sans',
+															'Droid Sans Armenian',
+															'Droid Sans Devanagari',
+															'Droid Sans Ethiopic',
+															'Droid Sans Fallback',
+															'Droid Sans Georgian',
+															'Droid Sans Hebrew',
+															'Droid Sans Japanese',
+															'Droid Sans Mono',
+															'Droid Sans Tamil',
+															'Droid Sans Thai',
+															'Droid Serif',
+															'East Syriac Adiabene',
+															'East Syriac Ctesiphon',
+															'EmojiOne Color',
+															'Estrangelo Antioch',
+															'Estrangelo Edessa',
+															'Estrangelo Midyat',
+															'Estrangelo Nisibin',
+															'Estrangelo Nisibin Outline',
+															'Estrangelo Quenneshrin',
+															'Estrangelo Talada',
+															'Estrangelo TurAbdin',
+															'Eunjin',
+															'Eunjin Nakseo',
+															'Frank Ruehl CLM',
+															'Frank Ruhl Hofshi',
+															'Gentium Basic',
+															'Gentium Book Basic',
+															'Goha-Tibeb Zemen',
+															'Guseul',
+															'KacstBook',
+															'KacstOffice',
+															'Karla',
+															'Khmer OS',
+															'Khmer OS Battambang',
+															'Khmer OS Bokor',
+															'Khmer OS Content',
+															'Khmer OS Fasthand',
+															'Khmer OS Freehand',
+															'Khmer OS Metal Chrieng',
+															'Khmer OS Muol',
+															'Khmer OS Muol Light',
+															'Khmer OS Muol Pali',
+															'Khmer OS Siemreap',
+															'Khmer OS System',
+															'Liberation Mono',
+															'Liberation Sans',
+															'Liberation Sans Narrow',
+															'Liberation Serif',
+															'Linux Biolinum G',
+															'Linux Libertine Display G',
+															'Linux Libertine G',
+															'LM Mono 10',
+															'LM Mono 12',
+															'LM Mono 8',
+															'LM Mono 9',
+															'LM Mono Caps 10',
+															'LM Mono Light 10',
+															'LM Mono Light Cond 10',
+															'LM Mono Prop 10',
+															'LM Mono Prop Light 10',
+															'LM Mono Slanted 10',
+															'LM Roman 10',
+															'LM Roman 12',
+															'LM Roman 17',
+															'LM Roman 5',
+															'LM Roman 6',
+															'LM Roman 7',
+															'LM Roman 8',
+															'LM Roman 9',
+															'LM Roman Caps 10',
+															'LM Roman Demi 10',
+															'LM Roman Dunhill 10',
+															'LM Roman Slanted 10',
+															'LM Roman Slanted 12',
+															'LM Roman Slanted 17',
+															'LM Roman Slanted 8',
+															'LM Roman Slanted 9',
+															'LM Roman Unslanted 10',
+															'LM Sans 10',
+															'LM Sans 12',
+															'LM Sans 17',
+															'LM Sans 8',
+															'LM Sans 9',
+															'LM Sans Demi Cond 10',
+															'LM Sans Quot 8',
+															'Luxi Mono',
+															'Luxi Sans',
+															'Luxi Serif',
+															'Miriam CLM',
+															'Miriam Libre',
+															'Miriam Mono CLM',
+															'Nachlieli CLM',
+															'Noto Color Emoji',
+															'Noto Kufi Arabic',
+															'Noto Mono',
+															'Noto Naskh Arabic',
+															'Noto Naskh Arabic UI',
+															'Noto Sans',
+															'Noto Sans Arabic',
+															'Noto Sans Arabic UI',
+															'Noto Sans Armenian',
+															'Noto Sans Blk',
+															'Noto Sans Cond',
+															'Noto Sans Cond Blk',
+															'Noto Sans Cond ExtBd',
+															'Noto Sans Cond ExtLt',
+															'Noto Sans Cond Light',
+															'Noto Sans Cond Med',
+															'Noto Sans Cond SemBd',
+															'Noto Sans Cond Thin',
+															'Noto Sans ExtBd',
+															'Noto Sans ExtCond',
+															'Noto Sans ExtCond Blk',
+															'Noto Sans ExtCond ExtBd',
+															'Noto Sans ExtCond ExtLt',
+															'Noto Sans ExtCond Light',
+															'Noto Sans ExtCond Med',
+															'Noto Sans ExtCond SemBd',
+															'Noto Sans ExtCond Thin',
+															'Noto Sans ExtLt',
+															'Noto Sans Georgian',
+															'Noto Sans Hebrew',
+															'Noto Sans JP Bold',
+															'Noto Sans JP Regular',
+															'Noto Sans KR Bold',
+															'Noto Sans KR Regular',
+															'Noto Sans Lao',
+															'Noto Sans Light',
+															'Noto Sans Lisu',
+															'Noto Sans Med',
+															'Noto Sans SC Bold',
+															'Noto Sans SC Regular',
+															'Noto Sans SemBd',
+															'Noto Sans SemCond',
+															'Noto Sans SemCond Blk',
+															'Noto Sans SemCond ExtBd',
+															'Noto Sans SemCond ExtLt',
+															'Noto Sans SemCond Light',
+															'Noto Sans SemCond Med',
+															'Noto Sans SemCond SemBd',
+															'Noto Sans SemCond Thin',
+															'Noto Sans TC Bold',
+															'Noto Sans TC Regular',
+															'Noto Sans Thin',
+															'Noto Serif',
+															'Noto Serif Armenian',
+															'Noto Serif Cond',
+															'Noto Serif Georgian',
+															'Noto Serif Hebrew',
+															'Noto Serif Lao',
+															'Noto Serif Light',
+															'Open Sans',
+															'Open Sans Condensed',
+															'Open Sans Condensed Light',
+															'Open Sans Extrabold',
+															'Open Sans Light',
+															'Open Sans Semibold',
+															'OpenDyslexic',
+															'OpenSymbol',
+															'Reem Kufi',
+															'Roboto',
+															'Roboto Black',
+															'Roboto Condensed',
+															'Roboto Condensed Light',
+															'Roboto Light',
+															'Roboto Medium',
+															'Roboto Slab',
+															'Roboto Thin',
+															'Rubik',
+															'Scheherazade',
+															'Serto Batnan',
+															'Serto Jerusalem',
+															'Serto Jerusalem Outline',
+															'Serto Kharput',
+															'Serto Malankara',
+															'Serto Mardin',
+															'Serto Urhoy',
+															'Source Code Pro',
+															'Source Code Pro Black',
+															'Source Code Pro ExtraLight',
+															'Source Code Pro Light',
+															'Source Code Pro Medium',
+															'Source Code Pro Semibold',
+															'Source Sans Pro',
+															'Source Sans Pro Black',
+															'Source Sans Pro ExtraLight',
+															'Source Sans Pro Light',
+															'Source Sans Pro Semibold',
+															'Source Serif Pro',
+															'Source Serif Pro Black',
+															'Source Serif Pro ExtraLight',
+															'Source Serif Pro Light',
+															'Source Serif Pro Semibold',
+															'STIXGeneral'
+														],
+														'selectedCount': '1',
+														'selectedEntries': [
+															'71'
+														],
+														'command': '.uno:CharFontName'
+													}
+												]
+											}
+										]
+									},
+									{
+										'id': 'fontheight',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'fontsize',
+												'type': 'combobox',
+												'text': '18 pt',
+												'enabled': 'true',
+												'children': [
+													{
+														'id': '',
+														'type': 'pushbutton',
+														'text': '',
+														'enabled': 'true'
+													},
+													{
+														'id': '',
+														'type': 'edit',
+														'text': '18 pt',
+														'enabled': 'true'
+													},
+													{
+														'id': '',
+														'type': 'borderwindow',
+														'text': '',
+														'enabled': 'true',
+														'children': [
+															{
+																'id': '',
+																'type': 'edit',
+																'text': '',
+																'enabled': 'true'
+															}
+														]
+													}
+												],
+												'entries': [
+													'6 pt',
+													'7 pt',
+													'8 pt',
+													'9 pt',
+													'10 pt',
+													'10.5 pt',
+													'11 pt',
+													'12 pt',
+													'13 pt',
+													'14 pt',
+													'15 pt',
+													'16 pt',
+													'18 pt',
+													'20 pt',
+													'22 pt',
+													'24 pt',
+													'26 pt',
+													'28 pt',
+													'32 pt',
+													'36 pt',
+													'40 pt',
+													'44 pt',
+													'48 pt',
+													'54 pt',
+													'60 pt',
+													'66 pt',
+													'72 pt',
+													'80 pt',
+													'88 pt',
+													'96 pt'
+												],
+												'selectedCount': '1',
+												'selectedEntries': [
+													'12'
+												],
+												'command': '.uno:FontHeight'
+											}
+										]
+									},
+									{
+										'id': 'ExtTop6',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Grow'),
+												'command': '.uno:Grow'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Shrink'),
+												'command': '.uno:Shrink'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							},
+							{
+								'id': 'GroupB11',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'ExtTop4',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Bold'),
+												'command': '.uno:Bold'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Italic'),
+												'command': '.uno:Italic'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Underline'),
+												'command': '.uno:Underline'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Strikeout'),
+												'command': '.uno:Strikeout'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Shadowed'),
+												'command': '.uno:Shadowed'
+											}
+										]
+									},
+									{
+										'id': 'separator78',
+										'type': 'fixedline',
+										'text': '',
+										'enabled': 'true'
+									},
+									{
+										'id': 'ExtTop2',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Spacing'),
+												'command': '.uno:Spacing'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:CharBackColor'),
+												'command': '.uno:CharBackColor'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Color'),
+												'command': '.uno:Color'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-Paragraph',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'separator102',
+						'type': 'fixedline',
+						'text': '',
+						'enabled': 'true'
+					},
+					{
+						'id': 'GroupB14',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'GroupB16',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'SectionBottom9',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:CellVertTop'),
+												'command': '.uno:CellVertTop'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:CellVertCenter'),
+												'command': '.uno:CellVertCenter'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:CellVertBottom'),
+												'command': '.uno:CellVertBottom'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							},
+							{
+								'id': 'GroupB15',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'SectionBottom13',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:LeftPara'),
+												'command': '.uno:LeftPara'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:CenterPara'),
+												'command': '.uno:CenterPara'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:RightPara'),
+												'command': '.uno:RightPara'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-Paragraph2',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'GroupB31',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'GroupB95',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'separator64',
+										'type': 'fixedline',
+										'text': '',
+										'enabled': 'true'
+									},
+									{
+										'id': 'SectionBottom98',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:DefaultBullet'),
+												'command': '.uno:DefaultBullet'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:DefaultNumbering'),
+												'command': '.uno:DefaultNumbering'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							},
+							{
+								'id': 'GroupB97',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'SectionBottom143',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:JustifyPara'),
+												'command': '.uno:JustifyPara'
+											}
+										]
+									},
+									{
+										'id': 'separator99',
+										'type': 'fixedline',
+										'text': '',
+										'enabled': 'true'
+									},
+									{
+										'id': 'SectionBottom144',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:LineSpacing'),
+												'command': '.uno:LineSpacing'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-Paragraph3',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'GroupB98',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'SectionBottom145',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:IncrementIndent'),
+										'command': '.uno:IncrementIndent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DecrementIndent'),
+										'command': '.uno:DecrementIndent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaLeftToRight'),
+										'command': '.uno:ParaLeftToRight'
+									}
+								]
+							},
+							{
+								'id': 'SectionBottom146',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaspaceIncrease'),
+										'command': '.uno:ParaspaceIncrease'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaspaceDecrease'),
+										'command': '.uno:ParaspaceDecrease'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaRightToLeft'),
+										'command': '.uno:ParaRightToLeft'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-DrawSection',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'separator69',
+						'type': 'fixedline',
+						'text': '',
+						'enabled': 'true'
+					},
+					{
+						'id': 'SectionBottom5',
+						'type': 'toolbox',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Text'),
+								'command': '.uno:Text'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:VerticalText'),
+								'command': '.uno:VerticalText'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-DrawSection1',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'GroupB43',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'GroupB12',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'shapes12',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:Line'),
+												'command': '.uno:Line'
+											},
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:LineToolbox'),
+												'command': '.uno:LineToolbox'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							},
+							{
+								'id': 'GroupB38',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'shapes15',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:BasicShapes'),
+												'command': '.uno:BasicShapes'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-DrawSection2',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'GroupB92',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'GroupB93',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'shapes1',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:ConnectorToolbox'),
+												'command': '.uno:ConnectorToolbox'
+											}
+										]
+									},
+									{
+										'id': 'separator95',
+										'type': 'fixedline',
+										'text': '',
+										'enabled': 'true'
+									},
+									{
+										'id': 'LineA28',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:XLineColor'),
+												'command': '.uno:XLineColor'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							},
+							{
+								'id': 'GroupB94',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'shapes3',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:FlowChartShapes'),
+												'command': '.uno:FlowChartShapes'
+											}
+										]
+									},
+									{
+										'id': 'separator98',
+										'type': 'fixedline',
+										'text': '',
+										'enabled': 'true'
+									},
+									{
+										'id': 'LineB29',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'type': 'toolitem',
+												'text': _UNO('.uno:FillColor'),
+												'command': '.uno:FillColor'
+											}
+										]
+									}
+								],
+								'vertical': 'false'
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			},
+			{
+				'id': 'Home-Section-Slideshow',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'separator94',
+						'type': 'fixedline',
+						'text': '',
+						'enabled': 'true'
+					},
+					{
+						'id': 'GroupB39',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'id': 'LineA9',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Presentation'),
+										'command': '.uno:Presentation'
+									}
+								]
+							},
+							{
+								'id': 'LineB21',
+								'type': 'toolbox',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:PresentationCurrentSlide'),
+										'command': '.uno:PresentationCurrentSlide'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				],
+				'vertical': 'false'
+			}
+		];
+
+		return this.getNotebookbar([this.getTabPage('Home', content)], '-6');
 	},
 
 	getFormatTab: function() {
