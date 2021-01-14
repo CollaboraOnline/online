@@ -2404,9 +2404,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " <<
             typeName << " [" << payload << "].");
 
+#if !MOBILEAPP
     if (UnitKit::get().filterLoKitCallback(type, payload))
         return;
-
+#endif
     if (isCloseFrame())
     {
         LOG_TRC("Skipping callback [" << typeName << "] on closing session " << getName());
