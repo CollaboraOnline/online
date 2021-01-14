@@ -110,8 +110,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'text': _('~Table'),
-				'id': '8',
-				'name': 'TableLabel',
+				'id': '-8',
+				'name': 'Table',
 				'context': 'Table'
 			},
 			{
@@ -148,6 +148,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
 		case 'Review':
 			this.loadTab(this.getReviewTab());
+			break;
+
+		case 'Table':
+			this.loadTab(this.getTableTab());
 			break;
 		}
 	},
@@ -2253,12 +2257,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': 'Spelling',
+								'text': _UNO('.uno:SpellDialog'),
 								'command': '.uno:SpellDialog'
 							},
 							{
 								'type': 'toolitem',
-								'text': 'Thesaurus',
+								'text': _UNO('.uno:ThesaurusDialog'),
 								'command': '.uno:ThesaurusDialog'
 							}
 						]
@@ -2279,7 +2283,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': 'Auto Spellcheck',
+										'text': _UNO('.uno:SpellOnline'),
 										'command': '.uno:SpellOnline'
 									}
 								]
@@ -2290,7 +2294,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': 'Hyphenation',
+										'text': _UNO('.uno:Hyphenation', 'presentation'),
 										'command': '.uno:Hyphenation'
 									}
 								]
@@ -2315,7 +2319,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': 'Comment',
+								'text': _UNO('.uno:InsertAnnotation'),
 								'command': '.uno:InsertAnnotation'
 							}
 						]
@@ -2336,7 +2340,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': 'Delete All Comments',
+										'text': _UNO('.uno:DeleteAllAnnotation', 'presentation'),
 										'command': '.uno:DeleteAllAnnotation'
 									}
 								]
@@ -2345,10 +2349,244 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'vertical': 'true'
 					}
 				]
-			}			
+			}
 		];
 
 		return this.getNotebookbar([this.getTabPage('Review', content)], '-5');
+	},
+
+	getTableTab: function() {
+		var content = [
+			{
+				'id': 'Table-Section-Layout1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB30',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'SectionBottom55',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertColumnsBefore', 'presentation'),
+										'command': '.uno:InsertColumnsBefore'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertColumnsAfter', 'presentation'),
+										'command': '.uno:InsertColumnsAfter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeleteColumns', 'presentation'),
+										'command': '.uno:DeleteColumns'
+									}
+								]
+							},
+							{
+								'id': 'SectionBottom57',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertRowsBefore', 'presentation'),
+										'command': '.uno:InsertRowsBefore'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:InsertRowsAfter', 'presentation'),
+										'command': '.uno:InsertRowsAfter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeleteRows', 'presentation'),
+										'command': '.uno:DeleteRows'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
+				'id': 'Table-Section-Merge',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator45',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom37',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:MergeCells', 'presentation'),
+								'command': '.uno:MergeCells'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': 'Table-Section-Merge1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'SectionBottom39',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SplitCell', 'presentation'),
+								'command': '.uno:SplitCell'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': 'Table-Section-Select',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator51',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom43',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SelectTable', 'presentation'),
+								'command': '.uno:SelectTable'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': 'Table-Section-Select1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB62',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'SectionBottom40',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:EntireColumn', 'presentation'),
+										'command': '.uno:EntireColumn'
+									}
+								]
+							},
+							{
+								'id': 'SectionBottom62',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:EntireRow', 'presentation'),
+										'command': '.uno:EntireRow'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
+				'id': 'Table-Section-Optimize1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB66',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'SectionBottom84',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertTop'),
+										'command': '.uno:CellVertTop'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertCenter'),
+										'command': '.uno:CellVertCenter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertBottom'),
+										'command': '.uno:CellVertBottom'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaRightToLeft'),
+										'command': '.uno:ParaRightToLeft'
+									}
+								]
+							},
+							{
+								'id': 'SectionBottom85',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:LeftPara'),
+										'command': '.uno:LeftPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CenterPara'),
+										'command': '.uno:CenterPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:RightPara'),
+										'command': '.uno:RightPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:JustifyPara'),
+										'command': '.uno:JustifyPara'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
+				'id': 'SectionBottom29',
+				'type': 'toolbox',
+				'children': [
+					{
+						'type': 'toolitem',
+						'text': _UNO('.uno:TableDialog', 'presentation'),
+						'command': '.uno:TableDialog'
+					}
+				]
+			}
+		];
+
+		return this.getNotebookbar([this.getTabPage('Table', content)], '-8');
 	}
 });
 
