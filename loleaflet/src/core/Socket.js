@@ -903,10 +903,6 @@ L.Socket = L.Class.extend({
 				return;
 			}
 		}
-		else if (textMsg.startsWith('viewinfo:')) {
-			this._onViewInfoMsg(textMsg);
-			return;
-		}
 		else if (textMsg.startsWith('jsdialog:')) {
 			this._onJSDialog(textMsg);
 		}
@@ -926,7 +922,8 @@ L.Socket = L.Class.extend({
 		if (textMsg.startsWith('window:') ||
 			textMsg.startsWith('celladdress:') ||
 			textMsg.startsWith('statechanged:') ||
-			textMsg.startsWith('invalidatecursor:')) {
+			textMsg.startsWith('invalidatecursor:') ||
+			textMsg.startsWith('viewinfo:')) {
 			//console.log('_tryToDelayMessage: textMsg: ' + textMsg);
 			var message = {msg: textMsg};
 			this._delayedMessages.push(message);
@@ -1066,18 +1063,6 @@ L.Socket = L.Class.extend({
 		this._map.fire('docloaded', {status: true});
 		if (this._map._docLayer) {
 			this._map._docLayer._onMessage(textMsg);
-		}
-	},
-
-	_onViewInfoMsg: function(textMsg) {
-		if (this._map._docLayer) {
-			this._map._docLayer._onMessage(textMsg);
-		}
-		else {
-			var that = this;
-			setTimeout(function() {
-				that._onViewInfoMsg(textMsg);
-			}, 100);
 		}
 	},
 
