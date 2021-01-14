@@ -36,8 +36,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'text': _('~Review'),
-				'id': '6',
-				'name': 'ReviewLabel'
+				'id': '-6',
+				'name': 'Review'
 			},
 			{
 				'text': _('~Help'),
@@ -67,6 +67,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
 		case 'Data':
 			this.loadTab(this.getDataTab());
+			break;
+
+		case 'Review':
+			this.loadTab(this.getReviewTab());
 			break;
 		}
 	},
@@ -2689,6 +2693,166 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		];
 
 		return this.getNotebookbar([this.getTabPage('Data', content)], '-5');
+	},
+
+	getReviewTab: function() {
+		var content = [
+			{
+				'id': 'Review-Section-Language',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'SectionBottom67',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SpellDialog'),
+								'command': '.uno:SpellDialog'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ThesaurusDialog'),
+								'command': '.uno:ThesaurusDialog'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': 'Review-Section-Language1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB40',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LineA19',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:SpellOnline'),
+										'command': '.uno:SpellOnline'
+									}
+								]
+							},
+							{
+								'id': 'LineB20',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Hyphenate', 'spreadsheet'),
+										'command': '.uno:Hyphenate'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
+				'id': 'Review-Section-Annotation',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator109',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom69',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertAnnotation'),
+								'command': '.uno:InsertAnnotation'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': 'Review-Section-Annotation2',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB43',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LeftParaMargin17',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeleteAllNotes'),
+										'command': '.uno:DeleteAllNotes'
+									}
+								]
+							},
+							{
+								'id': 'belowspacing15',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DeleteNote', 'spreadsheet'),
+										'command': '.uno:DeleteNote'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
+				'id': 'Review-Section-TrackChanges',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator112',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom72',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:TraceChangeMode', 'spreadsheet'),
+								'command': '.uno:TraceChangeMode'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': 'Review-Section-TrackChanges1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'SectionBottom88',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AcceptChanges', 'spreadsheet'),
+								'command': '.uno:AcceptChanges'
+							}
+						]
+					}
+				]
+			}
+		];
+
+		return this.getNotebookbar([this.getTabPage('Review', content)], '-6');
 	}
 });
 
