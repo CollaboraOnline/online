@@ -4099,7 +4099,7 @@ int LOOLWSD::innerMain()
                                             std::chrono::steady_clock::now() - startStamp).count();
 
         // Unit test timeout
-        if (timeSinceStartMs > UnitWSD::get().getTimeoutMilliSeconds())
+        if (UnitWSD::isUnitTesting() && timeSinceStartMs > UnitWSD::get().getTimeoutMilliSeconds())
             UnitWSD::get().timeout();
 
 #if ENABLE_DEBUG && !MOBILEAPP
