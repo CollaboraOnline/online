@@ -340,7 +340,6 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(eval INTERACTIVE_USER_SPEC=$(abs_dir)/integration_tests/multiuser/$(INTERACTIVE_USER_SPEC))
 	@$(call run_test_parallel,\
 		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) &
-	@sleep 5
 	$(call run_interactive_single,\
 		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(INTERACTIVE_USER_SPEC)) || true
 	@$(KILL_COMMAND) || true
@@ -372,7 +371,6 @@ define run_multiuser_test
 	$(eval ENV_EXTENDED=$(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)))
 	@$(call run_test_parallel,\
 		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(USER1_SPEC),multi-user,$(USER1_LOG)) & \
-	sleep 5 && \
 	$(call run_test_parallel,\
 		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
@@ -409,7 +407,6 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	$(call run_interactive_single,\
 		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC)) &
-	@sleep 5
 	@$(call run_test_parallel,\
 		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) || true
 	@$(KILL_COMMAND) || true
@@ -443,7 +440,6 @@ define run_mobile_interference_test
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@$(call run_test_parallel,\
 		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC),mobile,$(USER1_LOG)) & \
-	sleep 5 && \
 	$(call run_test_parallel,\
 		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
@@ -480,7 +476,6 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	$(call run_interactive_single,\
 		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC)) &
-	@sleep 5
 	@$(call run_test_parallel,\
 		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) || true
 	@$(KILL_COMMAND) || true
@@ -514,7 +509,6 @@ define run_desktop_interference_test
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@$(call run_test_parallel,\
 		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC),desktop,$(USER1_LOG)) & \
-	sleep 5 && \
 	$(call run_test_parallel,\
 		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
