@@ -401,10 +401,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 32px !important;
 }
 
-#ControlCodes.notebookbar {
-	margin-left: 62px !important;
-}
-
 #fontnamecombobox.notebookbar ~ .select2 {
 	width: 150px !important;
 }
