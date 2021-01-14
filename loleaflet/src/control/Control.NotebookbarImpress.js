@@ -100,8 +100,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'text': _('~Review'),
-				'id': '6',
-				'name': 'ReviewLabel'
+				'id': '-5',
+				'name': 'Review'
 			},
 			{
 				'text': _('Format'),
@@ -144,6 +144,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 
 		case 'Insert':
 			this.loadTab(this.getInsertTab());
+			break;
+
+		case 'Review':
+			this.loadTab(this.getReviewTab());
 			break;
 		}
 	},
@@ -2235,6 +2239,116 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		];
 
 		return this.getNotebookbar([this.getTabPage('Insert', content)], '-4');
+	},
+
+	getReviewTab: function() {
+		var content = [
+			{
+				'id': 'Review-Section-Language',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'SectionBottom67',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': 'Spelling',
+								'command': '.uno:SpellDialog'
+							},
+							{
+								'type': 'toolitem',
+								'text': 'Thesaurus',
+								'command': '.uno:ThesaurusDialog'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': 'Review-Section-Language1',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB40',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LineA19',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': 'Auto Spellcheck',
+										'command': '.uno:SpellOnline'
+									}
+								]
+							},
+							{
+								'id': 'LineB20',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': 'Hyphenation',
+										'command': '.uno:Hyphenation'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
+				'id': 'Review-Section-Annotation',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'separator20',
+						'type': 'separator',
+						'orientation': 'vertical'
+					},
+					{
+						'id': 'SectionBottom69',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': 'Comment',
+								'command': '.uno:InsertAnnotation'
+							}
+						]
+					}
+				]
+			},
+			{
+				'id': 'Review-Section-Annotation2',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'GroupB42',
+						'type': 'container',
+						'children': [
+							{
+								'id': 'LeftParaMargin13',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': 'Delete All Comments',
+										'command': '.uno:DeleteAllAnnotation'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			}			
+		];
+
+		return this.getNotebookbar([this.getTabPage('Review', content)], '-5');
 	}
 });
 
