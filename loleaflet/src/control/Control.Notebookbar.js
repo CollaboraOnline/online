@@ -20,7 +20,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this._currentScrollPosition = 0;
 
 		this.builder = new L.control.notebookbarBuilder({mobileWizard: this, map: map, cssClass: 'notebookbar'});
-		this.loadTab(this.getHomeTab());
+		this.loadTab(this.getFullJSON('-10'));
 
 		this.createScrollButtons();
 		this.setupResizeHandler();
