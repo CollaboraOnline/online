@@ -831,6 +831,27 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		builder.map._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 	},
 
+	buildControl: function(parent, data) {
+		var type = data.type;
+		var handler = this._controlHandlers[type];
+
+		var isVertical = (data.vertical === 'true' || data.vertical === true);
+		var hasManyChildren = data.children && data.children.length > 1;
+
+		if (handler)
+			var processChildren = handler(parent, data, this);
+		else
+			console.warn('NotebookbarBuilder: Unsupported control type: "' + type + '"');
+
+		if (processChildren && data.children != undefined)
+			this.build(parent, data.children, isVertical, hasManyChildren);
+		else if (data.visible && (data.visible === false || data.visible === 'false')) {
+			$('#' + data.id).addClass('hidden-from-event');
+		}
+
+		this.options.useInLineLabelsForUnoButtons = false;
+	},
+
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
 		this._amendJSDialogData(data);
 
