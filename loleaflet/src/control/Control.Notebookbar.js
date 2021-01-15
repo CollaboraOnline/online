@@ -274,7 +274,7 @@ L.Control.Notebookbar = L.Control.extend({
 				var contexts = tabs[tab].context.split('|');
 				for (var context in contexts) {
 					if (contexts[context] === event.context) {
-						var tabElement = $('#' + tabs[tab].name);
+						var tabElement = $('#' + tabs[tab].name + '-tab-label');
 						if (!tabElement.hasClass('selected'))
 							tabElement.click();
 					}
