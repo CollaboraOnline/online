@@ -71,6 +71,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
 		this._controlHandlers['tabcontrol'] = this._tabsControlHandler;
+		this._controlHandlers['tabpage'] = this._containerHandler;
 		this._controlHandlers['paneltabs'] = this._panelTabsHandler;
 		this._controlHandlers['singlepanel'] = this._singlePanelHandler;
 		this._controlHandlers['container'] = this._containerHandler;
@@ -785,23 +786,31 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_tabsControlHandler: function(parentContainer, data, builder) {
 		if (data.tabs) {
+			var tabs = 0;
+			for (var tabIdx = 0; data.children && tabIdx < data.children.length; tabIdx++) {
+				if (data.children[tabIdx].type === 'tabpage')
+					tabs++;
+			}
+			var isMultiTabJSON = tabs > 1;
+
 			var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget');
 			tabsContainer.id = data.id;
 			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', parentContainer);
 
-			var tabs = [];
+			tabs = [];
 			var contentDivs = [];
 			var tabIds = [];
-			for (var tabIdx = 0; tabIdx < data.tabs.length; tabIdx++) {
+			for (tabIdx = 0; tabIdx < data.tabs.length; tabIdx++) {
 				var item = data.tabs[tabIdx];
 
 				var title = builder._cleanText(item.text);
 
 				var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
-				tab.id = data.tabs[tabIdx].name;
+				tab.id = data.tabs[tabIdx].name + '-tab-label';
 				tab.number = data.tabs[tabIdx].id - 1;
 
-				if (data.selected == data.tabs[tabIdx].id)
+				var isSelectedTab = data.selected == data.tabs[tabIdx].id;
+				if (isSelectedTab)
 					$(tab).addClass('selected');
 
 				var tabContext = data.tabs[tabIdx].context;
@@ -816,15 +825,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 
 				tabs[tabIdx] = tab;
-				tabIds[tabIdx] = tab.id;
+				tabIds[tabIdx] = data.tabs[tabIdx].name;
 
 				var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
 				label.innerHTML = title;
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 				contentDiv.title = title;
+				contentDiv.id = data.tabs[tabIdx].name;
 
-				$(contentDiv).hide();
+				if (!isMultiTabJSON || !isSelectedTab)
+					$(contentDiv).hide();
 				contentDivs[tabIdx] = contentDiv;
 			}
 
@@ -845,6 +856,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			} else {
 				console.debug('Builder used outside of mobile wizard: please implement the click handler');
 			}
+		}
+
+		if (isMultiTabJSON) {
+			var tabId = 0;
+			for (tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
+				tab = data.children[tabIdx];
+
+				if (tab.type !== 'tabpage')
+					continue;
+
+				builder.build(contentDivs[tabId], [tab], false, false);
+				tabId++;
+			}
+
+			return false;
 		}
 
 		return true;
