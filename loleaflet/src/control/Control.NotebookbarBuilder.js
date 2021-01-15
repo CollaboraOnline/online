@@ -215,20 +215,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		if (commandName === '.uno:CharFontName') {
 			if (window.ThisIsTheiOSApp) {
-				$('#table-fontnamecombobox').addClass('select2 select2-container select2-container--default');
-				$('#table-fontnamecombobox > .row.notebookbar').addClass('select2-selection select2-selection--single');
-				$('#fontnamecombobox').addClass('select2-selection__rendered');
 				if (state === '')
 					$('#fontnamecombobox').html(_('Font Name'));
 				else
 					$('#fontnamecombobox').html(state);
 				window.LastSetiOSFontNameButtonFont = state;
-			} else {
-				$('#fontnamecombobox').val(state).trigger('change');
 			}
-		} else if (commandName === '.uno:FontHeight') {
-			$('#fontsize').val(parseFloat(state)).trigger('change');
-			$('#fontsizecombobox').val(parseFloat(state)).trigger('change');
 		} else if (commandName === '.uno:StyleApply') {
 			$('#applystyle').val(state).trigger('change');
 		}
@@ -242,53 +234,34 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 	},
 
-	_setupComboboxSelectionHandler: function(combobox, id, builder) {
-		var items = builder.map['stateChangeHandler'];
+	_createiOsFontButton: function(parentContainer, data, builder) {
+		var table = L.DomUtil.createWithId('div', 'table-fontnamecombobox', parentContainer);
+		var row = L.DomUtil.create('div', 'notebookbar row', table);
+		var button = L.DomUtil.createWithId('button', data.id, row);
 
-		if (id === 'fontnamecombobox') {
-			$(combobox).on('select2:select', function (e) {
-				var font = e.params.data.text;
-				builder.map.applyFont(font);
-				builder.map.focus();
-			});
+		$(table).addClass('select2 select2-container select2-container--default');
+		$(row).addClass('select2-selection select2-selection--single');
+		$(button).addClass('select2-selection__rendered');
 
-			var state = items.getItemValue('.uno:CharFontName');
-			$(combobox).val(state).trigger('change');
-		}
-		else if (id === 'fontsize' || id === 'fontsizecombobox') {
-			$(combobox).on('select2:select', function (e) {
-				builder.map.applyFontSize(parseFloat(e.params.data.text));
-				builder.map.focus();
-			});
+		if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
+			button.innerText = data.entries[data.selectedEntries[0]];
+		else if (window.LastSetiOSFontNameButtonFont)
+			button.innerText = window.LastSetiOSFontNameButtonFont;
+		else if (data.text)
+			button.innerText = data.text;
+		var map = builder.map;
+		window.MagicFontNameCallback = function(font) {
+			button.innerText = font;
+			map.applyFont(font);
+			map.focus();
+		};
+		button.onclick = function() {
 
-			state = items.getItemValue('.uno:FontHeight');
-			$(combobox).val(state).trigger('change');
-		}
-		else if (id === 'applystyle') {
-			$(combobox).on('select2:select', function (e) {
-				var style = e.target.value;
-				var docType = builder.map.getDocType();
-
-				if (style.startsWith('.uno:'))
-					builder.map.sendUnoCommand(style);
-				else if (docType === 'text')
-					builder.map.applyStyle(style, 'ParagraphStyles');
-				else if (docType === 'spreadsheet')
-					builder.map.applyStyle(style, 'CellStyles');
-				else if (docType === 'presentation' || docType === 'drawing')
-					builder.map.applyLayout(style);
-
-				builder.map.focus();
-			});
-
-			state = items.getItemValue('.uno:StyleApply');
-			$(combobox).val(state).trigger('change');
-		} else {
-			$(combobox).on('select2:select', function (e) {
-				var value = e.params.data.id + ';' + e.params.data.text;
-				builder.callback('combobox', 'selected', combobox, value, builder);
-			});
-		}
+			// There doesn't seem to be a way to pre-select an entry in the
+			// UIFontPickerViewController so no need to pass the
+			// current font here.
+			window.postMobileMessage('FONTPICKER');
+		};
 	},
 
 	_comboboxControl: function(parentContainer, data, builder) {
@@ -296,24 +269,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			return false;
 
 		if (window.ThisIsTheiOSApp && data.id === 'fontnamecombobox') {
-			var button = L.DomUtil.createWithId('button', data.id, parentContainer);
-			if (data.entries[data.selectedEntries[0]])
-				button.innerHTML = data.entries[data.selectedEntries[0]];
-			else if (window.LastSetiOSFontNameButtonFont)
-				button.innerHTML = window.LastSetiOSFontNameButtonFont;
-			var map = builder.map;
-			window.MagicFontNameCallback = function(font) {
-				button.innerHTML = font;
-				map.applyFont(font);
-				map.focus();
-			};
-			button.onclick = function() {
-
-				// There doesn't seem to be a way to pre-select an entry in the
-				// UIFontPickerViewController so no need to pass the
-				// current font here.
-				window.postMobileMessage('FONTPICKER');
-			};
+			this._createiOsFontButton(parentContainer, data, builder);
 			return false;
 		}
 
@@ -322,12 +278,23 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		var processedData = [];
 
+		var isFontSizeSelector = (data.id === 'fontsize' || data.id === 'fontsizecombobox');
+		var isFontSelector = (data.id === 'fontnamecombobox');
+
+		if (isFontSelector) {
+			builder.map.createFontSelector('#' + data.id);
+			return;
+		} else if (isFontSizeSelector) {
+			builder.map.createFontSizeSelector('#' + data.id);
+			return;
+		}
+
 		data.entries.forEach(function (value, index) {
 			var selected = parseInt(data.selectedEntries[0]) == index;
 			var id = index;
-			if (data.id === 'fontsize' || data.id === 'fontsizecombobox')
+			if (isFontSizeSelector)
 				id = parseFloat(value);
-			if (data.id === 'fontnamecombobox')
+			if (isFontSelector)
 				id = value;
 			processedData.push({id: id, text: value, selected: selected});
 		});
@@ -337,7 +304,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			placeholder: _(builder._cleanText(data.text))
 		});
 
-		builder._setupComboboxSelectionHandler(select, data.id, builder);
+		$(select).on('select2:select', function (e) {
+			var value = e.params.data.id + ';' + e.params.data.text;
+			builder.callback('combobox', 'selected', select, value, builder);
+		});
 
 		return false;
 	},
