@@ -26,6 +26,124 @@ L.Map.include({
 		}
 	},
 
+	onFontSelect: function(e) {
+		var font = e.target.value;
+		this.applyFont(font);
+		this.focus();
+	},
+
+	createFontSelector: function(nodeSelector) {
+		var commandValues = this.getToolbarCommandValues('.uno:CharFontName');
+
+		var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
+		// Old browsers like IE11 et al don't like Object.keys with
+		// empty arguments
+		if (typeof commandValues === 'object') {
+			data = data.concat(Object.keys(commandValues));
+		}
+
+		$(nodeSelector).select2({
+			data: data.sort(function (a, b) {  // also sort(localely)
+				return a.localeCompare(b);
+			}),
+			placeholder: _('Font')
+		});
+
+		$(nodeSelector).on('select2:select', this.onFontSelect.bind(this));
+
+		var items = this['stateChangeHandler'];
+		var val = items.getItemValue('.uno:CharFontName');
+		$(nodeSelector).val(val).trigger('change');
+
+		var onCommandStateChanged = function(e) {
+			var commandName = e.commandName;
+
+			if (commandName !== '.uno:CharFontName')
+				return;
+
+			var state = e.state;
+			var found = false;
+
+			$(nodeSelector + ' option').each(function () {
+				var value = this.value;
+				if (value.toLowerCase() === state.toLowerCase()) {
+					found = true;
+					return;
+				}
+			});
+
+			if (!found) {
+				$(nodeSelector)
+					.append($('<option></option>')
+						.text(state));
+			}
+
+			$(nodeSelector).val(state).trigger('change');
+		};
+
+		this.off('commandstatechanged', onCommandStateChanged);
+		this.on('commandstatechanged', onCommandStateChanged);
+	},
+
+	onFontSizeSelect: function(e) {
+		this.applyFontSize(e.target.value);
+		this.focus();
+	},
+
+	createFontSizeSelector: function(nodeSelector) {
+		var data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
+			22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
+		$(nodeSelector).select2({
+			data: data,
+			placeholder: ' ',
+			//Allow manually entered font size.
+			createTag: function(query) {
+				return {
+					id: query.term,
+					text: query.term,
+					tag: true
+				};
+			},
+			tags: true,
+			sorter: function(data) { return data.sort(function(a, b) {
+				return parseFloat(a.text) - parseFloat(b.text);
+			});}
+		});
+		$(nodeSelector).off('select2:select', this.onFontSizeSelect.bind(this)).on('select2:select', this.onFontSizeSelect.bind(this));
+
+		var onCommandStateChanged = function(e) {
+			var commandName = e.commandName;
+
+			if (commandName !== '.uno:FontHeight')
+				return;
+
+			var state = e.state;
+			var found = false;
+
+			if (state === '0') {
+				state = '';
+			}
+
+			$(nodeSelector + ' option').each(function (i, e) {
+				if ($(e).text() === state) {
+					found = true;
+				}
+			});
+
+			if (!found) {
+				// we need to add the size
+				$(nodeSelector)
+					.append($('<option>')
+						.text(state).val(state));
+			}
+
+			$(nodeSelector).val(state).trigger('change');
+		};
+
+		this.off('commandstatechanged', onCommandStateChanged);
+		this.on('commandstatechanged', onCommandStateChanged);
+	},
+
 	applyFont: function (fontName) {
 		if (this.isPermissionEdit()) {
 			var msg = 'uno .uno:CharFontName {' +
