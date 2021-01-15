@@ -496,6 +496,7 @@ class CanvasSectionContainer {
 		this.bottom = this.canvas.height;
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].dpiScale = this.dpiScale;
+			this.sections[i].isLocated = false;
 		}
 
 		this.reNewAllSections();
