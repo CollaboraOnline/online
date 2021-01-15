@@ -84,7 +84,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 		control.style.visibility = 'hidden';
 
-		this.builder.build(parent, [data.control], false);
+		this.builder.buildControl(parent, data.control);
 		L.DomUtil.remove(control);
 	},
 
