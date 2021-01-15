@@ -292,12 +292,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_comboboxControl: function(parentContainer, data, builder) {
-		if (!data.entries || data.entries.length === 0)
-			return false;
-
 		if (window.ThisIsTheiOSApp && data.id === 'fontnamecombobox') {
 			var button = L.DomUtil.createWithId('button', data.id, parentContainer);
-			if (data.entries[data.selectedEntries[0]])
+			if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
 				button.innerHTML = data.entries[data.selectedEntries[0]];
 			else if (window.LastSetiOSFontNameButtonFont)
 				button.innerHTML = window.LastSetiOSFontNameButtonFont;
@@ -323,7 +320,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var processedData = [];
 
 		data.entries.forEach(function (value, index) {
-			var selected = parseInt(data.selectedEntries[0]) == index;
+			var selected = data.selectedEntries.length &&
+				(parseInt(data.selectedEntries[0]) == index);
 			var id = index;
 			if (data.id === 'fontsize' || data.id === 'fontsizecombobox')
 				id = parseFloat(value);
@@ -868,8 +866,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				continue;
 
 			var childType = childData.type;
-			if (childType === 'toolbox' && !childData.id)
-				continue;
 
 			if (parentHasManyChildren) {
 				if (!hasVerticalParent)
