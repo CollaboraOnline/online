@@ -361,25 +361,7 @@ L.Control.TopToolbar = L.Control.extend({
 		if (toolbarUp)
 			toolbarUp.refresh();
 
-		data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
-			22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
-		$('.fontsizes-select').select2({
-			data: data,
-			placeholder: ' ',
-			//Allow manually entered font size.
-			createTag: function(query) {
-				return {
-					id: query.term,
-					text: query.term,
-					tag: true
-				};
-			},
-			tags: true,
-			sorter: function(data) { return data.sort(function(a, b) {
-				return parseFloat(a.text) - parseFloat(b.text);
-			});}
-		});
-		$('.fontsizes-select').off('select2:select', this.onFontSizeSelect.bind(this)).on('select2:select', this.onFontSizeSelect.bind(this));
+		this.map.createFontSizeSelector('.fontsizes-select');
 	},
 
 	onUpdatePermission: function(e) {
@@ -490,27 +472,7 @@ L.Control.TopToolbar = L.Control.extend({
 			$('.styles-select').on('select2:select', this.onStyleSelect.bind(this));
 			w2ui['editbar'].resize();
 		} else if (e.commandName === '.uno:CharFontName') {
-			// 2) For .uno:CharFontName
-			commandValues = this.map.getToolbarCommandValues(e.commandName);
-			if (typeof commandValues === 'undefined') {
-				return;
-			}
-
-			data = []; // reset data in order to avoid that the font select box is populated with styles, too.
-			// Old browsers like IE11 et al don't like Object.keys with
-			// empty arguments
-			if (typeof commandValues === 'object') {
-				data = data.concat(Object.keys(commandValues));
-			}
-
-			$('.fonts-select').select2({
-				data: data.sort(function (a, b) {  // also sort(localely)
-					return a.localeCompare(b);
-				}),
-				placeholder: _('Font')
-			});
-			$('.fonts-select').on('select2:select', this.onFontSelect.bind(this));
-			$('.fonts-select').val(this.options.fontsSelectValue).trigger('change');
+			this.map.createFontSelector('.fonts-select');
 			w2ui['editbar'].resize();
 		}
 	},
@@ -519,7 +481,6 @@ L.Control.TopToolbar = L.Control.extend({
 		var commandName = e.commandName;
 		var state = e.state;
 		var found = false;
-		var value;
 
 		if (commandName === '.uno:StyleApply') {
 			if (!state) {
@@ -553,39 +514,7 @@ L.Control.TopToolbar = L.Control.extend({
 			$('.styles-select').val(state).trigger('change');
 		}
 		else if (commandName === '.uno:CharFontName') {
-			$('.fonts-select option').each(function () {
-				value = this.value;
-				if (value.toLowerCase() === state.toLowerCase()) {
-					found = true;
-					return;
-				}
-			});
-			if (!found) {
-				// we need to add the size
-				$('.fonts-select')
-					.append($('<option></option>')
-					.text(state));
-			}
 			this.options.fontsSelectValue = state;
-			$('.fonts-select').val(state).trigger('change');
-		}
-		else if (commandName === '.uno:FontHeight') {
-			if (state === '0') {
-				state = '';
-			}
-
-			$('.fontsizes-select option').each(function (i, e) {
-				if ($(e).text() === state) {
-					found = true;
-				}
-			});
-			if (!found) {
-				// we need to add the size
-				$('.fontsizes-select')
-					.append($('<option>')
-					.text(state).val(state));
-			}
-			$('.fontsizes-select').val(state).trigger('change');
 		}
 
 		// call shared handler for font color and highlight items handling
