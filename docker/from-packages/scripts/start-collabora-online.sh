@@ -33,13 +33,12 @@ if test "${SAL_LOG-set}" == set; then
 SAL_LOG="-INFO-WARN"
 fi
 
-# Backward compatible way to pass configuration settings with environment variables
-# These environemt variables are documented at various places so we keep support of them.
-[ -z ${domain} ] || extra_params="${extra_params} --o:storage.wopi.host[0]=${domain}"
-[ -z ${username} ] || extra_params="${extra_params} --o:admin_console.username=${username}"
-[ -z ${password} ] || extra_params="${extra_params} --o:admin_console.password=${password}"
-[ -z ${server_name} ] || extra_params="${extra_params} --o:server_name=${server_name}"
-[ -z ${dictionaries} ] || extra_params="${extra_params} --o:allowed_languages=${dictionaries}"
+# Replace trusted host and set admin username and password
+perl -pi -e "s/localhost<\/host>/${domain}<\/host>/g" /etc/loolwsd/loolwsd.xml
+perl -pi -e "s/<username (.*)>.*<\/username>/<username \1>${username}<\/username>/" /etc/loolwsd/loolwsd.xml
+perl -pi -e "s/<password (.*)>.*<\/password>/<password \1>${password}<\/password>/" /etc/loolwsd/loolwsd.xml
+perl -pi -e "s/<server_name (.*)>.*<\/server_name>/<server_name \1>${server_name}<\/server_name>/" /etc/loolwsd/loolwsd.xml
+perl -pi -e "s/<allowed_languages (.*)>.*<\/allowed_languages>/<allowed_languages \1>${dictionaries:-de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru}<\/allowed_languages>/" /etc/loolwsd/loolwsd.xml
 
 # Restart when /etc/loolwsd/loolwsd.xml changes
 [ -x /usr/bin/inotifywait -a /usr/bin/killall ] && (
