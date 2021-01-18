@@ -33,11 +33,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	 * returns boolean: true if children should be processed
 	 * and false otherwise
 	 */
-	_controlHandlers: {},
-	_toolitemHandlers: {},
-	_menuItemHandlers: {},
-	_menus: {},
-	_colorPickers: [],
+	_controlHandlers: null,
+	_toolitemHandlers: null,
+	_menuItemHandlers: null,
+	_menus: null,
+	_colorPickers: null,
 
 	_currentDepth: 0,
 
@@ -47,6 +47,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this.map = options.map;
 		this.callback = options.callback ? options.callback : this._defaultCallbackHandler;
 
+		this._colorPickers = [];
+
+		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
@@ -96,8 +99,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['submenu'] = this._subMenuHandler;
 		this._controlHandlers['menuitem'] = this._menuItemHandler;
 
+		this._menuItemHandlers = {};
 		this._menuItemHandlers['inserttable'] = this._insertTableMenuItem;
 
+		this._toolitemHandlers = {};
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
@@ -114,6 +119,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:SetBorderStyle'] = function () {};
 		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = function () {};
 
+		this._menus = {};
 		this._menus['Menu Statistic'] = [
 			{text: _UNO('.uno:SamplingDialog', 'spreadsheet'), uno: '.uno:SamplingDialog'},
 			{text: _UNO('.uno:DescriptiveStatisticsDialog', 'spreadsheet'), uno: '.uno:DescriptiveStatisticsDialog'},

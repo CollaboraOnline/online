@@ -96,6 +96,10 @@ L.Control.JSDialog = L.Control.extend({
 
 	onJSUpdate: function (e) {
 		var data = e.data;
+
+		if (data.jsontype !== 'dialog')
+			return;
+
 		var dialog = this.dialogs[data.id];
 		if (!dialog)
 			return;
