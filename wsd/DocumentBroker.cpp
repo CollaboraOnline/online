@@ -171,7 +171,6 @@ DocumentBroker::DocumentBroker(ChildType type,
     _lastStorageUploadSuccessful(true),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
-    _markToDestroy(false),
     _isLoaded(false),
     _isModified(false),
     _interactive(false),
@@ -454,7 +453,7 @@ void DocumentBroker::pollThread()
             }
         }
 #endif
-        else if (_sessions.empty() && (isLoaded() || _markToDestroy))
+        else if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
         {
             // If all sessions have been removed, no reason to linger.
             LOG_INF("Terminating dead DocumentBroker for docKey [" << getDocKey() << "].");
@@ -572,7 +571,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             return result;
     }
 
-    if (_markToDestroy)
+    if (_docState.isMarkedToDestroy())
     {
         // Tearing down.
         LOG_WRN("Will not load document marked to destroy. DocKey: [" << _docKey << "].");
@@ -976,11 +975,11 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
 
     // If marked to destroy, or session is disconnected, remove.
     const auto it = _sessions.find(sessionId);
-    if (_markToDestroy || (it != _sessions.end() && it->second->isCloseFrame()))
+    if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
         disconnectSessionInternal(sessionId);
 
     // If marked to destroy, then this was the last session.
-    if (_markToDestroy || _sessions.empty())
+    if (_docState.isMarkedToDestroy() || _sessions.empty())
     {
         // Stop so we get cleaned up and removed.
         _stop = true;
@@ -1468,7 +1467,7 @@ size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
         if (_sessions.empty())
         {
             LOG_INF("Doc [" << _docKey << "] has no more sessions. Marking to destroy.");
-            _markToDestroy = true;
+            _docState.markToDestroy();
         }
 
         throw;
@@ -1547,7 +1546,11 @@ size_t DocumentBroker::removeSession(const std::string& id)
         std::shared_ptr<ClientSession> session = it->second;
 
         // Last view going away, can destroy.
-        _markToDestroy = (_sessions.size() <= 1);
+        if (_sessions.size() <= 1)
+            _docState.markToDestroy();
+
+        assert((_sessions.size() <= 1 && _docState.isMarkedToDestroy())
+               || !_docState.isMarkedToDestroy());
 
         const bool lastEditableSession = (!session->isReadOnly() || session->isAllowChangeComments()) && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
@@ -1556,7 +1559,7 @@ size_t DocumentBroker::removeSession(const std::string& id)
                 << id << "] on docKey [" << _docKey << "]. Have " << _sessions.size()
                 << " sessions. IsReadOnly: " << session->isReadOnly()
                 << ", IsViewLoaded: " << session->isViewLoaded() << ", IsWaitDisconnected: "
-                << session->inWaitDisconnected() << ", MarkToDestroy: " << _markToDestroy
+                << session->inWaitDisconnected() << ", MarkToDestroy: " << _docState.isMarkedToDestroy()
                 << ", LastEditableSession: " << lastEditableSession << ", DontSaveIfUnmodified: "
                 << dontSaveIfUnmodified << ", IsPossiblyModified: " << isPossiblyModified());
 
@@ -1609,10 +1612,10 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
 #endif
 
             LOG_TRC("Disconnect session internal " << id <<
-                    " destroy? " << _markToDestroy <<
+                    " destroy? " << _docState.isMarkedToDestroy() <<
                     " locked? " << _lockCtx->_isLocked);
 
-            if (_markToDestroy && // last session to remove; FIXME: Editable?
+            if (_docState.isMarkedToDestroy() && // last session to remove; FIXME: Editable?
                 _lockCtx->_isLocked && _storage)
             {
                 if (!_storage->updateLockState(it->second->getAuthorization(), it->second->getCookies(), *_lockCtx, false))
@@ -2325,7 +2328,6 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
 
     // try the not yet created sessions
     LOG_WRN("Child session [" << viewId << "] not found to forward message: " << getAbbreviatedMessage(message));
-
     return false;
 }
 
@@ -2620,7 +2622,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     auto now = std::chrono::steady_clock::now();
 
     os << " Broker: " << LOOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
-    if (_markToDestroy)
+    if (_docState.isMarkedToDestroy())
         os << " *** Marked to destroy ***";
     else
         os << " has live sessions";
