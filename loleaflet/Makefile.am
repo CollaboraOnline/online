@@ -205,6 +205,7 @@ LOLEAFLET_JS =\
 	src/map/Map.js \
 	src/map/Clipboard.js \
 	src/layer/Layer.js \
+	src/layer/tile/CanvasSectionProps.js \
 	src/layer/tile/CanvasSectionContainer.js \
 	src/layer/tile/GridLayer.js \
 	src/layer/tile/TileLayer.js \
