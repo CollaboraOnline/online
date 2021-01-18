@@ -1468,8 +1468,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		pushbutton.innerHTML = customText !== '' ? customText : builder._cleanText(data.text);
 		pushbutton.id = data.id;
 
-		if (data.enabled == 'false')
-			$(pushbutton).attr('disabled', 'disabled');
+		if (data.enabled === 'false' || data.enabled === false)
+			$(pushbutton).prop('disabled', true);
 
 		$(pushbutton).click(function () {
 			if (customCallback)
