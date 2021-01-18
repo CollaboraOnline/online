@@ -1049,7 +1049,7 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD"],
            fi
        fi
        if test "$enable_cypress" = "yes"; then
-           AC_PATH_PROGS(CHROME, chrome google-chrome chromium chromium-browser, no)
+           AC_PATH_PROGS(CHROME, chromium chromium-browser chrome google-chrome, no)
            if test "$CHROME" = "no"; then
                AC_MSG_ERROR([chrome or chromium is required to run the JS tests, but not installed])
            fi
