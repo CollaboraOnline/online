@@ -45,6 +45,7 @@ test/data/hello-world.odt
 test/data/hello-world.ods
 test/data/hello-world.odp
 test/fakesockettest
+coolstress
 
 *.o
 *.exe
