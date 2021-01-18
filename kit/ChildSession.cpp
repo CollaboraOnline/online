@@ -1021,6 +1021,7 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
     }
 
     std::string selection;
+    getLOKitDocument()->setView(_viewId);
     const int selectionType = getLOKitDocument()->getSelectionType();
     if (selectionType == LOK_SELTYPE_LARGE_TEXT || selectionType == LOK_SELTYPE_COMPLEX ||
         (selection = getTextSelectionInternal(mimeType)).size() >= 1024 * 1024) // Don't return huge data.
