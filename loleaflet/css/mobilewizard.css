@@ -966,3 +966,17 @@ input[type='checkbox'][disabled] {
 	width: -moz-available !important;
 	box-sizing: border-box !important;
 }
+
+/* Annotations - comments */
+#mobile-wizard .loleaflet-annotation-content {
+	margin: 3px 3px 3px 38px;
+	padding: 0px 10px;
+}
+
+#mobile-wizard .loleaflet-annotation-content-author {
+	font-weight: bold;
+}
+#mobile-wizard .loleaflet-annotation-author * {
+	color: var(--gray-light-txt--color) !important;
+	font-size: 11px;
+}
