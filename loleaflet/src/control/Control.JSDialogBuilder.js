@@ -1919,7 +1919,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			container.id = data.id;
 
 			var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-drawing-area', container);
-			image.src = data.image.replace('\\', '');
+			image.src = data.image.replace(/\\/g, '');
 			image.alt = data.text;
 			image.title = data.text;
 			if (!window.ThisIsAMobileApp)
