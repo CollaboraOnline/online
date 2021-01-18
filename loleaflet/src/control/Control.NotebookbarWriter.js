@@ -1911,373 +1911,194 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getInsertTab: function() {
 		var content = [
 			{
-				'id': 'SectionBottom70',
 				'type': 'toolbox',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:InsertPagebreak', 'text'),
-						'command': '.uno:InsertPagebreak'
-					}
+                        'command': '.uno:InsertPagebreak' 
+                    } 
+                ]
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:TitlePageDialog'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:InsertSection'
+							}
+						]
+                    },
 				]
 			},
 			{
-				'id': 'Insert-Section-Pagebreak1',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB29',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'LineA15',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:TitlePageDialog', 'text'),
-										'command': '.uno:TitlePageDialog'
-									}
-								]
-							},
-							{
-								'id': 'LineB16',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertSection', 'text'),
-										'command': '.uno:InsertSection'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
+				'type': 'separator'
+            },     
 			{
-				'id': 'Insert-Section-Image',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'SectionBottom65',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:InsertGraphic'),
-								'command': '.uno:InsertGraphic'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-Table-Chart',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB292',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'LineA152',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': 'Table',
-										'command': '.uno:InsertTable'
-									}
-								]
-							},
-							{
-								'id': 'LineB162',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertObjectChart'),
-										'command': '.uno:InsertObjectChart'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-Fontwork',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'SectionBottom656',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-Hyperlink',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'SectionBottom14',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:HyperlinkDialog'),
-								'command': '.uno:HyperlinkDialog'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-Bookmark',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB27',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'LineA13',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertBookmark', 'text'),
-										'command': '.uno:InsertBookmark'
-									}
-								]
-							},
-							{
-								'id': 'LineB14',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertReferenceField', 'text'),
-										'command': '.uno:InsertReferenceField'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'SectionBottom11',
 				'type': 'toolbox',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:InsertFieldCtrl', 'text'),
-						'command': '.uno:InsertFieldCtrl'
-					}
+                        'command': '.uno:InsertGraphic' 
+                    } 
+                ]
+            },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:InsertTable'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:InsertObjectChart'
+							}
+						]
+                    },
 				]
 			},
 			{
-				'id': 'Insert-Section-HeaderFoorter',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB291',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'LineA151',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertPageHeader', 'text'),
-										'command': '.uno:InsertPageHeader'
-									}
-								]
-							},
-							{
-								'id': 'LineB161',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertPageFooter', 'text'),
-										'command': '.uno:InsertPageFooter'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
+				'type': 'separator'
+            },   
 			{
-				'id': 'Insert-Text',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'shapes6',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:DrawText'),
-								'command': '.uno:DrawText'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-BasicShapes-VerticalText',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB293',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'LineA153',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:BasicShapes'),
-										'command': '.uno:BasicShapes'
-									}
-								]
-							},
-							{
-								'id': 'LineB163',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:VerticalText', 'text'),
-										'command': '.uno:VerticalText'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-Symbol',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'SectionBottom105',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:CharmapControl'),
-								'command': '.uno:CharmapControl'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-Line',
 				'type': 'toolbox',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:Line', 'text'),
-						'command': '.uno:Line'
-					}
+                        'command': '.uno:FontworkGalleryFloater' 
+                    } 
+                ]
+            },
+			{
+				'type': 'separator'
+            },     
+			{
+				'type': 'toolbox',
+				'children': [
+					{
+                        'command': '.uno:HyperlinkDialog' 
+                    } 
+                ]
+            },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:InsertBookmark'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:InsertReferenceField'
+							}
+						]
+                    },
 				]
+			},
+			{
+				'type': 'separator'
+            },    
+			{
+				'type': 'toolbox',
+				'children': [
+					{
+                        'command': '.uno:InsertFieldCtrl' 
+                    } 
+                ]
+            },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:InsertPageHeader'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:InsertPageFooter'
+							}
+						]
+                    },
+				]
+			},
+			{
+				'type': 'separator'
+            },  
+			{
+				'type': 'toolbox',
+				'children': [
+					{
+                        'command': '.uno:DrawText' 
+                    } 
+                ]
+            },
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:BasicShapes'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'command': '.uno:VerticalText'
+							}
+						]
+                    },
+				]
+			},
+			{
+				'type': 'separator'
+            }, 
+			{
+				'type': 'toolbox',
+				'children': [
+					{
+                        'command': '.uno:CharmapControl' 
+                    } 
+                ]
+			},
+			{
+				'type': 'separator'
+            }, 
+			{
+				'type': 'toolbox',
+				'children': [
+					{
+                        'command': '.uno:Line' 
+                    } 
+                ]
 			}
 		];
 
