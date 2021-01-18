@@ -257,8 +257,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			return false;
 		}
 
-		var select = L.DomUtil.createWithId('select', data.id, parentContainer);
-		$(select).addClass(builder.options.cssClass);
+		var container = L.DomUtil.createWithId('div', data.id, parentContainer);
+		L.DomUtil.addClass(container, builder.options.cssClass);
+		L.DomUtil.addClass(container, 'ui-combobox');
+		var select = L.DomUtil.create('select', builder.options.cssClass, container);
 
 		var processedData = [];
 
@@ -266,10 +268,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var isFontSelector = (data.id === 'fontnamecombobox');
 
 		if (isFontSelector) {
-			builder.map.createFontSelector('#' + data.id);
+			builder.map.createFontSelector('#' + data.id + ' select');
 			return;
 		} else if (isFontSizeSelector) {
-			builder.map.createFontSizeSelector('#' + data.id);
+			builder.map.createFontSizeSelector('#' + data.id + ' select');
 			return;
 		}
 
@@ -290,7 +292,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		$(select).on('select2:select', function (e) {
 			var value = e.params.data.id + ';' + e.params.data.text;
-			builder.callback('combobox', 'selected', select, value, builder);
+			builder.callback('combobox', 'selected', container, value, builder);
 		});
 
 		return false;
