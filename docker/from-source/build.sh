@@ -82,6 +82,7 @@ if test ! -f poco/lib/libPocoFoundation.a ; then
     ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings --prefix=$BUILDDIR/poco
     make -j 8
     make install
+    cd ..
 fi
 
 
