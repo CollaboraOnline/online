@@ -68,17 +68,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
 		var content = [
 			{
-				'id': 'File-Section',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					hasSaveAs ?
 						{
-							'id': 'Section2',
 							'type': 'toolbox',
-							'text': '',
-							'enabled': 'true',
 							'children': [
 								{
 									'id': 'saveas',
@@ -90,10 +84,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						} : {},
 					hasShare ?
 						{
-							'id': 'Section3',
 							'type': 'toolbox',
-							'text': '',
-							'enabled': 'true',
 							'children': [
 								{
 									'id': 'shareas',
@@ -105,10 +96,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						} : {},
 					hasPrint ?
 						{
-							'id': 'Section4',
 							'type': 'toolbox',
-							'text': '',
-							'enabled': 'true',
 							'children': [
 								{
 									'id': 'print',
@@ -120,10 +108,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						} : {},
 					hasRevisionHistory ?
 						{
-							'id': 'Section5',
 							'type': 'toolbox',
-							'text': '',
-							'enabled': 'true',
 							'children': [
 								{
 									'id': 'rev-history',
@@ -134,23 +119,14 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							]
 						} : {},
 					{
-						'id': 'saveas-Section',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'vertical': 'true',
 						'children': [
 							{
-								'id': 'saveas-Section1',
 								'type': 'container',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
-										'id': 'Section7',
 										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
 										'children': [
 											{
 												'id': 'downloadas-ods',
@@ -163,16 +139,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								]
 							},
 							{
-								'id': 'saveas-Section2',
 								'type': 'container',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
-										'id': 'Section10',
 										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
 										'children': [
 											{
 												'id': 'downloadas-pdf',
@@ -187,23 +157,14 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'saveas-Section',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'vertical': 'true',
 						'children': [
 							{
-								'id': 'saveas-Section1',
 								'type': 'container',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
-										'id': 'Section8',
 										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
 										'children': [
 											{
 												'id': 'downloadas-xls',
@@ -216,16 +177,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								]
 							},
 							{
-								'id': 'saveas-Section2',
 								'type': 'container',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
-										'id': 'Section9',
 										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
 										'children': [
 											{
 												'id': 'downloadas-xlsx',
@@ -249,16 +204,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getHomeTab: function() {
 		var content = [
 			{
-				'id': 'Home-Section-Clipboard',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'SectionBottom87',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
 								'type': 'toolitem',
@@ -268,16 +217,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'GroupB9',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'id': 'LineA6',
 								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
 										'type': 'toolitem',
@@ -287,10 +230,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								]
 							},
 							{
-								'id': 'LineB7',
 								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
 										'type': 'toolitem',
@@ -302,32 +242,16 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						],
 						'vertical': 'true'
 					}
-				],
-				'vertical': 'false'
+				]
 			},
 			{
-				'id': 'Home-Section-Style',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'separator70',
-						'type': 'fixedline',
-						'text': '',
-						'enabled': 'true'
-					},
-					{
-						'id': 'GroupB13',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'id': 'LineA7',
 								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
 										'type': 'toolitem',
@@ -337,10 +261,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								]
 							},
 							{
-								'id': 'LineB8',
 								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
 										'type': 'toolitem',
@@ -352,1123 +273,439 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						],
 						'vertical': 'true'
 					}
-				],
-				'vertical': 'false'
+				]
 			},
 			{
-				'id': 'Home-Section-Format',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'FileSection8',
+						'id': 'box76',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'id': 'GroupB10',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'box76',
-										'type': 'container',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'font1',
-												'type': 'toolbox',
-												'text': '',
-												'enabled': 'true',
-												'children': [
-													{
-														'id': '',
-														'type': 'borderwindow',
-														'text': '',
-														'enabled': 'true',
-														'children': [
-															{
-																'id': 'fontnamecombobox',
-																'type': 'combobox',
-																'text': 'Carlito',
-																'enabled': 'true',
-																'children': [
-																	{
-																		'id': '',
-																		'type': 'pushbutton',
-																		'text': '',
-																		'enabled': 'true'
-																	},
-																	{
-																		'id': '',
-																		'type': 'edit',
-																		'text': 'Carlito',
-																		'enabled': 'true'
-																	}
-																],
-																'entries': [
-																	'Alef',
-																	'Amiri',
-																	'Amiri Quran',
-																	'Baekmuk Batang',
-																	'Baekmuk Dotum',
-																	'Baekmuk Gulim',
-																	'Baekmuk Headline',
-																	'Bandal',
-																	'Bangwool',
-																	'Caladea',
-																	'Cantarell',
-																	'Carlito',
-																	'David CLM',
-																	'David Libre',
-																	'DejaVu Math TeX Gyre',
-																	'DejaVu Sans',
-																	'DejaVu Sans Condensed',
-																	'DejaVu Sans Light',
-																	'DejaVu Sans Mono',
-																	'DejaVu Serif',
-																	'DejaVu Serif Condensed',
-																	'Droid Arabic Kufi',
-																	'Droid Arabic Naskh',
-																	'Droid Naskh Shift Alt',
-																	'Droid Sans',
-																	'Droid Sans Armenian',
-																	'Droid Sans Devanagari',
-																	'Droid Sans Ethiopic',
-																	'Droid Sans Fallback',
-																	'Droid Sans Georgian',
-																	'Droid Sans Hebrew',
-																	'Droid Sans Japanese',
-																	'Droid Sans Mono',
-																	'Droid Sans Tamil',
-																	'Droid Sans Thai',
-																	'Droid Serif',
-																	'East Syriac Adiabene',
-																	'East Syriac Ctesiphon',
-																	'EmojiOne Color',
-																	'Estrangelo Antioch',
-																	'Estrangelo Edessa',
-																	'Estrangelo Midyat',
-																	'Estrangelo Nisibin',
-																	'Estrangelo Nisibin Outline',
-																	'Estrangelo Quenneshrin',
-																	'Estrangelo Talada',
-																	'Estrangelo TurAbdin',
-																	'Eunjin',
-																	'Eunjin Nakseo',
-																	'Frank Ruehl CLM',
-																	'Frank Ruhl Hofshi',
-																	'Gentium Basic',
-																	'Gentium Book Basic',
-																	'Goha-Tibeb Zemen',
-																	'Guseul',
-																	'KacstBook',
-																	'KacstOffice',
-																	'Karla',
-																	'Khmer OS',
-																	'Khmer OS Battambang',
-																	'Khmer OS Bokor',
-																	'Khmer OS Content',
-																	'Khmer OS Fasthand',
-																	'Khmer OS Freehand',
-																	'Khmer OS Metal Chrieng',
-																	'Khmer OS Muol',
-																	'Khmer OS Muol Light',
-																	'Khmer OS Muol Pali',
-																	'Khmer OS Siemreap',
-																	'Khmer OS System',
-																	'Liberation Mono',
-																	'Liberation Sans',
-																	'Liberation Sans Narrow',
-																	'Liberation Serif',
-																	'Linux Biolinum G',
-																	'Linux Libertine Display G',
-																	'Linux Libertine G',
-																	'LM Mono 10',
-																	'LM Mono 12',
-																	'LM Mono 8',
-																	'LM Mono 9',
-																	'LM Mono Caps 10',
-																	'LM Mono Light 10',
-																	'LM Mono Light Cond 10',
-																	'LM Mono Prop 10',
-																	'LM Mono Prop Light 10',
-																	'LM Mono Slanted 10',
-																	'LM Roman 10',
-																	'LM Roman 12',
-																	'LM Roman 17',
-																	'LM Roman 5',
-																	'LM Roman 6',
-																	'LM Roman 7',
-																	'LM Roman 8',
-																	'LM Roman 9',
-																	'LM Roman Caps 10',
-																	'LM Roman Demi 10',
-																	'LM Roman Dunhill 10',
-																	'LM Roman Slanted 10',
-																	'LM Roman Slanted 12',
-																	'LM Roman Slanted 17',
-																	'LM Roman Slanted 8',
-																	'LM Roman Slanted 9',
-																	'LM Roman Unslanted 10',
-																	'LM Sans 10',
-																	'LM Sans 12',
-																	'LM Sans 17',
-																	'LM Sans 8',
-																	'LM Sans 9',
-																	'LM Sans Demi Cond 10',
-																	'LM Sans Quot 8',
-																	'Luxi Mono',
-																	'Luxi Sans',
-																	'Luxi Serif',
-																	'Miriam CLM',
-																	'Miriam Libre',
-																	'Miriam Mono CLM',
-																	'Nachlieli CLM',
-																	'Noto Color Emoji',
-																	'Noto Kufi Arabic',
-																	'Noto Mono',
-																	'Noto Naskh Arabic',
-																	'Noto Naskh Arabic UI',
-																	'Noto Sans',
-																	'Noto Sans Arabic',
-																	'Noto Sans Arabic UI',
-																	'Noto Sans Armenian',
-																	'Noto Sans Blk',
-																	'Noto Sans Cond',
-																	'Noto Sans Cond Blk',
-																	'Noto Sans Cond ExtBd',
-																	'Noto Sans Cond ExtLt',
-																	'Noto Sans Cond Light',
-																	'Noto Sans Cond Med',
-																	'Noto Sans Cond SemBd',
-																	'Noto Sans Cond Thin',
-																	'Noto Sans ExtBd',
-																	'Noto Sans ExtCond',
-																	'Noto Sans ExtCond Blk',
-																	'Noto Sans ExtCond ExtBd',
-																	'Noto Sans ExtCond ExtLt',
-																	'Noto Sans ExtCond Light',
-																	'Noto Sans ExtCond Med',
-																	'Noto Sans ExtCond SemBd',
-																	'Noto Sans ExtCond Thin',
-																	'Noto Sans ExtLt',
-																	'Noto Sans Georgian',
-																	'Noto Sans Hebrew',
-																	'Noto Sans JP Bold',
-																	'Noto Sans JP Regular',
-																	'Noto Sans KR Bold',
-																	'Noto Sans KR Regular',
-																	'Noto Sans Lao',
-																	'Noto Sans Light',
-																	'Noto Sans Lisu',
-																	'Noto Sans Med',
-																	'Noto Sans SC Bold',
-																	'Noto Sans SC Regular',
-																	'Noto Sans SemBd',
-																	'Noto Sans SemCond',
-																	'Noto Sans SemCond Blk',
-																	'Noto Sans SemCond ExtBd',
-																	'Noto Sans SemCond ExtLt',
-																	'Noto Sans SemCond Light',
-																	'Noto Sans SemCond Med',
-																	'Noto Sans SemCond SemBd',
-																	'Noto Sans SemCond Thin',
-																	'Noto Sans TC Bold',
-																	'Noto Sans TC Regular',
-																	'Noto Sans Thin',
-																	'Noto Serif',
-																	'Noto Serif Armenian',
-																	'Noto Serif Cond',
-																	'Noto Serif Georgian',
-																	'Noto Serif Hebrew',
-																	'Noto Serif Lao',
-																	'Noto Serif Light',
-																	'Open Sans',
-																	'Open Sans Condensed',
-																	'Open Sans Condensed Light',
-																	'Open Sans Extrabold',
-																	'Open Sans Light',
-																	'Open Sans Semibold',
-																	'OpenDyslexic',
-																	'OpenSymbol',
-																	'Reem Kufi',
-																	'Roboto',
-																	'Roboto Black',
-																	'Roboto Condensed',
-																	'Roboto Condensed Light',
-																	'Roboto Light',
-																	'Roboto Medium',
-																	'Roboto Slab',
-																	'Roboto Thin',
-																	'Rubik',
-																	'Scheherazade',
-																	'Serto Batnan',
-																	'Serto Jerusalem',
-																	'Serto Jerusalem Outline',
-																	'Serto Kharput',
-																	'Serto Malankara',
-																	'Serto Mardin',
-																	'Serto Urhoy',
-																	'Source Code Pro',
-																	'Source Code Pro Black',
-																	'Source Code Pro ExtraLight',
-																	'Source Code Pro Light',
-																	'Source Code Pro Medium',
-																	'Source Code Pro Semibold',
-																	'Source Sans Pro',
-																	'Source Sans Pro Black',
-																	'Source Sans Pro ExtraLight',
-																	'Source Sans Pro Light',
-																	'Source Sans Pro Semibold',
-																	'Source Serif Pro',
-																	'Source Serif Pro Black',
-																	'Source Serif Pro ExtraLight',
-																	'Source Serif Pro Light',
-																	'Source Serif Pro Semibold',
-																	'STIXGeneral'
-																],
-																'selectedCount': '1',
-																'selectedEntries': [
-																	'71'
-																],
-																'command': '.uno:CharFontName'
-															}
-														]
-													}
-												]
-											},
-											{
-												'id': 'fontheight1',
-												'type': 'toolbox',
-												'text': '',
-												'enabled': 'true',
-												'children': [
-													{
-														'id': 'fontsize',
-														'type': 'combobox',
-														'text': '10 pt',
-														'enabled': 'true',
-														'children': [
-															{
-																'id': '',
-																'type': 'pushbutton',
-																'text': '',
-																'enabled': 'true'
-															},
-															{
-																'id': '',
-																'type': 'edit',
-																'text': '10 pt',
-																'enabled': 'true'
-															},
-															{
-																'id': '',
-																'type': 'borderwindow',
-																'text': '',
-																'enabled': 'true',
-																'children': [
-																	{
-																		'id': '',
-																		'type': 'edit',
-																		'text': '',
-																		'enabled': 'true'
-																	}
-																]
-															}
-														],
-														'entries': [
-															'6 pt',
-															'7 pt',
-															'8 pt',
-															'9 pt',
-															'10 pt',
-															'10.5 pt',
-															'11 pt',
-															'12 pt',
-															'13 pt',
-															'14 pt',
-															'15 pt',
-															'16 pt',
-															'18 pt',
-															'20 pt',
-															'22 pt',
-															'24 pt',
-															'26 pt',
-															'28 pt',
-															'32 pt',
-															'36 pt',
-															'40 pt',
-															'44 pt',
-															'48 pt',
-															'54 pt',
-															'60 pt',
-															'66 pt',
-															'72 pt',
-															'80 pt',
-															'88 pt',
-															'96 pt'
-														],
-														'selectedCount': '1',
-														'selectedEntries': [
-															'4'
-														],
-														'command': '.uno:FontHeight'
-													}
-												]
-											},
-											{
-												'id': 'ExtTop6',
-												'type': 'toolbox',
-												'text': '',
-												'enabled': 'true',
-												'children': [
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:Grow'),
-														'command': '.uno:Grow'
-													},
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:Shrink'),
-														'command': '.uno:Shrink'
-													}
-												]
-											}
-										],
-										'vertical': 'false'
-									},
-									{
-										'id': 'GroupB11',
-										'type': 'container',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'ExtTop4',
-												'type': 'toolbox',
-												'text': '',
-												'enabled': 'true',
-												'children': [
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:Bold'),
-														'command': '.uno:Bold'
-													},
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:Italic'),
-														'command': '.uno:Italic'
-													},
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:Underline'),
-														'command': '.uno:Underline'
-													},
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:Strikeout'),
-														'command': '.uno:Strikeout'
-													}
-												]
-											},
-											{
-												'id': 'separator67',
-												'type': 'fixedline',
-												'text': '',
-												'enabled': 'true'
-											},
-											{
-												'id': 'ExtTop5',
-												'type': 'toolbox',
-												'text': '',
-												'enabled': 'true',
-												'children': [
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:SuperScript'),
-														'command': '.uno:SuperScript'
-													}
-												]
-											},
-											{
-												'id': 'separator78',
-												'type': 'fixedline',
-												'text': '',
-												'enabled': 'true'
-											},
-											{
-												'id': 'ExtTop2',
-												'type': 'toolbox',
-												'text': '',
-												'enabled': 'true',
-												'children': [
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:SetBorderStyle'),
-														'command': '.uno:SetBorderStyle'
-													},
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:BackgroundColor'),
-														'command': '.uno:BackgroundColor'
-													},
-													{
-														'type': 'toolitem',
-														'text': _UNO('.uno:Color'),
-														'command': '.uno:Color'
-													}
-												]
-											}
-										],
-										'vertical': 'false'
-									}
-								],
-								'vertical': 'true'
-							}
-						],
-						'vertical': 'false'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Home-Section-Align',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'separator102',
-						'type': 'fixedline',
-						'text': '',
-						'enabled': 'true'
-					},
-					{
-						'id': 'GroupB14',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'GroupB15',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'first6',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:AlignTop', 'spreadsheet'),
-												'command': '.uno:AlignTop'
-											},
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:AlignVCenter', 'spreadsheet'),
-												'command': '.uno:AlignVCenter'
-											},
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:AlignBottom', 'spreadsheet'),
-												'command': '.uno:AlignBottom'
-											}
-										]
-									}
-								],
-								'vertical': 'false'
+								'id': 'fontnamecombobox',
+								'type': 'combobox',
+								'text': 'Carlito',
+								'entries': [],
+								'selectedCount': '0',
+								'selectedEntries': [],
+								'command': '.uno:CharFontName'
 							},
 							{
-								'id': 'GroupB16',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'second6',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:AlignLeft', 'spreadsheet'),
-												'command': '.uno:AlignLeft'
-											},
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:AlignHorizontalCenter', 'spreadsheet'),
-												'command': '.uno:AlignHorizontalCenter'
-											},
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:AlignRight', 'spreadsheet'),
-												'command': '.uno:AlignRight'
-											}
-										]
-									}
-								],
-								'vertical': 'false'
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Home-Section-Align1',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB76',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'GroupB80',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'separator74',
-										'type': 'fixedline',
-										'text': '',
-										'enabled': 'true'
-									},
-									{
-										'id': 'first16',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:IncrementIndent'),
-												'command': '.uno:IncrementIndent'
-											},
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:DecrementIndent'),
-												'command': '.uno:DecrementIndent'
-											}
-										]
-									}
-								],
-								'vertical': 'false'
+								'id': 'fontsize',
+								'type': 'combobox',
+								'text': '12 pt',
+								'entries': [],
+								'selectedCount': '0',
+								'selectedEntries': [],
+								'command': '.uno:FontHeight'
 							},
 							{
-								'id': 'GroupB85',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
+								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'second12',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:AlignBlock', 'spreadsheet'),
-												'command': '.uno:AlignBlock'
-											}
-										]
+										'type': 'toolitem',
+										'text': _UNO('.uno:Grow'),
+										'command': '.uno:Grow'
 									},
 									{
-										'id': 'separator77',
-										'type': 'fixedline',
-										'text': '',
-										'enabled': 'true'
-									},
-									{
-										'id': 'second14',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:WrapText', 'spreadsheet'),
-												'command': '.uno:WrapText'
-											}
-										]
+										'type': 'toolitem',
+										'text': _UNO('.uno:Shrink'),
+										'command': '.uno:Shrink'
 									}
-								],
-								'vertical': 'false'
+								]
 							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Home-Section-Number',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'separator30',
-						'type': 'fixedline',
-						'text': '',
-						'enabled': 'true'
+						]
 					},
 					{
-						'id': 'GroupB18',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'id': 'box2',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
+								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'SectionBottom36',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': '',
-												'type': 'borderwindow',
-												'text': '',
-												'enabled': 'true',
-												'children': [
-													{
-														'id': 'numbertype',
-														'type': 'listbox',
-														'text': '',
-														'enabled': 'true',
-														'children': [
-															{
-																'id': '',
-																'type': 'control',
-																'text': '',
-																'enabled': 'true'
-															},
-															{
-																'id': '',
-																'type': 'pushbutton',
-																'text': '',
-																'enabled': 'true'
-															}
-														],
-														'entries': [
-															'General',
-															'Number',
-															'Percent',
-															'Currency',
-															'Date',
-															'Time',
-															'Scientific',
-															'Fraction',
-															'Boolean Value',
-															'Text'
-														],
-														'selectedCount': '1',
-														'selectedEntries': [
-															'0'
-														]
-													}
-												]
-											}
-										]
+										'type': 'toolitem',
+										'text': _UNO('.uno:Bold'),
+										'command': '.uno:Bold'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Italic'),
+										'command': '.uno:Italic'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Underline'),
+										'command': '.uno:Underline'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Strikeout'),
+										'command': '.uno:Strikeout'
 									}
-								],
-								'vertical': 'false'
+								]
 							},
 							{
-								'id': 'GroupB22',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
+								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'second9',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:NumberFormatCurrency', 'spreadsheet'),
-												'command': '.uno:NumberFormatCurrency'
-											},
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:NumberFormatPercent', 'spreadsheet'),
-												'command': '.uno:NumberFormatPercent'
-											},
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:NumberFormatDecimal', 'spreadsheet'),
-												'command': '.uno:NumberFormatDecimal'
-											}
-										]
-									},
-									{
-										'id': 'separator27',
-										'type': 'fixedline',
-										'text': '',
-										'enabled': 'true'
-									},
-									{
-										'id': 'second2',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet'),
-												'command': '.uno:NumberFormatIncDecimals'
-											},
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet'),
-												'command': '.uno:NumberFormatDecDecimals'
-											}
-										]
+										'type': 'toolitem',
+										'text': _UNO('.uno:SuperScript'),
+										'command': '.uno:SuperScript'
 									}
-								],
-								'vertical': 'false'
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Home-Section-Cell',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'separator53',
-						'type': 'fixedline',
-						'text': '',
-						'enabled': 'true'
-					},
-					{
-						'id': 'SectionBottom35',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
+								]
+							},
 							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ToggleMergeCells', 'spreadsheet'),
-								'command': '.uno:ToggleMergeCells'
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:SetBorderStyle'),
+										'command': '.uno:SetBorderStyle'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:BackgroundColor'),
+										'command': '.uno:BackgroundColor'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Color'),
+										'command': '.uno:Color'
+									}
+								]
 							}
 						]
 					}
 				],
-				'vertical': 'false'
+				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Cell1',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'GroupB20',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'id': 'LineA10',
 								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:InsertRowsBefore', 'spreadsheet'),
-										'command': '.uno:InsertRowsBefore'
+										'text': _UNO('.uno:AlignTop', 'spreadsheet'),
+										'command': '.uno:AlignTop'
 									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:DeleteRows', 'spreadsheet'),
-										'command': '.uno:DeleteRows'
+										'text': _UNO('.uno:AlignVCenter', 'spreadsheet'),
+										'command': '.uno:AlignVCenter'
 									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:RowOperations', 'spreadsheet'),
-										'command': '.uno:RowOperations'
-									}
-								]
-							},
-							{
-								'id': 'LineB11',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertColumnsBefore', 'spreadsheet'),
-										'command': '.uno:InsertColumnsBefore'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DeleteColumns', 'spreadsheet'),
-										'command': '.uno:DeleteColumns'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:ColumnOperations', 'spreadsheet'),
-										'command': '.uno:ColumnOperations'
+										'text': _UNO('.uno:AlignBottom', 'spreadsheet'),
+										'command': '.uno:AlignBottom'
 									}
 								]
 							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Home-Section-Style2',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'separator25',
-						'type': 'fixedline',
-						'text': '',
-						'enabled': 'true'
+						]
 					},
 					{
-						'id': 'GroupB17',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'id': 'GroupB19',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
+								'type': 'toolbox',
 								'children': [
 									{
-										'id': 'SectionBottom5',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:DesignerDialog'),
-												'command': '.uno:DesignerDialog'
-											}
-										]
+										'type': 'toolitem',
+										'text': _UNO('.uno:AlignLeft', 'spreadsheet'),
+										'command': '.uno:AlignLeft'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:AlignHorizontalCenter', 'spreadsheet'),
+										'command': '.uno:AlignHorizontalCenter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:AlignRight', 'spreadsheet'),
+										'command': '.uno:AlignRight'
 									}
-								],
-								'vertical': 'false'
-							},
-							{
-								'id': 'StyleParagraphSection1',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'SectionBottom102',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _('Default'),
-												'command': '.uno:StyleApply?Style:string=Default&FamilyName:string=CellStyles'
-											}
-										]
-									},
-									{
-										'id': 'separator106',
-										'type': 'fixedline',
-										'text': '',
-										'enabled': 'true'
-									},
-									{
-										'id': 'SectionBottom93',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _('Heading 1'),
-												'command': '.uno:StyleApply?Style:string=Heading 1&FamilyName:string=CellStyles'
-											},
-											{
-												'type': 'toolitem',
-												'text': _('Heading 2'),
-												'command': '.uno:StyleApply?Style:string=Heading 2&FamilyName:string=CellStyles'
-											}
-										]
-									},
-									{
-										'id': 'separator24',
-										'type': 'fixedline',
-										'text': '',
-										'enabled': 'true'
-									},
-									{
-										'id': 'SectionBottom7',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _('Good'),
-												'command': '.uno:StyleApply?Style:string=Good&FamilyName:string=CellStyles'
-											},
-											{
-												'type': 'toolitem',
-												'text': _('Neutral'),
-												'command': '.uno:StyleApply?Style:string=Neutral&FamilyName:string=CellStyles'
-											},
-											{
-												'type': 'toolitem',
-												'text': _('Bad'),
-												'command': '.uno:StyleApply?Style:string=Bad&FamilyName:string=CellStyles'
-											}
-										]
-									}
-								],
-								'vertical': 'false'
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Home-Section-Condition',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'separator1',
-						'type': 'fixedline',
-						'text': '',
-						'enabled': 'true'
-					},
-					{
-						'id': 'SectionBottom37',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'),
-								'command': '.uno:ConditionalFormatMenu'
+								]
 							}
 						]
 					}
 				],
-				'vertical': 'false'
+				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Find',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'separator72',
-						'type': 'fixedline',
-						'text': '',
-						'enabled': 'true'
-					},
-					{
-						'id': 'SectionBottom26',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:SearchDialog'),
-								'command': '.uno:SearchDialog'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Home-Section-Find1',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB47',
 						'type': 'container',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'id': 'LineA17',
 								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:DataSort', 'spreadsheet'),
-										'command': '.uno:DataSort'
+										'text': _UNO('.uno:IncrementIndent'),
+										'command': '.uno:IncrementIndent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DecrementIndent'),
+										'command': '.uno:DecrementIndent'
+									}
+								]
+							}
+						]
+					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:AlignBlock', 'spreadsheet'),
+										'command': '.uno:AlignBlock'
 									}
 								]
 							},
 							{
-								'id': 'LineB19',
 								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterAutoFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterAutoFilter'
+										'text': _UNO('.uno:WrapText', 'spreadsheet'),
+										'command': '.uno:WrapText'
 									}
 								]
 							}
-						],
-						'vertical': 'true'
+						]
 					}
 				],
-				'vertical': 'false'
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'numbertype',
+						'type': 'listbox',
+						'children': [],
+						'entries': [
+							_('General'),
+							_('Number'),
+							_('Percent'),
+							_('Currency'),
+							_('Date'),
+							_('Time'),
+							_('Scientific'),
+							_('Fraction'),
+							_('Boolean Value'),
+							_('Text')
+						],
+						'selectedCount': '1',
+						'selectedEntries': [
+							'0'
+						]
+					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatCurrency', 'spreadsheet'),
+										'command': '.uno:NumberFormatCurrency'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatPercent', 'spreadsheet'),
+										'command': '.uno:NumberFormatPercent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatDecimal', 'spreadsheet'),
+										'command': '.uno:NumberFormatDecimal'
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet'),
+										'command': '.uno:NumberFormatIncDecimals'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet'),
+										'command': '.uno:NumberFormatDecDecimals'
+									}
+								]
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:ToggleMergeCells', 'spreadsheet'),
+				'command': '.uno:ToggleMergeCells'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertRowsBefore', 'spreadsheet'),
+								'command': '.uno:InsertRowsBefore'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DeleteRows', 'spreadsheet'),
+								'command': '.uno:DeleteRows'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:RowOperations', 'spreadsheet'),
+								'command': '.uno:RowOperations'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertColumnsBefore', 'spreadsheet'),
+								'command': '.uno:InsertColumnsBefore'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DeleteColumns', 'spreadsheet'),
+								'command': '.uno:DeleteColumns'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ColumnOperations', 'spreadsheet'),
+								'command': '.uno:ColumnOperations'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DesignerDialog'),
+								'command': '.uno:DesignerDialog'
+							}
+						]
+					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _('Default'),
+										'command': '.uno:StyleApply?Style:string=Default&FamilyName:string=CellStyles'
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _('Heading 1'),
+										'command': '.uno:StyleApply?Style:string=Heading 1&FamilyName:string=CellStyles'
+									},
+									{
+										'type': 'toolitem',
+										'text': _('Heading 2'),
+										'command': '.uno:StyleApply?Style:string=Heading 2&FamilyName:string=CellStyles'
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _('Good'),
+										'command': '.uno:StyleApply?Style:string=Good&FamilyName:string=CellStyles'
+									},
+									{
+										'type': 'toolitem',
+										'text': _('Neutral'),
+										'command': '.uno:StyleApply?Style:string=Neutral&FamilyName:string=CellStyles'
+									},
+									{
+										'type': 'toolitem',
+										'text': _('Bad'),
+										'command': '.uno:StyleApply?Style:string=Bad&FamilyName:string=CellStyles'
+									}
+								]
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'),
+				'command': '.uno:ConditionalFormatMenu'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:SearchDialog'),
+				'command': '.uno:SearchDialog'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataSort', 'spreadsheet'),
+								'command': '.uno:DataSort'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterAutoFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterAutoFilter'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			}
 		];
 
@@ -1478,267 +715,182 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getSheetTab: function() {
 		var content = [
 			{
-				'id': 'Sheet-Section',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
+				'command': '.uno:PageFormatDialog'
+			},
+			{
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
+				'vertical': 'true',
 				'children': [
 					{
-						'id': 'PageFormatDialog-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'SectionBottom655',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'bigtoolitem',
-										'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
-										'command': '.uno:PageFormatDialog'
-									}
-								]
-							}
-						],
-						'vertical': 'false'
-					},
-					{
-						'id': 'rows-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Rows Above'),
-										'command': '.uno:InsertRowsBefore'
-									}
-								]
-							},
-							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Rows Below'),
-										'command': '.uno:InsertRowsAfter'
-									}
-								]
+								'type': 'toolitem',
+								'text': _('Insert Rows Above'),
+								'command': '.uno:InsertRowsBefore'
 							}
 						]
 					},
 					{
-						'id': 'columns-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'Section8',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Columns Before'),
-										'command': '.uno:InsertColumnsBefore'
-									}
-								]
-							},
-							{
-								'id': 'Section9',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Columns After'),
-										'command': '.uno:InsertColumnsAfter'
-									}
-								]
+								'type': 'toolitem',
+								'text': _('Insert Rows Below'),
+								'command': '.uno:InsertRowsAfter'
 							}
 						]
-					},
-					{
-						'id': 'break-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Row Break'),
-										'command': '.uno:InsertRowBreak'
-									}
-								]
-							},
-							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Column Break'),
-										'command': '.uno:InsertColumnBreak'
-									}
-								]
-							}
-						]
-					},
-					{
-						'id': 'delete-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Delete Rows'),
-										'command': '.uno:DeleteRows'
-									}
-								]
-							},
-							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Delete Columns'),
-										'command': '.uno:DeleteColumns'
-									}
-								]
-							}
-						]
-					},
-					{
-						'id': 'deletebreak-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Remove Row Break'),
-										'command': '.uno:DeleteRowbreak'
-									}
-								]
-							},
-							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Remove Column Break'),
-										'command': '.uno:DeleteColumnbreak'
-									}
-								]
-							}
-						]
-					},
-					window.mode.isDesktop()? {
-						'id': 'freeze-section1',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:FreezePanes', 'spreadsheet', true),
-										'command': '.uno:FreezePanes'
-									}
-								]
-							}
-						]
-					} : {},
-					window.mode.isDesktop()? {
-						'id': 'freeze-section2',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text':_UNO('.uno:FreezePanesColumn', 'spreadsheet', true),
-										'command': '.uno:FreezePanesColumn'
-									}
-								]
-							},
-							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:FreezePanesRow', 'spreadsheet', true),
-										'command': '.uno:FreezePanesRow'
-									}
-								]
-							}
-						]
-					} : {}
+					}
 				]
-			}
+			},
+			{
+				'type': 'container',
+				'vertical': 'true',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Insert Columns Before'),
+								'command': '.uno:InsertColumnsBefore'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Insert Columns After'),
+								'command': '.uno:InsertColumnsAfter'
+							}
+						]
+					}
+				]
+			},
+			{
+				'type': 'container',
+				'vertical': 'true',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Insert Row Break'),
+								'command': '.uno:InsertRowBreak'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Insert Column Break'),
+								'command': '.uno:InsertColumnBreak'
+							}
+						]
+					}
+				]
+			},
+			{
+				'type': 'container',
+				'vertical': 'true',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Delete Rows'),
+								'command': '.uno:DeleteRows'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Delete Columns'),
+								'command': '.uno:DeleteColumns'
+							}
+						]
+					}
+				]
+			},
+			{
+				'type': 'container',
+				'vertical': 'true',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Remove Row Break'),
+								'command': '.uno:DeleteRowbreak'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Remove Column Break'),
+								'command': '.uno:DeleteColumnbreak'
+							}
+						]
+					}
+				]
+			},
+			window.mode.isDesktop()? {
+				'type': 'container',
+				'vertical': 'true',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FreezePanes', 'spreadsheet', true),
+								'command': '.uno:FreezePanes'
+							}
+						]
+					}
+				]
+			} : {},
+			window.mode.isDesktop()? {
+				'type': 'container',
+				'vertical': 'true',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text':_UNO('.uno:FreezePanesColumn', 'spreadsheet', true),
+								'command': '.uno:FreezePanesColumn'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FreezePanesRow', 'spreadsheet', true),
+								'command': '.uno:FreezePanesRow'
+							}
+						]
+					}
+				]
+			} : {}
 		];
 
 		return this.getTabPage('Sheet', content);
@@ -1747,16 +899,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getInsertTab: function() {
 		var content = [
 			{
-				'id': 'Insert-Section-PivotTable',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'SectionPivotTable',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
 								'type': 'bigtoolitem',
@@ -1765,272 +911,115 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							}
 						]
 					}
-				],
-				'vertical': 'false'
+				]
 			},
 			{
-				'id': 'Insert-Section-PivotTable-Ext',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'GroupB292',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'LineA152',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:RecalcPivotTable', 'spreadsheet'),
-										'command': '.uno:RecalcPivotTable'
-									}
-								]
-							},
-							{
-								'id': 'LineB162',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DeletePivotTable', 'spreadsheet'),
-										'command': '.uno:DeletePivotTable'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-Table1',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'LineA11',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:InsertObjectChart'),
-								'command': '.uno:InsertObjectChart'
+								'type': 'toolitem',
+								'text': _UNO('.uno:RecalcPivotTable', 'spreadsheet'),
+								'command': '.uno:RecalcPivotTable'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DeletePivotTable', 'spreadsheet'),
+								'command': '.uno:DeletePivotTable'
 							}
 						]
 					}
 				],
-				'vertical': 'false'
+				'vertical': 'true'
 			},
 			{
-				'id': 'Insert-Section-PivotTable-Ext',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB292',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'LineA152',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:InsertGraphic'),
-										'command': '.uno:InsertGraphic'
-									}
-								]
-							},
-							{
-								'id': 'LineB162',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:FunctionDialog', 'spreadsheet'),
-										'command': '.uno:FunctionDialog'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertObjectChart'),
+				'command': '.uno:InsertObjectChart'
 			},
 			{
-				'id': 'Insert-Section-Fontwork',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'SectionBottom656',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater'
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertGraphic'),
+								'command': '.uno:InsertGraphic'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FunctionDialog', 'spreadsheet'),
+								'command': '.uno:FunctionDialog'
 							}
 						]
 					}
 				],
-				'vertical': 'false'
+				'vertical': 'true'
 			},
 			{
-				'id': 'Insert-Section-Hyperlink',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FontworkGalleryFloater'),
+				'command': '.uno:FontworkGalleryFloater'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:HyperlinkDialog'),
+				'command': '.uno:HyperlinkDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:DrawText'),
+				'command': '.uno:DrawText'
+			},
+			{
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'SectionBottom14',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:HyperlinkDialog'),
-								'command': '.uno:HyperlinkDialog'
+								'type': 'toolitem',
+								'text': _UNO('.uno:BasicShapes'),
+								'command': '.uno:BasicShapes'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:VerticalText', 'text'),
+								'command': '.uno:VerticalText'
 							}
 						]
 					}
 				],
-				'vertical': 'false'
+				'vertical': 'true'
 			},
 			{
-				'id': 'Insert-Text',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'shapes6',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:DrawText'),
-								'command': '.uno:DrawText'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:CharmapControl'),
+				'command': '.uno:CharmapControl'
 			},
 			{
-				'id': 'Insert-BasicShapes-VerticalText',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'GroupB293',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'LineA153',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:BasicShapes'),
-										'command': '.uno:BasicShapes'
-									}
-								]
-							},
-							{
-								'id': 'LineB163',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:VerticalText', 'text'),
-										'command': '.uno:VerticalText'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-Symbol',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'shapes6',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:CharmapControl'),
-								'command': '.uno:CharmapControl'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Insert-Section-HeaderFooter',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'SectionHeaderFooter',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:EditHeaderAndFooter', 'spreadsheet'),
-								'command': '.uno:EditHeaderAndFooter'
-							}
-						]
-					}
-				],
-				'vertical': 'false'
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:EditHeaderAndFooter', 'spreadsheet'),
+				'command': '.uno:EditHeaderAndFooter'
 			}
 		];
 
@@ -2040,355 +1029,217 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getDataTab: function() {
 		var content = [
 			{
-				'id': 'Data-Section-Calculate',
+				'type': 'toolitem',
+				'text': _UNO('.uno:Calculate', 'spreadsheet'),
+				'command': '.uno:Calculate'
+			},
+			{
+				'type': 'toolbox',
+				'children': [
+					{
+						'type': 'toolitem',
+						'text': _UNO('.uno:DataDataPilotRun', 'spreadsheet'),
+						'command': '.uno:DataDataPilotRun'
+					}
+				]
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
-						'id': 'separator37',
-						'type': 'separator',
-						'orientation': 'vertical'
-					},
-					{
-						'id': 'SectionBottom13',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Calculate', 'spreadsheet'),
-								'command': '.uno:Calculate'
+								'text': _UNO('.uno:RecalcPivotTable', 'spreadsheet'),
+								'command': '.uno:RecalcPivotTable'
 							}
 						]
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-PivotTable',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'separator377',
-						'type': 'separator',
-						'orientation': 'vertical'
 					},
 					{
-						'id': 'SectionPivotTable1',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DataDataPilotRun', 'spreadsheet'),
-								'command': '.uno:DataDataPilotRun'
+								'text': _UNO('.uno:DeletePivotTable', 'spreadsheet'),
+								'command': '.uno:DeletePivotTable'
 							}
 						]
-					},
-					{
-						'id': 'GroupPivotTable1',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'ToolBoxPivotTable1',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:RecalcPivotTable', 'spreadsheet'),
-										'command': '.uno:RecalcPivotTable'
-									}
-								]
-							},
-							{
-								'id': 'ToolBoxPivotTable2',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DeletePivotTable', 'spreadsheet'),
-										'command': '.uno:DeletePivotTable'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
 					}
-				]
+				],
+				'vertical': 'true'
 			},
 			{
-				'id': 'Data-Section-Sort',
+				'type': 'toolitem',
+				'text': _UNO('.uno:DataSort', 'spreadsheet'),
+				'command': '.uno:DataSort'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
-						'id': 'separator18',
-						'type': 'separator',
-						'orientation': 'vertical'
-					},
-					{
-						'id': 'SectionBottom3',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DataSort', 'spreadsheet'),
-								'command': '.uno:DataSort'
+								'text': _UNO('.uno:SortAscending', 'spreadsheet'),
+								'command': '.uno:SortAscending'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SortDescending', 'spreadsheet'),
+								'command': '.uno:SortDescending'
 							}
 						]
 					}
-				]
+				],
+				'vertical': 'true'
 			},
 			{
-				'id': 'Data-Section-Sort1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'GroupB39',
-						'type': 'container',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'LeftParaMargin8',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:SortAscending', 'spreadsheet'),
-										'command': '.uno:SortAscending'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing8',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:SortDescending', 'spreadsheet'),
-										'command': '.uno:SortDescending'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterAutoFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterAutoFilter'
 							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-Filter',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'separator19',
-						'type': 'separator',
-						'orientation': 'vertical'
+						]
 					},
 					{
-						'id': 'GroupB458',
-						'type': 'container',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'SectionBottom8',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterAutoFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterAutoFilter'
-									}
-								]
-							},
-							{
-								'id': 'SectionBottom88',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterSpecialFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterSpecialFilter'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterSpecialFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterSpecialFilter'
 							}
-						],
-						'vertical': 'true'
+						]
 					}
-				]
+				],
+				'vertical': 'true'
 			},
 			{
-				'id': 'Data-Section-Filter1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'GroupB45',
-						'type': 'container',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'belowspacing9',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterStandardFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterStandardFilter'
-									}
-								]
-							},
-							{
-								'id': 'LeftParaMargin9',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterHideAutoFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterHideAutoFilter'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterStandardFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterStandardFilter'
 							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-Group1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB54',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LeftParaMargin14',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Group'),
-										'command': '.uno:Group'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing16',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Ungroup'),
-										'command': '.uno:Ungroup'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-Group2',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB92',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LeftParaMargin15',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:HideDetail'),
-										'command': '.uno:HideDetail'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing17',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:ShowDetail'),
-										'command': '.uno:ShowDetail'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-NamedRanges',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB561',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LeftParaMargin161',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:AddName', 'spreadsheet'),
-										'command': '.uno:AddName'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing181',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DefineName', 'spreadsheet'),
-										'command': '.uno:DefineName'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-TextToColumn1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB65',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'belowspacing11',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Validation', 'spreadsheet'),
-										'command': '.uno:Validation'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-Statistic',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'separator41',
-						'type': 'separator',
-						'orientation': 'vertical'
+						]
 					},
 					{
-						'id': 'Data-StatisticsMenu:Menu Statistic',
-						'type': 'menubutton',
-						'text': _UNO('.uno:StatisticsMenu', 'spreadsheet'),
-						'enabled': 'true'
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterHideAutoFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterHideAutoFilter'
+							}
+						]
 					}
-				]
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Group'),
+								'command': '.uno:Group'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Ungroup'),
+								'command': '.uno:Ungroup'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:HideDetail'),
+								'command': '.uno:HideDetail'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ShowDetail'),
+								'command': '.uno:ShowDetail'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AddName'),
+								'command': '.uno:AddName'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DefineName'),
+								'command': '.uno:DefineName'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:Validation', 'spreadsheet'),
+				'command': '.uno:Validation'
+			},
+			{
+				'id': 'Data-StatisticsMenu:Menu Statistic',
+				'type': 'menubutton',
+				'text': _UNO('.uno:StatisticsMenu'),
+				'enabled': 'true'
 			}
 		];
 
@@ -2398,157 +1249,81 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getReviewTab: function() {
 		var content = [
 			{
-				'id': 'Review-Section-Language',
+				'type': 'toolitem',
+				'text': _UNO('.uno:SpellDialog'),
+				'command': '.uno:SpellDialog'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:ThesaurusDialog'),
+				'command': '.uno:ThesaurusDialog'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom67',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:SpellDialog'),
-								'command': '.uno:SpellDialog'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ThesaurusDialog'),
-								'command': '.uno:ThesaurusDialog'
+								'text': _UNO('.uno:SpellOnline'),
+								'command': '.uno:SpellOnline'
 							}
 						]
-					}
-				]
-			},
-			{
-				'id': 'Review-Section-Language1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB40',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LineA19',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:SpellOnline'),
-										'command': '.uno:SpellOnline'
-									}
-								]
-							},
-							{
-								'id': 'LineB20',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Hyphenate', 'spreadsheet'),
-										'command': '.uno:Hyphenate'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Review-Section-Annotation',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'separator109',
-						'type': 'separator',
-						'orientation': 'vertical'
 					},
 					{
-						'id': 'SectionBottom69',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertAnnotation'),
-								'command': '.uno:InsertAnnotation'
+								'text': _UNO('.uno:Hyphenate', 'spreadsheet'),
+								'command': '.uno:Hyphenate'
 							}
 						]
 					}
-				]
+				],
+				'vertical': 'true'
 			},
 			{
-				'id': 'Review-Section-Annotation2',
+				'type': 'toolitem',
+				'text': _UNO('.uno:InsertAnnotation'),
+				'command': '.uno:InsertAnnotation'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
-						'id': 'GroupB43',
-						'type': 'container',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'LeftParaMargin17',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DeleteAllNotes'),
-										'command': '.uno:DeleteAllNotes'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing15',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DeleteNote', 'spreadsheet'),
-										'command': '.uno:DeleteNote'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:DeleteAllNotes'),
+								'command': '.uno:DeleteAllNotes'
 							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Review-Section-TrackChanges',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'separator112',
-						'type': 'separator',
-						'orientation': 'vertical'
+						]
 					},
 					{
-						'id': 'SectionBottom72',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:TraceChangeMode', 'spreadsheet'),
-								'command': '.uno:TraceChangeMode'
+								'text': _UNO('.uno:DeleteNote', 'spreadsheet'),
+								'command': '.uno:DeleteNote'
 							}
 						]
 					}
-				]
+				],
+				'vertical': 'true'
 			},
 			{
-				'id': 'Review-Section-TrackChanges1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'SectionBottom88',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:AcceptChanges', 'spreadsheet'),
-								'command': '.uno:AcceptChanges'
-							}
-						]
-					}
-				]
+				'type': 'toolitem',
+				'text': _UNO('.uno:TraceChangeMode', 'spreadsheet'),
+				'command': '.uno:TraceChangeMode'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:AcceptChanges', 'spreadsheet'),
+				'command': '.uno:AcceptChanges'
 			}
 		];
 
