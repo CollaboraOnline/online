@@ -279,7 +279,7 @@ public:
     static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
                                        const std::string &tag, bool sendError = false);
 
-    bool isMarkedToDestroy() const { return _markToDestroy || _stop; }
+    bool isMarkedToDestroy() const { return _docState.isMarkedToDestroy() || _stop; }
 
     bool handleInput(const std::vector<char>& payload);
 
@@ -492,7 +492,14 @@ private:
             _status = newStatus;
         }
 
-        /// Flag close-requested. Cannot be reset.
+        /// True iff the document is fully loaded and available for viewing/editing.
+        bool isLive() const { return _status == Status::Live; }
+
+        /// Flags the document for unloading and destruction.
+        void markToDestroy() { _status = Status::Destroying; }
+        bool isMarkedToDestroy() const { return _status >= Status::Destroying; }
+
+        /// Flag document termination. Cannot be reset.
         void setCloseRequested() { _closeRequested = true; }
         bool isCloseRequested() const { return _closeRequested; }
 
@@ -535,7 +542,6 @@ private:
 
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
-    std::atomic<bool> _markToDestroy;
     std::atomic<bool> _isLoaded;
     std::atomic<bool> _isModified;
     bool _interactive; //< If the document has interactive dialogs before load
