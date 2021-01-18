@@ -392,7 +392,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	height: 24px !important;
 }
 
-#table-fontsize .select2.select2-container {
+#fontsize.notebookbar .select2.select2-container {
 	width: 60px !important;
 }
 
@@ -405,15 +405,15 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-left: 62px !important;
 }
 
-#fontnamecombobox.notebookbar ~ .select2 {
+#fontnamecombobox.notebookbar .select2 {
 	width: 150px !important;
 }
 
-#fontsizecombobox.notebookbar ~ .select2 {
+#fontsizecombobox.notebookbar .select2 {
 	width: 50px !important;
 }
 
-#applystyle.notebookbar ~ .select2 {
+#applystyle.notebookbar .select2 {
 	width: 170px !important;
 }
 
@@ -580,7 +580,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	display: none;
 }
 
-#table-numbertype .select2.select2-container {
+#numbertype .select2.select2-container {
 	width: 170px !important;
 }
 
