@@ -594,6 +594,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     bool firstInstance = false;
     if (_storage == nullptr)
     {
+        _docState.setStatus(DocumentState::Status::Downloading);
+
         // Pass the public URI to storage as it needs to load using the token
         // and other storage-specific data provided in the URI.
         const Poco::URI& uriPublic = session->getPublicUri();
@@ -802,6 +804,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     {
         std::string localPath = _storage->downloadStorageFileToLocal(
             session->getAuthorization(), session->getCookies(), *_lockCtx, templateSource);
+
+        _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
 
         // Only lock the document on storage for editing sessions
         // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
