@@ -213,14 +213,14 @@ L.TileSectionManager = L.Class.extend({
 	_addTilesSection: function () {
 		var that = this;
 		this._sectionContainer.createSection({
-			name: 'tiles',
+			name: L.CSections.Tiles.name,
 			anchor: 'top left',
 			position: [250 * that._dpiScale, 250 * that._dpiScale], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
 			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
 			expand: 'top left bottom right', // Expand to all directions.
-			processingOrder: 5,
-			drawingOrder: 5,
-			zIndex: 5,
+			processingOrder: L.CSections.Tiles.processingOrder,
+			drawingOrder: L.CSections.Tiles.drawingOrder,
+			zIndex: L.CSections.Tiles.zIndex,
 			interactable: false,
 			sectionProperties: {
 				docLayer: that._layer,
@@ -236,14 +236,14 @@ L.TileSectionManager = L.Class.extend({
 	_addGridSection: function () {
 		var that = this;
 		this._sectionContainer.createSection({
-			name: 'calc grid',
+			name: L.CSections.CalcGrid.name,
 			anchor: 'top left',
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			processingOrder: 5, // Size and position will be copied, this value is not important.
-			drawingOrder: 4,
-			zIndex: 5,
+			processingOrder: L.CSections.CalcGrid.processingOrder, // Size and position will be copied, this value is not important.
+			drawingOrder: L.CSections.CalcGrid.drawingOrder,
+			zIndex: L.CSections.CalcGrid.zIndex,
 			// Even if this one is drawn on top, won't be able to catch events.
 			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
 			interactable: false,
@@ -305,14 +305,14 @@ L.TileSectionManager = L.Class.extend({
 	_addSplitsSection: function () {
 		var that = this;
 		this._sectionContainer.createSection({
-			name: 'splits',
+			name: L.CSections.Debug.Splits.name,
 			anchor: 'top left',
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			processingOrder: 5, // Size and position will be copied, this value is not important.
-			drawingOrder: 8, // Above tiles section (same zIndex, higher drawing order).
-			zIndex: 5,
+			processingOrder: L.CSections.Debug.Splits.processingOrder,
+			drawingOrder: L.CSections.Debug.Splits.drawingOrder,
+			zIndex: L.CSections.Debug.Splits.zIndex,
 			// Even if this one is drawn on top, won't be able to catch events.
 			// Sections with "interactable: true" can catch events even if they are under a section with property "interactable: false".
 			interactable: false,
@@ -327,14 +327,14 @@ L.TileSectionManager = L.Class.extend({
 	_addTilePixelGridSection: function () {
 		var that = this;
 		this._sectionContainer.createSection({
-			name: 'tile pixel grid',
+			name: L.CSections.Debug.TilePixelGrid.name,
 			anchor: 'top left',
 			position: [0, 0],
 			size: [0, 0],
 			expand: '',
-			processingOrder: 5, // Size and position will be copied, this value is not important.
-			drawingOrder: 6,
-			zIndex: 5,
+			processingOrder: L.CSections.Debug.TilePixelGrid.processingOrder, // Size and position will be copied, this value is not important.
+			drawingOrder: L.CSections.Debug.TilePixelGrid.drawingOrder,
+			zIndex: L.CSections.Debug.TilePixelGrid.zIndex,
 			interactable: false,
 			sectionProperties: {},
 			onDraw: that._onDrawTilePixelGrid
