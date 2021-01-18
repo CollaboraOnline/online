@@ -440,6 +440,64 @@ private:
     std::string _jailId;
     std::string _filename;
 
+    /// The state of the document.
+    /// This regulates all other primary operations.
+    class DocumentState
+    {
+    public:
+        /// Strictly speaking, these are phases that are directional.
+        /// A document starts as New and progresses towards Unloaded.
+        /// Upon error, intermediary states may be skipped.
+        enum class Status
+        {
+            None, //< Doesn't exist, pending downloading.
+            Downloading, //< Download from Storage to disk. Synchronous.
+            Loading, //< Loading the document in Core.
+            Live, //< General availability for viewing/editing.
+            Destroying, //< End-of-life, marked to destroy.
+            Destroyed //< Unloading complete, destruction pending.
+        };
+
+        static std::string toString(Status status)
+        {
+#define CASE(X)                                                                                    \
+    case X:                                                                                        \
+        return #X;
+            switch (status)
+            {
+                CASE(Status::None);
+                CASE(Status::Downloading);
+                CASE(Status::Loading);
+                CASE(Status::Live);
+                CASE(Status::Destroying);
+                CASE(Status::Destroyed);
+            }
+
+#undef CASE
+            return "Unknown Document Status";
+        }
+
+        DocumentState()
+            : _status(Status::None)
+        {
+        }
+
+        DocumentState::Status status() const { return _status; }
+        void setStatus(Status newStatus)
+        {
+            LOG_TRC("Setting DocumentState from " << toString(_status) << " to "
+                                                  << toString(newStatus));
+            assert(newStatus >= _status && "The document status cannot regress");
+            _status = newStatus;
+        }
+
+    private:
+        Status _status;
+    };
+
+    /// The main state of the document.
+    DocumentState _docState;
+
     /// Set to true when document changed in storage and we are waiting
     /// for user's command to act.
     bool _documentChangedInStorage;
