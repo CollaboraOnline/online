@@ -746,6 +746,10 @@ L.Map = L.Evented.extend({
 
 	// public methods for getting map state
 
+	hasInfoForView: function(viewid)  {
+		return (viewid in this._viewInfo);
+	},
+
 	getViewName: function(viewid) {
 		return this._viewInfo[viewid].username;
 	},
