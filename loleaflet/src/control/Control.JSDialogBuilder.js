@@ -1595,9 +1595,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		title = builder._cleanText(title);
 
-		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', parentContainer);
-		var listboxArrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', parentContainer);
-		listbox.id = data.id;
+		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-listbox-container ', parentContainer);
+		container.id = data.id;
+
+		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', container);
+		var listboxArrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
 
 		if (data.enabled === false || data.enabled === 'false')
