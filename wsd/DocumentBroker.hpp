@@ -549,6 +549,7 @@ private:
     /// Tracks auto-saveing and its frequency.
     /// Tracks the last save request and response times.
     /// Tracks the local file's last modified time.
+    /// Tracks the time a save response was received.
     class SaveManager final
     {
     public:
@@ -614,9 +615,11 @@ private:
                           >= std::chrono::milliseconds(COMMAND_TIMEOUT_MS);
         }
 
-        std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
-
+        /// Sets the modification time of the file on disk.
         void setModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
+
+        // Gets the modification time of the file on disk.
+        std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
 
     private:
         /// Helper to get the current time.
@@ -647,7 +650,8 @@ private:
     {
     public:
         StorageManager()
-            : _lastStorageUploadSuccessful(true)
+            : _lastSaveTime(now())
+            , _lastStorageUploadSuccessful(true)
         {
         }
 
@@ -663,9 +667,30 @@ private:
         /// Sets the last request's result, either to success or failure.
         void setLastRequestResult(bool success) { _lastStorageUploadSuccessful = success; }
 
+        /// Marks the last time we attempted to save and upload, regardless of outcome, to now.
+        void markLastSaveTime() { _lastSaveTime = now(); }
+
+        // Gets the last time we attempted to save.
+        std::chrono::steady_clock::time_point getLastSaveTime() const { return _lastSaveTime; }
+
     private:
+        /// Helper to get the current time.
+        static std::chrono::steady_clock::time_point now()
+        {
+            return std::chrono::steady_clock::now();
+        }
+
         /// The document's last-modified time on storage.
         std::chrono::system_clock::time_point _modifiedTime;
+
+        /// The last time we tried saving and uploading, regardless of
+        /// whether the document was modified and a newer version saved
+        /// and uploaded or not. In effect, this tracks the time we
+        /// synchronized with Storage (i.e. the last time we either uploaded
+        /// or had nothing new to upload). It is redundant as it is
+        /// equivalent to the larger of 'Last Save Response Time' and
+        /// 'Last Storage Response Time', and should be removed.
+        std::chrono::steady_clock::time_point _lastSaveTime;
 
         /// Indicates whether the last uploadToStorage operation was successful.
         bool _lastStorageUploadSuccessful;
@@ -786,10 +811,6 @@ private:
 
     /// Manage uploading to Storage.
     StorageManager _storageManager;
-
-    /// The last time we tried saving, regardless of whether the
-    /// document was modified and saved or not.
-    std::chrono::steady_clock::time_point _lastSaveTime;
 
     /// All session of this DocBroker by ID.
     SessionMap<ClientSession> _sessions;
