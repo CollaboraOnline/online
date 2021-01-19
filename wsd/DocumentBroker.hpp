@@ -642,6 +642,17 @@ private:
         const bool _isAutosaveEnabled;
     };
 
+    /// Responsible for managing document uploading into storage.
+    class StorageManager final
+    {
+    public:
+        StorageManager()
+        {
+        }
+
+    private:
+    };
+
 protected:
     /// Seconds to live for, or 0 forever
     std::chrono::seconds _limitLifeSeconds;
@@ -757,6 +768,9 @@ private:
 
     /// Manage saving in Core.
     SaveManager _saveManager;
+
+    /// Manage uploading to Storage.
+    StorageManager _storageManager;
 
     /// The last time we tried saving, regardless of whether the
     /// document was modified and saved or not.
