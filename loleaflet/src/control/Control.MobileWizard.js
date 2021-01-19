@@ -35,8 +35,18 @@ L.Control.MobileWizard = L.Control.extend({
 		map.on('showwizardsidebar', this._showWizardSidebar, this);
 		map.on('mobilewizardback', this.goLevelUp, this);
 		map.on('resize', this._onResize, this);
+		map.on('jsdialogupdate', this.onJSUpdate, this);
 
 		this._setupBackButton();
+	},
+
+	onRemove: function() {
+		this.map.off('mobilewizard', this._onMobileWizard, this);
+		this.map.off('closemobilewizard', this._hideWizard, this);
+		this.map.off('showwizardsidebar', this._showWizardSidebar, this);
+		this.map.off('mobilewizardback', this.goLevelUp, this);
+		this.map.off('resize', this._onResize, this);
+		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 	},
 
 	_reset: function() {
@@ -513,6 +523,43 @@ L.Control.MobileWizard = L.Control.extend({
 				}
 			}
 		}
+	},
+
+	onJSUpdate: function (e) {
+		var data = e.data;
+
+		if (data.jsontype === 'notebookbar')
+			return;
+
+		if (data.id !== window.mobileDialogId)
+			return;
+
+		var container = this.content.get(0);
+		if (!container)
+			return;
+
+		var control = container.querySelector('#' + data.control.id);
+		if (!control)
+			return;
+
+		var parent = control.parentNode;
+		if (!parent)
+			return;
+
+		var oldFocus = document.activeElement;
+
+		control.style.visibility = 'hidden';
+		var builder = new L.control.mobileWizardBuilder({windowId: data.id,
+			mobileWizard: this,
+			map: this.map,
+			cssClass: 'mobile-wizard'});
+
+		var temporaryParent = L.DomUtil.create('div');
+		builder.build(temporaryParent, [data.control], false);
+		control.parentNode.insertBefore(temporaryParent.firstChild, control.nextSibling);
+		L.DomUtil.remove(control);
+
+		oldFocus.focus();
 	},
 });
 
