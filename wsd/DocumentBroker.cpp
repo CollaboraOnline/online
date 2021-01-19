@@ -892,8 +892,9 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         _filename = fileInfo.getFilename();
 
         // Use the local temp file's timestamp.
-        _lastFileModifiedTime = templateSource.empty() ? Util::getFileTimestamp(_storage->getRootFilePath()) :
-                std::chrono::system_clock::time_point();
+        _saveManager.setLastFileModifiedTime(
+            templateSource.empty() ? FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint()
+                                   : std::chrono::system_clock::time_point());
 
         bool dontUseCache = false;
 #if MOBILEAPP
@@ -902,7 +903,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         dontUseCache = true;
 #endif
 
-        _tileCache.reset(new TileCache(_storage->getUriString(), _lastFileModifiedTime, dontUseCache));
+        _tileCache = Util::make_unique<TileCache>(
+            _storage->getUri().toString(), _saveManager.getLastFileModifiedTime(), dontUseCache);
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 
@@ -1051,13 +1053,15 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
 
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uri);
 
-    // If the file timestamp hasn't changed, skip saving.
-    const std::chrono::system_clock::time_point newFileModifiedTime = Util::getFileTimestamp(_storage->getRootFilePath());
-    if (!isSaveAs && newFileModifiedTime == _lastFileModifiedTime && !isRename && !force)
+    // If the file timestamp hasn't changed, skip uploading.
+    const std::chrono::system_clock::time_point newFileModifiedTime
+        = FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint();
+    if (!isSaveAs && newFileModifiedTime == _saveManager.getLastFileModifiedTime() && !isRename
+        && !force)
     {
         // Nothing to do.
-        const auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>
-                                            (std::chrono::system_clock::now() - _lastFileModifiedTime);
+        const auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::system_clock::now() - _saveManager.getLastFileModifiedTime());
         LOG_DBG("Skipping unnecessary uploading to URI [" << uriAnonym << "] with docKey [" << _docKey <<
                 "]. File last modified " << timeInSec.count() << " seconds ago, timestamp unchanged.");
         _poll->wakeup();
@@ -1095,7 +1099,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         if (!details.isSaveAs && !details.isRename)
         {
             // Saved and stored; update flags.
-            _lastFileModifiedTime = details.newFileModifiedTime;
+            _saveManager.setLastFileModifiedTime(details.newFileModifiedTime);
             _lastSaveTime = std::chrono::steady_clock::now();
 
             // Save the storage timestamp.
@@ -1395,7 +1399,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
     if (_sessions.find(sessionId) != _sessions.end())
     {
         // Invalidate the timestamp to force persisting.
-        _lastFileModifiedTime = std::chrono::system_clock::time_point();
+        _saveManager.setLastFileModifiedTime(std::chrono::system_clock::time_point());
 
         // We do not want save to terminate editing mode if we are in edit mode now
 
@@ -2645,7 +2649,7 @@ void DocumentBroker::dumpState(std::ostream& os)
        << Util::getSteadyClockAsString(_saveManager.lastSaveResponseTime());
     os << "\n  last storage save was successful: " << isLastStorageUploadSuccessful();
     os << "\n  last modified: " << Util::getHttpTime(_documentLastModifiedTime);
-    os << "\n  file last modified: " << Util::getHttpTime(_lastFileModifiedTime);
+    os << "\n  file last modified: " << Util::getHttpTime(_saveManager.getLastFileModifiedTime());
     if (_limitLifeSeconds > std::chrono::seconds::zero())
         os << "\n  life limit in seconds: " << _limitLifeSeconds.count();
     os << "\n  idle time: " << getIdleTimeSecs();
