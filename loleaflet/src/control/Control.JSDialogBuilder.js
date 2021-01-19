@@ -1446,7 +1446,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
 
-		edit.addEventListener('change', function() {
+		edit.addEventListener('keyup', function() {
 			if (callback)
 				callback(this.value);
 			else
