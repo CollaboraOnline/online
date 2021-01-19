@@ -171,7 +171,6 @@ DocumentBroker::DocumentBroker(ChildType type,
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _documentChangedInStorage(false),
-    _lastSaveTime(std::chrono::steady_clock::now()),
     _isModified(false),
     _cursorPosX(0),
     _cursorPosY(0),
@@ -1021,8 +1020,8 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
             "]. Success: " << success << ", result: " << result << ", force: " << force);
     if (!success && result == "unmodified" && !isRename && !force)
     {
-        LOG_DBG("Save skipped as document [" << _docKey << "] was not modified.");
-        _lastSaveTime = std::chrono::steady_clock::now();
+        LOG_DBG("Skipped uploading as document [" << _docKey << "] was not modified.");
+        _storageManager.markLastSaveTime(); // Mark that the storage is up-to-date.
         broadcastSaveResult(true, "unmodified");
         _poll->wakeup();
         return;
@@ -1116,7 +1115,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         {
             // Saved and stored; update flags.
             _saveManager.setModifiedTime(details.newFileModifiedTime);
-            _lastSaveTime = std::chrono::steady_clock::now();
+            _storageManager.markLastSaveTime();
 
             // Save the storage timestamp.
             _storageManager.setModifiedTime(_storage->getFileInfo().getModifiedTime());
@@ -1359,8 +1358,8 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         const std::chrono::milliseconds inactivityTimeMs
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
-        const std::chrono::milliseconds timeSinceLastSaveMs
-            = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastSaveTime);
+        const auto timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            now - _storageManager.getLastSaveTime());
         LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs
                                                    << " and most recent activity was "
                                                    << inactivityTimeMs << " ago.");
@@ -2610,7 +2609,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  thread start: " << Util::getSteadyClockAsString(_threadStart);
-    os << "\n  last saved: " << Util::getSteadyClockAsString(_lastSaveTime);
+    os << "\n  last saved: " << Util::getSteadyClockAsString(_storageManager.getLastSaveTime());
     os << "\n  last save request: "
        << Util::getSteadyClockAsString(_saveManager.lastSaveRequestTime());
     os << "\n  last save response: "
