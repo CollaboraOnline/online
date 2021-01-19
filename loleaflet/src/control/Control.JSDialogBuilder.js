@@ -208,7 +208,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.step != undefined)
 			$(spinfield).attr('step', data.step);
 
-		if (data.enabled == 'false') {
+		if (data.enabled === 'false' || data.enabled === false) {
 			$(spinfield).attr('disabled', 'disabled');
 		}
 
@@ -959,9 +959,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkboxLabel.innerHTML = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
 
-		if (data.enabled == 'false') {
+		if (data.enabled === 'false' || data.enabled === false) {
 			$(checkboxLabel).addClass('disabled');
-			$(checkbox).attr('disabled', 'disabled');
+			$(checkbox).prop('disabled', true);
 		}
 
 		checkbox.addEventListener('change', function() {
@@ -980,7 +980,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (!state)
 				state = data.checked;
 
-			if (state && state === 'true' || state === 1 || state === '1')
+			if (state && state === 'true' || state === true || state === 1 || state === '1')
 				$(checkbox).prop('checked', true);
 			else if (state)
 				$(checkbox).prop('checked', false);
@@ -1408,8 +1408,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		edit.value = builder._cleanText(data.text);
 		edit.id = data.id;
 
-		if (data.enabled == 'false')
-			$(edit).attr('disabled', 'disabled');
+		if (data.enabled === 'false' || data.enabled === false)
+			$(edit).prop('disabled', true);
 
 		edit.addEventListener('change', function() {
 			if (callback)
@@ -1445,8 +1445,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		edit.id = data.id;
 
-		if (data.enabled == 'false')
-			$(edit).attr('disabled', 'disabled');
+		if (data.enabled === 'false' || data.enabled === false)
+			$(edit).prop('disabled', true);
 
 		edit.addEventListener('change', function() {
 			if (callback)
@@ -2255,8 +2255,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		});
 
-		if (data.enabled == 'false')
-			$(button).attr('disabled', 'disabled');
+		if (data.enabled === 'false' || data.enabled === false)
+			$(button).prop('disabled', true);
 
 		return controls;
 	},
