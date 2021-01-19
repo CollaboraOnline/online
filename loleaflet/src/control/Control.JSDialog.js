@@ -112,6 +112,8 @@ L.Control.JSDialog = L.Control.extend({
 		if (!parent)
 			return;
 
+		var oldFocus = document.activeElement;
+
 		control.style.visibility = 'hidden';
 		var builder = new L.control.jsDialogBuilder({windowId: data.id,
 			mobileWizard: this,
@@ -120,6 +122,8 @@ L.Control.JSDialog = L.Control.extend({
 
 		builder.build(parent, [data.control], false);
 		L.DomUtil.remove(control);
+
+		oldFocus.focus();
 	},
 
 	onPan: function (ev) {
