@@ -63,19 +63,18 @@ describe('Chart tests.', function() {
 			.then(function(header) {
 				var rect = header[0].getBoundingClientRect();
 				var posX = rect.right + 10;
-				var posY = rect.bottom - 10;
+				var posY = rect.top + 2;
 
 				var moveY = 0.0;
 				cy.waitUntil(function() {
 					cy.get('body')
 						.click(posX, posY + moveY);
 
-					moveY -= 1.0;
-					var regex = /A[0-9]+$/;
+					moveY += 4.0;
 					return cy.get('input#addressInput')
 						.should('have.prop', 'value')
 						.then(function(value) {
-							return regex.test(value);
+							return value === 'A2';
 						});
 				});
 			});
@@ -96,7 +95,7 @@ describe('Chart tests.', function() {
 			.should('be.visible');
 	}
 
-	it.skip('Change chart type.', function() {
+	it('Change chart type.', function() {
 		stepIntoChartEditing();
 
 		mobileHelper.openMobileWizard();
@@ -107,15 +106,14 @@ describe('Chart tests.', function() {
 
 		helper.clickOnIdle('.ui-combobox-text', 'Pie');
 
-		mobileHelper.closeMobileWizard();
-
-		// TODO: crashes here
+		// TODO: this leads to crash?
+		//mobileHelper.closeMobileWizard();
 
 		exitChartEditing();
 
 		selectChartOnCenter();
 
 		cy.get('svg .OLE2 g g path')
-			.should('have.length', 4);
+			.should('have.length', 7);
 	});
 });
