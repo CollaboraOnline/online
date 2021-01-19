@@ -32,10 +32,13 @@ L.Control.AutofilterDropdown = L.Control.extend({
 						data.children[0].children.length &&
 						data.children[0].children[0].children.length === 1;
 
-		if (!isSubMenu && this.container)
+		if (!isSubMenu && this.container) {
 			L.DomUtil.remove(this.container);
-		else if (isSubMenu && this.subMenu)
+			this.container = null;
+		} else if (isSubMenu && this.subMenu) {
 			L.DomUtil.remove(this.subMenu);
+			this.subMenu = null;
+		}
 
 		if (data.action === 'close')
 			return;
@@ -138,7 +141,11 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		if (!this.container)
 			return;
 
-		var control = this.container.querySelector('#' + data.control.id);
+		var targetWindow = this.container;
+		if (this.subMenu)
+			targetWindow = this.subMenu;
+
+		var control = targetWindow.querySelector('#' + data.control.id);
 		if (!control)
 			return;
 
