@@ -1541,7 +1541,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var editCallback = function(value) {
 			builder.callback('combobox', 'change', data, value, builder);
 		};
-		builder._editControl(leftDiv, data, builder, editCallback);
+		builder._controlHandlers['edit'](leftDiv, data, builder, editCallback);
 
 		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
 
@@ -1605,7 +1605,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.callback('combobox', 'change', data, value, builder);
 			};
 
-			builder._editControl(parentContainer, data, builder, callback);
+			builder._controlHandlers['edit'](parentContainer, data, builder, callback);
 		}
 		else
 			builder._explorableEditControl(parentContainer, data, builder);
