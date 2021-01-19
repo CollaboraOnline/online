@@ -609,9 +609,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_expanderHandler: function(parentContainer, data, builder) {
 		if (data.children.length > 0) {
+			var container = L.DomUtil.create('div', 'ui-expander-container ' + builder.options.cssClass, parentContainer);
+			container.id = data.id;
+
 			if (data.children[0].text && data.children[0].text !== '') {
-				var expander = L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, parentContainer);
-				expander.id = data.id;
+				var expander = L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, container);
 				var label = L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expander);
 				label.innerText = builder._cleanText(data.children[0].text);
 
@@ -623,7 +625,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				});
 			}
 
-			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, parentContainer);
+			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
 
 			var children = [];
 			var startPos = 1;
