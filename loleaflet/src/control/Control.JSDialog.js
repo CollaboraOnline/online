@@ -120,7 +120,9 @@ L.Control.JSDialog = L.Control.extend({
 			map: this.map,
 			cssClass: 'jsdialog'});
 
-		builder.build(parent, [data.control], false);
+		var temporaryParent = L.DomUtil.create('div');
+		builder.build(temporaryParent, [data.control], false);
+		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
 
 		oldFocus.focus();
