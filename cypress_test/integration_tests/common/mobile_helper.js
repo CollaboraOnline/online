@@ -289,8 +289,6 @@ function selectListBoxItem(listboxSelector, item) {
 
 	helper.clickOnIdle('.mobile-wizard.ui-combobox-text', item);
 
-	helper.clickOnIdle('#mobile-wizard-back');
-
 	// Combobox entry contains the selected item
 	cy.get(listboxSelector + ' .ui-header-right .entry-value')
 		.should('have.text', item);

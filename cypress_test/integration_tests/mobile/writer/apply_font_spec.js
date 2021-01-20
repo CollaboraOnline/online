@@ -123,7 +123,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font color.', function() {
-		helper.clickOnIdle('#FontColor');
+		helper.clickOnIdle('#FontColor .ui-header');
 
 		mobileHelper.selectFromColorPalette(0, 5, 2);
 
@@ -134,7 +134,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply automatic font color.', function() {
-		helper.clickOnIdle('#FontColor');
+		helper.clickOnIdle('#FontColor .ui-header');
 
 		mobileHelper.selectFromColorPalette(0, 2);
 
@@ -147,7 +147,7 @@ describe('Apply font changes.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#FontColor');
+		helper.clickOnIdle('#FontColor .ui-header');
 
 		helper.clickOnIdle('.colors-container-auto-color-row');
 
@@ -158,7 +158,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply highlight color.', function() {
-		helper.clickOnIdle('#BackColor');
+		helper.clickOnIdle('#BackColor .ui-header');
 
 		mobileHelper.selectFromColorPalette(1, 5, 4);
 

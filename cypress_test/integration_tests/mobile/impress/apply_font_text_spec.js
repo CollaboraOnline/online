@@ -158,7 +158,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Color');
+		helper.clickOnIdle('#Color .ui-header');
 
 		mobileHelper.selectFromColorPalette(0, 5, 2);
 
@@ -173,7 +173,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#CharBackColor');
+		helper.clickOnIdle('#CharBackColor .ui-header');
 
 		mobileHelper.selectFromColorPalette(1, 2, 2);
 

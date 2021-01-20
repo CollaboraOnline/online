@@ -207,16 +207,9 @@ L.Control.MobileWizard = L.Control.extend({
 			$('#mobile-wizard-tabs').hide();
 		}
 
-		var titles = '.ui-header.level-' + this.getCurrentLevel() + '.mobile-wizard:visible';
-
-		if (animate)
-			$(titles).hide('slide', { direction: 'left' }, 'fast');
-		else
-			$(titles).hide();
-
 		$('#mobile-wizard .ui-effects-placeholder').hide();
 
-		var nodesToHide = $(contentToShow).siblings();
+		var nodesToHide = $(contentToShow).siblings().not('.mobile-wizard-scroll-indicator');
 
 		var duration = 10;
 		if (animate)
@@ -224,26 +217,30 @@ L.Control.MobileWizard = L.Control.extend({
 		else
 			nodesToHide.hide();
 
+		$(contentToShow).children('.ui-header').hide();
+
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('hideHelpBG');
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('showHelpBG');
 
 		if (animate)
-			$(contentToShow).show('slide', { direction: 'right' }, 'fast');
+			$(contentToShow).children('.ui-content').first().show('slide', { direction: 'right' }, 'fast');
 		else
-			$(contentToShow).show();
+			$(contentToShow).children('.ui-content').first().show();
 
 		this._currentDepth++;
 		if (!this._inBuilding)
 			history.pushState({context: 'mobile-wizard', level: this._currentDepth}, 'mobile-wizard-level-' + this._currentDepth);
 
+		var title = $(contentToShow).children('.ui-content').get(0).title;
+
 		if (this._customTitle)
 			this._setCustomTitle(this._customTitle);
 		else
-			this._setTitle(contentToShow.title);
+			this._setTitle(title);
 
 		this._inMainMenu = false;
 
-		this._currentPath.push(contentToShow.title);
+		this._currentPath.push(title);
 	},
 
 	goLevelUp: function() {
@@ -272,8 +269,9 @@ L.Control.MobileWizard = L.Control.extend({
 			else
 				this._customTitle ? this._setCustomTitle(this._customTitle) : this._setTitle(this._mainTitle);
 
-			var headers = $('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').siblings()
-				.not('.ui-content.level-' + this._currentDepth + '.mobile-wizard');
+			var headers = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible').siblings();
+			var currentHeader = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible').children('.ui-header');
+			headers = headers.add(currentHeader);
 
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');
@@ -586,6 +584,21 @@ L.Control.MobileWizard = L.Control.extend({
 		control.style.visibility = 'hidden';
 		if (!this._builder)
 			return;
+
+		// preserve the same level for control
+		var classList = control.className.split(' ');
+		var currentLevel = null;
+		for (var i in classList) {
+			if (classList[i].indexOf('level-') >= 0) {
+				currentLevel = classList[i];
+				break;
+			}
+		}
+
+		if (currentLevel) {
+			currentLevel = currentLevel.substring('level-'.length);
+			this._builder._currentDepth = currentLevel;
+		}
 
 		var temporaryParent = L.DomUtil.create('div');
 		this._builder.build(temporaryParent, [data.control], false);

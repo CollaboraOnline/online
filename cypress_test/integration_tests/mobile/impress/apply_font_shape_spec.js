@@ -138,7 +138,7 @@ describe('Apply font on selected shape.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Color');
+		helper.clickOnIdle('#Color .ui-header');
 
 		mobileHelper.selectFromColorPalette(0, 5, 2);
 
