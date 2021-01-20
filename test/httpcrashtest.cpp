@@ -5,6 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <chrono>
 #include <config.h>
 
 #include <errno.h>
@@ -140,7 +141,7 @@ void HTTPCrashTest::testCrashKit()
         TST_LOG("Killing loolkit instances.");
 
         killLoKitProcesses();
-        countLoolKitProcesses(0);
+        countLoolKitProcesses(0, std::chrono::seconds(1));
 
         TST_LOG("Reading the error code from the socket.");
         std::string message;
@@ -180,10 +181,13 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
     {
         std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.odt", _uri, testname);
 
+        TST_LOG("Allowing time for kits to spawn and connect to wsd to get cleanly killed");
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+
         TST_LOG("Killing loolkit instances.");
 
         killLoKitProcesses();
-        countLoolKitProcesses(0);
+        countLoolKitProcesses(0, std::chrono::seconds(1));
 
         // We expect the client connection to close.
         TST_LOG("Reconnect after kill.");

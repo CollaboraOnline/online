@@ -457,7 +457,8 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const s
         {
             return nullptr;
         }
-        LOK_ASSERT_MESSAGE("cannot load the document " + documentURL, isLoaded);
+
+        LOK_ASSERT_MESSAGE("Failed to load the document " + documentURL, isLoaded);
 
         TST_LOG("Loaded document [" << documentURL << "].");
         return socket;
