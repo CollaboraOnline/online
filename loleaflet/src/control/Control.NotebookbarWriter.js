@@ -140,10 +140,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'text': '',
 							'enabled': 'true',
+							'vertical': 'false',
 							'children': [
 								{
 									'id': 'print',
-									'type': 'bigtoolitem',
+									'type': 'menubartoolitem',
 									'text': _UNO('.uno:Print', 'text'),
 									'command': '.uno:Print'
 								}
@@ -169,7 +170,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'container',
 						'text': '',
 						'enabled': 'true',
-						'vertical': 'true',
+						'vertical': 'false',
 						'children': [
 							{
 								'id': 'saveas-Section1',
@@ -222,7 +223,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'container',
 						'text': '',
 						'enabled': 'true',
-						'vertical': 'true',
+						'vertical': 'false',
 						'children': [
 							{
 								'id': 'saveas-Section1',
@@ -275,7 +276,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'container',
 						'text': '',
 						'enabled': 'true',
-						'vertical': 'true',
+						'vertical': 'false',
 						'children': [
 							{
 								'id': 'saveas-Section1',
