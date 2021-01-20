@@ -249,11 +249,11 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 	// TODO: use the same handler as desktop one
 	_radiobuttonControl: function(parentContainer, data, builder) {
-		var container = L.DomUtil.createWithId('div', data.id + '-container', parentContainer);
+		var container = L.DomUtil.createWithId('div', data.id, parentContainer);
 		L.DomUtil.addClass(container, 'radiobutton');
 		L.DomUtil.addClass(container, builder.options.cssClass);
 
-		var radiobutton = L.DomUtil.createWithId('input', data.id, container);
+		var radiobutton = L.DomUtil.create('input', '', container);
 		radiobutton.type = 'radio';
 
 		if (data.group)
@@ -270,7 +270,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			$(radiobutton).prop('checked', true);
 
 		radiobutton.addEventListener('change', function() {
-			builder.callback('radiobutton', 'change', radiobutton, this.checked, builder);
+			builder.callback('radiobutton', 'change', container, this.checked, builder);
 		});
 
 		if (data.hidden)
