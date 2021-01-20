@@ -91,7 +91,7 @@ describe('Calc spell checking menu.', function() {
 			.should('be.visible');
 	});
 
-	it('Apply language for word.', function() {
+	it.skip('Apply language for word.', function() {
 		openContextMenu();
 
 		cy.contains('.context-menu-link', 'Word is Finnish')
@@ -114,7 +114,7 @@ describe('Calc spell checking menu.', function() {
 			.should('be.visible');
 	});
 
-	it('Apply language for paragraph.', function() {
+	it.skip('Apply language for paragraph.', function() {
 		openContextMenu();
 
 		cy.contains('.context-menu-link', 'Paragraph is Finnish')

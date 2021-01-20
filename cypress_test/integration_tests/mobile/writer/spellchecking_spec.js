@@ -85,7 +85,7 @@ describe('Spell checking menu.', function() {
 			.should('be.visible');
 	});
 
-	it('Check language status for selection.', function() {
+	it.skip('Check language status for selection.', function() {
 		openContextMenu();
 
 		cy.contains('.menu-entry-with-icon', 'Set Language for Selection')
@@ -96,7 +96,7 @@ describe('Spell checking menu.', function() {
 			.should('be.visible');
 	});
 
-	it('Set None Language for selection.', function() {
+	it.skip('Set None Language for selection.', function() {
 		openContextMenu();
 
 		cy.contains('.menu-entry-with-icon', 'Set Language for Selection')
@@ -112,7 +112,7 @@ describe('Spell checking menu.', function() {
 			.should('be.visible');
 	});
 
-	it('Check language status for paragraph.', function() {
+	it.skip('Check language status for paragraph.', function() {
 		openContextMenu();
 
 		cy.contains('.menu-entry-with-icon', 'Set Language for Paragraph')
@@ -123,7 +123,7 @@ describe('Spell checking menu.', function() {
 			.should('be.visible');
 	});
 
-	it('Set None Language for paragraph.', function() {
+	it.skip('Set None Language for paragraph.', function() {
 		openContextMenu();
 
 		cy.contains('.menu-entry-with-icon', 'Set Language for Paragraph')
