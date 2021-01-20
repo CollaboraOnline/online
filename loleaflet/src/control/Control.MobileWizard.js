@@ -556,7 +556,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 		var temporaryParent = L.DomUtil.create('div');
 		builder.build(temporaryParent, [data.control], false);
-		control.parentNode.insertBefore(temporaryParent.firstChild, control.nextSibling);
+		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
 
 		oldFocus.focus();
