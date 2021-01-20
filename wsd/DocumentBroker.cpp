@@ -559,7 +559,7 @@ void DocumentBroker::stop(const std::string& reason)
     _poll->wakeup();
 }
 
-bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const std::string& jailId)
+bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, const std::string& jailId)
 {
     assertCorrectThread();
 
@@ -797,7 +797,7 @@ bool DocumentBroker::load(const std::shared_ptr<ClientSession>& session, const s
 
     broadcastLastModificationTime(session);
 
-    // Let's load the document now, if not loaded.
+    // Let's download the document now, if not downloaded.
     if (!_storage->isLoaded())
     {
         std::string localPath = _storage->downloadStorageFileToLocal(
@@ -1478,8 +1478,8 @@ size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& 
 
     try
     {
-        // First load the document, since this can fail.
-        if (!load(session, _childProcess->getJailId()))
+        // First, download the document, since this can fail.
+        if (!download(session, _childProcess->getJailId()))
         {
             const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";
             LOG_ERR(msg);
