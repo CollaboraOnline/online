@@ -206,7 +206,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var checkbox = L.DomUtil.createWithId('input', data.id, div);
 		checkbox.type = 'checkbox';
 
-		if (data.enabled == 'false') {
+		if (data.enabled === 'false' || data.enabled === false) {
 			$(checkboxLabel).addClass('disabled');
 			$(checkbox).attr('disabled', 'disabled');
 		}
@@ -227,7 +227,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			if (!state)
 				state = data.checked;
 
-			if (state && state === 'true' || state === 1 || state === '1')
+			if (state && state === 'true' || state === true || state === 1 || state === '1')
 				$(checkbox).prop('checked', true);
 			else if (state)
 				$(checkbox).prop('checked', false);
