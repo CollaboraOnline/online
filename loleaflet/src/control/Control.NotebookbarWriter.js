@@ -2534,19 +2534,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																				}
 																			],
 																			'vertical': 'false'
-																		},
-																		{
-																			'id': 'Insert-Section-Line',
-																			'type': 'toolbox',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'type': 'bigtoolitem',
-																					'text': _UNO('.uno:Line', 'text'),
-																					'command': '.uno:Line'
-																				}
-																			]
 																		}
 																	],
 																	'vertical': 'false'
