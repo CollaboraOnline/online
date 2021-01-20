@@ -523,8 +523,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* Fontwork dialog */
 
 #FontworkGalleryDialog #ctlFavoriteswin {
-	max-width: 400px;
-	max-height: 400px;
+	width: 400px;
+	height: 400px;
 }
 #FontworkGalleryDialog #label1 {
 	display: none;
