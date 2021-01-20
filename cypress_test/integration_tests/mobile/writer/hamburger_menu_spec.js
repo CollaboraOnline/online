@@ -23,7 +23,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.openMobileWizard();
 
-		helper.clickOnIdle('#FontColor');
+		helper.clickOnIdle('#FontColor .ui-header');
 
 		mobileHelper.selectFromColorPalette(0, 0, 7);
 

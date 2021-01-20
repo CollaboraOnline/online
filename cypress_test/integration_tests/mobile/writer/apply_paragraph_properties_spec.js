@@ -126,7 +126,7 @@ describe('Apply paragraph properties.', function() {
 	});
 
 	it('Apply background color.', function() {
-		helper.clickOnIdle('#BackgroundColor');
+		helper.clickOnIdle('#BackgroundColor .ui-header');
 
 		mobileHelper.selectFromColorPalette(2, 5, 2);
 
