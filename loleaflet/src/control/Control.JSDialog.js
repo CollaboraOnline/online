@@ -105,8 +105,10 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 
 		var control = dialog.querySelector('#' + data.control.id);
-		if (!control)
+		if (!control) {
+			console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
 			return;
+		}
 
 		var parent = control.parentNode;
 		if (!parent)
