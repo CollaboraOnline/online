@@ -75,7 +75,7 @@ L.Control.ContextMenu = L.Control.extend({
 			'FormatDataPoint', 'FormatAxis', 'FormatMajorGrid', 'FormatMinorGrid',
 			'InsertTrendline', 'InsertXErrorBars' , 'InsertYErrorBars', 'FormatChartArea',
 			'FormatMeanValue', 'DiagramData', 'FormatLegend', 'FormatTrendline',
-			'FormatTrendlineEquation', 'FormatStockLoss', 'FormatStockGain',
+			'FormatTrendlineEquation', 'FormatStockLoss', 'FormatStockGain', 'LanguageStatus',
 			// text
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
