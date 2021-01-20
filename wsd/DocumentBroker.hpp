@@ -319,7 +319,7 @@ private:
     void refreshLock();
 
     /// Loads a document from the public URI into the jail.
-    bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
+    bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
 
     std::size_t getIdleTimeSecs() const
@@ -417,6 +417,7 @@ protected:
     /// Seconds to live for, or 0 forever
     std::chrono::seconds _limitLifeSeconds;
     std::string _uriOrig;
+
 private:
     /// What type are we: affects priority.
     ChildType _type;
