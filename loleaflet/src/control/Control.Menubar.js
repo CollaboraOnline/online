@@ -805,6 +805,7 @@ L.Control.Menubar = L.Control.extend({
 		],
 
 		mobilespreadsheet: [
+			{uno:'.uno:DataDataPilotRun'},
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},

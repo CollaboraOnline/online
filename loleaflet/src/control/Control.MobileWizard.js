@@ -220,13 +220,15 @@ L.Control.MobileWizard = L.Control.extend({
 		else
 			nodesToHide.hide();
 
+		$(contentToShow).children('.ui-header').hide();
+
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('hideHelpBG');
 		$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('showHelpBG');
 
 		if (animate)
-			$(contentToShow).show('slide', { direction: 'right' }, 'fast');
+			$(contentToShow).children('.ui-content').show('slide', { direction: 'right' }, 'fast');
 		else
-			$(contentToShow).show();
+			$(contentToShow).children('.ui-content').show();
 
 		this._currentDepth++;
 		if (!this._inBuilding)
@@ -267,14 +269,17 @@ L.Control.MobileWizard = L.Control.extend({
 			if (this._currentDepth === 0) {
 				headers = $('.ui-header.level-' + this._currentDepth + '.mobile-wizard');
 			} else {
-				headers = $('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').siblings()
+				headers = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible').siblings()
 					.not('.ui-content.level-' + this._currentDepth + '.mobile-wizard');
 			}
+
+			var myHeader = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible').children('.ui-header');
 
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').addClass('hideHelpBG');
 			headers.show('slide', { direction: 'left' }, 'fast');
+			myHeader.show();
 
 			if (this._currentDepth == 0 || (this._isTabMode && this._currentDepth == 1)) {
 				this._inMainMenu = true;
@@ -576,6 +581,19 @@ L.Control.MobileWizard = L.Control.extend({
 			mobileWizard: this,
 			map: this.map,
 			cssClass: 'mobile-wizard'});
+
+		// preserve the same level for control
+		var classList = control.className.split(' ');
+		var currentLevel = null;
+		for (var i in classList) {
+			if (classList[i].indexOf('level-') >= 0)
+				currentLevel = classList[i];
+		}
+
+		if (currentLevel) {
+			currentLevel = currentLevel.substring('level-'.length);
+			builder._currentDepth = currentLevel;
+		}
 
 		var temporaryParent = L.DomUtil.create('div');
 		builder.build(temporaryParent, [data.control], false);

@@ -470,10 +470,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconURL, updateCallback) {
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
-		$(sectionTitle).css('justify-content', 'space-between');
+		var mainConatiner = L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
 		if (data && data.id)
-			sectionTitle.id = data.id;
+			mainConatiner.id = data.id;
+
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainConatiner);
+		$(sectionTitle).css('justify-content', 'space-between');
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(sectionTitle).addClass('disabled');
@@ -544,7 +546,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		}, this);
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainConatiner);
 		contentDiv.title = data.text;
 
 		var contentData = content.length ? content : [content];
@@ -560,7 +562,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (builder.wizard) {
 				if (data.enabled !== 'false' && data.enabled !== false) {
 					$(sectionTitle).click(function(event, data) {
-						builder.wizard.goLevelDown(contentDiv, data);
+						builder.wizard.goLevelDown(mainConatiner, data);
 						if (contentNode && contentNode.onshow)
 							contentNode.onshow();
 					});
@@ -1920,6 +1922,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(fixedtext).click(function () {
 			builder.refreshSidebar = true;
 			builder.callback('combobox', 'selected', fixedtext.parent, data.pos + ';' + fixedtext.innerHTML, builder);
+			if (builder.wizard)
+				builder.wizard.goLevelUp();
 		});
 	},
 
