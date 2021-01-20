@@ -426,7 +426,7 @@ public:
             const auto timeSincePingMicroS
                 = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastPingSentTime);
             timeoutMaxMicroS
-                = std::min(timeoutMaxMicroS, (PingFrequencyMicroS - timeSincePingMicroS).count());
+                = std::min(timeoutMaxMicroS, (int64_t)(PingFrequencyMicroS - timeSincePingMicroS).count());
         }
 #endif
         int events = POLLIN;
