@@ -2347,28 +2347,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																			'vertical': 'false'
 																		},
 																		{
-																			'id': 'Insert-Section-Fontwork',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'SectionBottom6565',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:FontworkGalleryFloater'),
-																							'command': '.uno:FontworkGalleryFloater'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
 																			'id': 'Insert-Section-Bookmark',
 																			'type': 'container',
 																			'text': '',

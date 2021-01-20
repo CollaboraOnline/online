@@ -2275,28 +2275,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 																			'vertical': 'false'
 																		},
 																		{
-																			'id': 'Insert-Section-Fontwork',
-																			'type': 'container',
-																			'text': '',
-																			'enabled': 'true',
-																			'children': [
-																				{
-																					'id': 'SectionBottom656',
-																					'type': 'toolbox',
-																					'text': '',
-																					'enabled': 'true',
-																					'children': [
-																						{
-																							'type': 'bigtoolitem',
-																							'text': _UNO('.uno:FontworkGalleryFloater'),
-																							'command': '.uno:FontworkGalleryFloater'
-																						}
-																					]
-																				}
-																			],
-																			'vertical': 'false'
-																		},
-																		{
 																			'id': 'Insert-Section-Bookmark',
 																			'type': 'container',
 																			'text': '',
