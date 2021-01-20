@@ -279,7 +279,7 @@ L.Map.include({
 		var docLayer = this._docLayer;
 
 		// At least for Impress, we should not fire this. It causes a circular reference.
-		if (this.isPresentationOrDrawing()) {
+		if (!this.isPresentationOrDrawing()) {
 			this.fire('insertpage', {
 				selectedPart: docLayer._selectedPart,
 				parts:        docLayer._parts
@@ -305,7 +305,7 @@ L.Map.include({
 		var docLayer = this._docLayer;
 
 		// At least for Impress, we should not fire this. It causes a circular reference.
-		if (this.isPresentationOrDrawing()) {
+		if (!this.isPresentationOrDrawing()) {
 			this.fire('insertpage', {
 				selectedPart: docLayer._selectedPart,
 				parts:        docLayer._parts
@@ -345,7 +345,7 @@ L.Map.include({
 		}
 
 		// At least for Impress, we should not fire this. It causes a circular reference.
-		if (this.isPresentationOrDrawing()) {
+		if (!this.isPresentationOrDrawing()) {
 			this.fire('deletepage', {
 				selectedPart: docLayer._selectedPart,
 				parts:        docLayer._parts
