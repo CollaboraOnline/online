@@ -1212,7 +1212,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:AddName'),
+								'text': _UNO('.uno:AddName', 'spreadsheet'),
 								'command': '.uno:AddName'
 							}
 						]
@@ -1222,7 +1222,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DefineName'),
+								'text': _UNO('.uno:DefineName', 'spreadsheet'),
 								'command': '.uno:DefineName'
 							}
 						]
@@ -1238,7 +1238,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'Data-StatisticsMenu:Menu Statistic',
 				'type': 'menubutton',
-				'text': _UNO('.uno:StatisticsMenu'),
+				'text': _UNO('.uno:StatisticsMenu', 'spreadsheet'),
 				'enabled': 'true'
 			}
 		];

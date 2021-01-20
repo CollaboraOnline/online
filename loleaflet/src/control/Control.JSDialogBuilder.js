@@ -2232,12 +2232,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				controls['label'] = label;
 				$(div).addClass('has-label');
+				div.title = '';
 			} else if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('no-label');
+				div.title = '';
 			} else {
 				div.title = data.text;
 				if (!window.ThisIsAMobileApp)
 					$(div).tooltip();
+				else
+					div.title = '';
 				$(div).addClass('no-label');
 			}
 
