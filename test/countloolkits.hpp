@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <chrono>
 #include <iostream>
 #include <thread>
 
@@ -20,17 +21,19 @@
 #include "test.hpp"
 #include "helpers.hpp"
 
-static int countLoolKitProcesses(const int expected)
+static int countLoolKitProcesses(const int expected,
+                                 std::chrono::milliseconds timeoutMs
+                                 = std::chrono::milliseconds(COMMAND_TIMEOUT_MS * 8))
 {
     const auto testname = "countLoolKitProcesses ";
     TST_LOG_BEGIN("Waiting until loolkit processes are exactly " << expected << ". Loolkits: ");
 
     // This does not need to depend on any constant from Common.hpp.
     // The shorter the better (the quicker the test runs).
-    const int sleepMs = 50;
+    constexpr int sleepMs = 10;
 
     // This has to cause waiting for at least COMMAND_TIMEOUT_MS. Tolerate more for safety.
-    const size_t repeat = ((COMMAND_TIMEOUT_MS * 8) / sleepMs);
+    const size_t repeat = (timeoutMs.count() / sleepMs);
     int count = getLoolKitProcessCount();
     for (size_t i = 0; i < repeat; ++i)
     {

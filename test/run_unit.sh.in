@@ -71,6 +71,7 @@ echo "Test output is '$test_output'"
 echo > $test_output
 
 echo "Running $tst | $tst_log ...";
+echo > $tst_log
 if ${trace} \
        ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
        --o:child_root_path="$jails_path" \
@@ -103,5 +104,7 @@ else
         echo "============================================================="
         echo ":test-result: FAIL $tst" >> $test_output
 fi
+
+echo "Finished $tst in $SECONDS";
 
 # vim:set shiftwidth=4 expandtab:

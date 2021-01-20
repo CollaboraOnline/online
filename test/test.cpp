@@ -5,6 +5,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <chrono>
+#include <string>
 #define TST_LOG_REDIRECT
 #include <test.hpp>
 
@@ -156,8 +158,8 @@ public:
 
     void startTest(CppUnit::Test* test)
     {
-        _name = test->getName();
-        writeTestLog("\n=============== START " + _name + '\n');
+        writeTestLog("\n=============== START " + test->getName() + '\n');
+        _startTime = std::chrono::steady_clock::now();
     }
 
     void addFailure(const CppUnit::TestFailure& failure)
@@ -181,10 +183,16 @@ public:
         }
     }
 
-    void done() { writeTestLog("\n=============== END " + _name + " ===============\n"); }
+    void endTest(CppUnit::Test* test)
+    {
+        const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - _startTime);
+        writeTestLog("\n=============== END " + test->getName() + " (" + std::to_string(ms.count())
+                     + "ms) ===============\n");
+    }
 
 private:
-    std::string _name;
+    std::chrono::steady_clock::time_point _startTime;
 };
 
 // returns true on success
