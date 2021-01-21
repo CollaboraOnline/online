@@ -83,6 +83,8 @@ class CanvasSectionObject {
 	containerObject: CanvasSectionContainer = null;
 	dpiScale: number = null;
 	name: string = null;
+	backgroundColor: string = null; // Defult is null (container's background color will be used).
+	borderColor: string = null; // Default is null (no borders).
 	boundToSection: string = null;
 	anchor: Array<string> = new Array(0);
 	position: Array<number> = new Array(0);
@@ -114,6 +116,8 @@ class CanvasSectionObject {
 
 	constructor (options: any) {
 		this.name = options.name;
+		this.backgroundColor = options.backgroundColor ? options.backgroundColor: null;
+		this.borderColor = options.borderColor ? options.borderColor: null;
 		this.anchor = options.anchor.split(' ');
 		this.position = options.position;
 		this.size = options.size;
@@ -808,7 +812,19 @@ class CanvasSectionContainer {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].isLocated) {
 				this.context.translate(this.sections[i].myTopLeft[0], this.sections[i].myTopLeft[1]);
+				if (this.sections[i].backgroundColor) {
+					this.context.fillStyle = this.sections[i].backgroundColor;
+					this.context.fillRect(0, 0, this.sections[i].size[0], this.sections[i].size[1]);
+				}
+
 				this.sections[i].onDraw();
+
+				if (this.sections[i].borderColor) {
+					this.context.lineWidth = this.dpiScale;
+					this.context.strokeStyle = this.sections[i].borderColor;
+					this.context.strokeRect(0, 0, this.sections[i].size[0], this.sections[i].size[1]);
+				}
+
 				this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
 			}
 		}
