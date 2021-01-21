@@ -2407,6 +2407,17 @@ void lokit_main(
             std::string versionString(versionInfo);
             if (displayVersion)
                 std::cout << "office version details: " << versionString << std::endl;
+
+            // Add some parameters we want to pass to the client. Could not figure out how to get
+            // the configuration parameters from LOOLWSD.cpp's initialize() or loolwsd.xml here, so
+            // oh well, just have the value hardcoded in KitHelper.hpp. It isn't really useful to
+            // "tune" it at end-user installations anyway, I think.
+            auto versionJSON = Poco::JSON::Parser().parse(versionString).extract<Poco::JSON::Object::Ptr>();
+            versionJSON->set("tunnelled_dialog_image_cache_size", std::to_string(LOKitHelper::tunnelled_dialog_image_cache_size));
+            std::stringstream ss;
+            versionJSON->stringify(ss);
+            versionString = ss.str();
+
             std::string encodedVersion;
             Poco::URI::encode(versionString, "?#/", encodedVersion);
             pathAndQuery.append("&version=");
