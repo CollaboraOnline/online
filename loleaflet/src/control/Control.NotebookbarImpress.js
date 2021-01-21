@@ -2417,6 +2417,50 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				]
 			},
 			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'container',
+						'children': [
+							{
+								'id': 'formatarea',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:FormatArea'),
+										'command': '.uno:FormatArea'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'container',
+						'children': [
+							{
+								'id': 'fillcolor',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:FillColor'),
+										'command': '.uno:FillColor'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
 				'id': 'Table-Section-Merge',
 				'type': 'container',
 				'children': [
