@@ -2627,6 +2627,22 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'false'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'pagestyle',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'bigtoolitem',
+								'text': _UNO('.uno:PageDialog'),
+								'command': '.uno:PageDialog'
+							}
+						]
+					}
+				]
 			}
 		];
 
@@ -2939,6 +2955,22 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'false'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'updateall',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'bigtoolitem',
+								'text': _UNO('.uno:UpdateAll', 'text'),
+								'command': '.uno:UpdateAll'
+							}
+						]
+					}
+				]
 			}
 		];
 
@@ -3284,6 +3316,22 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'false'
 			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'accepttrackedchanges',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'bigtoolitem',
+								'text': _UNO('.uno:AcceptTrackedChanges', 'text'),
+								'command': '.uno:AcceptTrackedChanges'
+							}
+						]
+					}
+				]
+			}
 		];
 
 		return this.getNotebookbar([this.getTabPage('Review', content)], '-7');
@@ -3583,6 +3631,22 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'false'
 			},
 			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'pagestyle',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'bigtoolitem',
+								'text': _UNO('.uno:TableNumberFormatDialog', 'text'),
+								'command': '.uno:TableNumberFormatDialog'
+							}
+						]
+					}
+				]
+			},
+			{
 				'id': 'Table-Section-FormatCalc1',
 				'type': 'container',
 				'children': [
@@ -3627,7 +3691,23 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'false'
-			}
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'tabledialog',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'bigtoolitem',
+								'text': _UNO('.uno:TableDialog', 'text'),
+								'command': '.uno:TableDialog'
+							}
+						]
+					}
+				]
+			},
 		];
 
 		return this.getNotebookbar([this.getTabPage('Table', content)], '-8');
@@ -3763,17 +3843,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:WrapOff'),
+										'text': _UNO('.uno:WrapOff', 'text'),
 										'command': '.uno:WrapOff'
 									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:WrapOn'),
+										'text': _UNO('.uno:WrapOn', 'text'),
 										'command': '.uno:WrapOn'
 									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:WrapIdeal'),
+										'text': _UNO('.uno:WrapIdeal', 'text'),
 										'command': '.uno:WrapIdeal'
 									}
 								]
@@ -3784,17 +3864,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:WrapLeft'),
+										'text': _UNO('.uno:WrapLeft', 'text'),
 										'command': '.uno:WrapLeft'
 									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:WrapThrough'),
+										'text': _UNO('.uno:WrapThrough', 'text'),
 										'command': '.uno:WrapThrough'
 									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:WrapRight'),
+										'text': _UNO('.uno:WrapRight', 'text'),
 										'command': '.uno:WrapRight'
 									}
 								]
