@@ -361,6 +361,8 @@ private:
 
     /// If we are copying to clipboard.
     bool _copyToClipboard;
+
+    std::vector<uint64_t> _pixmapCache;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
