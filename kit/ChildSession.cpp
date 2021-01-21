@@ -1665,7 +1665,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
                                << " and rendered in " << elapsedMs << " (" << area / elapsedMics
                                << " MP/s).");
 
-    std::string response = "windowpaint: id=" + tokens[1] + " width=" + std::to_string(width)
+    std::string response = "windowpaint: id=" + std::to_string(winId) + " width=" + std::to_string(width)
                            + " height=" + std::to_string(height);
 
     if (!paintRectangle.empty())
