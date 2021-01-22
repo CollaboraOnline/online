@@ -280,7 +280,7 @@ L.TileLayer.include({
 			else
 				this._tableSelectionRowMarkers.push(selectionRectangle);
 
-			selectionRectangle.on('down', this._onSelectRowColumnClick, this);
+			selectionRectangle.on('click', this._onSelectRowColumnClick, this);
 			// We don't actually want this to be draggable of course, so use a dragstart
 			// handler that freezes it.
 			selectionRectangle.on('dragstart drag dragend', this._onSelectRowColumnDrag, this);
