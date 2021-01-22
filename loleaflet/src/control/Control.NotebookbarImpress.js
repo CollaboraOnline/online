@@ -2287,12 +2287,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:SpellDialog'),
 								'command': '.uno:SpellDialog'
 							},
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:ThesaurusDialog'),
 								'command': '.uno:ThesaurusDialog'
 							}
@@ -2349,7 +2349,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:InsertAnnotation'),
 								'command': '.uno:InsertAnnotation'
 							}
@@ -2370,14 +2370,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'type': 'toolbox',
 								'children': [
 									{
-										'type': 'toolitem',
+										'type': 'bigtoolitem',
 										'text': _UNO('.uno:DeleteAllAnnotation', 'presentation'),
 										'command': '.uno:DeleteAllAnnotation'
 									}
 								]
 							}
-						],
-						'vertical': 'true'
+						]
 					}
 				]
 			}
@@ -2444,6 +2443,49 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				]
 			},
 			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'container',
+						'children': [
+							{
+								'id': 'formatarea',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'bigtoolitem',
+										'text': _UNO('.uno:FormatArea'),
+										'command': '.uno:FormatArea'
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'container',
+						'children': [
+							{
+								'id': 'fillcolor',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:FillColor'),
+										'command': '.uno:FillColor'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					}
+				]
+			},
+			{
 				'id': 'Table-Section-Merge',
 				'type': 'container',
 				'children': [
@@ -2457,7 +2499,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:MergeCells', 'presentation'),
 								'command': '.uno:MergeCells'
 							}
@@ -2474,7 +2516,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:SplitCell', 'presentation'),
 								'command': '.uno:SplitCell'
 							}
@@ -2496,7 +2538,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:SelectTable', 'presentation'),
 								'command': '.uno:SelectTable'
 							}
@@ -2609,7 +2651,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'toolbox',
 				'children': [
 					{
-						'type': 'toolitem',
+						'type': 'bigtoolitem',
 						'text': _UNO('.uno:TableDialog', 'presentation'),
 						'command': '.uno:TableDialog'
 					}
@@ -2635,12 +2677,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'type': 'toolbox',
 								'children': [
 									{
-										'type': 'toolitem',
+										'type': 'bigtoolitem',
 										'text': _UNO('.uno:FlipVertical'),
 										'command': '.uno:FlipVertical'
 									},
 									{
-										'type': 'toolitem',
+										'type': 'bigtoolitem',
 										'text': _UNO('.uno:FlipHorizontal'),
 										'command': '.uno:FlipHorizontal'
 									}
@@ -2945,7 +2987,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:FormatGroup'),
 								'command': '.uno:FormatGroup'
 							}
@@ -3002,7 +3044,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:FontworkGalleryFloater'),
 								'command': '.uno:FontworkGalleryFloater'
 							}

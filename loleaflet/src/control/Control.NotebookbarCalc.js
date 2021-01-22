@@ -1985,7 +1985,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'container',
 						'text': '',
 						'enabled': 'true',
-						'vertical': 'true',
 						'children': [
 							{
 								'id': 'Section7',
@@ -1994,7 +1993,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'enabled': 'true',
 								'children': [
 									{
-										'type': 'toolitem',
+										'type': 'bigtoolitem',
 										'text': _UNO('.uno:FreezePanes', 'spreadsheet', true),
 										'command': '.uno:FreezePanes'
 									}
@@ -2375,7 +2374,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:Calculate', 'spreadsheet'),
 								'command': '.uno:Calculate'
 							}
@@ -2397,7 +2396,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:DataDataPilotRun', 'spreadsheet'),
 								'command': '.uno:DataDataPilotRun'
 							}
@@ -2448,7 +2447,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:DataSort', 'spreadsheet'),
 								'command': '.uno:DataSort'
 							}
@@ -2684,14 +2683,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'type': 'toolbox',
 								'children': [
 									{
-										'type': 'toolitem',
+										'type': 'bigtoolitem',
 										'text': _UNO('.uno:Validation', 'spreadsheet'),
 										'command': '.uno:Validation'
 									}
 								]
 							}
-						],
-						'vertical': 'true'
+						]
 					}
 				]
 			},
@@ -2728,12 +2726,12 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:SpellDialog'),
 								'command': '.uno:SpellDialog'
 							},
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:ThesaurusDialog'),
 								'command': '.uno:ThesaurusDialog'
 							}
@@ -2790,7 +2788,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:InsertAnnotation'),
 								'command': '.uno:InsertAnnotation'
 							}
@@ -2847,7 +2845,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:TraceChangeMode', 'spreadsheet'),
 								'command': '.uno:TraceChangeMode'
 							}
@@ -2864,7 +2862,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:AcceptChanges', 'spreadsheet'),
 								'command': '.uno:AcceptChanges'
 							}
