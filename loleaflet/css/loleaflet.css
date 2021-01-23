@@ -65,6 +65,7 @@
 	right: 0px;
 	z-index: 10;
 	cursor: auto;
+	background-color: transparent;
 }
 
 .leaflet-progress-layer
