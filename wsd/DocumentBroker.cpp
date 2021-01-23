@@ -174,7 +174,6 @@ DocumentBroker::DocumentBroker(ChildType type,
     _lastStorageUploadSuccessful(true),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
-    _isLoaded(false),
     _isModified(false),
     _cursorPosX(0),
     _cursorPosY(0),
@@ -1254,7 +1253,7 @@ void DocumentBroker::setLoaded()
 {
     if (!isLoaded())
     {
-        _isLoaded = true;
+        _docState.setLive();
         _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
                                 std::chrono::steady_clock::now() - _threadStart);
         LOG_TRC("Document loaded in " << _loadDuration);
