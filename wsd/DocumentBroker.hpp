@@ -332,7 +332,7 @@ private:
 
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
-    bool isLoaded() const { return _isLoaded; }
+    bool isLoaded() const { return _docState.hadLoaded(); }
     bool isInteractive() const { return _interactive; }
 
     std::size_t getIdleTimeSecs() const
@@ -480,6 +480,7 @@ private:
         DocumentState()
             : _status(Status::None)
             , _closeRequested(false)
+            , _loaded(false)
         {
         }
 
@@ -492,8 +493,21 @@ private:
             _status = newStatus;
         }
 
+        /// True iff the document had ever loaded completely, without implying it's still loaded.
+        bool hadLoaded() const { return _loaded; }
+
         /// True iff the document is fully loaded and available for viewing/editing.
         bool isLive() const { return _status == Status::Live; }
+
+        /// Transitions to Status::Live, implying the document has loaded.
+        void setLive()
+        {
+            LOG_TRC("Setting DocumentState to Status::Live from " << toString(_status));
+            // assert(_status == Status::Loading
+            //        && "Document wasn't in Loading state to transition to Status::Live");
+            _loaded = true;
+            setStatus(Status::Live);
+        }
 
         /// Flags the document for unloading and destruction.
         void markToDestroy() { _status = Status::Destroying; }
@@ -506,6 +520,7 @@ private:
     private:
         Status _status;
         std::atomic<bool> _closeRequested; //< Owner-Termination flag.
+        std::atomic<bool> _loaded; //< If the document ever loaded (check isLive to see if it still is).
     };
 
     /// The main state of the document.
@@ -542,7 +557,6 @@ private:
 
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
-    std::atomic<bool> _isLoaded;
     std::atomic<bool> _isModified;
     bool _interactive; //< If the document has interactive dialogs before load
     int _cursorPosX;
