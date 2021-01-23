@@ -533,7 +533,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		L.TileLayer.prototype._initContainer.call(this);
 
-		var mapContainer = this._map.getContainer();
+		var mapContainer = document.getElementById('document-container');
 		var canvasContainerClass = 'leaflet-canvas-container';
 		this._canvasContainer = L.DomUtil.create('div', canvasContainerClass, mapContainer);
 		this._setup();
