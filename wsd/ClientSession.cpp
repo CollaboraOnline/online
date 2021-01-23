@@ -776,8 +776,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         parseDocOptions(tokens, loadPart, timestamp, doctemplate);
 
         std::ostringstream oss;
-        oss << "load";
-        oss << " url=" << docBroker->getPublicUri().toString();;
+        oss << "load url=" << docBroker->getPublicUri().toString();
 
         if (!getUserId().empty() && !getUserName().empty())
         {

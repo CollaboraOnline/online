@@ -224,6 +224,7 @@ public:
 
     /// Returns the basic information about the file.
     FileInfo& getFileInfo() { return _fileInfo; }
+    const FileInfo& getFileInfo() const { return _fileInfo; }
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
