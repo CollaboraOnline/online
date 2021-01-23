@@ -325,7 +325,7 @@ void DocumentBroker::pollThread()
             continue;
         }
 
-        if (!_isLoaded && (limit_load_secs > 0) && (now > loadDeadline))
+        if (!isLoaded() && (limit_load_secs > 0) && (now > loadDeadline))
         {
             LOG_ERR("Doc [" << _docKey << "] is taking too long to load. Will kill process ["
                     << _childProcess->getPid() << "]. per_document.limit_load_secs set to "
@@ -1248,7 +1248,7 @@ void DocumentBroker::broadcastSaveResult(bool success, const std::string& result
 
 void DocumentBroker::setLoaded()
 {
-    if (!_isLoaded)
+    if (!isLoaded())
     {
         _isLoaded = true;
         _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -1314,7 +1314,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     assertCorrectThread();
 
     LOG_TRC("autoSave(): forceful? " << force);
-    if (_sessions.empty() || _storage == nullptr || !_isLoaded ||
+    if (_sessions.empty() || _storage == nullptr || !isLoaded() ||
         !_childProcess->isAlive() || (!isModified() && !force))
     {
         // Nothing to do.
@@ -2621,7 +2621,7 @@ void DocumentBroker::dumpState(std::ostream& os)
         os << " *** Marked to destroy ***";
     else
         os << " has live sessions";
-    if (_isLoaded)
+    if (isLoaded())
         os << "\n  loaded in: " << _loadDuration;
     else
         os << "\n  still loading... " <<
