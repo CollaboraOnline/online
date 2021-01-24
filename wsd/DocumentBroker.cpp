@@ -172,7 +172,6 @@ DocumentBroker::DocumentBroker(ChildType type,
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
     _markToDestroy(false),
-    _closeRequest(false),
     _isLoaded(false),
     _isModified(false),
     _interactive(false),
@@ -397,7 +396,7 @@ void DocumentBroker::pollThread()
             continue;
         }
 
-        if (SigUtil::getShutdownRequestFlag() || _closeRequest)
+        if (SigUtil::getShutdownRequestFlag() || _docState.isCloseRequested())
         {
             const std::string reason = SigUtil::getShutdownRequestFlag() ? "recycling" : _closeReason;
             LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] for " << reason);
@@ -2451,7 +2450,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
     LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
     _closeReason = reason;
-    _closeRequest = true;
+    _docState.setCloseRequested();
 }
 
 void DocumentBroker::broadcastMessage(const std::string& message) const

@@ -479,6 +479,7 @@ private:
 
         DocumentState()
             : _status(Status::None)
+            , _closeRequested(false)
         {
         }
 
@@ -491,8 +492,13 @@ private:
             _status = newStatus;
         }
 
+        /// Flag close-requested. Cannot be reset.
+        void setCloseRequested() { _closeRequested = true; }
+        bool isCloseRequested() const { return _closeRequested; }
+
     private:
         Status _status;
+        std::atomic<bool> _closeRequested; //< Owner-Termination flag.
     };
 
     /// The main state of the document.
@@ -530,7 +536,6 @@ private:
     std::unique_ptr<StorageBase> _storage;
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _markToDestroy;
-    std::atomic<bool> _closeRequest;
     std::atomic<bool> _isLoaded;
     std::atomic<bool> _isModified;
     bool _interactive; //< If the document has interactive dialogs before load
