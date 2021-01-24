@@ -426,7 +426,7 @@ void DocumentBroker::pollThread()
         if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
         {
             // Don't hammer on saving.
-            if (_saveManager.timeSinceLastSaveRequest() >= std::chrono::seconds(5))
+            if (_saveManager.timeSinceLastRequest() >= std::chrono::seconds(5))
             {
                 // Stop if there is nothing to save.
                 LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey()
