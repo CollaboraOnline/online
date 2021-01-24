@@ -545,18 +545,69 @@ private:
     virtual bool isConvertTo() const { return false; }
 
 private:
+    /// A base request manager.
+    /// Encapsulates common fields for
+    /// Save and Upload requests.
+    class RequestManagerBase
+    {
+    public:
+        RequestManagerBase()
+            : _lastRequestTime(now())
+            , _lastResponseTime(now())
+        {
+        }
+
+        /// How much time passed since the last request.
+        const std::chrono::milliseconds timeSinceLastRequest() const
+        {
+            return std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - _lastRequestTime);
+        }
+
+        /// How much time passed since the last response.
+        const std::chrono::milliseconds timeSinceLastResponse() const
+        {
+            return std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::steady_clock::now() - _lastResponseTime);
+        }
+
+        /// Returns true iff there is an active request in progress.
+        bool isActive() const { return _lastResponseTime < _lastRequestTime; }
+
+    protected:
+        /// Helper to get the current time.
+        static std::chrono::steady_clock::time_point now()
+        {
+            return std::chrono::steady_clock::now();
+        }
+
+        std::chrono::steady_clock::time_point lastRequestTime() const { return _lastRequestTime; }
+
+        void markLastRequestTime() { _lastRequestTime = now(); }
+
+        std::chrono::steady_clock::time_point lastResponseTime() const { return _lastResponseTime; }
+
+        void markLastResponseTime() { _lastResponseTime = now(); }
+
+    private:
+        /// The last time we started an a request.
+        std::chrono::steady_clock::time_point _lastRequestTime;
+
+        /// The last time we received a response.
+        std::chrono::steady_clock::time_point _lastResponseTime;
+    };
+
     /// Responsible for managing document saving.
     /// Tracks auto-saveing and its frequency.
     /// Tracks the last save request and response times.
     /// Tracks the local file's last modified time.
     /// Tracks the time a save response was received.
-    class SaveManager final
+    class SaveManager final : public RequestManagerBase
     {
     public:
         SaveManager()
-            : _lastAutosaveCheckTime(now())
-            , _lastSaveRequestTime(now())
-            , _lastSaveResponseTime(now())
+            : RequestManagerBase()
+            , _lastAutosaveCheckTime(now())
             , _isAutosaveEnabled(std::getenv("LOOL_NO_AUTOSAVE") == nullptr)
         {
         }
@@ -576,42 +627,35 @@ private:
         /// Marks autosave check done.
         void autosaveChecked() { _lastAutosaveCheckTime = now(); }
 
-        /// How much time passed since the last save request.
-        const std::chrono::milliseconds timeSinceLastSaveRequest() const
-        {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - _lastSaveRequestTime);
-        }
-
         /// Marks the last save request as now.
-        void markLastSaveRequestTime() { _lastSaveRequestTime = now(); }
+        void markLastSaveRequestTime() { markLastRequestTime(); }
 
         /// Returns the last save request time.
         /// TODO: Remove: temporary for logging only.
         std::chrono::steady_clock::time_point lastSaveRequestTime() const
         {
-            return _lastSaveRequestTime;
+            return lastRequestTime();
         }
 
         /// Marks the last save response as now.
-        void markLastSaveResponseTime() { _lastSaveResponseTime = now(); }
+        void markLastSaveResponseTime() { markLastResponseTime(); }
 
         /// Returns the last save response time.
         /// TODO: Remove: temporary for logging only.
         std::chrono::steady_clock::time_point lastSaveResponseTime() const
         {
-            return _lastSaveResponseTime;
+            return lastResponseTime();
         }
 
         /// True iff a save is in progress (requested but not completed).
-        bool isSaving() const { return _lastSaveResponseTime < _lastSaveRequestTime; }
+        bool isSaving() const { return isActive(); }
 
         /// True iff the last save request has timed out.
         bool hasSavingTimedOut() const
         {
             return isSaving()
                    && std::chrono::duration_cast<std::chrono::milliseconds>(now()
-                                                                            - _lastSaveRequestTime)
+                                                                            - lastRequestTime())
                           >= std::chrono::milliseconds(COMMAND_TIMEOUT_MS);
         }
 
@@ -622,21 +666,8 @@ private:
         std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
 
     private:
-        /// Helper to get the current time.
-        static std::chrono::steady_clock::time_point now()
-        {
-            return std::chrono::steady_clock::now();
-        }
-
-    private:
-        /// The time we last did an auto-save check, regarldess of outcome.
+        /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
-
-        /// The last time we sent a save request to lokit.
-        std::chrono::steady_clock::time_point _lastSaveRequestTime;
-
-        /// The last time we received a response for a save request from lokit.
-        std::chrono::steady_clock::time_point _lastSaveResponseTime;
 
         /// The jailed file last-modified time.
         std::chrono::system_clock::time_point _modifiedTime;
@@ -646,11 +677,12 @@ private:
     };
 
     /// Responsible for managing document uploading into storage.
-    class StorageManager final
+    class StorageManager final : public RequestManagerBase
     {
     public:
         StorageManager()
-            : _lastSaveTime(now())
+            : RequestManagerBase()
+            , _lastSaveTime(now())
             , _lastStorageUploadSuccessful(true)
         {
         }
@@ -674,12 +706,6 @@ private:
         std::chrono::steady_clock::time_point getLastSaveTime() const { return _lastSaveTime; }
 
     private:
-        /// Helper to get the current time.
-        static std::chrono::steady_clock::time_point now()
-        {
-            return std::chrono::steady_clock::now();
-        }
-
         /// The document's last-modified time on storage.
         std::chrono::system_clock::time_point _modifiedTime;
 
