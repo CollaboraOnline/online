@@ -1669,7 +1669,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
 
     auto found = std::find(_pixmapCache.begin(), _pixmapCache.end(), pixmapHash);
 
-    assert(_pixmapCache.size() <= LOKitHelper::tunnelled_dialog_image_cache_size);
+    assert(_pixmapCache.size() <= LOKitHelper::tunnelledDialogImageCacheSize);
 
     // If not found in cache, we need to encode to PNG and send to client
     const bool doPng = (found == _pixmapCache.end());
@@ -1687,7 +1687,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
                 LOG_DBG("Erasing found entry");
                 _pixmapCache.erase(found);
             }
-            else if (_pixmapCache.size() == LOKitHelper::tunnelled_dialog_image_cache_size)
+            else if (_pixmapCache.size() == LOKitHelper::tunnelledDialogImageCacheSize)
             {
                 LOG_DBG("Popping last entry");
                 _pixmapCache.pop_back();
@@ -1700,7 +1700,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
 
     LOG_DBG("Pixmap cache size now:" << _pixmapCache.size());
 
-    assert(_pixmapCache.size() <= LOKitHelper::tunnelled_dialog_image_cache_size);
+    assert(_pixmapCache.size() <= LOKitHelper::tunnelledDialogImageCacheSize);
 
     std::string response = "windowpaint: id=" + std::to_string(winId) + " width=" + std::to_string(width)
                            + " height=" + std::to_string(height);
