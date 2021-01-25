@@ -2413,7 +2413,7 @@ void lokit_main(
             // oh well, just have the value hardcoded in KitHelper.hpp. It isn't really useful to
             // "tune" it at end-user installations anyway, I think.
             auto versionJSON = Poco::JSON::Parser().parse(versionString).extract<Poco::JSON::Object::Ptr>();
-            versionJSON->set("tunnelled_dialog_image_cache_size", std::to_string(LOKitHelper::tunnelled_dialog_image_cache_size));
+            versionJSON->set("tunnelled_dialog_image_cache_size", std::to_string(LOKitHelper::tunnelledDialogImageCacheSize));
             std::stringstream ss;
             versionJSON->stringify(ss);
             versionString = ss.str();
