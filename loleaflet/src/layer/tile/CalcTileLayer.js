@@ -81,8 +81,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	onAdd: function (map) {
 		map.addControl(L.control.tabs());
-		map.addControl(L.control.columnHeader());
-		map.addControl(L.control.rowHeader());
 		L.CanvasTileLayer.prototype.onAdd.call(this, map);
 
 		map.on('resize', function () {
@@ -756,6 +754,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
 				this._tileWidthTwips, this._tileHeightTwips,
 				this._tileSize, this._selectedPart);
+
+			this._painter._sectionContainer.addSection(L.control.cornerHeader());
+			this._painter._sectionContainer.addSection(L.control.rowHeader());
+			this._painter._sectionContainer.addSection(L.control.columnHeader());
 		}
 		else {
 			this.sheetGeometry.update(jsonMsgObj, /* checkCompleteness */ false, this._selectedPart);
