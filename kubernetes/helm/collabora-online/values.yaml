@@ -1,10 +1,9 @@
-# Default values for libreoffice-online.
+# Default values for collabora-online.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 global:
   app:
-    name: libreoffice-online
-    version: 6.5.0
+    name: collabora-online
     urlScheme: HTTP # either HTTP or HTTPS
     scaling:
       enabled: true
@@ -18,17 +17,18 @@ global:
       port: 9980
       path: "/lool/getMetrics"
     service:
-      name: libreoffice-online
-      type: ClusterIP
+      name: collabora-online
+      type: NodePort # Use ClusterIP instead of NodePort if you are using standalone cluster structure 
       externalPort: 9980
       internalPort: 9980
   ingress: {}
 
-replicaCount: 3
+replicaCount: 3 # This is the amount of how many instances of loolwsd will run
+
 image:
   pullPolicy: Always
-  repository: libreoffice/online
-  tag: master
+  repository: collabora/code
+  tag: latest
 
 probes:
   urlScheme: HTTP # either HTTP or HTTPS
@@ -51,7 +51,7 @@ probes:
     failureThreshold: 3
 
 deployment:
-  name: libreoffice-online
+  name: collabora-online
   type: RollingUpdate
   minReadySeconds: 0
   maxUnavailable: 0
@@ -61,17 +61,17 @@ environmentVariablesLool:
   - name: extra_params
     value: --o:ssl.enable=false
   - name: username
-    value: 
+    value:
   - name: password
-    value: 
+    value:
   - name: domain
-    value: 
+    value: collabora
 
 service:
-  name: libreoffice-online
+  name: collabora-online
 
 hpa:
- name: libreoffice-online
+  name: collabora-online
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
