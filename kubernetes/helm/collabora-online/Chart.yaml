@@ -1,4 +1,4 @@
 apiVersion: v1
 description: Collabora Online helm chart
-name: libreoffice-online
-version: 1.1.0
+name: collabora-online
+version: 0.0.1
