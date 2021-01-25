@@ -1773,6 +1773,12 @@ L.Map = L.Evented.extend({
 
 	setMarkersOpacity: function(opacity) {
 		this._setPaneOpacity('leaflet-pane leaflet-marker-pane', opacity);
+	},
+
+	getTileSectionMgr: function() {
+		if (this._docLayer)
+			return this._docLayer._painter;
+		return undefined;
 	}
 });
 
