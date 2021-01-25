@@ -545,7 +545,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			console.error('canvas container not found. _initContainer failed ?');
 		}
 
-		this._canvas = L.DomUtil.create('canvas', '', this._canvasContainer);
+		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
 		this._container.style.position = 'absolute';
 
 		if (L.Browser.cypressTest) {
@@ -572,6 +572,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._map.on('splitposchanged', this._painter.update, this._painter);
 		this._map.on('sheetgeometrychanged', this._painter.update, this._painter);
 		this._map.on('move', this._syncTilePanePos, this);
+		this._map.on('updateselectionheader', this._painter.update, this._painter);
+		this._map.on('clearselectionheader', this._painter.update, this._painter);
+		this._map.on('updatecurrentheader', this._painter.update, this._painter);
 
 		this._map.on('viewrowcolumnheaders', this._painter.update, this._painter);
 
