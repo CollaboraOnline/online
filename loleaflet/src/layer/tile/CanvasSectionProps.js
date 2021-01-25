@@ -30,13 +30,17 @@ L.CSections.CornerGroup = 			{ name: 'corner group'		, zIndex: 5 };
 /* Drawing order	: Highest with the same zIndex will be drawn on top. */
 
 /* zIndex = 5 */
-L.CSections.CornerHeader.processingOrder =			1; // Calc.
-L.CSections.RowHeader.processingOrder =				2; // Calc.
-L.CSections.ColumnHeader.processingOrder =			3; // Calc.
-L.CSections.Tiles.processingOrder = 				5; // Writer & Impress & Calc.
-L.CSections.Debug.TilePixelGrid.processingOrder = 	5; // Writer & Impress & Calc. This is bound to tiles, processingOrder is not important.
-L.CSections.CalcGrid.processingOrder = 				5; // Calc. This is bound to tiles, processingOrder is not important.
-L.CSections.Debug.Splits.processingOrder = 			5; // Calc. This is bound to tiles, processingOrder is not important.
+
+L.CSections.CornerGroup.processingOrder =			25; // Calc.
+L.CSections.RowGroup.processingOrder =				27; // Calc.
+L.CSections.ColumnGroup.processingOrder =			29; // Calc.
+L.CSections.CornerHeader.processingOrder =			30; // Calc.
+L.CSections.RowHeader.processingOrder =				40; // Calc.
+L.CSections.ColumnHeader.processingOrder =			50; // Calc.
+L.CSections.Tiles.processingOrder = 				60; // Writer & Impress & Calc.
+L.CSections.Debug.TilePixelGrid.processingOrder = 	60; // Writer & Impress & Calc. This is bound to tiles, processingOrder is not important.
+L.CSections.CalcGrid.processingOrder = 				60; // Calc. This is bound to tiles, processingOrder is not important.
+L.CSections.Debug.Splits.processingOrder = 			60; // Calc. This is bound to tiles, processingOrder is not important.
 
 
 L.CSections.CalcGrid.drawingOrder = 				4; // Calc. This is 7 when debugging is enabled.
@@ -44,9 +48,12 @@ L.CSections.Tiles.drawingOrder = 					5; // Writer & Impress & Calc.
 L.CSections.Debug.TilePixelGrid.drawingOrder = 		6; // Writer & Impress & Calc.
 /* drawingOrder = 7 is reserved for debugging mode of CalcGrid */
 L.CSections.Debug.Splits.drawingOrder = 			8; // Calc.
-L.CSections.RowHeader.drawingOrder = 				9; // Calc.
-L.CSections.ColumnHeader.drawingOrder = 			10; // Calc.
-L.CSections.CornerHeader.drawingOrder =				11; // Calc.
+L.CSections.RowGroup.drawingOrder =					9; // Calc.
+L.CSections.ColumnGroup.drawingOrder =				10; // Calc.
+L.CSections.CornerGroup.drawingOrder =				11; // Calc.
+L.CSections.CornerHeader.drawingOrder =				12; // Calc.
+L.CSections.RowHeader.drawingOrder = 				13; // Calc.
+L.CSections.ColumnHeader.drawingOrder = 			14; // Calc.
 
 
 
