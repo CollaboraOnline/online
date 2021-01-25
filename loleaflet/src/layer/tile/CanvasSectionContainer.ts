@@ -261,8 +261,8 @@ class CanvasSectionContainer {
 	}
 
 	setDocumentTopLeft (point: Array<number>) {
-		this.documentTopLeft[0] = point[0];
-		this.documentTopLeft[1] = point[1];
+		this.documentTopLeft[0] = Math.round(point[0]);
+		this.documentTopLeft[1] = Math.round(point[1]);
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].onNewDocumentTopLeft(this.getDocumentTopLeft());
 		}
@@ -572,7 +572,7 @@ class CanvasSectionContainer {
 
 	// Find the left most point from a position with same zIndex.
 	private hitLeft (section: CanvasSectionObject): number {
-		var maxX = -1;
+		var maxX = -Infinity;
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].isLocated && this.sections[i].zIndex === section.zIndex && this.sections[i].name !== section.name) {
 				var currentLeft = this.sections[i].myTopLeft[0] + this.sections[i].size[0];
@@ -583,10 +583,10 @@ class CanvasSectionContainer {
 				}
 			}
 		}
-		if (maxX === -1)
+		if (maxX === -Infinity)
 			return 0; // There is nothing on the left of this section.
 		else
-			return maxX + 1; // Don't overlap with the section on the left.
+			return maxX + Math.round(this.dpiScale); // Don't overlap with the section on the left.
 	}
 
 	// Find the right most point from a position with same zIndex.
@@ -606,12 +606,12 @@ class CanvasSectionContainer {
 		if (minX === Infinity)
 			return this.right; // There is nothing on the right of this section.
 		else
-			return minX - 1; // Don't overlap with the section on the right.
+			return minX - Math.round(this.dpiScale); // Don't overlap with the section on the right.
 	}
 
 	// Find the top most point from a position with same zIndex.
 	private hitTop (section: CanvasSectionObject): number {
-		var maxY = -1;
+		var maxY = -Infinity;
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].isLocated && this.sections[i].zIndex === section.zIndex && this.sections[i].name !== section.name) {
 				var currentTop =  this.sections[i].myTopLeft[1] + this.sections[i].size[1];
@@ -622,10 +622,10 @@ class CanvasSectionContainer {
 				}
 			}
 		}
-		if (maxY === -1)
+		if (maxY === -Infinity)
 			return 0; // There is nothing on the left of this section.
 		else
-			return maxY + 1; // Don't overlap with the section on the top.
+			return maxY + Math.round(this.dpiScale); // Don't overlap with the section on the top.
 	}
 
 	// Find the bottom most point from a position with same zIndex.
@@ -644,7 +644,7 @@ class CanvasSectionContainer {
 		if (minY === Infinity)
 			return this.bottom; // There is nothing on the left of this section.
 		else
-			return minY - 1; // Don't overlap with the section on the bottom.
+			return minY - Math.round(this.dpiScale); // Don't overlap with the section on the bottom.
 	}
 
 	reNewAllSections(redraw: boolean = true) {
@@ -656,6 +656,13 @@ class CanvasSectionContainer {
 		this.applyDrawingOrders();
 		if (redraw)
 			this.drawSections();
+	}
+
+	private roundPositionAndSize(section: CanvasSectionObject) {
+		section.myTopLeft[0] = Math.round(section.myTopLeft[0]);
+		section.myTopLeft[1] = Math.round(section.myTopLeft[1]);
+		section.size[0] = Math.round(section.size[0]);
+		section.size[1] = Math.round(section.size[1]);
 	}
 
 	private locateSections () {
@@ -674,6 +681,7 @@ class CanvasSectionContainer {
 						section.size[1] = 0;
 				}
 				else {
+					this.roundPositionAndSize(section);
 					section.isLocated = true;
 				}
 			}
@@ -706,7 +714,7 @@ class CanvasSectionContainer {
 				if (section.expand.includes('bottom')) {
 					section.size[1] = this.hitBottom(section) - section.myTopLeft[1];
 				}
-
+				this.roundPositionAndSize(section);
 				section.isLocated = true;
 			}
 		}
@@ -721,6 +729,7 @@ class CanvasSectionContainer {
 					section.size[1] = parentSection.size[1];
 					section.myTopLeft[0] = parentSection.myTopLeft[0];
 					section.myTopLeft[1] = parentSection.myTopLeft[1];
+					this.roundPositionAndSize(section);
 					section.isLocated = true;
 				}
 			}
@@ -822,7 +831,7 @@ class CanvasSectionContainer {
 				if (this.sections[i].borderColor) {
 					this.context.lineWidth = this.dpiScale;
 					this.context.strokeStyle = this.sections[i].borderColor;
-					this.context.strokeRect(0, 0, this.sections[i].size[0], this.sections[i].size[1]);
+					this.context.strokeRect(0.5, 0.5, this.sections[i].size[0], this.sections[i].size[1]);
 				}
 
 				this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
