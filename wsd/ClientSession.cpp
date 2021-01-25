@@ -330,7 +330,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
     if (tokens.equals(0, "DEBUG"))
     {
-        std::cerr << std::string(buffer, length).substr(strlen("DEBUG") + 1) << std::endl;
+        LOG_DBG("From client: " << std::string(buffer, length).substr(strlen("DEBUG") + 1));
         return false;
     }
 
