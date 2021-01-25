@@ -590,10 +590,37 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	_getUIWidth: function () {
+		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+		if (section) {
+			return Math.round(section.myTopLeft[0] / section.dpiScale) + Math.round(section.size[0] / section.dpiScale);
+		}
+		else {
+			return 0;
+		}
+	},
+
+	_getUIHeight: function () {
+		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+		if (section) {
+			return Math.round(section.myTopLeft[1] / section.dpiScale) + Math.round(section.size[1] / section.dpiScale);
+		}
+		else {
+			return 0;
+		}
+	},
+
 	_syncTileContainerSize: function () {
 		var tileContainer = this._container;
 		if (tileContainer) {
 			var size = this._map.getPixelBounds().getSize();
+			if (this._docType === 'spreadsheet') {
+				size.x += this._getUIWidth();
+				size.y += this._getUIHeight();
+				this._canvasContainer.style.left = -1 * this._getUIWidth() + 'px';
+				this._canvasContainer.style.top = -1 * this._getUIHeight() + 'px';
+			}
+
 			this._painter._sectionContainer.onResize(size.x, size.y);
 			tileContainer.style.width = this._painter._sectionContainer.canvas.style.width;
 			tileContainer.style.height = this._painter._sectionContainer.canvas.style.height;
