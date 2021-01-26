@@ -23,8 +23,6 @@ RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit 
     setcap cap_sys_admin=ep /usr/bin/loolmount && \
     groupadd -r lool && \
     useradd -g lool -r lool -d /opt/lool -s /bin/bash && \
-    mkdir -p /var/cache/loolwsd && chown lool: /var/cache/loolwsd && \
-    rm -rf /var/cache/loolwsd/* && \
     rm -rf /opt/lool && \
     mkdir -p /opt/lool/child-roots && \
     loolwsd-systemplate-setup /opt/lool/systemplate /opt/lokit >/dev/null 2>&1 && \
