@@ -1259,6 +1259,9 @@ L.Socket = L.Class.extend({
 			else if (tokens[i].startsWith('hash=')) {
 				command.hash = tokens[i].substring('hash='.length);
 			}
+			else if (tokens[i] === 'nopng') {
+				command.nopng = true;
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
