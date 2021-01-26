@@ -70,18 +70,7 @@ progress.
 Running
 -------
 
-First create the directory used for caching tiles. It is set as
-"${localstatedir}/cache/${PACKAGE}" in the configure.ac, so if you did
-not pass any switch to the configure script that affects
-"localstatedir, it will be /usr/local/var/cache/loolwsd . If you did
-pass such a switch, like --prefix, check config.h for the exact value.
-
-If you're using the defaults you'll need to:
-
-sudo mkdir -p /usr/local/var/cache/loolwsd
-sudo chown `whoami` /usr/local/var/cache/loolwsd
-
-Now you can just do:
+You can just do:
 
     make run
 

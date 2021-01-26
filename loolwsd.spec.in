@@ -86,9 +86,6 @@ install -D -m 644 sysconfig.loolwsd %{buildroot}/etc/sysconfig/loolwsd
 install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
 %endif
 %endif
-mkdir -p %{buildroot}/etc/cron.d
-echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
-echo "0 0 */1 * * root find /var/cache/loolwsd -type f -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
 mkdir -p %{buildroot}/etc/pam.d
 echo "auth       required     pam_unix.so" > %{buildroot}/etc/pam.d/loolwsd
 echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
@@ -124,7 +121,6 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 %endif
 %endif
 
-%config(noreplace) /etc/cron.d/loolwsd.cron
 %config(noreplace) /etc/pam.d/loolwsd
 %config(noreplace) %attr(640, lool, root) /etc/loolwsd/loolwsd.xml
 %config /etc/loolwsd/loolkitconfig.xcu
@@ -142,9 +138,6 @@ getent passwd lool >/dev/null || useradd -g lool -r lool
 %post
 setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
 setcap cap_sys_admin=ep /usr/bin/loolmount
-
-mkdir -p /var/cache/loolwsd && chown lool:lool /var/cache/loolwsd
-rm -rf /var/cache/loolwsd/*
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system
