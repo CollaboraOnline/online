@@ -309,7 +309,6 @@ EXTRA_DIST = discovery.xml \
              sysconfig.loolwsd \
              debian/compat \
              debian/copyright \
-             debian/loolwsd.cron.d \
              debian/loolwsd.preinst \
              debian/loolwsd.service \
              debian/rules \
