@@ -2003,15 +2003,36 @@ L.TileLayer = L.GridLayer.extend({
 		var command = this._map._socket.parseServerCmd(textMsg);
 
 		// this._map._socket.sendMessage('DEBUG _onDialogPaintMsg: hash=' + command.hash + ' img=' + typeof(img) + (typeof(img) == 'string' ? (' (length:' + img.length + ':"' + img.substring(0, 30) + (img.length > 30 ? '...' : '') + '")') : '') + ', cache size ' + this._pngCache.length);
-		for (var i = 0; i < this._pngCache.length; i++) {
-			if (this._pngCache[i].hash == command.hash) {
-				// this._map._socket.sendMessage('DEBUG - Found in cache');
-				img = this._pngCache[i].img;
-				// Remove item and add it at the start of the array
-				this._pngCache.splice(i, 1);
-				break;
+		if (command.nopng) {
+			var found = false;
+			for (var i = 0; i < this._pngCache.length; i++) {
+				if (this._pngCache[i].hash == command.hash) {
+					found = true;
+					// this._map._socket.sendMessage('DEBUG - Found in cache');
+					img = this._pngCache[i].img;
+					// Remove item (and add it below at the start of the array)
+					this._pngCache.splice(i, 1);
+					break;
+				}
+			}
+			if (!found) {
+				this._map._socket.sendMessage('ERROR windowpaint: message assumed PNG for hash ' + command.hash
+							      + ' is cached here in the client but not found');
+				// Not sure what to do. Ask the server to re-send the windowpaint: message but this time including the PNG?
+			}
+		} else {
+			// Sanity check: If we get a PNG it should be for a hash that we don't have cached
+			for (var i = 0; i < this._pngCache.length; i++) {
+				if (this._pngCache[i].hash == command.hash) {
+					this._map._socket.sendMessage('ERROR windowpaint: message included PNG for hash ' + command.hash
+								      + ' even if it was already cached here in the client');
+					// Remove the extra copy, code below will add it at the start of the array
+					this._pngCache.splice(i, 1);
+					break;
+				}
 			}
 		}
+
 		// If cache is max size, drop the last element
 		if (this._pngCache.length == this._map._socket.TunnelledDialogImageCacheSize) {
 			// this._map._socket.sendMessage('DEBUG - Dropping last cache element');
