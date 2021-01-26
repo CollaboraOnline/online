@@ -95,9 +95,6 @@ rm %{buildroot}/etc/apache2/conf-available/loolwsd.conf
 install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
 install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
 %endif
-mkdir -p %{buildroot}/etc/cron.d
-echo "#Remove old tiles once every 10 days at midnight" > %{buildroot}/etc/cron.d/loolwsd.cron
-echo "0 0 */1 * * root find /var/cache/loolwsd -type f -a -atime +10 -exec rm {} \;" >> %{buildroot}/etc/cron.d/loolwsd.cron
 mkdir -p %{buildroot}/etc/pam.d
 echo "auth       required     pam_unix.so" > %{buildroot}/etc/pam.d/loolwsd
 echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
@@ -133,7 +130,6 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /var/adm/fillup-templates/sysconfig.loolwsd
 %endif
 
-%config(noreplace) /etc/cron.d/loolwsd.cron
 %config(noreplace) /etc/pam.d/loolwsd
 %config(noreplace) %attr(640, lool, root) /etc/loolwsd/loolwsd.xml
 %config /etc/loolwsd/loolkitconfig.xcu
@@ -187,9 +183,6 @@ echo "   Done."
 
 %post
 setcap cap_fowner,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
-
-mkdir -p /var/cache/loolwsd && chown lool:lool /var/cache/loolwsd
-rm -rf /var/cache/loolwsd/*
 
 %if 0%{?rhel} >= 7
 %systemd_post loolwsd.service
