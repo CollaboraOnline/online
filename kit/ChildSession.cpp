@@ -1672,6 +1672,11 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
     assert(_pixmapCache.size() <= LOKitHelper::tunnelledDialogImageCacheSize);
 
     // If not found in cache, we need to encode to PNG and send to client
+
+    // To artificially induce intentional cache inconsistency between server and client, to be able
+    // to test error handling, you can do something like:
+    // const bool doPng = (found == _pixmapCache.end() || (time(NULL) % 10 == 0)) && ((time(NULL) % 10) < 8);
+
     const bool doPng = (found == _pixmapCache.end());
 
     LOG_DBG("Pixmap hash: " << pixmapHash << (doPng ? " NOT in cache, doing PNG" : " in cache, not encoding to PNG") << ", cache size now:" << _pixmapCache.size());
