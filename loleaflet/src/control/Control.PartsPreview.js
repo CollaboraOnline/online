@@ -220,6 +220,8 @@ L.Control.PartsPreview = L.Control.extend({
 			if (!window.mode.isDesktop() && partId === this._map._docLayer._selectedPart) {
 				// if mobile or tab then second tap will open the mobile wizard
 				if (this._map._permission === 'edit') {
+					// Remove selection to get the slide properties in mobile wizard.
+					this._map._socket.sendMessage('resetselection');
 					setTimeout(function () {
 						w2ui['actionbar'].click('mobile_wizard');
 					}, 0);
