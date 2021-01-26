@@ -27,13 +27,13 @@ $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10
 	done
 endif
 
-SRC_TS = $(wildcard $(srcdir)/src/layer/tile/*.ts) $(wildcard $(srcdir)/src/layer/vector/*.ts)
-SRC_TS_JS = $(patsubst $(srcdir)/src/layer/tile/%.ts,$(srcdir)/src/layer/tile/%.js,$(SRC_TS)) $(patsubst $(srcdir)/src/layer/vector/%.ts,$(srcdir)/src/layer/vector/%.js,$(SRC_TS))
+SRC_TS = $(wildcard $(srcdir)/src/layer/tile/*.ts) $(srcdir)/src/layer/vector/CanvasOverlay.ts
+SRC_TS_JS = $(patsubst $(srcdir)/src/layer/tile/%.ts,$(srcdir)/src/layer/tile/%.js,$(SRC_TS)) $(srcdir)/src/layer/vector/CanvasOverlay.js
 
 $(srcdir)/src/layer/tile/%.js: $(srcdir)/src/layer/tile/%.ts
 	$(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
 
-$(srcdir)/src/layer/vector/%.js: $(srcdir)/src/layer/vector/%.ts
+$(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/CanvasOverlay.ts
 	$(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
