@@ -90,7 +90,7 @@ void HttpRequestTests::testSimpleGet()
     {
         if (protocol == http::Session::Protocol::HttpSsl)
         {
-#ifdef ENABLE_SSL
+#if ENABLE_SSL
             if (!SslContext::isInitialized())
 #endif
                 continue; // Skip SSL, it's not enabled.
