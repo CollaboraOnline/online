@@ -76,7 +76,6 @@ test_base_source = \
 	TileQueueTests.cpp \
 	WhiteBoxTests.cpp \
 	DeltaTests.cpp \
-	HttpRequestTests.cpp \
 	WopiProofTests.cpp \
 	$(wsd_sources)
 
@@ -110,7 +109,7 @@ fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/Log
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
-unit_base_la_SOURCES = UnitClient.cpp ${test_base_source}
+unit_base_la_SOURCES = UnitClient.cpp ${test_base_source} HttpRequestTests.cpp
 unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp
 unit_tiletest_la_LIBADD = $(CPPUNIT_LIBS)
 unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp
