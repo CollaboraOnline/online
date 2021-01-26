@@ -333,6 +333,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         LOG_DBG("From client: " << std::string(buffer, length).substr(strlen("DEBUG") + 1));
         return false;
     }
+    else if (tokens.equals(0, "ERROR"))
+    {
+        LOG_ERR("From client: " << std::string(buffer, length).substr(strlen("ERROR") + 1));
+        return false;
+    }
 
     LOOLWSD::dumpIncomingTrace(docBroker->getJailId(), getId(), firstLine);
 
