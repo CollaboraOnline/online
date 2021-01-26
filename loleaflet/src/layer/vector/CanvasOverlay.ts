@@ -1,3 +1,4 @@
+/// <reference path="CPath.ts" />
 /* eslint-disable */
 
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
@@ -13,7 +14,7 @@ class CanvasOverlay {
 		this.map = mapObject;
 		this.ctx = canvasContext;
 		this.tsManager = this.map.getTileSectionMgr();
-		this.paths = new Map<number, any>();
+		this.paths = new Map<number, CPath>();
 		this.updateCanvasBounds();
 	}
 
@@ -29,23 +30,25 @@ class CanvasOverlay {
 		this.draw();
 	}
 
-	initPath(path: any) {
+	initPath(path: CPath) {
 		var pathId: number = path.getId();
 		this.paths.set(pathId, path);
+		path.setRenderer(this);
+		path.updatePath();
 	}
 
-	removePath(path: any) {
+	removePath(path: CPath) {
 		// This does not get called via onDraw, so ask tileSection to "erase" by painting over.
 		this.tsManager._onTilesSectionDraw();
 		path.setDeleted();
 		this.paths.delete(path.getId());
 	}
 
-	updatePath(path: any) {
+	updatePath(path: CPath) {
 		this.redraw(path);
 	}
 
-	updateStyle(path: any) {
+	updateStyle(path: CPath) {
 		this.redraw(path);
 	}
 
@@ -55,19 +58,30 @@ class CanvasOverlay {
 			bound2[3] >= bound1[1] && bound2[1] <= bound1[3]);
 	}
 
-	private isVisible(path: any): boolean {
+	private isVisible(path: CPath): boolean {
 		var pathBounds = path.getBounds();
 		this.updateCanvasBounds();
 		return CanvasOverlay.intersects(pathBounds, this.bounds);
 	}
 
 	private draw() {
+		var orderedPaths = Array<CPath>();
 		this.paths.forEach((path: any) => {
+			orderedPaths.push(path);
+		});
+
+		// Sort in ascending order w.r.t zIndex.
+		// TODO: cache this operation away whenever possible.
+		orderedPaths.sort((a: CPath, b: CPath) : number => {
+			return a.zIndex - b.zIndex;
+		});
+
+		orderedPaths.forEach((path: any) => {
 			path.updatePath();
 		});
 	}
 
-	private redraw(path: any) {
+	private redraw(path: CPath) {
 		if (!this.isVisible(path))
 			return;
 		// This does not get called via onDraw(ie, tiles aren't painted), so ask tileSection to "erase" by painting over.
@@ -96,12 +110,12 @@ class CanvasOverlay {
 		this.ctx.translate(-this.docTopLeft[0], -this.docTopLeft[0]);
 	}
 
-	updatePoly(path: any, closed: boolean) {
+	updatePoly(path: CPath, closed: boolean) {
 		var i: number;
 		var j: number;
 		var len2: number;
-		var part: any;
-		var parts: Array<any> = path.getParts();
+		var part: Array<number>;
+		var parts = path.getParts();
 		var len: number = parts.length;
 
 		if (!len)
@@ -113,7 +127,7 @@ class CanvasOverlay {
 		for (i = 0; i < len; i++) {
 			for (j = 0, len2 = parts[i].length; j < len2; j++) {
 				part = parts[i][j];
-				this.ctx[j ? 'lineTo' : 'moveTo'](part.x, part.y);
+				this.ctx[j ? 'lineTo' : 'moveTo'](part[0], part[1]);
 			}
 			if (closed) {
 				this.ctx.closePath();
@@ -125,7 +139,7 @@ class CanvasOverlay {
 		this.ctEnd();
 	}
 
-	updateCircle(path: any) {
+	updateCircle(path: CPath) {
 		if (path.empty())
 			return;
 
@@ -133,7 +147,7 @@ class CanvasOverlay {
 
 		var point: Array<number> = path.point;
 		var r: number = path.radius;
-		var s: number = (path._radiusY || r) / r;
+		var s: number = (path.radiusY || r) / r;
 
 		if (s !== 1) {
 			this.ctx.save();
@@ -152,24 +166,31 @@ class CanvasOverlay {
 		this.ctEnd();
 	}
 
-	private fillStroke(path: any) {
-		var options: any = path.options;
+	private fillStroke(path: CPath) {
 
-		if (options.fill) {
-			this.ctx.globalAlpha = options.fillOpacity;
-			this.ctx.fillStyle = options.fillColor || options.color;
-			this.ctx.fill(options.fillRule || 'evenodd');
+		if (path.fill) {
+			this.ctx.globalAlpha = path.fillOpacity;
+			this.ctx.fillStyle = path.fillColor || path.color;
+			this.ctx.fill(path.fillRule || 'evenodd');
 		}
 
-		if (options.stroke && options.weight !== 0) {
-			this.ctx.globalAlpha = options.opacity;
+		if (path.stroke && path.weight !== 0) {
+			this.ctx.globalAlpha = path.opacity;
 
-			this.ctx.lineWidth = options.weight;
-			this.ctx.strokeStyle = options.color;
-			this.ctx.lineCap = options.lineCap;
-			this.ctx.lineJoin = options.lineJoin;
+			this.ctx.lineWidth = path.weight;
+			this.ctx.strokeStyle = path.color;
+			this.ctx.lineCap = path.lineCap;
+			this.ctx.lineJoin = path.lineJoin;
 			this.ctx.stroke();
 		}
 
+	}
+
+	bringToFront(path: CPath) {
+		// TODO: Implement this.
+	}
+
+	bringToBack(path: CPath) {
+		// TODO: Implement this.
 	}
 };
