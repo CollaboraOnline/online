@@ -1,4 +1,5 @@
 /// <reference path="CPoint.ts" />
+/// <reference path="CBounds.ts" />
 /// <reference path="CPath.ts" />
 /* eslint-disable */
 
@@ -7,7 +8,7 @@ class CanvasOverlay {
 	private map: any;
 	private ctx: CanvasRenderingContext2D;
 	private paths: Map<number, any>;
-	private bounds: Array<number>;
+	private bounds: CBounds;
 	private docTopLeft: CPoint;
 	private tsManager: any;
 
@@ -53,16 +54,10 @@ class CanvasOverlay {
 		this.redraw(path);
 	}
 
-	private static intersects(bound1: Array<number>, bound2: Array<number>): boolean {
-		// check if both X and Y segments intersect.
-		return (bound2[2] >= bound1[0] && bound2[0] <= bound1[2] &&
-			bound2[3] >= bound1[1] && bound2[1] <= bound1[3]);
-	}
-
 	private isVisible(path: CPath): boolean {
 		var pathBounds = path.getBounds();
 		this.updateCanvasBounds();
-		return CanvasOverlay.intersects(pathBounds, this.bounds);
+		return this.bounds.intersects(pathBounds);
 	}
 
 	private draw() {
@@ -96,13 +91,13 @@ class CanvasOverlay {
 
 	private updateCanvasBounds() {
 		var viewBounds: any = this.map.getPixelBoundsCore();
-		this.bounds = Array(viewBounds.min.x, viewBounds.min.y, viewBounds.max.x, viewBounds.max.y);
+		this.bounds = new CBounds(new CPoint(viewBounds.min.x, viewBounds.min.y), new CPoint(viewBounds.max.x, viewBounds.max.y));
 	}
 
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
 	private ctStart() {
 		this.updateCanvasBounds();
-		this.docTopLeft = new CPoint(this.bounds[0], this.bounds[1]);
+		this.docTopLeft = this.bounds.getTopLeft();
 		this.ctx.translate(this.docTopLeft.x, this.docTopLeft.y);
 	}
 
