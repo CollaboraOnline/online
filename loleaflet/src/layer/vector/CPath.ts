@@ -98,9 +98,9 @@ class CPath {
 		}
 	}
 
-	getBounds(): Array<number> {
+	getBounds(): CBounds {
 		// Overridden in implementations.
-		return Array<number>();
+		return undefined;
 	}
 
 	empty(): boolean {
