@@ -27,13 +27,16 @@
 #include <Util.hpp>
 
 /// http::Request unit-tests.
+/// FIXME: use loopback and avoid depending on external services.
+/// Currently we need to rely on external services to validate
+/// the implementation.
 class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(HttpRequestTests);
 
     CPPUNIT_TEST(testSimpleGet);
     CPPUNIT_TEST(testSimpleGetSync);
-    // CPPUNIT_TEST(test500GetStatuses); // Slow.
+    CPPUNIT_TEST(test500GetStatuses); // Slow.
     CPPUNIT_TEST(testSimplePost);
     CPPUNIT_TEST(testTimeout);
     CPPUNIT_TEST(testOnFinished_Complete);
