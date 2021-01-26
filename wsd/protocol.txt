@@ -42,7 +42,7 @@ client -> server
 DEBUG <rest of message>
 
     The rest of the message (without the DEBUG keyword), possibly
-    multiple lines, is printed to the server's stderr.
+    multiple lines, is logged by the server as LOG_DBG.
 
 canceltiles
 
