@@ -1,3 +1,4 @@
+/// <reference path="CPoint.ts" />
 /// <reference path="CPath.ts" />
 /* eslint-disable */
 
@@ -7,7 +8,7 @@ class CanvasOverlay {
 	private ctx: CanvasRenderingContext2D;
 	private paths: Map<number, any>;
 	private bounds: Array<number>;
-	private docTopLeft: Array<number> = [0, 0];
+	private docTopLeft: CPoint;
 	private tsManager: any;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
@@ -101,20 +102,20 @@ class CanvasOverlay {
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
 	private ctStart() {
 		this.updateCanvasBounds();
-		this.docTopLeft = Array(this.bounds[0], this.bounds[1]);
-		this.ctx.translate(this.docTopLeft[0], this.docTopLeft[1]);
+		this.docTopLeft = new CPoint(this.bounds[0], this.bounds[1]);
+		this.ctx.translate(this.docTopLeft.x, this.docTopLeft.y);
 	}
 
 	// Undo the canvas translation done by ctStart().
 	private ctEnd() {
-		this.ctx.translate(-this.docTopLeft[0], -this.docTopLeft[0]);
+		this.ctx.translate(-this.docTopLeft.x, -this.docTopLeft.y);
 	}
 
 	updatePoly(path: CPath, closed: boolean) {
 		var i: number;
 		var j: number;
 		var len2: number;
-		var part: Array<number>;
+		var part: CPoint;
 		var parts = path.getParts();
 		var len: number = parts.length;
 
@@ -127,7 +128,7 @@ class CanvasOverlay {
 		for (i = 0; i < len; i++) {
 			for (j = 0, len2 = parts[i].length; j < len2; j++) {
 				part = parts[i][j];
-				this.ctx[j ? 'lineTo' : 'moveTo'](part[0], part[1]);
+				this.ctx[j ? 'lineTo' : 'moveTo'](part.x, part.y);
 			}
 			if (closed) {
 				this.ctx.closePath();
@@ -145,7 +146,7 @@ class CanvasOverlay {
 
 		this.ctStart();
 
-		var point: Array<number> = path.point;
+		var point = path.point;
 		var r: number = path.radius;
 		var s: number = (path.radiusY || r) / r;
 
@@ -155,7 +156,7 @@ class CanvasOverlay {
 		}
 
 		this.ctx.beginPath();
-		this.ctx.arc(point[0], point[1] / s, r, 0, Math.PI * 2, false);
+		this.ctx.arc(point.x, point.y / s, r, 0, Math.PI * 2, false);
 
 		if (s !== 1) {
 			this.ctx.restore();

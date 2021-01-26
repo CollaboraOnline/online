@@ -21,7 +21,7 @@ class CPath {
 
 	radius: number = 0;
 	radiusY: number = 0;
-	point: Array<number>;
+	point: CPoint;
 	zIndex: number = 0;
 
 	static countObjects: number = 0;
@@ -108,9 +108,9 @@ class CPath {
 		return false;
 	}
 
-	getParts(): Array<Array<Array<number>>> {
+	getParts(): Array<Array<CPoint>> {
 		// Overridden in implementations.
-		return Array<Array<Array<number>>>();
+		return Array<Array<CPoint>>();
 	}
 
 	clickTolerance(): number {
