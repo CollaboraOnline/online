@@ -2028,7 +2028,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		} else {
 			// Sanity check: If we get a PNG it should be for a hash that we don't have cached
-			for (var i = 0; i < this._pngCache.length; i++) {
+			for (i = 0; i < this._pngCache.length; i++) {
 				if (this._pngCache[i].hash == command.hash) {
 					this._map._socket.sendMessage('ERROR windowpaint: message included PNG for hash ' + command.hash
 								      + ' even if it was already cached here in the client');
