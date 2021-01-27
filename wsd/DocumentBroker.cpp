@@ -984,11 +984,13 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
     }
 }
 
-bool DocumentBroker::saveAsToStorage(const std::string& sessionId, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename)
+void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
+                                       const std::string& uploadAsPath,
+                                       const std::string& uploadAsFilename, const bool isRename)
 {
     assertCorrectThread();
 
-    return saveToStorageInternal(sessionId, true, "", saveAsPath, saveAsFilename, isRename);
+    saveToStorageInternal(sessionId, true, "", uploadAsPath, uploadAsFilename, isRename);
 }
 
 bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool success,
