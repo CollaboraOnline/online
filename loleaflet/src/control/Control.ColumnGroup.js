@@ -28,6 +28,7 @@ L.Control.ColumnGroup = L.Class.extend({
 		this._map.on('viewrowcolumnheaders', this.update, this);
 		this._createFont();
 		this.update();
+		this.isRemoved = false;
 	},
 
 	getHeaderZoomScale : function(lowerBound, upperBound) {
@@ -59,22 +60,23 @@ L.Control.ColumnGroup = L.Class.extend({
 	},
 
 	update: function () {
-		this._sheetGeometry = this._map._docLayer.sheetGeometry;
-		this._groups = Array(this._sheetGeometry.getColumnGroupLevels());
+		if (!this.isRemoved) {
+			this._sheetGeometry = this._map._docLayer.sheetGeometry;
+			this._groups = Array(this._sheetGeometry.getColumnGroupLevels());
 
-		// Calculate width on the fly.
-		this.size[1] = this._computeOutlineHeight();
+			// Calculate width on the fly.
+			this.size[1] = this._computeOutlineHeight();
 
-		// Because this section's width is calculated on the fly, ColumnHeader and CornerHeader sections should be shifted.
-		this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name).position[1] = this.size[1] + 1;
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[1] = this.size[1] + 1;
+			// Because this section's width is calculated on the fly, ColumnHeader and CornerHeader sections should be shifted.
+			this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name).position[1] = this.size[1] + Math.round(this.dpiScale);
+			this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[1] = this.size[1] + Math.round(this.dpiScale);
 
-		this._cornerHeaderWidth = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[0];
+			this._cornerHeaderWidth = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[0];
 
-		this._splitPos = this._map._docLayer._splitPanesContext.getSplitPos();
+			this._splitPos = this._map._docLayer._splitPanesContext.getSplitPos();
 
-		this._collectGroupsData(this._sheetGeometry.getColumnGroupsDataInView());
-		//this.containerObject.onResize(false);
+			this._collectGroupsData(this._sheetGeometry.getColumnGroupsDataInView());
+		}
 	},
 
 	_getGroupLevel: function (pos) {
@@ -387,6 +389,12 @@ L.Control.ColumnGroup = L.Class.extend({
 
 	onMouseEnter: function () {
 		$.contextMenu('destroy', '#document-canvas');
+	},
+
+	onRemove: function () {
+		this.isRemoved = true;
+		this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name).position[1] = 0;
+		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[1] = 0;
 	},
 
 	onNewDocumentTopLeft: function () {},
