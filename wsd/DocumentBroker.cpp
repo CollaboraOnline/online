@@ -940,8 +940,8 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
     return bResult;
 }
 
-bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
-                                   const std::string& result, bool force)
+void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
+                                     const std::string& result, bool force)
 {
     assertCorrectThread();
 
@@ -968,8 +968,8 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
     }
 
     constexpr bool isRename = false;
-    const bool res = saveToStorageInternal(sessionId, success, result, /*saveAsPath*/ std::string(),
-                                           /*saveAsFilename*/ std::string(), isRename, force);
+    saveToStorageInternal(sessionId, success, result, /*saveAsPath*/ std::string(),
+                          /*saveAsFilename*/ std::string(), isRename, force);
 
     // If marked to destroy, or session is disconnected, remove.
     const auto it = _sessions.find(sessionId);
@@ -982,8 +982,6 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
         // Stop so we get cleaned up and removed.
         _stop = true;
     }
-
-    return res;
 }
 
 bool DocumentBroker::saveAsToStorage(const std::string& sessionId, const std::string& saveAsPath, const std::string& saveAsFilename, const bool isRename)
