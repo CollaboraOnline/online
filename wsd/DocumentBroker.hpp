@@ -610,15 +610,9 @@ private:
                           >= std::chrono::milliseconds(COMMAND_TIMEOUT_MS);
         }
 
-        std::chrono::system_clock::time_point getLastFileModifiedTime() const
-        {
-            return _lastFileModifiedTime;
-        }
+        std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
 
-        void setLastFileModifiedTime(std::chrono::system_clock::time_point time)
-        {
-            _lastFileModifiedTime = time;
-        }
+        void setModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
 
     private:
         /// Helper to get the current time.
@@ -638,7 +632,7 @@ private:
         std::chrono::steady_clock::time_point _lastSaveResponseTime;
 
         /// The jailed file last-modified time.
-        std::chrono::system_clock::time_point _lastFileModifiedTime;
+        std::chrono::system_clock::time_point _modifiedTime;
 
         /// Whether auto-saving is enabled at all or not.
         const bool _isAutosaveEnabled;
