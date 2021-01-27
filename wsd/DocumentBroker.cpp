@@ -968,8 +968,8 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
     }
 
     constexpr bool isRename = false;
-    saveToStorageInternal(sessionId, success, result, /*saveAsPath*/ std::string(),
-                          /*saveAsFilename*/ std::string(), isRename, force);
+    uploadToStorageInternal(sessionId, success, result, /*saveAsPath*/ std::string(),
+                            /*saveAsFilename*/ std::string(), isRename, force);
 
     // If marked to destroy, or session is disconnected, remove.
     const auto it = _sessions.find(sessionId);
@@ -990,10 +990,10 @@ void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
 {
     assertCorrectThread();
 
-    saveToStorageInternal(sessionId, true, "", uploadAsPath, uploadAsFilename, isRename);
+    uploadToStorageInternal(sessionId, true, "", uploadAsPath, uploadAsFilename, isRename);
 }
 
-bool DocumentBroker::saveToStorageInternal(const std::string& sessionId, bool success,
+bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool success,
                                            const std::string& result, const std::string& saveAsPath,
                                            const std::string& saveAsFilename, const bool isRename,
                                            const bool force)
