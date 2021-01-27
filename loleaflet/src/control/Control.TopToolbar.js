@@ -315,7 +315,6 @@ L.Control.TopToolbar = L.Control.extend({
 			$('#toolbar-wrapper').addClass('spreadsheet');
 			if (window.mode.isTablet()) {
 				$(this.map.options.documentContainer).addClass('tablet');
-				$('#spreadsheet-row-column-frame').addClass('tablet');
 				$('#toolbar-wrapper').addClass('tablet');
 			}
 

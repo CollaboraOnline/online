@@ -904,26 +904,6 @@ L.Control.LokDialog = L.Control.extend({
 					}
 				}
 
-				var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
-				if (spreadsheetRowColumnFrame) {
-					offsetTop = spreadsheetRowColumnFrame.offsetTop;
-					noTopProp = true;
-					props = spreadsheetRowColumnFrame.style.cssText.split(';');
-					for (i = 0; i < props.length; ++i) {
-						if (props[i].startsWith('top')) {
-							props[i] = 'top: ' + (offsetTop + delta).toString() + 'px !important';
-							spreadsheetRowColumnFrame.setAttribute('style', props.join(';'));
-							noTopProp = false;
-							break;
-						}
-					}
-					if (noTopProp) {
-						styleAttr = spreadsheetRowColumnFrame.style.cssText;
-						styleAttr += '; top: ' + (offsetTop + delta).toString() + 'px !important';
-						spreadsheetRowColumnFrame.setAttribute('style', styleAttr);
-					}
-				}
-				$('.funcwizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
 				console.log('_adjustCalcInputBarHeight: end');
 			}
 
@@ -1668,10 +1648,6 @@ L.Control.LokDialog = L.Control.extend({
 			this._map.options.documentContainer.style.right = (width - 15).toString() + 'px';
 
 		this._map._onResize();
-
-		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
-		if (spreadsheetRowColumnFrame)
-			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
 
 		this._resizeCalcInputBar(deckOffset);
 	},

@@ -441,13 +441,10 @@ L.Control.MobileWizard = L.Control.extend({
 				else if (data.id === 'insertshape') {
 					$('#mobile-wizard').addClass('shapeswizard');
 				}
-				if (this.map.getDocType() === 'spreadsheet')
-					$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
-				else
-					$('#mobile-wizard').css('top', $('#document-container').css('top'));
+				$('#mobile-wizard').css('top', $('#document-container').css('top'));
 			} else if (data.id === 'funclist') {
 				$('#mobile-wizard').height('100%');
-				$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
+				$('#mobile-wizard').css('top', $('#document-container').css('top'));
 				$('#mobile-wizard').addClass('funcwizard');
 			} else {
 				$('#mobile-wizard').height(this.options.maxHeight);

@@ -108,13 +108,11 @@ L.Control.UIManager = L.Control.extend({
 
 		if (docType === 'presentation') {
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 		}
 
 		if (docType === 'text') {
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 
@@ -150,7 +148,6 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
 		this.moveObjectVertically($('#document-container'), 36);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
@@ -168,7 +165,6 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon fold');
 		obj.addClass('w2ui-icon unfold');
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
 		this.moveObjectVertically($('#document-container'), -36);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
@@ -228,7 +224,6 @@ L.Control.UIManager = L.Control.extend({
 				additionalOffset = 53;
 		}
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
 		this.moveObjectVertically($('#document-container'), 43 + additionalOffset);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 43);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 43);
@@ -240,7 +235,6 @@ L.Control.UIManager = L.Control.extend({
 		if (this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), -85);
 		this.moveObjectVertically($('#document-container'), -85);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), -85);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -85);
@@ -254,7 +248,6 @@ L.Control.UIManager = L.Control.extend({
 		if (!this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 85);
 		this.moveObjectVertically($('#document-container'), 85);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 85);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 85);
