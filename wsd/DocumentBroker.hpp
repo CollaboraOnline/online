@@ -105,6 +105,13 @@ class ClientSession;
 
 /// There is one DocumentBroker object in the WSD process for each document that is open (in 1..n sessions).
 
+
+/// To disambiguate between Storage and Core, we
+/// use 'Download' for Reading from the Storage,
+/// and 'Load' for Loading a document in Core.
+/// Similarly, we 'Upload' to Storage after we
+/// 'Save' the document in Core.
+
 class DocumentBroker : public std::enable_shared_from_this<DocumentBroker>
 {
     class DocumentBrokerPoll;
