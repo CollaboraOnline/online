@@ -134,7 +134,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		// draw text content
 		this.context.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
-		this.context.font = this._font.getFont();
+		this.context.font = this.getFont();
 		this.context.textAlign = 'center';
 		this.context.textBaseline = 'middle';
 		// The '+ 1' below is a hack - it's currently not possible to measure
@@ -146,7 +146,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// draw column borders.
 		this.context.strokeStyle = this._borderColor;
 		this.context.lineWidth = this.dpiScale;
-		this.context.strokeRect(startX - 0.5, 0.5 , entry.size, this.size[1]);
+		this.context.strokeRect(startX - 0.5, 0.5, entry.size, this.size[1]);
 	},
 
 	getHeaderEntryBoundingClientRect: function (index) {
