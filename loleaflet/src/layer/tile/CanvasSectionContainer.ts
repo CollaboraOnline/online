@@ -113,6 +113,7 @@ class CanvasSectionObject {
 	onResize: Function; // Parameters: null (Section's size is up to date when this callback is called.)
 	onDraw: Function; // Parameters: null
 	onNewDocumentTopLeft: Function; // Parameters: Size [x, y]
+	onRemove: Function; // This Function is called right before section is removed.
 
 	constructor (options: any) {
 		this.name = options.name;
@@ -144,6 +145,7 @@ class CanvasSectionObject {
 		this.onResize = options.onResize ? options.onResize: function() {};
 		this.onDraw = options.onDraw ? options.onDraw: function() {};
 		this.onNewDocumentTopLeft = options.onNewDocumentTopLeft ? options.onNewDocumentTopLeft: function() {};
+		this.onRemove = options.onRemove ? options.onRemove: function() {};
 	}
 }
 
@@ -923,6 +925,8 @@ class CanvasSectionContainer {
 		var found: boolean = false;
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].name === name) {
+				this.sections[i].onRemove();
+				this.sections[i] = null;
 				this.sections.splice(i, 1);
 				found = true;
 				break;

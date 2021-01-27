@@ -753,6 +753,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._painter._sectionContainer.addSection(L.control.rowGroup());
 		}
 		else { // If not, remove RowGroup section.
+			// Now remove RowGroup section.
 			this._painter._sectionContainer.removeSection(L.CSections.RowGroup.name);
 		}
 
@@ -762,6 +763,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._painter._sectionContainer.addSection(L.control.columnGroup());
 		}
 		else { // If not, remove ColumnGroup section.
+			// Now remove ColumnGroup section.
 			this._painter._sectionContainer.removeSection(L.CSections.ColumnGroup.name);
 		}
 	},
