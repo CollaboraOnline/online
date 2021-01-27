@@ -79,23 +79,6 @@
 	opacity: 100% !important;
 }
 
-#spreadsheet-row-column-frame {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 117px;
-	bottom: 65px;
-}
-
-#spreadsheet-row-column-frame.readonly {
-	top: 36px;
-	bottom: 0px;
-}
-
-#spreadsheet-row-column-frame.tablet.readonly {
-	top: 32px;
-}
-
 #spreadsheet-header-corner-container {
 	border: 1px solid darkgrey;
 	background-color: #f1f4f7;
