@@ -186,10 +186,10 @@ public:
     void uploadToStorage(const std::string& sesionId, bool success, const std::string& result,
                          bool force);
 
-    /// Save As the document to Storage.
-    /// @param saveAsPath Absolute path to the jailed file.
-    void saveAsToStorage(const std::string& sesionId, const std::string& saveAsPath,
-                         const std::string& saveAsFilename, const bool isRename);
+    /// UploadAs the document to Storage, with a new name.
+    /// @param uploadAsPath Absolute path to the jailed file.
+    void uploadAsToStorage(const std::string& sesionId, const std::string& uploadAsPath,
+                           const std::string& uploadAsFilename, const bool isRename);
 
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
