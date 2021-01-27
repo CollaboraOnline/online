@@ -768,14 +768,13 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     {
         // Check if document has been modified by some external action
         LOG_TRC("Document modified time: " << fileInfo.getModifiedTime());
-        static const std::chrono::system_clock::time_point Zero;
-        if (_documentLastModifiedTime != Zero &&
-            fileInfo.getModifiedTime() != Zero &&
-            _documentLastModifiedTime != fileInfo.getModifiedTime())
+        constexpr std::chrono::system_clock::time_point Zero;
+        if (_documentLastModifiedTime != Zero && fileInfo.getModifiedTime() != Zero
+            && _documentLastModifiedTime != fileInfo.getModifiedTime())
         {
-            LOG_DBG("Document " << _docKey << "] has been modified behind our back. " <<
-                    "Informing all clients. Expected: " << _documentLastModifiedTime <<
-                    ", Actual: " << fileInfo.getModifiedTime());
+            LOG_DBG("Document " << _docKey << "] has been modified behind our back. "
+                                << "Informing all clients. Expected: " << _documentLastModifiedTime
+                                << ", Actual: " << fileInfo.getModifiedTime());
 
             _documentChangedInStorage = true;
             const std::string message = isModified() ? "error: cmd=storage kind=documentconflict"
@@ -892,7 +891,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         _filename = fileInfo.getFilename();
 
         // Use the local temp file's timestamp.
-        _saveManager.setLastFileModifiedTime(
+        _saveManager.setModifiedTime(
             templateSource.empty() ? FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint()
                                    : std::chrono::system_clock::time_point());
 
@@ -903,8 +902,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         dontUseCache = true;
 #endif
 
-        _tileCache = Util::make_unique<TileCache>(
-            _storage->getUri().toString(), _saveManager.getLastFileModifiedTime(), dontUseCache);
+        _tileCache = Util::make_unique<TileCache>(_storage->getUri().toString(),
+                                                  _saveManager.getModifiedTime(), dontUseCache);
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 
@@ -1056,12 +1055,11 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     // If the file timestamp hasn't changed, skip uploading.
     const std::chrono::system_clock::time_point newFileModifiedTime
         = FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint();
-    if (!isSaveAs && newFileModifiedTime == _saveManager.getLastFileModifiedTime() && !isRename
-        && !force)
+    if (!isSaveAs && newFileModifiedTime == _saveManager.getModifiedTime() && !isRename && !force)
     {
         // Nothing to do.
         const auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>(
-            std::chrono::system_clock::now() - _saveManager.getLastFileModifiedTime());
+            std::chrono::system_clock::now() - _saveManager.getModifiedTime());
         LOG_DBG("Skipping unnecessary uploading to URI [" << uriAnonym << "] with docKey [" << _docKey <<
                 "]. File last modified " << timeInSec.count() << " seconds ago, timestamp unchanged.");
         _poll->wakeup();
@@ -1099,7 +1097,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         if (!details.isSaveAs && !details.isRename)
         {
             // Saved and stored; update flags.
-            _saveManager.setLastFileModifiedTime(details.newFileModifiedTime);
+            _saveManager.setModifiedTime(details.newFileModifiedTime);
             _lastSaveTime = std::chrono::steady_clock::now();
 
             // Save the storage timestamp.
@@ -1399,7 +1397,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
     if (_sessions.find(sessionId) != _sessions.end())
     {
         // Invalidate the timestamp to force persisting.
-        _saveManager.setLastFileModifiedTime(std::chrono::system_clock::time_point());
+        _saveManager.setModifiedTime(std::chrono::system_clock::time_point());
 
         // We do not want save to terminate editing mode if we are in edit mode now
 
@@ -2649,7 +2647,7 @@ void DocumentBroker::dumpState(std::ostream& os)
        << Util::getSteadyClockAsString(_saveManager.lastSaveResponseTime());
     os << "\n  last storage save was successful: " << isLastStorageUploadSuccessful();
     os << "\n  last modified: " << Util::getHttpTime(_documentLastModifiedTime);
-    os << "\n  file last modified: " << Util::getHttpTime(_saveManager.getLastFileModifiedTime());
+    os << "\n  file last modified: " << Util::getHttpTime(_saveManager.getModifiedTime());
     if (_limitLifeSeconds > std::chrono::seconds::zero())
         os << "\n  life limit in seconds: " << _limitLifeSeconds.count();
     os << "\n  idle time: " << getIdleTimeSecs();
