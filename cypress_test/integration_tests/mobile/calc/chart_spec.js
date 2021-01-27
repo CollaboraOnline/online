@@ -58,26 +58,7 @@ describe('Chart tests.', function() {
 	}
 
 	function exitChartEditing() {
-		// Select cell on bottom
-		cy.get('.spreadsheet-header-rows')
-			.then(function(header) {
-				var rect = header[0].getBoundingClientRect();
-				var posX = rect.right + 10;
-				var posY = rect.top + 2;
-
-				var moveY = 0.0;
-				cy.waitUntil(function() {
-					cy.get('body')
-						.click(posX, posY + moveY);
-
-					moveY += 4.0;
-					return cy.get('input#addressInput')
-						.should('have.prop', 'value')
-						.then(function(value) {
-							return value === 'A2';
-						});
-				});
-			});
+		calcHelper.typeIntoFormulabar('{enter}');
 	}
 
 	function selectChartOnCenter() {
