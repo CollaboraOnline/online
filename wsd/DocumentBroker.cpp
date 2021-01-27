@@ -995,13 +995,15 @@ void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
 {
     assertCorrectThread();
 
-    uploadToStorageInternal(sessionId, true, "", uploadAsPath, uploadAsFilename, isRename);
+    uploadToStorageInternal(sessionId, true, "", uploadAsPath, uploadAsFilename, isRename,
+                            /*force=*/false);
 }
 
 void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool success,
-                                           const std::string& result, const std::string& saveAsPath,
-                                           const std::string& saveAsFilename, const bool isRename,
-                                           const bool force)
+                                             const std::string& result,
+                                             const std::string& saveAsPath,
+                                             const std::string& saveAsFilename, const bool isRename,
+                                             const bool force)
 {
     assertCorrectThread();
 
