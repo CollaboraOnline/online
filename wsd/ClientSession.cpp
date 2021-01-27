@@ -701,7 +701,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
         std::string wopiFilename;
         Poco::URI::decode(encodedWopiFilename, wopiFilename);
-        docBroker->saveAsToStorage(getId(), "", wopiFilename, true);
+        docBroker->uploadAsToStorage(getId(), "", wopiFilename, true);
         return true;
     }
     else if (tokens.equals(0, "dialogevent") || tokens.equals(0, "formfieldevent"))
@@ -1335,7 +1335,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             {
                 // this also sends the saveas: result
                 LOG_TRC("Save-as path: " << resultURL.getPath());
-                docBroker->saveAsToStorage(getId(), resultURL.getPath(), wopiFilename, false);
+                docBroker->uploadAsToStorage(getId(), resultURL.getPath(), wopiFilename, false);
             }
             else
                 sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
