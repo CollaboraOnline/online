@@ -36,17 +36,19 @@ L.Control.CornerGroup = L.Class.extend({
 	},
 
 	update: function () {
-		// If an instance of this section exists, it means that row and column groups exist at the same time.
-		// And we need their width and height information.
+		// Below 2 sections exist, unless they are being removed.
+
 		var rowGroupSection = this.containerObject.getSectionWithName(L.CSections.RowGroup.name);
-		rowGroupSection.update();
-		this.size[0] = rowGroupSection._computeOutlineWidth();
+		if (rowGroupSection) {
+			rowGroupSection.update();
+			this.size[0] = rowGroupSection._computeOutlineWidth();
+		}
 
 		var columnGroupSection = this.containerObject.getSectionWithName(L.CSections.ColumnGroup.name);
-		columnGroupSection.update();
-		this.size[1] = columnGroupSection._computeOutlineHeight();
-
-		//this.containerObject.onResize();
+		if (columnGroupSection) {
+			columnGroupSection.update();
+			this.size[1] = columnGroupSection._computeOutlineHeight();
+		}
 	},
 
 	onClick: function () {
@@ -62,7 +64,7 @@ L.Control.CornerGroup = L.Class.extend({
 		this.containerObject.canvas.style.cursor = 'default';
 	},
 
-	onDraw: function () { /* Only background and border drawings are needed. They are handled by CanvasSectionContainer. */ },
+	onDraw: function () { /* Only background and border drawings are needed for this section. And they are handled by CanvasSectionContainer. */ },
 	onLongPress: function () {},
 	onResize: function () {},
 	onContextMenu: function () {},
@@ -70,7 +72,8 @@ L.Control.CornerGroup = L.Class.extend({
 	onDoubleClick: function () {},
 	onNewDocumentTopLeft: function() {},
 	onMouseDown: function () {},
-	onMouseUp: function () {}
+	onMouseUp: function () {},
+	onRemove: function () {},
 });
 
 L.control.cornerGroup = function (options) {

@@ -273,6 +273,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 	},
 
 	onResize: function () {},
+	onRemove: function () {},
 });
 
 L.control.rowHeader = function (options) {
