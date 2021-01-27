@@ -215,7 +215,7 @@ L.TileSectionManager = L.Class.extend({
 		this._sectionContainer.createSection({
 			name: L.CSections.Tiles.name,
 			anchor: 'top left',
-			position: [250 * that._dpiScale, 250 * that._dpiScale], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
+			position: [200 * that._dpiScale, 200 * that._dpiScale], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
 			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
 			expand: 'top left bottom right', // Expand to all directions.
 			processingOrder: L.CSections.Tiles.processingOrder,
@@ -546,6 +546,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 
 		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
+		this._canvas.style.border = '1px solid darkgrey';
 		this._container.style.position = 'absolute';
 		this._painter = new L.TileSectionManager(this);
 		this._painter._addTilesSection();
@@ -636,17 +637,32 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			var size = this._map.getPixelBounds().getSize();
 			if (this._docType === 'spreadsheet') {
 				var offset = this._getUIWidth() + this._getGroupWidth();
+				offset += (this._getGroupWidth() > 0 ? 3: 1);
+
 				size.x += offset;
 				this._canvasContainer.style.left = -1 * (offset) + 'px';
 				this._map.options.documentContainer.style.left = String(offset) + 'px';
 
 				offset = this._getUIHeight() + this._getGroupHeight();
+				size.y += offset;
+				offset += (this._getGroupHeight() > 0 ? 3: 1);
 
-				var toolBarOffset = document.getElementById('toolbar-wrapper').getBoundingClientRect().bottom;
-				offset += toolBarOffset;
-				size.y += offset - toolBarOffset;
-				this._canvasContainer.style.top = -1 * (offset - toolBarOffset) + 'px';
-				this._map.options.documentContainer.style.top = String(offset) + 'px';
+				this._canvasContainer.style.top = -1 * offset + 'px';
+
+				if (window.mode.isDesktop()) {
+					if (document.getElementById('map').classList.contains('notebookbar-opened'))
+						this._map.options.documentContainer.style.marginTop = (Math.floor(this._getGroupHeight() + this._getUIHeight() * 0.5)) + 'px';
+					else
+						this._map.options.documentContainer.style.marginTop = (Math.floor(this._getGroupHeight() * 0.5)) + 'px';
+				}
+				else if (window.mode.isTablet()) {
+					if (this._map.isPermissionReadOnly())
+						this._map.options.documentContainer.style.marginTop = String(this._getGroupHeight()) + 'px';
+					else
+						this._map.options.documentContainer.style.marginTop = String(Math.floor(this._getGroupHeight() * 0.5)) + 'px';
+				}
+				else // Mobile.
+					this._map.options.documentContainer.style.marginTop = String(this._getGroupHeight()) + 'px';
 			}
 
 			this._painter._sectionContainer.onResize(size.x, size.y);
