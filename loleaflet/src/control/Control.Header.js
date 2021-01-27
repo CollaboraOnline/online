@@ -15,34 +15,27 @@ L.Control.Header = L.Class.extend({
 		this._textColor = L.DomUtil.getStyle(elem, 'color');
 		this._backgroundColor = L.DomUtil.getStyle(elem, 'background-color');
 		var fontFamily = L.DomUtil.getStyle(elem, 'font-family');
-		var fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
-		var fontHeight = parseInt(L.DomUtil.getStyle(elem, 'line-height'));
-		var rate = fontHeight / fontSize;
 		var that = this;
-		this._font = {
-			_baseFontSize: fontSize * this.dpiScale,
-			_fontSizeRate: rate,
-			_fontFamily: fontFamily,
-			getFont: function() {
-				// Limit zoomScale to 115%. At 120% the row ids at the bottom eat all
-				// horizontal margins and it looks ugly. Beyond 120% the row ids get
-				// clipped out visibly.
-				var zoomScale = that.getHeaderZoomScale(
-					/* lowerBound */ 0.5, /* upperBound */ 1.15);
-
-				return Math.floor(this._baseFontSize * zoomScale) +
-					'px/' +
-					this._fontSizeRate +
-					' ' +
-					this._fontFamily;
-			}
+		this.getFont = function() {
+			var selectedSize = that._getFontSize();
+			return selectedSize + 'px ' + fontFamily;
 		};
 		this._borderColor = L.DomUtil.getStyle(elem, 'border-top-color');
-		//this.borderColor = L.DomUtil.getStyle(elem, 'border-top-color'); // This is a section property, outside border.
 		var borderWidth = L.DomUtil.getStyle(elem, 'border-top-width');
 		this._borderWidth = Math.round(parseFloat(borderWidth));
 		this._cursor = L.DomUtil.getStyle(elem, 'cursor');
 		L.DomUtil.remove(elem);
+	},
+
+	_getFontSize: function () {
+		var map = this._map;
+		var zoomScale = map.getZoomScale(map.getZoom(),	map.options.defaultZoom);
+		if (zoomScale < 0.68)
+			return Math.round(8 * this.dpiScale);
+		else if (zoomScale < 0.8)
+			return Math.round(10 * this.dpiScale);
+		else
+			return Math.round(12 * this.dpiScale);
 	},
 
 	_initHeaderEntryHoverStyles: function (className) {
@@ -656,20 +649,6 @@ L.Control.Header = L.Class.extend({
 			return 0;
 		var point = new L.Point(twips, twips);
 		return Math.round(this._getParallelPos(this.converter(point)));
-	},
-
-	getHeaderZoomScale : function(lowerBound, upperBound) {
-		if (typeof lowerBound === 'undefined' || lowerBound < 0)
-			lowerBound = 0.5;
-		if (typeof upperBound === 'undefined' || upperBound < 0)
-			upperBound = 2.0;
-		if (lowerBound > upperBound) {
-			lowerBound = 0.5;
-			upperBound = 2.0;
-		}
-		var zoomScale = this._map.getZoomScale(this._map.getZoom(),
-			this._map.options.defaultZoom);
-		return Math.min(Math.max(zoomScale, lowerBound), upperBound);
 	},
 
 	onNewDocumentTopLeft: function () {

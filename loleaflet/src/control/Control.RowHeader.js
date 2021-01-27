@@ -134,15 +134,15 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		// draw text content
 		this.context.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
-		this.context.font = this._font.getFont();
+		this.context.font = this.getFont();
 		this.context.textAlign = 'center';
 		this.context.textBaseline = 'middle';
-		this.context.fillText(content, this.size[0] / 2, entry.pos - (entry.size / 2));
+		this.context.fillText(content, this.size[0] / 2, entry.pos - (entry.size / 2) + Math.round(this.dpiScale));
 
 		// draw row borders.
 		this.context.strokeStyle = this._borderColor;
 		this.context.lineWidth = this.dpiScale;
-		this.context.strokeRect(0.5, startY - 0.5 ,this.size[0] , entry.size);
+		this.context.strokeRect(0.5, startY - 0.5, this.size[0], entry.size);
 	},
 
 	getHeaderEntryBoundingClientRect: function (index) {

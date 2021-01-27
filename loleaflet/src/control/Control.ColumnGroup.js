@@ -52,18 +52,8 @@ L.Control.ColumnGroup = L.Class.extend({
 		this._textColor = L.DomUtil.getStyle(elem, 'color');
 		var fontFamily = L.DomUtil.getStyle(elem, 'font-family');
 		var fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
-		var fontHeight = parseInt(L.DomUtil.getStyle(elem, 'line-height'));
-		var rate = fontHeight / fontSize;
-		var that = this;
-		this._font = {
-			_baseFontSize: fontSize * this.dpiScale,
-			_fontSizeRate: rate,
-			_fontFamily: fontFamily,
-			getFont: function() {
-				var zoomScale = that.getHeaderZoomScale(/* lowerBound */ 0.5, /* upperBound */ 1.15);
-
-				return Math.floor(this._baseFontSize * zoomScale) +	'px/' +	this._fontSizeRate + ' ' + this._fontFamily;
-			}
+		this._getFont = function() {
+			return Math.round(fontSize * this.dpiScale) + 'px ' + fontFamily;
 		};
 		L.DomUtil.remove(elem);
 	},
@@ -290,7 +280,7 @@ L.Control.ColumnGroup = L.Class.extend({
 		ctx.strokeRect(startX + 0.5, startY + 0.5, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
 		ctx.fillStyle = this._textColor;
-		ctx.font = this._font.getFont();
+		ctx.font = this._getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText(level + 1, startX + (ctrlHeadSize / 2), startY + (ctrlHeadSize / 2) + 2 * this.dpiScale);
