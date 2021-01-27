@@ -210,12 +210,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 
 /* Related to spreadsheet.css */
 @-moz-document url-prefix() {
-	#spreadsheet-row-column-frame.readonly {
-		top: 36px !important;
-	}
-	#spreadsheet-row-column-frame {
-		top: 75px !important
-	}
 	#document-container.spreadsheet-document {
 		top: 95px !important;
 	}
@@ -639,17 +633,6 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	top: 37px; /*set equal to toolbar up's height*/
 	right: 0px !important;
 	bottom: 35px;
-}
-
-#spreadsheet-row-column-frame {
-	top: 72px;
-	bottom: 36px;
-	bottom: 68px;
-}
-
-#spreadsheet-row-column-frame.readonly {
-	top: 38px !important;
-	bottom: 35px !important;
 }
 
 #closebuttonwrapper {
