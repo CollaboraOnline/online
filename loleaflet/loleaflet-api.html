@@ -2,9 +2,6 @@
 <html>
 <head>
 
-
-	<title>Documentation - Leaflet - a JavaScript library for interactive maps</title>
-
 	<meta charset="utf-8" />
 
 
@@ -30,12 +27,13 @@
 <div class="container">
 
 
-<h2>API Reference</h2>
+<h2>LOLeaflet API Reference</h2>
 
 <div id="toc" class="clearfix">
- 	<div class="toc-col">
+ 	<div class="toc-col last-col">
 		<h4 style="color:red;">LOLeaflet API</h4>
 		<ul>
+			<li><a href="#loleaflet-initialization">Initialization</a></li>
 			<li><a href="#loleaflet-general">General</a></li>
 			<li><a href="#loleaflet-toolbar">Toolbar</a></li>
 			<li><a href="#loleaflet-page">Page oriented</a></li>
@@ -45,16 +43,6 @@
 			<li><a href="#loleaflet-uno-commands">Uno commands</a></li>
 		</ul>
 	</div>
-	<div class="toc-col last-col">
-		<h4 style="color:red;">PostMessage API</h4>
-		<ul>
-			<li><a href="#loleaflet-postmessage-initialization">Initialization</a></li>
-			<li><a href="#loleaflet-postmessage-query">Query API</a></li>
-			<li><a href="#loleaflet-postmessage-sessions">Session Management</a></li>
-			<li><a href="#loleaflet-postmessage-actions">Actions</a></li>
-			<li><a href="#loleaflet-postmessage-misc">Miscellaneous</a></li>
-		</ul>
-	</div>
 </div>
 
 <!--<a href="#toc" id="back-to-top">&uarr;</a>-->
@@ -62,7 +50,151 @@
 <hr />
 <p>This reference reflects <strong>LOLeaflet master</strong>.</p>
 
-<h2 id="loleaflet-loleaflet">LOLeaflet API</h2>
+<h2 id="loleaflet-loleaflet">LOLeaflet</h2>
+
+<h3 id="loleaflet-initialization">Initialization</h3>
+
+<h4>Usage example</h4>
+
+<pre><code class="javascript">
+var map = L.map('map', {
+    doc: 'file:///path/to/document',
+    server: 'wss://localhost',
+    documentContainer: 'document-container'
+});</code></pre>
+
+<h4 class="left">Creation</h4>
+
+<table data-id='map'>
+	<tr>
+		<th>Factory</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>L.map</b>(
+			<nobr>&lt;HTMLElement|String&gt; <i>id</i>,</nobr>
+			<nobr>&lt;<a href="#map-options">Map options</a>&gt; <i>options?</i> )</nobr>
+		</code></td>
+
+
+		<td>Instantiates a map object given a div element (or its id) and optionally an object literal with map options described below.</td>
+	</tr>
+</table>
+
+<h4>Options</h4>
+
+<h5>These are the options intended to be used for loleaflet, using any additional options from Leaflet might cause some
+unexpected behaviour.</h5>
+
+<table data-id='map'>
+	<tr>
+		<th>Option</th>
+		<th>Type</th>
+		<th>Default</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code><b>doc</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>Document URL, the server should be able to access the document.</td>
+	</tr>
+	<tr>
+		<td><code><b>server</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>The websocket server hosting loolwsd using the <code>ws:</code> protocol.
+		    Example: wss://localhost:9980</td>
+	</tr>
+	<tr>
+		<td><code><b>webserver</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>The webserver access to hosting loolwsd.  Normally it is
+		    derived from 'server', but can be overridden with an own
+		    value in case of proxying.  Example: http://localhost:9980</td>
+	</tr>
+	<tr>
+		<td><code><b>permission</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">'view'</span></code></td>
+        <td>The document's <a href="#documentpermission-values">permission</a>.</td>
+	</tr>
+	<tr>
+		<td><code><b>timestamp</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>A timestamp of the last modification to the document.</td>
+	</tr>
+	<tr>
+		<td><code><b>documentContainer</b></code></td>
+		<td><code>String / DOM element</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>An outer div, containing the map div, that is used internally for the creation of the toolbar.</td>
+	</tr>
+	<tr>
+		<td><code><b>toolbarContainer</b></code></td>
+		<td><code>String / DOM element</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>A div used by the default toolbar elements (bold, italic, search, etc.) in loleaflet. If you implement
+           your own toolbar and use controls that do not require a toolbar (like the dialog or scroll control) you
+          can ignore this.</td>
+	</tr>
+	<tr>
+		<td><code><b>renderingOptions</b></code></td>
+		<td><code>Object</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>Enables the continuous, web view, of the document, see the UNO commands below for this parameter.</td>
+	</tr>
+	<tr>
+		<td><code><b>print</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">true</span></code></td>
+		<td>Whether the print handler is active (for Chrome).</td>
+	</tr>
+	<tr>
+		<td><code><b>autoFitWidth</b></code></td>
+		<td><code>Boolean</code></td>
+		<td><code><span class="literal">true</span></code></td>
+		<td>Whether the document is automatically zoomed so that the width fits the viewing area when
+            the window is resized. The document will not be zoomed in more than map.options.zoom.</td>
+	</tr>
+	<tr>
+		<td><code><b>zoom</b></code></td>
+		<td><code>Number</code></td>
+		<td><code><span class="literal">10</span></code></td>
+		<td>Default zoom level in which the document will be loaded.</td>
+	</tr>
+	<tr>
+		<td><code><b>tileWidthTwips</b></code></td>
+		<td><code>Number</code></td>
+		<td><code><span class="literal">3840</span></code></td>
+		<td>Default tile width in twips (how much of the document is covered horizontally in a 256x256 pixels tile).
+            Unless you know what you are doing, this should not be modified;
+	    this means twips value for 256 pixels at 96dpi.</td>
+	</tr>
+	<tr>
+		<td><code><b>tileHeightTwips</b></code></td>
+		<td><code>Number</code></td>
+		<td><code><span class="literal">3840</span></code></td>
+		<td>Default tile height in twips (how much of the document is covered vertically in a 256x256 pixels tile).
+            Unless you know what you are doing, this should not be modified;
+	    this means twips value for 256 pixels at 96dpi.</td>
+	</tr>
+	<tr>
+		<td><code><b>defaultZoom</b></code></td>
+		<td><code>Number</code></td>
+		<td><code><span class="literal">10</span></code></td>
+		<td>The zoom level at which the tile size in twips equals the default size (3840 x 3840).
+            Unless you know what you are doing, this should not be modified.</td>
+	</tr>
+    <tr>
+		<td><code><b>cursorURL</b></code></td>
+		<td><code>String</code></td>
+		<td><code><span class="literal">undefined</span></code></td>
+		<td>The path (local to the server) where custom cursor files are stored.</td>
+	</tr>
+</table>
 
 <h3 id="loleaflet-general">General</h3>
 
@@ -1235,823 +1367,6 @@ The <code>id</code> property of ErrorEvent can have the following values:
 		<th>description</th>
 	</tr>
 </table>
-
-<h2 id="loleaflet-postmessage">PostMessage API</h2>
-
-<p>PostMessage API is used to interact with parent frame when loleaflet is
-  enclosed in one. This is useful for hosts wanting to
-  integrate Collabora Online in them.</p>
-
-<p>This API is mostly based
-  on <a href="https://wopi.readthedocs.io/en/latest/scenarios/postmessage.html">WOPI
-    specification</a> with few extensions/modifications. All messages sent are
-  in this form :
-
-<pre><code class="javascript">
-{
-    "MessageId": "&lt;MessageId&gt;",
-    "SendTime": "&lt;Timestamp when message is sent&gt;",
-    "Values": {
-         "&lt;key&gt;": "&lt;value&gt;"
-    }
-}
-</code></pre>
-SendTime is the timestamp returned by browsers' Date.now(). The post messages
-sent from the WOPI host should also be in same form.
-</p>
-
-<p>It is to be noted that as mentioned in WOPI specs, loleaflet frame will
-  ignore all post messages coming from the host frame
-  if <code>Host_PostmessageReady</code> has not been received. Further, since
-  for embedding Collabora Online as an iframe WOPI implementation is a must,
-  it is required that 'PostMessageOrigin' property is present in
-  WOPI host's CheckFileInfo response. Otherwise, no post messages will be
-  emitted.
-<br/>
-
-<h3 id="loleaflet-postmessage-initialization">Initialization</h3>
-Editor to WOPI host
-<table data-id='postmessage-initialization-from-editor'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>App_LoadingStatus</b></code></td>
-		<td><code>
-		    <nobr>Status: &lt;String&gt;</nobr>
-		    <nobr>DocumentLoadedTime: &lt;Timestamp&gt;</nobr>
-		    <nobr>Features: &lt;Dict&gt;</nobr>
-		</code></td>
-		<td>If Status is <i>Frame_Ready</i>, loleaflet frame is loaded and UI
-		    can be shown. <br/>
-		    Accompanying keys: <i>Features</i>: This client's capabilities.
-		    Supported values are: <i>VersionStates</i>. Tells the host that client supports different version states. See <a href="#loleaflet-postmessage-versioning">Version Restore</a> for more details.<br/>
-		    When Status is <i>Document_Loaded</i>, document has been completely
-		    loaded and host can also start using PostMessage API.<br/>
-		    Accompanying keys:
-			<i>DocumentLoadedTime</i><br/>
-			When Status is <i>Failed</i>, document hasn't been loaded but host can show the loleaflet frame to present an error for a user.
-		</td>
-	</tr>
-</table>
-
-WOPI host to editor
-<table data-id='postmessage-initialization-to-editor'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>Host_PostmessageReady</b></code></td>
-		<td><code>
-		</code></td>
-		<td>
-		  See WOPI docs for detail.
-		</td>
-	</tr>
-</table>
-
-<h3 id="loleaflet-postmessage-query">Query</h3>
-You can query data from the editor using post message API. All responses are
-returned with query's MessageId suffixed with '_Resp' as shown below
-<br/><br/>
-Getters<br/>
-WOPI Host to Editor
-<table data-id='postmessage-query-getters'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>Get_Views</b></code></td>
-		<td><code>
-		</code></td>
-		<td>
-		Queries the editor for currently active views of the document. Response is returned in form of <code>Get_Views_Resp</code>
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Get_Export_Formats</b></code></td>
-		<td><code>
-		</code></td>
-		<td>
-		Queries the editor for all the supported export formats for currently opened document.
-		</td>
-	</tr>
-
-</table>
-Getters response<br/>
-Editor to WOPI host
-<table data-id='postmessage-query-getters-resp'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>Get_Views_Resp</b></code></td>
-		<td><code>
-		    <nobr>ViewId: &lt;Number&gt;</nobr>
-		    <nobr>UserId: &lt;String&gt;</nobr>
-		    <nobr>UserName: &lt;String&gt;</nobr>
-		    <nobr>Color: &lt;Number&gt;</nobr>
-		    <nobr>ReadOnly: &lt;Boolean&gt;</nobr>
-		    <nobr>IsCurrentView: &lt;Boolean&gt;</nobr>
-		</code></td>
-		<td>Give details of all current views when queried using <code>Get_Views</code>
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Get_Export_Formats_Resp</b></code></td>
-		<td><code>
-		    <nobr>Label: &lt;String&gt;</nobr>
-		    <nobr>Format: &lt;String&gt;</nobr>
-		</code></td>
-		<td>
-		Response to query <code>Get_Export_Formats</code>.
-		Label would contain a localised string explaining about the format.
-		Format is the file extension of the format which is required while requesting
-		export of the document.
-		</td>
-	</tr>
-</table>
-
-<h3 id="loleaflet-postmessage-sessions">Session Management</h3>
-<h4>WOPI Host to editor</h4>
-<table data-id='postmessage-sessions-management'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>Action_RemoveView</b></code></td>
-		<td><code>
-			<nobr>ViewId: &lt;Number&gt;</nobr>
-		</code></td>
-		<td>Remove the session</code>.
-		</td>
-	</tr>
-	</table>
-
-<h4>Editor to WOPI Host</h4>
-<table data-id='postmessage-sessions'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>View_Added</b></code></td>
-		<td><code>
-		    <nobr>ViewId: &lt;Number&gt;</nobr>
-		    <nobr>UserId: &lt;String&gt;</nobr>
-		    <nobr>UserName: &lt;String&gt;</nobr>
-		    <nobr>Color: &lt;Number&gt;</nobr>
-		    <nobr>ReadOnly: &lt;Boolean&gt;</nobr>
-		    <nobr>Deprecated: true;</nobr>
-		</code></td>
-		<td>A new member is added. ViewId is unique integer
-		identifying a session/view. UserId is user identity. UserName is
-		display name of the user. Color is RGB color integer
-		value. ReadOnly tells if the new view is opened as readonly.<br/>
-		This message is <strong>deprecated</strong>, instead implement just
-		handling of Views_List which holds the same payload as
-		<code>Get_Views_Resp</code>.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>View_Removed</b></code></td>
-		<td><code>
-		    <nobr>ViewId: &lt;Number&gt;</nobr>
-		    <nobr>Deprecated: true;</nobr>
-		</code></td>
-		<td>View with <code>ViewId</code> has closed the document.<br/>
-		This message is <strong>deprecated</strong>, instead implement just
-		handling of Get_Views_Resp and if you need the info which view has
-		been added / removed, check against the previous state.<br/>
-		This message is <strong>deprecated</strong>, instead implement just
-		handling of Views_List which holds the same payload as
-		<code>Get_Views_Resp</code>.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Views_List</b></code></td>
-		<td>See <code>Get_Views_Resp</code>.</td>
-		<td>Complete information about the currently connected views.
-		</td>
-	</tr>
-	</table>
-
-<h3 id="loleaflet-postmessage-actions">Actions</h3>
-<h4>WOPI host to editor</h4>
-<table data-id='postmessage-actions'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>Action_Save</b></code></td>
-		<td><code>
-		    <nobr>DontTerminateEdit: &lt;boolean&gt;</nobr>
-		    <nobr>DontSaveIfUnmodified: &lt;boolean&gt;</nobr>
-		    <nobr>Notify: &lt;boolean&gt;</nobr>
-		    <nobr>ExtendedData: &lt;String&gt;</nobr>
-		</code></td>
-		<td>Saves the document.<br/>
-		<code>DontTerminateEdit</code> is relevant for spreadsheets where saving
-		a document can terminate the edit mode (text cursor dissappearing). Setting this to
-		true won't terminate the edit mode and can be used to save document without disrupting
-		user's editing session in spreadsheets.<br/>
-		<code>DontSaveIfUnmodified</code> prevents loolwsd to save the file back to storage if document is
-		unmodified (only cursor position changed etc.) but still saved. This can be helpful
-		to prevent creating unnecessary file revisions.<br/>
-		<code>Notify</code> when present and set to true notifies the
-		host when document is saved. See <code>Action_Save_Resp</code>
-		for details.<br/>
-		<code>ExtendedData</code> optional data carried over to the WOPI host if provided
-		in the X-LOOL-WOPI-ExtendedData header. The contents are preserved as-is,
-		however, care must be taken to avoid using anything that HTTP headers do
-		not allow, also, special values such as new-line, null character, non-printable
-		characters, etc. are not allowed. The client can use this to pass multiple values
-		to the WOPI host which can then act on them.<br/>
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_SaveAs</b></code></td>
-		<td><code>
-		    <nobr>Filename: &lt;String&gt;</nobr>
-		    <nobr>Notify: &lt;boolean&gt;</nobr>
-		</code></td>
-		<td>Creates copy of the document with given Filename.<br/>
-		<code>Filename</code> is the requested filename for the new file.<br/>
-		<code>Notify</code> when present and set to true notifies the
-		host when document is saved. See <code>Action_Save_Resp</code>
-		for details.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_FollowUser</b></code></td>
-		<td><code>
-			<nobr>Follow: &lt;Boolean&gt;</nobr>
-			<nobr>ViewId: &lt;Number&gt;</nobr>
-		</code></td>
-		<td>Turn on or off the follow user feature.<br/>
-		When <code>Follow</code> is set to true or is not defined enables following the editor, disables following when set to false.<br/>
-		When <code>Follow</code> is set to true or is not defined <code>ViewId</code> parameter specifies user to follow. When <code>ViewId</code> is not defined, the current editor is followed.<br/>
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_Close</b></code></td>
-		<td><code>
-		</code></td>
-		<td>
-		Closes the document.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_Print</b></code></td>
-		<td><code>
-		</code></td>
-		<td>
-		Prints the document.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_Export</b></code></td>
-		<td><code>
-		    <nobr>Format: &lt;String&gt;</nobr>
-		</code></td>
-		<td>
-		Downloads the document in format specified by <code>Format</code>. Format must be from the list returned
-		in <code>Get_Export_Formats</code>
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_InsertGraphics</b></code></td>
-		<td><code>
-		    <nobr>url: &lt;String&gt;</nobr>
-		</code></td>
-		<td>
-		Downloads image from the url and inserts it to the document.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_Paste</b></code></td>
-		<td><code>
-		    <nobr>Mimetype: &lt;String&gt;</nobr>
-		    <nobr>Data: &lt;String&gt;</nobr>
-		</code></td>
-		<td>
-		Pastes the Data with the given Mimetype at the current cursor
-		position. This works around the copy/paste mechanism that is
-		in Collabora Online, and pastes the data directly to the
-		document.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_ShowBusy</b></code></td>
-		<td><code>
-		    <nobr>Label: &lt;String&gt;</nobr>
-		</code></td>
-		<td>
-		Shows an in-progress overlay, just like what appears when saving
-		the document, with the given Label.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Action_HideBusy</b></code></td>
-		<td/>
-		<td>
-                Hides any in-progress overlay, if present.
-		</td>
-	</tr>
-</table>
-
-<h4>WOPI editor to host (Response)</h4>
-<table data-id='postmessage-actions-response'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>Action_Load_Resp</b></code></td>
-		<td><code>
-			<nobr>success: &lt;boolean&gt;</nobr>
-			<nobr>result: &lt;string&gt;</nobr>
-			<nobr>errorMsg: &lt;string&gt;</nobr>
-		</code></td>
-		<td>Acknowledgement when load finishes.<br/>
-		<code>success</code> tells if LOOL was able to load the document
-		successfully.<br/>
-		<code>result</code> contains the reason the document was not loaded.<br/>
-		<code>errorMsg</code> contains a detailed error message in case loading failed.
-		Probably it will contain the error message returned from the WOPI host.
-		</td>
-	</tr>
-
-	<tr>
-		<td><code><b>Action_Save_Resp</b></code></td>
-		<td><code>
-		    <nobr>success: &lt;boolean&gt;</nobr>
-		    <nobr>result: &lt;string&gt;</nobr>
-			<nobr>errorMsg: &lt;string&gt;</nobr>
-			<nobr>fileName: &lt;string&gt;</nobr>
-		</code></td>
-		<td>Acknowledgement when save finishes.<br/>
-		<i>This response is only emitted if <code>Notify</code> parameter
-		is mentioned by <code>Action_Save</code> PostMessage API.</i>
-		<br/>
-		<code>success</code> tells if LOOL was able to save the document
-		successfully.<br/>
-		<code>result</code> contains the reason the document was not saved.<br/>
-		In case, document was not saved because it was not modified,
-		then this parameter contains the string 'unmodified'. In this
-		case, WOPI hosts can be sure that there are no changes pending
-		in the document to be saved to the storage.<br/>
-		<code>errorMsg</code> contains a detailed error message in case saving failed.
-		Probably it will contain the error message returned from the WOPI host.<br/>
-		<code>fileName</code> if success equals true then contains saved file name.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>FollowUser_Changed</b></code></td>
-		<td><code>
-			<nobr>FollowedViewId: &lt;Number&gt;</nobr>
-			<nobr>IsFollowUser: &lt;Boolean&gt;</nobr>
-			<nobr>IsFollowEditor: &lt;Boolean&gt;</nobr>
-		</code></td>
-		<td>Notification about current following state.<br/>
-		<code>FollowedViewId</code> tells which user is followed. <code>IsFollowUser</code> determines if following the specific user is
-		activated. <code>IsFollowEditor</code> determines if following the editor is
-		activated. If both <code>IsFollowUser</code> and <code>IsFollowEditor</code> are false then following is
-		inactive.
-		</td>
-	</tr>
-</table>
-
-<h3 id="loleaflet-postmessage-versioning">Version Restore</h3>
-<h4>WOPI host to editor</h4>
-<table data-id="postmessage-versioning-to-editor">
-    <tr>
-	<th>MessageId</th>
-	<th>Values</th>
-	<th>Description</th>
-    </tr>
-    <tr>
-	<td><code><b>Host_VersionRestore</b></code></td>
-	<td><code>
-	    <nobr>Status: &lt;string&gt;</nobr>
-	</code></td>
-	<td>
-	    Only possible value of Status (for now) is <code>Pre_Restore</code>.
-	    This message is sent by the host <b>before</b> actually restoring the document
-	    and <b>after</b> user showed the intent to restore the document. This is so such
-	    that if there are any unsaved changes, Online can save them to storage before
-	    document is restored.
-	</td>
-    </tr>
-</table>
-
-<h4>Editor to WOPI host</h4>
-<table data-id="postmessage-versioning-to-host">
-    <tr>
-	<th>MessageId</th>
-	<th>Values</th>
-	<th>Description</th>
-    </tr>
-    <tr>
-	<td><code><b>App_VersionRestore</b></code></td>
-	<td><code>
-	    <nobr>Status: &lt;string&gt;</nobr>
-	</code></td>
-	<td>
-	    This is the reply for the Host_VersionRestore message. Possible values for <code>Status</code>
-	    (for now) is: <code>Pre_Restore_Ack</code>. It means that host can go ahead with restoring the
-	    document to an earlier revision.
-	</td>
-    </tr>
-</table>
-
-<h5>Note</h5>
-<p>These messages are only emitted if <i>App_LoadingStatus</i> contains <i>VersionStates</i> in <i>Features</i>. Otherwise, host can immediately restore the version to earlier revision.</p>
-
-<h3 id='loleaflet-postmessage-misc'>Miscellaneous</h3>
-<h4>WOPI host to editor</h4>
-<table data-id='postmessage-misc-to-editor'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>Insert_Button</b></code></td>
-		<td><code>
-		    <nobr>id: &lt;string&gt;</nobr><br/>
-		    <nobr>imgurl: &lt;string&gt;</nobr><br/>
-		    <nobr>hint: &lt;string&gt;</nobr><br/>
-		    <nobr>mobile: &lt;boolean&gt;</nobr><br/>
-		    <nobr>label: &lt;string&gt;</nobr><br/>
-		    <nobr>insertBefore: &lt;string&gt;</nobr><br/>
-		    <nobr>unoCommand: &lt;string&gt;</nobr><br/>
-		</code></td>
-		<td>
-		  Inserts a button to the top toolbar.
-
-		  It responds with <code>Clicked_Button</code> post message event
-		  on which hosts can react accordingly
-		  (except when the <code>unoCommand</code> property is set).<br/>
-		  <code>id</code> parameter is a unique id of the toolbar
-		  button. It is recommended to prefix such ids given here with
-		  some host namespace so that it doesn't conflict with existing
-		  toolbar IDs. In case of conflict, button is not added.<br/>
-		  <code>imgurl</code> parameter is the link to the image that
-		  will be set as button image in the toolbar. The ideal size of
-		  the image is 24x24px. The image must be hosted on the host URL
-		  to not violate Content-Security-Policy.<br/>
-		  <code>hint</code> This is used as a tooltip of the
-		  button.<br/>
-		  <code>mobile</code> Whether the button should be shown when
-		  the interface switches to mobile mode.<br/>
-		  <code>label</code> When a readonly document is opened, we
-		  don't have the toolbar at all. In this case, this newly added
-		  button is present in file menubar. The text against this label
-		  is used as text of the menubar item.<br/>
-		  <code>insertBefore</code> Specify the position where the button
-		  should be inserted.
-		  <code>insertBefore</code> is the button ID (see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>).
-		  <code>unoCommand</code> UNO Command to be executed on button click
-		  (<a href="https://wiki.documentfoundation.org/Development/DispatchCommands">Reference</a>). When this property
-		  is set, no 'Clicked_Button' response is sent. The button click will be handled by LibreOffice.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Hide_Button</b></code></td>
-		<td>
-			<code><nobr>id: &lt;string&gt;</nobr></code>
-		</td>
-		<td>
-			Hides a button from the toolbar.<br/>
-		    <code>id</code> is the button ID (see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>).
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Show_Button</b></code></td>
-		<td>
-			<code><nobr>id: &lt;string&gt;</nobr></code>
-		</td>
-		<td>
-			Hides a button from the toolbar.<br/>
-			<code>id</code> is the button ID (see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>).
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Remove_Button</b></code></td>
-		<td>
-			<code><nobr>id: &lt;string&gt;</nobr></code>
-		</td>
-		<td>
-			Removes a button from the toolbar.<br/>
-		    <code>id</code> is the button ID (see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>).
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Remove_Statusbar_Element</b></code></td>
-		<td>
-			<code><nobr>id: &lt;string&gt;</nobr></code>
-		</td>
-		<td>
-			Removes an element from the statusbar.<br/>
-		    <code>id</code> is the element ID (see <a href="#statusbar-element-ids">Finding statusbar element IDs</a>).
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Hide_Menubar</b></code></td>
-		<td></td>
-		<td>
-			Hides the menu bar.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Show_Menubar</b></code></td>
-		<td></td>
-		<td>
-			Shows the menu bar.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Grab_Focus</b></code></td>
-		<td></td>
-		<td>
-			This restores focus to the application, activating it, and removing any overlay
-		indicating quiescence, and re-connecting to the server if necessary. Useful after leaving
-		the application for a lengthy period, or when wanting to restore browser focus after
-		presenting an overlayed dialog.
-		</td>
-	</tr>
-		<td><code><b>Hide_Ruler</b></code></td>
-		<td></td>
-		<td>
-			Hides the horizontal document ruler (Writer only)
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Show_Ruler</b></code></td>
-		<td></td>
-		<td>
-			Shows the horizontal document ruler (Writer only)
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Hide_Button</b></code></td>
-		<td>
-			<code><nobr>id: &lt;string&gt;</nobr></code>
-		</td>
-		<td>
-			Hides a button from the toolbar.<br/>
-		    <code>id</code> is the button ID, see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Show_Button</b></code></td>
-		<td>
-			<code><nobr>id: &lt;string&gt;</nobr></code>
-		</td>
-		<td>
-			Shows a button from the toolbar.<br/>
-		    <code>id</code> is the button ID, see <a href="#toolbar-button-ids">Finding toolbar button IDs</a>.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Hide_Menu_Item</b></code></td>
-		<td>
-			<code><nobr>id: &lt;string&gt;</nobr></code>
-		</td>
-		<td>
-			Hides an item from the menu.<br/>
-			<code>id</code> is the item ID as defined in the
-			<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Show_Menu_Item</b></code></td>
-		<td>
-			<code><nobr>id: &lt;string&gt;</nobr></code>
-		</td>
-		<td>
-			Shows an item from the menu.<br/>
-			<code>id</code> is the item ID as defined in the
-			<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.Menubar.js">loleaflet/src/control/Control.Menubar.js</a>.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Disable_Default_UIAction</b></code></td>
-		<td>
-			<code><nobr>action: &lt;string&gt;</nobr></code>
-			<code><nobr>disable: &lt;Boolean&gt;</nobr></code>
-		</td>
-		<td>
-			Disable the default handler and action for a UI command.<br/>
-
-			<code>action</code> is the action name to enable/disable the
-			default action for.<br/>
-
-			<code>disable</code> controls whether to disable (true) or
-			enable (false) the default action.<br/>
-
-			When set to true, the given UI command will only issue a postMessage
-			without invoking the default action, leaving it up to the client
-			to intercept the postMessage event and handle as necessary.
-			Notice that some actions do not have any default handler to
-			begin with (such as UI_SaveAs and UI_Share) and therefore this
-			will have no effect on them; they only issue postMessage notification
-			anyway without taking any action beyond that.<br/>
-
-			For example, UI_Save will be issued for invoking the save
-			command (from the menu, toolbar, or keyboard shortcut) and no
-			action will take place if 'UI_Save' is disabled via
-			the Disable_Default_UIAction command. Clients who disable
-			UI_Save should then issue Action_Save themselves, when and
-			if they desire to save the document.
-			Similarly, when disabling UI_Close, the document will not
-			close upon invoking the UI_Close action, instead a postMessage
-			notification will be issued and it will be up to the client
-			to issue Action_Close when they desire.<br/>
-
-			Clients must be careful not to issue duplicate actions when
-			the default handler is enabled, instead, they should only
-			issue actions themselves when the default is disabled.
-
-			Note: currently only UI_Save and UI_Close are supported.<br/>
-		</td>
-	</tr>
-</table>
-
-<h5><a name="toolbar-button-ids">Finding toolbar button IDs</a></h5>
-<p>Toolbar button IDs are defined in getToolItems/create functions in:
-<ul>
-	<li>
-		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.TopToolbar.js">Control.TopToolbar.js</a> for the top toolbar on desktop or tablet.
-	</li>
-	<li>
-		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.MobileTopBar.js">Control.MobileTopBar.js</a> for the top toolbar on smartphone.
-	</li>
-	<li>
-		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.MobileBottomBar.js">Control.MobileBottomBar.js</a> for the bottom toolbar on smartphone.
-	</li>
-	<li>
-		<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a> for the statusbar on desktop.
-	</li>
-</ul>
-Note that they usually don't change but there is no guarantee that they are stable.</p>
-
-<h5><a name="statusbar-element-ids">Finding statusbar element IDs</a></h5>
-<p>Statusbar button IDs are defined in the onDocLayerInit function in
-<a href="https://github.com/CollaboraOnline/online/blob/master/loleaflet/src/control/Control.StatusBar.js">Control.StatusBar.js</a>.
-Note that they usually don't change but there is no guarantee that they are stable.</p>
-
-<h4>Editor to WOPI host</h4>
-<table data-id='postmessage-misc-to-host'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>Clicked_Button</b></code></td>
-		<td><code>
-		    <nobr>id: &lt;string&gt;</nobr>
-		</code></td>
-		<td>
-		  This event is emitted when the custom button added
-		  via <code>Insert_Button</code> API above is clicked.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Download_As</b></code></td>
-		<td><code>
-			<nobr>Type: 'print'|'slideshow'|'export'</nobr><br/>
-			<nobr>URL: &lt;string&gt;</nobr><br/>
-		</code></td>
-		<td>
-		  This event is emitted when the user chooses 'Print' or 'Show
-		  slideshow' or 'Download As [some type'] and the integration
-		  indicates via DownloadAsPostMessage in the CheckFileInfo that it
-		  wants to handle the downloading of pdf for printing or svg for
-		  slideshows or experted document.
-
-		  This is in situations when the integration cannot rely on browser's
-		  support for downloading like in mobile apps that use the Online in
-		  a WebView.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>UI_CreateFile</b></code></td>
-		<td></td>
-		<td>
-		Requests WOPI host to open a new browser tab and create a new
-		document.  The document type is passed as DocumentType
-		argument, and cand be 'text', 'spreadsheet', 'presentation' or
-		'drawing'.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>UI_SaveAs</b></code></td>
-		<td></td>
-		<td>
-		Requests WOPI host to create appropriate UI, so that the user can choose
-		path and File name for creating a copy of the current file.
-		Response to this query is sent via <code>Action_SaveAs</code> message.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>UI_Cancel_Password</b></code></td>
-		<td></td>
-		<td>
-		Notifies WOPI host that the user clicked on the 'cancel' option when opening
-		a password protected file, instead of providing the password to decrypt it.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>UI_Hyperlink</b></code></td>
-		<td></td>
-		<td>
-		Notifies WOPI host that the user clicked a hyperlink and
-		confirmed they really want to leave the document to follow the
-		hyperlink.</br>
-		This is especially useful for integrations that
-		embed Collabora Online into an iframe in a mobile app, where
-		actually trying to open a new window should trigger starting a
-		new Activity on Android (or something similar on iOS).</br>
-		The integration using this most probably also wants to trigger
-		the <b>Disable_Default_UIAction</b> for UI_Hyperlink.
-		</td>
-	</tr>
-	<tr>
-		<td><code><b>Doc_ModifiedStatus</b></code></td>
-		<td></td>
-		<td>
-		Notification to update the modified status of the document.
-		Values.Modified will be true, if the document has been modified
-		since the last save, otherwise, it will be false if the document
-		has been saved.
-
-		Note that this notification may be published without a change
-		from the prior value, so care must be taken to check the Values.Modified
-		value and not assume the notification itself implies the
-		modified state of the document on its own.
-		</td>
-	</tr>
-</table>
-
-<h3 id='loleaflet-postmessage-python'>Calling Python scripts</h3>
-<h4>WOPI host to editor</h4>
-<table data-id='postmessage-python-to-editor'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>CallPythonScript</b></code></td>
-		<td><code>
-		    <nobr>ScriptFile: &lt;string&gt;</nobr><br/>
-		    <nobr>Function: &lt;string&gt;</nobr>
-		    <nobr>Values: &lt;object&gt;</nobr>
-		</code></td>
-		<td>
-		  Calls a Python script. The Values parameter contains an
-		  object with named parameters that are passed to the script.
-		</td>
-	</tr>
-</table>
-
-<h4>Editor to WOPI host</h4>
-<table data-id='postmessage-python-to-host'>
-	<tr>
-		<th>MessageId</th>
-		<th>Values</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code><b>CallPythonScript-Result</b></code></td>
-		<td><code>
-		    <nobr>commandName: &lt;string&gt;</nobr>
-		    <nobr>Values: &lt;object&gt;</nobr>
-		</code></td>
-		<td>
-		  Returns the result of a Python script. The URL of the script called
-		  is in the commandName parameter.
-		</td>
-	</tr>
-</table>
-
 
 
 </div>
