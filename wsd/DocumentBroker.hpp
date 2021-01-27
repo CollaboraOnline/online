@@ -360,12 +360,11 @@ private:
     /// with the child and cleans up ChildProcess etc.
     void terminateChild(const std::string& closeReason);
 
-    /// Saves the doc to the storage.
+    /// Upload the doc to the storage.
     bool uploadToStorageInternal(const std::string& sesionId, bool success,
-                               const std::string& result = std::string(),
-                               const std::string& saveAsPath = std::string(),
-                               const std::string& saveAsFilename = std::string(),
-                               const bool isRename = false, const bool force = false);
+                                 const std::string& result, const std::string& saveAsPath,
+                                 const std::string& saveAsFilename, const bool isRename,
+                                 const bool force);
 
     struct StorageUploadDetails
     {
@@ -385,7 +384,8 @@ private:
      * @param result: Short message why saving was (not) successful
      * @param errorMsg: Long error msg (Error message from WOPI host if any)
      */
-    void broadcastSaveResult(bool success, const std::string& result = "", const std::string& errorMsg = "");
+    void broadcastSaveResult(bool success, const std::string& result = std::string(),
+                             const std::string& errorMsg = std::string());
 
     /// Broadcasts to all sessions the last modification time of the document.
     void broadcastLastModificationTime(const std::shared_ptr<ClientSession>& session = nullptr) const;
