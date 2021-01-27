@@ -991,7 +991,8 @@ void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
 {
     assertCorrectThread();
 
-    uploadToStorageInternal(sessionId, true, "", uploadAsPath, uploadAsFilename, isRename);
+    uploadToStorageInternal(sessionId, true, "", uploadAsPath, uploadAsFilename, isRename,
+                            /*force=*/false);
 }
 
 bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool success,
