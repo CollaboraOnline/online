@@ -650,7 +650,15 @@ private:
         {
         }
 
+        /// Returns the modified time of the document in storage.
+        std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
+
+        /// Set the modified time of the document in storage.
+        void setModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
+
     private:
+        /// The document's last-modified time on storage.
+        std::chrono::system_clock::time_point _modifiedTime;
     };
 
 protected:
@@ -775,9 +783,6 @@ private:
     /// The last time we tried saving, regardless of whether the
     /// document was modified and saved or not.
     std::chrono::steady_clock::time_point _lastSaveTime;
-
-    /// The document's last-modified time on storage.
-    std::chrono::system_clock::time_point _documentLastModifiedTime;
 
     /// All session of this DocBroker by ID.
     SessionMap<ClientSession> _sessions;
