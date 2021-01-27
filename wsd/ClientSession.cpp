@@ -1378,7 +1378,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             // When the document is saved internally, but saving to storage failed,
             // don't update the client's modified status
             // (otherwise client thinks document is unmodified b/c saving was successful)
-            if (!docBroker->isLastStorageSaveSuccessful())
+            if (!docBroker->isLastStorageUploadSuccessful())
                 return false;
 
             docBroker->setModified(stateTokens.equals(1, "true"));
