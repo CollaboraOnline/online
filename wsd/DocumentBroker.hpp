@@ -181,10 +181,10 @@ public:
 
     bool isLastStorageUploadSuccessful() { return _lastStorageUploadSuccessful; }
 
-    /// Save the document to Storage if it needs persisting.
+    /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
-    void saveToStorage(const std::string& sesionId, bool success, const std::string& result,
-                       bool force);
+    void uploadToStorage(const std::string& sesionId, bool success, const std::string& result,
+                         bool force);
 
     /// Save As the document to Storage.
     /// @param saveAsPath Absolute path to the jailed file.
@@ -444,7 +444,7 @@ private:
     /// for user's command to act.
     bool _documentChangedInStorage;
 
-    /// Indicates whether the last saveToStorage operation was successful.
+    /// Indicates whether the last uploadToStorage operation was successful.
     bool _lastStorageUploadSuccessful;
 
     /// The last time we tried saving, regardless of whether the
