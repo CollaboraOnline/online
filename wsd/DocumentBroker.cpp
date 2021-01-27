@@ -944,8 +944,8 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
     return bResult;
 }
 
-void DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
-                                   const std::string& result, bool force)
+void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
+                                     const std::string& result, bool force)
 {
     assertCorrectThread();
 
