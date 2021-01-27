@@ -22,6 +22,34 @@ describe('Top toolbar tests.', function() {
 		helper.getCursorPos('left', 'currentTextEndPos');
 	}
 
+	it('Save.', function() {
+		cy.get('#tb_editbar_item_bold')
+			.click();
+
+		cy.get('#tb_editbar_item_save')
+			.click();
+
+		helper.beforeAll(testFileName, 'calc', true);
+
+		calcHelper.selectEntireSheet();
+
+		cy.get('#copy-paste-container table td b')
+			.should('exist');
+	});
+
+	it('Print', function() {
+		// A new window should be opened with the PDF.
+		cy.window()
+			.then(function(win) {
+				cy.stub(win, 'open');
+			});
+
+		cy.get('#tb_editbar_item_print')
+		    .click();
+
+		cy.window().its('open').should('be.called');
+	});
+
 	it('Enable text wrapping.', function() {
 		calcHelper.clickOnFirstCell(true, false);
 		calcHelper.typeIntoFormulabar('_This_is_a_really_long_text');
