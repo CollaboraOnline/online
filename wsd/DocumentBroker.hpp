@@ -354,12 +354,12 @@ private:
     /// with the child and cleans up ChildProcess etc.
     void terminateChild(const std::string& closeReason);
 
-    /// Saves the doc to the storage.
-    void saveToStorageInternal(const std::string& sesionId, bool success,
-                               const std::string& result = std::string(),
-                               const std::string& saveAsPath = std::string(),
-                               const std::string& saveAsFilename = std::string(),
-                               const bool isRename = false, const bool force = false);
+    /// Upload the doc to the storage.
+    void uploadToStorageInternal(const std::string& sesionId, bool success,
+                                 const std::string& result = std::string(),
+                                 const std::string& saveAsPath = std::string(),
+                                 const std::string& saveAsFilename = std::string(),
+                                 const bool isRename = false, const bool force = false);
 
     struct StorageUploadDetails
     {
