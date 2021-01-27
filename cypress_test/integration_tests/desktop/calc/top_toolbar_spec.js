@@ -19,15 +19,15 @@ describe('Top toolbar tests.', function() {
 	function getTextEndPosForFirstCell() {
 		calcHelper.dblClickOnFirstCell();
 
+		helper.moveCursor('end');
+
 		helper.getCursorPos('left', 'currentTextEndPos');
 	}
 
 	it('Enable text wrapping.', function() {
-		calcHelper.clickOnFirstCell(true, false);
-		calcHelper.typeIntoFormulabar('_This_is_a_really_long_text');
-		helper.initAliasToNegative('originalTextEndPos');
-
 		getTextEndPosForFirstCell();
+
+		helper.initAliasToNegative('originalTextEndPos');
 		cy.get('@currentTextEndPos')
 			.as('originalTextEndPos');
 
@@ -39,8 +39,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.wraptext')
 			.click();
 
-		calcHelper.clickOnFirstCell(true, false);
-		calcHelper.typeIntoFormulabar('_string');
+		calcHelper.clickOnFirstCell();
 
 		// We use the text position as indicator
 		cy.waitUntil(function() {
