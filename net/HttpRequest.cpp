@@ -129,7 +129,8 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     constexpr int VersionMinPos = VersionDotPos + 1;
     const int versionMaj = version[VersionMajPos] - '0';
     const int versionMin = version[VersionMinPos] - '0';
-    if (!Util::startsWith(version, "HTTP/") || (versionMaj < 0 || versionMaj > 9)
+    // Version may not be null-terminated.
+    if (!Util::startsWith(std::string(version, VersionLen), "HTTP/") || (versionMaj < 0 || versionMaj > 9)
         || version[VersionDotPos] != '.' || (versionMin < 0 || versionMin > 9))
     {
         return FieldParseState::Invalid;
