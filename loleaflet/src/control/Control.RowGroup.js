@@ -28,6 +28,7 @@ L.Control.RowGroup = L.Class.extend({
 		this._map.on('viewrowcolumnheaders', this.update, this);
 		this._createFont();
 		this.update();
+		this.isRemoved = false;
 	},
 
 	getHeaderZoomScale : function(lowerBound, upperBound) {
@@ -59,22 +60,23 @@ L.Control.RowGroup = L.Class.extend({
 	},
 
 	update: function () {
-		this._sheetGeometry = this._map._docLayer.sheetGeometry;
-		this._groups = Array(this._sheetGeometry.getRowGroupLevels());
+		if (!this.isRemoved) {
+			this._sheetGeometry = this._map._docLayer.sheetGeometry;
+			this._groups = Array(this._sheetGeometry.getRowGroupLevels());
 
-		// Calculate width on the fly.
-		this.size[0] = this._computeOutlineWidth();
+			// Calculate width on the fly.
+			this.size[0] = this._computeOutlineWidth();
 
-		// Because this section's width is calculated on the fly, RowHeader and CornerHeader sections should be shifted.
-		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = this.size[0] + 1;
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = this.size[0] + 1;
+			// Because this section's width is calculated on the fly, RowHeader and CornerHeader sections should be shifted.
+			this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = this.size[0] + Math.round(this.dpiScale);
+			this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = this.size[0] + Math.round(this.dpiScale);
 
-		this._cornerHeaderHeight = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[1];
+			this._cornerHeaderHeight = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[1];
 
-		this._splitPos = this._map._docLayer._splitPanesContext.getSplitPos();
+			this._splitPos = this._map._docLayer._splitPanesContext.getSplitPos();
 
-		this._collectGroupsData(this._sheetGeometry.getRowGroupsDataInView());
-		//this.containerObject.onResize(false);
+			this._collectGroupsData(this._sheetGeometry.getRowGroupsDataInView());
+		}
 	},
 
 	_getGroupLevel: function (pos) {
@@ -388,6 +390,12 @@ L.Control.RowGroup = L.Class.extend({
 
 	onMouseEnter: function () {
 		$.contextMenu('destroy', '#document-canvas');
+	},
+
+	onRemove: function () {
+		this.isRemoved = true;
+		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = 0;
+		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
 	},
 
 	onNewDocumentTopLeft: function () {},

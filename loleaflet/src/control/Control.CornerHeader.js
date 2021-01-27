@@ -57,7 +57,8 @@ L.Control.CornerHeader = L.Class.extend({
 	onDoubleClick: function () {},
 	onNewDocumentTopLeft: function() {},
 	onMouseDown: function () {},
-	onMouseUp: function () {}
+	onMouseUp: function () {},
+	onRemove: function () {},
 });
 
 L.control.cornerHeader = function (options) {

@@ -276,6 +276,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	onResize: function () {},
+	onRemove: function () {},
 });
 
 L.control.columnHeader = function (options) {
