@@ -574,6 +574,12 @@ private:
         /// Returns true iff there is an active request in progress.
         bool isActive() const { return _lastResponseTime < _lastRequestTime; }
 
+        /// Set the modified time of the document.
+        void setModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
+
+        /// Returns the modified time of the document.
+        std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
+
     protected:
         /// Helper to get the current time.
         static std::chrono::steady_clock::time_point now()
@@ -595,6 +601,9 @@ private:
 
         /// The last time we received a response.
         std::chrono::steady_clock::time_point _lastResponseTime;
+
+        /// The document's last-modified time.
+        std::chrono::system_clock::time_point _modifiedTime;
     };
 
     /// Responsible for managing document saving.
@@ -659,18 +668,9 @@ private:
                           >= std::chrono::milliseconds(COMMAND_TIMEOUT_MS);
         }
 
-        /// Sets the modification time of the file on disk.
-        void setModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
-
-        // Gets the modification time of the file on disk.
-        std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
-
     private:
         /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
-
-        /// The jailed file last-modified time.
-        std::chrono::system_clock::time_point _modifiedTime;
 
         /// Whether auto-saving is enabled at all or not.
         const bool _isAutosaveEnabled;
@@ -687,12 +687,6 @@ private:
         {
         }
 
-        /// Returns the modified time of the document in storage.
-        std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
-
-        /// Set the modified time of the document in storage.
-        void setModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
-
         /// Indicates whether the last request was successful or not.
         bool lastRequestSuccessful() const { return _lastStorageUploadSuccessful; }
 
@@ -706,9 +700,6 @@ private:
         std::chrono::steady_clock::time_point getLastSaveTime() const { return _lastSaveTime; }
 
     private:
-        /// The document's last-modified time on storage.
-        std::chrono::system_clock::time_point _modifiedTime;
-
         /// The last time we tried saving and uploading, regardless of
         /// whether the document was modified and a newer version saved
         /// and uploaded or not. In effect, this tracks the time we
