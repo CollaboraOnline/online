@@ -168,7 +168,7 @@ DocumentBroker::DocumentBroker(ChildType type,
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _documentChangedInStorage(false),
-    _lastStorageSaveSuccessful(true),
+    _lastStorageUploadSuccessful(true),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _lastSaveRequestTime(std::chrono::steady_clock::now() - std::chrono::milliseconds(COMMAND_TIMEOUT_MS)),
     _markToDestroy(false),
@@ -955,7 +955,7 @@ bool DocumentBroker::saveToStorage(const std::string& sessionId, bool success,
             LOG_TRC("Enabling forced saving to storage per always_save_on_exit config.");
             force = true;
         }
-        else if (!_lastStorageSaveSuccessful)
+        else if (!_lastStorageUploadSuccessful)
         {
             LOG_TRC("Enabling forced saving to storage as last attempt had failed.");
             force = true;
@@ -1086,7 +1086,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
 {
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
-    _lastStorageSaveSuccessful
+    _lastStorageUploadSuccessful
         = storageSaveResult.getResult() == StorageBase::UploadResult::Result::OK ||
         storageSaveResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED;
     if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::OK)
@@ -2641,7 +2641,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  last saved: " << Util::getSteadyClockAsString(_lastSaveTime);
     os << "\n  last save request: " << Util::getSteadyClockAsString(_lastSaveRequestTime);
     os << "\n  last save response: " << Util::getSteadyClockAsString(_lastSaveResponseTime);
-    os << "\n  last storage save was successful: " << isLastStorageSaveSuccessful();
+    os << "\n  last storage save was successful: " << isLastStorageUploadSuccessful();
     os << "\n  last modified: " << Util::getHttpTime(_documentLastModifiedTime);
     os << "\n  file last modified: " << Util::getHttpTime(_lastFileModifiedTime);
     if (_limitLifeSeconds > std::chrono::seconds::zero())

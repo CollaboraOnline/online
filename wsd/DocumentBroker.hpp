@@ -184,7 +184,7 @@ public:
 
     bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
 
-    bool isLastStorageSaveSuccessful() { return _lastStorageSaveSuccessful; }
+    bool isLastStorageUploadSuccessful() { return _lastStorageUploadSuccessful; }
 
     /// Save the document to Storage if it needs persisting.
     bool saveToStorage(const std::string& sesionId, bool success, const std::string& result,
@@ -443,7 +443,7 @@ private:
     bool _documentChangedInStorage;
 
     /// Indicates whether the last saveToStorage operation was successful.
-    bool _lastStorageSaveSuccessful;
+    bool _lastStorageUploadSuccessful;
 
     /// The last time we tried saving, regardless of whether the
     /// document was modified and saved or not.
