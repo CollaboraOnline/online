@@ -361,7 +361,7 @@ private:
     void terminateChild(const std::string& closeReason);
 
     /// Saves the doc to the storage.
-    bool saveToStorageInternal(const std::string& sesionId, bool success,
+    bool uploadToStorageInternal(const std::string& sesionId, bool success,
                                const std::string& result = std::string(),
                                const std::string& saveAsPath = std::string(),
                                const std::string& saveAsFilename = std::string(),
