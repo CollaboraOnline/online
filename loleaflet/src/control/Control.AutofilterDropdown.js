@@ -85,7 +85,7 @@ L.Control.AutofilterDropdown = L.Control.extend({
 			top = newTop;
 
 		// some documents with split panes have coordinates increased by split position...
-		if (left >= $('.spreadsheet-header-columns').width()) {
+		if (left >= L.Map.THIS._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name).size[0]) {
 			if (cursorPos.x >= splitPos.x && left >= splitPos.x)
 				left = left - splitPos.x;
 
