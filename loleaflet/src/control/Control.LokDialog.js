@@ -1110,6 +1110,7 @@ L.Control.LokDialog = L.Control.extend({
 
 		var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('sidebar-panel'));
 		panelContainer.id = strId;
+		this._setCanvasWidthHeight(panelContainer, width, height);
 
 		// Create the panel canvas.
 		var panelCanvas = L.DomUtil.create('canvas', 'panel_canvas', panelContainer);
