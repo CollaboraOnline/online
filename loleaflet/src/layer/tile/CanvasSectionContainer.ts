@@ -177,6 +177,7 @@ class CanvasSectionContainer {
 	private potentialLongPress: boolean = false;
 	private clearColor: string = 'white';
 	private touchEventInProgress: boolean = false; // This prevents multiple calling of mouse down and up events.
+	public testing: boolean = false; // If this set to true, container will create a div element for every section. So, cypress tests can find where to click etc.
 
 	constructor (canvasDOMElement: HTMLCanvasElement) {
 		this.canvas = canvasDOMElement;
@@ -649,6 +650,25 @@ class CanvasSectionContainer {
 			return minY - Math.round(this.dpiScale); // Don't overlap with the section on the bottom.
 	}
 
+	createUpdateDivElements () {
+		var bcr: ClientRect = this.canvas.getBoundingClientRect();
+		for (var i: number = 0; i < this.sections.length; i++) {
+			var section: CanvasSectionObject = this.sections[i];
+			var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.sections[i].name);
+			if (!element) {
+				element = document.createElement('div');
+				element.id = 'test-div-' + this.sections[i].name;
+				document.body.appendChild(element);
+			}
+			element.style.position = 'fixed';
+			element.style.zIndex = '0';
+			element.style.left = String(bcr.left + Math.round(section.myTopLeft[0] / this.dpiScale)) + 'px';
+			element.style.top = String(bcr.top + Math.round(section.myTopLeft[1] / this.dpiScale)) + 'px';
+			element.style.width = String(Math.round(section.size[0] / this.dpiScale)) + 'px';
+			element.style.height = String(Math.round(section.size[1] / this.dpiScale)) + 'px';
+		}
+	}
+
 	reNewAllSections(redraw: boolean = true) {
 		this.orderSections();
 		this.locateSections();
@@ -656,6 +676,8 @@ class CanvasSectionContainer {
 			this.sections[i].onResize();
 		}
 		this.applyDrawingOrders();
+		if (this.testing)
+			this.createUpdateDivElements();
 		if (redraw)
 			this.drawSections();
 	}
@@ -925,6 +947,9 @@ class CanvasSectionContainer {
 		var found: boolean = false;
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].name === name) {
+				var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.sections[i].name);
+				if (element) // Remove test div if exists.
+					document.body.removeChild(element);
 				this.sections[i].onRemove();
 				this.sections[i] = null;
 				this.sections.splice(i, 1);

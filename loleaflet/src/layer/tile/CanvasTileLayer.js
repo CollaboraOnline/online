@@ -48,6 +48,9 @@ L.TileSectionManager = L.Class.extend({
 		this._tilesSection = null; // Shortcut.
 
 		this._sectionContainer = new CanvasSectionContainer(this._canvas);
+		if (L.Browser.cypressTest) // If cypress is active, create test divs.
+			this._sectionContainer.testing = true;
+
 		this._sectionContainer.onResize(mapSize.x, mapSize.y);
 
 		var dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
