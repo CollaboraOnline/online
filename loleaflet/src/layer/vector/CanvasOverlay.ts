@@ -104,12 +104,12 @@ class CanvasOverlay {
 	private ctStart() {
 		this.updateCanvasBounds();
 		this.docTopLeft = this.bounds.getTopLeft();
-		this.ctx.translate(this.docTopLeft.x, this.docTopLeft.y);
+		this.ctx.translate(-this.docTopLeft.x, -this.docTopLeft.y);
 	}
 
 	// Undo the canvas translation done by ctStart().
 	private ctEnd() {
-		this.ctx.translate(-this.docTopLeft.x, -this.docTopLeft.y);
+		this.ctx.translate(this.docTopLeft.x, this.docTopLeft.y);
 	}
 
 	updatePoly(path: CPath, closed: boolean = false) {
