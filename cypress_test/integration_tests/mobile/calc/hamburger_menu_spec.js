@@ -511,104 +511,44 @@ describe('Trigger hamburger menu options.', function() {
 	it('Data: grouping / ungrouping.', function() {
 		before('hamburger_menu.ods');
 
-		// Use columns header height as indicator
-		helper.initAliasToNegative('origHeaderHeight');
-
-		cy.get('.spreadsheet-header-columns')
-			.invoke('height')
-			.as('origHeaderHeight');
-
-		cy.get('@origHeaderHeight')
-			.should('be.greaterThan', 0);
-
 		// Group first
 		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.greaterThan(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('exist');
 
 		// Then ungroup
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Ungroup...']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.at.most(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('not.exist');
 	});
 
 	it('Data: remove grouping outline.', function() {
 		before('hamburger_menu.ods');
 
-		// Use columns header height as indicator
-		helper.initAliasToNegative('origHeaderHeight');
-
-		cy.get('.spreadsheet-header-columns')
-			.invoke('height')
-			.as('origHeaderHeight');
-
-		cy.get('@origHeaderHeight')
-			.should('be.greaterThan', 0);
-
 		// Group first
 		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.greaterThan(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('exist');
 
 		// Then remove outline
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Remove Outline']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.at.most(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('not.exist');
 	});
 
 	it('Data: show / hide grouping details.', function() {
 		before('hamburger_menu.ods');
 
-		// Use columns header height as indicator
-		helper.initAliasToNegative('origHeaderHeight');
-
-		cy.get('.spreadsheet-header-columns')
-			.invoke('height')
-			.as('origHeaderHeight');
-
-		cy.get('@origHeaderHeight')
-			.should('be.greaterThan', 0);
-
 		// Group first
 		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.greaterThan(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('exist');
 
 		// Use selected content as indicator
 		calcHelper.selectEntireSheet(false);
