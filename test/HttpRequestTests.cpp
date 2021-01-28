@@ -211,7 +211,7 @@ void HttpRequestTests::test500GetStatuses()
             http::StatusLine::StatusCodeClass::Client_Error,
             http::StatusLine::StatusCodeClass::Server_Error };
     int curStatusCodeClass = -1;
-    for (int statusCode = 100; statusCode < 600; ++statusCode)
+    for (int statusCode = 100; statusCode < 512; ++statusCode)
     {
         const std::string url = "/status/" + std::to_string(statusCode);
         httpRequest.setUrl(url);
