@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ */
+/* global $ _UNO */
 
 L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	_customizeOptions: function() {
@@ -21,6 +21,11 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['edit'] = this._editControl;
+
+		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
+		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
+
+		this._toolitemHandlers['.uno:FontworkShapeType'] = this._fontworkShapeControl;
 	},
 
 	baseSpinField: function(parentContainer, data, builder, customCallback) {
@@ -307,6 +312,181 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			$(edit).attr('placeholder', data.placeholder);
 
 		return false;
+	},
+
+	_fontworkShapeControl: function(parentContainer, data, builder) {
+		var json = [
+			{
+				type: 'frame',
+				children: [
+					{
+						text: _UNO('.uno:FontworkShapeType')
+					},
+					{
+						id: 'fontworkshape',
+						type: 'toolbox',
+						children: [
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-plain-text'),
+								command: '.uno:FontworkShapeType.fontwork-plain-text'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-wave'),
+								command: '.uno:FontworkShapeType.fontwork-wave'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-inflate'),
+								command: '.uno:FontworkShapeType.fontwork-inflate'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-stop'),
+								command: '.uno:FontworkShapeType.fontwork-stop'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-curve-up'),
+								command: '.uno:FontworkShapeType.fontwork-curve-up'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-curve-down'),
+								command: '.uno:FontworkShapeType.fontwork-curve-down'
+							},
+
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-triangle-up'),
+								command: '.uno:FontworkShapeType.fontwork-triangle-up'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-triangle-down'),
+								command: '.uno:FontworkShapeType.fontwork-triangle-down'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-fade-right'),
+								command: '.uno:FontworkShapeType.fontwork-fade-right'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-fade-left'),
+								command: '.uno:FontworkShapeType.fontwork-fade-left'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-fade-up'),
+								command: '.uno:FontworkShapeType.fontwork-fade-up'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-fade-down'),
+								command: '.uno:FontworkShapeType.fontwork-fade-down'
+							},
+
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-slant-up'),
+								command: '.uno:FontworkShapeType.fontwork-slant-up'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-slant-down'),
+								command: '.uno:FontworkShapeType.fontwork-slant-down'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-fade-up-and-right'),
+								command: '.uno:FontworkShapeType.fontwork-fade-up-and-right'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-fade-up-and-left'),
+								command: '.uno:FontworkShapeType.fontwork-fade-up-and-left'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-chevron-up'),
+								command: '.uno:FontworkShapeType.fontwork-chevron-up'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-chevron-down'),
+								command: '.uno:FontworkShapeType.fontwork-chevron-down'
+							},
+
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-arch-up-curve'),
+								command: '.uno:FontworkShapeType.fontwork-arch-up-curve'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-arch-down-curve'),
+								command: '.uno:FontworkShapeType.fontwork-arch-down-curve'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-arch-left-curve'),
+								command: '.uno:FontworkShapeType.fontwork-arch-left-curve'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-arch-right-curve'),
+								command: '.uno:FontworkShapeType.fontwork-arch-right-curve'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-circle-curve'),
+								command: '.uno:FontworkShapeType.fontwork-circle-curve'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-open-circle-curve'),
+								command: '.uno:FontworkShapeType.fontwork-open-circle-curve'
+							},
+
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-arch-up-pour'),
+								command: '.uno:FontworkShapeType.fontwork-arch-up-pour'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-arch-down-pour'),
+								command: '.uno:FontworkShapeType.fontwork-arch-down-pour'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-arch-down-pour'),
+								command: '.uno:FontworkShapeType.fontwork-arch-down-pour'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-arch-right-pour'),
+								command: '.uno:FontworkShapeType.fontwork-arch-right-pour'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-circle-pour'),
+								command: '.uno:FontworkShapeType.fontwork-circle-pour'
+							},
+							{
+								type: 'toolitem',
+								text: _UNO('.uno:FontworkShapeType.fontwork-open-circle-pour'),
+								command: '.uno:FontworkShapeType.fontwork-open-circle-pour'
+							},
+						]
+					}
+				]
+			}
+		];
+
+		builder.build(parentContainer, json);
 	},
 
 	build: function(parent, data) {

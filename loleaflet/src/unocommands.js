@@ -132,6 +132,36 @@ var unoCommandsArray = {
 	FontColor:{global:{menu:_('Font Color'),},text:{menu:_('Font Color'),},},
 	FontDialog:{global:{menu:_('C~haracter...'),},},
 	FontworkGalleryFloater:{global:{menu:_('Fontwork...'),},},
+	FontworkShapeType:{global:{menu:_('Fontwork Shape'),},},
+	FontworkShapeType_fontwork_arch_down_curve:{global:{menu:_('Arch Down (Curve)'),},},
+	FontworkShapeType_fontwork_arch_down_pour:{global:{menu:_('Arch Down (Pour)'),},},
+	FontworkShapeType_fontwork_arch_left_curve:{global:{menu:_('Arch Left (Curve)'),},},
+	FontworkShapeType_fontwork_arch_right_curve:{global:{menu:_('Arch Right (Curve)'),},},
+	FontworkShapeType_fontwork_arch_right_pour:{global:{menu:_('Arch Right (Pour)'),},},
+	FontworkShapeType_fontwork_arch_up_curve:{global:{menu:_('Arch Up (Curve)'),},},
+	FontworkShapeType_fontwork_arch_up_pour:{global:{menu:_('Arch Up (Pour)'),},},
+	FontworkShapeType_fontwork_chevron_down:{global:{menu:_('Chevron Down'),},},
+	FontworkShapeType_fontwork_chevron_up:{global:{menu:_('Chevron Up'),},},
+	FontworkShapeType_fontwork_circle_curve:{global:{menu:_('Circle (Curve)'),},},
+	FontworkShapeType_fontwork_circle_pour:{global:{menu:_('Circle (Pour)'),},},
+	FontworkShapeType_fontwork_curve_down:{global:{menu:_('Curve Down'),},},
+	FontworkShapeType_fontwork_curve_up:{global:{menu:_('Curve Up'),},},
+	FontworkShapeType_fontwork_fade_down:{global:{menu:_('Fade Down'),},},
+	FontworkShapeType_fontwork_fade_left:{global:{menu:_('Fade Left'),},},
+	FontworkShapeType_fontwork_fade_right:{global:{menu:_('Fade Right'),},},
+	FontworkShapeType_fontwork_fade_up:{global:{menu:_('Fade Up'),},},
+	FontworkShapeType_fontwork_fade_up_and_left:{global:{menu:_('Fade Up and Left'),},},
+	FontworkShapeType_fontwork_fade_up_and_right:{global:{menu:_('Fade Up and Right'),},},
+	FontworkShapeType_fontwork_inflate:{global:{menu:_('Inflate'),},},
+	FontworkShapeType_fontwork_open_circle_curve:{global:{menu:_('Open Circle (Curve)'),},},
+	FontworkShapeType_fontwork_open_circle_pour:{global:{menu:_('Open Circle (Pour)'),},},
+	FontworkShapeType_fontwork_plain_text:{global:{menu:_('Plain Text'),},},
+	FontworkShapeType_fontwork_slant_down:{global:{menu:_('Slant Down'),},},
+	FontworkShapeType_fontwork_slant_up:{global:{menu:_('Slant Up'),},},
+	FontworkShapeType_fontwork_stop:{global:{menu:_('Stop'),},},
+	FontworkShapeType_fontwork_triangle_down:{global:{menu:_('Triangle Down'),},},
+	FontworkShapeType_fontwork_triangle_up:{global:{menu:_('Triangle Up'),},},
+	FontworkShapeType_fontwork_wave:{global:{menu:_('Wave'),},},
 	FormatArea:{global:{menu:_('A~rea...'),},},
 	FormatAxis:{global:{menu:_('Format Axis...'),},},
 	FormatBulletsMenu:{global:{menu:_('Lis~ts'),},},
@@ -460,6 +490,8 @@ var unoCommandsArray = {
 
 window._UNO = function(string, component, isContext) {
 	var command = string.substr(5);
+	command = command.replace(/\./g, '_');
+	command = command.replace(/\-/g, '_');
 	var context = 'menu';
 	if (isContext === true) {
 		context = 'context';
