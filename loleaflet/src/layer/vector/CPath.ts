@@ -82,7 +82,7 @@ abstract class CPath {
 		}
 	}
 
-	updatePath() {
+	updatePath(paintArea?: CBounds) {
 		// Overridden in implementations.
 	}
 

@@ -55,13 +55,17 @@ class CanvasOverlay {
 		this.redraw(path);
 	}
 
+	paintRegion(paintArea: CBounds) {
+		this.draw(paintArea);
+	}
+
 	private isVisible(path: CPath): boolean {
 		var pathBounds = path.getBounds();
 		this.updateCanvasBounds();
 		return this.bounds.intersects(pathBounds);
 	}
 
-	private draw() {
+	private draw(paintArea?: CBounds) {
 		var orderedPaths = Array<CPath>();
 		this.paths.forEach((path: any) => {
 			orderedPaths.push(path);
@@ -73,8 +77,10 @@ class CanvasOverlay {
 			return a.zIndex - b.zIndex;
 		});
 
+		var renderer = this;
 		orderedPaths.forEach((path: any) => {
-			path.updatePath();
+			if (renderer.isVisible(path))
+				path.updatePath(paintArea);
 		});
 	}
 
