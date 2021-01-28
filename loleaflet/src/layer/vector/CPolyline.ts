@@ -160,15 +160,15 @@ class CPolyline extends CPath {
 		return new CBounds(this.bounds.getTopLeft().subtract(p), this.bounds.getBottomRight().add(p));
 	}
 
-	updatePath() {
-		this.clipPoints();
+	updatePath(paintArea?: CBounds) {
+		this.clipPoints(paintArea);
 		this.simplifyPoints();
 
 		this.renderer.updatePoly(this);
 	}
 
 	// clip polyline by renderer bounds so that we have less to render for performance
-	clipPoints() {
+	clipPoints(paintArea?: CBounds) {
 		if (this.noClip) {
 			return;
 		}
@@ -176,7 +176,7 @@ class CPolyline extends CPath {
 		this.parts = new Array<Array<CPoint>>();
 
 		var parts = this.parts;
-		var bounds = this.renderer.getBounds();
+		var bounds = paintArea ? paintArea : this.renderer.getBounds();
 		var i: number;
 		var j: number;
 		var k: number;

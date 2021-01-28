@@ -463,6 +463,14 @@ L.TileSectionManager = L.Class.extend({
 		this.onResize();
 	},
 
+	paintOverlayArea: function(coords) {
+		var tileTopLeft = coords.getPos();
+		var tileSize = this._layer._getTileSize();
+		var tileBounds = new L.Bounds(tileTopLeft,
+			tileTopLeft.add(new L.Point(tileSize, tileSize)));
+		this._layer._canvasOverlay.paintRegion(tileBounds);
+	},
+
 	update: function () {
 		this._sectionContainer.requestReDraw();
 	},
@@ -1235,6 +1243,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		// paint this tile on canvas.
 		this._painter.paint(tile);
+		this._painter.paintOverlayArea(coords);
 
 		if (this._noTilesToLoad()) {
 			this.fire('load');
