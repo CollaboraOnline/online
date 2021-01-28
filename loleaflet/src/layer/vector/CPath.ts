@@ -105,7 +105,7 @@ abstract class CPath {
 
 	empty(): boolean {
 		// Overridden in implementations.
-		return false;
+		return true;
 	}
 
 	getParts(): Array<Array<CPoint>> {
