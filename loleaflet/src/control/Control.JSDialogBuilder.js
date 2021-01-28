@@ -2070,6 +2070,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.command) {
 			var id = encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '');
+			id = id.replace(/\./g, '-');
 			div.id = id;
 
 			var icon = builder._createIconURL(data.command);
