@@ -33,7 +33,7 @@ SRC_TS_JS = $(patsubst $(srcdir)/src/layer/tile/%.ts,$(srcdir)/src/layer/tile/%.
 $(srcdir)/src/layer/tile/%.js: $(srcdir)/src/layer/tile/%.ts
 	$(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
 
-$(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/CPoint.ts $(srcdir)/src/layer/vector/CBounds.ts $(srcdir)/src/layer/vector/CPath.ts $(srcdir)/src/layer/vector/CanvasOverlay.ts
+$(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/*.ts 
 	$(builddir)/node_modules/typescript/bin/tsc $(srcdir)/src/layer/vector/CanvasOverlay.ts --outfile $(srcdir)/src/layer/vector/CanvasOverlay.js --module none --lib dom,es2016 --target ES5
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
