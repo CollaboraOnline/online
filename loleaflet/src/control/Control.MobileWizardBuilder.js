@@ -24,6 +24,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
+		this._toolitemHandlers['.uno:ExtrusionToggle'] = function () { return false; };
 
 		this._toolitemHandlers['.uno:FontworkShapeType'] = this._fontworkShapeControl;
 	},
