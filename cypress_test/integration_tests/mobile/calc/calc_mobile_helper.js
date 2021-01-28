@@ -1,7 +1,7 @@
 /* global cy expect */
 
 function selectFirstRow() {
-	cy.get('.spreadsheet-header-rows')
+	cy.get('[id="test-div-row header"]')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
 
