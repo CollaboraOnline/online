@@ -94,6 +94,11 @@ class CanvasOverlay {
 		this.bounds = new CBounds(new CPoint(viewBounds.min.x, viewBounds.min.y), new CPoint(viewBounds.max.x, viewBounds.max.y));
 	}
 
+	getBounds(): CBounds {
+		this.updateCanvasBounds();
+		return this.bounds;
+	}
+
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
 	private ctStart() {
 		this.updateCanvasBounds();
