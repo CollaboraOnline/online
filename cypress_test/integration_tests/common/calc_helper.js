@@ -97,8 +97,9 @@ function typeIntoFormulabar(text) {
 function removeTextSelection() {
 	cy.log('Removing text selection - start.');
 
-	cy.get('.spreadsheet-header-rows')
+	cy.get('[id="test-div-row header"]')
 		.then(function(header) {
+			expect(header).to.have.lengthOf(1);
 			var rect = header[0].getBoundingClientRect();
 			var posX = (rect.right + rect.left) / 2.0;
 			var posY = (rect.top + rect.bottom) / 2.0;
@@ -128,11 +129,14 @@ function selectEntireSheet(removeSelection = true) {
 	if (removeSelection)
 		removeTextSelection();
 
-	cy.get('#spreadsheet-header-corner')
-		.then(function(corner) {
-			var yPos = corner.height() - 10;
-			cy.get('#spreadsheet-header-corner')
-				.click(0, yPos);
+	cy.get('[id="test-div-corner header"]')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			var corner = items[0];
+			var XPos = (corner.getBoundingClientRect().right + items[0].getBoundingClientRect().left) / 2;
+			var YPos = items[0].getBoundingClientRect().bottom - 10;
+			cy.get('body')
+				.click(XPos, YPos);
 		});
 
 	helper.doIfOnMobile(function() {
@@ -147,7 +151,7 @@ function selectEntireSheet(removeSelection = true) {
 }
 
 function selectFirstColumn() {
-	cy.get('.spreadsheet-header-columns')
+	cy.get('[id="test-div-column header"]')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
 
