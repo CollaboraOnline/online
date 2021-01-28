@@ -546,7 +546,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 
 		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
-		this._canvas.style.border = '1px solid darkgrey';
 		this._container.style.position = 'absolute';
 		this._painter = new L.TileSectionManager(this);
 		this._painter._addTilesSection();

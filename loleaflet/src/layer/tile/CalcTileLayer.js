@@ -764,18 +764,19 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._painter._sectionContainer.addSection(L.control.rowGroup());
 		}
 		else { // If not, remove RowGroup section.
-			// Now remove RowGroup section.
 			this._painter._sectionContainer.removeSection(L.CSections.RowGroup.name);
 		}
 
 		// If there are column groups, add ColumnGroup section.
 		if (this.sheetGeometry._columns._outlines._outlines.length > 0) {
-			if (!this._painter._sectionContainer.doesSectionExist(L.CSections.ColumnGroup.name))
+			if (!this._painter._sectionContainer.doesSectionExist(L.CSections.ColumnGroup.name)) {
 				this._painter._sectionContainer.addSection(L.control.columnGroup());
+				this._painter._sectionContainer.canvas.style.border = '1px solid darkgrey';
+			}
 		}
 		else { // If not, remove ColumnGroup section.
-			// Now remove ColumnGroup section.
 			this._painter._sectionContainer.removeSection(L.CSections.ColumnGroup.name);
+			this._painter._sectionContainer.canvas.style.border = '0px solid darkgrey';
 		}
 	},
 
