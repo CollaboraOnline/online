@@ -8,8 +8,11 @@ class CBounds {
 	min: CPoint;
 	max: CPoint;
 
-	constructor(a: CPoint, b: CPoint) {
-		this.extend(a).extend(b);
+	constructor(a?: CPoint, b?: CPoint) {
+		if (a !== undefined)
+			this.extend(a);
+		if (b !== undefined)
+			this.extend(b);
 	}
 
 	static fromPointArray(points: Array<CPoint>): CBounds {
