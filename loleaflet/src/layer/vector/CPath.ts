@@ -4,7 +4,7 @@
  * CPath is the base class for all vector paths like polygons and circles.
  */
 
-class CPath {
+abstract class CPath {
 	stroke: boolean = true;
 	color: string = '#3388ff';
 	weight: number = 3;
@@ -28,7 +28,7 @@ class CPath {
 	static isTouchDevice: boolean = false; // Need to set this from current L.Browser.touch
 	private id: number;
 	private isDeleted: boolean = false;
-	private renderer: CanvasOverlay = null;
+	protected renderer: CanvasOverlay = null;
 
 	constructor(options: any) {
 		this.setStyleOptions(options);
