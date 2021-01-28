@@ -60,6 +60,12 @@ var nextcloudBlackList = [
 			'Print'
 		]
 	],
+	['desktop/calc/top_toolbar_spec.js',
+		[
+			'Save.',
+			'Print'
+		]
+	],
 	['multiuser/calc/sheet_operations_user1_spec.js',
 		[]
 	],
@@ -153,6 +159,11 @@ var phpProxyBlackList = [
 	['desktop/writer/top_toolbar_spec.js',
 		[
 			'Insert image.',
+			'Save.'
+		]
+	],
+	['desktop/calc/top_toolbar_spec.js',
+		[
 			'Save.'
 		]
 	],
