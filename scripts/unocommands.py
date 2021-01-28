@@ -38,6 +38,11 @@ Update the translations of unocommands.js before releasing:
     print(message.format(program=sys.argv[0]))
     exit(1)
 
+# Replace characters which are not allowed as keys in JS
+def cleanSpecialCharacters(command):
+    clean = re.sub('\.', '_', command)
+    clean = re.sub('-', '_', clean)
+    return clean
 
 def commandsFromLine(line):
     """Extract uno commands name from lines like "  'Command1', 'Command2',"""
@@ -303,7 +308,7 @@ def writeUnocommandsJS(
 var unoCommandsArray = {\n''')
 
     for key in sorted(descriptions.keys()):
-        f.write('\t' + key + ':{')
+        f.write('\t' + cleanSpecialCharacters(key) + ':{')
         for type in sorted(descriptions[key].keys()):
             f.write(type + ':{')
             for menuType in sorted(descriptions[key][type].keys()):
@@ -316,6 +321,8 @@ var unoCommandsArray = {\n''')
 
 window._UNO = function(string, component, isContext) {
 \tvar command = string.substr(5);
+\tcommand = command.replace(/\./g, '_');
+\tcommand = command.replace(/\-/g, '_');
 \tvar context = 'menu';
 \tif (isContext === true) {
 \t\tcontext = 'context';
@@ -459,10 +466,11 @@ if __name__ == "__main__":
     else:
         written = writeUnocommandsJS(onlineDir, lofficeDir, menuCommands,
                                      contextCommands, toolbarCommands)
-        processedCommands = set(written.keys())
+        processedCommands = set([cleanSpecialCharacters(key) for key in written.keys()])
 
     # check that we have translations for everything
-    dif = (menuCommands | contextCommands | toolbarCommands) - processedCommands
+    requiredCommands = set([cleanSpecialCharacters(key) for key in (menuCommands | contextCommands | toolbarCommands)])
+    dif = requiredCommands - processedCommands
 
     if len(dif) > 0:
         sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")
