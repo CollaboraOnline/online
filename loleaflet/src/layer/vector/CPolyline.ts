@@ -67,28 +67,38 @@ class CPolyline extends CPath {
 
 	setPointSet(pointSet: CPointSet) {
 		this.pointSet = pointSet;
-		this.updateBounds();
+		this.updateRingsBounds();
 		return this.redraw();
 	}
 
-	updateBounds() {
+	updateRingsBounds() {
+		this.rings = new Array<Array<CPoint>>();
 		var bounds = this.bounds = new CBounds();
-		CPolyline.traverse(this.pointSet, (pt: CPoint) => {
+
+		CPolyline.calcRingsBounds(this.pointSet, this.rings, (pt: CPoint) => {
 			bounds.extend(pt);
 		});
 	}
 
-	private static traverse(pset: CPointSet, pointCallback: (pt: CPoint) => void) {
+	// Converts the point-set datastructure into an array of point-arrays each of which is called a 'ring'.
+	// While doing that it also computes the bounds too.
+	private static calcRingsBounds(pset: CPointSet, rings: Array<Array<CPoint>>, updateBounds: (pt: CPoint) => void) {
 		if (pset.isFlat()) {
-			var points = pset.getPointArray();
-			points.forEach(pointCallback);
+			var srcArray = pset.getPointArray();
+			var array = Array<CPoint>(srcArray.length);
+			srcArray.forEach((pt: CPoint, index: number) => {
+				array[index] = pt.clone();
+				updateBounds(pt);
+			})
+
+			rings.push(array);
 			return;
 		}
 
 		var psetArray = pset.getSetArray();
 		if (psetArray) {
-			psetArray.forEach((psetNew: CPointSet) => {
-				CPolyline.traverse(psetNew, pointCallback);
+			psetArray.forEach((psetNext: CPointSet) => {
+				CPolyline.calcRingsBounds(psetNext, rings, updateBounds);
 			});
 		}
 	}
@@ -151,33 +161,10 @@ class CPolyline extends CPath {
 	}
 
 	updatePath() {
-		this.rings = new Array<Array<CPoint>>();
-		CPolyline.calcRings(this.pointSet, this.rings);
 		this.clipPoints();
 		this.simplifyPoints();
 
 		this.renderer.updatePoly(this);
-	}
-
-	// Converts the point-set datastructure into an array of point-arrays each of which is called a 'ring'.
-	private static calcRings(pset: CPointSet, rings: Array<Array<CPoint>>) {
-		if (pset.isFlat()) {
-			var srcArray = pset.getPointArray();
-			var array = Array<CPoint>(srcArray.length);
-			srcArray.forEach((pt: CPoint, index: number) => {
-				array[index] = pt.clone();
-			})
-
-			rings.push(array);
-			return;
-		}
-
-		var psetArray = pset.getSetArray();
-		if (psetArray) {
-			psetArray.forEach((psetNext: CPointSet) => {
-				CPolyline.calcRings(psetNext, rings);
-			});
-		}
 	}
 
 	// clip polyline by renderer bounds so that we have less to render for performance
