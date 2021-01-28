@@ -416,11 +416,11 @@ describe('Changing slide properties.', function() {
 		//	.should('have.text', 'Portrait');
 	});
 
-	it('Check disabled elements in master view.', function() {
+	it.skip('Check disabled elements in master view.', function() {
 		switchToMasterView();
 
 		cy.get('#masterslide')
-			.should('have.class', 'disabled');
+			.should('not.exist');
 
 		cy.get('#displaymasterbackground label')
 			.should('have.class', 'disabled');
@@ -436,7 +436,7 @@ describe('Changing slide properties.', function() {
 			.should('exist');
 
 		cy.get('#masterslide')
-			.should('have.class', 'disabled');
+			.should('not.exist');
 
 		cy.get('#displaymasterbackground label')
 			.should('have.class', 'disabled');
@@ -453,7 +453,7 @@ describe('Changing slide properties.', function() {
 		previewShouldBeFullWhite();
 
 		cy.get('#masterslide')
-			.should('not.have.class', 'disabled');
+			.should('exist');
 
 		cy.get('#displaymasterbackground label')
 			.should('not.have.class', 'disabled');
