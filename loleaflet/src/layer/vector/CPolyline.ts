@@ -58,8 +58,7 @@ class CPolyline extends CPath {
 	constructor(pointSet: CPointSet, options: any) {
 		super(options);
 		this.smoothFactor = options.smoothFactor !== undefined ? options.smoothFactor : this.smoothFactor;
-		this.pointSet = pointSet;
-		this.updateBounds();
+		this.setPointSet(pointSet);
 	}
 
 	getPointSet(): CPointSet {
