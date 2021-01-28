@@ -111,7 +111,7 @@ class CanvasOverlay {
 		this.ctx.translate(-this.docTopLeft.x, -this.docTopLeft.y);
 	}
 
-	updatePoly(path: CPath, closed: boolean) {
+	updatePoly(path: CPath, closed: boolean = false) {
 		var i: number;
 		var j: number;
 		var len2: number;
