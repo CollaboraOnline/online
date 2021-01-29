@@ -134,7 +134,7 @@ describe('Change alignment settings.', function() {
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 
-		helper.moveCursor('end');
+		helper.moveCursor('end', undefined, true, '#calc-inputbar .lokdialog-cursor');
 
 		calcHelper.typeIntoFormulabar('{backspace}{backspace}{backspace}');
 
