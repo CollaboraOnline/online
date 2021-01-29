@@ -9,6 +9,5 @@ ext {
     liboCoreVersionHash = '@CORE_VERSION_HASH@'
     liboApplicationId   = '@ANDROID_PACKAGE_NAME@'
     liboBrandingDir     = '@APP_BRANDING_DIR@'
-    liboAndroidAbi      = '@ANDROID_ABI@'
     liboGooglePlay      = '@APP_GOOGLE_PLAY@'
 }

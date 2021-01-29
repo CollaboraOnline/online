@@ -366,6 +366,7 @@ fi
 # Android: We need these to setup the CMakeLists.txt properly.
 LOBUILDDIR=
 ANDROID_ABI="armeabi-v7a"
+ANDROID_ABI_SPLIT="'armeabi-v7a'"
 LOBUILDDIR_ARM64_V8A=
 LOBUILDDIR_X86=
 LOBUILDDIR_X86_64=
@@ -389,6 +390,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
             ANDROID_ABI="armeabi-v7a arm64-v8a x86 x86_64"
          fi
       fi
+      ANDROID_ABI_SPLIT=`echo $ANDROID_ABI | sed "s/^/'/g;s/ /','/g;s/$/'/g"`
       AC_MSG_RESULT([$ANDROID_ABI])
    fi
 
@@ -539,6 +541,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 fi
 AC_SUBST(LOBUILDDIR)
 AC_SUBST(ANDROID_ABI)
+AC_SUBST(ANDROID_ABI_SPLIT)
 AC_SUBST(LOBUILDDIR_ARM64_V8A)
 AC_SUBST(LOBUILDDIR_X86)
 AC_SUBST(LOBUILDDIR_X86_64)
@@ -1165,6 +1168,8 @@ fi
 
 if test "$enable_androidapp" = "yes"; then
     AC_CONFIG_FILES([$srcdir/android/build.gradle:android/build.gradle.in
+                 $srcdir/android/app/build.gradle:android/app/build.gradle.in
+                 $srcdir/android/lib/build.gradle:android/lib/build.gradle.in
                  $srcdir/android/app/appSettings.gradle:android/app/appSettings.gradle.in
                  $srcdir/android/lib/libSettings.gradle:android/lib/libSettings.gradle.in
                  $srcdir/android/lib/src/main/cpp/CMakeLists.txt:android/lib/src/main/cpp/CMakeLists.txt.in])
