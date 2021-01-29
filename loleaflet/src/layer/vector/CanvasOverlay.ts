@@ -10,7 +10,7 @@ class CanvasOverlay {
 	private ctx: CanvasRenderingContext2D;
 	private paths: Map<number, any>;
 	private bounds: CBounds;
-	private docTopLeft: CPoint;
+	private cOrigin: CPoint; // Canvas section origin
 	private tsManager: any;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
@@ -37,7 +37,7 @@ class CanvasOverlay {
 		var pathId: number = path.getId();
 		this.paths.set(pathId, path);
 		path.setRenderer(this);
-		path.updatePath();
+		path.updatePathAllPanes();
 	}
 
 	removePath(path: CPath) {
@@ -59,15 +59,20 @@ class CanvasOverlay {
 		this.draw(paintArea);
 	}
 
+	getSplitPanesContext(): any {
+		return this.map.getSplitPanesContext();
+	}
+
 	private isVisible(path: CPath): boolean {
 		var pathBounds = path.getBounds();
 		this.updateCanvasBounds();
-		return this.bounds.intersects(pathBounds);
+		var spc = this.getSplitPanesContext();
+		return spc ? spc.intersectsVisible(pathBounds) : this.bounds.intersects(pathBounds);
 	}
 
 	private draw(paintArea?: CBounds) {
 		var orderedPaths = Array<CPath>();
-		this.paths.forEach((path: any) => {
+		this.paths.forEach((path: CPath) => {
 			orderedPaths.push(path);
 		});
 
@@ -78,9 +83,9 @@ class CanvasOverlay {
 		});
 
 		var renderer = this;
-		orderedPaths.forEach((path: any) => {
+		orderedPaths.forEach((path: CPath) => {
 			if (renderer.isVisible(path))
-				path.updatePath(paintArea);
+				path.updatePathAllPanes(paintArea);
 		});
 	}
 
@@ -107,18 +112,25 @@ class CanvasOverlay {
 	}
 
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
-	private ctStart() {
+	private ctStart(paneXFixed?: boolean, paneYFixed?: boolean) {
 		this.updateCanvasBounds();
-		this.docTopLeft = this.bounds.getTopLeft();
-		this.ctx.translate(-this.docTopLeft.x, -this.docTopLeft.y);
+		var docTopLeft = this.bounds.getTopLeft();
+		this.cOrigin = new CPoint(0, 0);
+
+		if (!paneXFixed)
+			this.cOrigin.x = -docTopLeft.x;
+		if (!paneYFixed)
+			this.cOrigin.y = -docTopLeft.y;
+
+		this.ctx.translate(this.cOrigin.x, this.cOrigin.y);
 	}
 
 	// Undo the canvas translation done by ctStart().
 	private ctEnd() {
-		this.ctx.translate(this.docTopLeft.x, this.docTopLeft.y);
+		this.ctx.translate(-this.cOrigin.x, -this.cOrigin.y);
 	}
 
-	updatePoly(path: CPath, closed: boolean = false) {
+	updatePoly(path: CPath, closed: boolean = false, paneXFixed?: boolean, paneYFixed?: boolean) {
 		var i: number;
 		var j: number;
 		var len2: number;
@@ -129,7 +141,7 @@ class CanvasOverlay {
 		if (!len)
 			return;
 
-		this.ctStart();
+		this.ctStart(paneXFixed, paneYFixed);
 		this.ctx.beginPath();
 
 		for (i = 0; i < len; i++) {
@@ -147,11 +159,11 @@ class CanvasOverlay {
 		this.ctEnd();
 	}
 
-	updateCircle(path: CPath) {
+	updateCircle(path: CPath, paneXFixed?: boolean, paneYFixed?: boolean) {
 		if (path.empty())
 			return;
 
-		this.ctStart();
+		this.ctStart(paneXFixed, paneYFixed);
 
 		var point = path.point;
 		var r: number = path.radius;
