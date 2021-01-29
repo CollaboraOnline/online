@@ -11,7 +11,6 @@ class CanvasOverlay {
 	private ctx: CanvasRenderingContext2D;
 	private paths: Map<number, any>;
 	private bounds: CBounds;
-	private cOrigin: CPoint; // Canvas section origin
 	private tsManager: any;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
@@ -113,25 +112,34 @@ class CanvasOverlay {
 	}
 
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
-	private ctStart(paneXFixed?: boolean, paneYFixed?: boolean) {
+	private ctStart(paneXFixed?: boolean, paneYFixed?: boolean, clipArea?: CBounds) {
 		this.updateCanvasBounds();
 		var docTopLeft = this.bounds.getTopLeft();
-		this.cOrigin = new CPoint(0, 0);
+		var cOrigin = new CPoint(0, 0);
+
+		this.ctx.save();
 
 		if (!paneXFixed)
-			this.cOrigin.x = -docTopLeft.x;
+			cOrigin.x = -docTopLeft.x;
 		if (!paneYFixed)
-			this.cOrigin.y = -docTopLeft.y;
+			cOrigin.y = -docTopLeft.y;
 
-		this.ctx.translate(this.cOrigin.x, this.cOrigin.y);
+		this.ctx.translate(cOrigin.x, cOrigin.y);
+		if (clipArea) {
+			this.ctx.save();
+			this.ctx.beginPath();
+			var clipSize = clipArea.getSize();
+			this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
+			this.ctx.clip();
+		}
 	}
 
 	// Undo the canvas translation done by ctStart().
 	private ctEnd() {
-		this.ctx.translate(-this.cOrigin.x, -this.cOrigin.y);
+		this.ctx.restore();
 	}
 
-	updatePoly(path: CPath, closed: boolean = false, paneXFixed?: boolean, paneYFixed?: boolean) {
+	updatePoly(path: CPath, closed: boolean = false, paneXFixed?: boolean, paneYFixed?: boolean, clipArea?: CBounds) {
 		var i: number;
 		var j: number;
 		var len2: number;
@@ -142,7 +150,8 @@ class CanvasOverlay {
 		if (!len)
 			return;
 
-		this.ctStart(paneXFixed, paneYFixed);
+
+		this.ctStart(paneXFixed, paneYFixed, clipArea);
 		this.ctx.beginPath();
 
 		for (i = 0; i < len; i++) {
@@ -158,6 +167,10 @@ class CanvasOverlay {
 		this.fillStroke(path);
 
 		this.ctEnd();
+
+		if (clipArea) {
+			this.ctx.restore();
+		}
 	}
 
 	updateCircle(path: CPath, paneXFixed?: boolean, paneYFixed?: boolean) {
