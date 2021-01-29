@@ -53,9 +53,14 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 			cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 				.should('be.visible');
 		});
-	} else
+	} else {
 		cy.get('.leaflet-cursor.blinking-cursor')
 			.should('be.visible');
+
+		helper.doIfOnDesktop(function() {
+			cy.wait(500);
+		});
+	}
 
 	cy.get('input#addressInput')
 		.should('have.prop', 'value', 'A1');
