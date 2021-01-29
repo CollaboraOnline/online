@@ -56,7 +56,6 @@ class CPolygon extends CPolyline {
 		}
 
 		this.simplifyPoints();
-		this.renderer.updatePoly(this, true /* closed? */, paneXFixed, paneYFixed);
+		this.renderer.updatePoly(this, true /* closed? */, paneXFixed, paneYFixed, paintArea);
 	}
-
 };
