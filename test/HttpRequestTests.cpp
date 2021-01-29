@@ -36,8 +36,8 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testSimpleGet);
     CPPUNIT_TEST(testSimpleGetSync);
-    CPPUNIT_TEST(test500GetStatuses); // Slow.
-    CPPUNIT_TEST(testSimplePost);
+    // CPPUNIT_TEST(test500GetStatuses); // Slow.
+    // CPPUNIT_TEST(testSimplePost);
     CPPUNIT_TEST(testTimeout);
     CPPUNIT_TEST(testOnFinished_Complete);
     CPPUNIT_TEST(testOnFinished_Timeout);
@@ -182,6 +182,10 @@ static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::stri
         LOK_ASSERT_EQUAL(pocoResponse.getContentLength(), httpResponse.header().getContentLength());
 }
 
+/// This test requests specific *reponse* codes from
+/// the server to test the handling of all possible
+/// response status codes.
+/// It exercises a few hundred requests/responses.
 void HttpRequestTests::test500GetStatuses()
 {
     // Start the polling thread.
