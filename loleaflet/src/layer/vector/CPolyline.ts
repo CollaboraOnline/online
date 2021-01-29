@@ -164,7 +164,7 @@ class CPolyline extends CPath {
 		this.clipPoints(paintArea);
 		this.simplifyPoints();
 
-		this.renderer.updatePoly(this, false /* closed? */, paneXFixed, paneYFixed);
+		this.renderer.updatePoly(this, false /* closed? */, paneXFixed, paneYFixed, paintArea);
 	}
 
 	// clip polyline by renderer bounds so that we have less to render for performance
