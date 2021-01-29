@@ -2,6 +2,7 @@
 /// <reference path="CBounds.ts" />
 /// <reference path="CPath.ts" />
 /// <reference path="CPolyline.ts" />
+/// <reference path="CPolygon.ts" />
 /* eslint-disable */
 
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
