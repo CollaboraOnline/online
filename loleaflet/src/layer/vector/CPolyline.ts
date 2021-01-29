@@ -49,11 +49,11 @@ class CPolyline extends CPath {
 	// how much to simplify the polyline on each zoom level
 	// more = better performance and smoother look, less = more accurate
 	private smoothFactor: number = 1.0;
-	private noClip: boolean = false;
+	protected noClip: boolean = false;
 	private pointSet: CPointSet;
 	private bounds: CBounds;
-	private rings: Array<Array<CPoint>>;
-	private parts: Array<Array<CPoint>>;
+	protected rings: Array<Array<CPoint>>;
+	protected parts: Array<Array<CPoint>>;
 
 	constructor(pointSet: CPointSet, options: any) {
 		super(options);
@@ -170,6 +170,7 @@ class CPolyline extends CPath {
 	// clip polyline by renderer bounds so that we have less to render for performance
 	clipPoints(paintArea?: CBounds) {
 		if (this.noClip) {
+			this.parts = this.rings;
 			return;
 		}
 
