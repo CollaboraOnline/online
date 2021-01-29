@@ -97,6 +97,9 @@ abstract class CPath {
 			if (paintArea) {
 				var paneArea = paneBoundsList[i];
 
+				if (!paneArea.intersects(panePaintArea))
+					continue;
+
 				panePaintArea.min.x = Math.max(panePaintArea.min.x, paneArea.min.x);
 				panePaintArea.min.y = Math.max(panePaintArea.min.y, paneArea.min.y);
 
