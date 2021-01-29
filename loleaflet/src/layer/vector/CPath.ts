@@ -82,7 +82,33 @@ abstract class CPath {
 		}
 	}
 
-	updatePath(paintArea?: CBounds) {
+	updatePathAllPanes(paintArea?: CBounds) {
+		var viewBounds = this.renderer.getBounds().clone();
+
+		var splitPanesContext = this.renderer.getSplitPanesContext();
+		var paneBoundsList: Array<CBounds> = splitPanesContext ?
+		    splitPanesContext.getPxBoundList() :
+			[viewBounds];
+		var paneProperties = splitPanesContext ? splitPanesContext.getPanesProperties() :
+			[{ xFixed : false, yFixed: false }];
+
+		for (var i = 0; i < paneBoundsList.length; ++i) {
+			var panePaintArea = paintArea ? paintArea.clone() : paneBoundsList[i].clone();
+			if (paintArea) {
+				var paneArea = paneBoundsList[i];
+
+				panePaintArea.min.x = Math.max(panePaintArea.min.x, paneArea.min.x);
+				panePaintArea.min.y = Math.max(panePaintArea.min.y, paneArea.min.y);
+
+				panePaintArea.max.x = Math.min(panePaintArea.max.x, paneArea.max.x);
+				panePaintArea.max.y = Math.min(panePaintArea.max.y, paneArea.max.y);
+			}
+
+			this.updatePath(panePaintArea, paneProperties[i].xFixed, paneProperties[i].yFixed);
+		}
+	}
+
+	updatePath(paintArea?: CBounds, paneXFixed?: boolean, paneYFixed?: boolean) {
 		// Overridden in implementations.
 	}
 
