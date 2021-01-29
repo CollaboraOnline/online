@@ -5,7 +5,6 @@ ext {
     liboLauncherIcon    = '@mipmap/@APP_IC_LAUNCHER@'
     liboHasBranding     = '@APP_HAS_BRANDING@'
     liboBrandingDir     = '@APP_BRANDING_DIR@'
-    liboAndroidAbi      = '@ANDROID_ABI@'
     liboOVersionHash    = '@LOOLWSD_VERSION_HASH@'
     liboCoreVersionHash = '@CORE_VERSION_HASH@'
 

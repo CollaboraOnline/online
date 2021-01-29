@@ -16,15 +16,20 @@ android {
         resValue "string", "app_name", "${liboAppName}"
         buildConfigField "String", "GIT_COMMIT", "\"${liboOVersionHash}\""
         buildConfigField "boolean", "GOOGLE_PLAY_ENABLED", "${liboGooglePlay}"
-        ndk {
-                abiFilters = []
-                abiFilters.addAll("${liboAndroidAbi}".split(' ').collect{it as String})
-        }
 
         externalNativeBuild {
             cmake {
                 arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_STL=c++_shared"
             }
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+
+            reset ()
+            include @ANDROID_ABI_SPLIT@
         }
     }
 
