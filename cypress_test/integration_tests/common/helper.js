@@ -746,22 +746,25 @@ function doIfOnDesktop(callback) {
 		});
 }
 
-function moveCursor(direction, modifier, checkCursorVis = true) {
+function moveCursor(direction, modifier,
+	checkCursorVis = true,
+	cursorSelector = '.leaflet-overlay-pane .blinking-cursor') {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
 	cy.log('Param - modifier: ' + modifier);
 	cy.log('Param - checkCursorVis: ' + checkCursorVis);
+	cy.log('Param - cursorSelector: ' + cursorSelector);
 
 	if (direction === 'up' ||
 		direction === 'down' ||
 		(direction === 'home' && modifier === 'ctrl') ||
 		(direction === 'end' && modifier === 'ctrl')) {
-		getCursorPos('top', 'origCursorPos');
+		getCursorPos('top', 'origCursorPos', cursorSelector);
 	} else if (direction === 'left' ||
 		direction === 'right' ||
 		direction === 'home' ||
 		direction === 'end') {
-		getCursorPos('left', 'origCursorPos');
+		getCursorPos('left', 'origCursorPos', cursorSelector);
 	}
 
 	var key = '';
@@ -789,7 +792,7 @@ function moveCursor(direction, modifier, checkCursorVis = true) {
 
 	cy.get('@origCursorPos')
 		.then(function(origCursorPos) {
-			cy.get('.blinking-cursor')
+			cy.get(cursorSelector)
 				.should(function(cursor) {
 					if (direction === 'up' ||
 						direction === 'down' ||
@@ -806,7 +809,7 @@ function moveCursor(direction, modifier, checkCursorVis = true) {
 		});
 
 	if (checkCursorVis === true) {
-		cy.get('.blinking-cursor')
+		cy.get(cursorSelector)
 			.should('be.visible');
 	}
 
@@ -822,24 +825,13 @@ function typeIntoDocument(text) {
 	cy.log('Typing into document - end.');
 }
 
-function getCursorPos(offsetProperty, aliasName) {
+function getCursorPos(offsetProperty, aliasName, cursorSelector = '.leaflet-overlay-pane .blinking-cursor') {
 	initAliasToNegative(aliasName);
 
-	cy.get('.leaflet-pane')
-		.then(function(pane) {
-			// We try document's blinking cursor first if exists.
-			if (pane.find('.blinking-cursor').length !== 0) {
-				cy.get('.leaflet-pane .blinking-cursor')
-					.invoke('offset')
-					.its(offsetProperty)
-					.as(aliasName);
-			} else {
-				cy.get('.blinking-cursor')
-					.invoke('offset')
-					.its(offsetProperty)
-					.as(aliasName);
-			}
-		});
+	cy.get(cursorSelector)
+		.invoke('offset')
+		.its(offsetProperty)
+		.as(aliasName);
 
 	cy.get('@' + aliasName)
 		.should('be.greaterThan', 0);
