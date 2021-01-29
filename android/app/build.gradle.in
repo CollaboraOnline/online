@@ -20,9 +20,13 @@ android {
         resValue "string", "image_draw_header", "@drawable/drawer_header"
         manifestPlaceholders = [ appIcon: "${liboLauncherIcon}" ]
         buildConfigField "boolean", "APP_HAS_BRANDING", "${liboHasBranding}"
-        ndk {
-                abiFilters = []
-                abiFilters.addAll("${liboAndroidAbi}".split(' ').collect{it as String})
+    }
+    splits {
+        abi {
+            enable true
+
+            reset ()
+            include @ANDROID_ABI_SPLIT@
         }
     }
 
