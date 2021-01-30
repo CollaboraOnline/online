@@ -953,12 +953,12 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
             = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
         if (isMarkedToDestroy() && always_save)
         {
-            LOG_TRC("Enabling forced uploading to storage per always_save_on_exit config.");
+            LOG_INF("Enabling forced uploading to storage per always_save_on_exit config.");
             force = true;
         }
         else if (!_lastStorageUploadSuccessful)
         {
-            LOG_TRC("Enabling forced uploading to storage as last attempt had failed.");
+            LOG_INF("Enabling forced uploading to storage as last attempt had failed.");
             force = true;
         }
     }
