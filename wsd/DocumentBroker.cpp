@@ -171,7 +171,6 @@ DocumentBroker::DocumentBroker(ChildType type,
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _documentChangedInStorage(false),
-    _lastStorageUploadSuccessful(true),
     _lastSaveTime(std::chrono::steady_clock::now()),
     _isModified(false),
     _cursorPosX(0),
@@ -969,7 +968,7 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
             LOG_INF("Enabling forced uploading to storage per always_save_on_exit config.");
             force = true;
         }
-        else if (!_lastStorageUploadSuccessful)
+        else if (!_storageManager.lastRequestSuccessful())
         {
             LOG_INF("Enabling forced uploading to storage as last attempt had failed.");
             force = true;
@@ -1101,9 +1100,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
 {
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
-    _lastStorageUploadSuccessful
-        = uploadResult.getResult() == StorageBase::UploadResult::Result::OK
-          || uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED;
+    _storageManager.setLastRequestResult(
+        uploadResult.getResult() == StorageBase::UploadResult::Result::OK
+        || uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED);
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
     {
