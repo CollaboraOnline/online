@@ -1174,20 +1174,11 @@ void LOOLWSD::initialize(Application& self)
 
 #if ENABLE_SSL
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
-#endif
-
-    if (LOOLWSD::isSSLEnabled())
-    {
-        LOG_INF("SSL support: SSL is enabled.");
-    }
-    else
-    {
-        LOG_WRN("SSL support: SSL is disabled.");
-    }
-
-#if ENABLE_SSL
     LOOLWSD::SSLTermination.set(getConfigValue<bool>(conf, "ssl.termination", true));
 #endif
+
+    LOG_INF("SSL support: SSL is " << (LOOLWSD::isSSLEnabled() ? "enabled." : "disabled."));
+    LOG_INF("SSL support: termination is " << (LOOLWSD::isSSLTermination() ? "enabled." : "disabled."));
 
     std::string allowedLanguages(config().getString("allowed_languages"));
     // Core <= 7.0.
