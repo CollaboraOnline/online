@@ -301,6 +301,10 @@ public:
 
     bool isLastStorageUploadSuccessful() { return _lastStorageUploadSuccessful; }
 
+    /// Handle the save response from Core and upload to storage as necessary.
+    /// Also notifies clients of the result.
+    void handleSaveResponse(const std::string& sessionId, bool success, const std::string& result);
+
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
     void uploadToStorage(const std::string& sesionId, bool success, const std::string& result,
