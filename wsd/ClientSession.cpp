@@ -1147,7 +1147,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
 
                 // Save to Storage and log result.
-                docBroker->uploadToStorage(getId(), success, result, /*force=*/false);
+                docBroker->handleSaveResponse(getId(), success, result);
 
                 if (!isCloseFrame())
                     forwardToClient(payload);
