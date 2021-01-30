@@ -934,6 +934,22 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
     return bResult;
 }
 
+void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool success,
+                                        const std::string& result)
+{
+    assertCorrectThread();
+
+    if (success)
+        LOG_DBG("Save result from Core: saved");
+    else
+        LOG_INF("Save result from Core (failure): " << result);
+
+    // Record that we got a response to avoid timing out on saving.
+    _saveManager.markLastSaveResponseTime();
+
+    uploadToStorage(sessionId, success, result, /*force=*/false);
+}
+
 void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
                                      const std::string& result, bool force)
 {
@@ -994,9 +1010,6 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
                                            const bool force)
 {
     assertCorrectThread();
-
-    // Record that we got a response to avoid timing out on saving.
-    _saveManager.markLastSaveResponseTime();
 
     // If save requested, but core didn't save because document was unmodified
     // notify the waiting thread, if any.
