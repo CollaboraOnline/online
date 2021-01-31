@@ -953,12 +953,12 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
             = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
         if (isMarkedToDestroy() && always_save)
         {
-            LOG_TRC("Enabling forced saving to storage per always_save_on_exit config.");
+            LOG_TRC("Enabling forced uploading to storage per always_save_on_exit config.");
             force = true;
         }
         else if (!_lastStorageUploadSuccessful)
         {
-            LOG_TRC("Enabling forced saving to storage as last attempt had failed.");
+            LOG_TRC("Enabling forced uploading to storage as last attempt had failed.");
             force = true;
         }
     }
@@ -1066,7 +1066,7 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         // Nothing to do.
         const auto timeInSec = std::chrono::duration_cast<std::chrono::seconds>
                                             (std::chrono::system_clock::now() - _lastFileModifiedTime);
-        LOG_DBG("Skipping unnecessary saving to URI [" << uriAnonym << "] with docKey [" << _docKey <<
+        LOG_DBG("Skipping unnecessary uploading to URI [" << uriAnonym << "] with docKey [" << _docKey <<
                 "]. File last modified " << timeInSec.count() << " seconds ago, timestamp unchanged.");
         _poll->wakeup();
         broadcastSaveResult(true, "unmodified");
@@ -1076,22 +1076,23 @@ bool DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
     assert(_storage && _tileCache);
-    const StorageBase::UploadResult storageSaveResult = _storage->uploadLocalFileToStorage(
+    const StorageBase::UploadResult uploadResult = _storage->uploadLocalFileToStorage(
         auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
 
     const StorageUploadDetails details { uriAnonym, newFileModifiedTime, it->second, isSaveAs, isRename };
-    return handleUploadToStorageResponse(details, storageSaveResult);
+    return handleUploadToStorageResponse(details, uploadResult);
 }
 
 bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& details,
-                                                   const StorageBase::UploadResult& storageSaveResult)
+                                                   const StorageBase::UploadResult& uploadResult)
 {
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
     _lastStorageUploadSuccessful
-        = storageSaveResult.getResult() == StorageBase::UploadResult::Result::OK ||
-        storageSaveResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED;
-    if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::OK)
+        = uploadResult.getResult() == StorageBase::UploadResult::Result::OK
+          || uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED;
+
+    if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
     {
 #if !MOBILEAPP
         WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
@@ -1121,8 +1122,8 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         else if (details.isRename)
         {
             // encode the name
-            const std::string& filename = storageSaveResult.getSaveAsName();
-            const std::string url = Poco::URI(storageSaveResult.getSaveAsUrl()).toString();
+            const std::string& filename = uploadResult.getSaveAsName();
+            const std::string url = Poco::URI(uploadResult.getSaveAsUrl()).toString();
             std::string encodedName;
             Poco::URI::encode(filename, "", encodedName);
             const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
@@ -1134,9 +1135,9 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
         else
         {
             // normalize the url (mainly to " " -> "%20")
-            const std::string url = Poco::URI(storageSaveResult.getSaveAsUrl()).toString();
+            const std::string url = Poco::URI(uploadResult.getSaveAsUrl()).toString();
 
-            const std::string& filename = storageSaveResult.getSaveAsName();
+            const std::string& filename = uploadResult.getSaveAsName();
 
             // encode the name
             std::string encodedName;
@@ -1168,7 +1169,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
 
         return true;
     }
-    else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
+    else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
     {
         LOG_WRN("Disk full while uploading docKey ["
                 << _docKey << "] to URI [" << details.uriAnonym
@@ -1180,9 +1181,9 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
             sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savediskfull");
         }
 
-        broadcastSaveResult(false, "Disk full", storageSaveResult.getReason());
+        broadcastSaveResult(false, "Disk full", uploadResult.getReason());
     }
-    else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::UNAUTHORIZED)
+    else if (uploadResult.getResult() == StorageBase::UploadResult::Result::UNAUTHORIZED)
     {
         const auto session = details.session.lock();
         if (session)
@@ -1201,7 +1202,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
 
         broadcastSaveResult(false, "Invalid or expired access token");
     }
-    else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::FAILED)
+    else if (uploadResult.getResult() == StorageBase::UploadResult::Result::FAILED)
     {
         //TODO: Should we notify all clients?
         const auto session = details.session.lock();
@@ -1219,10 +1220,10 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
                                                 << "]. The client session is closed.");
         }
 
-        broadcastSaveResult(false, "Save failed", storageSaveResult.getReason());
+        broadcastSaveResult(false, "Save failed", uploadResult.getReason());
     }
-    else if (storageSaveResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED
-             || storageSaveResult.getResult() == StorageBase::UploadResult::Result::CONFLICT)
+    else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED
+             || uploadResult.getResult() == StorageBase::UploadResult::Result::CONFLICT)
     {
         LOG_ERR("PutFile says that Document changed in storage");
         _documentChangedInStorage = true;
@@ -1231,7 +1232,7 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
 
         broadcastMessage(message);
         broadcastSaveResult(false, "Conflict: Document changed in storage",
-                            storageSaveResult.getReason());
+                            uploadResult.getReason());
     }
 
     return false;
