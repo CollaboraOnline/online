@@ -952,6 +952,28 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
     return bResult;
 }
 
+bool DocumentBroker::needToUploadToStorage() const
+{
+    // When destroying, we might have to force uploading if always_save_on_exit=true.
+    if (isMarkedToDestroy())
+    {
+        static const bool always_save
+            = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
+        if (always_save)
+        {
+            LOG_INF("Need to upload per always_save_on_exit config (MarkedToDestroy=true).");
+            return true;
+        }
+    }
+
+    // Get the modified-time of the file on disk.
+    const std::chrono::system_clock::time_point currentModifiedTime
+        = FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint();
+
+    // Compare to the last uploaded file's modified-time.
+    return currentModifiedTime != _storageManager.getLastUploadedFileModifiedTime();
+}
+
 void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool success,
                                         const std::string& result)
 {
@@ -965,7 +987,11 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     // Record that we got a response to avoid timing out on saving.
     _saveManager.setLastSaveResult(success || result == "unmodified");
 
-    uploadToStorage(sessionId, success, result, /*force=*/false);
+    // See if we have anything to upload.
+    if (needToUploadToStorage())
+    {
+        uploadToStorage(sessionId, success, result, /*force=*/false);
+    }
 }
 
 void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
