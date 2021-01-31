@@ -1119,6 +1119,9 @@ bool DocumentBroker::handleUploadToStorageResponse(const StorageUploadDetails& d
             // Save the storage timestamp.
             _storageManager.setModifiedTime(_storage->getFileInfo().getModifiedTime());
 
+            // Set the timestamp of the file we uploaded, to detect changes.
+            _storageManager.setLastUploadedFileModifiedTime(details.newFileModifiedTime);
+
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
 
