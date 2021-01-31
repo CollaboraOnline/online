@@ -471,6 +471,10 @@ private:
     /// with the child and cleans up ChildProcess etc.
     void terminateChild(const std::string& closeReason);
 
+    /// Returns true iff the Document in Storage is
+    /// out-of-date and we must upload the last file on disk.
+    bool needToUploadToStorage() const;
+
     /// Upload the doc to the storage.
     void uploadToStorageInternal(const std::string& sesionId, bool success,
                                  const std::string& result, const std::string& saveAsPath,
