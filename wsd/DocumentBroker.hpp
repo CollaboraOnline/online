@@ -576,7 +576,12 @@ private:
         bool lastRequestSuccessful() const { return _lastRequestSuccessful; }
 
         /// Sets the last request's result, either to success or failure.
-        void setLastRequestResult(bool success) { _lastRequestSuccessful = success; }
+        /// And marks the last response time.
+        void setLastRequestResult(bool success)
+        {
+            markLastResponseTime();
+            _lastRequestSuccessful = success;
+        }
 
         /// Returns true iff there is an active request in progress.
         bool isActive() const { return _lastResponseTime < _lastRequestTime; }
