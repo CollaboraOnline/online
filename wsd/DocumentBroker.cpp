@@ -1062,6 +1062,8 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         Util::mapAnonymized(newFilename, fileId);
     }
 
+    assert(_storage && "Must have a valid Storage instance");
+
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uri);
 
     // If the file timestamp hasn't changed, skip uploading.
@@ -1081,7 +1083,6 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
 
     LOG_DBG("Persisting [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
-    assert(_storage && _tileCache);
     const StorageBase::UploadResult uploadResult = _storage->uploadLocalFileToStorage(
         auth, it->second->getCookies(), *_lockCtx, saveAsPath, saveAsFilename, isRename);
 
