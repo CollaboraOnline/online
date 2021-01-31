@@ -696,6 +696,7 @@ private:
         StorageManager()
             : RequestManagerBase()
             , _lastSaveTime(now())
+            , _lastUploadedFileModifiedTime(std::chrono::system_clock::now())
         {
         }
 
@@ -704,6 +705,18 @@ private:
 
         // Gets the last time we attempted to save.
         std::chrono::steady_clock::time_point getLastSaveTime() const { return _lastSaveTime; }
+
+        /// Get the modified-timestamp of the local file on disk we last uploaded.
+        std::chrono::system_clock::time_point getLastUploadedFileModifiedTime() const
+        {
+            return _lastUploadedFileModifiedTime;
+        }
+
+        /// Set the modified-timestamp of the local file on disk we last uploaded.
+        void setLastUploadedFileModifiedTime(std::chrono::system_clock::time_point modifiedTime)
+        {
+            _lastUploadedFileModifiedTime = modifiedTime;
+        }
 
     private:
         /// The last time we tried saving and uploading, regardless of
@@ -714,6 +727,9 @@ private:
         /// equivalent to the larger of 'Last Save Response Time' and
         /// 'Last Storage Response Time', and should be removed.
         std::chrono::steady_clock::time_point _lastSaveTime;
+
+        /// The modified-timestamp of the local file on disk we uploaded last.
+        std::chrono::system_clock::time_point _lastUploadedFileModifiedTime;
     };
 
 protected:
