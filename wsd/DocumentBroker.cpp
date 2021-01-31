@@ -944,7 +944,7 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
         LOG_INF("Save result from Core (failure): " << result);
 
     // Record that we got a response to avoid timing out on saving.
-    _saveManager.markLastSaveResponseTime();
+    _saveManager.setLastSaveResult(success || result == "unmodified");
 
     uploadToStorage(sessionId, success, result, /*force=*/false);
 }
