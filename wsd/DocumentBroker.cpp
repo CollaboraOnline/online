@@ -966,6 +966,10 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
         }
         else if (!_storageManager.lastRequestSuccessful())
         {
+            //FIXME: Forcing is used when overwriting a 'document conflict' and
+            // for uploading when otherwise we might not have an immediate
+            // reason. We shouldn't use a single flag for both these uses.
+            // Also, we should use the file timestamp to decide when we upload.
             LOG_INF("Enabling forced uploading to storage as last attempt had failed.");
             force = true;
         }
