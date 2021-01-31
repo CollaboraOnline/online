@@ -554,6 +554,7 @@ private:
         RequestManagerBase()
             : _lastRequestTime(now())
             , _lastResponseTime(now())
+            , _lastRequestSuccessful(true)
         {
         }
 
@@ -570,6 +571,12 @@ private:
             return std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - _lastResponseTime);
         }
+
+        /// Indicates whether the last request was successful or not.
+        bool lastRequestSuccessful() const { return _lastRequestSuccessful; }
+
+        /// Sets the last request's result, either to success or failure.
+        void setLastRequestResult(bool success) { _lastRequestSuccessful = success; }
 
         /// Returns true iff there is an active request in progress.
         bool isActive() const { return _lastResponseTime < _lastRequestTime; }
@@ -604,6 +611,12 @@ private:
 
         /// The document's last-modified time.
         std::chrono::system_clock::time_point _modifiedTime;
+
+        /// Indicates whether the last request resulted in success.
+        /// Note that this is interpretted by the request in question.
+        /// For example, Core's Save operation turns 'false' for success
+        /// when the file is unmodified, but that is still a successful result.
+        bool _lastRequestSuccessful;
     };
 
     /// Responsible for managing document saving.
@@ -683,15 +696,8 @@ private:
         StorageManager()
             : RequestManagerBase()
             , _lastSaveTime(now())
-            , _lastStorageUploadSuccessful(true)
         {
         }
-
-        /// Indicates whether the last request was successful or not.
-        bool lastRequestSuccessful() const { return _lastStorageUploadSuccessful; }
-
-        /// Sets the last request's result, either to success or failure.
-        void setLastRequestResult(bool success) { _lastStorageUploadSuccessful = success; }
 
         /// Marks the last time we attempted to save and upload, regardless of outcome, to now.
         void markLastSaveTime() { _lastSaveTime = now(); }
@@ -708,9 +714,6 @@ private:
         /// equivalent to the larger of 'Last Save Response Time' and
         /// 'Last Storage Response Time', and should be removed.
         std::chrono::steady_clock::time_point _lastSaveTime;
-
-        /// Indicates whether the last uploadToStorage operation was successful.
-        bool _lastStorageUploadSuccessful;
     };
 
 protected:
