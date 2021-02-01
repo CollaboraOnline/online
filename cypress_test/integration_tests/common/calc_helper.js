@@ -38,6 +38,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 			var YPos = items[0].getBoundingClientRect().top + 10;
 			if (dblClick) {
 				cy.get('body')
+					.click(XPos, YPos)
 					.dblclick(XPos, YPos);
 			} else {
 				cy.get('body')
