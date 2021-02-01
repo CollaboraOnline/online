@@ -126,7 +126,6 @@ class CanvasOverlay {
 
 		this.ctx.translate(cOrigin.x, cOrigin.y);
 		if (clipArea) {
-			this.ctx.save();
 			this.ctx.beginPath();
 			var clipSize = clipArea.getSize();
 			this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
@@ -167,10 +166,6 @@ class CanvasOverlay {
 		this.fillStroke(path);
 
 		this.ctEnd();
-
-		if (clipArea) {
-			this.ctx.restore();
-		}
 	}
 
 	updateCircle(path: CPath, paneXFixed?: boolean, paneYFixed?: boolean) {
