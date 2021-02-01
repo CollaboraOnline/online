@@ -272,6 +272,11 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 							expect(doc[0].getBoundingClientRect().right).to.be.lessThan(win.innerWidth * 0.95);
 						});
 				});
+
+			// Check also that the inputbar is drawn in Calc.
+			doIfInCalc(function() {
+				canvasShouldBeFullWhiteOrNot('#calc-inputbar .inputbar_canvas', false);
+			});
 		});
 	}
 
@@ -614,6 +619,23 @@ function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 		});
 }
 
+function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
+	cy.get(selector)
+		.should(function(canvas) {
+			var context = canvas[0].getContext('2d');
+			var pixelData = context.getImageData(0, 0, canvas[0].width, canvas[0].height).data;
+
+			var allIsWhite = true;
+			for (var i = 0; i < pixelData.length; ++i) {
+				allIsWhite = allIsWhite && pixelData[i] == 255;
+			}
+			if (fullWhite)
+				expect(allIsWhite).to.be.true;
+			else
+				expect(allIsWhite).to.be.false;
+		});
+}
+
 function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Waiting item to be idle - start.');
 	cy.log('Param - selector: ' + selector);
@@ -866,6 +888,7 @@ module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
 module.exports.getLOVersion = getLOVersion;
 module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
+module.exports.canvasShouldBeFullWhiteOrNot = canvasShouldBeFullWhiteOrNot;
 module.exports.clickOnIdle = clickOnIdle;
 module.exports.inputOnIdle = inputOnIdle;
 module.exports.waitUntilIdle = waitUntilIdle;
