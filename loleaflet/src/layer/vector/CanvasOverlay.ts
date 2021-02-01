@@ -45,6 +45,7 @@ class CanvasOverlay {
 		this.tsManager._onTilesSectionDraw();
 		path.setDeleted();
 		this.paths.delete(path.getId());
+		this.draw();
 	}
 
 	updatePath(path: CPath) {
