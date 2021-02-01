@@ -275,6 +275,11 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 							expect(doc[0].getBoundingClientRect().right).to.be.lessThan(win.innerWidth * 0.95);
 						});
 				});
+
+			// Check also that the inputbar is drawn in Calc.
+			doIfInCalc(function() {
+				canvasShouldBeFullWhiteOrNot('#calc-inputbar .inputbar_canvas', false);
+			});
 		});
 	}
 
