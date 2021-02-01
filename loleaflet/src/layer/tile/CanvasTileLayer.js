@@ -860,6 +860,13 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			twips.y / this._tileHeightTwips * this._tileSize);
 	},
 
+	_twipsToCorePixelsBounds: function (twips) {
+		return new L.Bounds(
+			this._twipsToCorePixels(twips.min),
+			this._twipsToCorePixels(twips.max)
+		);
+	},
+
 	_corePixelsToTwips: function (corePixels) {
 		return new L.Point(
 			corePixels.x / this._tileSize * this._tileWidthTwips,
