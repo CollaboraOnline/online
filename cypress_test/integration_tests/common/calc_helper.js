@@ -55,7 +55,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 				.should('be.visible');
 		});
 	} else {
-		cy.get('.leaflet-cursor.blinking-cursor')
+		cy.get('.leaflet-overlay-pane .blinking-cursor')
 			.should('be.visible');
 
 		helper.doIfOnDesktop(function() {
