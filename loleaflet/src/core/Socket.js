@@ -424,7 +424,7 @@ L.Socket = L.Class.extend({
 				postMsgData['Reason'] = 'DocumentDisconnected';
 			}
 			else if (textMsg === 'recycling') {
-				msg = _('Server is recycling and will be available shortly');
+				msg = _('Server is down, restarting automatically. Please wait.');
 				this._map._active = false;
 				this._map._serverRecycling = true;
 
