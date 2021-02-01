@@ -104,7 +104,7 @@ L.TileLayer = L.GridLayer.extend({
 		// Position and size of the visible cursor.
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Last cursor position for invalidation
-		this.lastCursorPos = this._visibleCursor.getNorthWest();
+		this.lastCursorPos = null;
 		// Are we zooming currently ? - if so, no cursor.
 		this._isZooming = false;
 		// Original rectangle graphic selection in twips
@@ -1336,8 +1336,8 @@ L.TileLayer = L.GridLayer.extend({
 	_onInvalidateCursorMsg: function (textMsg) {
 		textMsg = textMsg.substring('invalidatecursor:'.length + 1);
 		var obj = JSON.parse(textMsg);
-		var rectangle = this._getEditCursorRectangle(obj);
-		if (rectangle === undefined) {
+		var recCursor = this._getEditCursorRectangle(obj);
+		if (recCursor === undefined) {
 			return;
 		}
 		var modifierViewId = parseInt(obj.viewId);
@@ -1346,8 +1346,8 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 		this._visibleCursor = new L.LatLngBounds(
-			this._twipsToLatLng(rectangle.getTopLeft(), this._map.getZoom()),
-			this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom()));
+			this._twipsToLatLng(recCursor.getTopLeft(), this._map.getZoom()),
+			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
@@ -1369,13 +1369,13 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		//first time document open, set last cursor position
-		if (this.lastCursorPos.lat === 0 && this.lastCursorPos.lng === 0)
-			this.lastCursorPos = cursorPos;
+		if (!this.lastCursorPos)
+			this.lastCursorPos = recCursor.getTopLeft();
 
 		var updateCursor = false;
-		if ((this.lastCursorPos.lat !== cursorPos.lat) || (this.lastCursorPos.lng !== cursorPos.lng)) {
+		if (!this.lastCursorPos.equals(recCursor.getTopLeft())) {
 			updateCursor = true;
-			this.lastCursorPos = cursorPos;
+			this.lastCursorPos = recCursor.getTopLeft();
 		}
 
 		this._onUpdateCursor(updateCursor && (modifierViewId === this._viewId));
