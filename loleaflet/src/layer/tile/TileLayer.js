@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ isAnyVexDialogActive */
+/* global vex $ L _ isAnyVexDialogActive CRectangle */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -3078,19 +3078,25 @@ L.TileLayer = L.GridLayer.extend({
 			}
 
 			if (this._cellCursorMarker) {
-				this._map.removeLayer(this._cellCursorMarker);
+				this._cellCursorMarker.setBounds(
+					this._twipsToCorePixelsBounds(this._cellCursorTwips));
 				this._map.removeLayer(this._dropDownButton);
 			}
-			this._cellCursorMarker = L.rectangle(this._cellCursor, {
-				pointerEvents: 'none',
-				fill: false,
-				color: '#000000',
-				weight: 2});
-			if (!this._cellCursorMarker) {
-				this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
-				return;
+			else {
+				this._cellCursorMarker = new CRectangle(
+					this._twipsToCorePixelsBounds(this._cellCursorTwips),
+					{
+						pointerEvents: 'none',
+						fill: false,
+						color: '#000000',
+						weight: 2 * (this._painter ? this._painter._dpiScale : 1)
+					});
+				if (!this._cellCursorMarker) {
+					this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
+					return;
+				}
+				this._canvasOverlay.initPath(this._cellCursorMarker);
 			}
-			this._map.addLayer(this._cellCursorMarker);
 
 			this._addDropDownMarker();
 
@@ -3105,7 +3111,8 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.fire('editorgotfocus');
 		}
 		else if (this._cellCursorMarker) {
-			this._map.removeLayer(this._cellCursorMarker);
+			this._canvasOverlay.removePath(this._cellCursorMarker);
+			this._cellCursorMarker = undefined;
 		}
 		this._removeDropDownMarker();
 
@@ -3119,7 +3126,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._closeURLPopUp();
 			if (targetURL) {
-				this._showURLPopUp(this._cellCursorMarker._bounds._northEast, targetURL);
+				this._showURLPopUp(this._cellCursor.getNorthEast(), targetURL);
 			}
 
 		}
