@@ -4,6 +4,15 @@
 */
 
 /* global $ */
+
+/*
+	This file is Calc only. This adds a section for grouped rows in Calc.
+	When user selects some rows and groups them using "Data->Group and Outline->Group" menu path, this section is added into
+	sections list of CanvasSectionContainer. See _addRemoveGroupSections in file CalcTileLayer.js
+
+	This class is an extended version of "CanvasSectionObject".
+*/
+
 L.Control.RowGroup = L.Class.extend({
 	name: L.CSections.RowGroup.name,
 	anchor: ['top', 'left'],
@@ -16,13 +25,14 @@ L.Control.RowGroup = L.Class.extend({
 	interactable: true,
 	sectionProperties: {},
 
+	// This function is called by CanvasSectionContainer when the section is added to the sections list.
 	onInitialize: function () {
 		this._map = L.Map.THIS;
 		this._groups = null;
 
 		// group control styles
 		this._groupHeadSize = Math.round(12 * this.dpiScale);
-		this._levelSpacing = this.dpiScale;
+		this._levelSpacing = Math.round(this.dpiScale);
 
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
@@ -31,20 +41,7 @@ L.Control.RowGroup = L.Class.extend({
 		this.isRemoved = false;
 	},
 
-	getHeaderZoomScale : function(lowerBound, upperBound) {
-		if (typeof lowerBound === 'undefined' || lowerBound < 0)
-			lowerBound = 0.5;
-		if (typeof upperBound === 'undefined' || upperBound < 0)
-			upperBound = 2.0;
-		if (lowerBound > upperBound) {
-			lowerBound = 0.5;
-			upperBound = 2.0;
-		}
-		var zoomScale = this._map.getZoomScale(this._map.getZoom(),
-			this._map.options.defaultZoom);
-		return Math.min(Math.max(zoomScale, lowerBound), upperBound);
-	},
-
+	// Create font for the group headers. Group headers are on the left side of corner header.
 	_createFont: function () {
 		var baseElem = document.getElementsByTagName('body')[0];
 		var elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
@@ -60,44 +57,32 @@ L.Control.RowGroup = L.Class.extend({
 	},
 
 	update: function () {
-		if (!this.isRemoved) {
-			this._sheetGeometry = this._map._docLayer.sheetGeometry;
-			this._groups = Array(this._sheetGeometry.getRowGroupLevels());
+		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
+			return;
 
-			// Calculate width on the fly.
-			this.size[0] = this._computeOutlineWidth();
+		this._sheetGeometry = this._map._docLayer.sheetGeometry;
+		this._groups = Array(this._sheetGeometry.getRowGroupLevels());
 
-			// Because this section's width is calculated on the fly, RowHeader and CornerHeader sections should be shifted.
-			this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = this.size[0] + Math.round(this.dpiScale);
-			this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = this.size[0] + Math.round(this.dpiScale);
+		// Calculate width on the fly.
+		this.size[0] = this._computeSectionWidth();
 
-			this._cornerHeaderHeight = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[1];
+		// Because this section's width is calculated on the fly, RowHeader and CornerHeader sections should be shifted.
+		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = this.size[0] + Math.round(this.dpiScale);
+		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = this.size[0] + Math.round(this.dpiScale);
 
-			this._splitPos = this._map._docLayer._splitPanesContext.getSplitPos();
+		this._cornerHeaderHeight = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[1];
 
-			this._collectGroupsData(this._sheetGeometry.getRowGroupsDataInView());
-		}
+		this._splitPos = this._map._docLayer._splitPanesContext.getSplitPos();
+
+		this._collectGroupsData(this._sheetGeometry.getRowGroupsDataInView());
 	},
 
-	_getGroupLevel: function (pos) {
-		var levels = this._groups.length;
-		var size = this._levelSpacing + this._groupHeadSize;
-
-		var level = (pos + 1) / size | 0;
-		var relPos = pos % size;
-
-		if (level <= levels && relPos > this._levelSpacing) {
-			return level;
-		}
-		else {
-			return -1;
-		}
-	},
-
-	_computeOutlineWidth: function () {
+	// This returns the required width for the section.
+	_computeSectionWidth: function () {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
 	},
 
+	// This function puts data into a good shape for use of this class.
 	_collectGroupsData: function(groups) {
 		var level, groupEntry;
 
@@ -131,7 +116,7 @@ L.Control.RowGroup = L.Class.extend({
 					}
 				}
 				// if 2 groups belonging to the same level are contiguous and the first group is collapsed,
-				// the second one has to be shifted as much as possible in order to avoiding overlapping.
+				// the second one has to be shifted as much as possible in order to avoid overlapping.
 				if (!moved && lastGroupIndex[level] !== undefined) {
 					var prevGroupEntry = this._groups[level][lastGroupIndex[level]];
 					if (prevGroupEntry.hidden) {
@@ -160,32 +145,34 @@ L.Control.RowGroup = L.Class.extend({
 		}
 	},
 
+	// If previous group is visible (expanded), current group's plus sign etc. will be drawn. If previous group is not expanded, current group's plus sign etc. won't be drawn.
 	_isPreviousGroupVisible: function (index, level) {
-		if (level === 0) {
+		if (level === 0) // First group's drawings are always drawn.
 			return true;
-		}
-		else {
-			for (var i = 0; i < this._groups.length; i++) {
-				for (var group in this._groups[i]) {
-					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						var group_ = this._groups[i][group];
-						if (group_.level === level - 1 && group_.index === index) {
-							if (group_.hidden === false) {
-								if (group_.level > 0) {
-									if (this._isPreviousGroupVisible(group_.index, group_.level)) {
-										return true;
-									}
-									else {
-										return false;
-									}
+
+		for (var i = 0; i < this._groups.length; i++) {
+			for (var group in this._groups[i]) {
+				if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
+					var group_ = this._groups[i][group];
+					if (group_.level === level - 1 && group_.index === index) {
+						if (group_.hidden === false) {
+							if (group_.level > 0) {
+								// This recursive call is needed.
+								// Because first upper group may have been expanded and second upper group may have been collapsed.
+								// If one of the upper groups is not expanded, this function should return false.
+								if (this._isPreviousGroupVisible(group_.index, group_.level)) {
+									return true;
 								}
 								else {
-									return true;
+									return false;
 								}
 							}
 							else {
-								return false;
+								return true;
 							}
+						}
+						else {
+							return false;
 						}
 					}
 				}
@@ -193,6 +180,7 @@ L.Control.RowGroup = L.Class.extend({
 		}
 	},
 
+	// This calls drawing functions related to tails and plus & minus signs etc.
 	drawOutline: function() {
 		if (this._groups) {
 			for (var i = 0; i < this._groups.length; i++) {
@@ -264,6 +252,7 @@ L.Control.RowGroup = L.Class.extend({
 		}
 	},
 
+	// This function calls drawing function for related to headers of groups. Headers are drawn on the left of corner header.
 	drawLevelHeaders: function () {
 		for (var i = 0; i < this._groups.length + 1; ++i) {
 			this.drawLevelHeader(i);
@@ -289,12 +278,15 @@ L.Control.RowGroup = L.Class.extend({
 		ctx.fillText(level + 1, startX + (ctrlHeadSize / 2), startY + (ctrlHeadSize / 2) + 2 * this.dpiScale);
 	},
 
+	// Handle user interaction.
 	_updateOutlineState: function (group) {
 		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
 		var payload = 'outlinestate type=row' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
 		this._map._socket.sendMessage(payload);
 	},
 
+	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
+	// Clicked point is also given to handler function. This function finds the clicked header.
 	findClickedLevel: function (point) {
 		if (point[1] < this._cornerHeaderHeight) {
 			var index = (point[0] / this.size[0]) * 100; // Percentage.
