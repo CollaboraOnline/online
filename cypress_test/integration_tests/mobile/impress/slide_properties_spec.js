@@ -416,7 +416,7 @@ describe('Changing slide properties.', function() {
 		//	.should('have.text', 'Portrait');
 	});
 
-	it.skip('Check disabled elements in master view.', function() {
+	it('Check disabled elements in master view.', function() {
 		switchToMasterView();
 
 		cy.get('#masterslide')
