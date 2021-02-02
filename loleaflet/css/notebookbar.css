@@ -424,25 +424,43 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	margin-left: -60px;
 }
 
-#table-stylescontainer #style1 img,
-#table-stylescontainer #style2 img,
-#table-stylescontainer #style3 img,
-#table-stylescontainer #style4 img
-{
-	border: 1px dashed lightgray;
+/* Styles preview */
+
+#stylesview {
+	height: 60px;
+	width: 400px;
+	overflow-x: hidden;
+	border: 1px dashed silver;
+	padding: 5px;
+	display: inline-block;
+}
+
+#stylesview .ui-iconview-entry {
+	width: 30%;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+#stylesview .ui-iconview-entry:not(.selected) {
+	border-radius: 3px;
+	border: 2px solid transparent;
+}
+
+#stylesview .ui-iconview-entry:hover {
+	border-radius: 3px;
+	border: 2px solid #e6e6e6b0;
 	cursor: pointer;
 }
 
-#table-stylescontainer #style4 {
-	border-right: 1px dashed transparent;
+#stylesview .ui-iconview-icon {
+	height: 35px;
 }
 
-#table-stylescontainer #style1 img:hover,
-#table-stylescontainer #style2 img:hover,
-#table-stylescontainer #style3 img:hover,
-#table-stylescontainer #style4 img:hover
-{
-	border: 1px solid lightgray;
+#stylesview .ui-iconview-text {
+	font-size: 10pt;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 /* Insert Tab */
