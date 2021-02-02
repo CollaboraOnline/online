@@ -348,12 +348,13 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .ui-iconview-entry {
 	float: left;
+	text-align: center;
 	position: relative;
-	display: flex;
 	flex-direction: row;
 	align-self: center;
 	border: 2px solid transparent;
 	border-radius: 3px;
+	flex: 1;
 }
 
 .ui-iconview-entry.selected {
