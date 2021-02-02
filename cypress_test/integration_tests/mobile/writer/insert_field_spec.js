@@ -34,7 +34,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'type', 'PAGE')
 			.should('have.text', '1');
 	});
@@ -46,7 +46,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'type', 'DOCSTAT')
 			.should('have.text', '1');
 	});
@@ -58,11 +58,11 @@ describe('Insert fields via insertion wizard.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'type', 'DATETIME');
 
 		var regex = new RegExp(';MM/DD/YY$');
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'sdnum')
 			.should('match', regex);
 	});
@@ -74,11 +74,11 @@ describe('Insert fields via insertion wizard.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'type', 'DATETIME');
 
 		var regex = new RegExp(';HH:MM:SS AM/PM$');
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'sdnum')
 			.should('match', regex);
 	});
@@ -90,7 +90,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
 			.should('have.attr', 'subtype', 'TITLE');
 	});
@@ -102,7 +102,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
 			.should('have.attr', 'subtype', 'CREATE')
 			.should('have.attr', 'format', 'AUTHOR');
@@ -115,7 +115,7 @@ describe('Insert fields via insertion wizard.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p span sdfield')
+		cy.get('#copy-paste-container p sdfield')
 			.should('have.attr', 'type', 'DOCINFO')
 			.should('have.attr', 'subtype', 'THEME');
 	});
