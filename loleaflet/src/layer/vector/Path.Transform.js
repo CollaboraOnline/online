@@ -54,7 +54,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		scaleSouthAndEastOnly:  false,
 		uniformScaling: true,
 		maxZoom:  22,
-
+		handles: [],
 		// edge handlers
 		handlerOptions: {
 			radius:      L.Browser.touch && !L.Browser.pointer ? 10 : 5,
@@ -480,18 +480,20 @@ L.Handler.PathTransform = L.Handler.extend({
 	},
 
 	_getPoints: function () {
-		var bounds = this._rect.getBounds(),
-		sw = bounds.getSouthWest(),
-		nw = bounds.getNorthWest(),
-		ne = bounds.getNorthEast(),
-		se = bounds.getSouthEast(),
-		center = bounds.getCenter(),
-		west   = L.latLng(center.lat, nw.lng),
-		north  = L.latLng(nw.lat, center.lng),
-		east   = L.latLng(center.lat, ne.lng),
-		south  = L.latLng(sw.lat, center.lng);
+		var rectangleHandles = this.options.handles['rectangle'];
+		if (rectangleHandles && rectangleHandles !== '') {
+			var nw = rectangleHandles['1'],
+			north = rectangleHandles['2'],
+			ne = rectangleHandles['3'],
+			west = rectangleHandles['4'],
+			east = rectangleHandles['5'],
+			sw = rectangleHandles['6'],
+			south = rectangleHandles['7'],
+			se = rectangleHandles['8'];
+			return [sw, west, nw, north, ne, east, se, south];
+		}
 
-		return [sw, west, nw, north, ne, east, se, south];
+		return [];
 	},
 
 	_getMirroredIndex: function(type, index) {
@@ -519,7 +521,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			var points = this._getPoints();
 			for (var i = 0; i < points.length; i++) {
 				this._handlers.push(
-					this._createHandler(points[i], i * 2, i)
+					this._createHandler(this._map._docLayer._twipsToLatLng(points[i].point), i * 2, i)
 						.addTo(this._handlersGroup));
 			}
 		}
@@ -704,12 +706,14 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._initialDistX = this._originMarker._point.x - this._activeMarker._point.x;
 		this._initialDistY = this._originMarker._point.y - this._activeMarker._point.y;
 
+		var index = this._activeMarker.options.index;
 		this._path
 			.fire('transformstart', { layer: this._path })
 			.fire('scalestart', {
 				layer: this._path,
 				scale: L.point(1, 1),
-				pos: this._getPoints()[this._activeMarker.options.index]
+				pos: this._activeMarker._latlng,
+				handleId: this._getPoints()[index].id
 			});
 
 		if (this.options.rotation) {
@@ -776,23 +780,13 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._map.addLayer(this._rotationMarker);
 		}
 
-		var type;
 		var index = this._activeMarker.options.index;
-		if (this._scale.x < 0 && this._scale.y < 0)
-			type = 'c';
-		else if (this._scale.x < 0)
-			type = 'v';
-		else if (this._scale.y < 0)
-			type = 'h';
-
-		if (type)
-			index = this._getMirroredIndex(type, index);
-
 		this._apply();
 		this._path.fire('scaleend', {
 			layer: this._path,
 			scale: this._scale.clone(),
-			pos: this._getPoints()[index]
+			pos: this._activeMarker._latlng,
+			handleId: this._getPoints()[index].id
 		});
 
 		this._scaleOrigin = undefined;
