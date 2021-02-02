@@ -277,6 +277,7 @@ LOLEAFLET_JS =\
 	src/control/Control.Toolbar.js \
 	src/control/Control.js \
 	src/control/Control.PartsPreview.js \
+	src/control/Control.GroupBase.js \
 	src/control/Control.CornerGroup.js \
 	src/control/Control.RowGroup.js \
 	src/control/Control.ColumnGroup.js \
