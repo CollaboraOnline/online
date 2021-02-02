@@ -4,10 +4,15 @@
 */
 
 /*
-	Calc only.
+	This file is Calc only. This adds a header section for grouped columns and rows in Calc.
+	When user uses row grouping and column grouping at the same time, there occurs a space at the crossing point of the row group and column group sections.
+	This sections fills that gap.
+
+	This class is an extended version of "CanvasSectionObject".
 */
 
 /* global $ */
+
 L.Control.CornerGroup = L.Class.extend({
 	name: L.CSections.CornerGroup.name,
 	anchor: ['top', 'left'],
@@ -41,13 +46,13 @@ L.Control.CornerGroup = L.Class.extend({
 		var rowGroupSection = this.containerObject.getSectionWithName(L.CSections.RowGroup.name);
 		if (rowGroupSection) {
 			rowGroupSection.update();
-			this.size[0] = rowGroupSection._computeOutlineWidth();
+			this.size[0] = rowGroupSection._computeSectionWidth();
 		}
 
 		var columnGroupSection = this.containerObject.getSectionWithName(L.CSections.ColumnGroup.name);
 		if (columnGroupSection) {
 			columnGroupSection.update();
-			this.size[1] = columnGroupSection._computeOutlineHeight();
+			this.size[1] = columnGroupSection._computeSectionHeight();
 		}
 	},
 
