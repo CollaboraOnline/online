@@ -1407,84 +1407,23 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 																															'enabled': 'true',
 																															'children': [
 																																{
-																																	'id': 'stylescontainer',
-																																	'type': 'container',
+																																	'id': 'stylesview',
+																																	'type': 'iconview',
 																																	'text': '',
 																																	'enabled': 'true',
-																																	'children': [
+																																	'entries': [
 																																		{
-																																			'id': 'style1',
-																																			'type': 'drawingarea',
 																																			'text': _('Default Style'),
-																																			'placeholderText': 'true',
-																																			'loading': 'false',
-																																			'enabled': 'true',
-																																			'image': 'data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABACAYAAADs39J0AAAAr0lEQVR4nO3RMREAIBDAMIb3bxlYUUCHREHvOvtaZMzvAF6GxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgScwDMKAT9P9vfmAAAAABJRU5ErkJggg=='
+																																			'selected': 'true'
 																																		},
 																																		{
-																																			'id': 'style2',
-																																			'type': 'drawingarea',
 																																			'text': _('Text Body'),
-																																			'placeholderText': 'true',
-																																			'loading': 'false',
-																																			'enabled': 'true',
-																																			'image': 'data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABACAYAAADs39J0AAAAr0lEQVR4nO3RMREAIBDAMIb3bxlYUUCHREHvOvtaZMzvAF6GxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgScwDMKAT9P9vfmAAAAABJRU5ErkJggg=='
 																																		},
 																																		{
-																																			'id': 'style3',
-																																			'type': 'drawingarea',
 																																			'text': _('Title'),
-																																			'placeholderText': 'true',
-																																			'loading': 'false',
-																																			'enabled': 'true',
-																																			'image': 'data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABACAYAAADs39J0AAAAr0lEQVR4nO3RMREAIBDAMIb3bxlYUUCHREHvOvtaZMzvAF6GxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgScwDMKAT9P9vfmAAAAABJRU5ErkJggg=='
-																																		},
-																																		{
-																																			'id': 'style4',
-																																			'type': 'drawingarea',
-																																			'text': _('Subtitle'),
-																																			'placeholderText': 'true',
-																																			'loading': 'false',
-																																			'enabled': 'true',
-																																			'image': 'data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABACAYAAADs39J0AAAAr0lEQVR4nO3RMREAIBDAMIb3bxlYUUCHREHvOvtaZMzvAF6GxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgSY0iMITGGxBgScwDMKAT9P9vfmAAAAABJRU5ErkJggg=='
 																																		}
 																																	],
 																																	'vertical': 'false'
-																																},
-																																{
-																																	'id': '',
-																																	'type': 'container',
-																																	'text': '',
-																																	'enabled': 'true',
-																																	'children': [
-																																		{
-																																			'id': 'uptoolbar',
-																																			'type': 'toolbox',
-																																			'text': '',
-																																			'enabled': 'true',
-																																			'children': [
-																																				{
-																																					'type': 'toolitem',
-																																					'text': 'Previous',
-																																					'command': 'up'
-																																				}
-																																			]
-																																		},
-																																		{
-																																			'id': 'downtoolbar',
-																																			'type': 'toolbox',
-																																			'text': '',
-																																			'enabled': 'true',
-																																			'children': [
-																																				{
-																																					'type': 'toolitem',
-																																					'text': 'Next',
-																																					'command': 'down'
-																																				}
-																																			]
-																																		}
-																																	],
-																																	'vertical': 'true'
 																																}
 																															],
 																															'vertical': 'false'
