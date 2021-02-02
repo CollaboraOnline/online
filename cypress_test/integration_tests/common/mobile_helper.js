@@ -35,10 +35,6 @@ function enableEditingMobile() {
 	helper.doIfInCalc(function() {
 		cy.get('#formulabar')
 			.should('be.visible');
-
-		// we should have a cell selected here
-		cy.get('.spreadsheet-cell-resize-marker')
-			.should('be.visible');
 	});
 
 	// In writer, we should have the blinking cursor visible
