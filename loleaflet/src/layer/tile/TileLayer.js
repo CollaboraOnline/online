@@ -2716,10 +2716,12 @@ L.TileLayer = L.GridLayer.extend({
 	// Update dragged graphics selection resize.
 	_onGraphicEdit: function (e) {
 		if (!e.pos) { return; }
+		if (!e.handleId) { return; }
 
 		var aPos = this._latLngToTwips(e.pos);
 		var selMin = this._graphicSelectionTwips.min;
 		var selMax = this._graphicSelectionTwips.max;
+		var handleId = e.handleId;
 
 		if (e.type === 'scalestart') {
 			this._graphicMarker.isDragged = true;
@@ -2738,136 +2740,23 @@ L.TileLayer = L.GridLayer.extend({
 				this._graphicMarker.dragVertDir = 1; // down handle
 		}
 		else if (e.type === 'scaleend') {
-			var oldSize = selMax.subtract(selMin);
-			var newSize = oldSize.clone();
-			var newPos = selMin.clone();
-			var center = this._graphicSelectionTwips.getCenter();
-			var horizDir = this._graphicMarker.dragHorizDir;
-			var vertDir = this._graphicMarker.dragVertDir;
-
-			var computePosAndSize = function (coord) {
-				var direction = (coord === 'x') ? horizDir : vertDir;
-				var delta;
-				if (direction === 0) {
-					newSize[coord] = Math.abs(aPos[coord] - center[coord]);
-					newPos[coord] = (aPos[coord] > center[coord]) ? center[coord] : center[coord] - newSize[coord];
-				}
-				else if (direction === -1) { // left/up handle
-					delta = selMin[coord] - aPos[coord];
-					newSize[coord] = oldSize[coord] + delta;
-					newPos[coord] = aPos[coord];
-				}
-				else if (direction === 1) {  // right/down handle
-					delta = aPos[coord] - selMax[coord];
-					newSize[coord] = oldSize[coord] + delta;
-					newPos[coord] = selMin[coord];
-				}
-			};
-
-			computePosAndSize('x');
-			computePosAndSize('y');
-
-			// do we need to perform uniform scaling ?
-			if (!this._isGraphicAngleDivisibleBy90()) {
-				var delta = 0;
-				if (horizDir !== undefined && vertDir === undefined) {
-					newSize.y = Math.round(oldSize.y * (newSize.x / oldSize.x));
-					delta = newSize.y - oldSize.y;
-					newPos.y = Math.round(selMin.y - delta / 2);
-				}
-				else if (horizDir === undefined && vertDir !== undefined) {
-					newSize.x = Math.round(oldSize.x * (newSize.y / oldSize.y));
-					delta = newSize.x - oldSize.x;
-					newPos.x = Math.round(selMin.x - delta / 2);
-				}
-			}
-
-			// try to keep shape inside document
-			if (newPos.x + newSize.x > this._docWidthTwips)
-				newPos.x = this._docWidthTwips - newSize.x;
-			if (newPos.x < 0)
-				newPos.x = 0;
-
-			if (newPos.y + newSize.y > this._docHeightTwips)
-				newPos.y = this._docHeightTwips - newSize.y;
-			if (newPos.y < 0)
-				newPos.y = 0;
-
-			// For an image in Writer we need to send the size of the image not of the selection box.
-			// So if the image has been rotated we need to compute its size starting from the size of the selection
-			// rectangle and the rotation angle.
-			var isSelectionWriterGraphic =
-				this._graphicSelection.extraInfo ? this._graphicSelection.extraInfo.isWriterGraphic : false;
-			if (isSelectionWriterGraphic) {
-				if (this._isGraphicAngleDivisibleBy90()) {
-					var k = this._graphicSelectionAngle / 9000;
-					// if k is even we have nothing to do since the rotation is 0 or 180.
-					// when k is odd we need to swap width and height.
-					if (k % 2 !== 0) {
-						var temp = newSize.x;
-						newSize.x = newSize.y;
-						newSize.y = temp;
-					}
-				}
-				else {
-					// let's say that the selection rectangle width is subdivided by a corner of the rotated image
-					// in 2 segments of length s and t and the selection rectangle height is subdivided by a corner
-					// of the rotated image in 2 segments of length u and v, so we get the following system of equations:
-					// s + t = w, u + v = h,
-					// l = u/t, l = s/v, where l = tan(rotation angle)
-					var w = newSize.x;
-					var h = newSize.y;
-					var angle = Math.PI * this._graphicSelectionAngle / 18000;
-					var c = Math.abs(Math.cos(angle));
-					var s = Math.abs(Math.sin(angle));
-					var l = s / c;
-					var u = (l * w - l * l * h) / (1 - l * l);
-					var v = h - u;
-					newSize.x = Math.round(u / s);
-					newSize.y = Math.round(v / c);
-				}
-			}
-
-			if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
-				newPos = this.sheetGeometry.getPrintTwipsPointFromTile(newPos);
-			}
-
 			// fill params for uno command
 			var param = {
-				TransformPosX: {
+				HandleNum: {
 					type: 'long',
-					value: newPos.x
+					value: handleId
 				},
-				TransformPosY: {
+				NewPosX: {
 					type: 'long',
-					value: newPos.y
+					value: aPos.x
 				},
-				TransformWidth: {
+				NewPosY: {
 					type: 'long',
-					value: newSize.x
-				},
-				TransformHeight: {
-					type: 'long',
-					value: newSize.y
+					value: aPos.y
 				}
 			};
 
-			this._map.sendUnoCommand('.uno:TransformDialog ', param);
-
-			if (isSelectionWriterGraphic) {
-				param = {
-					TransformPosX: {
-						type: 'long',
-						value: newPos.x
-					},
-					TransformPosY: {
-						type: 'long',
-						value: newPos.y
-					}
-				};
-				this._map.sendUnoCommand('.uno:TransformDialog ', param);
-			}
-
+			this._map.sendUnoCommand('.uno:MoveShapeHandle', param);
 			this._graphicMarker.isDragged = false;
 			this._graphicMarker.setVisible(false);
 			this._graphicMarker.dragHorizDir = undefined;
@@ -3151,6 +3040,7 @@ L.TileLayer = L.GridLayer.extend({
 				scaling: extraInfo.isResizable,
 				rotation: extraInfo.isRotatable && !this.hasTableSelection(),
 				uniformScaling: !this._isGraphicAngleDivisibleBy90(),
+				handles: extraInfo.handles.kinds || [],
 				scaleSouthAndEastOnly: this.hasTableSelection()});
 			if (extraInfo.dragInfo && extraInfo.dragInfo.svg) {
 				this._graphicMarker.removeEmbeddedSVG();
