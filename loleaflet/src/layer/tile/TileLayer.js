@@ -2030,7 +2030,7 @@ L.TileLayer = L.GridLayer.extend({
 			// Sanity check: If we get a PNG it should be for a hash that we don't have cached
 			for (i = 0; i < this._pngCache.length; i++) {
 				if (this._pngCache[i].hash == command.hash) {
-					var message = 'windowpaint: message included PNG for hash ' + command.hash
+					message = 'windowpaint: message included PNG for hash ' + command.hash
 					    + ' even if it was already cached here in the client';
 					if (L.Browser.cypressTest)
 						throw message;
