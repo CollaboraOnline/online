@@ -41,7 +41,7 @@ describe('Interfering second user.', function() {
 			});
 
 			helper.doIfInCalc(function() {
-				calcHelper.dblClickOnFirstCell();
+				calcHelper.clickOnFirstCell();
 			});
 
 			// Do some interfering activity.
