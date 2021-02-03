@@ -925,6 +925,7 @@ L.Socket = L.Class.extend({
 		var delayed = false;
 		if (textMsg.startsWith('window:') ||
 			textMsg.startsWith('celladdress:') ||
+			textMsg.startsWith('cellviewcursor:') ||
 			textMsg.startsWith('statechanged:') ||
 			textMsg.startsWith('invalidatecursor:') ||
 			textMsg.startsWith('viewinfo:')) {
