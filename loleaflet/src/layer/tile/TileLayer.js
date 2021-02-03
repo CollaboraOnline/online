@@ -2022,7 +2022,7 @@ L.TileLayer = L.GridLayer.extend({
 				var message = 'windowpaint: message assumed PNG for hash ' + command.hash
 				    + ' is cached here in the client but not found';
 				if (L.Browser.cypressTest)
-					throw message;
+					throw new Error(message);
 				this._map._socket.sendMessage('ERROR ' + message);
 				// Not sure what to do. Ask the server to re-send the windowpaint: message but this time including the PNG?
 			}
@@ -2033,7 +2033,7 @@ L.TileLayer = L.GridLayer.extend({
 					message = 'windowpaint: message included PNG for hash ' + command.hash
 					    + ' even if it was already cached here in the client';
 					if (L.Browser.cypressTest)
-						throw message;
+						throw new Error(message);
 					this._map._socket.sendMessage('ERROR ' + message);
 					// Remove the extra copy, code below will add it at the start of the array
 					this._pngCache.splice(i, 1);
