@@ -1341,7 +1341,7 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 		var modifierViewId = parseInt(obj.viewId);
-		if (modifierViewId != this._viewId)
+		if (modifierViewId !== this._viewId || (obj.window && obj.window === 'SwAnnotationWin'))
 			return;
 
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
