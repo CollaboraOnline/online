@@ -79,10 +79,10 @@ print_error() {
     CypressError: a test failed, please do one of the following:\n\n\
     Run the failing test in headless mode:\n\
     \tcd cypress_test && make check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+    if [ "${TEST_TYPE}" != "multi-user" ]; then
     echo -e "\
     Run the failing test with video recording:\n\
     \tcd cypress_test && ENABLE_VIDEO_REC="1" make check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
-    if [ "${TEST_TYPE}" != "multi-user" ]; then
     echo -e "\
     Open the failing test in the interactive test runner:\n\
     \tcd cypress_test && make run-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
