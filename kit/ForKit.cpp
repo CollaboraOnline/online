@@ -180,7 +180,7 @@ protected:
     void onDisconnect() override
     {
 #if !MOBILEAPP
-        LOG_WRN("ForKit connection lost without exit arriving from wsd. Setting TerminationFlag");
+        LOG_ERR("ForKit connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
 #endif
     }
@@ -219,7 +219,7 @@ static bool haveCapability(cap_value_t capability)
     {
         if (cap_name)
         {
-            LOG_FTL("Capability " << cap_name << " is not set for the loolforkit program.");
+            LOG_ERR("Capability " << cap_name << " is not set for the loolforkit program.");
             cap_free(cap_name);
         }
         else
@@ -480,9 +480,9 @@ int main(int argc, char** argv)
     /*WARNING*/     else if (hasAnyCapability())
     /*WARNING*/     {
     /*WARNING*/         if (!checkLoolUser)
-    /*WARNING*/             std::cerr << "Security: --disable-lool-user-checking failed, loolforkit has some capabilities set." << std::endl;
+    /*WARNING*/             LOG_FTL("Security: --disable-lool-user-checking failed, loolforkit has some capabilities set.");
 
-    /*WARNING*/         std::cerr << "Aborting." << std::endl;
+    /*WARNING*/         LOG_FTL("Aborting.");
     /*WARNING*/         return EX_SOFTWARE;
     /*WARNING*/     }
 
@@ -490,11 +490,11 @@ int main(int argc, char** argv)
     /*WARNING*/     // what they are doing, and provided a --disable-lool-user-checking
     /*WARNING*/     if (checkLoolUser)
     /*WARNING*/     {
-    /*WARNING*/         std::cerr << "Aborting." << std::endl;
+    /*WARNING*/         LOG_FTL("Aborting.");
     /*WARNING*/         return EX_SOFTWARE;
     /*WARNING*/     }
 
-    /*WARNING*/     std::cerr << "Security: Check for the 'lool' username overridden on the command line." << std::endl;
+    /*WARNING*/     LOG_ERR("Security: Check for the 'lool' username overridden on the command line.");
     /*WARNING*/ }
 
     /*WARNING: PRIVILEGED CODE CHECKING END */
@@ -651,7 +651,7 @@ int main(int argc, char** argv)
     if (!UnitBase::init(UnitBase::UnitType::Kit,
                         UnitTestLibrary))
     {
-        LOG_ERR("Failed to load kit unit test library");
+        LOG_FTL("Failed to load kit unit test library");
         return EX_USAGE;
     }
 
@@ -662,9 +662,9 @@ int main(int argc, char** argv)
 
     if (!NoCapsForKit && !haveCorrectCapabilities())
     {
-        std::cerr << "FATAL: Capabilities are not set for the loolforkit program." << std::endl;
-        std::cerr << "Please make sure that the current partition was *not* mounted with the 'nosuid' option." << std::endl;
-        std::cerr << "If you are on SLES11, please set 'file_caps=1' as kernel boot option." << std::endl << std::endl;
+        LOG_FTL("Capabilities are not set for the loolforkit program.");
+        LOG_FTL("Please make sure that the current partition was *not* mounted with the 'nosuid' option.");
+        LOG_FTL("If you are on SLES11, please set 'file_caps=1' as kernel boot option.");
         return EX_SOFTWARE;
     }
 
@@ -677,7 +677,7 @@ int main(int argc, char** argv)
     }
 
     if (Util::getProcessThreadCount() != 1)
-        LOG_ERR("Error: forkit has more than a single thread after pre-init");
+        LOG_ERR("forkit has more than a single thread after pre-init");
 
     // Link the network and system files in sysTemplate, if possible.
     JailUtil::SysTemplate::setupDynamicFiles(sysTemplate);
