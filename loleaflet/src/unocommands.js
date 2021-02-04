@@ -150,7 +150,7 @@ var unoCommandsArray = {
 	FormatMeanValue:{global:{menu:_('Format Mean Value Line...'),},},
 	FormatMenu:{global:{menu:_('F~ormat'),},},
 	FormatMinorGrid:{global:{menu:_('Format Minor Grid...'),},},
-	FormatPaintbrush:{global:{context:_('Clone Formatting (double click for multi-selection)'),menu:_('Clone'),},text:{context:_('Clone Formatting (double click and Ctrl or Cmd to alter behavior)'),menu:_('Clone'),},},
+	FormatPaintbrush:{global:{context:_('Clone Formatting (double click for multi-selection)'),menu:_('Clone'),},text:{context:_('Clone Formatting'),menu:_('Clone'),},},
 	FormatSelection:{global:{menu:_('Format Selection...'),},},
 	FormatSpacingMenu:{global:{menu:_('~Spacing'),},},
 	FormatStockGain:{global:{menu:_('Format Stock Gain...'),},},
