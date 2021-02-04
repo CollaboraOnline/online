@@ -251,6 +251,28 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 										]
 									}
 								]
+							},
+							{
+								'id': 'saveas-Section3',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'Section9',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'downloadas-csv',
+												'type': 'menubartoolitem',
+												'text': _('CSV File (.csv)'),
+												'command': ''
+											}
+										]
+									}
+								]
 							}
 						]
 					}
