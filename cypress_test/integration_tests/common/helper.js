@@ -389,9 +389,7 @@ function clearAllText() {
 	assertCursorAndFocus();
 
 	// Trigger select all
-	typeIntoDocument('{ctrl}a');
-
-	textSelectionShouldExist();
+	selectAllText();
 
 	// Then remove
 	typeIntoDocument('{del}');
