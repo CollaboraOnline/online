@@ -57,18 +57,6 @@ function plugin(on, config) {
 	return config;
 }
 
-function getLOVersion(config) {
-	var versionString = config.env.LO_CORE_VERSION;
-	if (versionString.includes('Collabora')) {
-		if (versionString.includes('_6.2.')) {
-			return 'cp-6-2';
-		} else if (versionString.includes('_6.4.')) {
-			return 'cp-6-4';
-		}
-	}
-	return 'master';
-}
-
 function removeBlacklistedTest(filename, testsToRun, blackList) {
 	for (var i = 0; i < blackList.length; i++) {
 		if (filename.endsWith(blackList[i][0])) {
@@ -80,14 +68,8 @@ function removeBlacklistedTest(filename, testsToRun, blackList) {
 	return testsToRun;
 }
 
-function pickTests(filename, foundTests, config) {
-	var coreVersion = getLOVersion(config);
+function pickTests(filename, foundTests) {
 	var testsToRun = foundTests;
-	if (!(coreVersion in blacklists.coreBlackLists))
-		return testsToRun;
-
-	var coreblackList = blacklists.coreBlackLists[coreVersion];
-	testsToRun = removeBlacklistedTest(filename, testsToRun, coreblackList);
 
 	if (process.env.CYPRESS_INTEGRATION === 'nextcloud') {
 		testsToRun = removeBlacklistedTest(filename, testsToRun, blacklists.nextcloudBlackList);

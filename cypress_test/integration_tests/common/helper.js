@@ -659,18 +659,6 @@ function typeText(selector, text, delayMs=0) {
 	}
 }
 
-function getLOVersion() {
-	var versionString = Cypress.env('LO_CORE_VERSION');
-	if (versionString.includes('Collabora')) {
-		if (versionString.includes('_6.2.')) {
-			return 'cp-6-2';
-		} else if (versionString.includes('_6.4.')) {
-			return 'cp-6-4';
-		}
-	}
-	return 'master';
-}
-
 function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 	cy.get(selector)
 		.should(function(images) {
@@ -1010,7 +998,6 @@ module.exports.doIfNotInImpress = doIfNotInImpress;
 module.exports.doIfNotInWriter = doIfNotInWriter;
 module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
-module.exports.getLOVersion = getLOVersion;
 module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
 module.exports.canvasShouldBeFullWhiteOrNot = canvasShouldBeFullWhiteOrNot;
 module.exports.clickOnIdle = clickOnIdle;

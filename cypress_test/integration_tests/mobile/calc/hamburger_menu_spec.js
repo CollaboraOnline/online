@@ -628,15 +628,8 @@ describe('Trigger hamburger menu options.', function() {
 			.should('exist');
 
 		// Check the version
-		if (helper.getLOVersion() === 'master') {
-			cy.contains('#lokit-version', 'LibreOffice')
-				.should('exist');
-		} else if (helper.getLOVersion() === 'cp-6-2' ||
-				   helper.getLOVersion() === 'cp-6-4')
-		{
-			cy.contains('#lokit-version', 'Collabora Office')
-				.should('exist');
-		}
+		cy.contains('#lokit-version', 'Collabora Office')
+			.should('exist');
 
 		// Close about dialog
 		cy.get('.vex-close')
