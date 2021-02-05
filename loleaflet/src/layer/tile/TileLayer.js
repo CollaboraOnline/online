@@ -3237,9 +3237,15 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._addDropDownMarker();
 
+			var hasTunneledDialogOpened = this._map.dialog ? this._map.dialog.hasOpenedDialog() : false;
+			var hasJSDialogOpened = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened() : false;
+			var hasDialogOpened = hasTunneledDialogOpened || hasJSDialogOpened;
+
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
-			this._map.fire('editorgotfocus');
+			// exception: when dialog opened don't focus the document
+			if (!hasDialogOpened)
+				this._map.fire('editorgotfocus');
 		}
 		else if (this._cellCursorMarker) {
 			this._map.removeLayer(this._cellCursorMarker);
