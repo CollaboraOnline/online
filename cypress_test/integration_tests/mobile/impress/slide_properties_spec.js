@@ -22,7 +22,10 @@ describe('Changing slide properties.', function() {
 
 	function previewShouldBeFullWhite(fullWhite = true, slideNumber = 1) {
 		var selector = '.preview-frame:nth-of-type(' + (slideNumber + 1).toString() + ') img';
-		helper.imageShouldBeFullWhiteOrNot(selector, fullWhite);
+		if (fullWhite)
+			helper.imageShouldBeFullWhite(selector);
+		else
+			helper.imageShouldNotBeFullWhite(selector);
 	}
 
 	function switchToMasterView() {

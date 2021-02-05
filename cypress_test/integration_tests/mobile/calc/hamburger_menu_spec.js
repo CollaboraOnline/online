@@ -682,18 +682,18 @@ describe('Trigger hamburger menu options.', function() {
 
 		var firstTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 0px; top: 5px;\']';
 		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 5px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
-		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
+		helper.imageShouldBeFullWhite(centerTile);
+		helper.imageShouldNotBeFullWhite(firstTile);
 
 		// Disable automatic spell checking
 		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(firstTile, true);
+		helper.imageShouldBeFullWhite(firstTile);
 
 		// Enable automatic spell checking again
 		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
+		helper.imageShouldNotBeFullWhite(firstTile);
 	});
 
 	it('Check version information.', function() {
