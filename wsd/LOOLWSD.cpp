@@ -317,7 +317,7 @@ void LOOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
     }
     catch (const std::exception& exc)
     {
-        LOG_WRN("Exception while checking disk-space and warning clients: " << exc.what());
+        LOG_ERR("Exception while checking disk-space and warning clients: " << exc.what());
     }
 #endif
 }
@@ -1519,7 +1519,7 @@ void LOOLWSD::dumpNewSessionTrace(const std::string& id, const std::string& sess
         }
         catch (const std::exception& exc)
         {
-            LOG_WRN("Exception in tracer newSession: " << exc.what());
+            LOG_ERR("Exception in tracer newSession: " << exc.what());
         }
     }
 }
@@ -1534,7 +1534,7 @@ void LOOLWSD::dumpEndSessionTrace(const std::string& id, const std::string& sess
         }
         catch (const std::exception& exc)
         {
-            LOG_WRN("Exception in tracer newSession: " << exc.what());
+            LOG_ERR("Exception in tracer newSession: " << exc.what());
         }
     }
 }
@@ -2406,7 +2406,7 @@ public:
                 }
                 catch (const Poco::Exception& exc)
                 {
-                    LOG_WRN("Poco::Net::DNS::resolve(\"" << addressToCheck << "\") failed: " << exc.displayText());
+                    LOG_ERR("Poco::Net::DNS::resolve(\"" << addressToCheck << "\") failed: " << exc.displayText());
                     // We can't find out the hostname, and it already failed the IP check
                     allow = false;
                 }
@@ -2607,7 +2607,7 @@ private:
         }
         catch (const std::exception& exc)
         {
-            LOG_INF('#' << socket->getFD() << " Exception while processing incoming request: [" <<
+            LOG_ERR('#' << socket->getFD() << " Exception while processing incoming request: [" <<
                     LOOLProtocol::getAbbreviatedMessage(socket->getInBuffer()) << "]: " << exc.what());
 
             // Bad request.
@@ -2788,6 +2788,7 @@ private:
                                        + serverId + " vs. " + Util::getProcessIdentifier()
                                        + "on request to URL: " + request.getURI();
             LOG_ERR(errMsg);
+
             // we got the wrong request.
             http::Response httpResponse(http::StatusLine(400));
             httpResponse.set("Content-Length", "0");
