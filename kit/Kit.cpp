@@ -275,7 +275,7 @@ namespace
                     if (::stat(fpath, &ownerInfo) != 0 ||
                         ::chown(linkableCopy.c_str(), ownerInfo.st_uid, ownerInfo.st_gid) != 0)
                     {
-                        LOG_WRN("Failed to stat or chown " << ownerInfo.st_uid << ":" << ownerInfo.st_gid <<
+                        LOG_ERR("Failed to stat or chown " << ownerInfo.st_uid << ":" << ownerInfo.st_gid <<
                                 " " << linkableCopy << ": " << strerror(errno) << " missing cap_chown?, disabling linkable");
                         unlink(linkableCopy.c_str());
                         canChown = false;
@@ -585,7 +585,7 @@ public:
         {
             if (_sessions.find(sessionId) != _sessions.end())
             {
-                LOG_WRN("Session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "] already exists.");
+                LOG_ERR("Session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "] already exists.");
                 return true;
             }
 
@@ -1389,7 +1389,7 @@ private:
             }
 
             const std::string abbrMessage = getAbbreviatedMessage(data, size);
-            LOG_WRN("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
+            LOG_ERR("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
         }
         else
         {
@@ -1551,7 +1551,7 @@ public:
 
                         if (!isFound)
                         {
-                            LOG_WRN("Document::ViewCallback. Session [" << viewId <<
+                            LOG_ERR("Document::ViewCallback. Session [" << viewId <<
                                     "] is no longer active to process [" << lokCallbackTypeToString(type) <<
                                     "] [" << payload << "] message to Master Session.");
                         }
@@ -2022,7 +2022,7 @@ protected:
     void onDisconnect() override
     {
 #if !MOBILEAPP
-        LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
+        LOG_ERR("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
 #endif
 #ifdef IOS
@@ -2206,7 +2206,7 @@ void lokit_main(
                 if (!JailUtil::bind(sysTemplate, jailPathStr)
                     || !JailUtil::remountReadonly(sysTemplate, jailPathStr))
                 {
-                    LOG_WRN("Failed to mount [" << sysTemplate << "] -> [" << jailPathStr
+                    LOG_ERR("Failed to mount [" << sysTemplate << "] -> [" << jailPathStr
                                                 << "], will link/copy contents.");
                     return false;
                 }
@@ -2230,7 +2230,7 @@ void lokit_main(
                 LOG_INF("Mounting random temp dir " << tmpSubDir << " -> " << jailTmpDir);
                 if (!JailUtil::bind(tmpSubDir, jailTmpDir))
                 {
-                    LOG_WRN("Failed to mount [" << tmpSubDir << "] -> [" << jailTmpDir
+                    LOG_ERR("Failed to mount [" << tmpSubDir << "] -> [" << jailTmpDir
                                                 << "], will link/copy contents.");
                     return false;
                 }
@@ -2265,7 +2265,7 @@ void lokit_main(
                 // Update the dynamic files inside the jail.
                 if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
                 {
-                    LOG_WRN(
+                    LOG_ERR(
                         "Failed to update the dynamic files in the jail ["
                         << jailPathStr
                         << "]. If the systemplate directory is owned by a superuser or is "
@@ -2483,7 +2483,7 @@ void lokit_main(
 #ifndef IOS
         if (!LIBREOFFICEKIT_HAS(kit, runLoop))
         {
-            LOG_ERR("Kit is missing Unipoll API");
+            LOG_FTL("Kit is missing Unipoll API");
             std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
             std::_Exit(EX_SOFTWARE);
         }
