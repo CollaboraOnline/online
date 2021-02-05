@@ -52,7 +52,7 @@ describe('Spell checking menu.', function() {
 		cy.contains('.context-menu-link', 'hello')
 			.click();
 
-		helper.selectAllText(false);
+		helper.selectAllText();
 
 		helper.expectTextForClipboard('hello');
 	});

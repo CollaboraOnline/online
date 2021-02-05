@@ -148,7 +148,7 @@ function selectTextOfShape() {
 	cy.get('.leaflet-cursor.blinking-cursor')
 		.should('exist');
 
-	helper.selectAllText(false);
+	helper.selectAllText();
 
 	cy.log('Selecting text of shape - end.');
 }
