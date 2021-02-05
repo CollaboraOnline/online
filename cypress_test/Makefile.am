@@ -411,7 +411,7 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC)) &
 	@sleep 5
 	@$(call run_test_parallel,\
-		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) || true
+		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) || true
 	@$(KILL_COMMAND) || true
 
 INTERFER_MOBILE_CONFIG1 = \
@@ -442,10 +442,10 @@ define run_mobile_interference_test
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@$(call run_test_parallel,\
-		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC),mobile,$(USER1_LOG)) & \
+		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC),interfer-mobile,$(USER1_LOG)) & \
 	sleep 5 && \
 	$(call run_test_parallel,\
-		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
+		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
 
@@ -482,7 +482,7 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC)) &
 	@sleep 5
 	@$(call run_test_parallel,\
-		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) || true
+		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) || true
 	@$(KILL_COMMAND) || true
 
 INTERFER_DESKTOP_CONFIG1 = \
@@ -513,10 +513,10 @@ define run_desktop_interference_test
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@$(call run_test_parallel,\
-		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC),desktop,$(USER1_LOG)) & \
+		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC),interfer-desktop,$(USER1_LOG)) & \
 	sleep 5 && \
 	$(call run_test_parallel,\
-		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
+		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
 
