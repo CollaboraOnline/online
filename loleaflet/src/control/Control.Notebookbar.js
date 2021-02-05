@@ -84,12 +84,16 @@ L.Control.Notebookbar = L.Control.extend({
 		if (!this.builder)
 			return;
 
+		var scrollTop = control.scrollTop;
 		control.style.visibility = 'hidden';
 
 		var temporaryParent = L.DomUtil.create('div');
 		this.builder.buildControl(temporaryParent, data.control);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
+
+		var newControl = this.container.querySelector('#' + data.control.id);
+		newControl.scrollTop = scrollTop;
 	},
 
 	onUpdatePermission: function(e) {
