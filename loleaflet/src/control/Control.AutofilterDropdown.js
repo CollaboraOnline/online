@@ -153,7 +153,9 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		if (!parent)
 			return;
 
+		var scrollTop = control.scrollTop;
 		control.style.visibility = 'hidden';
+
 		var builder = new L.control.jsDialogBuilder({windowId: data.id,
 			mobileWizard: this,
 			map: this.map,
@@ -161,6 +163,9 @@ L.Control.AutofilterDropdown = L.Control.extend({
 
 		builder.build(parent, [data.control], false);
 		L.DomUtil.remove(control);
+
+		var newControl = targetWindow.querySelector('#' + data.control.id);
+		newControl.scrollTop = scrollTop;
 	},
 
 	onClosePopup: function() {
