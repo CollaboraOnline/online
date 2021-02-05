@@ -20,6 +20,10 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 	},
 
+	hasDialogOpened: function() {
+		return Object.keys(this.dialogs).length > 0;
+	},
+
 	onJSDialog: function(e) {
 		var posX = 0;
 		var posY = 0;
@@ -33,8 +37,10 @@ L.Control.JSDialog = L.Control.extend({
 
 		if (data.action === 'close')
 		{
-			if (data.id && this.dialogs[data.id])
+			if (data.id && this.dialogs[data.id]) {
 				L.DomUtil.remove(this.dialogs[data.id]);
+				delete this.dialogs[data.id];
+			}
 			return;
 		}
 
@@ -58,7 +64,7 @@ L.Control.JSDialog = L.Control.extend({
 		var that = this;
 		button.onclick = function() {
 			L.DomUtil.remove(that.dialogs[data.id]);
-			that.dialogs[data.id] = undefined;
+			delete that.dialogs[data.id];
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 		};
 
