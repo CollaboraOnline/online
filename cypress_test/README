@@ -158,6 +158,25 @@ Prerequisites:
 https://github.com/CollaboraOnline/richdocumentscode/blob/master/proxy.php
 * Put it under /srv/www/htdocs/richproxy/ folder.
 
+Other useful flags
+------------------
+
+1. ENABLE_VIDEO_REC
+
+You can enable video recording during running a test suite in headless mode.
+So you can check visually what happens in the browser during the test.
+Unfortunatelly this does not work for multi-user tests.
+
+    ENABLE_VIDEO_REC="1" make check-mobile spec=writer/apply_font_spec.js
+
+2. ENABLE_CONSOLE_LOG
+
+With this flag we can enable logging for console.error() messages and so they
+will be displayed in the command line. It's useful when we can reproduce a test
+failure only in headless mode and we need to debug the client-side JS code.
+
+    ENABLE_CONSOLE_LOG="1" make check-mobile spec=writer/apply_font_spec.js
+
 Known issues
 ------------
 
