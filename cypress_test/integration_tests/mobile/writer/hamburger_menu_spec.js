@@ -659,39 +659,39 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Show formatting marks.', function() {
-		// Hide text so the center tile is full white.
+		// Hide text so the document is full white.
 		hideText();
 
 		var canvas = '.leaflet-canvas-container canvas';
-		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
+		helper.canvasShouldBeFullWhite(canvas);
 
 		// Enable it first -> spaces will be visible.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.canvasShouldBeFullWhiteOrNot(canvas, false);
+		helper.canvasShouldNotBeFullWhite(canvas);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
+		helper.canvasShouldBeFullWhite(canvas);
 	});
 
 	it('Automatic spell checking.', function() {
-		// Hide text so the center tile is full white.
+		// Hide text so the document is full white.
 		hideText();
 
 		var canvas = '.leaflet-canvas-container canvas';
-		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
+		helper.canvasShouldBeFullWhite(canvas);
 
 		// Enable it first.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.canvasShouldBeFullWhiteOrNot(canvas, false);
+		helper.canvasShouldNotBeFullWhite(canvas);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
+		helper.canvasShouldBeFullWhite(canvas);
 	});
 
 	it('Resolved comments.', function() {
