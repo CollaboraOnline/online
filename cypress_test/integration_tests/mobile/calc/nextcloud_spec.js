@@ -13,7 +13,7 @@ describe('Nextcloud specific tests.', function() {
 	});
 
 	it('Insert image from storage.', function() {
-		helper.loadFileToNextCloud('image_to_insert.png', 'calc');
+		helper.upLoadFileToNextCloud('image_to_insert.png', 'calc');
 
 		helper.beforeAll(testFileName, 'calc', undefined, true);
 
