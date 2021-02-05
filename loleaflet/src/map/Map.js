@@ -51,6 +51,9 @@ L.Map = L.Evented.extend({
 	// Control.LokDialog instance, is set in Control.UIManager.js
 	dialog: null,
 
+	// Control.JSDialog instance, is set in Control.UIManager.js
+	jsdialog: null,
+
 	context: {context: ''},
 
 	lastActiveTime: Date.now(),
