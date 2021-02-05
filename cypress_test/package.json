@@ -6,7 +6,7 @@
   "dependencies": {
     "cypress": "6.2.1",
     "cypress-failed-log": "2.9.1",
-    "cypress-file-upload": "4.1.1",
+    "cypress-file-upload": "5.0.2",
     "cypress-log-to-output": "1.1.2",
     "cypress-select-tests": "1.5.8",
     "cypress-wait-until": "1.7.1",
