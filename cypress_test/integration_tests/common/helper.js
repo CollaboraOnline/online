@@ -323,7 +323,7 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 
 			// Check also that the inputbar is drawn in Calc.
 			doIfInCalc(function() {
-				canvasShouldBeFullWhiteOrNot('#calc-inputbar .inputbar_canvas', false);
+				canvasShouldNotBeFullWhite('#calc-inputbar .inputbar_canvas');
 			});
 		});
 	}
@@ -706,7 +706,18 @@ function imageShouldNotBeFullWhite(selector) {
 	imageShouldNotBeFullWhiteOrNot(selector, false);
 }
 
+// Check wether a canvas DOM element has only white colored pixels or not.
+// Parameters:
+// selector - a CSS selector to query the canvas DOM element.
+// fullWhite - this specifies what we expect here, that the canvas is full white
+//             or on the contrary.
 function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
+	cy.log('Check whether a canvas is full white or not - start.');
+	cy.log('Param - selector: ' + selector);
+	cy.log('Param - fullWhite: ' + fullWhite);
+
+	expect(selector).to.have.string('canvas');
+
 	cy.get(selector)
 		.should(function(canvas) {
 			var context = canvas[0].getContext('2d');
@@ -721,6 +732,18 @@ function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 			else
 				expect(allIsWhite).to.be.false;
 		});
+
+	cy.log('Check whether a canvas is full white or not - end.');
+}
+
+// Check wether a canvas DOM element consist of only white pixels.
+function canvasShouldBeFullWhite(selector) {
+	canvasShouldBeFullWhiteOrNot(selector, true);
+}
+
+// Check wether a canvas DOM element has any non-white pixels.
+function canvasShouldNotBeFullWhite(selector) {
+	canvasShouldBeFullWhiteOrNot(selector, false);
 }
 
 // Waits until a DOM element becomes idle (does not change for a given time).
@@ -1018,7 +1041,8 @@ module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
 module.exports.imageShouldBeFullWhite = imageShouldBeFullWhite;
 module.exports.imageShouldNotBeFullWhite = imageShouldNotBeFullWhite;
-module.exports.canvasShouldBeFullWhiteOrNot = canvasShouldBeFullWhiteOrNot;
+module.exports.canvasShouldBeFullWhite = canvasShouldBeFullWhite;
+module.exports.canvasShouldNotBeFullWhite = canvasShouldNotBeFullWhite;
 module.exports.clickOnIdle = clickOnIdle;
 module.exports.inputOnIdle = inputOnIdle;
 module.exports.waitUntilIdle = waitUntilIdle;
