@@ -369,13 +369,9 @@ function assertCursorAndFocus() {
 }
 
 // Select all text via CTRL+A shortcut.
-function selectAllText(assertFocus = true) {
+function selectAllText() {
 	cy.log('Select all text - start');
 
-	if (assertFocus)
-		assertCursorAndFocus();
-
-	// Trigger select all
 	typeIntoDocument('{ctrl}a');
 
 	textSelectionShouldExist();

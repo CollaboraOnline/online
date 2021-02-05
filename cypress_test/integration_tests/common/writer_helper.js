@@ -16,7 +16,7 @@ function selectAllTextOfDoc() {
 	cy.get('.leaflet-selection-marker-start')
 		.should('not.exist');
 
-	helper.selectAllText(false);
+	helper.selectAllText();
 
 	cy.log('Select all text of Writer document - end.');
 }
