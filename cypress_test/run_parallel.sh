@@ -52,12 +52,12 @@ done
 TEST_ERROR="${TEST_LOG}.error"
 
 TEST_FILE_PATH=
-if [ "${TEST_TYPE}" = "desktop" ]; then
+if [ "${TEST_TYPE}" = "desktop" -o "${TEST_TYPE}" = "interfer-desktop" ]; then
     TEST_FILE_PATH=${DESKTOP_TEST_FOLDER}${TEST_FILE};
-elif [ "${TEST_TYPE}" = "multi-user" ]; then
-    TEST_FILE_PATH=${MULTIUSER_TEST_FOLDER}${TEST_FILE};
-else
+elif [ "${TEST_TYPE}" = "mobile" -o "${TEST_TYPE}" = "interfer-mobile" ]; then
     TEST_FILE_PATH=${MOBILE_TEST_FOLDER}${TEST_FILE};
+elif [ "${TEST_TYPE}" = "multi-user" -o "${TEST_TYPE}" = "interfer" ]; then
+    TEST_FILE_PATH=${MULTIUSER_TEST_FOLDER}${TEST_FILE};
 fi
 
 RUN_COMMAND="${CYPRESS_BINARY} run \
@@ -70,6 +70,13 @@ RUN_COMMAND="${CYPRESS_BINARY} run \
 print_error() {
     SPEC=${TEST_FILE}
     COMMAND=${TEST_TYPE}
+    if [ "${TEST_TYPE}" = "interfer" ]; then
+        echo -e "\n\
+        CypressError: the interference user failed.\n\n\
+        For running this test again, you need to find the related test user.\n" >> ${ERROR_LOG}
+        return
+    fi
+
     if [ "${TEST_TYPE}" = "multi-user" ]; then
         COMMAND="multi"
         SPEC=${SPEC%"_user1_spec.js"}
