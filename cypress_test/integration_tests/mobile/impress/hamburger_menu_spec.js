@@ -374,12 +374,12 @@ describe('Trigger hamburger menu options.', function() {
 		impressHelper.removeShapeSelection();
 
 		var preiew = '.preview-frame:nth-of-type(2) img';
-		helper.imageShouldBeFullWhiteOrNot(preiew, false);
+		helper.imageShouldNotBeFullWhite(preiew);
 
 		// Disable automatic spell checking
 		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(preiew, true);
+		helper.imageShouldBeFullWhite(preiew);
 	});
 
 	it('Fullscreen presentation.', function() {

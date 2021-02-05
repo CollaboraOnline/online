@@ -503,7 +503,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Page setup: change paper size.', function() {
 		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhite(centerTile);
 
 		openPageWizard();
 
@@ -512,7 +512,7 @@ describe('Trigger hamburger menu options.', function() {
 		closePageWizard();
 
 		// Smaller paper size makes center tile to contain text too.
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.imageShouldNotBeFullWhite(centerTile);
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -523,7 +523,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Page setup: change paper width.', function() {
 		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhite(centerTile);
 
 		openPageWizard();
 
@@ -533,7 +533,7 @@ describe('Trigger hamburger menu options.', function() {
 		closePageWizard();
 
 		// Smaller paper size makes center tile to contain text too.
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.imageShouldNotBeFullWhite(centerTile);
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -547,7 +547,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Page setup: change paper height.', function() {
 		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhite(centerTile);
 
 		openPageWizard();
 
@@ -556,7 +556,7 @@ describe('Trigger hamburger menu options.', function() {
 		closePageWizard();
 
 		// Smaller paper size makes center tile to contain the end of the page.
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.imageShouldNotBeFullWhite(centerTile);
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -598,7 +598,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Page setup: change margin.', function() {
 		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.imageShouldNotBeFullWhite(centerTile);
 
 		openPageWizard();
 
@@ -607,7 +607,7 @@ describe('Trigger hamburger menu options.', function() {
 		closePageWizard();
 
 		// Text is moved up by margin removal, so the the center tile will be empty.
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhite(centerTile);
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -621,17 +621,17 @@ describe('Trigger hamburger menu options.', function() {
 		hideText();
 
 		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhite(centerTile);
 
 		// Enable it first -> spaces will be visible.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.imageShouldNotBeFullWhite(centerTile);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhite(centerTile);
 	});
 
 	it('Automatic spell checking.', function() {
@@ -639,17 +639,17 @@ describe('Trigger hamburger menu options.', function() {
 		hideText();
 
 		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 261px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhite(centerTile);
 
 		// Enable it first.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, false);
+		helper.imageShouldNotBeFullWhite(centerTile);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
+		helper.imageShouldBeFullWhite(centerTile);
 	});
 
 	it('Resolved comments.', function() {
