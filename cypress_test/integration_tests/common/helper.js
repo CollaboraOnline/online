@@ -659,7 +659,18 @@ function typeText(selector, text, delayMs=0) {
 	}
 }
 
-function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
+// Check wether an img DOM element has only white colored pixels or not.
+// Parameters:
+// selector - a CSS selector to query the img DOM element.
+// fullWhite - this specifies what we expect here, that the image is full white
+//             or on the contrary.
+function imageShouldNotBeFullWhiteOrNot(selector, fullWhite = true) {
+	cy.log('Check whether an image is full white or not - start.');
+	cy.log('Param - selector: ' + selector);
+	cy.log('Param - fullWhite: ' + fullWhite);
+
+	expect(selector).to.have.string('img');
+
 	cy.get(selector)
 		.should(function(images) {
 			var img = images[0];
@@ -686,6 +697,18 @@ function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 			else
 				expect(allIsWhite).to.be.false;
 		});
+
+	cy.log('Check whether an image is full white or not - end.');
+}
+
+// Check wether an img DOM element consist of only white pixels.
+function imageShouldBeFullWhite(selector) {
+	imageShouldNotBeFullWhiteOrNot(selector, true);
+}
+
+// Check wether an img DOM element has any non-white pixels.
+function imageShouldNotBeFullWhite(selector) {
+	imageShouldNotBeFullWhiteOrNot(selector, false);
 }
 
 function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
@@ -998,7 +1021,8 @@ module.exports.doIfNotInImpress = doIfNotInImpress;
 module.exports.doIfNotInWriter = doIfNotInWriter;
 module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
-module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
+module.exports.imageShouldBeFullWhite = imageShouldBeFullWhite;
+module.exports.imageShouldNotBeFullWhite = imageShouldNotBeFullWhite;
 module.exports.canvasShouldBeFullWhiteOrNot = canvasShouldBeFullWhiteOrNot;
 module.exports.clickOnIdle = clickOnIdle;
 module.exports.inputOnIdle = inputOnIdle;
