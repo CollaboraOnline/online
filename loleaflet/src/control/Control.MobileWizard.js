@@ -566,7 +566,7 @@ L.Control.MobileWizard = L.Control.extend({
 		if (!parent)
 			return;
 
-		var oldFocus = document.activeElement;
+		var scrollTop = control.scrollTop;
 
 		control.style.visibility = 'hidden';
 		var builder = new L.control.mobileWizardBuilder({windowId: data.id,
@@ -579,7 +579,8 @@ L.Control.MobileWizard = L.Control.extend({
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
 
-		oldFocus.focus();
+		var newControl = container.querySelector('#' + data.control.id);
+		newControl.scrollTop = scrollTop;
 	},
 });
 

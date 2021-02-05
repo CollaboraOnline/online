@@ -114,6 +114,8 @@ L.Control.JSDialog = L.Control.extend({
 		if (!parent)
 			return;
 
+		var scrollTop = control.scrollTop;
+
 		control.style.visibility = 'hidden';
 		var builder = new L.control.jsDialogBuilder({windowId: data.id,
 			mobileWizard: this,
@@ -124,6 +126,9 @@ L.Control.JSDialog = L.Control.extend({
 		builder.build(temporaryParent, [data.control], false);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
+
+		var newControl = dialog.querySelector('#' + data.control.id);
+		newControl.scrollTop = scrollTop;
 	},
 
 	onPan: function (ev) {
