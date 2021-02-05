@@ -257,7 +257,7 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Uploading test document into nextcloud - end.');
 }
 
-// Used for interference test. We wait until the interfering user loads
+// Used for interference testing. We wait until the interfering user loads
 // its instance of the document and starts its interfering actions.
 // So we can be sure the interference actions are made during the test
 // user does the actual test steps.
@@ -659,7 +659,7 @@ function typeText(selector, text, delayMs=0) {
 	}
 }
 
-// Check wether an img DOM element has only white colored pixels or not.
+// Check whether an img DOM element has only white colored pixels or not.
 // Parameters:
 // selector - a CSS selector to query the img DOM element.
 // fullWhite - this specifies what we expect here, that the image is full white
@@ -701,17 +701,17 @@ function imageShouldNotBeFullWhiteOrNot(selector, fullWhite = true) {
 	cy.log('Check whether an image is full white or not - end.');
 }
 
-// Check wether an img DOM element consist of only white pixels.
+// Check whether an img DOM element consist of only white pixels.
 function imageShouldBeFullWhite(selector) {
 	imageShouldNotBeFullWhiteOrNot(selector, true);
 }
 
-// Check wether an img DOM element has any non-white pixels.
+// Check whether an img DOM element has any non-white pixels.
 function imageShouldNotBeFullWhite(selector) {
 	imageShouldNotBeFullWhiteOrNot(selector, false);
 }
 
-// Check wether a canvas DOM element has only white colored pixels or not.
+// Check whether a canvas DOM element has only white colored pixels or not.
 // Parameters:
 // selector - a CSS selector to query the canvas DOM element.
 // fullWhite - this specifies what we expect here, that the canvas is full white
@@ -741,12 +741,12 @@ function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 	cy.log('Check whether a canvas is full white or not - end.');
 }
 
-// Check wether a canvas DOM element consist of only white pixels.
+// Check whether a canvas DOM element consist of only white pixels.
 function canvasShouldBeFullWhite(selector) {
 	canvasShouldBeFullWhiteOrNot(selector, true);
 }
 
-// Check wether a canvas DOM element has any non-white pixels.
+// Check whether a canvas DOM element has any non-white pixels.
 function canvasShouldNotBeFullWhite(selector) {
 	canvasShouldBeFullWhiteOrNot(selector, false);
 }
@@ -819,8 +819,8 @@ function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Waiting item to be idle - end.');
 }
 
-// Waits the DOM element to be idle and clicks on it afterwards.
-// This is a workaround for avoid 'item detached from DOM'
+// Waits for the DOM element to be idle and clicks on it afterward.
+// This is a workaround to avoid 'item detached from DOM'
 // failures caused by GUI flickering.
 // GUI flickering might mean bad design, but
 // until it's fixed we can use this method.
@@ -848,7 +848,7 @@ function clickOnIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Clicking on item when idle - end.');
 }
 
-// Waits the DOM element to be idle and typs into it afterwards.
+// Waits for the DOM element to be idle and types into it afterward.
 // See also the comments at clickOnIdle() method.
 // Parameters:
 // selector - a CSS selector to query a DOM element to wait on to be idle.
@@ -892,7 +892,7 @@ function doIfOnDesktop(callback) {
 // direction - the direction the cursor should be moved.
 //			   possible valude: up, down, left, right, home, end
 // modifier - a modifier to the cursor movement keys (e.g. 'shift' or 'ctrl').
-// checkCursorVis - whether check the cursor visibility after movement.
+// checkCursorVis - whether to check the cursor visibility after movement.
 // cursorSelector - selector for the cursor DOM element (document cursor is the default).
 function moveCursor(direction, modifier,
 	checkCursorVis = true,
