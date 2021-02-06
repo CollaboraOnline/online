@@ -555,7 +555,9 @@ void WopiStorage::initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::U
 
     // TODO: Avoid repeated parsing.
     std::map<std::string, std::string> params = GetQueryParams(uri);
-    addWopiProof(request, uri, params["access_token"]);
+    const auto it = params.find("access_token");
+    if (it != params.end())
+        addWopiProof(request, uri, it->second);
 
     if (_reuseCookies)
         addStorageReuseCookie(request, cookies);
@@ -663,6 +665,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         auto wopiInfo = std::unique_ptr<WopiStorage::WOPIFileInfo>(new WOPIFileInfo(fileInfo, callDuration, object));
         if (wopiInfo->getSupportsLocks())
             lockCtx.initSupportsLocks();
+
+        // If FileUrl is set, we use it for GetFile.
+        _fileUrl = wopiInfo->getFileUrl();
 
         return wopiInfo;
     }
@@ -786,6 +791,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "SupportsRename", _supportsRename);
     JsonUtil::findJSONValue(object, "UserCanRename", _userCanRename);
     JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
+    JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
     bool booleanFlag = false;
     if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
         _disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
@@ -891,8 +897,26 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
         return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
     }
 
+    // First try the FileUrl, if provided.
+    if (!_fileUrl.empty())
+    {
+        const std::string fileUrlAnonym = LOOLWSD::anonymizeUrl(_fileUrl);
+        try
+        {
+            LOG_INF("WOPI::GetFile using FileUrl: " << fileUrlAnonym);
+            return downloadDocument(Poco::URI(_fileUrl), fileUrlAnonym, auth, cookies);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Could not download document from WOPI FileUrl [" + fileUrlAnonym
+                        + "]. Will use default URL. Error: "
+                    << ex.what());
+        }
+    }
+
+    // Try the default URL, we either don't have FileUrl, or it failed.
     // WOPI URI to download files ends in '/contents'.
-    // Add it here to get the payload instead of file info.
+    // Add it's here to get the payload instead of file info.
     Poco::URI uriObject(getUri());
     uriObject.setPath(uriObject.getPath() + "/contents");
     auth.authorizeURI(uriObject);
@@ -901,23 +925,22 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
     uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
     const std::string uriAnonym = uriObjectAnonym.toString();
 
-    LOG_DBG("Wopi requesting: " << uriAnonym);
-
     try
     {
+        LOG_INF("WOPI::GetFile using default URI: " << uriAnonym);
         return downloadDocument(uriObject, uriAnonym, auth, cookies);
     }
-    catch (const Poco::Exception& pexc)
+    catch (const Poco::Exception& ex)
     {
         LOG_ERR("Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
-                << pexc.displayText()
-                << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
+                << ex.displayText()
+                << (ex.nested() ? " (" + ex.nested()->displayText() + ')' : ""));
         throw;
     }
-    catch (const BadRequestException& exc)
+    catch (const std::exception& ex)
     {
         LOG_ERR("Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
-                << exc.what());
+                << ex.what());
     }
 
     return std::string();
@@ -957,9 +980,9 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     {
         std::ostringstream oss;
         Poco::StreamCopier::copyStream(rs, oss);
-        std::string responseString = oss.str();
-        LOG_ERR("WOPI::GetFile failed with " << response.getStatus() << ' ' << responseString);
-        throw StorageConnectionException("WOPI::GetFile failed: " + responseString);
+        LOG_ERR("WOPI::GetFile [" << uriAnonym
+                                  << "] failed with Status Code: " << response.getStatus());
+        throw StorageConnectionException("WOPI::GetFile [" + uriAnonym + "] failed: " + oss.str());
     }
 
     // Successful
