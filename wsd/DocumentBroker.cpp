@@ -698,6 +698,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         wopiInfo->set("HideUserList", wopifileinfo->getHideUserList());
         wopiInfo->set("SupportsRename", wopifileinfo->getSupportsRename());
         wopiInfo->set("UserCanRename", wopifileinfo->getUserCanRename());
+        wopiInfo->set("FileUrl", wopifileinfo->getFileUrl());
         if (wopifileinfo->getHideChangeTrackingControls() != WopiStorage::WOPIFileInfo::TriState::Unset)
             wopiInfo->set("HideChangeTrackingControls", wopifileinfo->getHideChangeTrackingControls() == WopiStorage::WOPIFileInfo::TriState::True);
 

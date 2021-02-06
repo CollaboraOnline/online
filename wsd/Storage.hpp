@@ -398,6 +398,7 @@ public:
         const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
         const std::string& getTemplateSource() const { return _templateSource; }
         const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
+        const std::string& getFileUrl() const { return _fileUrl; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
         std::string& getPostMessageOrigin() { return _postMessageOrigin; }
@@ -440,6 +441,8 @@ public:
         std::string _templateSource;
         /// User readable string of document name to show in UI, if present.
         std::string _breadcrumbDocName;
+        /// The optional FileUrl, used to download the document if provided.
+        std::string _fileUrl;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property
@@ -543,6 +546,9 @@ private:
                                  const Authorization& auth, const std::string& cookies);
 
 private:
+    /// A URl provided by the WOPI host to use for GetFile.
+    std::string _fileUrl;
+
     // Time spend in loading the file from storage
     std::chrono::milliseconds _wopiLoadDuration;
     std::chrono::milliseconds _wopiSaveDuration;
