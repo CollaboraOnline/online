@@ -15,6 +15,7 @@
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/MemoryStream.h>
+#include <Poco/RegularExpression.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 #include <Poco/Timestamp.h>
