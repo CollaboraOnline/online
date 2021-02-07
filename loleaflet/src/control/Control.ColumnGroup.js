@@ -104,19 +104,19 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 			startY -= this._groupHeadSize * 0.5;
 			if (startX > this._cornerHeaderWidth) {
 				// draw '-'
-				this.context.moveTo(startX + this._groupHeadSize * 0.25 + 0.5, startY + this._groupHeadSize * 0.5 + 0.5);
-				this.context.lineTo(startX + this._groupHeadSize * 0.75 + 0.5, startY + this._groupHeadSize * 0.5 + 0.5);
+				this.context.moveTo(startX + this._groupHeadSize * 0.25, startY + this._groupHeadSize * 0.5 + 0.5);
+				this.context.lineTo(startX + this._groupHeadSize * 0.75 + Math.round(this.dpiScale), startY + this._groupHeadSize * 0.5 + 0.5);
 				this.context.stroke();
 			}
 		}
 		else if (startX > this._cornerHeaderWidth) {
 			// draw '+'
 			this.context.beginPath();
-			this.context.moveTo(startX + this._groupHeadSize * 0.25 + 0.5, startY + this._groupHeadSize * 0.5 + 0.5);
-			this.context.lineTo(startX + this._groupHeadSize * 0.75 + 0.5, startY + this._groupHeadSize * 0.5 + 0.5);
+			this.context.moveTo(startX + this._groupHeadSize * 0.25, startY + this._groupHeadSize * 0.5 + 0.5);
+			this.context.lineTo(startX + this._groupHeadSize * 0.75 + Math.round(this.dpiScale), startY + this._groupHeadSize * 0.5 + 0.5);
 
-			this.context.moveTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.25 + 0.5);
-			this.context.lineTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.75 + 0.5);
+			this.context.moveTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.25);
+			this.context.lineTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.75 + Math.round(this.dpiScale));
 
 			this.context.stroke();
 		}
