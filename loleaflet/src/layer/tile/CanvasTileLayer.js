@@ -651,17 +651,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 				this._canvasContainer.style.top = -1 * offset + 'px';
 
-				if (window.mode.isDesktop()) {
+				if (window.mode.isDesktop() || window.mode.isTablet()) {
 					if (document.getElementById('map').classList.contains('notebookbar-opened'))
-						this._map.options.documentContainer.style.marginTop = (Math.floor(this._getGroupHeight() + this._getUIHeight() * 0.5)) + 'px';
+						this._map.options.documentContainer.style.marginTop = (Math.floor(this._getGroupHeight() + this._getUIHeight())) + 'px';
 					else
-						this._map.options.documentContainer.style.marginTop = (Math.floor(this._getGroupHeight() * 0.5)) + 'px';
-				}
-				else if (window.mode.isTablet()) {
-					if (this._map.isPermissionReadOnly())
-						this._map.options.documentContainer.style.marginTop = String(this._getGroupHeight()) + 'px';
-					else
-						this._map.options.documentContainer.style.marginTop = String(Math.floor(this._getGroupHeight() * 0.5)) + 'px';
+						this._map.options.documentContainer.style.marginTop = (Math.floor(this._getGroupHeight())) + 'px';
 				}
 				else // Mobile.
 					this._map.options.documentContainer.style.marginTop = String(this._getGroupHeight()) + 'px';

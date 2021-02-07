@@ -887,10 +887,18 @@ L.Control.LokDialog = L.Control.extend({
 				var documentContainer = L.DomUtil.get('document-container');
 				if (documentContainer) {
 					var offsetTop = documentContainer.offsetTop;
+					var marginTop = documentContainer.style.marginTop;
+					if (marginTop)
+						marginTop = parseInt(marginTop.replace('px', ''));
+					else
+						marginTop = 0;
+
+					offsetTop -= marginTop;
+
 					var noTopProp = true;
 					var props = documentContainer.style.cssText.split(';');
 					for (var i = 0; i < props.length; ++i) {
-						if (props[i].startsWith('top')) {
+						if (props[i].trim().startsWith('top')) {
 							props[i] = 'top: ' + (offsetTop + delta).toString() + 'px !important';
 							documentContainer.setAttribute('style', props.join(';'));
 							noTopProp = false;
