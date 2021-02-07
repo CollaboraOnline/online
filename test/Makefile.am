@@ -43,6 +43,7 @@ noinst_LTLIBRARIES = \
 	unit-hosting.la \
 	unit-wopi-loadencoded.la \
 	unit-wopi-temp.la \
+	unit-wopi-fileurl.la \
 	unit-wopi-httpheaders.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
@@ -151,6 +152,8 @@ unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
 unit_wopi_loadencoded_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_temp_la_SOURCES = UnitWOPITemplate.cpp
 unit_wopi_temp_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_fileurl_la_SOURCES = UnitWOPIFileUrl.cpp
+unit_wopi_fileurl_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_httpheaders_la_SOURCES = UnitWOPIHttpHeaders.cpp
 unit_wopi_httpheaders_la_LIBADD = $(CPPUNIT_LIBS)
 unit_tiff_load_la_SOURCES = UnitTiffLoad.cpp
@@ -207,11 +210,10 @@ check-local:
 TESTS = \
 	unit-base.la unit-tiletest.la \
 	unit-integration.la unit-httpws.la unit-crash.la \
-	\
 	unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
-        unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
-        unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-        unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
+	unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
+	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
+	unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-http.la \
 	unit-tiff-load.la \
 	unit-large-paste.la \
@@ -232,6 +234,7 @@ TESTS = \
 	unit-hosting.la \
 	unit-wopi-loadencoded.la \
 	unit-wopi-temp.la \
+	unit-wopi-fileurl.la \
 	unit-wopi-httpheaders
 # TESTS += unit-admin.test
 # TESTS += unit-storage.test
@@ -253,6 +256,7 @@ unit-wopi-documentconflict.log : group0.log
 unit-prefork.log : group0.log
 unit-wopi-versionrestore.log : group0.log
 unit-wopi-temp.log : group0.log
+unit-wopi-fileurl.log : group0.log
 unit_wopi_renamefile.log : group0.log
 unit_wopi_watermark.log : group0.log
 unit-wopi.log : group0.log
@@ -286,7 +290,17 @@ unit-timeout.log : group0.log
 unit-wopi-httpheaders.log: group0.log
 unit-base.log: group0.log
 
-group1.log: unit-crash.log unit-tiletest.log unit-insert-delete.log unit-each-view.log unit-httpws.log unit-close.log unit-wopi-documentconflict.log unit-prefork.log unit-wopi-versionrestore.log unit-wopi-temp.log unit_wopi_renamefile.log unit_wopi_watermark.log unit-wopi.log unit-wopi-ownertermination.log unit-load-torture.log unit-wopi-saveas.log unit-password-protected.log unit-http.log unit-tiff-load.log unit-render-shape.log unit-oauth.log unit-large-paste.log unit-paste.log unit-rendering-options.log unit-session.log unit-uno-command.log unit-load.log unit-cursor.log unit-calc.log unit-bad-doc-load.log unit-hosting.log unit-wopi-loadencoded.log unit-integration.log unit-convert.log unit-typing.log unit-tilecache.log unit-timeout.log unit-base.log unit-wopi-httpheaders.log
+group1.log: unit-tiletest.log unit-crash.log unit-insert-delete.log unit-each-view.log \
+			unit-httpws.log unit-close.log unit-wopi-documentconflict.log unit-prefork.log \
+			unit-wopi-versionrestore.log unit-wopi-temp.log unit-wopi-fileurl.log \
+			unit_wopi_renamefile.log unit_wopi_watermark.log unit-wopi.log \
+			unit-wopi-ownertermination.log unit-load-torture.log unit-wopi-saveas.log \
+			unit-password-protected.log unit-http.log unit-tiff-load.log unit-render-shape.log \
+			unit-oauth.log unit-large-paste.log unit-paste.log unit-rendering-options.log \
+			unit-session.log unit-uno-command.log unit-load.log unit-cursor.log unit-calc.log \
+			unit-bad-doc-load.log unit-hosting.log unit-wopi-loadencoded.log unit-integration.log \
+			unit-convert.log unit-typing.log unit-tilecache.log unit-timeout.log unit-base.log \
+			unit-wopi-httpheaders.log
 	$(CLEANUP_COMMAND)
 	touch $@
 
