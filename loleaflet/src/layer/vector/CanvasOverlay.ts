@@ -7,6 +7,7 @@
 /* eslint-disable */
 
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
+// where overlays like cell-cursors, cell-selections, edit-cursors are instances of CPath or its subclasses.
 class CanvasOverlay {
 	private map: any;
 	private ctx: CanvasRenderingContext2D;
