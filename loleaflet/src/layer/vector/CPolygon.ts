@@ -59,4 +59,19 @@ class CPolygon extends CPolyline {
 		this.simplifyPoints();
 		this.renderer.updatePoly(this, true /* closed? */, paneXFixed, paneYFixed, paintArea);
 	}
+
+	anyRingBoundContains(corePxPoint: CPoint): boolean {
+		for (var i = 0; i < this.rings.length; ++i) {
+			var ringBound = new CBounds();
+			var ring = this.rings[i];
+			for (var pointIdx = 0; pointIdx < ring.length; ++pointIdx) {
+				ringBound.extend(ring[pointIdx]);
+			}
+
+			if (ring.length && ringBound.contains(corePxPoint))
+				return true;
+		}
+
+		return false;
+	}
 };
