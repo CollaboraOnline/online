@@ -910,6 +910,9 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('jsdialog:')) {
 			this._onJSDialog(textMsg);
 		}
+		else if (textMsg.startsWith('hyperlinkclicked:')) {
+			this._onHyperlinkClickedMsg(textMsg);
+		}
 
 		var msgDelayed = false;
 		if (!this._isReady() || !this._map._docLayer || this._delayedMessages.length || this._handlingDelayedMessages) {
@@ -1106,6 +1109,22 @@ L.Socket = L.Class.extend({
 				}
 			}
 		}
+	},
+
+	_onHyperlinkClickedMsg: function (textMsg) {
+		var link = null;
+		var coords = null;
+		var hyperlinkMsgStart = 'hyperlinkclicked: ';
+		var coordinatesMsgStart = ' coordinates: ';
+
+		if (textMsg.indexOf(coordinatesMsgStart) !== -1) {
+			var coordpos = textMsg.indexOf(coordinatesMsgStart);
+			link = textMsg.substring(hyperlinkMsgStart.length, coordpos);
+			coords = textMsg.substring(coordpos+coordinatesMsgStart.length);
+		} else
+			link = textMsg.substring(hyperlinkMsgStart.length);
+
+		this._map.fire('hyperlinkclicked', {url: link, coordinates: coords});
 	},
 
 	_onSocketError: function () {
