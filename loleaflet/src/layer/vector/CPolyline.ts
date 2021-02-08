@@ -27,6 +27,12 @@ class CPointSet {
 		return this.points !== undefined;
 	}
 
+	empty(): boolean {
+		return (
+			(this.points === undefined && this.pointSets === undefined) ||
+			(this.pointSets === undefined && this.points.length == 0));
+	}
+
 	getPointArray(): Array<CPoint> {
 		return this.points;
 	}
@@ -77,6 +83,11 @@ class CPolyline extends CPath {
 		this.rings = new Array<Array<CPoint>>();
 		var bounds = this.bounds = new CBounds();
 
+		if (this.pointSet.empty()) {
+			bounds.extend(new CPoint(-1000000, -1000000));
+			return;
+		}
+
 		CPolyline.calcRingsBounds(this.pointSet, this.rings, (pt: CPoint) => {
 			bounds.extend(pt);
 		});
@@ -87,6 +98,10 @@ class CPolyline extends CPath {
 	private static calcRingsBounds(pset: CPointSet, rings: Array<Array<CPoint>>, updateBounds: (pt: CPoint) => void) {
 		if (pset.isFlat()) {
 			var srcArray = pset.getPointArray();
+			if (srcArray === undefined) {
+				rings.push([]);
+				return;
+			}
 			var array = Array<CPoint>(srcArray.length);
 			srcArray.forEach((pt: CPoint, index: number) => {
 				array[index] = pt.clone();
@@ -107,7 +122,8 @@ class CPolyline extends CPath {
 
 	private static getPoints(pset: CPointSet): Array<CPoint> {
 		if (pset.isFlat()) {
-			return pset.getPointArray();
+			var parray = pset.getPointArray();
+			return parray === undefined ? [] : parray;
 		}
 
 		var psetArray = pset.getSetArray();
@@ -223,7 +239,6 @@ class CPolyline extends CPath {
 	}
 
 	empty(): boolean {
-		// Overridden in implementations.
-		return this.parts.length > 0;
+		return this.pointSet.empty();
 	}
 };
