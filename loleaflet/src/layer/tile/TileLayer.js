@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ isAnyVexDialogActive w2ui CRectangle */
+/* global vex $ L _ isAnyVexDialogActive w2ui CPointSet CRectangle CPolyUtil CPolygon */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -43,6 +43,58 @@ function hasMark(collection, mark)
 	}
 	return false;
 }
+
+var CSelections = L.Class.extend({
+
+	initialize: function (pointSet, canvasOverlay, dpiScale) {
+		this._pointSet = pointSet ? pointSet : new CPointSet();
+		this._overlay = canvasOverlay;
+		this._dpiScale = dpiScale;
+		this._polygon = undefined;
+		this._updatePolygon();
+	},
+
+	empty: function () {
+		return !this._pointSet || this._pointSet.empty();
+	},
+
+	clear: function () {
+		this.setPointSet(new CPointSet());
+	},
+
+	setPointSet: function(pointSet) {
+		this._pointSet = pointSet;
+		this._updatePolygon();
+	},
+
+	contains: function(corePxPoint) {
+		if (!this._polygon)
+			return false;
+
+		return this._polygon.anyRingBoundContains(corePxPoint);
+	},
+
+	getBounds: function() {
+		return this._polygon.getBounds();
+	},
+
+	_updatePolygon: function() {
+		if (!this._polygon) {
+			this._polygon = new CPolygon(
+				this._pointSet, {
+					pointerEvents: 'none',
+					fillColor: '#43ACE8',
+					fillOpacity: 0.25,
+					weight: Math.round(2 * this._dpiScale),
+					opacity: 0.25
+				});
+			this._overlay.initPath(this._polygon);
+			return;
+		}
+
+		this._polygon.setPointSet(this._pointSet);
+	}
+});
 
 L.TileLayer = L.GridLayer.extend({
 
@@ -218,10 +270,9 @@ L.TileLayer = L.GridLayer.extend({
 	onAdd: function (map) {
 		this._initContainer();
 		this._getToolbarCommandsValues();
-		this._selections = new L.LayerGroup();
+		this._selections = new CSelections(undefined, this._canvasOverlay, this._painter._dpiScale);
 		this._references = new L.LayerGroup();
 		this._referencesAll = [];
-		map.addLayer(this._selections);
 		if (this.options.permission !== 'readonly') {
 			map.addLayer(this._references);
 		}
@@ -1662,7 +1713,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_clearSearchResults: function() {
 		if (this._searchTerm) {
-			this._selections.clearLayers();
+			this._selections.clear();
 		}
 		this._lastSearchResult = null;
 		this._searchResults = null;
@@ -1762,7 +1813,6 @@ L.TileLayer = L.GridLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 
 		var rectArray = this._getTextSelectionRectangles(textMsg);
-		this._selections.clearLayers();
 
 		if (rectArray.length) {
 
@@ -1770,14 +1820,14 @@ L.TileLayer = L.GridLayer.extend({
 				return rect.getPointArray();
 			});
 
-			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
-			var selection = new L.Polygon(polygons, {
-				pointerEvents: 'none',
-				fillColor: '#43ACE8',
-				fillOpacity: 0.25,
-				weight: 2,
-				opacity: 0.25});
-			this._selections.addLayer(selection);
+			var docLayer = this;
+			var pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
+				function (twipsPoint) {
+					var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
+					corePxPt.round();
+					return corePxPt;
+				});
+			this._selections.setPointSet(pointSet);
 			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
 			if (this._selectionContentRequest) {
 				clearTimeout(this._selectionContentRequest);
@@ -1785,6 +1835,10 @@ L.TileLayer = L.GridLayer.extend({
 			this._selectionContentRequest = setTimeout(L.bind(function () {
 				this._map._socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
 		}
+		else {
+			this._selections.clear();
+		}
+
 		this._onUpdateTextSelection();
 	},
 
@@ -2254,7 +2308,7 @@ L.TileLayer = L.GridLayer.extend({
 		// hide the cursor if not editable
 		this._onUpdateCursor(calledFromSetPartHandler);
 		// hide the text selection
-		this._selections.clearLayers();
+		this._selections.clear();
 		// hide the selection handles
 		this._onUpdateTextSelection();
 		// hide the graphic selection
@@ -2272,15 +2326,8 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	containsSelection: function (latlng) {
-		var ret = false;
-		var selections = this._selections.getLayers();
-		for (var sel in selections) {
-			if (selections[sel].getBounds().contains(latlng)) {
-				ret = true;
-				break;
-			}
-		}
-		return ret;
+		var corepxPoint = this._map.project(latlng);
+		return this._selections.contains(corepxPoint);
 	},
 
 	_clearReferences: function () {
@@ -3328,7 +3375,7 @@ L.TileLayer = L.GridLayer.extend({
 									|| (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)));
 
 		if (!selectionOnDesktop &&
-			(this._selections.getLayers().length !== 0 || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
+			(!this._selections.empty() || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
 			if (this._isEmptyRectangle(this._cellSelectionArea) && this._isEmptyRectangle(this._cellCursor)) {
 				return;
 			}
@@ -3390,7 +3437,7 @@ L.TileLayer = L.GridLayer.extend({
 		var startMarker = this._selectionHandles['start'];
 		var endMarker = this._selectionHandles['end'];
 
-		if (this._map.editorHasFocus() && (this._selections.getLayers().length !== 0 || startMarker.isDragged || endMarker.isDragged)) {
+		if (this._map.editorHasFocus() && (!this._selections.empty() || startMarker.isDragged || endMarker.isDragged)) {
 			this._updateMarkers();
 		}
 		else {
@@ -3407,7 +3454,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._selectionHandles[key]);
 			this._selectionHandles[key].isDragged = false;
 		}
-		this._selections.clearLayers();
+		this._selections.clear();
 	},
 
 	_updateMarkers: function() {
