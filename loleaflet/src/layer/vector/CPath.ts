@@ -1,7 +1,8 @@
 /* eslint-disable */
 
 /*
- * CPath is the base class for all vector paths like polygons and circles.
+ * CPath is the base class for all vector paths like polygons and circles used to draw overlay
+ * objects like cell-cursors, cell-selections etc.
  */
 
 abstract class CPath {

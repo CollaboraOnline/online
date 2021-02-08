@@ -48,6 +48,8 @@ namespace CPolyUtil {
 			return keys;
 		}
 
+		// CPoint comparison function for sorting a list of CPoints w.r.t x-coordinate.
+		// When the points have same x-coordinate break tie based on y-coordinates.
 		function xThenY(ap: CPoint, bp: CPoint): number {
 			if (ap.x < bp.x || (ap.x === bp.x && ap.y < bp.y)) {
 				return -1;
@@ -60,6 +62,8 @@ namespace CPolyUtil {
 			}
 		}
 
+		// CPoint comparison function for sorting a list of CPoints w.r.t y-coordinate.
+		// When the points have same y-coordinate break tie based on x-coordinates.
 		function yThenX(ap: CPoint, bp: CPoint): number {
 
 			if (ap.y < bp.y || (ap.y === bp.y && ap.x < bp.x)) {
