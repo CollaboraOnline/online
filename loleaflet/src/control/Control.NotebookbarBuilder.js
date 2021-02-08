@@ -731,6 +731,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 						{uno: '.uno:GoalSeekDialog'},
 						{type: 'separator'},
+						{uno: '.uno:RunMacro'},
+						{type: 'separator'},
 						{name: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'), type: 'menu', menu: [
 							{uno: '.uno:ConditionalFormatDialog'},
 							{uno: '.uno:ColorScaleFormatDialog'},
