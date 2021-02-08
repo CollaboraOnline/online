@@ -71,15 +71,16 @@ abstract class CPath {
 		this.isDeleted = true;
 	}
 
-	redraw() {
+	redraw(oldBounds: CBounds) {
 		if (this.renderer)
-			this.renderer.updatePath(this);
+			this.renderer.updatePath(this, oldBounds);
 	}
 
 	setStyle(style: any) {
+		var oldBounds = this.getBounds();
 		this.setStyleOptions(style);
 		if (this.renderer) {
-			this.renderer.updateStyle(this);
+			this.renderer.updateStyle(this, oldBounds);
 		}
 	}
 
