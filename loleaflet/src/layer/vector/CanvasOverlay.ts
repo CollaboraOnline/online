@@ -80,7 +80,7 @@ class CanvasOverlay {
 
 		// Sort in ascending order w.r.t zIndex.
 		// TODO: cache this operation away whenever possible.
-		orderedPaths.sort((a: CPath, b: CPath) : number => {
+		orderedPaths.sort((a: CPath, b: CPath): number => {
 			return a.zIndex - b.zIndex;
 		});
 
