@@ -2,7 +2,9 @@
 /// <reference path="CLineUtil.ts" />
 
 /*
- * CPolyline implements polyline vector layer (a set of points connected with lines)
+ * CPolyline implements polyline vector layer (a set of points connected with lines).
+ * This class implements basic line drawing and CPointSet datastructure which is to be used
+ * by the subclass CPolygon for drawing of overlays like cell-selections, cell-cursors etc.
  */
 
 class CPointSet {
