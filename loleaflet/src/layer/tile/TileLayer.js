@@ -3729,6 +3729,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._debugAlwaysActive = new L.LayerGroup();
 			this._debugShowClipboard = new L.LayerGroup();
 			this._tilesDevicePixelGrid = new L.LayerGroup();
+			this._debugSidebar = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
 			this._map.addLayer(this._debugInfo);
 			this._map.addLayer(this._debugInfo2);
@@ -3738,7 +3739,8 @@ L.TileLayer = L.GridLayer.extend({
 				'Show Clipboard': this._debugShowClipboard,
 				'Always active': this._debugAlwaysActive,
 				'Typing': this._debugTyper,
-				'Tiles device pixel grid': this._tilesDevicePixelGrid
+				'Tiles device pixel grid': this._tilesDevicePixelGrid,
+				'Sidebar Rerendering': this._debugSidebar,
 			};
 			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(this._map);
 
@@ -3756,6 +3758,8 @@ L.TileLayer = L.GridLayer.extend({
 				} else if (e.layer === this._tilesDevicePixelGrid) {
 					this._map._docLayer._painter._addTilePixelGridSection();
 					this._map._docLayer._painter._sectionContainer.reNewAllSections(true);
+				} else if (e.layer === this._debugSidebar) {
+					this._map._debugSidebar = true;
 				}
 			}, this);
 			this._map.on('layerremove', function(e) {
@@ -3772,6 +3776,8 @@ L.TileLayer = L.GridLayer.extend({
 				} else if (e.layer === this._tilesDevicePixelGrid) {
 					this._map._docLayer._painter._sectionContainer.removeSection('tile pixel grid');
 					this._map._docLayer._painter._sectionContainer.reNewAllSections(true);
+				} else if (e.layer === this._debugSidebar) {
+					this._map._debugSidebar = false;
 				}
 			}, this);
 		}

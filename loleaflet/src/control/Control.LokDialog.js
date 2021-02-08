@@ -262,7 +262,7 @@ L.Control.LokDialog = L.Control.extend({
 		//console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
 		this._map._socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
 
-		if (this._map._docLayer && this._map._docLayer._debug)
+		if (this._map._docLayer && this._map._docLayer._debug && this._map._debugSidebar)
 			this._debugPaintWindow(id, rectangle);
 	},
 
