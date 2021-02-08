@@ -104,6 +104,8 @@ inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()
 
 #define TST_LOG(X) TST_LOG_NAME(testname, X)
 
+#define LOG_TST TST_LOG
+
 // Sometimes we need to retry some commands as they can (due to timing or load) soft-fail.
 constexpr int COMMAND_RETRY_COUNT = 5;
 

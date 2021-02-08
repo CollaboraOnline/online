@@ -268,4 +268,12 @@ protected:
 
 };
 
+/// Send a command message to WSD from a WopiTestServer.
+#define WSD_CMD(MSG)                                                                               \
+    do                                                                                             \
+    {                                                                                              \
+        LOG_TST(": Sending: " << MSG);                                                             \
+        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), MSG, testname);                       \
+    } while (false)
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
