@@ -2863,6 +2863,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	setupStandardButtonHandler: function(button, response, builder) {
+		$(button).unbind('click');
+		$(button).click(function () {
+			builder.callback('dialog', 'response', {id: '__DIALOG__'}, response, builder);
+		});
+	},
+
 	_amendJSDialogData: function(data) {
 		// Called from build() which is already recursive,
 		// so no need to recurse here over 'data'.
@@ -2945,6 +2952,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					this.build(childObject, childData.children, isVertical, hasManyChildren);
 				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
 					$('#' + childData.id).addClass('hidden-from-event');
+				}
+
+				if ((childType === 'dialog' || childType === 'messagebox' || childType === 'modelessdialog')
+					&& childData.responses) {
+					for (var i in childData.responses) {
+						var buttonId = childData.responses[i].id;
+						var response = childData.responses[i].response;
+						var button = $('#' + buttonId);
+						if (button)
+							this.setupStandardButtonHandler(button, response, this);
+					}
 				}
 
 				this.options.useInLineLabelsForUnoButtons = false;
