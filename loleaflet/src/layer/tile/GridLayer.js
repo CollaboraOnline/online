@@ -47,8 +47,8 @@ L.GridLayer = L.Layer.extend({
 		this._clearPreFetch();
 		clearTimeout(this._previewInvalidator);
 
-		if (this._selections) {
-			this._map.removeLayer(this._selections);
+		if (!this._selections.empty()) {
+			this._selections.clear();
 		}
 		if (this._cursorMarker) {
 			this._cursorMarker.remove();
