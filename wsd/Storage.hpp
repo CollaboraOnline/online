@@ -537,6 +537,11 @@ private:
     void initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
                          const Authorization& auth, const std::string& cookies) const;
 
+    /// Download the document from the given URI.
+    /// Does not add authorization tokens or any other logic.
+    std::string downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
+                                 const Authorization& auth, const std::string& cookies);
+
 private:
     // Time spend in loading the file from storage
     std::chrono::milliseconds _wopiLoadDuration;
