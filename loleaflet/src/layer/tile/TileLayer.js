@@ -625,9 +625,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('referenceclear:')) {
 			this._clearReferences();
 		}
-		else if (textMsg.startsWith('hyperlinkclicked:')) {
-			this._onHyperlinkClickedMsg(textMsg);
-		}
 		else if (textMsg.startsWith('invalidatecursor:')) {
 			this._onInvalidateCursorMsg(textMsg);
 		}
@@ -1321,22 +1318,6 @@ L.TileLayer = L.GridLayer.extend({
 	_closeURLPopUp: function() {
 		this._map.closePopup(this._map.hyperlinkPopup);
 		this._map.hyperlinkPopup = null;
-	},
-
-	_onHyperlinkClickedMsg: function (textMsg) {
-		var link = null;
-		var coords = null;
-		var hyperlinkMsgStart = 'hyperlinkclicked: ';
-		var coordinatesMsgStart = ' coordinates: ';
-
-		if (textMsg.indexOf(coordinatesMsgStart) !== -1) {
-			var coordpos = textMsg.indexOf(coordinatesMsgStart);
-			link = textMsg.substring(hyperlinkMsgStart.length, coordpos);
-			coords = textMsg.substring(coordpos+coordinatesMsgStart.length);
-		} else
-			link = textMsg.substring(hyperlinkMsgStart.length);
-
-		this._map.fire('hyperlinkclicked', {url: link, coordinates: coords});
 	},
 
 	_onInvalidateCursorMsg: function (textMsg) {
