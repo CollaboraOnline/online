@@ -2,6 +2,7 @@
 
 /*
  * CRectangle extends CPolygon and creates a rectangle of given bounds.
+ * This is used for drawing of the self and view cell-cursor on the canvas.
  */
 
 class CRectangle extends CPolygon {
