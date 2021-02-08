@@ -29,6 +29,9 @@ describe('Trigger hamburger menu options.', function() {
 
 		// End remove spell checking red lines
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
+
+		// Remove any selections.
+		helper.moveCursor('left');
 	}
 
 	function openPageWizard() {
