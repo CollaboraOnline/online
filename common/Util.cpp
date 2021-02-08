@@ -771,7 +771,7 @@ namespace Util
         // Prepend with count to make it unique within a single process instance,
         // in case we get collisions (which we will, eventually). N.B.: Identical
         // strings likely to have different prefixes when logged in WSD process vs. Kit.
-        const std::string res
+        std::string res
             = '#' + Util::encodeId(AnonymizationCounter++, 0) + '#' + Util::encodeId(hash, 0) + '#';
         mapAnonymized(text, res);
         return res;

@@ -914,7 +914,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         dontUseCache = true;
 #endif
 
-        _tileCache = Util::make_unique<TileCache>(_storage->getUriString(), _lastFileModifiedTime, dontUseCache);
+        _tileCache = Util::make_unique<TileCache>(_storage->getUri().toString(),
+                                                  _lastFileModifiedTime, dontUseCache);
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 

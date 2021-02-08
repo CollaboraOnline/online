@@ -176,8 +176,6 @@ public:
 
     const Poco::URI& getUri() const { return _uri; }
 
-    const std::string getUriString() const { return _uri.toString(); }
-
     const std::string& getJailPath() const { return _jailPath; };
 
     /// Returns the root path to the jailed file.
