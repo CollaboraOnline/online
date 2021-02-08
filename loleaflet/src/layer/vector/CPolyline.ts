@@ -69,14 +69,30 @@ class CPolyline extends CPath {
 		this.setPointSet(pointSet);
 	}
 
+	private static invalidPoint(): CPoint {
+		return new CPoint(-1000000, -1000000);
+	}
+
+	private static emptyBounds(): CBounds {
+		var bounds = new CBounds();
+		bounds.extend(CPolyline.invalidPoint());
+		return bounds;
+	}
+
 	getPointSet(): CPointSet {
 		return this.pointSet;
 	}
 
 	setPointSet(pointSet: CPointSet) {
+		var oldBounds: CBounds;
+		if (this.bounds)
+			oldBounds = this.bounds.clone();
+		else
+			oldBounds = CPolyline.emptyBounds();
+
 		this.pointSet = pointSet;
 		this.updateRingsBounds();
-		return this.redraw();
+		return this.redraw(oldBounds);
 	}
 
 	updateRingsBounds() {
@@ -84,7 +100,7 @@ class CPolyline extends CPath {
 		var bounds = this.bounds = new CBounds();
 
 		if (this.pointSet.empty()) {
-			bounds.extend(new CPoint(-1000000, -1000000));
+			bounds.extend(CPolyline.invalidPoint());
 			return;
 		}
 
