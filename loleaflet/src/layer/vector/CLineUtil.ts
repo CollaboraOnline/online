@@ -6,7 +6,7 @@
 
 namespace CLineUtil {
 
-    var _lastCode: number = 0;
+	var _lastCode: number = 0;
 
 	// Simplify polyline with vertex reduction and Douglas-Peucker simplification.
 	// Improves rendering performance dramatically by lessening the number of points to draw.
@@ -57,9 +57,9 @@ namespace CLineUtil {
 	function _simplifyDPStep(points: Array<CPoint>, markers: Uint8Array | Array<boolean>, sqTolerance: number, first: number, last: number) {
 
 		var maxSqDist = 0;
-        var index: number;
-        var i: number;
-        var sqDist: number;
+		var index: number;
+		var i: number;
+		var sqDist: number;
 
 		for (i = first + 1; i <= last - 1; i++) {
 			sqDist = _sqDistToClosestPointOnSegment(points[i], points[first], points[last]);
@@ -100,9 +100,9 @@ namespace CLineUtil {
 	export function clipSegment(a: CPoint, b: CPoint, bounds: CBounds, useLastCode: boolean, round: boolean): Array<CPoint> {
 		var codeA = useLastCode ? _lastCode : _getBitCode(a, bounds);
 		var codeB = _getBitCode(b, bounds);
-        var codeOut: number;
-        var p: CPoint
-        var newCode: number;
+		var codeOut: number;
+		var p: CPoint
+		var newCode: number;
 
 		// save 2nd code to avoid calculating it on the next segment
 		_lastCode = codeB;
@@ -111,10 +111,10 @@ namespace CLineUtil {
 			// if a,b is inside the clip window (trivial accept)
 			if (!(codeA | codeB)) {
 				return [a, b];
-			// if a,b is outside the clip window (trivial reject)
+				// if a,b is outside the clip window (trivial reject)
 			} else if (codeA & codeB) {
 				return [];
-			// other cases
+				// other cases
 			} else {
 				codeOut = codeA || codeB;
 				p = _getEdgeIntersection(a, b, codeOut, bounds, round);
@@ -133,11 +133,11 @@ namespace CLineUtil {
 
 	function _getEdgeIntersection(a: CPoint, b: CPoint, code: number, bounds: CBounds, round: boolean): CPoint {
 		var dx = b.x - a.x;
-        var dy = b.y - a.y;
+		var dy = b.y - a.y;
 		var min = bounds.min;
 		var max = bounds.max;
-        var x: number;
-        var y: number;
+		var x: number;
+		var y: number;
 
 		if (code & 8) { // top
 			x = a.x + dx * (max.y - a.y) / dy;
@@ -180,7 +180,7 @@ namespace CLineUtil {
 	// square distance (to avoid unnecessary Math.sqrt calls)
 	function _sqDist(p1: CPoint, p2: CPoint): number {
 		var dx = p2.x - p1.x,
-		    dy = p2.y - p1.y;
+			dy = p2.y - p1.y;
 		return dx * dx + dy * dy;
 	}
 
@@ -206,10 +206,10 @@ namespace CLineUtil {
 		}
 
 		return new CPoint(x, y);
-    }
+	}
 
-    // returns distance to closest point on segment.
+	// returns distance to closest point on segment.
 	function _sqDistToClosestPointOnSegment(p: CPoint, p1: CPoint, p2: CPoint): number {
-        return _sqDist(_sqClosestPointOnSegment(p, p1, p2), p);
+		return _sqDist(_sqClosestPointOnSegment(p, p1, p2), p);
 	}
 }

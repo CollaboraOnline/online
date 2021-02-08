@@ -84,8 +84,8 @@ class CBounds {
 
 	getCenter(round: boolean = false): CPoint {
 		return new CPoint(
-		        (this.min.x + this.max.x) / 2,
-		        (this.min.y + this.max.y) / 2, round);
+			(this.min.x + this.max.x) / 2,
+			(this.min.y + this.max.y) / 2, round);
 	}
 
 	round() {
@@ -126,19 +126,19 @@ class CBounds {
 		}
 
 		return (min.x >= this.min.x) &&
-		       (max.x <= this.max.x) &&
-		       (min.y >= this.min.y) &&
-		       (max.y <= this.max.y);
+			(max.x <= this.max.x) &&
+			(min.y >= this.min.y) &&
+			(max.y <= this.max.y);
 	}
 
 	intersects(bounds: CBounds): boolean { // (Bounds) -> Boolean
 
 		var min = this.min,
-		    max = this.max,
-		    min2 = bounds.min,
-		    max2 = bounds.max,
-		    xIntersects = (max2.x >= min.x) && (min2.x <= max.x),
-		    yIntersects = (max2.y >= min.y) && (min2.y <= max.y);
+			max = this.max,
+			min2 = bounds.min,
+			max2 = bounds.max,
+			xIntersects = (max2.x >= min.x) && (min2.x <= max.x),
+			yIntersects = (max2.y >= min.y) && (min2.y <= max.y);
 
 		return xIntersects && yIntersects;
 	}
@@ -164,8 +164,8 @@ class CBounds {
 
 	toString(): string {
 		return '[' +
-		        this.min.toString() + ', ' +
-		        this.max.toString() + ']';
+			this.min.toString() + ', ' +
+			this.max.toString() + ']';
 	}
 
 	isValid(): boolean {

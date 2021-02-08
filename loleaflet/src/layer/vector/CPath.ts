@@ -87,10 +87,10 @@ abstract class CPath {
 
 		var splitPanesContext = this.renderer.getSplitPanesContext();
 		var paneBoundsList: Array<CBounds> = splitPanesContext ?
-		    splitPanesContext.getPxBoundList() :
+			splitPanesContext.getPxBoundList() :
 			[viewBounds];
 		var paneProperties = splitPanesContext ? splitPanesContext.getPanesProperties() :
-			[{ xFixed : false, yFixed: false }];
+			[{ xFixed: false, yFixed: false }];
 
 		for (var i = 0; i < paneBoundsList.length; ++i) {
 			var panePaintArea = paintArea ? paintArea.clone() : paneBoundsList[i].clone();
