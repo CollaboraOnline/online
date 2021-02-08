@@ -50,12 +50,12 @@ class CanvasOverlay {
 		this.draw();
 	}
 
-	updatePath(path: CPath) {
-		this.redraw(path);
+	updatePath(path: CPath, oldBounds: CBounds) {
+		this.redraw(path, oldBounds);
 	}
 
-	updateStyle(path: CPath) {
-		this.redraw(path);
+	updateStyle(path: CPath, oldBounds: CBounds) {
+		this.redraw(path, oldBounds);
 	}
 
 	paintRegion(paintArea: CBounds) {
@@ -68,9 +68,13 @@ class CanvasOverlay {
 
 	private isVisible(path: CPath): boolean {
 		var pathBounds = path.getBounds();
+		return this.intersectsVisible(pathBounds);
+	}
+
+	private intersectsVisible(queryBounds: CBounds): boolean {
 		this.updateCanvasBounds();
 		var spc = this.getSplitPanesContext();
-		return spc ? spc.intersectsVisible(pathBounds) : this.bounds.intersects(pathBounds);
+		return spc ? spc.intersectsVisible(queryBounds) : this.bounds.intersects(queryBounds);
 	}
 
 	private draw(paintArea?: CBounds) {
@@ -92,8 +96,8 @@ class CanvasOverlay {
 		});
 	}
 
-	private redraw(path: CPath) {
-		if (!this.isVisible(path))
+	private redraw(path: CPath, oldBounds: CBounds) {
+		if (!this.isVisible(path) && !this.intersectsVisible(oldBounds))
 			return;
 		// This does not get called via onDraw(ie, tiles aren't painted), so ask tileSection to "erase" by painting over.
 		// Repainting the whole canvas is not necessary but finding the minimum area to paint over
