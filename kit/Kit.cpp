@@ -809,7 +809,7 @@ public:
             }
             return;
         }
-        else if (type == LOK_CALLBACK_JSDIALOG)
+        else if (type == LOK_CALLBACK_JSDIALOG || type == LOK_CALLBACK_HYPERLINK_CLICKED)
         {
             if (self->_sessions.size() == 1)
             {
