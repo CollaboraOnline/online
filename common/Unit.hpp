@@ -114,9 +114,34 @@ public:
     }
 
     /// Message that is about to be sent via the websocket.
-    virtual bool filterSendMessage(const char* /* data */, const size_t /* len */, const WSOpCode /* code */, const bool /* flush */, int& /*unitReturn*/)
+    /// To override, handle onFilterSendMessage or any of the onDocument...() handlers.
+    virtual bool filterSendMessage(const char* data, const std::size_t len, const WSOpCode code,
+                                   const bool flush, int& unitReturn)
     {
-        return false;
+        const std::string message(data, len);
+
+        if (Util::startsWith(message, "status:"))
+        {
+            if (onDocumentLoaded(message))
+                return false;
+        }
+        else if (message == "statechanged: .uno:ModifiedStatus=true")
+        {
+            if (onDocumentModified(message))
+                return false;
+        }
+        else if (Util::startsWith(message, "statechanged:"))
+        {
+            if (onDocumentStateChanged(message))
+                return false;
+        }
+        else if (Util::startsWith(message, "error:"))
+        {
+            if (onDocumentError(message))
+                return false;
+        }
+
+        return onFilterSendMessage(data, len, code, flush, unitReturn);
     }
 
     /// Hook the disk space check
@@ -137,6 +162,28 @@ public:
     {
         return false;
     }
+
+    /// Called when the document has been loaded,
+    /// based on the "status:" message, in the context of filterSendMessage.
+    /// Return true to stop further handling of messages.
+    virtual bool onDocumentLoaded(const std::string&) { return false; }
+
+    /// Called when the document's 'modified' status
+    /// changes to true.
+    /// Return true to stop further handling of messages.
+    virtual bool onDocumentModified(const std::string&) { return false; }
+
+    /// Called when the document has been saved.
+    /// Return true to stop further handling of messages.
+    virtual bool onDocumentSaved(const std::string&) { return false; }
+
+    /// Called when the document issues a 'statechanged:' message.
+    /// Return true to stop further handling of messages.
+    virtual bool onDocumentStateChanged(const std::string&) { return false; }
+
+    /// Called when the document issues an 'error:' message.
+    /// Return true to stop further handling of messages.
+    virtual bool onDocumentError(const std::string&) { return false; }
 
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
@@ -160,6 +207,14 @@ private:
         _dlHandle = dlHandle;
     }
     static UnitBase *linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
+
+    /// Handles messages sent via WebSocket.
+    virtual bool onFilterSendMessage(const char* /*data*/, const std::size_t /*len*/,
+                                     const WSOpCode /* code */, const bool /* flush */,
+                                     int& /*unitReturn*/)
+    {
+        return false;
+    }
 
     void *_dlHandle;
     static char *UnitLibPath;
