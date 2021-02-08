@@ -3205,19 +3205,20 @@ L.TileLayer = L.GridLayer.extend({
 				this._cellCursorOnPgDn = null;
 			}
 
+			var corePxBounds = this._twipsToCorePixelsBounds(this._cellCursorTwips);
+			corePxBounds.round();
 			if (this._cellCursorMarker) {
-				this._cellCursorMarker.setBounds(
-					this._twipsToCorePixelsBounds(this._cellCursorTwips));
+				this._cellCursorMarker.setBounds(corePxBounds);
 				this._map.removeLayer(this._dropDownButton);
 			}
 			else {
 				this._cellCursorMarker = new CRectangle(
-					this._twipsToCorePixelsBounds(this._cellCursorTwips),
+					corePxBounds,
 					{
 						pointerEvents: 'none',
 						fill: false,
 						color: '#000000',
-						weight: 2 * (this._painter ? this._painter._dpiScale : 1)
+						weight: Math.round(2 * (this._painter ? this._painter._dpiScale : 1))
 					});
 				if (!this._cellCursorMarker) {
 					this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
