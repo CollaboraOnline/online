@@ -5,34 +5,34 @@
  */
 
 class CPoint {
-    x: number;
-    y: number;
+	x: number;
+	y: number;
 
-    constructor(x: number, y: number, round: boolean = false) {
-        this.x = (round ? Math.round(x) : x);
-	    this.y = (round ? Math.round(y) : y);
-    }
+	constructor(x: number, y: number, round: boolean = false) {
+		this.x = (round ? Math.round(x) : x);
+		this.y = (round ? Math.round(y) : y);
+	}
 
-    static arrayToPoint(arr: Array<number>) : CPoint {
-        return new CPoint(arr[0], arr[1]);
-    }
+	static arrayToPoint(arr: Array<number>): CPoint {
+		return new CPoint(arr[0], arr[1]);
+	}
 
-    static parse(pointString: string): CPoint {
+	static parse(pointString: string): CPoint {
 
-        var pointParts = pointString.match(/\d+/g);
-        if (pointParts === null || pointParts.length < 2) {
-            console.error('incomplete point');
-            return undefined;
-        }
+		var pointParts = pointString.match(/\d+/g);
+		if (pointParts === null || pointParts.length < 2) {
+			console.error('incomplete point');
+			return undefined;
+		}
 
-        return new CPoint(parseInt(pointParts[0]), parseInt(pointParts[1]));
-    };
+		return new CPoint(parseInt(pointParts[0]), parseInt(pointParts[1]));
+	};
 
-    clone(): CPoint {
-        return new CPoint(this.x, this.y);
-    }
+	clone(): CPoint {
+		return new CPoint(this.x, this.y);
+	}
 
-    // non-destructive, returns a new point
+	// non-destructive, returns a new point
 	add(point: CPoint): CPoint {
 		return this.clone()._add(point);
 	}
@@ -82,7 +82,7 @@ class CPoint {
 		this.x = Math.round(this.x);
 		this.y = Math.round(this.y);
 		return this;
-    }
+	}
 
 	floor(): CPoint {
 		return this.clone()._floor();
@@ -107,7 +107,7 @@ class CPoint {
 	distanceTo(point: CPoint): number {
 
 		var x = point.x - this.x,
-		    y = point.y - this.y;
+			y = point.y - this.y;
 
 		return Math.sqrt(x * x + y * y);
 	}
@@ -116,20 +116,20 @@ class CPoint {
 
 		// Proper ieee 754 equality comparison.
 		return Math.abs(point.x - this.x) < Number.EPSILON &&
-			   Math.abs(point.y - this.y) < Number.EPSILON;
-    }
+			Math.abs(point.y - this.y) < Number.EPSILON;
+	}
 
 	contains(point: CPoint): boolean {
 
 		return Math.abs(point.x) <= Math.abs(this.x) &&
-		       Math.abs(point.y) <= Math.abs(this.y);
+			Math.abs(point.y) <= Math.abs(this.y);
 	}
 
 	assign(point: CPoint): boolean {
 		var xChanged = this.setX(point.x);
 		var yChanged = this.setY(point.y);
 		return xChanged || yChanged;
-    }
+	}
 
 	setX(x: number): boolean {
 		if (x === this.x) {
