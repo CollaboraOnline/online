@@ -6,7 +6,7 @@
 
 namespace CPolyUtil {
 
-	function rectanglesToPolygons(rectangles: Array<Array<CPoint>>, unitConverter: (point: CPoint) => CPoint): CPointSet {
+	export function rectanglesToPointSet(rectangles: Array<Array<CPoint>>, unitConverter: (point: CPoint) => CPoint): CPointSet {
 		/* An Implementation based on O'ROURKE, Joseph. "Uniqueness of orthogonal connect-the-dots."
 		   Machine Intelligence and Pattern Recognition. Vol. 6. North-Holland, 1988. 97-104.
 		   http://www.science.smith.edu/~jorourke/Papers/OrthoConnect.pdf
