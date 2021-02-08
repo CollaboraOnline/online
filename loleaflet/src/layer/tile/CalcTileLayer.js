@@ -549,15 +549,15 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_getSelectionHeaderData: function() {
-		var layers = this._selections.getLayers();
-		var layer = layers.pop();
-		if (layers.length === 0 && layer && layer.getLatLngs().length === 1) {
-			var start = this._latLngToTwips(layer.getBounds().getNorthWest()).add([1, 1]);
-			var end = this._latLngToTwips(layer.getBounds().getSouthEast()).subtract([1, 1]);
-			return { hasSelection: true, start: start, end: end };
-		}
+		if (this._selections.empty())
+			return { hasSelection: false };
 
-		return { hasSelection: false };
+		var bounds = this._selections.getBounds();
+		return {
+			hasSelection: true,
+			start: this._corePixelsToTwips(bounds.min).add([1, 1]),
+			end: this._corePixelsToTwips(bounds.max).subtract([1, 1]),
+		};
 	},
 
 	_onStatusMsg: function (textMsg) {
