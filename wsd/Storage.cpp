@@ -903,16 +903,6 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
                                                     LockContext& /*lockCtx*/,
                                                     const std::string& templateUri)
 {
-    // WOPI URI to download files ends in '/contents'.
-    // Add it here to get the payload instead of file info.
-    Poco::URI uriObject(getUri());
-    uriObject.setPath(uriObject.getPath() + "/contents");
-    auth.authorizeURI(uriObject);
-
-    Poco::URI uriObjectAnonym(getUri());
-    uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
-    const std::string uriAnonym = uriObjectAnonym.toString();
-
     if (!templateUri.empty())
     {
         // template are created in kit process, so just obtain a reference
@@ -924,69 +914,21 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
     }
 
+    // WOPI URI to download files ends in '/contents'.
+    // Add it here to get the payload instead of file info.
+    Poco::URI uriObject(getUri());
+    uriObject.setPath(uriObject.getPath() + "/contents");
+    auth.authorizeURI(uriObject);
+
+    Poco::URI uriObjectAnonym(getUri());
+    uriObjectAnonym.setPath(LOOLWSD::anonymizeUrl(uriObjectAnonym.getPath()) + "/contents");
+    const std::string uriAnonym = uriObjectAnonym.toString();
+
     LOG_DBG("Wopi requesting: " << uriAnonym);
 
-    const auto startTime = std::chrono::steady_clock::now();
     try
     {
-        std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET,
-                                       uriObject.getPathAndQuery(),
-                                       Poco::Net::HTTPMessage::HTTP_1_1);
-        initHttpRequest(request, uriObject, auth, cookies);
-
-        psession->sendRequest(request);
-
-        Poco::Net::HTTPResponse response;
-        std::istream& rs = psession->receiveResponse(response);
-        const std::chrono::milliseconds diff
-            = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()
-                                                                    - startTime);
-        _wopiLoadDuration += diff;
-
-        Log::StreamLogger logger = Log::trace();
-        if (logger.enabled())
-        {
-            logger << "WOPI::GetFile header for URI [" << uriAnonym << "]:\n";
-            for (const auto& pair : response)
-            {
-                logger << '\t' << pair.first << ": " << pair.second << " / ";
-            }
-
-            LOG_END(logger, true);
-        }
-
-        if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
-        {
-            std::ostringstream oss;
-            Poco::StreamCopier::copyStream(rs, oss);
-            std::string responseString = oss.str();
-            LOG_ERR("WOPI::GetFile failed with " << response.getStatus() << ' ' << responseString);
-            throw StorageConnectionException("WOPI::GetFile failed: " + responseString);
-        }
-        else // Successful
-        {
-            setRootFilePath(Poco::Path(getLocalRootPath(), getFileInfo().getFilename()).toString());
-            setRootFilePathAnonym(LOOLWSD::anonymizeUrl(getRootFilePath()));
-            std::ofstream ofs(getRootFilePath());
-            std::copy(std::istreambuf_iterator<char>(rs),
-                      std::istreambuf_iterator<char>(),
-                      std::ostreambuf_iterator<char>(ofs));
-            ofs.close();
-
-            const FileUtil::Stat fileStat(getRootFilePath());
-            const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
-            LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" <<
-                    uriAnonym << "] -> " << getRootFilePathAnonym() << " in " << diff.count() << 's');
-            setLoaded(true);
-
-            // Now return the jailed path.
-            if (LOOLWSD::NoCapsForKit)
-                return getRootFilePath();
-            else
-                return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
-        }
+        return downloadDocument(uriObject, uriAnonym, auth, cookies);
     }
     catch (const Poco::Exception& pexc)
     {
@@ -1002,6 +944,70 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
     }
 
     return std::string();
+}
+
+std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
+                                          const Authorization& auth, const std::string& cookies)
+{
+    const auto startTime = std::chrono::steady_clock::now();
+    std::unique_ptr<Poco::Net::HTTPClientSession> psession(getHTTPClientSession(uriObject));
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uriObject.getPathAndQuery(),
+                                   Poco::Net::HTTPMessage::HTTP_1_1);
+    initHttpRequest(request, uriObject, auth, cookies);
+
+    psession->sendRequest(request);
+
+    Poco::Net::HTTPResponse response;
+    std::istream& rs = psession->receiveResponse(response);
+    const std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - startTime);
+    _wopiLoadDuration += diff;
+
+    Log::StreamLogger logger = Log::trace();
+    if (logger.enabled())
+    {
+        logger << "WOPI::GetFile header for URI [" << uriAnonym << "]:\n";
+        for (const auto& pair : response)
+        {
+            logger << '\t' << pair.first << ": " << pair.second << " / ";
+        }
+
+        LOG_END(logger, true);
+    }
+
+    if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
+    {
+        std::ostringstream oss;
+        Poco::StreamCopier::copyStream(rs, oss);
+        std::string responseString = oss.str();
+        LOG_ERR("WOPI::GetFile failed with " << response.getStatus() << ' ' << responseString);
+        throw StorageConnectionException("WOPI::GetFile failed: " + responseString);
+    }
+
+    // Successful
+    assert(response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK);
+
+    setRootFilePath(Poco::Path(getLocalRootPath(), getFileInfo().getFilename()).toString());
+    setRootFilePathAnonym(LOOLWSD::anonymizeUrl(getRootFilePath()));
+
+    std::ofstream ofs(getRootFilePath());
+    std::copy(std::istreambuf_iterator<char>(rs), std::istreambuf_iterator<char>(),
+              std::ostreambuf_iterator<char>(ofs));
+    ofs.close();
+
+    const FileUtil::Stat fileStat(getRootFilePath());
+    const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
+    LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" << uriAnonym << "] -> "
+                                        << getRootFilePathAnonym() << " in " << diff.count()
+                                        << 's');
+    setLoaded(true);
+
+    // Now return the jailed path.
+    if (LOOLWSD::NoCapsForKit)
+        return getRootFilePath();
+    else
+        return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
 }
 
 StorageBase::UploadResult
