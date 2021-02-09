@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-09 19:01+0100\n"
+"POT-Creation-Date: 2021-02-09 10:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,9 +136,9 @@ msgstr "CPU ਗਰਾਫ਼"
 msgid "Network Graph"
 msgstr "ਨੈੱਟਵਰਕ ਗਰਾਫ਼"
 
-#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:152
+#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:194
 #: src/control/Control.NotebookbarImpress.js:22
-#: src/layer/marker/Annotation.js:286 src/layer/tile/TileLayer.js:423
+#: src/layer/marker/Annotation.js:279 src/layer/tile/TileLayer.js:443
 msgid "Save"
 msgstr "ਸੰਭਾਲੋ"
 
@@ -203,7 +203,7 @@ msgstr "ਤਾਜ਼ਾ ਕਰੋ"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
+#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:303
 #: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr ""
@@ -217,7 +217,7 @@ msgid "Log Levels"
 msgstr ""
 
 #: admin/admin.strings.js:53 src/control/Control.AlertDialog.js:25
-#: src/control/Parts.js:376 src/control/Signing.js:608
+#: src/control/Parts.js:413 src/control/Signing.js:608
 msgid "Close"
 msgstr "ਬੰਦ ਕਰੋ"
 
@@ -233,11 +233,11 @@ msgstr "ਮਿਲੇ"
 msgid "Sent"
 msgstr "ਭੇਜੇ"
 
-#: admin/src/AdminSocketBase.js:52
+#: admin/src/AdminSocketBase.js:60
 msgid "Server has been shut down; please reload the page."
 msgstr ""
 
-#: admin/src/AdminSocketBase.js:62
+#: admin/src/AdminSocketBase.js:70
 msgid "Connection error"
 msgstr "ਕਨੈਕਸ਼ਨ ਗਲਤੀ"
 
@@ -250,18 +250,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "ਕੀ ਤੁਸੀਂ ਇਹ ਸ਼ੈਸ਼ਨ ਖਤਮ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1324
-#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:233
-#: src/control/Control.Tabs.js:250 src/control/Toolbar.js:641
+#: src/control/Control.Menubar.js:1456
+#: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:251
+#: src/control/Control.Tabs.js:268 src/control/Toolbar.js:750
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1325
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1457
 #: src/control/Control.MobileTopBar.js:45
-#: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:234
-#: src/control/Control.Tabs.js:251 src/control/Toolbar.js:642
-#: src/layer/marker/Annotation.js:210 src/layer/tile/TileLayer.js:424
+#: src/control/Control.PresentationBar.js:88 src/control/Control.Tabs.js:252
+#: src/control/Control.Tabs.js:269 src/control/Toolbar.js:751
+#: src/layer/marker/Annotation.js:203 src/layer/tile/TileLayer.js:444
 msgid "Cancel"
 msgstr "ਰੱਦ ਕਰੋ"
 
@@ -341,11 +341,11 @@ msgstr "ਲਿੰਕ ਖੋਲ੍ਹੋ"
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:183
+#: src/control/Control.ContextMenu.js:184
 msgid "Delete"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:267
+#: src/control/Control.ContextMenu.js:268
 msgid "Paste Special"
 msgstr "ਖਾਸ ਚੇਪੋ"
 
@@ -362,8 +362,8 @@ msgid "Index"
 msgstr "ਇੰਡੈਕਸ"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:1868 src/layer/tile/TileLayer.js:292
-#: src/layer/tile/TileLayer.js:3793
+#: src/control/Control.JSDialogBuilder.js:2145 src/layer/tile/TileLayer.js:310
+#: src/layer/tile/TileLayer.js:3913
 msgid "Comment"
 msgstr "ਟਿੱਪਣੀ"
 
@@ -404,340 +404,360 @@ msgstr ""
 msgid "Function Wizard"
 msgstr "ਫੰਕਸ਼ਨ"
 
-#: src/control/Control.JSDialogBuilder.js:273
+#: src/control/Control.JSDialogBuilder.js:306
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:276
+#: src/control/Control.JSDialogBuilder.js:309
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:279
+#: src/control/Control.JSDialogBuilder.js:312
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:282
+#: src/control/Control.JSDialogBuilder.js:315
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:285
+#: src/control/Control.JSDialogBuilder.js:318
 msgid "Ellipsoid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:289
+#: src/control/Control.JSDialogBuilder.js:322
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:292
+#: src/control/Control.JSDialogBuilder.js:325
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:295
+#: src/control/Control.JSDialogBuilder.js:328
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1248
+#: src/control/Control.JSDialogBuilder.js:1372
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1251
+#: src/control/Control.JSDialogBuilder.js:1375
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1379
+#: src/control/Control.JSDialogBuilder.js:1503
 #, fuzzy
 msgid "Select range"
 msgstr "ਤਬਦੀਲੀ ਰੱਦ ਕਰੋ"
 
-#: src/control/Control.JSDialogBuilder.js:1408
+#: src/control/Control.JSDialogBuilder.js:1532
+#: src/control/Control.NotebookbarBuilder.js:219
 #, fuzzy
 msgid "Font Name"
 msgstr "ਫੋਂਟ"
 
-#: src/control/Control.JSDialogBuilder.js:1410
+#: src/control/Control.JSDialogBuilder.js:1534
 #, fuzzy
 msgid "Font Size"
 msgstr "ਦਸਤਖਤ ਨਹੀਂ ਕੀਤੇ"
 
-#: src/control/Control.JSDialogBuilder.js:1819
-#: src/layer/marker/Annotation.js:247
+#: src/control/Control.JSDialogBuilder.js:2083
+#: src/layer/marker/Annotation.js:240
 msgid "Accept change"
 msgstr "ਤਬਦੀਲੀ ਮੰਨੋ"
 
-#: src/control/Control.JSDialogBuilder.js:1824
-#: src/layer/marker/Annotation.js:248
+#: src/control/Control.JSDialogBuilder.js:2088
+#: src/layer/marker/Annotation.js:241
 msgid "Reject change"
 msgstr "ਤਬਦੀਲੀ ਰੱਦ ਕਰੋ"
 
-#: src/control/Control.JSDialogBuilder.js:1833
-#: src/layer/marker/Annotation.js:266
+#: src/control/Control.JSDialogBuilder.js:2097
+#: src/layer/marker/Annotation.js:259
 msgid "Open menu"
 msgstr "ਮੇਨੂ ਖੋਲ੍ਹੋ"
 
-#: src/control/Control.JSDialogBuilder.js:2271
+#: src/control/Control.JSDialogBuilder.js:2136
+#, fuzzy
+msgid "reply"
+msgstr "ਜਵਾਬ ਦਿਓ"
+
+#: src/control/Control.JSDialogBuilder.js:2139
+msgid "replies"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:2552
 #, fuzzy
 msgid "Cell borders"
 msgstr "ਹਾਸ਼ੀਏ"
 
-#: src/control/Control.JSDialogBuilder.js:2310
+#: src/control/Control.JSDialogBuilder.js:2596
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2312
+#: src/control/Control.JSDialogBuilder.js:2598
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2314
+#: src/control/Control.JSDialogBuilder.js:2600
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2496
+#: src/control/Control.JSDialogBuilder.js:2782
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2497
+#: src/control/Control.JSDialogBuilder.js:2783
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2517
+#: src/control/Control.JSDialogBuilder.js:2803
 #, fuzzy
 msgid "Insert Table"
 msgstr "ਸਾਰਣੀ ਜੋੜੋ"
 
-#: src/control/Control.JSDialogBuilder.js:2546
+#: src/control/Control.JSDialogBuilder.js:2832
 msgid "Line style:"
 msgstr ""
 
-#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:237
-#: src/control/Control.Menubar.js:239 src/control/Control.Menubar.js:241
-#: src/control/Control.Menubar.js:375 src/control/Control.Menubar.js:571
-#: src/control/Control.StatusBar.js:507
-#: src/control/Control.NotebookbarBuilder.js:673
-#: src/control/Control.NotebookbarBuilder.js:675
-#: src/control/Control.NotebookbarBuilder.js:677
-#: src/control/Control.NotebookbarBuilder.js:698
-#: src/control/Control.NotebookbarBuilder.js:730
+#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
+#: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
+#: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:488
+#: src/control/Control.Menubar.js:695 src/control/Control.StatusBar.js:507
+#: src/control/Control.NotebookbarBuilder.js:706
+#: src/control/Control.NotebookbarBuilder.js:708
+#: src/control/Control.NotebookbarBuilder.js:710
+#: src/control/Control.NotebookbarBuilder.js:731
+#: src/control/Control.NotebookbarBuilder.js:765
 msgid "None (Do not check spelling)"
 msgstr "ਕੋਈ ਨਹੀਂ (ਸਪੈਲਿੰਗ ਚੈੱਕ ਨਾ ਕਰੋ)"
 
-#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:267
-#: src/control/Control.Menubar.js:391 src/control/Control.Menubar.js:588
-#: src/control/Control.Menubar.js:638 src/control/Control.Menubar.js:686
-#: src/control/Control.NotebookbarWriter.js:175
-#: src/control/Control.NotebookbarCalc.js:157
-#: src/control/Control.NotebookbarImpress.js:237
+#: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:268
+#: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:504
+#: src/control/Control.Menubar.js:714 src/control/Control.Menubar.js:764
+#: src/control/Control.Menubar.js:812
 msgid "Share..."
 msgstr "...ਸਾਂਝਾ ਕਰੋ"
 
-#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:268
-#: src/control/Control.Menubar.js:392 src/control/Control.Menubar.js:590
-#: src/control/Control.Menubar.js:640 src/control/Control.Menubar.js:688
-#: src/control/Control.NotebookbarWriter.js:205
-#: src/control/Control.NotebookbarCalc.js:187
-#: src/control/Control.NotebookbarImpress.js:267
+#: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:269
+#: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:505
+#: src/control/Control.Menubar.js:716 src/control/Control.Menubar.js:766
+#: src/control/Control.Menubar.js:814
 msgid "See revision history"
 msgstr "ਸੁਧਾਈ ਅਤੀਤ ਵੇਖੋ"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:269
-#: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:593
-#: src/control/Control.Menubar.js:642 src/control/Control.Menubar.js:690
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:270
+#: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:506
+#: src/control/Control.Menubar.js:719 src/control/Control.Menubar.js:768
+#: src/control/Control.Menubar.js:816
 msgid "Download as"
 msgstr "ਇੰਝ ਡਾਊਨਲੋਡ ਕਰੋ"
 
-#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:269
-#: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:593
-#: src/control/Control.Menubar.js:642 src/control/Control.Menubar.js:690
+#: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:270
+#: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:506
+#: src/control/Control.Menubar.js:719 src/control/Control.Menubar.js:768
+#: src/control/Control.Menubar.js:816
 msgid "Export as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:394 src/control/Control.Menubar.js:594
-#: src/control/Control.Menubar.js:643 src/control/Control.Menubar.js:691
-#: src/control/Control.NotebookbarWriter.js:338
-#: src/control/Control.NotebookbarCalc.js:236
-#: src/control/Control.NotebookbarImpress.js:400
+#: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:271
+#: src/control/Control.Menubar.js:397 src/control/Control.Menubar.js:507
+#: src/control/Control.Menubar.js:720 src/control/Control.Menubar.js:769
+#: src/control/Control.Menubar.js:817
+#: src/control/Control.NotebookbarWriter.js:309
+#: src/control/Control.NotebookbarCalc.js:195
+#: src/control/Control.NotebookbarImpress.js:364
 msgid "PDF Document (.pdf)"
 msgstr "PDF ਦਸਤਾਵੇਜ਼ (.pdf)"
 
-#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:595
-#: src/control/Control.NotebookbarWriter.js:232
+#: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:721
+#: src/control/Control.NotebookbarWriter.js:203
 msgid "ODF text document (.odt)"
 msgstr "ODF ਲਿਖਤ ਦਸਤਾਵੇਜ਼ (.odt)"
 
-#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:596
-#: src/control/Control.NotebookbarWriter.js:285
+#: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:722
+#: src/control/Control.NotebookbarWriter.js:256
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 ਦਸਤਾਵੇਜ਼ (.doc)"
 
-#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:597
-#: src/control/Control.NotebookbarWriter.js:307
+#: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:723
+#: src/control/Control.NotebookbarWriter.js:278
 msgid "Word Document (.docx)"
 msgstr "Word ਦਸਤਾਵੇਜ਼ (.docx)"
 
-#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:598
-#: src/control/Control.NotebookbarWriter.js:254
+#: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:724
+#: src/control/Control.NotebookbarWriter.js:225
 msgid "Rich Text (.rtf)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:599
-#: src/control/Control.NotebookbarWriter.js:360
+#: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:725
+#: src/control/Control.NotebookbarWriter.js:331
 msgid "EPUB (.epub)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:591
-#: src/control/Control.NotebookbarWriter.js:379 src/control/Signing.js:601
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:717
+#: src/control/Control.NotebookbarWriter.js:350 src/control/Signing.js:601
 msgid "Sign document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਲਈ ਦਸਤਖਤ ਕਰੋ"
 
 #: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:278
-#: src/control/Control.Menubar.js:400
+#: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:514
 msgid "Close document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਬੰਦ ਕਰੋ"
 
 #: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:283
-#: src/control/Control.Menubar.js:405 src/control/Control.Menubar.js:604
-#: src/control/Control.Menubar.js:652 src/control/Control.Menubar.js:699
-#: src/control/Control.NotebookbarBuilder.js:666
-#: src/control/Control.NotebookbarBuilder.js:693
-#: src/control/Control.NotebookbarBuilder.js:725
+#: src/control/Control.Menubar.js:406 src/control/Control.Menubar.js:519
+#: src/control/Control.Menubar.js:730 src/control/Control.Menubar.js:778
+#: src/control/Control.Menubar.js:825
+#: src/control/Control.NotebookbarBuilder.js:699
+#: src/control/Control.NotebookbarBuilder.js:726
+#: src/control/Control.NotebookbarBuilder.js:760
 msgid "Repair"
 msgstr "ਮੁਰੰਮਤ ਕਰੋ"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:297
-#: src/control/Control.Menubar.js:419 src/control/Control.StatusBar.js:205
+#: src/control/Control.Menubar.js:420 src/control/Control.Menubar.js:533
+#: src/control/Control.StatusBar.js:205
 msgid "Reset zoom"
 msgstr "ਜ਼ੂਮ ਮੁੜ-ਸੈੱਟ ਕਰੋ"
 
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.NotebookbarBuilder.js:652
+#: src/control/Control.NotebookbarBuilder.js:685
 msgid "Show Ruler"
 msgstr ""
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:307
+#: src/control/Control.Menubar.js:423
 msgid "Show Status Bar"
 msgstr ""
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:310
-#: src/control/Control.Menubar.js:430 src/control/Control.Menubar.js:748
-#: src/control/Control.Menubar.js:788 src/control/Control.Menubar.js:802
+#: src/control/Control.Menubar.js:426 src/control/Control.Menubar.js:544
+#: src/control/Control.Menubar.js:874 src/control/Control.Menubar.js:915
+#: src/control/Control.Menubar.js:929
 msgid "Local Image..."
 msgstr "...ਲੋਕਲ ਚਿੱਤਰ"
 
-#: src/control/Control.Menubar.js:94 src/control/Control.Menubar.js:96
-#: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:766
+#: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:97
+#: src/control/Control.Menubar.js:890 src/control/Control.Menubar.js:892
 msgid "All"
 msgstr "ਸਾਰੇ"
 
-#: src/control/Control.Menubar.js:149
+#: src/control/Control.Menubar.js:150
 msgid "Text orientation"
 msgstr "ਲਿਖਤ ਦੀ ਦਿਸ਼ਾ"
 
-#: src/control/Control.Menubar.js:253 src/control/Control.Menubar.js:378
-#: src/control/Control.Menubar.js:575
-#: src/control/Control.NotebookbarWriter.js:471
+#: src/control/Control.Menubar.js:254 src/control/Control.Menubar.js:379
+#: src/control/Control.Menubar.js:491 src/control/Control.Menubar.js:701
+#: src/control/Control.NotebookbarWriter.js:381
 msgid "Online Help"
 msgstr ""
 
-#: src/control/Control.Menubar.js:254 src/control/Control.Menubar.js:379
-#: src/control/Control.Menubar.js:576
-#: src/control/Control.NotebookbarWriter.js:485
+#: src/control/Control.Menubar.js:255 src/control/Control.Menubar.js:380
+#: src/control/Control.Menubar.js:492 src/control/Control.Menubar.js:702
+#: src/control/Control.NotebookbarWriter.js:395
 msgid "Keyboard shortcuts"
 msgstr "ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
 
-#: src/control/Control.Menubar.js:255 src/control/Control.Menubar.js:380
-#: src/control/Control.Menubar.js:577
-#: src/control/Control.NotebookbarWriter.js:499
+#: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:381
+#: src/control/Control.Menubar.js:493 src/control/Control.Menubar.js:703
+#: src/control/Control.NotebookbarWriter.js:409
 msgid "Report an issue"
 msgstr ""
 
-#: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:381
-#: src/control/Control.Menubar.js:578 src/control/Control.Menubar.js:630
-#: src/control/Control.Menubar.js:678 src/control/Control.Menubar.js:741
-#: src/control/Control.NotebookbarWriter.js:514
+#: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:382
+#: src/control/Control.Menubar.js:494 src/control/Control.Menubar.js:704
+#: src/control/Control.Menubar.js:756 src/control/Control.Menubar.js:804
+#: src/control/Control.Menubar.js:867
+#: src/control/Control.NotebookbarWriter.js:424
 msgid "Latest Updates"
 msgstr ""
 
-#: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:382
-#: src/control/Control.Menubar.js:579 src/control/Control.Menubar.js:631
-#: src/control/Control.Menubar.js:679 src/control/Control.Menubar.js:742
-#: src/control/Control.NotebookbarWriter.js:528
+#: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:383
+#: src/control/Control.Menubar.js:495 src/control/Control.Menubar.js:705
+#: src/control/Control.Menubar.js:757 src/control/Control.Menubar.js:805
+#: src/control/Control.Menubar.js:868
+#: src/control/Control.NotebookbarWriter.js:438
 msgid "About"
 msgstr "ਇਸ ਬਾਰੇ"
 
-#: src/control/Control.Menubar.js:259 src/control/Control.Menubar.js:384
-#: src/control/Control.Menubar.js:581 src/map/Map.js:393
+#: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:385
+#: src/control/Control.Menubar.js:497 src/control/Control.Menubar.js:707
+#: src/map/Map.js:394
 msgid "Last modification"
 msgstr "ਆਖਰੀ ਸੋਧ"
 
-#: src/control/Control.Menubar.js:266
+#: src/control/Control.Menubar.js:267 src/control/Control.Menubar.js:392
 #, fuzzy
 msgid "Save Comments"
 msgstr "ਟਿੱਪਣੀ"
 
-#: src/control/Control.Menubar.js:271 src/control/Control.Menubar.js:644
-#: src/control/Control.NotebookbarImpress.js:294
+#: src/control/Control.Menubar.js:272 src/control/Control.Menubar.js:770
+#: src/control/Control.NotebookbarImpress.js:258
 msgid "ODF presentation (.odp)"
 msgstr "ODF ਪੇਸ਼ਕਾਰੀ (.odp)"
 
-#: src/control/Control.Menubar.js:272 src/control/Control.Menubar.js:645
-#: src/control/Control.NotebookbarImpress.js:347
+#: src/control/Control.Menubar.js:273 src/control/Control.Menubar.js:771
+#: src/control/Control.NotebookbarImpress.js:311
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:273 src/control/Control.Menubar.js:646
-#: src/control/Control.NotebookbarImpress.js:369
+#: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:772
+#: src/control/Control.NotebookbarImpress.js:333
 msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:647
-#: src/control/Control.NotebookbarImpress.js:316
-#, fuzzy
-msgid "ODF Drawing (.odg)"
-msgstr "ODF ਪੇਸ਼ਕਾਰੀ (.odp)"
-
-#: src/control/Control.Menubar.js:368 src/control/Control.Menubar.js:677
+#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:803
 #: src/control/Control.PresentationBar.js:33
 msgid "Fullscreen presentation"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ ਉੱਤੇ ਪੇਸ਼ਕਾਰੀ"
 
-#: src/control/Control.Menubar.js:369
+#: src/control/Control.Menubar.js:370
 msgid "Present current slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:692
-#: src/control/Control.NotebookbarCalc.js:214
+#: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:773
+#: src/control/Control.NotebookbarImpress.js:280
+#, fuzzy
+msgid "ODF Drawing (.odg)"
+msgstr "ODF ਪੇਸ਼ਕਾਰੀ (.odp)"
+
+#: src/control/Control.Menubar.js:508 src/control/Control.Menubar.js:818
+#: src/control/Control.NotebookbarCalc.js:173
 msgid "ODF spreadsheet (.ods)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:693
-#: src/control/Control.NotebookbarCalc.js:267
+#: src/control/Control.Menubar.js:509 src/control/Control.Menubar.js:819
+#: src/control/Control.NotebookbarCalc.js:226
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:397 src/control/Control.Menubar.js:694
-#: src/control/Control.NotebookbarCalc.js:289
+#: src/control/Control.Menubar.js:510 src/control/Control.Menubar.js:820
+#: src/control/Control.NotebookbarCalc.js:248
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:611 src/control/Control.Menubar.js:659
-#: src/control/Control.Menubar.js:706 src/control/Control.StatusBar.js:190
+#: src/control/Control.Menubar.js:511
+msgid "CSV file (.csv)"
+msgstr ""
+
+#: src/control/Control.Menubar.js:737 src/control/Control.Menubar.js:785
+#: src/control/Control.Menubar.js:832 src/control/Control.StatusBar.js:190
 msgid "Search"
 msgstr "ਖੋਜੋ"
 
-#: src/control/Control.Menubar.js:622
+#: src/control/Control.Menubar.js:748
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:889 src/control/Control.StatusBar.js:506
+#: src/control/Control.Menubar.js:1017 src/control/Control.StatusBar.js:506
 msgid "Reset to Default Language"
 msgstr "ਡਿਫਾਲਟ ਭਾਸ਼ਾ ਲਈ ਮੁੜ-ਸੈੱਟ ਕਰੋ"
 
-#: src/control/Control.Menubar.js:1229
+#: src/control/Control.Menubar.js:1359
 #, fuzzy
 msgid "Insert Shape"
 msgstr "ਸ਼ਕਲਾਂ ਜੋੜੋ"
 
-#: src/control/Control.Menubar.js:1322
+#: src/control/Control.Menubar.js:1454
 msgid "Are you sure you want to delete this slide?"
 msgstr "ਕੀ ਤੁਸੀਂ ਇਸ ਸਲਾਈਡ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
@@ -888,60 +908,60 @@ msgstr ""
 msgid "Move Sheet Right"
 msgstr ""
 
-#: src/control/Control.Tabs.js:231
+#: src/control/Control.Tabs.js:249
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr "ਕੀ ਤੁਸੀਂ %sheet% ਸ਼ੀਟ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: src/control/Control.Tabs.js:248
+#: src/control/Control.Tabs.js:266
 msgid "Enter new sheet name"
 msgstr "ਨਵੀਂ ਸ਼ੀਟ ਦਾ ਨਾਂ ਦਿਓ"
 
-#: src/control/Control.Toolbar.js:904
+#: src/control/Control.Toolbar.js:928
 msgid "Previous slide"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:905
+#: src/control/Control.Toolbar.js:929
 msgid "Next slide"
 msgstr ""
 
-#: src/control/Control.Toolbar.js:960
+#: src/control/Control.Toolbar.js:984
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:106
-#: src/control/Control.NotebookbarWriter.js:1521
+#: src/control/Control.TopToolbar.js:107
+#: src/control/Control.NotebookbarWriter.js:1418
 msgid "Default Style"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:162
+#: src/control/Control.TopToolbar.js:163
 msgid "Borders"
 msgstr "ਹਾਸ਼ੀਏ"
 
-#: src/control/Control.TopToolbar.js:170
+#: src/control/Control.TopToolbar.js:171
 msgid "More..."
 msgstr "...ਹੋਰ"
 
-#: src/control/Control.TopToolbar.js:207
+#: src/control/Control.TopToolbar.js:235
 msgid "Insert table"
 msgstr "ਸਾਰਣੀ ਜੋੜੋ"
 
-#: src/control/Control.TopToolbar.js:211
-#: src/control/Control.NotebookbarBuilder.js:539
+#: src/control/Control.TopToolbar.js:239
+#: src/control/Control.NotebookbarBuilder.js:526
 msgid "Insert Local Image"
 msgstr "ਲੋਕਲ ਚਿੱਤਰ ਜੋੜੋ"
 
-#: src/control/Control.TopToolbar.js:215
+#: src/control/Control.TopToolbar.js:243
 msgid "Insert shapes"
 msgstr "ਸ਼ਕਲਾਂ ਜੋੜੋ"
 
-#: src/control/Control.TopToolbar.js:459
+#: src/control/Control.TopToolbar.js:245
+msgid "Insert connectors"
+msgstr ""
+
+#: src/control/Control.TopToolbar.js:473
 msgid "Style"
 msgstr "ਸਟਾਈਲ"
-
-#: src/control/Control.TopToolbar.js:482
-msgid "Font"
-msgstr "ਫੋਂਟ"
 
 #: src/control/Control.UserList.js:10
 msgid "%user has joined"
@@ -975,20 +995,20 @@ msgstr ""
 msgid "Current"
 msgstr "ਮੌਜੂਦਾ"
 
-#: src/control/Control.Notebookbar.js:147
+#: src/control/Control.Notebookbar.js:189
 #: src/control/Control.NotebookbarImpress.js:17
-#: src/control/Control.NotebookbarBuilder.js:650
-#: src/control/Control.NotebookbarBuilder.js:688
-#: src/control/Control.NotebookbarBuilder.js:713
+#: src/control/Control.NotebookbarBuilder.js:683
+#: src/control/Control.NotebookbarBuilder.js:721
+#: src/control/Control.NotebookbarBuilder.js:748
 msgid "Menu"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:157
+#: src/control/Control.Notebookbar.js:199
 #: src/control/Control.NotebookbarImpress.js:32
 msgid "Undo"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:162
+#: src/control/Control.Notebookbar.js:204
 #: src/control/Control.NotebookbarImpress.js:37
 msgid "Redo"
 msgstr ""
@@ -1047,15 +1067,27 @@ msgstr ""
 msgid "~Help"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1530
+#: src/control/Control.NotebookbarWriter.js:146
+#: src/control/Control.NotebookbarCalc.js:116
+#: src/control/Control.NotebookbarImpress.js:201
+msgid "Share"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:176
+#: src/control/Control.NotebookbarCalc.js:146
+#: src/control/Control.NotebookbarImpress.js:231
+msgid "See history"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:1427
 msgid "Text Body"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1539
+#: src/control/Control.NotebookbarWriter.js:1436
 msgid "Title"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1548
+#: src/control/Control.NotebookbarWriter.js:1445
 msgid "Subtitle"
 msgstr ""
 
@@ -1067,48 +1099,52 @@ msgstr ""
 msgid "~Data"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1925
+#: src/control/Control.NotebookbarCalc.js:270
+msgid "CSV File (.csv)"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:1845
 #, fuzzy
 msgid "Insert Rows Above"
 msgstr "ਸਾਰਣੀ ਜੋੜੋ"
 
-#: src/control/Control.NotebookbarCalc.js:1938
+#: src/control/Control.NotebookbarCalc.js:1858
 #, fuzzy
 msgid "Insert Rows Below"
 msgstr "ਸ਼ੀਟ ਜੋੜੋ"
 
-#: src/control/Control.NotebookbarCalc.js:1960
+#: src/control/Control.NotebookbarCalc.js:1880
 #, fuzzy
 msgid "Insert Columns Before"
 msgstr "ਸ਼ੀਟ ਜੋੜੋ"
 
-#: src/control/Control.NotebookbarCalc.js:1973
+#: src/control/Control.NotebookbarCalc.js:1893
 #, fuzzy
 msgid "Insert Columns After"
 msgstr "ਸ਼ੀਟ ਜੋੜੋ"
 
-#: src/control/Control.NotebookbarCalc.js:1995
+#: src/control/Control.NotebookbarCalc.js:1915
 msgid "Insert Row Break"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:2008
+#: src/control/Control.NotebookbarCalc.js:1928
 msgid "Insert Column Break"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:2030
+#: src/control/Control.NotebookbarCalc.js:1950
 #, fuzzy
 msgid "Delete Rows"
 msgstr "ਸਾਰਣੀ ਜੋੜੋ"
 
-#: src/control/Control.NotebookbarCalc.js:2043
+#: src/control/Control.NotebookbarCalc.js:1963
 msgid "Delete Columns"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:2065
+#: src/control/Control.NotebookbarCalc.js:1985
 msgid "Remove Row Break"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:2078
+#: src/control/Control.NotebookbarCalc.js:1998
 msgid "Remove Column Break"
 msgstr ""
 
@@ -1117,7 +1153,7 @@ msgstr ""
 msgid "Start Presentation"
 msgstr "ਲਿਖਤ ਦੀ ਦਿਸ਼ਾ"
 
-#: src/control/Parts.js:377
+#: src/control/Parts.js:414
 msgid "Show Selected Sheets"
 msgstr ""
 
@@ -1276,54 +1312,52 @@ msgstr ""
 msgid "Signed but not all files are signed"
 msgstr ""
 
-#: src/control/Toolbar.js:76 src/control/Toolbar.js:88
+#: src/control/Toolbar.js:49
+msgid "Font"
+msgstr "ਫੋਂਟ"
+
+#: src/control/Toolbar.js:194 src/control/Toolbar.js:206
 msgid "Downloading..."
 msgstr "...ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: src/control/Toolbar.js:104 src/map/Map.js:1548
+#: src/control/Toolbar.js:222 src/map/Map.js:1460
 msgid "Saving..."
 msgstr "...ਸੰਭਾਲਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: src/control/Toolbar.js:115
+#: src/control/Toolbar.js:233
 msgid "Renaming..."
 msgstr "...ਨਾਂ ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: src/control/Toolbar.js:438
+#: src/control/Toolbar.js:550
 msgid "I understand the risks"
 msgstr ""
 
-#: src/control/Toolbar.js:490
+#: src/control/Toolbar.js:602
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:535
+#: src/control/Toolbar.js:647
 msgid "This version of %productName is powered by"
 msgstr "%productName ਦਾ ਇਹ ਵਰਜ਼ਨ ਇਸ ਦੇ ਸਹਿਯੋਗ ਨਾਲ ਹੈ"
 
-#: src/control/Toolbar.js:545
+#: src/control/Toolbar.js:657
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:548
-msgid ""
-"The Personal edition is supported by volunteers and intended for individual "
-"use."
-msgstr ""
-
-#: src/control/Toolbar.js:635
+#: src/control/Toolbar.js:744
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:637
+#: src/control/Toolbar.js:746
 msgid "Text"
 msgstr ""
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:747
 msgid "Link"
 msgstr ""
 
-#: src/core/Socket.js:59
+#: src/core/Socket.js:62
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
@@ -1331,55 +1365,55 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 
-#: src/core/Socket.js:61
+#: src/core/Socket.js:64
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr ""
 
-#: src/core/Socket.js:305
+#: src/core/Socket.js:308
 msgid "Served by:"
 msgstr ""
 
-#: src/core/Socket.js:310
+#: src/core/Socket.js:313
 msgid "Unsupported server version."
 msgstr ""
 
-#: src/core/Socket.js:404
+#: src/core/Socket.js:408
 msgid "Session terminated by document owner"
 msgstr ""
 
-#: src/core/Socket.js:409
+#: src/core/Socket.js:413
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 
-#: src/core/Socket.js:411
+#: src/core/Socket.js:415
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 
-#: src/core/Socket.js:419
+#: src/core/Socket.js:423
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
-#: src/core/Socket.js:423
+#: src/core/Socket.js:427
 msgid "Oops, there is a problem connecting the document"
 msgstr ""
 
-#: src/core/Socket.js:427
-msgid "Server is recycling and will be available shortly"
+#: src/core/Socket.js:431
+msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:455
+#: src/core/Socket.js:459
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
 
-#: src/core/Socket.js:461
+#: src/core/Socket.js:465
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
 
-#: src/core/Socket.js:581
+#: src/core/Socket.js:585
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1387,43 +1421,43 @@ msgstr ""
 "ਦਸਤਾਵੇਜ਼਼ ਨੂੰ ਸੰਭਾਲਣ ਦੇ ਦੌਰਾਨ ਬਦਲਿਆ ਗਿਆ ਸੀ। ਤੁਸੀਂ ਆਪਣੀਆਂ ਨਾ-ਸੰਭਾਲੀਆਂ ਤਬਦੀਲੀਆਂ "
 "ਨਾਲ ਕੀ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: src/core/Socket.js:585
+#: src/core/Socket.js:589
 msgid "Discard"
 msgstr "ਅਣਡਿੱਠ ਕਰੋ"
 
-#: src/core/Socket.js:590
+#: src/core/Socket.js:594
 msgid "Overwrite"
 msgstr "ਉੱਤੇ ਲਿਖੋ"
 
-#: src/core/Socket.js:595
+#: src/core/Socket.js:599
 msgid "Save to new file"
 msgstr "ਨਵੀਂ ਫ਼ਾਇਲ 'ਚ ਸੰਭਾਲੋ"
 
-#: src/core/Socket.js:665
+#: src/core/Socket.js:669
 msgid "Document requires password to view."
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਵੇਖਣ ਲਈ ਪਾਸਵਰਡ ਚਾਹੀਦਾ ਹੈ।"
 
-#: src/core/Socket.js:668
+#: src/core/Socket.js:672
 msgid "Document requires password to modify."
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੋਧਣ ਲਈ ਪਾਸਵਰਡ ਚਾਹੀਦਾ ਹੈ।"
 
-#: src/core/Socket.js:670
+#: src/core/Socket.js:674
 msgid "Hit Cancel to open in view-only mode."
 msgstr "ਸਿਰਫ਼ ਪੜ੍ਹਨ ਲਈ ਢੰਗ ਵਿੱਚ ਖੋਲ੍ਹਣ ਲਈ ਰੱਦ ਕਰੋ ਨੂੰ ਕਲਿੱਕ ਕਰੋ।"
 
-#: src/core/Socket.js:674
+#: src/core/Socket.js:678
 msgid "Wrong password provided. Please try again."
 msgstr "ਗਲਤ ਪਾਸਵਰਡ ਦਿੱਤਾ ਗਿਆ। ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
-#: src/core/Socket.js:823 src/map/Map.js:1551
+#: src/core/Socket.js:827 src/map/Map.js:1463
 msgid "Loading..."
 msgstr "...ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: src/core/Socket.js:823
+#: src/core/Socket.js:827
 msgid "Connecting..."
 msgstr "...ਕੁਨੈਕਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: src/core/Socket.js:1102
+#: src/core/Socket.js:1132
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1562,39 +1596,39 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/marker/Annotation.js:289 src/layer/tile/TileLayer.js:245
+#: src/layer/marker/Annotation.js:282 src/layer/tile/TileLayer.js:263
 msgid "Reply"
 msgstr "ਜਵਾਬ ਦਿਓ"
 
-#: src/layer/tile/TileLayer.js:239
+#: src/layer/tile/TileLayer.js:257
 msgid "Modify"
 msgstr "ਸੋਧੋ"
 
-#: src/layer/tile/TileLayer.js:251
+#: src/layer/tile/TileLayer.js:269
 msgid "Remove"
 msgstr "ਹਟਾਓ"
 
-#: src/layer/tile/TileLayer.js:257
+#: src/layer/tile/TileLayer.js:275
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:263
+#: src/layer/tile/TileLayer.js:281
 msgid "Resolve"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:263
+#: src/layer/tile/TileLayer.js:281
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:269
+#: src/layer/tile/TileLayer.js:287
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:269
+#: src/layer/tile/TileLayer.js:287
 msgid "Resolve Thread"
 msgstr ""
 
-#: src/layer/tile/TileLayer.js:851
+#: src/layer/tile/TileLayer.js:878
 #, fuzzy
 msgid "Functions"
 msgstr "ਫੰਕਸ਼ਨ"
@@ -1634,21 +1668,21 @@ msgid ""
 "one</p>"
 msgstr ""
 
-#: src/map/Map.js:223
+#: src/map/Map.js:224
 msgid "Initializing..."
 msgstr "...ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: src/map/Map.js:428
+#: src/map/Map.js:429
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d ਸਕਿੰਟ ਪਹਿਲਾਂ"
 
-#: src/map/Map.js:431
+#: src/map/Map.js:432
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d ਮਿੰਟ ਪਹਿਲਾਂ"
 
-#: src/map/Map.js:1402
+#: src/map/Map.js:1314
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 
