@@ -41,7 +41,7 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-style', 'italic');
-	});	
+	});
 
 	it('Apply underline on text shape.', function() {
 		cy.get('#tb_editbar_item_underline')
@@ -93,29 +93,29 @@ describe('Top toolbar tests.', function() {
 	it('Apply a selected font name on the text shape', function() {
 		cy.get('#tb_editbar_item_fonts')
 			.click();
-	   
-		desktopHelper.selectFromListbox('Liberation Mono');    
-	   
+
+		desktopHelper.selectFromListbox('Liberation Mono');
+
 		impressHelper.triggerNewSVGForShapeInTheCenter();
-  
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape .TextParagraph')
 			.should('have.attr', 'font-family', 'Liberation Mono');
 	});
-  
+
 	it('Apply a selected font size on the text shape', function() {
-  
+
 		cy.get('#tb_editbar_item_fontsizes')
 			.click();
-	   
+
 		desktopHelper.selectFromListbox('22');
-  
+
 		impressHelper.triggerNewSVGForShapeInTheCenter();
-	   
+
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape .TextParagraph')
 			.should('have.attr', 'font-size', '776px');
 	});
 
-	it('Apply left/right alignment on text seleced text.', function() {
+	it('Apply left/right alignment on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
