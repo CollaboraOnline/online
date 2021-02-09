@@ -970,15 +970,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		radiobuttonLabel.innerHTML = builder._cleanText(data.text);
 		radiobuttonLabel.for = data.id;
 
+		var toggleFunction = function() {
+			builder.callback('radiobutton', 'change', container, this.checked, builder);
+		};
+
+		$(radiobuttonLabel).click(function () {
+			$(radiobutton).prop('checked', true);
+			toggleFunction.bind({checked: true})();
+		});
+
 		if (data.enabled === 'false' || data.enabled === false)
 			$(radiobutton).attr('disabled', 'disabled');
 
 		if (data.checked === 'true' || data.checked === true)
 			$(radiobutton).prop('checked', true);
 
-		radiobutton.addEventListener('change', function() {
-			builder.callback('radiobutton', 'change', container, this.checked, builder);
-		});
+		radiobutton.addEventListener('change', toggleFunction);
 
 		if (data.hidden)
 			$(radiobutton).hide();
@@ -997,14 +1004,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkboxLabel.innerHTML = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
 
+		var toggleFunction = function() {
+			builder.callback('checkbox', 'change', div, this.checked, builder);
+		};
+
+		$(checkboxLabel).click(function () {
+			var status = $(checkbox).is(':checked');
+			$(checkbox).prop('checked', !status);
+			toggleFunction.bind({checked: !status})();
+		});
+
 		if (data.enabled === 'false' || data.enabled === false) {
 			$(checkboxLabel).addClass('disabled');
 			$(checkbox).prop('disabled', true);
 		}
 
-		checkbox.addEventListener('change', function() {
-			builder.callback('checkbox', 'change', div, this.checked, builder);
-		});
+		checkbox.addEventListener('change', toggleFunction);
 
 		var customCommand = builder._mapWindowIdToUnoCommand(data.id);
 
