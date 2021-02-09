@@ -27,12 +27,16 @@ $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10
 	done
 endif
 
-SRC_TS = $(wildcard $(srcdir)/src/layer/tile/*.ts) $(srcdir)/src/layer/vector/CanvasOverlay.ts
-SRC_TS_JS = $(patsubst $(srcdir)/src/layer/tile/%.ts,$(srcdir)/src/layer/tile/%.js,$(SRC_TS)) $(srcdir)/src/layer/vector/CanvasOverlay.js
-SRC_TS_JS_DST = $(patsubst $(srcdir)/src/layer/tile/%.js,$(DIST_FOLDER)/src/layer/tile/%.js,$(SRC_TS_JS)) $(DIST_FOLDER)/src/layer/vector/CanvasOverlay.js
+DIRECTORY_TS = $(srcdir)/src/layer/tile $(srcdir)/src/control # Add ts directories here.
+SRC_TS_ALL := $(foreach dir, $(DIRECTORY_TS), $(wildcard $(dir)/*.ts))
+SRC_TS_JS_FILES := $(SRC_TS_ALL:.ts=.js)
 
-$(srcdir)/src/layer/tile/%.js: $(srcdir)/src/layer/tile/%.ts
-	$(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
+$(SRC_TS_ALL:.ts=.js): $(SRC_TS_ALL)
+	$(builddir)/node_modules/typescript/bin/tsc $(@:.js=.ts) --outfile $@ --module none --lib dom,es2016 --target ES5
+
+SRC_TS = $(srcdir)/src/layer/vector/CanvasOverlay.ts
+SRC_TS_JS = $(srcdir)/src/layer/vector/CanvasOverlay.js
+SRC_TS_JS_DST = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES)) $(DIST_FOLDER)/src/layer/vector/CanvasOverlay.js
 
 $(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/*.ts
 	$(builddir)/node_modules/typescript/bin/tsc $(srcdir)/src/layer/vector/CanvasOverlay.ts --outfile $(srcdir)/src/layer/vector/CanvasOverlay.js --module none --lib dom,es2016 --target ES5
