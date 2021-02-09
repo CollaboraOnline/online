@@ -10,8 +10,8 @@
     <string name="action_create">Δημιουργία</string>
     <string name="enter_filename">Εισαγωγή ονόματος αρχείου:</string>
     <string name="create_new_document_title">Δημιουργία νέου εγγράφου</string>
-    <string name="action_cancel">Ακύρωση</string>
-    <string name="negative_cancel">Ακύρωση</string>
+    <string name="action_cancel">Ακύρωση</string>
+    <string name="negative_cancel">Ακύρωση</string>
     <string name="negative_im_sure">Είμαι βέβαιος</string>
     <string name="positive_ok">Εντάξει</string>
     <string name="reason_required_to_read_documents">Απαιτείται άδεια αποθήκευσης για ανάγνωση των εγγράφων σας.</string>
@@ -20,7 +20,7 @@
     <string name="bad_directory">Άκυρη διαδρομή καταλόγου</string>
     <string name="directory_browser_label">Επιλογή καταλόγου</string>
     <string name="search_label">Μετάβαση</string>
-    <string name="cancel_label">Ακύρωση</string>
+    <string name="cancel_label">Ακύρωση</string>
     <string name="confirm_label">Επιβεβαίωση</string>
     <string name="up_description">Στον γονικό κατάλογο</string>
     <string name="password">Κωδικός πρόσβασης</string>
@@ -80,7 +80,7 @@
     <string name="pref_sort_title">Διάταξη αρχείων</string>
     <string name="pref_file_explorer_title">Διάταξη διαχειριστή αρχείων</string>
     <string name="pref_viewmode_summary">Προβολή αρχείων ως πλέγμα ή σε κατάλογο.</string>
-    <string name="pref_sort_summary">"Επιλέξτε τρόπο διάταξης αρχείων:  A-Z, κατά μέγεθος ή κατά ημερομηνία."</string>
+    <string name="pref_sort_summary">Επιλέξτε τρόπο διάταξης αρχείων: A-Z, κατά μέγεθος ή κατά ημερομηνία.</string>
     <string name="pref_show_hidden_files_summary">Ενεργοποίηση εμφάνισης κρυφών αρχείων/φακέλων</string>
     <string name="pref_show_hidden_files">Κρυφά αρχεία/φάκελοι</string>
     <string name="pref_category_explorer">Ρυθμίσεις διαχειριστή αρχείων</string>
@@ -94,12 +94,12 @@
     <string name="no_items">Χωρίς στοιχεία</string>
     <string name="no_recent_items">Ανοίξτε ένα αρχείο χρησιμοποιώντας το εικονίδιο φακέλου στη γραμμή εργαλείων.</string>
     <string name="app_vendor">Αυτή η έκδοση παρέχεται από τον $VENDOR.</string>
-    <string name="app_description">"Το $APP_NAME είναι μια σύγχρονη, εύχρηστη,  σειρά προγραμμάτων για επεξεργασία κειμένου, υπολογιστικά φύλλα, παρουσιάσεις και άλλα."</string>
+    <string name="app_description">Το $APP_NAME είναι μια σύγχρονη, εύχρηστη, σειρά προγραμμάτων για επεξεργασία κειμένου, υπολογιστικά φύλλα, παρουσιάσεις και άλλα.</string>
     <string name="app_version">Έκδοση: %1$s
 \nδιαδικτυακό git-hash: %2$s
 \nπυρήνας git-hash: %3$s</string>
     <string name="app_name_settings">Ρυθμίσεις</string>
-    <string name="pref_enable_chrome_debugger_info">Ενεργοποίηση της χρήσης του εργαλείου αποσφαλμάτωσης Chrome στο έγγραφο.</string>
+    <string name="pref_enable_chrome_debugger_info">Ενεργοποίηση χρήσης του εργαλείου εντοπισμού σφαλμάτων του Chrome στο έγγραφο</string>
     <string name="pref_enable_chrome_debugger">Αποσφαλμάτωση Chrome</string>
     <string name="remove_from_list">Αφαίρεση από τον κατάλογο</string>
     <string name="file_actions_icon_desc">Ενέργειες αρχείου</string>
@@ -107,8 +107,8 @@
     <string name="app_version_and_hash">Έκδοση: %1$s
 \nΔιαδικτυακό git-hash: %2$s
 \nΠυρήνας git-hash: %3$s</string>
-    <string name="theme_light">Ανοιχτόχρωμο</string>
-    <string name="theme_dark">Σκούρο</string>
+    <string name="theme_light">Φωτεινό</string>
+    <string name="theme_dark">Σκοτεινό</string>
     <string name="theme_system_default">Προεπιλεγμένο σύστημα</string>
     <string name="choose_theme">Επιλέξτε θέμα</string>
     <string name="theme">Θέμα</string>
