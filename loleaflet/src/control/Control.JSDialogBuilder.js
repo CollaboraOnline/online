@@ -25,6 +25,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		useInLineLabelsForUnoButtons: false
 	},
 
+	windowId: null,
+
 	/* Handler is a function which takes three parameters:
 	 * parentContainer - place where insert the content
 	 * data - data of a control under process
@@ -42,13 +44,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_currentDepth: 0,
 
 	setWindowId: function (id) {
-		this.options.windowId = id;
+		this.windowId = id;
 	},
 
 	_setup: function(options) {
 		this._clearColorPickers();
 		this.wizard = options.mobileWizard;
 		this.map = options.map;
+		this.windowId = options.windowId;
 		this.callback = options.callback ? options.callback : this._defaultCallbackHandler;
 
 		this._colorPickers = [];
@@ -177,7 +180,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.sendUnoCommand(encodedCommand);
 		} else if (object) {
 			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
-			var windowId = builder.options.windowId !== null && builder.options.windowId !== undefined ? builder.options.windowId :
+			var windowId = builder.windowId !== null && builder.windowId !== undefined ? builder.windowId :
 				(window.mobileDialogId !== undefined ? window.mobileDialogId :
 					(window.sidebarId !== undefined ? window.sidebarId : -1));
 			var message = 'dialogevent ' + windowId
