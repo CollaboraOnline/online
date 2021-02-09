@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
-"PO-Revision-Date: 2021-01-02 21:57+0000\n"
+"PO-Revision-Date: 2021-01-25 09:32+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-ui-ja.po\n"
 "X-Pootle-Revision: 3937895\n"
 
@@ -630,7 +630,7 @@ msgstr "文字の方向"
 #: src/control/Control.Menubar.js:575
 #: src/control/Control.NotebookbarWriter.js:471
 msgid "Online Help"
-msgstr ""
+msgstr "オンラインヘルプ"
 
 #: src/control/Control.Menubar.js:254 src/control/Control.Menubar.js:379
 #: src/control/Control.Menubar.js:576
@@ -760,9 +760,8 @@ msgid "Clear the search field"
 msgstr "検索のキャンセル"
 
 #: src/control/Control.SearchBar.js:32
-#, fuzzy
 msgid "Hide the search bar"
-msgstr "検索のキャンセル"
+msgstr "検索バーを隠す"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
@@ -850,7 +849,7 @@ msgstr "スライド数"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "複数のセルを選択"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
@@ -1151,7 +1150,7 @@ msgstr ""
 
 #: src/control/Signing.js:275
 msgid "PIN Code"
-msgstr ""
+msgstr "PINコード"
 
 #: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"

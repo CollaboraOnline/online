@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2021-01-02 21:57+0000\n"
+"PO-Revision-Date: 2021-02-08 10:50+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-help-ja.po\n"
 "X-Pootle-Revision: 3446209\n"
 
@@ -1064,7 +1064,7 @@ msgstr "テキスト文書"
 #: html/loleaflet-help.html%2Bdiv.div.p:245-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:537-5
 msgid "Spreadsheets"
-msgstr "表計算ドキュメント"
+msgstr "表計算"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:248-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:565-5
@@ -1151,11 +1151,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:269-11
 msgid "Search backwards"
-msgstr ""
+msgstr "逆方向検索"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:270-11
 msgid "Search forward"
-msgstr ""
+msgstr "順方向検索"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:271-11
 msgid "Cancel the search (appears only when a text has been searched)"
