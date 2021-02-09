@@ -10,8 +10,8 @@
     <string name="action_create">Δημιουργία</string>
     <string name="enter_filename">Εισαγωγή ονόματος αρχείου:</string>
     <string name="create_new_document_title">Δημιουργία νέου εγγράφου</string>
-    <string name="action_cancel">Ακύρωση</string>
-    <string name="negative_cancel">Ακύρωση</string>
+    <string name="action_cancel">Άκυρο</string>
+    <string name="negative_cancel">Άκυρο</string>
     <string name="negative_im_sure">Είμαι βέβαιος</string>
     <string name="positive_ok">Εντάξει</string>
     <string name="reason_required_to_read_documents">Απαιτείται άδεια αποθήκευσης για ανάγνωση των εγγράφων σας.</string>
@@ -20,7 +20,7 @@
     <string name="bad_directory">Άκυρη διαδρομή καταλόγου</string>
     <string name="directory_browser_label">Επιλογή καταλόγου</string>
     <string name="search_label">Μετάβαση</string>
-    <string name="cancel_label">Ακύρωση</string>
+    <string name="cancel_label">Άκυρο</string>
     <string name="confirm_label">Επιβεβαίωση</string>
     <string name="up_description">Στον γονικό κατάλογο</string>
     <string name="password">Κωδικός πρόσβασης</string>
@@ -51,7 +51,7 @@
     <string name="filter_documents">Έγγραφα</string>
     <string name="filter_everything">Όλα</string>
     <string name="share_via">Κοινόχρηστο μέσω</string>
-    <string name="share">Κοινόχρηστο</string>
+    <string name="share">Κοινοποίηση</string>
     <string name="open">Άνοιγμα</string>
     <string name="action_settings">Ρυθμίσεις</string>
     <string name="action_about">Περί</string>
@@ -67,9 +67,9 @@
     <string name="sort">Ταξινόμηση κατά</string>
     <string name="filter">Φιλτράρισμα κατά</string>
     <string name="default_document_name">χωρίς τίτλο</string>
-    <string name="new_spreadsheet">Νέο υπολογιστικό φύλλο</string>
-    <string name="new_presentation">Νέα παρουσίαση</string>
-    <string name="new_textdocument">Νέο έγγραφο κειμένου</string>
+    <string name="new_spreadsheet">Νέο Υπολογιστικό φύλλο</string>
+    <string name="new_presentation">Νέα Παρουσίαση</string>
+    <string name="new_textdocument">Νέο Έγγραφο κειμένου</string>
     <string name="about_moreinfo">Περισσότερες πληροφορίες</string>
     <string name="about_notice">Εμφάνιση σημείωσης</string>
     <string name="about_license">Εμφάνιση άδειας</string>
