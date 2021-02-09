@@ -37,7 +37,7 @@
     <string name="external_sd_file_system">Зовнішня SD-карта</string>
     <string name="local_file_system">Локальна файлова система</string>
     <string name="local_documents">Каталог з документами</string>
-    <string name="close_document_locations">Закрити розташування файлу</string>
+    <string name="close_document_locations">Закрити розташування файла</string>
     <string name="document_locations">Розміщення файлів</string>
     <string name="filter_presentations">Презентації</string>
     <string name="filter_spreadsheets">Таблиці</string>
