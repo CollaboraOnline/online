@@ -45,11 +45,11 @@ L.CSections.CalcGrid.processingOrder = 				60; // Calc. This is bound to tiles, 
 L.CSections.Debug.Splits.processingOrder = 			60; // Calc. This is bound to tiles, processingOrder is not important.
 
 
-L.CSections.CalcGrid.drawingOrder = 				4; // Calc. This is 8 when debugging is enabled.
+L.CSections.CalcGrid.drawingOrder = 				4; // Calc.
 L.CSections.Tiles.drawingOrder = 					5; // Writer & Impress & Calc.
 L.CSections.Debug.TilePixelGrid.drawingOrder = 		6; // Writer & Impress & Calc.
 L.CSections.Overlays.drawingOrder =					7; // Writer & Impress & Calc.
-/* drawingOrder = 8 is reserved for debugging mode of CalcGrid */
+L.CSections.CalcGrid.drawingOrderDebug =            8; // Calc debug mode.
 L.CSections.Debug.Splits.drawingOrder = 			9; // Calc.
 L.CSections.RowGroup.drawingOrder =					10; // Calc.
 L.CSections.ColumnGroup.drawingOrder =				11; // Calc.

@@ -3726,7 +3726,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._map._docLayer._docType === 'spreadsheet') {
 			var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
 			if (section) {
-				section.drawingOrder = 7;
+				section.drawingOrder = L.CSections.CalcGrid.drawingOrderDebug;
 				section.sectionProperties.strokeStyle = 'blue';
 			}
 			this._map._docLayer._painter._addSplitsSection();
