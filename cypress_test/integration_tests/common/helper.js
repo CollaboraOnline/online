@@ -515,6 +515,12 @@ function afterAll(fileName, testState) {
 
 		cy.wait(5000);
 	} else {
+		if (Cypress.env('INTERFERENCE_TEST') === true) {
+			typeIntoDocument('{ctrl}s');
+
+			cy.wait(2000);
+		}
+
 		// Make sure that the document is closed
 		cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +
