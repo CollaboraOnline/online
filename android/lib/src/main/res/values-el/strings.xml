@@ -14,4 +14,8 @@
     <string name="later">Αργότερα</string>
     <string name="rate_now">Αξιολόγηση τώρα</string>
     <string name="file_chromeos_read_only">Αυτό το αρχείο δεν μπορεί να αποθηκευτεί σε αυτήν τη θέση, το άνοιγμα του είναι μόνο για ανάγνωση. Μετακινήστε το στα αρχεία αναπαραγωγής για δικαίωμα πλήρους ανάγνωσης/εγγραφής.</string>
+    <string name="ask_for_copy">Αυτό το έγγραφο είναι μόνο για ανάγνωση. Θέλετε να δημιουργήσετε ένα αντίγραφο για επεξεργασία;</string>
+    <string name="edit_copy">Επεξεργασία αντιγράφου</string>
+    <string name="view_only">Μόνο προβολή</string>
+    <string name="restarting">Επανεκκίνηση...</string>
 </resources>

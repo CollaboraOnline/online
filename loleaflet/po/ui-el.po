@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-09 19:01+0100\n"
 "PO-Revision-Date: 2021-02-05 18:41+0000\n"
-"Last-Translator: Michalis <michalisntovas@yahoo.gr>\n"
+"Last-Translator: Stratos Kostidis <petros8280@hotmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
 "Language: el\n"
@@ -200,7 +200,7 @@ msgstr "Ανανέωση σύνδεσης"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Φίλτρο καναλιού:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:270
 #: src/control/Control.StatusBar.js:331
@@ -235,6 +235,8 @@ msgstr "Απεστάλησαν"
 #: admin/src/AdminSocketBase.js:52
 msgid "Server has been shut down; please reload the page."
 msgstr ""
+"Έχει τερματιστεί η λειτουργία του διακομιστή. Παρακαλώ φορτώστε ξανά τη "
+"σελίδα."
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Connection error"
@@ -847,15 +849,15 @@ msgstr "Αριθμός διαφανειών"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Επιλέξτε πολλαπλά κελιά"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Λειτουργία εισαγωγής: ανενεργό"
 
 #: src/control/Control.StatusBar.js:466
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Λειτουργία επιλογής: ανενεργή"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -867,11 +869,11 @@ msgstr "Εισαγωγή φύλλου μετά από αυτό"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Μετακίνηση φύλλου αριστερά"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Μετακίνηση φύλλου δεξιά"
 
 #: src/control/Control.Tabs.js:231
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1034,15 +1036,15 @@ msgstr "~Βοήθεια"
 
 #: src/control/Control.NotebookbarWriter.js:1530
 msgid "Text Body"
-msgstr ""
+msgstr "Σώμα κειμένου"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #: src/control/Control.NotebookbarWriter.js:1548
 msgid "Subtitle"
-msgstr ""
+msgstr "Υπότιτλος"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1098,7 +1100,7 @@ msgstr "Έναρξη παρουσίασης"
 
 #: src/control/Parts.js:377
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Εμφάνιση επιλεγμένων φύλλων"
 
 #: src/control/Permission.js:48
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -1322,9 +1324,8 @@ msgstr ""
 "connections"
 
 #: src/core/Socket.js:61
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Όπα, υπάρχει πρόβλημα σύνδεσης του εγγράφου."
+msgstr "Όπα, υπάρχει πρόβλημα σύνδεσης με το %productName: "
 
 #: src/core/Socket.js:305
 msgid "Served by:"
@@ -1345,11 +1346,9 @@ msgstr ""
 "συνεχίσετε την επεξεργασία"
 
 #: src/core/Socket.js:411
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
-"Ανενεργό έγγραφο - παρακαλούμε πατήστε για να επαναφορτώσετε και να "
-"συνεχίσετε την επεξεργασία"
+"Αδρανές έγγραφο - πατήστε για επαναφόρτωση και συνέχιση της επεξεργασίας"
 
 #: src/core/Socket.js:419
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1624,7 +1623,7 @@ msgstr "Αφαίρεση"
 
 #: src/layer/tile/TileLayer.js:257
 msgid "Remove Thread"
-msgstr ""
+msgstr "Αφαίρεση νήματος"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Resolve"
@@ -1632,20 +1631,19 @@ msgstr "Επίλυση"
 
 #: src/layer/tile/TileLayer.js:263
 msgid "Unresolve"
-msgstr ""
+msgstr "Άλυτο"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Ανεπίλυτο νήμα"
 
 #: src/layer/tile/TileLayer.js:269
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Επίλυση νήματος"
 
 #: src/layer/tile/TileLayer.js:851
-#, fuzzy
 msgid "Functions"
-msgstr "Οδηγός συναρτήσεων"
+msgstr "Λειτουργίες"
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
