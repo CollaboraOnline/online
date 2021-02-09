@@ -481,14 +481,14 @@ L.Handler.PathTransform = L.Handler.extend({
 	_getPoints: function () {
 		var rectangleHandles = this.options.handles['rectangle'];
 		if (rectangleHandles && rectangleHandles !== '') {
-			var nw = rectangleHandles['1'],
-			north = rectangleHandles['2'],
-			ne = rectangleHandles['3'],
-			west = rectangleHandles['4'],
-			east = rectangleHandles['5'],
-			sw = rectangleHandles['6'],
-			south = rectangleHandles['7'],
-			se = rectangleHandles['8'];
+			var nw = rectangleHandles['1'][0],
+			north = rectangleHandles['2'][0],
+			ne = rectangleHandles['3'][0],
+			west = rectangleHandles['4'][0],
+			east = rectangleHandles['5'][0],
+			sw = rectangleHandles['6'][0],
+			south = rectangleHandles['7'][0],
+			se = rectangleHandles['8'][0];
 			return [sw, west, nw, north, ne, east, se, south];
 		}
 
