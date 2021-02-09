@@ -581,6 +581,9 @@ L.Control.MobileWizard = L.Control.extend({
 
 		var newControl = container.querySelector('#' + data.control.id);
 		newControl.scrollTop = scrollTop;
+
+		// avoid scrolling when adding new bigger elements to the view
+		$('#mobile-wizard-content').animate({ scrollTop: this._currentScrollPosition }, 0);
 	},
 });
 
