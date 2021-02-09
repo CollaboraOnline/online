@@ -349,6 +349,9 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_onMobileWizard: function(data) {
 		if (data) {
+			if (data.jsontype === 'autofilter' && (data.visible === 'false' || data.visible === false))
+				return;
+
 			this._inBuilding = true;
 
 			var isSidebar = (data.children && data.children.length >= 1 &&
