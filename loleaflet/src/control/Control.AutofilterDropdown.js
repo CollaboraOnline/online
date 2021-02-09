@@ -201,7 +201,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		this.container = null;
 		this.subMenu = null;
 
-		this.builder.callback('button', 'click', {id: 'cancel'}, null, this.builder);
+		if (this.builder.windowId)
+			this.builder.callback('button', 'click', {id: 'cancel'}, null, this.builder);
 		this.builder.setWindowId(null);
 		this.subMenuBuilder.setWindowId(null);
 	}
