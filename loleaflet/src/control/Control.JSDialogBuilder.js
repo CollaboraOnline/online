@@ -1748,19 +1748,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (!disabled && entry.state == null) {
+			var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
 			$(text).click(function() {
 				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
 				$(span).addClass('selected');
 
 				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+				if (singleClick) {
+					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+				}
 			});
 
-			$(text).dblclick(function() {
-				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
-				$(span).addClass('selected');
+			if (!singleClick) {
+				$(text).dblclick(function() {
+					$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
+					$(span).addClass('selected');
 
-				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
-			});
+					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+				});
+			}
 		}
 	},
 
