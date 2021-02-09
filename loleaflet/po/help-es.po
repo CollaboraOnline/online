@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-02 11:08+0200\n"
-"PO-Revision-Date: 2020-10-16 21:33+0000\n"
+"PO-Revision-Date: 2021-01-22 23:59+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
 "X-Pootle-Revision: 3713610\n"
 
@@ -1095,7 +1095,7 @@ msgstr "Documentos de texto"
 #: html/loleaflet-help.html%2Bdiv.div.p:245-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:537-5
 msgid "Spreadsheets"
-msgstr "Libros"
+msgstr "Hojas de cálculo"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:248-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:565-5
@@ -1158,9 +1158,9 @@ msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
-"<span class=\"def\">El área del documento:</span> El área de aplicación "
-"muestra el contenido del documento, pudiendo ser hojas de cálculo, "
-"presentaciones o documentos de texto."
+"<span class=\"def\">El área del documento:</span> el área de la aplicación "
+"muestra el contenido del documento, pudiendo ser este una hoja de cálculo, "
+"una presentación o un documento de texto."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:262-5
 msgid ""
@@ -1249,9 +1249,9 @@ msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
-"Los textos, gráficos, formas de dibujo e imágenes svg permanecen "
-"geométricamente precisos al ser ampliados. Las imágenes insertadas en "
-"formato png y jpg pueden producir píxeles en la ampliación."
+"El texto, los gráficos, las formas de dibujo y las imágenes SVG permanecen "
+"geométricamente precisos al escalarse. Las imágenes insertadas en formato "
+"PNG y JPG pueden pixelarse en la ampliación."
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
 msgid "Using the browser zoom affects the document and user interface areas."
@@ -1306,9 +1306,9 @@ msgid ""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
 "Los documentos de <span class=\"productname\">%productName</span> se guardan "
-"automáticamente, pero, si le preocupa que el documento se sincronice tan "
-"rápido como sea posible, también puede forzar un guardado usando el menú <"
-"span class=\"ui\">Archivo</span> → <span class=\"ui\">Guardar</span>."
+"automáticamente, pero si quiere que el documento se sincronice tan rápido "
+"como sea posible, también puede forzar un guardado usando el menú <span "
+"class=\"ui\">Archivo</span> ▸ <span class=\"ui\">Guardar</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:284-5
 msgid ""
@@ -1330,8 +1330,9 @@ msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
-"La edición de documentos será familiar para todos los que usaron una suite "
-"de oficina anteriormente, sin embargo, hay diferencias importantes:"
+"El proceso de edición de los documentos resultará familiar a cualquiera que "
+"haya utilizado un paquete de oficina con anterioridad; sin embargo, hay "
+"diferencias importantes:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:289-5
 msgid "Copy and Paste"
@@ -1640,11 +1641,10 @@ msgid ""
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
-"El <span class=\"productname\">%productName</span> comprueba la ortografía "
-"en documentos de texto, hojas de cálculo y presentaciones. Una línea "
-"ondulada roja indica palabras con error ortográfico. Haga clic con el botón "
-"derecho del ratón para tener un menú contextual con sugerencias de "
-"corrección."
+"<span class=\"productname\">%productName</span> comprueba la ortografía en "
+"documentos de texto, hojas de cálculo y presentaciones. Una línea ondulada "
+"roja indica palabras con error ortográfico. Pulse con el botón secundario "
+"del ratón para abrir un menú contextual con sugerencias de corrección."
 
 #: html/loleaflet-help.html%2Bdiv.p:335-5
 msgid ""
@@ -2083,11 +2083,11 @@ msgid ""
 "the slide show from the menu or click on icon in the bottom left toolbar in "
 "the slide pane."
 msgstr ""
-"El <span class=\"productname\">%productName</span> muestra presentaciones de "
-"diapositivas, incluyendo un subconjunto de transiciones de diapositivas y "
-"animaciones de objetos. Seleccione la presentación de diapositivas del menú "
-"o haga clic en el icono situado debajo de la izquierda del panel de "
-"diapositivas."
+"<span class=\"productname\">%productName</span> muestra presentaciones de "
+"diapositivas, además de un subconjunto de transiciones de diapositivas y "
+"animaciones de objetos. Seleccione el pase de diapositivas del menú o pulse "
+"en el icono situado en la barra de herramientas del panel de diapositivas, "
+"en la esquina inferior izquierda."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:427-5
 msgid ""
@@ -2142,12 +2142,12 @@ msgid ""
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
-"<span class=\"def\">Transición entre diapositivas:</span> <span class=\""
-"productname\">%productName</span> Impress proporciona efectos visuales al "
-"mostrar una diapositiva diapositiva en el pase de diapositivas. Las "
-"transiciones de diapositivas son propiedades de cada diapositiva. Utilice la "
-"barra lateral para establecer la transición de la diapositiva durante el en "
-"modo de edición."
+"<span class=\"def\">Transición entre diapositivas:</span> <span class="
+"\"productname\">%productName</span> Impress proporciona efectos visuales que "
+"se activan al mostrar una diapositiva nueva durante el pase de diapositivas. "
+"Las transiciones de diapositiva son propiedades de cada diapositiva. Utilice "
+"la barra lateral para establecer la transición de la diapositiva en el modo "
+"de edición."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:438-5
 msgid ""
@@ -2528,8 +2528,7 @@ msgstr "Ajuste los márgenes de la página en el diálogo."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:511-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
-"¿Cómo cambiar la orientación de la página al paisaje dentro de mi documento?"
+msgstr "¿Cómo cambiar la orientación de la página a horizontal en mi documento?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:513-11
 msgid ""
@@ -2557,7 +2556,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:516-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "Seleccione Paisaje en \"Con estilo de página\"."
+msgstr "Seleccione Horizontal en «Con estilo de página»."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:517-11
 msgid "Select if you want to change page numbering."
@@ -2568,12 +2567,12 @@ msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
 msgstr ""
-"Para volver a la orientación Retrato, repita el procedimiento eligiendo "
-"Retrato en \"Con estilo de página\"."
+"Para volver a la orientación Vertical, repita el procedimiento eligiendo "
+"Vertical en «Con estilo de página»."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:520-5
 msgid "How can I make the new text look like other existing text?"
-msgstr "¿Cómo puedo hacer que el nuevo texto sea igual a otro texto existente?"
+msgstr "¿Cómo puedo hacer que el texto nuevo sea igual a otro texto existente?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:521-5
 msgid "Directly:"
@@ -2590,17 +2589,17 @@ msgid ""
 "alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
 "a paint bucket."
 msgstr ""
-"Haga clic en el icono Clonar formato <img style=\"height:0.6cm;width:0.6cm;\""
-" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. El puntero del ratón "
+"Pulse en el icono Clonar formato <img style=\"height:0.6cm;width:0.6cm;\" "
+"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. El puntero del ratón "
 "cambia a un cubo de tinta."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:525-11
 msgid "Select the text you want to apply the new format."
-msgstr "Seleccione el texto al que quiere aplicar en nuevo formato."
+msgstr "Seleccione el texto al que quiere aplicar el formato nuevo."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:527-5
 msgid "Applying a paragraph style:"
-msgstr "Con estilo de párrafo:"
+msgstr "Con un estilo de párrafo:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:529-11
 msgid "Place the cursor at the paragraph to be formatted"
@@ -2618,7 +2617,7 @@ msgstr ""
 msgid ""
 "Why did the text I just typed change automatically? How can I revert it?"
 msgstr ""
-"¿Por qué mi texto cambia tan pronto como escribió? ¿cómo puedo impedir esto?"
+"¿Por qué mi texto cambia tan pronto como escribo? ¿Cómo puedo impedirlo?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:533-5
 msgid ""
