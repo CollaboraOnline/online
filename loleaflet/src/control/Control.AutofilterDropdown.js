@@ -7,8 +7,6 @@
 L.Control.AutofilterDropdown = L.Control.extend({
 	container: null,
 	subMenu: null,
-	builder: null,
-	subMenuBuilder: null,
 	position: {x: 0, y: 0},
 
 	onAdd: function (map) {
@@ -19,9 +17,6 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		this.map.on('closepopups', this.onClosePopup, this);
 		L.DomEvent.on(this.map, 'mouseup', this.onClosePopup, this);
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
-
-		this.builder = new L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'autofilter'});
-		this.subMenuBuilder = new L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'autofilter'});
 	},
 
 	onRemove: function() {
@@ -39,19 +34,14 @@ L.Control.AutofilterDropdown = L.Control.extend({
 
 		if (!isSubMenu && this.container) {
 			L.DomUtil.remove(this.container);
-			L.DomUtil.remove(this.subMenu);
 			this.container = null;
-			this.subMenu = null;
 		} else if (isSubMenu && this.subMenu) {
 			L.DomUtil.remove(this.subMenu);
 			this.subMenu = null;
 		}
 
-		if (data.action === 'close') {
-			this.builder.setWindowId(null);
-			this.subMenuBuilder.setWindowId(null);
+		if (data.action === 'close')
 			return;
-		}
 
 		if (!isSubMenu && this.subMenu)
 			L.DomUtil.remove(this.subMenu);
@@ -104,10 +94,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		}
 
 		var mainContainer = null;
-		var builder = null;
 		if (isSubMenu) {
 			this.subMenu = L.DomUtil.create('div', 'autofilter-container-submenu');
-			this.subMenu.id = data.id;
 			this.container.parentNode.insertBefore(this.subMenu, this.container.nextSibling);
 
 			var innerContainer = L.DomUtil.create('div', 'autofilter-container', this.subMenu);
@@ -115,27 +103,18 @@ L.Control.AutofilterDropdown = L.Control.extend({
 
 			left = this.position.x + this.container.offsetWidth - 30;
 			top = this.position.y + 50;
-
-			if (data.visible === 'false' || data.visible === false)
-				$(this.subMenu).hide();
-
-			this.subMenuBuilder.setWindowId(data.id);
-			builder = this.subMenuBuilder;
 		} else {
 			this.container = L.DomUtil.create('div', 'autofilter-container', $('#document-container').get(0));
-			this.container.id = data.id;
 			mainContainer = this.container;
 
 			this.position.x = left;
 			this.position.y = top;
-
-			this.builder.setWindowId(data.id);
-			builder = this.builder;
 		}
 
 		L.DomUtil.setStyle(mainContainer, 'margin-left', left + 'px');
 		L.DomUtil.setStyle(mainContainer, 'margin-top', top + 'px');
 
+		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'autofilter'});
 		builder.build(mainContainer, [data]);
 
 		var height = $(mainContainer).height();
@@ -162,18 +141,9 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		if (!this.container)
 			return;
 
-		var targetWindow = null;
-		var builder = null;
-		if (this.container && this.container.id == data.id) {
-			targetWindow = this.container;
-			builder = this.builder;
-		} else if (this.subMenu && this.subMenu.id == data.id) {
+		var targetWindow = this.container;
+		if (this.subMenu)
 			targetWindow = this.subMenu;
-			builder = this.subMenuBuilder;
-		}
-
-		if (!targetWindow)
-			return;
 
 		var control = targetWindow.querySelector('#' + data.control.id);
 		if (!control)
@@ -185,6 +155,12 @@ L.Control.AutofilterDropdown = L.Control.extend({
 
 		var scrollTop = control.scrollTop;
 		control.style.visibility = 'hidden';
+
+		var builder = new L.control.jsDialogBuilder({windowId: data.id,
+			mobileWizard: this,
+			map: this.map,
+			cssClass: 'autofilter'});
+
 		builder.build(parent, [data.control], false);
 		L.DomUtil.remove(control);
 
@@ -200,10 +176,6 @@ L.Control.AutofilterDropdown = L.Control.extend({
 
 		this.container = null;
 		this.subMenu = null;
-
-		this.builder.callback('button', 'click', {id: 'cancel'}, null, this.builder);
-		this.builder.setWindowId(null);
-		this.subMenuBuilder.setWindowId(null);
 	}
 });
 
