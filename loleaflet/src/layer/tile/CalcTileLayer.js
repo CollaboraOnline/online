@@ -290,7 +290,6 @@ L.CalcTileLayer = BaseTileLayer.extend({
 			];
 
 			var otherViewTypes = [
-				'cellviewcursor',
 				'textviewselection',
 				'invalidateviewcursor',
 				'graphicviewselection',

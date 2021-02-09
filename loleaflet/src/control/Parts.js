@@ -54,7 +54,12 @@ L.Map.include({
 		});
 
 		docLayer.eachView(docLayer._viewCursors, docLayer._onUpdateViewCursor, docLayer);
-		docLayer.eachView(docLayer._cellViewCursors, docLayer._onUpdateCellViewCursor, docLayer);
+
+		// We do not want to call _onUpdateCellViewCursor to update the cell view cursors of
+		// other views as we at this stage don't yet know the geometry of the sheet we are
+		// switching to, I think.
+		// docLayer.eachView(docLayer._cellViewCursors, docLayer._onUpdateCellViewCursor, docLayer);
+
 		docLayer.eachView(docLayer._graphicViewMarkers, docLayer._onUpdateGraphicViewSelection, docLayer);
 		docLayer.eachView(docLayer._viewSelections, docLayer._onUpdateTextViewSelection, docLayer);
 		docLayer._clearSelections(calledFromSetPartHandler);
