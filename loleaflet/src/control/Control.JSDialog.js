@@ -24,6 +24,13 @@ L.Control.JSDialog = L.Control.extend({
 		return Object.keys(this.dialogs).length > 0;
 	},
 
+	closeDialog: function(id) {
+		var builder = this.dialogs[id].builder;
+		L.DomUtil.remove(this.dialogs[id].container);
+		delete this.dialogs[id];
+		builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
+	},
+
 	onJSDialog: function(e) {
 		var posX = 0;
 		var posY = 0;
@@ -32,13 +39,13 @@ L.Control.JSDialog = L.Control.extend({
 		if (this.dialogs[data.id]) {
 			posX = this.dialogs[data.id].startX;
 			posY = this.dialogs[data.id].startY;
-			L.DomUtil.remove(this.dialogs[data.id]);
+			L.DomUtil.remove(this.dialogs[data.id].container);
 		}
 
 		if (data.action === 'close')
 		{
 			if (data.id && this.dialogs[data.id]) {
-				L.DomUtil.remove(this.dialogs[data.id]);
+				L.DomUtil.remove(this.dialogs[data.id].container);
 				delete this.dialogs[data.id];
 			}
 			return;
@@ -46,7 +53,6 @@ L.Control.JSDialog = L.Control.extend({
 
 		var container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
 		container.id = data.id;
-		this.dialogs[data.id] = container;
 		if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
 			L.DomUtil.addClass(container, 'collapsed');
 
@@ -63,14 +69,12 @@ L.Control.JSDialog = L.Control.extend({
 
 		var that = this;
 		button.onclick = function() {
-			L.DomUtil.remove(that.dialogs[data.id]);
-			delete that.dialogs[data.id];
-			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
+			that.closeDialog(data.id);
 		};
 
 		var onInput = function(ev) {
 			if (ev.isFirst)
-				that.draggingObject = container;
+				that.draggingObject = that.dialogs[data.id];
 
 			if (ev.isFinal && that.draggingObject
 				&& that.draggingObject.translateX
@@ -95,8 +99,13 @@ L.Control.JSDialog = L.Control.extend({
 			posY = window.innerHeight/2 - container.offsetHeight/2;
 		}
 
-		container.startX = posX;
-		container.startY = posY;
+		this.dialogs[data.id] = {
+			container: container,
+			builder: builder,
+			startX: posX,
+			startY: posY
+		};
+
 		this.updatePosition(container, posX, posY);
 	},
 
@@ -106,7 +115,7 @@ L.Control.JSDialog = L.Control.extend({
 		if (data.jsontype !== 'dialog')
 			return;
 
-		var dialog = this.dialogs[data.id];
+		var dialog = this.dialogs[data.id] ? this.dialogs[data.id].container : null;
 		if (!dialog)
 			return;
 
@@ -153,7 +162,7 @@ L.Control.JSDialog = L.Control.extend({
 				target.translateX = newX;
 				target.translateY = newY;
 
-				this.updatePosition(target, newX, newY);
+				this.updatePosition(target.container, newX, newY);
 			}
 		}
 	},
@@ -161,6 +170,24 @@ L.Control.JSDialog = L.Control.extend({
 	updatePosition: function (target, newX, newY) {
 		target.style.marginLeft = newX + 'px';
 		target.style.marginTop = newY + 'px';
+	},
+
+	handleKeyEvent: function (event) {
+		var keyCode = event.keyCode;
+
+		switch (keyCode) {
+		case 27:
+			// ESC
+			var dialogs = Object.keys(this.dialogs);
+			if (dialogs.length) {
+				var lastKey = dialogs[dialogs.length - 1];
+				this.closeDialog(lastKey);
+				this.map.focus();
+				return true;
+			}
+		}
+
+		return false;
 	}
 });
 
