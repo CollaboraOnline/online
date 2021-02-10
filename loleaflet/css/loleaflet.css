@@ -688,3 +688,15 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.leaflet-canvas-container .cell-cursor-data {
+	--stroke-color: #000000;
+	--weight: 2;
+}
+
+.leaflet-canvas-container .selections-data {
+	--fill-color: #43ACE8;
+	--fill-opacity: 0.25;
+	--opacity: 0.25;
+	--weight: 2;
+}
