@@ -44,14 +44,36 @@ function hasMark(collection, mark)
 	return false;
 }
 
+// CStyleData is used to obtain CSS property values from style data
+// stored in DOM elements in the form of custom CSS properties/variables.
+var CStyleData = L.Class.extend({
+
+	initialize: function (styleDataDiv) {
+		this._div = styleDataDiv;
+	},
+
+	getPropValue: function (name) {
+		return getComputedStyle(this._div).getPropertyValue(name);
+	},
+
+	getIntPropValue: function(name) { // (String) -> Number
+		return parseInt(this.getPropValue(name));
+	},
+
+	getFloatPropValue: function(name) { // (String) -> Number
+		return parseFloat(this.getPropValue(name));
+	}
+});
+
 // CSelections is used to add/modify/clear selections (text/cell-area(s))
 // on canvas using polygons (CPolygon).
 var CSelections = L.Class.extend({
 
-	initialize: function (pointSet, canvasOverlay, dpiScale) {
+	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
 		this._dpiScale = dpiScale;
+		this._styleData = new CStyleData(selectionsDataDiv);
 		this._polygon = undefined;
 		this._updatePolygon();
 	},
@@ -82,14 +104,14 @@ var CSelections = L.Class.extend({
 
 	_updatePolygon: function() {
 		if (!this._polygon) {
-			this._polygon = new CPolygon(
-				this._pointSet, {
-					pointerEvents: 'none',
-					fillColor: '#43ACE8',
-					fillOpacity: 0.25,
-					weight: Math.round(2 * this._dpiScale),
-					opacity: 0.25
-				});
+			var attributes = {
+				pointerEvents: 'none',
+				fillColor: this._styleData.getPropValue('--fill-color'),
+				fillOpacity: this._styleData.getPropValue('--fill-opacity'),
+				opacity: this._styleData.getFloatPropValue('--opacity'),
+				weight: Math.round(this._styleData.getIntPropValue('--weight') * this._dpiScale)
+			};
+			this._polygon = new CPolygon(this._pointSet, attributes);
 			this._overlay.initPath(this._polygon);
 			return;
 		}
@@ -272,7 +294,8 @@ L.TileLayer = L.GridLayer.extend({
 	onAdd: function (map) {
 		this._initContainer();
 		this._getToolbarCommandsValues();
-		this._selections = new CSelections(undefined, this._canvasOverlay, this._painter._dpiScale);
+		this._selections = new CSelections(undefined, this._canvasOverlay,
+			this._painter._dpiScale, this._selectionsDataDiv);
 		this._references = new L.LayerGroup();
 		this._referencesAll = [];
 		if (this.options.permission !== 'readonly') {
@@ -3261,13 +3284,15 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.removeLayer(this._dropDownButton);
 			}
 			else {
+				var cursorStyle = new CStyleData(this._cursorDataDiv);
 				this._cellCursorMarker = new CRectangle(
 					corePxBounds,
 					{
 						pointerEvents: 'none',
 						fill: false,
-						color: '#000000',
-						weight: Math.round(2 * (this._painter ? this._painter._dpiScale : 1))
+						color: cursorStyle.getPropValue('--stroke-color'),
+						weight: Math.round(cursorStyle.getIntPropValue('--weight') *
+							(this._painter ? this._painter._dpiScale : 1))
 					});
 				if (!this._cellCursorMarker) {
 					this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
