@@ -23,7 +23,7 @@ class TilesSection {
 	processingOrder: number = null;
 	drawingOrder: number = null;
 	zIndex: number = null;
-	interactable: boolean = false;
+	interactable: boolean = true;
 	sectionProperties: any = {};
 	map: any;
 	offscreenCanvases: Array<any> = new Array(0);
@@ -213,6 +213,7 @@ class TilesSection {
 		this.inZoomAnimation = setValue;
 	}
 
+	public onMouseWheel () {}
 	public onMouseMove () {}
 	public onMouseDown () {}
 	public onMouseUp () {}
@@ -221,7 +222,6 @@ class TilesSection {
 	public onClick () {}
 	public onDoubleClick () {}
 	public onContextMenu () {}
-	public onMouseWheel () {}
 	public onLongPress () {}
 	public onMultiTouchStart () {}
 	public onMultiTouchMove () {}

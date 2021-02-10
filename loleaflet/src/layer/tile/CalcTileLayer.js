@@ -853,6 +853,26 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+	_onRowColSelCount: function (state) {
+		if (state.trim() !== '') {
+			var rowCount = parseInt(state.split(', ')[0].trim().split(' ')[0].replace(',', '').replace(',', ''));
+			var columnCount = parseInt(state.split(', ')[1].trim().split(' ')[0].replace(',', '').replace(',', ''));
+			if (rowCount > 1000000)
+				this._map.wholeColumnSelected = true;
+			else
+				this._map.wholeColumnSelected = false;
+
+			if (columnCount === 1024)
+				this._map.wholeRowSelected = true;
+			else
+				this._map.wholeRowSelected = false;
+		}
+		else {
+			this._map.wholeColumnSelected = false;
+			this._map.wholeRowSelected = false;
+		}
+	},
+
 	_onCommandStateChanged: function (e) {
 
 		if (e.commandName === '.uno:FreezePanesColumn') {
@@ -860,6 +880,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 		else if (e.commandName === '.uno:FreezePanesRow') {
 			this._onSplitStateChanged(e, false /* isSplitCol */);
+		}
+		else if (e.commandName === '.uno:RowColSelCount') {
+			this._onRowColSelCount(e.state.replace('Selected:', '').replace('row', '').replace('column', '').replace('s', ''));
 		}
 	},
 

@@ -59,25 +59,24 @@ L.TileSectionManager = L.Class.extend({
 		this._splitPos = splitPanesContext ?
 			splitPanesContext.getSplitPos() : new L.Point(0, 0);
 		this._updatesRunning = false;
-		this._mirrorMapEventsToCanvasSectionContainer();
+		this._mirrorEventsFromSourceToCanvasSectionContainer(document.getElementById('map'));
 	},
 
 	// Map and TilesSection overlap entirely. Map is above tiles section. In order to handle events in tiles section, we need to mirror them from map.
-	_mirrorMapEventsToCanvasSectionContainer: function () {
-		var mapElement = document.getElementById('map');
+	_mirrorEventsFromSourceToCanvasSectionContainer: function (sourceElement) {
 		var that = this;
-		mapElement.addEventListener('mousemove', function (e) { that._sectionContainer.onMouseMove(e); });
-		mapElement.addEventListener('mousedown', function (e) { that._sectionContainer.onMouseDown(e); });
-		mapElement.addEventListener('mouseup', function (e) { that._sectionContainer.onMouseUp(e); });
-		mapElement.addEventListener('click', function (e) { that._sectionContainer.onClick(e); });
-		mapElement.addEventListener('dblclick', function (e) { that._sectionContainer.onDoubleClick(e); });
-		mapElement.addEventListener('contextmenu', function (e) { that._sectionContainer.onContextMenu(e); });
-		mapElement.addEventListener('wheel', function (e) { that._sectionContainer.onMouseWheel(e); });
-		mapElement.addEventListener('mouseleave', function (e) { that._sectionContainer.onMouseLeave(e); });
-		mapElement.addEventListener('touchstart', function (e) { that._sectionContainer.onTouchStart(e); });
-		mapElement.addEventListener('touchmove', function (e) { that._sectionContainer.onTouchMove(e); });
-		mapElement.addEventListener('touchend', function (e) { that._sectionContainer.onTouchEnd(e); });
-		mapElement.addEventListener('touchcancel', function (e) { that._sectionContainer.onTouchCancel(e); });
+		sourceElement.addEventListener('mousemove', function (e) { that._sectionContainer.onMouseMove(e); }, true);
+		sourceElement.addEventListener('mousedown', function (e) { that._sectionContainer.onMouseDown(e); }, true);
+		sourceElement.addEventListener('mouseup', function (e) { that._sectionContainer.onMouseUp(e); }, true);
+		sourceElement.addEventListener('click', function (e) { that._sectionContainer.onClick(e); }, true);
+		sourceElement.addEventListener('dblclick', function (e) { that._sectionContainer.onDoubleClick(e); }, true);
+		sourceElement.addEventListener('contextmenu', function (e) { that._sectionContainer.onContextMenu(e); }, true);
+		sourceElement.addEventListener('wheel', function (e) { that._sectionContainer.onMouseWheel(e); }, true);
+		sourceElement.addEventListener('mouseleave', function (e) { that._sectionContainer.onMouseLeave(e); }, true);
+		sourceElement.addEventListener('touchstart', function (e) { that._sectionContainer.onTouchStart(e); }, true);
+		sourceElement.addEventListener('touchmove', function (e) { that._sectionContainer.onTouchMove(e); }, true);
+		sourceElement.addEventListener('touchend', function (e) { that._sectionContainer.onTouchEnd(e); }, true);
+		sourceElement.addEventListener('touchcancel', function (e) { that._sectionContainer.onTouchCancel(e); }, true);
 	},
 
 	startUpdates: function () {
@@ -483,6 +482,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._painter._addTilesSection();
 		this._painter._sectionContainer.getSectionWithName('tiles').onResize();
 		this._painter._addOverlaySection();
+		this._painter._sectionContainer.addSection(L.getNewScrollSection());
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
 		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
