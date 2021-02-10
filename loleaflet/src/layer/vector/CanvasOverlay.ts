@@ -44,7 +44,7 @@ class CanvasOverlay {
 
 	removePath(path: CPath) {
 		// This does not get called via onDraw, so ask tileSection to "erase" by painting over.
-		this.tsManager._onTilesSectionDraw();
+		this.tsManager._tilesSection.onDraw();
 		path.setDeleted();
 		this.paths.delete(path.getId());
 		this.draw();
@@ -103,9 +103,9 @@ class CanvasOverlay {
 		// Repainting the whole canvas is not necessary but finding the minimum area to paint over
 		// is potentially expensive to compute (think of overlapped path objects).
 		// TODO: We could repaint the area on the canvas occupied by all the visible path-objects
-		// and paint tiles just for that, but need a more general version of _onTilesSectionDraw() and callees.
+		// and paint tiles just for that, but need a more general version of _tilesSection.onDraw() and callees.
 		this.tsManager.clearTilesSection();
-		this.tsManager._onTilesSectionDraw();
+		this.tsManager._tilesSection.onDraw();
 		this.draw();
 	}
 
