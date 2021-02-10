@@ -2830,7 +2830,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						var buttonId = childData.responses[i].id;
 						var response = childData.responses[i].response;
 						var button = $('#' + buttonId);
-						if (button)
+						var isOk = response === '1' || response === 1;
+						if (button && !isOk)
 							this.setupStandardButtonHandler(button, response, this);
 					}
 				}
