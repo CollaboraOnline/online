@@ -50,6 +50,7 @@ L.TileSectionManager = L.Class.extend({
 		if (L.Browser.cypressTest) // If cypress is active, create test divs.
 			this._sectionContainer.testing = true;
 
+		this._sectionContainer.addSection(L.getNewScrollSection());
 		this._sectionContainer.onResize(mapSize.x, mapSize.y);
 
 		var dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
