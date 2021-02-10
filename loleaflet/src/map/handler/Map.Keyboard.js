@@ -178,10 +178,12 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
+		L.DomEvent.on(window.document, 'keydown', this._globalKeyEvent, this);
 	},
 
 	removeHooks: function () {
 		L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
+		L.DomEvent.off(window.document, 'keydown', this._globalKeyEvent, this);
 	},
 
 	_ignoreKeyEvent: function(ev) {
@@ -241,6 +243,14 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (ev.charCode == 0) {
 			this._handleKeyEvent(ev);
+		}
+	},
+
+	_globalKeyEvent: function(ev) {
+		if (this._map.jsdialog && this._map.jsdialog.hasDialogOpened()
+			&& this._map.jsdialog.handleKeyEvent(ev)) {
+			ev.preventDefault();
+			return;
 		}
 	},
 
