@@ -46,6 +46,24 @@ L.PathTransform.RotateHandle = L.PathTransform.Handle.extend({
 	}
 });
 
+/**
+ * @extends {L.Handler.PathTransform.Handle}
+ */
+L.PathTransform.CustomHandle = L.PathTransform.Handle.extend({
+	// transform-handler--rotate and others are defined in branding.css
+	// Until it is updated, we can use rotate as the style matches with the core
+	options: {
+		className: 'leaflet-path-transform-handler transform-handler--rotate',
+	},
+
+	onAdd: function (map) {
+		L.CircleMarker.prototype.onAdd.call(this, map);
+		if (this._path && this.options.setCursor) { // SVG/VML
+			this.setCursorType('all-scroll');
+		}
+	}
+});
+
 L.Handler.PathTransform = L.Handler.extend({
 
 	options: {
@@ -87,7 +105,8 @@ L.Handler.PathTransform = L.Handler.extend({
 		edgesCount:   4,
 
 		handleClass:       L.PathTransform.Handle,
-		rotateHandleClass: L.PathTransform.RotateHandle
+		rotateHandleClass: L.PathTransform.RotateHandle,
+		customHandleClass: L.PathTransform.CustomHandle
 	},
 
 
@@ -105,6 +124,9 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._activeMarker   = null;
 		this._originMarker   = null;
 		this._rotationMarker = null;
+		this._customMarker   = null;
+		this._customHandle   = null;
+		this._customHandlePosition = null;
 
 		// origins & temporary state
 		this._rotationOrigin   = null;
@@ -358,6 +380,10 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._handlersGroup.removeLayer(this._rotationMarker);
 		}
 
+		if (this._customMarker) {
+			this._handlersGroup.removeLayer(this._customMarker);
+		}
+
 		this._handleLine = this._rotationMarker = null;
 
 		for (var i = this._handlers.length - 1; i >= 0; i--) {
@@ -530,6 +556,9 @@ L.Handler.PathTransform = L.Handler.extend({
 			//add rotation handler
 			this._createRotationHandlers();
 		}
+		if (this.options.handles['custom'] !== '') {
+			this._createCustomHandlers();
+		}
 	},
 
 
@@ -571,6 +600,77 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._handlers.push(this._rotationMarker);
 	},
 
+	/**
+	* Custom Shape Handles, id = 22
+	*/
+	_createCustomHandlers: function() {
+		var map = this._map;
+		var handle = this.options.handles['custom']['22'][0];
+		this._customHandle = handle;
+		this._customHandlePosition = map._docLayer._twipsToLatLng(handle.point);
+		var CustomHandleClass = this.options.customHandleClass;
+		var options = this.options.handlerOptions;
+		this._customMarker = new CustomHandleClass(this._customHandlePosition,
+			options)
+			.addTo(this._handlersGroup)
+			.on('mousedown', this._onCustomHandleDragStart, this);
+
+		this._handlers.push(this._customMarker);
+	},
+
+	_onCustomHandleDragStart: function(evt) {
+		var map = this._map;
+		this._activeMarker = evt.target;
+
+		this._handleDragged = false;
+		map._docLayer._graphicMarker.isDragged = true;
+		this._mapDraggingWasEnabled = false;
+		if (map.dragging.enabled()) {
+			map.dragging.disable();
+			this._mapDraggingWasEnabled = true;
+		}
+
+		this._customMarker.addEventParent(this._map);
+		this._path._map
+			.on('mousemove', this._onCustomHandleDrag,     this)
+			.on('mouseup',   this._onCustomHandleDragEnd,  this);
+	},
+
+	/**
+	* @param  {Event} evt
+	*/
+	_onCustomHandleDrag: function(evt) {
+		if (!this._rect) {
+			return;
+		}
+		this._handleDragged = true;
+		this._customMarker.setLatLng(evt.latlng);
+		this._customMarker._updatePath();
+	},
+
+	_onCustomHandleDragEnd: function() {
+		if (!this._rect) {
+			return;
+		}
+		var map = this._map;
+		map._docLayer._graphicMarker.isDragged = false;
+		this._customMarker.removeEventParent(this._map);
+		this._path._map
+			.off('mousemove', this._onCustomHandleDrag,     this)
+			.off('mouseup',   this._onCustomHandleDragEnd,  this);
+
+		this._path.fire('scaleend', {
+			pos: this._activeMarker._latlng,
+			handleId: this._customHandle.id
+		});
+
+		this._activeMarker = null;
+		// Set the initial position;
+		// If the final look of the shape does not change we dont get selection update
+		// In that case, marker may stay where it is placed. This fixes that.
+		this._customMarker.setLatLng(this._customHandlePosition);
+		this._customMarker._updatePath();
+	},
 
 	/**
 	* @return {L.LatLng}
@@ -720,6 +820,10 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._map.removeLayer(this._rotationMarker);
 		}
 
+		if (this.options.handles['custom'] !== '') {
+			this._map.removeLayer(this._customMarker);
+		}
+
 		//this._handleLine = this._rotationMarker = null;
 	},
 
@@ -777,6 +881,10 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (this.options.rotation) {
 			this._map.addLayer(this._handleLine);
 			this._map.addLayer(this._rotationMarker);
+		}
+
+		if (this.options.handles['custom'] !== '') {
+			this._map.addLayer(this._customMarker);
 		}
 
 		var index = this._activeMarker.options.index;
