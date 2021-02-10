@@ -44,6 +44,8 @@ function hasMark(collection, mark)
 	return false;
 }
 
+// CSelections is used to add/modify/clear selections (text/cell-area(s))
+// on canvas using polygons (CPolygon).
 var CSelections = L.Class.extend({
 
 	initialize: function (pointSet, canvasOverlay, dpiScale) {
