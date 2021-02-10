@@ -415,6 +415,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		if (L.Browser.cypressTest) {
 			this._cypressHelperDiv = L.DomUtil.create('div', '', this._container);
 		}
+		this._cursorDataDiv = L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
+		this._selectionsDataDiv = L.DomUtil.create('div', 'selections-data', this._canvasContainer);
+
 		this._painter = new L.TileSectionManager(this);
 		this._painter._addTilesSection();
 		this._painter._sectionContainer.getSectionWithName('tiles').onResize();
