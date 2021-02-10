@@ -320,6 +320,9 @@ private:
 
     /// Secure session id token for proxyprotocol authentication
     std::string _proxyAccess;
+
+    /// Store last sent payload of form field button, so we can filter out redundant messages.
+    std::string _lastSentFormFielButtonMessage;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
