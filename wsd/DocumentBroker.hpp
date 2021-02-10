@@ -304,7 +304,7 @@ public:
 
     bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
 
-    bool isLastStorageUploadSuccessful() { return _storageManager.lastRequestSuccessful(); }
+    bool isLastStorageUploadSuccessful() { return _storageManager.lastUploadSuccessful(); }
 
     /// Handle the save response from Core and upload to storage as necessary.
     /// Also notifies clients of the result.
@@ -545,13 +545,13 @@ private:
     void getIOStats(uint64_t &sent, uint64_t &recv);
 
 private:
-    /// A base request manager.
+    /// Request manager.
     /// Encapsulates common fields for
     /// Save and Upload requests.
-    class RequestManagerBase
+    class RequestManager
     {
     public:
-        RequestManagerBase()
+        RequestManager()
             : _lastRequestTime(now())
             , _lastResponseTime(now())
             , _lastRequestSuccessful(true)
@@ -587,19 +587,22 @@ private:
         /// Returns the modified time of the document.
         std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
 
-    protected:
         /// Helper to get the current time.
         static std::chrono::steady_clock::time_point now()
         {
             return std::chrono::steady_clock::now();
         }
 
+        /// Returns the time the last request was made.
         std::chrono::steady_clock::time_point lastRequestTime() const { return _lastRequestTime; }
 
+        /// Sets the time the last request was made to now.
         void markLastRequestTime() { _lastRequestTime = now(); }
 
+        /// Returns the time the last response was received.
         std::chrono::steady_clock::time_point lastResponseTime() const { return _lastResponseTime; }
 
+        /// Sets the time the last response was received to now.
         void markLastResponseTime() { _lastResponseTime = now(); }
 
     private:
@@ -624,12 +627,11 @@ private:
     /// Tracks the last save request and response times.
     /// Tracks the local file's last modified time.
     /// Tracks the time a save response was received.
-    class SaveManager final : public RequestManagerBase
+    class SaveManager final
     {
     public:
         SaveManager()
-            : RequestManagerBase()
-            , _lastAutosaveCheckTime(now())
+            : _lastAutosaveCheckTime(RequestManager::now())
             , _isAutosaveEnabled(std::getenv("LOOL_NO_AUTOSAVE") == nullptr)
         {
         }
@@ -641,47 +643,73 @@ private:
         bool needAutosaveCheck() const
         {
             return isAutosaveEnabled()
-                   && std::chrono::duration_cast<std::chrono::seconds>(now()
+                   && std::chrono::duration_cast<std::chrono::seconds>(RequestManager::now()
                                                                        - _lastAutosaveCheckTime)
                           >= std::chrono::seconds(30);
         }
 
         /// Marks autosave check done.
-        void autosaveChecked() { _lastAutosaveCheckTime = now(); }
+        void autosaveChecked() { _lastAutosaveCheckTime = RequestManager::now(); }
 
         /// Marks the last save request as now.
-        void markLastSaveRequestTime() { markLastRequestTime(); }
+        void markLastSaveRequestTime() { _request.markLastRequestTime(); }
+
+        /// Returns whether the last save was successful or not.
+        bool lastSaveSuccessful() const { return _request.lastRequestSuccessful(); }
+
+        /// Sets whether the last save was successful or not.
+        void setLastSaveResult(bool success) { _request.setLastRequestResult(success); }
 
         /// Returns the last save request time.
         /// TODO: Remove: temporary for logging only.
         std::chrono::steady_clock::time_point lastSaveRequestTime() const
         {
-            return lastRequestTime();
+            return _request.lastRequestTime();
         }
 
         /// Marks the last save response as now.
-        void markLastSaveResponseTime() { markLastResponseTime(); }
+        void markLastSaveResponseTime() { _request.markLastResponseTime(); }
 
         /// Returns the last save response time.
         /// TODO: Remove: temporary for logging only.
         std::chrono::steady_clock::time_point lastSaveResponseTime() const
         {
-            return lastResponseTime();
+            return _request.lastResponseTime();
+        }
+
+        /// Set the last modified time of the document.
+        void setLastModifiedTime(std::chrono::system_clock::time_point time)
+        {
+            _request.setModifiedTime(time);
+        }
+
+        /// Returns the last modified time of the document.
+        std::chrono::system_clock::time_point getLastModifiedTime() const
+        {
+            return _request.getModifiedTime();
         }
 
         /// True iff a save is in progress (requested but not completed).
-        bool isSaving() const { return isActive(); }
+        bool isSaving() const { return _request.isActive(); }
 
         /// True iff the last save request has timed out.
-        bool hasSavingTimedOut() const
+        bool hasSavingTimedOut(std::chrono::milliseconds timeoutMs
+                               = std::chrono::milliseconds(COMMAND_TIMEOUT_MS)) const
         {
-            return isSaving()
-                   && std::chrono::duration_cast<std::chrono::milliseconds>(now()
-                                                                            - lastRequestTime())
-                          >= std::chrono::milliseconds(COMMAND_TIMEOUT_MS);
+            return isSaving() && timeSinceLastSaveRequest() >= timeoutMs;
+        }
+
+        /// The duration elapsed since we sent the last save request to Core.
+        std::chrono::milliseconds timeSinceLastSaveRequest() const
+        {
+            return std::chrono::duration_cast<std::chrono::milliseconds>(
+                RequestManager::now() - _request.lastRequestTime());
         }
 
     private:
+        /// Request tracking logic.
+        RequestManager _request;
+
         /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
 
@@ -690,18 +718,23 @@ private:
     };
 
     /// Responsible for managing document uploading into storage.
-    class StorageManager final : public RequestManagerBase
+    class StorageManager final
     {
     public:
         StorageManager()
-            : RequestManagerBase()
-            , _lastSaveTime(now())
+            : _lastSaveTime(RequestManager::now())
             , _lastUploadedFileModifiedTime(std::chrono::system_clock::now())
         {
         }
 
         /// Marks the last time we attempted to save and upload, regardless of outcome, to now.
-        void markLastSaveTime() { _lastSaveTime = now(); }
+        void markLastSaveTime() { _lastSaveTime = RequestManager::now(); }
+
+        /// Returns whether the last upload was successful or not.
+        bool lastUploadSuccessful() const { return _request.lastRequestSuccessful(); }
+
+        /// Sets whether the last upload was successful or not.
+        void setLastUploadResult(bool success) { _request.setLastRequestResult(success); }
 
         // Gets the last time we attempted to save.
         std::chrono::steady_clock::time_point getLastSaveTime() const { return _lastSaveTime; }
@@ -718,7 +751,22 @@ private:
             _lastUploadedFileModifiedTime = modifiedTime;
         }
 
+        /// Set the last modified time of the document.
+        void setLastModifiedTime(std::chrono::system_clock::time_point time)
+        {
+            _request.setModifiedTime(time);
+        }
+
+        /// Returns the last modified time of the document.
+        std::chrono::system_clock::time_point getLastModifiedTime() const
+        {
+            return _request.getModifiedTime();
+        }
+
     private:
+        /// Request tracking logic.
+        RequestManager _request;
+
         /// The last time we tried saving and uploading, regardless of
         /// whether the document was modified and a newer version saved
         /// and uploaded or not. In effect, this tracks the time we
