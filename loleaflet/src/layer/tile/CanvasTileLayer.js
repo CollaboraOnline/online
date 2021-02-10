@@ -445,6 +445,13 @@ L.TileSectionManager = L.Class.extend({
 		}
 	},
 
+	clearTilesSection: function () {
+		this._sectionContainer.setPenPosition(this._tilesSection);
+		var size = this._map.getPixelBoundsCore().getSize();
+		this._tilesSection.context.fillStyle = this._sectionContainer.getClearColor();
+		this._tilesSection.context.fillRect(0, 0, size.x, size.y);
+	},
+
 	_onTilesSectionResize: function () {
 		var tileSize = this.sectionProperties.docLayer._getTileSize();
 		var borderSize = 3;
