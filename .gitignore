@@ -140,3 +140,4 @@ Makecache
 
 # autoconf stuff
 autogen.input
+loleaflet/src/layer/tile/TilesSection.js
