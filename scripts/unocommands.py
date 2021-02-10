@@ -38,12 +38,6 @@ Update the translations of unocommands.js before releasing:
     print(message.format(program=sys.argv[0]))
     exit(1)
 
-# Replace characters which are not allowed as keys in JS
-def cleanSpecialCharacters(command):
-    clean = re.sub('\.', '_', command)
-    clean = re.sub('-', '_', clean)
-    return clean
-
 def commandsFromLine(line):
     """Extract uno commands name from lines like "  'Command1', 'Command2',"""
     commands = []
@@ -308,7 +302,7 @@ def writeUnocommandsJS(
 var unoCommandsArray = {\n''')
 
     for key in sorted(descriptions.keys()):
-        f.write('\t' + cleanSpecialCharacters(key) + ':{')
+        f.write('\t\'' + key + '\':{')
         for type in sorted(descriptions[key].keys()):
             f.write(type + ':{')
             for menuType in sorted(descriptions[key][type].keys()):
@@ -321,8 +315,6 @@ var unoCommandsArray = {\n''')
 
 window._UNO = function(string, component, isContext) {
 \tvar command = string.substr(5);
-\tcommand = command.replace(/\./g, '_');
-\tcommand = command.replace(/\-/g, '_');
 \tvar context = 'menu';
 \tif (isContext === true) {
 \t\tcontext = 'context';
@@ -369,7 +361,7 @@ def parseUnocommandsJS(onlineDir):
     f = open(onlineDir + '/loleaflet/src/unocommands.js', 'r',
              encoding='utf-8')
     for line in f:
-        m = re.match(r"\t([^:]*):.*", line)
+        m = re.match(r"\t\'([^:]*)\':.*", line)
         if m:
             command = m.group(1)
 
@@ -465,10 +457,10 @@ if __name__ == "__main__":
     else:
         written = writeUnocommandsJS(onlineDir, lofficeDir, menuCommands,
                                      contextCommands, toolbarCommands)
-        processedCommands = set([cleanSpecialCharacters(key) for key in written.keys()])
+        processedCommands = set(written.keys())
 
     # check that we have translations for everything
-    requiredCommands = set([cleanSpecialCharacters(key) for key in (menuCommands | contextCommands | toolbarCommands)])
+    requiredCommands = (menuCommands | contextCommands | toolbarCommands)
     dif = requiredCommands - processedCommands
 
     if len(dif) > 0:
