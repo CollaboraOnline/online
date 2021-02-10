@@ -67,7 +67,8 @@ ClientSession::ClientSession(
     _tileHeightTwips(0),
     _kitViewId(-1),
     _serverURL(requestDetails),
-    _isTextDocument(false)
+    _isTextDocument(false),
+    _lastSentFormFielButtonMessage("")
 {
     const std::size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -1450,6 +1451,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         LOG_INF("End of disconnection handshake for " << getId());
         docBroker->finalRemoveSession(getId());
         return true;
+    }
+    else if (tokens[0] == "formfieldbutton:") {
+        // Do not send redundant messages
+        if (_lastSentFormFielButtonMessage == firstLine)
+            return true;
+        _lastSentFormFielButtonMessage = firstLine;
     }
 
     if (!isDocPasswordProtected())
