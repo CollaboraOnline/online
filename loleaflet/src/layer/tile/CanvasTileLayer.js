@@ -43,7 +43,6 @@ L.TileSectionManager = L.Class.extend({
 		this._canvas = this._layer._canvas;
 		this._map = this._layer._map;
 		var mapSize = this._map.getPixelBoundsCore().getSize();
-		this._offscreenCanvases = [];
 		this._oscCtxs = [];
 		this._tilesSection = null; // Shortcut.
 
@@ -106,133 +105,8 @@ L.TileSectionManager = L.Class.extend({
 		};
 	},
 
-	_extendedPaneBounds: function (paneBounds) {
-		var extendedBounds = paneBounds.clone();
-		var halfExtraSize = this._osCanvasExtraSize / 2; // This is always an integer.
-		if (this._layer.getSplitPanesContext()) {
-			if (paneBounds.min.x) { // pane can move in x direction.
-				extendedBounds.min.x = Math.max(0, extendedBounds.min.x - halfExtraSize);
-				extendedBounds.max.x += halfExtraSize;
-			}
-			if (paneBounds.min.y) { // pane can move in y direction.
-				extendedBounds.min.y = Math.max(0, extendedBounds.min.y - halfExtraSize);
-				extendedBounds.max.y += halfExtraSize;
-			}
-		}
-		else {
-			extendedBounds.min.x -= halfExtraSize;
-			extendedBounds.max.x += halfExtraSize;
-			extendedBounds.min.y -= halfExtraSize;
-			extendedBounds.max.y += halfExtraSize;
-		}
-
-		return extendedBounds;
-	},
-
-	_paintWithPanes: function (tile, ctx) {
-		var tileTopLeft = tile.coords.getPos();
-		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
-
-		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			// co-ordinates of this pane in core document pixels
-			var paneBounds = ctx.paneBoundsList[i];
-			// co-ordinates of the main-(bottom right) pane in core document pixels
-			var viewBounds = ctx.viewBounds;
-			// Extended pane bounds
-			var extendedBounds = this._extendedPaneBounds(paneBounds);
-
-			// into real pixel-land ...
-			paneBounds.round();
-			viewBounds.round();
-			extendedBounds.round();
-
-			if (paneBounds.intersects(tileBounds)) {
-				var paneOffset = paneBounds.getTopLeft(); // allocates
-				// Cute way to detect the in-canvas pixel offset of each pane
-				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
-				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
-
-				this._drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this._tilesSection.context);
-			}
-
-			if (extendedBounds.intersects(tileBounds)) {
-				var offset = extendedBounds.getTopLeft();
-				offset.x = Math.min(offset.x, viewBounds.min.x);
-				offset.y = Math.min(offset.y, viewBounds.min.y);
-				this._drawTileInPane(tile, tileBounds, extendedBounds, offset, this._oscCtxs[i]);
-			}
-		}
-	},
-
-	_drawTileInPane: function (tile, tileBounds, paneBounds, paneOffset, canvasCtx) {
-		// intersect - to avoid state thrash through clipping
-		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
-		crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
-		crop.min.y = Math.max(paneBounds.min.y, tileBounds.min.y);
-		crop.max.x = Math.min(paneBounds.max.x, tileBounds.max.x);
-		crop.max.y = Math.min(paneBounds.max.y, tileBounds.max.y);
-
-		var cropWidth = crop.max.x - crop.min.x;
-		var cropHeight = crop.max.y - crop.min.y;
-
-		if (cropWidth && cropHeight) {
-			canvasCtx.drawImage(tile.el,
-				crop.min.x - tileBounds.min.x,
-				crop.min.y - tileBounds.min.y,
-				cropWidth, cropHeight,
-				crop.min.x - paneOffset.x,
-				crop.min.y - paneOffset.y,
-				cropWidth, cropHeight);
-		}
-
-		if (this._layer._debug)
-		{
-			canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-			canvasCtx.strokeRect(tile.coords.x - paneBounds.min.x, tile.coords.y - paneBounds.min.y, 256, 256);
-		}
-	},
-
-	_paintSimple: function (tile, ctx) {
-		ctx.viewBounds.round();
-		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
-		var halfExtraSize = this._osCanvasExtraSize / 2;
-		var extendedOffset = offset.add(new L.Point(halfExtraSize, halfExtraSize));
-		this._tilesSection.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
-		this._oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
-	},
-
-	paint: function(tile, ctx) {
-		if (!ctx)
-			ctx = this._paintContext();
-
-		this._sectionContainer.setPenPosition(this._tilesSection);
-
-		if (ctx.paneBoundsActive === true)
-			this._paintWithPanes(tile, ctx);
-		else
-			this._paintSimple(tile, ctx);
-	},
-
 	_addTilesSection: function () {
-		var that = this;
-		this._sectionContainer.createSection({
-			name: L.CSections.Tiles.name,
-			anchor: 'top left',
-			position: [200 * that._dpiScale, 200 * that._dpiScale], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
-			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
-			expand: 'top left bottom right', // Expand to all directions.
-			processingOrder: L.CSections.Tiles.processingOrder,
-			drawingOrder: L.CSections.Tiles.drawingOrder,
-			zIndex: L.CSections.Tiles.zIndex,
-			interactable: false,
-			sectionProperties: {
-				docLayer: that._layer,
-				tsManager: that
-			},
-			onInitialize: that._onTilesSectionInitialize,
-			onResize: that._onTilesSectionResize,
-			onDraw: that._onTilesSectionDraw.bind(that)
-		});
+		this._sectionContainer.pushSection(L.getNewTilesSection());
 		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
 	},
 
@@ -411,63 +285,11 @@ L.TileSectionManager = L.Class.extend({
 		this._sectionContainer.requestReDraw();
 	},
 
-	_onTilesSectionDraw: function () {
-		var zoom = Math.round(this._map.getZoom());
-		var part = this._layer._selectedPart;
-
-		// Calculate all this here intead of doing it per tile.
-		var ctx = this._paintContext();
-
-		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			this._oscCtxs[i].fillStyle = 'white';
-			this._oscCtxs[i].fillRect(0, 0, this._offscreenCanvases[i].width, this._offscreenCanvases[i].height);
-		}
-
-		var tileRanges = ctx.paneBoundsList.map(this._layer._pxBoundsToTileRange, this._layer);
-
-		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
-			var tileRange = tileRanges[rangeIdx];
-			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
-				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
-					var coords = new L.TileCoordData(
-						i * ctx.tileSize.x,
-						j * ctx.tileSize.y,
-						zoom,
-						part);
-
-					var key = coords.key();
-					var tile = this._layer._tiles[key];
-					if (tile && tile.loaded) {
-						this.paint(tile, ctx);
-					}
-				}
-			}
-		}
-	},
-
 	clearTilesSection: function () {
 		this._sectionContainer.setPenPosition(this._tilesSection);
 		var size = this._map.getPixelBoundsCore().getSize();
 		this._tilesSection.context.fillStyle = this._sectionContainer.getClearColor();
 		this._tilesSection.context.fillRect(0, 0, size.x, size.y);
-	},
-
-	_onTilesSectionResize: function () {
-		var tileSize = this.sectionProperties.docLayer._getTileSize();
-		var borderSize = 3;
-		this.sectionProperties.tsManager._osCanvasExtraSize = 2 * borderSize * tileSize;
-		for (var i = 0; i < 4; ++i) {
-			this.sectionProperties.tsManager._offscreenCanvases[i].width = this.size[0] + this.sectionProperties.tsManager._osCanvasExtraSize;
-			this.sectionProperties.tsManager._offscreenCanvases[i].height = this.size[1] + this.sectionProperties.tsManager._osCanvasExtraSize;
-		}
-	},
-
-	_onTilesSectionInitialize: function () {
-		for (var i = 0; i < 4; i++) {
-			this.sectionProperties.tsManager._offscreenCanvases.push(document.createElement('canvas'));
-			this.sectionProperties.tsManager._oscCtxs.push(this.sectionProperties.tsManager._offscreenCanvases[i].getContext('2d', { alpha: false }));
-		}
-		this.onResize();
 	},
 
 	paintOverlayArea: function(coords) {
@@ -485,8 +307,8 @@ L.TileSectionManager = L.Class.extend({
 	_viewReset: function () {
 		var ctx = this._paintContext();
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			this._oscCtxs[i].fillStyle = 'white';
-			this._oscCtxs[i].fillRect(0, 0, this._offscreenCanvases[i].width, this._offscreenCanvases[i].height);
+			this._tilesSection.oscCtxs[i].fillStyle = 'white';
+			this._tilesSection.oscCtxs[i].fillRect(0, 0, this._tilesSection.offscreenCanvases[i].width, this._tilesSection.offscreenCanvases[i].height);
 		}
 	},
 
@@ -501,7 +323,7 @@ L.TileSectionManager = L.Class.extend({
 			for (var i = 0; i < paneBoundsList.length; ++i) {
 				var paneBounds = paneBoundsList[i];
 				var paneSize = paneBounds.getSize();
-				var extendedBounds = painter._extendedPaneBounds(paneBounds);
+				var extendedBounds = painter._tilesSection.extendedPaneBounds(paneBounds);
 				var paneBoundsOffset = paneBounds.min.subtract(extendedBounds.min);
 
 				var inXBounds = (painter._newCenter.x >= paneBounds.min.x) && (painter._newCenter.x <= paneBounds.max.x);
@@ -518,7 +340,7 @@ L.TileSectionManager = L.Class.extend({
 					Math.max(0, center.x + (-center.x / painter._zoomFrameScale) + paneBoundsOffset.x),
 					Math.max(0, center.y + (-center.y / painter._zoomFrameScale) + paneBoundsOffset.y));
 
-				painter._tilesSection.context.drawImage(painter._offscreenCanvases[i],
+				painter._tilesSection.context.drawImage(painter._tilesSection.offscreenCanvases[i],
 					sourceTopLeft.x, sourceTopLeft.y,
 					// sourceWidth, sourceHeight
 					paneSize.x / painter._zoomFrameScale, paneSize.y / painter._zoomFrameScale,
@@ -1256,7 +1078,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		tile.active = true;
 
 		// paint this tile on canvas.
-		this._painter.paint(tile);
+		this._painter._tilesSection.paint(tile);
 		this._painter.paintOverlayArea(coords);
 
 		if (this._noTilesToLoad()) {
