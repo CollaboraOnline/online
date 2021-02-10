@@ -1979,7 +1979,8 @@ L.TileLayer = L.GridLayer.extend({
 					center = center.subtract(this._map.getSize().divideBy(2));
 					center.x = Math.round(center.x < 0 ? 0 : center.x);
 					center.y = Math.round(center.y < 0 ? 0 : center.y);
-					this._map.fire('scrollto', {x: center.x, y: center.y});
+					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected)
+						this._map.fire('scrollto', {x: center.x, y: center.y});
 				}
 			}
 		}
@@ -2375,7 +2376,7 @@ L.TileLayer = L.GridLayer.extend({
 	// / "beforeinput" events) and "up" for key releases (akin to the DOM
 	// "keyup" event).
 	//
-	// PageUp/PageDown are handled as special cases for spreadsheets - in
+	// PageUp/PageDown and select column & row are handled as special cases for spreadsheets - in
 	// addition of sending messages to loolwsd, they move the cell cursor around.
 	postKeyboardEvent: function(type, charCode, unoKeyCode) {
 		var winId = this._map.getWinId();
@@ -2396,6 +2397,12 @@ L.TileLayer = L.GridLayer.extend({
 					return;
 				}
 				this._cellCursorOnPgDn = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
+			}
+			else if (unoKeyCode === 9476) { // Select whole column.
+				this._map.wholeColumnSelected = true;
+			}
+			else if (unoKeyCode === 5380) { // Select whole row.
+				this._map.wholeRowSelected = true;
 			}
 		}
 

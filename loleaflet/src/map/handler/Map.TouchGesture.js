@@ -498,7 +498,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._moving = true;
 		} else if (this._state === L.Map.TouchGesture.CURSOR) {
 			this._map._docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, 1, 0);
-		} else {
+		} else if (this._map.scrollingIsHandled === false) {
 			this._map.dragging._draggable._onMove(this._constructFakeEvent(point, 'mousemove'));
 		}
 	},
