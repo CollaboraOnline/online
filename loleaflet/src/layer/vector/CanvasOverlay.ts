@@ -68,6 +68,8 @@ class CanvasOverlay {
 
 	private isVisible(path: CPath): boolean {
 		var pathBounds = path.getBounds();
+		if (!pathBounds.isValid())
+			return false;
 		return this.intersectsVisible(pathBounds);
 	}
 
@@ -97,7 +99,7 @@ class CanvasOverlay {
 	}
 
 	private redraw(path: CPath, oldBounds: CBounds) {
-		if (!this.isVisible(path) && !this.intersectsVisible(oldBounds))
+		if (!this.isVisible(path) && (!oldBounds.isValid() || !this.intersectsVisible(oldBounds)))
 			return;
 		// This does not get called via onDraw(ie, tiles aren't painted), so ask tileSection to "erase" by painting over.
 		// Repainting the whole canvas is not necessary but finding the minimum area to paint over

@@ -69,16 +69,6 @@ class CPolyline extends CPath {
 		this.setPointSet(pointSet);
 	}
 
-	private static invalidPoint(): CPoint {
-		return new CPoint(-1000000, -1000000);
-	}
-
-	private static emptyBounds(): CBounds {
-		var bounds = new CBounds();
-		bounds.extend(CPolyline.invalidPoint());
-		return bounds;
-	}
-
 	getPointSet(): CPointSet {
 		return this.pointSet;
 	}
@@ -88,7 +78,7 @@ class CPolyline extends CPath {
 		if (this.bounds)
 			oldBounds = this.bounds.clone();
 		else
-			oldBounds = CPolyline.emptyBounds();
+			oldBounds = new CBounds();
 
 		this.pointSet = pointSet;
 		this.updateRingsBounds();
@@ -100,7 +90,6 @@ class CPolyline extends CPath {
 		var bounds = this.bounds = new CBounds();
 
 		if (this.pointSet.empty()) {
-			bounds.extend(CPolyline.invalidPoint());
 			return;
 		}
 
@@ -188,6 +177,9 @@ class CPolyline extends CPath {
 	}
 
 	getHitBounds(): CBounds {
+		if (!this.bounds.isValid())
+			return this.bounds;
+
 		// add clicktolerance for hit detection/etc.
 		var w = this.clickTolerance();
 		var p = new CPoint(w, w);
