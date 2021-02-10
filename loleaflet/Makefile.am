@@ -222,6 +222,7 @@ LOLEAFLET_JS =\
 	src/layer/tile/CanvasSectionProps.js \
 	src/layer/tile/CanvasSectionContainer.js \
 	src/layer/tile/TilesSection.js \
+	src/layer/tile/ScrollSection.js \
 	src/layer/vector/CanvasOverlay.js \
 	src/layer/tile/GridLayer.js \
 	src/layer/tile/TileLayer.js \

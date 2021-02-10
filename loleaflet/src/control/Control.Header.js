@@ -287,6 +287,7 @@ L.Control.Header = L.Class.extend({
 			}
 		};
 
+		this._map.wholeRowSelected = true; // This variable is set early, state change will set this again.
 		this._map.sendUnoCommand('.uno:SelectRow ', command);
 	},
 
@@ -431,6 +432,7 @@ L.Control.Header = L.Class.extend({
 			}
 		};
 
+		this._map.wholeColumnSelected = true; // This variable is set early, state change will set this again.
 		this._map.sendUnoCommand('.uno:SelectColumn ', command);
 	},
 

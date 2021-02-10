@@ -134,7 +134,7 @@ class CanvasSectionObject {
 	onClick: Function; // Parameters: Point [x, y], e (native event object)
 	onDoubleClick: Function; // Parameters: Point [x, y], e (native event object)
 	onContextMenu: Function;
-	onMouseWheel: Function; // Parameters: Point [x, y], DeltaY, e (native event object)
+	onMouseWheel: Function; // Parameters: Point [x, y], Delta [X, Y], e (native event object)
 	onLongPress: Function; // Parameters: Point [x, y], e (native event object)
 	onMultiTouchStart: Function; // Parameters: e (native event object)
 	onMultiTouchMove: Function; // Parameters: Point [x, y], DragDistance [x, y], e (native event object)
@@ -464,10 +464,10 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private propagateOnMouseWheel(section: CanvasSectionObject, position: Array<number>, deltaY: number, e: MouseEvent) {
+	private propagateOnMouseWheel(section: CanvasSectionObject, position: Array<number>, delta: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseWheel(position, deltaY, e);
+				section.boundsList[i].onMouseWheel(position, delta, e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -506,14 +506,15 @@ class CanvasSectionContainer {
 
 	private onClick (e: MouseEvent) {
 		if (!this.draggingSomething) { // Prevent click event after dragging.
-			this.positionOnClick = this.convertPositionToCanvasLocale(e);
-
-			var s1 = this.findSectionContainingPoint(this.positionOnMouseDown);
-			var s2 = this.findSectionContainingPoint(this.positionOnMouseUp);
-			if (s1 && s2 && s1 == s2) { // Allow click event if only mouse was above same section while clicking.
-				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnClick);
-				if (section) { // "interactable" property is also checked inside function "findSectionContainingPoint".
-					this.propagateOnClick(section, this.convertPositionToSectionLocale(section, this.positionOnClick), e);
+			if (this.positionOnMouseDown !== null && this.positionOnMouseUp !== null) {
+				this.positionOnClick = this.convertPositionToCanvasLocale(e);
+				var s1 = this.findSectionContainingPoint(this.positionOnMouseDown);
+				var s2 = this.findSectionContainingPoint(this.positionOnMouseUp);
+				if (s1 && s2 && s1 == s2) { // Allow click event if only mouse was above same section while clicking.
+					var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnClick);
+					if (section) { // "interactable" property is also checked inside function "findSectionContainingPoint".
+						this.propagateOnClick(section, this.convertPositionToSectionLocale(section, this.positionOnClick), e);
+					}
 				}
 			}
 			this.clearMousePositions(); // Drawing takes place after cleaning mouse positions. Sections should overcome this evil.
@@ -635,7 +636,7 @@ class CanvasSectionContainer {
 
 	private onMouseWheel (e: WheelEvent) {
 		var point = this.convertPositionToCanvasLocale(e);
-		var delta = e.deltaY;
+		var delta: Array<number> = [e.deltaX, e.deltaY];
 		var section: CanvasSectionObject = this.findSectionContainingPoint(point);
 		if (section)
 			this.propagateOnMouseWheel(section, this.convertPositionToSectionLocale(section, point), delta, e);
