@@ -546,7 +546,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			var points = this._getPoints();
 			for (var i = 0; i < points.length; i++) {
 				this._handlers.push(
-					this._createHandler(this._map._docLayer._twipsToLatLng(points[i].point), i * 2, i)
+					this._createHandler(this._map._docLayer._twipsToLatLng(points[i].point), i * 2, i, this._onScaleStart)
 						.addTo(this._handlersGroup));
 			}
 		}
@@ -929,9 +929,10 @@ L.Handler.PathTransform = L.Handler.extend({
 	* @param  {L.LatLng} latlng
 	* @param  {Number}   type one of L.Handler.PathTransform.HandlerTypes
 	* @param  {Number}   index
+	* @param  {Function} event mousedown function
 	* @return {L.Handler.PathTransform.Handle}
 	*/
-	_createHandler: function(latlng, type, index) {
+	_createHandler: function(latlng, type, index, event) {
 		var HandleClass = this.options.handleClass;
 		var options = {
 			className: 'leaflet-drag-transform-marker drag-marker--' +
@@ -948,7 +949,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			L.Util.extend({}, this.options.handlerOptions, options)
 		);
 
-		marker.on('mousedown', this._onScaleStart, this);
+		marker.on('mousedown', event, this);
 		return marker;
 	},
 
