@@ -553,6 +553,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return { hasSelection: false };
 
 		var bounds = this._selections.getBounds();
+		console.assert(bounds.isValid(), 'Non empty selection should have valid bounds');
 		return {
 			hasSelection: true,
 			start: this._corePixelsToTwips(bounds.min).add([1, 1]),
