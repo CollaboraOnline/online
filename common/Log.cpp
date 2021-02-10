@@ -265,7 +265,7 @@ namespace Log
     void signalLogPrefix()
     {
         char buffer[1024];
-        prefix<sizeof(buffer) - 1>(buffer, "SIG");
+        prefix<sizeof(buffer) - 1>(buffer, "[ERR]");
         signalLog(buffer);
     }
 
