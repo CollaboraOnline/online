@@ -71,7 +71,7 @@
 }
 .main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--gray-bg-color);
-	margin-top: 0px;
+	margin: 0px;
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
