@@ -34,6 +34,11 @@ SRC_TS_JS_FILES := $(SRC_TS_ALL:.ts=.js)
 $(SRC_TS_ALL:.ts=.js): $(SRC_TS_ALL)
 	$(builddir)/node_modules/typescript/bin/tsc $(@:.js=.ts) --outfile $@ --module none --lib dom,es2016 --target ES5
 
+MOCHA_TS_FILES = $(wildcard $(srcdir)/mocha_tests/*.ts)
+MOCHA_TS_JS_FILES := $(MOCHA_TS_FILES:.ts=.js)
+$(MOCHA_TS_FILES:.ts=.js): $(MOCHA_TS_FILES)
+	$(builddir)/node_modules/typescript/bin/tsc $(@:.js=.ts) --outfile $@ --module none --lib dom,es2016 --target ES5
+
 SRC_TS = $(srcdir)/src/layer/vector/CanvasOverlay.ts
 SRC_TS_JS = $(srcdir)/src/layer/vector/CanvasOverlay.js
 SRC_TS_JS_DST = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES)) $(DIST_FOLDER)/src/layer/vector/CanvasOverlay.js
@@ -700,3 +705,7 @@ $(abs_srcdir)/admin/jsconfig.json:
 	\"exclude\" : [\"node_modules\"]\n}" > $@
 
 jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
+
+check: $(MOCHA_TS_JS_FILES)
+	@echo "Running mocha tests..."
+	npm test

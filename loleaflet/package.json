@@ -16,11 +16,14 @@
     "jquery-ui-dist": "1.12.1",
     "json-js": "1.1.2",
     "l10n-for-node": "0.0.1",
+    "mocha": "8.2.1",
     "select2": "4.0.13",
     "shrinkpack": "1.0.0-alpha",
     "smartmenus": "1.0.0",
     "stylelint": "13.7.0",
     "stylelint-config-standard": "20.0.0",
+    "@types/mocha": "8.2.0",
+    "@types/node": "14.14.25",
     "typescript": "3.9.5",
     "uglify-js": "3.9.4",
     "uglifycss": "0.0.29",
@@ -41,5 +44,8 @@
   "dependencies": {
     "canvas": "^2.6.1",
     "jsdom": "^16.4.0"
+  },
+  "scripts": {
+    "test": "mocha 'mocha_tests/**/*.js'"
   }
 }

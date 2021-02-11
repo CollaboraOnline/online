@@ -9,6 +9,8 @@ bower.json
 component.json
 
 src/layer/tile/CanvasSectionContainer.js
+src/layer/vector/CanvasOverlay.js
+mocha_tests/*.js
 
 _site
 dist/*.js
