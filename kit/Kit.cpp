@@ -1419,7 +1419,7 @@ private:
             Poco::Dynamic::Var var = parser.parse(renderOpts);
             renderOptsObj = var.extract<Object::Ptr>();
         }
-        else if (!userName.empty())
+        else
         {
             renderOptsObj = new Object();
         }
@@ -1431,11 +1431,9 @@ private:
             renderOptsObj->set(".uno:Author", makePropertyValue("string", userName));
         }
 
-        if (!spellOnline.empty())
-        {
-            bool bSet = (spellOnline != "false");
-            renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
-        }
+        // By default we enable spell-checking, unless it's disabled explicitly.
+        const bool bSet = (spellOnline != "false");
+        renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
 
         if (renderOptsObj)
         {
