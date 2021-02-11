@@ -206,7 +206,9 @@ L.Socket = L.Class.extend({
 		}
 		if (window.isLocalStorageAllowed) {
 			var spellOnline = window.localStorage.getItem('SpellOnline');
-			msg += ' spellOnline=' +  spellOnline;
+			if (spellOnline) {
+				msg += ' spellOnline=' + spellOnline;
+			}
 		}
 
 		this._doSend(msg);
