@@ -65,6 +65,7 @@ loleaflet/admin/jsconfig.json
 loleaflet/dist
 loleaflet/compilets
 loleaflet/typescript_js
+loleaflet/**/CanvasOverlay.js
 
 connect
 lokitclient
