@@ -9,6 +9,10 @@
 
 L.Control.Header = L.Class.extend({
 
+	_setConverter: function() {
+		this.converter = this._map._docLayer._twipsToCorePixels.bind(this._map._docLayer);
+	},
+
 	_initHeaderEntryStyles: function (className) {
 		var baseElem = document.getElementsByTagName('body')[0];
 		var elem = L.DomUtil.create('div', className, baseElem);
