@@ -28,6 +28,7 @@ class TilesSection {
 	map: any;
 	offscreenCanvases: Array<any> = new Array(0);
 	oscCtxs: Array<any> = new Array(0);
+	inZoomAnimation: boolean = false;
 
 	constructor () {
 		this.name = L.CSections.Tiles.name;
@@ -173,6 +174,9 @@ class TilesSection {
 	}
 
 	public onDraw () {
+		if (this.inZoomAnimation)
+			return;
+
 		var zoom = Math.round(this.map.getZoom());
 		var part = this.sectionProperties.docLayer._selectedPart;
 
@@ -204,6 +208,10 @@ class TilesSection {
 				}
 			}
 		}
+	}
+
+	public setInZoomAnim(setValue: boolean) {
+		this.inZoomAnimation = setValue;
 	}
 
 	public onMouseMove () {}
