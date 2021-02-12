@@ -23,7 +23,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	onInitialize: function () {
 		this._map = L.Map.THIS;
 		this._isColumn = true;
-		this.converter = null;
+		this._setConverter();
 		this._current = -1;
 		this._resizeHandleSize = 15 * this.dpiScale;
 		this._selection = {start: -1, end: -1};
