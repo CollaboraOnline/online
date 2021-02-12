@@ -281,7 +281,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	z-index: 2;
 }
 
-.ui-content.mobile-wizard {
+.ui-content.mobile-wizard:not(.unotoolbutton) {
 	background-color: white !important;
 	border: none !important;
 	padding: 0px 0px 16px;
@@ -860,7 +860,20 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColumnStyle, input[type='checkbox']#UseFirstColumnStyle, input[type='checkbox']#UseBandingRowStyle, input[type='checkbox']#UseLastRowStyle, input[type='checkbox']#UseFirstRowStyle{
 	margin-right: 0px !important;
 }
-#mobile-wizard button{
+#mobile-wizard #FontworkSameLetterHeights {
+	display: flex;
+	padding: 0px;
+	align-items: center;
+}
+#mobile-wizard #FontworkSameLetterHeights > * {
+	flex: 1 auto;
+	color: white;
+}
+#mobile-wizard #FontworkSameLetterHeights > img {
+	filter: brightness(3);
+}
+#mobile-wizard button,
+#mobile-wizard #FontworkSameLetterHeights {
 	height: 44px;
 	width: 92%;
 	border-radius: 4px;
@@ -869,6 +882,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	background-color: #0b87e7;
 	border: 1px solid #0b87e7;
 	margin: 5px 4%;
+	font-size: 13px;
 }
 #mobile-wizard button:focus{
 	outline: none;
@@ -983,7 +997,6 @@ input[type='checkbox'][disabled] {
 }
 
 /* Fontwork property panel */
-#FontworkSameLetterHeights.mobile-wizard,
 #ExtrusionToggle.mobile-wizard {
 	display: inline-table
 }
