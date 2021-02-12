@@ -319,7 +319,7 @@ L.TileSectionManager = L.Class.extend({
 		var splitPos = ctx.paneBoundsActive ? this._splitPos.multiplyBy(this._tilesSection.dpiScale) : new L.Point(0, 0);
 
 		var rafFunc = function () {
-
+			painter._sectionContainer.setPenPosition(painter._tilesSection);
 			for (var i = 0; i < paneBoundsList.length; ++i) {
 				var paneBounds = paneBoundsList[i];
 				var paneSize = paneBounds.getSize();
