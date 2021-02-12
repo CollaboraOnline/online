@@ -79,7 +79,8 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_startPlaying: function() {
-		this._slideShow.src = this._slideURL + '?StartSlideNumber=' + this._startSlideNumber;
+		var separator = (this._slideURL.indexOf('?') === -1) ? '?' : '&';
+		this._slideShow.src = this._slideURL + separator + 'StartSlideNumber=' + this._startSlideNumber;
 		this._slideShow.contentWindow.focus();
 	}
 });
