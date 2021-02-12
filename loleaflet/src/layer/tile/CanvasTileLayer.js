@@ -369,6 +369,7 @@ L.TileSectionManager = L.Class.extend({
 		this._calcZoomFrameScale(zoom, newCenter);
 
 		if (!this._inZoomAnim) {
+			this._tilesSection.setInZoomAnim(true);
 			this._inZoomAnim = true;
 			this._layer._prefetchTilesSync();
 			// Start RAF loop for zoom-animation
@@ -383,6 +384,7 @@ L.TileSectionManager = L.Class.extend({
 			this._calcZoomFrameScale(zoom, newCenter);
 			this.rafFunc();
 			this._zoomFrameScale = undefined;
+			this._tilesSection.setInZoomAnim(false);
 			this._inZoomAnim = false;
 		}
 	}
