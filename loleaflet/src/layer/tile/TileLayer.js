@@ -3040,7 +3040,8 @@ L.TileLayer = L.GridLayer.extend({
 				scaling: extraInfo.isResizable,
 				rotation: extraInfo.isRotatable && !this.hasTableSelection(),
 				uniformScaling: !this._isGraphicAngleDivisibleBy90(),
-				handles: extraInfo.handles.kinds || [],
+				handles: (extraInfo.handles) ? extraInfo.handles.kinds || [] : [],
+				shapeType: extraInfo.type,
 				scaleSouthAndEastOnly: this.hasTableSelection()});
 			if (extraInfo.dragInfo && extraInfo.dragInfo.svg) {
 				this._graphicMarker.removeEmbeddedSVG();
