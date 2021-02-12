@@ -983,4 +983,19 @@ input[type='checkbox'][disabled] {
 #fontworkproperties + .ui-content {
 	display: inline-flex;
 	flex-wrap: wrap;
+	align-items: flex-start;
+}
+
+#fontworkproperties + .ui-content > div {
+	margin: 0 !important;
+	padding: 0 !important;
+	flex: 1 30%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#fontworkproperties + .ui-content > div > * {
+	flex: 1 44px;
+	text-align: center;
 }
