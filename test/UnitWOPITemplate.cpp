@@ -45,7 +45,7 @@ public:
 
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", "test.odt");
-            fileInfo->set("TemplateSource", std::string("http://127.0.0.1:") + std::to_string(ClientPortNumber) + "/test.ott"); // must be http, otherwise Neon in the core complains
+            fileInfo->set("TemplateSource", helpers::getTestServerURI() + "/test.ott");
             fileInfo->set("Size", getFileContent().size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
