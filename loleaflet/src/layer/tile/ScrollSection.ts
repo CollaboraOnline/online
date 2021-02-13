@@ -30,19 +30,18 @@ class ScrollSection {
 	map: any;
 	documentWidth: number = 0;
 	documentHeight: number = 0;
-	currentScrollPosX: number = 0;
-	currentScrollPosY: number = 0;
-	ignoreScroll: boolean;
 	autoScrollTimer: any;
-	mockDoc: any;
 	hammer: any;
 	scrollContainer: any;
+	drawScrollBar: boolean = false;
+	previousDragDistance: Array<number> = null;
+	documentTopMax: number = Infinity;
 
 	constructor () {
 		this.name = L.CSections.Scroll.name;
 		this.anchor = ['top', 'right'];
 		this.position = [0, 0];
-		this.size = [30, 0];
+		this.size = [30 * window.devicePixelRatio, 0];
 		this.expand = ['bottom'];
 		this.processingOrder = L.CSections.Scroll.processingOrder;
 		this.drawingOrder = L.CSections.Scroll.drawingOrder;
@@ -60,10 +59,6 @@ class ScrollSection {
 
 	public onInitialize () {
 		this.scrollContainer = L.DomUtil.create('div', 'scroll-container', this.map._container.parentElement);
-		this.mockDoc = L.DomUtil.create('div', '', this.scrollContainer);
-		this.mockDoc.id = 'mock-doc';
-
-		this.addMCustomScrollBar();
 
 		if (!this.hammer && this.map.touchGesture) {
 			this.hammer = new Hammer(this.scrollContainer);
@@ -83,138 +78,10 @@ class ScrollSection {
 		}
 	}
 
-	private addMCustomScrollBar () {
-		var control = this;
-		var autoHideTimeout: any = null;
-		$('.scroll-container').mCustomScrollbar({
-			axis: 'yx',
-			theme: 'minimal-dark',
-			scrollInertia: 0,
-			advanced:{
-				autoExpandHorizontalScroll: true, /* weird bug, it should be false */
-				jumpOnContentResize: false /* prevent "jumping" on mobile devices */
-			},
-			callbacks:{
-				onScrollStart: function() {
-					control.map.fire('closepopup');
-				},
-				onScroll: function() {
-					control.onScrollEnd(this);
-					if (autoHideTimeout)
-						clearTimeout(autoHideTimeout);
-					autoHideTimeout = setTimeout(function() {
-						//$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').css({opacity: 0, 'filter': 'alpha(opacity=0)', '-ms-filter': 'alpha(opacity=0)'});
-						$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').removeClass('loleaflet-scrollbar-show');
-					}, 2000);
-				},
-				whileScrolling: function() {
-					control.onScroll(this);
-
-					// autoHide feature doesn't work because plugin relies on hovering on scroll container
-					// and we have a mock scroll container whereas the actual user hovering happens only on
-					// real document. Change the CSS rules manually to simulate autoHide feature.
-					$('.mCS-autoHide > .mCustomScrollBox ~ .mCSB_scrollTools').addClass('loleaflet-scrollbar-show');
-				},
-				onUpdate: function() {
-					console.debug('mCustomScrollbar: onUpdate:');
-				},
-				alwaysTriggerOffsets: false
-			}
-		});
-	}
-
-	public onCalcScroll (e: any) {
-		if (!this.map._enabled) {
-			return;
-		}
-
-		var newLeft = -e.mcs.left;
-		if (newLeft > this.currentScrollPosX) {
-			var viewportWidth = this.map.getSize().x;
-			var docWidth = this.map._docLayer._docPixelSize.x;
-			newLeft = Math.min(newLeft, docWidth - viewportWidth);
-		}
-		else {
-			newLeft = Math.max(newLeft, 0);
-		}
-
-		var newTop = -e.mcs.top;
-		if (newTop > this.currentScrollPosY) {
-			var viewportHeight = this.map.getSize().y;
-			var docHeight = Math.round(this.map._docLayer._docPixelSize.y);
-			newTop = Math.min(newTop, docHeight - viewportHeight);
-		}
-		else {
-			newTop = Math.max(newTop, 0);
-		}
-
-		var offset = new L.Point(
-			newLeft - this.currentScrollPosX,
-			newTop - this.currentScrollPosY);
-
-		if (offset.equals(new L.Point(0, 0))) {
-			return;
-		}
-
-		this.currentScrollPosX = newLeft;
-		this.currentScrollPosY = newTop;
-		this.map.fire('scrolloffset', offset);
-		this.map._docLayer.refreshViewData({ x: newLeft, y: newTop, offset: offset});
-		this.map.scroll(offset.x, offset.y);
-	}
-
-	public onScroll (e: any) {
-		if (this.map._docLayer._docType === 'spreadsheet') {
-			this.onCalcScroll(e);
-			return;
-		}
-
-		console.debug('_onScroll: ');
-		if (!this.map._enabled) {
-			return;
-		}
-
-		if (this.ignoreScroll) {
-			console.debug('_onScroll: ignoring scroll');
-			return;
-		}
-
-		var offset = new L.Point(
-			-e.mcs.left - this.currentScrollPosX,
-			-e.mcs.top - this.currentScrollPosY);
-
-		if (!offset.equals(new L.Point(0, 0))) {
-			this.currentScrollPosX = -e.mcs.left;
-			this.currentScrollPosY = -e.mcs.top;
-			console.debug('_onScroll: scrolling: ' + offset);
-			this.map.scroll(offset.x, offset.y);
-			this.map.fire('scrolloffset', offset);
-		}
-	}
-
-	public onScrollEnd (e: any) {
-		// needed in order to keep the row/column header correctly aligned
-		if (this.map._docLayer._docType === 'spreadsheet') {
-			return;
-		}
-
-		console.debug('_onScrollEnd:');
-		if (this.ignoreScroll) {
-			this.ignoreScroll = null;
-			console.debug('_onScrollEnd: scrollTop: ' + -e.mcs.top);
-			this.map.scrollTop(-e.mcs.top);
-		}
-		this.currentScrollPosX = -e.mcs.left;
-		this.currentScrollPosY = -e.mcs.top;
-		// Scrolling quickly via mousewheel messes up the annotations for some reason
-		// Triggering the layouting algorithm here, though unnecessary, fixes the problem.
-		// This is just a workaround till we find the root cause of why it messes up the annotations
-		this.map._docLayer.layoutAnnotations();
-	}
-
 	public onScrollTo (e: any) {
-		// triggered by the document (e.g. search result out of the viewing area)
-		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {calledFromInvalidateCursorMsg: e.calledFromInvalidateCursorMsg});
+		// Triggered by the document (e.g. search result out of the viewing area).
+		this.map.scrollTop(e.y, {});
+		this.map.scrollLeft(e.x, {});
 	}
 
 	public onScrollBy (e: any) {
@@ -228,8 +95,8 @@ class ScrollSection {
 		if (e.x < 0) {
 			x = '-=' + Math.abs(e.x);
 		}
-		// Note: timeout===1 is checked in my extremely ugly hack in jquery.mCustomScrollbar.js.
-		$('.scroll-container').mCustomScrollbar('scrollTo', [y, x], { timeout: 1 });
+
+		this.onScrollTo({x: x, y: y});
 	}
 
 	public onScrollVelocity (e: any) {
@@ -241,7 +108,7 @@ class ScrollSection {
 			clearInterval(this.autoScrollTimer);
 			this.map.isAutoScrolling = true;
 			this.autoScrollTimer = setInterval(L.bind(function() {
-				this._onScrollBy({x: e.vx, y: e.vy});
+				this.onScrollBy({x: e.vx, y: e.vy});
 			}, this), 100);
 		}
 	}
@@ -265,80 +132,124 @@ class ScrollSection {
 	}
 
 	public onUpdateSize (e: any) {
-		if (!this.mockDoc) {
-			return;
-		}
-
 		// we need to avoid precision issues in comparison (in the end values are pixels)
 		var newDocWidth = Math.ceil(e.x);
 		var newDocHeight = Math.ceil(e.y);
-
-		// for writer documents, ignore scroll while document size is being reduced
-		if (this.map.getDocType() === 'text' && newDocHeight < this.documentHeight) {
-			console.debug('_onUpdateSize: Ignore the scroll !');
-			this.ignoreScroll = true;
-		}
-
-		// Use the rounded pixel values as it makes little sense to use fractional pixels.
-		L.DomUtil.setStyle(this.mockDoc, 'width', newDocWidth + 'px');
-		L.DomUtil.setStyle(this.mockDoc, 'height', newDocHeight + 'px');
-
-		// custom scrollbar plugin checks automatically for content height changes but not for content width changes
-		// so we need to update scrollbars explicitly; moreover we want to avoid to have 'update' invoked twice
-		// in case prevDocHeight !== newDocHeight
-		if (this.documentWidth !== newDocWidth && this.documentHeight === newDocHeight) {
-			$('.scroll-container').mCustomScrollbar('update');
-		}
 
 		// Don't get them through L.DomUtil.getStyle because precision is no more than 6 digits
 		this.documentWidth = newDocWidth;
 		this.documentHeight = newDocHeight;
 	}
 
-	public onUpdateScrollOffset (e: any) {
-		// used on window resize
-		// also when dragging
-		var offset = new L.Point(e.x - this.currentScrollPosX, e.y - this.currentScrollPosY);
+	public getScrollProperties () :any {
+		var result: any = {};
+		// Scroll bar starts at tiles section's top right point
+		var tilesSection: any = this.containerObject.getSectionWithName(L.CSections.Tiles.name);
+		result.startY = 0;
+		if (tilesSection)
+			result.startY += tilesSection.myTopLeft[1];
 
-		this.map.fire('scrolloffset', offset);
-		if (e.updateHeaders && this.map._docLayer._docType === 'spreadsheet') {
-			// This adjustment was just meant for refreshViewData()
-			// to indicate that both column/row headers/gridlines
-			// should be updated, no matter what the actual offset
-			// is (unsure why).
-			// TODO: Get rid of the 'offset' adjustment and
-			// only send boolean flags to refreshViewData().
-			if (offset.x === 0) {
-				offset.x = 1;
-			}
-			if (offset.y === 0) {
-				offset.y = 1;
-			}
-			this.map._docLayer.refreshViewData({x: e.x, y: e.y, offset: offset});
-		}
+		result.scrollLength = this.size[1] - result.startY; // The length of the railway that the scroll bar moves on up & down.
+		result.percentage = this.documentTopLeft[1] / this.documentHeight; // % of the top position of the scroll bar.
+		result.scrollSize = result.scrollLength * (result.scrollLength / this.documentHeight); // Height of the scroll bar.
+		this.documentTopMax = this.documentHeight - result.scrollLength; // When documentTopLeft[1] value is equal to this value, it means whole document is visible.
+		result.documentTopMax = this.documentTopMax;
 
-		this.ignoreScroll = null;
-		$('.scroll-container').mCustomScrollbar('stop');
-		this.currentScrollPosX = e.x;
-		this.currentScrollPosY = e.y;
-		$('.scroll-container').mCustomScrollbar('scrollTo', [e.y, e.x], {callbacks: false, timeout:0});
+		if (result.scrollSize > this.documentHeight)
+			result.scrollSize = this.documentHeight; // This shouldn't happen.
+		else if (result.scrollSize < 100 * this.dpiScale)
+			result.scrollSize = 100 * this.dpiScale; // This can happen if document height is a big number.
+
+		return result;
 	}
 
-	public onMouseMove () {}
-	public onMouseDown () {}
-	public onMouseUp () {}
-	public onMouseEnter () {}
-	public onMouseLeave () {}
+	public onUpdateScrollOffset () {
+		if (this.map._docLayer._docType === 'spreadsheet')
+			this.map._docLayer.refreshViewData();
+	}
+
+	public onDraw () {
+		if (!this.drawScrollBar)
+			return;
+
+		// When documentTopLeft[1] is below zero, no scroll bar is needed, because whole document is visible (user must have zoomed-out).
+		if (this.documentTopLeft[1] < 0)
+			return;
+
+		var scrollProps: any = this.getScrollProperties();
+
+		this.context.fillStyle = 'red';
+		this.context.strokeStyle = 'grey';
+
+		this.context.beginPath();
+		this.context.fillRect(0, scrollProps.startY + scrollProps.scrollLength * scrollProps.percentage, this.size[0], scrollProps.scrollSize);
+		this.context.rect(0, scrollProps.startY + scrollProps.scrollLength * scrollProps.percentage, this.size[0], scrollProps.scrollSize);
+		this.context.stroke();
+	}
+
+	public onMouseEnter () {
+		this.drawScrollBar = true;
+		this.containerObject.requestReDraw();
+	}
+
+	public onMouseLeave () {
+		this.drawScrollBar = false;
+		this.containerObject.requestReDraw();
+	}
+
+	public scrollWithOffset (offset: number) {
+		if (this.documentTopLeft[1] + offset <= 0) // We shouldn't scroll document to a negative y value.
+			this.map.scrollTop(0, {});
+		else if (this.documentTopLeft[1] + offset >= this.documentTopMax) // We should stop at the bottom of the document.
+			this.map.scrollTop(this.documentTopMax, {});
+		else // Humph, everything is normal.
+			this.map.scroll(0, offset, {});
+	}
+
+	public onMouseMove (position: Array<number>, dragDistance: Array<number>) {
+		if (this.containerObject.draggingSomething) {
+			if (!this.previousDragDistance) {
+				this.previousDragDistance = [0, 0];
+			}
+
+			var scrollProps: any = this.getScrollProperties();
+			var diffY: number = dragDistance[1] - this.previousDragDistance[1];
+			var percentage: number = diffY / scrollProps.scrollLength;
+			var actualDistance = this.documentHeight * percentage;
+
+			this.scrollWithOffset(actualDistance);
+			this.previousDragDistance[1] = dragDistance[1];
+		}
+	}
+
+	public onMouseUp () {
+		this.previousDragDistance = null;
+		this.drawScrollBar = false;
+	}
+
+	public onMouseWheel (point: Array<number>, delta: number) {
+		if (delta > 0)
+			this.scrollWithOffset(30);
+		else
+			this.scrollWithOffset(-30);
+
+		this.drawScrollBar = true;
+		this.containerObject.requestReDraw();
+		this.drawScrollBar = false;
+	}
+
+	public onMouseDown () {
+		this.drawScrollBar = true;
+	}
+
 	public onClick () {}
 	public onDoubleClick () {}
 	public onContextMenu () {}
-	public onMouseWheel () {}
 	public onLongPress () {}
 	public onMultiTouchStart () {}
 	public onMultiTouchMove () {}
 	public onMultiTouchEnd () {}
 	public onResize () {}
-	public onDraw () {}
 	public onNewDocumentTopLeft () {}
 }
 
