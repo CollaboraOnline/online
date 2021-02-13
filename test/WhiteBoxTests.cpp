@@ -605,8 +605,7 @@ public:
 
     bool onLoad(const std::string& /*sessionId*/,
                 const std::string& /*uriAnonym*/,
-                const std::string& /*renderOpts*/,
-                const std::string& /*docTemplate*/) override
+                const std::string& /*renderOpts*/) override
     {
         return false;
     }

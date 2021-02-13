@@ -628,7 +628,7 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const S
     }
 #endif
 
-    const bool loaded = _docManager->onLoad(getId(), getJailedFilePathAnonym(), renderOpts, doctemplate);
+    const bool loaded = _docManager->onLoad(getId(), getJailedFilePathAnonym(), renderOpts);
     if (!loaded || _viewId < 0)
     {
         LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << "].");
