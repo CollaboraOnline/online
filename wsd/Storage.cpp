@@ -888,13 +888,21 @@ std::string WopiStorage::loadStorageFileToLocal(const Authorization& auth,
 {
     if (!templateUri.empty())
     {
-        // template are created in kit process, so just obtain a reference
-        setRootFilePath(Poco::Path(getLocalRootPath(), getFileInfo().getFilename()).toString());
-        setRootFilePathAnonym(LOOLWSD::anonymizeUrl(getRootFilePath()));
-        LOG_INF("Template reference " << getRootFilePathAnonym());
+        // Download the template file and load it normally.
+        // The document will get saved once loading in Core is complete.
+        const std::string templateUriAnonym = LOOLWSD::anonymizeUrl(templateUri);
+        try
+        {
+            LOG_INF("WOPI::GetFile template source: " << templateUriAnonym);
+            return downloadDocument(Poco::URI(templateUri), templateUriAnonym, auth, cookies);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Could not download template from [" + templateUriAnonym + "]. Error: "
+                    << ex.what());
+        }
 
-        setLoaded(true);
-        return Poco::Path(getJailPath(), getFileInfo().getFilename()).toString();
+        return std::string();
     }
 
     // First try the FileUrl, if provided.
