@@ -35,13 +35,13 @@ public:
 
     virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& /*message*/, std::shared_ptr<StreamSocket>& socket) override
     {
-        Poco::URI uriReq(request.getURI());
-        LOG_INF("Fake wopi host request: " << uriReq.toString() << " method " << request.getMethod());
+        const Poco::URI uriReq(request.getURI());
+        LOG_TST("Fake wopi host " << request.getMethod() << " request: " << uriReq.toString());
 
         // CheckFileInfo
         if (request.getMethod() == "GET" && uriReq.getPath() == "/wopi/files/10")
         {
-            LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
 
             Poco::LocalDateTime now;
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
@@ -93,7 +93,7 @@ public:
         // Get the template
         else if (request.getMethod() == "GET" && uriReq.getPath() == "/test.ott")
         {
-            LOG_INF("Fake wopi host request, handling template GetFile: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling template GetFile: " << uriReq.getPath());
 
             HttpHelper::sendFileAndShutdown(socket, TDOC "/test.ott", "");
 
@@ -102,7 +102,7 @@ public:
         // Save template
         else if (request.getMethod() == "POST" && uriReq.getPath() == "/wopi/files/10/contents")
         {
-            LOG_INF("Fake wopi host request, handling PutFile: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
 
             std::streamsize size = request.getContentLength();
             LOK_ASSERT( size > 0 );
@@ -129,24 +129,22 @@ public:
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWOPITemplate";
-
         switch (_phase)
         {
             case Phase::LoadTemplate:
             {
-                initWebsocket("/wopi/files/10?access_token=anything");
-
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
-                SocketPoll::wakeupWorld();
-
                 _phase = Phase::SaveDoc;
+
+                initWebsocket("/wopi/files/10?access_token=anything");
+                WSD_CMD("load url=" + getWopiSrc());
+
+                SocketPoll::wakeupWorld();
                 break;
             }
             case Phase::CloseDoc:
             {
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "closedocument", testName);
                 _phase = Phase::Polling;
+                WSD_CMD("closedocument");
                 break;
             }
             case Phase::Polling:
