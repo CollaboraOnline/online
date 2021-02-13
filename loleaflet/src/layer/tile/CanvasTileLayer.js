@@ -59,6 +59,25 @@ L.TileSectionManager = L.Class.extend({
 		this._splitPos = splitPanesContext ?
 			splitPanesContext.getSplitPos() : new L.Point(0, 0);
 		this._updatesRunning = false;
+		this._mirrorMapEventsToCanvasSectionContainer();
+	},
+
+	// Map and TilesSection overlap entirely. Map is above tiles section. In order to handle events in tiles section, we need to mirror them from map.
+	_mirrorMapEventsToCanvasSectionContainer: function () {
+		var mapElement = document.getElementById('map');
+		var that = this;
+		mapElement.addEventListener('mousemove', function (e) { that._sectionContainer.onMouseMove(e); });
+		mapElement.addEventListener('mousedown', function (e) { that._sectionContainer.onMouseDown(e); });
+		mapElement.addEventListener('mouseup', function (e) { that._sectionContainer.onMouseUp(e); });
+		mapElement.addEventListener('click', function (e) { that._sectionContainer.onClick(e); });
+		mapElement.addEventListener('dblclick', function (e) { that._sectionContainer.onDoubleClick(e); });
+		mapElement.addEventListener('contextmenu', function (e) { that._sectionContainer.onContextMenu(e); });
+		mapElement.addEventListener('wheel', function (e) { that._sectionContainer.onMouseWheel(e); });
+		mapElement.addEventListener('mouseleave', function (e) { that._sectionContainer.onMouseLeave(e); });
+		mapElement.addEventListener('touchstart', function (e) { that._sectionContainer.onTouchStart(e); });
+		mapElement.addEventListener('touchmove', function (e) { that._sectionContainer.onTouchMove(e); });
+		mapElement.addEventListener('touchend', function (e) { that._sectionContainer.onTouchEnd(e); });
+		mapElement.addEventListener('touchcancel', function (e) { that._sectionContainer.onTouchCancel(e); });
 	},
 
 	startUpdates: function () {
@@ -157,7 +176,7 @@ L.TileSectionManager = L.Class.extend({
 			processingOrder: L.CSections.Overlays.processingOrder,
 			drawingOrder: L.CSections.Overlays.drawingOrder,
 			zIndex: L.CSections.Overlays.zIndex,
-			interactable: true,
+			interactable: false,
 			sectionProperties: {
 				docLayer: tsMgr._layer,
 				tsManager: tsMgr
