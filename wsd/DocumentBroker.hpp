@@ -722,22 +722,22 @@ private:
     {
     public:
         StorageManager()
-            : _lastSaveTime(RequestManager::now())
+            : _lastUploadTime(RequestManager::now())
             , _lastUploadedFileModifiedTime(std::chrono::system_clock::now())
         {
         }
 
-        /// Marks the last time we attempted to save and upload, regardless of outcome, to now.
-        void markLastSaveTime() { _lastSaveTime = RequestManager::now(); }
+        /// Marks the last time we attempted to upload, regardless of outcome, to now.
+        void markLastUploadTime() { _lastUploadTime = RequestManager::now(); }
+
+        // Gets the last time we attempted to upload.
+        std::chrono::steady_clock::time_point getLastUploadTime() const { return _lastUploadTime; }
 
         /// Returns whether the last upload was successful or not.
         bool lastUploadSuccessful() const { return _request.lastRequestSuccessful(); }
 
         /// Sets whether the last upload was successful or not.
         void setLastUploadResult(bool success) { _request.setLastRequestResult(success); }
-
-        // Gets the last time we attempted to save.
-        std::chrono::steady_clock::time_point getLastSaveTime() const { return _lastSaveTime; }
 
         /// Get the modified-timestamp of the local file on disk we last uploaded.
         std::chrono::system_clock::time_point getLastUploadedFileModifiedTime() const
@@ -767,14 +767,14 @@ private:
         /// Request tracking logic.
         RequestManager _request;
 
-        /// The last time we tried saving and uploading, regardless of
-        /// whether the document was modified and a newer version saved
+        /// The last time we tried uploading, regardless of whether the
+        /// document was modified and a newer version saved
         /// and uploaded or not. In effect, this tracks the time we
         /// synchronized with Storage (i.e. the last time we either uploaded
         /// or had nothing new to upload). It is redundant as it is
         /// equivalent to the larger of 'Last Save Response Time' and
         /// 'Last Storage Response Time', and should be removed.
-        std::chrono::steady_clock::time_point _lastSaveTime;
+        std::chrono::steady_clock::time_point _lastUploadTime;
 
         /// The modified-timestamp of the local file on disk we uploaded last.
         std::chrono::system_clock::time_point _lastUploadedFileModifiedTime;
