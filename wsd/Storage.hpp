@@ -423,7 +423,6 @@ public:
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
         TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
-        std::chrono::milliseconds getCallDurationMs() const { return _callDurationMs; }
     private:
         /// User id of the user accessing the file
         std::string _userId;
@@ -487,9 +486,6 @@ public:
         bool _supportsRename;
         /// If user is allowed to rename the document
         bool _userCanRename;
-
-        /// Time it took to call WOPI's CheckFileInfo
-        std::chrono::milliseconds _callDurationMs;
     };
 
     /// Returns the response of CheckFileInfo WOPI call for URI that was
