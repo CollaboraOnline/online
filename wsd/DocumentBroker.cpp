@@ -619,12 +619,17 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     std::string templateSource;
 
 #if !MOBILEAPP
-    std::chrono::milliseconds checkFileInfoCallDurationMs;
+    std::chrono::milliseconds checkFileInfoCallDurationMs = std::chrono::milliseconds::zero();
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
+        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(
             session->getAuthorization(), session->getCookies(), *_lockCtx);
+
+        checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - start);
+
         userId = wopifileinfo->getUserId();
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
@@ -708,8 +713,6 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             LOG_DBG("Session [" << sessionId << "] is the document owner");
             session->setDocumentOwner(true);
         }
-
-        checkFileInfoCallDurationMs = wopifileinfo->getCallDurationMs();
 
         // Pass the ownership to client session
         session->setWopiFileInfo(wopifileinfo);
