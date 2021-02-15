@@ -364,7 +364,6 @@ public:
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
                 const std::string& jailPath)
         : StorageBase(uri, localStorePath, jailPath)
-        , _wopiLoadDuration(std::chrono::milliseconds::zero())
         , _wopiSaveDuration(std::chrono::milliseconds::zero())
         , _reuseCookies(false)
     {
@@ -510,8 +509,7 @@ public:
                                           const std::string& saveAsFilename,
                                           const bool isRename) override;
 
-    /// Total time taken for making WOPI calls during load
-    std::chrono::milliseconds getWopiLoadDuration() const { return _wopiLoadDuration; }
+    /// Total time taken for making WOPI calls during saving.
     std::chrono::milliseconds getWopiSaveDuration() const { return _wopiSaveDuration; }
 
 protected:
@@ -545,8 +543,7 @@ private:
     /// A URl provided by the WOPI host to use for GetFile.
     std::string _fileUrl;
 
-    // Time spend in loading the file from storage
-    std::chrono::milliseconds _wopiLoadDuration;
+    // Time spend in saving the file from storage
     std::chrono::milliseconds _wopiSaveDuration;
     /// Whether or not to re-use cookies from the browser for the WOPI requests.
     bool _reuseCookies;
