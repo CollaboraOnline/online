@@ -36,4 +36,16 @@ describe('Calc sidebar dialog image caching', function() {
 			cy.wait(500);
 		}
 	});
+
+	it('Keep LOK dialog opened until closing document.', function() {
+		cy.get('#tb_editbar_item_setborderstyle')
+			.click();
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame13')
+		    .click();
+
+		cy.get('.lokdialog')
+			.should('exist');
+	});
+
 });
