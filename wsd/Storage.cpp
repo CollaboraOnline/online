@@ -993,7 +993,6 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     std::istream& rs = psession->receiveResponse(response);
     const std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - startTime);
-    _wopiLoadDuration += diff;
 
     Log::StreamLogger logger = Log::trace();
     if (logger.enabled())
