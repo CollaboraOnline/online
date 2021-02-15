@@ -794,7 +794,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
     // Let's download the document now, if not downloaded.
     std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
-    if (!_storage->isLoaded())
+    if (!_storage->isDownloaded())
     {
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         std::string localPath = _storage->downloadStorageFileToLocal(
