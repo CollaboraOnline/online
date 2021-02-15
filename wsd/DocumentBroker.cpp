@@ -182,7 +182,7 @@ DocumentBroker::DocumentBroker(ChildType type,
     _lockCtx(new LockContext()),
     _tileVersion(0),
     _debugRenderedTileCount(0),
-    _wopiLoadDuration(0),
+    _wopiDownloadDuration(0),
     _mobileAppDocId(mobileAppDocId)
 {
     assert(!_docKey.empty());
@@ -924,9 +924,10 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     if (wopiStorage != nullptr)
     {
         // Add the time taken to load the file from storage and to check file info.
-        _wopiLoadDuration += getFileCallDurationMs + checkFileInfoCallDurationMs;
-        const std::string msg = "stats: wopiloadduration "
-                                + std::to_string(_wopiLoadDuration.count() / 1000.); // In seconds.
+        _wopiDownloadDuration += getFileCallDurationMs + checkFileInfoCallDurationMs;
+        const auto downloadSecs = _wopiDownloadDuration.count() / 1000.;
+        const std::string msg
+            = "stats: wopiloadduration " + std::to_string(downloadSecs); // In seconds.
         LOG_TRC("Sending to Client [" << msg << "].");
         session->sendTextFrame(msg);
     }
@@ -1533,7 +1534,7 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
     // Tell the admin console about this new doc
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
                              session->getUserId(), _childProcess->getSMapsFD());
-    Admin::instance().setDocWopiDownloadDuration(_docKey, _wopiLoadDuration);
+    Admin::instance().setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
 #endif
 
     // Add and attach the session.

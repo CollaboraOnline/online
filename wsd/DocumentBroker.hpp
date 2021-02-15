@@ -924,7 +924,7 @@ private:
     std::chrono::steady_clock::time_point _lastActivityTime;
     std::chrono::steady_clock::time_point _threadStart;
     std::chrono::milliseconds _loadDuration;
-    std::chrono::milliseconds _wopiLoadDuration;
+    std::chrono::milliseconds _wopiDownloadDuration;
 
     /// Unique DocBroker ID for tracing and debugging.
     static std::atomic<unsigned> DocBrokerId;
