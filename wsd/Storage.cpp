@@ -379,7 +379,8 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
         throw;
     }
 
-    setLoaded(true);
+    setDownloaded(true);
+
     // Now return the jailed path.
 #ifndef KIT_IN_PROCESS
     if (LOOLWSD::NoCapsForKit)
@@ -394,7 +395,6 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 
     // In the mobile app we use no jail
     setRootFilePath(getUri().getPath());
-    setLoaded(true);
 
     return getRootFilePath();
 #endif
@@ -1031,7 +1031,7 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" << uriAnonym << "] -> "
                                         << getRootFilePathAnonym() << " in " << diff.count()
                                         << 's');
-    setLoaded(true);
+    setDownloaded(true);
 
     // Now return the jailed path.
     if (LOOLWSD::NoCapsForKit)

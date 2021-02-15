@@ -163,7 +163,7 @@ public:
         _localStorePath(localStorePath),
         _jailPath(jailPath),
         _fileInfo("", "lool", std::chrono::system_clock::time_point(), 0),
-        _isLoaded(false),
+        _isDownloaded(false),
         _forceSave(false),
         _isUserModified(false),
         _isAutosave(false),
@@ -196,9 +196,9 @@ public:
         _jailedFilePathAnonym = newPath;
     }
 
-    void setLoaded(bool loaded) { _isLoaded = loaded; }
+    void setDownloaded(bool loaded) { _isDownloaded = loaded; }
 
-    bool isLoaded() const { return _isLoaded; }
+    bool isDownloaded() const { return _isDownloaded; }
 
     /// Asks the storage object to force overwrite to storage upon next save
     /// even if document turned out to be changed in storage
@@ -274,7 +274,7 @@ private:
     std::string _jailedFilePath;
     std::string _jailedFilePathAnonym;
     FileInfo _fileInfo;
-    bool _isLoaded;
+    bool _isDownloaded;
     bool _forceSave;
 
     /// The document has been modified by the user.
