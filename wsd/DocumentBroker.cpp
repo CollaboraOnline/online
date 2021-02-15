@@ -801,10 +801,15 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     broadcastLastModificationTime(session);
 
     // Let's download the document now, if not downloaded.
+    std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
     if (!_storage->isLoaded())
     {
+        std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         std::string localPath = _storage->downloadStorageFileToLocal(
             session->getAuthorization(), session->getCookies(), *_lockCtx, templateSource);
+
+        getFileCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - start);
 
         _docState.setStatus(DocumentState::Status::Loading); // Done downloading.
 
@@ -927,11 +932,10 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     // Since document has been loaded, send the stats if its WOPI
     if (wopiStorage != nullptr)
     {
-        // Get the time taken to load the file from storage
-        // Add the time taken to check file info
-        _wopiLoadDuration = wopiStorage->getWopiLoadDuration() + checkFileInfoCallDurationMs;
-        const std::string msg
-            = "stats: wopiloadduration " + std::to_string(_wopiLoadDuration.count() / 1000.); // In seconds.
+        // Add the time taken to load the file from storage and to check file info.
+        _wopiLoadDuration += getFileCallDurationMs + checkFileInfoCallDurationMs;
+        const std::string msg = "stats: wopiloadduration "
+                                + std::to_string(_wopiLoadDuration.count() / 1000.); // In seconds.
         LOG_TRC("Sending to Client [" << msg << "].");
         session->sendTextFrame(msg);
     }

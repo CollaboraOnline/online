@@ -1047,8 +1047,6 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     const std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - startTime);
 
-    _wopiLoadDuration += diff;
-
     if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
     {
         // Log the response header.
