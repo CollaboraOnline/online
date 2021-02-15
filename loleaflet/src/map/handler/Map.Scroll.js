@@ -11,6 +11,7 @@ L.Map.mergeOptions({
 L.Map.Scroll = L.Handler.extend({
 	addHooks: function () {
 		L.DomEvent.on(this._map._container, {
+			wheel: this._onWheelScroll,
 			mousewheel: this._onWheelScroll,
 			MozMousePixelScroll: L.DomEvent.preventDefault
 		}, this);
@@ -70,10 +71,10 @@ L.Map.Scroll = L.Handler.extend({
 	},
 
 	_onWheelScroll: function (e) {
-		var delta = L.DomEvent.getWheelDelta(e);
+		var delta =  -1 * e.deltaY; // L.DomEvent.getWheelDelta(e);
 		var debounce = this._map.options.wheelDebounceTime;
 
-		this._delta += delta;
+		this._delta = delta;
 		this._lastMousePos = this._map.mouseEventToContainerPoint(e);
 
 		if (!this._startTime) {
@@ -85,17 +86,6 @@ L.Map.Scroll = L.Handler.extend({
 		clearTimeout(this._timer);
 		if (e.ctrlKey) {
 			this._timer = setTimeout(L.bind(this._performZoom, this), left);
-		}
-		else if (e.shiftKey) {
-			this._vertical = 0;
-			this._timer = setTimeout(L.bind(this._performScroll, this), left);
-		}
-		else {
-			if (Math.abs(e.deltaX) > Math.abs(e.deltaY))
-				this._vertical = 0;
-			else
-				this._vertical = 1;
-			this._timer = setTimeout(L.bind(this._performScroll, this), left);
 		}
 
 		L.DomEvent.stop(e);
@@ -121,7 +111,7 @@ L.Map.Scroll = L.Handler.extend({
 		map.stop(); // stop panning and fly animations if any
 
 		delta = delta > 0 ? Math.ceil(delta) : Math.floor(delta);
-		delta = Math.max(Math.min(delta, 4), -4);
+		delta = Math.max(Math.min(delta, 1), -1);
 		delta = map._limitZoom(zoom + delta) - zoom;
 
 		this._delta = 0;
