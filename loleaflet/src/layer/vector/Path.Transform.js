@@ -425,17 +425,15 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._handlersGroup.removeLayer(this._customMarker);
 		}
 
-		this._handleLine = this._rotationMarker = null;
+		if (this._polyLine) {
+			this._handlersGroup.removeLayer(this._polyLine);
+		}
+
+		this._handleLine = this._rotationMarker = this._polyLine = null;
 
 		for (var i = this._handlers.length - 1; i >= 0; i--) {
 			handlersGroup.removeLayer(this._handlers[i]);
 		}
-
-		if (this._polyLine) {
-			this._map.removeLayer(this._polyLine);
-			this._polyLine = null;
-		}
-
 
 		this._createHandlers();
 	},
@@ -703,7 +701,14 @@ L.Handler.PathTransform = L.Handler.extend({
 				this.options.polyLineOptions).addTo(this._handlersGroup);
 		}
 		else {
-			this._originMarker = this._handlers[(this._activeMarker.options.index + 1) % this._polyEdges.length];
+			var originIndex = (this._activeMarker.options.index + 1) % this._polyEdges.length;
+			this._originMarker = this._handlers[originIndex];
+			if (this.options.shapeType == 2) { // flat line
+				this._polyLine = new L.Polyline([
+					originIndex === 0 ? this._originMarker.getLatLng() : this._activeMarker.getLatLng(),
+					originIndex === 0 ? this._activeMarker.getLatLng() : this._originMarker.getLatLng()],
+				this.options.polyLineOptions).addTo(this._handlersGroup);
+			}
 		}
 		if (this._polyLine)
 			this._map.addLayer(this._polyLine);
@@ -753,7 +758,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		}
 
 		// no scale - middle point or line
-		if (ratioX == ratioY) {
+		if (this._polyLine) {
 			var direction = new L.LatLng(0,0);
 			var middleHandleCursor = 0;
 			if (this._activeMarker.options.cursor == 8) {
@@ -767,19 +772,22 @@ L.Handler.PathTransform = L.Handler.extend({
 			} else {
 				direction = evt.latlng;
 			}
-			if (middleHandleCursor && this._polyLine) {
-				var lineTop;
-				var lineBottom;
+			if (this._polyLine) {
+				var lineTop = this._polyLine.getLatLngs()[0];
+				var lineBottom = this._polyLine.getLatLngs()[1];
 				if (middleHandleCursor == 10) {
-					lineTop = this._polyLine.getLatLngs()[0];
-					lineBottom = this._polyLine.getLatLngs()[1];
 					lineTop.lng = direction.lng;
 					lineBottom.lng = direction.lng;
-				} else {
-					lineTop = this._polyLine.getLatLngs()[0];
-					lineBottom = this._polyLine.getLatLngs()[1];
+				} else if (middleHandleCursor == 8) {
 					lineTop.lat = direction.lat;
 					lineBottom.lat = direction.lat;
+				} else if (this.options.shapeType == 2) { // flat line
+					var handleIndex = this._activeMarker.options.index;
+					if (handleIndex == 0) {
+						lineTop = direction;
+					} else {
+						lineBottom = direction;
+					}
 				}
 				this._polyLine.setLatLngs([lineTop, lineBottom]);
 			}
