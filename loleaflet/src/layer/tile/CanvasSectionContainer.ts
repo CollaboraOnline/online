@@ -157,6 +157,11 @@ class CanvasSectionObject {
 		this.onNewDocumentTopLeft = options.onNewDocumentTopLeft ? options.onNewDocumentTopLeft: function() {};
 		this.onRemove = options.onRemove ? options.onRemove: function() {};
 	}
+
+	getTestDivContainer(): HTMLDivElement {
+		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
+		return element;
+	}
 }
 
 class CanvasSectionContainer {
