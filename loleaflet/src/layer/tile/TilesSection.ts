@@ -15,7 +15,7 @@ class TilesSection {
 	backgroundColor: string = null;
 	borderColor: string = null;
 	boundToSection: string = null;
-	anchor: Array<string> = new Array(0);
+	anchor: Array<any> = new Array(0);
 	position: Array<number> = new Array(0);
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
@@ -32,8 +32,9 @@ class TilesSection {
 
 	constructor () {
 		this.name = L.CSections.Tiles.name;
-		this.anchor = ['top', 'left'];
-		this.position = [200, 200]; // This will be adjusted in "onInitialize" according to dpiScale.
+		// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
+		this.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
+		this.position = [0, 0]; // This section's myTopLeft will be anchored to other sections^. No initial position is needed.
 		this.size = [0, 0]; // Going to be expanded, no initial width or height is necessary.
 		this.expand = ['top', 'left', 'bottom', 'right'];
 		this.processingOrder = L.CSections.Tiles.processingOrder;
@@ -47,8 +48,6 @@ class TilesSection {
 	}
 
 	public onInitialize () {
-		this.position = [Math.round(200 * this.dpiScale), Math.round(200 * this.dpiScale)]; // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
-
 		for (var i = 0; i < 4; i++) {
 			this.offscreenCanvases.push(document.createElement('canvas'));
 			this.oscCtxs.push(this.offscreenCanvases[i].getContext('2d', { alpha: false }));
