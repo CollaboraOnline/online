@@ -10,6 +10,16 @@
 	New section's options:
 	name: 'tiles' | 'row headers' | 'column headers' | 'markers & cursor' | 'shapes' | 'scroll' etc.
 	anchor: 'top left' | 'top right' | 'bottom left' | 'bottom right' (Examples: For row & column headers, anchor will be 'top left'; If we would want to draw something sticked to bottom, it would be 'bottom left' or 'bottom right').
+		One can also anchor sections to other sections' edges.
+		Order is important, first variables are related to top or bottom, next ones are related to left or right.
+		Examples:
+		1- [["column header", "bottom", "some section name", "top", "top"], "left"]
+			^ If "column header" section exists, its bottom will be section's top
+			If "some section name" exists, its top will be section's top.
+			If none of them exists, canvas's top will be used as anchor.
+			Canvas's left will be used as horizontal anchor.
+		2- [["column header", "bottom", "ruler", "bottom", "top"], ["row header", "right", "left"]]
+
 	position: [0, 0] | [10, 50] | [x, y] // Related to anchor. Example 'bottom right': P(0, 0) is bottom right etc. myTopLeft is updated according to position and anchor.
 	size: [100, 100] | [10, 20] | [maxX, maxY] // This doesn't restrict the drawable area, that is up to implementation. Size is not important for expanded directions. Expandable size is assigned after calculations.
 	zIndex: Elements with highest zIndex will be drawn on top.
@@ -119,7 +129,7 @@ class CanvasSectionObject {
 		this.name = options.name;
 		this.backgroundColor = options.backgroundColor ? options.backgroundColor: null;
 		this.borderColor = options.borderColor ? options.borderColor: null;
-		this.anchor = options.anchor.split(' ');
+		this.anchor = typeof options.anchor === 'string' ? options.anchor.split(' '): options.anchor;
 		this.position = options.position;
 		this.size = options.size;
 		this.expand = options.expand.split(' ');
@@ -693,70 +703,116 @@ class CanvasSectionContainer {
 		section.size[1] = Math.round(section.size[1]);
 	}
 
-	private locateSections () {
-		for (var i: number = 0; i < this.sections.length; i++) {
-			var section: CanvasSectionObject = this.sections[i];
-			section.isLocated = false;
-			section.myTopLeft = null;
-			var x = section.anchor[1] === 'left' ? section.position[0]: (this.right - (section.position[0] + section.size[0]));
-			var y = section.anchor[0] === 'top' ? section.position[1]: (this.bottom - (section.position[1] + section.size[1]));
-			if (!section.boundToSection) {
-				section.myTopLeft = [x, y];
-				if (section.expand[0] !== '') {
-					if (section.expand.includes('left') || section.expand.includes('right'))
-						section.size[0] = 0;
-					if (section.expand.includes('top') || section.expand.includes('bottom'))
-						section.size[1] = 0;
+	private calculateSectionInitialPosition(section: CanvasSectionObject, index: number): number {
+		if (typeof section.anchor[index] === 'string' || section.anchor[index].length === 1) {
+			var anchor: string = typeof section.anchor[index] === 'string' ? section.anchor[index]: section.anchor[index][0];
+			if (index === 0)
+				return anchor === 'top' ? section.position[1]: (this.bottom - (section.position[1] + section.size[1]));
+			else
+				return anchor === 'left' ? section.position[0]: (this.right - (section.position[0] + section.size[0]));
+		}
+		else {
+			// If we are here, it means section's edge(s) will be snapped to another section's edges.
+			// Count should always be an odd number. Because last variable will be used as a fallback to canvas's edges (top, bottom, right or left).
+			// See anchor explanation on top of this file.
+			// Correct example: ["header", "bottom", "top"] => Look for section "header", if found, use its bottom, if not found, use canvas's top.
+			if (section.anchor[index].length % 2 === 0) {
+				console.error('Section: ' + section.name + '. Wrong anchor definition.');
+				return 0;
+			}
+			else {
+				var count: number = section.anchor[index].length;
+				var targetSection: CanvasSectionObject = null;
+				var targetEdge: string = null;
+				for (var i: number = 0; i < count - 1; i++) {
+					targetSection = this.getSectionWithName(section.anchor[index][i]);
+					if (targetSection) {
+						targetEdge = section.anchor[index][i + 1];
+						break;
+					}
+				}
+
+				if (targetSection) {
+					// So, we have target section, we will use its position. Is it located?
+					if (!targetSection.isLocated) {
+						console.error('Section: ' + section.name + '. Target section for anchor should be located before this section.'
+							+ ' It means that target section\'s (if zIndex is the same) processing order should be less or its zIndex should be less than this section.');
+						return 0;
+					}
+					else {
+						if (targetEdge === 'top')
+							return targetSection.myTopLeft[1] - Math.round(this.dpiScale);
+						else if (targetEdge === 'bottom')
+							return targetSection.myTopLeft[1] + targetSection.size[1] + Math.round(this.dpiScale);
+						else if (targetEdge === 'left')
+							return targetSection.myTopLeft[0] - Math.round(this.dpiScale);
+						else if (targetEdge === 'right')
+							return targetSection.myTopLeft[0] + targetSection.size[0] + Math.round(this.dpiScale);
+					}
 				}
 				else {
-					this.roundPositionAndSize(section);
-					section.isLocated = true;
+					// No target section is found. Use fallback.
+					var anchor: string = section.anchor[index][count - 1];
+					if (index === 0)
+						return anchor === 'top' ? section.position[1]: (this.bottom - (section.position[1] + section.size[1]));
+					else
+						return anchor === 'left' ? section.position[0]: (this.right - (section.position[0] + section.size[0]));
 				}
+			}
+		}
+	}
+
+	private expandSection(section: CanvasSectionObject) {
+		if (section.expand.includes('left')) {
+			var initialX = section.myTopLeft[0];
+			section.myTopLeft[0] = this.hitLeft(section);
+			section.size[0] = initialX - section.myTopLeft[0];
+		}
+
+		if (section.expand.includes('right')) {
+			section.size[0] = this.hitRight(section) - section.myTopLeft[0];
+		}
+
+		if (section.expand.includes('top')) {
+			var initialY = section.myTopLeft[1];
+			section.myTopLeft[1] = this.hitTop(section);
+			section.size[1] = initialY - section.myTopLeft[1];
+		}
+
+		if (section.expand.includes('bottom')) {
+			section.size[1] = this.hitBottom(section) - section.myTopLeft[1];
+		}
+	}
+
+	private locateSections () {
+		// Reset some values.
+		for (var i: number = 0; i < this.sections.length; i++) {
+			this.sections[i].isLocated = false;
+			this.sections[i].myTopLeft = null;
+		}
+
+		for (var i: number = 0; i < this.sections.length; i++) {
+			var section: CanvasSectionObject = this.sections[i];
+			if (!section.boundToSection) {
+				section.myTopLeft = [this.calculateSectionInitialPosition(section, 1), this.calculateSectionInitialPosition(section, 0)];
+
+				if (section.expand[0] !== '')
+					this.expandSection(section);
+
+				this.roundPositionAndSize(section);
+				section.isLocated = true;
 			}
 			else {
 				section.myTopLeft = [0, 0];
 				section.size = [0, 0];
-			}
-		}
-
-		// We have initial positions, now we'll expand them.
-		for (var i: number = 0; i < this.sections.length; i++) {
-			var section: CanvasSectionObject = this.sections[i];
-			if (section.expand[0] !== '' && !section.boundToSection) {
-				if (section.expand.includes('left')) {
-					var initialX = section.myTopLeft[0];
-					section.myTopLeft[0] = this.hitLeft(section);
-					section.size[0] = initialX - section.myTopLeft[0];
-				}
-
-				if (section.expand.includes('right')) {
-					section.size[0] = this.hitRight(section) - section.myTopLeft[0];
-				}
-
-				if (section.expand.includes('top')) {
-					var initialY = section.myTopLeft[1];
-					section.myTopLeft[1] = this.hitTop(section);
-					section.size[1] = initialY - section.myTopLeft[1];
-				}
-
-				if (section.expand.includes('bottom')) {
-					section.size[1] = this.hitBottom(section) - section.myTopLeft[1];
-				}
-				this.roundPositionAndSize(section);
-				section.isLocated = true;
-			}
-		}
-
-		// Set location and size of bound sections.
-		for (var i: number = 0; i < this.sections.length; i++) {
-			var section: CanvasSectionObject = this.sections[i];
-			if (section.boundToSection) {
 				var parentSection = this.getSectionWithName(section.boundToSection);
 				if (parentSection) {
 					section.size[0] = parentSection.size[0];
 					section.size[1] = parentSection.size[1];
+
 					section.myTopLeft[0] = parentSection.myTopLeft[0];
 					section.myTopLeft[1] = parentSection.myTopLeft[1];
+
 					this.roundPositionAndSize(section);
 					section.isLocated = true;
 				}
@@ -882,18 +938,27 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private newSectionChecks (options: any): boolean {
-		if (options.name !== undefined && typeof options.name === 'string' && options.name !== '') {
+	private checkNewSectionName (options: any) {
+		if (options.name !== undefined && typeof options.name === 'string' && options.name.trim() !== '') {
 			if (this.doesSectionExist(options.name)) {
 				console.error('There is a section with the same name. Use doesSectionExist for existancy checks.');
 				return false;
+			}
+			else if (['top', 'left', 'bottom', 'right'].includes(options.name.trim())) {
+				console.error('"top", "left", "bottom" and "right" words are reserved. Choose another name for the section.');
+				return false;
+			}
+			else {
+				return true;
 			}
 		}
 		else {
 			console.error('Sections should have a "name" property.');
 			return false;
 		}
+	}
 
+	private checkSectionProperties (options: any) {
 		if (
 			options.anchor === undefined
 			|| options.position === undefined
@@ -904,11 +969,21 @@ class CanvasSectionContainer {
 			|| options.zIndex === undefined
 			|| options.interactable === undefined
 		) {
-				console.error('Section has missing properties. See "newSectionChecks" function.');
-				return false;
+			console.error('Section has missing properties. See "checkSectionProperties" function.');
+			return false;
 		}
+		else {
+			return true;
+		}
+	}
 
-		return true;
+	private newSectionChecks (options: any): boolean {
+		if (!this.checkNewSectionName(options))
+			return false;
+		else if (!this.checkSectionProperties(options))
+			return false;
+		else
+			return true;
 	}
 
 	createSection (options: any, parentSectionName: string = null) {

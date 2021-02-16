@@ -15,10 +15,10 @@
 
 L.Control.ColumnGroup = L.Control.GroupBase.extend({
 	name: L.CSections.ColumnGroup.name,
-	anchor: ['top', 'left'],
-	position: [350 * window.devicePixelRatio, 0], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
-	size: [0, 0], // No initial width is necessary. Height is computed inside update function.
-	expand: ['left', 'right'], // Expand vertically.
+	anchor: ['top', [L.CSections.CornerGroup.name, 'right', 'left']],
+	position: [0, 0], // This section's myTopLeft is placed according to corner group section if exists, if not, this is placed at (0, 0).
+	size: [0, 0], // No initial width is necessary. Width will be expanded. Height is computed inside update function.
+	expand: ['left', 'right'], // Expand horizontally.
 	processingOrder: L.CSections.ColumnGroup.processingOrder,
 	drawingOrder: L.CSections.ColumnGroup.drawingOrder,
 	zIndex: L.CSections.ColumnGroup.zIndex,
@@ -50,10 +50,6 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 
 		// Calculate width on the fly.
 		this.size[1] = this._computeSectionHeight();
-
-		// Because this section's width is calculated on the fly, ColumnHeader and CornerHeader sections should be shifted.
-		this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name).position[1] = this.size[1] + Math.round(this.dpiScale);
-		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[1] = this.size[1] + Math.round(this.dpiScale);
 
 		this._cornerHeaderWidth = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[0];
 

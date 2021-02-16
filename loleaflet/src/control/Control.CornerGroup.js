@@ -41,18 +41,18 @@ L.Control.CornerGroup = L.Class.extend({
 	},
 
 	update: function () {
-		// Below 2 sections exist, unless they are being removed.
+		// Below 2 sections exist (since this section is added), unless they are being removed.
 
 		var rowGroupSection = this.containerObject.getSectionWithName(L.CSections.RowGroup.name);
 		if (rowGroupSection) {
-			rowGroupSection.update();
-			this.size[0] = rowGroupSection._computeSectionWidth();
+			rowGroupSection.update(); // This will update its size.
+			this.size[0] = rowGroupSection.size[0];
 		}
 
 		var columnGroupSection = this.containerObject.getSectionWithName(L.CSections.ColumnGroup.name);
 		if (columnGroupSection) {
-			columnGroupSection.update();
-			this.size[1] = columnGroupSection._computeSectionHeight();
+			columnGroupSection.update(); // This will update its size.
+			this.size[1] = columnGroupSection.size[1];
 		}
 	},
 
