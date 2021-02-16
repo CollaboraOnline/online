@@ -6,6 +6,7 @@
  */
 
 abstract class CPath {
+	name: string = "";
 	stroke: boolean = true;
 	color: string = '#3388ff';
 	weight: number = 3;
@@ -29,6 +30,7 @@ abstract class CPath {
 	static isTouchDevice: boolean = false; // Need to set this from current L.Browser.touch
 	private id: number;
 	private isDeleted: boolean = false;
+	private testDiv: HTMLDivElement;
 	protected renderer: CanvasOverlay = null;
 
 	constructor(options: any) {
@@ -44,6 +46,7 @@ abstract class CPath {
 	}
 
 	setStyleOptions(options: any) {
+		this.name = options.name !== undefined ? options.name : this.name;
 		this.stroke = options.stroke !== undefined ? options.stroke : this.stroke;
 		this.color = options.color !== undefined ? options.color : this.color;
 		this.weight = options.weight !== undefined ? options.weight : this.weight;
@@ -61,6 +64,39 @@ abstract class CPath {
 
 	setRenderer(rendererObj: CanvasOverlay) {
 		this.renderer = rendererObj;
+		if (this.renderer) {
+			this.addPathTestDiv();
+		}
+	}
+
+	// Adds a div for cypress-tests (if active) for this CPath if not already done.
+	private addPathTestDiv() {
+		var testContainer = this.renderer.getTestDivContainer();
+		if (testContainer && !this.testDiv) {
+			this.testDiv = document.createElement('div');
+			this.testDiv.id = 'test-div-overlay-' + this.name;
+			testContainer.appendChild(this.testDiv);
+		}
+	}
+
+	// Used by cypress tests to assert on the bounds of CPaths.
+	protected updateTestData() {
+		if (!this.testDiv)
+			return;
+		var bounds = this.getBounds();
+		if (this.empty() || !bounds.isValid()) {
+			this.testDiv.innerText = '{}';
+			return;
+		}
+
+		var topLeft = bounds.getTopLeft();
+		var size = bounds.getSize();
+		this.testDiv.innerText = JSON.stringify({
+			top: topLeft.y,
+			left: topLeft.x,
+			width: size.x,
+			height: size.y
+		});
 	}
 
 	getId(): number {
@@ -69,6 +105,10 @@ abstract class CPath {
 
 	setDeleted() {
 		this.isDeleted = true;
+		if (this.testDiv) {
+			this.testDiv.remove();
+			this.testDiv = undefined;
+		}
 	}
 
 	redraw(oldBounds: CBounds) {
@@ -111,6 +151,8 @@ abstract class CPath {
 
 			this.updatePath(panePaintArea, paneProperties[i].xFixed, paneProperties[i].yFixed);
 		}
+
+		this.updateTestData();
 	}
 
 	updatePath(paintArea?: CBounds, paneXFixed?: boolean, paneYFixed?: boolean) {

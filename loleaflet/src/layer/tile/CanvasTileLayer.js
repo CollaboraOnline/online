@@ -154,7 +154,7 @@ L.TileSectionManager = L.Class.extend({
 			onResize: canvasOverlay.onResize.bind(canvasOverlay), // will call onDraw.
 			onDraw: canvasOverlay.onDraw.bind(canvasOverlay)
 		}, L.CSections.Tiles.name); // 'tile' section is the parent.
-		this._overlaySection = this._sectionContainer.getSectionWithName(L.CSections.Overlays);
+		canvasOverlay.setOverlaySection(this._sectionContainer.getSectionWithName(L.CSections.Overlays.name));
 	},
 
 	_onDrawGridSection: function () {

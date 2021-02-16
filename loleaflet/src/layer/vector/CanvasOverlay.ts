@@ -14,11 +14,13 @@ class CanvasOverlay {
 	private paths: Map<number, any>;
 	private bounds: CBounds;
 	private tsManager: any;
+	private overlaySection: any;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
 		this.map = mapObject;
 		this.ctx = canvasContext;
 		this.tsManager = this.map.getTileSectionMgr();
+		this.overlaySection = undefined;
 		this.paths = new Map<number, CPath>();
 		this.updateCanvasBounds();
 	}
@@ -33,6 +35,14 @@ class CanvasOverlay {
 	onDraw() {
 		// No need to "erase" previous drawings because tiles are draw first via its onDraw.
 		this.draw();
+	}
+
+	setOverlaySection(overlaySection: any) {
+		this.overlaySection = overlaySection;
+	}
+
+	getTestDivContainer(): HTMLDivElement {
+		return this.overlaySection.getTestDivContainer();
 	}
 
 	initPath(path: CPath) {

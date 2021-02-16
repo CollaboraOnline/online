@@ -69,11 +69,12 @@ var CStyleData = L.Class.extend({
 // on canvas using polygons (CPolygon).
 var CSelections = L.Class.extend({
 
-	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv) {
+	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv, name) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
 		this._dpiScale = dpiScale;
 		this._styleData = new CStyleData(selectionsDataDiv);
+		this._name = name;
 		this._polygon = undefined;
 		this._updatePolygon();
 	},
@@ -105,6 +106,7 @@ var CSelections = L.Class.extend({
 	_updatePolygon: function() {
 		if (!this._polygon) {
 			var attributes = {
+				name: this._name,
 				pointerEvents: 'none',
 				fillColor: this._styleData.getPropValue('--fill-color'),
 				fillOpacity: this._styleData.getPropValue('--fill-opacity'),
@@ -295,7 +297,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._initContainer();
 		this._getToolbarCommandsValues();
 		this._selections = new CSelections(undefined, this._canvasOverlay,
-			this._painter._dpiScale, this._selectionsDataDiv);
+			this._painter._dpiScale, this._selectionsDataDiv, 'selections');
 		this._references = new L.LayerGroup();
 		this._referencesAll = [];
 		if (this.options.permission !== 'readonly') {
@@ -3269,6 +3271,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._cellCursorMarker = new CRectangle(
 					corePxBounds,
 					{
+						name: 'cell-cursor',
 						pointerEvents: 'none',
 						fill: false,
 						color: cursorStyle.getPropValue('--stroke-color'),
