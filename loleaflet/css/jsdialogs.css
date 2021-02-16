@@ -81,6 +81,12 @@ td.jsdialog > [id^='table-box'] {
 	border-spacing: 0px;
 }
 
+#MacroWarnMedium p {
+	max-width: 512px;
+	color: #333;
+	text-transform: capitalize;
+}
+
 /* Expander */
 
 .jsdialog.ui-expander {
