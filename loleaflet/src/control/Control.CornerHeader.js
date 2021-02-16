@@ -10,8 +10,8 @@
 /* global $ */
 L.Control.CornerHeader = L.Class.extend({
 	name: L.CSections.CornerHeader.name,
-	anchor: ['top', 'left'],
-	position: [0, 0],
+	anchor: [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']],
+	position: [0, 0], // If column group or row group sections exist, myTopleft will be set according to their positions.
 	size: [48 * window.devicePixelRatio, 19 * window.devicePixelRatio], // These values are static.
 	expand: [''], // Don't expand.
 	processingOrder: L.CSections.CornerHeader.processingOrder,

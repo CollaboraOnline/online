@@ -6,10 +6,10 @@
 /* global _UNO */
 L.Control.ColumnHeader = L.Control.Header.extend({
 	name: L.CSections.ColumnHeader.name,
-	anchor: ['top', 'left'],
-	position: [250 * window.devicePixelRatio, 0], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
-	size: [0, 19 * window.devicePixelRatio], // No initial height is necessary.
-	expand: ['left', 'right'], // Expand vertically.
+	anchor: [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']],
+	position: [0, 0], // This section's myTopLeft is placed according to corner header and column group sections.
+	size: [0, 19 * window.devicePixelRatio], // No initial width is necessary.
+	expand: ['left', 'right'], // Expand horizontally.
 	processingOrder: L.CSections.ColumnHeader.processingOrder,
 	drawingOrder: L.CSections.ColumnHeader.drawingOrder,
 	zIndex: L.CSections.ColumnHeader.zIndex,
