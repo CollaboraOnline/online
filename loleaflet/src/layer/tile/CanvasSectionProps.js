@@ -39,10 +39,10 @@ L.CSections.CornerHeader.processingOrder =			30; // Calc.
 L.CSections.RowHeader.processingOrder =				40; // Calc.
 L.CSections.ColumnHeader.processingOrder =			50; // Calc.
 L.CSections.Tiles.processingOrder = 				60; // Writer & Impress & Calc.
-L.CSections.Overlays.processingOrder =				60; // Writer & Impress & Calc. This is bound to tiles, processingOrder is not important.
-L.CSections.Debug.TilePixelGrid.processingOrder = 	60; // Writer & Impress & Calc. This is bound to tiles, processingOrder is not important.
-L.CSections.CalcGrid.processingOrder = 				60; // Calc. This is bound to tiles, processingOrder is not important.
-L.CSections.Debug.Splits.processingOrder = 			60; // Calc. This is bound to tiles, processingOrder is not important.
+L.CSections.Overlays.processingOrder =				61; // Writer & Impress & Calc. This is bound to tiles.
+L.CSections.Debug.TilePixelGrid.processingOrder = 	62; // Writer & Impress & Calc. This is bound to tiles.
+L.CSections.CalcGrid.processingOrder = 				63; // Calc. This is bound to tiles.
+L.CSections.Debug.Splits.processingOrder = 			64; // Calc. This is bound to tiles.
 
 
 L.CSections.CalcGrid.drawingOrder = 				4; // Calc.

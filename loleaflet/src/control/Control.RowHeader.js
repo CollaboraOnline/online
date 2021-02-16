@@ -6,8 +6,8 @@
 /* global _UNO */
 L.Control.RowHeader = L.Control.Header.extend({
 	name: L.CSections.RowHeader.name,
-	anchor: ['top', 'left'],
-	position: [0, 250 * window.devicePixelRatio], // Set its initial position to somewhere blank. Other sections shouldn't cover this point after initializing.
+	anchor: [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']],
+	position: [0, 0], // This section's myTopLeft is placed according to corner header and row group sections.
 	size: [48 * window.devicePixelRatio, 0], // No initial height is necessary.
 	expand: ['top', 'bottom'], // Expand vertically.
 	processingOrder: L.CSections.RowHeader.processingOrder,
