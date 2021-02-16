@@ -27,7 +27,8 @@
 .ui-button-box.jsdialog #ok,
 .ui-button-box.autofilter #ok,
 .cell.jsdialog > button,
-.ui-button-box.jsdialog button {
+.ui-button-box.jsdialog button,
+.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {
 	height: 32px;
 	line-height: 0em;
 	color: #111;
