@@ -1031,6 +1031,69 @@ function textSelectionShouldNotExist() {
 	cy.log('Make sure there is no text selection - end.');
 }
 
+// Used to represent the bounds of overlays like cell-cursor, document selections etc.
+class Bounds {
+	constructor(top, left, width, height) {
+		this.set(top, left, width, height);
+	}
+
+	set(top, left, width, height) {
+		this.top = top;
+		this.left = left;
+		this.width = width;
+		this.height = height;
+	}
+
+	isValid() {
+		return (this.top !== undefined
+			&& this.left !== undefined
+			&& this.width !== undefined
+			&& this.height !== undefined);
+	}
+
+	static parseBoundsJson(boundsJsonString) {
+		var jsonObject = JSON.parse(boundsJsonString);
+		return new Bounds(jsonObject.top, jsonObject.left, jsonObject.width, jsonObject.height);
+	}
+
+	parseSetJson(boundsJsonString) {
+		var jsonObject = JSON.parse(boundsJsonString);
+		this.set(jsonObject.top, jsonObject.left, jsonObject.width, jsonObject.height);
+	}
+
+	toString() {
+		return '{ "top": ' + this.top + ', "left": ' + this.left
+			+ ', "width": ' + this.width + ', "height": ' + this.height + ' }';
+	}
+}
+
+// Used to get the bounds of overlay items from the JSON text inside its
+// test div element.
+// Parameters:
+// itemDivId - The id of the test div element corresponding to the overlay item.
+// bounds - A Bounds object in which this function stores the bounds of the overlay item.
+//          The bounds unit is core pixels in document coordinates.
+function getOverlayItemBounds(itemDivId, bounds) {
+	cy.get(itemDivId)
+		.should(function (itemDiv) {
+			bounds.parseSetJson(itemDiv.text());
+			expect(bounds.isValid()).to.be.true;
+		});
+}
+
+// This ensures that the overlay item has the expected bounds via its test div element.
+// Parameters:
+// itemDivId - The id of the test div element corresponding to the overlay item.
+// bounds - A Bounds object with the expected bounds data.
+//          The bounds unit should be core pixels in document coordinates.
+function overlayItemHasBounds(itemDivId, expectedBounds) {
+	cy.get(itemDivId)
+		.should(function (elem) {
+			expect(Bounds.parseBoundsJson(elem.text()))
+				.to.deep.equal(expectedBounds, 'Bounds of ' + itemDivId);
+		});
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -1065,3 +1128,6 @@ module.exports.upLoadFileToNextCloud = upLoadFileToNextCloud;
 module.exports.getCursorPos = getCursorPos;
 module.exports.textSelectionShouldExist = textSelectionShouldExist;
 module.exports.textSelectionShouldNotExist = textSelectionShouldNotExist;
+module.exports.Bounds = Bounds;
+module.exports.getOverlayItemBounds = getOverlayItemBounds;
+module.exports.overlayItemHasBounds = overlayItemHasBounds;
