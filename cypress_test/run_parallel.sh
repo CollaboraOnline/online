@@ -108,9 +108,10 @@ mkdir -p `dirname ${TEST_LOG}`
 touch ${TEST_LOG}
 rm -rf ${TEST_ERROR}
 echo "`echo ${RUN_COMMAND} && ${RUN_COMMAND} || touch ${TEST_ERROR}`" > ${TEST_LOG} 2>&1
-cat ${TEST_LOG}
-if [ -f ${TEST_ERROR} ];
-    then cat ${TEST_LOG} >> ${ERROR_LOG} && \
+if [ ! -f ${TEST_ERROR} ];
+    then cat ${TEST_LOG};
+    else echo -e "Cypress test failed: ${TEST_FILE}\n" && \
+        cat ${TEST_LOG} >> ${ERROR_LOG} && \
         print_error;
 fi;
 
