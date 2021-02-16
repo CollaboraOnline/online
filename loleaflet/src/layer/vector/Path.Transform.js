@@ -562,7 +562,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			se = rectangleHandles['8'][0];
 			return [sw, west, nw, north, ne, east, se, south];
 		}
-
+		this.options.rotation = false;
 		return [];
 	},
 
@@ -616,15 +616,8 @@ L.Handler.PathTransform = L.Handler.extend({
 	*/
 	_createRotationHandlers: function() {
 		var map     = this._map;
-		var latlngs = this._rect._latlngs;
-
-		var bottom   = new L.LatLng(
-			(latlngs[0].lat + latlngs[3].lat) / 2,
-			(latlngs[0].lng + latlngs[3].lng) / 2);
-		// hehe, top is a reserved word
-		var topPoint = new L.LatLng(
-			(latlngs[1].lat + latlngs[2].lat) / 2,
-			(latlngs[1].lng + latlngs[2].lng) / 2);
+		var bottom   = map._docLayer._twipsToLatLng(this._getPoints()[7].point);
+		var topPoint   = map._docLayer._twipsToLatLng(this._getPoints()[3].point);
 
 		var handlerPosition = map.layerPointToLatLng(
 		L.PathTransform.pointOnLine(
@@ -909,7 +902,6 @@ L.Handler.PathTransform = L.Handler.extend({
 			map.dragging.disable();
 			this._mapDraggingWasEnabled = true;
 		}
-
 		this._originMarker     = null;
 		this._rotationOriginPt = map.latLngToLayerPoint(this._getRotationOrigin());
 		this._rotationStart    = evt.layerPoint;
