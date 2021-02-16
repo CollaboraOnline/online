@@ -10,7 +10,8 @@
 .jsdialog-container #input-range-button,
 .jsdialog-container #output-range-button,
 .jsdialog-container #variable1-range-button,
-.jsdialog-container #variable2-range-button {
+.jsdialog-container #variable2-range-button,
+.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {
 	height: 32px;
 	line-height: 0em;
 	color: #222;
@@ -38,6 +39,10 @@
 	border-radius: 3px;
 	margin: 5px;
 	vertical-align: middle;
+}
+
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {
+	margin-right: -5px; /* Account for child element (button)'s margin */
 }
 
 .jsdialog.ui-button-box.end {
