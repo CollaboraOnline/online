@@ -316,7 +316,7 @@ class CanvasSectionContainer {
 				this.mousePosition = this.convertPositionToCanvasLocale(e);
 				if (this.positionOnMouseDown !== null && !this.draggingSomething) {
 					var dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
-					if (dragDistance[0] >= this.draggingTolerance || dragDistance[1] >= this.draggingTolerance) {
+					if (Math.abs(dragDistance[0]) >= this.draggingTolerance || Math.abs(dragDistance[1]) >= this.draggingTolerance) {
 						this.draggingSomething = true;
 					}
 				}
