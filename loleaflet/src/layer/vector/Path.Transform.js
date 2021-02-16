@@ -720,8 +720,8 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		this._activeMarker.addEventParent(this._map);
 		this._map
-			.on('mousemove', this._onPolyHandleDrag,    this)
-			.on('mouseup',   this._onPolyHandleDragEnd, this);
+			.on('mousemove', this._polyLine ? this._onPolyHandleDrag : this._onScale,    this)
+			.on('mouseup',   this._polyLine ? this._onPolyHandleDragEnd: this._onScaleEnd, this);
 		this._initialDist  = this._originMarker._point.distanceTo(this._activeMarker._point);
 		this._initialDistX = this._originMarker._point.x - this._activeMarker._point.x;
 		this._initialDistY = this._originMarker._point.y - this._activeMarker._point.y;
@@ -737,75 +737,44 @@ L.Handler.PathTransform = L.Handler.extend({
 	},
 
 	_onPolyHandleDrag: function(evt) {
-		if (!this._rect || !this._scaleOrigin) {
+		if (!this._rect) {
 			return;
 		}
-
-		var originPoint = this._originMarker._point;
-		var ratioX, ratioY;
-
-		this._handleDragged = true;
-
-		if ((window.ThisIsAMobileApp && (this._activeMarker.options.index % 2) == 0) ||
-		    this.options.uniformScaling) {
-			ratioX = originPoint.distanceTo(evt.layerPoint) / this._initialDist;
-			ratioY = ratioX;
+		var direction = new L.LatLng(0,0);
+		var middleHandleCursor = 0;
+		if (this._activeMarker.options.cursor == 8) {
+			direction.lat = evt.latlng.lat;
+			direction.lng = this._activeMarker.getLatLng().lng;
+			middleHandleCursor = 8;
+		} else if (this._activeMarker.options.cursor == 10) {
+			direction.lat = this._activeMarker.getLatLng().lat;
+			direction.lng = evt.latlng.lng;
+			middleHandleCursor = 10;
 		} else {
-			ratioX = this._initialDistX !== 0 ?
-				(originPoint.x - evt.layerPoint.x) / this._initialDistX : 1;
-			ratioY = this._initialDistY !== 0 ?
-				(originPoint.y - evt.layerPoint.y) / this._initialDistY : 1;
+			direction = evt.latlng;
 		}
-
-		// no scale - middle point or line
 		if (this._polyLine) {
-			var direction = new L.LatLng(0,0);
-			var middleHandleCursor = 0;
-			if (this._activeMarker.options.cursor == 8) {
-				direction.lat = evt.latlng.lat;
-				direction.lng = this._activeMarker.getLatLng().lng;
-				middleHandleCursor = 8;
-			} else if (this._activeMarker.options.cursor == 10) {
-				direction.lat = this._activeMarker.getLatLng().lat;
-				direction.lng = evt.latlng.lng;
-				middleHandleCursor = 10;
-			} else {
-				direction = evt.latlng;
-			}
-			if (this._polyLine) {
-				var lineTop = this._polyLine.getLatLngs()[0];
-				var lineBottom = this._polyLine.getLatLngs()[1];
-				if (middleHandleCursor == 10) {
-					lineTop.lng = direction.lng;
-					lineBottom.lng = direction.lng;
-				} else if (middleHandleCursor == 8) {
-					lineTop.lat = direction.lat;
-					lineBottom.lat = direction.lat;
-				} else if (this.options.shapeType == 2) { // flat line
-					var handleIndex = this._activeMarker.options.index;
-					if (handleIndex == 0) {
-						lineTop = direction;
-					} else {
-						lineBottom = direction;
-					}
+			var lineTop = this._polyLine.getLatLngs()[0];
+			var lineBottom = this._polyLine.getLatLngs()[1];
+			if (middleHandleCursor == 10) {
+				lineTop.lng = direction.lng;
+				lineBottom.lng = direction.lng;
+			} else if (middleHandleCursor == 8) {
+				lineTop.lat = direction.lat;
+				lineBottom.lat = direction.lat;
+			} else if (this.options.shapeType == 2) { // flat line
+				var handleIndex = this._activeMarker.options.index;
+				if (handleIndex == 0) {
+					lineTop = direction;
+				} else {
+					lineBottom = direction;
 				}
-				this._polyLine.setLatLngs([lineTop, lineBottom]);
 			}
-			this._activeMarker.setLatLng(direction);
-			this._activeMarker._updatePath();
-			return;
+			this._polyLine.setLatLngs([lineTop, lineBottom]);
 		}
-
-		this._scale = new L.Point(ratioX, ratioY);
-
-		// update matrix
-		this._matrix = this._initialMatrix
-			.clone()
-			.scale(this._scale, originPoint);
-
-		this._update();
-		this._path.fire('scale', {
-			layer: this._path, scale: this._scale.clone() });	},
+		this._activeMarker.setLatLng(direction);
+		this._activeMarker._updatePath();
+	},
 
 	_onPolyHandleDragEnd: function() {
 		if (!this._rect || !this._scaleOrigin) {
@@ -813,8 +782,8 @@ L.Handler.PathTransform = L.Handler.extend({
 		}
 		this._activeMarker.removeEventParent(this._map);
 		this._map
-			.off('mousemove', this._onScale,    this)
-			.off('mouseup',   this._onScaleEnd, this);
+			.off('mousemove', this._onPolyHandleDrag,    this)
+			.off('mouseup',   this._onPolyHandleDragEnd, this);
 
 		if (this.options.rotation) {
 			this._map.addLayer(this._handleLine);
@@ -1133,7 +1102,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			layer: this._path,
 			scale: this._scale.clone(),
 			pos: this._activeMarker._latlng,
-			handleId: this._getPoints()[index].id
+			handleId: this._activeMarker.options.id || this._getPoints()[index].id
 		});
 
 		this._scaleOrigin = undefined;
