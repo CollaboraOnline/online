@@ -154,7 +154,7 @@ Proof::Proof()
                 "\nor if your config dir is not /etc, you can run ssh-keygen manually:"
                 "\n    ssh-keygen -t rsa -N \"\" -m PEM -f \"" + keyPath + "\""
                 "\nNote: the proof_key file must be readable by the loolwsd process.";
-            LOG_WRN(msg);
+            LOG_ERR(msg);
         }
         catch (const Poco::Exception& e)
         {
