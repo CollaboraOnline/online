@@ -1187,6 +1187,7 @@ private:
         const bool haveDocPassword = session->getHaveDocPassword();
         const std::string& lang = session->getLang();
         const std::string& deviceFormFactor = session->getDeviceFormFactor();
+        const std::string& batchMode = session->getBatchMode();
         std::string spellOnline;
 
         std::string options;
@@ -1195,6 +1196,9 @@ private:
 
         if (!deviceFormFactor.empty())
             options += ",DeviceFormFactor=" + deviceFormFactor;
+
+        if (!batchMode.empty())
+            options += ",Batch=" + batchMode;
 
         if (!_loKitDocument)
         {
