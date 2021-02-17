@@ -13,8 +13,8 @@ PARALLEL_SCRIPT = $(abs_srcdir)/run_parallel.sh
 
 PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
 ERROR_LOG=$(abs_builddir)/workdir/error.log
-LOOLWSD_LOG=$(abs_builddir)/workdir/loolwsd.log
-LOOLWSD_OUTPUT=$(abs_builddir)/workdir/loolwsd_output.log
+LOOLWSD_LOG=$(abs_builddir)/cypress/wsd_logs/loolwsd.log
+LOOLWSD_OUTPUT=$(abs_builddir)/cypress/wsd_logs/loolwsd_output.log
 
 SUPPORT_FILE_ABS = $(abs_srcdir)/support/index.js
 SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(SUPPORT_FILE_ABS))
@@ -138,6 +138,7 @@ define start_loolwsd
 	@echo "Launching loolwsd..."
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@echo
+	@mkdir -p $(dir $(LOOLWSD_OUTPUT))
 	../loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			--disable-ssl \
@@ -163,8 +164,6 @@ endef
 
 define cleanup_before_run
 	@rm -f $(ERROR_LOG)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
 	@rm -f $(PID_FILE)
 	@rm -rf cypress
 endef
