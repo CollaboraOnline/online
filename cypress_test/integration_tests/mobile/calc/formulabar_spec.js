@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Change alignment settings.', function() {
+describe('Formula bar tests.', function() {
 	var testFileName = 'formulabar.ods';
 
 	beforeEach(function() {
