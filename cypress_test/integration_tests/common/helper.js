@@ -22,13 +22,13 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy) {
 		if (subFolder === undefined) {
 			cy.task('copyFile', {
 				sourceDir: Cypress.env('DATA_FOLDER'),
-				destDir: Cypress.env('WORKDIR'),
+				destDir: Cypress.env('DATA_WORKDIR'),
 				fileName: fileName,
 			});
 		} else {
 			cy.task('copyFile', {
 				sourceDir: Cypress.env('DATA_FOLDER') + subFolder + '/',
-				destDir: Cypress.env('WORKDIR') + subFolder + '/',
+				destDir: Cypress.env('DATA_WORKDIR') + subFolder + '/',
 				fileName: fileName,
 			});
 		}
@@ -46,12 +46,12 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy) {
 		URI += '/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/loleaflet.html?lang=en-US&file_path=file://' +
-			Cypress.env('WORKDIR') + fileName;
+			Cypress.env('DATA_WORKDIR') + fileName;
 	} else {
 		URI += '/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/loleaflet.html?lang=en-US&file_path=file://' +
-			Cypress.env('WORKDIR') + subFolder + '/' + fileName;
+			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
 	}
 
 	cy.log('Loading: ' + URI);
