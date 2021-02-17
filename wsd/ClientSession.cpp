@@ -1387,7 +1387,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             if (errorCommand == "load")
             {
-                LOG_WRN("Document load failed: " << errorKind);
+                LOG_ERR("Document load failed: " << errorKind);
                 if (errorKind == "passwordrequired:to-view" ||
                     errorKind == "passwordrequired:to-modify" ||
                     errorKind == "wrongpassword")
@@ -1415,7 +1415,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             }
             else
             {
-                LOG_WRN(errorCommand << " error failure: " << errorKind);
+                LOG_ERR(errorCommand << " error failure: " << errorKind);
             }
         }
     }
@@ -1971,7 +1971,7 @@ void ClientSession::onDisconnect()
     }
     catch (const std::exception& exc)
     {
-        LOG_WRN(getName() << ": Exception while closing socket for docKey [" << docKey << "]: " << exc.what());
+        LOG_ERR(getName() << ": Exception while closing socket for docKey [" << docKey << "]: " << exc.what());
     }
 }
 
