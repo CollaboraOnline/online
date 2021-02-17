@@ -1772,7 +1772,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
     }
     catch (const std::exception& exc)
     {
-        LOG_WRN("Exception while preparing session [" << id << "]: " << exc.what());
+        LOG_ERR("Exception while preparing session [" << id << "]: " << exc.what());
     }
 
     return nullptr;
@@ -2422,7 +2422,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
         }
         catch (const std::exception& exc)
         {
-            LOG_WRN("Error while shutting down client [" <<
+            LOG_ERR("Error while shutting down client [" <<
                     session->getName() << "]: " << exc.what());
         }
     }
