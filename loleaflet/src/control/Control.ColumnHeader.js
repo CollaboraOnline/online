@@ -673,42 +673,42 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 	_insertColBefore: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.insertColumnBefore.call(this, index);
 		}
 	},
 
 	_insertColAfter: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.insertColumnAfter.call(this, index);
 		}
 	},
 
 	_deleteSelectedCol: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.deleteColumn.call(this, index);
 		}
 	},
 
 	_optimalWidth: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.optimalWidth.call(this, index);
 		}
 	},
 
 	_hideColumn: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.hideColumn.call(this, index);
 		}
 	},
 
 	_showColumn: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.showColumn.call(this, index);
 		}
 	}

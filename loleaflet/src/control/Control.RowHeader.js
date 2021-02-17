@@ -623,42 +623,42 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 	_insertRowAbove: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.insertRowAbove.call(this, index);
 		}
 	},
 
 	_insertRowBelow: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.insertRowBelow.call(this, index);
 		}
 	},
 
 	_deleteSelectedRow: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.deleteRow.call(this, index);
 		}
 	},
 
 	_optimalHeight: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.optimalHeight.call(this, index);
 		}
 	},
 
 	_hideRow: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.hideRow.call(this, index);
 		}
 	},
 
 	_showRow: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.showRow.call(this, index);
 		}
 	}
