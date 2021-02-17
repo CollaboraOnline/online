@@ -769,7 +769,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     {
         // Check if document has been modified by some external action
         LOG_TRC("Document modified time: " << fileInfo.getModifiedTime());
-        constexpr std::chrono::system_clock::time_point Zero;
+        std::chrono::system_clock::time_point Zero;
         if (_storageManager.getLastModifiedTime() != Zero && fileInfo.getModifiedTime() != Zero
             && _storageManager.getLastModifiedTime() != fileInfo.getModifiedTime())
         {
