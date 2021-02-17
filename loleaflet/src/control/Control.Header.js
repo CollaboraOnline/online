@@ -292,42 +292,42 @@ L.Control.Header = L.Class.extend({
 
 	_insertRowAbove: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.insertRowAbove.call(this, index);
 		}
 	},
 
 	_insertRowBelow: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.insertRowBelow.call(this, index);
 		}
 	},
 
 	_deleteSelectedRow: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.deleteRow.call(this, index);
 		}
 	},
 
 	_optimalHeight: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.optimalHeight.call(this, index);
 		}
 	},
 
 	_hideRow: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.hideRow.call(this, index);
 		}
 	},
 
 	_showRow: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.showRow.call(this, index);
 		}
 	},
@@ -447,42 +447,42 @@ L.Control.Header = L.Class.extend({
 
 	_insertColBefore: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.insertColumnBefore.call(this, index);
 		}
 	},
 
 	_insertColAfter: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.insertColumnAfter.call(this, index);
 		}
 	},
 
 	_deleteSelectedCol: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.deleteColumn.call(this, index);
 		}
 	},
 
 	_optimalWidth: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.optimalWidth.call(this, index);
 		}
 	},
 
 	_hideColumn: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.hideColumn.call(this, index);
 		}
 	},
 
 	_showColumn: function() {
 		var index = this._lastMouseOverIndex;
-		if (index) {
+		if (index !== undefined) {
 			this.showColumn.call(this, index);
 		}
 	},
