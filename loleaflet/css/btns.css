@@ -1,3 +1,9 @@
+.jsdialog-container .ui-button-box button,
+.vex.vex-theme-plain .vex-dialog-button {
+	font-family: var(--jquery-ui-font);
+	text-transform: full-size-kana;
+}
+
 .loleaflet-annotation-edit #annotation-cancel,
 .ui-button-box.jsdialog #cancel,
 .ui-button-box.autofilter #cancel,
