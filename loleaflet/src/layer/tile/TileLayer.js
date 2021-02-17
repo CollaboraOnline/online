@@ -3107,13 +3107,17 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (this._cellResizeMarkerStart === e.target) {
 			this._postSelectTextEvent('start', aMousePosition.x, aMousePosition.y);
-			if (e.type === 'dragend')
+			if (e.type === 'dragend') {
 				this._onUpdateCellResizeMarkers();
+				window.IgnorePanning = undefined;
+			}
 		}
 		else if (this._cellResizeMarkerEnd === e.target) {
 			this._postSelectTextEvent('end', aMousePosition.x, aMousePosition.y);
-			if (e.type === 'dragend')
+			if (e.type === 'dragend') {
 				this._onUpdateCellResizeMarkers();
+				window.IgnorePanning = undefined;
+			}
 		}
 		else if (this._cellAutofillMarker === e.target) {
 			this._postMouseEvent(buttonType, aMousePosition.x, aMousePosition.y, 1, 1, 0);
