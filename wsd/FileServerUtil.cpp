@@ -46,7 +46,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
                 uiMode = keyValue[1];
             }
             else
-                LOG_WRN("unknown UIMode value " << keyValue[1]);
+                LOG_ERR("unknown UIMode value " << keyValue[1]);
 
             continue;
         }
@@ -67,7 +67,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
         }
         else
         {
-            LOG_WRN("unknown UI default's component " << keyValue[0]);
+            LOG_ERR("unknown UI default's component " << keyValue[0]);
             continue;
         }
 
@@ -84,7 +84,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
         }
         else
         {
-            LOG_WRN("unknown UI default " << keyValue[0]);
+            LOG_ERR("unknown UI default " << keyValue[0]);
             continue;
         }
     }
@@ -125,12 +125,12 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
         StringVector keyValue(Util::tokenize(tokens.getParam(token), '='));
         if (keyValue.size() < 2)
         {
-            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it does not have '='");
+            LOG_ERR("Skipping the token [" << tokens.getParam(token) << "] since it does not have '='");
             continue;
         }
         else if (keyValue.size() > 2)
         {
-            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it has more than one '=' pair");
+            LOG_ERR("Skipping the token [" << tokens.getParam(token) << "] since it has more than one '=' pair");
             continue;
         }
         styleOSS << keyValue[0] << ':' << keyValue[1] << ';';
