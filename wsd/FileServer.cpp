@@ -111,7 +111,7 @@ bool isPamAuthOk(const std::string& userProvidedUsr, const std::string& userProv
 
     if (retval != PAM_SUCCESS)
     {
-        LOG_WRN("pam_end returned " << retval);
+        LOG_ERR("pam_end returned " << retval);
     }
 
     return true;
@@ -233,7 +233,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     // or anything.
     if (userProvidedUsr.empty() || userProvidedPwd.empty())
     {
-        LOG_WRN("An attempt to log into Admin Console without username or password.");
+        LOG_ERR("An attempt to log into Admin Console without username or password.");
         return false;
     }
 
@@ -481,7 +481,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
     }
     catch (const Poco::FileNotFoundException& exc)
     {
-        LOG_WRN("FileServerRequestHandler: " << exc.displayText());
+        LOG_ERR("FileServerRequestHandler: " << exc.displayText());
         sendError(404, request, socket, "404 - file not found!",
                   "There seems to be a problem locating");
     }
@@ -886,7 +886,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
             }
             catch (Poco::SyntaxException& exc)
             {
-                LOG_WRN("Invalid value of HPKP's max-age directive found in config file. Defaulting to "
+                LOG_ERR("Invalid value of HPKP's max-age directive found in config file. Defaulting to "
                         << maxAge);
             }
             hpkpOss << "max-age=" << maxAge << "; ";
