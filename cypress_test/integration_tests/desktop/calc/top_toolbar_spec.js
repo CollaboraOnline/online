@@ -487,7 +487,7 @@ describe('Top toolbar tests.', function() {
 			.click();
 
 		cy.contains('.menu-text', 'Align Left')
-			.click();
+			.click({force: true}); // tooltip
 
 		calcHelper.selectEntireSheet();
 

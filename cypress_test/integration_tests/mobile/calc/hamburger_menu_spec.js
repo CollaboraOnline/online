@@ -427,7 +427,16 @@ describe('Trigger hamburger menu options.', function() {
 		// TODO: no visual indicator here
 		cy.wait(500);
 
-		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Page Break', 'Remove Row Break']);
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
+			.click();
+
+		cy.contains('[title=\'Delete Page Break\'] .menu-entry-with-icon', 'Row Break')
+			.click();
 
 		// TODO: no visual indicator here
 		cy.wait(500);
@@ -456,7 +465,16 @@ describe('Trigger hamburger menu options.', function() {
 		// TODO: no visual indicator here
 		cy.wait(500);
 
-		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Page Break', 'Remove Column Break']);
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
+			.click();
+
+		cy.contains('[title=\'Delete Page Break\'] .menu-entry-with-icon', 'Column Break')
+			.click();
 
 		// TODO: no visual indicator here
 		cy.wait(500);
