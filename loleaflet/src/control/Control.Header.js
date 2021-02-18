@@ -811,18 +811,32 @@ L.Control.Header.colHeaderHeight = undefined;
  */
 L.Control.Header.GapTickMap = L.Class.extend({
 
-	initialize: function (map, ticks) {
+	initialize: function (map, ticks, limit) {
 
 		var gapSize;
+		this._toTheLimit = false;
 		this._ticks = [];
 
 		// Sanitize input
 		var knownTicks = [];
+		var thisTickIdx;
+		var prevTickIdx = -1;
 		for (var i in ticks) {
 			// The field in the input data struct is called "text" but it's the
 			// column/row index, as a string.
 			// Idem for "size": it's the tick position in pixels, as a string
-			knownTicks[ parseInt(ticks[i].text) ] = parseInt(ticks[i].size);
+			// console.log('  ' + ticks[i].text + ':' + ticks[i].size);
+			thisTickIdx = parseInt(ticks[i].text);
+			if (i == ticks.length - 1 && thisTickIdx == limit) {
+				// console.log('  (To the limit!)');
+				this._toTheLimit = true;
+				if (prevTickIdx == -1)
+					throw new Error('Malformed data for column/row sizes, prevTickIdx=-1');
+				knownTicks[ prevTickIdx + 1 ] = parseInt(ticks[i].size);
+			} else {
+				knownTicks[ thisTickIdx ] = parseInt(ticks[i].size);
+			}
+			prevTickIdx = thisTickIdx;
 		}
 
 		// This *assumes* the input is ordered - i.e. tick indexes only grow
@@ -841,7 +855,7 @@ L.Control.Header.GapTickMap = L.Class.extend({
 					// This should never happen, unless data from the UNO message
 					// is not in strictly increasing order, or the first two ticks
 					// are not consecutive.
-					throw new Error('Malformed data for column/row sizes.');
+					throw new Error('Malformed data for column/row sizes, gapSize=' + gapSize);
 				}
 				this._ticks[idx] = this._ticks[idx - 1] + gapSize;
 			}

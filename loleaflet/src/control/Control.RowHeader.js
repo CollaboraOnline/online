@@ -389,7 +389,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		}
 
 		// create data structure for row heights
-		this._tickMap = new L.Control.Header.GapTickMap(this._map, rows);
+		this._tickMap = new L.Control.Header.GapTickMap(this._map, rows, 500001);
 		this._startOffset = this._tickMap.getStartOffset();
 
 		// setup conversion routine

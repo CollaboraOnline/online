@@ -79,7 +79,7 @@ L.CalcGridLines = L.LayerGroup.extend({
 		var pixelToMapUnitRatio = this._map.options.crs.scale(this._map.getZoom());
 
 		if (ev.data.columns && ev.data.columns.length) {
-			ticks = new L.Control.Header.GapTickMap(this._map, ev.data.columns);
+			ticks = new L.Control.Header.GapTickMap(this._map, ev.data.columns, 1024);
 			this._colLines.clearLayers();
 
 			ticks.forEachTick(function(idx, pos) {
@@ -93,7 +93,7 @@ L.CalcGridLines = L.LayerGroup.extend({
 		}
 
 		if (ev.data.rows && ev.data.rows.length) {
-			ticks = new L.Control.Header.GapTickMap(this._map, ev.data.rows);
+			ticks = new L.Control.Header.GapTickMap(this._map, ev.data.rows, 500001);
 			this._rowLines.clearLayers();
 
 			ticks.forEachTick(function(idx, pos) {
