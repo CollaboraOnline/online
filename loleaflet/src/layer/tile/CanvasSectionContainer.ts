@@ -7,6 +7,25 @@
  	Supports multi touch with 2 fingers.
  	This class uses only native events. There is: No timer for anything & no longpress for desktop & no doubleclick for touch screen & no wheel for touchscreen etc.
 
+	Propagated events:  All events are propagated between "bound sections".
+						If 2 sections overlap but not bound, only top section gets the event.
+
+	lowestPropagatedBoundSection:
+			This property applies to bound sections.
+			Bound sections are like layers. They overlap entirely.
+			Every bound section should share same zIndex unless there is a very good reason for different zIndex values.
+			To make a section "bound" to another, one can use "boundToSection" property (section name - string).
+			When 2 or more sections overlap, the top section will get the event first.
+			If a section handles the event and calls stopPropagating function, the sections after that section won't get the event.
+			Example scenario:
+				Event: drag
+				Top section handles event.
+				Middle section handles event then calls "stopPropagating" function. From this point, top section still handles the event until the end of the event.
+				Bottom section doesn't get the event.
+
+			If stopPropagating function is called, it is valid until the end of the event. So for events like dragging, calling
+			the function only once is enough. When the event is lasted, lowestPropagatedBoundSection variable is set to null automatically.
+
 	New section's options:
 	name: 'tiles' | 'row headers' | 'column headers' | 'markers & cursor' | 'shapes' | 'scroll' etc.
 	anchor: 'top left' | 'top right' | 'bottom left' | 'bottom right' (Examples: For row & column headers, anchor will be 'top left'; If we would want to draw something sticked to bottom, it would be 'bottom left' or 'bottom right').
@@ -124,6 +143,11 @@ class CanvasSectionObject {
 	onDraw: Function; // Parameters: null
 	onNewDocumentTopLeft: Function; // Parameters: Size [x, y]
 	onRemove: Function; // This Function is called right before section is removed.
+	setDrawingOrder: Function; // Parameters: integer. Do not implement this. This function is added by section container.
+	setZIndex: Function; // Parameters: integer. Do not implement this. This function is added by section container.
+	bindToSection: Function; // Parameters: string. Do not implement this. This function is added by section container.
+	boundsList: Array<CanvasSectionObject>; // The sections those this section can propagate events to. Updated by container.
+	stopPropagating: Function; // Do not implement this. This function is added by section container.
 
 	constructor (options: any) {
 		this.name = options.name;
@@ -193,6 +217,7 @@ class CanvasSectionContainer {
 	private clearColor: string = 'white';
 	private touchEventInProgress: boolean = false; // This prevents multiple calling of mouse down and up events.
 	public testing: boolean = false; // If this set to true, container will create a div element for every section. So, cypress tests can find where to click etc.
+	public lowestPropagatedBoundSection: string = null; // Event propagating to bound sections. The first section which stops propagating and the sections those are on top of that section, get the event.
 
 	constructor (canvasDOMElement: HTMLCanvasElement) {
 		this.canvas = canvasDOMElement;
@@ -229,6 +254,7 @@ class CanvasSectionContainer {
 		this.touchCenter = null;
 		this.draggingSomething = false;
 		this.touchEventInProgress = false;
+		this.lowestPropagatedBoundSection = null;
 	}
 
 	private convertPositionToSectionLocale (section: CanvasSectionObject, point: Array<number>): Array<number> {
@@ -290,8 +316,192 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private updateBoundSectionList(section: CanvasSectionObject, sectionList: Array<CanvasSectionObject> = null): Array<CanvasSectionObject>{
+		if (sectionList === null)
+			sectionList = new Array(0);
+
+		sectionList.push(section);
+
+		var tempSectionList: Array<CanvasSectionObject> = new Array(0);
+
+		if (section.boundToSection) {
+			var tempSection = this.getSectionWithName(section.boundToSection);
+			if (tempSection && tempSection.isLocated) {
+				if (tempSection.zIndex < section.zIndex || (tempSection.zIndex === section.zIndex && tempSection.drawingOrder < section.drawingOrder)) {
+					tempSectionList.push(tempSection);
+				}
+			}
+		}
+
+		for (var i: number = 0; i < this.sections.length; i++) {
+			if (this.sections[i].isLocated && this.sections[i].boundToSection === section.name) {
+				if (this.sections[i].zIndex < section.zIndex || (this.sections[i].zIndex === section.zIndex && this.sections[i].drawingOrder < section.drawingOrder)) {
+					tempSectionList.push(this.sections[i]);
+				}
+			}
+		}
+
+		for (var i: number = 0; i < tempSectionList.length; i++) {
+			this.updateBoundSectionList(tempSectionList[i], sectionList);
+		}
+
+		return sectionList;
+	}
+
+	private orderBoundsList(section: CanvasSectionObject) {
+		// According to zIndex & drawingOrder.
+		for (var i: number = 0; i < section.boundsList.length - 1; i++) {
+			for (var j = i + 1; j < section.boundsList.length; j++) {
+				if (section.boundsList[i].zIndex > section.boundsList[j].zIndex
+					|| (section.boundsList[i].zIndex === section.boundsList[j].zIndex && section.boundsList[i].drawingOrder > section.boundsList[j].drawingOrder)) {
+					var temp = section.boundsList[i];
+					section.boundsList[i] = section.boundsList[j];
+					section.boundsList[j] = temp;
+				}
+			}
+		}
+	}
+
+	private updateBoundSectionLists() {
+		for (var i: number = 0; i < this.sections.length; i++) {
+			this.sections[i].boundsList = null;
+			this.sections[i].boundsList = this.updateBoundSectionList(this.sections[i]);
+			this.orderBoundsList(this.sections[i]);
+		}
+	}
+
 	requestReDraw() {
 		this.drawSections();
+	}
+
+	private propagateOnClick(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onClick(position, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnDoubleClick(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onDoubleClick(position, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMouseLeave(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMouseLeave(position, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMouseEnter(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMouseEnter(position, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMouseMove(section: CanvasSectionObject, position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMouseMove(position, dragDistance, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnLongPress(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onLongPress(position, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMouseDown(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMouseDown(position, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMouseUp(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMouseUp(position, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnContextMenu(section: CanvasSectionObject) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onContextMenu();
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMouseWheel(section: CanvasSectionObject, position: Array<number>, deltaY: number, e: MouseEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMouseWheel(position, deltaY, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMultiTouchStart(section: CanvasSectionObject, e: TouchEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMultiTouchStart(e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMultiTouchMove(section: CanvasSectionObject, position: Array<number>, distance: number, e: TouchEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMultiTouchMove(position, distance, e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
+	}
+
+	private propagateOnMultiTouchEnd(section: CanvasSectionObject, e: TouchEvent) {
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].interactable)
+				section.boundsList[i].onMultiTouchEnd(e);
+
+			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+				break; // Stop propagation.
+		}
 	}
 
 	private onClick (e: MouseEvent) {
@@ -303,7 +513,7 @@ class CanvasSectionContainer {
 			if (s1 && s2 && s1 == s2) { // Allow click event if only mouse was above same section while clicking.
 				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnClick);
 				if (section) { // "interactable" property is also checked inside function "findSectionContainingPoint".
-					section.onClick(this.convertPositionToSectionLocale(section, this.positionOnClick), e);
+					this.propagateOnClick(section, this.convertPositionToSectionLocale(section, this.positionOnClick), e);
 				}
 			}
 			this.clearMousePositions(); // Drawing takes place after cleaning mouse positions. Sections should overcome this evil.
@@ -319,7 +529,7 @@ class CanvasSectionContainer {
 
 		var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnDoubleClick);
 		if (section) {
-			section.onDoubleClick(this.convertPositionToSectionLocale(section, this.positionOnDoubleClick), e);
+			this.propagateOnDoubleClick(section, this.convertPositionToSectionLocale(section, this.positionOnDoubleClick), e);
 		}
 		this.clearMousePositions();
 		this.drawSections();
@@ -351,17 +561,17 @@ class CanvasSectionContainer {
 						if (this.sectionUnderMouse !== null) {
 							var previousSection: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
 							if (previousSection)
-								previousSection.onMouseLeave(this.convertPositionToSectionLocale(previousSection, this.mousePosition), e);
+								this.propagateOnMouseLeave(previousSection, this.convertPositionToSectionLocale(previousSection, this.mousePosition), e);
 						}
 						this.sectionUnderMouse = section.name;
-						section.onMouseEnter(this.convertPositionToSectionLocale(section, this.mousePosition), e);
+						this.propagateOnMouseEnter(section, this.convertPositionToSectionLocale(section, this.mousePosition), e);
 					}
-					section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
+					this.propagateOnMouseMove(section, this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
 				}
 				else if (this.sectionUnderMouse !== null) {
 					var previousSection: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
 					if (previousSection)
-						previousSection.onMouseLeave(this.convertPositionToSectionLocale(previousSection, this.mousePosition), e);
+						this.propagateOnMouseLeave(previousSection, this.convertPositionToSectionLocale(previousSection, this.mousePosition), e);
 					this.sectionUnderMouse = null;
 				}
 			}
@@ -370,7 +580,7 @@ class CanvasSectionContainer {
 			this.mousePosition = this.convertPositionToCanvasLocale(e);
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.mousePosition);
 			if (section) {
-				section.onLongPress(this.convertPositionToSectionLocale(section, this.mousePosition), e);
+				this.propagateOnLongPress(section, this.convertPositionToSectionLocale(section, this.mousePosition), e);
 			}
 		}
 	}
@@ -383,7 +593,7 @@ class CanvasSectionContainer {
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseDown);
 			if (section) {
 				this.sectionOnMouseDown = section.name;
-				section.onMouseDown(this.convertPositionToSectionLocale(section, this.positionOnMouseDown), e);
+				this.propagateOnMouseDown(section, this.convertPositionToSectionLocale(section, this.positionOnMouseDown), e);
 			}
 		}
 	}
@@ -395,13 +605,13 @@ class CanvasSectionContainer {
 			if (!this.draggingSomething) {
 				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
 				if (section) {
-					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
+					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
 				}
 			}
 			else {
 				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 				if (section) {
-					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
+					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
 				}
 			}
 		}
@@ -411,7 +621,7 @@ class CanvasSectionContainer {
 		var mousePosition = this.convertPositionToCanvasLocale(e);
 		var section: CanvasSectionObject = this.findSectionContainingPoint(mousePosition);
 		if (section) {
-			section.onContextMenu();
+			this.propagateOnContextMenu(section);
 		}
 		if (this.potentialLongPress) {
 			// LongPress triggers context menu.
@@ -428,12 +638,14 @@ class CanvasSectionContainer {
 		var delta = e.deltaY;
 		var section: CanvasSectionObject = this.findSectionContainingPoint(point);
 		if (section)
-			section.onMouseWheel(this.convertPositionToSectionLocale(section, point), delta, e);
+			this.propagateOnMouseWheel(section, this.convertPositionToSectionLocale(section, point), delta, e);
 	}
 
 	onMouseLeave (e: MouseEvent) {
 		if (this.sectionUnderMouse !== null) {
-			this.getSectionWithName(this.sectionUnderMouse).onMouseLeave(null, e);
+			var section: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
+			if (section)
+				this.propagateOnMouseLeave(section, null, e);
 			this.sectionUnderMouse = null;
 		}
 		this.clearMousePositions();
@@ -449,7 +661,7 @@ class CanvasSectionContainer {
 			var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseDown);
 			if (section) {
 				this.sectionOnMouseDown = section.name;
-				section.onMouseDown(this.convertPositionToSectionLocale(section, this.positionOnMouseDown), e);
+				this.propagateOnMouseDown(section, this.convertPositionToSectionLocale(section, this.positionOnMouseDown), (<MouseEvent><any>e));
 			}
 		}
 		else if (!this.multiTouch) {
@@ -457,7 +669,7 @@ class CanvasSectionContainer {
 			this.multiTouch = true;
 			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section)
-				section.onMultiTouchStart(e);
+				this.propagateOnMultiTouchStart(section, e);
 		}
 	}
 
@@ -470,7 +682,7 @@ class CanvasSectionContainer {
 
 			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section) {
-				section.onMouseMove(this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
+				this.propagateOnMouseMove(section, this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, <MouseEvent><any>e);
 			}
 		}
 		else if (e.touches.length === 2) {
@@ -484,7 +696,7 @@ class CanvasSectionContainer {
 					this.touchCenter = this.convertPointToCanvasLocale(this.touchCenter);
 				}
 				var distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
-				section.onMultiTouchMove(this.convertPositionToSectionLocale(section, this.touchCenter), distance, e);
+				this.propagateOnMultiTouchMove(section, this.convertPositionToSectionLocale(section, this.touchCenter), distance, e);
 			}
 		}
 	}
@@ -496,12 +708,12 @@ class CanvasSectionContainer {
 			if (!this.draggingSomething) {
 				var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnMouseUp);
 				if (section)
-					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
+					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), <MouseEvent><any>e);
 			}
 			else {
 				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 				if (section)
-					section.onMouseUp(this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
+					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), <MouseEvent><any>e);
 			}
 		}
 		else {
@@ -509,7 +721,7 @@ class CanvasSectionContainer {
 				this.multiTouch = false;
 				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
 				if (section) {
-					section.onMultiTouchEnd(e);
+					this.propagateOnMultiTouchEnd(section, e);
 				}
 			}
 		}
@@ -808,10 +1020,10 @@ class CanvasSectionContainer {
 				section.isLocated = true;
 			}
 			else {
-				section.myTopLeft = [0, 0];
-				section.size = [0, 0];
 				var parentSection = this.getSectionWithName(section.boundToSection);
 				if (parentSection) {
+					section.myTopLeft = [0, 0];
+					section.size = [0, 0];
 					section.size[0] = parentSection.size[0];
 					section.size[1] = parentSection.size[1];
 
@@ -826,32 +1038,21 @@ class CanvasSectionContainer {
 	}
 
 	private orderSections () {
-		// According to zIndex. Section with the highest zIndex will be drawn on top.
+		// According to zIndex & processing order.
 		for (var i: number = 0; i < this.sections.length - 1; i++) {
 			for (var j = i + 1; j < this.sections.length; j++) {
-				if (this.sections[i].zIndex > this.sections[j].zIndex) {
+				if (this.sections[i].zIndex > this.sections[j].zIndex
+					|| (this.sections[i].zIndex === this.sections[j].zIndex && this.sections[i].processingOrder > this.sections[j].processingOrder)) {
 					var temp = this.sections[i];
 					this.sections[i] = this.sections[j];
 					this.sections[j] = temp;
 				}
 			}
 		}
-
-		// According to processing order. Section with the highest processing order will be calculated last.
-		for (var i: number = 0; i < this.sections.length - 1; i++) {
-			var zIndex = this.sections[i].zIndex;
-			for (var j: number = i + 1; j < this.sections.length && this.sections[j].zIndex === zIndex; j++) {
-				if (this.sections[i].processingOrder > this.sections[j].processingOrder) {
-					var temp = this.sections[j];
-					this.sections[j] = this.sections[i];
-					this.sections[i] = temp;
-				}
-			}
-		}
 	}
 
 	private applyDrawingOrders () {
-		// According to drawing order. Section with the highest drawing order will be drawn on top.
+		// According to drawing order. Section with the highest drawing order will be drawn on top (inside same zIndex).
 		for (var i: number = 0; i < this.sections.length - 1; i++) {
 			var zIndex = this.sections[i].zIndex;
 			for (var j: number = i + 1; j < this.sections.length && this.sections[j].zIndex === zIndex; j++) {
@@ -1014,6 +1215,30 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private addSectionFunctions(section: CanvasSectionObject) {
+		section.setDrawingOrder = function(drawingOrder: number) {
+			section.drawingOrder = drawingOrder;
+			section.containerObject.updateBoundSectionLists();
+			section.containerObject.reNewAllSections();
+		};
+
+		section.setZIndex = function(zIndex: number) {
+			section.zIndex = zIndex;
+			section.containerObject.updateBoundSectionLists();
+			section.containerObject.reNewAllSections();
+		};
+
+		section.bindToSection = function(sectionName: string) {
+			section.boundToSection = sectionName;
+			section.containerObject.updateBoundSectionLists();
+			section.containerObject.reNewAllSections();
+		};
+
+		section.stopPropagating = function() {
+			section.containerObject.lowestPropagatedBoundSection = section.name;
+		}
+	}
+
 	private pushSection (newSection: CanvasSectionObject) {
 		// Every section can draw from Point(0, 0), their drawings will be translated to myTopLeft position.
 		newSection.context = this.context;
@@ -1022,6 +1247,8 @@ class CanvasSectionContainer {
 		newSection.dpiScale = this.dpiScale;
 		newSection.sectionProperties.section = newSection;
 		this.sections.push(newSection);
+		this.addSectionFunctions(newSection);
+		this.updateBoundSectionLists();
 		newSection.onInitialize();
 		this.reNewAllSections(false);
 		this.drawSections();
@@ -1043,6 +1270,7 @@ class CanvasSectionContainer {
 		}
 
 		if (found) {
+			this.updateBoundSectionLists();
 			this.reNewAllSections();
 			return true;
 		}
