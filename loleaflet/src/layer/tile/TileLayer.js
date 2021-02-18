@@ -876,7 +876,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._map._docLayer._docType === 'spreadsheet') {
 				var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
 				if (section) {
-					section.drawingOrder = 4;
+					section.setDrawingOrder(L.CSections.CalcGrid.drawingOrder);
 					section.sectionProperties.strokeStyle = '#c0c0c0';
 				}
 				this._map._docLayer._painter._sectionContainer.removeSection('splits');
@@ -3861,7 +3861,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._map._docLayer._docType === 'spreadsheet') {
 			var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
 			if (section) {
-				section.drawingOrder = L.CSections.CalcGrid.drawingOrderDebug;
+				section.setDrawingOrder(L.CSections.CalcGrid.drawingOrderDebug);
 				section.sectionProperties.strokeStyle = 'blue';
 			}
 			this._map._docLayer._painter._addSplitsSection();
