@@ -408,7 +408,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 
 		// create data structure for column widths
-		this._tickMap = new L.Control.Header.GapTickMap(this._map, columns);
+		this._tickMap = new L.Control.Header.GapTickMap(this._map, columns, 1024);
 		this._startOffset = this._tickMap.getStartOffset();
 
 		// setup conversion routine
