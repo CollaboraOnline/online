@@ -14,7 +14,7 @@ describe('Interfering second user.', function() {
 			return 'impress';
 	}
 
-	it('Spaming keyboard input.', function() {
+	it('Spaming keyboard\mouse input.', function() {
 		cy.waitUntil(function() {
 			// Wait for the user-1 to open the document
 			cy.visit('http://admin:admin@localhost:' +
