@@ -1665,7 +1665,7 @@ bool ChildSession::renderWindow(const char* /*buffer*/, int /*length*/, const St
             << " and rendered in " << totalTime
             << "ms (" << area / elapsed << " MP/s).");
 
-    uint64_t pixmapHash = Png::hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight);
+    uint64_t pixmapHash = Png::hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight) + getViewId();
 
     auto found = std::find(_pixmapCache.begin(), _pixmapCache.end(), pixmapHash);
 
