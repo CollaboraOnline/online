@@ -591,7 +591,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			var points = this._getPoints();
 			for (var i = 0; i < points.length; i++) {
 				this._handlers.push(
-					this._createHandler(this._map._docLayer._twipsToLatLng(points[i].point), i * 2, i, this._onScaleStart)
+					this._createHandler(this._map._docLayer._twipsToLatLng(points[i].point, this._map.getZoom()), i * 2, i, this._onScaleStart)
 						.addTo(this._handlersGroup));
 			}
 		}
@@ -616,8 +616,8 @@ L.Handler.PathTransform = L.Handler.extend({
 	*/
 	_createRotationHandlers: function() {
 		var map     = this._map;
-		var bottom   = map._docLayer._twipsToLatLng(this._getPoints()[7].point);
-		var topPoint   = map._docLayer._twipsToLatLng(this._getPoints()[3].point);
+		var bottom   = map._docLayer._twipsToLatLng(this._getPoints()[7].point, this._map.getZoom());
+		var topPoint   = map._docLayer._twipsToLatLng(this._getPoints()[3].point, this._map.getZoom());
 
 		var handlerPosition = map.layerPointToLatLng(
 			L.PathTransform.pointOnLine(
@@ -809,7 +809,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		var map = this._map;
 		var handle = this.options.handles['custom']['22'][0];
 		this._customHandle = handle;
-		this._customHandlePosition = map._docLayer._twipsToLatLng(handle.point);
+		this._customHandlePosition = map._docLayer._twipsToLatLng(handle.point, this._map.getZoom());
 		var CustomHandleClass = this.options.customHandleClass;
 		var options = this.options.handlerOptions;
 		this._customMarker = new CustomHandleClass(this._customHandlePosition,
@@ -1167,7 +1167,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (options.cursor != 10 && options.cursor != 8) {
 			this._polyEdges.push(index);
 		}
-		var marker = new HandleClass(this._map._docLayer._twipsToLatLng(handle.point),
+		var marker = new HandleClass(this._map._docLayer._twipsToLatLng(handle.point, this._map.getZoom()),
 			L.Util.extend({}, this.options.handlerOptions, options)
 		);
 
