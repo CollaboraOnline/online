@@ -2,7 +2,6 @@
 
 var helper = require('../common/helper');
 var mobileHelper = require('../common/mobile_helper');
-var calcHelper = require('../common/calc_helper');
 
 describe('Interfering second user.', function() {
 	function getComponent(fileName) {
@@ -38,10 +37,6 @@ describe('Interfering second user.', function() {
 
 			helper.doIfOnMobile(function() {
 				mobileHelper.enableEditingMobile();
-			});
-
-			helper.doIfInCalc(function() {
-				calcHelper.clickOnFirstCell();
 			});
 
 			// Do some interfering activity.
