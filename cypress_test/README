@@ -115,6 +115,53 @@ mobile and desktop tests, that's why there are two separate commands
 for them and there is no option to open all the tests in the
 test runner.
 
+Interference testing
+--------------------
+
+The idea is to run an existing cypress test while the same document
+is opened by a second user. The second user does some activity
+(e.g. moving cursor, clicking, etc) and we check whether it makes
+any interference with the first user's view. The first user is doing
+the actual test's steps, so we can see if interference breaks the assertions.
+
+In Writer, the interfering user moves the cursor left and right. In Calc,
+the interfering user moves the cellcursor left and right. In Impress, it
+just does mouse-clicking next to the slide. All these activities trigger
+view switches in the core, which can hit issues with multiple users.
+
+To run all mobile tests with interference testing:
+
+    make check-interfer-mobile
+
+To run one specific mobile test suit:
+
+    make check-interfer-mobile spec=writer/toolbar_spec.js
+
+We can also run the interactive test runner with interference
+testing. In this case, the test user is visible in the browser
+and the interfering user runs in the background. Yon can see
+the activity of the interfering user as another view appears
+in the document moving its cursor left and right.
+To open one specific mobile test suit in interactive test runner:
+
+    make run-interfer-mobile spec=writer/toolbar_spec.js
+
+To run all desktop tests with interference testing:
+
+    make check-interfer-desktop
+
+To run one specific desktop test suit:
+
+    make check-interfer-desktop spec=writer/form_field_spec.js
+
+To open one specific desktop test suit in interactive test runner:
+
+    make run-interfer-desktop spec=writer/form_field_spec.js
+
+The implementation of interference testing can be found in
+cypress_test/integration_tests/multiuser/interference_user_spec.js
+test file.
+
 Running tests in different browsers
 -----------------------------------
 
