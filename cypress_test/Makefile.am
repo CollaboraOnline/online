@@ -221,6 +221,7 @@ define run_interactive_mobile
 	@echo
 	$(if $(1),\
 		$(eval SPEC_FILE=$(MOBILE_TEST_FOLDER)/$(1))\
+		$(call check_spec_existence,$(1),mobile)\
 		$(call run_interactive_single,$(MOBILE_CONFIG),$(MOBILE_ENV),$(SPEC_FILE))\
 	,\
 		$(call run_interactive_all,$(MOBILE_CONFIG),$(MOBILE_ENV))\
@@ -241,6 +242,7 @@ define run_mobile_tests
 			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(1),mobile,$(2))\
 	,\
 		$(eval SPEC_FILE=$(if $(1),$(MOBILE_TEST_FOLDER)/$(1)))\
+		$(call check_spec_existence,$(1),mobile)\
 		$(call run_test_headless,\
 			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
@@ -276,8 +278,9 @@ DESKTOP_ENV = \
 define run_interactive_desktop
 	@echo "Open cypress with desktop tests..."
 	@echo
-	$(eval SPEC_FILE=$(DESKTOP_TEST_FOLDER)/$(1))
 	$(if $(1),\
+		$(eval SPEC_FILE=$(DESKTOP_TEST_FOLDER)/$(1))\
+		$(call check_spec_existence,$(1),desktop)\
 		$(call run_interactive_single,$(DESKTOP_CONFIG),$(DESKTOP_ENV),$(SPEC_FILE))\
 	,\
 		$(call run_interactive_all,$(DESKTOP_CONFIG),$(DESKTOP_ENV))\
@@ -298,6 +301,7 @@ define run_desktop_tests
 			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(1),desktop,$(2))\
 	,\
 		$(eval SPEC_FILE=$(if $(1),$(DESKTOP_TEST_FOLDER)/$(1)))\
+		$(call check_spec_existence,$(1),desktop)\
 		$(call run_test_headless,\
 			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
@@ -329,6 +333,7 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Running multi-user test in interactive test runner..."
 	@echo
+	$(call check_spec_existence,$(spec),multi)\
 	$(if $(filter 1,$(user)), \
 		$(eval BACKGROUND_USER_SPEC=$(spec)_user2_spec.js), \
 		$(eval BACKGROUND_USER_SPEC=$(spec)_user1_spec.js))
@@ -362,6 +367,7 @@ endef
 # 1 - test name:	test name to run. This test name means to test files (user1, user2).
 # 2 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
 define run_multiuser_test
+	$(call check_spec_existence,$(1),multi)
 	$(eval USER1_SPEC=$(strip $(1))_user1_spec.js)
 	$(eval USER2_SPEC=$(strip $(1))_user2_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
@@ -403,6 +409,7 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Running interfer mobile test in interactive test runner..."
 	@echo
+	$(call check_spec_existence,$(spec),mobile)
 	$(eval USER1_SPEC=$(MOBILE_TEST_FOLDER)/$(spec))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
@@ -436,6 +443,7 @@ endef
 define run_mobile_interference_test
 	@echo "Running cypress mobile interference test: $(1)"
 	@echo
+	$(call check_spec_existence,$(1),mobile)
 	$(eval USER1_SPEC=$(1))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
@@ -474,6 +482,7 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Running interfer desktop test in interactive test runner..."
 	@echo
+	$(call check_spec_existence,$(spec),desktop)
 	$(eval USER1_SPEC=$(DESKTOP_TEST_FOLDER)/$(spec))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
@@ -507,6 +516,7 @@ endef
 define run_desktop_interference_test
 	@echo "Running cypress desktop interference test: $(1)"
 	@echo
+	$(call check_spec_existence,$(1),desktop)
 	$(eval USER1_SPEC=$(1))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
@@ -608,6 +618,20 @@ define run_test_headless
 		--env $(2) \
 		--spec=$(3) \
 		|| ($(KILL_COMMAND) && false)
+endef
+
+# Checks whether the given spec file exists.
+# We run this check when the spec file was specified by
+# the user so we can give clearer error message.
+#
+# Parameters:
+# 1 - spec:	      test file path (e.g. make check-mobile spec=...)
+# 2 - test type:      mobile, desktop or multi test.
+define check_spec_exisetnce
+	$(eval TEST_FILES=$(if $(filter mobile,$(2)),$(MOBILE_TEST_FILES),\
+				$(if $(filter desktop,$(2)),$(DESKTOP_TEST_FILES),$(MULTIUSER_TESTS))))
+	$(if $(filter $(1),$(TEST_FILES)),,$(error CypressError: Can't find the given spec file!))
+
 endef
 
 else
