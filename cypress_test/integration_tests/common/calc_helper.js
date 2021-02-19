@@ -47,8 +47,11 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 		});
 
 	if (firstClick && !dblClick) {
-		cy.get('.spreadsheet-cell-autofill-marker')
-			.should('be.visible');
+		cy.get('#test-div-overlay-cell-cursor')
+			.should(function (elem) {
+				expect(helper.Bounds.parseBoundsJson(elem.text()).left).to.be.equal(0);
+				expect(helper.Bounds.parseBoundsJson(elem.text()).top).to.be.equal(0);
+			});
 
 		helper.doIfOnMobile(function() {
 			cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
