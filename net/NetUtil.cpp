@@ -22,10 +22,15 @@ std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, const bool isSSL,
         const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler)
 {
-    LOG_DBG("Connecting to " << host << ':' << port << " (" << (isSSL ? "SSL" : "Unencrypted")
-                             << ')');
-
     std::shared_ptr<StreamSocket> socket;
+
+    if (host.empty() || port.empty())
+    {
+        LOG_ERR("Invalid host/port " << host << ':' << port);
+        return socket;
+    }
+
+    LOG_DBG("Connecting to " << host << ':' << port << " (" << (isSSL ? "SSL)" : "Unencrypted)"));
 
 #if !ENABLE_SSL
     if (isSSL)
