@@ -34,6 +34,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(HttpRequestTests);
 
+    CPPUNIT_TEST(testInvalidURI);
     CPPUNIT_TEST(testSimpleGet);
     CPPUNIT_TEST(testSimpleGetSync);
     // CPPUNIT_TEST(test500GetStatuses); // Slow.
@@ -44,6 +45,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testInvalidURI();
     void testSimpleGet();
     void testSimpleGetSync();
     void test500GetStatuses();
@@ -74,6 +76,27 @@ pocoGet(const std::string& host, const std::string& url)
     }
 
     return std::make_pair(response, responseString);
+}
+
+void HttpRequestTests::testInvalidURI()
+{
+    const char* Host = "";
+    const char* URL = "/";
+
+    http::Request httpRequest(URL);
+
+    auto httpSession = http::Session::createHttp(Host);
+    httpSession->setTimeout(std::chrono::seconds(1));
+    LOK_ASSERT(httpSession->syncRequest(httpRequest) == false);
+
+    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+    LOK_ASSERT(httpResponse->done() == false);
+    LOK_ASSERT(httpResponse->state() != http::Response::State::Complete);
+    LOK_ASSERT(httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
+    LOK_ASSERT(httpResponse->statusLine().statusCode() == 0);
+    LOK_ASSERT(httpResponse->statusLine().statusCategory()
+               == http::StatusLine::StatusCodeClass::Invalid);
+    LOK_ASSERT(httpResponse->getBody().empty());
 }
 
 void HttpRequestTests::testSimpleGet()
