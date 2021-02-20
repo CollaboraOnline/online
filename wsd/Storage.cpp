@@ -661,7 +661,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             LOG_END(logger, true);
         }
 
-        httpSession->syncRequest(httpRequest);
+        const bool success = httpSession->syncRequest(httpRequest);
 
         std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
@@ -671,7 +671,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         // Note: we don't log the response if obfuscation is enabled, except for failures.
         wopiResponse = httpResponse->getBody();
         const bool failed
-            = (httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
+            = !success
+              || (httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
 
         Log::StreamLogger logRes = failed ? Log::error() : Log::trace();
         if (logRes.enabled())
@@ -1035,8 +1036,7 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
 
     LOG_TRC("Downloading from [" << uriAnonym << "] to [" << getRootFilePath()
                                  << "]: " << httpRequest.header().toString());
-    httpSession->syncDownload(httpRequest, getRootFilePath());
-
+    bool success = httpSession->syncDownload(httpRequest, getRootFilePath());
     std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
     const std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -1044,19 +1044,25 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
 
     _wopiLoadDuration += diff;
 
-    Log::StreamLogger logger = Log::trace();
-    if (logger.enabled())
+    if (success)
     {
-        logger << "WOPI::GetFile header for URI [" << uriAnonym << "]:\n";
-        for (const auto& pair : httpResponse->header())
+        // Log the response header.
+        Log::StreamLogger logger = Log::trace();
+        if (logger.enabled())
         {
-            logger << '\t' << pair.first << ": " << pair.second << " / ";
-        }
+            logger << "WOPI::GetFile response header for URI [" << uriAnonym << "]:\n";
+            for (const auto& pair : httpResponse->header())
+            {
+                logger << '\t' << pair.first << ": " << pair.second << " / ";
+            }
 
         LOG_END(logger, true);
     }
 
-    if (httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK)
+        success = (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK);
+    }
+
+    if (!success)
     {
         const std::string responseString = httpResponse->getBody();
         LOG_ERR("WOPI::GetFile [" << uriAnonym << "] failed with Status Code: "
