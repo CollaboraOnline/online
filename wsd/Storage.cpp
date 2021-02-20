@@ -1075,8 +1075,7 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     const FileUtil::Stat fileStat(getRootFilePath());
     const std::size_t filesize = (fileStat.good() ? fileStat.size() : 0);
     LOG_INF("WOPI::GetFile downloaded " << filesize << " bytes from [" << uriAnonym << "] -> "
-                                        << getRootFilePathAnonym() << " in " << diff.count()
-                                        << 's');
+                                        << getRootFilePathAnonym() << " in " << diff);
     setLoaded(true);
 
     // Now return the jailed path.
