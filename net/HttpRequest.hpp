@@ -744,7 +744,7 @@ public:
         return syncRequestImpl();
     }
 
-    void asyncRequest(const Request& req, SocketPoll& poll)
+    bool asyncRequest(const Request& req, SocketPoll& poll)
     {
         LOG_TRC("asyncRequest");
 
@@ -755,8 +755,15 @@ public:
             LOG_TRC("Connected");
             poll.insertNewSocket(_socket);
         }
+        else if (!_socket)
+        {
+            LOG_ERR("Failed to connect to " << _host << ':' << _port);
+            return false;
+        }
         else
             poll.wakeupWorld();
+
+        return true;
     }
 
 private:
