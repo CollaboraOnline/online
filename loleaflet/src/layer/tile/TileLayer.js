@@ -777,9 +777,6 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._map._clip)
 				this._map._clip.onComplexSelection(textMsg.substr('complexselection:'.length));
 		}
-		else if (textMsg.startsWith('tile:')) {
-			this._onTileMsg(textMsg, img);
-		}
 		else if (textMsg.startsWith('windowpaint:')) {
 			this._onDialogPaintMsg(textMsg, img);
 		}
