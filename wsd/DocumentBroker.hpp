@@ -712,14 +712,13 @@ private:
         bool hasSavingTimedOut(std::chrono::milliseconds timeoutMs
                                = std::chrono::milliseconds(COMMAND_TIMEOUT_MS)) const
         {
-            return isSaving() && timeSinceLastSaveRequest() >= timeoutMs;
+            return _request.hasLastRequestTimedOut(timeoutMs);
         }
 
         /// The duration elapsed since we sent the last save request to Core.
         std::chrono::milliseconds timeSinceLastSaveRequest() const
         {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(
-                RequestManager::now() - _request.lastRequestTime());
+            return _request.timeSinceLastRequest();
         }
 
     private:
