@@ -558,22 +558,43 @@ private:
         {
         }
 
-        /// How much time passed since the last request.
+        /// Sets the time the last request was made to now.
+        void markLastRequestTime() { _lastRequestTime = now(); }
+
+        /// Returns the time the last request was made.
+        std::chrono::steady_clock::time_point lastRequestTime() const { return _lastRequestTime; }
+
+        /// How much time passed since the last request,
+        /// regardless of whether we got a response or not.
         const std::chrono::milliseconds timeSinceLastRequest() const
         {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - _lastRequestTime);
+            return std::chrono::duration_cast<std::chrono::milliseconds>(now() - _lastRequestTime);
         }
 
-        /// How much time passed since the last response.
+        /// True iff there is an active request and it has timed out.
+        bool hasLastRequestTimedOut(std::chrono::milliseconds timeoutMs) const
+        {
+            return isActive() && timeSinceLastRequest() >= timeoutMs;
+        }
+
+
+        /// Sets the time the last response was received to now.
+        void markLastResponseTime() { _lastResponseTime = now(); }
+
+        /// Returns the time the last response was received.
+        std::chrono::steady_clock::time_point lastResponseTime() const { return _lastResponseTime; }
+
+        /// How much time passed since the last response,
+        /// regardless of whether there is a newer request or not.
         const std::chrono::milliseconds timeSinceLastResponse() const
         {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::steady_clock::now() - _lastResponseTime);
+            return std::chrono::duration_cast<std::chrono::milliseconds>(now() - _lastResponseTime);
         }
 
-        /// Indicates whether the last request was successful or not.
-        bool lastRequestSuccessful() const { return _lastRequestSuccessful; }
+
+        /// Returns true iff there is an active request in progress.
+        bool isActive() const { return _lastResponseTime < _lastRequestTime; }
+
 
         /// Sets the last request's result, either to success or failure.
         /// And marks the last response time.
@@ -583,8 +604,9 @@ private:
             _lastRequestSuccessful = success;
         }
 
-        /// Returns true iff there is an active request in progress.
-        bool isActive() const { return _lastResponseTime < _lastRequestTime; }
+        /// Indicates whether the last request was successful or not.
+        bool lastRequestSuccessful() const { return _lastRequestSuccessful; }
+
 
         /// Set the modified time of the document.
         void setModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
@@ -592,23 +614,12 @@ private:
         /// Returns the modified time of the document.
         std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
 
+
         /// Helper to get the current time.
         static std::chrono::steady_clock::time_point now()
         {
             return std::chrono::steady_clock::now();
         }
-
-        /// Returns the time the last request was made.
-        std::chrono::steady_clock::time_point lastRequestTime() const { return _lastRequestTime; }
-
-        /// Sets the time the last request was made to now.
-        void markLastRequestTime() { _lastRequestTime = now(); }
-
-        /// Returns the time the last response was received.
-        std::chrono::steady_clock::time_point lastResponseTime() const { return _lastResponseTime; }
-
-        /// Sets the time the last response was received to now.
-        void markLastResponseTime() { _lastResponseTime = now(); }
 
     private:
         /// The last time we started an a request.
