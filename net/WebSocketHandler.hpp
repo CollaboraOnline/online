@@ -122,7 +122,14 @@ public:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
         {
-            LOG_ERR("No socket associated with WebSocketHandler " << this);
+            LOG_ERR("No socket associated with WebSocketHandler " << this
+                                                                  << " to send Close Frame to.");
+            return;
+        }
+
+        if (socket->isClosed())
+        {
+            LOG_DBG("Socket #" << socket->getFD() << " is closed. Cannot send Close Frame.");
             return;
         }
 
@@ -619,23 +626,28 @@ protected:
             return -1;
 
         if (socket->isClosed())
+        {
+            LOG_DBG("Socket #" << socket->getFD() << " is closed. Cannot send WS frame.");
             return 0;
+        }
 
         socket->assertCorrectThread();
         Buffer& out = socket->getOutBuffer();
+
+        LOG_TRC("WebSocketHandle::sendFrame: Writing to #" << socket->getFD() << ' ' << len
+                                                           << " bytes");
 
 #if !MOBILEAPP
         const size_t oldSize = out.size();
 
         buildFrame(data, len, flags, out);
 
+        // Return the number of bytes we wrote to the *buffer*.
         const size_t size = out.size() - oldSize;
 
         if (flush)
             socket->writeOutgoingData();
 #else
-        LOG_TRC("WebSocketHandle::sendFrame: Writing to #" << socket->getFD() << ' ' << len << " bytes");
-
         // We ignore the flush parameter and always flush in the MOBILEAPP case because there is no
         // WebSocket framing, we put the messages as such into the FakeSocket queue.
 
