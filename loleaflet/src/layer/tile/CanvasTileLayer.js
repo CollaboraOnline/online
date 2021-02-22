@@ -383,6 +383,7 @@ L.TileSectionManager = L.Class.extend({
 			cancelAnimationFrame(this._zoomRAF);
 			this._calcZoomFrameScale(zoom, newCenter);
 			this.rafFunc();
+			cancelAnimationFrame(this._zoomRAF);
 			this._zoomFrameScale = undefined;
 			this._tilesSection.setInZoomAnim(false);
 			this._inZoomAnim = false;
