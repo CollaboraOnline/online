@@ -136,15 +136,46 @@ class CanvasOverlay {
 		this.updateCanvasBounds();
 		var docTopLeft = this.bounds.getTopLeft();
 		var cOrigin = new CPoint(0, 0);
-
 		this.ctx.save();
 
-		if (!paneXFixed)
-			cOrigin.x = -docTopLeft.x;
-		if (!paneYFixed)
-			cOrigin.y = -docTopLeft.y;
+		if (this.tsManager._inZoomAnim) {
+			// zoom-animation is in progress : Draw overlay on main canvas
+			// at the current frame's zoom level.
+			var scale = this.tsManager._zoomFrameScale;
+			var pinchCenter = this.tsManager._newCenter;
+			var center = docTopLeft.clone();
+			if (pinchCenter.x >= this.bounds.min.x && pinchCenter.x <= this.bounds.max.x)
+				center.x = pinchCenter.x;
+			if (pinchCenter.y >= this.bounds.min.y && pinchCenter.y <= this.bounds.max.y)
+				center.y = pinchCenter.y;
 
-		this.ctx.translate(cOrigin.x, cOrigin.y);
+			var newDocTopLeft = new CPoint(
+					Math.max(0, (center.x - (center.x - docTopLeft.x) / scale)),
+					Math.max(0, (center.y - (center.y - docTopLeft.y) / scale)));
+			if (!paneXFixed)
+				cOrigin.x = -newDocTopLeft.x;
+			if (!paneYFixed)
+				cOrigin.y = -newDocTopLeft.y;
+
+			if (clipArea) {
+				clipArea = clipArea.clone();
+				var newClipSize = clipArea.getSize().divideBy(scale);
+				clipArea.min.x = Math.max(0, (center.x - (center.x - clipArea.min.x) / scale));
+				clipArea.min.y = Math.max(0, (center.y - (center.y - clipArea.min.y) / scale));
+				clipArea.max = clipArea.min.add(newClipSize);
+			}
+
+			this.ctx.transform(scale, 0, 0, scale, scale * cOrigin.x, scale * cOrigin.y);
+
+		} else {
+			if (!paneXFixed)
+				cOrigin.x = -docTopLeft.x;
+			if (!paneYFixed)
+				cOrigin.y = -docTopLeft.y;
+
+			this.ctx.translate(cOrigin.x, cOrigin.y);
+		}
+
 		if (clipArea) {
 			this.ctx.beginPath();
 			var clipSize = clipArea.getSize();
@@ -226,7 +257,8 @@ class CanvasOverlay {
 		if (path.stroke && path.weight !== 0) {
 			this.ctx.globalAlpha = path.opacity;
 
-			this.ctx.lineWidth = path.weight;
+			this.ctx.lineWidth = this.tsManager._inZoomAnim ?
+				path.weight / this.tsManager._zoomFrameScale : path.weight;
 			this.ctx.strokeStyle = path.color;
 			this.ctx.lineCap = path.lineCap;
 			this.ctx.lineJoin = path.lineJoin;
