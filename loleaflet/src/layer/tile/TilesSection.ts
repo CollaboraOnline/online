@@ -213,13 +213,7 @@ class TilesSection {
 		this.inZoomAnimation = setValue;
 	}
 
-	public onMouseWheel (point: Array<number>, delta: number, e: MouseEvent) {
-		// User wants to scroll the document. We will send this request to Scroll Section.
-		var section: any = this.containerObject.getSectionWithName(L.CSections.Scroll.name);
-		if (section)
-			section.onMouseWheel(point, delta, e);
-	}
-
+	public onMouseWheel () {}
 	public onMouseMove () {}
 	public onMouseDown () {}
 	public onMouseUp () {}

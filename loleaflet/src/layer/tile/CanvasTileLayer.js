@@ -50,7 +50,6 @@ L.TileSectionManager = L.Class.extend({
 		if (L.Browser.cypressTest) // If cypress is active, create test divs.
 			this._sectionContainer.testing = true;
 
-		this._sectionContainer.addSection(L.getNewScrollSection());
 		this._sectionContainer.onResize(mapSize.x, mapSize.y);
 
 		var dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
@@ -439,6 +438,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._painter._addTilesSection();
 		this._painter._sectionContainer.getSectionWithName('tiles').onResize();
 		this._painter._addOverlaySection();
+		this._painter._sectionContainer.addSection(L.getNewScrollSection());
 
 		// For mobile/tablet the hammerjs swipe handler already uses a requestAnimationFrame to fire move/drag events
 		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.

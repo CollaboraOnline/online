@@ -25,14 +25,9 @@ class ScrollSection {
 	zIndex: number = null;
 	interactable: boolean = true;
 	sectionProperties: any = {};
-	map: any;
-	documentWidth: number = 0;
-	documentHeight: number = 0;
-	autoScrollTimer: any;
-	previousDragDistance: Array<number> = null;
-	documentTopMax: number = Infinity;
-	documentRightMax: number = Infinity;
 	stopPropagating: Function; // Implemented by container.
+	map: any;
+	autoScrollTimer: any;
 
 	constructor () {
 		this.name = L.CSections.Scroll.name;
@@ -56,7 +51,15 @@ class ScrollSection {
 
 	public onInitialize () {
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
-		this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
+		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
+
+		this.sectionProperties.documentWidth = 0;
+		this.sectionProperties.documentHeight = 0;
+
+		this.sectionProperties.documentTopMax = Infinity;
+		this.sectionProperties.documentRightMax = Infinity;
+
+		this.sectionProperties.previousDragDistance = null;
 
 		this.sectionProperties.usableThickness = 20 * this.dpiScale;
 		this.sectionProperties.scrollBarThickness = 6 * this.dpiScale;
@@ -70,6 +73,20 @@ class ScrollSection {
 
 		this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 		this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
+
+		this.sectionProperties.minimumScrollSize = 80 * this.dpiScale;
+
+		this.sectionProperties.circleSliderRadius = 24 * this.dpiScale; // Radius of the mobile vertical circular slider.
+		this.sectionProperties.arrowCornerLength = 10 * this.dpiScale; // Corner length of the arrows inside circular slider.
+
+		// Opacity.
+		this.sectionProperties.alphaWhenVisible = 0.5; // Scroll bar is visible but not being used.
+		this.sectionProperties.alphaWhenBeingUsed = 0.8; // Scroll bar is being used.
+
+		this.sectionProperties.yOffset = 0;
+		this.sectionProperties.xOffset = 0;
+
+		this.sectionProperties.horizontalScrollRightOffset = this.sectionProperties.usableThickness * 2; // To prevent overlapping of the scroll bars.
 	}
 
 	public onScrollTo (e: any) {
@@ -131,38 +148,78 @@ class ScrollSection {
 		var newDocHeight = Math.ceil(e.y);
 
 		// Don't get them through L.DomUtil.getStyle because precision is no more than 6 digits
-		this.documentWidth = Math.round(newDocWidth * this.dpiScale);
-		this.documentHeight = Math.round(newDocHeight * this.dpiScale);
+		this.sectionProperties.documentWidth = Math.round(newDocWidth * this.dpiScale);
+		this.sectionProperties.documentHeight = Math.round(newDocHeight * this.dpiScale);
+	}
+
+	private getVerticalScrollLength () :number {
+		if (this.map._docLayer._docType !== 'spreadsheet') {
+			return this.size[1];
+		}
+		else {
+			var splitPanesContext: any = this.map.getSplitPanesContext();
+			var splitPos: any = splitPanesContext.getSplitPos().clone();
+			splitPos.y *= this.dpiScale;
+			this.sectionProperties.yOffset = splitPos.y;
+			return this.size[1] - splitPos.y;
+		}
+	}
+
+	private calculateVerticalScrollSize (scrollLength: number) :number {
+		var scrollSize = scrollLength * scrollLength / this.sectionProperties.documentHeight;
+		if (scrollSize > this.sectionProperties.minimumScrollSize) {
+			return scrollSize;
+		}
+		else {
+			return this.sectionProperties.minimumScrollSize;
+		}
 	}
 
 	public getVerticalScrollProperties () :any {
 		var result: any = {};
-		result.scrollLength = this.size[1]; // The length of the railway that the scroll bar moves on up & down.
-		result.percentage = this.documentTopLeft[1] / this.documentHeight; // % of the top position of the scroll bar.
-		result.scrollSize = result.scrollLength * (result.scrollLength / this.documentHeight); // Height of the scroll bar.
-		this.documentTopMax = this.documentHeight - result.scrollLength; // When documentTopLeft[1] value is equal to this value, it means whole document is visible.
-		result.documentTopMax = this.documentTopMax;
-
-		if (result.scrollSize > this.documentHeight)
-			result.scrollSize = this.documentHeight; // This shouldn't happen.
-		else if (result.scrollSize < 100 * this.dpiScale)
-			result.scrollSize = 100 * this.dpiScale; // This can happen if document height is a big number.
+		result.scrollLength = this.getVerticalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
+		result.scrollSize = this.calculateVerticalScrollSize(result.scrollLength);
+		result.scrollableLength = result.scrollLength - result.scrollSize;
+		result.scrollableHeight = this.sectionProperties.documentHeight - this.size[1];
+		result.ratio = result.scrollableHeight / result.scrollableLength; // 1px scrolling = xpx document height.
+		result.startY = this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset;
+		this.sectionProperties.documentTopMax = result.scrollableHeight; // When documentTopLeft[1] value is equal to this value, it means whole document is visible.
 
 		return result;
 	}
 
+	private getHorizontalScrollLength () :number {
+		if (this.map._docLayer._docType !== 'spreadsheet') {
+			return this.size[0] - this.sectionProperties.horizontalScrollRightOffset;
+		}
+		else {
+			var splitPanesContext: any = this.map.getSplitPanesContext();
+			var splitPos: any = splitPanesContext.getSplitPos().clone();
+			splitPos.x *= this.dpiScale;
+			this.sectionProperties.xOffset = splitPos.x;
+			return this.size[0] - splitPos.x - this.sectionProperties.horizontalScrollRightOffset;
+		}
+	}
+
+	private calculateHorizontalScrollSize (scrollLength: number) :number {
+		var scrollSize = scrollLength * scrollLength / this.sectionProperties.documentWidth;
+		if (scrollSize > this.sectionProperties.minimumScrollSize) {
+			return scrollSize;
+		}
+		else {
+			return this.sectionProperties.minimumScrollSize;
+		}
+	}
+
 	public getHorizontalScrollProperties () :any {
 		var result: any = {};
-		result.scrollLength = this.size[0]; // The length of the railway that the scroll bar moves on up & down.
-		result.percentage = this.documentTopLeft[0] / this.documentWidth; // % of the top position of the scroll bar.
-		result.scrollSize = result.scrollLength * (result.scrollLength / this.documentWidth); // Height of the scroll bar.
-		this.documentRightMax = this.documentWidth - result.scrollLength; // When documentTopLeft[0] value is equal to this value, it means whole document is visible.
-		result.documentRightMax = this.documentRightMax;
-
-		if (result.scrollSize > this.documentWidth)
-			result.scrollSize = this.documentWidth; // This shouldn't happen.
-		else if (result.scrollSize < 100 * this.dpiScale)
-			result.scrollSize = 100 * this.dpiScale; // This can happen if document width is a big number.
+		result.scrollLength = this.getHorizontalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
+		result.scrollSize = this.calculateHorizontalScrollSize(result.scrollLength); // Width of the scroll bar.
+		result.scrollableLength = result.scrollLength - result.scrollSize;
+		result.scrollableWidth = this.sectionProperties.documentWidth - this.size[0];
+		result.ratio = result.scrollableWidth / result.scrollableLength;
+		result.startX = this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset;
+		this.sectionProperties.documentRightMax = result.scrollableWidth;
 
 		return result;
 	}
@@ -174,46 +231,43 @@ class ScrollSection {
 
 	private DrawVerticalScrollBarMobile () {
 		var scrollProps: any = this.getVerticalScrollProperties();
-		this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? 0.8: 0.5;
+		this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
 		this.context.strokeStyle = '#7E8182';
 		this.context.fillStyle = 'white';
 
-		var circleRadius = 24 * this.dpiScale;
-		var circleStartY = scrollProps.scrollLength * scrollProps.percentage + circleRadius;
-		var circleStartX = this.size[0] - circleRadius * 0.5;
+		var circleStartY = scrollProps.startY + this.sectionProperties.circleSliderRadius;
+		var circleStartX = this.size[0] - this.sectionProperties.circleSliderRadius * 0.5;
 
 		this.context.beginPath();
-		this.context.arc(circleStartX, circleStartY, circleRadius, 0, Math.PI * 2, true);
+		this.context.arc(circleStartX, circleStartY, this.sectionProperties.circleSliderRadius, 0, Math.PI * 2, true);
 		this.context.fill();
 		this.context.stroke();
 
-		var cornerLength = 10 * this.dpiScale;
-
 		this.context.fillStyle = '#7E8182';
 		this.context.beginPath();
-		var x: number = circleStartX - cornerLength * 0.5;
+		var x: number = circleStartX - this.sectionProperties.arrowCornerLength * 0.5;
 		var y: number = circleStartY - 5 * this.dpiScale;
 		this.context.moveTo(x, y);
-		x += cornerLength;
+		x += this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
-		x -= cornerLength * 0.5;
-		y -= Math.sin(Math.PI / 3) * cornerLength;
+		x -= this.sectionProperties.arrowCornerLength * 0.5;
+		y -= Math.sin(Math.PI / 3) * this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
-		x -= cornerLength * 0.5;
-		y += Math.sin(Math.PI / 3) * cornerLength;
+		x -= this.sectionProperties.arrowCornerLength * 0.5;
+		y += Math.sin(Math.PI / 3) * this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
 		this.context.fill();
 
-		x = circleStartX - cornerLength * 0.5;
+		x = circleStartX - this.sectionProperties.arrowCornerLength * 0.5;
 		y = circleStartY + 5 * this.dpiScale;
 		this.context.moveTo(x, y);
-		x += cornerLength;
+		x += this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
-		x -= cornerLength * 0.5;
-		y += Math.sin(Math.PI / 3) * cornerLength;
+		x -= this.sectionProperties.arrowCornerLength * 0.5;
+		y += Math.sin(Math.PI / 3) * this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
-		x -= cornerLength * 0.5;
-		y -= Math.sin(Math.PI / 3) * cornerLength;
+		x -= this.sectionProperties.arrowCornerLength * 0.5;
+		y -= Math.sin(Math.PI / 3) * this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
 		this.context.fill();
 
@@ -222,21 +276,20 @@ class ScrollSection {
 
 	private drawVerticalScrollBar () {
 		var scrollProps: any = this.getVerticalScrollProperties();
-		this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? 0.8: 0.5;
+		this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
 		this.context.fillStyle = '#7E8182';
 
 		var startX = this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
-		var startY = scrollProps.scrollLength * scrollProps.percentage + this.sectionProperties.scrollBarThickness * 0.5;
 
 		var centerX = this.size[0] - this.sectionProperties.edgeOffset - this.sectionProperties.scrollBarThickness * 0.5;
-		var centerY = startY;
+		var centerY = scrollProps.startY;
 		var radius = this.sectionProperties.scrollBarThickness * 0.5;
 
 		this.context.beginPath();
 		this.context.arc(centerX, centerY, radius, 0, Math.PI, true);
 		this.context.fill();
 
-		this.context.fillRect(startX, startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
+		this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
 
 		centerY += scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
 		this.context.beginPath();
@@ -247,20 +300,13 @@ class ScrollSection {
 	}
 
 	private drawHorizontalScrollBar () {
-		if (!this.sectionProperties.drawHorizontalScrollBar)
-			return;
-
-		if (this.documentTopLeft[0] < 0)
-			return;
-
 		var scrollProps: any = this.getHorizontalScrollProperties();
-		this.context.globalAlpha = this.sectionProperties.clickScrollHorizontal ? 0.8: 0.5;
+		this.context.globalAlpha = this.sectionProperties.clickScrollHorizontal ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
 		this.context.fillStyle = '#7E8182';
 
-		var startX = scrollProps.scrollLength * scrollProps.percentage + this.sectionProperties.scrollBarThickness * 0.5;
 		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
-		var centerX = startX;
+		var centerX = scrollProps.startX;
 		var centerY = this.size[1] - this.sectionProperties.edgeOffset - this.sectionProperties.scrollBarThickness * 0.5;
 		var radius = this.sectionProperties.scrollBarThickness * 0.5;
 
@@ -268,7 +314,7 @@ class ScrollSection {
 		this.context.arc(centerX, centerY, radius, Math.PI * 0.5, Math.PI * 1.5, false);
 		this.context.fill();
 
-		this.context.fillRect(startX, startY, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, this.sectionProperties.scrollBarThickness);
+		this.context.fillRect(scrollProps.startX, startY, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, this.sectionProperties.scrollBarThickness);
 
 		centerX += scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
 		this.context.beginPath();
@@ -286,47 +332,73 @@ class ScrollSection {
 				this.drawVerticalScrollBar();
 		}
 
-		this.drawHorizontalScrollBar();
+		if (this.sectionProperties.drawHorizontalScrollBar && this.documentTopLeft[0] >= 0) {
+			this.drawHorizontalScrollBar();
+		}
+	}
+
+	private hideVerticalScrollBar () {
+		if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
+			this.sectionProperties.drawVerticalScrollBar = false;
+			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
+			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+			this.containerObject.requestReDraw();
+		}
+	}
+
+	private showVerticalScrollBar () {
+		if (!this.sectionProperties.mouseIsOnVerticalScrollBar) {
+			this.sectionProperties.drawVerticalScrollBar = true;
+			this.sectionProperties.mouseIsOnVerticalScrollBar = true;
+			this.sectionProperties.mapPane.style.cursor = 'pointer';
+			this.containerObject.requestReDraw();
+		}
+	}
+
+	private hideHorizontalScrollBar () {
+		if (this.sectionProperties.mouseIsOnHorizontalScrollBar) {
+			this.sectionProperties.drawHorizontalScrollBar = false;
+			this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
+			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+			this.containerObject.requestReDraw();
+		}
+	}
+
+	private showHorizontalScrollBar () {
+		if (!this.sectionProperties.mouseIsOnHorizontalScrollBar) {
+			this.sectionProperties.drawHorizontalScrollBar = true;
+			this.sectionProperties.mouseIsOnHorizontalScrollBar = true;
+			this.sectionProperties.mapPane.style.cursor = 'pointer';
+			this.containerObject.requestReDraw();
+		}
 	}
 
 	private isMouseOnScrollBar (point: Array<number>) {
 		if (this.documentTopLeft[1] >= 0) {
 			if (point[0] >= this.size[0] - this.sectionProperties.usableThickness) {
-				if (!this.sectionProperties.mouseIsOnVerticalScrollBar) {
-					this.sectionProperties.drawVerticalScrollBar = true;
-					this.sectionProperties.mouseIsOnVerticalScrollBar = true;
-					this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
-					this.sectionProperties.mapPane.style.cursor = 'pointer';
-					this.containerObject.requestReDraw();
+				if (point[1] > this.sectionProperties.yOffset) {
+					this.showVerticalScrollBar();
+				}
+				else {
+					this.hideVerticalScrollBar();
 				}
 			}
 			else {
-				if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
-					this.sectionProperties.drawVerticalScrollBar = false;
-					this.sectionProperties.mouseIsOnVerticalScrollBar = false;
-					this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
-					this.containerObject.requestReDraw();
-				}
+				this.hideVerticalScrollBar();
 			}
 		}
 
 		if (this.documentTopLeft[0] >= 0) {
 			if (point[1] >= this.size[1] - this.sectionProperties.usableThickness) {
-				if (!this.sectionProperties.mouseIsOnHorizontalScrollBar) {
-					this.sectionProperties.drawHorizontalScrollBar = true;
-					this.sectionProperties.mouseIsOnHorizontalScrollBar = true;
-					this.sectionProperties.previousCursorStyle = this.sectionProperties.mapPane.style.cursor;
-					this.sectionProperties.mapPane.style.cursor = 'pointer';
-					this.containerObject.requestReDraw();
+				if (point[0] <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset && point[0] >= this.sectionProperties.xOffset) {
+					this.showHorizontalScrollBar();
+				}
+				else {
+					this.hideHorizontalScrollBar();
 				}
 			}
 			else {
-				if (this.sectionProperties.mouseIsOnHorizontalScrollBar) {
-					this.sectionProperties.drawHorizontalScrollBar = false;
-					this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
-					this.sectionProperties.mapPane.style.cursor = this.sectionProperties.previousCursorStyle;
-					this.containerObject.requestReDraw();
-				}
+				this.hideHorizontalScrollBar();
 			}
 		}
 	}
@@ -337,55 +409,60 @@ class ScrollSection {
 	}
 
 	public scrollVerticalWithOffset (offset: number) {
-		offset /= this.dpiScale;
-
-		if (this.documentTopLeft[1] + offset <= 0) // We shouldn't scroll document to a negative y value.
-			this.map.scrollTop(0, {});
-		else if (this.documentTopLeft[1] + offset >= this.documentTopMax) // We should stop at the bottom of the document.
-			this.map.scrollTop(this.documentTopMax / this.dpiScale, {});
+		if (this.documentTopLeft[1] + offset <= 0) { // We shouldn't scroll document to a negative y value.
+			if (this.documentTopLeft[1] > 0)
+				this.map.scrollTop(0, {});
+		}
+		else if (this.documentTopLeft[1] + offset >= this.sectionProperties.documentTopMax) // We should stop at the bottom of the document.
+			this.map.scrollTop(this.sectionProperties.documentTopMax / this.dpiScale, {});
 		else // Humph, everything is normal.
-			this.map.scroll(0, offset, {});
+			this.map.scroll(0, offset / this.dpiScale, {});
 	}
 
 	public scrollHorizontalWithOffset (offset: number) {
-		offset /= this.dpiScale;
-
-		if (this.documentTopLeft[0] + offset <= 0) // We shouldn't scroll document to a negative x value.
-			this.map.scrollLeft(0, {});
-		else if (this.documentTopLeft[0] + offset >= this.documentRightMax) // We should stop at the right edge of the document.
-			this.map.scrollLeft(this.documentRightMax / this.dpiScale, {});
+		if (this.documentTopLeft[0] + offset <= 0){ // We shouldn't scroll document to a negative x value.
+			if (this.documentTopLeft[0] > 0)
+				this.map.scrollLeft(0, {});
+		}
+		else if (this.documentTopLeft[0] + offset >= this.sectionProperties.documentRightMax) // We should stop at the right edge of the document.
+			this.map.scrollLeft(this.sectionProperties.documentRightMax / this.dpiScale, {});
 		else // Humph, everything is normal.
-			this.map.scroll(offset, 0, {});
+			this.map.scroll(offset / this.dpiScale, 0, {});
 	}
 
 	public onMouseMove (position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.sectionProperties.clickScrollVertical && this.containerObject.draggingSomething) {
-			if (!this.previousDragDistance) {
-				this.previousDragDistance = [0, 0];
+			if (!this.sectionProperties.previousDragDistance) {
+				this.sectionProperties.previousDragDistance = [0, 0];
 			}
 
+			if (!this.sectionProperties.drawVerticalScrollBar)
+				this.sectionProperties.drawVerticalScrollBar = true;
+
 			var scrollProps: any = this.getVerticalScrollProperties();
-			var diffY: number = dragDistance[1] - this.previousDragDistance[1];
-			var percentage: number = diffY / scrollProps.scrollLength;
-			var actualDistance = this.documentHeight * percentage;
+			var diffY: number = dragDistance[1] - this.sectionProperties.previousDragDistance[1];
+			var actualDistance = scrollProps.ratio * diffY;
 
 			this.scrollVerticalWithOffset(actualDistance);
-			this.previousDragDistance[1] = dragDistance[1];
+			this.sectionProperties.previousDragDistance[1] = dragDistance[1];
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
 		}
 		else if (this.sectionProperties.clickScrollHorizontal && this.containerObject.draggingSomething) {
-			if (!this.previousDragDistance) {
-				this.previousDragDistance = [0, 0];
+			if (!this.sectionProperties.previousDragDistance) {
+				this.sectionProperties.previousDragDistance = [0, 0];
 			}
 
+			if (!this.sectionProperties.drawHorizontalScrollBar)
+				this.sectionProperties.drawHorizontalScrollBar = true;
+
 			var scrollProps: any = this.getHorizontalScrollProperties();
-			var diffX: number = dragDistance[0] - this.previousDragDistance[0];
+			var diffX: number = dragDistance[0] - this.sectionProperties.previousDragDistance[0];
 			var percentage: number = diffX / scrollProps.scrollLength;
-			var actualDistance = this.documentWidth * percentage;
+			var actualDistance = this.sectionProperties.documentWidth * percentage;
 
 			this.scrollHorizontalWithOffset(actualDistance);
-			this.previousDragDistance[0] = dragDistance[0];
+			this.sectionProperties.previousDragDistance[0] = dragDistance[0];
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
 		}
@@ -400,10 +477,15 @@ class ScrollSection {
 
 		if (this.documentTopLeft[1] >= 0) {
 			if (point[0] >= this.size[0] - this.sectionProperties.usableThickness) {
-				this.sectionProperties.clickScrollVertical = true;
-				this.map.scrollingIsHandled = true;
-				e.stopPropagation(); // Don't propagate to map.
-				this.stopPropagating(); // Don't propagate to bound sections.
+				if (point[1] > this.sectionProperties.yOffset) {
+					this.sectionProperties.clickScrollVertical = true;
+					this.map.scrollingIsHandled = true;
+					e.stopPropagation(); // Don't propagate to map.
+					this.stopPropagating(); // Don't propagate to bound sections.
+				}
+				else {
+					this.sectionProperties.clickScrollVertical = false;
+				}
 			}
 			else {
 				this.sectionProperties.clickScrollVertical = false;
@@ -412,10 +494,15 @@ class ScrollSection {
 
 		if (this.documentTopLeft[0] >= 0) {
 			if (point[1] >= this.size[1] - this.sectionProperties.usableThickness) {
-				this.sectionProperties.clickScrollHorizontal = true;
-				this.map.scrollingIsHandled = true;
-				e.stopPropagation(); // Don't propagate to map.
-				this.stopPropagating(); // Don't propagate to bound sections.
+				if (point[0] >= this.sectionProperties.xOffset && point[0] <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset) {
+					this.sectionProperties.clickScrollHorizontal = true;
+					this.map.scrollingIsHandled = true;
+					e.stopPropagation(); // Don't propagate to map.
+					this.stopPropagating(); // Don't propagate to bound sections.
+				}
+				else {
+					this.sectionProperties.clickScrollHorizontal = false;
+				}
 			}
 			else {
 				this.sectionProperties.clickScrollHorizontal = false;
@@ -437,34 +524,46 @@ class ScrollSection {
 			this.sectionProperties.clickScrollHorizontal = false;
 		}
 
-		this.previousDragDistance = null;
+		this.sectionProperties.previousDragDistance = null;
 		this.onMouseMove(point, null, e);
 	}
 
-	public onMouseWheel (point: Array<number>, delta: number, e: MouseEvent) {
+	private performVerticalScroll (delta: number) {
+		if (delta > 0)
+			this.scrollVerticalWithOffset(30);
+		else
+			this.scrollVerticalWithOffset(-30);
+
+		this.sectionProperties.drawVerticalScrollBar = true;
+		this.containerObject.requestReDraw();
+		this.sectionProperties.drawVerticalScrollBar = false;
+		this.sectionProperties.drawHorizontalScrollBar = false;
+	}
+
+	private performHorizontalScroll (delta: number) {
+		if (delta > 0)
+			this.scrollHorizontalWithOffset(30);
+		else
+			this.scrollHorizontalWithOffset(-30);
+
+		this.sectionProperties.drawHorizontalScrollBar = true;
+		this.containerObject.requestReDraw();
+		this.sectionProperties.drawVerticalScrollBar = false;
+		this.sectionProperties.drawHorizontalScrollBar = false;
+	}
+
+	public onMouseWheel (point: Array<number>, delta: Array<number>, e: MouseEvent) {
 		if (e.ctrlKey)
 			return;
 
-		if (!e.shiftKey) {
-			if (delta > 0)
-				this.scrollVerticalWithOffset(30);
+		if (Math.abs(delta[1]) > Math.abs(delta[0])) {
+			if (!e.shiftKey)
+				this.performVerticalScroll(delta[1]);
 			else
-				this.scrollVerticalWithOffset(-30);
-
-			this.sectionProperties.drawVerticalScrollBar = true;
-			this.containerObject.requestReDraw();
-			this.sectionProperties.drawVerticalScrollBar = false;
-			this.sectionProperties.drawHorizontalScrollBar = false;
+				this.performHorizontalScroll(delta[1]);
 		}
 		else {
-			if (delta > 0)
-				this.scrollHorizontalWithOffset(30);
-			else
-				this.scrollHorizontalWithOffset(-30);
-
-			this.sectionProperties.drawHorizontalScrollBar = true;
-			this.containerObject.requestReDraw();
-			this.sectionProperties.drawHorizontalScrollBar = false;
+			this.performHorizontalScroll(delta[0]);
 		}
 	}
 
