@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # set -x
 
 test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to create> <LO installation directory>"; exit 1; }
@@ -20,6 +20,16 @@ mkdir -p $CHROOT || exit 1
 CHROOT=`cd $CHROOT && /bin/pwd`
 INSTDIR_LOGICAL=`cd $INSTDIR && /bin/pwd -L`
 INSTDIR=`cd $INSTDIR && /bin/pwd -P`
+
+if [ ! `uname -s` = "FreeBSD" ]; then
+    CP=cp
+    REALPATH=realpath
+    LOCALBASE=usr/
+else
+    CP=gcp
+    REALPATH=grealpath
+    LOCALBASE=usr/local/
+fi
 
 cd / || exit 1
 
@@ -57,7 +67,7 @@ find $INSTDIR -name 'xpdfimport' |
 while read file; do
     ldd $file 2>/dev/null
 done |
-grep -v dynamic | cut -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
+grep -v dynamic | cut -s -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e 's,^/,,'
 
 ) |
 
@@ -67,13 +77,14 @@ cpio -p -d -L $CHROOT
 
 # Link the dynamic files, replacing any existing.
 rm -f $CHROOT/etc/copied
+mkdir -p $CHROOT/etc/
 for file in hosts nsswitch.conf resolv.conf passwd group host.conf timezone localtime
 do
     # echo "Linking/Copying /etc/$file"
     # Prefer hard-linking, fallback to just copying (do *not* use soft-linking because that would be relative to the jail).
     # When copying, we must make sure that we copy the source and not a symlink. Otherwise, the source won't be accessible from the jail.
     # In addition, we flag that at least one file is copied by creating the 'copied' file, so that we do check for updates.
-    ln -f `realpath /etc/$file` $CHROOT/etc/$file 2> /dev/null || (cp --dereference --preserve=all /etc/$file $CHROOT/etc/$file && touch $CHROOT/etc/copied) || echo "$0: Failed to link or copy /etc/$file"
+    ln -f `${REALPATH} /etc/$file` $CHROOT/etc/$file 2> /dev/null || (${CP} --dereference --preserve=all /etc/$file $CHROOT/etc/$file && touch $CHROOT/etc/copied) || echo "$0: Failed to link or copy /etc/$file"
 done
 
 # Link dev/random and dev/urandom to ../tmp/dev/.
@@ -96,7 +107,7 @@ do
     # Create a soft-link, as it's a relative directory path (can't be a hard-link).
     INSTDIR_PARENT="$(dirname "$CHROOT/$path")"
     mkdir -p $INSTDIR_PARENT
-    ln -f -s `realpath --relative-to=$INSTDIR_PARENT $CHROOT/lo` $CHROOT/$path
+    ln -f -s `${REALPATH} --relative-to=$INSTDIR_PARENT $CHROOT/lo` $CHROOT/$path
 done
 
 # /usr/share/fonts needs to be taken care of separately because the
@@ -105,23 +116,23 @@ done
 
 cd $CHROOT || exit 1
 
-mkdir -p usr/share || exit 1
-cp -r -p -L /usr/share/fonts usr/share
+mkdir -p $LOCALBASE/share || exit 1
+${CP} -r -p -L /${LOCALBASE}/share/fonts $LOCALBASE/share
 
-if [ -h usr/share/fonts/ghostscript ]; then
-    mkdir usr/share/ghostscript || exit 1
-    cp -r -p -L /usr/share/ghostscript/fonts usr/share/ghostscript
+if [ -h $LOCALBASE/share/fonts/ghostscript ]; then
+    mkdir $LOCALBASE/share/ghostscript || exit 1
+    ${CP} -r -p -L /$LOCALBASE/share/ghostscript/fonts $LOCALBASE/share/ghostscript
 fi
 
 # Remove obsolete & unused bitmap fonts
-find usr/share -name '*.pcf' | xargs rm -f
-find usr/share -name '*.pcf.gz' | xargs rm -f
+find $LOCALBASE/share -name '*.pcf' | xargs rm -f
+find $LOCALBASE/share -name '*.pcf.gz' | xargs rm -f
 
 # Debugging only hackery to avoid confusion.
 if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     echo "$0: Copying development users's fonts into systemplate"
     mkdir -p $CHROOT/$HOME
-    test -d $HOME/.fonts && cp -r -p -L $HOME/.fonts $CHROOT/$HOME
+    test -d $HOME/.fonts && ${CP} -r -p -L $HOME/.fonts $CHROOT/$HOME
 fi
 
 exit 0
