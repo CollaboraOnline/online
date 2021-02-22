@@ -317,6 +317,7 @@ L.TileSectionManager = L.Class.extend({
 		var ctx = this._paintContext();
 		var paneBoundsList = ctx.paneBoundsList;
 		var splitPos = ctx.paneBoundsActive ? this._splitPos.multiplyBy(this._tilesSection.dpiScale) : new L.Point(0, 0);
+		var canvasOverlay = this._layer._canvasOverlay;
 
 		var rafFunc = function () {
 			painter._sectionContainer.setPenPosition(painter._tilesSection);
@@ -349,6 +350,8 @@ L.TileSectionManager = L.Class.extend({
 					// destWidth, destHeight
 					paneSize.x, paneSize.y);
 			}
+
+			canvasOverlay.onDraw();
 
 			painter._zoomRAF = requestAnimationFrame(rafFunc);
 		};
