@@ -71,7 +71,7 @@ describe('Top toolbar tests.', function() {
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape .TextParagraph .TextPosition tspan')
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(255,1,27)');
 	});
 
@@ -98,7 +98,7 @@ describe('Top toolbar tests.', function() {
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape .TextParagraph')
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph')
 			.should('have.attr', 'font-family', 'Liberation Mono');
 	});
 
@@ -111,7 +111,7 @@ describe('Top toolbar tests.', function() {
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape .TextParagraph')
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph')
 			.should('have.attr', 'font-size', '776px');
 	});
 
