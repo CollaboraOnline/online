@@ -162,7 +162,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 
 	it('Apply default numbering on text shape.', function() {
 		// We have no bulleting by default
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape tspan')
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
 
 		openListsPropertiesPanel();
@@ -171,7 +171,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextShape tspan')
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
