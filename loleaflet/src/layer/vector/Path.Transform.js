@@ -590,6 +590,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._handlers = [];
 			var points = this._getPoints();
 			for (var i = 0; i < points.length; i++) {
+				points[i].point = map._docLayer._convertCalcTileTwips(points[i].point);
 				this._handlers.push(
 					this._createHandler(this._map._docLayer._twipsToLatLng(points[i].point, this._map.getZoom()), i * 2, i, this._onScaleStart)
 						.addTo(this._handlersGroup));
