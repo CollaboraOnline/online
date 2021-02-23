@@ -43,7 +43,7 @@ class CPolygon extends CPolyline {
 		return new CPoint(x / area, y / area);
 	}
 
-	updatePath(paintArea?: CBounds, paneXFixed?: boolean, paneYFixed?: boolean) {
+	updatePath(paintArea?: CBounds, paneBounds?: CBounds) {
 
 		this.parts = this.rings;
 
@@ -57,7 +57,7 @@ class CPolygon extends CPolyline {
 		}
 
 		this.simplifyPoints();
-		this.renderer.updatePoly(this, true /* closed? */, paneXFixed, paneYFixed, paintArea);
+		this.renderer.updatePoly(this, true /* closed? */, paintArea, paneBounds);
 	}
 
 	anyRingBoundContains(corePxPoint: CPoint): boolean {
