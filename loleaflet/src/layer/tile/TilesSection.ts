@@ -68,13 +68,15 @@ class TilesSection {
 	extendedPaneBounds (paneBounds: any) {
 		var extendedBounds = paneBounds.clone();
 		var halfExtraSize = this.sectionProperties.osCanvasExtraSize / 2; // This is always an integer.
-		if (this.sectionProperties.docLayer.getSplitPanesContext()) {
+		var spCxt = this.sectionProperties.docLayer.getSplitPanesContext();
+		if (spCxt) {
+			var splitPos = spCxt.getSplitPos().multiplyBy(this.dpiScale);
 			if (paneBounds.min.x) { // pane can move in x direction.
-				extendedBounds.min.x = Math.max(0, extendedBounds.min.x - halfExtraSize);
+				extendedBounds.min.x = Math.max(splitPos.x + 1, extendedBounds.min.x - halfExtraSize);
 				extendedBounds.max.x += halfExtraSize;
 			}
 			if (paneBounds.min.y) { // pane can move in y direction.
-				extendedBounds.min.y = Math.max(0, extendedBounds.min.y - halfExtraSize);
+				extendedBounds.min.y = Math.max(splitPos.y + 1, extendedBounds.min.y - halfExtraSize);
 				extendedBounds.max.y += halfExtraSize;
 			}
 		}
@@ -116,8 +118,6 @@ class TilesSection {
 
 			if (extendedBounds.intersects(tileBounds)) {
 				var offset = extendedBounds.getTopLeft();
-				offset.x = Math.min(offset.x, viewBounds.min.x);
-				offset.y = Math.min(offset.y, viewBounds.min.y);
 				this.drawTileInPane(tile, tileBounds, extendedBounds, offset, this.oscCtxs[i]);
 			}
 		}

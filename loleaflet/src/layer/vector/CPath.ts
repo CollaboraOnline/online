@@ -131,8 +131,6 @@ abstract class CPath {
 		var paneBoundsList: Array<CBounds> = splitPanesContext ?
 			splitPanesContext.getPxBoundList() :
 			[viewBounds];
-		var paneProperties = splitPanesContext ? splitPanesContext.getPanesProperties() :
-			[{ xFixed: false, yFixed: false }];
 
 		for (var i = 0; i < paneBoundsList.length; ++i) {
 			var panePaintArea = paintArea ? paintArea.clone() : paneBoundsList[i].clone();
@@ -149,13 +147,13 @@ abstract class CPath {
 				panePaintArea.max.y = Math.min(panePaintArea.max.y, paneArea.max.y);
 			}
 
-			this.updatePath(panePaintArea, paneProperties[i].xFixed, paneProperties[i].yFixed);
+			this.updatePath(panePaintArea, paneBoundsList[i]);
 		}
 
 		this.updateTestData();
 	}
 
-	updatePath(paintArea?: CBounds, paneXFixed?: boolean, paneYFixed?: boolean) {
+	updatePath(paintArea?: CBounds, paneBounds?: CBounds) {
 		// Overridden in implementations.
 	}
 
