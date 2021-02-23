@@ -754,7 +754,7 @@ bool ChildSession::sendFontRendering(const char* /*buffer*/, int /*length*/, con
     }
     catch (Poco::SyntaxException& exc)
     {
-        LOG_DBG(exc.message());
+        LOG_ERR(exc.message());
         sendTextFrameAndLogError("error: cmd=renderfont kind=syntax");
         return false;
     }
