@@ -3616,6 +3616,13 @@ L.TileLayer = L.GridLayer.extend({
 		return new L.Bounds(newTopLeft, newTopLeft.add(rectSize));
 	},
 
+	_convertCalcTileTwips: function (point) {
+		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry)
+			return point;
+		var newPoint = new L.Point(parseInt(point.x), parseInt(point.y));
+		return this.sheetGeometry.getTileTwipsPointFromPrint(newPoint);
+	},
+
 	_getEditCursorRectangle: function (msgObj) {
 
 		if (typeof msgObj !== 'object' || !Object.prototype.hasOwnProperty.call(msgObj,'rectangle')) {
