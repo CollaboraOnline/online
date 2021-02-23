@@ -132,46 +132,67 @@ class CanvasOverlay {
 	}
 
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
-	private ctStart(paneXFixed?: boolean, paneYFixed?: boolean, clipArea?: CBounds) {
+	private ctStart(clipArea?: CBounds, paneBounds?: CBounds) {
 		this.updateCanvasBounds();
-		var docTopLeft = this.bounds.getTopLeft();
 		var cOrigin = new CPoint(0, 0);
 		this.ctx.save();
 
+		if (!paneBounds)
+			paneBounds = this.bounds.clone();
+
 		if (this.tsManager._inZoomAnim) {
-			// zoom-animation is in progress : Draw overlay on main canvas
+			// zoom-animation is in progress : so draw overlay on main canvas
 			// at the current frame's zoom level.
+			paneBounds = CBounds.fromCompat(paneBounds);
+			var splitPos = this.tsManager.getSplitPos();
 			var scale = this.tsManager._zoomFrameScale;
 			var pinchCenter = this.tsManager._newCenter;
-			var center = docTopLeft.clone();
-			if (pinchCenter.x >= this.bounds.min.x && pinchCenter.x <= this.bounds.max.x)
+
+			var center = paneBounds.min.clone();
+			if (pinchCenter.x >= paneBounds.min.x && pinchCenter.x <= paneBounds.max.x)
 				center.x = pinchCenter.x;
-			if (pinchCenter.y >= this.bounds.min.y && pinchCenter.y <= this.bounds.max.y)
+			if (pinchCenter.y >= paneBounds.min.y && pinchCenter.y <= paneBounds.max.y)
 				center.y = pinchCenter.y;
 
-			var newDocTopLeft = new CPoint(
-					Math.max(0, (center.x - (center.x - docTopLeft.x) / scale)),
-					Math.max(0, (center.y - (center.y - docTopLeft.y) / scale)));
-			if (!paneXFixed)
-				cOrigin.x = -newDocTopLeft.x;
-			if (!paneYFixed)
-				cOrigin.y = -newDocTopLeft.y;
+			// Compute the new top left in core pixels that ties with the origin of overlay canvas section.
+			var newTopLeft = new CPoint(
+				Math.max(0,
+					-splitPos.x - 1 + (center.x - (center.x - paneBounds.min.x) / scale)),
+				Math.max(0,
+					-splitPos.y - 1 + (center.y - (center.y - paneBounds.min.y) / scale)));
 
-			if (clipArea) {
-				clipArea = clipArea.clone();
-				var newClipSize = clipArea.getSize().divideBy(scale);
-				clipArea.min.x = Math.max(0, (center.x - (center.x - clipArea.min.x) / scale));
-				clipArea.min.y = Math.max(0, (center.y - (center.y - clipArea.min.y) / scale));
-				clipArea.max = clipArea.min.add(newClipSize);
+			// Set canvas section's unscaled origin for the transformation matrix.
+			cOrigin.x = -newTopLeft.x;
+			cOrigin.y = -newTopLeft.y;
+
+			// Compute clip area which needs to be applied after setting the transformation.
+			var clipTopLeft = new CPoint(0, 0);
+			// Original pane size.
+			var paneSize = paneBounds.getSize();
+			var clipSize = paneSize.clone();
+			if (paneBounds.min.x) {
+				clipTopLeft.x = newTopLeft.x + splitPos.x;
+				// Pane's "free" size will shrink(expand) as we zoom in(out)
+				// respectively because fixed pane size expand(shrink).
+				clipSize.x = (paneSize.x - splitPos.x * (scale - 1)) / scale;
 			}
+			if (paneBounds.min.y) {
+				clipTopLeft.y = newTopLeft.y + splitPos.y;
+				// See comment regarding pane width above.
+				clipSize.y = (paneSize.y - splitPos.y * (scale - 1)) / scale;
+			}
+			// Force clip area to the zoom frame area of the pane specified.
+			clipArea = new CBounds(
+				clipTopLeft,
+				clipTopLeft.add(clipSize));
 
 			this.ctx.transform(scale, 0, 0, scale, scale * cOrigin.x, scale * cOrigin.y);
 
 		} else {
-			if (!paneXFixed)
-				cOrigin.x = -docTopLeft.x;
-			if (!paneYFixed)
-				cOrigin.y = -docTopLeft.y;
+			if (paneBounds.min.x)
+				cOrigin.x = -this.bounds.min.x;
+			if (paneBounds.min.y)
+				cOrigin.y = -this.bounds.min.y;
 
 			this.ctx.translate(cOrigin.x, cOrigin.y);
 		}
@@ -189,7 +210,7 @@ class CanvasOverlay {
 		this.ctx.restore();
 	}
 
-	updatePoly(path: CPath, closed: boolean = false, paneXFixed?: boolean, paneYFixed?: boolean, clipArea?: CBounds) {
+	updatePoly(path: CPath, closed: boolean = false, clipArea?: CBounds, paneBounds?: CBounds) {
 		var i: number;
 		var j: number;
 		var len2: number;
@@ -201,7 +222,7 @@ class CanvasOverlay {
 			return;
 
 
-		this.ctStart(paneXFixed, paneYFixed, clipArea);
+		this.ctStart(clipArea, paneBounds);
 		this.ctx.beginPath();
 
 		for (i = 0; i < len; i++) {
@@ -219,11 +240,11 @@ class CanvasOverlay {
 		this.ctEnd();
 	}
 
-	updateCircle(path: CPath, paneXFixed?: boolean, paneYFixed?: boolean) {
+	updateCircle(path: CPath, clipArea?: CBounds, paneBounds?: CBounds) {
 		if (path.empty())
 			return;
 
-		this.ctStart(paneXFixed, paneYFixed);
+		this.ctStart(clipArea, paneBounds);
 
 		var point = path.point;
 		var r: number = path.radius;

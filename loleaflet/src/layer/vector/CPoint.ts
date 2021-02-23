@@ -28,6 +28,10 @@ class CPoint {
 		return new CPoint(parseInt(pointParts[0]), parseInt(pointParts[1]));
 	};
 
+	static fromCompat(point: any): CPoint {
+		return new CPoint(<number>(point.x), <number>(point.y));
+	}
+
 	clone(): CPoint {
 		return new CPoint(this.x, this.y);
 	}

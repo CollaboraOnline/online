@@ -63,6 +63,13 @@ class CBounds {
 		return rectangles;
 	};
 
+	static fromCompat(bounds: any) : CBounds {
+		return new CBounds(
+			CPoint.fromCompat(bounds.min),
+			CPoint.fromCompat(bounds.max)
+		);
+	}
+
 	// extend the bounds to contain the given point
 	extend(point: CPoint): CBounds {
 

@@ -86,6 +86,17 @@ L.TileSectionManager = L.Class.extend({
 		this.stopUpdates();
 	},
 
+	getDpiScale: function () {
+		return this._tilesSection.dpiScale;
+	},
+
+	getSplitPos: function () {
+		var splitPanesContext = this._layer.getSplitPanesContext();
+		return splitPanesContext ?
+			splitPanesContext.getSplitPos().multiplyBy(this.getDpiScale()) :
+			new L.Point(0, 0);
+	},
+
 	// Details of tile areas to render
 	_paintContext: function() {
 		var tileSize = new L.Point(this._layer._getTileSize(), this._layer._getTileSize());
@@ -101,7 +112,8 @@ L.TileSectionManager = L.Class.extend({
 			 tileSize: tileSize,
 			 viewBounds: viewBounds,
 			 paneBoundsList: paneBoundsList,
-			 paneBoundsActive: splitPanesContext ? true: false
+			 paneBoundsActive: splitPanesContext ? true: false,
+			 splitPos: this.getSplitPos(),
 		};
 	},
 
@@ -316,7 +328,7 @@ L.TileSectionManager = L.Class.extend({
 		var painter = this;
 		var ctx = this._paintContext();
 		var paneBoundsList = ctx.paneBoundsList;
-		var splitPos = ctx.paneBoundsActive ? this._splitPos.multiplyBy(this._tilesSection.dpiScale) : new L.Point(0, 0);
+		var splitPos = ctx.splitPos;
 		var canvasOverlay = this._layer._canvasOverlay;
 
 		var rafFunc = function () {
@@ -326,27 +338,55 @@ L.TileSectionManager = L.Class.extend({
 				var paneSize = paneBounds.getSize();
 				var extendedBounds = painter._tilesSection.extendedPaneBounds(paneBounds);
 				var paneBoundsOffset = paneBounds.min.subtract(extendedBounds.min);
+				var scale = painter._zoomFrameScale;
 
 				var inXBounds = (painter._newCenter.x >= paneBounds.min.x) && (painter._newCenter.x <= paneBounds.max.x);
 				var inYBounds = (painter._newCenter.y >= paneBounds.min.y) && (painter._newCenter.y <= paneBounds.max.y);
 
 				// Calculate the pinch-center in off-screen canvas coordinates.
-				var center = new L.Point(0, 0);
+				var center = paneBounds.min.clone();
 				if (inXBounds)
-					center.x = painter._newCenter.x - paneBounds.min.x;
+					center.x = painter._newCenter.x;
 				if (inYBounds)
-					center.y = painter._newCenter.y - paneBounds.min.y;
+					center.y = painter._newCenter.y;
 
+				// Top left position in the offscreen canvas.
 				var sourceTopLeft = new L.Point(
-					Math.max(0, center.x + (-center.x / painter._zoomFrameScale) + paneBoundsOffset.x),
-					Math.max(0, center.y + (-center.y / painter._zoomFrameScale) + paneBoundsOffset.y));
+					Math.max(paneBounds.min.x ? splitPos.x + 1 : 0,
+						center.x - (center.x - paneBounds.min.x) / scale),
+					Math.max(paneBounds.min.y ? splitPos.y + 1 : 0,
+						center.y - (center.y - paneBounds.min.y) / scale))
+					._subtract(paneBounds.min)._add(paneBoundsOffset);
+
+				var destPos = new L.Point(0, 0);
+				if (paneBoundsList.length > 1) {
+					// Has freeze-panes, so recalculate the main canvas position to draw the pane
+					// and compute the adjusted paneSizes.
+					if (paneBounds.min.x) {
+						// Pane is free to move in X direction.
+						destPos.x = splitPos.x * scale;
+						paneSize.x -= (splitPos.x * (scale - 1));
+					} else {
+						// Pane is fixed in X direction.
+						paneSize.x += (splitPos.x * (scale - 1));
+					}
+
+					if (paneBounds.min.y) {
+						// Pane is free to move in Y direction.
+						destPos.y = splitPos.y * scale;
+						paneSize.y -= (splitPos.y * (scale - 1));
+					} else {
+						// Pane is fixed in Y direction.
+						paneSize.y += (splitPos.y * (scale - 1));
+					}
+				}
 
 				painter._tilesSection.context.drawImage(painter._tilesSection.offscreenCanvases[i],
 					sourceTopLeft.x, sourceTopLeft.y,
 					// sourceWidth, sourceHeight
-					paneSize.x / painter._zoomFrameScale, paneSize.y / painter._zoomFrameScale,
+					paneSize.x / scale, paneSize.y / scale,
 					// destX, destY
-					paneBounds.min.x ? splitPos.x + 1 : 0, paneBounds.min.y ? splitPos.y + 1 : 0,
+					destPos.x, destPos.y,
 					// destWidth, destHeight
 					paneSize.x, paneSize.y);
 			}
