@@ -233,7 +233,7 @@ void setupJailDevNodes(const std::string& root)
     }
     catch (const std::exception& ex)
     {
-        LOG_WRN("Failed to create [" << pathDev.toString() << "]: " << ex.what());
+        LOG_ERR("Failed to create [" << pathDev.toString() << "]: " << ex.what());
         return;
     }
 
@@ -444,7 +444,7 @@ void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& na
     }
     catch (const std::exception& ex)
     {
-        LOG_WRN("Failed to create [" << path << "]: " << ex.what());
+        LOG_ERR("Failed to create [" << path << "]: " << ex.what());
         return;
     }
 

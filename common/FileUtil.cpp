@@ -281,7 +281,7 @@ namespace FileUtil
         catch (const std::exception&e)
         {
             // Already removed or we don't care about failures.
-            LOG_DBG("Failed to remove [" << path << "] " << (recursive ? "recursively: " : "only: ")
+            LOG_ERR("Failed to remove [" << path << "] " << (recursive ? "recursively: " : "only: ")
                                          << e.what());
         }
 #endif
@@ -320,7 +320,7 @@ namespace FileUtil
         if (access(path, W_OK) == 0)
             return true;
 
-        LOG_DBG("Cannot access path [" << path << "]: " << strerror(errno));
+        LOG_ERR("Cannot access path [" << path << "]: " << strerror(errno));
         return false;
     }
 
