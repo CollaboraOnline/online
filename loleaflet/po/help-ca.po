@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2021-02-11 11:50+0000\n"
-"Last-Translator: Joan Montané <joan@montane.cat>\n"
+"PO-Revision-Date: 2021-02-15 23:17+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "help/ca/>\n"
 "Language: ca\n"
@@ -1035,7 +1035,7 @@ msgstr "Va i selecciona el text fins al final del quadre de text"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Dreceres de teclat en diapositives"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1063,26 +1063,23 @@ msgstr "Selecciona els objectes en l'ordre invers en el qual han estat creats"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Move to next text object on slide"
-msgstr "Mou l'objecte de text següent a la diapositiva"
+msgstr "Es mou a l'objecte de text següent a la diapositiva"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr "Selecciona-ho tot a la diapositiva"
+msgstr "Ho selecciona tot a la diapositiva"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Dreceres de teclat en diapositives i pàgines de dibuix"
+msgstr "Dreceres de teclat en pàgines del Draw"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Va al següent objecte de text de la diapositiva o pàgina de dibuix"
+msgstr "Es mou a l'objecte de text següent a la pàgina de dibuix"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Ho selecciona tot en la diapositiva o pàgina de dibuix"
+msgstr "Ho selecciona tot a la pàgina de dibuix"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -2652,7 +2649,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:574-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "Seleccioneu horitzontal a «Amb estil de pàgina»"
+msgstr "Seleccioneu Horitzontal a «Amb estil de pàgina»"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Select if you want to change page numbering."
