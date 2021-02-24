@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="temp_file_saving_disabled">這個檔案唯讀，儲存已停用。</string>
+    <string name="temp_file_saving_disabled">此檔案唯讀，已停用儲存。</string>
     <string name="no_items">沒有項目</string>
     <string name="no_recent_items">請使用工具列中的資料夾圖示開啟檔案。</string>
     <string name="app_vendor">本發行版由 $VENDOR 提供。</string>
@@ -12,7 +12,7 @@
     <string name="bmp_null">Bmp 是空值 null！</string>
     <string name="unable_to_go_further">無法繼續。</string>
     <string name="share_document">分享文件</string>
-    <string name="loading">正在載入...</string>
+    <string name="loading">正在載入……</string>
     <string name="action_overwrite">覆寫</string>
     <string name="action_create">製作</string>
     <string name="enter_filename">請輸入檔名：</string>
