@@ -29,3 +29,26 @@ describe('CBounds parse() tests', function () {
 		});
 	});
 });
+
+describe('CBounds fromCompat() tests', function () {
+
+	describe('CBounds.fromCompat() with a CBounds like object', function () {
+		it('should return correct CBounds object', function () {
+			var compatBoundsObj = {
+				min: {
+					x: 34,
+					y: 56
+				},
+				max: {
+					x: 94,
+					y: 76
+				}
+			};
+			assert.ok(CBounds.fromCompat(compatBoundsObj).equals(
+				new CBounds(
+					new CPoint(compatBoundsObj.min.x, compatBoundsObj.min.y),
+					new CPoint(compatBoundsObj.max.x, compatBoundsObj.max.y))
+			));
+		});
+	});
+});
