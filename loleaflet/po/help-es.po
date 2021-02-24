@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2021-01-22 23:59+0000\n"
+"PO-Revision-Date: 2021-02-11 11:50+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
 "X-Pootle-Revision: 3713610\n"
 
@@ -1037,7 +1037,7 @@ msgstr "Ir y seleccionar texto hasta el final del cuadro de texto"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Atajos de teclado para las diapositivas"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1065,26 +1065,23 @@ msgstr "Seleccionar objetos según el orden inverso al de su creación"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Moverse al objeto de texto siguiente en la diapositiva"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Seleccionarlo todo en la diapositiva"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Atajos de teclado en diapositivas y páginas de dibujos"
+msgstr "Atajos de teclado para las páginas de Draw"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Va al siguiente objeto de texto en la diapositiva o página de dibujo"
+msgstr "Moverse al objeto de texto siguiente en la página de dibujo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Seleccionar todo en la diapositiva o página de dibujo"
+msgstr "Seleccionarlo todo en la página de dibujo"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -1734,7 +1731,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:390-5
 msgid "Spellchecking"
-msgstr "Corrección ortográfica"
+msgstr "Revisión ortográfica"
 
 #: html/loleaflet-help.html%2Bdiv.p:391-5
 msgid ""
@@ -1811,13 +1808,14 @@ msgid ""
 "and custom number formatting, as well as font, complex border, background, "
 "cell protection and other options."
 msgstr ""
-"<span class=\"def\">Formato directo:</span> Puede formatear celdas, "
-"columnas, líneas y plantillas formateando directamente desde los menús, "
-"barras de herramientas o menús contextuales. El formato directo sólo se "
-"aplica al objeto seleccionado. Para dar formato a una celda utilice el menú "
-"o pulse <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. El "
-"cuadro de diálogo muestra posibilidades de formato complejas de números, así "
-"como fuente, bordes complejos, fondo, protección de celdas y otras opciones."
+"<span class=\"def\">Formato directo:</span> puede dar formato a celdas, "
+"columnas, filas y hojas de cálculo sirviéndose directamente de los menús, "
+"las barras de herramientas y los menús contextuales. El formato directo solo "
+"se aplica al objeto seleccionado. Para dar formato a una celda utilice el "
+"menú u oprima <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">1</"
+"span>. El cuadro de diálogo muestra posibilidades de formato numérico "
+"complejas, así como opciones de tipo de letra, bordes complejos, fondo, "
+"protección de celdas y otros parámetros."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:412-5
 msgid ""
@@ -2809,7 +2807,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:612-11
 msgid "Format the source cell with the font, color background and more."
-msgstr "Formatee la celda de origen con fuente, color, fondo, etc."
+msgstr "Formatee la celda de origen con tipo de letra, color, fondo, etc."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:614-11
 msgid "Select the cells you want to format. Release the mouse button."
