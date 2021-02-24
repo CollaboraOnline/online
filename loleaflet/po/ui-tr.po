@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2020-12-09 22:52+0000\n"
+"PO-Revision-Date: 2021-02-11 11:50+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -474,13 +474,12 @@ msgid "Open menu"
 msgstr "Menüyü aç"
 
 #: src/control/Control.JSDialogBuilder.js:2136
-#, fuzzy
 msgid "reply"
-msgstr "Yanıtla"
+msgstr "yanıt"
 
 #: src/control/Control.JSDialogBuilder.js:2139
 msgid "replies"
-msgstr ""
+msgstr "yanıt"
 
 #: src/control/Control.JSDialogBuilder.js:2552
 msgid "Cell borders"
@@ -731,7 +730,7 @@ msgstr "Excel Çalışma Sayfası (.xlsx)"
 
 #: src/control/Control.Menubar.js:511
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV dosyası (.csv)"
 
 #: src/control/Control.Menubar.js:737 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:832 src/control/Control.StatusBar.js:190
@@ -947,7 +946,7 @@ msgstr "Şekil ekle"
 
 #: src/control/Control.TopToolbar.js:245
 msgid "Insert connectors"
-msgstr ""
+msgstr "Bağlayıcıları ekle"
 
 #: src/control/Control.TopToolbar.js:473
 msgid "Style"
@@ -1059,13 +1058,13 @@ msgstr "~Yardım"
 #: src/control/Control.NotebookbarCalc.js:116
 #: src/control/Control.NotebookbarImpress.js:201
 msgid "Share"
-msgstr ""
+msgstr "Paylaş"
 
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarImpress.js:231
 msgid "See history"
-msgstr ""
+msgstr "Geçmişi gör"
 
 #: src/control/Control.NotebookbarWriter.js:1427
 msgid "Text Body"
@@ -1089,7 +1088,7 @@ msgstr "~Veri"
 
 #: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV Dosyası (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1845
 msgid "Insert Rows Above"
@@ -1384,7 +1383,7 @@ msgstr "Belgeye bağlanırken hata oluştu"
 
 #: src/core/Socket.js:431
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Sunucu çalışmıyor, otomatik olarak yeniden başlıyor. Lütfen bekleyin."
 
 #: src/core/Socket.js:459
 msgid ""
