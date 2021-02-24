@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2020-12-13 17:14+0000\n"
-"Last-Translator: Piotr Rudzki <ryba.lodz@gmail.com>\n"
+"PO-Revision-Date: 2021-02-11 11:50+0000\n"
+"Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "help/pl/>\n"
 "Language: pl\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Pootle-Path: /pl/libo_online/loleaflet-help-pl.po\n"
 "X-Pootle-Revision: 3510350\n"
 
@@ -1036,7 +1036,7 @@ msgstr "Przejdź i zaznacz tekst na końcu bloku tekstowego"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Skróty klawiaturowe slajdu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1064,26 +1064,23 @@ msgstr "Zaznacza obiekty w odwrotnej kolejności, w której były tworzone"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Przejdź do następnego obiektu tekstowego na slajdzie"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Zaznacz wszystko na slajdzie"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Skróty klawiaturowe dla slajdu / rysunku"
+msgstr "Skróty klawiaturowe strony rysowania"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Przejdź do następnego obiektu tekstowego na slajdzie / rysunku"
+msgstr "Przejdź do następnego obiektu tekstowego na stronie rysunku"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Zaznacz wszystko na slajdzie / stronie"
+msgstr "Zaznacz wszystko na stronie rysunku"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
