@@ -26,14 +26,19 @@ class UnitWOPITemplate : public WopiTestServer
         Polling
     } _phase;
 
+    bool _savedTemplate;
+
 public:
     UnitWOPITemplate()
         : WopiTestServer("UnitWOPITemplate")
         , _phase(Phase::LoadTemplate)
+        , _savedTemplate(false)
     {
     }
 
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& /*message*/, std::shared_ptr<StreamSocket>& socket) override
+    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
+                                   Poco::MemoryInputStream& /*message*/,
+                                   std::shared_ptr<StreamSocket>& socket) override
     {
         const Poco::URI uriReq(request.getURI());
         LOG_TST("Fake wopi host " << request.getMethod() << " request: " << uriReq.toString());
@@ -77,8 +82,13 @@ public:
 
             return true;
         }
-        else if ((request.getMethod() == "OPTIONS" || request.getMethod() == "HEAD" || request.getMethod() == "PROPFIND") && uriReq.getPath() == "/test.ott")
+        else if ((request.getMethod() == "OPTIONS" || request.getMethod() == "HEAD"
+                  || request.getMethod() == "PROPFIND")
+                 && uriReq.getPath() == "/test.ott")
         {
+            LOG_TST("Fake wopi host request, handling " << request.getMethod() << " on "
+                                                        << uriReq.getPath());
+
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
                 << "Allow: GET\r\n"
@@ -104,7 +114,21 @@ public:
         {
             LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
 
-            std::streamsize size = request.getContentLength();
+            if (!_savedTemplate)
+            {
+                // First, we expect to get a PutFile right after loading.
+                LOK_ASSERT_EQUAL(static_cast<int>(Phase::SaveDoc), static_cast<int>(_phase));
+                _savedTemplate = true;
+                _phase = Phase::CloseDoc;
+            }
+            else
+            {
+                // This is the save at shutting down.
+                LOK_ASSERT_EQUAL(static_cast<int>(Phase::Polling), static_cast<int>(_phase));
+                exitTest(TestResult::Ok);
+            }
+
+            const std::streamsize size = request.getContentLength();
             LOK_ASSERT( size > 0 );
 
             std::ostringstream oss;
@@ -116,12 +140,8 @@ public:
             socket->send(oss.str());
             socket->shutdown();
 
-            LOK_ASSERT_EQUAL(static_cast<int>(Phase::SaveDoc), static_cast<int>(_phase));
-            _phase = Phase::CloseDoc;
-
             return true;
         }
-
 
         return false;
     }
