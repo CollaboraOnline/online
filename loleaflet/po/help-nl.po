@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2020-11-18 13:39+0000\n"
-"Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
+"PO-Revision-Date: 2021-02-19 22:08+0000\n"
+"Last-Translator: sebastiaanveld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "help/nl/>\n"
 "Language: nl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-help-nl.po\n"
 "X-Pootle-Revision: 832994\n"
 
@@ -58,7 +58,7 @@ msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-18
 msgid "Paste special"
-msgstr ""
+msgstr "Plakken speciaal"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-58
 msgid "Ctrl + Alt + Shift + V"
@@ -1034,7 +1034,7 @@ msgstr "Selecteer tekst tot aan het einde van het tekstvak"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Dia toetsenbord sneltoetsen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1064,11 +1064,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Verplaats naar volgende tekst object op dia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Selecteer alles binnen dia"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
 #, fuzzy
