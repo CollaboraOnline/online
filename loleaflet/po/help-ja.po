@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2021-02-08 10:50+0000\n"
+"PO-Revision-Date: 2021-02-11 11:50+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/help/ja/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-help-ja.po\n"
 "X-Pootle-Revision: 3446209\n"
 
@@ -1061,9 +1061,8 @@ msgstr "<span class=\"productname\">%productName</span> ヘルプ"
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 #: html/loleaflet-help.html%2Bdiv.h3:310-5
-#, fuzzy
 msgid "Collaborative editing"
-msgstr "セル書式"
+msgstr "共同編集"
 
 #: html/loleaflet-help.html%2Bdiv.p:273-5
 #: html/loleaflet-help.html%2Bdiv.h3:317-5

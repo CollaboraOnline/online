@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2021-01-25 09:32+0000\n"
+"PO-Revision-Date: 2021-02-11 11:50+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ja/>\n"
-"Language: \n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -570,12 +570,12 @@ msgstr "ODF 文書ドキュメント (.odt)"
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:722
 #: src/control/Control.NotebookbarWriter.js:256
 msgid "Word 2003 Document (.doc)"
-msgstr "ワード 2003 文書 (.doc)"
+msgstr "Word 2003 文書 (.doc)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:723
 #: src/control/Control.NotebookbarWriter.js:278
 msgid "Word Document (.docx)"
-msgstr "ワード文書 (.docx)"
+msgstr "Word 文書 (.docx)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:724
 #: src/control/Control.NotebookbarWriter.js:225
@@ -686,17 +686,17 @@ msgstr "コメントの保存"
 #: src/control/Control.Menubar.js:272 src/control/Control.Menubar.js:770
 #: src/control/Control.NotebookbarImpress.js:258
 msgid "ODF presentation (.odp)"
-msgstr "ODFプレゼンテーション(.odp)"
+msgstr "ODF プレゼンテーション (.odp)"
 
 #: src/control/Control.Menubar.js:273 src/control/Control.Menubar.js:771
 #: src/control/Control.NotebookbarImpress.js:311
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003 プレゼンテーション (.ppt)"
 
 #: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:772
 #: src/control/Control.NotebookbarImpress.js:333
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "PowerPoint プレゼンテーション (.ppt)"
 
 #: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:803
 #: src/control/Control.PresentationBar.js:33
@@ -715,21 +715,21 @@ msgstr "ODF 図形描画 (.odg)"
 #: src/control/Control.Menubar.js:508 src/control/Control.Menubar.js:818
 #: src/control/Control.NotebookbarCalc.js:173
 msgid "ODF spreadsheet (.ods)"
-msgstr "ODF表計算(.ods)"
+msgstr "ODF 表計算 (.ods)"
 
 #: src/control/Control.Menubar.js:509 src/control/Control.Menubar.js:819
 #: src/control/Control.NotebookbarCalc.js:226
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Excel 2003 表計算 (.xls)"
 
 #: src/control/Control.Menubar.js:510 src/control/Control.Menubar.js:820
 #: src/control/Control.NotebookbarCalc.js:248
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Excel 表計算 (.xlsx)"
 
 #: src/control/Control.Menubar.js:511
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV ファイル (.csv)"
 
 #: src/control/Control.Menubar.js:737 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:832 src/control/Control.StatusBar.js:190
@@ -944,7 +944,7 @@ msgstr "シェイプの挿入"
 
 #: src/control/Control.TopToolbar.js:245
 msgid "Insert connectors"
-msgstr ""
+msgstr "コネクターの挿入"
 
 #: src/control/Control.TopToolbar.js:473
 msgid "Style"
@@ -1086,7 +1086,7 @@ msgstr "データ(~D)"
 
 #: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV ファイル (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1845
 msgid "Insert Rows Above"

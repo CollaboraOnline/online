@@ -42,7 +42,7 @@
     <string name="theme">テーマ</string>
     <string name="sort_smallest">小さい順</string>
     <string name="sort_largest">大きい順</string>
-    <string name="app_description">$APP_NAME はワードプロセッサー、表計算、プレゼンテーションやその他を含む、モダンで使いやすいオープンソースのオフィススイートです。</string>
+    <string name="app_description">$APP_NAME はワードプロセッサ、表計算、プレゼンテーションやその他を含む、モダンで使いやすいオープンソースのオフィススイートです。</string>
     <string name="about_moreinfo">詳細情報</string>
     <string name="about_license">ライセンスを表示</string>
     <string name="sort_newest">新しい順</string>
