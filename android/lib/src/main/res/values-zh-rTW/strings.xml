@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">正在載入…</string>
+    <string name="loading">正在載入……</string>
     <string name="preparing_for_the_first_start_after_an_update">正在準備更新後的首次啟動。</string>
     <string name="saving">正在儲存…</string>
     <string name="cannot_open_file_chooser">無法開啟檔案選擇器</string>
@@ -14,4 +14,8 @@
     <string name="later">稍後再說</string>
     <string name="rate_now">立刻評分</string>
     <string name="file_chromeos_read_only">此檔案無法在此位置儲存，僅以唯讀開啟。請將它移動至 Play 檔案，以取得完整的讀取/寫入存取權。</string>
+    <string name="ask_for_copy">此文件唯讀。您想要製作副本來進行編輯嗎？</string>
+    <string name="edit_copy">編輯副本</string>
+    <string name="view_only">僅檢視</string>
+    <string name="restarting">正在重新啟動……</string>
 </resources>
