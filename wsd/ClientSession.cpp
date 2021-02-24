@@ -1472,19 +1472,28 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens[0] == "status:" || tokens[0] == "statusindicatorfinish:")
         {
-            setState(ClientSession::SessionState::LIVE);
-            docBroker->setLoaded();
+            // Do once, for either "status:" or
+            // "statusindicatorfinish:", whichever coves first.
+            if (!docBroker->isLoaded())
+            {
+                setState(ClientSession::SessionState::LIVE);
+                docBroker->setLoaded();
 
 #if !MOBILEAPP
-            Admin::instance().setViewLoadDuration(docBroker->getDocKey(), getId(), std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - _viewLoadStart));
+                Admin::instance().setViewLoadDuration(
+                    docBroker->getDocKey(), getId(),
+                    std::chrono::duration_cast<std::chrono::milliseconds>(
+                        std::chrono::steady_clock::now() - _viewLoadStart));
 #endif
 
-            // Wopi post load actions
-            if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
-            {
-                std::string result;
-                LOG_DBG("Saving template [" << _wopiFileInfo->getTemplateSource() << "] to storage");
-                docBroker->uploadToStorage(getId(), true, result, /*force=*/false);
+                // Wopi post load actions.
+                if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
+                {
+                    std::string result;
+                    LOG_DBG("Saving template [" << _wopiFileInfo->getTemplateSource()
+                                                << "] to storage");
+                    docBroker->uploadToStorage(getId(), true, result, /*force=*/false);
+                }
             }
 
             for(auto &token : tokens)

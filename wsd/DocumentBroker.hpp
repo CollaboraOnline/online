@@ -294,6 +294,9 @@ public:
     /// Notify that the load has completed
     virtual void setLoaded();
 
+    /// Returns true iff the document had ever loaded (even if it's now unloaded).
+    bool isLoaded() const { return _docState.hadLoaded(); }
+
     /// If not yet locked, try to lock
     bool attemptLock(const ClientSession& session, std::string& failReason);
 
@@ -451,7 +454,6 @@ private:
 
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
-    bool isLoaded() const { return _docState.hadLoaded(); }
 
     std::size_t getIdleTimeSecs() const
     {
