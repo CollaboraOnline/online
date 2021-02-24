@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2020-09-22 21:49+0000\n"
+"PO-Revision-Date: 2021-02-11 11:51+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian <https://weblate.documentfoundation.org/projects/"
-"libo_online/loleaflet-help/sl/>\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
+"collabora-online/help/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:20-5
@@ -1028,7 +1028,7 @@ msgstr "Skoči in izberi besedilo do konca besedilnega polja"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Tipke za bližnjice za prosojnice"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1056,26 +1056,23 @@ msgstr "Izbere predmete v obratnem vrstnem redu nastanka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Pomakni se na naslednji besedilni predmet na prosojnici"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Izberi vse gradnike prosojnice"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Tipke za bližnjice na prosojnicah/risbah"
+msgstr "Tipke za bližnjice za stran risbe"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Pomakni se na naslednji besedilni predmet na prosojnici/strani"
+msgstr "Pomakni se na naslednji besedilni predmet na strani risbe"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Izberi vse na prosojnici/strani"
+msgstr "Izberi vse na strani risbe"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
