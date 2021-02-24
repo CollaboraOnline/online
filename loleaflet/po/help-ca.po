@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2020-10-18 21:54+0000\n"
+"PO-Revision-Date: 2021-02-11 11:50+0000\n"
 "Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "help/ca/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-help-ca.po\n"
 "X-Pootle-Revision: 827117\n"
 
@@ -26,7 +26,7 @@ msgstr "Dreceres de teclat generals"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Undo"
-msgstr "Desfà l'última acció"
+msgstr "Desfés"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl + Z"
@@ -1063,11 +1063,11 @@ msgstr "Selecciona els objectes en l'ordre invers en el qual han estat creats"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Mou l'objecte de text següent a la diapositiva"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Selecciona-ho tot a la diapositiva"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
 #, fuzzy
