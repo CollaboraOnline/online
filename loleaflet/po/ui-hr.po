@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2020-12-23 23:07+0000\n"
+"PO-Revision-Date: 2021-02-22 21:50+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.5\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-ui-hr.po\n"
 "X-Pootle-Revision: 3937859\n"
 
@@ -474,13 +474,12 @@ msgid "Open menu"
 msgstr "Otvori izbornik"
 
 #: src/control/Control.JSDialogBuilder.js:2136
-#, fuzzy
 msgid "reply"
-msgstr "Odgovori"
+msgstr "odgovor"
 
 #: src/control/Control.JSDialogBuilder.js:2139
 msgid "replies"
-msgstr ""
+msgstr "odgovori"
 
 #: src/control/Control.JSDialogBuilder.js:2552
 msgid "Cell borders"
@@ -731,7 +730,7 @@ msgstr "Excel proračunska tablica (.xlsx)"
 
 #: src/control/Control.Menubar.js:511
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV datoteka (.csv)"
 
 #: src/control/Control.Menubar.js:737 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:832 src/control/Control.StatusBar.js:190
@@ -947,7 +946,7 @@ msgstr "Umetni oblike"
 
 #: src/control/Control.TopToolbar.js:245
 msgid "Insert connectors"
-msgstr ""
+msgstr "Umetni poveznice"
 
 #: src/control/Control.TopToolbar.js:473
 msgid "Style"
@@ -1059,13 +1058,13 @@ msgstr "Po~moć"
 #: src/control/Control.NotebookbarCalc.js:116
 #: src/control/Control.NotebookbarImpress.js:201
 msgid "Share"
-msgstr ""
+msgstr "Dijeli"
 
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarImpress.js:231
 msgid "See history"
-msgstr ""
+msgstr "Pogledaj povijest"
 
 #: src/control/Control.NotebookbarWriter.js:1427
 msgid "Text Body"
@@ -1089,7 +1088,7 @@ msgstr "Poda~ci"
 
 #: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV datoteka (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1845
 msgid "Insert Rows Above"
@@ -1386,7 +1385,7 @@ msgstr "Ups, postoji problem s povezivanjem dokumenta"
 
 #: src/core/Socket.js:431
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Poslužitelj ne radi, automatski će se ponovo pokrenuti. Pričekaj."
 
 #: src/core/Socket.js:459
 msgid ""
