@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2020-12-09 22:52+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-02-11 11:50+0000\n"
+"Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.5-dev\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
 "X-Pootle-Revision: 3938227\n"
 
@@ -473,13 +473,12 @@ msgid "Open menu"
 msgstr "Відкрити меню"
 
 #: src/control/Control.JSDialogBuilder.js:2136
-#, fuzzy
 msgid "reply"
-msgstr "Відповідь"
+msgstr "відповідь"
 
 #: src/control/Control.JSDialogBuilder.js:2139
 msgid "replies"
-msgstr ""
+msgstr "відповіді"
 
 #: src/control/Control.JSDialogBuilder.js:2552
 msgid "Cell borders"
@@ -581,7 +580,7 @@ msgstr "Документ Word (.docx)"
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:724
 #: src/control/Control.NotebookbarWriter.js:225
 msgid "Rich Text (.rtf)"
-msgstr "Rich Text (.rtf)"
+msgstr "Форматований текст (.rtf)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:725
 #: src/control/Control.NotebookbarWriter.js:331
@@ -730,7 +729,7 @@ msgstr "Електронна таблиця Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:511
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "Файл CSV (.csv)"
 
 #: src/control/Control.Menubar.js:737 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:832 src/control/Control.StatusBar.js:190
@@ -946,7 +945,7 @@ msgstr "Вставити фігури"
 
 #: src/control/Control.TopToolbar.js:245
 msgid "Insert connectors"
-msgstr ""
+msgstr "Вставити роз'єм"
 
 #: src/control/Control.TopToolbar.js:473
 msgid "Style"
@@ -1058,13 +1057,13 @@ msgstr "~Довідка"
 #: src/control/Control.NotebookbarCalc.js:116
 #: src/control/Control.NotebookbarImpress.js:201
 msgid "Share"
-msgstr ""
+msgstr "Поділитися"
 
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarImpress.js:231
 msgid "See history"
-msgstr ""
+msgstr "Переглянути історію"
 
 #: src/control/Control.NotebookbarWriter.js:1427
 msgid "Text Body"
@@ -1088,7 +1087,7 @@ msgstr "~Дані"
 
 #: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "Файл CSV (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1845
 msgid "Insert Rows Above"
@@ -1383,7 +1382,7 @@ msgstr "Ой, виникла проблема під час з’єднання 
 
 #: src/core/Socket.js:431
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Сервер не працює, перезапускається автоматично. Будь ласка, зачекайте."
 
 #: src/core/Socket.js:459
 msgid ""
