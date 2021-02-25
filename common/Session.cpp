@@ -190,11 +190,6 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _spellOnline = value;
             ++offset;
         }
-        else if (name == "batch")
-        {
-            _batch = value;
-            ++offset;
-        }
     }
 
     Util::mapAnonymized(_userId, _userIdAnonym);

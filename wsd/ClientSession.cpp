@@ -853,11 +853,6 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " template=" << _wopiFileInfo->getTemplateSource();
         }
 
-        if (!getBatchMode().empty())
-        {
-            oss << " batch=" << getBatchMode();
-        }
-
         return forwardToChild(oss.str(), docBroker);
     }
     catch (const Poco::SyntaxException&)

@@ -221,8 +221,6 @@ public:
 
     const std::string& getSpellOnline() const { return _spellOnline; }
 
-    const std::string& getBatchMode() const { return _batch; }
-
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -321,9 +319,6 @@ private:
 
     /// The start value of Auto Spell Checking wheter it is enabled or disabled on start.
     std::string _spellOnline;
-
-    /// Disable dialogs interactivity
-    std::string _batch;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
