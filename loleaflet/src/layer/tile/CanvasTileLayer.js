@@ -1545,9 +1545,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._xSplitter = new CSplitterLine(
 				map, {
 					name: 'horiz-pane-splitter',
-					color: this._splittersStyleData.getPropValue('--stroke-color'),
-					opacity: this._splittersStyleData.getFloatPropValue('--opacity'),
-					weight: Math.round(
+					fillColor: this._splittersStyleData.getPropValue('--color'),
+					fillOpacity: this._splittersStyleData.getFloatPropValue('--opacity'),
+					thickness: Math.round(
 						this._splittersStyleData.getIntPropValue('--weight')
 						* this._painter._dpiScale),
 					isHoriz: true
@@ -1568,9 +1568,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._ySplitter = new CSplitterLine(
 				map, {
 					name: 'vert-pane-splitter',
-					color: this._splittersStyleData.getPropValue('--stroke-color'),
-					opacity: this._splittersStyleData.getFloatPropValue('--opacity'),
-					weight: Math.round(
+					fillColor: this._splittersStyleData.getPropValue('--color'),
+					fillOpacity: this._splittersStyleData.getFloatPropValue('--opacity'),
+					thickness: Math.round(
 						this._splittersStyleData.getIntPropValue('--weight')
 						* this._painter._dpiScale),
 					isHoriz: false
