@@ -207,4 +207,8 @@ abstract class CPath {
 		this.cursorType = cursorType;
 	}
 
+	onResize() {
+		// Overridden in implementations.
+	}
+
 };

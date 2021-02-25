@@ -30,10 +30,18 @@ class CSplitterLine extends CRectangle {
 		// preserve original opacity.
 		this.origOpacity = this.fillOpacity;
 
-		this.onPositionChange();
+		this.onChange();
+	}
+
+	onResize() {
+		this.onChange();
 	}
 
 	onPositionChange() {
+		this.onChange();
+	}
+
+	onChange() {
 		var newBounds = this.computeBounds();
 		this.fillOpacity = this.inactive ? 0 : this.origOpacity;
 		this.setBounds(newBounds);
