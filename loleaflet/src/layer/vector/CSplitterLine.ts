@@ -43,10 +43,10 @@ class CSplitterLine extends CPolyline {
 
 		var start = new CPoint(
 			this.isHoriz ? splitPos.x : 0,
-			this.isHoriz ? 0 : splitPos.y);
+			this.isHoriz ? 0 : splitPos.y)._round();
 		var end = new CPoint(
 			this.isHoriz ? splitPos.x : mapSize.x,
-			this.isHoriz ? mapSize.y : splitPos.y);
+			this.isHoriz ? mapSize.y : splitPos.y)._round();
 
 		this.inactive = this.isHoriz ? !splitPos.x : !splitPos.y;
 		return CPointSet.fromPointArray([start, end]);
