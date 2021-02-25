@@ -16,6 +16,9 @@ class CRectangle extends CPolygon {
 	}
 
 	private static boundsToPointSet(bounds: CBounds): CPointSet {
+		if (!bounds.isValid()) {
+			return new CPointSet();
+		}
 		return CPointSet.fromPointArray([bounds.getTopLeft(), bounds.getTopRight(), bounds.getBottomRight(), bounds.getBottomLeft(), bounds.getTopLeft()]);
 	}
 }
