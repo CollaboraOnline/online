@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a L.TileLayer with canvas based rendering.
  */
 
-/* global L CanvasSectionContainer CanvasOverlay */
+/* global L CanvasSectionContainer CanvasOverlay CSplitterLine */
 
 L.TileCoordData = L.Class.extend({
 
@@ -656,14 +656,13 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_removeSplitters: function () {
-		var map = this._map;
 		if (this._xSplitter) {
-			map.removeLayer(this._xSplitter);
+			this._canvasOverlay.removePath(this._xSplitter);
 			this._xSplitter = undefined;
 		}
 
 		if (this._ySplitter) {
-			map.removeLayer(this._ySplitter);
+			this._canvasOverlay.removePath(this._ySplitter);
 			this._ySplitter = undefined;
 		}
 	},
@@ -1541,13 +1540,18 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		var map = this._map;
 
 		if (!this._xSplitter) {
-			this._xSplitter = new L.SplitterLine(
-				map, { isHoriz: true });
+			this._xSplitter = new CSplitterLine(
+				map, {
+					color: '#e0e0e0',
+					opacity: 1,
+					weight: Math.round(3 * this._painter._dpiScale),
+					isHoriz: true
+				});
 
-			map.addLayer(this._xSplitter);
+			this._canvasOverlay.initPath(this._xSplitter);
 		}
 		else {
-			this._xSplitter.update();
+			this._xSplitter.onPositionChange();
 		}
 	},
 
@@ -1556,13 +1560,18 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		var map = this._map;
 
 		if (!this._ySplitter) {
-			this._ySplitter = new L.SplitterLine(
-				map, { isHoriz: false });
+			this._ySplitter = new CSplitterLine(
+				map, {
+					color: '#e0e0e0',
+					opacity: 1,
+					weight: Math.round(3 * this._painter._dpiScale),
+					isHoriz: false
+				});
 
-			map.addLayer(this._ySplitter);
+			this._canvasOverlay.initPath(this._ySplitter);
 		}
 		else {
-			this._ySplitter.update();
+			this._ySplitter.onPositionChange();
 		}
 	},
 
