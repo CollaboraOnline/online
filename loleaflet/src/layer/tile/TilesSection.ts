@@ -72,11 +72,11 @@ class TilesSection {
 		if (spCxt) {
 			var splitPos = spCxt.getSplitPos().multiplyBy(this.dpiScale);
 			if (paneBounds.min.x) { // pane can move in x direction.
-				extendedBounds.min.x = Math.max(splitPos.x + 1, extendedBounds.min.x - halfExtraSize);
+				extendedBounds.min.x = Math.max(splitPos.x, extendedBounds.min.x - halfExtraSize);
 				extendedBounds.max.x += halfExtraSize;
 			}
 			if (paneBounds.min.y) { // pane can move in y direction.
-				extendedBounds.min.y = Math.max(splitPos.y + 1, extendedBounds.min.y - halfExtraSize);
+				extendedBounds.min.y = Math.max(splitPos.y, extendedBounds.min.y - halfExtraSize);
 				extendedBounds.max.y += halfExtraSize;
 			}
 		}

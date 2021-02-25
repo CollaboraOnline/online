@@ -370,9 +370,9 @@ L.TileSectionManager = L.Class.extend({
 
 				// Top left position in the offscreen canvas.
 				var sourceTopLeft = new L.Point(
-					Math.max(paneBounds.min.x ? splitPos.x + 1 : 0,
+					Math.max(paneBounds.min.x ? splitPos.x: 0,
 						center.x - (center.x - paneBounds.min.x) / scale),
-					Math.max(paneBounds.min.y ? splitPos.y + 1 : 0,
+					Math.max(paneBounds.min.y ? splitPos.y: 0,
 						center.y - (center.y - paneBounds.min.y) / scale))
 					._subtract(paneBounds.min)._add(paneBoundsOffset);
 
