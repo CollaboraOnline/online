@@ -72,19 +72,19 @@ task copyUnpackAssets(type: Copy) {
     description "copies assets that need to be extracted on the device"
     into 'src/main/assets/unpack'
     into('program') {
-        from("${liboInstdir}/${liboEtcFolder}/types") {
+        from("${liboInstdir}/program/types") {
             includes = [
                     "offapi.rdb",
                     "oovbaapi.rdb"
             ]
         }
-        from("${liboInstdir}/${liboUreMiscFolder}") {
+        from("${liboInstdir}/program") {
             includes = ["types.rdb"]
             rename 'types.rdb', 'udkapi.rdb'
         }
 
         into('resource') {
-            from "${liboInstdir}/${liboSharedResFolder}"
+            from "${liboInstdir}/program/resource"
             includes = ['**']
         }
     }
