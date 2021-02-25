@@ -1190,6 +1190,7 @@ L.Handler.PathTransform = L.Handler.extend({
 	*/
 	_onDragStart: function() {
 		this._hideHandlers();
+		this._rect.options.opacity = 1;
 		this._map.addLayer(this._rect);
 	},
 
