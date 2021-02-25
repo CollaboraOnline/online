@@ -20,6 +20,7 @@ abstract class CPath {
 	interactive: boolean = true;
 	fixed: boolean = false; // CPath coordinates are the same as overlay section coordinates.
 	cursorType: string;
+	thickness: number = 2;
 
 	radius: number = 0;
 	radiusY: number = 0;
@@ -58,6 +59,7 @@ abstract class CPath {
 		this.fillOpacity = options.fillOpacity !== undefined ? options.fillOpacity : this.fillOpacity;
 		this.fillRule = options.fillRule !== undefined ? options.fillRule : this.fillRule;
 		this.cursorType = options.cursorType !== undefined ? options.cursorType : this.cursorType;
+		this.thickness = options.thickness !== undefined ? options.thickness : this.thickness;
 		this.interactive = options.interactive !== undefined ? options.interactive : this.interactive;
 		this.fixed = options.fixed !== undefined ? options.fixed : this.fixed;
 	}
