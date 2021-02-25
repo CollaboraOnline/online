@@ -341,47 +341,6 @@ describe('Trigger hamburger menu options.', function() {
 		cy.wait(500);
 	});
 
-	it.skip('Automatic spell checking.', function() {
-		before('hamburger_menu.odp');
-
-		// Add a spelling error to the shape
-		impressHelper.selectTextShapeInTheCenter();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
-			.should('have.text', 'X');
-
-		// Type a new character
-		impressHelper.dblclickOnSelectedShape();
-
-		helper.typeIntoDocument('qqqqqq');
-
-		impressHelper.triggerNewSVGForShapeInTheCenter();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
-			.should('have.text', 'Xqqqqqq');
-
-		// Make everything white on tile
-		impressHelper.selectTextOfShape();
-
-		mobileHelper.openTextPropertiesPanel();
-
-		helper.clickOnIdle('#Color');
-
-		mobileHelper.selectFromColorPalette(0, 0, 7);
-
-		mobileHelper.closeMobileWizard();
-
-		impressHelper.removeShapeSelection();
-
-		var preiew = '.preview-frame:nth-of-type(2) img';
-		helper.imageShouldNotBeFullWhite(preiew);
-
-		// Disable automatic spell checking
-		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
-
-		helper.imageShouldBeFullWhite(preiew);
-	});
-
 	it('Fullscreen presentation.', function() {
 		before('hamburger_menu.odp');
 
