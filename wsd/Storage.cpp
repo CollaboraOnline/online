@@ -344,7 +344,7 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
         }
         catch (const Poco::Exception& exc)
         {
-            LOG_ERR("Failed to move [" << LOOLWSD::anonymizeUrl(publicFilePath) << "] to ["
+            LOG_WRN("Failed to move [" << LOOLWSD::anonymizeUrl(publicFilePath) << "] to ["
                                        << getRootFilePathAnonym() << "]: " << exc.displayText());
         }
     }
@@ -805,7 +805,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
         if (!_userId.empty())
             _username += '_' + _userId;
 
-        LOG_ERR("WOPI::CheckFileInfo does not specify a valid UserFriendlyName for the current "
+        LOG_WRN("WOPI::CheckFileInfo does not specify a valid UserFriendlyName for the current "
                 "user. Temporarily ["
                 << _username << "] will be used until a valid name is specified.");
     }
@@ -939,7 +939,7 @@ bool WopiStorage::updateLockState(const Authorization& auth, const std::string& 
                 lockCtx._lockFailureReason = sMoreInfo;
                 sMoreInfo = ", failure reason: \"" + sMoreInfo + "\"";
             }
-            LOG_ERR("Un-successful " << wopiLog << " with status " << response.getStatus() <<
+            LOG_WRN("Un-successful " << wopiLog << " with status " << response.getStatus() <<
                     sMoreInfo << " and response: " << responseString);
         }
     }
@@ -1310,7 +1310,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
             }
             else
             {
-                LOG_ERR("Invalid or missing JSON in " << wopiLog << " HTTP_OK response.");
+                LOG_WRN("Invalid or missing JSON in " << wopiLog << " HTTP_OK response.");
             }
         }
         else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_REQUEST_ENTITY_TOO_LARGE)
@@ -1337,7 +1337,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
             }
             else
             {
-                LOG_ERR("Invalid or missing JSON in " << wopiLog << " HTTP_CONFLICT response.");
+                LOG_WRN("Invalid or missing JSON in " << wopiLog << " HTTP_CONFLICT response.");
             }
         }
         else
