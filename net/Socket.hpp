@@ -1129,6 +1129,7 @@ protected:
             // perform the shutdown if we have sent everything.
             if (_shutdownSignalled && _outBuffer.empty())
             {
+                LOG_TRC('#' << getFD() << ": Shutdown Signaled. Close Connection.");
                 closeConnection();
                 closed = true;
                 break;
@@ -1173,7 +1174,7 @@ public:
                                          getSendBufferSize()));
 
                 LOG_TRC('#' << getFD() << ": Wrote outgoing data " << len << " bytes of "
-                            << _outBuffer.size() << " bytes buffered.");
+                            << _outBuffer.size() << " buffered bytes.");
 
 #ifdef LOG_SOCKET_DATA
                 auto& log = Log::logger();

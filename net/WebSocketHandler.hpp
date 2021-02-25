@@ -175,6 +175,7 @@ public:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
+            LOG_TRC('#' << socket->getFD() << ": Shutdown. Close Connection.");
             socket->closeConnection();
             socket->getInBuffer().clear();
         }
