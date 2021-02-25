@@ -194,53 +194,6 @@ describe('Change alignment settings.', function() {
 			});
 	});
 
-	it.skip('Change text indent via input field.', function() {
-		// TODO: this fails, because the input field always becomes disabled.
-		helper.initAliasToNegative('originalTextEndPos');
-
-		getTextEndPosForFirstCell();
-		cy.get('@currentTextEndPos')
-			.as('originalTextEndPos');
-
-		cy.get('@currentTextEndPos')
-			.should('be.greaterThan', 0);
-
-		openAlignmentPaneForFirstCell();
-
-		// TODO: First we need to increase indent to make the input enabled
-		helper.clickOnIdle('#IncrementIndent');
-
-		cy.wait(300);
-
-		helper.clickOnIdle('#IncrementIndent');
-
-		calcHelper.removeTextSelection();
-
-		openAlignmentPaneForFirstCell();
-
-		cy.get('#leftindent .spinfield')
-			.should('not.have.attr', 'disabled');
-
-		// Increase indent
-		cy.get('#leftindent .spinfield')
-			.clear()
-			.type('20{enter}');
-
-		// We use the text position as indicator
-		cy.get('body')
-			.should(function() {
-				getTextEndPosForFirstCell();
-
-				cy.get('@currentTextEndPos')
-					.then(function(currentTextEndPos) {
-						cy.get('@originalTextEndPos')
-							.then(function(originalTextEndPos) {
-								expect(originalTextEndPos).to.be.lessThan(currentTextEndPos);
-							});
-					});
-			});
-	});
-
 	it('Enable text wrapping.', function() {
 		helper.initAliasToNegative('originalTextEndPos');
 
