@@ -595,50 +595,6 @@ describe('Trigger hamburger menu options.', function() {
 			.should('exist');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Automatic spell checking.', function() {
-		before('hamburger_menu.ods');
-
-		// Make everything white on tile
-		calcHelper.selectEntireSheet(false);
-
-		mobileHelper.openMobileWizard();
-
-		helper.clickOnIdle('#ScCellAppearancePropertyPanel');
-
-		cy.contains('.menu-entry-with-icon', 'Background Color')
-			.should('be.visible');
-
-		helper.clickOnIdle('#border-12');
-
-		helper.clickOnIdle('#FrameLineColor');
-
-		mobileHelper.selectFromColorPalette(2, 0, 7);
-
-		mobileHelper.closeMobileWizard();
-
-		mobileHelper.openTextPropertiesPanel();
-
-		helper.clickOnIdle('#Color');
-
-		mobileHelper.selectFromColorPalette(0, 0, 7);
-
-		var firstTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 0px; top: 5px;\']';
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 5px;\']';
-		helper.imageShouldBeFullWhite(centerTile);
-		helper.imageShouldNotBeFullWhite(firstTile);
-
-		// Disable automatic spell checking
-		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
-
-		helper.imageShouldBeFullWhite(firstTile);
-
-		// Enable automatic spell checking again
-		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
-
-		helper.imageShouldNotBeFullWhite(firstTile);
-	});
-
 	it('Check version information.', function() {
 		before('hamburger_menu.ods');
 
