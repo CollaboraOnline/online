@@ -687,3 +687,9 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	--opacity: 0.25;
 	--weight: 2;
 }
+
+.leaflet-canvas-container .splitters-data {
+	--stroke-color: #e0e0e0;
+	--opacity: 1;
+	--weight: 3;
+}
