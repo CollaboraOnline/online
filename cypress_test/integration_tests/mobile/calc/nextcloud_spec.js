@@ -2,7 +2,6 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcHelper = require('../../common/calc_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
 
 describe('Nextcloud specific tests.', function() {
@@ -58,49 +57,6 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.checkAndCloseSharing();
-	});
-
-	it.skip('Revision history.', function() {
-		helper.beforeAll(testFileName, 'calc');
-
-		mobileHelper.enableEditingMobile();
-
-		nextcloudHelper.checkAndCloseRevisionHistory();
-	});
-
-	it.skip('Restore previous revision.', function() {
-		helper.beforeAll(testFileName, 'calc');
-
-		mobileHelper.enableEditingMobile();
-
-		// Initially we have "text" text in the document
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'Text');
-
-		// Change the document content and save it
-		calcHelper.clickOnFirstCell(false, true);
-
-		helper.selectAllText();
-
-		helper.typeIntoDocument('new');
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'new');
-
-		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
-
-		nextcloudHelper.restorePreviousVersion();
-
-		mobileHelper.enableEditingMobile();
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'Text');
 	});
 });
 

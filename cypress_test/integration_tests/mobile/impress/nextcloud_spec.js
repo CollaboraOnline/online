@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
-var impressHelper = require('../../common/impress_helper');
+
 describe('Nextcloud specific tests.', function() {
 	var testFileName = 'nextcloud.odp';
 
@@ -56,45 +56,6 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.checkAndCloseSharing();
-	});
-
-	it.skip('Revision history.', function() {
-		helper.beforeAll(testFileName, 'impress');
-
-		mobileHelper.enableEditingMobile();
-
-		nextcloudHelper.checkAndCloseRevisionHistory();
-	});
-
-	it.skip('Restore previous revision.', function() {
-		helper.beforeAll(testFileName, 'impress');
-
-		mobileHelper.enableEditingMobile();
-
-		// Initially we have "text" text in the document
-		impressHelper.selectTextShapeInTheCenter();
-
-		impressHelper.selectTextOfShape();
-
-		helper.expectTextForClipboard('text');
-
-		helper.typeIntoDocument('new');
-
-		helper.selectAllText();
-
-		helper.expectTextForClipboard('new');
-
-		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
-
-		nextcloudHelper.restorePreviousVersion();
-
-		mobileHelper.enableEditingMobile();
-
-		impressHelper.selectTextShapeInTheCenter();
-
-		impressHelper.selectTextOfShape();
-
-		helper.expectTextForClipboard('text');
 	});
 });
 
