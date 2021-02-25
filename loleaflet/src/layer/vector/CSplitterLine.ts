@@ -14,6 +14,8 @@ class CSplitterLine extends CPolyline {
 	constructor(map: any, options: any) {
 		super(new CPointSet(), options);
 
+		this.fixed = true;
+
 		// Splitters should always be on top.
 		this.zIndex = Infinity;
 
@@ -36,30 +38,17 @@ class CSplitterLine extends CPolyline {
 
 	private computePointSet(): CPointSet {
 		var docLayer = this.map._docLayer;
-		var viewBounds = this.map.getPixelBoundsCore();
-		var docSize = docLayer.getMaxDocSize();
+		var mapSize = this.map.getPixelBoundsCore().getSize();
 		var splitPos = docLayer._painter.getSplitPos();
 
-		// The part of splitter line inside the frozen pane.
-		var l1Start = new CPoint(
+		var start = new CPoint(
 			this.isHoriz ? splitPos.x : 0,
 			this.isHoriz ? 0 : splitPos.y);
-		var l1End = new CPoint(
-			this.isHoriz ? splitPos.x : docSize.x,
-			this.isHoriz ? docSize.y : splitPos.y);
-
-		// The part of splitter line inside the free pane.
-		var l2Start = new CPoint(
-			this.isHoriz ? splitPos.x + viewBounds.min.x : 0,
-			this.isHoriz ? 0 : splitPos.y + viewBounds.min.y);
-		var l2End = new CPoint(
-			this.isHoriz ? splitPos.x + viewBounds.min.x : docSize.x,
-			this.isHoriz ? docSize.y : splitPos.y + viewBounds.min.y);
+		var end = new CPoint(
+			this.isHoriz ? splitPos.x : mapSize.x,
+			this.isHoriz ? mapSize.y : splitPos.y);
 
 		this.inactive = this.isHoriz ? !splitPos.x : !splitPos.y;
-		return CPointSet.fromSetArray([
-			CPointSet.fromPointArray([l1Start, l1End]),
-			CPointSet.fromPointArray([l2Start, l2End]),
-		]);
+		return CPointSet.fromPointArray([start, end]);
 	}
 }
