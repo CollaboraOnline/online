@@ -64,33 +64,6 @@ describe('Form field button tests.', function() {
 			});
 	}
 
-	function doZoom(zoomIn) {
-		helper.initAliasToEmptyString('prevZoom');
-
-		cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
-			.invoke('text')
-			.as('prevZoom');
-
-		cy.get('@prevZoom')
-			.should('not.be.equal', '');
-
-		if (zoomIn) {
-			cy.get('.w2ui-tb-image.w2ui-icon.zoomin')
-				.click();
-		} else {
-			cy.get('.w2ui-tb-image.w2ui-icon.zoomout')
-				.click();
-		}
-
-		cy.get('@prevZoom')
-			.then(function(prevZoom) {
-				cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
-					.should(function(zoomItem) {
-						expect(zoomItem.text()).to.be.not.equal(prevZoom);
-					});
-			});
-	}
-
 	it('Activate and deactivate form field button.', function() {
 		before('form_field.odt');
 
@@ -289,13 +262,11 @@ describe('Form field button tests.', function() {
 
 		buttonShouldExist();
 
-		// Do a zoom in
-		doZoom(true);
+		desktopHelper.zoomIn();
 
 		buttonShouldExist();
 
-		// Do a zoom out
-		doZoom(false);
+		desktopHelper.zoomOut();
 
 		buttonShouldExist();
 
@@ -307,8 +278,7 @@ describe('Form field button tests.', function() {
 
 		buttonShouldNotExist();
 
-		// Do a zoom in again
-		doZoom(true);
+		desktopHelper.zoomIn();
 	});
 
 	it('Test dynamic font size.', function() {
@@ -329,8 +299,7 @@ describe('Form field button tests.', function() {
 		cy.get('@prevFontSize')
 			.should('not.be.equal', '');
 
-		// Do a zoom in
-		doZoom(true);
+		desktopHelper.zoomIn();
 
 		buttonShouldExist();
 
@@ -349,8 +318,7 @@ describe('Form field button tests.', function() {
 			.invoke('css', 'font-size')
 			.as('prevFontSize');
 
-		// Do a zoom out
-		doZoom(false);
+		desktopHelper.zoomOut();
 
 		buttonShouldExist();
 
