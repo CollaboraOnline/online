@@ -1,6 +1,4 @@
 ext {
-    liboWorkdir         = '@LOBUILDDIR@/workdir'
-    liboVersionMinor    = '@LOOLWSD_VERSION_MAJOR@'
     liboAppName         = '@APP_NAME@'
     liboVendor          = '@VENDOR@'
     liboInfoURL         = '@INFO_URL@'
