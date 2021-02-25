@@ -46,13 +46,18 @@ class CSplitterLine extends CRectangle {
 
 		var thickdown = Math.floor(this.thickness / 2);
 		var thickup = Math.ceil(this.thickness / 2);
+
+		// Let the lines be long enough so as to cover the map area at the
+		// highest possible zoom level. This makes splitter's
+		// zoom animation easier.
+		var maxZoom : number = this.map.zoomToFactor(this.map.options.maxZoom);
 		var start = new CPoint(
 			(this.isHoriz ? splitPos.x : 0) - thickdown,
 			(this.isHoriz ? 0 : splitPos.y) - thickdown)
 			._round();
 		var end = new CPoint(
-			(this.isHoriz ? splitPos.x : mapSize.x) + thickup,
-			(this.isHoriz ? mapSize.y : splitPos.y) + thickup)
+			(this.isHoriz ? splitPos.x : mapSize.x * maxZoom) + thickup,
+			(this.isHoriz ? mapSize.y * maxZoom : splitPos.y) + thickup)
 			._round();
 
 		this.inactive = this.isHoriz ? !splitPos.x : !splitPos.y;
