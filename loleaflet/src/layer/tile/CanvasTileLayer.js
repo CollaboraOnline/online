@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a L.TileLayer with canvas based rendering.
  */
 
-/* global L CanvasSectionContainer CanvasOverlay CSplitterLine */
+/* global L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData */
 
 L.TileCoordData = L.Class.extend({
 
@@ -477,6 +477,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._container.style.position = 'absolute';
 		this._cursorDataDiv = L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
 		this._selectionsDataDiv = L.DomUtil.create('div', 'selections-data', this._canvasContainer);
+		this._splittersDataDiv = L.DomUtil.create('div', 'splitters-data', this._canvasContainer);
+		this._splittersStyleData = new CStyleData(this._splittersDataDiv);
 
 		this._painter = new L.TileSectionManager(this);
 		this._painter._addTilesSection();
@@ -1543,9 +1545,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._xSplitter = new CSplitterLine(
 				map, {
 					name: 'horiz-pane-splitter',
-					color: '#e0e0e0',
-					opacity: 1,
-					weight: Math.round(3 * this._painter._dpiScale),
+					color: this._splittersStyleData.getPropValue('--stroke-color'),
+					opacity: this._splittersStyleData.getFloatPropValue('--opacity'),
+					weight: Math.round(
+						this._splittersStyleData.getIntPropValue('--weight')
+						* this._painter._dpiScale),
 					isHoriz: true
 				});
 
@@ -1564,9 +1568,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._ySplitter = new CSplitterLine(
 				map, {
 					name: 'vert-pane-splitter',
-					color: '#e0e0e0',
-					opacity: 1,
-					weight: Math.round(3 * this._painter._dpiScale),
+					color: this._splittersStyleData.getPropValue('--stroke-color'),
+					opacity: this._splittersStyleData.getFloatPropValue('--opacity'),
+					weight: Math.round(
+						this._splittersStyleData.getIntPropValue('--weight')
+						* this._painter._dpiScale),
 					isHoriz: false
 				});
 
