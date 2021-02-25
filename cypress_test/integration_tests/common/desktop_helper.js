@@ -1,4 +1,4 @@
-/* global cy Cypress */
+/* global cy Cypress expect */
 
 function showSidebar() {
 	cy.log('Showing sidebar - start.');
@@ -111,6 +111,51 @@ function checkDialogAndClose(dialogTitle) {
 		.should('not.exist');
 }
 
+function shouldHaveZoomLevel(zoomLevel) {
+	cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
+		.should('have.text', zoomLevel);
+}
+
+function doZoom(zoomIn) {
+	var prevZoom = '';
+	cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
+		.should(function(zoomLevel) {
+			prevZoom = zoomLevel.text();
+			expect(prevZoom).to.not.equal('');
+		});
+
+	if (zoomIn) {
+		cy.get('.w2ui-tb-image.w2ui-icon.zoomin')
+			.click();
+	} else {
+		cy.get('.w2ui-tb-image.w2ui-icon.zoomout')
+			.click();
+	}
+
+	cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
+		.should(function(zoomLevel) {
+			expect(zoomLevel.text()).to.not.equal(prevZoom);
+		});
+}
+
+function zoomIn() {
+	doZoom(true);
+}
+
+function zoomOut() {
+	doZoom(false);
+}
+
+function selectZoomLevel(zoomLevel) {
+	cy.get('#tb_actionbar_item_zoom')
+		.click();
+
+	cy.contains('.w2ui-drop-menu .menu-text', zoomLevel)
+		.click();
+
+	shouldHaveZoomLevel(zoomLevel);
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
@@ -119,3 +164,7 @@ module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
 module.exports.selectFromListbox = selectFromListbox;
 module.exports.checkDialogAndClose = checkDialogAndClose;
+module.exports.zoomIn = zoomIn;
+module.exports.zoomOut = zoomOut;
+module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
+module.exports.selectZoomLevel = selectZoomLevel;
