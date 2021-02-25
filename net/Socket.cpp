@@ -988,7 +988,9 @@ bool StreamSocket::compactChunks(MessageMap *map)
     // shrink our size to fit
     map->_messageSize -= gap;
 
+#if ENABLE_DEBUG
     dumpState(std::cerr);
+#endif
 
     return true;
 }
