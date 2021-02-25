@@ -170,9 +170,9 @@ L.TileSectionManager = L.Class.extend({
 		this.context.beginPath();
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
-			var paneBounds = this.sectionProperties.docLayer._cssBoundsToCore(ctx.paneBoundsList[i]);
+			var paneBounds = ctx.paneBoundsList[i];
 			// co-ordinates of the main-(bottom right) pane in core document pixels
-			var viewBounds = this.sectionProperties.docLayer._cssBoundsToCore(ctx.viewBounds);
+			var viewBounds = ctx.viewBounds;
 			// into real pixel-land ...
 			paneBounds.round();
 			viewBounds.round();
