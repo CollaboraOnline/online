@@ -14,6 +14,9 @@ class CSplitterLine extends CPolyline {
 	constructor(map: any, options: any) {
 		super(new CPointSet(), options);
 
+		// Splitters should always be on top.
+		this.zIndex = Infinity;
+
 		if (options.isHoriz !== undefined)
 			this.isHoriz = options.isHoriz;
 
