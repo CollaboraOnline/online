@@ -30,6 +30,9 @@ class CanvasOverlay {
 	}
 
 	onResize() {
+		this.paths.forEach(function (path: CPath) {
+			path.onResize();
+		});
 		this.onDraw();
 	}
 
