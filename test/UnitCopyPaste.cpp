@@ -7,6 +7,7 @@
 
 // Test various copy/paste pieces ...
 
+#include "lokassert.hpp"
 #include <config.h>
 
 #include <Unit.hpp>
@@ -69,22 +70,19 @@ public:
 
         try {
             std::istream& responseStream = session->receiveResponse(response);
+            LOG_TST("HTTP get request returned reason: " << response.getReason());
 
             if (response.getStatus() != expected)
             {
-                LOG_TST("Error: response for clipboard status mismatch "
-                        << response.getStatus() << " != " << expected
-                        << " reason: " << response.getReason());
+                LOK_ASSERT_EQUAL_MESSAGE("clipboard status mismatches expected", expected,
+                                         response.getStatus());
                 exitTest(TestResult::Failed);
                 return std::shared_ptr<ClipboardData>();
             }
 
-            if (response.getContentType() != "application/octet-stream")
-            {
-                LOG_TST("Error: mismatching content type for clipboard: " << response.getContentType());
-                exitTest(TestResult::Failed);
-                return std::shared_ptr<ClipboardData>();
-            }
+            LOK_ASSERT_EQUAL_MESSAGE("clipboard content-type mismatches expected",
+                                     std::string("application/octet-stream"),
+                                     response.getContentType());
 
             auto clipboard = std::make_shared<ClipboardData>();
             clipboard->read(responseStream);
@@ -114,6 +112,7 @@ public:
         {
             LOG_TST("Error: missing clipboard or missing clipboard mime type '" << mimeType
                                                                                 << '\'');
+            LOK_ASSERT_FAIL("Missing clipboard mime type");
             failed = true;
         }
         else if (value != content)
@@ -123,6 +122,7 @@ public:
             sleep (1); // output settle.
             Util::dumpHex(std::cerr, "\tclipboard:\n", "", value);
             Util::dumpHex(std::cerr, "\tshould be:\n", "", content);
+            LOK_ASSERT_EQUAL_MESSAGE("Clipboard content mismatch", value.size(), content.size());
             failed = true;
         }
         if (failed)
