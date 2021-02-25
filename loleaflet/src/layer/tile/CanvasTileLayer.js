@@ -1554,6 +1554,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		if (!this._xSplitter) {
 			this._xSplitter = new CSplitterLine(
 				map, {
+					name: 'horiz-pane-splitter',
 					color: '#e0e0e0',
 					opacity: 1,
 					weight: Math.round(3 * this._painter._dpiScale),
@@ -1574,6 +1575,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		if (!this._ySplitter) {
 			this._ySplitter = new CSplitterLine(
 				map, {
+					name: 'vert-pane-splitter',
 					color: '#e0e0e0',
 					opacity: 1,
 					weight: Math.round(3 * this._painter._dpiScale),
