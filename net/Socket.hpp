@@ -1149,6 +1149,7 @@ protected:
             // perform the shutdown if we have sent everything.
             if (_shutdownSignalled && _outBuffer.empty())
             {
+                LOG_TRC('#' << getFD() << ": Shutdown Signaled. Close Connection.");
                 closeConnection();
                 closed = true;
                 break;
@@ -1197,7 +1198,9 @@ public:
                 last_errno = errno; // Save right after the syscall.
 
                 LOG_TRC('#' << getFD() << ": Wrote outgoing data " << len << " bytes of "
-                            << _outBuffer.size() << " buffered bytes.");
+                            << _outBuffer.size() << " buffered bytes ("
+                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
+                            << ')');
 
 #ifdef LOG_SOCKET_DATA
                 auto& log = Log::logger();
