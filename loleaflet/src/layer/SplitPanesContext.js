@@ -185,7 +185,7 @@ L.SplitPanesContext = L.Class.extend({
 		if (this._splitPos.y) {
 			// top-right pane or top half pane
 			boundList.push(new L.Bounds(
-				new L.Point(topLeft.x + this._splitPos.x + 1, 0),
+				new L.Point(topLeft.x + this._splitPos.x, 0),
 				new L.Point(bottomRight.x, this._splitPos.y)
 			));
 		}
@@ -193,7 +193,7 @@ L.SplitPanesContext = L.Class.extend({
 		if (this._splitPos.x) {
 			// bottom-left pane or left half pane
 			boundList.push(new L.Bounds(
-				new L.Point(0, topLeft.y + this._splitPos.y + 1),
+				new L.Point(0, topLeft.y + this._splitPos.y),
 				new L.Point(this._splitPos.x, bottomRight.y)
 			));
 		}
@@ -207,7 +207,7 @@ L.SplitPanesContext = L.Class.extend({
 		} else {
 			// bottom-right/bottom-half/right-half pane
 			boundList.push(new L.Bounds(
-				topLeft.add(this._splitPos).add(new L.Point(1, 1)),
+				topLeft.add(this._splitPos),
 				bottomRight
 			));
 		}
