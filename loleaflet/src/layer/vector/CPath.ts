@@ -18,7 +18,7 @@ abstract class CPath {
 	fillOpacity: number = 0.2;
 	fillRule: CanvasFillRule = 'evenodd';
 	interactive: boolean = true;
-	fixed: boolean = false;
+	fixed: boolean = false; // CPath coordinates are the same as overlay section coordinates.
 	cursorType: string;
 
 	radius: number = 0;
@@ -126,6 +126,17 @@ abstract class CPath {
 
 	updatePathAllPanes(paintArea?: CBounds) {
 		var viewBounds = this.renderer.getBounds().clone();
+
+		if (this.fixed) {
+			// Ignore freeze-panes.
+			var fixedMapArea = new CBounds(
+				new CPoint(0, 0),
+				viewBounds.getSize()
+			)
+			this.updatePath(fixedMapArea, fixedMapArea);
+			this.updateTestData();
+			return;
+		}
 
 		var splitPanesContext = this.renderer.getSplitPanesContext();
 		var paneBoundsList: Array<CBounds> = splitPanesContext ?
