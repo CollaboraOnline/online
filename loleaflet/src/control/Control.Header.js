@@ -499,7 +499,7 @@ L.Control.Header = L.Class.extend({
 			var end = entry.pos;
 			var start = end - entry.size;
 			if (position >= start && position < end) {
-				var resizeAreaStart = Math.max(start, end - 3 * this.dpiScale);
+				var resizeAreaStart = Math.max(start, end - 3 * that.dpiScale);
 				if (that.isHeaderSelected(entry.index) || window.mode.isMobile()) {
 					resizeAreaStart = end - that._resizeHandleSize;
 				}
@@ -587,15 +587,17 @@ L.Control.Header = L.Class.extend({
 		else { // We are in dragging mode.
 			this.containerObject.requestReDraw(); // Remove previously drawn line.
 			this.containerObject.setPenPosition(this);
-			var x = this._isColumn ? (this._dragEntry.pos + dragDistance[0]): this.size[0];
-			var y = this._isColumn ? this.size[1]: (this._dragEntry.pos + dragDistance[1]);
+			if (this._dragEntry) {
+				var x = this._isColumn ? (this._dragEntry.pos + dragDistance[0]): this.size[0];
+				var y = this._isColumn ? this.size[1]: (this._dragEntry.pos + dragDistance[1]);
 
-			this.context.lineWidth = this.dpiScale;
-			this.context.strokeStyle = 'darkblue';
-			this.context.beginPath();
-			this.context.moveTo(x, y);
-			this.context.lineTo(this._isColumn ? x: this.containerObject.right, this._isColumn ? this.containerObject.bottom: y);
-			this.context.stroke();
+				this.context.lineWidth = this.dpiScale;
+				this.context.strokeStyle = 'darkblue';
+				this.context.beginPath();
+				this.context.moveTo(x, y);
+				this.context.lineTo(this._isColumn ? x: this.containerObject.right, this._isColumn ? this.containerObject.bottom: y);
+				this.context.stroke();
+			}
 		}
 	},
 
