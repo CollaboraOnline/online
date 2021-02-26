@@ -116,7 +116,22 @@ function shouldHaveZoomLevel(zoomLevel) {
 		.should('have.text', zoomLevel);
 }
 
+function makeZoomItemsVisible() {
+	cy.get('.w2ui-tb-image.w2ui-icon.zoomin')
+		.then(function(zoomInItem) {
+			if (!Cypress.dom.isVisible(zoomInItem)) {
+				cy.get('#toolbar-down .w2ui-scroll-right')
+					.click();
+			}
+		});
+
+	cy.get('.w2ui-tb-image.w2ui-icon.zoomin')
+		.should('be.visible');
+}
+
 function doZoom(zoomIn) {
+	makeZoomItemsVisible();
+
 	var prevZoom = '';
 	cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
 		.should(function(zoomLevel) {
@@ -147,6 +162,8 @@ function zoomOut() {
 }
 
 function selectZoomLevel(zoomLevel) {
+	makeZoomItemsVisible();
+
 	cy.get('#tb_actionbar_item_zoom')
 		.click();
 
