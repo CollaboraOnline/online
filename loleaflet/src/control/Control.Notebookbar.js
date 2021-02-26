@@ -13,6 +13,7 @@ L.Control.Notebookbar = L.Control.extend({
 	builder: null,
 
 	additionalShortcutButtons: [],
+	hiddenShortcutButtons: [],
 
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
@@ -198,21 +199,25 @@ L.Control.Notebookbar = L.Control.extend({
 				'type': 'toolbox',
 				'children': [
 					{
+						'id': 'menu',
 						'type': 'toolitem',
 						'text': _('Menu'),
 						'command': '.uno:Menubar'
 					},
 					{
+						'id': 'save',
 						'type': 'toolitem',
 						'text': _('Save'),
 						'command': '.uno:Save'
 					},
 					{
+						'id': 'undo',
 						'type': 'toolitem',
 						'text': _('Undo'),
 						'command': '.uno:Undo'
 					},
 					{
+						'id': 'redo',
 						'type': 'toolitem',
 						'text': _('Redo'),
 						'command': '.uno:Redo'
@@ -227,12 +232,30 @@ L.Control.Notebookbar = L.Control.extend({
 		$('#main-menu-state').after(shortcutsBar);
 
 		var shortcutsBarData = this.getShortcutsBarData();
+		var toolitems = shortcutsBarData[0].children;
+
 		for (var i in this.additionalShortcutButtons) {
 			var item = this.additionalShortcutButtons[i];
-			shortcutsBarData[0].children.push(item);
+			toolitems.push(item);
+		}
+
+		for (var i in this.hiddenShortcutButtons) {
+			var toHide = this.hiddenShortcutButtons[i];
+			for (var i in toolitems) {
+				var item = toolitems[i];
+				if (item.id == toHide) {
+					toolitems.splice(i, 1);
+					break;
+				}
+			}
 		}
 
 		this.builder.build(shortcutsBar, shortcutsBarData);
+	},
+
+	reloadShortcutsBar: function() {
+		$('.notebookbar-shortcuts-bar').remove();
+		this.createShortcutsBar();
 	},
 
 	insertButtonToShortcuts: function(button) {
@@ -253,8 +276,21 @@ L.Control.Notebookbar = L.Control.extend({
 			}
 		);
 
-		$('.notebookbar-shortcuts-bar').remove();
-		this.createShortcutsBar();
+		this.reloadShortcutsBar();
+	},
+
+	showShortcutsButton: function(buttonId, show) {
+		var i = this.hiddenShortcutButtons.indexOf(buttonId);
+		if (i > -1) {
+			if (show === true)
+				this.hiddenShortcutButtons.splice(i, 1);
+
+			this.reloadShortcutsBar();
+			return;
+		}
+
+		this.hiddenShortcutButtons.push(buttonId);
+		this.reloadShortcutsBar();
 	},
 
 	setCurrentScrollPosition: function() {
