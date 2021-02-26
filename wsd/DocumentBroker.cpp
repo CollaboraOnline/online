@@ -298,7 +298,7 @@ void DocumentBroker::pollThread()
 #endif
         LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
 
-    const auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
+    auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
 
     // Main polling loop goodness.
@@ -312,6 +312,12 @@ void DocumentBroker::pollThread()
         // a tile's data is ~8k, a 4k screen is ~128 256x256 tiles
         if (_tileCache)
             _tileCache->setMaxCacheSize(8 * 1024 * 128 * _sessions.size());
+
+        if (isInteractive())
+        {
+            loadDeadline = now + std::chrono::seconds(limit_load_secs);
+            continue;
+        }
 
         if (!isLoaded() && (limit_load_secs > 0) && (now > loadDeadline))
         {
@@ -1281,6 +1287,15 @@ void DocumentBroker::setLoaded()
         _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
                                 std::chrono::steady_clock::now() - _threadStart);
         LOG_TRC("Document loaded in " << _loadDuration);
+    }
+}
+
+void DocumentBroker::setInteractive(bool value)
+{
+    if (isInteractive() != value)
+    {
+        _docState.setInteractive(value);
+        LOG_TRC("Document has interactive dialogs before load");
     }
 }
 
