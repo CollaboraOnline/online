@@ -29,7 +29,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		map.on('resize', this.onResize, this);
 
 		this._annotationManager = L.annotationManagerImpress(map);
-		map.uiManager.initializeSpecializedUI('presentation');
+		map.uiManager.initializeSpecializedUI(this._docType);
 		if (window.mode.isMobile()) {
 
 			L.Control.MobileWizard.mergeOptions({maxHeight: '55%'});
