@@ -321,7 +321,10 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	showButton: function(buttonId, show) {
-		this.showButtonInClassicToolbar(buttonId, show);
+		if (!this.notebookbar)
+			this.showButtonInClassicToolbar(buttonId, show);
+		else
+			this.notebookbar.showShortcutsButton(buttonId, show);
 	},
 
 	// Menubar
