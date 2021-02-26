@@ -568,27 +568,6 @@ function initAliasToNegative(aliasName) {
 	cy.log('Initializing alias to a negative value - end.');
 }
 
-// Initialize an alias to an empty string. It can be useful
-// when we use an alias as a variable and later we intend to
-// set it to a non-empty string.
-// Parameters:
-// aliasName - a string, expected to be used as alias.
-function initAliasToEmptyString(aliasName) {
-	cy.log('Initializing alias to empty string - start.');
-	cy.log('Param - aliasName: ' + aliasName);
-
-	// Do an empty slice to generate empty string
-	cy.get('#copy-paste-container')
-		.invoke('css', 'display')
-		.invoke('slice', '0', '0')
-		.as(aliasName);
-
-	cy.get('@' + aliasName)
-		.should('be.equal', '');
-
-	cy.log('Initializing alias to empty string - end.');
-}
-
 // Run a code snippet if we are inside Calc.
 function doIfInCalc(callback) {
 	cy.get('#document-container')
@@ -1104,7 +1083,6 @@ module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.matchClipboardText = matchClipboardText;
 module.exports.afterAll = afterAll;
 module.exports.initAliasToNegative = initAliasToNegative;
-module.exports.initAliasToEmptyString = initAliasToEmptyString;
 module.exports.doIfInCalc = doIfInCalc;
 module.exports.doIfInImpress = doIfInImpress;
 module.exports.doIfInWriter = doIfInWriter;
