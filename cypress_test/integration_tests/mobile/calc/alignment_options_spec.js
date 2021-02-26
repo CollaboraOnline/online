@@ -272,7 +272,7 @@ describe('Change alignment settings.', function() {
 			.should('have.prop', 'checked', true);
 
 		// Check content
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'colspan', '1024');
