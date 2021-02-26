@@ -187,6 +187,31 @@ L.Control.UIManager = L.Control.extend({
 			this.notebookbar.insertButtonToShortcuts(button);
 	},
 
+	showButtonInClassicToolbar: function(buttonId, show) {
+		var toolbars = [w2ui['toolbar-up'], w2ui['actionbar'], w2ui['editbar']];
+		var found = false;
+
+		toolbars.forEach(function(toolbar) {
+			if (toolbar && toolbar.get(buttonId)) {
+				found = true;
+				if (show) {
+					toolbar.show(buttonId);
+				} else {
+					toolbar.hide(buttonId);
+				}
+			}
+		});
+
+		if (!found) {
+			console.error('Toolbar button with id "' + buttonId + '" not found.');
+			return;
+		}
+	},
+
+	showButton: function(buttonId, show) {
+		this.showButtonInClassicToolbar(buttonId, show);
+	},
+
 	// Menubar
 
 	showMenubar: function() {
