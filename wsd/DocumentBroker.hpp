@@ -169,6 +169,9 @@ public:
     /// Notify that the load has completed
     virtual void setLoaded();
 
+    /// Notify that the document has dialogs before load
+    virtual void setInteractive(bool value);
+
     /// If not yet locked, try to lock
     bool attemptLock(const ClientSession& session, std::string& failReason);
 
@@ -321,6 +324,7 @@ private:
     /// Loads a document from the public URI into the jail.
     bool load(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _isLoaded; }
+    bool isInteractive() const { return _interactive; }
 
     std::size_t getIdleTimeSecs() const
     {
@@ -446,6 +450,7 @@ private:
     std::atomic<bool> _closeRequest;
     std::atomic<bool> _isLoaded;
     std::atomic<bool> _isModified;
+    bool _interactive; //< If the document has interactive dialogs before load
     int _cursorPosX;
     int _cursorPosY;
     int _cursorWidth;
