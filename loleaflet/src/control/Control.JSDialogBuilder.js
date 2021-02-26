@@ -152,7 +152,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_toolitemHandler: function(parentContainer, data, builder) {
-		if (data.command) {
+		if (data.command || data.postmessage) {
 			var handler = builder._toolitemHandlers[data.command];
 			if (handler)
 				handler(parentContainer, data, builder);
@@ -2092,12 +2092,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 		controls['container'] = div;
 
-		if (data.command) {
-			var id = encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '');
+		if (data.command || data.postmessage === true) {
+			var id = data.command ? encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '') : data.id;
 			id = id.replace(/\./g, '-');
 			div.id = id;
 
-			var icon = builder._createIconURL(data.command);
+			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
 			var buttonId = id + 'img';
 
 			button = L.DomUtil.create('img', 'ui-content unobutton', div);
@@ -2130,32 +2130,33 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				controls['label'] = label;
 			}
 
-			var updateFunction = function() {
-				var items = builder.map['stateChangeHandler'];
-				var state = items.getItemValue(data.command);
+			if (data.command) {
+				var updateFunction = function() {
+					var items = builder.map['stateChangeHandler'];
+					var state = items.getItemValue(data.command);
 
-				if (state && state === 'true') {
-					$(button).addClass('selected');
-					$(div).addClass('selected');
-				}
-				else {
-					$(button).removeClass('selected');
-					$(div).removeClass('selected');
-				}
+					if (state && state === 'true') {
+						$(button).addClass('selected');
+						$(div).addClass('selected');
+					}
+					else {
+						$(button).removeClass('selected');
+						$(div).removeClass('selected');
+					}
 
-				if (state && state === 'disabled')
-					$(div).addClass('disabled');
-				else
-					$(div).removeClass('disabled');
-			};
+					if (state && state === 'disabled')
+						$(div).addClass('disabled');
+					else
+						$(div).removeClass('disabled');
+				};
 
-			updateFunction();
+				updateFunction();
 
-			builder.map.on('commandstatechanged', function(e) {
-				if (e.commandName === data.command)
-					updateFunction();
-			}, this);
-
+				builder.map.on('commandstatechanged', function(e) {
+					if (e.commandName === data.command)
+						updateFunction();
+				}, this);
+			}
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.innerHTML = builder._cleanText(data.text);
@@ -2170,7 +2171,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(div).click(function () {
 			if (!$(div).hasClass('disabled')) {
 				builder.refreshSidebar = true;
-				builder.callback('toolbutton', 'click', button, data.command, builder);
+				if (data.postmessage)
+					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
+				else
+					builder.callback('toolbutton', 'click', button, data.command, builder);
 			}
 		});
 

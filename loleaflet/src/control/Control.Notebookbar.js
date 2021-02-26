@@ -14,6 +14,8 @@ L.Control.Notebookbar = L.Control.extend({
 	container: null,
 	builder: null,
 
+	additionalShortcutButtons: [],
+
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
 		this.map = map;
@@ -212,7 +214,36 @@ L.Control.Notebookbar = L.Control.extend({
 	createShortcutsBar: function() {
 		var shortcutsBar = L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
 		$('#main-menu').after(shortcutsBar);
-		this.builder.build(shortcutsBar, this.getShortcutsBarData());
+
+		var shortcutsBarData = this.getShortcutsBarData();
+		for (var i in this.additionalShortcutButtons) {
+			var item = this.additionalShortcutButtons[i];
+			shortcutsBarData[0].children.push(item);
+		}
+
+		this.builder.build(shortcutsBar, shortcutsBarData);
+	},
+
+	insertButtonToShortcuts: function(button) {
+		for (var i in this.additionalShortcutButtons) {
+			var item = this.additionalShortcutButtons[i];
+			if (item.id === button.id)
+				return;
+		}
+
+		this.additionalShortcutButtons.push(
+			{
+				id: button.id,
+				type: 'toolitem',
+				text: button.label ? button.label : _(button.hint),
+				icon: button.imgurl,
+				command: button.unoCommand,
+				postmessage: button.unoCommand ? undefined : true,
+			}
+		);
+
+		$('.notebookbar-shortcuts-bar').remove();
+		this.createShortcutsBar();
 	},
 
 	setCurrentScrollPosition: function() {

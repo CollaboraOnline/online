@@ -181,7 +181,10 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	insertButton: function(button) {
-		this.insertButtonToClassicToolbar(button);
+		if (!this.notebookbar)
+			this.insertButtonToClassicToolbar(button);
+		else
+			this.notebookbar.insertButtonToShortcuts(button);
 	},
 
 	// Menubar
