@@ -289,29 +289,24 @@ describe('Form field button tests.', function() {
 
 		buttonShouldExist();
 
-		// Get the initial font size from the style
-		helper.initAliasToEmptyString('prevFontSize');
-
+		// Get the initial font size from the style.
+		var prevFontSize = '';
 		cy.get('.drop-down-field-list-item')
-			.invoke('css', 'font-size')
-			.as('prevFontSize');
-
-		cy.get('@prevFontSize')
-			.should('not.be.equal', '');
+			.should(function(item) {
+				prevFontSize = item.css('font-size');
+				expect(prevFontSize).to.not.equal('');
+			});
 
 		desktopHelper.zoomIn();
 
 		buttonShouldExist();
 
 		// Check that the font size was changed
-		cy.get('@prevFontSize')
-			.then(function(prevFontSize) {
-				cy.get('.drop-down-field-list-item')
-					.should(function(items) {
-						var prevSize = parseInt(prevFontSize, 10);
-						var currentSize = parseInt(items.css('font-size'), 10);
-						expect(currentSize).to.be.greaterThan(prevSize);
-					});
+		cy.get('.drop-down-field-list-item')
+			.should(function(item) {
+				var prevSize = parseInt(prevFontSize, 10);
+				var currentSize = parseInt(item.css('font-size'), 10);
+				expect(currentSize).to.be.greaterThan(prevSize);
 			});
 
 		cy.get('.drop-down-field-list-item')
@@ -322,15 +317,10 @@ describe('Form field button tests.', function() {
 
 		buttonShouldExist();
 
-		// Check that the font size was changed
-		cy.get('@prevFontSize')
-			.then(function(prevFontSize) {
-				cy.get('.drop-down-field-list-item')
-					.should(function(items) {
-						var prevSize = parseInt(prevFontSize, 10);
-						var currentSize = parseInt(items.css('font-size'), 10);
-						expect(currentSize).to.be.lessThan(prevSize);
-					});
+		// Check that the font size was changed back
+		cy.get('.drop-down-field-list-item')
+			.should(function(item) {
+				expect(item.css('font-size')).to.be.equal(prevFontSize);
 			});
 	});
 });
