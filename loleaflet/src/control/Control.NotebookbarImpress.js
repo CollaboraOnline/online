@@ -13,26 +13,31 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'toolbox',
 				'children': [
 					{
+						'id': 'menu',
 						'type': 'toolitem',
 						'text': _('Menu'),
 						'command': '.uno:Menubar'
 					},
 					{
+						'id': 'save',
 						'type': 'toolitem',
 						'text': _('Save'),
 						'command': '.uno:Save'
 					},
 					{
+						'id': 'presentation',
 						'type': 'toolitem',
 						'text': _('Start Presentation'),
 						'command': '.uno:Presentation'
 					},
 					{
+						'id': 'undo',
 						'type': 'toolitem',
 						'text': _('Undo'),
 						'command': '.uno:Undo'
 					},
 					{
+						'id': 'redo',
 						'type': 'toolitem',
 						'text': _('Redo'),
 						'command': '.uno:Redo'
