@@ -1470,9 +1470,14 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
         }
-        else if (tokens[0] == "status:" || tokens[0] == "statusindicatorfinish:")
+        else if (tokens[0] == "jsdialog:" && _state == ClientSession::SessionState::LOADING)
+        {
+            docBroker->setInteractive(true);
+        }
+        else if (tokens[0] == "status:")
         {
             setState(ClientSession::SessionState::LIVE);
+            docBroker->setInteractive(false);
             docBroker->setLoaded();
 
 #if !MOBILEAPP

@@ -294,6 +294,9 @@ public:
     /// Notify that the load has completed
     virtual void setLoaded();
 
+    /// Notify that the document has dialogs before load
+    virtual void setInteractive(bool value);
+
     /// If not yet locked, try to lock
     bool attemptLock(const ClientSession& session, std::string& failReason);
 
@@ -452,6 +455,7 @@ private:
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _docState.hadLoaded(); }
+    bool isInteractive() const { return _docState.isInteractive(); }
 
     std::size_t getIdleTimeSecs() const
     {
@@ -856,6 +860,7 @@ private:
             : _status(Status::None)
             , _closeRequested(false)
             , _loaded(false)
+            , _interactive(false)
         {
         }
 
@@ -892,10 +897,14 @@ private:
         void setCloseRequested() { _closeRequested = true; }
         bool isCloseRequested() const { return _closeRequested; }
 
+        void setInteractive(bool value) { _interactive = value; }
+        bool isInteractive() const { return _interactive; }
+
     private:
         Status _status;
         std::atomic<bool> _closeRequested; //< Owner-Termination flag.
         std::atomic<bool> _loaded; //< If the document ever loaded (check isLive to see if it still is).
+        bool _interactive; //< If the document has interactive dialogs before load
     };
 
     /// The main state of the document.
