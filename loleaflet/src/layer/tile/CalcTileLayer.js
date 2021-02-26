@@ -483,10 +483,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._tileSize);
 		}
 		this._restrictDocumentSize();
-		this._replayPrintTwipsMsgs();
 		this.setSplitPosFromCell();
 		this._map.fire('zoomchanged');
 		this.refreshViewData();
+		this._replayPrintTwipsMsgs();
 		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
 
