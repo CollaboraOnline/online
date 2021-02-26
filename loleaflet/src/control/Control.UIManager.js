@@ -89,6 +89,8 @@ L.Control.UIManager = L.Control.extend({
 				var notebookbar = L.control.notebookbarCalc();
 			} else if (docType === 'presentation') {
 				notebookbar = L.control.notebookbarImpress();
+			} else if (docType === 'drawing') {
+				notebookbar = L.control.notebookbarDraw();
 			} else {
 				notebookbar = L.control.notebookbarWriter();
 			}
