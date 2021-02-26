@@ -41,6 +41,25 @@ class CanvasOverlay {
 		this.draw();
 	}
 
+	onMouseMove(position: Array<number>) {
+		var mousePos = new CPoint(position[0], position[1]);
+		this.paths.forEach(function (path:CPath) {
+			var pathBounds = path.getBounds();
+
+			if (!pathBounds.isValid())
+				return;
+
+			var mouseOverPath = pathBounds.contains(mousePos);
+			if (mouseOverPath && !path.isUnderMouse()) {
+				path.onMouseEnter(mousePos);
+				path.setUnderMouse(true);
+			} else if (!mouseOverPath && path.isUnderMouse()) {
+				path.onMouseLeave(mousePos);
+				path.setUnderMouse(false);
+			}
+		});
+	}
+
 	setOverlaySection(overlaySection: any) {
 		this.overlaySection = overlaySection;
 	}
@@ -310,5 +329,9 @@ class CanvasOverlay {
 
 	bringToBack(path: CPath) {
 		// TODO: Implement this.
+	}
+
+	getMap(): any {
+		return this.map;
 	}
 };

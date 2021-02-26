@@ -1,11 +1,14 @@
+/// <reference path="CEventsHandler.ts" />
 /* eslint-disable */
+
+declare var L: any;
 
 /*
  * CPath is the base class for all vector paths like polygons and circles used to draw overlay
  * objects like cell-cursors, cell-selections etc.
  */
 
-abstract class CPath {
+abstract class CPath extends CEventsHandler {
 	name: string = "";
 	stroke: boolean = true;
 	color: string = '#3388ff';
@@ -21,6 +24,7 @@ abstract class CPath {
 	fixed: boolean = false; // CPath coordinates are the same as overlay section coordinates.
 	cursorType: string;
 	thickness: number = 2;
+	toCompatUnits: Function;
 
 	radius: number = 0;
 	radiusY: number = 0;
@@ -33,17 +37,24 @@ abstract class CPath {
 	private isDeleted: boolean = false;
 	private testDiv: HTMLDivElement;
 	protected renderer: CanvasOverlay = null;
+	protected underMouse: boolean = false;
+	private popup: any;
+	private popupHandlersAdded: boolean = false;
+	private popupTimer: NodeJS.Timeout;
 
 	constructor(options: any) {
+		super();
 		this.setStyleOptions(options);
 
 		this.radius = options.radius !== undefined ? options.radius : this.radius;
 		this.radiusY = options.radiusY !== undefined ? options.radiusY : this.radiusY;
 		this.point = options.point !== undefined ? options.point : this.point;
+		this.toCompatUnits = options.toCompatUnits !== undefined ? options.toCompatUnits : this.toCompatUnits;
 
 		CPath.countObjects += 1;
 		this.id = CPath.countObjects;
 		this.zIndex = this.id;
+		this.addSupportedEvents(['popupopen', 'popupclose']);
 	}
 
 	setStyleOptions(options: any) {
@@ -69,6 +80,7 @@ abstract class CPath {
 		if (this.renderer) {
 			this.addPathTestDiv();
 		}
+		this.fire('add');
 	}
 
 	// Adds a div for cypress-tests (if active) for this CPath if not already done.
@@ -106,11 +118,28 @@ abstract class CPath {
 	}
 
 	setDeleted() {
+		this.fire('remove');
 		this.isDeleted = true;
 		if (this.testDiv) {
 			this.testDiv.remove();
 			this.testDiv = undefined;
 		}
+	}
+
+	isUnderMouse(): boolean {
+		return this.underMouse;
+	}
+
+	setUnderMouse(isUnder: boolean) {
+		this.underMouse = isUnder;
+	}
+
+	onMouseEnter(position: CPoint) {
+		this.fire('mouseenter');
+	}
+
+	onMouseLeave(position: CPoint) {
+		this.fire('mouseleave');
 	}
 
 	redraw(oldBounds: CBounds) {
@@ -209,6 +238,78 @@ abstract class CPath {
 
 	onResize() {
 		// Overridden in implementations.
+	}
+
+	getMap(): any {
+		if (this.renderer) {
+			return this.renderer.getMap();
+		}
+	}
+
+	// Popup related methods
+	bindPopup(content: any, options: any): CPath {
+
+		if (content instanceof L.Popup) {
+			this.popup = content;
+		} else {
+			if (!this.popup || options) {
+				this.popup = new L.Popup(options, this);
+			}
+			this.popup.setContent(content);
+		}
+
+		if (!this.popupHandlersAdded) {
+			this.on('add', this.firstPopup);
+			this.on('remove', this.closePopup);
+			this.on('mouseenter', this.openPopup);
+			this.on('mouseleave', this.delayClosePopup);
+
+			this.popupHandlersAdded = true;
+		}
+
+		return this;
+	}
+
+	unbindPopup(): CPath {
+		if (this.popup) {
+			this.popup = null;
+			this.off('add', this.firstPopup);
+			this.off('remove', this.closePopup);
+			this.off('mouseenter', this.openPopup);
+			this.off('mouseleave', this.delayClosePopup);
+
+			this.popupHandlersAdded = false;
+		}
+		return this;
+	}
+
+	protected firstPopup() {
+		if (this.popup) {
+			var center = this.getBounds().getCenter();
+			this.openPopup({
+				latlng: this.toCompatUnits([center.x, center.y])
+			});
+		}
+	}
+
+	protected closePopup() {
+		if (this.popup) {
+			this.popup._close();
+		}
+		return this;
+	}
+
+	protected delayClosePopup() {
+		clearTimeout(this.popupTimer);
+		this.popupTimer = setTimeout(this.closePopup.bind(this), 3000);
+	}
+
+	protected openPopup(e: any) {
+		if (!this.getMap().hasLayer(this.popup)) {
+			this.popup.setLatLng(e.latlng);
+			this.getMap().openPopup(this.popup);
+			this.delayClosePopup();
+		}
 	}
 
 };
