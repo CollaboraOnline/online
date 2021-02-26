@@ -889,17 +889,22 @@ function moveCursor(direction, modifier,
 	cy.log('Param - cursorSelector: ' + cursorSelector);
 
 	// Get the original cursor position.
-	if (direction === 'up' ||
-		direction === 'down' ||
-		(direction === 'home' && modifier === 'ctrl') ||
-		(direction === 'end' && modifier === 'ctrl')) {
-		getCursorPos('top', 'origCursorPos', cursorSelector);
-	} else if (direction === 'left' ||
-		direction === 'right' ||
-		direction === 'home' ||
-		direction === 'end') {
-		getCursorPos('left', 'origCursorPos', cursorSelector);
-	}
+	var origCursorPos = 0;
+	cy.get(cursorSelector)
+		.should(function(cursor) {
+			if (direction === 'up' ||
+				direction === 'down' ||
+				(direction === 'home' && modifier === 'ctrl') ||
+				(direction === 'end' && modifier === 'ctrl')) {
+				origCursorPos = cursor.offset().top;
+			} else if (direction === 'left' ||
+				direction === 'right' ||
+				direction === 'home' ||
+				direction === 'end') {
+				origCursorPos = cursor.offset().left;
+			}
+			expect(origCursorPos).to.not.equal(0);
+		});
 
 	// Move the cursor using keyboard input.
 	var key = '';
@@ -926,22 +931,19 @@ function moveCursor(direction, modifier,
 	typeIntoDocument(key);
 
 	// Make sure the cursor position was changed.
-	cy.get('@origCursorPos')
-		.then(function(origCursorPos) {
-			cy.get(cursorSelector)
-				.should(function(cursor) {
-					if (direction === 'up' ||
-						direction === 'down' ||
-						(direction === 'home' && modifier === 'ctrl') ||
-						(direction === 'end' && modifier === 'ctrl')) {
-						expect(cursor.offset().top).to.not.equal(origCursorPos);
-					} else if (direction === 'left' ||
-								direction === 'right' ||
-								direction === 'end' ||
-								direction === 'home') {
-						expect(cursor.offset().left).to.not.equal(origCursorPos);
-					}
-				});
+	cy.get(cursorSelector)
+		.should(function(cursor) {
+			if (direction === 'up' ||
+				direction === 'down' ||
+				(direction === 'home' && modifier === 'ctrl') ||
+				(direction === 'end' && modifier === 'ctrl')) {
+				expect(cursor.offset().top).to.not.equal(origCursorPos);
+			} else if (direction === 'left' ||
+					direction === 'right' ||
+					direction === 'end' ||
+					direction === 'home') {
+				expect(cursor.offset().left).to.not.equal(origCursorPos);
+			}
 		});
 
 	// Cursor should be visible after move, because the view always follows it.
