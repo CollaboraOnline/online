@@ -104,7 +104,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ShareDocument'] = function() {};
 		this._toolitemHandlers['.uno:EditDoc'] = function() {};
 		this._toolitemHandlers['.uno:AssignLayout'] = function() {};
-		this._toolitemHandlers['.uno:ConnectorToolbox'] = function() {};
+		this._toolitemHandlers['.uno:ConnectorToolbox'] = this._shapesControl;
 		this._toolitemHandlers['.uno:PresentationCurrentSlide'] = function() {};
 		this._toolitemHandlers['.uno:PresentationLayout'] = function() {};
 		this._toolitemHandlers['.uno:CapturePoint'] = function() {};
@@ -473,7 +473,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			if (!$('.insertshape-grid').length) {
 				$(control.container).w2overlay(window.getShapesPopupHtml());
-				window.insertShapes('insertshapes');
+				if (data.command === '.uno:ConnectorToolbox') {
+					window.insertShapes('insertconnectors');
+				} else {
+					window.insertShapes('insertshapes');
+				}
 
 				$('.insertshape-grid .row .col').click(function () {
 					$(control.container).w2overlay();
