@@ -173,26 +173,22 @@ describe('Formula bar tests.', function() {
 	});
 
 	it('Switch oneline-multiline mode of input bar', function() {
-		helper.initAliasToNegative('inputOriginalHeight');
-
+		// Get the initial height of the input field.
+		var inputOriginalHeight = 0;
 		cy.get('#calc-inputbar')
-			.invoke('height')
-			.as('inputOriginalHeight');
-
-		cy.get('@inputOriginalHeight')
-			.should('be.greaterThan', 0);
+			.should(function(inputbar) {
+				inputOriginalHeight = inputbar.height();
+				expect(inputOriginalHeight).to.not.equal(0);
+			});
 
 		// Switch to multiline mode.
 		var arrowPos = [250, 10];
 		cy.get('#calc-inputbar')
 			.click(arrowPos[0], arrowPos[1]);
 
-		cy.get('@inputOriginalHeight')
-			.then(function(inputOriginalHeight) {
-				cy.get('#calc-inputbar')
-					.should(function(inputbar) {
-						expect(inputbar.height()).to.be.greaterThan(inputOriginalHeight);
-					});
+		cy.get('#calc-inputbar')
+			.should(function(inputbar) {
+				expect(inputbar.height()).to.be.greaterThan(inputOriginalHeight);
 			});
 
 		cy.get('#calc-inputbar')
@@ -204,12 +200,9 @@ describe('Formula bar tests.', function() {
 		cy.get('#calc-inputbar')
 			.click(arrowPos[0], arrowPos[1]);
 
-		cy.get('@inputOriginalHeight')
-			.then(function(inputOriginalHeight) {
-				cy.get('#calc-inputbar')
-					.should(function(inputbar) {
-						expect(inputbar.height()).to.be.equal(inputOriginalHeight);
-					});
+		cy.get('#calc-inputbar')
+			.should(function(inputbar) {
+				expect(inputbar.height()).to.be.equal(inputOriginalHeight);
 			});
 	});
 
