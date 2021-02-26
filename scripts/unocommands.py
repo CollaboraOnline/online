@@ -167,6 +167,11 @@ def extractToolbarCommands(path):
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
+    f = open(path + '/loleaflet/src/control/Control.NotebookbarDraw.js', 'r')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
     f = open(path + '/loleaflet/src/control/Control.PresentationBar.js', 'r')
     for line in f:
         if line.find("_UNO(") >= 0:
