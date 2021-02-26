@@ -1,7 +1,12 @@
 /* global cy Cypress require */
 
+// Nextcloud integration related helper methods.
+
 var mobileHelper = require('./mobile_helper');
 
+// Open sharing sidebar of NC integration (mobile).
+// We check whether the NC sidebar is opened and then we
+// close it.
 function checkAndCloseSharing() {
 	mobileHelper.selectHamburgerMenuItem(['File']);
 
@@ -27,6 +32,12 @@ function checkAndCloseSharing() {
 		});
 }
 
+// Insert an image from NC storage. We use the "Insert"
+// menu for this, which will trigger NC's own image
+// insert dialog, where we can select an existing image
+// that was uploaded to NC storage earlier.
+// Parameters:
+// fileName - name of the image file.
 function insertImageFromStorage(fileName) {
 	mobileHelper.openInsertionWizard();
 
@@ -51,6 +62,12 @@ function insertImageFromStorage(fileName) {
 		});
 }
 
+// Save an existing and opened document with a different
+// name on the NC storage. We use the "File" -> "Save As..."
+// menu option for this, which will trigger an NC dialog
+// to specify the new file name.
+// Parameters:
+// fileName - the new filename we would like to save as.
 function saveFileAs(fileName) {
 	mobileHelper.enableEditingMobile();
 

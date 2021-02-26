@@ -120,7 +120,7 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.togglemergecells')
 			.click();
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'colspan', '1024');
