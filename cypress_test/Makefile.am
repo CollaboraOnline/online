@@ -581,7 +581,7 @@ define run_interactive_single
 	$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
 		--headed --no-exit \
-		--config $(1) \
+		--config $(1),retries=0 \
 		--env $(2) \
 		--spec=$(3)
 endef
