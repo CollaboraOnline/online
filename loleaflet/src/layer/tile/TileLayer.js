@@ -1508,9 +1508,11 @@ L.TileLayer = L.GridLayer.extend({
 		this._cellViewCursors[viewId] = this._cellViewCursors[viewId] || {};
 		if (!this._cellViewCursors[viewId].bounds) {
 			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
+			this._cellViewCursors[viewId].corePixelBounds = new L.Bounds();
 		}
 		if (obj.rectangle.match('EMPTY')) {
 			this._cellViewCursors[viewId].bounds = L.LatLngBounds.createDefault();
+			this._cellViewCursors[viewId].corePixelBounds = new L.Bounds();
 		}
 		else {
 			var strTwips = obj.rectangle.match(/\d+/g);
@@ -1522,6 +1524,9 @@ L.TileLayer = L.GridLayer.extend({
 			this._cellViewCursors[viewId].bounds = new L.LatLngBounds(
 				this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(boundsTwips.getBottomRight(), this._map.getZoom()));
+			var corePixelBounds = this._twipsToCorePixelsBounds(boundsTwips);
+			corePixelBounds.round();
+			this._cellViewCursors[viewId].corePixelBounds = corePixelBounds;
 		}
 
 		this._cellViewCursors[viewId].part = parseInt(obj.part);
@@ -1542,17 +1547,25 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds) && this._selectedPart === viewPart && this._map.hasInfoForView(viewId)) {
 			if (!cellViewCursorMarker) {
 				var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
-				cellViewCursorMarker = L.rectangle(this._cellViewCursors[viewId].bounds, {fill: false, color: backgroundColor, weight: 2});
+				cellViewCursorMarker = new CRectangle(this._cellViewCursors[viewId].corePixelBounds, {
+					fill: false,
+					color: backgroundColor,
+					weight: 2,
+					toCompatUnits: function (corePx) {
+						return this._map.unproject(L.point(corePx)
+							.divideBy(this._painter._dpiScale));
+					}.bind(this)
+				});
 				this._cellViewCursors[viewId].marker = cellViewCursorMarker;
 				cellViewCursorMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: backgroundColor, color: 'white', closeButton: false});
+				this._canvasOverlay.initPath(cellViewCursorMarker);
 			}
 			else {
-				cellViewCursorMarker.setBounds(this._cellViewCursors[viewId].bounds);
+				cellViewCursorMarker.setBounds(this._cellViewCursors[viewId].corePixelBounds);
 			}
-			this._viewLayerGroup.addLayer(cellViewCursorMarker);
 		}
 		else if (cellViewCursorMarker) {
-			this._viewLayerGroup.removeLayer(cellViewCursorMarker);
+			this._canvasOverlay.removePath(cellViewCursorMarker);
 		}
 	},
 
