@@ -4,7 +4,7 @@
                          and allows to controll them (show/hide)
  */
 
-/* global $ setupToolbar w2ui w2utils */
+/* global $ setupToolbar w2ui w2utils toolbarUpMobileItems _ */
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 
@@ -137,6 +137,51 @@ L.Control.UIManager = L.Control.extend({
 				w2ui['editbar'].refresh();
 			});
 		}
+	},
+
+	// UI modification
+
+	insertButtonToClassicToolbar: function(button) {
+		if (!w2ui['editbar'].get(button.id)) {
+			if (this.map.isPermissionEdit()) {
+				// add the css rule for the image
+				var style = $('html > head > style');
+				if (style.length == 0)
+					$('html > head').append('<style/>');
+				$('html > head > style').append('.w2ui-icon.' + button.id + '{background: url(' + button.imgurl + ') no-repeat center !important; }');
+
+				// Position: Either specified by the caller, or defaulting to first position (before save)
+				var insertBefore = button.insertBefore || 'save';
+				// add the item to the toolbar
+				w2ui['editbar'].insert(insertBefore, [
+					{
+						type: 'button',
+						uno: button.unoCommand,
+						id: button.id,
+						img: button.id,
+						hint: _(button.hint), /* "Try" to localize ! */
+						/* Notify the host back when button is clicked (only when unoCommand is not set) */
+						postmessage: !button.hasOwnProperty('unoCommand')
+					}
+				]);
+				if (button.mobile)
+				{
+					// Add to our list of items to preserve when in mobile mode
+					// FIXME: Wrap the toolbar in a class so that we don't make use
+					// global variables and functions like this
+					var idx = toolbarUpMobileItems.indexOf(insertBefore);
+					toolbarUpMobileItems.splice(idx, 0, button.id);
+				}
+			}
+			else if (this.map.isPermissionReadOnly()) {
+				// Just add a menu entry for it
+				this.map.fire('addmenu', {id: button.id, label: button.hint});
+			}
+		}
+	},
+
+	insertButton: function(button) {
+		this.insertButtonToClassicToolbar(button);
 	},
 
 	// Menubar
