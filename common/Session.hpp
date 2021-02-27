@@ -146,10 +146,16 @@ public:
     virtual void disconnect();
 
     /// clean & normal shutdown
-    void shutdownNormal(const std::string& statusMessage = "")    { shutdown(false, statusMessage); }
+    void shutdownNormal(const std::string& statusMessage = std::string())
+    {
+        shutdown(false, statusMessage);
+    }
 
     /// abnormal / hash shutdown end-point going away
-    void shutdownGoingAway(const std::string& statusMessage = "") { shutdown(true, statusMessage); }
+    void shutdownGoingAway(const std::string& statusMessage = std::string())
+    {
+        shutdown(true, statusMessage);
+    }
 
     bool isActive() const { return _isActive; }
     void setIsActive(bool active) { _isActive = active; }
