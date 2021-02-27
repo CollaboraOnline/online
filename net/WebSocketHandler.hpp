@@ -117,7 +117,8 @@ public:
     };
 
     /// Sends WS Close frame to the peer.
-    void sendCloseFrame(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE, const std::string& statusMessage = "")
+    void sendCloseFrame(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
+                        const std::string& statusMessage = std::string())
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
@@ -168,7 +169,8 @@ public:
         }
     }
 
-    void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE, const std::string& statusMessage = "")
+    void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
+                  const std::string& statusMessage = std::string())
     {
         if (!_shuttingDown)
             sendCloseFrame(statusCode, statusMessage);
