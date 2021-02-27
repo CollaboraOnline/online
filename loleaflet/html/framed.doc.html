@@ -90,6 +90,13 @@
         window.frames[0].postMessage(JSON.stringify({'MessageId': messageId}), '*');
       }
 
+      function ShowNotebookbar(notebookbar) {
+        var value = notebookbar ? 'notebookbar' : 'classic';
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Action_ChangeUIMode',
+            'Values': {'Mode': value}}), '*');
+      }
+
       // This function is invoked when the iframe posts a message back.
 
       function receiveMessage(event) {
@@ -179,6 +186,9 @@
     <form id="menubar-toggle">
       <button onclick="ShowMenubar(false); return false;">Hide Menubar</button>
       <button onclick="ShowMenubar(true); return false;">Show Menubar</button>
+      <p>
+      <button onclick="ShowNotebookbar(false); return false;">Classic Toolbar</button>
+      <button onclick="ShowNotebookbar(true); return false;">Notebookbar</button>
     </form>
 
     <h3>Document frame</h3>
