@@ -206,7 +206,7 @@ public:
         _sendBufferSize = getSocketBufferSize();
         if (rc != 0 || _sendBufferSize < 0 )
         {
-            LOG_ERR('#' << _fd << ": Error getting socket buffer size " << errno);
+            LOG_SYS('#' << _fd << ": Error getting socket buffer size");
             _sendBufferSize = DefaultSendBufferSize;
             return false;
         }
@@ -966,6 +966,7 @@ public:
         // SSL decodes blocks of 16Kb, so for efficiency we use the same.
         char buf[16 * 1024];
         ssize_t len;
+        int last_errno = 0;
         do
         {
             // Drain the read buffer.
@@ -973,8 +974,9 @@ public:
             do
             {
                 len = readData(buf, sizeof(buf));
+                last_errno = errno;
             }
-            while (len < 0 && errno == EINTR);
+            while (len < 0 && last_errno == EINTR);
 
             if (len > 0)
             {
@@ -985,6 +987,9 @@ public:
             // else poll will handle errors.
         }
         while (len == (sizeof(buf)));
+
+        // Restore errno from the read call.
+        errno = last_errno;
 #else
         LOG_TRC("readIncomingData #" << getFD());
         ssize_t available = fakeSocketAvailableDataLength(getFD());
@@ -1177,10 +1182,10 @@ public:
     {
         assertCorrectThread();
         assert(!_outBuffer.empty());
+        int last_errno = 0;
         do
         {
             ssize_t len = 0;
-            int last_errno = 0;
             do
             {
                 // Writing much more than we can absorb in the kernel causes wastage.
@@ -1217,6 +1222,9 @@ public:
             }
         }
         while (!_outBuffer.empty());
+
+        // Restore errno from the write call.
+        errno = last_errno;
     }
 
     /// Does it look like we have some TLS / SSL where we don't expect it ?

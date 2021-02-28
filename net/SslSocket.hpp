@@ -207,37 +207,44 @@ private:
         case SSL_ERROR_ZERO_RETURN:
             // Shutdown complete, we're disconnected.
             LOG_TRC("Socket #" << getFD() << " SSL error: ZERO_RETURN (" << sslError << ").");
+            errno = last_errno; // Restore errno.
             return 0;
 
         case SSL_ERROR_WANT_READ:
             LOG_TRC("Socket #" << getFD() << " SSL error: WANT_READ (" << sslError << ").");
             _sslWantsTo = SslWantsTo::Read;
+            errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_WRITE:
             LOG_TRC("Socket #" << getFD() << " SSL error: WANT_WRITE (" << sslError << ").");
             _sslWantsTo = SslWantsTo::Write;
+            errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_CONNECT:
             LOG_TRC("Socket #" << getFD() << " SSL error: WANT_CONNECT (" << sslError << ").");
+            errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_ACCEPT:
             LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ACCEPT (" << sslError << ").");
+            errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_X509_LOOKUP:
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_X509_LOOKUP (" << sslError << ").");
             // Unexpected.
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_X509_LOOKUP (" << sslError << ").");
+            errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_SYSCALL:
-            if (errno != 0)
+            if (last_errno != 0)
             {
                 // Posix API error, let the caller handle.
                 LOG_SYS_ERRNO(last_errno,
                               "Socket #" << getFD() << " SSL error: SYSCALL (" << sslError << ')');
+                errno = last_errno; // Restore errno.
                 return rc;
             }
 
@@ -249,6 +256,7 @@ private:
                 {
                     LOG_TRC("Socket #" << getFD() << " BIO asks for retry - underlying EAGAIN? " <<
                             SSL_get_error(_ssl, rc));
+                    errno = last_errno ? last_errno : EAGAIN; // Restore errno.
                     return -1; // poll is used to detect real errors.
                 }
 
@@ -273,6 +281,7 @@ private:
                     {
                         // Socket closed. Not an error.
                         LOG_INF("Socket #" << getFD() << " SSL BIO error: closed (0).");
+                        errno = last_errno; // Restore errno.
                         return 0;
                     }
                     else if (rc == -1)
@@ -280,6 +289,7 @@ private:
                         LOG_SYS_ERRNO(last_errno,
                                       "Socket #" << getFD()
                                                  << " SSL BIO error: closed unexpectedly (-1)");
+                        errno = last_errno; // Restore errno.
                         throw std::runtime_error("SSL Socket closed unexpectedly.");
                     }
                     else
@@ -287,6 +297,7 @@ private:
                         LOG_SYS_ERRNO(last_errno, "Socket #" << getFD()
                                                              << " SSL BIO error: unknown (" << rc
                                                              << ')');
+                        errno = last_errno; // Restore errno.
                         throw std::runtime_error("SSL BIO reported error [" + std::to_string(rc)
                                                  + ']');
                     }
@@ -296,12 +307,14 @@ private:
                     char buf[512];
                     ERR_error_string_n(bioError, buf, sizeof(buf));
                     LOG_SYS_ERRNO(last_errno, "Socket #" << getFD() << " SSL BIO error: " << buf);
+                    errno = last_errno; // Restore errno.
                     throw std::runtime_error(buf);
                 }
             }
             break;
         }
 
+        errno = last_errno; // Restore errno.
         return rc;
     }
 
