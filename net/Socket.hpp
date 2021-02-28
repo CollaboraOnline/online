@@ -1161,7 +1161,7 @@ protected:
         do
         {
             // If we have space for writing and that was requested
-            if ((events & POLLOUT) && _outBuffer.empty())
+            if ((events & POLLOUT) && (static_cast<int>(_outBuffer.size()) < getSendBufferSize()))
                 _socketHandler->performWrites();
 
             // perform the shutdown if we have sent everything.
