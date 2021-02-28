@@ -970,7 +970,6 @@ public:
         do
         {
             // Drain the read buffer.
-            // TODO: Cap the buffer size, lest we grow beyond control.
             do
             {
                 len = readData(buf, sizeof(buf));
@@ -983,6 +982,8 @@ public:
                 assert (len <= ssize_t(sizeof(buf)));
                 _bytesRecvd += len;
                 _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
+                if (_inBuffer.size() >= 512 * 1024)
+                    break; // Cap the buffer size, lest we grow beyond control.
             }
             // else poll will handle errors.
         }
