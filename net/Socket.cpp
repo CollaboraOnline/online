@@ -74,11 +74,11 @@ bool StreamSocket::simulateSocketError(bool)
 {
     if ((socketErrorCount++ % 7) == 0)
     {
+        LOG_DBG("Simulating socket error.");
         errno = EAGAIN;
         return true;
     }
 
-    LOG_DBG("Simulating socket error.");
     return false;
 }
 
@@ -87,11 +87,12 @@ bool SslStreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)
     {
+        LOG_DBG("Simulating socket error.");
         _sslWantsTo = read ? SslWantsTo::Read : SslWantsTo::Write;
+        errno = EAGAIN;
         return true;
     }
 
-    LOG_DBG("Simulating socket error.");
     return false;
 }
 #endif
