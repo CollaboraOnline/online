@@ -1,5 +1,8 @@
 /* global cy */
 
+// Search bar related helper methods for mobile.
+
+// Make the searchbar visible on the bottom toolbar.
 function showSearchBar() {
 	cy.get('#tb_editbar_item_showsearchbar')
 		.click();
@@ -20,6 +23,10 @@ function showSearchBar() {
 		.should('not.be.visible');
 }
 
+// Type some text into the search field, which will
+// trigger searching automatically.
+// Parameters:
+// text - the text to type in
 function tpyeIntoSearchField(text) {
 	cy.get('input#search-input')
 		.clear()
@@ -38,16 +45,20 @@ function tpyeIntoSearchField(text) {
 		.should('be.visible');
 }
 
+// Move to the next search result in the document.
 function searchNext() {
 	cy.get('#tb_searchbar_item_searchnext')
 		.click();
 }
 
+// Move to the previous search result in the document.
 function searchPrev() {
 	cy.get('#tb_searchbar_item_searchnext')
 		.click();
 }
 
+// Cancel search with the specified text.
+// This will remove the search string from the input field.
 function cancelSearch() {
 	cy.get('#tb_searchbar_item_cancelsearch')
 		.click();
@@ -65,6 +76,7 @@ function cancelSearch() {
 		.should('not.be.visible');
 }
 
+// Hide the searchbar from the bottom toolbar.
 function closeSearchBar() {
 	cy.get('#tb_searchbar_item_hidesearchbar')
 		.click();

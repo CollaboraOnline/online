@@ -13,8 +13,8 @@ PARALLEL_SCRIPT = $(abs_srcdir)/run_parallel.sh
 
 PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
 ERROR_LOG=$(abs_builddir)/workdir/error.log
-LOOLWSD_LOG=$(abs_builddir)/workdir/loolwsd.log
-LOOLWSD_OUTPUT=$(abs_builddir)/workdir/loolwsd_output.log
+LOOLWSD_LOG=$(abs_builddir)/cypress/wsd_logs/loolwsd.log
+LOOLWSD_OUTPUT=$(abs_builddir)/cypress/wsd_logs/loolwsd_output.log
 
 SUPPORT_FILE_ABS = $(abs_srcdir)/support/index.js
 SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(SUPPORT_FILE_ABS))
@@ -22,18 +22,18 @@ SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
 DESKTOP_DATA_FOLDER = $(abs_srcdir)/data/desktop/
-DESKTOP_WORKDIR = $(abs_builddir)/workdir/desktop/
+DESKTOP_DATA_WORKDIR = $(abs_builddir)/workdir/data/desktop/
 DESKTOP_TRACK_FOLDER=$(abs_builddir)/workdir/track/desktop
 
 MOBILE_USER_AGENT = "cypress-mobile"
 MOBILE_TEST_FOLDER = $(abs_srcdir)/integration_tests/mobile
 MOBILE_DATA_FOLDER = $(abs_srcdir)/data/mobile/
-MOBILE_WORKDIR = $(abs_builddir)/workdir/mobile/
+MOBILE_DATA_WORKDIR = $(abs_builddir)/workdir/data/mobile/
 MOBILE_TRACK_FOLDER=$(abs_builddir)/workdir/track/mobile
 
 MULTIUSER_TEST_FOLDER = $(abs_srcdir)/integration_tests/multiuser
 MULTIUSER_DATA_FOLDER = $(abs_srcdir)/data/multiuser/
-MULTIUSER_WORKDIR = $(abs_builddir)/workdir/multiuser/
+MULTIUSER_DATA_WORKDIR = $(abs_builddir)/workdir/data/multiuser/
 MULTIUSER_TRACK_FOLDER=$(abs_builddir)/workdir/track/multiuser
 
 ALLOWED_PORTS = $(shell seq 9900 1 9980)
@@ -138,6 +138,7 @@ define start_loolwsd
 	@echo "Launching loolwsd..."
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@echo
+	@mkdir -p $(dir $(LOOLWSD_OUTPUT))
 	../loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			--disable-ssl \
@@ -163,8 +164,6 @@ endef
 
 define cleanup_before_run
 	@rm -f $(ERROR_LOG)
-	@rm -f $(LOOLWSD_LOG)
-	@rm -f $(LOOLWSD_OUTPUT)
 	@rm -f $(PID_FILE)
 	@rm -rf cypress
 endef
@@ -212,7 +211,7 @@ MOBILE_CONFIG = \
 	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
 
 MOBILE_ENV = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MOBILE_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run one mobile test / all mobile tests in interactive test runner.
 # Parameters:
@@ -221,7 +220,8 @@ define run_interactive_mobile
 	@echo "Open cypress with mobile tests..."
 	@echo
 	$(if $(1),\
-		$(eval SPEC_FILE=$(abs_dir)/integration_tests/mobile/$(1))\
+		$(eval SPEC_FILE=$(MOBILE_TEST_FOLDER)/$(1))\
+		$(call check_spec_existence,$(1),mobile)\
 		$(call run_interactive_single,$(MOBILE_CONFIG),$(MOBILE_ENV),$(SPEC_FILE))\
 	,\
 		$(call run_interactive_all,$(MOBILE_CONFIG),$(MOBILE_ENV))\
@@ -241,7 +241,8 @@ define run_mobile_tests
 		@$(call run_test_parallel,\
 			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(1),mobile,$(2))\
 	,\
-		$(eval SPEC_FILE=$(if $(1),$(abs_dir)/integration_tests/mobile/$(1)))\
+		$(eval SPEC_FILE=$(if $(1),$(MOBILE_TEST_FOLDER)/$(1)))\
+		$(call check_spec_existence,$(1),mobile)\
 		$(call run_test_headless,\
 			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
@@ -269,7 +270,7 @@ DESKTOP_CONFIG = \
 	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 DESKTOP_ENV = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(DESKTOP_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run one desktop test / all desktop tests in interactive test runner.
 # Parameters:
@@ -277,8 +278,9 @@ DESKTOP_ENV = \
 define run_interactive_desktop
 	@echo "Open cypress with desktop tests..."
 	@echo
-	$(eval SPEC_FILE=$(abs_dir)/integration_tests/desktop/$(1))
 	$(if $(1),\
+		$(eval SPEC_FILE=$(DESKTOP_TEST_FOLDER)/$(1))\
+		$(call check_spec_existence,$(1),desktop)\
 		$(call run_interactive_single,$(DESKTOP_CONFIG),$(DESKTOP_ENV),$(SPEC_FILE))\
 	,\
 		$(call run_interactive_all,$(DESKTOP_CONFIG),$(DESKTOP_ENV))\
@@ -298,7 +300,8 @@ define run_desktop_tests
 		@$(call run_test_parallel,\
 			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(1),desktop,$(2))\
 	,\
-		$(eval SPEC_FILE=$(if $(1),$(abs_dir)/integration_tests/desktop/$(1)))\
+		$(eval SPEC_FILE=$(if $(1),$(DESKTOP_TEST_FOLDER)/$(1)))\
+		$(call check_spec_existence,$(1),desktop)\
 		$(call run_test_headless,\
 			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
@@ -330,6 +333,7 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Running multi-user test in interactive test runner..."
 	@echo
+	$(call check_spec_existence,$(spec),multi)\
 	$(if $(filter 1,$(user)), \
 		$(eval BACKGROUND_USER_SPEC=$(spec)_user2_spec.js), \
 		$(eval BACKGROUND_USER_SPEC=$(spec)_user1_spec.js))
@@ -337,7 +341,7 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 		$(eval INTERACTIVE_USER_SPEC=$(spec)_user1_spec.js), \
 		$(eval INTERACTIVE_USER_SPEC=$(spec)_user2_spec.js))
 	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
-	$(eval INTERACTIVE_USER_SPEC=$(abs_dir)/integration_tests/multiuser/$(INTERACTIVE_USER_SPEC))
+	$(eval INTERACTIVE_USER_SPEC=$(MULTIUSER_TEST_FOLDER)/$(INTERACTIVE_USER_SPEC))
 	@$(call run_test_parallel,\
 		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) &
 	@sleep 5
@@ -349,7 +353,7 @@ MULTIUSER_CONFIG = \
 	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 MULTIUSER_ENV = \
-	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all multi-user tests in headless mode.
 # Parameters:
@@ -363,6 +367,7 @@ endef
 # 1 - test name:	test name to run. This test name means to test files (user1, user2).
 # 2 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
 define run_multiuser_test
+	$(call check_spec_existence,$(1),multi)
 	$(eval USER1_SPEC=$(strip $(1))_user1_spec.js)
 	$(eval USER2_SPEC=$(strip $(1))_user2_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
@@ -404,27 +409,28 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Running interfer mobile test in interactive test runner..."
 	@echo
-	$(eval USER1_SPEC=$(abs_dir)/integration_tests/mobile/$(spec))
+	$(call check_spec_existence,$(spec),mobile)
+	$(eval USER1_SPEC=$(MOBILE_TEST_FOLDER)/$(spec))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	$(call run_interactive_single,\
 		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC)) &
 	@sleep 5
 	@$(call run_test_parallel,\
-		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) || true
+		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) || true
 	@$(KILL_COMMAND) || true
 
 INTERFER_MOBILE_CONFIG1 = \
-	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
+	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_MOBILE_ENV1 = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_MOBILE_CONFIG2 = \
 	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_MOBILE_ENV2 = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all mobile interference tests in headless mode.
 define run_mobile_interference_tests
@@ -437,15 +443,16 @@ endef
 define run_mobile_interference_test
 	@echo "Running cypress mobile interference test: $(1)"
 	@echo
+	$(call check_spec_existence,$(1),mobile)
 	$(eval USER1_SPEC=$(1))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@$(call run_test_parallel,\
-		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC),mobile,$(USER1_LOG)) & \
+		$(INTERFER_MOBILE_CONFIG1),$(INTERFER_MOBILE_ENV1),$(USER1_SPEC),interfer-mobile,$(USER1_LOG)) & \
 	sleep 5 && \
 	$(call run_test_parallel,\
-		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
+		$(INTERFER_MOBILE_CONFIG2),$(INTERFER_MOBILE_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
 
@@ -475,27 +482,28 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@echo
 	@echo "Running interfer desktop test in interactive test runner..."
 	@echo
-	$(eval USER1_SPEC=$(abs_dir)/integration_tests/desktop/$(spec))
+	$(call check_spec_existence,$(spec),desktop)
+	$(eval USER1_SPEC=$(DESKTOP_TEST_FOLDER)/$(spec))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	$(call run_interactive_single,\
 		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC)) &
 	@sleep 5
 	@$(call run_test_parallel,\
-		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) || true
+		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) || true
 	@$(KILL_COMMAND) || true
 
 INTERFER_DESKTOP_CONFIG1 = \
-	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
+	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_DESKTOP_ENV1 = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_DESKTOP_CONFIG2 = \
 	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_DESKTOP_ENV2 = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),WORKDIR=$(MULTIUSER_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all desktop interference test in headless mode.
 define run_desktop_interference_tests
@@ -508,15 +516,16 @@ endef
 define run_desktop_interference_test
 	@echo "Running cypress desktop interference test: $(1)"
 	@echo
+	$(call check_spec_existence,$(1),desktop)
 	$(eval USER1_SPEC=$(1))
 	$(eval USER2_SPEC=interference_user_spec.js)
 	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
 	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@$(call run_test_parallel,\
-		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC),desktop,$(USER1_LOG)) & \
+		$(INTERFER_DESKTOP_CONFIG1),$(INTERFER_DESKTOP_ENV1),$(USER1_SPEC),interfer-desktop,$(USER1_LOG)) & \
 	sleep 5 && \
 	$(call run_test_parallel,\
-		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
+		$(INTERFER_DESKTOP_CONFIG2),$(INTERFER_DESKTOP_ENV2),$(USER2_SPEC),interfer,$(USER2_LOG)) && \
 	wait # waits the background process to be finished
 endef
 
@@ -572,7 +581,7 @@ define run_interactive_single
 	$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
 		--headed --no-exit \
-		--config $(1) \
+		--config $(1),retries=0 \
 		--env $(2) \
 		--spec=$(3)
 endef
@@ -609,6 +618,20 @@ define run_test_headless
 		--env $(2) \
 		--spec=$(3) \
 		|| ($(KILL_COMMAND) && false)
+endef
+
+# Checks whether the given spec file exists.
+# We run this check when the spec file was specified by
+# the user so we can give clearer error message.
+#
+# Parameters:
+# 1 - spec:	      test file path (e.g. make check-mobile spec=...)
+# 2 - test type:      mobile, desktop or multi test.
+define check_spec_exisetnce
+	$(eval TEST_FILES=$(if $(filter mobile,$(2)),$(MOBILE_TEST_FILES),\
+				$(if $(filter desktop,$(2)),$(DESKTOP_TEST_FILES),$(MULTIUSER_TESTS))))
+	$(if $(filter $(1),$(TEST_FILES)),,$(error CypressError: Can't find the given spec file!))
+
 endef
 
 else

@@ -2,34 +2,39 @@
 
 var mobileWizardIdleTime = 1250;
 
-function loadTestDocLocal(fileName, subFolder, noFileCopy) {
+// Loading the test document directly in Collabora Online.
+// Parameters:
+// fileName - test document file name (without path)
+// subFolder - sub folder inside data folder (e.g. writer, calc, impress)
+// noFileCopy - whether to create a copy of the test file before run the test.
+//              By default, we create a copy to have a clear test document
+//              but when we open the same document with another user (multi-user tests),
+//              then we intend to open the same document without modification.
+function loadTestDocNoIntegration(fileName, subFolder, noFileCopy) {
 	cy.log('Loading test document with a local build - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - noFileCopy: ' + noFileCopy);
 
-	// Get a clean test document
+	// Get a clean test document, by creating a copy of it in the workdir
+	// We overwrite this copy everytime we run a new test case.
 	if (noFileCopy !== true) {
 		if (subFolder === undefined) {
 			cy.task('copyFile', {
 				sourceDir: Cypress.env('DATA_FOLDER'),
-				destDir: Cypress.env('WORKDIR'),
+				destDir: Cypress.env('DATA_WORKDIR'),
 				fileName: fileName,
 			});
 		} else {
 			cy.task('copyFile', {
 				sourceDir: Cypress.env('DATA_FOLDER') + subFolder + '/',
-				destDir: Cypress.env('WORKDIR') + subFolder + '/',
+				destDir: Cypress.env('DATA_WORKDIR') + subFolder + '/',
 				fileName: fileName,
 			});
 		}
 	}
 
-	doIfOnMobile(function() {
-		cy.viewport('iphone-6');
-	});
-
-	// Open test document
+	// We generate the URI of the document.
 	var URI = 'http://localhost';
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
 		URI += '/richproxy/proxy.php?req=';
@@ -41,12 +46,12 @@ function loadTestDocLocal(fileName, subFolder, noFileCopy) {
 		URI += '/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/loleaflet.html?lang=en-US&file_path=file://' +
-			Cypress.env('WORKDIR') + fileName;
+			Cypress.env('DATA_WORKDIR') + fileName;
 	} else {
 		URI += '/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/loleaflet.html?lang=en-US&file_path=file://' +
-			Cypress.env('WORKDIR') + subFolder + '/' + fileName;
+			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
 	}
 
 	cy.log('Loading: ' + URI);
@@ -58,6 +63,13 @@ function loadTestDocLocal(fileName, subFolder, noFileCopy) {
 	cy.log('Loading test document with a local build - end.');
 }
 
+// Loading the test document inside a Nextcloud integration.
+// Parameters:
+// fileName - test document file name (without path)
+// subFolder - sub folder inside data folder (e.g. writer, calc, impress)
+// subsequentLoad - whether we load a test document for the first time in the
+//                  test case or not. It's important because we need to sign in
+//                  with the username + password only for the first time.
 function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Loading test document with nextcloud - start.');
 	cy.log('Param - fileName: ' + fileName);
@@ -69,7 +81,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 		return false;
 	});
 
-	loadFileToNextCloud(fileName, subFolder, subsequentLoad);
+	upLoadFileToNextCloud(fileName, subFolder, subsequentLoad);
 
 	// Open test document
 	cy.get('tr[data-file=\'' + fileName + '\']')
@@ -80,6 +92,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 
 	cy.wait(10000);
 
+	// We create global aliases for iframes, so it's faster to reach them.
 	cy.get('iframe#richdocumentsframe')
 		.its('0.contentDocument').should('exist')
 		.its('body').should('not.be.undefined')
@@ -91,6 +104,10 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 		.its('body').should('not.be.undefined')
 		.then(cy.wrap).as('loleafletIFrameGlobal');
 
+	// Let's overwrite get() and contains() methods, because they don't work
+	// inside iframes. We need to find the iframes first and find the related
+	// DOM elements under them.
+	// https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
 	var getIframeBody = function(level) {
 		if (level === 1) {
 			return cy.get('@richdocumentsIFrameGlobal');
@@ -98,11 +115,6 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			return cy.get('@loleafletIFrameGlobal');
 		}
 	};
-
-	cy.get('iframe#richdocumentsframe')
-		.then(function() {
-			Cypress.env('IFRAME_LEVEL', '2');
-		});
 
 	Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
 		var iFrameLevel = Cypress.env('IFRAME_LEVEL');
@@ -122,10 +134,19 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			return originalFn(selector, content, options);
 	});
 
+	// The IFRAME_LEVEL environment variable will indicate
+	// in which iframe we have.
+	cy.get('iframe#richdocumentsframe')
+		.then(function() {
+			Cypress.env('IFRAME_LEVEL', '2');
+		});
 
 	cy.log('Loading test document with nextcloud - end.');
 }
 
+// Hide NC's first run wizard, which is opened by the first run of
+// nextcloud. When we run cypress in headless mode, NC don't detect
+// that we already used it and so it always opens this wizard.
 function hideNCFirstRunWizard() {
 	// Hide first run wizard if it's there
 	cy.wait(2000); // Wait some time to the wizard become visible, if it's there.
@@ -140,8 +161,15 @@ function hideNCFirstRunWizard() {
 		});
 }
 
-function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
-	cy.log('Loading test document with nextcloud - start.');
+// Upload a test document into Nexcloud and open it.
+// Parameters:
+// fileName - test document file name (without path)
+// subFolder - sub folder inside data folder (e.g. writer, calc, impress)
+// subsequentLoad - whether we load a test document for the first time in the
+//                  test case or not. It's important because we need to sign in
+//                  with the username + password only for the first time.
+function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
+	cy.log('Uploading test document into nextcloud - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - subsequentLoad: ' + subsequentLoad);
@@ -149,7 +177,7 @@ function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 	// Open local nextcloud installation
 	cy.visit('http://localhost/nextcloud/index.php/apps/files');
 
-	// Log in with cypress test user / password
+	// Log in with cypress test user / password (if this is the first time)
 	if (subsequentLoad !== true) {
 		cy.get('input#user')
 			.clear()
@@ -171,6 +199,8 @@ function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 
 		hideNCFirstRunWizard();
 
+		// Remove all existing file, so we make sure the test document is removed
+		// and then we can upload a new one.
 		cy.get('#fileList')
 			.then(function(filelist) {
 				if (filelist.find('tr').length !== 0) {
@@ -223,22 +253,40 @@ function loadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 
 	cy.get('tr[data-file=\'' + fileName + '\']')
 		.should('be.visible');
+
+	cy.log('Uploading test document into nextcloud - end.');
 }
 
+// Used for interference testing. We wait until the interfering user loads
+// its instance of the document and starts its interfering actions.
+// So we can be sure the interference actions are made during the test
+// user does the actual test steps.
 function waitForInterferingUser() {
 	cy.get('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 		.should('be.visible');
 
-	// Make sure that the interfering user is loaded, before we start the actual test.
 	cy.wait(10000);
 }
 
+// Loading the test document inside Collabora Online (directly or via some integration).
+// Parameters:
+// fileName - test document file name (without path)
+// subFolder - sub folder inside data folder (e.g. writer, calc, impress)
+// noFileCopy - whether to create a copy of the test file before run the test.
+//              By default, we create a copy to have a clear test document
+//              but when we open the same document with another user (multi-user tests),
+//              then we intend to open the same document without modification.
+// subsequentLoad - whether we load a test document for the first time in the
+//                  test case or not. It's important for nextcloud because we need to sign in
+//                  with the username + password only for the first time.
 function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - noFileCopy: ' + noFileCopy);
+	cy.log('Param - subsequentLoad: ' + noFileCopy);
 
+	// We set the mobile screen size here. We could use any other phone type here.
 	doIfOnMobile(function() {
 		cy.viewport('iphone-6');
 	});
@@ -246,16 +294,16 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		loadTestDocNextcloud(fileName, subFolder, subsequentLoad);
 	} else {
-		loadTestDocLocal(fileName, subFolder, noFileCopy);
+		loadTestDocNoIntegration(fileName, subFolder, noFileCopy);
 	}
 
 	// Wait for the document to fully load
 	cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
 	// Wait until anything is drawn on tile canvas.
-	canvasShouldBeFullWhiteOrNot('.leaflet-canvas-container canvas', false);
+	canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
 
-	// The client is irresponsive for some seconds after load, because of the incoming messages.
+	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
 		cy.wait(10000);
 	}
@@ -275,6 +323,11 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 							expect(doc[0].getBoundingClientRect().right).to.be.lessThan(win.innerWidth * 0.95);
 						});
 				});
+
+			// Check also that the inputbar is drawn in Calc.
+			doIfInCalc(function() {
+				canvasShouldNotBeFullWhite('#calc-inputbar .inputbar_canvas');
+			});
 		});
 	}
 
@@ -297,10 +350,9 @@ function assertHaveKeyboardInput() {
 		.should('have.attr', 'data-accept-input', 'true');
 }
 
-// Assert that we have cursor and focus.
+// Assert that we have cursor and focus on the text area of the document.
 function assertCursorAndFocus() {
-	cy.log('Verifying Cursor and Focus.');
-
+	cy.log('Verifying Cursor and Focus - start');
 
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		// Active element must be the textarea named clipboard.
@@ -316,40 +368,40 @@ function assertCursorAndFocus() {
 
 	assertHaveKeyboardInput();
 
-	cy.log('Cursor and Focus verified.');
+	cy.log('Verifying Cursor and Focus - end');
 }
 
 // Select all text via CTRL+A shortcut.
-function selectAllText(assertFocus = true) {
-	if (assertFocus)
-		assertCursorAndFocus();
+function selectAllText() {
+	cy.log('Select all text - start');
 
-	cy.log('Select all text');
-
-	// Trigger select all
 	typeIntoDocument('{ctrl}a');
 
 	textSelectionShouldExist();
+
+	cy.log('Select all text - end');
 }
 
 // Clear all text by selecting all and deleting.
 function clearAllText() {
+	cy.log('Clear all text - start');
+
 	assertCursorAndFocus();
 
-	cy.log('Clear all text');
-
 	// Trigger select all
-	typeIntoDocument('{ctrl}a');
-
-	textSelectionShouldExist();
+	selectAllText();
 
 	// Then remove
 	typeIntoDocument('{del}');
 
 	textSelectionShouldNotExist();
+
+	cy.log('Clear all text - end');
 }
 
 // Check that the clipboard text matches with the specified text.
+// Parameters:
+// expectedPlainText - a string, the clipboard container should have.
 function expectTextForClipboard(expectedPlainText) {
 	doIfInWriter(function() {
 		cy.get('#copy-paste-container p')
@@ -375,6 +427,9 @@ function expectTextForClipboard(expectedPlainText) {
 
 // Check that the clipboard text matches with the
 // passed regular expression.
+// Parameters:
+// regexp - a regular expression to match the content with.
+//          https://docs.cypress.io/api/commands/contains.html#Regular-Expression
 function matchClipboardText(regexp) {
 	doIfInWriter(function() {
 		cy.contains('#copy-paste-container p font', regexp)
@@ -394,6 +449,12 @@ function beforeAll(fileName, subFolder, noFileCopy, subsequentLoad) {
 	loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad);
 }
 
+// This method is intended to call after each test case.
+// We use this method to close the document, before step
+// on to the next test case.
+// Parameters:
+// fileName - test document name (we can check it on the admin console).
+// testState - whether the test passed or failed before this method was called.
 function afterAll(fileName, testState) {
 	cy.log('Waiting for closing the document - start.');
 
@@ -404,7 +465,7 @@ function afterAll(fileName, testState) {
 		}
 
 		if (Cypress.env('IFRAME_LEVEL') === '2') {
-			// Close the document
+			// Close the document, with the close button.
 			doIfOnMobile(function() {
 				cy.get('#tb_actionbar_item_closemobile')
 					.click();
@@ -447,11 +508,19 @@ function afterAll(fileName, testState) {
 				.should('not.exist');
 
 		}
+	// For php-proxy admin console does not work, so we just open
+	// localhost and wait some time for the test document to be closed.
 	} else if (Cypress.env('INTEGRATION') === 'php-proxy') {
 		cy.visit('http://localhost/', {failOnStatusCode: false});
 
 		cy.wait(5000);
 	} else {
+		if (Cypress.env('INTERFERENCE_TEST') === true) {
+			typeIntoDocument('{ctrl}s');
+
+			cy.wait(2000);
+		}
+
 		// Make sure that the document is closed
 		cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +
@@ -479,7 +548,11 @@ function afterAll(fileName, testState) {
 	cy.log('Waiting for closing the document - end.');
 }
 
-
+// Initialize an alias to a negative number value. It can be useful
+// when we use an alias as a variable and later we intend to set it
+// to a non-negative value.
+// Parameters:
+// aliasName - a string, expected to be used as alias.
 function initAliasToNegative(aliasName) {
 	cy.log('Initializing alias to a negative value - start.');
 	cy.log('Param - aliasName: ' + aliasName);
@@ -495,6 +568,11 @@ function initAliasToNegative(aliasName) {
 	cy.log('Initializing alias to a negative value - end.');
 }
 
+// Initialize an alias to an empty string. It can be useful
+// when we use an alias as a variable and later we intend to
+// set it to a non-empty string.
+// Parameters:
+// aliasName - a string, expected to be used as alias.
 function initAliasToEmptyString(aliasName) {
 	cy.log('Initializing alias to empty string - start.');
 	cy.log('Param - aliasName: ' + aliasName);
@@ -511,6 +589,7 @@ function initAliasToEmptyString(aliasName) {
 	cy.log('Initializing alias to empty string - end.');
 }
 
+// Run a code snippet if we are inside Calc.
 function doIfInCalc(callback) {
 	cy.get('#document-container')
 		.then(function(doc) {
@@ -520,6 +599,7 @@ function doIfInCalc(callback) {
 		});
 }
 
+// Run a code snippet if we are *NOT* inside Calc.
 function doIfNotInCalc(callback) {
 	cy.get('#document-container')
 		.then(function(doc) {
@@ -529,6 +609,7 @@ function doIfNotInCalc(callback) {
 		});
 }
 
+// Run a code snippet if we are inside Impress.
 function doIfInImpress(callback) {
 	cy.get('#document-container')
 		.then(function(doc) {
@@ -537,6 +618,8 @@ function doIfInImpress(callback) {
 			}
 		});
 }
+
+// Run a code snippet if we are *NOT* inside Impress.
 function doIfNotInImpress(callback) {
 	cy.get('#document-container')
 		.then(function(doc) {
@@ -546,6 +629,7 @@ function doIfNotInImpress(callback) {
 		});
 }
 
+// Run a code snippet if we are inside Writer.
 function doIfInWriter(callback) {
 	cy.get('#document-container')
 		.then(function(doc) {
@@ -555,6 +639,7 @@ function doIfInWriter(callback) {
 		});
 }
 
+// Run a code snippet if we are *NOT* inside Writer.
 function doIfNotInWriter(callback) {
 	cy.get('#document-container')
 		.then(function(doc) {
@@ -567,6 +652,10 @@ function doIfNotInWriter(callback) {
 // Types text into elem with a delay in between characters.
 // Sometimes cy.type results in random character insertion,
 // this avoids that, which is not clear why it happens.
+// Parameters:
+// selector - a CSS selector to query a DOM element to type in.
+// text - a text, what we'll type char-by-char.
+// delayMs - delay in ms between the characters.
 function typeText(selector, text, delayMs=0) {
 	for (var i = 0; i < text.length; i++) {
 		cy.get(selector)
@@ -576,19 +665,18 @@ function typeText(selector, text, delayMs=0) {
 	}
 }
 
-function getLOVersion() {
-	var versionString = Cypress.env('LO_CORE_VERSION');
-	if (versionString.includes('Collabora')) {
-		if (versionString.includes('_6.2.')) {
-			return 'cp-6-2';
-		} else if (versionString.includes('_6.4.')) {
-			return 'cp-6-4';
-		}
-	}
-	return 'master';
-}
+// Check whether an img DOM element has only white colored pixels or not.
+// Parameters:
+// selector - a CSS selector to query the img DOM element.
+// fullWhite - this specifies what we expect here, that the image is full white
+//             or on the contrary.
+function imageShouldNotBeFullWhiteOrNot(selector, fullWhite = true) {
+	cy.log('Check whether an image is full white or not - start.');
+	cy.log('Param - selector: ' + selector);
+	cy.log('Param - fullWhite: ' + fullWhite);
 
-function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
+	expect(selector).to.have.string('img');
+
 	cy.get(selector)
 		.should(function(images) {
 			var img = images[0];
@@ -615,9 +703,32 @@ function imageShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 			else
 				expect(allIsWhite).to.be.false;
 		});
+
+	cy.log('Check whether an image is full white or not - end.');
 }
 
+// Check whether an img DOM element consist of only white pixels.
+function imageShouldBeFullWhite(selector) {
+	imageShouldNotBeFullWhiteOrNot(selector, true);
+}
+
+// Check whether an img DOM element has any non-white pixels.
+function imageShouldNotBeFullWhite(selector) {
+	imageShouldNotBeFullWhiteOrNot(selector, false);
+}
+
+// Check whether a canvas DOM element has only white colored pixels or not.
+// Parameters:
+// selector - a CSS selector to query the canvas DOM element.
+// fullWhite - this specifies what we expect here, that the canvas is full white
+//             or on the contrary.
 function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
+	cy.log('Check whether a canvas is full white or not - start.');
+	cy.log('Param - selector: ' + selector);
+	cy.log('Param - fullWhite: ' + fullWhite);
+
+	expect(selector).to.have.string('canvas');
+
 	cy.get(selector)
 		.should(function(canvas) {
 			var context = canvas[0].getContext('2d');
@@ -632,8 +743,28 @@ function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
 			else
 				expect(allIsWhite).to.be.false;
 		});
+
+	cy.log('Check whether a canvas is full white or not - end.');
 }
 
+// Check whether a canvas DOM element consist of only white pixels.
+function canvasShouldBeFullWhite(selector) {
+	canvasShouldBeFullWhiteOrNot(selector, true);
+}
+
+// Check whether a canvas DOM element has any non-white pixels.
+function canvasShouldNotBeFullWhite(selector) {
+	canvasShouldBeFullWhiteOrNot(selector, false);
+}
+
+// Waits until a DOM element becomes idle (does not change for a given time).
+// It's useful to handle flickering on the UI, which might make cypress
+// tests unstable. If the UI flickers, we can use this method to wait
+// until it settles and the move on with the test.
+// Parameters:
+// selector - a CSS selector to query a DOM element to wait on to be idle.
+// content - a string, a content selector used by cy.contains() to select the correct DOM element.
+// waitingTime - how much time to wait before we say the item is idle.
 function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Waiting item to be idle - start.');
 	cy.log('Param - selector: ' + selector);
@@ -641,9 +772,12 @@ function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Param - waitingTime: ' + waitingTime);
 
 	var item;
+	// We check every 'waitOnce' time whether we are idle.
 	var waitOnce = 250;
+	// 'idleSince' variable counts the idle time so far.
 	var idleSince = 0;
 	if (content) {
+		// We get the initial DOM item first.
 		cy.contains(selector, content, { log: false })
 			.then(function(itemToIdle) {
 				item = itemToIdle;
@@ -655,7 +789,7 @@ function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 			return cy.contains(selector, content, { log: false })
 				.then(function(itemToIdle) {
 					if (Cypress.dom.isDetached(item[0])) {
-						cy.log('Item is detached after ' + (idleSince + waitOnce).toString() + ' ms.');
+						cy.log('Item was detached after ' + (idleSince + waitOnce).toString() + ' ms.');
 						item = itemToIdle;
 						idleSince = 0;
 					} else {
@@ -665,6 +799,7 @@ function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 				});
 		});
 	} else {
+		// We get the initial DOM item first.
 		cy.get(selector, { log: false })
 			.then(function(itemToIdle) {
 				item = itemToIdle;
@@ -676,7 +811,7 @@ function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 			return cy.get(selector, { log: false })
 				.then(function(itemToIdle) {
 					if (Cypress.dom.isDetached(item[0])) {
-						cy.log('Item is detached after ' + (idleSince + waitOnce).toString() + ' ms.');
+						cy.log('Item was detached after ' + (idleSince + waitOnce).toString() + ' ms.');
 						item = itemToIdle;
 						idleSince = 0;
 					} else {
@@ -690,19 +825,24 @@ function waitUntilIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Waiting item to be idle - end.');
 }
 
-// This is a workaround for avoid 'item detached from DOM'
+// Waits for the DOM element to be idle and clicks on it afterward.
+// This is a workaround to avoid 'item detached from DOM'
 // failures caused by GUI flickering.
 // GUI flickering might mean bad design, but
 // until it's fixed we can use this method.
 // Known GUI flickering:
 // * mobile wizard
-// IMPORTANT: don't use this if there is no
-// flickering. Use simple click() instead. This method
-// is much slower.
+// IMPORTANT: don't use this if there is no flickering.
+// Use simple click() instead. This method is much slower.
+// Parameters:
+// selector - a CSS selector to query a DOM element to wait on to be idle.
+// content - a string, a content selector used by cy.contains() to select the correct DOM element.
+// waitingTime - how much time to wait before we say the item is idle.
 function clickOnIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Clicking on item when idle - start.');
 
 	waitUntilIdle(selector, content, waitingTime);
+
 	if (content) {
 		cy.contains(selector, content)
 			.click();
@@ -714,7 +854,12 @@ function clickOnIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	cy.log('Clicking on item when idle - end.');
 }
 
-// See comments at clickOnIdle() method.
+// Waits for the DOM element to be idle and types into it afterward.
+// See also the comments at clickOnIdle() method.
+// Parameters:
+// selector - a CSS selector to query a DOM element to wait on to be idle.
+// input - text to be typed into the selected DOM element.
+// waitingTime - how much time to wait before we say the item is idle.
 function inputOnIdle(selector, input, waitingTime = mobileWizardIdleTime) {
 	cy.log('Type into an input item when idle - start.');
 
@@ -728,6 +873,7 @@ function inputOnIdle(selector, input, waitingTime = mobileWizardIdleTime) {
 	cy.log('Type into an input item when idle - end.');
 }
 
+// Run a code snippet if we are in a mobile test.
 function doIfOnMobile(callback) {
 	cy.window()
 		.then(function(win) {
@@ -737,6 +883,7 @@ function doIfOnMobile(callback) {
 		});
 }
 
+// Run a code snippet if we are in a desktop test.
 function doIfOnDesktop(callback) {
 	cy.window()
 		.then(function(win) {
@@ -746,24 +893,36 @@ function doIfOnDesktop(callback) {
 		});
 }
 
-function moveCursor(direction, modifier, checkCursorVis = true) {
+// Move the cursor in the given direction and wait until it moves.
+// Parameters:
+// direction - the direction the cursor should be moved.
+//			   possible valude: up, down, left, right, home, end
+// modifier - a modifier to the cursor movement keys (e.g. 'shift' or 'ctrl').
+// checkCursorVis - whether to check the cursor visibility after movement.
+// cursorSelector - selector for the cursor DOM element (document cursor is the default).
+function moveCursor(direction, modifier,
+	checkCursorVis = true,
+	cursorSelector = '.leaflet-overlay-pane .blinking-cursor') {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
 	cy.log('Param - modifier: ' + modifier);
 	cy.log('Param - checkCursorVis: ' + checkCursorVis);
+	cy.log('Param - cursorSelector: ' + cursorSelector);
 
+	// Get the original cursor position.
 	if (direction === 'up' ||
 		direction === 'down' ||
 		(direction === 'home' && modifier === 'ctrl') ||
 		(direction === 'end' && modifier === 'ctrl')) {
-		getCursorPos('top', 'origCursorPos');
+		getCursorPos('top', 'origCursorPos', cursorSelector);
 	} else if (direction === 'left' ||
 		direction === 'right' ||
 		direction === 'home' ||
 		direction === 'end') {
-		getCursorPos('left', 'origCursorPos');
+		getCursorPos('left', 'origCursorPos', cursorSelector);
 	}
 
+	// Move the cursor using keyboard input.
 	var key = '';
 	if (modifier === 'ctrl') {
 		key = '{ctrl}';
@@ -787,9 +946,10 @@ function moveCursor(direction, modifier, checkCursorVis = true) {
 
 	typeIntoDocument(key);
 
+	// Make sure the cursor position was changed.
 	cy.get('@origCursorPos')
 		.then(function(origCursorPos) {
-			cy.get('.blinking-cursor')
+			cy.get(cursorSelector)
 				.should(function(cursor) {
 					if (direction === 'up' ||
 						direction === 'down' ||
@@ -805,14 +965,16 @@ function moveCursor(direction, modifier, checkCursorVis = true) {
 				});
 		});
 
+	// Cursor should be visible after move, because the view always follows it.
 	if (checkCursorVis === true) {
-		cy.get('.blinking-cursor')
+		cy.get(cursorSelector)
 			.should('be.visible');
 	}
 
 	cy.log('Moving text cursor - end.');
 }
 
+// Type something into the document. It can be some text or special characters too.
 function typeIntoDocument(text) {
 	cy.log('Typing into document - start.');
 
@@ -822,29 +984,24 @@ function typeIntoDocument(text) {
 	cy.log('Typing into document - end.');
 }
 
-function getCursorPos(offsetProperty, aliasName) {
+// Get cursor's current position.
+// Parameters:
+// offsetProperty - which offset position we need (e.g. 'left' or 'top').
+// aliasName - we create an alias with the queried position.
+// cursorSelector - selector to find the correct cursor element in the DOM.
+function getCursorPos(offsetProperty, aliasName, cursorSelector = '.leaflet-overlay-pane .blinking-cursor') {
 	initAliasToNegative(aliasName);
 
-	cy.get('.leaflet-pane')
-		.then(function(pane) {
-			// We try document's blinking cursor first if exists.
-			if (pane.find('.blinking-cursor').length !== 0) {
-				cy.get('.leaflet-pane .blinking-cursor')
-					.invoke('offset')
-					.its(offsetProperty)
-					.as(aliasName);
-			} else {
-				cy.get('.blinking-cursor')
-					.invoke('offset')
-					.its(offsetProperty)
-					.as(aliasName);
-			}
-		});
+	cy.get(cursorSelector)
+		.invoke('offset')
+		.its(offsetProperty)
+		.as(aliasName);
 
 	cy.get('@' + aliasName)
 		.should('be.greaterThan', 0);
 }
 
+// We make sure we have a text selection..
 function textSelectionShouldExist() {
 	cy.log('Make sure text selection exists - start.');
 
@@ -861,6 +1018,7 @@ function textSelectionShouldExist() {
 	cy.log('Make sure text selection exists - end.');
 }
 
+// We make sure we don't have a text selection..
 function textSelectionShouldNotExist() {
 	cy.log('Make sure there is no text selection - start.');
 
@@ -871,6 +1029,69 @@ function textSelectionShouldNotExist() {
 		.should('not.exist');
 
 	cy.log('Make sure there is no text selection - end.');
+}
+
+// Used to represent the bounds of overlays like cell-cursor, document selections etc.
+class Bounds {
+	constructor(top, left, width, height) {
+		this.set(top, left, width, height);
+	}
+
+	set(top, left, width, height) {
+		this.top = top;
+		this.left = left;
+		this.width = width;
+		this.height = height;
+	}
+
+	isValid() {
+		return (this.top !== undefined
+			&& this.left !== undefined
+			&& this.width !== undefined
+			&& this.height !== undefined);
+	}
+
+	static parseBoundsJson(boundsJsonString) {
+		var jsonObject = JSON.parse(boundsJsonString);
+		return new Bounds(jsonObject.top, jsonObject.left, jsonObject.width, jsonObject.height);
+	}
+
+	parseSetJson(boundsJsonString) {
+		var jsonObject = JSON.parse(boundsJsonString);
+		this.set(jsonObject.top, jsonObject.left, jsonObject.width, jsonObject.height);
+	}
+
+	toString() {
+		return '{ "top": ' + this.top + ', "left": ' + this.left
+			+ ', "width": ' + this.width + ', "height": ' + this.height + ' }';
+	}
+}
+
+// Used to get the bounds of overlay items from the JSON text inside its
+// test div element.
+// Parameters:
+// itemDivId - The id of the test div element corresponding to the overlay item.
+// bounds - A Bounds object in which this function stores the bounds of the overlay item.
+//          The bounds unit is core pixels in document coordinates.
+function getOverlayItemBounds(itemDivId, bounds) {
+	cy.get(itemDivId)
+		.should(function (itemDiv) {
+			bounds.parseSetJson(itemDiv.text());
+			expect(bounds.isValid()).to.be.true;
+		});
+}
+
+// This ensures that the overlay item has the expected bounds via its test div element.
+// Parameters:
+// itemDivId - The id of the test div element corresponding to the overlay item.
+// bounds - A Bounds object with the expected bounds data.
+//          The bounds unit should be core pixels in document coordinates.
+function overlayItemHasBounds(itemDivId, expectedBounds) {
+	cy.get(itemDivId)
+		.should(function (elem) {
+			expect(Bounds.parseBoundsJson(elem.text()))
+				.to.deep.equal(expectedBounds, 'Bounds of ' + itemDivId);
+		});
 }
 
 module.exports.loadTestDoc = loadTestDoc;
@@ -892,9 +1113,10 @@ module.exports.doIfNotInImpress = doIfNotInImpress;
 module.exports.doIfNotInWriter = doIfNotInWriter;
 module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
-module.exports.getLOVersion = getLOVersion;
-module.exports.imageShouldBeFullWhiteOrNot = imageShouldBeFullWhiteOrNot;
-module.exports.canvasShouldBeFullWhiteOrNot = canvasShouldBeFullWhiteOrNot;
+module.exports.imageShouldBeFullWhite = imageShouldBeFullWhite;
+module.exports.imageShouldNotBeFullWhite = imageShouldNotBeFullWhite;
+module.exports.canvasShouldBeFullWhite = canvasShouldBeFullWhite;
+module.exports.canvasShouldNotBeFullWhite = canvasShouldNotBeFullWhite;
 module.exports.clickOnIdle = clickOnIdle;
 module.exports.inputOnIdle = inputOnIdle;
 module.exports.waitUntilIdle = waitUntilIdle;
@@ -902,7 +1124,10 @@ module.exports.doIfOnMobile = doIfOnMobile;
 module.exports.doIfOnDesktop = doIfOnDesktop;
 module.exports.moveCursor = moveCursor;
 module.exports.typeIntoDocument = typeIntoDocument;
-module.exports.loadFileToNextCloud = loadFileToNextCloud;
+module.exports.upLoadFileToNextCloud = upLoadFileToNextCloud;
 module.exports.getCursorPos = getCursorPos;
 module.exports.textSelectionShouldExist = textSelectionShouldExist;
 module.exports.textSelectionShouldNotExist = textSelectionShouldNotExist;
+module.exports.Bounds = Bounds;
+module.exports.getOverlayItemBounds = getOverlayItemBounds;
+module.exports.overlayItemHasBounds = overlayItemHasBounds;

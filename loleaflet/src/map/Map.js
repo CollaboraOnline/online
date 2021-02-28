@@ -51,6 +51,9 @@ L.Map = L.Evented.extend({
 	// Control.LokDialog instance, is set in Control.UIManager.js
 	dialog: null,
 
+	// Control.JSDialog instance, is set in Control.UIManager.js
+	jsdialog: null,
+
 	context: {context: ''},
 
 	lastActiveTime: Date.now(),
@@ -182,7 +185,6 @@ L.Map = L.Evented.extend({
 				}
 				L.DomUtil.addClass(L.DomUtil.get('main-menu'), 'readonly');
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'readonly');
-				L.DomUtil.addClass(L.DomUtil.get('spreadsheet-row-column-frame'), 'readonly');
 			} else {
 				L.DomUtil.removeClass(this._container.parentElement, 'readonly');
 				if (window.mode.isDesktop() || window.mode.isTablet()) {
@@ -190,7 +192,6 @@ L.Map = L.Evented.extend({
 				}
 				L.DomUtil.removeClass(L.DomUtil.get('main-menu'), 'readonly');
 				L.DomUtil.removeClass(L.DomUtil.get('presentation-controls-wrapper'), 'readonly');
-				L.DomUtil.removeClass(L.DomUtil.get('spreadsheet-row-column-frame'), 'readonly');
 			}
 		}, this);
 		this.on('doclayerinit', function() {
@@ -252,6 +253,8 @@ L.Map = L.Evented.extend({
 		// Unlike _docLoaded, this is flagged only once,
 		// after we receive status for the first time.
 		this._docLoadedOnce = false;
+
+		this._isNotebookbarLoadedOnCore = false;
 
 		this.on('commandstatechanged', function(e) {
 			if (e.commandName === '.uno:ModifiedStatus') {
@@ -1775,6 +1778,12 @@ L.Map = L.Evented.extend({
 
 	setMarkersOpacity: function(opacity) {
 		this._setPaneOpacity('leaflet-pane leaflet-marker-pane', opacity);
+	},
+
+	getTileSectionMgr: function() {
+		if (this._docLayer)
+			return this._docLayer._painter;
+		return undefined;
 	}
 });
 

@@ -38,7 +38,6 @@ Update the translations of unocommands.js before releasing:
     print(message.format(program=sys.argv[0]))
     exit(1)
 
-
 def commandsFromLine(line):
     """Extract uno commands name from lines like "  'Command1', 'Command2',"""
     commands = []
@@ -140,6 +139,11 @@ def extractToolbarCommands(path):
             commands += commandFromMenuLine(line)
 
     f = open(path + '/loleaflet/src/control/Control.MobileTopBar.js', 'r')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    f = open(path + '/loleaflet/src/control/Control.MobileWizardBuilder.js', 'r')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
@@ -298,7 +302,7 @@ def writeUnocommandsJS(
 var unoCommandsArray = {\n''')
 
     for key in sorted(descriptions.keys()):
-        f.write('\t' + key + ':{')
+        f.write('\t\'' + key + '\':{')
         for type in sorted(descriptions[key].keys()):
             f.write(type + ':{')
             for menuType in sorted(descriptions[key][type].keys()):
@@ -356,9 +360,8 @@ def parseUnocommandsJS(onlineDir):
 
     f = open(onlineDir + '/loleaflet/src/unocommands.js', 'r',
              encoding='utf-8')
-    readingCommands = False
     for line in f:
-        m = re.match(r"\t([^:]*):.*", line)
+        m = re.match(r"\t\'([^:]*)\':.*", line)
         if m:
             command = m.group(1)
 
@@ -457,7 +460,8 @@ if __name__ == "__main__":
         processedCommands = set(written.keys())
 
     # check that we have translations for everything
-    dif = (menuCommands | contextCommands | toolbarCommands) - processedCommands
+    requiredCommands = (menuCommands | contextCommands | toolbarCommands)
+    dif = requiredCommands - processedCommands
 
     if len(dif) > 0:
         sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")

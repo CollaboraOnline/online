@@ -8,8 +8,6 @@ describe('Calc bottom bar tests.', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
-		// Wait until the Formula-Bar is loaded.
-		cy.get('.inputbar_container', {timeout : 10000});
 	});
 
 	afterEach(function() {

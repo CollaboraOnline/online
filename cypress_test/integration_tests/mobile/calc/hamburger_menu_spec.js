@@ -289,7 +289,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Rows', 'Rows Above']);
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 3);
@@ -310,7 +310,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Rows', 'Rows Below']);
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 3);
@@ -331,7 +331,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Columns', 'Columns Before']);
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 2);
@@ -352,7 +352,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Columns', 'Columns After']);
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 2);
@@ -373,7 +373,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Rows']);
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 1);
@@ -392,7 +392,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Columns']);
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 2);
@@ -427,7 +427,16 @@ describe('Trigger hamburger menu options.', function() {
 		// TODO: no visual indicator here
 		cy.wait(500);
 
-		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Page Break', 'Remove Row Break']);
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
+			.click();
+
+		cy.contains('[title=\'Delete Page Break\'] .menu-entry-with-icon', 'Row Break')
+			.click();
 
 		// TODO: no visual indicator here
 		cy.wait(500);
@@ -456,7 +465,16 @@ describe('Trigger hamburger menu options.', function() {
 		// TODO: no visual indicator here
 		cy.wait(500);
 
-		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Delete Page Break', 'Remove Column Break']);
+		mobileHelper.openHamburgerMenu();
+
+		cy.contains('.menu-entry-with-icon', 'Sheet')
+			.click();
+
+		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
+			.click();
+
+		cy.contains('[title=\'Delete Page Break\'] .menu-entry-with-icon', 'Column Break')
+			.click();
 
 		// TODO: no visual indicator here
 		cy.wait(500);
@@ -470,7 +488,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Sort Ascending']);
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 4);
@@ -493,7 +511,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Sort Descending']);
 
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table tr')
 			.should('have.length', 4);
@@ -511,107 +529,47 @@ describe('Trigger hamburger menu options.', function() {
 	it('Data: grouping / ungrouping.', function() {
 		before('hamburger_menu.ods');
 
-		// Use columns header height as indicator
-		helper.initAliasToNegative('origHeaderHeight');
-
-		cy.get('.spreadsheet-header-columns')
-			.invoke('height')
-			.as('origHeaderHeight');
-
-		cy.get('@origHeaderHeight')
-			.should('be.greaterThan', 0);
-
 		// Group first
 		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.greaterThan(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('exist');
 
 		// Then ungroup
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Ungroup...']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.at.most(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('not.exist');
 	});
 
 	it('Data: remove grouping outline.', function() {
 		before('hamburger_menu.ods');
 
-		// Use columns header height as indicator
-		helper.initAliasToNegative('origHeaderHeight');
-
-		cy.get('.spreadsheet-header-columns')
-			.invoke('height')
-			.as('origHeaderHeight');
-
-		cy.get('@origHeaderHeight')
-			.should('be.greaterThan', 0);
-
 		// Group first
 		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.greaterThan(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('exist');
 
 		// Then remove outline
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Remove Outline']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.at.most(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('not.exist');
 	});
 
 	it('Data: show / hide grouping details.', function() {
 		before('hamburger_menu.ods');
 
-		// Use columns header height as indicator
-		helper.initAliasToNegative('origHeaderHeight');
-
-		cy.get('.spreadsheet-header-columns')
-			.invoke('height')
-			.as('origHeaderHeight');
-
-		cy.get('@origHeaderHeight')
-			.should('be.greaterThan', 0);
-
 		// Group first
 		calcHelper.selectFirstColumn();
 
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Group...']);
 
-		cy.get('@origHeaderHeight')
-			.then(function(origHeaderHeight) {
-				cy.get('.spreadsheet-header-columns')
-					.should(function(header) {
-						expect(header.height()).to.be.greaterThan(origHeaderHeight);
-					});
-			});
+		cy.get('[id="test-div-column group"]').should('exist');
 
 		// Use selected content as indicator
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table')
 			.should('exist');
@@ -620,7 +578,7 @@ describe('Trigger hamburger menu options.', function() {
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Hide Details']);
 
 		// Frist column is hidden -> no content
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table')
 			.should('not.exist');
@@ -629,54 +587,10 @@ describe('Trigger hamburger menu options.', function() {
 		mobileHelper.selectHamburgerMenuItem(['Data', 'Group and Outline', 'Show Details']);
 
 		// Frist column is visible again -> we have content again
-		calcHelper.selectEntireSheet(false);
+		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table')
 			.should('exist');
-	});
-
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Automatic spell checking.', function() {
-		before('hamburger_menu.ods');
-
-		// Make everything white on tile
-		calcHelper.selectEntireSheet(false);
-
-		mobileHelper.openMobileWizard();
-
-		helper.clickOnIdle('#ScCellAppearancePropertyPanel');
-
-		cy.contains('.menu-entry-with-icon', 'Background Color')
-			.should('be.visible');
-
-		helper.clickOnIdle('#border-12');
-
-		helper.clickOnIdle('#FrameLineColor');
-
-		mobileHelper.selectFromColorPalette(2, 0, 7);
-
-		mobileHelper.closeMobileWizard();
-
-		mobileHelper.openTextPropertiesPanel();
-
-		helper.clickOnIdle('#Color');
-
-		mobileHelper.selectFromColorPalette(0, 0, 7);
-
-		var firstTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 0px; top: 5px;\']';
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 5px;\']';
-		helper.imageShouldBeFullWhiteOrNot(centerTile, true);
-		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
-
-		// Disable automatic spell checking
-		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
-
-		helper.imageShouldBeFullWhiteOrNot(firstTile, true);
-
-		// Enable automatic spell checking again
-		mobileHelper.selectHamburgerMenuItem(['Automatic Spell Checking']);
-
-		helper.imageShouldBeFullWhiteOrNot(firstTile, false);
 	});
 
 	it('Check version information.', function() {
@@ -688,15 +602,8 @@ describe('Trigger hamburger menu options.', function() {
 			.should('exist');
 
 		// Check the version
-		if (helper.getLOVersion() === 'master') {
-			cy.contains('#lokit-version', 'LibreOffice')
-				.should('exist');
-		} else if (helper.getLOVersion() === 'cp-6-2' ||
-				   helper.getLOVersion() === 'cp-6-4')
-		{
-			cy.contains('#lokit-version', 'Collabora Office')
-				.should('exist');
-		}
+		cy.contains('#lokit-version', 'Collabora Office')
+			.should('exist');
 
 		// Close about dialog
 		cy.get('.vex-close')

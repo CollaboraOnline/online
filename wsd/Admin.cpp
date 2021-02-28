@@ -168,16 +168,16 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             }
             else
             {
-                LOG_WRN("Invalid PID to kill (not a document pid)");
+                LOG_ERR("Invalid PID to kill (not a document pid)");
             }
         }
         catch (std::invalid_argument& exc)
         {
-            LOG_WRN("Invalid PID to kill (invalid argument): " << tokens[1]);
+            LOG_ERR("Invalid PID to kill (invalid argument): " << tokens[1]);
         }
         catch (std::out_of_range& exc)
         {
-            LOG_WRN("Invalid PID to kill (out of range): " << tokens[1]);
+            LOG_ERR("Invalid PID to kill (out of range): " << tokens[1]);
         }
     }
     else if (tokens.equals(0, "settings"))
@@ -222,7 +222,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             }
             catch (const std::exception& exc)
             {
-                LOG_WRN("Invalid setting value: " << setting[1] <<
+                LOG_ERR("Invalid setting value: " << setting[1] <<
                         " for " << setting[0]);
                 return;
             }
@@ -822,7 +822,7 @@ public:
 
     void onDisconnect() override
     {
-        LOG_WRN("Monitor " << _uri << " dis-connected, re-trying in 20 seconds");
+        LOG_ERR("Monitor " << _uri << " dis-connected, re-trying in 20 seconds");
         Admin::instance().scheduleMonitorConnect(_uri, std::chrono::steady_clock::now() + std::chrono::seconds(20));
     }
 };

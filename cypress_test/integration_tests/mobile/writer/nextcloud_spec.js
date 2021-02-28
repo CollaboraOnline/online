@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
-var writerHelper = require('../../common/writer_helper');
 
 describe('Nextcloud specific tests.', function() {
 	var testFileName = 'nextcloud.odt';
@@ -13,7 +12,7 @@ describe('Nextcloud specific tests.', function() {
 	});
 
 	it('Insert image from storage.', function() {
-		helper.loadFileToNextCloud('image_to_insert.png', 'writer');
+		helper.upLoadFileToNextCloud('image_to_insert.png', 'writer');
 
 		helper.beforeAll(testFileName, 'writer', undefined, true);
 
@@ -56,42 +55,6 @@ describe('Nextcloud specific tests.', function() {
 		mobileHelper.enableEditingMobile();
 
 		nextcloudHelper.checkAndCloseSharing();
-	});
-
-	it.skip('Revision history.', function() {
-		helper.beforeAll(testFileName, 'writer');
-
-		mobileHelper.enableEditingMobile();
-
-		nextcloudHelper.checkAndCloseRevisionHistory();
-	});
-
-	it.skip('Restore previous revision.', function() {
-		helper.beforeAll(testFileName, 'writer');
-
-		mobileHelper.enableEditingMobile();
-
-		// Initially we have "text" text in the document
-		writerHelper.selectAllTextOfDoc();
-
-		helper.expectTextForClipboard('text');
-
-		// Change the document content and save it
-		helper.typeIntoDocument('new');
-
-		writerHelper.selectAllTextOfDoc();
-
-		helper.expectTextForClipboard('new');
-
-		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
-
-		nextcloudHelper.restorePreviousVersion();
-
-		mobileHelper.enableEditingMobile();
-
-		writerHelper.selectAllTextOfDoc();
-
-		helper.expectTextForClipboard('text');
 	});
 });
 

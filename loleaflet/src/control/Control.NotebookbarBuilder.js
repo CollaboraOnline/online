@@ -133,8 +133,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ColumnOperations'] = function() {};
 		this._toolitemHandlers['.uno:Insert'] = function() {};
 		this._toolitemHandlers['.uno:InsertCell'] = function() {};
-		this._toolitemHandlers['.uno:AddName'] = function() {};
-		this._toolitemHandlers['.uno:DefineName'] = function() {};
 		this._toolitemHandlers['.uno:ToolProtectionDocument'] = function() {};
 		this._toolitemHandlers['.uno:Protect'] = function() {};
 		this._toolitemHandlers['.uno:ImportFromFile'] = function() {};
@@ -730,6 +728,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 						{uno: '.uno:GoalSeekDialog'},
+						{type: 'separator'},
+						{uno: '.uno:RunMacro'},
 						{type: 'separator'},
 						{name: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'), type: 'menu', menu: [
 							{uno: '.uno:ConditionalFormatDialog'},

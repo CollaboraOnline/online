@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ isAnyVexDialogActive w2ui */
+/* global vex $ L _ isAnyVexDialogActive w2ui CPointSet CRectangle CPolyUtil CPolygon */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -43,6 +43,84 @@ function hasMark(collection, mark)
 	}
 	return false;
 }
+
+// CStyleData is used to obtain CSS property values from style data
+// stored in DOM elements in the form of custom CSS properties/variables.
+var CStyleData = L.Class.extend({
+
+	initialize: function (styleDataDiv) {
+		this._div = styleDataDiv;
+	},
+
+	getPropValue: function (name) {
+		return getComputedStyle(this._div).getPropertyValue(name);
+	},
+
+	getIntPropValue: function(name) { // (String) -> Number
+		return parseInt(this.getPropValue(name));
+	},
+
+	getFloatPropValue: function(name) { // (String) -> Number
+		return parseFloat(this.getPropValue(name));
+	}
+});
+
+// CSelections is used to add/modify/clear selections (text/cell-area(s))
+// on canvas using polygons (CPolygon).
+var CSelections = L.Class.extend({
+
+	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv, name) {
+		this._pointSet = pointSet ? pointSet : new CPointSet();
+		this._overlay = canvasOverlay;
+		this._dpiScale = dpiScale;
+		this._styleData = new CStyleData(selectionsDataDiv);
+		this._name = name;
+		this._polygon = undefined;
+		this._updatePolygon();
+	},
+
+	empty: function () {
+		return !this._pointSet || this._pointSet.empty();
+	},
+
+	clear: function () {
+		this.setPointSet(new CPointSet());
+	},
+
+	setPointSet: function(pointSet) {
+		this._pointSet = pointSet;
+		this._updatePolygon();
+	},
+
+	contains: function(corePxPoint) {
+		if (!this._polygon)
+			return false;
+
+		return this._polygon.anyRingBoundContains(corePxPoint);
+	},
+
+	getBounds: function() {
+		return this._polygon.getBounds();
+	},
+
+	_updatePolygon: function() {
+		if (!this._polygon) {
+			var attributes = {
+				name: this._name,
+				pointerEvents: 'none',
+				fillColor: this._styleData.getPropValue('--fill-color'),
+				fillOpacity: this._styleData.getPropValue('--fill-opacity'),
+				opacity: this._styleData.getFloatPropValue('--opacity'),
+				weight: Math.round(this._styleData.getIntPropValue('--weight') * this._dpiScale)
+			};
+			this._polygon = new CPolygon(this._pointSet, attributes);
+			this._overlay.initPath(this._polygon);
+			return;
+		}
+
+		this._polygon.setPointSet(this._pointSet);
+	}
+});
 
 L.TileLayer = L.GridLayer.extend({
 
@@ -104,7 +182,7 @@ L.TileLayer = L.GridLayer.extend({
 		// Position and size of the visible cursor.
 		this._visibleCursor = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 		// Last cursor position for invalidation
-		this.lastCursorPos = this._visibleCursor.getNorthWest();
+		this.lastCursorPos = null;
 		// Are we zooming currently ? - if so, no cursor.
 		this._isZooming = false;
 		// Original rectangle graphic selection in twips
@@ -218,10 +296,10 @@ L.TileLayer = L.GridLayer.extend({
 	onAdd: function (map) {
 		this._initContainer();
 		this._getToolbarCommandsValues();
-		this._selections = new L.LayerGroup();
+		this._selections = new CSelections(undefined, this._canvasOverlay,
+			this._painter._dpiScale, this._selectionsDataDiv, 'selections');
 		this._references = new L.LayerGroup();
 		this._referencesAll = [];
-		map.addLayer(this._selections);
 		if (this.options.permission !== 'readonly') {
 			map.addLayer(this._references);
 		}
@@ -621,9 +699,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('referenceclear:')) {
 			this._clearReferences();
 		}
-		else if (textMsg.startsWith('hyperlinkclicked:')) {
-			this._onHyperlinkClickedMsg(textMsg);
-		}
 		else if (textMsg.startsWith('invalidatecursor:')) {
 			this._onInvalidateCursorMsg(textMsg);
 		}
@@ -701,9 +776,6 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('complexselection:')) {
 			if (this._map._clip)
 				this._map._clip.onComplexSelection(textMsg.substr('complexselection:'.length));
-		}
-		else if (textMsg.startsWith('tile:')) {
-			this._onTileMsg(textMsg, img);
 		}
 		else if (textMsg.startsWith('windowpaint:')) {
 			this._onDialogPaintMsg(textMsg, img);
@@ -803,7 +875,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (this._map._docLayer._docType === 'spreadsheet') {
 				var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
 				if (section) {
-					section.drawingOrder = 4;
+					section.setDrawingOrder(L.CSections.CalcGrid.drawingOrder);
 					section.sectionProperties.strokeStyle = '#c0c0c0';
 				}
 				this._map._docLayer._painter._sectionContainer.removeSection('splits');
@@ -1317,34 +1389,21 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.hyperlinkPopup = null;
 	},
 
-	_onHyperlinkClickedMsg: function (textMsg) {
-		var link = null;
-		var coords = null;
-		var hyperlinkMsgStart = 'hyperlinkclicked: ';
-		var coordinatesMsgStart = ' coordinates: ';
-
-		if (textMsg.indexOf(coordinatesMsgStart) !== -1) {
-			var coordpos = textMsg.indexOf(coordinatesMsgStart);
-			link = textMsg.substring(hyperlinkMsgStart.length, coordpos);
-			coords = textMsg.substring(coordpos+coordinatesMsgStart.length);
-		} else
-			link = textMsg.substring(hyperlinkMsgStart.length);
-
-		this._map.fire('hyperlinkclicked', {url: link, coordinates: coords});
-	},
-
 	_onInvalidateCursorMsg: function (textMsg) {
 		textMsg = textMsg.substring('invalidatecursor:'.length + 1);
 		var obj = JSON.parse(textMsg);
-		var rectangle = this._getEditCursorRectangle(obj);
-		if (rectangle === undefined) {
+		var recCursor = this._getEditCursorRectangle(obj);
+		if (recCursor === undefined) {
 			return;
 		}
 		var modifierViewId = parseInt(obj.viewId);
+		if (modifierViewId != this._viewId)
+			return;
+
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 		this._visibleCursor = new L.LatLngBounds(
-			this._twipsToLatLng(rectangle.getTopLeft(), this._map.getZoom()),
-			this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom()));
+			this._twipsToLatLng(recCursor.getTopLeft(), this._map.getZoom()),
+			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
@@ -1366,13 +1425,13 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		//first time document open, set last cursor position
-		if (this.lastCursorPos.lat === 0 && this.lastCursorPos.lng === 0)
-			this.lastCursorPos = cursorPos;
+		if (!this.lastCursorPos)
+			this.lastCursorPos = recCursor.getTopLeft();
 
 		var updateCursor = false;
-		if ((this.lastCursorPos.lat !== cursorPos.lat) || (this.lastCursorPos.lng !== cursorPos.lng)) {
+		if (!this.lastCursorPos.equals(recCursor.getTopLeft())) {
 			updateCursor = true;
-			this.lastCursorPos = cursorPos;
+			this.lastCursorPos = recCursor.getTopLeft();
 		}
 
 		this._onUpdateCursor(updateCursor && (modifierViewId === this._viewId));
@@ -1659,7 +1718,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_clearSearchResults: function() {
 		if (this._searchTerm) {
-			this._selections.clearLayers();
+			this._selections.clear();
 		}
 		this._lastSearchResult = null;
 		this._searchResults = null;
@@ -1759,7 +1818,6 @@ L.TileLayer = L.GridLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 
 		var rectArray = this._getTextSelectionRectangles(textMsg);
-		this._selections.clearLayers();
 
 		if (rectArray.length) {
 
@@ -1767,14 +1825,14 @@ L.TileLayer = L.GridLayer.extend({
 				return rect.getPointArray();
 			});
 
-			var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
-			var selection = new L.Polygon(polygons, {
-				pointerEvents: 'none',
-				fillColor: '#43ACE8',
-				fillOpacity: 0.25,
-				weight: 2,
-				opacity: 0.25});
-			this._selections.addLayer(selection);
+			var docLayer = this;
+			var pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
+				function (twipsPoint) {
+					var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
+					corePxPt.round();
+					return corePxPt;
+				});
+			this._selections.setPointSet(pointSet);
 			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
 			if (this._selectionContentRequest) {
 				clearTimeout(this._selectionContentRequest);
@@ -1782,6 +1840,10 @@ L.TileLayer = L.GridLayer.extend({
 			this._selectionContentRequest = setTimeout(L.bind(function () {
 				this._map._socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
 		}
+		else {
+			this._selections.clear();
+		}
+
 		this._onUpdateTextSelection();
 	},
 
@@ -2016,16 +2078,22 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 			if (!found) {
-				this._map._socket.sendMessage('ERROR windowpaint: message assumed PNG for hash ' + command.hash
-							      + ' is cached here in the client but not found');
+				var message = 'windowpaint: message assumed PNG for hash ' + command.hash
+				    + ' is cached here in the client but not found';
+				if (L.Browser.cypressTest)
+					throw new Error(message);
+				this._map._socket.sendMessage('ERROR ' + message);
 				// Not sure what to do. Ask the server to re-send the windowpaint: message but this time including the PNG?
 			}
 		} else {
 			// Sanity check: If we get a PNG it should be for a hash that we don't have cached
 			for (i = 0; i < this._pngCache.length; i++) {
 				if (this._pngCache[i].hash == command.hash) {
-					this._map._socket.sendMessage('ERROR windowpaint: message included PNG for hash ' + command.hash
-								      + ' even if it was already cached here in the client');
+					message = 'windowpaint: message included PNG for hash ' + command.hash
+					    + ' even if it was already cached here in the client';
+					if (L.Browser.cypressTest)
+						throw new Error(message);
+					this._map._socket.sendMessage('ERROR ' + message);
 					// Remove the extra copy, code below will add it at the start of the array
 					this._pngCache.splice(i, 1);
 					break;
@@ -2245,7 +2313,7 @@ L.TileLayer = L.GridLayer.extend({
 		// hide the cursor if not editable
 		this._onUpdateCursor(calledFromSetPartHandler);
 		// hide the text selection
-		this._selections.clearLayers();
+		this._selections.clear();
 		// hide the selection handles
 		this._onUpdateTextSelection();
 		// hide the graphic selection
@@ -2263,15 +2331,8 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	containsSelection: function (latlng) {
-		var ret = false;
-		var selections = this._selections.getLayers();
-		for (var sel in selections) {
-			if (selections[sel].getBounds().contains(latlng)) {
-				ret = true;
-				break;
-			}
-		}
-		return ret;
+		var corepxPoint = this._map.project(latlng);
+		return this._selections.contains(corepxPoint);
 	},
 
 	_clearReferences: function () {
@@ -3046,13 +3107,17 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (this._cellResizeMarkerStart === e.target) {
 			this._postSelectTextEvent('start', aMousePosition.x, aMousePosition.y);
-			if (e.type === 'dragend')
+			if (e.type === 'dragend') {
 				this._onUpdateCellResizeMarkers();
+				window.IgnorePanning = undefined;
+			}
 		}
 		else if (this._cellResizeMarkerEnd === e.target) {
 			this._postSelectTextEvent('end', aMousePosition.x, aMousePosition.y);
-			if (e.type === 'dragend')
+			if (e.type === 'dragend') {
 				this._onUpdateCellResizeMarkers();
+				window.IgnorePanning = undefined;
+			}
 		}
 		else if (this._cellAutofillMarker === e.target) {
 			this._postMouseEvent(buttonType, aMousePosition.x, aMousePosition.y, 1, 1, 0);
@@ -3196,29 +3261,46 @@ L.TileLayer = L.GridLayer.extend({
 				this._cellCursorOnPgDn = null;
 			}
 
+			var corePxBounds = this._twipsToCorePixelsBounds(this._cellCursorTwips);
+			corePxBounds.round();
 			if (this._cellCursorMarker) {
-				this._map.removeLayer(this._cellCursorMarker);
+				this._cellCursorMarker.setBounds(corePxBounds);
 				this._map.removeLayer(this._dropDownButton);
 			}
-			this._cellCursorMarker = L.rectangle(this._cellCursor, {
-				pointerEvents: 'none',
-				fill: false,
-				color: '#000000',
-				weight: 2});
-			if (!this._cellCursorMarker) {
-				this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
-				return;
+			else {
+				var cursorStyle = new CStyleData(this._cursorDataDiv);
+				this._cellCursorMarker = new CRectangle(
+					corePxBounds,
+					{
+						name: 'cell-cursor',
+						pointerEvents: 'none',
+						fill: false,
+						color: cursorStyle.getPropValue('--stroke-color'),
+						weight: Math.round(cursorStyle.getIntPropValue('--weight') *
+							(this._painter ? this._painter._dpiScale : 1))
+					});
+				if (!this._cellCursorMarker) {
+					this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
+					return;
+				}
+				this._canvasOverlay.initPath(this._cellCursorMarker);
 			}
-			this._map.addLayer(this._cellCursorMarker);
 
 			this._addDropDownMarker();
 
+			var hasTunneledDialogOpened = this._map.dialog ? this._map.dialog.hasOpenedDialog() : false;
+			var hasJSDialogOpened = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened() : false;
+			var hasDialogOpened = hasTunneledDialogOpened || hasJSDialogOpened;
+
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
-			this._map.fire('editorgotfocus');
+			// exception: when dialog opened don't focus the document
+			if (!hasDialogOpened)
+				this._map.fire('editorgotfocus');
 		}
 		else if (this._cellCursorMarker) {
-			this._map.removeLayer(this._cellCursorMarker);
+			this._canvasOverlay.removePath(this._cellCursorMarker);
+			this._cellCursorMarker = undefined;
 		}
 		this._removeDropDownMarker();
 
@@ -3232,7 +3314,7 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._closeURLPopUp();
 			if (targetURL) {
-				this._showURLPopUp(this._cellCursorMarker._bounds._northEast, targetURL);
+				this._showURLPopUp(this._cellCursor.getNorthEast(), targetURL);
 			}
 
 		}
@@ -3311,7 +3393,7 @@ L.TileLayer = L.GridLayer.extend({
 									|| (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)));
 
 		if (!selectionOnDesktop &&
-			(this._selections.getLayers().length !== 0 || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
+			(!this._selections.empty() || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
 			if (this._isEmptyRectangle(this._cellSelectionArea) && this._isEmptyRectangle(this._cellCursor)) {
 				return;
 			}
@@ -3373,7 +3455,7 @@ L.TileLayer = L.GridLayer.extend({
 		var startMarker = this._selectionHandles['start'];
 		var endMarker = this._selectionHandles['end'];
 
-		if (this._map.editorHasFocus() && (this._selections.getLayers().length !== 0 || startMarker.isDragged || endMarker.isDragged)) {
+		if (this._map.editorHasFocus() && (!this._selections.empty() || startMarker.isDragged || endMarker.isDragged)) {
 			this._updateMarkers();
 		}
 		else {
@@ -3390,7 +3472,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._selectionHandles[key]);
 			this._selectionHandles[key].isDragged = false;
 		}
-		this._selections.clearLayers();
+		this._selections.clear();
 	},
 
 	_updateMarkers: function() {
@@ -3720,6 +3802,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._debugAlwaysActive = new L.LayerGroup();
 			this._debugShowClipboard = new L.LayerGroup();
 			this._tilesDevicePixelGrid = new L.LayerGroup();
+			this._debugSidebar = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
 			this._map.addLayer(this._debugInfo);
 			this._map.addLayer(this._debugInfo2);
@@ -3729,7 +3812,8 @@ L.TileLayer = L.GridLayer.extend({
 				'Show Clipboard': this._debugShowClipboard,
 				'Always active': this._debugAlwaysActive,
 				'Typing': this._debugTyper,
-				'Tiles device pixel grid': this._tilesDevicePixelGrid
+				'Tiles device pixel grid': this._tilesDevicePixelGrid,
+				'Sidebar Rerendering': this._debugSidebar,
 			};
 			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(this._map);
 
@@ -3747,6 +3831,8 @@ L.TileLayer = L.GridLayer.extend({
 				} else if (e.layer === this._tilesDevicePixelGrid) {
 					this._map._docLayer._painter._addTilePixelGridSection();
 					this._map._docLayer._painter._sectionContainer.reNewAllSections(true);
+				} else if (e.layer === this._debugSidebar) {
+					this._map._debugSidebar = true;
 				}
 			}, this);
 			this._map.on('layerremove', function(e) {
@@ -3763,6 +3849,8 @@ L.TileLayer = L.GridLayer.extend({
 				} else if (e.layer === this._tilesDevicePixelGrid) {
 					this._map._docLayer._painter._sectionContainer.removeSection('tile pixel grid');
 					this._map._docLayer._painter._sectionContainer.reNewAllSections(true);
+				} else if (e.layer === this._debugSidebar) {
+					this._map._debugSidebar = false;
 				}
 			}, this);
 		}
@@ -3777,7 +3865,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._map._docLayer._docType === 'spreadsheet') {
 			var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
 			if (section) {
-				section.drawingOrder = 7;
+				section.setDrawingOrder(L.CSections.CalcGrid.drawingOrderDebug);
 				section.sectionProperties.strokeStyle = 'blue';
 			}
 			this._map._docLayer._painter._addSplitsSection();

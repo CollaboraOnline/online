@@ -52,7 +52,7 @@ describe('Spell checking menu.', function() {
 		cy.contains('.context-menu-link', 'hello')
 			.click();
 
-		helper.selectAllText(false);
+		helper.selectAllText();
 
 		helper.expectTextForClipboard('hello');
 	});
@@ -61,32 +61,6 @@ describe('Spell checking menu.', function() {
 		openContextMenu();
 
 		cy.contains('.context-menu-link', 'Ignore All')
-			.click();
-
-		openContextMenu();
-
-		// We don't get the spell check context menu any more
-		cy.contains('.context-menu-link', 'Paste')
-			.should('be.visible');
-	});
-
-	it.skip('Apply language for word.', function() {
-		openContextMenu();
-
-		cy.contains('.context-menu-link', 'Word is Finnish')
-			.click();
-
-		openContextMenu();
-
-		// We don't get the spell check context menu any more
-		cy.contains('.context-menu-link', 'Paste')
-			.should('be.visible');
-	});
-
-	it.skip('Apply language for paragraph.', function() {
-		openContextMenu();
-
-		cy.contains('.context-menu-link', 'Paragraph is Finnish')
 			.click();
 
 		openContextMenu();

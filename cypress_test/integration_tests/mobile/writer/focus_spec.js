@@ -31,31 +31,6 @@ describe('Focus tests', function() {
 			.should('be.eq', 'clipboard');
 	});
 
-	it.skip('Focus with a vex dialog.', function() {
-		// Click on edit button
-		mobileHelper.enableEditingMobile();
-
-		// Open comment insertion dialog
-		cy.get('#tb_actionbar_item_insertcomment')
-			.click();
-
-		cy.get('.loleaflet-annotation-table')
-			.should('be.visible');
-
-		// The dialog grabs the focus
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'loleaflet-annotation-textarea');
-
-		// Close the dialog
-		cy.get('.vex-dialog-button-secondary')
-			.click();
-		cy.get('.loleaflet-annotation-table').should('be.not.visible');
-
-		// Body should have the focus again (no focus on document)
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
-	});
-
 	it('Focus with opened mobile wizard.', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

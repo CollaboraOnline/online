@@ -29,6 +29,9 @@ describe('Trigger hamburger menu options.', function() {
 
 		// End remove spell checking red lines
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
+
+		// Remove any selections.
+		helper.moveCursor('left');
 	}
 
 	function openPageWizard() {
@@ -659,39 +662,39 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Show formatting marks.', function() {
-		// Hide text so the center tile is full white.
+		// Hide text so the document is full white.
 		hideText();
 
 		var canvas = '.leaflet-canvas-container canvas';
-		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
+		helper.canvasShouldBeFullWhite(canvas);
 
 		// Enable it first -> spaces will be visible.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.canvasShouldBeFullWhiteOrNot(canvas, false);
+		helper.canvasShouldNotBeFullWhite(canvas);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
+		helper.canvasShouldBeFullWhite(canvas);
 	});
 
 	it('Automatic spell checking.', function() {
-		// Hide text so the center tile is full white.
+		// Hide text so the document is full white.
 		hideText();
 
 		var canvas = '.leaflet-canvas-container canvas';
-		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
+		helper.canvasShouldBeFullWhite(canvas);
 
 		// Enable it first.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.canvasShouldBeFullWhiteOrNot(canvas, false);
+		helper.canvasShouldNotBeFullWhite(canvas);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		helper.canvasShouldBeFullWhiteOrNot(canvas, true);
+		helper.canvasShouldBeFullWhite(canvas);
 	});
 
 	it('Resolved comments.', function() {
@@ -744,15 +747,8 @@ describe('Trigger hamburger menu options.', function() {
 			.should('exist');
 
 		// Check the version
-		if (helper.getLOVersion() === 'master') {
-			cy.contains('#lokit-version', 'LibreOffice')
-				.should('exist');
-		} else if (helper.getLOVersion() === 'cp-6-2' ||
-				   helper.getLOVersion() === 'cp-6-4')
-		{
-			cy.contains('#lokit-version', 'Collabora Office')
-				.should('exist');
-		}
+		cy.contains('#lokit-version', 'Collabora Office')
+			.should('exist');
 
 		// Close about dialog
 		cy.get('.vex-close')

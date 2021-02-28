@@ -507,7 +507,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
 					{name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
 					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action'},
-					{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}]},
+					{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'},
+					{name: _('CSV file (.csv)'), id: 'downloadas-csv', type: 'action'}]},
 				{type: 'separator'},
 				{name: _UNO('.uno:Print', 'spreadsheet'), id: 'print', type: 'action'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
@@ -530,11 +531,11 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
 				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
-				{type: 'separator', tablet: false},
-				{name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes', tablet: false},
-				{name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', tablet: false, menu: [
-					{name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn', tablet: false},
-					{name: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), id: 'FreezePanesRow', type: 'action', uno: '.uno:FreezePanesRow', tablet: false}
+				{type: 'separator'},
+				{name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
+				{name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
+					{name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
+					{name: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), id: 'FreezePanesRow', type: 'action', uno: '.uno:FreezePanesRow'}
 				]},
 				{type: 'separator'},
 				{uno: '.uno:Sidebar'},
@@ -545,6 +546,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DataDataPilotRun', 'spreadsheet'), uno: '.uno:DataDataPilotRun'},
 				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
+				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater'},
 				{uno: '.uno:FunctionDialog'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
@@ -956,7 +958,7 @@ L.Control.Menubar = L.Control.extend({
 			'savecomments', 'shareas', 'print', // file menu
 			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', 'downloadas-epub', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'print', // file menu
-			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'closedocument', // file menu
+			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showresolved', // view menu
 			'about', 'keyboard-shortcuts', 'latest-updates', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
@@ -967,6 +969,12 @@ L.Control.Menubar = L.Control.extend({
 		this._initialized = false;
 		this._hiddenItems = [];
 		this._menubarCont = L.DomUtil.get('main-menu');
+		// In case it contains garbage
+		if (this._menubarCont)
+			this._menubarCont.remove();
+		// Use original template as provided by server
+		this._menubarCont = map.mainMenuTemplate.cloneNode(true);
+		$('#main-menu-state').after(this._menubarCont);
 		this._initializeMenu(this.options.initial);
 
 		map.on('doclayerinit', this._onDocLayerInit, this);
@@ -974,6 +982,17 @@ L.Control.Menubar = L.Control.extend({
 		map.on('addmenu', this._addMenu, this);
 		map.on('commandvalues', this._onInitLanguagesMenu, this);
 		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
+	},
+
+	onRemove: function() {
+		this._map.off('doclayerinit', this._onDocLayerInit, this);
+		this._map.off('updatepermission', this._onRefresh, this);
+		this._map.off('addmenu', this._addMenu, this);
+		this._map.off('commandvalues', this._onInitLanguagesMenu, this);
+		this._map.off('updatetoolbarcommandvalues', this._onStyleMenu, this);
+
+		this._menubarCont.remove();
+		this._menubarCont = null;
 	},
 
 	_addMenu: function (e) {
@@ -1535,7 +1554,7 @@ L.Control.Menubar = L.Control.extend({
 			self._executeAction(item);
 		}
 
-		if (!window.mode.isMobile() && $(item).data('id') !== 'insertcomment')
+		if (!window.mode.isMobile() && $(item).data('id') !== 'insertcomment' && self && self._map)
 			self._map.focus();
 	},
 

@@ -307,8 +307,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame13')
 		    .click();
 
-		cy.get('.lokdialog.ui-dialog-content.ui-widget-content')
-		 .should('exist');
+		 desktopHelper.checkDialogAndClose('Format Cells');
 	});
 
 	it('Clear Direct formatting.', function() {
@@ -488,7 +487,7 @@ describe('Top toolbar tests.', function() {
 			.click();
 
 		cy.contains('.menu-text', 'Align Left')
-			.click();
+			.click({force: true}); // tooltip
 
 		calcHelper.selectEntireSheet();
 

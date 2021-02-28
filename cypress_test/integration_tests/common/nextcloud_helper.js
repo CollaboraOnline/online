@@ -1,72 +1,12 @@
 /* global cy Cypress require */
 
+// Nextcloud integration related helper methods.
+
 var mobileHelper = require('./mobile_helper');
 
-function openRevisionHistory() {
-	mobileHelper.selectHamburgerMenuItem(['File']);
-
-	cy.contains('.menu-entry-with-icon', 'See revision history')
-		.then(function(item) {
-			Cypress.env('IFRAME_LEVEL', '');
-			cy.wrap(item)
-				.click();
-		});
-
-	cy.get('#app-sidebar-vue')
-		.should('be.visible');
-
-	cy.get('section#tab-versionsTabView')
-		.should('be.visible');
-
-}
-
-function checkAndCloseRevisionHistory() {
-	openRevisionHistory();
-
-	cy.get('.app-sidebar__close.icon-close')
-		.then(function(item) {
-			Cypress.env('IFRAME_LEVEL', '1');
-			cy.wrap(item)
-				.click();
-		});
-
-	cy.wait(2000);
-
-	cy.get('#revViewerContainer .icon-close')
-		.then(function(item) {
-			Cypress.env('IFRAME_LEVEL', '2');
-			cy.wrap(item)
-				.click();
-		});
-}
-
-function restorePreviousVersion() {
-	openRevisionHistory();
-
-	cy.get('#versionsTabView .versions li:nth-of-type(1) .revertVersion')
-		.click();
-
-	cy.wait(10000);
-
-	cy.get('.app-sidebar__close.icon-close')
-		.then(function(item) {
-			Cypress.env('IFRAME_LEVEL', '1');
-			cy.wrap(item)
-				.click();
-		});
-
-	cy.wait(2000);
-
-	cy.get('#revViewerContainer .icon-close')
-		.then(function(item) {
-			Cypress.env('IFRAME_LEVEL', '2');
-			cy.wrap(item)
-				.click();
-		});
-
-	cy.wait(2000);
-}
-
+// Open sharing sidebar of NC integration (mobile).
+// We check whether the NC sidebar is opened and then we
+// close it.
 function checkAndCloseSharing() {
 	mobileHelper.selectHamburgerMenuItem(['File']);
 
@@ -92,6 +32,12 @@ function checkAndCloseSharing() {
 		});
 }
 
+// Insert an image from NC storage. We use the "Insert"
+// menu for this, which will trigger NC's own image
+// insert dialog, where we can select an existing image
+// that was uploaded to NC storage earlier.
+// Parameters:
+// fileName - name of the image file.
 function insertImageFromStorage(fileName) {
 	mobileHelper.openInsertionWizard();
 
@@ -116,6 +62,12 @@ function insertImageFromStorage(fileName) {
 		});
 }
 
+// Save an existing and opened document with a different
+// name on the NC storage. We use the "File" -> "Save As..."
+// menu option for this, which will trigger an NC dialog
+// to specify the new file name.
+// Parameters:
+// fileName - the new filename we would like to save as.
 function saveFileAs(fileName) {
 	mobileHelper.enableEditingMobile();
 
@@ -143,8 +95,6 @@ function saveFileAs(fileName) {
 		});
 }
 
-module.exports.checkAndCloseRevisionHistory = checkAndCloseRevisionHistory;
 module.exports.checkAndCloseSharing = checkAndCloseSharing;
 module.exports.insertImageFromStorage = insertImageFromStorage;
 module.exports.saveFileAs = saveFileAs;
-module.exports.restorePreviousVersion = restorePreviousVersion;

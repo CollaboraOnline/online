@@ -81,6 +81,12 @@ td.jsdialog > [id^='table-box'] {
 	border-spacing: 0px;
 }
 
+#MacroWarnMedium p {
+	max-width: 512px;
+	color: #333;
+	text-transform: capitalize;
+}
+
 /* Expander */
 
 .jsdialog.ui-expander {
@@ -130,6 +136,8 @@ td.jsdialog > [id^='table-box'] {
 	display: block;
 	border: 1px solid silver;
 	border-radius: 2px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .ui-treeview.disabled {
@@ -142,8 +150,6 @@ td.jsdialog > [id^='table-box'] {
 	min-height: 100px;
 	min-width: 100px;
 	max-height: 150px;
-	overflow-y: auto;
-	overflow-x: hidden;
 	width: 100%;
 }
 

@@ -980,3 +980,22 @@ input[type='checkbox'][disabled] {
 	color: var(--gray-light-txt--color) !important;
 	font-size: 11px;
 }
+
+/* Fontwork property panel */
+#FontworkSameLetterHeights.mobile-wizard,
+#ExtrusionToggle.mobile-wizard {
+	display: inline-table
+}
+
+#FontworkShapeType-fontwork-plain-text, #FontworkShapeType-fontwork-wave, #FontworkShapeType-fontwork-inflate, #FontworkShapeType-fontwork-stop, #FontworkShapeType-fontwork-curve-up, #FontworkShapeType-fontwork-curve-down, #FontworkShapeType-fontwork-triangle-up, #FontworkShapeType-fontwork-triangle-down, #FontworkShapeType-fontwork-fade-right, #FontworkShapeType-fontwork-fade-left, #FontworkShapeType-fontwork-fade-up, #FontworkShapeType-fontwork-fade-down, #FontworkShapeType-fontwork-slant-up, #FontworkShapeType-fontwork-slant-down, #FontworkShapeType-fontwork-fade-up-and-right, #FontworkShapeType-fontwork-fade-up-and-left, #FontworkShapeType-fontwork-chevron-up, #FontworkShapeType-fontwork-chevron-down, #FontworkShapeType-fontwork-arch-up-curve, #FontworkShapeType-fontwork-arch-down-curve, #FontworkShapeType-fontwork-arch-left-curve, #FontworkShapeType-fontwork-arch-right-curve, #FontworkShapeType-fontwork-circle-curve, #FontworkShapeType-fontwork-open-circle-curve, #FontworkShapeType-fontwork-arch-up-pour, #FontworkShapeType-fontwork-arch-down-pour, #FontworkShapeType-fontwork-arch-right-pour, #FontworkShapeType-fontwork-circle-pour, #FontworkShapeType-fontwork-open-circle-pour
+{
+	padding: 16px 28px 16px 4% !important;
+	margin: 0px !important;
+	float: left;
+	width: 20%;
+}
+
+#fontworkproperties + .ui-content {
+	display: inline-flex;
+	flex-wrap: wrap;
+}

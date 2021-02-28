@@ -204,8 +204,6 @@ m4_ifelse(MOBILEAPP,[true],
       <div class="closebuttonimage" id="closebutton"></div>
     </div>
 
-    <div id="spreadsheet-row-column-frame" class="readonly"></div>
-
     <div id="document-container" class="readonly">
       <div id="map"></div>
     </div>

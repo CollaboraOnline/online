@@ -115,7 +115,7 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
                 continue; // Not even close, keep searching.
 
             // We found something with some differences--warn and return.
-            LOG_WRN("Incorrect JSON property [" << userInput << "]. Did you mean [" << key <<
+            LOG_ERR("Incorrect JSON property [" << userInput << "]. Did you mean [" << key <<
                     "] ? (Levenshtein distance: " << levDist << ')');
 
             // Fail without exact match.

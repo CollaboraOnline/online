@@ -2,7 +2,6 @@
 
 var helper = require('../common/helper');
 var mobileHelper = require('../common/mobile_helper');
-var calcHelper = require('../common/calc_helper');
 
 describe('Interfering second user.', function() {
 	function getComponent(fileName) {
@@ -14,7 +13,7 @@ describe('Interfering second user.', function() {
 			return 'impress';
 	}
 
-	it('Spaming keyboard input.', function() {
+	it('Spaming keyboard\mouse input.', function() {
 		cy.waitUntil(function() {
 			// Wait for the user-1 to open the document
 			cy.visit('http://admin:admin@localhost:' +
@@ -38,10 +37,6 @@ describe('Interfering second user.', function() {
 
 			helper.doIfOnMobile(function() {
 				mobileHelper.enableEditingMobile();
-			});
-
-			helper.doIfInCalc(function() {
-				calcHelper.dblClickOnFirstCell();
 			});
 
 			// Do some interfering activity.

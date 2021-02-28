@@ -67,7 +67,8 @@ ClientSession::ClientSession(
     _tileHeightTwips(0),
     _kitViewId(-1),
     _serverURL(requestDetails),
-    _isTextDocument(false)
+    _isTextDocument(false),
+    _lastSentFormFielButtonMessage("")
 {
     const std::size_t curConnections = ++LOOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -852,6 +853,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " template=" << _wopiFileInfo->getTemplateSource();
         }
 
+        if (!getBatchMode().empty())
+        {
+            oss << " batch=" << getBatchMode();
+        }
+
         return forwardToChild(oss.str(), docBroker);
     }
     catch (const Poco::SyntaxException&)
@@ -1147,7 +1153,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
 
                 // Save to Storage and log result.
-                docBroker->uploadToStorage(getId(), success, result, /*force=*/false);
+                docBroker->handleSaveResponse(getId(), success, result);
 
                 if (!isCloseFrame())
                     forwardToClient(payload);
@@ -1451,6 +1457,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         docBroker->finalRemoveSession(getId());
         return true;
     }
+    else if (tokens[0] == "formfieldbutton:") {
+        // Do not send redundant messages
+        if (_lastSentFormFielButtonMessage == firstLine)
+            return true;
+        _lastSentFormFielButtonMessage = firstLine;
+    }
 
     if (!isDocPasswordProtected())
     {
@@ -1458,7 +1470,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         {
             assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
         }
-        else if (tokens[0] == "status:")
+        else if (tokens[0] == "status:" || tokens[0] == "statusindicatorfinish:")
         {
             setState(ClientSession::SessionState::LIVE);
             docBroker->setLoaded();

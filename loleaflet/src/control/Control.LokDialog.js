@@ -262,7 +262,7 @@ L.Control.LokDialog = L.Control.extend({
 		//console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
 		this._map._socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
 
-		if (this._map._docLayer && this._map._docLayer._debug)
+		if (this._map._docLayer && this._map._docLayer._debug && this._map._debugSidebar)
 			this._debugPaintWindow(id, rectangle);
 	},
 
@@ -419,6 +419,10 @@ L.Control.LokDialog = L.Control.extend({
 			else {
 				$('#' + strId).remove();
 				this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
+			}
+			if (this._map._docLayer && this._map._docLayer._docType === 'spreadsheet') {
+				this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+				this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
 			}
 		} else if (e.action === 'cursor_invalidate') {
 			if (this._isOpen(e.id) && !!e.rectangle) {
@@ -887,10 +891,18 @@ L.Control.LokDialog = L.Control.extend({
 				var documentContainer = L.DomUtil.get('document-container');
 				if (documentContainer) {
 					var offsetTop = documentContainer.offsetTop;
+					var marginTop = documentContainer.style.marginTop;
+					if (marginTop)
+						marginTop = parseInt(marginTop.replace('px', ''));
+					else
+						marginTop = 0;
+
+					offsetTop -= marginTop;
+
 					var noTopProp = true;
 					var props = documentContainer.style.cssText.split(';');
 					for (var i = 0; i < props.length; ++i) {
-						if (props[i].startsWith('top')) {
+						if (props[i].trim().startsWith('top')) {
 							props[i] = 'top: ' + (offsetTop + delta).toString() + 'px !important';
 							documentContainer.setAttribute('style', props.join(';'));
 							noTopProp = false;
@@ -904,26 +916,6 @@ L.Control.LokDialog = L.Control.extend({
 					}
 				}
 
-				var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
-				if (spreadsheetRowColumnFrame) {
-					offsetTop = spreadsheetRowColumnFrame.offsetTop;
-					noTopProp = true;
-					props = spreadsheetRowColumnFrame.style.cssText.split(';');
-					for (i = 0; i < props.length; ++i) {
-						if (props[i].startsWith('top')) {
-							props[i] = 'top: ' + (offsetTop + delta).toString() + 'px !important';
-							spreadsheetRowColumnFrame.setAttribute('style', props.join(';'));
-							noTopProp = false;
-							break;
-						}
-					}
-					if (noTopProp) {
-						styleAttr = spreadsheetRowColumnFrame.style.cssText;
-						styleAttr += '; top: ' + (offsetTop + delta).toString() + 'px !important';
-						spreadsheetRowColumnFrame.setAttribute('style', styleAttr);
-					}
-				}
-				$('.funcwizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
 				console.log('_adjustCalcInputBarHeight: end');
 			}
 
@@ -1668,10 +1660,6 @@ L.Control.LokDialog = L.Control.extend({
 			this._map.options.documentContainer.style.right = (width - 15).toString() + 'px';
 
 		this._map._onResize();
-
-		var spreadsheetRowColumnFrame = L.DomUtil.get('spreadsheet-row-column-frame');
-		if (spreadsheetRowColumnFrame)
-			spreadsheetRowColumnFrame.style.right = width.toString() + 'px';
 
 		this._resizeCalcInputBar(deckOffset);
 	},

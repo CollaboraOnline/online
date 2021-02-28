@@ -35,8 +35,7 @@ public:
     /// Request loading a document, or a new view, if one exists.
     virtual bool onLoad(const std::string& sessionId,
                         const std::string& uriAnonym,
-                        const std::string& renderOpts,
-                        const std::string& docTemplate) = 0;
+                        const std::string& renderOpts) = 0;
 
     /// Unload a client session, which unloads the document
     /// if it is the last and only.

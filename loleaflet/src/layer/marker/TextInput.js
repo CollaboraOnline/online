@@ -198,6 +198,10 @@ L.TextInput = L.Layer.extend({
 		// to pop-up), unless the document is read only.
 		if (!this._map.isPermissionEdit()) {
 			this._setAcceptInput(false);
+			// on clicking focus is important
+			// specially in chrome once document loses focus it never gets it back
+			// which causes shortcuts to stop working (i.e: print, search etc...)
+			this._map.getContainer().focus();
 			return;
 		}
 
@@ -507,7 +511,7 @@ L.TextInput = L.Layer.extend({
 
 		// Move and display under-caret marker
 		if (L.Browser.touch) {
-			if (this._map._docLayer._selections.getLayers().length === 0) {
+			if (this._map._docLayer._selections.empty()) {
 				this._cursorHandler.setLatLng(bottom).addTo(this._map);
 			} else {
 				this._map.removeLayer(this._cursorHandler);

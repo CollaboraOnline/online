@@ -370,6 +370,9 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_onMobileWizard: function(data) {
 		if (data) {
+			if (data.jsontype === 'autofilter' && (data.visible === 'false' || data.visible === false))
+				return;
+
 			this._inBuilding = true;
 
 			var isSidebar = (data.children && data.children.length >= 1 &&
@@ -441,13 +444,10 @@ L.Control.MobileWizard = L.Control.extend({
 				else if (data.id === 'insertshape') {
 					$('#mobile-wizard').addClass('shapeswizard');
 				}
-				if (this.map.getDocType() === 'spreadsheet')
-					$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
-				else
-					$('#mobile-wizard').css('top', $('#document-container').css('top'));
+				$('#mobile-wizard').css('top', $('#document-container').css('top'));
 			} else if (data.id === 'funclist') {
 				$('#mobile-wizard').height('100%');
-				$('#mobile-wizard').css('top', $('#spreadsheet-row-column-frame').css('top'));
+				$('#mobile-wizard').css('top', $('#document-container').css('top'));
 				$('#mobile-wizard').addClass('funcwizard');
 			} else {
 				$('#mobile-wizard').height(this.options.maxHeight);
@@ -569,7 +569,7 @@ L.Control.MobileWizard = L.Control.extend({
 		if (!parent)
 			return;
 
-		var oldFocus = document.activeElement;
+		var scrollTop = control.scrollTop;
 
 		control.style.visibility = 'hidden';
 		var builder = new L.control.mobileWizardBuilder({windowId: data.id,
@@ -582,7 +582,11 @@ L.Control.MobileWizard = L.Control.extend({
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
 
-		oldFocus.focus();
+		var newControl = container.querySelector('#' + data.control.id);
+		newControl.scrollTop = scrollTop;
+
+		// avoid scrolling when adding new bigger elements to the view
+		$('#mobile-wizard-content').animate({ scrollTop: this._currentScrollPosition }, 0);
 	},
 });
 

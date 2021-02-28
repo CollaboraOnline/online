@@ -25,6 +25,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		useInLineLabelsForUnoButtons: false
 	},
 
+	windowId: null,
+
 	/* Handler is a function which takes three parameters:
 	 * parentContainer - place where insert the content
 	 * data - data of a control under process
@@ -42,13 +44,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_currentDepth: 0,
 
 	setWindowId: function (id) {
-		this.options.windowId = id;
+		this.windowId = id;
 	},
 
 	_setup: function(options) {
 		this._clearColorPickers();
 		this.wizard = options.mobileWizard;
 		this.map = options.map;
+		this.windowId = options.windowId;
 		this.callback = options.callback ? options.callback : this._defaultCallbackHandler;
 
 		this._colorPickers = [];
@@ -177,7 +180,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.sendUnoCommand(encodedCommand);
 		} else if (object) {
 			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
-			var windowId = builder.options.windowId !== null && builder.options.windowId !== undefined ? builder.options.windowId :
+			var windowId = builder.windowId !== null && builder.windowId !== undefined ? builder.windowId :
 				(window.mobileDialogId !== undefined ? window.mobileDialogId :
 					(window.sidebarId !== undefined ? window.sidebarId : -1));
 			var message = 'dialogevent ' + windowId
@@ -969,15 +972,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		radiobuttonLabel.innerHTML = builder._cleanText(data.text);
 		radiobuttonLabel.for = data.id;
 
+		var toggleFunction = function() {
+			builder.callback('radiobutton', 'change', container, this.checked, builder);
+		};
+
+		$(radiobuttonLabel).click(function () {
+			$(radiobutton).prop('checked', true);
+			toggleFunction.bind({checked: true})();
+		});
+
 		if (data.enabled === 'false' || data.enabled === false)
 			$(radiobutton).attr('disabled', 'disabled');
 
 		if (data.checked === 'true' || data.checked === true)
 			$(radiobutton).prop('checked', true);
 
-		radiobutton.addEventListener('change', function() {
-			builder.callback('radiobutton', 'change', container, this.checked, builder);
-		});
+		radiobutton.addEventListener('change', toggleFunction);
 
 		if (data.hidden)
 			$(radiobutton).hide();
@@ -996,14 +1006,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkboxLabel.innerHTML = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
 
+		var toggleFunction = function() {
+			builder.callback('checkbox', 'change', div, this.checked, builder);
+		};
+
+		$(checkboxLabel).click(function () {
+			var status = $(checkbox).is(':checked');
+			$(checkbox).prop('checked', !status);
+			toggleFunction.bind({checked: !status})();
+		});
+
 		if (data.enabled === 'false' || data.enabled === false) {
 			$(checkboxLabel).addClass('disabled');
 			$(checkbox).prop('disabled', true);
 		}
 
-		checkbox.addEventListener('change', function() {
-			builder.callback('checkbox', 'change', div, this.checked, builder);
-		});
+		checkbox.addEventListener('change', toggleFunction);
 
 		var customCommand = builder._mapWindowIdToUnoCommand(data.id);
 
@@ -1448,7 +1466,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
 
-		edit.addEventListener('change', function() {
+		edit.addEventListener('keyup', function() {
 			if (callback)
 				callback(this.value);
 			else
@@ -1745,19 +1763,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (!disabled && entry.state == null) {
+			var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
 			$(text).click(function() {
 				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
 				$(span).addClass('selected');
 
 				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+				if (singleClick) {
+					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+				}
 			});
 
-			$(text).dblclick(function() {
-				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
-				$(span).addClass('selected');
+			if (!singleClick) {
+				$(text).dblclick(function() {
+					$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
+					$(span).addClass('selected');
 
-				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
-			});
+					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+				});
+			}
 		}
 	},
 
@@ -2213,6 +2237,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.command) {
 			var id = encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '');
+			id = id.replace(/\./g, '-');
 			div.id = id;
 
 			var icon = builder._createIconURL(data.command);
@@ -2853,6 +2878,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	setupStandardButtonHandler: function(button, response, builder) {
+		$(button).unbind('click');
+		$(button).click(function () {
+			builder.callback('dialog', 'response', {id: '__DIALOG__'}, response, builder);
+		});
+	},
+
 	_amendJSDialogData: function(data) {
 		// Called from build() which is already recursive,
 		// so no need to recurse here over 'data'.
@@ -2935,6 +2967,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					this.build(childObject, childData.children, isVertical, hasManyChildren);
 				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
 					$('#' + childData.id).addClass('hidden-from-event');
+				}
+
+				if ((childType === 'dialog' || childType === 'messagebox' || childType === 'modelessdialog')
+					&& childData.responses) {
+					for (var i in childData.responses) {
+						var buttonId = childData.responses[i].id;
+						var response = childData.responses[i].response;
+						var button = $('#' + buttonId);
+						var isOk = response === '1' || response === 1;
+						if (button && !isOk)
+							this.setupStandardButtonHandler(button, response, this);
+					}
 				}
 
 				this.options.useInLineLabelsForUnoButtons = false;

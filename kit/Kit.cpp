@@ -275,7 +275,7 @@ namespace
                     if (::stat(fpath, &ownerInfo) != 0 ||
                         ::chown(linkableCopy.c_str(), ownerInfo.st_uid, ownerInfo.st_gid) != 0)
                     {
-                        LOG_WRN("Failed to stat or chown " << ownerInfo.st_uid << ":" << ownerInfo.st_gid <<
+                        LOG_ERR("Failed to stat or chown " << ownerInfo.st_uid << ":" << ownerInfo.st_gid <<
                                 " " << linkableCopy << ": " << strerror(errno) << " missing cap_chown?, disabling linkable");
                         unlink(linkableCopy.c_str());
                         canChown = false;
@@ -585,7 +585,7 @@ public:
         {
             if (_sessions.find(sessionId) != _sessions.end())
             {
-                LOG_WRN("Session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "] already exists.");
+                LOG_ERR("Session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "] already exists.");
                 return true;
             }
 
@@ -804,7 +804,7 @@ public:
             }
             return;
         }
-        else if (type == LOK_CALLBACK_JSDIALOG)
+        else if (type == LOK_CALLBACK_JSDIALOG || type == LOK_CALLBACK_HYPERLINK_CLICKED)
         {
             if (self->_sessions.size() == 1)
             {
@@ -927,8 +927,7 @@ private:
     /// Load a document (or view) and register callbacks.
     bool onLoad(const std::string& sessionId,
                 const std::string& uriAnonym,
-                const std::string& renderOpts,
-                const std::string& docTemplate) override
+                const std::string& renderOpts) override
     {
         LOG_INF("Loading url [" << uriAnonym << "] for session [" << sessionId <<
                 "] which has " << (_sessions.size() - 1) << " sessions.");
@@ -944,7 +943,7 @@ private:
         std::shared_ptr<ChildSession> session = it->second;
         try
         {
-            if (!load(session, renderOpts, docTemplate))
+            if (!load(session, renderOpts))
                 return false;
         }
         catch (const std::exception &exc)
@@ -1176,8 +1175,7 @@ private:
     }
 
     std::shared_ptr<lok::Document> load(const std::shared_ptr<ChildSession>& session,
-                                        const std::string& renderOpts,
-                                        const std::string& docTemplate)
+                                        const std::string& renderOpts)
     {
         const std::string sessionId = session->getId();
 
@@ -1189,6 +1187,7 @@ private:
         const bool haveDocPassword = session->getHaveDocPassword();
         const std::string& lang = session->getLang();
         const std::string& deviceFormFactor = session->getDeviceFormFactor();
+        const std::string& batchMode = session->getBatchMode();
         std::string spellOnline;
 
         std::string options;
@@ -1197,6 +1196,9 @@ private:
 
         if (!deviceFormFactor.empty())
             options += ",DeviceFormFactor=" + deviceFormFactor;
+
+        if (!batchMode.empty())
+            options += ",Batch=" + batchMode;
 
         if (!_loKitDocument)
         {
@@ -1219,7 +1221,7 @@ private:
             _jailedUrl = uri;
             _isDocPasswordProtected = false;
 
-            const char *pURL = docTemplate.empty() ? uri.c_str() : docTemplate.c_str();
+            const char *pURL = uri.c_str();
             LOG_DBG("Calling lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ", \"" << options << "\").");
             const auto start = std::chrono::steady_clock::now();
             _loKitDocument.reset(_loKit->documentLoad(pURL, options.c_str()));
@@ -1389,7 +1391,7 @@ private:
             }
 
             const std::string abbrMessage = getAbbreviatedMessage(data, size);
-            LOG_WRN("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
+            LOG_ERR("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
         }
         else
         {
@@ -1419,7 +1421,7 @@ private:
             Poco::Dynamic::Var var = parser.parse(renderOpts);
             renderOptsObj = var.extract<Object::Ptr>();
         }
-        else if (!userName.empty())
+        else
         {
             renderOptsObj = new Object();
         }
@@ -1431,11 +1433,9 @@ private:
             renderOptsObj->set(".uno:Author", makePropertyValue("string", userName));
         }
 
-        if (!spellOnline.empty())
-        {
-            bool bSet = (spellOnline != "false");
-            renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
-        }
+        // By default we enable spell-checking, unless it's disabled explicitly.
+        const bool bSet = (spellOnline != "false");
+        renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
 
         if (renderOptsObj)
         {
@@ -1551,7 +1551,7 @@ public:
 
                         if (!isFound)
                         {
-                            LOG_WRN("Document::ViewCallback. Session [" << viewId <<
+                            LOG_ERR("Document::ViewCallback. Session [" << viewId <<
                                     "] is no longer active to process [" << lokCallbackTypeToString(type) <<
                                     "] [" << payload << "] message to Master Session.");
                         }
@@ -2022,7 +2022,7 @@ protected:
     void onDisconnect() override
     {
 #if !MOBILEAPP
-        LOG_WRN("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
+        LOG_ERR("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
 #endif
 #ifdef IOS
@@ -2206,7 +2206,7 @@ void lokit_main(
                 if (!JailUtil::bind(sysTemplate, jailPathStr)
                     || !JailUtil::remountReadonly(sysTemplate, jailPathStr))
                 {
-                    LOG_WRN("Failed to mount [" << sysTemplate << "] -> [" << jailPathStr
+                    LOG_ERR("Failed to mount [" << sysTemplate << "] -> [" << jailPathStr
                                                 << "], will link/copy contents.");
                     return false;
                 }
@@ -2230,7 +2230,7 @@ void lokit_main(
                 LOG_INF("Mounting random temp dir " << tmpSubDir << " -> " << jailTmpDir);
                 if (!JailUtil::bind(tmpSubDir, jailTmpDir))
                 {
-                    LOG_WRN("Failed to mount [" << tmpSubDir << "] -> [" << jailTmpDir
+                    LOG_ERR("Failed to mount [" << tmpSubDir << "] -> [" << jailTmpDir
                                                 << "], will link/copy contents.");
                     return false;
                 }
@@ -2265,7 +2265,7 @@ void lokit_main(
                 // Update the dynamic files inside the jail.
                 if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
                 {
-                    LOG_WRN(
+                    LOG_ERR(
                         "Failed to update the dynamic files in the jail ["
                         << jailPathStr
                         << "]. If the systemplate directory is owned by a superuser or is "
@@ -2483,7 +2483,7 @@ void lokit_main(
 #ifndef IOS
         if (!LIBREOFFICEKIT_HAS(kit, runLoop))
         {
-            LOG_ERR("Kit is missing Unipoll API");
+            LOG_FTL("Kit is missing Unipoll API");
             std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
             std::_Exit(EX_SOFTWARE);
         }

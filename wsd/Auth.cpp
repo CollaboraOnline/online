@@ -104,7 +104,7 @@ bool JWTAuth::verify(const std::string& accessToken)
     {
         if (tokens.size() < 3)
         {
-            LOG_INF("JWTAuth: verification failed; Not enough tokens");
+            LOG_ERR("JWTAuth: verification failed; Not enough tokens");
             return false;
         }
 
@@ -130,7 +130,7 @@ bool JWTAuth::verify(const std::string& accessToken)
 
         if (encodedSig != tokens[2])
         {
-            LOG_INF("JWTAuth: verification failed; Expected: " << encodedSig << ", Received: " << tokens[2]);
+            LOG_ERR("JWTAuth: verification failed; Expected: " << encodedSig << ", Received: " << tokens[2]);
             if (!Util::isFuzzing())
             {
                 return false;
@@ -164,7 +164,7 @@ bool JWTAuth::verify(const std::string& accessToken)
     }
     catch(Poco::Exception& exc)
     {
-        LOG_WRN("JWTAuth:verify: Exception: " << exc.displayText());
+        LOG_ERR("JWTAuth:verify: Exception: " << exc.displayText());
         return false;
     }
 

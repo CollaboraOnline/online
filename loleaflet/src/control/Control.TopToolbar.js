@@ -26,9 +26,24 @@ L.Control.TopToolbar = L.Control.extend({
 		$(window).resize(function() {
 			if ($(window).width() !== map.getSize().x) {
 				var toolbar = w2ui['editbar'];
-				toolbar.resize();
+				if (toolbar)
+					toolbar.resize();
 			}
 		});
+	},
+
+	onRemove: function() {
+		$().w2destroy('editbar');
+		L.DomUtil.get('toolbar-up').remove();
+
+		this.map.off('doclayerinit', this.onDocLayerInit, this);
+		this.map.off('updatepermission', this.onUpdatePermission, this);
+		this.map.off('wopiprops', this.onWopiProps, this);
+		this.map.off('commandstatechanged', this.onCommandStateChanged, this);
+
+		if (!window.mode.isMobile()) {
+			this.map.off('updatetoolbarcommandvalues', this.updateCommandValues, this);
+		}
 	},
 
 	onFontSizeSelect: function(e) {
@@ -262,8 +277,25 @@ L.Control.TopToolbar = L.Control.extend({
 		];
 	},
 
+	updateControlsState: function() {
+		if (this.map['stateChangeHandler']) {
+			var items = this.map['stateChangeHandler'].getItems();
+			if (items) {
+				for (var item in items) {
+					this.processStateChangedCommand(item, items[item]);
+				}
+			}
+		}
+	},
+
 	create: function() {
-		var toolbar = $('#toolbar-up');
+		var toolbar = L.DomUtil.get('toolbar-up');
+		// In case it contains garbage
+		if (toolbar)
+			toolbar.remove();
+		// Use original template as provided by server
+		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
+		toolbar = $('#toolbar-up');
 		toolbar.w2toolbar({
 			name: 'editbar',
 			items: this.getToolItems(),
@@ -295,6 +327,9 @@ L.Control.TopToolbar = L.Control.extend({
 		toolbar.bind('touchstart', function() {
 			w2ui['editbar'].touchStarted = true;
 		});
+
+		this.map.createFontSelector('.fonts-select');
+		w2ui['editbar'].resize();
 	},
 
 	onDocLayerInit: function() {
@@ -315,7 +350,6 @@ L.Control.TopToolbar = L.Control.extend({
 			$('#toolbar-wrapper').addClass('spreadsheet');
 			if (window.mode.isTablet()) {
 				$(this.map.options.documentContainer).addClass('tablet');
-				$('#spreadsheet-row-column-frame').addClass('tablet');
 				$('#toolbar-wrapper').addClass('tablet');
 			}
 
@@ -482,9 +516,7 @@ L.Control.TopToolbar = L.Control.extend({
 		}
 	},
 
-	onCommandStateChanged: function(e) {
-		var commandName = e.commandName;
-		var state = e.state;
+	processStateChangedCommand: function(commandName, state) {
 		var found = false;
 
 		if (commandName === '.uno:StyleApply') {
@@ -522,8 +554,11 @@ L.Control.TopToolbar = L.Control.extend({
 			this.options.fontsSelectValue = state;
 		}
 
-		// call shared handler for font color and highlight items handling
-		window.onCommandStateChanged(e);
+		window.processStateChangedCommand(commandName, state);
+	},
+
+	onCommandStateChanged: function(e) {
+		this.processStateChangedCommand(e.commandName, e.state);
 	}
 });
 

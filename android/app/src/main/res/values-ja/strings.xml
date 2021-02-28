@@ -31,7 +31,7 @@
     <string name="pref_show_hidden_files_summary">隠しファイル/フォルダを表示する</string>
     <string name="title_browser">すべてのファイル</string>
     <string name="filter_presentations">プレゼンテーション</string>
-    <string name="filter_spreadsheets">表計算ドキュメント</string>
+    <string name="filter_spreadsheets">表計算</string>
     <string name="title_recents">最近使用したファイル</string>
     <string name="positive_ok">OK</string>
     <string name="current_dir">現在のディレクトリ: %1$s</string>
@@ -42,7 +42,7 @@
     <string name="theme">テーマ</string>
     <string name="sort_smallest">小さい順</string>
     <string name="sort_largest">大きい順</string>
-    <string name="app_description">$APP_NAME はワードプロセッサー、表計算、プレゼンテーションやその他を含む、モダンで使いやすいオープンソースのオフィススイートです。</string>
+    <string name="app_description">$APP_NAME はワードプロセッサ、表計算、プレゼンテーションやその他を含む、モダンで使いやすいオープンソースのオフィススイートです。</string>
     <string name="about_moreinfo">詳細情報</string>
     <string name="about_license">ライセンスを表示</string>
     <string name="sort_newest">新しい順</string>
@@ -50,4 +50,14 @@
     <string name="filter_documents">文書ドキュメント</string>
     <string name="open">開く</string>
     <string name="filter_everything">すべての形式</string>
+    <string name="share_document">ドキュメントの共有</string>
+    <string name="action_overwrite">上書き</string>
+    <string name="action_create">作成</string>
+    <string name="enter_filename">ファイル名を入力してください:</string>
+    <string name="create_new_document_title">新規ドキュメントの作成</string>
+    <string name="action_cancel">キャンセル</string>
+    <string name="negative_cancel">キャンセル</string>
+    <string name="about_notice">お知らせを表示</string>
+    <string name="owncloud_unauthorized">クラウドサーバーにログインできません。設定を確認してください。</string>
+    <string name="owncloud_wrong_connection">クラウドサーバーに接続できません。設定を確認してください。</string>
 </resources>

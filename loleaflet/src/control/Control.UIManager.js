@@ -11,6 +11,16 @@ L.Control.UIManager = L.Control.extend({
 	onAdd: function (map) {
 		this.map = map;
 		this.notebookbar = null;
+		// Every time the UI mode changes from 'classic' to 'notebookbar'
+		// the two below elements will be destroyed.
+		// Here we save the original state of the elements, as provided
+		// by server, in order to apply to them the same initialization
+		// code when activating the 'classic' mode as if the elements are
+		// initialized for the first time since the start of the application.
+		// It is important to use the same initial structure provided by server
+		// in order to keep a single place (server) of initial properties setting.
+		this.map.toolbarUpTemplate = $('#toolbar-up')[0].cloneNode(true);
+		this.map.mainMenuTemplate = $('#main-menu')[0].cloneNode(true);
 
 		map.on('updatepermission', this.onUpdatePermission, this);
 
@@ -38,13 +48,15 @@ L.Control.UIManager = L.Control.extend({
 			$('#mobile-edit-button').show();
 		} else {
 			if (!enableNotebookbar) {
-				this.map.addControl(L.control.topToolbar());
+				this.map.topToolbar = L.control.topToolbar();
+				this.map.addControl(this.map.topToolbar);
 			}
 
 			this.map.addControl(L.control.signingBar());
 			this.map.addControl(L.control.statusBar());
 
-			this.map.addControl(L.control.jsDialog());
+			this.map.jsdialog = L.control.jsDialog();
+			this.map.addControl(this.map.jsdialog);
 		}
 
 		setupToolbar(this.map);
@@ -108,13 +120,11 @@ L.Control.UIManager = L.Control.extend({
 
 		if (docType === 'presentation') {
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 		}
 
 		if (docType === 'text') {
 			// remove unused elements
-			L.DomUtil.remove(L.DomUtil.get('spreadsheet-row-column-frame'));
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 
@@ -134,6 +144,111 @@ L.Control.UIManager = L.Control.extend({
 				w2ui['editbar'].refresh();
 			});
 		}
+
+		this.map.on('changeuimode', this.onChangeUIMode, this);
+	},
+
+	removeClassicUI: function() {
+		if (this.map.menubar)
+		{
+			this.map.removeControl(this.map.menubar);
+			this.map.menubar = null;
+		}
+		if (this.map.topToolbar)
+		{
+			this.map.removeControl(this.map.topToolbar);
+			this.map.topToolbar = null;
+		}
+	},
+
+	addClassicUI: function(adjustVertPos) {
+		if (adjustVertPos) {
+			this.moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
+			this.moveObjectVertically($('#document-container'), -36);
+			this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
+			this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
+		}
+
+		this.map.menubar = L.control.menubar();
+		this.map.addControl(this.map.menubar);
+		this.map.topToolbar = L.control.topToolbar();
+		this.map.addControl(this.map.topToolbar);
+
+		this.map.menubar._onDocLayerInit();
+		this.map.topToolbar.onDocLayerInit();
+		this.map.sendInitUNOCommands();
+		this.map._docLayer._resetClientVisArea();
+		this.map._docLayer._requestNewTiles();
+
+		this.map.topToolbar.updateControlsState();
+	},
+
+	addNotebookbarUI: function(adjustVertPos) {
+		if (this.map.getDocType() === 'spreadsheet') {
+			var notebookbar = L.control.notebookbarCalc();
+		} else if (this.map.getDocType() === 'presentation') {
+			notebookbar = L.control.notebookbarImpress();
+		} else {
+			notebookbar = L.control.notebookbarWriter();
+		}
+
+		this.notebookbar = notebookbar;
+		this.map.addControl(notebookbar);
+
+		notebookbar._showNotebookbar = true;
+		notebookbar.showTabs();
+		$('.main-nav').removeClass('readonly');
+
+		if (adjustVertPos) {
+			this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
+			this.moveObjectVertically($('#document-container'), 36);
+			this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
+			this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
+		}
+		$('#map').addClass('notebookbar-opened');
+
+		this.map.sendInitUNOCommands();
+		this.map._docLayer._resetClientVisArea();
+		this.map._docLayer._requestNewTiles();
+	},
+
+	removeNotebookbarUI: function() {
+		if (this.notebookbar) {
+			this.map.removeControl(this.notebookbar);
+			this.notebookbar = null;
+		}
+		$('#map').removeClass('notebookbar-opened');
+	},
+
+	onChangeUIMode: function(uiMode) {
+		if (uiMode.mode === window.userInterfaceMode && !uiMode.force)
+			return;
+
+		if (uiMode.mode !== 'classic' && uiMode.mode !== 'notebookbar')
+			return;
+
+		switch (window.userInterfaceMode) {
+		case 'classic':
+			this.removeClassicUI();
+			break;
+
+		case 'notebookbar':
+			this.removeNotebookbarUI();
+			break;
+		}
+
+		var adjustVertPos = (window.userInterfaceMode != uiMode.mode);
+		window.userInterfaceMode = uiMode.mode;
+
+		switch (window.userInterfaceMode) {
+		case 'classic':
+			this.addClassicUI(adjustVertPos);
+			break;
+
+		case 'notebookbar':
+			this.addNotebookbarUI(adjustVertPos);
+			break;
+		}
 	},
 
 	// Menubar
@@ -150,7 +265,6 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
 		this.moveObjectVertically($('#document-container'), 36);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
@@ -168,7 +282,6 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon fold');
 		obj.addClass('w2ui-icon unfold');
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
 		this.moveObjectVertically($('#document-container'), -36);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
@@ -228,7 +341,6 @@ L.Control.UIManager = L.Control.extend({
 				additionalOffset = 53;
 		}
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
 		this.moveObjectVertically($('#document-container'), 43 + additionalOffset);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 43);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 43);
@@ -240,7 +352,6 @@ L.Control.UIManager = L.Control.extend({
 		if (this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), -85);
 		this.moveObjectVertically($('#document-container'), -85);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), -85);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -85);
@@ -254,7 +365,6 @@ L.Control.UIManager = L.Control.extend({
 		if (!this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#spreadsheet-row-column-frame'), 85);
 		this.moveObjectVertically($('#document-container'), 85);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 85);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 85);

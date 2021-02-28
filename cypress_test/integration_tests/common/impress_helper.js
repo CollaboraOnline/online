@@ -54,11 +54,18 @@ function typeTextAndVerify(text, expected) {
 	helper.expectTextForClipboard(expected);
 }
 
+// Make sure we have the right number of slides in the document.
+// We use the number of slide previews as indicators.
+// Parameters:
+// slides - number of expected slides
 function assertNumberOfSlidePreviews(slides) {
 	cy.get('#slide-sorter .preview-frame')
 		.should('have.length', slides + 1);
 }
 
+// Select a text shape at the center of the slide / view.
+// This method triggers mouse click in the center to achive
+// a shape selection. It fails, if there is no shape there.
 function selectTextShapeInTheCenter() {
 	cy.log('Selecting text shape - start.');
 
@@ -81,6 +88,7 @@ function selectTextShapeInTheCenter() {
 	cy.log('Selecting text shape - end.');
 }
 
+// Remove existing shape selection by clicking outside of the shape.
 function removeShapeSelection() {
 	cy.log('Removing shape selection - start.');
 
@@ -108,6 +116,11 @@ function removeShapeSelection() {
 	cy.log('Removing shape selection - end.');
 }
 
+
+// We use an SVG representation of the Impress shapes
+// to check it's content, it's shape, etc. We can use
+// this method to trigger the update of the SVG representation
+// so we can be sure that it's in an updated state.
 function triggerNewSVGForShapeInTheCenter() {
 	cy.log('Triggering new SVG for shape - start.');
 
@@ -123,6 +136,10 @@ function triggerNewSVGForShapeInTheCenter() {
 	cy.log('Triggering new SVG for shape - end.');
 }
 
+// Select the text inside a preselected shape. So we assume
+// we have already a shape selected. We try to select the
+// text of this shape by double clicking into it, until the
+// cursor becomes visible.
 function selectTextOfShape() {
 	cy.log('Selecting text of shape - start.');
 
@@ -148,11 +165,14 @@ function selectTextOfShape() {
 	cy.get('.leaflet-cursor.blinking-cursor')
 		.should('exist');
 
-	helper.selectAllText(false);
+	helper.selectAllText();
 
 	cy.log('Selecting text of shape - end.');
 }
 
+// Step into text editing of the preselected shape. So we assume
+// we have already a shape selected. We try to make the document
+// to switch text editing mode by double clicking into the shape.
 function dblclickOnSelectedShape() {
 	cy.get('.transform-handler--rotate')
 		.then(function(items) {

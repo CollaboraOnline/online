@@ -1029,8 +1029,8 @@ void LOOLWSD::initialize(Application& self)
     setenv("LOOL_LOGLEVEL", LogLevel.c_str(), true);
 
 #if !ENABLE_DEBUG
-    std::string SalLog = getConfigValue<std::string>(conf, "logging.lokit_sal_log", "-INFO-WARN");
-    setenv("SAL_LOG", SalLog.c_str(), 0);
+    const std::string salLog = getConfigValue<std::string>(conf, "logging.lokit_sal_log", "-INFO-WARN");
+    setenv("SAL_LOG", salLog.c_str(), 0);
 #endif
 
     const bool withColor = getConfigValue<bool>(conf, "logging.color", true) && isatty(fileno(stderr));
@@ -1174,20 +1174,11 @@ void LOOLWSD::initialize(Application& self)
 
 #if ENABLE_SSL
     LOOLWSD::SSLEnabled.set(getConfigValue<bool>(conf, "ssl.enable", true));
-#endif
-
-    if (LOOLWSD::isSSLEnabled())
-    {
-        LOG_INF("SSL support: SSL is enabled.");
-    }
-    else
-    {
-        LOG_WRN("SSL support: SSL is disabled.");
-    }
-
-#if ENABLE_SSL
     LOOLWSD::SSLTermination.set(getConfigValue<bool>(conf, "ssl.termination", true));
 #endif
+
+    LOG_INF("SSL support: SSL is " << (LOOLWSD::isSSLEnabled() ? "enabled." : "disabled."));
+    LOG_INF("SSL support: termination is " << (LOOLWSD::isSSLTermination() ? "enabled." : "disabled."));
 
     std::string allowedLanguages(config().getString("allowed_languages"));
     // Core <= 7.0.

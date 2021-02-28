@@ -441,11 +441,10 @@ public:
     static constexpr const char* HTTP_1_1 = "HTTP/1.1";
     static constexpr const char* OK = "OK";
 
-    StatusLine(const std::string& version = HTTP_1_1, int code = 200,
-               const std::string& reason = OK)
-        : _httpVersion(version)
+    StatusLine(std::string version = HTTP_1_1, int code = 0, std::string reason = std::string())
+        : _httpVersion(std::move(version))
         , _statusCode(code)
-        , _reasonPhrase(reason)
+        , _reasonPhrase(std::move(reason))
     {
     }
 
@@ -745,7 +744,7 @@ public:
         return syncRequestImpl();
     }
 
-    void asyncRequest(const Request& req, SocketPoll& poll)
+    bool asyncRequest(const Request& req, SocketPoll& poll)
     {
         LOG_TRC("asyncRequest");
 
@@ -756,8 +755,15 @@ public:
             LOG_TRC("Connected");
             poll.insertNewSocket(_socket);
         }
+        else if (!_socket)
+        {
+            LOG_ERR("Failed to connect to " << _host << ':' << _port);
+            return false;
+        }
         else
             poll.wakeupWorld();
+
+        return true;
     }
 
 private:
@@ -874,7 +880,6 @@ private:
         }
         else if (!out.empty())
         {
-            LOG_TRC("Sending\n" << std::string(out.getBlock(), out.getBlockSize()));
             _socket->writeOutgoingData();
         }
     }

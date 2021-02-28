@@ -27,11 +27,25 @@ $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10
 	done
 endif
 
-SRC_TS = $(wildcard $(srcdir)/src/layer/tile/*.ts)
-SRC_TS_JS = $(patsubst $(srcdir)/src/layer/tile/%.ts,$(srcdir)/src/layer/tile/%.js,$(SRC_TS))
+DIRECTORY_TS = $(srcdir)/src/layer/tile $(srcdir)/src/control # Add ts directories here.
+SRC_TS_ALL := $(foreach dir, $(DIRECTORY_TS), $(wildcard $(dir)/*.ts))
+SRC_TS_JS_FILES := $(SRC_TS_ALL:.ts=.js)
 
-$(srcdir)/src/layer/tile/%.js: $(srcdir)/src/layer/tile/%.ts
+$(SRC_TS_ALL:.ts=.js): $(SRC_TS_ALL)
+	$(builddir)/node_modules/typescript/bin/tsc $(@:.js=.ts) --outfile $@ --module none --lib dom,es2016 --target ES5
+
+MOCHA_DIR = $(srcdir)/mocha_tests
+MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
+MOCHA_TS_JS_FILES := $(MOCHA_TS_FILES:.ts=.js)
+$(MOCHA_TS_JS_FILES): %.js: %.ts
 	$(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
+
+SRC_TS = $(srcdir)/src/layer/vector/CanvasOverlay.ts
+SRC_TS_JS = $(srcdir)/src/layer/vector/CanvasOverlay.js
+SRC_TS_JS_DST = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES)) $(DIST_FOLDER)/src/layer/vector/CanvasOverlay.js
+
+$(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/*.ts
+	$(builddir)/node_modules/typescript/bin/tsc $(srcdir)/src/layer/vector/CanvasOverlay.ts --outfile $(srcdir)/src/layer/vector/CanvasOverlay.js --module none --lib dom,es2016 --target ES5
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
@@ -207,6 +221,8 @@ LOLEAFLET_JS =\
 	src/layer/Layer.js \
 	src/layer/tile/CanvasSectionProps.js \
 	src/layer/tile/CanvasSectionContainer.js \
+	src/layer/tile/TilesSection.js \
+	src/layer/vector/CanvasOverlay.js \
 	src/layer/tile/GridLayer.js \
 	src/layer/tile/TileLayer.js \
 	src/layer/tile/CanvasTileLayer.js \
@@ -277,6 +293,11 @@ LOLEAFLET_JS =\
 	src/control/Control.Toolbar.js \
 	src/control/Control.js \
 	src/control/Control.PartsPreview.js \
+	src/control/Control.GroupBase.js \
+	src/control/Control.CornerGroup.js \
+	src/control/Control.RowGroup.js \
+	src/control/Control.ColumnGroup.js \
+	src/control/Control.CornerHeader.js \
 	src/control/Control.Header.js \
 	src/control/Control.ColumnHeader.js \
 	src/control/Control.RowHeader.js \
@@ -417,7 +438,7 @@ $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 build-loleaflet: \
 	$(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
-	$(SRC_TS_JS) \
+	$(SRC_TS_JS_DST) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(LOLEAFLET_IMAGES_CUSTOM_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
@@ -685,3 +706,7 @@ $(abs_srcdir)/admin/jsconfig.json:
 	\"exclude\" : [\"node_modules\"]\n}" > $@
 
 jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
+
+check: $(MOCHA_TS_JS_FILES)
+	@echo "Running mocha tests..."
+	npm test

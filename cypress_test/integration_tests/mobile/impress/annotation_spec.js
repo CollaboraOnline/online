@@ -83,34 +83,6 @@ describe('Annotation tests.', function() {
 			.should('have.text', 'modified some text');
 	});
 
-	// TODO: Reply does not work at all
-	it.skip('Reply to comment.', function() {
-		insertComment();
-
-		mobileHelper.selectAnnotationMenuItem('Reply');
-
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
-
-		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.should('have.text', '');
-
-		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.type('reply');
-
-		cy.get('.vex-dialog-button-primary')
-			.click();
-
-		cy.get('.loleaflet-annotation')
-			.should('exist');
-
-		cy.get('.loleaflet-annotation:nth-of-type(1) .loleaflet-annotation-content')
-			.should('have.text', 'some text');
-
-		cy.get('.loleaflet-annotation:nth-of-type(2) .loleaflet-annotation-content')
-			.should('have.text', 'reply');
-	});
-
 	it('Remove comment.', function() {
 		insertComment();
 

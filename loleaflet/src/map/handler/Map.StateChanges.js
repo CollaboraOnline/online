@@ -54,6 +54,10 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		}
 	},
 
+	getItems: function() {
+		return this._items;
+	},
+
 	getItemValue: function(unoCmd) {
 		if (unoCmd && unoCmd.substring(0, 5) !== '.uno:') {
 			unoCmd = '.uno:' + unoCmd;

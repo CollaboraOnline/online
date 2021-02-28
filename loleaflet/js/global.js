@@ -784,7 +784,9 @@
 				}
 				if (window.isLocalStorageAllowed) {
 					var spellOnline = window.localStorage.getItem('SpellOnline');
-					msg += ' spellOnline=' +  spellOnline;
+					if (spellOnline) {
+						msg += ' spellOnline=' + spellOnline;
+					}
 				}
 				global.socket.send(msg);
 			}

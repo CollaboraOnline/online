@@ -22,6 +22,7 @@
 #include "Log.hpp"
 #include "Util.hpp"
 #include <common/Authorization.hpp>
+#include <net/HttpRequest.hpp>
 
 namespace Poco
 {
@@ -163,7 +164,7 @@ public:
         _localStorePath(localStorePath),
         _jailPath(jailPath),
         _fileInfo("", "lool", std::chrono::system_clock::time_point(), 0),
-        _isLoaded(false),
+        _isDownloaded(false),
         _forceSave(false),
         _isUserModified(false),
         _isAutosave(false),
@@ -175,8 +176,6 @@ public:
     virtual ~StorageBase() {}
 
     const Poco::URI& getUri() const { return _uri; }
-
-    const std::string getUriString() const { return _uri.toString(); }
 
     const std::string& getJailPath() const { return _jailPath; };
 
@@ -198,9 +197,9 @@ public:
         _jailedFilePathAnonym = newPath;
     }
 
-    void setLoaded(bool loaded) { _isLoaded = loaded; }
+    void setDownloaded(bool loaded) { _isDownloaded = loaded; }
 
-    bool isLoaded() const { return _isLoaded; }
+    bool isDownloaded() const { return _isDownloaded; }
 
     /// Asks the storage object to force overwrite to storage upon next save
     /// even if document turned out to be changed in storage
@@ -260,6 +259,7 @@ public:
 
     static bool allowedWopiHost(const std::string& host);
     static Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri);
+    static std::shared_ptr<http::Session> getHttpSession(const Poco::URI& uri);
 
 protected:
 
@@ -276,7 +276,7 @@ private:
     std::string _jailedFilePath;
     std::string _jailedFilePathAnonym;
     FileInfo _fileInfo;
-    bool _isLoaded;
+    bool _isDownloaded;
     bool _forceSave;
 
     /// The document has been modified by the user.
@@ -366,7 +366,6 @@ public:
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
                 const std::string& jailPath)
         : StorageBase(uri, localStorePath, jailPath)
-        , _wopiLoadDuration(std::chrono::milliseconds::zero())
         , _wopiSaveDuration(std::chrono::milliseconds::zero())
         , _reuseCookies(false)
     {
@@ -400,6 +399,7 @@ public:
         const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
         const std::string& getTemplateSource() const { return _templateSource; }
         const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
+        const std::string& getFileUrl() const { return _fileUrl; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
         std::string& getPostMessageOrigin() { return _postMessageOrigin; }
@@ -424,7 +424,6 @@ public:
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
         TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
-        std::chrono::milliseconds getCallDurationMs() const { return _callDurationMs; }
     private:
         /// User id of the user accessing the file
         std::string _userId;
@@ -442,6 +441,8 @@ public:
         std::string _templateSource;
         /// User readable string of document name to show in UI, if present.
         std::string _breadcrumbDocName;
+        /// The optional FileUrl, used to download the document if provided.
+        std::string _fileUrl;
         /// If user accessing the file has write permission
         bool _userCanWrite;
         /// WOPI Post message property
@@ -486,9 +487,6 @@ public:
         bool _supportsRename;
         /// If user is allowed to rename the document
         bool _userCanRename;
-
-        /// Time it took to call WOPI's CheckFileInfo
-        std::chrono::milliseconds _callDurationMs;
     };
 
     /// Returns the response of CheckFileInfo WOPI call for URI that was
@@ -513,8 +511,7 @@ public:
                                           const std::string& saveAsFilename,
                                           const bool isRename) override;
 
-    /// Total time taken for making WOPI calls during load
-    std::chrono::milliseconds getWopiLoadDuration() const { return _wopiLoadDuration; }
+    /// Total time taken for making WOPI calls during saving.
     std::chrono::milliseconds getWopiSaveDuration() const { return _wopiSaveDuration; }
 
 protected:
@@ -539,9 +536,20 @@ private:
     void initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
                          const Authorization& auth, const std::string& cookies) const;
 
+    /// Create an http::Request with the common headers.
+    http::Request initHttpRequest(const Poco::URI& uri, const Authorization& auth,
+                                  const std::string& cookies) const;
+
+    /// Download the document from the given URI.
+    /// Does not add authorization tokens or any other logic.
+    std::string downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
+                                 const Authorization& auth, const std::string& cookies);
+
 private:
-    // Time spend in loading the file from storage
-    std::chrono::milliseconds _wopiLoadDuration;
+    /// A URl provided by the WOPI host to use for GetFile.
+    std::string _fileUrl;
+
+    // Time spend in saving the file from storage
     std::chrono::milliseconds _wopiSaveDuration;
     /// Whether or not to re-use cookies from the browser for the WOPI requests.
     bool _reuseCookies;

@@ -1,3 +1,9 @@
+.jsdialog-container .ui-button-box button,
+.vex.vex-theme-plain .vex-dialog-button {
+	font-family: var(--jquery-ui-font);
+	text-transform: full-size-kana;
+}
+
 .loleaflet-annotation-edit #annotation-cancel,
 .ui-button-box.jsdialog #cancel,
 .ui-button-box.autofilter #cancel,
@@ -10,7 +16,8 @@
 .jsdialog-container #input-range-button,
 .jsdialog-container #output-range-button,
 .jsdialog-container #variable1-range-button,
-.jsdialog-container #variable2-range-button {
+.jsdialog-container #variable2-range-button,
+.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {
 	height: 32px;
 	line-height: 0em;
 	color: #222;
@@ -27,7 +34,8 @@
 .ui-button-box.jsdialog #ok,
 .ui-button-box.autofilter #ok,
 .cell.jsdialog > button,
-.ui-button-box.jsdialog button {
+.ui-button-box.jsdialog button,
+.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {
 	height: 32px;
 	line-height: 0em;
 	color: #111;
@@ -37,6 +45,10 @@
 	border-radius: 3px;
 	margin: 5px;
 	vertical-align: middle;
+}
+
+.vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {
+	margin-right: -5px; /* Account for child element (button)'s margin */
 }
 
 .jsdialog.ui-button-box.end {

@@ -178,10 +178,12 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
+		L.DomEvent.on(window.document, 'keydown', this._globalKeyEvent, this);
 	},
 
 	removeHooks: function () {
 		L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
+		L.DomEvent.off(window.document, 'keydown', this._globalKeyEvent, this);
 	},
 
 	_ignoreKeyEvent: function(ev) {
@@ -241,6 +243,14 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (ev.charCode == 0) {
 			this._handleKeyEvent(ev);
+		}
+	},
+
+	_globalKeyEvent: function(ev) {
+		if (this._map.jsdialog && this._map.jsdialog.hasDialogOpened()
+			&& this._map.jsdialog.handleKeyEvent(ev)) {
+			ev.preventDefault();
+			return;
 		}
 	},
 
@@ -386,7 +396,7 @@ L.Map.Keyboard = L.Handler.extend({
 				map.fire('scrollby', {x: this._panKeys[key][0], y: this._panKeys[key][1]});
 			}
 			else if (key in this._panKeys && ev.shiftKey &&
-					docLayer._selections.getLayers().length !== 0) {
+					!docLayer._selections.empty()) {
 				// if there is a selection and the user wants to modify it
 				keyEventFn('input', charCode, unoKeyCode);
 			}

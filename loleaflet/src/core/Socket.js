@@ -206,7 +206,9 @@ L.Socket = L.Class.extend({
 		}
 		if (window.isLocalStorageAllowed) {
 			var spellOnline = window.localStorage.getItem('SpellOnline');
-			msg += ' spellOnline=' +  spellOnline;
+			if (spellOnline) {
+				msg += ' spellOnline=' + spellOnline;
+			}
 		}
 
 		this._doSend(msg);
@@ -428,7 +430,7 @@ L.Socket = L.Class.extend({
 				postMsgData['Reason'] = 'DocumentDisconnected';
 			}
 			else if (textMsg === 'recycling') {
-				msg = _('Server is recycling and will be available shortly');
+				msg = _('Server is down, restarting automatically. Please wait.');
 				this._map._active = false;
 				this._map._serverRecycling = true;
 
@@ -910,6 +912,9 @@ L.Socket = L.Class.extend({
 		else if (textMsg.startsWith('jsdialog:')) {
 			this._onJSDialog(textMsg);
 		}
+		else if (textMsg.startsWith('hyperlinkclicked:')) {
+			this._onHyperlinkClickedMsg(textMsg);
+		}
 
 		var msgDelayed = false;
 		if (!this._isReady() || !this._map._docLayer || this._delayedMessages.length || this._handlingDelayedMessages) {
@@ -925,6 +930,7 @@ L.Socket = L.Class.extend({
 		var delayed = false;
 		if (textMsg.startsWith('window:') ||
 			textMsg.startsWith('celladdress:') ||
+			textMsg.startsWith('cellviewcursor:') ||
 			textMsg.startsWith('statechanged:') ||
 			textMsg.startsWith('invalidatecursor:') ||
 			textMsg.startsWith('viewinfo:')) {
@@ -1062,6 +1068,8 @@ L.Socket = L.Class.extend({
 			this._map._docLayer._requestNewTiles();
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
 			this._map.setPermission(this._map.options.permission);
+			this._map._isNotebookbarLoadedOnCore = false;
+			this._map.fire('changeuimode', {mode: window.userInterfaceMode, force: true});
 		}
 
 		this._map.fire('docloaded', {status: true});
@@ -1105,6 +1113,22 @@ L.Socket = L.Class.extend({
 				}
 			}
 		}
+	},
+
+	_onHyperlinkClickedMsg: function (textMsg) {
+		var link = null;
+		var coords = null;
+		var hyperlinkMsgStart = 'hyperlinkclicked: ';
+		var coordinatesMsgStart = ' coordinates: ';
+
+		if (textMsg.indexOf(coordinatesMsgStart) !== -1) {
+			var coordpos = textMsg.indexOf(coordinatesMsgStart);
+			link = textMsg.substring(hyperlinkMsgStart.length, coordpos);
+			coords = textMsg.substring(coordpos+coordinatesMsgStart.length);
+		} else
+			link = textMsg.substring(hyperlinkMsgStart.length);
+
+		this._map.fire('hyperlinkclicked', {url: link, coordinates: coords});
 	},
 
 	_onSocketError: function () {
