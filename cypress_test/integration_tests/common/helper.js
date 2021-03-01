@@ -1038,8 +1038,8 @@ class Bounds {
 	}
 
 	toString() {
-		return '{ "top": ' + this.top + ', "left": ' + this.left
-			+ ', "width": ' + this.width + ', "height": ' + this.height + ' }';
+		return '{"top":' + this.top + ',"left":' + this.left
+			+ ',"width":' + this.width + ',"height":' + this.height + '}';
 	}
 }
 
@@ -1067,6 +1067,19 @@ function overlayItemHasBounds(itemDivId, expectedBounds) {
 		.should(function (elem) {
 			expect(Bounds.parseBoundsJson(elem.text()))
 				.to.deep.equal(expectedBounds, 'Bounds of ' + itemDivId);
+		});
+}
+
+// This ensures that the overlay item has different bounds from the given one
+// via its test div element.
+// Parameters:
+// itemDivId - The id of the test div element corresponding to the overlay item.
+// bounds - A Bounds object with the bounds data to compare.
+function overlayItemHasDifferentBoundsThan(itemDivId, bounds) {
+	cy.log(bounds.toString());
+	cy.get(itemDivId)
+		.should(function (elem) {
+			expect(elem.text()).to.not.equal(bounds.toString());
 		});
 }
 
@@ -1106,3 +1119,4 @@ module.exports.textSelectionShouldNotExist = textSelectionShouldNotExist;
 module.exports.Bounds = Bounds;
 module.exports.getOverlayItemBounds = getOverlayItemBounds;
 module.exports.overlayItemHasBounds = overlayItemHasBounds;
+module.exports.overlayItemHasDifferentBoundsThan = overlayItemHasDifferentBoundsThan;
