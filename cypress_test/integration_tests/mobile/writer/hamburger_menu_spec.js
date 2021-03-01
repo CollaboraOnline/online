@@ -505,27 +505,14 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change paper size.', function() {
-		// We use the cursor horizontal position as indicator of document width change.
-		helper.moveCursor('end');
-
-		helper.getCursorPos('left', 'cursorOrigLeft');
+		// For now, we don't/can't actually check if the size of the document is updated or not.
+		// That can be checked with a unit test.
 
 		openPageWizard();
 
 		mobileHelper.selectListBoxItem2('#papersize', 'A3');
 
 		closePageWizard();
-
-		// Cursor postion changes because of the bigger document width.
-		helper.moveCursor('end');
-
-		cy.get('@cursorOrigLeft')
-			.then(function(cursorOrigLeft) {
-				cy.get('.blinking-cursor')
-					.should(function(cursor) {
-						expect(cursor.offset().left).to.be.greaterThan(cursorOrigLeft);
-					});
-			});
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -535,27 +522,14 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change paper width.', function() {
-		// We use the cursor horizontal position as indicator of document width change.
-		helper.moveCursor('end');
-
-		helper.getCursorPos('left', 'cursorOrigLeft');
+		// For now, we don't/can't actually check if the size of the document is updated or not.
+		// That can be checked with a unit test.
 
 		openPageWizard();
 
 		helper.inputOnIdle('#paperwidth .spinfield', '12');
 
 		closePageWizard();
-
-		// Cursor postion changes because of the bigger document width.
-		helper.moveCursor('end');
-
-		cy.get('@cursorOrigLeft')
-			.then(function(cursorOrigLeft) {
-				cy.get('.blinking-cursor')
-					.should(function(cursor) {
-						expect(cursor.offset().left).to.be.greaterThan(cursorOrigLeft);
-					});
-			});
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -568,25 +542,14 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change paper height.', function() {
-		// We use the cursor vertical position as indicator of document size change.
-		helper.moveCursor('end', 'ctrl');
-
-		helper.getCursorPos('top', 'cursorOrigTop');
+		// For now, we don't/can't actually check if the size of the document is updated or not.
+		// That can be checked with a unit test.
 
 		openPageWizard();
 
 		helper.inputOnIdle('#paperheight .spinfield', '3.0');
 
 		closePageWizard();
-
-		// Cursor postion changes because of having more pages (page gap).
-		cy.get('@cursorOrigTop')
-			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
-					.should(function(cursor) {
-						expect(cursor.offset().top).to.be.greaterThan(cursorOrigTop);
-					});
-			});
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -599,29 +562,14 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 	it('Page setup: change orientation.', function() {
-		// We use the cursor horizontal position as indicator of document width change.
-		helper.moveCursor('end');
-
-		helper.getCursorPos('left', 'cursorOrigLeft');
+		// For now, we don't/can't actually check if the size of the document is updated or not.
+		// That can be checked with a unit test.
 
 		openPageWizard();
 
 		mobileHelper.selectListBoxItem2('#paperorientation', 'Landscape');
 
 		closePageWizard();
-
-		// We got some extra tiles horizontally.
-		// TODO: issue here, view is not moved with the cursor
-		helper.moveCursor('end', '', false);
-
-		// Cursor postion changes because of the bigger document width.
-		cy.get('@cursorOrigLeft')
-			.then(function(cursorOrigLeft) {
-				cy.get('.blinking-cursor')
-					.should(function(cursor) {
-						expect(cursor.offset().left).to.be.greaterThan(cursorOrigLeft);
-					});
-			});
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
