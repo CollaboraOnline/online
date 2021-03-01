@@ -38,6 +38,9 @@ class CPolyline extends CPath {
 
 		this.pointSet = pointSet;
 		this.updateRingsBounds();
+		if (this.pointSet.empty()) {
+			this.closePopup({});
+		}
 		return this.redraw(oldBounds);
 	}
 
