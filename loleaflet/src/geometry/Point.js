@@ -166,5 +166,12 @@ L.point = function (x, y, round) {
 	if (x === undefined || x === null) {
 		return x;
 	}
+
+	// Detect L.Point like objects such as CPoint.
+	if (Object.prototype.hasOwnProperty.call(x, 'x')
+		&& Object.prototype.hasOwnProperty.call(x, 'y')) {
+		return new L.Point(x.x, x.y);
+	}
+
 	return new L.Point(x, y, round);
 };
