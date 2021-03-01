@@ -1,9 +1,12 @@
 /* eslint-disable */
 
+// Type of the data passed to event handlers.
 interface EventData {
 	position?: CPoint;
 }
 
+// Used as base class for classes that needs to setup
+// event handlers for real or synthetic events.
 abstract class CEventsHandler {
 
 	protected supportedEventNames = [
