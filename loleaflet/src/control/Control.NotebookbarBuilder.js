@@ -166,6 +166,20 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:BezierSmooth'] = function() {};
 		this._toolitemHandlers['.uno:GlueEditMode'] = function() {};
 
+		/*Draw Home Tab*/
+		this._toolitemHandlers['.uno:ZoomMode'] = function() {};
+		this._toolitemHandlers['.uno:ObjectAlign'] = function() {};
+		this._toolitemHandlers['.uno:ObjectPosition'] = function() {};
+		this._toolitemHandlers['.uno:GlueInsertPoint'] = function() {};
+		this._toolitemHandlers['.uno:SnapPoints'] = function() {};
+		this._toolitemHandlers['.uno:SnapBorder'] = function() {};
+		this._toolitemHandlers['.uno:HelplinesMove'] = function() {};
+		this._toolitemHandlers['.uno:SnapFrame'] = function() {};
+		this._toolitemHandlers['.uno:HelplinesVisible'] = function() {};
+		this._toolitemHandlers['.uno:HelplinesUse'] = function() {};
+		this._toolitemHandlers['.uno:GridVisible'] = function() {};
+		this._toolitemHandlers['.uno:GridUse'] = function() {};
+
 		/*Calc: Data Tab*/
 		this._toolitemHandlers['.uno:DataProvider'] = function() {};
 		this._toolitemHandlers['.uno:ManageXMLSource'] = function() {};
