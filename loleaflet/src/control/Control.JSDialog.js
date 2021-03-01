@@ -13,11 +13,13 @@ L.Control.JSDialog = L.Control.extend({
 
 		this.map.on('jsdialog', this.onJSDialog, this);
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
+		this.map.on('jsdialogaction', this.onJSAction, this);
 	},
 
 	onRemove: function() {
 		this.map.off('jsdialog', this.onJSDialog, this);
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
+		this.map.off('jsdialogaction', this.onJSAction, this);
 	},
 
 	hasDialogOpened: function() {
@@ -144,6 +146,23 @@ L.Control.JSDialog = L.Control.extend({
 
 		var newControl = dialog.querySelector('#' + data.control.id);
 		newControl.scrollTop = scrollTop;
+	},
+
+	onJSAction: function (e) {
+		var data = e.data;
+
+		if (data.jsontype !== 'dialog')
+			return;
+
+		var builder = this.dialogs[data.id] ? this.dialogs[data.id].builder : null;
+		if (!builder)
+			return;
+
+		var dialog = this.dialogs[data.id] ? this.dialogs[data.id].container : null;
+		if (!dialog)
+			return;
+
+		builder.executeAction(dialog, data.data);
 	},
 
 	onPan: function (ev) {
