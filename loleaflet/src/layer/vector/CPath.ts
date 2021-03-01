@@ -80,7 +80,7 @@ abstract class CPath extends CEventsHandler {
 		if (this.renderer) {
 			this.addPathTestDiv();
 		}
-		this.fire('add');
+		this.fire('add', {});
 	}
 
 	// Adds a div for cypress-tests (if active) for this CPath if not already done.
@@ -118,7 +118,7 @@ abstract class CPath extends CEventsHandler {
 	}
 
 	setDeleted() {
-		this.fire('remove');
+		this.fire('remove', {});
 		this.isDeleted = true;
 		if (this.testDiv) {
 			this.testDiv.remove();
@@ -135,11 +135,11 @@ abstract class CPath extends CEventsHandler {
 	}
 
 	onMouseEnter(position: CPoint) {
-		this.fire('mouseenter');
+		this.fire('mouseenter', {position: position});
 	}
 
 	onMouseLeave(position: CPoint) {
-		this.fire('mouseleave');
+		this.fire('mouseleave', {position: position});
 	}
 
 	redraw(oldBounds: CBounds) {
@@ -283,32 +283,34 @@ abstract class CPath extends CEventsHandler {
 		return this;
 	}
 
-	protected firstPopup() {
+	protected firstPopup(e: EventData) {
 		if (this.popup) {
-			var center = this.getBounds().getCenter();
 			this.openPopup({
-				latlng: this.toCompatUnits([center.x, center.y])
+				position: this.getBounds().getCenter()
 			});
 		}
 	}
 
-	protected closePopup() {
+	protected closePopup(e: EventData) {
 		if (this.popup) {
 			this.popup._close();
 		}
 		return this;
 	}
 
-	protected delayClosePopup() {
+	protected delayClosePopup(e: EventData) {
 		clearTimeout(this.popupTimer);
 		this.popupTimer = setTimeout(this.closePopup.bind(this), 3000);
 	}
 
-	protected openPopup(e: any) {
+	protected openPopup(e: EventData) {
 		if (!this.getMap().hasLayer(this.popup)) {
-			this.popup.setLatLng(e.latlng);
+			if (!e.position)
+				e.position = this.getBounds().getCenter();
+			var latlngPos = this.toCompatUnits([e.position.x, e.position.y])
+			this.popup.setLatLng(latlngPos);
 			this.getMap().openPopup(this.popup);
-			this.delayClosePopup();
+			this.delayClosePopup({});
 		}
 	}
 
