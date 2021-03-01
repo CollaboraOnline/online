@@ -69,12 +69,15 @@ var CStyleData = L.Class.extend({
 // on canvas using polygons (CPolygon).
 var CSelections = L.Class.extend({
 
-	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv, name) {
+	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv, map, isView, viewId) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
 		this._dpiScale = dpiScale;
 		this._styleData = new CStyleData(selectionsDataDiv);
-		this._name = name;
+		this._map = map;
+		this._name = 'selections' + (isView ? '-viewid-' + viewId : '');
+		this._isView = isView;
+		this._viewId = viewId;
 		this._polygon = undefined;
 		this._updatePolygon();
 	},
@@ -105,10 +108,13 @@ var CSelections = L.Class.extend({
 
 	_updatePolygon: function() {
 		if (!this._polygon) {
+			var fillColor = this._isView ?
+				L.LOUtil.rgbToHex(this._map.getViewColor(this._viewId)) :
+				this._styleData.getPropValue('--fill-color');
 			var attributes = {
 				name: this._name,
 				pointerEvents: 'none',
-				fillColor: this._styleData.getPropValue('--fill-color'),
+				fillColor: fillColor,
 				fillOpacity: this._styleData.getPropValue('--fill-opacity'),
 				opacity: this._styleData.getFloatPropValue('--opacity'),
 				weight: Math.round(this._styleData.getIntPropValue('--weight') * this._dpiScale)
@@ -119,6 +125,11 @@ var CSelections = L.Class.extend({
 		}
 
 		this._polygon.setPointSet(this._pointSet);
+	},
+
+	remove: function() {
+		if (this._polygon)
+			this._overlay.removePath(this._polygon);
 	}
 });
 
@@ -297,7 +308,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._initContainer();
 		this._getToolbarCommandsValues();
 		this._selections = new CSelections(undefined, this._canvasOverlay,
-			this._painter._dpiScale, this._selectionsDataDiv, 'selections');
+			this._painter._dpiScale, this._selectionsDataDiv, this._map, false);
 		this._references = new L.LayerGroup();
 		this._referencesAll = [];
 		if (this.options.permission !== 'readonly') {
@@ -1638,7 +1649,8 @@ L.TileLayer = L.GridLayer.extend({
 	_removeView: function(viewId) {
 		// Remove selection, if any.
 		if (this._viewSelections[viewId] && this._viewSelections[viewId].selection) {
-			this._viewLayerGroup.removeLayer(this._viewSelections[viewId].selection);
+			this._viewSelections[viewId].selection.remove();
+			this._viewSelections[viewId].selection = undefined;
 		}
 
 		// Remove the view and update (to refresh as needed).
@@ -1879,9 +1891,15 @@ L.TileLayer = L.GridLayer.extend({
 			});
 
 			this._viewSelections[viewId].part = viewPart;
-			this._viewSelections[viewId].polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
+			var docLayer = this;
+			this._viewSelections[viewId].pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
+				function (twipsPoint) {
+					var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
+					corePxPt.round();
+					return corePxPt;
+				});
 		} else {
-			this._viewSelections[viewId].polygons = null;
+			this._viewSelections[viewId].pointSet = new CPointSet();
 		}
 
 		this._onUpdateTextViewSelection(viewId);
@@ -2640,30 +2658,24 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onUpdateTextViewSelection: function (viewId) {
 		viewId = parseInt(viewId);
-		var viewPolygons = this._viewSelections[viewId].polygons;
+		var viewPointSet = this._viewSelections[viewId].pointSet;
 		var viewSelection = this._viewSelections[viewId].selection;
 		var viewPart = this._viewSelections[viewId].part;
 
-		if (viewPolygons &&
+		if (viewPointSet &&
 		    (this.isWriter() || this._selectedPart === viewPart)) {
 
-			// Reset previous selections
 			if (viewSelection) {
-				this._viewLayerGroup.removeLayer(viewSelection);
+				// change previous selections
+				viewSelection.setPointSet(viewPointSet);
+			} else {
+				viewSelection = new CSelections(viewPointSet, this._canvasOverlay,
+					this._painter._dpiScale, this._selectionsDataDiv, this._map, true, viewId);
+				this._viewSelections[viewId].selection = viewSelection;
 			}
-
-			viewSelection = new L.Polygon(viewPolygons, {
-				pointerEvents: 'none',
-				fillColor: L.LOUtil.rgbToHex(this._map.getViewColor(viewId)),
-				fillOpacity: 0.25,
-				weight: 2,
-				opacity: 0.25
-			});
-			this._viewSelections[viewId].selection = viewSelection;
-			this._viewLayerGroup.addLayer(viewSelection);
 		}
 		else if (viewSelection) {
-			this._viewLayerGroup.removeLayer(viewSelection);
+			viewSelection.clear();
 		}
 	},
 
