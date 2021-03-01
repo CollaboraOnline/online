@@ -504,19 +504,15 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', '0');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change paper size.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhite(centerTile);
+	it('Page setup: change paper size.', function() {
+		// For now, we don't/can't actually check if the size of the document is updated or not.
+		// That can be checked with a unit test.
 
 		openPageWizard();
 
 		mobileHelper.selectListBoxItem2('#papersize', 'C6 Envelope');
 
 		closePageWizard();
-
-		// Smaller paper size makes center tile to contain text too.
-		helper.imageShouldNotBeFullWhite(centerTile);
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -525,10 +521,9 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'C6 Envelope');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change paper width.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhite(centerTile);
+	it('Page setup: change paper width.', function() {
+		// For now, we don't/can't actually check if the size of the document is updated or not.
+		// That can be checked with a unit test.
 
 		openPageWizard();
 
@@ -536,9 +531,6 @@ describe('Trigger hamburger menu options.', function() {
 		helper.inputOnIdle('#paperwidth .spinfield', '5');
 
 		closePageWizard();
-
-		// Smaller paper size makes center tile to contain text too.
-		helper.imageShouldNotBeFullWhite(centerTile);
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -550,19 +542,15 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.attr', 'value', '5');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change paper height.', function() {
-		var centerTile = '.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 256px; top: 517px;\']';
-		helper.imageShouldBeFullWhite(centerTile);
+	it('Page setup: change paper height.', function() {
+		// For now, we don't/can't actually check if the size of the document is updated or not.
+		// That can be checked with a unit test.
 
 		openPageWizard();
 
 		helper.inputOnIdle('#paperheight .spinfield', '3.0');
 
 		closePageWizard();
-
-		// Smaller paper size makes center tile to contain the end of the page.
-		helper.imageShouldNotBeFullWhite(centerTile);
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
@@ -574,27 +562,15 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.attr', 'value', '3');
 	});
 
-	// FIXME temporarily disabled, does not work with CanvasTileLayer
-	it.skip('Page setup: change orientation.', function() {
-		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1024px; top: 5px;\']')
-			.should('not.exist');
-
-		// Move the cursor to the right side of the document,
-		// so the new tile will be visible and loaded.
-		helper.typeIntoDocument('{end}');
-
-		cy.get('.blinking-cursor')
-			.should('be.visible');
+	it('Page setup: change orientation.', function() {
+		// For now, we don't/can't actually check if the size of the document is updated or not.
+		// That can be checked with a unit test.
 
 		openPageWizard();
 
 		mobileHelper.selectListBoxItem2('#paperorientation', 'Landscape');
 
 		closePageWizard();
-
-		// We got some extra tiles horizontally.
-		cy.get('.leaflet-tile-loaded[style=\'width: 256px; height: 256px; left: 1024px; top: 5px;\']')
-			.should('exist');
 
 		// Check that the page wizard shows the right value after reopen.
 		openPageWizard();
