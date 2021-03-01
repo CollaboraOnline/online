@@ -1,5 +1,9 @@
 /* eslint-disable */
 
+interface EventData {
+	position?: CPoint;
+}
+
 abstract class CEventsHandler {
 
 	protected supportedEventNames = [
@@ -55,7 +59,7 @@ abstract class CEventsHandler {
 		return true;
 	}
 
-	fire(eventName: string): boolean {
+	fire(eventName: string, eventData: EventData): boolean {
 		var handlerSet = this.handlers.get(eventName);
 		if (handlerSet === undefined) {
 			console.warn('Unknown event type: ' + eventName);
@@ -64,7 +68,7 @@ abstract class CEventsHandler {
 
 		var that = this;
 		handlerSet.forEach(function (handler) {
-			handler.call(that);
+			handler.call(that, eventData);
 		});
 	}
 }
