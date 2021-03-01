@@ -33,6 +33,7 @@ describe('Overlay bounds.', function () {
 			.should('have.prop', 'value', 'C3');
 
 		var cellC3Bounds = new helper.Bounds();
+		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor', cellA1Bounds);
 		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor', cellC3Bounds);
 
 		cy.get('input#addressInput')
@@ -72,6 +73,7 @@ describe('Overlay bounds.', function () {
 			.should('have.prop', 'value', 'D4');
 
 		var cellD4Bounds = new helper.Bounds();
+		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor', cellA1Bounds);
 		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor', cellD4Bounds);
 
 		cy.get('input#addressInput')
