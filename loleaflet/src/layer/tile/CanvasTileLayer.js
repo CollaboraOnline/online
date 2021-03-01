@@ -175,7 +175,7 @@ L.TileSectionManager = L.Class.extend({
 			processingOrder: L.CSections.Overlays.processingOrder,
 			drawingOrder: L.CSections.Overlays.drawingOrder,
 			zIndex: L.CSections.Overlays.zIndex,
-			interactable: false,
+			interactable: true,
 			sectionProperties: {
 				docLayer: tsMgr._layer,
 				tsManager: tsMgr
