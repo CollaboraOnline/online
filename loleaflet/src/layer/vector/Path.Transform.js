@@ -585,7 +585,8 @@ L.Handler.PathTransform = L.Handler.extend({
 			new L.LayerGroup().addTo(map);
 		this._rect = this._rect ||
 			this._getBoundingPolygon().addTo(this._handlersGroup);
-
+		if (this.options.handles.length <= 0)
+			return;
 		if (this.options.scaling) {
 			this._handlers = [];
 			var points = this._getPoints();
@@ -1181,7 +1182,8 @@ L.Handler.PathTransform = L.Handler.extend({
 	* Hide(not remove) the handlers layer
 	*/
 	_hideHandlers: function() {
-		this._map.removeLayer(this._handlersGroup);
+		if (this._handlersGroup)
+			this._map.removeLayer(this._handlersGroup);
 	},
 
 
