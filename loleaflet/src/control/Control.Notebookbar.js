@@ -37,6 +37,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('notebookbar', this.onNotebookbar, this);
 		this.map.on('updatepermission', this.onUpdatePermission, this);
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
+		this.map.on('jsdialogaction', this.onJSAction, this);
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
@@ -68,6 +69,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.off('updatepermission', this.onUpdatePermission, this);
 		this.map.off('notebookbar');
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
+		this.map.off('jsdialogaction', this.onJSAction, this);
 		$('.main-nav #document-header').remove();
 		$('.main-nav').removeClass('hasnotebookbar');
 		$('#toolbar-wrapper').removeClass('hasnotebookbar');
@@ -108,6 +110,21 @@ L.Control.Notebookbar = L.Control.extend({
 
 		var newControl = this.container.querySelector('#' + data.control.id);
 		newControl.scrollTop = scrollTop;
+	},
+
+	onJSAction: function (e) {
+		var data = e.data;
+
+		if (data.jsontype !== 'notebookbar')
+			return;
+
+		if (!this.builder)
+			return;
+
+		if (!this.container)
+			return;
+
+		this.builder.executeAction(this.container, data.data);
 	},
 
 	onUpdatePermission: function(e) {

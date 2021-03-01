@@ -1896,6 +1896,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder._iconViewEntry(entry, data, data.entries[i], builder);
 		}
 
+		var firstSelected = $(container).children('.selected').get(0);
+		if (firstSelected)
+			firstSelected.scrollIntoView({behavior: 'smooth', block: 'center'});
+
 		return false;
 	},
 
@@ -2880,6 +2884,28 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				data.splice(idx, 0, this._missingLabelData[controlId]);
 				++idx;
 			}
+		}
+	},
+
+	// executes actions like changing the selection without rebuilding the widget
+	executeAction: function(container, data) {
+		var control = container.querySelector('#' + data.control_id);
+		if (!control) {
+			console.warn('executeAction: not found control with id: "' + data.control_id + '"');
+			return;
+		}
+
+		switch (data.action_type) {
+		case 'select':
+			$(control).children('.selected').removeClass('selected');
+
+			var pos = parseInt(data.position);
+			var entry = $(control).children().eq(pos);
+
+			entry.addClass('selected');
+			$(entry).get(0).scrollIntoView({behavior: 'smooth', block: 'center'});
+
+			break;
 		}
 	},
 
