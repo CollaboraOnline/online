@@ -239,12 +239,12 @@ L.Control.Notebookbar = L.Control.extend({
 			toolitems.push(item);
 		}
 
-		for (var i in this.hiddenShortcutButtons) {
+		for (i in this.hiddenShortcutButtons) {
 			var toHide = this.hiddenShortcutButtons[i];
-			for (var i in toolitems) {
-				var item = toolitems[i];
+			for (var j in toolitems) {
+				item = toolitems[j];
 				if (item.id == toHide) {
-					toolitems.splice(i, 1);
+					toolitems.splice(j, 1);
 					break;
 				}
 			}
