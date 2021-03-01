@@ -26,24 +26,6 @@ function hex2string(inData)
 	return hexified.join('');
 }
 
-function marksAreEqual(mark1, mark2)
-{
-	return mark1._bounds._northEast.lat == mark2._bounds._northEast.lat
-		&& mark1._bounds._northEast.lng == mark2._bounds._northEast.lng
-		&& mark1._bounds._southWest.lat == mark2._bounds._southWest.lat
-		&& mark1._bounds._southWest.lng == mark2._bounds._southWest.lng;
-}
-
-function hasMark(collection, mark)
-{
-	for (var i = 0; i < collection.length; i++) {
-		if (marksAreEqual(mark, collection[i])) {
-			return true;
-		}
-	}
-	return false;
-}
-
 // CStyleData is used to obtain CSS property values from style data
 // stored in DOM elements in the form of custom CSS properties/variables.
 var CStyleData = L.Class.extend({
@@ -131,6 +113,40 @@ var CSelections = L.Class.extend({
 		if (this._polygon)
 			this._overlay.removePath(this._polygon);
 	}
+});
+
+// CReferences is used to store and manage the CPath's of all
+// references in the current sheet.
+var CReferences = L.Class.extend({
+
+	initialize: function (canvasOverlay) {
+
+		this._overlay = canvasOverlay;
+		this._marks = [];
+	},
+
+	// mark should be a CPath.
+	addMark: function (mark) {
+		this._overlay.initPath(mark);
+		this._marks.push(mark);
+	},
+
+	// mark should be a CPath.
+	hasMark: function (mark) {
+		for (var i = 0; i < this._marks.length; ++i) {
+			if (mark.getBounds().equals(this._marks[i].getBounds()))
+				return true;
+		}
+
+		return false;
+	},
+
+	clear: function () {
+		for (var i = 0; i < this._marks.length; ++i)
+			this._overlay.removePath(this._marks[i]);
+		this._marks = [];
+	}
+
 });
 
 L.TileLayer = L.GridLayer.extend({
@@ -309,11 +325,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._getToolbarCommandsValues();
 		this._selections = new CSelections(undefined, this._canvasOverlay,
 			this._painter._dpiScale, this._selectionsDataDiv, this._map, false);
-		this._references = new L.LayerGroup();
+		this._references = new CReferences(this._canvasOverlay);
 		this._referencesAll = [];
-		if (this.options.permission !== 'readonly') {
-			map.addLayer(this._references);
-		}
 
 		// This layergroup contains all the layers corresponding to other's view
 		this._viewLayerGroup = new L.LayerGroup();
@@ -1919,15 +1932,15 @@ L.TileLayer = L.GridLayer.extend({
 
 		for (var i = 0; i < this._referencesAll.length; i++) {
 			// Avoid doubled marks, add only marks for current sheet
-			if ((this._references == null || !hasMark(this._references.getLayers(), this._referencesAll[i].mark))
+			if (!this._references.hasMark(this._referencesAll[i].mark)
 				&& this._selectedPart === this._referencesAll[i].part) {
-				this._references.addLayer(this._referencesAll[i].mark);
+				this._references.addMark(this._referencesAll[i].mark);
 			}
 			if (!window.mode.isDesktop()) {
 				if (!this._referenceMarkerStart.isDragged) {
 					this._map.addLayer(this._referenceMarkerStart);
 					var sizeStart = this._referenceMarkerStart._icon.getBoundingClientRect();
-					var posStart = this._map.project(this._referencesAll[i].mark._bounds.getNorthWest());
+					var posStart = this._referencesAll[i].mark.getBounds().getTopLeft().divideBy(this._painter.getDpiScale());
 					posStart = posStart.subtract(new L.Point(sizeStart.width / 2, sizeStart.height / 2));
 					posStart = this._map.unproject(posStart);
 					this._referenceMarkerStart.setLatLng(posStart);
@@ -1936,7 +1949,7 @@ L.TileLayer = L.GridLayer.extend({
 				if (!this._referenceMarkerEnd.isDragged) {
 					this._map.addLayer(this._referenceMarkerEnd);
 					var sizeEnd = this._referenceMarkerEnd._icon.getBoundingClientRect();
-					var posEnd = this._map.project(this._referencesAll[i].mark._bounds.getSouthEast());
+					var posEnd = this._referencesAll[i].mark.getBounds().getBottomRight().divideBy(this._painter.getDpiScale());
 					posEnd = posEnd.subtract(new L.Point(sizeEnd.width / 2, sizeEnd.height / 2));
 					posEnd = this._map.unproject(posEnd);
 					this._referenceMarkerEnd.setLatLng(posEnd);
@@ -1968,8 +1981,13 @@ L.TileLayer = L.GridLayer.extend({
 						boundsTwips.getTopLeft(), boundsTwips.getTopRight()]);
 				}
 
-				var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this);
-				var reference = new L.Polygon(polygons, {
+				var docLayer = this;
+				var pointSet = CPolyUtil.rectanglesToPointSet(rectangles, function (twipsPoint) {
+					var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
+					corePxPt.round();
+					return corePxPt;
+				});
+				var reference = new CPolygon(pointSet, {
 					pointerEvents: 'none',
 					fillColor: '#' + strColor,
 					fillOpacity: 0.25,
@@ -2369,7 +2387,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_clearReferences: function () {
-		this._references.clearLayers();
+		this._references.clear();
 
 		if (!this._referenceMarkerStart.isDragged)
 			this._map.removeLayer(this._referenceMarkerStart);
