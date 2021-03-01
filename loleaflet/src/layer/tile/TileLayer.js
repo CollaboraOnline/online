@@ -670,6 +670,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onMessage: function (textMsg, img) {
+		this._saveMessageForReplay(textMsg);
 		// 'tile:' is the most common message type; keep this the first.
 		if (textMsg.startsWith('tile:')) {
 			this._onTileMsg(textMsg, img);
@@ -1904,9 +1905,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._onUpdateTextViewSelection(viewId);
 
-		if (this.isCalc()) {
-			this._saveMessageForReplay(textMsg, viewId);
-		}
+		this._saveMessageForReplay(textMsg, viewId);
 	},
 
 	_updateReferenceMarks: function() {
@@ -2479,6 +2478,8 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onZoomEnd: function () {
 		this._isZooming = false;
+		if (!this.isCalc())
+			this._replayPrintTwipsMsgs();
 		this._onUpdateCursor(null, true);
 		this.updateAllViewCursors();
 	},
@@ -3928,6 +3929,133 @@ L.TileLayer = L.GridLayer.extend({
 		if (annotation) {
 			$('#comment' + annotation._data.id).click();
 		}
-	}
+	},
 
+	_saveMessageForReplay: function (textMsg, viewId) {
+		// We will not get some messages (with coordinates)
+		// from core when zoom changes because print-twips coordinates are zoom-invariant. So we need to
+		// remember the last version of them and replay, when zoom is changed.
+		// In calc we need to replay the messages when sheet-geometry changes too. This is because it is possible for
+		// the updated print-twips messages to arrive before the sheet-geometry update message arrives.
+
+		if (!this._printTwipsMessagesForReplay) {
+			var ownViewTypes = this.isCalc() ? [
+				'cellcursor',
+				'referencemarks',
+				'cellselectionarea',
+				'textselection',
+				'invalidatecursor',
+				'textselectionstart',
+				'textselectionend',
+				'graphicselection',
+			] : [
+				'textselection'
+			];
+
+			var otherViewTypes = this.isCalc() ? [
+				'cellviewcursor',
+				'textviewselection',
+				'invalidateviewcursor',
+				'graphicviewselection',
+			] : [
+				'textviewselection'
+			];
+
+			this._printTwipsMessagesForReplay = new L.MessageStore(ownViewTypes, otherViewTypes);
+		}
+
+		var colonIndex = textMsg.indexOf(':');
+		if (colonIndex === -1) {
+			return;
+		}
+
+		var msgType = textMsg.substring(0, colonIndex);
+		this._printTwipsMessagesForReplay.save(msgType, textMsg, viewId);
+	},
+
+	_clearMsgReplayStore: function () {
+		if (!this._printTwipsMessagesForReplay) {
+			return;
+		}
+
+		this._printTwipsMessagesForReplay.clear();
+	},
+
+	_replayPrintTwipsMsgs: function () {
+		if (!this._printTwipsMessagesForReplay) {
+			return;
+		}
+
+		this._printTwipsMessagesForReplay.forEach(this._onMessage.bind(this));
+	},
+
+});
+
+
+L.MessageStore = L.Class.extend({
+
+	// ownViewTypes : The types of messages related to own view.
+	// otherViewTypes: The types of messages related to other views.
+	initialize: function (ownViewTypes, otherViewTypes) {
+
+		if (!Array.isArray(ownViewTypes) || !Array.isArray(otherViewTypes)) {
+			console.error('Unexpected argument types');
+			return;
+		}
+
+		var ownMessages = {};
+		ownViewTypes.forEach(function (msgType) {
+			ownMessages[msgType] = '';
+		});
+		this._ownMessages = ownMessages;
+
+		var othersMessages = {};
+		otherViewTypes.forEach(function (msgType) {
+			othersMessages[msgType] = [];
+		});
+		this._othersMessages = othersMessages;
+	},
+
+	clear: function () {
+		var msgs = this._ownMessages;
+		Object.keys(msgs).forEach(function (msgType) {
+			msgs[msgType] = '';
+		});
+
+		msgs = this._othersMessages;
+		Object.keys(msgs).forEach(function (msgType) {
+			msgs[msgType] = [];
+		});
+	},
+
+	save: function (msgType, textMsg, viewId) {
+
+		var othersMessage = (typeof viewId === 'number');
+
+		if (!othersMessage && Object.prototype.hasOwnProperty.call(this._ownMessages, msgType)) {
+			this._ownMessages[msgType] = textMsg;
+			return;
+		}
+
+		if (othersMessage && Object.prototype.hasOwnProperty.call(this._othersMessages, msgType)) {
+			this._othersMessages[msgType][viewId] = textMsg;
+		}
+	},
+
+	forEach: function (callback) {
+		if (typeof callback !== 'function') {
+			console.error('Invalid callback type');
+			return;
+		}
+
+		var ownMessages = this._ownMessages;
+		Object.keys(this._ownMessages).forEach(function (msgType) {
+			callback(ownMessages[msgType]);
+		});
+
+		var othersMessages = this._othersMessages;
+		Object.keys(othersMessages).forEach(function (msgType) {
+			othersMessages[msgType].forEach(callback);
+		});
+	}
 });
