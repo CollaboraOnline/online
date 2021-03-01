@@ -9,6 +9,7 @@ L.Control.MobileWizard = L.Control.extend({
 		maxHeight: '45%'
 	},
 
+	_builder: null,
 	_inMainMenu: true,
 	_isActive: false,
 	_inBuilding: false,
@@ -36,6 +37,7 @@ L.Control.MobileWizard = L.Control.extend({
 		map.on('mobilewizardback', this.goLevelUp, this);
 		map.on('resize', this._onResize, this);
 		map.on('jsdialogupdate', this.onJSUpdate, this);
+		map.on('jsdialogaction', this.onJSAction, this);
 
 		this._setupBackButton();
 	},
@@ -47,6 +49,7 @@ L.Control.MobileWizard = L.Control.extend({
 		this.map.off('mobilewizardback', this.goLevelUp, this);
 		this.map.off('resize', this._onResize, this);
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
+		this.map.off('jsdialogaction', this.onJSAction, this);
 	},
 
 	_reset: function() {
@@ -431,8 +434,8 @@ L.Control.MobileWizard = L.Control.extend({
 				history.pushState({context: 'mobile-wizard', level: 0}, 'mobile-wizard-level-0');
 			}
 
-			var builder = L.control.mobileWizardBuilder({mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
-			builder.build(this.content.get(0), [data]);
+			this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
+			this._builder.build(this.content.get(0), [data]);
 
 			this._mainTitle = data.text ? data.text : '';
 			this._setTitle(this._mainTitle);
@@ -572,13 +575,11 @@ L.Control.MobileWizard = L.Control.extend({
 		var scrollTop = control.scrollTop;
 
 		control.style.visibility = 'hidden';
-		var builder = new L.control.mobileWizardBuilder({windowId: data.id,
-			mobileWizard: this,
-			map: this.map,
-			cssClass: 'mobile-wizard'});
+		if (!this._builder)
+			return;
 
 		var temporaryParent = L.DomUtil.create('div');
-		builder.build(temporaryParent, [data.control], false);
+		this._builder.build(temporaryParent, [data.control], false);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
 
@@ -587,6 +588,21 @@ L.Control.MobileWizard = L.Control.extend({
 
 		// avoid scrolling when adding new bigger elements to the view
 		$('#mobile-wizard-content').animate({ scrollTop: this._currentScrollPosition }, 0);
+	},
+
+	onJSAction: function (e) {
+		var data = e.data;
+
+		if (data.jsontype === 'notebookbar')
+			return;
+
+		if (!this._builder)
+			return;
+
+		if (!this.content.get(0))
+			return;
+
+		this._builder.executeAction(this.content.get(0), data.data);
 	},
 });
 

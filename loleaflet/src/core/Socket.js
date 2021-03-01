@@ -1086,9 +1086,16 @@ L.Socket = L.Class.extend({
 			return;
 		}
 
-		if (msgData.action && msgData.action === 'update') {
-			this._map.fire('jsdialogupdate', {data: msgData});
-			return;
+		if (msgData.action) {
+			switch (msgData.action) {
+			case 'update':
+				this._map.fire('jsdialogupdate', {data: msgData});
+				return;
+
+			case 'action':
+				this._map.fire('jsdialogaction', {data: msgData});
+				return;
+			}
 		}
 
 		// re/create
