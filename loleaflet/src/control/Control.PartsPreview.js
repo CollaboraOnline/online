@@ -93,7 +93,6 @@ L.Control.PartsPreview = L.Control.extend({
 					L.DomUtil.addClass(docContainer, 'parts-preview-document');
 					setTimeout(L.bind(function () {
 						this._map.invalidateSize();
-						$('.scroll-container').mCustomScrollbar('update');
 					}, this), 500);
 				}
 
@@ -323,7 +322,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo, false))) {
 			nodePos = this._direction === 'x' ? $(node).position().left : $(node).position().top;
-			nodeMargin = this._direction === 'x' ? parseInt($(node).css('margin-right')) : parseInt($(node).css('margin-bottom')); 
+			nodeMargin = this._direction === 'x' ? parseInt($(node).css('margin-right')) : parseInt($(node).css('margin-bottom'));
 			nodeOffset = (this._direction === 'x' ? $(node).width() : $(node).height()) + nodeMargin;
 			sliderSize = this._direction === 'x' ? $(this._partsPreviewCont).width() : $(this._partsPreviewCont).height();
 			if (this._map._partsDirection < 0) {
