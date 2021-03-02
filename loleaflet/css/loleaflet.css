@@ -81,11 +81,6 @@
 	z-index: 1000;
 }
 
-.scroll-container .mCSB_scrollTools.mCSB_1_scrollbar {
-	position: absolute;
-	z-index: 1000;
-}
-
 .bucket-cursor {
 	cursor: url('images/cursors/fill.png') 4 9, auto !important;/*setting coordinates to align the tip of the bucket icon */
 }

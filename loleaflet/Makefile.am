@@ -138,7 +138,6 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/toolbar-mobile.css \
 	$(srcdir)/css/partsPreviewControl.css \
 	$(srcdir)/css/sidebar.css \
-	$(srcdir)/css/scrollBar.css \
 	$(srcdir)/css/searchControl.css \
 	$(srcdir)/css/impress.css \
 	$(srcdir)/css/impress-mobile.css \
