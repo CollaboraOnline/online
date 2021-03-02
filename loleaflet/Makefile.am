@@ -44,7 +44,7 @@ SRC_TS = $(srcdir)/src/layer/vector/CanvasOverlay.ts
 SRC_TS_JS = $(srcdir)/src/layer/vector/CanvasOverlay.js
 SRC_TS_JS_DST = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES)) $(DIST_FOLDER)/src/layer/vector/CanvasOverlay.js
 
-$(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/*.ts
+$(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/*.ts $(srcdir)/src/layer/marker/*.ts
 	$(builddir)/node_modules/typescript/bin/tsc $(srcdir)/src/layer/vector/CanvasOverlay.ts --outfile $(srcdir)/src/layer/vector/CanvasOverlay.js --module none --lib dom,es2016 --target ES5
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
