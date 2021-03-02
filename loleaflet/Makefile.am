@@ -237,7 +237,6 @@ LOLEAFLET_JS =\
 	src/layer/marker/Icon.js \
 	src/layer/marker/Icon.Default.js \
 	src/layer/marker/Marker.js \
-	src/layer/marker/Cursor.js \
 	src/layer/marker/DivIcon.js \
 	src/layer/Popup.js \
 	src/layer/Layer.Popup.js \
