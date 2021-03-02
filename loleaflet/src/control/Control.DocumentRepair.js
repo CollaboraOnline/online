@@ -119,7 +119,6 @@ L.Control.DocumentRepair = L.Control.extend({
 	},
 
 	_onCloseClick: function () {
-		this._map.enable(true);
 		this._map.focus();
 		this.remove();
 	},

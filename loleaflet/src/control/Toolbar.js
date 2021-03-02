@@ -375,7 +375,6 @@ L.Map.include({
 				afterOpen: function() {
 					var $vexContent = $(this.contentEl);
 					this.contentEl.style.width = w + 'px';
-					map.enable(false);
 					var i;
 					// Display keyboard shortcut or online help
 					if (id === 'keyboard-shortcuts') {
@@ -503,7 +502,6 @@ L.Map.include({
 				},
 				beforeClose: function () {
 					map.focus();
-					map.enable(true);
 				}
 			});
 		});
@@ -552,7 +550,6 @@ L.Map.include({
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				this.contentEl.style.width = w + 'px';
-				map.enable(false);
 
 				$vexContent.attr('tabindex', -1);
 				// Work-around to avoid the ugly all-bold dialog message on mobile
@@ -569,7 +566,6 @@ L.Map.include({
 					localStorage.setItem('WSDWelcomeVersion', map._socket.WSDServer.Version);
 				}
 				map.focus();
-				map.enable(true);
 			}
 		});
 	},
@@ -695,7 +691,6 @@ L.Map.include({
 
 				this.contentEl.style.width = w + 'px';
 
-				map.enable(false);
 				$(window).bind('keyup.vex', handler);
 				// workaround for https://github.com/HubSpot/vex/issues/43
 				$('.vex-overlay').css({ 'pointer-events': 'none'});
@@ -706,7 +701,6 @@ L.Map.include({
 				if (touchGesture && touchGesture._hammer) {
 					touchGesture._hammer.on('tripletap', L.bind(touchGesture._onTripleTap, touchGesture));
 				}
-				map.enable(true);
 				map.focus();
 			}
 		});

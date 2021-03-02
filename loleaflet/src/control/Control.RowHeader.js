@@ -199,8 +199,6 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 			this._map.sendUnoCommand('.uno:SetOptimalRowHeight', extra);
 		}
-
-		this._map.enable(true);
 	},
 
 	onDragEnd: function (dragDistance) {
