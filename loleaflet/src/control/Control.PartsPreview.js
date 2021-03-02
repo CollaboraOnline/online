@@ -30,6 +30,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 		this._container = container;
 		this._partsPreviewCont = preview;
+		this._partsPreviewCont.onscroll = this._onScroll.bind(this);
 	},
 
 	onAdd: function (map) {
@@ -52,23 +53,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	createScrollbar: function () {
-		var control = this;
-
-		$(this._partsPreviewCont).mCustomScrollbar({
-			axis: this._direction,
-			theme: 'dark-thick',
-			scrollInertia: 0,
-			mouseWheelPixels: 100,
-			alwaysShowScrollbar: 1,
-			callbacks:{
-				whileScrolling: function() {
-					control._onScroll(this);
-				}
-			}
-		});
-
-		var scrollContainer = $(this._partsPreviewCont).find('.mCSB_container').get(0);
-		scrollContainer.style.whiteSpace = 'nowrap';
+		this._partsPreviewCont.style.whiteSpace = 'nowrap';
 	},
 
 	_updateDisabled: function (e) {
@@ -96,13 +81,11 @@ L.Control.PartsPreview = L.Control.extend({
 					}, this), 500);
 				}
 
-				this.createScrollbar();
 				var bottomBound = this._getBottomBound();
-				this._scrollContainer = $(this._partsPreviewCont).find('.mCSB_container').get(0);
 
 				// Add a special frame just as a drop-site for reordering.
 				var frameClass = 'preview-frame ' + this.options.frameClass;
-				var frame = L.DomUtil.create('div', frameClass, this._scrollContainer);
+				var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
 				this._addDnDHandlers(frame);
 				frame.setAttribute('draggable', false);
 				frame.setAttribute('id', 'first-drop-site');
@@ -163,12 +146,7 @@ L.Control.PartsPreview = L.Control.extend({
 			previewFrame.addClass(addPreviewFrame);
 
 			// re-create scrollbar with new direction
-			var direction = this._direction;
 			this._direction = !window.mode.isDesktop() && !window.mode.isTablet() && L.DomUtil.isPortrait() ? 'x' : 'y';
-			if (direction !== this._direction) {
-				$(this._partsPreviewCont).mCustomScrollbar('destroy');
-				this.createScrollbar();
-			}
 
 			// Hide portrait view's previews when layout view is used.
 			if (this._direction === 'x' && window.mode.isMobile()) {
@@ -193,7 +171,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_createPreview: function (i, hashCode, bottomBound) {
 		var frameClass = 'preview-frame ' + this.options.frameClass;
-		var frame = L.DomUtil.create('div', frameClass, this._scrollContainer);
+		var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
 		this._addDnDHandlers(frame);
 		L.DomUtil.create('span', 'preview-helper', frame);
 
@@ -213,7 +191,7 @@ L.Control.PartsPreview = L.Control.extend({
 		L.DomEvent.on(img, 'click', function (e) {
 			L.DomEvent.stopPropagation(e);
 			L.DomEvent.stop(e);
-			var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+			var part = this._findClickedPart(e.target.parentNode);
 			if (part !== null)
 				var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 			if (!window.mode.isDesktop() && partId === this._map._docLayer._selectedPart) {
@@ -317,28 +295,37 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_scrollToPart: function() {
 		var partNo = this._map.getCurrentPartNumber();
-		var sliderSize, nodePos, nodeOffset, nodeMargin;
-		var node = $(this._partsPreviewCont).find('.mCSB_container .preview-frame')[partNo];
+		//var sliderSize, nodePos, nodeOffset, nodeMargin;
+		var node = this._partsPreviewCont.children[partNo];
 
 		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo, false))) {
-			nodePos = this._direction === 'x' ? $(node).position().left : $(node).position().top;
-			nodeMargin = this._direction === 'x' ? parseInt($(node).css('margin-right')) : parseInt($(node).css('margin-bottom'));
-			nodeOffset = (this._direction === 'x' ? $(node).width() : $(node).height()) + nodeMargin;
-			sliderSize = this._direction === 'x' ? $(this._partsPreviewCont).width() : $(this._partsPreviewCont).height();
+			var nodePos = this._direction === 'x' ? $(node).position().left : $(node).position().top;
+			var scrollDirection = window.mode.isDesktop() || window.mode.isTablet() ? 'scrollTop': (L.DomUtil.isPortrait() ? 'scrollLeft': 'scrollTop');
+			var that = this;
 			if (this._map._partsDirection < 0) {
 				setTimeout(function() {
-					$(this._partsPreviewCont).mCustomScrollbar('scrollTo', nodePos + nodeOffset);
+					that._partsPreviewCont[scrollDirection] += nodePos;
 				}, 50);
 			} else {
 				setTimeout(function() {
-					$(this._partsPreviewCont).mCustomScrollbar('scrollTo', (nodePos + nodeOffset) - (sliderSize - nodeOffset - nodeMargin));
+					that._partsPreviewCont[scrollDirection] += nodePos;
 				}, 50);
 			}
 		}
 	},
 
+	// We will use this function because IE doesn't support "Array.from" feature.
+	_findClickedPart: function (element) {
+		for (var i = 0; i < this._partsPreviewCont.children.length; i++) {
+			if (this._partsPreviewCont.children[i] === element) {
+				return i;
+			}
+		}
+		return -1;
+	},
+
 	_setPart: function (e) {
-		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = this._findClickedPart(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 
@@ -453,10 +440,6 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
-	_updatePreviewIds: function () {
-		$(this._partsPreviewCont).mCustomScrollbar('update');
-	},
-
 	_insertPreview: function (e) {
 		if (this._map.getDocType() === 'presentation') {
 			var newIndex = e.selectedPart + 1;
@@ -470,7 +453,6 @@ L.Control.PartsPreview = L.Control.extend({
 
 			// insert after selectedFrame
 			selectedFrame.parentNode.insertBefore(newFrame, selectedFrame.nextSibling);
-			this._updatePreviewIds();
 		}
 	},
 
@@ -480,7 +462,6 @@ L.Control.PartsPreview = L.Control.extend({
 			L.DomUtil.remove(selectedFrame);
 
 			this._previewTiles.splice(e.selectedPart, 1);
-			this._updatePreviewIds();
 		}
 	},
 
@@ -489,7 +470,8 @@ L.Control.PartsPreview = L.Control.extend({
 			var scrollOffset = 0;
 			if (e) {
 				var prevScrollY = this._scrollY;
-				this._scrollY = this._direction === 'x' ? -e.mcs.left : -e.mcs.top;
+				var rectangle = e.target.getBoundingClientRect();
+				this._scrollY = this._direction === 'x' ? -rectangle.left : -rectangle.top;
 				scrollOffset = this._scrollY - prevScrollY;
 			}
 
@@ -565,7 +547,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 		// To avoid having to add a new message to move an arbitrary part, let's select the
 		// slide that is being dragged.
-		var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = this._findClickedPart(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 			this._map.setPart(partId);
@@ -627,7 +609,7 @@ L.Control.PartsPreview = L.Control.extend({
 			e.stopPropagation();
 		}
 		if (this.currentNode) {
-			var part = $(this._partsPreviewCont).find('.mCSB_container .preview-frame').index(this.currentNode);
+			var part = this._findClickedPart(this.currentNode);
 			if (part !== null) {
 				var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
 				if (partId < 0)
@@ -644,7 +626,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_handleDragStart: function (e) {
 		// To avoid having to add a new message to move an arbitrary part, let's select the
 		// slide that is being dragged.
-		var part = $(this.partsPreview._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = this.partsPreview._findClickedPart(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 			if (this.partsPreview._map._docLayer && !this.partsPreview._map._docLayer._selectedParts.includes(partId))
@@ -683,7 +665,7 @@ L.Control.PartsPreview = L.Control.extend({
 			e.stopPropagation();
 		}
 
-		var part = $(this.partsPreview._partsPreviewCont).find('.mCSB_container .preview-frame').index(e.target.parentNode);
+		var part = this.partsPreview._findClickedPart(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
 			if (partId < 0)

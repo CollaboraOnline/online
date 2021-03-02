@@ -107,7 +107,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 	_openMobileWizard: function(data) {
 		L.TileLayer.prototype._openMobileWizard.call(this, data);
-		$('mobile-slide-sorter').mCustomScrollbar('update');
 	},
 
 	onUpdateParts: function () {
