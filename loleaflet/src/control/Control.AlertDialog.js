@@ -77,7 +77,6 @@ L.Control.AlertDialog = L.Control.extend({
 				afterClose: function () {
 					vex.dialogID = -1;
 					e.map.focus();
-					e.map.enable(true);
 				}
 			});
 		} else if (e.cmd && e.kind) {

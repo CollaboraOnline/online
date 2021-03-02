@@ -1688,16 +1688,6 @@ L.Map = L.Evented.extend({
 		return Math.max(min, Math.min(max, zoom));
 	},
 
-	enable: function(enabled) {
-		this._enabled = enabled;
-		if (this._enabled) {
-			$('.scroll-container').mCustomScrollbar('update');
-		}
-		else {
-			$('.scroll-container').mCustomScrollbar('disable');
-		}
-	},
-
 	_goToViewId: function(id) {
 		if (id === -1)
 			return;

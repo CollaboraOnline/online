@@ -1330,7 +1330,6 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._docRepair.isVisible()) {
 			this._docRepair.addTo(this._map);
 			this._docRepair.fillActions(textMsg);
-			this._map.enable(false);
 			this._docRepair.show();
 		}
 	},
