@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ isAnyVexDialogActive w2ui CPointSet CRectangle CPolyUtil CPolygon */
+/* global vex $ L _ isAnyVexDialogActive w2ui CPointSet CRectangle CPolyUtil CPolygon Cursor CBounds */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -1358,7 +1358,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_onMousePointerMsg: function (textMsg) {
 		textMsg = textMsg.substring(14); // "mousepointer: "
-		textMsg = L.Cursor.getCustomCursor(textMsg) || textMsg;
+		textMsg = Cursor.getCustomCursor(textMsg) || textMsg;
 		if (this._map._container.style.cursor !== textMsg) {
 			this._map._container.style.cursor = textMsg;
 		}
@@ -1428,6 +1428,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._visibleCursor = new L.LatLngBounds(
 			this._twipsToLatLng(recCursor.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
+		this._cursorCorePixels = CBounds.fromCompat(this._twipsToCorePixelsBounds(recCursor));
+
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
 		if ((docLayer._followEditor || docLayer._followUser) && this._map.lastActionByUser) {
@@ -1495,6 +1497,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._viewCursors[viewId].bounds = new L.LatLngBounds(
 			this._twipsToLatLng(rectangle.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom())),
+		this._viewCursors[viewId].corepxBounds = CBounds.fromCompat(this._twipsToCorePixelsBounds(rectangle));
 		this._viewCursors[viewId].part = parseInt(obj.part);
 
 		// FIXME. Server not sending view visible cursor
@@ -1513,9 +1516,7 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}
 
-		if (this.isCalc()) {
-			this._saveMessageForReplay(textMsg, viewId);
-		}
+		this._saveMessageForReplay(textMsg, viewId);
 	},
 
 	_onCellViewCursorMsg: function (textMsg) {
@@ -2503,15 +2504,16 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_updateCursorPos: function () {
-		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._visibleCursor.getSouthWest()),
-			this._map.latLngToLayerPoint(this._visibleCursor.getNorthEast()));
-		var cursorSize = pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom()));
-		var cursorPos = this._visibleCursor.getNorthWest();
+		var cursorPos = this._cursorCorePixels.getTopLeft();
+		var cursorSize = this._cursorCorePixels.getSize();
 
 		if (!this._cursorMarker) {
-			this._cursorMarker = L.cursor(cursorPos, cursorSize, {blink: true});
+			this._cursorMarker = new Cursor(cursorPos, cursorSize, this._map, {
+				blink: true,
+				dpiScale: this._painter.getDpiScale()
+			});
 		} else {
-			this._cursorMarker.setLatLng(cursorPos, cursorSize);
+			this._cursorMarker.setPositionSize(cursorPos, cursorSize);
 		}
 	},
 
@@ -2559,7 +2561,7 @@ L.TileLayer = L.GridLayer.extend({
 		this.eachView(this._viewCursors, function (item) {
 			var viewCursorMarker = item.marker;
 			if (viewCursorMarker) {
-				viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
+				viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
 			}
 		}, this, true);
 	},
@@ -2606,9 +2608,8 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 
-		var pixBounds = L.bounds(this._map.latLngToLayerPoint(this._viewCursors[viewId].bounds.getSouthWest()),
-		                         this._map.latLngToLayerPoint(this._viewCursors[viewId].bounds.getNorthEast()));
-		var viewCursorPos = this._viewCursors[viewId].bounds.getNorthWest();
+		var pixBounds = this._viewCursors[viewId].corepxBounds;
+		var viewCursorPos = pixBounds.getTopLeft();
 		var viewCursorMarker = this._viewCursors[viewId].marker;
 		var viewCursorVisible = this._viewCursors[viewId].visible;
 		var viewPart = this._viewCursors[viewId].part;
@@ -2625,22 +2626,24 @@ L.TileLayer = L.GridLayer.extend({
 					header: true, // we want a 'hat' to our view cursors (which will contain view user names)
 					headerTimeout: 3000, // hide after some interval
 					zIndex: viewId,
-					headerName: this._map.getViewName(viewId)
+					headerName: this._map.getViewName(viewId),
+					dpiScale: this._painter.getDpiScale()
 				};
-				viewCursorMarker = L.cursor(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())), viewCursorOptions);
+				viewCursorMarker = new Cursor(viewCursorPos, pixBounds.getSize(), this._map, viewCursorOptions);
 				this._viewCursors[viewId].marker = viewCursorMarker;
 			}
 			else {
-				viewCursorMarker.setLatLng(viewCursorPos, pixBounds.getSize().multiplyBy(this._map.getZoomScale(this._map.getZoom())));
+				viewCursorMarker.setPositionSize(viewCursorPos, pixBounds.getSize());
 			}
-			viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getLatLng().equals(viewCursorMarker.getLatLng()) ? 0 : 1);
-			this._viewLayerGroup.addLayer(viewCursorMarker);
+			viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
+			if (!viewCursorMarker.isVisible())
+				viewCursorMarker.add();
 		}
-		else if (viewCursorMarker) {
-			this._viewLayerGroup.removeLayer(viewCursorMarker);
+		else if (viewCursorMarker.isVisible()) {
+			viewCursorMarker.remove();
 		}
 
-		if (this._viewCursors[viewId].marker)
+		if (this._viewCursors[viewId].marker && this._viewCursors[viewId].marker.isVisible())
 			this._viewCursors[viewId].marker.showCursorHeader();
 	},
 
@@ -2651,7 +2654,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	isCursorVisible: function() {
-		return this._map.hasLayer(this._cursorMarker);
+		return this._cursorMarker ? this._cursorMarker.isVisible() : false;
 	},
 
 	goToViewCursor: function(viewId) {
@@ -3967,6 +3970,7 @@ L.TileLayer = L.GridLayer.extend({
 				'textselectionend',
 				'graphicselection',
 			] : [
+				'invalidatecursor',
 				'textselection'
 			];
 
@@ -3976,7 +3980,8 @@ L.TileLayer = L.GridLayer.extend({
 				'invalidateviewcursor',
 				'graphicviewselection',
 			] : [
-				'textviewselection'
+				'textviewselection',
+				'invalidateviewcursor'
 			];
 
 			this._printTwipsMessagesForReplay = new L.MessageStore(ownViewTypes, otherViewTypes);

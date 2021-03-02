@@ -50,7 +50,7 @@ L.GridLayer = L.Layer.extend({
 		if (!this._selections.empty()) {
 			this._selections.clear();
 		}
-		if (this._cursorMarker) {
+		if (this._cursorMarker && this._cursorMarker.isVisible()) {
 			this._cursorMarker.remove();
 		}
 		if (this._graphicMarker) {

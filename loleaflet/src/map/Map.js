@@ -11,7 +11,7 @@ function isAnyVexDialogActive() {
 	return res;
 }
 
-/* global vex $ _ */
+/* global vex $ _ Cursor */
 L.Map = L.Evented.extend({
 
 	statics: {
@@ -94,7 +94,7 @@ L.Map = L.Evented.extend({
 			this.setView(L.latLng(options.center), options.zoom, {reset: true});
 		}
 
-		L.Cursor.imagePath = options.cursorURL;
+		Cursor.imagePath = options.cursorURL;
 
 		if (options.webserver === undefined) {
 			var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
