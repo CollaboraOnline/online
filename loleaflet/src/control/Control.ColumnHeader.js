@@ -204,8 +204,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 			this._map.sendUnoCommand('.uno:SetOptimalColumnWidth', extra);
 		}
-
-		this._map.enable(true);
 	},
 
 	onDragEnd: function (dragDistance) {
