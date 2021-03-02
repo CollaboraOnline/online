@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a L.TileLayer with canvas based rendering.
  */
 
-/* global L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData */
+/* global L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint */
 
 L.TileCoordData = L.Class.extend({
 
@@ -450,6 +450,10 @@ L.TileSectionManager = L.Class.extend({
 			this._tilesSection.setInZoomAnim(false);
 			this._inZoomAnim = false;
 		}
+	},
+
+	getTileSectionPos : function () {
+		return new CPoint(this._tilesSection.myTopLeft[0], this._tilesSection.myTopLeft[1]);
 	}
 });
 
@@ -479,6 +483,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._cursorDataDiv = L.DomUtil.create('div', 'cell-cursor-data', this._canvasContainer);
 		this._selectionsDataDiv = L.DomUtil.create('div', 'selections-data', this._canvasContainer);
 		this._splittersDataDiv = L.DomUtil.create('div', 'splitters-data', this._canvasContainer);
+		this._cursorOverlayDiv = L.DomUtil.create('div', 'cursor-overlay', this._canvasContainer);
 		this._splittersStyleData = new CStyleData(this._splittersDataDiv);
 
 		this._painter = new L.TileSectionManager(this);
@@ -1591,6 +1596,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	hasYSplitter: function () {
 		return !!(this._ySplitter);
 	},
+
+	getTileSectionPos: function () {
+		return this._painter.getTileSectionPos();
+	}
 
 });
 

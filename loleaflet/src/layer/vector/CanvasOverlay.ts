@@ -5,6 +5,7 @@
 /// <reference path="CPolygon.ts" />
 /// <reference path="CRectangle.ts" />
 /// <reference path="CSplitterLine.ts" />
+/// <reference path="../marker/Cursor.ts" />
 /* eslint-disable */
 
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.

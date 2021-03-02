@@ -1774,6 +1774,12 @@ L.Map = L.Evented.extend({
 		if (this._docLayer)
 			return this._docLayer._painter;
 		return undefined;
+	},
+
+	getCursorOverlayContainer: function() {
+		if (this._docLayer)
+			return this._docLayer._cursorOverlayDiv;
+		return undefined;
 	}
 });
 
