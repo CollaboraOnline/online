@@ -22,22 +22,12 @@ describe('Formula bar tests.', function() {
 		calcHelper.clickOnFirstCell();
 
 		// Select a different cell using address input.
-		cy.get('input#addressInput')
-			.clear()
-			.type('B2{enter}');
-
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'B2');
+		helper.typeIntoInputField('input#addressInput', 'B2');
 
 		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 
-		cy.get('input#addressInput')
-			.clear()
-			.type('A1{enter}');
-
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
+		helper.typeIntoInputField('input#addressInput', 'A1');
 
 		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('exist');
@@ -48,12 +38,7 @@ describe('Formula bar tests.', function() {
 		calcHelper.clickOnFirstCell();
 
 		// Select a cell range using address input.
-		cy.get('input#addressInput')
-			.clear()
-			.type('B2:B3{enter}');
-
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'B2:B3');
+		helper.typeIntoInputField('input#addressInput', 'B2:B3');
 
 		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
@@ -65,12 +50,7 @@ describe('Formula bar tests.', function() {
 			.should('exist');
 
 		// Select a cell range again using address input.
-		cy.get('input#addressInput')
-			.clear()
-			.type('B2:B3{enter}');
-
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'B2:B3');
+		helper.typeIntoInputField('input#addressInput', 'B2:B3');
 
 		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
@@ -84,9 +64,7 @@ describe('Formula bar tests.', function() {
 		helper.expectTextForClipboard('long line long line long line');
 
 		// A2 cell is empty
-		cy.get('input#addressInput')
-			.clear()
-			.type('A2{enter}');
+		helper.typeIntoInputField('input#addressInput', 'A2');
 
 		cy.get('.spreadsheet-cell-autofill-marker')
 			.should('be.visible');

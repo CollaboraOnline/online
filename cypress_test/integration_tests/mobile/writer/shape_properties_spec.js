@@ -88,10 +88,7 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		openPosSizePanel();
 
-		cy.get('#selectwidth .spinfield')
-			.clear()
-			.type('4.2')
-			.type('{enter}');
+		helper.typeIntoInputField('#selectwidth .spinfield', '4.2', true, false);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('not.have.attr', 'd', defaultGeometry);
@@ -104,10 +101,7 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		openPosSizePanel();
 
-		cy.get('#selectheight .spinfield')
-			.clear()
-			.type('5.2')
-			.type('{enter}');
+		helper.typeIntoInputField('#selectheight .spinfield', '5.2', true, false);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('not.have.attr', 'd', defaultGeometry);
@@ -229,13 +223,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Change line transparency', function() {
 		openLinePropertyPanel();
 
-		cy.get('#linetransparency .spinfield')
-			.clear()
-			.type('20')
-			.type('{enter}');
-
-		cy.get('#linetransparency .spinfield')
-			.should('have.attr', 'value', '20');
+		helper.typeIntoInputField('#linetransparency .spinfield', '20', true, false);
 
 		triggerNewSVG();
 
