@@ -308,7 +308,6 @@ LOLEAFLET_JS =\
 	src/control/Control.Tabs.js \
 	src/control/Control.Permission.js \
 	src/control/Control.Selection.js \
-	src/control/Control.Scroll.js \
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
 	src/control/Control.Infobar.js src/control/ColorPicker.js \
