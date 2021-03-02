@@ -3,7 +3,10 @@
 }
 
 #slide-sorter {
-	height: 100%
+	height: 100%;
+	white-space: nowrap;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 #sidebar-panel {
@@ -30,7 +33,8 @@
 	max-width: 164px;
 	cursor: pointer;
 	border: 2px solid #dfdfdf;
-	margin-left: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 /* The current part the user is on. */
