@@ -468,6 +468,8 @@ L.Control.MobileWizard = L.Control.extend({
 	// These 2 functions show/hide mobile-slide-sorter.
 	_showSlideSorter: function() {
 		document.getElementById('mobile-wizard-header').style.display = 'block';
+		document.getElementById('mobile-wizard-header').style.whiteSpace = 'nowrap';
+		document.getElementById('mobile-wizard-header').style.overflowX = 'auto';
 	},
 
 	_hideSlideSorter: function() {
