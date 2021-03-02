@@ -105,11 +105,6 @@ L.Control.Tabs = L.Control.extend({
 				// make room for the preview
 				var docContainer = this._map.options.documentContainer;
 				L.DomUtil.addClass(docContainer, 'spreadsheet-document');
-				setTimeout(L.bind(function () {
-					this._map.invalidateSize();
-					$('.scroll-container').mCustomScrollbar('update');
-					$('.scroll-container').mCustomScrollbar('scrollTo', [0, 0]);
-				}, this), 100);
 				this._tabsInitialized = true;
 			}
 
