@@ -326,12 +326,7 @@ describe('Apply number formatting.', function() {
 			.should('have.attr', 'value', '0');
 
 		// Type in a new value
-		cy.get('#decimalplaces input')
-			.clear()
-			.type('2{enter}');
-
-		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '2');
+		helper.typeIntoInputField('#decimalplaces input', '2', true, false);
 
 		calcHelper.selectEntireSheet();
 
@@ -350,12 +345,7 @@ describe('Apply number formatting.', function() {
 			.should('have.attr', 'value', '1');
 
 		// Type in a new value
-		cy.get('#leadingzeroes input')
-			.clear()
-			.type('6{enter}');
-
-		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '6');
+		helper.typeIntoInputField('#leadingzeroes input', '6', true, false);
 
 		calcHelper.selectEntireSheet();
 

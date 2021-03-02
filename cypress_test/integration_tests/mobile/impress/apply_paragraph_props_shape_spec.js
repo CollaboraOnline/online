@@ -189,12 +189,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#aboveparaspacing input')
-			.clear()
-			.type('2{enter}');
-
-		cy.get('#aboveparaspacing input')
-			.should('have.attr', 'value', '2');
+		helper.typeIntoInputField('#aboveparaspacing input', '2', true, false);
 
 		triggerNewSVG();
 
@@ -209,12 +204,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 
 		openParagraphPropertiesPanel();
 
-		cy.get('#belowparaspacing input')
-			.clear()
-			.type('2{enter}');
-
-		cy.get('#belowparaspacing input')
-			.should('have.attr', 'value', '2');
+		helper.typeIntoInputField('#belowparaspacing input', '2', true, false);
 
 		triggerNewSVG();
 
