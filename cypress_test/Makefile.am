@@ -627,7 +627,7 @@ endef
 # Parameters:
 # 1 - spec:	      test file path (e.g. make check-mobile spec=...)
 # 2 - test type:      mobile, desktop or multi test.
-define check_spec_exisetnce
+define check_spec_existence
 	$(eval TEST_FILES=$(if $(filter mobile,$(2)),$(MOBILE_TEST_FILES),\
 				$(if $(filter desktop,$(2)),$(DESKTOP_TEST_FILES),$(MULTIUSER_TESTS))))
 	$(if $(filter $(1),$(TEST_FILES)),,$(error CypressError: Can't find the given spec file!))
