@@ -9,5 +9,3 @@
 **/src/unocommands.js
 **/js/viamapi-client.js
 #
-# This is way too ugly for eslint...
-**/js/jquery.mCustomScrollbar.js
