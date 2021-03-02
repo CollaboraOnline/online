@@ -145,7 +145,6 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/writer.css \
 	$(srcdir)/css/writer-mobile.css \
 	$(srcdir)/css/editor.css \
-	$(srcdir)/css/jquery.mCustomScrollbar.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
 	$(builddir)/node_modules/vex-js/dist/css/vex.css \
 	$(builddir)/node_modules/vex-js/dist/css/vex-theme-plain.css \
@@ -186,7 +185,6 @@ LOLEAFLET_LIBS_JS +=\
 endif
 
 LOLEAFLET_LIBS_JS +=\
-	jquery.mCustomScrollbar.js \
 	w2ui-1.5.rc1.js
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
