@@ -234,13 +234,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#rowheight .spinfield')
 			.should('have.attr', 'value', '0');
 
-		cy.get('#rowheight .spinfield')
-			.clear()
-			.type('1.4')
-			.type('{enter}');
-
-		cy.get('#rowheight .spinfield')
-			.should('have.attr', 'value', '1.4');
+		helper.typeIntoInputField('#rowheight .spinfield', '1.4', true, false);
 
 		selectFullTable();
 
@@ -254,13 +248,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		openTablePanel();
 
-		cy.get('#columnwidth .spinfield')
-			.clear()
-			.type('1.6')
-			.type('{enter}');
-
-		cy.get('#columnwidth .spinfield')
-			.should('have.attr', 'value', '1.6');
+		helper.typeIntoInputField('#columnwidth .spinfield', '1.6', true, false);
 
 		selectFullTable();
 

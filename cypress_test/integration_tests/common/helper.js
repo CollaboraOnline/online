@@ -1088,6 +1088,37 @@ function overlayItemHasDifferentBoundsThan(itemDivId, bounds) {
 		});
 }
 
+// Type some text into an input DOM item.
+// Parameters:
+// selector - selector to find the correct input item in the DOM.
+// text - string to type in (can contain cypress command strings).
+// clearBefore - whether clear the existing content or not.
+// prop - whether the value is set as property or attribute (depends on implementation).
+function typeIntoInputField(selector, text, clearBefore = true, prop = true)
+{
+	cy.log('Typing into input field - start.');
+
+	if (clearBefore) {
+		cy.get(selector)
+			.focus()
+			.clear()
+			.type(text + '{enter}');
+	} else {
+		cy.get(selector)
+			.type(text + '{enter}');
+	}
+
+	if (prop) {
+		cy.get(selector)
+			.should('have.prop', 'value', text);
+	} else {
+		cy.get(selector)
+			.should('have.attr', 'value', text);
+	}
+
+	cy.log('Typing into input field - end.');
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -1125,3 +1156,4 @@ module.exports.Bounds = Bounds;
 module.exports.getOverlayItemBounds = getOverlayItemBounds;
 module.exports.overlayItemHasBounds = overlayItemHasBounds;
 module.exports.overlayItemHasDifferentBoundsThan = overlayItemHasDifferentBoundsThan;
+module.exports.typeIntoInputField = typeIntoInputField;
