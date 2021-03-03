@@ -38,6 +38,8 @@ L.Control.CornerHeader = L.Class.extend({
 	},
 
 	onClick: function () {
+		this._map.wholeRowSelected = true;
+		this._map.wholeColumnSelected = true;
 		this._map.sendUnoCommand('.uno:SelectAll');
 	},
 
