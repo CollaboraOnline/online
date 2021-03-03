@@ -101,24 +101,53 @@ class Cursor {
 		if (!this.container || !this.map)
 			return;
 
+		var docBounds = CBounds.fromCompat(this.map.getCorePxDocBounds());
+		var inDocCursor = docBounds.contains(this.position);
 		// Calculate position and size in CSS pixels.
 		var viewBounds = CBounds.fromCompat(this.map.getPixelBoundsCore());
 		var spCxt = this.map.getSplitPanesContext();
 		var origin = viewBounds.min.clone();
-		if (spCxt) {
-			var splitPos = spCxt.getSplitPos().multiplyBy(this.dpiScale);
-			if (this.position.x <= splitPos.x && this.position.x >= 0)
+		var paneSize = viewBounds.getSize();
+		var splitPos = new CPoint(0, 0);
+		if (inDocCursor && spCxt) {
+			splitPos = CPoint.fromCompat(
+				spCxt.getSplitPos()).multiplyBy(this.dpiScale);
+			if (this.position.x <= splitPos.x && this.position.x >= 0) {
 				origin.x = 0;
+				paneSize.x = splitPos.x;
+			}
+			else {
+				paneSize.x -= splitPos.x;
+			}
 
-			if (this.position.y <= splitPos.y && this.position.y >= 0)
+			if (this.position.y <= splitPos.y && this.position.y >= 0) {
 				origin.y = 0;
+				paneSize.y = splitPos.y;
+			}
+			else {
+				paneSize.y -= splitPos.y;
+			}
 		}
-		var tileSectionPos = this.map._docLayer.getTileSectionPos();
-		var pos = new CPoint(
-			(this.position.x + tileSectionPos.x - origin.x) / this.dpiScale,
-			(this.position.y + tileSectionPos.y - origin.y) / this.dpiScale).round();
+		var canvasOffset = this.position.subtract(origin);
 
-		var size = this.size.divideBy(this.dpiScale).round();
+		if (inDocCursor) {
+			var paneOffset = new CPoint(
+				origin.x ? canvasOffset.x - splitPos.x : canvasOffset.x,
+				origin.y ? canvasOffset.y - splitPos.y : canvasOffset.y);
+			var paneBounds = new CBounds(new CPoint(0, 0), paneSize);
+
+			if (!paneBounds.contains(paneOffset)) {
+				this.container.style.visibility = 'hidden';
+				return;
+			}
+		}
+
+		this.container.style.visibility = 'visible';
+
+		var tileSectionPos = this.map._docLayer.getTileSectionPos();
+		// Compute tile-section offset in css pixels.
+		var pos = canvasOffset.add(tileSectionPos)._divideBy(this.dpiScale)._round();
+		var size = this.size.divideBy(this.dpiScale)._round();
 		this.setSize(size);
 		this.setPos(pos);
 	}
