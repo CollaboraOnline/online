@@ -100,7 +100,7 @@ describe('Calc insertion wizard.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg.bottomright-svg-pane')
 			.should(function(svg) {
 				expect(svg[0].getBBox().width).to.be.greaterThan(0);
 				expect(svg[0].getBBox().height).to.be.greaterThan(0);
