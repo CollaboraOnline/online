@@ -34,6 +34,9 @@ L.Renderer = L.Layer.extend({
 			this.getPane().appendChild(this._container);
 		}
 
+		if (this.rendererId)
+			L.DomUtil.addClass(this._container, this.rendererId + '-svg-pane');
+
 		this._update();
 	},
 
