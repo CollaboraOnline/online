@@ -81,12 +81,6 @@ td.jsdialog > [id^='table-box'] {
 	border-spacing: 0px;
 }
 
-#MacroWarnMedium p {
-	max-width: 512px;
-	color: #333;
-	text-transform: capitalize;
-}
-
 /* Expander */
 
 .jsdialog.ui-expander {
@@ -535,4 +529,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 #FontworkGalleryDialog #label1 {
 	display: none;
+}
+
+/* Macros dialos */
+
+#MacroWarnMedium p {
+	max-width: 512px;
+	color: #333;
+	text-transform: capitalize;
 }
