@@ -881,7 +881,7 @@ function doIfOnDesktop(callback) {
 // cursorSelector - selector for the cursor DOM element (document cursor is the default).
 function moveCursor(direction, modifier,
 	checkCursorVis = true,
-	cursorSelector = '.leaflet-overlay-pane .blinking-cursor') {
+	cursorSelector = '.cursor-overlay .blinking-cursor') {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
 	cy.log('Param - modifier: ' + modifier);
@@ -970,7 +970,7 @@ function typeIntoDocument(text) {
 // offsetProperty - which offset position we need (e.g. 'left' or 'top').
 // aliasName - we create an alias with the queried position.
 // cursorSelector - selector to find the correct cursor element in the DOM.
-function getCursorPos(offsetProperty, aliasName, cursorSelector = '.leaflet-overlay-pane .blinking-cursor') {
+function getCursorPos(offsetProperty, aliasName, cursorSelector = '.cursor-overlay .blinking-cursor') {
 	initAliasToNegative(aliasName);
 
 	cy.get(cursorSelector)
