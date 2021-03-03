@@ -10,9 +10,6 @@ L.Control.PresentationBar = L.Control.extend({
 	},
 
 	onAdd: function (map) {
-		if (this._map.getDocType() === 'drawing') {
-			return;
-		}
 		this.map = map;
 		this.create();
 
@@ -30,11 +27,11 @@ L.Control.PresentationBar = L.Control.extend({
 			hidden: true,
 			items: [
 				{type: 'html',  id: 'left'},
-				{type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: _('Fullscreen presentation')},
+				{type: 'button',  id: 'presentation', img: 'presentation', hidden:true, hint: this._getItemUnoName('presentation')},
 				{type: 'break', id: 'presentationbreak', hidden:true},
-				{type: 'button',  id: 'insertpage', img: 'insertpage', hint: _UNO('.uno:TaskPaneInsertPage', 'presentation')},
-				{type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: _UNO('.uno:DuplicateSlide', 'presentation')},
-				{type: 'button',  id: 'deletepage', img: 'deletepage', hint: _UNO('.uno:DeleteSlide', 'presentation')},
+				{type: 'button',  id: 'insertpage', img: 'insertpage', hint: this._getItemUnoName('insertpage')},
+				{type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: this._getItemUnoName('duplicatepage')},
+				{type: 'button',  id: 'deletepage', img: 'deletepage', hint: this._getItemUnoName('deletepage')},
 				{type: 'html',  id: 'right'}
 			],
 			onClick: function (e) {
@@ -45,9 +42,27 @@ L.Control.PresentationBar = L.Control.extend({
 		if (window.mode.isDesktop())
 			toolbar.tooltip();
 
+		if (this.map.getDocType() === 'drawing')
+			w2ui['presentation-toolbar'].disable('presentation');
+
 		toolbar.bind('touchstart', function() {
 			w2ui['presentation-toolbar'].touchStarted = true;
 		});
+	},
+
+	_getItemUnoName: function(id) {
+		var docType = this.map.getDocType();
+		switch (id) {
+		case 'presentation':
+			return docType === 'presentation' ? _('Fullscreen presentation') : '';
+		case 'insertpage':
+			return docType === 'presentation' ? _UNO('.uno:TaskPaneInsertPage', 'presentation') : _UNO('.uno:InsertPage', 'presentation');
+		case 'duplicatepage':
+			return docType === 'presentation' ? _UNO('.uno:DuplicateSlide', 'presentation') : _UNO('.uno:DuplicatePage', 'presentation');
+		case 'deletepage':
+			return docType === 'presentation' ? _UNO('.uno:DeleteSlide', 'presentation') : _UNO('.uno:DeletePage', 'presentation');
+		}
+		return '';
 	},
 
 	onDelete: function(e) {
@@ -99,19 +114,13 @@ L.Control.PresentationBar = L.Control.extend({
 	},
 
 	onDocLayerInit: function() {
-		var docType = this.map.getDocType();
-		switch (docType) {
-		case 'presentation':
-			var presentationToolbar = w2ui['presentation-toolbar'];
-			if (!this.map['wopi'].HideExportOption && presentationToolbar) {
-				presentationToolbar.show('presentation', 'presentationbreak');
-			}
+		var presentationToolbar = w2ui['presentation-toolbar'];
+		if (!this.map['wopi'].HideExportOption && presentationToolbar) {
+			presentationToolbar.show('presentation', 'presentationbreak');
+		}
 
-			// FALLTHROUGH intended
-		case 'drawing':
-			if (!window.mode.isMobile()) {
-				$('#presentation-toolbar').show();
-			}
+		if (!window.mode.isMobile()) {
+			$('#presentation-toolbar').show();
 		}
 	},
 
