@@ -378,7 +378,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_updatePart: function (e) {
-		if (e.docType === 'presentation' && e.part >= 0) {
+		if ((e.docType === 'presentation' || e.docType === 'drawing') && e.part >= 0) {
 			this._map.getPreview(e.part, e.part, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 		}
 	},
@@ -440,7 +440,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_updatePreview: function (e) {
-		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing') {
+		if (this._map.isPresentationOrDrawing()) {
 			this._map._previewRequestsOnFly--;
 			if (this._map._previewRequestsOnFly < 0) {
 				this._map._previewRequestsOnFly = 0;
@@ -459,7 +459,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_insertPreview: function (e) {
-		if (this._map.getDocType() === 'presentation') {
+		if (this._map.isPresentationOrDrawing()) {
 			var newIndex = e.selectedPart + 1;
 			var newPreview = this._createPreview(newIndex, (e.hashCode === undefined ? null : e.hashCode));
 
@@ -476,7 +476,7 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_deletePreview: function (e) {
-		if (this._map.getDocType() === 'presentation') {
+		if (this._map.isPresentationOrDrawing()) {
 			var selectedFrame = this._previewTiles[e.selectedPart].parentNode;
 			L.DomUtil.remove(selectedFrame);
 
