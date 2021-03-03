@@ -569,6 +569,13 @@ L.Map = L.Evented.extend({
 		this.options.docBounds = bounds;
 	},
 
+	getCorePxDocBounds: function () {
+		var topleft = this.project(this.options.docBounds.getNorthWest());
+		var bottomRight = this.project(this.options.docBounds.getSouthEast());
+		return new L.Bounds(this._docLayer._cssPixelsToCore(topleft),
+			this._docLayer._cssPixelsToCore(bottomRight));
+	},
+
 	panInsideBounds: function (bounds, options) {
 		var center = this.getCenter(),
 		    newCenter = this._limitCenter(center, this._zoom, bounds);
