@@ -141,7 +141,7 @@ function selectTextOfShape() {
 
 		cy.wait(2000);
 
-		return cy.get('.leaflet-overlay-pane')
+		return cy.get('.cursor-overlay')
 			.then(function(overlay) {
 				return overlay.children('.leaflet-cursor-container').length !== 0;
 			});
