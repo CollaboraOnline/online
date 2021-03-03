@@ -62,7 +62,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 				expect(helper.Bounds.parseBoundsJson(elem.text()).top).to.be.equal(0);
 			});
 	} else {
-		cy.get('.leaflet-overlay-pane .blinking-cursor')
+		cy.get('.cursor-overlay .blinking-cursor')
 			.should('be.visible');
 
 		helper.doIfOnDesktop(function() {
