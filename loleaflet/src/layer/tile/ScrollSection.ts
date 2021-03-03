@@ -50,6 +50,10 @@ class ScrollSection {
 	}
 
 	public onInitialize () {
+		this.sectionProperties.roundedDpi = Math.round(this.dpiScale);
+		if (this.sectionProperties.roundedDpi === 0)
+			this.sectionProperties.roundedDpi = 1;
+
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
 
@@ -61,9 +65,9 @@ class ScrollSection {
 
 		this.sectionProperties.previousDragDistance = null;
 
-		this.sectionProperties.usableThickness = 20 * this.dpiScale;
-		this.sectionProperties.scrollBarThickness = 6 * this.dpiScale;
-		this.sectionProperties.edgeOffset = 10 * this.dpiScale;
+		this.sectionProperties.usableThickness = 20 * this.sectionProperties.roundedDpi;
+		this.sectionProperties.scrollBarThickness = 6 * this.sectionProperties.roundedDpi;
+		this.sectionProperties.edgeOffset = 10 * this.sectionProperties.roundedDpi;
 
 		this.sectionProperties.drawVerticalScrollBar = false;
 		this.sectionProperties.drawHorizontalScrollBar = false;
@@ -74,10 +78,10 @@ class ScrollSection {
 		this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 		this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
 
-		this.sectionProperties.minimumScrollSize = 80 * this.dpiScale;
+		this.sectionProperties.minimumScrollSize = 80 * this.sectionProperties.roundedDpi;
 
-		this.sectionProperties.circleSliderRadius = 24 * this.dpiScale; // Radius of the mobile vertical circular slider.
-		this.sectionProperties.arrowCornerLength = 10 * this.dpiScale; // Corner length of the arrows inside circular slider.
+		this.sectionProperties.circleSliderRadius = 24 * this.sectionProperties.roundedDpi; // Radius of the mobile vertical circular slider.
+		this.sectionProperties.arrowCornerLength = 10 * this.sectionProperties.roundedDpi; // Corner length of the arrows inside circular slider.
 
 		// Opacity.
 		this.sectionProperties.alphaWhenVisible = 0.5; // Scroll bar is visible but not being used.
@@ -159,7 +163,7 @@ class ScrollSection {
 		else {
 			var splitPanesContext: any = this.map.getSplitPanesContext();
 			var splitPos: any = splitPanesContext.getSplitPos().clone();
-			splitPos.y *= this.dpiScale;
+			splitPos.y = Math.round(splitPos.y * this.dpiScale);
 			this.sectionProperties.yOffset = splitPos.y;
 			return this.size[1] - splitPos.y;
 		}
@@ -168,7 +172,7 @@ class ScrollSection {
 	private calculateVerticalScrollSize (scrollLength: number) :number {
 		var scrollSize = scrollLength * scrollLength / this.sectionProperties.documentHeight;
 		if (scrollSize > this.sectionProperties.minimumScrollSize) {
-			return scrollSize;
+			return Math.round(scrollSize);
 		}
 		else {
 			return this.sectionProperties.minimumScrollSize;
@@ -182,7 +186,7 @@ class ScrollSection {
 		result.scrollableLength = result.scrollLength - result.scrollSize;
 		result.scrollableHeight = this.sectionProperties.documentHeight - this.size[1];
 		result.ratio = result.scrollableHeight / result.scrollableLength; // 1px scrolling = xpx document height.
-		result.startY = this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset;
+		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset);
 		this.sectionProperties.documentTopMax = result.scrollableHeight; // When documentTopLeft[1] value is equal to this value, it means whole document is visible.
 
 		return result;
@@ -195,7 +199,7 @@ class ScrollSection {
 		else {
 			var splitPanesContext: any = this.map.getSplitPanesContext();
 			var splitPos: any = splitPanesContext.getSplitPos().clone();
-			splitPos.x *= this.dpiScale;
+			splitPos.x = Math.round(splitPos.x * this.dpiScale);
 			this.sectionProperties.xOffset = splitPos.x;
 			return this.size[0] - splitPos.x - this.sectionProperties.horizontalScrollRightOffset;
 		}
@@ -204,7 +208,7 @@ class ScrollSection {
 	private calculateHorizontalScrollSize (scrollLength: number) :number {
 		var scrollSize = scrollLength * scrollLength / this.sectionProperties.documentWidth;
 		if (scrollSize > this.sectionProperties.minimumScrollSize) {
-			return scrollSize;
+			return Math.round(scrollSize);
 		}
 		else {
 			return this.sectionProperties.minimumScrollSize;
@@ -218,7 +222,7 @@ class ScrollSection {
 		result.scrollableLength = result.scrollLength - result.scrollSize;
 		result.scrollableWidth = this.sectionProperties.documentWidth - this.size[0];
 		result.ratio = result.scrollableWidth / result.scrollableLength;
-		result.startX = this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset;
+		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset);
 		this.sectionProperties.documentRightMax = result.scrollableWidth;
 
 		return result;
@@ -246,7 +250,7 @@ class ScrollSection {
 		this.context.fillStyle = '#7E8182';
 		this.context.beginPath();
 		var x: number = circleStartX - this.sectionProperties.arrowCornerLength * 0.5;
-		var y: number = circleStartY - 5 * this.dpiScale;
+		var y: number = circleStartY - 5 * this.sectionProperties.roundedDpi;
 		this.context.moveTo(x, y);
 		x += this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
@@ -259,7 +263,7 @@ class ScrollSection {
 		this.context.fill();
 
 		x = circleStartX - this.sectionProperties.arrowCornerLength * 0.5;
-		y = circleStartY + 5 * this.dpiScale;
+		y = circleStartY + 5 * this.sectionProperties.roundedDpi;
 		this.context.moveTo(x, y);
 		x += this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
@@ -281,20 +285,9 @@ class ScrollSection {
 
 		var startX = this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
-		var centerX = this.size[0] - this.sectionProperties.edgeOffset - this.sectionProperties.scrollBarThickness * 0.5;
-		var centerY = scrollProps.startY;
-		var radius = this.sectionProperties.scrollBarThickness * 0.5;
-
-		this.context.beginPath();
-		this.context.arc(centerX, centerY, radius, 0, Math.PI, true);
-		this.context.fill();
-
-		this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
-
-		centerY += scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
-		this.context.beginPath();
-		this.context.arc(centerX, centerY, radius, 0, Math.PI, false);
-		this.context.fill();
+		this.context.fillRect(startX + this.sectionProperties.roundedDpi, scrollProps.startY - this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi * 4, this.sectionProperties.roundedDpi);
+        this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
+        this.context.fillRect(startX + this.sectionProperties.roundedDpi, scrollProps.startY + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, this.sectionProperties.roundedDpi * 4, this.sectionProperties.roundedDpi);
 
 		this.context.globalAlpha = 1.0;
 	}
@@ -306,20 +299,9 @@ class ScrollSection {
 
 		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
-		var centerX = scrollProps.startX;
-		var centerY = this.size[1] - this.sectionProperties.edgeOffset - this.sectionProperties.scrollBarThickness * 0.5;
-		var radius = this.sectionProperties.scrollBarThickness * 0.5;
-
-		this.context.beginPath();
-		this.context.arc(centerX, centerY, radius, Math.PI * 0.5, Math.PI * 1.5, false);
-		this.context.fill();
-
+		this.context.fillRect(scrollProps.startX - this.sectionProperties.roundedDpi, startY + this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi * 4);
 		this.context.fillRect(scrollProps.startX, startY, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, this.sectionProperties.scrollBarThickness);
-
-		centerX += scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
-		this.context.beginPath();
-		this.context.arc(centerX, centerY, radius, Math.PI * 0.5, Math.PI * 1.5, true);
-		this.context.fill();
+		this.context.fillRect(scrollProps.startX + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, startY + this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi * 4);
 
 		this.context.globalAlpha = 1.0;
 	}
