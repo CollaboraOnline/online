@@ -23,14 +23,12 @@ describe('Statubar tests.', function() {
 		cy.get('#StatusDocPos')
 			.should('have.text', 'Sheet 1 of 2');
 
-		cy.contains('.spreadsheet-tab', 'Sheet2')
-			.click();
+		helper.clickOnIdle('.spreadsheet-tab', 'Sheet2');
 
 		cy.get('#StatusDocPos')
 			.should('have.text', 'Sheet 2 of 2');
 
-		cy.contains('.spreadsheet-tab', 'Sheet1')
-			.click();
+		helper.clickOnIdle('.spreadsheet-tab', 'Sheet1');
 
 		cy.get('#StatusDocPos')
 			.should('have.text', 'Sheet 1 of 2');
