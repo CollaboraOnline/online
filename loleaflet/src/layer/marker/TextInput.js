@@ -809,7 +809,11 @@ L.TextInput = L.Layer.extend({
 
 		// avoid setting the focus keyboard
 		if (!noSelect) {
-			this._textArea.setSelectionRange(1, 1);
+			try {
+				this._textArea.setSelectionRange(1, 1);
+			} catch (err) {
+				// old firefox throws an exception on start.
+			}
 
 			if (this._hasWorkingSelectionStart === undefined)
 				this._hasWorkingSelectionStart = (this._textArea.selectionStart === 1);
