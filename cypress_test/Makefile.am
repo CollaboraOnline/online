@@ -242,7 +242,7 @@ define run_mobile_tests
 			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(1),mobile,$(2))\
 	,\
 		$(eval SPEC_FILE=$(if $(1),$(MOBILE_TEST_FOLDER)/$(1)))\
-		$(call check_spec_existence,$(1),mobile)\
+		$(if $(1),$(call check_spec_existence,$(1),mobile))\
 		$(call run_test_headless,\
 			$(MOBILE_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
@@ -301,7 +301,7 @@ define run_desktop_tests
 			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(1),desktop,$(2))\
 	,\
 		$(eval SPEC_FILE=$(if $(1),$(DESKTOP_TEST_FOLDER)/$(1)))\
-		$(call check_spec_existence,$(1),desktop)\
+		$(if $(1),$(call check_spec_existence,$(1),desktop))\
 		$(call run_test_headless,\
 			$(DESKTOP_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))\
 	)
