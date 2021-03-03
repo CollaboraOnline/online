@@ -538,3 +538,72 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: #333;
 	text-transform: capitalize;
 }
+
+#MacroSelectorDialog #helpmacro {
+	margin-bottom: 8px;
+	text-transform: full-size-kana;
+	font-size: 12px;
+}
+
+#MacroSelectorDialog #table-box2 {
+	width: auto;
+}
+
+#MacroSelectorDialog #table-box2 > .row > .cell.jsdialog {
+	width: auto;
+}
+
+#MacroSelectorDialog #table-box2 > .row > .cell.jsdialog:first-of-type {
+	width: 47%;
+}
+
+#MacroSelectorDialog #table-frame3 {
+	width: 100%;
+}
+
+#MacroSelectorDialog #table-frame3 .jsdialog.ui-alignment,
+#MacroSelectorDialog #table-frame2,
+#MacroSelectorDialog #table-frame2 .vertical.jsdialog.ui-alignment {
+	width: auto;
+}
+
+#MacroSelectorDialog #commands {
+	height: 150px;
+}
+
+#MacroSelectorDialog #categories {
+	box-sizing: border-box;
+	border-color: transparent;
+	padding-right: 8px
+}
+
+#MacroSelectorDialog #categories .ui-treeview-entry.selected {
+	color: #222;
+	background-color: #dfdfdf;
+	border-radius: 3px;
+	border-bottom-right-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+#MacroSelectorDialog #categories .ui-treeview-entry.selected::after {
+	margin-right: -6px;
+	margin-right: -11px;
+	color: #dfdfdf;
+	content: '\23F5';
+	font-size: 16px;
+}
+
+#MacroSelectorDialog #categories .ui-treeview-entry {
+	color: #555;
+}
+
+#MacroSelectorDialog #categories > tbody > ul > li > ul .ui-treeview-expandable.selected > .ui-treeview::before {
+	/* visibility: hidden; hide when javascript sets properly expanders*/
+}
+#MacroSelectorDialog #categories .ui-treeview-entry:hover, .ui-treeview-entry.selected, .ui-listview-entry:hover, .ui-listview-entry.selected {
+	background-color: #dfdfdf;
+}
+
+#MacroSelectorDialog #table-frame3 .jsdialog.ui-treeview-entry {
+	padding-left: 8px;
+}
