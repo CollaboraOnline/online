@@ -119,7 +119,7 @@ L.Control.UIManager = L.Control.extend({
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 		}
 
-		if (docType === 'presentation') {
+		if (this.map.isPresentationOrDrawing()) {
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 		}
@@ -136,7 +136,7 @@ L.Control.UIManager = L.Control.extend({
 			}
 		}
 
-		if (docType === 'presentation' && (isDesktop || window.mode.isTablet())) {
+		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
 			this.map.addControl(L.control.presentationBar());
 		}
 
