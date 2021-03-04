@@ -424,6 +424,8 @@ L.TextInput = L.Layer.extend({
 		// Move the hidden text area with the cursor
 		this._latlng = L.latLng(top);
 		this.update();
+		// shape handlers hidden (if selected)
+		this._map.fire('handlerstatus', {hidden: true});
 	},
 
 	// Hides the caret and the under-caret marker.
@@ -433,6 +435,8 @@ L.TextInput = L.Layer.extend({
 		}
 		this._map.removeLayer(this._map._docLayer._cursorMarker);
 		this._map.removeLayer(this._cursorHandler);
+		// shape handlers visible again (if selected)
+		this._map.fire('handlerstatus', {hidden: false});
 	},
 
 	_setPos: function(pos) {
