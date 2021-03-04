@@ -448,7 +448,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	overflow-x: hidden;
 	border: 1px dashed silver;
 	padding: 5px;
-	display: inline-block;
 }
 
 #stylesview .ui-iconview-entry {
