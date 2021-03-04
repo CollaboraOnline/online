@@ -50,22 +50,25 @@ class CSplitterLine extends CRectangle {
 	private computeBounds(): CBounds {
 		var docLayer = this.map._docLayer;
 		var mapSize = this.map.getPixelBoundsCore().getSize();
+		mapSize.round();
+		var dpiScale = Math.round(docLayer._painter.getDpiScale());
 		var splitPos = docLayer._painter.getSplitPos();
+		splitPos.round();
 
-		var thickdown = Math.floor(this.thickness / 2);
-		var thickup = Math.ceil(this.thickness / 2);
+		// For making splitlines appear symmetric w.r.t. headers/grid.
+		var thickup = Math.ceil(this.thickness / 2) + dpiScale;
+		var thickdown = Math.ceil(this.thickness / 2);
 
 		// Let the lines be long enough so as to cover the map area at the
 		// highest possible zoom level. This makes splitter's
 		// zoom animation easier.
 		var maxZoom : number = this.map.zoomToFactor(this.map.options.maxZoom);
 		var start = new CPoint(
-			(this.isHoriz ? splitPos.x : 0) - thickdown,
-			(this.isHoriz ? 0 : splitPos.y) - thickdown)
-			._round();
+			this.isHoriz ? splitPos.x - thickup: 0,
+			this.isHoriz ? 0 : splitPos.y - thickup);
 		var end = new CPoint(
-			(this.isHoriz ? splitPos.x : mapSize.x * maxZoom) + thickup,
-			(this.isHoriz ? mapSize.y * maxZoom : splitPos.y) + thickup)
+			this.isHoriz ? splitPos.x + thickdown : mapSize.x * maxZoom,
+			this.isHoriz ? mapSize.y * maxZoom : splitPos.y + thickdown)
 			._round();
 
 		this.inactive = this.isHoriz ? !splitPos.x : !splitPos.y;
