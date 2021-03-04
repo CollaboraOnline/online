@@ -29,6 +29,7 @@
 #include <Log.hpp>
 #include <Util.hpp>
 #include <Protocol.hpp>
+#include "LOOLWSD.hpp"
 
 using Poco::Base64Decoder;
 using Poco::Base64Encoder;
@@ -153,6 +154,8 @@ bool JWTAuth::verify(const std::string& accessToken)
 
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t curtime = std::chrono::system_clock::to_time_t(now);
+
+        LOG_TRC("JWT: cur time " << curtime << " vs. " << decodedExptime);
         if (curtime > decodedExptime)
         {
             LOG_INF("JWTAuth:verify: JWT expired; curtime:" << curtime << ", exp:" << decodedExptime);
@@ -190,14 +193,15 @@ const std::string JWTAuth::createPayload()
 {
     std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
     std::time_t curtime = std::chrono::system_clock::to_time_t(now);
-    const std::string exptime = std::to_string(curtime + 1800);
+    int expirySeconds = LOOLWSD::getConfigValue<int>("security.jwt_expiry_secs", 1800);
+    const std::string exptime = std::to_string(curtime + expirySeconds);
 
     // TODO: Some sane code to represent JSON objects
     const std::string payload = "{\"iss\":\"" + _iss + "\",\"sub\":\"" + _sub
                               + "\",\"aud\":\"" + _aud + "\",\"nme\":\"" + _name
                               + "\",\"exp\":\"" + exptime + "\"}";
 
-    LOG_INF("JWT Payload: " << payload);
+    LOG_INF("JWT Payload: " << payload << " expires in " << expirySeconds << "seconds");
     std::ostringstream ostr;
     OutputLineEndingConverter lineEndingConv(ostr, "");
     Base64Encoder encoder(lineEndingConv);
