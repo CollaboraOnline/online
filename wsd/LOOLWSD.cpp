@@ -957,6 +957,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_view.out_of_focus_timeout_secs", "120" },
             { "security.capabilities", "true" },
             { "security.seccomp", "true" },
+            { "security.jwt_expiry_secs", "1800" },
             { "server_name", "" },
             { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
             { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
