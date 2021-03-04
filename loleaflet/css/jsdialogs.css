@@ -555,7 +555,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	width: auto;
 }
 
-#MacroSelectorDialog #commands {
+#MacroSelectorDialog #commands,
+#MacroSelectorDialog #categories {
 	height: 150px;
 }
 
