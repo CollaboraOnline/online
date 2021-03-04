@@ -95,14 +95,16 @@ td.jsdialog > [id^='table-box'] {
 	color: #666;
 }
 
-.ui-expander-label::before {
+.ui-expander-label::before,
+.ui-treeview-expandable > .ui-treeview-expander::before {
 	content: '>';
 	color: transparent;
 	margin-right: 5px;
 	background: transparent url('images/lc_menu_chevron.svg') no-repeat center right;
 }
 
-.ui-expander-label.expanded::before {
+.ui-expander-label.expanded::before,
+.ui-treeview-expandable.collapsed > .ui-treeview-expander::before  {
 	content: 'V';
 	margin: 0px;
 	position: absolute;
@@ -110,6 +112,13 @@ td.jsdialog > [id^='table-box'] {
 	left: 16px;
 	background: transparent url('images/lc_menu_chevron.svg') no-repeat center;
 	filter: brightness(0.5);
+}
+
+.ui-treeview-expandable > .ui-treeview-expander::before {
+	margin-right: 6px !important;
+	display: inline-block;
+	position: relative !important;
+	left: 0px !important;
 }
 
 .ui-expander-label.expanded {
@@ -149,27 +158,6 @@ td.jsdialog > [id^='table-box'] {
 
 .ui-treeview-cell.with-sub-dialog {
 	cursor: context-menu;
-}
-
-.ui-treeview-expandable > .ui-treeview-expander::before {
-	content: '\25B6';
-	color: black;
-	margin-right: 6px;
-	display: inline-block;
-
-	transform: rotate(90deg);
-	-webkit-transform: rotate(90deg);
-	-moz-transform: rotate(90deg);
-	-o-transform: rotate(90deg);
-	-ms-transform: rotate(90deg);
-}
-
-.ui-treeview-expandable.collapsed > .ui-treeview-expander::before {
-	transform: rotate(0deg);
-	-webkit-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
-	-o-transform: rotate(0deg);
-	-ms-transform: rotate(0deg);
 }
 
 .ui-treeview-expandable.collapsed + ul {
