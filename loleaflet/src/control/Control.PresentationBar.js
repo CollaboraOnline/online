@@ -115,7 +115,7 @@ L.Control.PresentationBar = L.Control.extend({
 
 	onDocLayerInit: function() {
 		var presentationToolbar = w2ui['presentation-toolbar'];
-		if (!this.map['wopi'].HideExportOption && presentationToolbar) {
+		if (!this.map['wopi'].HideExportOption && presentationToolbar && this._map.getDocType() !== 'drawing') {
 			presentationToolbar.show('presentation', 'presentationbreak');
 		}
 
