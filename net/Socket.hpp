@@ -775,8 +775,8 @@ private:
 
         for (size_t i = 0; i < size; ++i)
         {
-            int events = _pollSockets[i]->getPollEvents(now, timeoutMaxMicroS);
-            assert(events >= 0); // Or > 0 even?
+            const int events = _pollSockets[i]->getPollEvents(now, timeoutMaxMicroS);
+            assert(events >= 0 && "The events bitmask must be non-negative, where 0 means skip all events.");
             _pollFds[i].fd = _pollSockets[i]->getFD();
             _pollFds[i].events = events;
             _pollFds[i].revents = 0;
