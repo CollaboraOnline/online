@@ -119,6 +119,19 @@
 		BE2626A725EE3F470041833D /* analysis.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = analysis.hxx; path = "../../ios-device/scaddins/source/analysis/analysis.hxx"; sourceTree = "<group>"; };
 		BE2626A825EE3F470041833D /* analysishelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = analysishelper.cxx; path = "../../ios-device/scaddins/source/analysis/analysishelper.cxx"; sourceTree = "<group>"; };
 		BE2626A925EE3F470041833D /* analysishelper.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = analysishelper.hxx; path = "../../ios-device/scaddins/source/analysis/analysishelper.hxx"; sourceTree = "<group>"; };
+		BE2626AF25EEBD930041833D /* lnktrans.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lnktrans.cxx; path = "../../ios-device/sc/source/ui/app/lnktrans.cxx"; sourceTree = "<group>"; };
+		BE2626B025EEBD930041833D /* seltrans.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = seltrans.cxx; path = "../../ios-device/sc/source/ui/app/seltrans.cxx"; sourceTree = "<group>"; };
+		BE2626B125EEBD930041833D /* transobj.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = transobj.cxx; path = "../../ios-device/sc/source/ui/app/transobj.cxx"; sourceTree = "<group>"; };
+		BE2626B225EEBD930041833D /* inputwin.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = inputwin.cxx; path = "../../ios-device/sc/source/ui/app/inputwin.cxx"; sourceTree = "<group>"; };
+		BE2626B325EEBD930041833D /* inputhdl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = inputhdl.cxx; path = "../../ios-device/sc/source/ui/app/inputhdl.cxx"; sourceTree = "<group>"; };
+		BE2626B425EEBD930041833D /* rfindlst.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rfindlst.cxx; path = "../../ios-device/sc/source/ui/app/rfindlst.cxx"; sourceTree = "<group>"; };
+		BE2626B525EEBD930041833D /* scmod.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scmod.cxx; path = "../../ios-device/sc/source/ui/app/scmod.cxx"; sourceTree = "<group>"; };
+		BE2626B625EEBD930041833D /* typemap.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = typemap.cxx; path = "../../ios-device/sc/source/ui/app/typemap.cxx"; sourceTree = "<group>"; };
+		BE2626B725EEBD930041833D /* uiitems.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uiitems.cxx; path = "../../ios-device/sc/source/ui/app/uiitems.cxx"; sourceTree = "<group>"; };
+		BE2626B825EEBD930041833D /* client.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = client.cxx; path = "../../ios-device/sc/source/ui/app/client.cxx"; sourceTree = "<group>"; };
+		BE2626B925EEBD930041833D /* msgpool.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = msgpool.cxx; path = "../../ios-device/sc/source/ui/app/msgpool.cxx"; sourceTree = "<group>"; };
+		BE2626BA25EEBD930041833D /* scdll.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scdll.cxx; path = "../../ios-device/sc/source/ui/app/scdll.cxx"; sourceTree = "<group>"; };
+		BE2626BB25EEBD930041833D /* drwtrans.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drwtrans.cxx; path = "../../ios-device/sc/source/ui/app/drwtrans.cxx"; sourceTree = "<group>"; };
 		BE28F880228CE04600C00C48 /* langselect.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = langselect.hxx; path = "../../ios-device/desktop/source/app/langselect.hxx"; sourceTree = "<group>"; };
 		BE28F881228CE04600C00C48 /* officeipcthread.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = officeipcthread.hxx; path = "../../ios-device/desktop/source/app/officeipcthread.hxx"; sourceTree = "<group>"; };
 		BE28F882228CE04600C00C48 /* opencl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = opencl.cxx; path = "../../ios-device/desktop/source/app/opencl.cxx"; sourceTree = "<group>"; };
@@ -1167,6 +1180,14 @@
 		BEB6524E216FD0CA00B8C09A /* stream.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stream.cxx; path = "../../ios-device/tools/source/stream/stream.cxx"; sourceTree = "<group>"; };
 		BEB6524F216FD0CA00B8C09A /* strmwnt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmwnt.cxx; path = "../../ios-device/tools/source/stream/strmwnt.cxx"; sourceTree = "<group>"; };
 		BEB65250216FD0CA00B8C09A /* strmunx.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = strmunx.cxx; path = "../../ios-device/tools/source/stream/strmunx.cxx"; sourceTree = "<group>"; };
+		BEBA767325EFC52100D33B57 /* salbmp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = salbmp.h; path = "../../ios-device/vcl/inc/quartz/salbmp.h"; sourceTree = "<group>"; };
+		BEBA767425EFC52100D33B57 /* CGHelpers.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = CGHelpers.hxx; path = "../../ios-device/vcl/inc/quartz/CGHelpers.hxx"; sourceTree = "<group>"; };
+		BEBA767525EFC52100D33B57 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = common.h; path = "../../ios-device/vcl/inc/quartz/common.h"; sourceTree = "<group>"; };
+		BEBA767625EFC52100D33B57 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = utils.h; path = "../../ios-device/vcl/inc/quartz/utils.h"; sourceTree = "<group>"; };
+		BEBA767725EFC52100D33B57 /* salgdi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = salgdi.h; path = "../../ios-device/vcl/inc/quartz/salgdi.h"; sourceTree = "<group>"; };
+		BEBA767825EFC52100D33B57 /* ctfonts.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ctfonts.hxx; path = "../../ios-device/vcl/inc/quartz/ctfonts.hxx"; sourceTree = "<group>"; };
+		BEBA767925EFC52100D33B57 /* salvd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = salvd.h; path = "../../ios-device/vcl/inc/quartz/salvd.h"; sourceTree = "<group>"; };
+		BEBA767A25EFC52100D33B57 /* salgdicommon.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = salgdicommon.hxx; path = "../../ios-device/vcl/inc/quartz/salgdicommon.hxx"; sourceTree = "<group>"; };
 		BEBF3EAE246EB1C800415E87 /* RequestDetails.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RequestDetails.hpp; sourceTree = "<group>"; };
 		BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestDetails.cpp; sourceTree = "<group>"; };
 		BECBD30323D7152900DA5582 /* SlsFramePainter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsFramePainter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.cxx"; sourceTree = "<group>"; };
@@ -1556,6 +1577,26 @@
 			name = analysis;
 			sourceTree = "<group>";
 		};
+		BE2626AE25EEBD770041833D /* app */ = {
+			isa = PBXGroup;
+			children = (
+				BE2626B825EEBD930041833D /* client.cxx */,
+				BE2626BB25EEBD930041833D /* drwtrans.cxx */,
+				BE2626B325EEBD930041833D /* inputhdl.cxx */,
+				BE2626B225EEBD930041833D /* inputwin.cxx */,
+				BE2626AF25EEBD930041833D /* lnktrans.cxx */,
+				BE2626B925EEBD930041833D /* msgpool.cxx */,
+				BE2626B425EEBD930041833D /* rfindlst.cxx */,
+				BE2626BA25EEBD930041833D /* scdll.cxx */,
+				BE2626B525EEBD930041833D /* scmod.cxx */,
+				BE2626B025EEBD930041833D /* seltrans.cxx */,
+				BE2626B125EEBD930041833D /* transobj.cxx */,
+				BE2626B625EEBD930041833D /* typemap.cxx */,
+				BE2626B725EEBD930041833D /* uiitems.cxx */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
 		BE28F87F228CE02500C00C48 /* app */ = {
 			isa = PBXGroup;
 			children = (
@@ -1806,6 +1847,7 @@
 		BE34D18B2190715400815297 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				BE2626AE25EEBD770041833D /* app */,
 				BE017B6825AE876B00244ED8 /* docshell */,
 				BE34D18A2190713900815297 /* dbgui */,
 				BE34D1AC2190769E00815297 /* view */,
@@ -2760,6 +2802,7 @@
 				BE58E1312187938700249358 /* headless */,
 				BEF7895224C887760013A906 /* helper */,
 				BEF7897B24C8D9B20013A906 /* image */,
+				BEBA767125EFC4E500D33B57 /* inc */,
 				BE7E6806229D371B00DE73C8 /* ios */,
 				BEB0E5E721D642420085A0CF /* outdev */,
 				BEB0E5DF21CA9DA20085A0CF /* quartz */,
@@ -3198,6 +3241,29 @@
 				BEB6524D216FD0CA00B8C09A /* vcompat.cxx */,
 			);
 			name = stream;
+			sourceTree = "<group>";
+		};
+		BEBA767125EFC4E500D33B57 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				BEBA767225EFC50300D33B57 /* quartz */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
+		BEBA767225EFC50300D33B57 /* quartz */ = {
+			isa = PBXGroup;
+			children = (
+				BEBA767425EFC52100D33B57 /* CGHelpers.hxx */,
+				BEBA767525EFC52100D33B57 /* common.h */,
+				BEBA767825EFC52100D33B57 /* ctfonts.hxx */,
+				BEBA767325EFC52100D33B57 /* salbmp.h */,
+				BEBA767725EFC52100D33B57 /* salgdi.h */,
+				BEBA767A25EFC52100D33B57 /* salgdicommon.hxx */,
+				BEBA767925EFC52100D33B57 /* salvd.h */,
+				BEBA767625EFC52100D33B57 /* utils.h */,
+			);
+			name = quartz;
 			sourceTree = "<group>";
 		};
 		BECBD30123D7150100DA5582 /* slidesorter */ = {
