@@ -584,6 +584,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: #555;
 }
 
+#MacroSelectorDialog #categories .ui-treeview-entry:hover {
+	box-shadow: inset -6px 0 0 white;
+}
+
 #MacroSelectorDialog #categories > tbody > ul > li > ul .ui-treeview-expandable.selected > .ui-treeview::before {
 	/* visibility: hidden; hide when javascript sets properly expanders*/
 }
