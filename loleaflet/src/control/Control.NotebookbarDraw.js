@@ -357,11 +357,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 																											'children': [
 																												{
 																													'type': 'metricfield',
-																													'text': '0.00″',
+																													'text': '0.00"',
 																													'children': [
 																														{
 																															'type': 'edit',
-																															'text': '0.00″',
+																															'text': '0.00"',
 																														}
 																													],
 																													'min': '0',
