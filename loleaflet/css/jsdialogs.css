@@ -524,12 +524,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 #MacroWarnMedium p {
 	max-width: 512px;
 	color: #333;
-	text-transform: capitalize;
+	text-transform: none;
 }
 
 #MacroSelectorDialog #helpmacro {
 	margin-bottom: 8px;
-	text-transform: full-size-kana;
+	text-transform: none;
 	font-size: 12px;
 }
 
