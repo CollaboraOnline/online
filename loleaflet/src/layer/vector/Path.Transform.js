@@ -212,6 +212,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			.on('dragstart', this._onDragStart, this)
 			.on('drag',      this._onDrag, this)
 			.on('dragend',   this._onDragEnd,   this);
+		this._map.on('handlerstatus', this._onHandlerStatus, this);
 	},
 
 
@@ -224,6 +225,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			.off('dragstart', this._onDragStart, this)
 			.off('drag',      this._onDrag, this)
 			.off('dragend',   this._onDragEnd,   this);
+		this._map.off('handlerstatus', this._onHandlerStatus, this);
 
 		if (this._map.hasLayer(this._rect)) {
 			this._map.removeLayer(this._rect);
@@ -237,6 +239,16 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._handlersGroup = null;
 		this._rect = null;
 		this._handlers = [];
+	},
+
+	_onHandlerStatus: function(e) {
+		if (e.hidden) {
+			this._hideHandlers();
+			this._path.off('dragstart', this._onDragStart, this);
+		} else {
+			this._showHandlers();
+			this._path.on('dragstart', this._onDragStart, this);
+		}
 	},
 
 
@@ -1186,6 +1198,10 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._map.removeLayer(this._handlersGroup);
 	},
 
+	_showHandlers: function() {
+		this._map.addLayer(this._handlersGroup);
+		this._updateHandlers();
+	},
 
 	/**
 	* Hide handlers and rectangle
@@ -1223,8 +1239,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		rect._project();
 		rect.dragging.disable();
 
-		this._map.addLayer(this._handlersGroup);
-		this._updateHandlers();
+		this._showHandlers();
 
 		this._path.fire('transformed', {
 			scale: L.point(1, 1),
