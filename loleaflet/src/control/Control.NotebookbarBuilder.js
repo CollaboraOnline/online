@@ -399,7 +399,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			div.id = id;
 
 			div.title = data.text;
-			$(div).tooltip();
+			if (!window.ThisIsAMobileApp)
+				$(div).tooltip();
 
 			var icon = builder._createIconURL(data.command);
 			var buttonId = id + 'img';
