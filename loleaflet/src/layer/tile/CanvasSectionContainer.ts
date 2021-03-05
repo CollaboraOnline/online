@@ -327,17 +327,15 @@ class CanvasSectionContainer {
 		if (section.boundToSection) {
 			var tempSection = this.getSectionWithName(section.boundToSection);
 			if (tempSection && tempSection.isLocated) {
-				if (tempSection.zIndex < section.zIndex || (tempSection.zIndex === section.zIndex && tempSection.drawingOrder < section.drawingOrder)) {
+				if (!sectionList.includes(tempSection))
 					tempSectionList.push(tempSection);
-				}
 			}
 		}
 
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].isLocated && this.sections[i].boundToSection === section.name) {
-				if (this.sections[i].zIndex < section.zIndex || (this.sections[i].zIndex === section.zIndex && this.sections[i].drawingOrder < section.drawingOrder)) {
+				if (!sectionList.includes(this.sections[i]))
 					tempSectionList.push(this.sections[i]);
-				}
 			}
 		}
 
@@ -358,6 +356,16 @@ class CanvasSectionContainer {
 					section.boundsList[i] = section.boundsList[j];
 					section.boundsList[j] = temp;
 				}
+			}
+		}
+
+		// Remove the sections those are above this section. Events will not be propagated to them.
+		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+			if (section.boundsList[i].name !== section.name) {
+				section.boundsList.splice(i, 1);
+			}
+			else {
+				break;
 			}
 		}
 	}
