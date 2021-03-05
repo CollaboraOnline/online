@@ -202,6 +202,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _enableMacrosExecution = value;
             ++offset;
         }
+        else if (name == "macroSecurityLevel")
+        {
+            _macroSecurityLevel = value;
+            ++offset;
+        }
     }
 
     Util::mapAnonymized(_userId, _userIdAnonym);
