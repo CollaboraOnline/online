@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
 "PO-Revision-Date: 2021-03-03 03:57+0000\n"
-"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
+"Last-Translator: Nguyen Tuan Anh <anhnt633@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
 "Language: vi\n"
@@ -794,19 +794,19 @@ msgstr ""
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
-msgstr ""
+msgstr "Chèn trang tính"
 
 #: src/control/Control.StatusBar.js:196
 msgid "Cancel the search"
-msgstr ""
+msgstr "Hủy tìm kiếm"
 
 #: src/control/Control.StatusBar.js:296
 msgid "Number of Sheets"
-msgstr ""
+msgstr "Số trang tính"
 
 #: src/control/Control.StatusBar.js:301
 msgid "Selected range of cells"
-msgstr ""
+msgstr "Phạm vi ô đã chọn"
 
 #: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:355
 msgid "Entering text mode"
@@ -850,7 +850,7 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:345
 msgid "Number of Pages"
-msgstr ""
+msgstr "Số trang"
 
 #: src/control/Control.StatusBar.js:350
 msgid "Word Counter"
