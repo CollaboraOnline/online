@@ -1193,6 +1193,7 @@ private:
         const std::string& lang = session->getLang();
         const std::string& deviceFormFactor = session->getDeviceFormFactor();
         const std::string& batchMode = session->getBatchMode();
+        const std::string& enableMacrosExecution = session->getEnableMacrosExecution();
         std::string spellOnline;
 
         std::string options;
@@ -1204,6 +1205,9 @@ private:
 
         if (!batchMode.empty())
             options += ",Batch=" + batchMode;
+
+        if (!enableMacrosExecution.empty())
+            options += ",EnableMacrosExecution=" + enableMacrosExecution;
 
         if (!_loKitDocument)
         {
