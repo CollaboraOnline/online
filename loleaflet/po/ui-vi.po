@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2021-03-03 03:34+0000\n"
-"Last-Translator: Nguyen Tuan Anh <anh93.nguyentuan@gmail.com>\n"
+"PO-Revision-Date: 2021-03-03 03:57+0000\n"
+"Last-Translator: Nguyen Trung Kien <ntk2111997@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
 "Language: vi\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
-msgstr ""
+msgstr "Bảng điều khiển cho quản trị viên"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
@@ -29,64 +29,64 @@ msgstr "Cài đặt"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "Tổng quan"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "Hiện tại"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "Phân tích"
 
 #: admin/admin.strings.js:11
 msgid "History"
-msgstr ""
+msgstr "Lịch sử"
 
 #: admin/admin.strings.js:12
 msgid "Log"
-msgstr ""
+msgstr "Nhật ký"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
-msgstr ""
+msgstr "Bảng điều khiển"
 
 #: admin/admin.strings.js:14
 msgid "Users online"
-msgstr ""
+msgstr "Người dùng trực tuyến"
 
 #: admin/admin.strings.js:15
 msgid "User Name"
-msgstr ""
+msgstr "Tên người dùng"
 
 #: admin/admin.strings.js:16
 msgid "Documents open"
-msgstr ""
+msgstr "Tài liệu đang mở"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
 msgid " user(s)."
-msgstr ""
+msgstr " người dùng."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
-msgstr ""
+msgstr " tài liệu đang mở."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
-msgstr ""
+msgstr "Số lượng tài liệu"
 
 #: admin/admin.strings.js:20
 msgid "Memory consumed"
-msgstr ""
+msgstr "Bộ nhớ đã dùng"
 
 #: admin/admin.strings.js:21
 msgid "Bytes sent"
-msgstr ""
+msgstr "Lượng bytes đã gửi"
 
 #: admin/admin.strings.js:22
 msgid "Bytes received"
-msgstr ""
+msgstr "Lượng bytes đã nhận"
 
 #: admin/admin.strings.js:23
 msgid "PID"
@@ -94,23 +94,23 @@ msgstr ""
 
 #: admin/admin.strings.js:24
 msgid "Document"
-msgstr ""
+msgstr "Tài liệu"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Lượt xem"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
-msgstr ""
+msgstr "Thời gian trôi qua"
 
 #: admin/admin.strings.js:27
 msgid "Idle time"
-msgstr ""
+msgstr "Thời gian chờ"
 
 #: admin/admin.strings.js:28
 msgid "Modified"
-msgstr ""
+msgstr "Đã chỉnh sửa"
 
 #: admin/admin.strings.js:29
 msgid "Kill"
@@ -118,49 +118,49 @@ msgstr ""
 
 #: admin/admin.strings.js:30
 msgid "Graphs"
-msgstr ""
+msgstr "Đồ thị"
 
 #: admin/admin.strings.js:31
 msgid "Memory Graph"
-msgstr ""
+msgstr "Đồ thị bộ nhớ"
 
 #: admin/admin.strings.js:32
 msgid "CPU Graph"
-msgstr ""
+msgstr "Đồ thị CPU"
 
 #: admin/admin.strings.js:33
 msgid "Network Graph"
-msgstr ""
+msgstr "Đồ thị Network"
 
 #: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:194
 #: src/control/Control.NotebookbarImpress.js:22
 #: src/layer/marker/Annotation.js:279 src/layer/tile/TileLayer.js:443
 msgid "Save"
-msgstr ""
+msgstr "Lưu"
 
 #: admin/admin.strings.js:35
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Kích thước bộ nhớ đệm của Memory Statistics"
 
 #: admin/admin.strings.js:36
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Khoảng thời gian của Memory Statistics (ms)"
 
 #: admin/admin.strings.js:37
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "Kích thước bộ nhớ đệm của CPU statistics"
 
 #: admin/admin.strings.js:38
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "Khoảng thời gian của CPU statistics (ms)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Kết thúc phiên."
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Bộ nhớ ảo xử lý tài liệu tối đa (MB) - chỉ giảm"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process stack memory (in KB) - reduce only"
@@ -168,88 +168,88 @@ msgstr ""
 
 #: admin/admin.strings.js:42
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Kích thước tệp tối đa được phép ghi vào đĩa (tính bằng MB) - chỉ giảm"
 
 #: admin/admin.strings.js:43
 msgid "Documents:"
-msgstr ""
+msgstr "Tài liệu:"
 
 #: admin/admin.strings.js:44
 msgid "Expired:"
-msgstr ""
+msgstr "Đã hết hạn:"
 
 #: admin/admin.strings.js:45
 msgid "Refresh"
-msgstr ""
+msgstr "Tải lại"
 
 #: admin/admin.strings.js:46
 msgid "Shutdown Server"
-msgstr ""
+msgstr "Tắt máy chủ"
 
 #: admin/admin.strings.js:47
 msgid "Server uptime"
-msgstr ""
+msgstr "Thời gian hoạt động của máy chủ"
 
 #: admin/admin.strings.js:48
 msgid "Refresh Log"
-msgstr ""
+msgstr "Tải lại nhật kí"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Bộ lọc kệnh:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:303
 #: src/control/Control.StatusBar.js:331
 msgid "None"
-msgstr ""
+msgstr "Không có"
 
 #: admin/admin.strings.js:51
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Đặt cấp độ nhật kí"
 
 #: admin/admin.strings.js:52
 msgid "Log Levels"
-msgstr ""
+msgstr "Cấp độ nhật kí"
 
 #: admin/admin.strings.js:53 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:413 src/control/Signing.js:608
 msgid "Close"
-msgstr ""
+msgstr "Đóng"
 
 #: admin/admin.strings.js:54
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Cập nhật cấp độ nhật kí"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
-msgstr ""
+msgstr "Đã nhận"
 
 #: admin/src/AdminSocketAnalytics.js:209
 msgid "Sent"
-msgstr ""
+msgstr "Đã gửi"
 
 #: admin/src/AdminSocketBase.js:60
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Máy chủ đã bị tắt; vui lòng tải lại trang"
 
 #: admin/src/AdminSocketBase.js:70
 msgid "Connection error"
-msgstr ""
+msgstr "Lỗi kết nối"
 
 #: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Sự xác nhận"
 
 #: admin/src/AdminSocketOverview.js:98
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "Bạn có chắc chắn muốn kết thúc phiên này không?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1456
 #: src/control/Control.PresentationBar.js:87 src/control/Control.Tabs.js:251
 #: src/control/Control.Tabs.js:268 src/control/Toolbar.js:750
 msgid "OK"
-msgstr ""
+msgstr "Đồng ý"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1457
@@ -258,47 +258,47 @@ msgstr ""
 #: src/control/Control.Tabs.js:269 src/control/Toolbar.js:751
 #: src/layer/marker/Annotation.js:203 src/layer/tile/TileLayer.js:444
 msgid "Cancel"
-msgstr ""
+msgstr "Hủy"
 
 #: admin/src/AdminSocketOverview.js:377
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "Không đặt được cookie xác thực jwt qua kết nối không an toàn"
 
 #: admin/src/AdminSocketOverview.js:381
 msgid "Failed to authenticate this session over protocol %0"
-msgstr ""
+msgstr "Không xác thực được phiên này qua giao thức %0"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Bạn có chắc chắn muốn tắt máy chủ không?"
 
 #: admin/src/Util.js:14
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: admin/src/Util.js:14
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: admin/src/Util.js:14
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: admin/src/Util.js:14
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:14
 msgid "YB"
