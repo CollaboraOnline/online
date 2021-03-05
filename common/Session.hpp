@@ -231,6 +231,8 @@ public:
 
     const std::string& getEnableMacrosExecution() const { return _enableMacrosExecution; }
 
+    const std::string& getMacroSecurityLevel() const { return _macroSecurityLevel; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -335,6 +337,9 @@ private:
 
     /// Specifies whether the macro execution is enabled in general.
     std::string _enableMacrosExecution;
+
+    /// Level of Macro security.
+    std::string _macroSecurityLevel;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
