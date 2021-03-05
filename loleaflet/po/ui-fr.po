@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2020-12-23 23:07+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-03-04 02:44+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.5.1-dev\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-ui-fr.po\n"
 "X-Pootle-Revision: 3937804\n"
 
@@ -478,13 +478,12 @@ msgid "Open menu"
 msgstr "Ouvrir le menu"
 
 #: src/control/Control.JSDialogBuilder.js:2136
-#, fuzzy
 msgid "reply"
-msgstr "Répondre"
+msgstr "réponse"
 
 #: src/control/Control.JSDialogBuilder.js:2139
 msgid "replies"
-msgstr ""
+msgstr "réponses"
 
 #: src/control/Control.JSDialogBuilder.js:2552
 msgid "Cell borders"
@@ -735,7 +734,7 @@ msgstr "Classeur Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:511
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "Fichier CSV (.csv)"
 
 #: src/control/Control.Menubar.js:737 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:832 src/control/Control.StatusBar.js:190
@@ -951,7 +950,7 @@ msgstr "Insérer des formes"
 
 #: src/control/Control.TopToolbar.js:245
 msgid "Insert connectors"
-msgstr ""
+msgstr "Insérer des connecteurs"
 
 #: src/control/Control.TopToolbar.js:473
 msgid "Style"
@@ -1063,13 +1062,13 @@ msgstr "~Aide"
 #: src/control/Control.NotebookbarCalc.js:116
 #: src/control/Control.NotebookbarImpress.js:201
 msgid "Share"
-msgstr ""
+msgstr "Partager"
 
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarImpress.js:231
 msgid "See history"
-msgstr ""
+msgstr "Voir l'historique"
 
 #: src/control/Control.NotebookbarWriter.js:1427
 msgid "Text Body"
@@ -1093,7 +1092,7 @@ msgstr "~Données"
 
 #: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "Fichier CSV (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1845
 msgid "Insert Rows Above"
@@ -1185,7 +1184,7 @@ msgstr "Veuillez scanner le code"
 
 #: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
-msgstr "Il n'a pas été possible d'obtenir l'image du QR code."
+msgstr "Il n'a pas été possible d'obtenir l'image du code QR."
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
@@ -1193,7 +1192,7 @@ msgstr "Erreur lors de la tentative de restauration de l'accès à l'identité."
 
 #: src/control/Signing.js:275
 msgid "PIN Code"
-msgstr "Code PIN"
+msgstr "Code NIP"
 
 #: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"
@@ -1233,7 +1232,7 @@ msgstr "Sélectionner le passeport"
 
 #: src/control/Signing.js:599
 msgid "Passport: N/A"
-msgstr "Passeport : N/D"
+msgstr "Passeport : s.o."
 
 #: src/control/Signing.js:601
 msgid "Sign"
@@ -1245,7 +1244,7 @@ msgstr "État :"
 
 #: src/control/Signing.js:604
 msgid "N/A"
-msgstr "N/D"
+msgstr "s.o."
 
 #: src/control/Signing.js:607
 msgid "Login"
@@ -1392,7 +1391,7 @@ msgstr "Oups, il y a un problème de connexion au document"
 
 #: src/core/Socket.js:431
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Le serveur est arrêté et redémarre automatiquement. Veuillez attendre."
 
 #: src/core/Socket.js:459
 msgid ""
