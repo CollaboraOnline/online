@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
 "PO-Revision-Date: 2021-03-04 02:44+0000\n"
-"Last-Translator: Nguyen Trung Kien <ntk2111997@gmail.com>\n"
+"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
 "Language: vi\n"
@@ -2703,12 +2703,18 @@ msgstr ""
 "Màu được gán cho các thay đổi phụ thuộc vào người dùng thay đổi tài liệu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:558-5
+#, fuzzy
 msgid ""
 "To display or hide track changes choose <span class=\"ui\">Edit</span> → <"
 "span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. "
 "Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
+"Để hiển thị hoặc ẩn các thay đổi trên bản ghi, hãy chọn <span class=\"ui\"> "
+"Chỉnh sửa </span> → <span class=\"ui\"> Thay đổi bản ghi </span> → <span "
+"class=\"ui\"> Hiển thị </span>. Lưu ý rằng nếu các thay đổi theo dõi được "
+"bật nhưng bị ẩn, bạn vẫn ghi lại các thay đổi và vô tình có thể để lại văn "
+"bản không mong muốn trong tài liệu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:559-5
 msgid ""
