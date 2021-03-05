@@ -637,6 +637,15 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 	animation: 1s blink step-end 0s infinite;
 }
 
+.blinking-cursor-hidden {
+	-webkit-animation: none !important;
+	-moz-animation: none !important;
+	-ms-animation: none !important;
+	-o-animation: none !important;
+	animation: none !important;
+	display: none !important;
+}
+
 @keyframes blink {
 	from, to {
 		background: black;
