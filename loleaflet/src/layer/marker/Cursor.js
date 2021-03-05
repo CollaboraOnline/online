@@ -38,6 +38,16 @@ L.Cursor = L.Layer.extend({
 		this.update();
 		this.getPane().appendChild(this._container);
 		this._map.on('splitposchanged', this.update, this);
+
+		document.addEventListener('blur', this.onFocusBlur.bind(this));
+		document.addEventListener('focus', this.onFocusBlur.bind(this));
+	},
+
+	onFocusBlur: function(ev) {
+		if (ev.type === 'blur')
+			$('.leaflet-cursor').addClass('blinking-cursor-hidden');
+		else
+			$('.leaflet-cursor').removeClass('blinking-cursor-hidden');
 	},
 
 	onRemove: function () {
@@ -50,6 +60,9 @@ L.Cursor = L.Layer.extend({
 		if (this._container) {
 			this.getPane().removeChild(this._container);
 		}
+
+		document.removeEventListener('blur', this.onFocusBlur.bind(this));
+		document.removeEventListener('focus', this.onFocusBlur.bind(this));
 	},
 
 	getEvents: function () {
