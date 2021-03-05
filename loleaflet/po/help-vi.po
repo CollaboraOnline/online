@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
 "PO-Revision-Date: 2021-03-05 02:26+0000\n"
-"Last-Translator: Nguyen Trung Kien <ntk2111997@gmail.com>\n"
+"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
 "Language: vi\n"
@@ -3106,28 +3106,44 @@ msgid ""
 msgstr "Mở bản trình bày trong <span class=\"productname\">%productName </span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:627-11
+#, fuzzy
 msgid ""
 "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
 "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
 "images/lc_dia.svg\">"
 msgstr ""
+"Chọn <span class = \"ui\"> Trình chiếu </span> → <span class = \"ui\"> Bản "
+"trình bày toàn màn hình </span> hoặc nhấp vào biểu tượng ngoài cùng bên trái "
+"ở cuối bảng slide: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
+"\"images/lc_dia.svg\">"
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:629-5
+#, fuzzy
 msgid "How can I change the line, area and position of a shape in my slides?"
 msgstr ""
+"Làm cách nào để thay đổi đường thẳng, diện tích và vị trí của một hình trong "
+"các trang trình bày của tôi?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:631-11
+#, fuzzy
 msgid "Select the shape in your slide. A set of handles shows."
 msgstr ""
+"Chọn hình dạng trong trang trình bày của bạn. Một tập hợp các tay cầm cho "
+"thấy."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:633-9
+#, fuzzy
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or "
 "<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
 "Size</span>). A dialog opens."
 msgstr ""
+"Chọn <span class=\"ui\"> Định dạng </span> → <span class=\"ui\"> Dòng </"
+"span> (hoặc <span class=\"ui\"> Khu vực </span> hoặc <span class=\"ui\"> Vị "
+"trí và Kích thước </span>). Một hộp thoại sẽ mở ra."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:636-11
+#, fuzzy
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Đặt các thuộc tính của phần tử của đối tượng."
