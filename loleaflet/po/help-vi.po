@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2021-03-04 02:41+0000\n"
-"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
+"PO-Revision-Date: 2021-03-04 02:44+0000\n"
+"Last-Translator: Nguyen Trung Kien <ntk2111997@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
 "Language: vi\n"
@@ -1293,42 +1293,57 @@ msgstr "Tài liệu văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:303-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:595-5
-#, fuzzy
 msgid "Spreadsheets"
-msgstr "Bảng tính"
+msgstr "Trang tính"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:306-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:623-5
 #, fuzzy
 msgid "Presentations"
-msgstr "Bài thuyết trình"
+msgstr "Bản trình bày"
 
 #: html/loleaflet-help.html%2Bdiv.p:308-5
+#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> allows you to create and "
 "edit office documents text documents, spreadsheets and presentations "
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
+"<span class=\"productname\">%productName</span> cho phép bạn tạo và chỉnh "
+"sửa tài liệu văn phòng, tài liệu văn bản, trang tính và bản trình bày trực "
+"tiếp trong trình duyệt của bạn một cách đơn giản. Bạn có thể làm việc một "
+"mình trên tài liệu hoặc cộng tác như một phần của nhóm."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:312-11
+#, fuzzy
 msgid ""
 "Each user gets assigned a color. The cursor of each user will be shown in "
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
+"Mỗi người dùng được chỉ định một màu. Con trỏ của mỗi người dùng sẽ được "
+"hiển thị bằng màu được chỉ định. Lưu ý: bạn sẽ thấy con trỏ của mình có màu "
+"đen, con trỏ nhấp nháy, mặc dù những người khác sẽ nhìn thấy bạn với màu "
+"khác."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:313-11
+#, fuzzy
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
+"Bạn có thể chuyển đến con trỏ của người dùng bằng cách nhấp vào tên (hoặc "
+"hình đại diện) của người dùng. Có thể theo dõi chỉnh sửa."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:314-11
+#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
+"<span class=\"productname\">%productName</span> thông báo cho bạn bằng một "
+"thông báo nhỏ ở chân trang khi người dùng mới vào hoặc khi người dùng rời đi."
 
 #: html/loleaflet-help.html%2Bdiv.p:318-5
 msgid ""
