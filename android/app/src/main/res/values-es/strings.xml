@@ -68,17 +68,17 @@
     <string name="owncloud_wrong_connection">Imposible conectar con el servidor en la nube. Revise su configuración.</string>
     <string name="owncloud_unauthorized">Imposible acceder al servidor en la nube. Revise su configuración.</string>
     <string name="owncloud_unspecified_error">Error no especificado al conectarse con el servidor en la nube. Revise su configuración o intente más tarde.</string>
-    <string name="ext_document_provider_error">Archivo raíz no válido. Verifique la configuración de su tarjeta SD.</string>
-    <string name="otg_missing_error">Archivo raíz no válido. Verifique su dispositivo OTG y/o la configuración.</string>
+    <string name="ext_document_provider_error">Archivo raíz no válido. Compruebe la configuración de su tarjeta SD.</string>
+    <string name="otg_missing_error">Archivo raíz no válido. Compruebe su dispositivo OTG y/o la configuración.</string>
     <!-- Edit action names -->
     <!-- Feedback messages -->
     <!-- Document provider settings -->
     <string name="storage_provider_settings">Config. de proveedor de almac.</string>
     <string name="owncloud_settings">Config. de servidor en nube</string>
-    <string name="physical_storage_settings">Config. de almacenamiento físico</string>
+    <string name="physical_storage_settings">Conf. de almacenamiento físico</string>
     <string name="external_sd_path">Ruta a SD externa</string>
     <string name="otg_device_path">Ruta del dispositivo OTG</string>
-    <string name="otg_warning">Característica experimental: Úselo solo si el dispositivo OTG es grabable</string>
+    <string name="otg_warning">Función experimental: utilice solo si el dispositivo OTG es grabable.</string>
     <string name="server_url">URL del servidor</string>
     <string name="server_url_and_port">URL y puerto del servidor en la nube</string>
     <string name="user_name">Nombre de usuario</string>
