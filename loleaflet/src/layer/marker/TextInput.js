@@ -698,6 +698,15 @@ L.TextInput = L.Layer.extend({
 		// remove leading & tailing spaces.
 		content = content.slice(1, -1);
 
+		// In the android keyboard when you try to erase in an empty area
+		// and then enter some character,
+		// The first character will likely travel with the cursor,
+		// And that is caused because after entering the first character
+		// cursor position is never updated by keyboard (I know it is strange)
+		// so here we manually correct the position
+		if (content.length === 1 && this._lastContent.length === 0)
+			this._setCursorPosition(2);
+
 		var matchTo = 0;
 		var sharedLength = Math.min(content.length, this._lastContent.length);
 		while (matchTo < sharedLength && content[matchTo] === this._lastContent[matchTo])
@@ -809,11 +818,7 @@ L.TextInput = L.Layer.extend({
 
 		// avoid setting the focus keyboard
 		if (!noSelect) {
-			try {
-				this._textArea.setSelectionRange(1, 1);
-			} catch (err) {
-				// old firefox throws an exception on start.
-			}
+			this._setCursorPosition(1);
 
 			if (this._hasWorkingSelectionStart === undefined)
 				this._hasWorkingSelectionStart = (this._textArea.selectionStart === 1);
@@ -962,6 +967,14 @@ L.TextInput = L.Layer.extend({
 		var cursorPos = this._map._docLayer._latLngToTwips(ev.target.getLatLng());
 		this._map._docLayer._postMouseEvent('buttondown', cursorPos.x, cursorPos.y, 1, 1, 0);
 		this._map._docLayer._postMouseEvent('buttonup', cursorPos.x, cursorPos.y, 1, 1, 0);
+	},
+
+	_setCursorPosition: function(pos) {
+		try {
+			this._textArea.setSelectionRange(pos, pos);
+		} catch (err) {
+			// old firefox throws an exception on start.
+		}
 	},
 
 	_setAcceptInput: function(accept) {
