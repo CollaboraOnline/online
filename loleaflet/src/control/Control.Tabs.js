@@ -149,6 +149,13 @@ L.Control.Tabs = L.Control.extend({
 							};
 						}(i).bind(this));
 					} else {
+						L.DomEvent.on(tab, 'dblclick', function(j) {
+							return function() {
+								// console.err('Double clicked ' + j);
+								this._tabForContextMenu = j;
+								this._renameSheet();
+							};
+						}(i).bind(this));
 						L.DomEvent.on(tab, 'contextmenu', function(j) {
 							return function(e) {
 								this._tabForContextMenu = j;
