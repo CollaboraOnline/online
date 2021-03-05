@@ -220,6 +220,8 @@ public:
 
     const std::string& getBatchMode() const { return _batch; }
 
+    const std::string& getEnableMacrosExecution() const { return _enableMacrosExecution; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -323,6 +325,9 @@ private:
 
     /// Disable dialogs interactivity
     std::string _batch;
+
+    /// Specifies whether the macro execution is enabled in general.
+    std::string _enableMacrosExecution;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
