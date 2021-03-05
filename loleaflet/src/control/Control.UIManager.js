@@ -224,6 +224,9 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	onChangeUIMode: function(uiMode) {
+		if (window.mode.isMobile())
+			return;
+
 		if (uiMode.mode === window.userInterfaceMode && !uiMode.force)
 			return;
 
