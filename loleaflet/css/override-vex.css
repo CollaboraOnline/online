@@ -8,6 +8,22 @@
 .vex-theme-bottom-right-corner .vex-dialog-message {
 	font-size: 1em;
 }
+.vex-dialog-external-url::before {
+	content: 'URL';
+	border-radius: 3px;
+	padding: 1px 2px;
+	margin-right: 2px;
+	font-size: 11px;
+	border: thin solid lightgray;
+	background: var(--gray-bg-color);
+	color: gray;
+	box-sizing: border-box;
+	vertical-align: top;
+	font-weight: bold;
+}
+.vex-dialog-external-url {
+	font-size: 16px;
+}
 /* Place above statusbar */
 .vex.vex-theme-bottom-right-corner .vex-content {
 	bottom: 40px !important;
