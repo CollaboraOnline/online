@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
 "PO-Revision-Date: 2021-03-03 03:57+0000\n"
-"Last-Translator: Nguyen Trung Kien <ntk2111997@gmail.com>\n"
+"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
 "Language: vi\n"
@@ -436,75 +436,75 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1375
 msgid "To"
-msgstr ""
+msgstr "Đến"
 
 #: src/control/Control.JSDialogBuilder.js:1503
 msgid "Select range"
-msgstr ""
+msgstr "Chọn phạm vi"
 
 #: src/control/Control.JSDialogBuilder.js:1532
 #: src/control/Control.NotebookbarBuilder.js:219
 msgid "Font Name"
-msgstr ""
+msgstr "Tên phông chữ"
 
 #: src/control/Control.JSDialogBuilder.js:1534
 msgid "Font Size"
-msgstr ""
+msgstr "Cỡ phông chữ"
 
 #: src/control/Control.JSDialogBuilder.js:2083
 #: src/layer/marker/Annotation.js:240
 msgid "Accept change"
-msgstr ""
+msgstr "Chấp nhận thay đổi"
 
 #: src/control/Control.JSDialogBuilder.js:2088
 #: src/layer/marker/Annotation.js:241
 msgid "Reject change"
-msgstr ""
+msgstr "Từ chối thay đổi"
 
 #: src/control/Control.JSDialogBuilder.js:2097
 #: src/layer/marker/Annotation.js:259
 msgid "Open menu"
-msgstr ""
+msgstr "Mở menu"
 
 #: src/control/Control.JSDialogBuilder.js:2136
 msgid "reply"
-msgstr ""
+msgstr "Phản hồi"
 
 #: src/control/Control.JSDialogBuilder.js:2139
 msgid "replies"
-msgstr ""
+msgstr "Phản hồi"
 
 #: src/control/Control.JSDialogBuilder.js:2552
 msgid "Cell borders"
-msgstr ""
+msgstr "Đường viền ô"
 
 #: src/control/Control.JSDialogBuilder.js:2596
 msgid "Background Color"
-msgstr ""
+msgstr "Màu nền"
 
 #: src/control/Control.JSDialogBuilder.js:2598
 msgid "Gradient Start"
-msgstr ""
+msgstr "Bắt đầu chuyển màu"
 
 #: src/control/Control.JSDialogBuilder.js:2600
 msgid "Gradient End"
-msgstr ""
+msgstr "Kết thúc chuyển màu"
 
 #: src/control/Control.JSDialogBuilder.js:2782
 msgid "Rows"
-msgstr ""
+msgstr "Hàng"
 
 #: src/control/Control.JSDialogBuilder.js:2783
 msgid "Columns"
-msgstr ""
+msgstr "Cột"
 
 #: src/control/Control.JSDialogBuilder.js:2803
 msgid "Insert Table"
-msgstr ""
+msgstr "Chèn bảng"
 
 #: src/control/Control.JSDialogBuilder.js:2832
 msgid "Line style:"
-msgstr ""
+msgstr "Kiểu dòng:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
@@ -516,35 +516,35 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:731
 #: src/control/Control.NotebookbarBuilder.js:765
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Không có (Không kiểm tra chính tả)"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:268
 #: src/control/Control.Menubar.js:393 src/control/Control.Menubar.js:504
 #: src/control/Control.Menubar.js:714 src/control/Control.Menubar.js:764
 #: src/control/Control.Menubar.js:812
 msgid "Share..."
-msgstr ""
+msgstr "Chia sẻ"
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:269
 #: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:505
 #: src/control/Control.Menubar.js:716 src/control/Control.Menubar.js:766
 #: src/control/Control.Menubar.js:814
 msgid "See revision history"
-msgstr ""
+msgstr "Xem lịch sử chỉnh sửa"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:270
 #: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:506
 #: src/control/Control.Menubar.js:719 src/control/Control.Menubar.js:768
 #: src/control/Control.Menubar.js:816
 msgid "Download as"
-msgstr ""
+msgstr "Tải xuống như"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:270
 #: src/control/Control.Menubar.js:396 src/control/Control.Menubar.js:506
 #: src/control/Control.Menubar.js:719 src/control/Control.Menubar.js:768
 #: src/control/Control.Menubar.js:816
 msgid "Export as"
-msgstr ""
+msgstr "Xuất ra như"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:397 src/control/Control.Menubar.js:507
@@ -554,42 +554,42 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:195
 #: src/control/Control.NotebookbarImpress.js:364
 msgid "PDF Document (.pdf)"
-msgstr ""
+msgstr "Tài liệu PDF (.pdf)"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:721
 #: src/control/Control.NotebookbarWriter.js:203
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "Tài liệu văn bản ODF (.odt)"
 
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:722
 #: src/control/Control.NotebookbarWriter.js:256
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Tài liệu văn bản Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:723
 #: src/control/Control.NotebookbarWriter.js:278
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Tài liệu văn bản Word (.docx)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:724
 #: src/control/Control.NotebookbarWriter.js:225
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Tài liệu văn bản RTF (.rtf)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:725
 #: src/control/Control.NotebookbarWriter.js:331
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "Tài liệu định dạng EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:717
 #: src/control/Control.NotebookbarWriter.js:350 src/control/Signing.js:601
 msgid "Sign document"
-msgstr ""
+msgstr "Kí tài liệu"
 
 #: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:278
 #: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:514
 msgid "Close document"
-msgstr ""
+msgstr "Đóng tài liệu"
 
 #: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:283
 #: src/control/Control.Menubar.js:406 src/control/Control.Menubar.js:519
@@ -599,57 +599,57 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:726
 #: src/control/Control.NotebookbarBuilder.js:760
 msgid "Repair"
-msgstr ""
+msgstr "Sửa"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:297
 #: src/control/Control.Menubar.js:420 src/control/Control.Menubar.js:533
 #: src/control/Control.StatusBar.js:205
 msgid "Reset zoom"
-msgstr ""
+msgstr "Đặt lại thu phóng"
 
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.NotebookbarBuilder.js:685
 msgid "Show Ruler"
-msgstr ""
+msgstr "Hiển thị thước"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:307
 #: src/control/Control.Menubar.js:423
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Hiển thị thanh trạng thái"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:310
 #: src/control/Control.Menubar.js:426 src/control/Control.Menubar.js:544
 #: src/control/Control.Menubar.js:874 src/control/Control.Menubar.js:915
 #: src/control/Control.Menubar.js:929
 msgid "Local Image..."
-msgstr ""
+msgstr "Ảnh trên thiết bị"
 
 #: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:97
 #: src/control/Control.Menubar.js:890 src/control/Control.Menubar.js:892
 msgid "All"
-msgstr ""
+msgstr "Tất cả"
 
 #: src/control/Control.Menubar.js:150
 msgid "Text orientation"
-msgstr ""
+msgstr "Hướng văn bản"
 
 #: src/control/Control.Menubar.js:254 src/control/Control.Menubar.js:379
 #: src/control/Control.Menubar.js:491 src/control/Control.Menubar.js:701
 #: src/control/Control.NotebookbarWriter.js:381
 msgid "Online Help"
-msgstr ""
+msgstr "Hỗ trợ trực tuyến"
 
 #: src/control/Control.Menubar.js:255 src/control/Control.Menubar.js:380
 #: src/control/Control.Menubar.js:492 src/control/Control.Menubar.js:702
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Các phím tắt bàn phím"
 
 #: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:381
 #: src/control/Control.Menubar.js:493 src/control/Control.Menubar.js:703
 #: src/control/Control.NotebookbarWriter.js:409
 msgid "Report an issue"
-msgstr ""
+msgstr "Báo cáo một vấn đề"
 
 #: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:382
 #: src/control/Control.Menubar.js:494 src/control/Control.Menubar.js:704
@@ -657,7 +657,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:867
 #: src/control/Control.NotebookbarWriter.js:424
 msgid "Latest Updates"
-msgstr ""
+msgstr "Cập nhật mới nhất"
 
 #: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:495 src/control/Control.Menubar.js:705
@@ -665,41 +665,41 @@ msgstr ""
 #: src/control/Control.Menubar.js:868
 #: src/control/Control.NotebookbarWriter.js:438
 msgid "About"
-msgstr ""
+msgstr "Về thông tin"
 
 #: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:497 src/control/Control.Menubar.js:707
 #: src/map/Map.js:394
 msgid "Last modification"
-msgstr ""
+msgstr "Lần chỉnh sửa cuối"
 
 #: src/control/Control.Menubar.js:267 src/control/Control.Menubar.js:392
 msgid "Save Comments"
-msgstr ""
+msgstr "Lưu chú thích"
 
 #: src/control/Control.Menubar.js:272 src/control/Control.Menubar.js:770
 #: src/control/Control.NotebookbarImpress.js:258
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "Bản trình bày ODF (.odp)"
 
 #: src/control/Control.Menubar.js:273 src/control/Control.Menubar.js:771
 #: src/control/Control.NotebookbarImpress.js:311
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "Bản trình bày PowerPoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:772
 #: src/control/Control.NotebookbarImpress.js:333
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "Bản trình bày Power Point (.pptx)"
 
 #: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:803
 #: src/control/Control.PresentationBar.js:33
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Trình chiếu toàn màn hình"
 
 #: src/control/Control.Menubar.js:370
 msgid "Present current slide"
-msgstr ""
+msgstr "Trình chiếu trang hiện tại"
 
 #: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:773
 #: src/control/Control.NotebookbarImpress.js:280
