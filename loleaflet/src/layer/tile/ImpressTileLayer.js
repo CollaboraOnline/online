@@ -3,7 +3,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global $ L isAnyVexDialogActive */
+/* global L isAnyVexDialogActive */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
