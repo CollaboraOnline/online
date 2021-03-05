@@ -1,6 +1,6 @@
 <config>
 
-    <!-- Note: 'default' attributes are used to document a setting's default value as well as to use as fallback. -->
+    <!-- Note: 'default' attributes are used to docume a setting's default value as well as to use as fallback. -->
     <!-- Note: When adding a new entry, a default must be set in WSD in case the entry is missing upon deployment. -->
 
     <allowed_languages desc="List of supported languages of Writing Aids (spell checker, grammar checker, thesaurus, hyphenation) on this instance. Allowing too many has negative effect on startup performance." default="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru">de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru</allowed_languages>
@@ -123,6 +123,7 @@
       <seccomp desc="Should we use the seccomp system call filtering." type="bool" default="true">true</seccomp>
       <capabilities desc="Should we require capabilities to isolate processes into chroot jails" type="bool" default="true">true</capabilities>
       <jwt_expiry_secs desc="Time in seconds before the Admin Console's JWT token expires" type="int" default="1800">1800</jwt_expiry_secs>
+      <enable_macros_execution desc="Specifies whether the macro execution is enabled in general. This will enable Basic, Beanshell, Javascript and Python scripts. If it is set to false, the macro_security_level is ignored. If it is set to true, the mentioned entry specified the level of macro security." type="bool" default="false">false</enable_macros_execution>
     </security>
 
     <watermark>

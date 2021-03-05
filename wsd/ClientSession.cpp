@@ -854,6 +854,12 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " watermarkOpacity=" << LOOLWSD::getConfigValue<double>("watermark.opacity", 0.2);
         }
 
+        if (LOOLWSD::hasProperty("security.enable_macros_execution"))
+        {
+            oss << " enableMacrosExecution=" << std::boolalpha
+                << LOOLWSD::getConfigValue<bool>("security.enable_macros_execution", false);
+        }
+
         if (!getDocOptions().empty())
         {
             oss << " options=" << getDocOptions();

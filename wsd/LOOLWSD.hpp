@@ -363,6 +363,13 @@ public:
         return value;
     }
 
+    /// Returns true if and only if the property with the given key exists.
+    static
+    bool hasProperty(const std::string& key)
+    {
+        return Application::instance().config().hasProperty(key);
+    }
+
     /// Trace a new session and take a snapshot of the file.
     static void dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path);
 
