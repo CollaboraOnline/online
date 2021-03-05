@@ -53,7 +53,13 @@ L.Control.AlertDialog = L.Control.extend({
 				messageText = window.errorMessages.invalidLink;
 			}
 
-			messageText = messageText.replace('%url', url);
+			messageText = messageText.replace('%url?', '?');
+			var containerWithLink = document.createElement('div');
+			containerWithLink.innerHTML = messageText;
+			var externalUrl = document.createElement('p');
+			externalUrl.classList.add('vex-dialog-external-url');
+			externalUrl.innerHTML = url;
+			containerWithLink.appendChild(externalUrl);
 			buttonsList = [];
 
 			if (isLinkValid) {
@@ -69,7 +75,7 @@ L.Control.AlertDialog = L.Control.extend({
 			}
 
 			vex.dialog.open({
-				message: messageText,
+				unsafeMessage: containerWithLink.outerHTML,
 				showCloseButton: true,
 				contentClassName: 'word-wrap-for-vex-dialog',
 				buttons: buttonsList,
