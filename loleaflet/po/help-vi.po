@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
 "PO-Revision-Date: 2021-03-04 02:58+0000\n"
-"Last-Translator: Nguyen Trung Kien <ntk2111997@gmail.com>\n"
+"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
 "Language: vi\n"
@@ -2760,6 +2760,7 @@ msgstr ""
 "bản không mong muốn trong tài liệu."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:559-5
+#, fuzzy
 msgid ""
 "Changes can be accepted or rejected. To accept or reject changes, click on "
 "the corresponding icons in the comment box on the right of the document. "
@@ -2770,111 +2771,162 @@ msgid ""
 "\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog "
 "shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
+"Các thay đổi có thể được chấp nhận hoặc bị từ chối. Để chấp nhận hoặc từ "
+"chối các thay đổi, hãy nhấp vào các biểu tượng tương ứng trong hộp nhận xét "
+"ở bên phải của tài liệu. Hoặc, chọn <span class=\"ui\"> Chỉnh sửa </span> → "
+"<span class=\"ui\"> Theo dõi thay đổi </span> → <span class=\"ui\"> Chấp "
+"nhận </span> hoặc <span class=\"ui\"> Từ chối </span>. Hơn nữa, nếu bạn cần "
+"lọc các thay đổi trước khi chấp nhận hoặc từ chối, hãy chọn <span class=\"ui"
+"\"> Chỉnh sửa </span> → <span class=\"ui\"> Theo dõi thay đổi </span> → "
+"<span class=\"ui\"> Quản lý </span>. Hộp thoại hiển thị danh sách tất cả các "
+"thay đổi được theo dõi. Sử dụng các nút hộp thoại cho phù hợp."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:561-5
+#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr ""
+msgstr "Làm cách nào để đặt lề của tài liệu?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:562-5
+#, fuzzy
 msgid ""
 "Using the ruler drag the leftmost edge of the ruler to adjust the left "
 "margin, or the rightmost for the right margin."
 msgstr ""
+"Dùng thước kéo mép ngoài cùng bên trái của thước để điều chỉnh lề trái hoặc "
+"ngoài cùng bên phải cho lề phải."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:563-5
+#, fuzzy
 msgid "Using the page style"
-msgstr ""
+msgstr "Sử dụng kiểu trang"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:565-11
+#, fuzzy
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"Chọn <span class=\"ui\"> Định dạng </span> → <span class=\"ui\"> Trang </"
+"span> và chọn tab <span class=\"ui\"> Trang </span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:566-11
+#, fuzzy
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Đặt lề trang trong hộp thoại."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:569-5
+#, fuzzy
 msgid "How do I change the page orientation to landscape inside my document"
 msgstr ""
+"Làm cách nào để thay đổi hướng trang thành nằm ngang bên trong tài liệu của "
+"tôi"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:571-11
+#, fuzzy
 msgid ""
 "Place the cursor at the place where the page orientation is to change. Add "
 "an empty paragraph."
-msgstr ""
+msgstr "Đặt con trỏ vào vị trí mà hướng trang sẽ thay đổi. Thêm một đoạn trống."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:572-11
+#, fuzzy
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>"
 ", <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
+"Chọn tab <span class=\"ui\"> Định dạng </span> → <span class=\"ui\"> Đoạn </"
+"span>, <span class=\"ui\"> Luồng văn bản </span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:573-11
+#, fuzzy
 msgid ""
 "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, "
 "Position: Before."
 msgstr ""
+"Trong vùng <span class=\"ui\"> Dấu ngắt </span>, đánh dấu Chèn, Loại: Ngắt "
+"trang, Vị trí: Trước."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:574-11
+#, fuzzy
 msgid "Select Landscape in “With Page Style”"
-msgstr ""
+msgstr "Chọn khổ ngang trong “Với Kiểu trang”"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
+#, fuzzy
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "Chọn nếu bạn muốn thay đổi cách đánh số trang."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:577-5
+#, fuzzy
 msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
 msgstr ""
+"Để quay lại hướng dọc, hãy lặp lại quy trình, chọn Chân dung trong “Với kiểu "
+"trang”."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:578-5
+#, fuzzy
 msgid "How can I make the new text look like other existing text?"
 msgstr ""
+"Làm cách nào để làm cho văn bản mới trông giống như các văn bản hiện có khác?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:579-5
+#, fuzzy
 msgid "Directly:"
-msgstr ""
+msgstr "Trực tiếp:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:581-11
+#, fuzzy
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Chọn văn bản có định dạng hiện có"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:582-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:613-11
+#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" "
 "alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
 "a paint bucket."
 msgstr ""
+"Nhấp vào biểu tượng định dạng sao chép <img style = \"height: 0.6cm; width: 0"
+".6cm;\" alt = \"\" src = \"hình ảnh/lc_formatpaintbrush.svg\">. Con trỏ "
+"chuột chuyển sang thùng sơn."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:583-11
+#, fuzzy
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "Chọn văn bản bạn muốn áp dụng định dạng mới."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:585-5
+#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr ""
+msgstr "Áp dụng một kiểu đoạn văn:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:587-11
+#, fuzzy
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr ""
+msgstr "Đặt con trỏ vào đoạn văn bản cần định dạng"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:588-11
+#, fuzzy
 msgid ""
 "Select the style to apply in the style dropdown list. The paragraph displays "
 "the styles attributes."
 msgstr ""
+"Chọn kiểu để áp dụng trong danh sách thả xuống kiểu. Đoạn văn hiển thị các "
+"thuộc tính kiểu."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:590-5
+#, fuzzy
 msgid ""
 "Why did the text I just typed change automatically? How can I revert it?"
 msgstr ""
+"Tại sao văn bản tôi vừa nhập lại tự động thay đổi? Làm thế nào tôi có thể "
+"hoàn nguyên nó?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:591-5
+#, fuzzy
 msgid ""
 "You have the AutoCorrection enabled. AutoCorrection changes the text just "
 "typed into an internal table of corresponding text. In most cases, "
@@ -2882,74 +2934,105 @@ msgid ""
 "necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
 ">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
+"Bạn đã bật AutoCorrection. AutoCorrection thay đổi văn bản vừa nhập vào một "
+"bảng nội bộ của văn bản tương ứng. Trong hầu hết các trường hợp, "
+"AutoCorrection sẽ sửa lỗi chính tả khi bạn đang nhập văn bản. Nếu không cần "
+"thiết Tự động sửa, hãy tắt tính năng này trong <span class=\"ui\"> Công cụ </"
+"span> → <span class=\"ui\"> Tự động sửa </span> → <span class=\"ui\"> Trong "
+"khi nhập </span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:596-5
+#, fuzzy
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Làm cách nào để chọn dữ liệu để in?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:597-5
+#, fuzzy
 msgid ""
 "Insert column and row breaks in the spreadsheet to narrow the print range "
 "and print the document to download. On printing the PDF, select the pages of "
 "interest."
 msgstr ""
+"Chèn các dấu ngắt cột và hàng trong bảng tính để thu hẹp phạm vi in và in "
+"tài liệu để tải xuống. Khi in PDF, hãy chọn các trang quan tâm."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:598-5
+#, fuzzy
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "Làm cách nào để nhập dữ liệu CSV?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:600-11
+#, fuzzy
 msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
 msgstr ""
+"Tải dữ liệu CSV của bạn trong một số công cụ gốc vào nền tảng của bạn, chọn "
+"và sao chép nó vào khay nhớ tạm"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:601-11
+#, fuzzy
 msgid ""
 "Activate the <span class=\"productname\">%productName</span> spreadsheet "
 "window."
 msgstr ""
+"Kích hoạt cửa sổ bảng tính <span class=\"productname\">%productName </span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:603-9
+#, fuzzy
 msgid ""
 "Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
 ">Paste</span> or press <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\""
 ">V</span>. The <span class=\"ui\">Text Import</span> dialog opens to let you "
 "describe the precise format of the CSV data."
 msgstr ""
+"Dán từ trình duyệt <span class=\"ui\"> Chỉnh sửa </span> → <span class=\"ui\""
+"> Dán </span> hoặc nhấn <span class=\"kbd\"> Ctrl </span> + <span class=\"kbd"
+"\"> V </span>. Hộp thoại <span class=\"ui\"> Nhập văn bản </span> mở ra để "
+"cho phép bạn mô tả định dạng chính xác của dữ liệu CSV."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:606-11
+#, fuzzy
 msgid ""
 "Select the character set, language and separator options for the CSV file."
-msgstr ""
+msgstr "Chọn các tùy chọn bộ ký tự, ngôn ngữ và dấu phân tách cho tệp CSV."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:608-5
+#, fuzzy
 msgid ""
 "The CSV data is loaded into the selected cell where you pasted, according to "
 "these settings."
-msgstr ""
+msgstr "Dữ liệu CSV được tải vào ô đã chọn mà bạn đã dán, theo các cài đặt này."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:609-5
+#, fuzzy
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "Làm cách nào để sao chép định dạng của các ô hiện có sang các ô mới?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:610-5
+#, fuzzy
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
 msgstr ""
+"Điều này rất dễ thực hiện bằng cách sử dụng công cụ Paintbrush trên thanh "
+"công cụ."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:612-11
+#, fuzzy
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "Định dạng ô nguồn với phông chữ, màu nền và hơn thế nữa."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:614-11
+#, fuzzy
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "Chọn các ô bạn muốn định dạng. Thả nút chuột."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:616-5
+#, fuzzy
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "Biểu tượng “Xóa định dạng trực tiếp” là gì?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:617-5
+#, fuzzy
 msgid ""
 "Direct formatting is formatting applied directly to the selected contents of "
 "a paragraph or a spreadsheet cell, and overlaps its assigned style "
@@ -2957,26 +3040,38 @@ msgid ""
 "or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span "
 "class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
 msgstr ""
+"Định dạng trực tiếp là định dạng được áp dụng trực tiếp cho nội dung đã chọn "
+"của đoạn văn hoặc ô bảng tính và chồng lên định dạng kiểu được chỉ định của "
+"nó. Để khôi phục định dạng về cài đặt kiểu, hãy chọn ô văn bản hoặc bảng "
+"tính và chọn <span class=\"ui\"> Định dạng </span> → <span class=\"ui\"> Xóa "
+"định dạng trực tiếp </span> hoặc sử dụng nút trên thanh công cụ."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:618-5
+#, fuzzy
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Làm cách nào để đổi tên trang tính?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:619-5
+#, fuzzy
 msgid ""
 "Rename a sheet in the spreadsheet document using the context menu (using the "
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
 "name in the dialog that follows."
 msgstr ""
+"Đổi tên trang tính trong tài liệu bảng tính bằng menu ngữ cảnh (sử dụng nút "
+"chuột phải) trên tab trang tính ở dưới cùng. Nhập tên trang tính mới vào hộp "
+"thoại sau đó."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:624-5
+#, fuzzy
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Làm cách nào tôi có thể chạy trình chiếu của mình?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:626-11
+#, fuzzy
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "Mở bản trình bày trong <span class=\"productname\">%productName </span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:627-11
 msgid ""
