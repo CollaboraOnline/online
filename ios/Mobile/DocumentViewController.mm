@@ -17,7 +17,6 @@
 #import <sys/stat.h>
 
 #import "ios.h"
-#import "CollaboraOnlineWebViewKeyboardManager.h"
 #import "FakeSocket.hpp"
 #import "LOOLWSD.hpp"
 #import "Log.hpp"
@@ -30,7 +29,6 @@
 @interface DocumentViewController() <WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, UIScrollViewDelegate, UIDocumentPickerDelegate, UIFontPickerViewControllerDelegate> {
     int closeNotificationPipeForForwardingThread[2];
     NSURL *downloadAsTmpURL;
-    CollaboraOnlineWebViewKeyboardManager *keyboardManager;
 }
 
 @end
@@ -99,11 +97,6 @@ static IMP standardImpOfInputAccessoryView = nil;
     // stopping any zoom attempt in scrollViewWillBeginZooming: below. (The zooming of the document
     // contents is handled fully in JavaScript, the WebView has no knowledge of that.)
     self.webView.scrollView.delegate = self;
-
-    if (!isExternalKeyboardAttached()) {
-        keyboardManager =
-            [[CollaboraOnlineWebViewKeyboardManager alloc] initForWebView:self.webView];
-    }
 
     [self.view addSubview:self.webView];
 
