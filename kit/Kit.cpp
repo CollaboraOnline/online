@@ -1220,6 +1220,7 @@ private:
         const std::string& deviceFormFactor = session->getDeviceFormFactor();
         const std::string& batchMode = session->getBatchMode();
         const std::string& enableMacrosExecution = session->getEnableMacrosExecution();
+        const std::string& macroSecurityLevel = session->getMacroSecurityLevel();
         std::string spellOnline = "";
 
         std::string options;
@@ -1234,6 +1235,9 @@ private:
 
         if (!enableMacrosExecution.empty())
             options += ",EnableMacrosExecution=" + enableMacrosExecution;
+
+        if (!macroSecurityLevel.empty())
+            options += ",MacroSecurityLevel=" + macroSecurityLevel;
 
         if (!_loKitDocument)
         {
