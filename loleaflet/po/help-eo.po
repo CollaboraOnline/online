@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2020-09-28 02:35+0000\n"
-"Last-Translator: Donald Rogers <donr2648@clear.net.nz>\n"
-"Language-Team: Esperanto <https://weblate.documentfoundation.org/projects/"
-"libo_online/loleaflet-help/eo/>\n"
+"PO-Revision-Date: 2021-03-04 02:44+0000\n"
+"Last-Translator: phlostically <phlostically@mailinator.com>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/"
+"collabora-online/help/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5.1-dev\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-help-eo.po\n"
 "X-Pootle-Revision: 2347824\n"
 
@@ -906,7 +906,7 @@ msgstr "Stir + Maj + Eniga klavo"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
-msgstr "Enmeti novan alineon ĵus antaŭ aŭ post sekcio, aŭ antaŭ tabelo."
+msgstr "Enmeti novan alineon ĵus antaŭ aŭ post sekcio, aŭ antaŭ tabelo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-155
@@ -1030,7 +1030,7 @@ msgstr "Iri kaj elekti tekston al fino de tekstujo"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Fulmoklavoj por lumbildo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1058,26 +1058,23 @@ msgstr "Elekti objektojn laŭ la ordo inversa al tiu, laŭ kiu ili kreiĝis"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Movi al sekva teksta objekto en lumbildo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Elekti ĉion en lumbildo"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Fulmoklavoj por Lumbildo / desegni paĝon"
+msgstr "Fulmoklavoj por desegna paĝo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Movi al la sekva objekto en lumbilda / desegna paĝo"
+msgstr "Movi al la sekva teksta objekto en desegna paĝo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Elekti ĉion en lumbilda / desegna paĝo"
+msgstr "Elekti ĉion en desegna paĝo"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -2596,7 +2593,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:574-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "Elektu je Horizontala en \"Kun paĝa stilo\"."
+msgstr "Elektu je Horizontala en \"Kun paĝa stilo\""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Select if you want to change page numbering."
@@ -2644,7 +2641,7 @@ msgstr "Apliki alinean stilon:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:587-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr "Metu la kursoron ĉe la alineo formatota."
+msgstr "Metu la kursoron ĉe la alineo formatota"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:588-11
 msgid ""

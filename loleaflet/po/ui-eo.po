@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2020-12-09 17:58+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2021-03-04 02:44+0000\n"
+"Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
 "collabora-online/ui/eo/>\n"
-"Language: \n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.5.1-dev\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
 "X-Pootle-Revision: 3937773\n"
 
@@ -198,7 +198,7 @@ msgstr "Aktualigi protokolon"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanala Filtrilo:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:303
 #: src/control/Control.StatusBar.js:331
@@ -232,7 +232,7 @@ msgstr "Sendita"
 
 #: admin/src/AdminSocketBase.js:60
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "La servilo malŝaltiĝis; bonvolu reŝargi la paĝon."
 
 #: admin/src/AdminSocketBase.js:70
 msgid "Connection error"
@@ -469,13 +469,12 @@ msgid "Open menu"
 msgstr "Malfermi la menuon"
 
 #: src/control/Control.JSDialogBuilder.js:2136
-#, fuzzy
 msgid "reply"
-msgstr "Respondi"
+msgstr "respondo"
 
 #: src/control/Control.JSDialogBuilder.js:2139
 msgid "replies"
-msgstr ""
+msgstr "respondoj"
 
 #: src/control/Control.JSDialogBuilder.js:2552
 msgid "Cell borders"
@@ -502,7 +501,6 @@ msgid "Columns"
 msgstr "Kolumnoj"
 
 #: src/control/Control.JSDialogBuilder.js:2803
-#, fuzzy
 msgid "Insert Table"
 msgstr "Enmeti tabelon"
 
@@ -727,7 +725,7 @@ msgstr "Kalkultabelo de Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:511
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "Kome disigita dosiero (.csv)"
 
 #: src/control/Control.Menubar.js:737 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:832 src/control/Control.StatusBar.js:190
@@ -866,15 +864,15 @@ msgstr "Nombro da lumbildoj"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Elekti plurajn ĉelojn"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Enmeta reĝimo: ne aktiva"
 
 #: src/control/Control.StatusBar.js:466
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Elekta reĝimo: ne aktiva"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -886,11 +884,11 @@ msgstr "Enigi folion post tio"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Movi Folion Maldekstren"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Movi Folion Dekstren"
 
 #: src/control/Control.Tabs.js:249
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -943,7 +941,7 @@ msgstr "Enmeti formojn"
 
 #: src/control/Control.TopToolbar.js:245
 msgid "Insert connectors"
-msgstr ""
+msgstr "Enmeti konektilojn"
 
 #: src/control/Control.TopToolbar.js:473
 msgid "Style"
@@ -1055,25 +1053,25 @@ msgstr "Helpo"
 #: src/control/Control.NotebookbarCalc.js:116
 #: src/control/Control.NotebookbarImpress.js:201
 msgid "Share"
-msgstr ""
+msgstr "Kunhavi"
 
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarImpress.js:231
 msgid "See history"
-msgstr ""
+msgstr "Vidi historion"
 
 #: src/control/Control.NotebookbarWriter.js:1427
 msgid "Text Body"
-msgstr ""
+msgstr "Teksta Korpo"
 
 #: src/control/Control.NotebookbarWriter.js:1436
 msgid "Title"
-msgstr ""
+msgstr "Titolo"
 
 #: src/control/Control.NotebookbarWriter.js:1445
 msgid "Subtitle"
-msgstr ""
+msgstr "Subtitolo"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1085,7 +1083,7 @@ msgstr "Datumoj"
 
 #: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "Kome Disigita Dosiero (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1845
 msgid "Insert Rows Above"
@@ -1347,9 +1345,8 @@ msgstr ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:64
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Ho ve. Okazis problemo konekti al la dokumento"
+msgstr "Ho ve. Okazis problemo konekti al %productName: "
 
 #: src/core/Socket.js:308
 msgid "Served by:"
@@ -1381,7 +1378,7 @@ msgstr "Ho ve. Okazis problemo konekti al la dokumento"
 
 #: src/core/Socket.js:431
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "La servilo estas haltigita kaj restartanta aŭtomate. Bonvolu atendi."
 
 #: src/core/Socket.js:459
 msgid ""
@@ -1628,7 +1625,7 @@ msgstr "Forigi"
 
 #: src/layer/tile/TileLayer.js:275
 msgid "Remove Thread"
-msgstr ""
+msgstr "Forigi Fadenon"
 
 #: src/layer/tile/TileLayer.js:281
 msgid "Resolve"
@@ -1636,15 +1633,15 @@ msgstr "Solvi"
 
 #: src/layer/tile/TileLayer.js:281
 msgid "Unresolve"
-msgstr ""
+msgstr "Malsolvi"
 
 #: src/layer/tile/TileLayer.js:287
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Malsolvi Fadenon"
 
 #: src/layer/tile/TileLayer.js:287
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Solvi Fadenon"
 
 #: src/layer/tile/TileLayer.js:878
 msgid "Functions"
