@@ -66,6 +66,9 @@ class Cursor {
 			this.map.on('zoomend move', this.update, this);
 
 		this.visible = true;
+
+		document.addEventListener('blur', this.onFocusBlur.bind(this));
+		document.addEventListener('focus', this.onFocusBlur.bind(this));
 	}
 
 	remove() {
@@ -80,10 +83,20 @@ class Cursor {
 		}
 
 		this.visible = false;
+
+		document.removeEventListener('blur', this.onFocusBlur.bind(this));
+		document.removeEventListener('focus', this.onFocusBlur.bind(this));
 	}
 
 	isVisible(): boolean {
 		return this.visible;
+	}
+
+	onFocusBlur(ev: FocusEvent) {
+		if (ev.type === 'blur')
+			$('.leaflet-cursor').addClass('blinking-cursor-hidden');
+		else
+			$('.leaflet-cursor').removeClass('blinking-cursor-hidden');
 	}
 
 	// position and size should be in core pixels.
