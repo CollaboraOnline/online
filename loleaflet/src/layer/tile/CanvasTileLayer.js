@@ -271,7 +271,8 @@ L.CanvasTilePainter = L.Class.extend({
 			!partChanged &&
 			!resizeCanvas &&
 			!splitPosChanged &&
-			!scaleChanged);
+			!scaleChanged &&
+			!mapSizeChanged);
 
 //		console.debug('Tile size: ' + this._layer._getTileSize());
 
