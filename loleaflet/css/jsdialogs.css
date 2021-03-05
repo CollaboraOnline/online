@@ -200,6 +200,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	box-shadow: none;
 }
 
+.ui-textarea.jsdialog {
+	max-width: 400px;
+}
+
 .ui-treeview-entry span {
 	width: 100%;
 }
