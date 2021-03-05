@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2021-03-03 03:57+0000\n"
-"Last-Translator: Nguyen Tuan Anh <anhnt633@viettel.com.vn>\n"
+"PO-Revision-Date: 2021-03-03 04:19+0000\n"
+"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
 "Language: vi\n"
@@ -704,93 +704,93 @@ msgstr "Trình chiếu trang hiện tại"
 #: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:773
 #: src/control/Control.NotebookbarImpress.js:280
 msgid "ODF Drawing (.odg)"
-msgstr ""
+msgstr "Bản vẽ ODF (.odg)"
 
 #: src/control/Control.Menubar.js:508 src/control/Control.Menubar.js:818
 #: src/control/Control.NotebookbarCalc.js:173
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "Trang tính ODF (.ods)"
 
 #: src/control/Control.Menubar.js:509 src/control/Control.Menubar.js:819
 #: src/control/Control.NotebookbarCalc.js:226
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Trang tính Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:510 src/control/Control.Menubar.js:820
 #: src/control/Control.NotebookbarCalc.js:248
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Trang tính Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:511
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "Tài liệu CSV (.csv)"
 
 #: src/control/Control.Menubar.js:737 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:832 src/control/Control.StatusBar.js:190
 msgid "Search"
-msgstr ""
+msgstr "Tìm kiếm"
 
 #: src/control/Control.Menubar.js:748
 msgid "Page Setup"
-msgstr ""
+msgstr "Thiết lập trang"
 
 #: src/control/Control.Menubar.js:1017 src/control/Control.StatusBar.js:506
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Đặt lại về ngôn ngữ mặc định"
 
 #: src/control/Control.Menubar.js:1359
 msgid "Insert Shape"
-msgstr ""
+msgstr "Chèn hình dạng"
 
 #: src/control/Control.Menubar.js:1454
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "Bạn có chắc chắn muốn xóa trang trình chiếu này không?"
 
 #: src/control/Control.MobileBottomBar.js:27
 #: src/control/Control.MobileBottomBar.js:55
 #: src/control/Control.MobileBottomBar.js:84
 msgid "Show the search bar"
-msgstr ""
+msgstr "Hiển thị thanh tìm kiếm"
 
 #: src/control/Control.MobileTopBar.js:44
 msgid "Accept"
-msgstr ""
+msgstr "Chấp nhận"
 
 #: src/control/Control.PresentationBar.js:85
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "Bạn có chắc chắn muốn xóa trang này không?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Cuộn lên các chú thích"
 
 #: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Cuộn xuống các chú thích"
 
 #: src/control/Control.SearchBar.js:30
 msgid "Clear the search field"
-msgstr ""
+msgstr "Xóa trường tìm kiếm"
 
 #: src/control/Control.SearchBar.js:32
 msgid "Hide the search bar"
-msgstr ""
+msgstr "Ẩn thanh tìm kiếm"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Di chuyển đến trang tính đầu tiên"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "Di chuyển sang trái"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "Di chuyển sang phải"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Cuộn đến trang cuối cùng"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
@@ -810,43 +810,43 @@ msgstr "Phạm vi ô đã chọn"
 
 #: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:355
 msgid "Entering text mode"
-msgstr ""
+msgstr "Vào chế độ văn bản"
 
 #: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:360
 msgid "Selection Mode"
-msgstr ""
+msgstr "Chế độ lựa chọn"
 
 #: src/control/Control.StatusBar.js:320
 msgid "Choice of functions"
-msgstr ""
+msgstr "Lựa chọn chức năng"
 
 #: src/control/Control.StatusBar.js:324
 msgid "Average"
-msgstr ""
+msgstr "Trung bình"
 
 #: src/control/Control.StatusBar.js:325
 msgid "CountA"
-msgstr ""
+msgstr "Đếm A"
 
 #: src/control/Control.StatusBar.js:326
 msgid "Count"
-msgstr ""
+msgstr "Đếm"
 
 #: src/control/Control.StatusBar.js:327
 msgid "Maximum"
-msgstr ""
+msgstr "Tối đa"
 
 #: src/control/Control.StatusBar.js:328
 msgid "Minimum"
-msgstr ""
+msgstr "Tối thiểu"
 
 #: src/control/Control.StatusBar.js:329
 msgid "Sum"
-msgstr ""
+msgstr "Tổng"
 
 #: src/control/Control.StatusBar.js:330
 msgid "Selection count"
-msgstr ""
+msgstr "Số lượng lựa chọn"
 
 #: src/control/Control.StatusBar.js:345
 msgid "Number of Pages"
@@ -854,126 +854,128 @@ msgstr "Số trang"
 
 #: src/control/Control.StatusBar.js:350
 msgid "Word Counter"
-msgstr ""
+msgstr "Bộ đếm từ"
 
 #: src/control/Control.StatusBar.js:377
 msgid "Number of Slides"
-msgstr ""
+msgstr "Số lượng trang chiếu"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Chọn nhiều ô"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Chế độ chèn: không hoạt động"
 
 #: src/control/Control.StatusBar.js:466
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Chế độ lựa chọn: không hoạt động"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "Chèn trang tính phía trước"
 
 #: src/control/Control.Tabs.js:50
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "Chèn trang tính phía sau"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Chuyển trang tính sang trái"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Chuyển trang tính sang phải"
 
 #: src/control/Control.Tabs.js:249
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr ""
+msgstr "Bạn có muốn xóa trang tính %sheet%"
 
 #: src/control/Control.Tabs.js:266
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "Nhập tên trang tính mới"
 
 #: src/control/Control.Toolbar.js:928
 msgid "Previous slide"
-msgstr ""
+msgstr "Trang chiếu trước"
 
 #: src/control/Control.Toolbar.js:929
 msgid "Next slide"
-msgstr ""
+msgstr "Trang chiếu tiếp"
 
 #: src/control/Control.Toolbar.js:984
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
+"Xung đột Hoàn tác /Làm lại với nhiều người dùng. Vui lòng sử dụng sửa chữa "
+"tài liệu để giải quyết"
 
 #: src/control/Control.TopToolbar.js:107
 #: src/control/Control.NotebookbarWriter.js:1418
 msgid "Default Style"
-msgstr ""
+msgstr "Kiểu mặc định"
 
 #: src/control/Control.TopToolbar.js:163
 msgid "Borders"
-msgstr ""
+msgstr "Viền"
 
 #: src/control/Control.TopToolbar.js:171
 msgid "More..."
-msgstr ""
+msgstr "Xem thêm"
 
 #: src/control/Control.TopToolbar.js:235
 msgid "Insert table"
-msgstr ""
+msgstr "Chèn bảng"
 
 #: src/control/Control.TopToolbar.js:239
 #: src/control/Control.NotebookbarBuilder.js:526
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Chèn ảnh trên thiết bị"
 
 #: src/control/Control.TopToolbar.js:243
 msgid "Insert shapes"
-msgstr ""
+msgstr "Chèn hình dạng"
 
 #: src/control/Control.TopToolbar.js:245
 msgid "Insert connectors"
-msgstr ""
+msgstr "Chèn các đầu nối"
 
 #: src/control/Control.TopToolbar.js:473
 msgid "Style"
-msgstr ""
+msgstr "Kiểu"
 
 #: src/control/Control.UserList.js:10
 msgid "%user has joined"
-msgstr ""
+msgstr "%user đã tham gia"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has left"
-msgstr ""
+msgstr "%user đã rời đi"
 
 #: src/control/Control.UserList.js:33
 msgid "%n users"
-msgstr ""
+msgstr "%n người dùng"
 
 #: src/control/Control.UserList.js:34
 msgid "1 user"
-msgstr ""
+msgstr "1 người dùng"
 
 #: src/control/Control.UserList.js:35
 msgid "0 users"
-msgstr ""
+msgstr "0 người dùng"
 
 #: src/control/Control.UserList.js:202
 msgid "Readonly"
-msgstr ""
+msgstr "Chỉ đọc"
 
 #: src/control/Control.UserList.js:250
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Luôn theo dõi người chỉnh sửa"
 
 #: src/control/Control.UserList.js:253
 msgid "Current"
-msgstr ""
+msgstr "Hiện tại"
 
 #: src/control/Control.Notebookbar.js:189
 #: src/control/Control.NotebookbarImpress.js:17
@@ -981,7 +983,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:721
 #: src/control/Control.NotebookbarBuilder.js:748
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/control/Control.Notebookbar.js:199
 #: src/control/Control.NotebookbarImpress.js:32
