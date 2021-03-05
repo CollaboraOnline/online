@@ -197,6 +197,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             _batch = value;
             ++offset;
         }
+        else if (name == "enableMacrosExecution")
+        {
+            _enableMacrosExecution = value;
+            ++offset;
+        }
     }
 
     Util::mapAnonymized(_userId, _userIdAnonym);
