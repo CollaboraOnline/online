@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
 "PO-Revision-Date: 2021-03-03 07:07+0000\n"
-"Last-Translator: Nguyen Trung Kien <ntk2111997@gmail.com>\n"
+"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
 "Language: vi\n"
@@ -24,7 +24,7 @@ msgstr "Các phím tắt chung"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Undo"
-msgstr ""
+msgstr "Hoàn tác"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl + Z"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-18
 msgid "Redo"
-msgstr ""
+msgstr "Thực hiện lại"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-49
 msgid "Ctrl + Y"

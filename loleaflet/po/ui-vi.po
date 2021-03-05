@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
 "PO-Revision-Date: 2021-03-03 09:12+0000\n"
-"Last-Translator: Nguyen Trung Kien <ntk2111997@gmail.com>\n"
+"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
 "Language: vi\n"
@@ -1025,357 +1025,421 @@ msgstr "Menu"
 #: src/control/Control.Notebookbar.js:199
 #: src/control/Control.NotebookbarImpress.js:32
 msgid "Undo"
-msgstr ""
+msgstr "Hoàn tác"
 
 #: src/control/Control.Notebookbar.js:204
 #: src/control/Control.NotebookbarImpress.js:37
 msgid "Redo"
-msgstr ""
+msgstr "Thực hiện lại"
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:86
 msgid "~File"
-msgstr ""
+msgstr "Tập tin"
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarImpress.js:91
+#, fuzzy
 msgid "~Home"
-msgstr ""
+msgstr "Trang chủ"
 
 #: src/control/Control.NotebookbarWriter.js:23
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:97
 msgid "~Insert"
-msgstr ""
+msgstr "Chèn"
 
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
-msgstr ""
+msgstr "Bố cục"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
-msgstr ""
+msgstr "Tham chiếu"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarImpress.js:102
 msgid "~Review"
-msgstr ""
+msgstr "Xem lại"
 
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "Format"
-msgstr ""
+msgstr "Định dạng"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Table"
-msgstr ""
+msgstr "Bảng"
 
 #: src/control/Control.NotebookbarWriter.js:54
+#, fuzzy
 msgid "~Draw"
-msgstr ""
+msgstr "Vẽ"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:124
 msgid "~Help"
-msgstr ""
+msgstr "Trợ giúp"
 
 #: src/control/Control.NotebookbarWriter.js:146
 #: src/control/Control.NotebookbarCalc.js:116
 #: src/control/Control.NotebookbarImpress.js:201
 msgid "Share"
-msgstr ""
+msgstr "Chia sẻ"
 
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarCalc.js:146
 #: src/control/Control.NotebookbarImpress.js:231
 msgid "See history"
-msgstr ""
+msgstr "Xem lịch sử"
 
 #: src/control/Control.NotebookbarWriter.js:1427
 msgid "Text Body"
-msgstr ""
+msgstr "Thân văn bản"
 
 #: src/control/Control.NotebookbarWriter.js:1436
 msgid "Title"
-msgstr ""
+msgstr "Tiêu đề"
 
 #: src/control/Control.NotebookbarWriter.js:1445
 msgid "Subtitle"
-msgstr ""
+msgstr "Phụ đề"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
-msgstr ""
+msgstr "Trang tính"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "Dữ liệu"
 
 #: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "Tài liệu CSV (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1845
+#, fuzzy
 msgid "Insert Rows Above"
-msgstr ""
+msgstr "Chèn hàng lên trên"
 
 #: src/control/Control.NotebookbarCalc.js:1858
+#, fuzzy
 msgid "Insert Rows Below"
-msgstr ""
+msgstr "Chèn hàng xuống dưới"
 
 #: src/control/Control.NotebookbarCalc.js:1880
+#, fuzzy
 msgid "Insert Columns Before"
-msgstr ""
+msgstr "Chèn cột phía trước"
 
 #: src/control/Control.NotebookbarCalc.js:1893
+#, fuzzy
 msgid "Insert Columns After"
-msgstr ""
+msgstr "Chèn cột phía sau"
 
 #: src/control/Control.NotebookbarCalc.js:1915
+#, fuzzy
 msgid "Insert Row Break"
-msgstr ""
+msgstr "Chèn ngắt hàng"
 
 #: src/control/Control.NotebookbarCalc.js:1928
+#, fuzzy
 msgid "Insert Column Break"
-msgstr ""
+msgstr "Chèn ngắt cột"
 
 #: src/control/Control.NotebookbarCalc.js:1950
 msgid "Delete Rows"
-msgstr ""
+msgstr "Xoá hàng"
 
 #: src/control/Control.NotebookbarCalc.js:1963
 msgid "Delete Columns"
-msgstr ""
+msgstr "Xóa cột"
 
 #: src/control/Control.NotebookbarCalc.js:1985
+#, fuzzy
 msgid "Remove Row Break"
-msgstr ""
+msgstr "Xóa ngắt hàng"
 
 #: src/control/Control.NotebookbarCalc.js:1998
+#, fuzzy
 msgid "Remove Column Break"
-msgstr ""
+msgstr "Xóa ngắt cột"
 
 #: src/control/Control.NotebookbarImpress.js:27
+#, fuzzy
 msgid "Start Presentation"
-msgstr ""
+msgstr "Bắt đầu bản trình chiếu"
 
 #: src/control/Parts.js:414
+#, fuzzy
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Hiển thị các trang tính đã chọn"
 
 #: src/control/Permission.js:48
+#, fuzzy
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "Tài liệu không thể khóa  và được mở ở chế độ chỉ đọc."
 
 #: src/control/Permission.js:50 src/control/Permission.js:68
+#, fuzzy
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Máy chủ trả về lý do này:"
 
 #: src/control/Permission.js:66
+#, fuzzy
 msgid "The document could not be locked."
-msgstr ""
+msgstr "Tài liệu không thể khóa."
 
 #: src/control/Ruler.js:369
+#, fuzzy
 msgid "Left Margin"
-msgstr ""
+msgstr "Lề trái"
 
 #: src/control/Ruler.js:370
+#, fuzzy
 msgid "Right Margin"
-msgstr ""
+msgstr "Lề phải"
 
 #: src/control/Ruler.js:646
 msgid "Insert tabstop"
-msgstr ""
+msgstr "Chèn vị trí dừng tab"
 
 #: src/control/Ruler.js:653
 msgid "Delete tabstop"
-msgstr ""
+msgstr "Xóa vị trí dừng Tab"
 
 #: src/control/Signing.js:195
+#, fuzzy
 msgid "Please enter the PIN Code"
-msgstr ""
+msgstr "Vui lòng nhập mã PIN"
 
 #: src/control/Signing.js:214
+#, fuzzy
 msgid "Error at login."
-msgstr ""
+msgstr "Lỗi khi đăng nhập."
 
 #: src/control/Signing.js:227
+#, fuzzy
 msgid "Please scan the code"
-msgstr ""
+msgstr "Vui lòng quét mã"
 
 #: src/control/Signing.js:242
+#, fuzzy
 msgid "Couldn't get the QR code image."
-msgstr ""
+msgstr "Không thể tải hình ảnh mã QR."
 
 #: src/control/Signing.js:269
+#, fuzzy
 msgid "Error when trying to restore access to identity."
-msgstr ""
+msgstr "Lỗi khi cố gắng khôi phục quyền truy cập vào danh tính."
 
 #: src/control/Signing.js:275
+#, fuzzy
 msgid "PIN Code"
-msgstr ""
+msgstr "Mã PIN"
 
 #: src/control/Signing.js:276
+#, fuzzy
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr ""
+msgstr "Vui lòng nhập mã PIN từ email hoặc SMS"
 
 #: src/control/Signing.js:296
+#, fuzzy
 msgid "Login from email or mobile number"
-msgstr ""
+msgstr "Đăng nhập từ email hoặc số điện thoại di động"
 
 #: src/control/Signing.js:329
+#, fuzzy
 msgid "Select document type to upload"
-msgstr ""
+msgstr "Chọn loại tài liệu để tải lên"
 
 #: src/control/Signing.js:330
+#, fuzzy
 msgid "Type:"
-msgstr ""
+msgstr "Kiểu:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
+#, fuzzy
 msgid "Document uploaded."
-msgstr ""
+msgstr "Tài liệu đã tải lên."
 
 #: src/control/Signing.js:488
+#, fuzzy
 msgid "Select identity:"
-msgstr ""
+msgstr "Chọn danh tính:"
 
 #: src/control/Signing.js:489
+#, fuzzy
 msgid "Login from mobile"
-msgstr ""
+msgstr "Đăng nhập từ điện thoại di động"
 
 #: src/control/Signing.js:490
+#, fuzzy
 msgid "Recover from email"
-msgstr ""
+msgstr "Khôi phục từ email"
 
 #: src/control/Signing.js:598
+#, fuzzy
 msgid "Select passport"
-msgstr ""
+msgstr "Chọn hộ chiếu"
 
 #: src/control/Signing.js:599
+#, fuzzy
 msgid "Passport: N/A"
-msgstr ""
+msgstr "Hộ chiếu: N / A"
 
 #: src/control/Signing.js:601
+#, fuzzy
 msgid "Sign"
-msgstr ""
+msgstr "Ký tên"
 
 #: src/control/Signing.js:603
+#, fuzzy
 msgid "Status:"
-msgstr ""
+msgstr "Trạng thái:"
 
 #: src/control/Signing.js:604
+#, fuzzy
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/control/Signing.js:607
 msgid "Login"
-msgstr ""
+msgstr "Đăng nhập"
 
 #: src/control/Signing.js:616
 msgid "Not Signed"
-msgstr ""
+msgstr "Chưa ký"
 
 #: src/control/Signing.js:619
+#, fuzzy
 msgid "This document is digitally signed and the signature is valid."
-msgstr ""
+msgstr "Tài liệu này được ký điện tử và chữ ký hợp lệ."
 
 #: src/control/Signing.js:620
+#, fuzzy
 msgid "Signed and validated"
-msgstr ""
+msgstr "Đã ký và xác thực"
 
 #: src/control/Signing.js:623
+#, fuzzy
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "Tài liệu này có chữ ký không hợp lệ."
 
 #: src/control/Signing.js:624
+#, fuzzy
 msgid "Signature broken"
-msgstr ""
+msgstr "Chữ ký bị hỏng"
 
 #: src/control/Signing.js:627
+#, fuzzy
 msgid "The signature was valid, but the document has been modified"
-msgstr ""
+msgstr "Chữ ký hợp lệ, nhưng tài liệu đã được sửa đổi"
 
 #: src/control/Signing.js:628
+#, fuzzy
 msgid "Signed but document modified"
-msgstr ""
+msgstr "Đã ký nhưng tài liệu đã được sửa đổi"
 
 #: src/control/Signing.js:631
+#, fuzzy
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "Chữ ký được xác nhận, nhưng không thể xác thực chứng chỉ."
 
 #: src/control/Signing.js:632
+#, fuzzy
 msgid "Signed but not validated"
-msgstr ""
+msgstr "Đã ký nhưng chưa được xác thực"
 
 #: src/control/Signing.js:635
+#, fuzzy
 msgid "The signature is OK, but the document is only partially signed"
-msgstr ""
+msgstr "Chữ ký được xác nhận, nhưng tài liệu chỉ được ký một phần"
 
 #: src/control/Signing.js:636
+#, fuzzy
 msgid "Signed but not all files are signed"
-msgstr ""
+msgstr "Đã ký nhưng không phải tất cả các tệp đều được ký"
 
 #: src/control/Toolbar.js:49
+#, fuzzy
 msgid "Font"
-msgstr ""
+msgstr "Nét chữ"
 
 #: src/control/Toolbar.js:194 src/control/Toolbar.js:206
+#, fuzzy
 msgid "Downloading..."
-msgstr ""
+msgstr "Đang tải..."
 
 #: src/control/Toolbar.js:222 src/map/Map.js:1460
+#, fuzzy
 msgid "Saving..."
-msgstr ""
+msgstr "Đang lưu..."
 
 #: src/control/Toolbar.js:233
+#, fuzzy
 msgid "Renaming..."
-msgstr ""
+msgstr "Đang đổi tên..."
 
 #: src/control/Toolbar.js:550
+#, fuzzy
 msgid "I understand the risks"
-msgstr ""
+msgstr "Tôi hiểu những rủi ro"
 
 #: src/control/Toolbar.js:602
+#, fuzzy
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
+"Chúng tôi rất tiếc, thông tin về các bản cập nhật mới nhất không có sẵn."
 
 #: src/control/Toolbar.js:647
+#, fuzzy
 msgid "This version of %productName is powered by"
-msgstr ""
+msgstr "Phiên bản %productName này được cung cấp bởi"
 
 #: src/control/Toolbar.js:657
+#, fuzzy
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"Uỷ quyền chậm\""
 
 #: src/control/Toolbar.js:744
+#, fuzzy
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Chèn siêu liên kết"
 
 #: src/control/Toolbar.js:746
+#, fuzzy
 msgid "Text"
-msgstr ""
+msgstr "Văn bản"
 
 #: src/control/Toolbar.js:747
+#, fuzzy
 msgid "Link"
-msgstr ""
+msgstr "Liên kết"
 
 #: src/core/Socket.js:62
+#, fuzzy
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
 "versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
+"IE11 đã đạt đến số lượng kết nối tối đa. Vui lòng xem tài liệu này để tăng "
+"giới hạn này nếu cần: https://docs.microsoft.com/en-us/previous-versions/"
+"windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85"
+")#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:64
+#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr ""
+msgstr "Rất tiếc, đã xảy ra sự cố khi kết nối với %productName: "
 
 #: src/core/Socket.js:308
 #, fuzzy
