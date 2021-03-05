@@ -36,7 +36,11 @@ MULTIUSER_DATA_FOLDER = $(abs_srcdir)/data/multiuser/
 MULTIUSER_DATA_WORKDIR = $(abs_builddir)/workdir/data/multiuser/
 MULTIUSER_TRACK_FOLDER=$(abs_builddir)/workdir/track/multiuser
 
-ALLOWED_PORTS = $(shell seq 9900 1 9980)
+PHP_PROXY_PORT = 9983
+NEXTCLOUD_PORT = 9980
+ALLOWED_PORTS = $(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),$(PHP_PROXY_PORT),\
+			$(if $(findstring nextcloud, $(CYPRESS_INTEGRATION)),$(NEXTCLOUD_PORT),$(shell seq 9900 1 9980)))
+
 KILL_COMMAND=pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)
 PARALLEL_BUILD = $(findstring -j,$(MAKEFLAGS))
 DISPLAY_NUMBER = 100
@@ -128,11 +132,11 @@ define run_JS_error_check
 endef
 
 define start_loolwsd
+	$(eval FREE_PORT:=$(shell $(GET_PORT_BINARY) --host=127.0.0.1 $(ALLOWED_PORTS)))
+	$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),\
+		$(if $(findstring $(PHP_PROXY_PORT),$(FREE_PORT)),,$(error CypressError: $(PHP_PROXY_PORT) port is unavailable!)))
 	$(if $(findstring nextcloud, $(CYPRESS_INTEGRATION)),\
-		$(eval FREE_PORT:=9980),\
-		$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),
-			$(eval FREE_PORT:=9983),\
-			$(eval FREE_PORT:=$(shell $(GET_PORT_BINARY) --host=127.0.0.1 $(ALLOWED_PORTS)))))
+		$(if $(findstring $(NEXTCLOUD_PORT),$(FREE_PORT)),,$(error CypressError: $(NEXTCLOUD_PORT) port is unavailable!)))
 	@echo "Found available port for testing: $(FREE_PORT)"
 	@echo
 	@echo "Launching loolwsd..."
