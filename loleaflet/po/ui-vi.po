@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
 "PO-Revision-Date: 2021-03-03 04:19+0000\n"
-"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
+"Last-Translator: Nguyen Tuan Anh <anhnt633@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
 "Language: vi\n"
@@ -1638,17 +1638,17 @@ msgstr ""
 
 #: src/map/Map.js:224
 msgid "Initializing..."
-msgstr ""
+msgstr "Đang khởi tạo..."
 
 #: src/map/Map.js:429
 #, javascript-format
 msgid "%d seconds ago"
-msgstr ""
+msgstr "%d giây trước"
 
 #: src/map/Map.js:432
 #, javascript-format
 msgid "%d minutes ago"
-msgstr ""
+msgstr "%d phút trước"
 
 #: src/map/Map.js:1314
 msgid "Inactive document - please click to resume editing"
@@ -1668,11 +1668,11 @@ msgstr ""
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
-msgstr ""
+msgstr "Đang tải lên..."
 
 #: src/map/handler/Map.FileInserter.js:152
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "Tải tệp lên máy chủ không thành công với trạng thái: %0"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
@@ -1680,4 +1680,4 @@ msgstr ""
 
 #: src/map/handler/Map.WOPI.js:464
 msgid "Creating copy..."
-msgstr ""
+msgstr "Đang tạo bản sao ..."
