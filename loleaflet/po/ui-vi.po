@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2021-03-03 09:12+0000\n"
-"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
+"PO-Revision-Date: 2021-03-05 02:25+0000\n"
+"Last-Translator: Nguyen Tuan Anh <anhnt633@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
 "Language: vi\n"
@@ -20,197 +20,161 @@ msgstr ""
 "X-Generator: Weblate 4.5.1-dev\n"
 
 #: admin/admin.strings.js:6
-#, fuzzy
 msgid "Admin console"
-msgstr "Bảng điều khiển cho quản trị viên"
+msgstr "Bảng điều khiển dành cho quản trị viên"
 
 #: admin/admin.strings.js:7
-#, fuzzy
 msgid "Settings"
 msgstr "Cài đặt"
 
 #: admin/admin.strings.js:8
-#, fuzzy
 msgid "Overview"
 msgstr "Tổng quan"
 
 #: admin/admin.strings.js:9
-#, fuzzy
 msgid "(current)"
-msgstr "Hiện tại"
+msgstr "(hiện tại)"
 
 #: admin/admin.strings.js:10
-#, fuzzy
 msgid "Analytics"
 msgstr "Phân tích"
 
 #: admin/admin.strings.js:11
-#, fuzzy
 msgid "History"
 msgstr "Lịch sử"
 
 #: admin/admin.strings.js:12
-#, fuzzy
 msgid "Log"
 msgstr "Nhật ký"
 
 #: admin/admin.strings.js:13
-#, fuzzy
 msgid "Dashboard"
 msgstr "Bảng điều khiển"
 
 #: admin/admin.strings.js:14
-#, fuzzy
 msgid "Users online"
 msgstr "Người dùng trực tuyến"
 
 #: admin/admin.strings.js:15
-#, fuzzy
 msgid "User Name"
 msgstr "Tên người dùng"
 
 #: admin/admin.strings.js:16
-#, fuzzy
 msgid "Documents open"
 msgstr "Tài liệu đang mở"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
 msgid " user(s)."
 msgstr " người dùng."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
 msgid " document(s) open."
 msgstr " tài liệu đang mở."
 
 #: admin/admin.strings.js:19
-#, fuzzy
 msgid "Number of Documents"
 msgstr "Số lượng tài liệu"
 
 #: admin/admin.strings.js:20
-#, fuzzy
 msgid "Memory consumed"
 msgstr "Bộ nhớ đã dùng"
 
 #: admin/admin.strings.js:21
-#, fuzzy
 msgid "Bytes sent"
-msgstr "Lượng bytes đã gửi"
+msgstr "Bytes đã gửi"
 
 #: admin/admin.strings.js:22
-#, fuzzy
 msgid "Bytes received"
-msgstr "Lượng bytes đã nhận"
+msgstr "Bytes đã nhận"
 
 #: admin/admin.strings.js:23
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin/admin.strings.js:24
-#, fuzzy
 msgid "Document"
 msgstr "Tài liệu"
 
 #: admin/admin.strings.js:25
-#, fuzzy
 msgid "Views"
 msgstr "Lượt xem"
 
 #: admin/admin.strings.js:26
-#, fuzzy
 msgid "Elapsed time"
 msgstr "Thời gian trôi qua"
 
 #: admin/admin.strings.js:27
-#, fuzzy
 msgid "Idle time"
 msgstr "Thời gian chờ"
 
 #: admin/admin.strings.js:28
-#, fuzzy
 msgid "Modified"
 msgstr "Đã chỉnh sửa"
 
 #: admin/admin.strings.js:29
 msgid "Kill"
-msgstr ""
+msgstr "Kết thúc"
 
 #: admin/admin.strings.js:30
-#, fuzzy
 msgid "Graphs"
 msgstr "Đồ thị"
 
 #: admin/admin.strings.js:31
-#, fuzzy
 msgid "Memory Graph"
 msgstr "Đồ thị bộ nhớ"
 
 #: admin/admin.strings.js:32
-#, fuzzy
 msgid "CPU Graph"
 msgstr "Đồ thị CPU"
 
 #: admin/admin.strings.js:33
-#, fuzzy
 msgid "Network Graph"
 msgstr "Đồ thị Network"
 
 #: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:194
 #: src/control/Control.NotebookbarImpress.js:22
 #: src/layer/marker/Annotation.js:279 src/layer/tile/TileLayer.js:443
-#, fuzzy
 msgid "Save"
 msgstr "Lưu"
 
 #: admin/admin.strings.js:35
-#, fuzzy
 msgid "Cache size of memory statistics"
-msgstr "Kích thước bộ nhớ đệm của Memory Statistics"
+msgstr "Kích thước bộ nhớ đệm của thống kê bộ nhớ"
 
 #: admin/admin.strings.js:36
-#, fuzzy
 msgid "Time interval of memory statistics (in ms)"
-msgstr "Khoảng thời gian của Memory Statistics (ms)"
+msgstr "Khoảng thời gian thống kê bộ nhớ (tính bằng mili giây)"
 
 #: admin/admin.strings.js:37
-#, fuzzy
 msgid "Cache size of CPU statistics"
-msgstr "Kích thước bộ nhớ đệm của CPU statistics"
+msgstr "Kích thước bộ nhớ đệm của thống kê CPU"
 
 #: admin/admin.strings.js:38
-#, fuzzy
 msgid "Time interval of CPU statistics (in ms)"
-msgstr "Khoảng thời gian của CPU statistics (ms)"
+msgstr "Khoảng thời gian thống kê CPU (tính bằng mili giây)"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
-#, fuzzy
 msgid "Kill session."
 msgstr "Kết thúc phiên."
 
 #: admin/admin.strings.js:40
-#, fuzzy
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "Bộ nhớ ảo xử lý tài liệu tối đa (MB) - chỉ giảm"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Bộ nhớ ngăn xếp quy trình tài liệu tối đa (tính bằng KB) - chỉ giảm"
 
 #: admin/admin.strings.js:42
-#, fuzzy
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "Kích thước tệp tối đa được phép ghi vào đĩa (tính bằng MB) - chỉ giảm"
 
 #: admin/admin.strings.js:43
-#, fuzzy
 msgid "Documents:"
 msgstr "Tài liệu:"
 
 #: admin/admin.strings.js:44
-#, fuzzy
 msgid "Expired:"
 msgstr "Đã hết hạn:"
 
@@ -266,7 +230,7 @@ msgstr "Đã gửi"
 
 #: admin/src/AdminSocketBase.js:60
 msgid "Server has been shut down; please reload the page."
-msgstr "Máy chủ đã bị tắt; vui lòng tải lại trang"
+msgstr "Máy chủ đã bị tắt; vui lòng tải lại trang."
 
 #: admin/src/AdminSocketBase.js:70
 msgid "Connection error"
@@ -370,7 +334,7 @@ msgstr "Mở đường dẫn"
 
 #: src/control/Control.AlertDialog.js:84
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Máy chủ gặp lỗi %0 khi phân tích cú pháp lệnh %1"
+msgstr "Máy chủ gặp lỗi %0 khi phân tích cú pháp lệnh %1."
 
 #: src/control/Control.ContextMenu.js:184
 msgid "Delete"
@@ -459,7 +423,6 @@ msgid "Quadratic"
 msgstr "Phương trình bậc hai"
 
 #: src/control/Control.JSDialogBuilder.js:325
-#, fuzzy
 msgid "Square"
 msgstr "Ô vuông"
 
@@ -560,7 +523,7 @@ msgstr "Không có (Không kiểm tra chính tả)"
 #: src/control/Control.Menubar.js:714 src/control/Control.Menubar.js:764
 #: src/control/Control.Menubar.js:812
 msgid "Share..."
-msgstr "Chia sẻ"
+msgstr "Chia sẻ..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:269
 #: src/control/Control.Menubar.js:395 src/control/Control.Menubar.js:505
@@ -659,7 +622,7 @@ msgstr "Hiển thị thanh trạng thái"
 #: src/control/Control.Menubar.js:874 src/control/Control.Menubar.js:915
 #: src/control/Control.Menubar.js:929
 msgid "Local Image..."
-msgstr "Ảnh trên thiết bị"
+msgstr "Ảnh trên thiết bị..."
 
 #: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:97
 #: src/control/Control.Menubar.js:890 src/control/Control.Menubar.js:892
@@ -927,7 +890,7 @@ msgstr "Chuyển trang tính sang phải"
 
 #: src/control/Control.Tabs.js:249
 msgid "Are you sure you want to delete sheet, %sheet% ?"
-msgstr "Bạn có muốn xóa trang tính %sheet%"
+msgstr "Bạn có muốn xóa trang tính, %sheet% ?"
 
 #: src/control/Control.Tabs.js:266
 msgid "Enter new sheet name"
@@ -959,7 +922,7 @@ msgstr "Viền"
 
 #: src/control/Control.TopToolbar.js:171
 msgid "More..."
-msgstr "Xem thêm"
+msgstr "Thêm..."
 
 #: src/control/Control.TopToolbar.js:235
 msgid "Insert table"
@@ -1041,7 +1004,6 @@ msgstr "Tập tin"
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarImpress.js:91
-#, fuzzy
 msgid "~Home"
 msgstr "Trang chủ"
 
@@ -1076,7 +1038,6 @@ msgid "~Table"
 msgstr "Bảng"
 
 #: src/control/Control.NotebookbarWriter.js:54
-#, fuzzy
 msgid "~Draw"
 msgstr "Vẽ"
 
@@ -1123,34 +1084,28 @@ msgid "CSV File (.csv)"
 msgstr "Tài liệu CSV (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1845
-#, fuzzy
 msgid "Insert Rows Above"
 msgstr "Chèn hàng lên trên"
 
 #: src/control/Control.NotebookbarCalc.js:1858
-#, fuzzy
 msgid "Insert Rows Below"
-msgstr "Chèn hàng xuống dưới"
+msgstr "Chèn hàng bên dưới"
 
 #: src/control/Control.NotebookbarCalc.js:1880
-#, fuzzy
 msgid "Insert Columns Before"
 msgstr "Chèn cột phía trước"
 
 #: src/control/Control.NotebookbarCalc.js:1893
-#, fuzzy
 msgid "Insert Columns After"
 msgstr "Chèn cột phía sau"
 
 #: src/control/Control.NotebookbarCalc.js:1915
-#, fuzzy
 msgid "Insert Row Break"
-msgstr "Chèn ngắt hàng"
+msgstr "Chèn Ngắt hàng"
 
 #: src/control/Control.NotebookbarCalc.js:1928
-#, fuzzy
 msgid "Insert Column Break"
-msgstr "Chèn ngắt cột"
+msgstr "Chèn Ngắt Cột"
 
 #: src/control/Control.NotebookbarCalc.js:1950
 msgid "Delete Rows"
@@ -1161,49 +1116,40 @@ msgid "Delete Columns"
 msgstr "Xóa cột"
 
 #: src/control/Control.NotebookbarCalc.js:1985
-#, fuzzy
 msgid "Remove Row Break"
-msgstr "Xóa ngắt hàng"
+msgstr "Xóa Ngắt hàng"
 
 #: src/control/Control.NotebookbarCalc.js:1998
-#, fuzzy
 msgid "Remove Column Break"
-msgstr "Xóa ngắt cột"
+msgstr "Xóa Ngắt Cột"
 
 #: src/control/Control.NotebookbarImpress.js:27
-#, fuzzy
 msgid "Start Presentation"
-msgstr "Bắt đầu bản trình chiếu"
+msgstr "Bắt đầu Bản trình chiếu"
 
 #: src/control/Parts.js:414
-#, fuzzy
 msgid "Show Selected Sheets"
-msgstr "Hiển thị các trang tính đã chọn"
+msgstr "Hiển thị Trang tính đã Chọn"
 
 #: src/control/Permission.js:48
-#, fuzzy
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr "Tài liệu không thể khóa  và được mở ở chế độ chỉ đọc."
+msgstr "Không thể khóa tài liệu và được mở ở chế độ chỉ đọc."
 
 #: src/control/Permission.js:50 src/control/Permission.js:68
-#, fuzzy
 msgid "Server returned this reason:"
 msgstr "Máy chủ trả về lý do này:"
 
 #: src/control/Permission.js:66
-#, fuzzy
 msgid "The document could not be locked."
-msgstr "Tài liệu không thể khóa."
+msgstr "Không thể khóa tài liệu."
 
 #: src/control/Ruler.js:369
-#, fuzzy
 msgid "Left Margin"
-msgstr "Lề trái"
+msgstr "Lề Trái"
 
 #: src/control/Ruler.js:370
-#, fuzzy
 msgid "Right Margin"
-msgstr "Lề phải"
+msgstr "Lề Phải"
 
 #: src/control/Ruler.js:646
 msgid "Insert tabstop"
@@ -1214,97 +1160,78 @@ msgid "Delete tabstop"
 msgstr "Xóa vị trí dừng Tab"
 
 #: src/control/Signing.js:195
-#, fuzzy
 msgid "Please enter the PIN Code"
-msgstr "Vui lòng nhập mã PIN"
+msgstr "Vui lòng nhập Mã PIN"
 
 #: src/control/Signing.js:214
-#, fuzzy
 msgid "Error at login."
 msgstr "Lỗi khi đăng nhập."
 
 #: src/control/Signing.js:227
-#, fuzzy
 msgid "Please scan the code"
 msgstr "Vui lòng quét mã"
 
 #: src/control/Signing.js:242
-#, fuzzy
 msgid "Couldn't get the QR code image."
 msgstr "Không thể tải hình ảnh mã QR."
 
 #: src/control/Signing.js:269
-#, fuzzy
 msgid "Error when trying to restore access to identity."
-msgstr "Lỗi khi cố gắng khôi phục quyền truy cập vào danh tính."
+msgstr "Lỗi khi cố khôi phục quyền truy nhập vào danh tính."
 
 #: src/control/Signing.js:275
-#, fuzzy
 msgid "PIN Code"
 msgstr "Mã PIN"
 
 #: src/control/Signing.js:276
-#, fuzzy
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr "Vui lòng nhập mã PIN từ email hoặc SMS"
+msgstr "Vui lòng nhập mã PIN từ EMail hoặc SMS"
 
 #: src/control/Signing.js:296
-#, fuzzy
 msgid "Login from email or mobile number"
 msgstr "Đăng nhập từ email hoặc số điện thoại di động"
 
 #: src/control/Signing.js:329
-#, fuzzy
 msgid "Select document type to upload"
 msgstr "Chọn loại tài liệu để tải lên"
 
 #: src/control/Signing.js:330
-#, fuzzy
 msgid "Type:"
 msgstr "Kiểu:"
 
 #: src/control/Signing.js:361 src/control/Signing.js:660
-#, fuzzy
 msgid "Document uploaded."
 msgstr "Tài liệu đã tải lên."
 
 #: src/control/Signing.js:488
-#, fuzzy
 msgid "Select identity:"
 msgstr "Chọn danh tính:"
 
 #: src/control/Signing.js:489
-#, fuzzy
 msgid "Login from mobile"
-msgstr "Đăng nhập từ điện thoại di động"
+msgstr "Đăng nhập từ thiết bị di động"
 
 #: src/control/Signing.js:490
-#, fuzzy
 msgid "Recover from email"
 msgstr "Khôi phục từ email"
 
 #: src/control/Signing.js:598
-#, fuzzy
 msgid "Select passport"
 msgstr "Chọn hộ chiếu"
 
 #: src/control/Signing.js:599
-#, fuzzy
 msgid "Passport: N/A"
-msgstr "Hộ chiếu: N / A"
+msgstr "Hộ chiếu: N/A"
 
 #: src/control/Signing.js:601
-#, fuzzy
 msgid "Sign"
 msgstr "Ký tên"
 
 #: src/control/Signing.js:603
-#, fuzzy
 msgid "Status:"
 msgstr "Trạng thái:"
 
 #: src/control/Signing.js:604
-#, fuzzy
 msgid "N/A"
 msgstr "N/A"
 
@@ -1317,114 +1244,92 @@ msgid "Not Signed"
 msgstr "Chưa ký"
 
 #: src/control/Signing.js:619
-#, fuzzy
 msgid "This document is digitally signed and the signature is valid."
 msgstr "Tài liệu này được ký điện tử và chữ ký hợp lệ."
 
 #: src/control/Signing.js:620
-#, fuzzy
 msgid "Signed and validated"
 msgstr "Đã ký và xác thực"
 
 #: src/control/Signing.js:623
-#, fuzzy
 msgid "This document has an invalid signature."
 msgstr "Tài liệu này có chữ ký không hợp lệ."
 
 #: src/control/Signing.js:624
-#, fuzzy
 msgid "Signature broken"
 msgstr "Chữ ký bị hỏng"
 
 #: src/control/Signing.js:627
-#, fuzzy
 msgid "The signature was valid, but the document has been modified"
 msgstr "Chữ ký hợp lệ, nhưng tài liệu đã được sửa đổi"
 
 #: src/control/Signing.js:628
-#, fuzzy
 msgid "Signed but document modified"
 msgstr "Đã ký nhưng tài liệu đã được sửa đổi"
 
 #: src/control/Signing.js:631
-#, fuzzy
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "Chữ ký được xác nhận, nhưng không thể xác thực chứng chỉ."
 
 #: src/control/Signing.js:632
-#, fuzzy
 msgid "Signed but not validated"
 msgstr "Đã ký nhưng chưa được xác thực"
 
 #: src/control/Signing.js:635
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed"
 msgstr "Chữ ký được xác nhận, nhưng tài liệu chỉ được ký một phần"
 
 #: src/control/Signing.js:636
-#, fuzzy
 msgid "Signed but not all files are signed"
 msgstr "Đã ký nhưng không phải tất cả các tệp đều được ký"
 
 #: src/control/Toolbar.js:49
-#, fuzzy
 msgid "Font"
-msgstr "Nét chữ"
+msgstr "Font"
 
 #: src/control/Toolbar.js:194 src/control/Toolbar.js:206
-#, fuzzy
 msgid "Downloading..."
 msgstr "Đang tải..."
 
 #: src/control/Toolbar.js:222 src/map/Map.js:1460
-#, fuzzy
 msgid "Saving..."
 msgstr "Đang lưu..."
 
 #: src/control/Toolbar.js:233
-#, fuzzy
 msgid "Renaming..."
 msgstr "Đang đổi tên..."
 
 #: src/control/Toolbar.js:550
-#, fuzzy
 msgid "I understand the risks"
 msgstr "Tôi hiểu những rủi ro"
 
 #: src/control/Toolbar.js:602
-#, fuzzy
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 "Chúng tôi rất tiếc, thông tin về các bản cập nhật mới nhất không có sẵn."
 
 #: src/control/Toolbar.js:647
-#, fuzzy
 msgid "This version of %productName is powered by"
 msgstr "Phiên bản %productName này được cung cấp bởi"
 
 #: src/control/Toolbar.js:657
-#, fuzzy
 msgid "\"Slow Proxy\""
-msgstr "\"Uỷ quyền chậm\""
+msgstr "\"Proxy chậm\""
 
 #: src/control/Toolbar.js:744
-#, fuzzy
 msgid "Insert hyperlink"
 msgstr "Chèn siêu liên kết"
 
 #: src/control/Toolbar.js:746
-#, fuzzy
 msgid "Text"
-msgstr "Văn bản"
+msgstr "Bản văn"
 
 #: src/control/Toolbar.js:747
-#, fuzzy
 msgid "Link"
 msgstr "Liên kết"
 
 #: src/core/Socket.js:62
-#, fuzzy
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
@@ -1437,54 +1342,44 @@ msgstr ""
 ")#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:64
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Rất tiếc, đã xảy ra sự cố khi kết nối với %productName: "
 
 #: src/core/Socket.js:308
-#, fuzzy
 msgid "Served by:"
-msgstr "Được phục vụ bởi"
+msgstr "Phục vụ bởi:"
 
 #: src/core/Socket.js:313
-#, fuzzy
 msgid "Unsupported server version."
-msgstr "Phiên bản máy chủ không được hỗ trợ"
+msgstr "Phiên bản máy chủ không được hỗ trợ."
 
 #: src/core/Socket.js:408
-#, fuzzy
 msgid "Session terminated by document owner"
-msgstr "Phiên đã chấm dứt bởi chủ sở hữu tài liệu"
+msgstr "Phiên bị chấm dứt bởi chủ sở hữu tài liệu"
 
 #: src/core/Socket.js:413
-#, fuzzy
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Tài liệu không hoạt động - vui lòng nhấp để tải lại và tiếp tục chỉnh sửa"
 
 #: src/core/Socket.js:415
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Tài liệu không hoạt động - vui lòng nhấn để tải lại và tiếp tục chỉnh sửa"
 
 #: src/core/Socket.js:423
-#, fuzzy
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Máy chủ đang ngừng hoạt động để bảo trì (tự động lưu)"
 
 #: src/core/Socket.js:427
-#, fuzzy
 msgid "Oops, there is a problem connecting the document"
 msgstr "Rất tiếc, đã xảy ra sự cố khi kết nối tài liệu"
 
 #: src/core/Socket.js:431
-#, fuzzy
 msgid "Server is down, restarting automatically. Please wait."
-msgstr "Máy chủ không hoạt động, tự động khởi động lại. Xin vui lòng chờ."
+msgstr "Máy chủ không hoạt động, tự động khởi động lại. Xin vui lòng chờ đợi."
 
 #: src/core/Socket.js:459
-#, fuzzy
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1501,7 +1396,6 @@ msgstr ""
 "lịch sử phiên bản"
 
 #: src/core/Socket.js:585
-#, fuzzy
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1510,59 +1404,48 @@ msgstr ""
 "chưa được lưu của mình?"
 
 #: src/core/Socket.js:589
-#, fuzzy
 msgid "Discard"
-msgstr "Bỏ"
+msgstr "Hủy bỏ"
 
 #: src/core/Socket.js:594
-#, fuzzy
 msgid "Overwrite"
 msgstr "Ghi đè"
 
 #: src/core/Socket.js:599
-#, fuzzy
 msgid "Save to new file"
 msgstr "Lưu vào tệp mới"
 
 #: src/core/Socket.js:669
-#, fuzzy
 msgid "Document requires password to view."
 msgstr "Tài liệu yêu cầu mật khẩu để xem."
 
 #: src/core/Socket.js:672
-#, fuzzy
 msgid "Document requires password to modify."
 msgstr "Tài liệu yêu cầu mật khẩu để sửa đổi."
 
 #: src/core/Socket.js:674
-#, fuzzy
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Nhấn Hủy để mở ở chế độ chỉ xem."
 
 #: src/core/Socket.js:678
-#, fuzzy
 msgid "Wrong password provided. Please try again."
 msgstr "Đã cung cấp sai mật khẩu. Vui lòng thử lại."
 
 #: src/core/Socket.js:827 src/map/Map.js:1463
-#, fuzzy
 msgid "Loading..."
 msgstr "Đang tải..."
 
 #: src/core/Socket.js:827
-#, fuzzy
 msgid "Connecting..."
 msgstr "Đang kết nối..."
 
 #: src/core/Socket.js:1132
-#, fuzzy
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr "Chúng tôi không thể kết nối với tài liệu của bạn. Vui lòng thử lại"
+msgstr "Chúng tôi không thể kết nối với tài liệu của bạn. Vui lòng thử lại."
 
 #: src/errormessages.js:13
-#, fuzzy
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
@@ -1571,7 +1454,6 @@ msgstr ""
 "máy chủ để tiếp tục."
 
 #: src/errormessages.js:14
-#, fuzzy
 msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
@@ -1580,7 +1462,6 @@ msgstr ""
 "liên hệ với quản trị viên."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears when "
@@ -1592,12 +1473,10 @@ msgstr ""
 "hơn {docs} tài liệu hoặc {kết nối} kết nối được sử dụng đồng thời"
 
 #: src/errormessages.js:16
-#, fuzzy
 msgid "More information and support"
 msgstr "Thêm thông tin và hỗ trợ"
 
 #: src/errormessages.js:17
-#, fuzzy
 msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
@@ -1606,7 +1485,6 @@ msgstr ""
 "hạn này đã đạt đến. Vui lòng thử lại sau."
 
 #: src/errormessages.js:18
-#, fuzzy
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
@@ -1615,7 +1493,6 @@ msgstr ""
 "của bạn nếu sự cố vẫn tiếp diễn."
 
 #: src/errormessages.js:19
-#, fuzzy
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
@@ -1624,22 +1501,19 @@ msgstr ""
 "trị viên của bạn nếu sự cố vẫn tiếp diễn."
 
 #: src/errormessages.js:20
-#, fuzzy
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr ""
 "Thông số WOPISrc sai hoặc bị thiếu, vui lòng liên hệ với bộ phận hỗ trợ."
 
 #: src/errormessages.js:21
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
-"Phiên của bạn sẽ hết hạn sau% thời gian. Vui lòng lưu công việc của bạn và "
-"làm mới phiên (hoặc trang web) để tiếp tục."
+"Phiên làm việc của bạn sẽ hết hạn sau %time. Vui lòng lưu công việc của bạn "
+"và làm mới phiên (hoặc trang web) để tiếp tục."
 
 #: src/errormessages.js:22
-#, fuzzy
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
@@ -1648,7 +1522,6 @@ msgstr ""
 "được lưu. Vui lòng làm mới phiên (hoặc trang web) để tiếp tục."
 
 #: src/errormessages.js:23
-#, fuzzy
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
@@ -1657,18 +1530,15 @@ msgstr ""
 "bị hỏng, sau đó thử lại."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid "Invalid link: '%url'"
-msgstr "Liên kết không hợp lệ: '% url'"
+msgstr "Liên kết không hợp lệ: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid "You are leaving the editor, are you sure you want to visit %url?"
 msgstr ""
-"Bạn đang rời khỏi trình chỉnh sửa, bạn có chắc chắn muốn truy cập% url không?"
+"Bạn đang rời khỏi trình chỉnh sửa, bạn có chắc chắn muốn truy cập %url không?"
 
 #: src/errormessages.js:26
-#, fuzzy
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
@@ -1677,54 +1547,48 @@ msgstr ""
 "nhiều tài nguyên hơn mức cho phép. Vui lòng liên hệ với quản trị viên."
 
 #: src/errormessages.js:30
-#, fuzzy
 msgid "Failed to load document."
 msgstr "Không tải được tài liệu."
 
 #: src/errormessages.js:31
-#, fuzzy
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
 "Lưu không thành công do không còn dung lượng đĩa. Tài liệu bây giờ sẽ ở chế "
 "độ chỉ đọc."
 
 #: src/errormessages.js:32 src/errormessages.js:40
-#, fuzzy
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr "Không thể lưu tài liệu do mã truy cập đã hết hạn hoặc không hợp lệ."
 
 #: src/errormessages.js:33
-#, fuzzy
 msgid "Document cannot be saved."
 msgstr "Không thể lưu tài liệu."
 
 #: src/errormessages.js:34
-#, fuzzy
 msgid "Document cannot be renamed."
 msgstr "Không thể đổi tên tài liệu."
 
 #: src/errormessages.js:38
-#, fuzzy, javascript-format
+#, javascript-format
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
 "Không thể đọc tài liệu từ bộ nhớ. Vui lòng liên hệ với quản trị viên máy chủ "
-"lưu trữ (% storageserver) của bạn."
+"lưu trữ (%storageserver) của bạn."
 
 #: src/errormessages.js:39
-#, fuzzy, javascript-format
+#, javascript-format
 msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
-"Lưu không thành công do không còn dung lượng đĩa trên máy chủ lưu trữ. Tài "
-"liệu bây giờ sẽ ở chế độ chỉ đọc. Vui lòng liên hệ với quản trị viên máy chủ "
-"(% storageserver) để tiếp tục chỉnh sửa."
+"Lưu thất bại do không còn không gian đĩa trên hệ phục vụ lưu trữ. Tài liệu "
+"bây giờ sẽ là chỉ đọc. Vui lòng liên hệ với quản trị viên máy chủ "
+"(%storageserver) để tiếp tục chỉnh sửa."
 
 #: src/errormessages.js:41
-#, fuzzy
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
@@ -1733,7 +1597,6 @@ msgstr ""
 "viên máy chủ lưu trữ."
 
 #: src/errormessages.js:42
-#, fuzzy
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
@@ -1742,76 +1605,64 @@ msgstr ""
 "viên máy chủ lưu trữ."
 
 #: src/errormessages.js:47
-#, fuzzy
 msgid "Uploading file to server failed, file not found."
 msgstr "Tải tệp lên máy chủ không thành công, không tìm thấy tệp."
 
 #: src/errormessages.js:48
-#, fuzzy
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Tải tệp lên máy chủ không thành công, tệp quá lớn."
 
 #: src/layer/marker/Annotation.js:282 src/layer/tile/TileLayer.js:263
-#, fuzzy
 msgid "Reply"
-msgstr "Đáp lại"
+msgstr "Trả lời"
 
 #: src/layer/tile/TileLayer.js:257
-#, fuzzy
 msgid "Modify"
 msgstr "Chỉnh sửa"
 
 #: src/layer/tile/TileLayer.js:269
-#, fuzzy
 msgid "Remove"
 msgstr "Xóa"
 
 #: src/layer/tile/TileLayer.js:275
-#, fuzzy
 msgid "Remove Thread"
 msgstr "Xóa chủ đề"
 
 #: src/layer/tile/TileLayer.js:281
-#, fuzzy
 msgid "Resolve"
 msgstr "Giải quyết"
 
 #: src/layer/tile/TileLayer.js:281
-#, fuzzy
 msgid "Unresolve"
 msgstr "Thu hồi giải pháp"
 
 #: src/layer/tile/TileLayer.js:287
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Chủ đề chưa giải quyết"
 
 #: src/layer/tile/TileLayer.js:287
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Giải quyết Chủ đề"
 
 #: src/layer/tile/TileLayer.js:878
-#, fuzzy
 msgid "Functions"
 msgstr "Chức năng"
 
 #: src/map/Clipboard.js:138
-#, fuzzy
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr ""
-"Để dán bên ngoài% productName, trước tiên, vui lòng nhấp vào nút 'tải xuống'"
+"Để dán bên ngoài %productName, trước tiên, vui lòng nhấp vào nút 'tải xuống'"
 
 #: src/map/Clipboard.js:290
-#, fuzzy
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Không tải xuống được khay nhớ tạm, vui lòng sao chép lại"
 
 #: src/map/Clipboard.js:864
-#, fuzzy
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
-msgstr "<p> Vui lòng sử dụng các nút sao chép / dán trên bàn phím của bạn. </p>"
+msgstr ""
+"<p> Vui lòng sử dụng các nút sao chép / dán trên bàn phím ảo của bạn. </p>"
 
 #: src/map/Clipboard.js:866
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
@@ -1823,7 +1674,6 @@ msgstr ""
 "</li></ul> </p>"
 
 #: src/map/Clipboard.js:887
-#, fuzzy
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1835,11 +1685,10 @@ msgstr ""
 "khác, trước tiên bạn cần tải chúng xuống thiết bị của mình. Để thực hiện "
 "việc đó, hãy nhấn nút \"Bắt đầu tải xuống\" bên dưới và khi hoàn tất, hãy "
 "nhấp vào \"Xác nhận sao chép vào khay nhớ tạm\". </p> <p> Nếu bạn đang sao "
-"chép và dán giữa các tài liệu bên trong% productName, thì không cần tải "
-"xuống. < / p>"
+"chép và dán giữa các tài liệu bên trong %productName, thì không cần tải "
+"xuống. </p>"
 
 #: src/map/Clipboard.js:903
-#, fuzzy
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -1863,21 +1712,20 @@ msgid "%d minutes ago"
 msgstr "%d phút trước"
 
 #: src/map/Map.js:1314
-#, fuzzy
 msgid "Inactive document - please click to resume editing"
 msgstr "Tài liệu không hoạt động - vui lòng nhấp để tiếp tục chỉnh sửa"
 
 #: src/map/handler/Map.FileInserter.js:105
-#, fuzzy, javascript-format
+#, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "Tệp loại:% 0 không thể được tải lên máy chủ vì tệp không có tên"
+msgstr "Tệp loại: %0 không thể được tải lên máy chủ vì tệp không có tên"
 
 #: src/map/handler/Map.FileInserter.js:107
-#, fuzzy, javascript-format
+#, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Tệp loại:% 0 không thể được tải lên máy chủ vì tệp trống"
+msgstr "Tệp loại: %0 không thể được tải lên máy chủ vì tệp trống"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
@@ -1888,7 +1736,6 @@ msgid "Uploading file to server failed with status: %0"
 msgstr "Tải tệp lên máy chủ không thành công với trạng thái: %0"
 
 #: src/map/handler/Map.WOPI.js:133
-#, fuzzy
 msgid "Creating new file from template..."
 msgstr "Tạo tệp mới từ mẫu..."
 
