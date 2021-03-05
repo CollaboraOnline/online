@@ -72,6 +72,7 @@
     "uk": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-uk.json",
     "uz": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-uz.json",
     "vec": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-vec.json",
+    "vi": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-vi.json",
     "zh-cn": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-zh_CN.json",
     "zh-CN": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-zh_CN.json",
     "zh-Hans": "%SERVICE_ROOT%/loleaflet/%VERSION%/l10n/help-zh_CN.json",
