@@ -1496,7 +1496,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (controlType === 'textarea')
 			edit.value = builder._cleanText(data.text);
 		else
+		{
+			data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br>');
 			edit.innerHTML = builder._cleanText(data.text);
+		}
 
 		edit.id = data.id;
 
