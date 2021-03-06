@@ -1528,23 +1528,28 @@ public:
                         const std::string payload(input.data() + offset, input.size() - offset);
 
                         // Forward the callback to the same view, demultiplexing is done by the LibreOffice core.
-                        // TODO: replace with a map to be faster.
                         bool isFound = false;
-                        for (auto& it : _sessions)
+                        for (const auto& it : _sessions)
                         {
-                            std::shared_ptr<ChildSession> session = it.second;
-                            if (session && ((broadcast && (session->getViewId() != exceptViewId)) || (!broadcast && (session->getViewId() == viewId))))
+                            if (!it.second)
+                                continue;
+
+                            ChildSession& session = *it.second;
+                            if ((broadcast && (session.getViewId() != exceptViewId))
+                                || (!broadcast && (session.getViewId() == viewId)))
                             {
-                                if (!it.second->isCloseFrame())
+                                if (!session.isCloseFrame())
                                 {
                                     isFound = true;
-                                    session->loKitCallback(type, payload);
+                                    session.loKitCallback(type, payload);
                                 }
                                 else
                                 {
-                                    LOG_ERR("Session-thread of session [" << session->getId() << "] for view [" <<
-                                            viewId << "] is not running. Dropping [" << lokCallbackTypeToString(type) <<
-                                            "] payload [" << payload << "].");
+                                    LOG_ERR("Session-thread of session ["
+                                            << session.getId() << "] for view [" << viewId
+                                            << "] is not running. Dropping ["
+                                            << lokCallbackTypeToString(type) << "] payload ["
+                                            << payload << ']');
                                 }
 
                                 if (!broadcast)
