@@ -1135,7 +1135,7 @@ int main(int argc, char**argv)
     }
 
     /// Convert a string to 32-bit unsigned int.
-    /// Returs the parsed value and a boolean indiciating success or failure.
+    /// Returns the parsed value and a boolean indiciating success or failure.
     inline std::pair<std::uint32_t, bool> u32FromString(const std::string& input)
     {
         const char* str = input.data();
