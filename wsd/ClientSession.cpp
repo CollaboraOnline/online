@@ -1620,9 +1620,8 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
     docBroker->assertCorrectThread();
 
-    const std::string command = data->firstToken();
     std::unique_ptr<TileDesc> tile;
-    if (command == "tile:")
+    if (data->firstTokenMatches("tile:"))
     {
         // Avoid sending tile if it has the same wireID as the previously sent tile
         tile = Util::make_unique<TileDesc>(TileDesc::parse(data->firstLine()));

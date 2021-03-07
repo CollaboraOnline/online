@@ -1844,16 +1844,15 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     }
     else
     {
-        const auto& command = message->firstToken();
-        if (command == "tile:")
+        if (message->firstTokenMatches("tile:"))
         {
             handleTileResponse(payload);
         }
-        else if (command == "tilecombine:")
+        else if (message->firstTokenMatches("tilecombine:"))
         {
             handleTileCombinedResponse(payload);
         }
-        else if (command == "errortoall:")
+        else if (message->firstTokenMatches("errortoall:"))
         {
             LOG_CHECK_RET(message->tokens().size() == 3, false);
             std::string cmd, kind;
@@ -1863,7 +1862,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOG_CHECK_RET(kind != "", false);
             Util::alertAllUsers(cmd, kind);
         }
-        else if (command == "registerdownload:")
+        else if (message->firstTokenMatches("registerdownload:"))
         {
             LOG_CHECK_RET(message->tokens().size() == 3, false);
             std::string downloadid, url;
