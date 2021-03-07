@@ -141,12 +141,22 @@ public:
         std::shared_ptr<ClipboardData> clipboard;
         try {
             clipboard = getClipboard(clipURI, expected);
-        } catch (ParseError &err) {
-            LOG_TST("Error: parse error " << err.toString());
+        }
+        catch (const ParseError& err)
+        {
+            LOG_TST("Error fetching clipboard: parse error: " << err.toString());
             exitTest(TestResult::Failed);
             return false;
-        } catch (...) {
-            LOG_TST("Error: unknown exception during read / parse");
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_TST("Error fetching clipboard: " << ex.what());
+            exitTest(TestResult::Failed);
+            return false;
+        }
+        catch (...)
+        {
+            LOG_TST("Error fetching clipboard: unknown exception during read / parse");
             exitTest(TestResult::Failed);
             return false;
         }
@@ -222,8 +232,6 @@ public:
     void invokeWSDTest() override
     {
         std::string testname = "copypaste";
-
-        try {
 
         // Load a doc with the cursor saved at a top row.
         std::string documentPath, documentURL;
@@ -310,11 +318,6 @@ public:
 
         LOG_TST("Clipboard tests succeeded");
         exitTest(TestResult::Ok);
-
-        } catch (...) {
-            LOG_TST("Error: exception failure during tests");
-            exitTest(TestResult::Failed);
-        }
     }
 };
 
