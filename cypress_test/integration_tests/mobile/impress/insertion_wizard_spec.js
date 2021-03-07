@@ -42,7 +42,7 @@ describe('Impress insertion wizard.', function() {
 			});
 
 		if (checkTextShape)
-			cy.get('.leaflet-pane.leaflet-overlay-pane svg g.com\\.sun\\.star\\.drawing\\.TextShape')
+			cy.get('.leaflet-pane.leaflet-overlay-pane svg g.TextShape')
 				.should('exist');
 
 		// Check also that the shape is fully visible
