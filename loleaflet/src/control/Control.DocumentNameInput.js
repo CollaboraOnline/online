@@ -84,7 +84,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 			$('#document-name-input').removeClass('editable');
 			$('#document-title-pencil').removeClass('editable');
 			$('#document-name-input').focus(function() { $(this).blur(); });
-			// Call decodecodeURIComponent twice: Reverse both our encoding and the encoding of
+			// Call decodeURIComponent twice: Reverse both our encoding and the encoding of
 			// the name in the file system.
 			$('#document-name-input').val(decodeURIComponent(decodeURIComponent(this.map.options.doc.replace(/.*\//, '')))
 							  // To conveniently see the initial visualViewport scale and size, un-comment the following line.
