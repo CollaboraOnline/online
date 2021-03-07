@@ -186,9 +186,7 @@ private:
         return POLLIN;
     }
 
-    void performWrites() override
-    {
-    }
+    void performWrites(std::size_t /*capacity*/) override {}
 
 private:
     // The socket that owns us (we can't own it).

@@ -459,7 +459,7 @@ void SocketPoll::insertNewUnixSocket(
     else
     {
         Buffer buf;
-        req.writeData(buf);
+        req.writeData(buf, INT_MAX); // Write the whole request.
         socket->sendFD(buf.getBlock(), buf.getBlockSize(), shareFD);
     }
 
@@ -592,7 +592,7 @@ bool StreamSocket::send(const http::Response& response)
 
 bool StreamSocket::send(http::Request& request)
 {
-    if (request.writeData(_outBuffer))
+    if (request.writeData(_outBuffer, getSendBufferCapacity()))
     {
         flush();
         return true;

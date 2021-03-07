@@ -812,11 +812,11 @@ public:
             return AdminSocketHandler::getPollEvents(now, timeoutMaxMicroS);
     }
 
-    void performWrites() override
+    void performWrites(std::size_t capacity) override
     {
         LOG_TRC("Outbound monitor - connected");
         _connecting = false;
-        return AdminSocketHandler::performWrites();
+        return AdminSocketHandler::performWrites(capacity);
     }
 
     void onDisconnect() override

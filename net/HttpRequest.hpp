@@ -241,7 +241,7 @@ using IoWriteFunc = std::function<int64_t(const char*, int64_t)>;
 /// The second argument is the buffer size.
 using IoReadFunc = std::function<int64_t(char*, int64_t)>;
 
-/// An HTTP Header.
+/// HTTP Header.
 class Header
 {
 public:
@@ -505,7 +505,7 @@ public:
 
     Stage stage() const { return _stage; }
 
-    bool writeData(Buffer& out)
+    bool writeData(Buffer& out, std::size_t capacity)
     {
         if (_stage == Stage::Header)
         {
@@ -530,19 +530,27 @@ public:
             // from the client's callback. This is
             // used to upload files, or other data.
             char buffer[16 * 1024];
-            const int64_t read = _bodyReaderCb(buffer, sizeof(buffer));
-            if (read < 0)
-                return false;
+            std::size_t wrote = 0;
+            do
+            {
+                const int64_t read = _bodyReaderCb(buffer, sizeof(buffer));
+                if (read < 0)
+                {
+                    LOG_ERR("Error reading the data to send as the HTTP request body: " << read);
+                    return false;
+                }
 
-            if (read == 0)
-            {
-                _stage = Stage::Finished;
-            }
-            else if (read > 0)
-            {
+                if (read == 0)
+                {
+                    LOG_TRC("performWrites (body): finished, total: " << wrote);
+                    _stage = Stage::Finished;
+                    return true;
+                }
+
                 out.append(buffer, read);
-                LOG_TRC("performWrites (body): " << read);
-            }
+                wrote += read;
+                LOG_TRC("performWrites (body): " << read << " bytes, total: " << wrote);
+            } while (wrote < capacity);
         }
 
         return true;
@@ -1139,9 +1147,10 @@ private:
         }
     }
 
-    void performWrites() override
+    void performWrites(std::size_t capacity) override
     {
-        LOG_TRC("performWrites");
+        Buffer& out = _socket->getOutBuffer();
+        LOG_TRC("performWrites: " << out.size() << " bytes, capacity: " << capacity);
 
         if (!_socket->send(_request))
         {

@@ -568,10 +568,10 @@ private:
 #endif
     }
 public:
-    void performWrites() override
+    void performWrites(std::size_t capacity) override
     {
         if (_msgHandler)
-            _msgHandler->writeQueuedMessages();
+            _msgHandler->writeQueuedMessages(capacity);
     }
 
     void onDisconnect() override

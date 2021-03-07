@@ -307,9 +307,9 @@ private:
         return POLLIN;
     }
 
-    void performWrites() override
+    void performWrites(std::size_t capacity) override
     {
-        LOG_TRC("WebSocketSession: performing writes.");
+        LOG_TRC("WebSocketSession: performing writes, up to " << capacity << " bytes.");
 
         std::unique_lock<std::mutex> lock(_outMutex);
 
@@ -317,7 +317,7 @@ private:
         try
         {
             // Drain the queue, for efficient communication.
-            if (!_outQueue.isEmpty())
+            while (capacity > wrote && !_outQueue.isEmpty())
             {
                 std::vector<char> item = _outQueue.get();
                 const auto size = item.size();

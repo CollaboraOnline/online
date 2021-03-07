@@ -2317,9 +2317,7 @@ private:
         return POLLIN;
     }
 
-    void performWrites() override
-    {
-    }
+    void performWrites(std::size_t /*capcity*/) override {}
 };
 
 #if !MOBILEAPP
@@ -2700,9 +2698,7 @@ private:
         return POLLIN;
     }
 
-    void performWrites() override
-    {
-    }
+    void performWrites(std::size_t /*capacity*/) override {}
 
 #if !MOBILEAPP
     void handleRootRequest(const RequestDetails& requestDetails,
