@@ -80,6 +80,7 @@ public:
     const StringVector& tokens() const { return _tokens; }
     const std::string& forwardToken() const { return _forwardToken; }
     std::string firstToken() const { return _tokens[0]; }
+    bool firstTokenMatches(const std::string& target) const { return _tokens[0] == target; }
     const std::string& firstLine() const { return _firstLine; }
     std::string operator[](size_t index) const { return _tokens[index]; }
 
