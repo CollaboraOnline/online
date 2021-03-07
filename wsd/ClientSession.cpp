@@ -1076,34 +1076,43 @@ bool ClientSession::hasQueuedMessages() const
     return _senderQueue.size() > 0;
 }
 
-    /// Please send them to me then.
-void ClientSession::writeQueuedMessages()
+void ClientSession::writeQueuedMessages(std::size_t capacity)
 {
-    LOG_TRC(getName() << " ClientSession: performing writes.");
+    LOG_TRC(getName() << " ClientSession: performing writes, up to " << capacity << " bytes.");
 
     std::shared_ptr<Message> item;
-    if (_senderQueue.dequeue(item))
+    std::size_t wrote = 0;
+    try
     {
-        try
+        // Drain the queue, for efficient communication.
+        // FIXME: use 'while' to write at least capacity bytes, if possible.
+        if (capacity > wrote && _senderQueue.dequeue(item) && item)
         {
             const std::vector<char>& data = item->data();
+            const auto size = data.size();
+            assert(size && "Zero-sized messages must never be queued for sending.");
+
             if (item->isBinary())
             {
-                Session::sendBinaryFrame(data.data(), data.size());
+                Session::sendBinaryFrame(data.data(), size);
             }
             else
             {
-                Session::sendTextFrame(data.data(), data.size());
+                Session::sendTextFrame(data.data(), size);
             }
-        }
-        catch (const std::exception& ex)
-        {
-            LOG_ERR("Failed to send message " << item->abbr() <<
-                    " to " << getName() << ": " << ex.what());
+
+            wrote += size;
+            LOG_TRC(getName() << " ClientSession: wrote " << size << ", total " << wrote
+                              << " bytes.");
         }
     }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR(getName() << " Failed to send message " << (item ? item->abbr() : "<empty-item>")
+                          << " to client: " << ex.what());
+    }
 
-    LOG_TRC(getName() << " ClientSession: performed write.");
+    LOG_TRC(getName() << " ClientSession: performed write, wrote " << wrote << " bytes.");
 }
 
 // NB. also see loleaflet/src/map/Clipboard.js that does this in JS for stubs.

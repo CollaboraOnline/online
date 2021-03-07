@@ -97,7 +97,7 @@ public:
     }
 
     // By default rely on the socket buffer.
-    void writeQueuedMessages() override
+    void writeQueuedMessages(std::size_t) override
     {
         assert(false);
     }

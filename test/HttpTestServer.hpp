@@ -135,7 +135,7 @@ private:
         return POLLIN;
     }
 
-    void performWrites() override
+    void performWrites(std::size_t) override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
