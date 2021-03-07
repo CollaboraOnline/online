@@ -46,20 +46,23 @@ public:
     /// Dequeue an item if we have one - @returns true if we do, else false.
     bool dequeue(Item& item)
     {
+        // This check is always thread-safe.
+        if (SigUtil::getTerminationFlag())
+        {
+            LOG_DBG("SenderQueue: TerminationFlag is set");
+            return false;
+        }
+
         std::unique_lock<std::mutex> lock(_mutex);
 
-        if (!_queue.empty() && !SigUtil::getTerminationFlag())
+        if (!_queue.empty())
         {
             item = _queue.front();
             _queue.pop_front();
             return true;
         }
-        else
-        {
-            if (SigUtil::getTerminationFlag())
-                LOG_DBG("SenderQueue: TerminationFlag is set");
-            return false;
-        }
+
+        return false;
     }
 
     size_t size() const
