@@ -213,8 +213,9 @@ public:
         _sendBufferSize = getSocketBufferSize();
         if (rc != 0 || _sendBufferSize < 0 )
         {
-            LOG_SYS('#' << _fd << ": Error getting socket buffer size");
             _sendBufferSize = DefaultSendBufferSize;
+            LOG_SYS('#' << _fd << ": Error getting socket buffer size. Using default size of "
+                        << _sendBufferSize << " bytes.");
             return false;
         }
         else
@@ -246,6 +247,17 @@ public:
     {
 #if !MOBILEAPP
         return _sendBufferSize;
+#else
+        return INT_MAX; // We want to always send a single record in one go
+#endif
+    }
+
+    /// The available number of bytes in the socket
+    /// buffer for an optimal transmition.
+    int getSendBufferCapacity() const
+    {
+#if !MOBILEAPP
+        return _sendBufferSize * 6;
 #else
         return INT_MAX; // We want to always send a single record in one go
 #endif
@@ -416,7 +428,7 @@ public:
     virtual void checkTimeout(std::chrono::steady_clock::time_point /* now */) {}
 
     /// Do some of the queued writing.
-    virtual void performWrites() = 0;
+    virtual void performWrites(std::size_t capacity) = 0;
 
     /// Called when the socket is disconnected and will be destroyed.
     /// Will be called exactly once.
@@ -507,7 +519,9 @@ public:
     /// Do we have something to send ?
     virtual bool hasQueuedMessages() const = 0;
     /// Please send them to me then.
-    virtual void writeQueuedMessages() = 0;
+    /// Write queued messages into the socket, at least capacity bytes,
+    /// and up to the next message boundary.
+    virtual void writeQueuedMessages(std::size_t capacity) = 0;
     /// We just got a message - here it is
     virtual void handleMessage(const std::vector<char> &data) = 0;
     /// Get notified that the underlying transports disconnected
@@ -1226,8 +1240,13 @@ protected:
         do
         {
             // If we have space for writing and that was requested
-            if ((events & POLLOUT) && (static_cast<int>(_outBuffer.size()) < getSendBufferSize()))
-                _socketHandler->performWrites();
+            if (events & POLLOUT)
+            {
+                // Try to get multiple blocks at a time.
+                const int capacity = getSendBufferCapacity();
+                if (capacity > 0)
+                    _socketHandler->performWrites(capacity);
+            }
 
             // perform the shutdown if we have sent everything.
             if (_shutdownSignalled && _outBuffer.empty())
