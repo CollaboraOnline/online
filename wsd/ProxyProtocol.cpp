@@ -301,17 +301,17 @@ int ProxyProtocolHandler::getPollEvents(std::chrono::steady_clock::time_point /*
 }
 
 /// slurp from the core to us, @returns true if there are messages to send
-bool ProxyProtocolHandler::slurpHasMessages()
+bool ProxyProtocolHandler::slurpHasMessages(std::size_t capacity)
 {
-    if (_msgHandler && _msgHandler->hasQueuedMessages())
-        _msgHandler->writeQueuedMessages();
+    if (_msgHandler)
+        _msgHandler->writeQueuedMessages(capacity);
 
     return _writeQueue.size() > 0;
 }
 
-void ProxyProtocolHandler::performWrites()
+void ProxyProtocolHandler::performWrites(std::size_t capacity)
 {
-    if (!slurpHasMessages())
+    if (!slurpHasMessages(capacity))
         return;
 
     auto sock = popOutSocket();
@@ -325,7 +325,7 @@ void ProxyProtocolHandler::performWrites()
 
 bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &socket)
 {
-    if (!slurpHasMessages())
+    if (!slurpHasMessages(socket->getSendBufferCapacity()))
         return false;
 
     size_t totalSize = 0;
