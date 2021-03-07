@@ -21,12 +21,14 @@
 
 void TileQueue::put_impl(const Payload& value)
 {
-    const std::string msg = std::string(value.data(), value.size());
     const std::string firstToken = LOOLProtocol::getFirstToken(value);
 
     if (firstToken == "canceltiles")
     {
-        LOG_TRC("Processing [" << LOOLProtocol::getAbbreviatedMessage(msg) << "]. Before canceltiles have " << getQueue().size() << " in queue.");
+        const std::string msg = std::string(value.data(), value.size());
+        LOG_TRC("Processing [" << LOOLProtocol::getAbbreviatedMessage(msg)
+                               << "]. Before canceltiles have " << getQueue().size()
+                               << " in queue.");
         const std::string seqs = msg.substr(12);
         StringVector tokens(Util::tokenize(seqs, ','));
         getQueue().erase(std::remove_if(getQueue().begin(), getQueue().end(),
@@ -57,8 +59,9 @@ void TileQueue::put_impl(const Payload& value)
     {
         // Breakup tilecombine and deduplicate (we are re-combining the tiles
         // in the get_impl() again)
+        const std::string msg = std::string(value.data(), value.size());
         const TileCombined tileCombined = TileCombined::parse(msg);
-        for (auto& tile : tileCombined.getTiles())
+        for (const auto& tile : tileCombined.getTiles())
         {
             const std::string newMsg = tile.serialize("tile");
 
@@ -70,14 +73,14 @@ void TileQueue::put_impl(const Payload& value)
     }
     else if (firstToken == "tile")
     {
-        removeTileDuplicate(msg);
+        removeTileDuplicate(std::string(value.data(), value.size()));
 
         MessageQueue::put_impl(value);
         return;
     }
     else if (firstToken == "callback")
     {
-        const std::string newMsg = removeCallbackDuplicate(msg);
+        const std::string newMsg = removeCallbackDuplicate(std::string(value.data(), value.size()));
 
         if (newMsg.empty())
         {
