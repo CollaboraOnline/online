@@ -630,7 +630,7 @@ public:
             return false;
         }
 
-        _websocketHandler->sendMessage(data, size, code);
+        _websocketHandler->sendMessage(data, size, code, /*flush=*/true);
         return true;
     }
 

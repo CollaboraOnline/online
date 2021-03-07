@@ -626,8 +626,8 @@ public:
 
     /// Sends a WebSocket message of WPOpCode type.
     /// Returns the number of bytes written (including frame overhead) on success,
-    /// 0 for closed/invalid socket, and -1 for other errors.
-    int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush = true) const
+    /// 0 for closed socket, and -1 for other errors.
+    int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush) const
     {
         int unitReturn = -1;
         if (!Util::isFuzzing() && UnitBase::get().filterSendMessage(data, len, code, flush, unitReturn))
