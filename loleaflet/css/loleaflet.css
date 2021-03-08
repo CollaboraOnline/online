@@ -397,6 +397,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	overflow-x: hidden;
 	height: 50px;
 	width: 95%;
+	box-sizing: border-box;
 }
 
 .loleaflet-div-layer {
