@@ -99,71 +99,14 @@ L.Marker = L.Layer.extend({
 			return;
 		}
 
-		var splitPanesContext = this._map.getSplitPanesContext();
+		var posVis = L.Layer.getLayerPositionVisibility(this._latlng,
+			this._icon.getBoundingClientRect(), this._map);
 
-		if (!splitPanesContext) {
-			this._setPos(this._map.latLngToLayerPoint(this._latlng).round());
-			return;
+		if (this._icon.style.visibility != posVis.visibility) {
+			this._icon.style.visibility = posVis.visibility;
 		}
 
-		var splitPos = splitPanesContext.getSplitPos();
-		var docPos = this._map.project(this._latlng);
-		var pixelOrigin = this._map.getPixelOrigin();
-		var mapPanePos = this._map._getMapPanePos();
-		var layerSplitPos = splitPos.subtract(mapPanePos);
-
-		var makeHidden = false;
-
-		if (splitPos.x) {
-			layerSplitPos.x += 1;
-		}
-
-		if (splitPos.y) {
-			layerSplitPos.y += 1;
-		}
-
-		var layerPos = new L.Point(0, 0);
-		var iconRect = this._icon.getBoundingClientRect();
-		var eps = new L.Point(iconRect.width, iconRect.height);
-
-		if (docPos.x <= splitPos.x) {
-			// fixed region.
-			layerPos.x = docPos.x - mapPanePos.x;
-			if (splitPos.x - docPos.x <= eps.x) {
-				// Hide the marker if it is close to the split *and* the non-fixed region has moved away from the fixed.
-				makeHidden = (mapPanePos.x !== pixelOrigin.x);
-			}
-		}
-		else {
-			layerPos.x = docPos.x - pixelOrigin.x;
-			if (layerPos.x < layerSplitPos.x) {
-				// do not encroach the fixed region.
-				makeHidden = true;
-			}
-		}
-
-		if (docPos.y <= splitPos.y) {
-			// fixed region.
-			layerPos.y = docPos.y - mapPanePos.y;
-			if (splitPos.y - docPos.y <= eps.y) {
-				// Hide the marker if it is close to the split *and* the non-fixed region has moved away from the fixed.
-				makeHidden = (mapPanePos.y !== pixelOrigin.y);
-			}
-		}
-		else {
-			layerPos.y = docPos.y - pixelOrigin.y;
-			if (layerPos.y < layerSplitPos.y) {
-				// do not encroach the fixed region.
-				makeHidden = true;
-			}
-		}
-
-		var newVisibility = makeHidden ? 'hidden' : 'visible';
-		if (this._icon.style.visibility != newVisibility) {
-			this._icon.style.visibility = newVisibility;
-		}
-
-		this._setPos(layerPos);
+		this._setPos(posVis.position);
 	},
 
 	update: function () {
