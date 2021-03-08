@@ -54,7 +54,6 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy) {
 			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
 	}
 
-	cy.log('Loading: ' + URI);
 	cy.visit(URI, {
 		onLoad: function(win) {
 			win.onerror = cy.onUncaughtException;
