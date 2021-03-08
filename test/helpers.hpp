@@ -328,7 +328,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
     }
     catch (const Poco::Net::WebSocketException& exc)
     {
-        TST_LOG(exc.message());
+        TST_LOG('[' << prefix <<  "] ERROR in helpers::getResponseMessage: " << exc.message());
     }
 
     return std::vector<char>();
@@ -409,35 +409,37 @@ connectLOKit(const Poco::URI& uri,
              Poco::Net::HTTPResponse& response,
              const std::string& testname)
 {
-    TST_LOG_BEGIN("Connecting... ");
-    int retries = 10;
+    TST_LOG("Connecting to " << uri.toString());
+    constexpr int max_retries = 11;
+    int retries = max_retries - 1;
     do
     {
         try
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
             auto ws = std::make_shared<LOOLWebSocket>(*session, request, response);
+
             const char* expected_response = "statusindicator: ready";
-            TST_LOG_END;
+
+            TST_LOG("Connected to " << uri.toString() << ", waiting for response ["
+                                    << expected_response << "]");
             if (getResponseString(ws, expected_response, testname) == expected_response)
             {
                 return ws;
             }
 
-            TST_LOG_BEGIN("Connecting... ");
-            TST_LOG_APPEND(11 - retries);
+            TST_LOG("ERROR: Reconnecting (retry #" << (max_retries - retries) << ") to " << uri.toString());
         }
         catch (const std::exception& ex)
         {
-            TST_LOG_END;
-            TST_LOG("Connection problem: " << ex.what());
+            TST_LOG("ERROR: Failed to connect to " << uri.toString() << ": " << ex.what());
         }
 
         std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
     }
     while (retries--);
 
-    TST_LOG_END;
+    TST_LOG("ERROR: Giving up connecting to " << uri.toString());
     throw std::runtime_error("Cannot connect to [" + uri.toString() + "].");
 }
 
