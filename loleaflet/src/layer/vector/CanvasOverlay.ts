@@ -44,6 +44,13 @@ class CanvasOverlay {
 
 	onMouseMove(position: Array<number>) {
 		var mousePos = new CPoint(position[0], position[1]);
+		var overlaySectionBounds = this.bounds.clone();
+		var splitPos = this.tsManager.getSplitPos();
+		if (mousePos.x > splitPos.x)
+			mousePos.x += overlaySectionBounds.min.x;
+		if (mousePos.y > splitPos.y)
+			mousePos.y += overlaySectionBounds.min.y;
+
 		this.paths.forEach(function (path:CPath) {
 			var pathBounds = path.getBounds();
 
