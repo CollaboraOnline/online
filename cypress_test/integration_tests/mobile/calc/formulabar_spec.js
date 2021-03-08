@@ -29,7 +29,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'B2');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 
 		cy.get('input#addressInput')
@@ -39,7 +39,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'A1');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('exist');
 	});
 
@@ -55,13 +55,13 @@ describe('Change alignment settings.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'B2:B3');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 
 		// Select first cell by clicking on it.
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('exist');
 
 		// Select a cell range again using address input.
@@ -72,7 +72,7 @@ describe('Change alignment settings.', function() {
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'B2:B3');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
+		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
 			.should('not.exist');
 	});
 
