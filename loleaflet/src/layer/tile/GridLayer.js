@@ -359,8 +359,8 @@ L.GridLayer = L.Layer.extend({
 	_updateTileTwips: function () {
 		// smaller zoom = zoom in
 		var factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
-		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
-		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
+		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor / window.devicePixelRatio);
+		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor / window.devicePixelRatio);
 	},
 
 	_updateMaxBounds: function (sizeChanged, options, zoom) {
@@ -372,8 +372,8 @@ L.GridLayer = L.Layer.extend({
 		}
 
 		var extraSize = options ? options.extraSize : null;
-		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
-			this._docHeightTwips / this.options.tileHeightTwips);
+		var docPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
+			this._docHeightTwips / this._tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize);
 		var scale = this._map.getZoomScale(zoom, 10);
 		var topLeft = new L.Point(0, 0);
@@ -461,12 +461,8 @@ L.GridLayer = L.Layer.extend({
 		    crs = map.options.crs,
 		    tileSize = this._tileSize = this._getTileSize(),
 		    tileZoom = this._tileZoom;
-		if (this._tileWidthTwips === undefined) {
-			this._tileWidthTwips = this.options.tileWidthTwips;
-		}
-		if (this._tileHeightTwips === undefined) {
-			this._tileHeightTwips = this.options.tileHeightTwips;
-		}
+		this._tileWidthTwips = this.options.tileWidthTwips / window.devicePixelRatio;
+		this._tileHeightTwips = this.options.tileHeightTwips / window.devicePixelRatio;
 
 		var bounds = this._map.getPixelWorldBounds(this._tileZoom);
 		if (bounds) {

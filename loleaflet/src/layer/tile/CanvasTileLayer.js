@@ -52,8 +52,7 @@ L.TileSectionManager = L.Class.extend({
 
 		this._sectionContainer.onResize(mapSize.x, mapSize.y);
 
-		var dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
-		this._dpiScale = dpiScale;
+		this._dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
 
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		this._splitPos = splitPanesContext ?
@@ -572,6 +571,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_syncTileContainerSize: function () {
+		this._dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
 		var tileContainer = this._container;
 		if (tileContainer) {
 			var size = this._map.getPixelBounds().getSize();
@@ -840,8 +840,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		var dpiScale = this._painter._dpiScale;
 		var extraSize = options ? options.extraSize : null;
-		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
-			this._docHeightTwips / this.options.tileHeightTwips);
+		var docPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
+			this._docHeightTwips / this._tileHeightTwips);
 		// docPixelLimits should be in csspx.
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize / dpiScale);
 		var scale = this._map.getZoomScale(zoom, 10);
