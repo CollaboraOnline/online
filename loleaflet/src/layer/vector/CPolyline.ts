@@ -41,6 +41,10 @@ class CPolyline extends CPath {
 		if (this.pointSet.empty()) {
 			this.closePopup({});
 		}
+
+		if (this.renderer)
+			this.renderer.setPenOnOverlay();
+
 		return this.redraw(oldBounds);
 	}
 
