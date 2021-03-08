@@ -69,10 +69,15 @@ class CanvasOverlay {
 		return this.overlaySection.getTestDivContainer();
 	}
 
+	setPenOnOverlay() {
+		this.overlaySection.containerObject.setPenPosition(this.overlaySection);
+	}
+
 	initPath(path: CPath) {
 		var pathId: number = path.getId();
 		this.paths.set(pathId, path);
 		path.setRenderer(this);
+		this.setPenOnOverlay();
 		path.updatePathAllPanes();
 	}
 
