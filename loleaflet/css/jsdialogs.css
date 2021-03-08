@@ -526,7 +526,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* Macros dialos */
 
 #MacroWarnMedium p {
-	max-width: 512px;
+	max-width: 400px;
 	color: #333;
 	text-transform: none;
 }
