@@ -13,6 +13,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		syncSplits: true, // if false, the splits/freezes are not synced with other users viewing the same sheet.
 	},
 
+	editedAnnotation: null,
+
 	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
 							  * 0.1986cm with TeX points,
 							  * 0.1993cm with PS points. */
@@ -41,6 +43,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				annotation._annotation._tag = annotation;
 				this.showAnnotation(annotation);
 			}
+			this.editedAnnotation = annotation;
 			annotation.editAnnotation();
 		}
 	},
@@ -93,6 +96,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	onAnnotationModify: function (annotation) {
+		this.editedAnnotation = annotation;
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			var that = this;
 			this.newAnnotationVex(annotation, function(annotation) { that._onAnnotationSave(annotation); }, /* isMod */ true);
@@ -116,6 +120,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	onAnnotationReply: function (annotation) {
+		this.editedAnnotation = annotation;
 		annotation.reply();
 		annotation.focus();
 	},

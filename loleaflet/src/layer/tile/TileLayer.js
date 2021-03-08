@@ -3237,7 +3237,9 @@ L.TileLayer = L.GridLayer.extend({
 
 			var hasTunneledDialogOpened = this._map.dialog ? this._map.dialog.hasOpenedDialog() : false;
 			var hasJSDialogOpened = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened() : false;
-			var hasDialogOpened = hasTunneledDialogOpened || hasJSDialogOpened;
+			var isEditingAnnotation = this.editedAnnotation &&
+				(this._map.hasLayer(this.editedAnnotation) || this._map.hasLayer(this.editedAnnotation.annotation));
+			var hasDialogOpened = hasTunneledDialogOpened || hasJSDialogOpened || isEditingAnnotation;
 
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
