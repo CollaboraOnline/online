@@ -317,7 +317,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 /* button box */
 
-.jsdialog.ui-button-box.end .ui-button-box-right {
+.jsdialog.ui-button-box-right {
 	float: right;
 }
 
