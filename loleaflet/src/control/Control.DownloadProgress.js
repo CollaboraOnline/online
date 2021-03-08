@@ -17,9 +17,20 @@ L.Control.DownloadProgress = L.Control.extend({
 		return this._container;
 	},
 
+	// we really don't want mouse and other events propagating
+	// to the parent map - since they affect the context.
+	_ignoreEvents: function(elem) {
+		L.DomEvent.on(elem, 'mousedown mouseup mouseover mouseout mousemove',
+			      function(e) {
+				      L.DomEvent.stopPropagation(e);
+				      return false;
+			      }, this);
+	},
+
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'leaflet-control-layers');
 		this._container.style.visibility = 'hidden';
+		this._ignoreEvents(this._container);
 
 		var closeButton = L.DomUtil.create('a', 'leaflet-popup-close-button', this._container);
 		closeButton.href = '#close';
@@ -193,6 +204,7 @@ L.Control.UploadProgress = L.Control.extend({
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'leaflet-control-layers');
 		this._container.style.visibility = 'hidden';
+		this._ignoreEvents(this._container);
 
 		var closeButton = L.DomUtil.create('a', 'leaflet-popup-close-button', this._container);
 		closeButton.href = '#close';
@@ -296,6 +308,7 @@ L.Control.CrossProgress = L.Control.extend({
 	_initLayout: function () {
 		this._container = L.DomUtil.create('div', 'leaflet-control-layers');
 		this._container.style.visibility = 'hidden';
+		this._ignoreEvents(this._container);
 
 		// close button
 		var closeButton = L.DomUtil.create('a', 'leaflet-popup-close-button', this._container);
