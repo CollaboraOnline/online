@@ -1894,7 +1894,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var firstSelected = $(container).children('.selected').get(0);
 		if (firstSelected)
-			firstSelected.scrollIntoView({behavior: 'smooth', block: 'center'});
+			firstSelected.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'});
 
 		return false;
 	},
@@ -2758,7 +2758,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var entry = $(control).children().eq(pos);
 
 			entry.addClass('selected');
-			$(entry).get(0).scrollIntoView({behavior: 'smooth', block: 'center'});
+			$(entry).get(0).scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'});
 
 			break;
 		}
