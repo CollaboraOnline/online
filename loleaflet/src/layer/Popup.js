@@ -112,8 +112,11 @@ L.Popup = L.Layer.extend({
 	},
 
 	getEvents: function () {
-		var events = {viewreset: this._updatePosition},
-		    options = this.options;
+		var events = {
+			viewreset: this._updatePosition,
+			move: this._updatePosition
+		};
+		var options = this.options;
 
 		if ('closeOnClick' in options ? options.closeOnClick : this._map.options.closePopupOnClick) {
 			events.preclick = this._close;
@@ -121,6 +124,7 @@ L.Popup = L.Layer.extend({
 		if (options.keepInView) {
 			events.moveend = this._adjustPan;
 		}
+
 		return events;
 	},
 
@@ -215,11 +219,20 @@ L.Popup = L.Layer.extend({
 		this._containerWidth = this._container.offsetWidth;
 	},
 
+
+
 	_updatePosition: function () {
 		if (!this._map) { return; }
 
-		var pos = this._map.latLngToLayerPoint(this._latlng),
-		    offset = L.point(this.options.offset);
+		var offset = L.point(this.options.offset);
+		var posVis = L.Layer.getLayerPositionVisibility(this._latlng, {
+			width: this._containerWidth,
+			height: this._container.offsetHeight
+		}, this._map,
+		new L.Point(
+			offset.x - Math.round(this._containerWidth / 2),
+			-this._container.offsetHeight - offset.y));
+		var pos = posVis.position;
 
 		offset = offset.add(pos);
 
@@ -229,6 +242,7 @@ L.Popup = L.Layer.extend({
 		// bottom position the popup in case the height of the popup changes (images loading etc)
 		this._container.style.bottom = bottom + 'px';
 		this._container.style.left = left + 'px';
+		this._container.style.visibility = posVis.visibility;
 	},
 
 	_adjustPan: function () {
