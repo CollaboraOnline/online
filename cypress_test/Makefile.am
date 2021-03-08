@@ -620,7 +620,7 @@ define run_test_headless
 		--headless \
 		--config $(1) \
 		--env $(2) \
-		--spec=$(3) \
+		$(if $(3),--spec=$(3)) \
 		|| ($(KILL_COMMAND) && false)
 endef
 
