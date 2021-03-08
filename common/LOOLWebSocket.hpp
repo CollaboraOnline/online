@@ -178,7 +178,7 @@ public:
                 break;
         }
 
-        result << ' ' << std::setw(3) << length << " bytes"
+        result << ' ' << std::setw(3) << std::dec << length << " bytes"
                << (flags & Poco::Net::WebSocket::FRAME_FLAG_FIN ? " (FIN)" : "");
 
         if (length > 0 &&
