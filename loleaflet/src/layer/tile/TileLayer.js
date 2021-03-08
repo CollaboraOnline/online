@@ -3204,11 +3204,13 @@ L.TileLayer = L.GridLayer.extend({
 
 			var isEditingAnnotation = this.editedAnnotation &&
 				(this._map.hasLayer(this.editedAnnotation) || this._map.hasLayer(this.editedAnnotation.annotation));
-			var hasDialogOpened = isEditingAnnotation;
+			var isAnyInputFocused = $('input:focus').length > 0;
+			var dontFocusDocument = isEditingAnnotation || isAnyInputFocused;
 
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
-			if (!hasDialogOpened)
+			// exception: when dialog opened don't focus the document
+			if (!dontFocusDocument)
 				this._map.fire('editorgotfocus');
 		}
 		else if (this._cellCursorMarker) {
