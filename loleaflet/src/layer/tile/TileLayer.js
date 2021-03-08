@@ -1576,7 +1576,7 @@ L.TileLayer = L.GridLayer.extend({
 				cellViewCursorMarker = new CRectangle(this._cellViewCursors[viewId].corePixelBounds, {
 					fill: false,
 					color: backgroundColor,
-					weight: 2,
+					weight: 2 * (this._painter ? this._painter._dpiScale : 1),
 					toCompatUnits: function (corePx) {
 						return this._map.unproject(L.point(corePx)
 							.divideBy(this._painter._dpiScale));
@@ -1992,7 +1992,7 @@ L.TileLayer = L.GridLayer.extend({
 					pointerEvents: 'none',
 					fillColor: '#' + strColor,
 					fillOpacity: 0.25,
-					weight: 2,
+					weight: 2 * (this._painter ? this._painter._dpiScale : 1),
 					opacity: 0.25});
 
 				references.push({mark: reference, part: part});
