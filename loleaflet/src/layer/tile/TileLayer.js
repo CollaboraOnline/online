@@ -539,7 +539,7 @@ L.TileLayer = L.GridLayer.extend({
 		var dialog = vex.dialog.open({
 			message: '',
 			input: [
-				'<textarea name="comment" class="loleaflet-annotation-textarea" style="max-width: 400px" required>' + content + '</textarea>'
+				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + content + '</textarea>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
