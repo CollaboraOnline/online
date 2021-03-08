@@ -44,6 +44,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Paste'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:BasicShapes'] = this._shapesControl;
 		this._toolitemHandlers['.uno:ConditionalFormatMenu'] = this._conditionalFormatControl;
+		this._toolitemHandlers['.uno:SetBorderStyle'] = this._borderStyleControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._clearFormattingControl;
 		this._toolitemHandlers['.uno:Presentation'] = this._startPresentationControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
@@ -53,9 +54,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Text'] = this._insertTextBoxControl;
 		this._toolitemHandlers['.uno:DrawText'] = this._insertTextBoxControl;
 		this._toolitemHandlers['.uno:VerticalText'] = this._insertTextBoxControl;
-
-		this._toolitemHandlers['up'] = this._toolbarItemControl;
-		this._toolitemHandlers['down'] = this._toolbarItemControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
@@ -89,7 +87,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:SelectObject'] = function() {};
 		this._toolitemHandlers['.uno:BibliographyComponent'] = function() {};
 		this._toolitemHandlers['.uno:ViewDataSourceBrowser'] = function() {};
-		this._toolitemHandlers['.uno:SetBorderStyle'] = function() {};
 		this._toolitemHandlers['.uno:LineStyle'] = function() {};
 		this._toolitemHandlers['.uno:InsertFormula'] = function() {};
 		this._toolitemHandlers['.uno:AutoSum'] = function() {};
@@ -517,6 +514,22 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		});
 	},
 
+	_borderStyleControl: function(parentContainer, data, builder) {
+		var options = {hasDropdownArrow: true};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			if (!$('#setborderstyle-grid').length) {
+				$(control.container).w2overlay(window.getBorderStyleMenuHtml());
+
+				$('#setborderstyle-grid tr td').click(function () {
+					$(control.container).w2overlay();
+				});
+			}
+		});
+	},
+
 	_insertGraphicControl: function(parentContainer, data, builder) {
 		var options = {hasDropdownArrow: builder.map['wopi'].EnableInsertRemoteImage};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
@@ -559,16 +572,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				builder.map._clip.filterExecCopyPaste(data.command);
 			});
 		}
-	},
-
-	_toolbarItemControl: function(parentContainer, data, builder) {
-		builder.options.useInLineLabelsForUnoButtons = false;
-		var control = builder._unoToolButton(parentContainer, data, builder);
-
-		$(control.container).unbind('click');
-		$(control.container).click(function () {
-			builder.callback('toolbox', 'click', {id: data.parent.id}, data.command, builder);
-		});
 	},
 
 	_lineSpacingControl: function(parentContainer, data, builder) {
