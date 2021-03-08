@@ -269,7 +269,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 		return point.x;
 	},
 
-	onResize: function () {},
+	onResize: function () {
+		this._resizeHandleSize = 15 * this.dpiScale;
+	},
+
 	onRemove: function () {},
 });
 

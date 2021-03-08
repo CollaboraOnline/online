@@ -336,7 +336,7 @@ L.Control.Header = L.Class.extend({
 	_getHorzLatLng: function (start, offset, e) {
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
+		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this.dpiScale;
 		var ypos = Math.max(drag.y, entryStart);
 		return [
 			this._map.unproject(new L.Point(0, ypos)),
@@ -439,7 +439,7 @@ L.Control.Header = L.Class.extend({
 	_getVertLatLng: function (start, offset, e) {
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
+		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this.dpiScale;
 		var xpos = Math.max(drag.x, entryStart);
 		return [
 			this._map.unproject(new L.Point(xpos, 0)),
@@ -687,6 +687,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 	},
 
 	update: function (section) {
+		this._dpiScale = L.Util.getDpiScaleFactor(true);
 		var startPx = this._isColumn === true ? section.documentTopLeft[0]: section.documentTopLeft[1]; // this._isColumn ? bounds.getTopLeft().x : bounds.getTopLeft().y;
 		this._docVisStart = startPx;
 		var endPx = startPx + (this._isColumn === true ? section.size[0]: section.size[1]);

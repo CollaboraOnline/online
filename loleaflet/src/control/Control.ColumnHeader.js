@@ -273,7 +273,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		return point.y;
 	},
 
-	onResize: function () {},
+	onResize: function () {
+		this._resizeHandleSize = 15 * this.dpiScale;
+	},
+
 	onRemove: function () {},
 });
 

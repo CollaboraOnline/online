@@ -30,10 +30,6 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 		this._map = L.Map.THIS;
 		this._groups = null;
 
-		// group control styles
-		this._groupHeadSize = Math.round(12 * this.dpiScale);
-		this._levelSpacing = Math.round(this.dpiScale);
-
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
 		this._createFont();
@@ -44,6 +40,10 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 	update: function () {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
 			return;
+
+		// group control styles
+		this._groupHeadSize = Math.round(12 * this.dpiScale);
+		this._levelSpacing = Math.round(this.dpiScale);
 
 		this._sheetGeometry = this._map._docLayer.sheetGeometry;
 		this._groups = Array(this._sheetGeometry.getColumnGroupLevels());

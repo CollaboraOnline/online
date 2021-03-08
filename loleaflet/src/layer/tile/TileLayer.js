@@ -54,7 +54,6 @@ var CSelections = L.Class.extend({
 	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv, map, isView, viewId) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
-		this._dpiScale = dpiScale;
 		this._styleData = new CStyleData(selectionsDataDiv);
 		this._map = map;
 		this._name = 'selections' + (isView ? '-viewid-' + viewId : '');
@@ -99,7 +98,7 @@ var CSelections = L.Class.extend({
 				fillColor: fillColor,
 				fillOpacity: this._styleData.getPropValue('--fill-opacity'),
 				opacity: this._styleData.getFloatPropValue('--opacity'),
-				weight: Math.round(this._styleData.getIntPropValue('--weight') * this._dpiScale)
+				weight: Math.round(this._styleData.getIntPropValue('--weight') * L.Util.getDpiScaleFactor(true))
 			};
 			this._polygon = new CPolygon(this._pointSet, attributes);
 			this._overlay.initPath(this._polygon);
