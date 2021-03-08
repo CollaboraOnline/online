@@ -302,7 +302,7 @@ public class LOActivity extends AppCompatActivity {
                     Log.d(TAG, "SCHEME_CONTENT: getPath(): " + getIntent().getData().getPath());
                 } else {
                     Log.e(TAG, "couldn't create temporary file from " + getIntent().getData());
-                    Toast.makeText(this, R.string.cant_open_de_document, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.cant_open_the_document, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             } else if (getIntent().getData().getScheme().equals(ContentResolver.SCHEME_FILE)) {
