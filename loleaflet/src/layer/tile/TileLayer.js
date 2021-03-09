@@ -2527,7 +2527,8 @@ L.TileLayer = L.GridLayer.extend({
 
 		if (!this._visibleCursor ||
 			this._referenceMarkerStart.isDragged ||
-			this._referenceMarkerEnd.isDragged) {
+			this._referenceMarkerEnd.isDragged ||
+			this._map.inZoomViewPanning()) {
 			return;
 		}
 
@@ -2564,6 +2565,10 @@ L.TileLayer = L.GridLayer.extend({
 				viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
 			}
 		}, this, true);
+	},
+
+	activateCursor: function () {
+		this._replayPrintTwipsMsg('invalidatecursor');
 	},
 
 	// enable or disable blinking cursor and  the cursor overlay depending on
@@ -4015,6 +4020,11 @@ L.TileLayer = L.GridLayer.extend({
 		this._printTwipsMessagesForReplay.forEach(this._onMessage.bind(this));
 	},
 
+	_replayPrintTwipsMsg: function (msgType) {
+		var msg = this._printTwipsMessagesForReplay.get(msgType);
+		this._onMessage(msg);
+	}
+
 });
 
 
@@ -4065,6 +4075,19 @@ L.MessageStore = L.Class.extend({
 
 		if (othersMessage && Object.prototype.hasOwnProperty.call(this._othersMessages, msgType)) {
 			this._othersMessages[msgType][viewId] = textMsg;
+		}
+	},
+
+	get: function (msgType, viewId) {
+
+		var othersMessage = (typeof viewId === 'number');
+
+		if (!othersMessage && Object.prototype.hasOwnProperty.call(this._ownMessages, msgType)) {
+			return this._ownMessages[msgType];
+		}
+
+		if (othersMessage && Object.prototype.hasOwnProperty.call(this._othersMessages, msgType)) {
+			return this._othersMessages[msgType][viewId];
 		}
 	},
 
