@@ -397,20 +397,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							}
 						]
 					},
-					{
-						'id': 'Section3',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'report-an-issue',
-								'type': 'menubartoolitem',
-								'text': _('Report an issue'),
-								'command': ''
-							}
-						]
-					},
 					hasLatestUpdates ?
 					{
 						'id': 'Section4',
