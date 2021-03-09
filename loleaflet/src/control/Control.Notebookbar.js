@@ -12,6 +12,8 @@ L.Control.Notebookbar = L.Control.extend({
 	container: null,
 	builder: null,
 
+	lastContext: 'Text',
+
 	additionalShortcutButtons: [],
 	hiddenShortcutButtons: [],
 
@@ -373,6 +375,9 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onContextChange: function(event) {
+		if (event.context === this.lastContext)
+			return;
+
 		var tabs = this.getTabs();
 		for (var tab in tabs) {
 			if (tabs[tab].context) {
@@ -386,6 +391,8 @@ L.Control.Notebookbar = L.Control.extend({
 				}
 			}
 		}
+
+		this.lastContext = event.context;
 	},
 
 	getOptionsSectionData: function() {
