@@ -399,6 +399,7 @@ class ScrollSection {
 			this.map.scrollTop(this.sectionProperties.documentTopMax / this.dpiScale, {});
 		else // Humph, everything is normal.
 			this.map.scroll(0, offset / this.dpiScale, {});
+		this.onUpdateScrollOffset();
 	}
 
 	public scrollHorizontalWithOffset (offset: number) {
@@ -410,6 +411,7 @@ class ScrollSection {
 			this.map.scrollLeft(this.sectionProperties.documentRightMax / this.dpiScale, {});
 		else // Humph, everything is normal.
 			this.map.scroll(offset / this.dpiScale, 0, {});
+		this.onUpdateScrollOffset();
 	}
 
 	public onMouseMove (position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
