@@ -3838,24 +3838,6 @@ private:
     /// This thread & poll accepts incoming connections.
     AcceptPoll _acceptPoll;
 
-    /// Create a new server socket - accepted sockets will be added
-    /// to the @clientSockets' poll when created with @factory.
-    static std::shared_ptr<ServerSocket> getServerSocket(ServerSocket::Type type, int port,
-                                                  SocketPoll &clientSocket,
-                                                  const std::shared_ptr<SocketFactory>& factory)
-    {
-        auto serverSocket = std::make_shared<ServerSocket>(
-            ClientPortProto, clientSocket, factory);
-
-        if (!serverSocket->bind(type, port))
-            return nullptr;
-
-        if (serverSocket->listen())
-            return serverSocket;
-
-        return nullptr;
-    }
-
     /// Create the internal only, local socket for forkit / kits prisoners to talk to.
     std::shared_ptr<ServerSocket> findPrisonerServerPort()
     {
@@ -3884,8 +3866,9 @@ private:
         MasterLocation = location;
 #else
         constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
-        std::shared_ptr<ServerSocket> socket = getServerSocket(
-            ServerSocket::Type::Public, DEFAULT_MASTER_PORT_NUMBER, PrisonerPoll, factory);
+        std::shared_ptr<ServerSocket> socket
+            = ServerSocket::create(ServerSocket::Type::Public, DEFAULT_MASTER_PORT_NUMBER,
+                                   ClientPortProto, PrisonerPoll, factory);
 
         LOOLWSD::prisonerServerSocketFD = socket->getFD();
         LOG_INF("Listening to prisoner connections on #" << LOOLWSD::prisonerServerSocketFD);
@@ -3905,8 +3888,8 @@ private:
 #endif
             factory = std::make_shared<PlainSocketFactory>();
 
-        std::shared_ptr<ServerSocket> socket = getServerSocket(
-            ClientListenAddr, port, WebServerPoll, factory);
+        std::shared_ptr<ServerSocket> socket
+            = ServerSocket::create(ClientListenAddr, port, ClientPortProto, WebServerPoll, factory);
 
         while (!socket &&
 #ifdef BUILDING_TESTS
@@ -3918,7 +3901,7 @@ private:
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << '.');
-            socket = getServerSocket(ClientListenAddr, port, WebServerPoll, factory);
+            socket = ServerSocket::create(ClientListenAddr, port, ClientPortProto, WebServerPoll, factory);
         }
 
         if (!socket)
