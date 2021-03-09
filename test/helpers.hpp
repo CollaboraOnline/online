@@ -238,7 +238,7 @@ int getErrorCode(LOOLWebSocket& ws, std::string& message, const std::string& tes
     do
     {
         // Read next WS frame and log it.
-        bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags);
+        bytes = ws.receiveFrame(buffer.begin(), READ_BUFFER_SIZE, flags, testname);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
     while (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
@@ -288,7 +288,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
             if (ws.poll(Poco::Timespan(waitTimeUs), Poco::Net::Socket::SELECT_READ))
             {
                 response.resize(READ_BUFFER_SIZE * 8);
-                const int bytes = ws.receiveFrame(response.data(), response.size(), flags);
+                const int bytes = ws.receiveFrame(response.data(), response.size(), flags, testname);
                 response.resize(std::max(bytes, 0));
                 const auto message = LOOLProtocol::getFirstLine(response);
                 if (bytes > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
@@ -512,7 +512,7 @@ void SocketProcessor(const std::string& testname,
             break;
         }
 
-        n = socket->receiveFrame(buffer, sizeof(buffer), flags);
+        n = socket->receiveFrame(buffer, sizeof(buffer), flags, testname);
         TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, n, flags));
         if (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE)
         {
