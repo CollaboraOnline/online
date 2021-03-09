@@ -2248,6 +2248,28 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'false'
+			},
+			{
+				'id': 'Insert-Section-Annotation',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'Annotation',
+						'type': 'toolbox',
+						'text': '',
+						'enabled': 'true',
+						'children': [
+							{
+								'type': 'bigtoolitem',
+								'text': _UNO('.uno:InsertAnnotation', 'presentation'),
+								'command': '.uno:InsertAnnotation'
+							}
+						]
+					}
+				],
+				'vertical': 'false'
 			}
 		];
 
