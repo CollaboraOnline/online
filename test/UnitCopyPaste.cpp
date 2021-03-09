@@ -305,8 +305,8 @@ public:
             return;
 
         LOG_TST("Close sockets:");
-        socket->shutdown();
-        socket2->shutdown();
+        socket->shutdown(testname);
+        socket2->shutdown(testname);
 
         sleep(1); // paranoia.
 

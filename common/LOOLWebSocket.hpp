@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <test/testlog.hpp>
+
 #include <cstdlib>
 #include <mutex>
 #include <thread>
@@ -47,20 +49,20 @@ public:
     /// or -1 if no "interesting" (not PING or PONG) frame was actually received).
 
     /// Should we also factor out the handling of non-final and continuation frames into this?
-    int receiveFrame(char* buffer, const int length, int& flags)
+    int receiveFrame(char* buffer, const int length, int& flags,
+                     const std::string& testname = std::string())
     {
         // Timeout is in microseconds. We don't need this, except to yield the cpu.
         static const Poco::Timespan waitTime(POLL_TIMEOUT_MICRO_S / 10);
-        static const Poco::Timespan waitZero(0);
 
         while (poll(waitTime, Poco::Net::Socket::SELECT_READ))
         {
             const int n = Poco::Net::WebSocket::receiveFrame(buffer, length, flags);
 
             if (n <= 0)
-                LOG_TRC("Got nothing (" << n << ')');
+                TST_LOG("Got nothing (" << n << ')');
             else
-                LOG_TRC("Got frame: " << getAbbreviatedFrameDump(buffer, n, flags));
+                TST_LOG("Got frame: " << getAbbreviatedFrameDump(buffer, n, flags));
 
             if ((flags & WebSocket::FRAME_OP_BITMASK) == WebSocket::FRAME_OP_CLOSE)
             {
@@ -73,7 +75,7 @@ public:
                 // Echo back the ping message.
                 if (Poco::Net::WebSocket::sendFrame(buffer, n, static_cast<int>(WebSocket::FRAME_FLAG_FIN) | WebSocket::FRAME_OP_PONG) != n)
                 {
-                    LOG_WRN("Sending Pong failed.");
+                    TST_LOG("WARN: Sending Pong failed.");
                     return -1;
                 }
             }
@@ -92,20 +94,20 @@ public:
     }
 
     /// Wrapper for Poco::Net::WebSocket::sendFrame() that handles large frames.
-    int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT)
+    int sendFrame(const char* buffer, const int length, const int flags = FRAME_TEXT,
+                  const std::string& testname = std::string())
     {
-        static const Poco::Timespan waitZero(0);
-
         const int result = Poco::Net::WebSocket::sendFrame(buffer, length, flags);
 
         if (result != length)
         {
-            LOG_ERR("Sent incomplete message, expected " << length << " bytes but sent " << result <<
-                    " for: " << getAbbreviatedFrameDump(buffer, length, flags));
+            TST_LOG("ERROR: Sent incomplete message, expected "
+                    << length << " bytes but sent " << result
+                    << " for: " << getAbbreviatedFrameDump(buffer, length, flags));
         }
         else
         {
-            LOG_TRC("Sent frame: " << getAbbreviatedFrameDump(buffer, length, flags));
+            TST_LOG("Sent frame: " << getAbbreviatedFrameDump(buffer, length, flags));
         }
 
         return result;
@@ -113,14 +115,15 @@ public:
 
     /// Safe shutdown by sending a normal close frame, if socket is not in error,
     /// or, otherwise, close the socket without sending close frame, if it is.
-    void shutdown()
+    void shutdown(const std::string& testname = std::string())
     {
-        shutdown(Poco::Net::WebSocket::StatusCodes::WS_NORMAL_CLOSE);
+        shutdown(Poco::Net::WebSocket::StatusCodes::WS_NORMAL_CLOSE, testname);
     }
 
     /// Safe shutdown by sending a specific close frame, if socket is not in error,
     /// or, otherwise, close the socket without sending close frame, if it is.
-    void shutdown(Poco::UInt16 statusCode, const std::string& statusMessage = "")
+    void shutdown(Poco::UInt16 statusCode, const std::string& statusMessage = std::string(),
+                  const std::string& testname = std::string())
     {
         try
         {
@@ -138,8 +141,9 @@ public:
         }
         catch (const Poco::Exception& exc)
         {
-            LOG_WRN("LOOLWebSocket::shutdown: Exception: " << exc.displayText() <<
-                    (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
+            TST_LOG("WARN: LOOLWebSocket::shutdown: Exception: "
+                    << exc.displayText()
+                    << (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
 
             // Just close it.
             try

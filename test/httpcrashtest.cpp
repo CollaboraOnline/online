@@ -150,7 +150,7 @@ void HTTPCrashTest::testCrashKit()
 
         // respond close frame
         TST_LOG("Shutting down socket.");
-        socket->shutdown();
+        socket->shutdown(testname);
 
         TST_LOG("Reading after shutdown.");
 
@@ -223,7 +223,7 @@ void HTTPCrashTest::testCrashForkit()
         assertResponseString(socket, "status:", testname);
 
         // respond close frame
-        socket->shutdown();
+        socket->shutdown(testname);
 
         TST_LOG("Killing loolkit.");
         killLoKitProcesses();
