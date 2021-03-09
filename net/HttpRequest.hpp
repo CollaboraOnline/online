@@ -361,7 +361,7 @@ public:
     /// Set the file to send as the body of the request.
     void setBodyFile(const std::string& path)
     {
-        //FIXME: use generalized lambda campture to move the ifstream, available in C++14.
+        //FIXME: use generalized lambda capture to move the ifstream, available in C++14.
         auto ifs = std::make_shared<std::ifstream>(path, std::ios::binary);
 
         ifs->seekg(0, std::ios_base::end);

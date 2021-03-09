@@ -1116,7 +1116,7 @@ int main(int argc, char**argv)
 #endif
 
     /// Convert a string to 32-bit signed int.
-    /// Returs the parsed value and a boolean indiciating success or failure.
+    /// Returns the parsed value and a boolean indiciating success or failure.
     inline std::pair<std::int32_t, bool> i32FromString(const std::string& input)
     {
         const char* str = input.data();
@@ -1154,7 +1154,7 @@ int main(int argc, char**argv)
     }
 
     /// Convert a string to 64-bit signed int.
-    /// Returs the parsed value and a boolean indiciating success or failure.
+    /// Returns the parsed value and a boolean indiciating success or failure.
     inline std::pair<std::int64_t, bool> i64FromString(const std::string& input)
     {
         const char* str = input.data();
@@ -1173,7 +1173,7 @@ int main(int argc, char**argv)
     }
 
     /// Convert a string to 64-bit unsigned int.
-    /// Returs the parsed value and a boolean indiciating success or failure.
+    /// Returns the parsed value and a boolean indiciating success or failure.
     inline std::pair<std::uint64_t, bool> u64FromString(const std::string& input)
     {
         const char* str = input.data();
