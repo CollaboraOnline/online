@@ -59,6 +59,8 @@ using Poco::Util::Application;
 static bool closeExpected = false;
 static std::mutex coutMutex;
 
+constexpr auto Name = "connect ";
+
 /// Prints incoming data from a LOOLWebSocket.
 class Output : public Runnable
 {
@@ -77,7 +79,7 @@ public:
             do
             {
                 char buffer[100000];
-                n = _ws.receiveFrame(buffer, sizeof(buffer), flags);
+                n = _ws.receiveFrame(buffer, sizeof(buffer), flags, Name);
                 if (n > 0 && (flags & WebSocket::FRAME_OP_BITMASK) != WebSocket::FRAME_OP_CLOSE)
                 {
                     {
@@ -209,6 +211,7 @@ protected:
                     std::unique_lock<std::mutex> lock(coutMutex);
                     std::cout << "Sending: '" << line << '\'' << std::endl;
                 }
+
                 ws.sendFrame(line.c_str(), line.size());
             }
         }
@@ -217,8 +220,9 @@ protected:
             std::unique_lock<std::mutex> lock(coutMutex);
             std::cout << "Shutting down websocket" << std::endl;
         }
+
         closeExpected = true;
-        ws.shutdown();
+        ws.shutdown(Name);
         thread.join();
 
         return EX_OK;
