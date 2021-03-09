@@ -865,6 +865,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:HideDetail'},
 					{uno: '.uno:ShowDetail'}]}
 			]},
+			{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'},
 			{uno: '.uno:SpellOnline'},
 			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
