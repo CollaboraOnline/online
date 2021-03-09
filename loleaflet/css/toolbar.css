@@ -84,7 +84,7 @@ w2ui-toolbar {
 	left: 0;
 	text-align: center;
 	bottom: 35px;
-	padding: 0;
+	padding: 7px 0px 0px;
 	position: absolute;
 }
 
