@@ -37,6 +37,20 @@ public:
     /// Control access to a bound TCP socket
     enum Type { Local, Public };
 
+    /// Create a new server socket - accepted sockets will be added
+    /// to the @clientSockets' poll when created with @factory.
+    static std::shared_ptr<ServerSocket> create(ServerSocket::Type type, int port,
+                                                Socket::Type socketType, SocketPoll& clientSocket,
+                                                std::shared_ptr<SocketFactory> factory)
+    {
+        auto serverSocket = std::make_shared<ServerSocket>(socketType, clientSocket, std::move(factory));
+
+        if (serverSocket && serverSocket->bind(type, port) && serverSocket->listen())
+            return serverSocket;
+
+        return nullptr;
+    }
+
     /// Binds to a local address (Servers only).
     /// Does not retry on error.
     /// Returns true only on success.
