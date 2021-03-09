@@ -556,7 +556,8 @@ protected:
         int slen = 0;
         char scratch[16];
 
-        scratch[slen++] = flags;
+        // All unfragmented frames must have the Fin bit.
+        scratch[slen++] = WSFrameMask::Fin | flags;
 
         int maskFlag = _isMasking ? 0x80 : 0;
         if (len < 126)
