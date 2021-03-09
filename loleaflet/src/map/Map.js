@@ -472,6 +472,74 @@ L.Map = L.Evented.extend({
 		return Math.pow(1.2, (zoom - this.options.zoom));
 	},
 
+	setDesktopCalcViewOnZoom: function (zoom) {
+		var calcLayer = this._docLayer;
+		if (!calcLayer.options.sheetGeometryDataEnabled || !calcLayer.sheetGeometry)
+			return false;
+
+		var sheetGeom = calcLayer.sheetGeometry;
+		var zoomScaleAbs = this.zoomToFactor(zoom);
+
+		var cssBounds = this.getPixelBounds();
+		var cssBoundsSize = cssBounds.getSize();
+
+		var topLeftCell = sheetGeom.getCellFromPos(
+			cssBounds.getTopLeft().multiplyBy(window.devicePixelRatio), 'corepixels');
+		var newTopLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y, zoomScaleAbs)
+			.getTopLeft().divideBy(window.devicePixelRatio);
+
+		var cursorInBounds = calcLayer._cursorCorePixels ?
+			cssBounds.contains(
+				L.point(calcLayer._cursorCorePixels.getTopLeft().divideBy(window.devicePixelRatio))) : false;
+
+		var cursorActive = calcLayer.isCursorVisible();
+		if (cursorActive && cursorInBounds) {
+			var cursorBounds = calcLayer._cursorCorePixels;
+			var cursorCenter = calcLayer._corePixelsToTwips(cursorBounds.getCenter());
+			var newCursorCenter = sheetGeom.getTileTwipsAtZoom(cursorCenter, zoomScaleAbs);
+			// convert to css pixels at zoomScale.
+			newCursorCenter._multiplyBy(zoomScaleAbs / 15 / window.devicePixelRatio)._round();
+			var newBounds = new L.Bounds(newTopLeftPx, newTopLeftPx.add(cssBoundsSize));
+
+			if (!newBounds.contains(newCursorCenter)) {
+				var margin = 10;
+				var diffX = 0;
+				var diffY = 0;
+				var docSize = sheetGeom.getSize('corepixels').divideBy(window.devicePixelRatio);
+				if (newCursorCenter.x < newBounds.min.x) {
+					diffX = Math.max(0, newCursorCenter.x - margin) - newBounds.min.x;
+				} else if (newCursorCenter.x > newBounds.max.x) {
+					diffX = Math.min(docSize.x, newCursorCenter.x + margin) - newBounds.max.x;
+				}
+
+				if (newCursorCenter.y < newBounds.min.y) {
+					diffY = Math.max(0, newCursorCenter.y - margin) - newBounds.min.y;
+				} else if (newCursorCenter.y > newBounds.max.y) {
+					diffY = Math.min(docSize.y, newCursorCenter.y + margin) - newBounds.max.y;
+				}
+
+				newTopLeftPx._add(new L.Point(diffX, diffY));
+			}
+		}
+
+		var newHalfSize = cssBoundsSize.divideBy(2);
+		var newCenter = newTopLeftPx.add(newHalfSize);
+		var newCenterLatLng = this.unproject(newCenter, zoom);
+
+		this._inZoomViewPanning = true;
+		this._resetView(L.latLng(newCenterLatLng), this._limitZoom(zoom));
+		this._inZoomViewPanning = false;
+		if (cursorActive) {
+			calcLayer.activateCursor();
+		}
+
+		return;
+	},
+
+	inZoomViewPanning: function () {
+		return this._inZoomViewPanning;
+	},
+
 	setZoom: function (zoom, options) {
 
 		if (this._docLayer instanceof L.CanvasTileLayer) {
@@ -492,21 +560,7 @@ L.Map = L.Evented.extend({
 			// we want it to be glued to the row/column headers instead of being centered
 			this._docLayer._checkSpreadSheetBounds(zoom);
 			if (window.mode.isDesktop()) {
-				var calcLayer = this._docLayer;
-				if (calcLayer.options.sheetGeometryDataEnabled && calcLayer.sheetGeometry) {
-					var sheetGeom = calcLayer.sheetGeometry;
-					var cellRange = sheetGeom.getViewCellRange();
-					var col = cellRange.columnrange.start, row = cellRange.rowrange.start;
-					var zoomScaleAbs = this.zoomToFactor(zoom);
-
-					var newTopLeftPx = sheetGeom.getCellRect(col, row, zoomScaleAbs).getTopLeft().divideBy(window.devicePixelRatio);
-					var moveByPoint = this._getTopLeftPoint(curCenter, zoom).subtract(newTopLeftPx);
-
-					// move the center (which is in LatLng) by the computed amount of pixels
-					var newCenterLatLng = this.unproject(this.project(curCenter, zoom).subtract(moveByPoint), zoom);
-
-					return this.setView(newCenterLatLng, zoom, {zoom: options});
-				}
+				return this.setDesktopCalcViewOnZoom(zoom);
 			}
 		}
 
