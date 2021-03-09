@@ -549,6 +549,15 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	width: 47%;
 }
 
+#MacroSelectorDialog #table-frame1 {
+	width: auto;
+	margin-left: 47%;
+}
+
+#MacroSelectorDialog #description {
+	text-transform: none;
+}
+
 #MacroSelectorDialog #table-frame3 {
 	width: 100%;
 }
