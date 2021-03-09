@@ -511,11 +511,7 @@ class ScrollSection {
 	}
 
 	private performVerticalScroll (delta: number) {
-		if (delta > 0)
-			this.scrollVerticalWithOffset(30);
-		else
-			this.scrollVerticalWithOffset(-30);
-
+		this.scrollVerticalWithOffset(delta / 2);
 		this.sectionProperties.drawVerticalScrollBar = true;
 		this.containerObject.requestReDraw();
 		this.sectionProperties.drawVerticalScrollBar = false;
@@ -523,11 +519,7 @@ class ScrollSection {
 	}
 
 	private performHorizontalScroll (delta: number) {
-		if (delta > 0)
-			this.scrollHorizontalWithOffset(30);
-		else
-			this.scrollHorizontalWithOffset(-30);
-
+		this.scrollHorizontalWithOffset(delta / 2);
 		this.sectionProperties.drawHorizontalScrollBar = true;
 		this.containerObject.requestReDraw();
 		this.sectionProperties.drawVerticalScrollBar = false;
