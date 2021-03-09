@@ -521,7 +521,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* References Tab */
 
-#table-ReferencesTab
+#table-References
 {
 	margin-top: 10px;
 }
@@ -547,6 +547,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 /* Table Tab */
+
+#table-Table {
+	margin-top: 10px;
+}
 
 #table-Table-Section-Layout #InsertCaptionDialog.notebookbar img,
 #BorderDialog.notebookbar img,
@@ -579,7 +583,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Review Tab */
 
-#table-ReviewTab {
+#table-Review {
 	margin-top: 10px;
 }
 
@@ -609,6 +613,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 #table-Draw #table-box16 #table-first16.notebookbar,
 #table-DrawTab #table-GroupB74 #table-SectionBottom48.notebookbar {
 	display: none;
+}
+
+#table-Draw
+{
+	margin-top: 5px;
 }
 
 /* Calc */
@@ -651,7 +660,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Data Tab */
 
-#table-DataTab {
+#table-Data {
 	margin-top: 10px;
 }
 
