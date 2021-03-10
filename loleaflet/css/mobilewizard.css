@@ -968,6 +968,64 @@ input[type='checkbox'][disabled] {
 	display: none;
 }
 
+.wizard-comment-box {
+	padding: 5px 10px 10px !important;
+	display: table !important;
+	width: 100% !important;
+	width: -webkit-fill-available !important;
+	width: -moz-available !important;
+}
+#mobile-wizard .ui-header[id^='comment'] {
+	padding: 5px 10px 10px !important;
+	display: table;
+	width: -moz-available !important;
+	box-sizing: border-box !important;
+}
+
+/* Annotations - comments */
+#mobile-wizard .loleaflet-annotation-content {
+	margin: 3px 3px 3px 38px;
+	padding: 0px 10px;
+}
+
+#mobile-wizard .loleaflet-annotation-content-author {
+	font-weight: bold;
+}
+#mobile-wizard .loleaflet-annotation-author * {
+	color: var(--gray-light-txt--color) !important;
+	font-size: 11px;
+}
+
+#mobile-wizard .loleaflet-annotation-reply-count {
+	grid-column: 2;
+	grid-row: 1;
+	margin-right: 32px;
+	align-self: center;
+	padding: 0 !important;
+	justify-self: end;
+	color: #636363;
+}
+
+#mobile-wizard .loleaflet-annotation-table {
+	grid-column: 1 / 2;
+	grid-row: 1;
+}
+
+#mobile-wizard .loleaflet-dont-break {
+	grid-column: 1 / 2;
+	grid-row: 2;
+}
+
+#mobile-wizard .loleaflet-annotation-content-wrapper,
+#mobile-wizard .loleaflet-annotation-redline-content-wrapper {
+	display: grid !important;
+}
+
+#mobile-wizard .sub-menu-arrow {
+	grid-column: 2;
+	grid-row: 1;
+}
+
 /* Fontwork property panel */
 #ExtrusionToggle.mobile-wizard {
 	display: inline-table
@@ -999,10 +1057,4 @@ input[type='checkbox'][disabled] {
 #fontworkproperties + .ui-content > div > * {
 	flex: 1 44px;
 	text-align: center;
-}
-
-.wizard-comment-box {
-	padding: 5px 10px 10px !important;
-	display: table !important;
-	width: -webkit-fill-available !important
 }
