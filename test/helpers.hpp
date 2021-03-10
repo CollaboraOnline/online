@@ -32,6 +32,7 @@
 
 #include <iterator>
 #include <fstream>
+#include <string>
 
 #ifndef TDOC
 #error TDOC must be defined (see Makefile.am)
@@ -144,6 +145,49 @@ inline std::unique_ptr<Poco::Net::HTTPClientSession> createSession(const Poco::U
 #endif
 
     return Util::make_unique<Poco::Net::HTTPClientSession>(uri.getHost(), uri.getPort());
+}
+
+/// Uses Poco to make an HTTP GET from the given URI.
+inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
+pocoGet(const Poco::URI& uri)
+{
+    try
+    {
+        LOG_INF("pocoGet: " << uri.toString());
+        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(),
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        session->sendRequest(request);
+        auto response = std::make_shared<Poco::Net::HTTPResponse>();
+        std::istream& rs = session->receiveResponse(*response);
+        LOG_DBG("pocoGet response for [" << uri.toString() << "]: " << response->getStatus() << ' '
+                                         << response->getReason());
+
+        std::string responseString;
+        if (response->hasContentLength() && response->getContentLength() > 0)
+        {
+            std::ostringstream outputStringStream;
+            Poco::StreamCopier::copyStream(rs, outputStringStream);
+            responseString = outputStringStream.str();
+            LOG_DBG("pocoGet [" << uri.toString() << "]: " << responseString);
+        }
+
+        return std::make_pair(response, responseString);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("pocoGet failed for [" << uri.toString() << "]: " << ex.what());
+        throw;
+    }
+}
+
+/// Uses Poco to make an HTTP GET from the given URI components.
+inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
+pocoGet(bool secure, const std::string& host, const int port, const std::string& url)
+{
+    const char* scheme = (secure ? "https://" : "http://");
+    Poco::URI uri(scheme + host + ':' + std::to_string(port) + url);
+    return pocoGet(uri);
 }
 
 inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
