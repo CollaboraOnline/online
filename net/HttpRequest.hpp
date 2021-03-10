@@ -140,6 +140,90 @@ enum class FieldParseState
     Valid //< The field is both complete and valid.
 };
 
+/// Returns the Reason Phrase for a given HTTP Status Code.
+/// If not defined, "Unknown" is returned.
+/// The Reason Phrase is informational only, but it helps
+/// to use the canonical one for consistency.
+/// See https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+static inline const char* getReasonPhraseForCode(int code)
+{
+#define CASE(C, R)                                                                                 \
+    case C:                                                                                        \
+        return R;
+    switch (code)
+    {
+        CASE(100, "Continue");
+        CASE(101, "Switching Protocols");
+        CASE(102, "Processing"); // RFC 2518 (WebDAV)
+        CASE(103, "Early Hints"); // RFC 8297
+
+        CASE(200, "OK");
+        CASE(201, "Created");
+        CASE(202, "Accepted");
+        CASE(203, "Non Authoritative Information");
+        CASE(204, "No Content");
+        CASE(205, "Reset Content");
+        CASE(206, "Partial Content");
+        CASE(207, "Multi Status"); // RFC 4918 (WebDAV)
+        CASE(208, "Already Reported"); // RFC 5842 (WebDAV)
+        CASE(226, "IM Used"); // RFC 3229
+
+        CASE(300, "Multiple Choices");
+        CASE(301, "Moved Permanently");
+        CASE(302, "Found");
+        CASE(303, "See Other");
+        CASE(304, "Not Modified");
+        CASE(305, "Use Proxy");
+        CASE(307, "Temporary Redirect");
+
+        CASE(400, "Bad Request");
+        CASE(401, "Unauthorized");
+        CASE(402, "Payment Required");
+        CASE(403, "Forbidden");
+        CASE(404, "Not Found");
+        CASE(405, "Method Not Allowed");
+        CASE(406, "Not Acceptable");
+        CASE(407, "Proxy Authentication Required");
+        CASE(408, "Request Timeout");
+        CASE(409, "Conflict");
+        CASE(410, "Gone");
+        CASE(411, "Length Required");
+        CASE(412, "Precondition Failed");
+        CASE(413, "Payload Too Large"); // Previously called "Request Entity Too Large"
+        CASE(414, "URI Too Long"); // Previously called "Request-URI Too Long"
+        CASE(415, "Unsupported Media Type");
+        CASE(416, "Range Not Satisfiable"); // Previously called "Requested Range Not Satisfiable"
+        CASE(417, "Expectation Failed");
+        CASE(418, "I'm A Teapot"); // RFC 2324, RFC 7168 (April's fool)
+        CASE(421, "Misdirected Request"); // RFC 7540
+        CASE(422, "Unprocessable Entity"); // RFC 4918 (WebDAV)
+        CASE(423, "Locked"); // RFC 4918 (WebDAV)
+        CASE(424, "Failed Dependency"); // RFC 4918 (WebDAV)
+        CASE(425, "Too Early"); // RFC 8470
+        CASE(426, "Upgrade Required");
+        CASE(428, "Precondition Required"); // RFC 6585
+        CASE(429, "Too Many Requests"); // RFC 6585
+        CASE(431, "Request Header Fields Too Large"); // RFC 6585
+        CASE(440, "Login Time-out"); // IIS
+        CASE(449, "Retry With"); // IIS
+        CASE(451, "Unavailable For Legal Reasons"); // RFC 7725 and IIS Redirect
+
+        CASE(500, "Internal Server Error");
+        CASE(501, "Not Implemented");
+        CASE(502, "Bad Gateway");
+        CASE(503, "Service Unavailable");
+        CASE(504, "Gateway Timeout");
+        CASE(505, "HTTP Version Not Supported");
+        CASE(507, "Insufficient Storage"); // RFC 4918 (WebDAV)
+        CASE(508, "Loop Detected"); // RFC 5842 (WebDAV)
+        CASE(510, "Not Extended"); // RFC 2774
+        CASE(511, "Network Authentication Required"); // RFC 6585
+    }
+#undef CASE
+
+    return "Unknown";
+}
+
 /// The callback signature for handling IO writes.
 /// Returns the number of bytes read from the buffer,
 /// -1 for error (terminates the transfer).
