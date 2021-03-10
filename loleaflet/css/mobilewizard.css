@@ -996,6 +996,36 @@ input[type='checkbox'][disabled] {
 	font-size: 11px;
 }
 
+#mobile-wizard .loleaflet-annotation-reply-count {
+	grid-column: 2;
+	grid-row: 1;
+	margin-right: 32px;
+	align-self: center;
+	padding: 0 !important;
+	justify-self: end;
+	color: #636363;
+}
+
+#mobile-wizard .loleaflet-annotation-table {
+	grid-column: 1 / 2;
+	grid-row: 1;
+}
+
+#mobile-wizard .loleaflet-dont-break {
+	grid-column: 1 / 2;
+	grid-row: 2;
+}
+
+#mobile-wizard .loleaflet-annotation-content-wrapper,
+#mobile-wizard .loleaflet-annotation-redline-content-wrapper {
+	display: grid !important;
+}
+
+#mobile-wizard .sub-menu-arrow {
+	grid-column: 2;
+	grid-row: 1;
+}
+
 /* Fontwork property panel */
 #ExtrusionToggle.mobile-wizard {
 	display: inline-table
