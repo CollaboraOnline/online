@@ -25,6 +25,7 @@
 #include <net/HttpRequest.hpp>
 #include <FileUtil.hpp>
 #include <Util.hpp>
+#include <helpers.hpp>
 
 /// http::Request unit-tests.
 /// FIXME: use loopback and avoid depending on external services.
@@ -54,29 +55,6 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testOnFinished_Complete();
     void testOnFinished_Timeout();
 };
-
-static std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
-pocoGet(const std::string& host, const std::string& url)
-{
-    Poco::Net::HTTPClientSession session(host, 80);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, url,
-                                   Poco::Net::HTTPMessage::HTTP_1_1);
-    session.sendRequest(request);
-    auto response = std::make_shared<Poco::Net::HTTPResponse>();
-    std::istream& rs = session.receiveResponse(*response);
-    // std::cout << response.getStatus() << ' ' << response.getReason() << std::endl;
-
-    std::string responseString;
-    if (response->hasContentLength() && response->getContentLength() > 0)
-    {
-        std::ostringstream outputStringStream;
-        Poco::StreamCopier::copyStream(rs, outputStringStream);
-        responseString = outputStringStream.str();
-        // std::cout << responseString << std::endl << "-----" << std::endl;
-    }
-
-    return std::make_pair(response, responseString);
-}
 
 void HttpRequestTests::testInvalidURI()
 {
@@ -136,7 +114,9 @@ void HttpRequestTests::testSimpleGet()
         httpSession->asyncRequest(httpRequest, pollThread);
 
         // Use Poco to get the same URL in parallel.
-        const auto pocoResponse = pocoGet(Host, URL);
+        const bool secure = (protocol == http::Session::Protocol::HttpSsl);
+        const int port = (protocol == http::Session::Protocol::HttpSsl ? 443 : 80);
+        const auto pocoResponse = helpers::pocoGet(secure, Host, port, URL);
 
         std::unique_lock<std::mutex> lock(mutex);
         cv.wait_for(lock, std::chrono::seconds(1));
@@ -163,8 +143,10 @@ void HttpRequestTests::testSimpleGetSync()
 {
     const char* Host = "www.example.com";
     const char* URL = "/";
+    const bool secure = false;
+    const int port = 80;
 
-    const auto pocoResponse = pocoGet(Host, URL);
+    const auto pocoResponse = helpers::pocoGet(secure, Host, port, URL);
 
     http::Request httpRequest(URL);
 
@@ -211,15 +193,15 @@ static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::stri
 /// It exercises a few hundred requests/responses.
 void HttpRequestTests::test500GetStatuses()
 {
+    constexpr auto Host = "httpbin.org";
+    constexpr bool secure = false;
+    constexpr int port = 80;
+
     // Start the polling thread.
     SocketPoll pollThread("HttpSessionPoll");
     pollThread.startThread();
 
-    const std::string host = "httpbin.org";
-
-    http::Request httpRequest;
-
-    auto httpSession = http::Session::createHttp(host);
+    auto httpSession = http::Session::createHttp(Host);
     httpSession->setTimeout(std::chrono::seconds(1));
 
     std::condition_variable cv;
@@ -241,6 +223,8 @@ void HttpRequestTests::test500GetStatuses()
     for (int statusCode = 100; statusCode < 512; ++statusCode)
     {
         const std::string url = "/status/" + std::to_string(statusCode);
+
+        http::Request httpRequest;
         httpRequest.setUrl(url);
 
         timedout = true; // Assume we timed out until we prove otherwise.
@@ -265,7 +249,8 @@ void HttpRequestTests::test500GetStatuses()
         if (httpResponse->statusLine().statusCategory()
             != http::StatusLine::StatusCodeClass::Informational)
         {
-            const auto pocoResponse = pocoGet(host, url); // Get via Poco in parallel.
+            // Get via Poco in parallel.
+            const auto pocoResponse = helpers::pocoGet(secure, Host, port, url);
             compare(*pocoResponse.first, pocoResponse.second, *httpResponse);
         }
     }
