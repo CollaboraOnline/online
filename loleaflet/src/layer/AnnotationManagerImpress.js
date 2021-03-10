@@ -426,7 +426,7 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		}
 		if (bounds) {
 			if (!this._scrollAnnotation) {
-				this._scrollAnnotation = L.control.ScrollAnnotation();
+				this._scrollAnnotation = L.control.scrollannotation();
 				this._scrollAnnotation.addTo(this._map);
 			}
 		} else if (this._scrollAnnotation) {
