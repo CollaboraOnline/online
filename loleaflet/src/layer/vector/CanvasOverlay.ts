@@ -17,6 +17,7 @@ class CanvasOverlay {
 	private bounds: CBounds;
 	private tsManager: any;
 	private overlaySection: any;
+	private manualTranslationAmount: CPoint;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
 		this.map = mapObject;
@@ -24,6 +25,7 @@ class CanvasOverlay {
 		this.tsManager = this.map.getTileSectionMgr();
 		this.overlaySection = undefined;
 		this.paths = new Map<number, CPath>();
+		this.manualTranslationAmount = new CPoint(0, 0);
 		this.updateCanvasBounds();
 	}
 
@@ -167,6 +169,12 @@ class CanvasOverlay {
 		return this.bounds;
 	}
 
+	private paneHitCoordinateLimit(paneBounds: CBounds): boolean {
+		// canvasRenderingContext2D.translate() and friends only seem to function with numbers < 2^24
+		// Lets use a more readable upper-bound.
+		return paneBounds.max.y > 16000000 || paneBounds.max.x > 16000000;;
+	}
+
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
 	private ctStart(clipArea?: CBounds, paneBounds?: CBounds, fixed?: boolean) {
 		this.updateCanvasBounds();
@@ -176,10 +184,17 @@ class CanvasOverlay {
 		if (!paneBounds)
 			paneBounds = this.bounds.clone();
 
+		var doManualTranslation = this.paneHitCoordinateLimit(paneBounds);
+
 		if (this.tsManager._inZoomAnim && !fixed) {
 			// zoom-animation is in progress : so draw overlay on main canvas
 			// at the current frame's zoom level.
 			paneBounds = CBounds.fromCompat(paneBounds);
+
+			// This is complicated to do, bail out.
+			if (doManualTranslation)
+				return;
+
 			var splitPos = this.tsManager.getSplitPos();
 			var scale = this.tsManager._zoomFrameScale;
 			var pinchCenter = this.tsManager._newCenter;
@@ -237,18 +252,30 @@ class CanvasOverlay {
 			}
 
 		} else {
-			if (paneBounds.min.x)
-				cOrigin.x = -this.bounds.min.x;
-			if (paneBounds.min.y)
-				cOrigin.y = -this.bounds.min.y;
 
-			this.ctx.translate(cOrigin.x, cOrigin.y);
+			if (doManualTranslation) {
+				this.manualTranslationAmount.x = this.bounds.min.x;
+				this.manualTranslationAmount.y = this.bounds.min.y;
+			} else {
+				if (paneBounds.min.x)
+					cOrigin.x = -this.bounds.min.x;
+				if (paneBounds.min.y)
+					cOrigin.y = -this.bounds.min.y;
+
+				this.ctx.translate(cOrigin.x, cOrigin.y);
+			}
 		}
 
 		if (clipArea) {
 			this.ctx.beginPath();
 			var clipSize = clipArea.getSize();
-			this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
+			if (doManualTranslation) {
+				this.ctx.rect(clipArea.min.x - this.manualTranslationAmount.x,
+					clipArea.min.y - this.manualTranslationAmount.y,
+					clipSize.x, clipSize.y);
+			} else {
+				this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
+			}
 			this.ctx.clip();
 		}
 	}
@@ -269,6 +296,11 @@ class CanvasOverlay {
 		if (!len)
 			return;
 
+		var doManualTranslation = this.paneHitCoordinateLimit(paneBounds ? paneBounds : this.bounds);
+		// Until we can accurately do the functionality of transform() lets not animate overlay
+		// when pane coordinates have hit the limit.
+		if (doManualTranslation && this.tsManager._inZoomAnim)
+			return;
 
 		this.ctStart(clipArea, paneBounds, path.fixed);
 		this.ctx.beginPath();
@@ -276,7 +308,13 @@ class CanvasOverlay {
 		for (i = 0; i < len; i++) {
 			for (j = 0, len2 = parts[i].length; j < len2; j++) {
 				part = parts[i][j];
-				this.ctx[j ? 'lineTo' : 'moveTo'](part.x, part.y);
+				if (doManualTranslation) {
+					this.ctx[j ? 'lineTo' : 'moveTo'](
+						part.x - this.manualTranslationAmount.x,
+						part.y - this.manualTranslationAmount.y);
+				} else {
+					this.ctx[j ? 'lineTo' : 'moveTo'](part.x, part.y);
+				}
 			}
 			if (closed) {
 				this.ctx.closePath();
@@ -292,9 +330,15 @@ class CanvasOverlay {
 		if (path.empty())
 			return;
 
+		var doManualTranslation = this.paneHitCoordinateLimit(paneBounds ? paneBounds : this.bounds);
+		// Until we can accurately do the functionality of transform() lets not animate overlay
+		// when pane coordinates have hit the limit.
+		if (doManualTranslation && this.tsManager._inZoomAnim)
+			return;
+
 		this.ctStart(clipArea, paneBounds, path.fixed);
 
-		var point = path.point;
+		var point = doManualTranslation ? path.point.subtract(this.manualTranslationAmount) : path.point;
 		var r: number = path.radius;
 		var s: number = (path.radiusY || r) / r;
 
