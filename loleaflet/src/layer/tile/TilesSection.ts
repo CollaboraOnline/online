@@ -151,16 +151,25 @@ class TilesSection {
 		}
 	}
 
-	paintSimple (tile: any, ctx: any) {
+	paintSimple (tile: any, ctx: any, async: boolean) {
 		ctx.viewBounds.round();
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 		var halfExtraSize = this.sectionProperties.osCanvasExtraSize / 2;
 		var extendedOffset = offset.add(new L.Point(halfExtraSize, halfExtraSize));
+
+		if (async) {
+			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
+			// so clear before paint if the call is an async one.
+			// For the full view area repaint, whole canvas is cleared by section container.
+			this.context.fillStyle = this.containerObject.getClearColor();
+			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+		}
+
 		this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
 	}
 
-	public paint (tile: any, ctx: any) {
+	public paint (tile: any, ctx: any, async: boolean = false) {
 		if (!ctx)
 			ctx = this.sectionProperties.tsManager._paintContext();
 
@@ -169,7 +178,7 @@ class TilesSection {
 		if (ctx.paneBoundsActive === true)
 			this.paintWithPanes(tile, ctx);
 		else
-			this.paintSimple(tile, ctx);
+			this.paintSimple(tile, ctx, async);
 	}
 
 	public onDraw () {
@@ -202,7 +211,7 @@ class TilesSection {
 					var key = coords.key();
 					var tile = this.sectionProperties.docLayer._tiles[key];
 					if (tile && tile.loaded) {
-						this.paint(tile, ctx);
+						this.paint(tile, ctx, false /* async? */);
 					}
 				}
 			}
