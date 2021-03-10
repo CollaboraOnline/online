@@ -3773,10 +3773,9 @@ private:
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
 #if !MOBILEAPP
-        std::string location;
-        auto socket = std::make_shared<LocalServerSocket>(PrisonerPoll, factory);;
+        auto socket = std::make_shared<LocalServerSocket>(PrisonerPoll, factory);
 
-        location = socket->bind();
+        const std::string location = socket->bind();
         if (!location.length())
         {
             LOG_FTL("Failed to create local unix domain socket. Exiting.");

@@ -67,7 +67,9 @@ public:
         const int rc = fakeSocketListen(getFD());
 #endif
         if (rc)
-            LOG_SYS("Failed to listen");
+            LOG_SYS('#' << getFD() << " Failed to listen");
+        else
+            LOG_TRC('#' << getFD() << " Listening");
         return rc == 0;
     }
 
