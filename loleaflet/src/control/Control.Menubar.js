@@ -248,7 +248,9 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:ChapterNumberingDialog'},
 				{uno: '.uno:LineNumberingDialog'},
-				{uno: '.uno:FootnoteDialog'}
+				{uno: '.uno:FootnoteDialog'},
+				{type: 'separator'},
+				{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
@@ -373,7 +375,10 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SpellDialog'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+				{type: 'separator'},
+				{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'}
+
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
