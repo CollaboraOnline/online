@@ -23,6 +23,7 @@
 }
 .vex-dialog-external-url {
 	font-size: 16px;
+	font-weight: normal;
 }
 /* Place above statusbar */
 .vex.vex-theme-bottom-right-corner .vex-content {
