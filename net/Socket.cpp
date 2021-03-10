@@ -619,15 +619,19 @@ bool ServerSocket::bind(Type type, int port)
         else
             addrv6.sin6_addr = in6addr_loopback;
 
-        int ipv6only = _type == Socket::Type::All ? 0 : 1;
+        const int ipv6only = (_type == Socket::Type::All ? 0 : 1);
         if (::setsockopt(getFD(), IPPROTO_IPV6, IPV6_V6ONLY, (char*)&ipv6only, sizeof(ipv6only)) == -1)
-            LOG_SYS("Failed set ipv6 socket to %d" << ipv6only);
+            LOG_SYS('#' << getFD() << " Failed set ipv6 socket to " << ipv6only);
 
         rc = ::bind(getFD(), (const sockaddr *)&addrv6, sizeof(addrv6));
     }
 
     if (rc)
-        LOG_SYS("Failed to bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6") << " port: " << port);
+        LOG_SYS('#' << getFD() << " Failed to bind to: "
+                    << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6") << " port: " << port);
+    else
+        LOG_TRC('#' << getFD() << " bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6")
+                    << " port: " << port);
 
     return rc == 0;
 #else
@@ -697,7 +701,7 @@ int Socket::getPid() const
     socklen_t credSize = sizeof(struct ucred);
     if (getsockopt(_fd, SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
     {
-        LOG_TRC("Failed to get pid via peer creds on " << _fd << ' ' << strerror(errno));
+        LOG_SYS("Failed to get pid via peer creds on " << _fd);
         return -1;
     }
     return creds.pid;
@@ -730,7 +734,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         socklen_t credSize = sizeof(struct ucred);
         if (getsockopt(rc, SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
         {
-            LOG_ERR("Failed to get peer creds on " << rc << ' ' << strerror(errno));
+            LOG_SYS("Failed to get peer creds on " << rc);
             ::close(rc);
             return std::shared_ptr<Socket>(nullptr);
         }
@@ -778,18 +782,18 @@ std::string LocalServerSocket::bind()
         std::memcpy(addrunix.sun_path, socketAbstractUnixName.c_str(), socketAbstractUnixName.length());
         addrunix.sun_path[0] = '\0'; // abstract name
 
-        std::string rand = Util::rng::getFilename(8);
+        const std::string rand = Util::rng::getFilename(8);
         memcpy(addrunix.sun_path + socketAbstractUnixName.length(), rand.c_str(), 8);
 
         rc = ::bind(getFD(), (const sockaddr *)&addrunix, sizeof(struct sockaddr_un));
-        LOG_TRC("Bind to location " << std::string(&addrunix.sun_path[1]) <<
-                " result - " << rc << "errno: " << ((rc >= 0) ? "no error" : ::strerror(errno)));
+        LOG_SYS('#' << getFD() << " Bind to location " << std::string(&addrunix.sun_path[1])
+                    << " result - " << rc);
     } while (rc < 0 && errno == EADDRINUSE);
 
     if (rc >= 0)
         return std::string(&addrunix.sun_path[1]);
 
-    return "";
+    return std::string();
 }
 
 // For a verbose life, tweak here:
