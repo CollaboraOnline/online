@@ -1165,7 +1165,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 
 		// paint this tile on canvas.
-		this._painter._tilesSection.paint(tile);
+		this._painter._tilesSection.paint(tile, undefined, true /* async? */);
 		this._painter.paintOverlayArea(coords);
 
 		if (this._noTilesToLoad()) {
