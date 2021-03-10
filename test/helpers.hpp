@@ -136,14 +136,14 @@ void sendTextFrame(const std::shared_ptr<LOOLWebSocket>& socket, const std::stri
     sendTextFrame(*socket, string, name);
 }
 
-inline
-Poco::Net::HTTPClientSession* createSession(const Poco::URI& uri)
+inline std::unique_ptr<Poco::Net::HTTPClientSession> createSession(const Poco::URI& uri)
 {
 #if ENABLE_SSL
     if (uri.getScheme() == "https" || uri.getScheme() == "wss")
-        return new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
+        return Util::make_unique<Poco::Net::HTTPSClientSession>(uri.getHost(), uri.getPort());
 #endif
-    return new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+
+    return Util::make_unique<Poco::Net::HTTPClientSession>(uri.getHost(), uri.getPort());
 }
 
 inline std::shared_ptr<Poco::Net::StreamSocket> createRawSocket()
