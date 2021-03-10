@@ -424,7 +424,7 @@ L.Control.MobileWizard = L.Control.extend({
 			}
 
 			this._showWizard(mWizardContentLength);
-			if (!this._map._docLayer.isCalc()) {
+			if (this._map._docLayer && !this._map._docLayer.isCalc()) {
 				// In Calc, the wizard is used for the formulas,
 				// and it's easier to allow the user to search
 				// for a formula by typing the first few characters.
