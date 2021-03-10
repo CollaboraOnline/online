@@ -740,6 +740,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
                 // other
                 "text/csv",
+                "text/plain",
                 "text/comma-separated-values",
                 "application/vnd.ms-works",
                 "application/vnd.apple.keynote",

@@ -106,6 +106,7 @@
 
                 <!-- OTHER -->
                 <data android:mimeType="text/csv" />
+                <data android:mimeType="text/plain" />
                 <data android:mimeType="text/comma-separated-values" />
                 <data android:mimeType="application/vnd.ms-works" />
                 <data android:mimeType="application/vnd.apple.keynote" />
