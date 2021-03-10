@@ -338,7 +338,7 @@ protected:
         setNoDelay();
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
-        LOG_DBG('#' << _fd << " Thread affinity set to " << Log::to_string(_owner) << '.');
+        LOG_DBG('#' << _fd << " Created socket. Thread affinity set to " << Log::to_string(_owner));
 
 #if !MOBILEAPP
 #if ENABLE_DEBUG
