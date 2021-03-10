@@ -1,7 +1,7 @@
 /* -*- js-indent-level: 8 -*- */
 /*
  * L.Control.UIManager - initializes the UI elements like toolbars, menubar or ruler
-                         and allows to controll them (show/hide)
+			 and allows to controll them (show/hide)
  */
 
 /* global $ setupToolbar w2ui w2utils toolbarUpMobileItems _ */
@@ -44,9 +44,7 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(menubar);
 		}
 
-		if (window.mode.isMobile()) {
-			$('#mobile-edit-button').show();
-		} else {
+		if (!window.mode.isMobile()) {
 			if (!enableNotebookbar) {
 				this.map.topToolbar = L.control.topToolbar();
 				this.map.addControl(this.map.topToolbar);
@@ -91,6 +89,7 @@ L.Control.UIManager = L.Control.extend({
 		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
 
 		if (window.mode.isMobile()) {
+			$('#mobile-edit-button').show();
 			this.map.addControl(L.control.mobileBottomBar(docType));
 			this.map.addControl(L.control.mobileTopBar(docType));
 			this.map.addControl(L.control.searchBar());
