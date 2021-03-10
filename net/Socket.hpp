@@ -653,8 +653,9 @@ public:
     void wakeup()
     {
         if (!isAlive())
-            LOG_WRN("Waking up dead poll thread [" << _name << "], started: " <<
-                    _threadStarted << ", finished: " << _threadFinished);
+            LOG_WRN("Waking up dead poll thread ["
+                    << _name << "], started: " << (_threadStarted ? "true" : "false")
+                    << ", finished: " << _threadFinished);
 
         wakeup(_wakeup[1]);
     }
@@ -795,7 +796,7 @@ private:
     std::atomic<bool> _stop;
     /// The polling thread.
     std::thread _thread;
-    std::atomic<bool> _threadStarted;
+    std::atomic<int64_t> _threadStarted;
     std::atomic<bool> _threadFinished;
     std::atomic<bool> _runOnClientThread;
     std::thread::id _owner;

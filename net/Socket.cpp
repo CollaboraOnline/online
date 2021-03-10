@@ -106,7 +106,7 @@ namespace {
 SocketPoll::SocketPoll(const std::string& threadName)
     : _name(threadName),
       _stop(false),
-      _threadStarted(false),
+      _threadStarted(0),
       _threadFinished(false),
       _runOnClientThread(false),
       _owner(std::this_thread::get_id())
@@ -156,23 +156,25 @@ bool SocketPoll::startThread()
 {
     assert(!_runOnClientThread);
 
-    if (!_threadStarted)
+    // In a race, only the first gets in.
+    if (_threadStarted++ == 0)
     {
-        _threadStarted = true;
         _threadFinished = false;
         _stop = false;
         try
         {
-            LOG_TRC("starting thread for poll " << _name);
+            LOG_TRC("Creating thread for poll " << _name);
             _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
             return true;
         }
         catch (const std::exception& exc)
         {
-            LOG_ERR("Failed to start poll thread: " << exc.what());
-            _threadStarted = false;
+            LOG_ERR("Failed to start poll thread [" << _name << "]: " << exc.what());
+            _threadStarted = 0;
         }
     }
+    else
+        LOG_ERR("SocketPoll [" << _name << "] thread is already started.");
 
     return false;
 }
@@ -195,7 +197,7 @@ void SocketPoll::joinThread()
         else
         {
             _thread.join();
-            _threadStarted = false;
+            _threadStarted = 0;
         }
     }
 }
