@@ -109,6 +109,9 @@ UnitBase::TestResult UnitSession::testHandshake()
         char buffer[1024] = { 0 };
         int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
         TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
+        LOK_ASSERT_MESSAGE(
+            "Expected 'statusindicator: find' response from the server but got nothing.",
+            bytes > 0);
         LOK_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
