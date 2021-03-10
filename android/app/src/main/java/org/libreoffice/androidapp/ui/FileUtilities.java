@@ -122,6 +122,7 @@ public class FileUtilities {
         extensionToMimeTypeMap.put("odm", "application/vnd.oasis.opendocument.text-master");
         extensionToMimeTypeMap.put("ott", "application/vnd.oasis.opendocument.text-template");
         extensionToMimeTypeMap.put("oth", "application/vnd.oasis.opendocument.text-web");
+        extensionToMimeTypeMap.put("txt", "text/plain");
     }
 
     public static String getExtension(String filename) {

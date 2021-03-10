@@ -43,6 +43,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.MimeTypeMap;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -98,6 +99,7 @@ public class LOActivity extends AppCompatActivity {
     private File mTempFile = null;
 
     private int providerId;
+    private Activity mActivity;
 
     /// Unique number identifying this app + document.
     private long loadDocumentMillis = 0;
@@ -238,7 +240,7 @@ public class LOActivity extends AppCompatActivity {
             this.rateAppController = new RateAppController(this);
         else
             this.rateAppController = null;
-
+        this.mActivity = this;
         init();
     }
 
@@ -1018,6 +1020,10 @@ public class LOActivity extends AppCompatActivity {
                 switch (messageAndParam[1]) {
                     case "on":
                         mIsEditModeActive = true;
+                        if (getMimeType().equals("text/plain")) {
+                            // prompt for file conversion
+                            requestForOdt();
+                        }
                         break;
                     case "off":
                         mIsEditModeActive = false;
@@ -1053,7 +1059,23 @@ public class LOActivity extends AppCompatActivity {
         activity.startActivityForResult(i, requestCode);
     }
 
-    private void requestForCopy() {
+    private AlertDialog.Builder buildPrompt(final String mTitle, final String mMessage, final String mPositiveBtnText, final String mNegativeBtnText, DialogInterface.OnClickListener callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(mTitle);
+        if (mMessage.length() > 0)
+            builder.setMessage(mMessage);
+        builder.setPositiveButton(mPositiveBtnText, callback);
+        builder.setNegativeButton(mNegativeBtnText, null);
+        builder.setCancelable(false);
+        return builder;
+    }
+
+    private String getMimeType() {
+        ContentResolver cR = getContentResolver();
+        return cR.getType(getIntent().getData());
+    }
+
+    private String getFileName(boolean withExtension) {
         Cursor cursor = null;
         String filename = null;
         try {
@@ -1061,21 +1083,29 @@ public class LOActivity extends AppCompatActivity {
             if (cursor != null && cursor.moveToFirst())
                 filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
         } catch (Exception e) {
-            return;
+            return null;
         }
-        final String _filename = filename;
-        final Activity mActivity = this;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.ask_for_copy));
-        builder.setPositiveButton(getString(R.string.edit_copy), new DialogInterface.OnClickListener() {
+        if (!withExtension)
+            filename = filename.substring(0, filename.lastIndexOf("."));
+        return filename;
+    }
+
+    private void requestForCopy() {
+        buildPrompt(getString(R.string.ask_for_copy), "", getString(R.string.edit_copy), getString(R.string.view_only), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                createNewFileInputDialog(mActivity, _filename, getIntent().getType(), REQUEST_COPY);
+                createNewFileInputDialog(mActivity, getFileName(true), getMimeType(), REQUEST_COPY);
             }
-        });
-        builder.setNegativeButton(getString(R.string.view_only), null);
-        builder.setCancelable(true);
-        builder.show();
+        }).show();
+    }
+
+    private void requestForOdt() {
+        buildPrompt(getString(R.string.ask_for_convert_odf), getString(R.string.convert_odf_message), getString(R.string.use_odf), getString(R.string.use_text), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                createNewFileInputDialog(mActivity, getFileName(false) + ".odt", "application/vnd.oasis.opendocument.text", REQUEST_COPY);
+            }
+        }).show();
     }
 
     private void initiateSaveAs(String optionsString) {
