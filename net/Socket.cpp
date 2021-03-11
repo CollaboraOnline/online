@@ -540,7 +540,7 @@ void WebSocketHandler::dumpState(std::ostream& os)
     os << std::setw(5) << _pingTimeUs/1000. << "ms ";
 #endif
     if (_wsPayload.size() > 0)
-        Util::dumpHex(os, "\t\tws queued payload:\n", "\t\t", _wsPayload);
+        Util::dumpHex(os, _wsPayload, "\t\tws queued payload:\n", "\t\t");
     os << '\n';
     if (_msgHandler)
         _msgHandler->dumpState(os);
@@ -556,7 +556,7 @@ void StreamSocket::dumpState(std::ostream& os)
        << clientAddress() << '\t';
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
-        Util::dumpHex(os, "\t\tinBuffer:\n", "\t\t", _inBuffer);
+        Util::dumpHex(os, _inBuffer, "\t\tinBuffer:\n", "\t\t");
     _outBuffer.dumpHex(os, "\t\toutBuffer:\n", "\t\t");
 }
 

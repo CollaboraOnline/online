@@ -107,7 +107,7 @@ public:
             result.length() < responseLen + 4 ||
             strncmp(result.c_str() + responseLen + 1, (const char *)correct, 3))
         {
-            Util::dumpHex(std::cerr, "Error: wrong textselectioncontent:", "", result);
+            Util::dumpHex(std::cerr, result, "Error: wrong textselectioncontent:");
             return TestResult::Failed;
         }
 
