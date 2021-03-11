@@ -99,10 +99,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['treelistbox'] = this._treelistboxControl;
 		this._controlHandlers['iconview'] = this._iconViewControl;
 		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
-		this._controlHandlers['separator'] = this._separatorControl;
-		this._controlHandlers['menubutton'] = this._menubuttonControl;
 		this._controlHandlers['rootcomment'] = this._rootCommentControl;
 		this._controlHandlers['comment'] = this._commentControl;
+		this._controlHandlers['emptyCommentWizard'] = this._rootCommentControl;
+		this._controlHandlers['separator'] = this._separatorControl;
+		this._controlHandlers['menubutton'] = this._menubuttonControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -2151,6 +2152,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_rootCommentControl: function(parentContainer, data, builder) {
+
+		if (data.type === 'emptyCommentWizard') {
+			builder._emptyCommentWizard(parentContainer, data);
+			return;
+		}
+
 		var container = L.DomUtil.create('div',  'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 		container.setAttribute('style', 'padding: 5px 10px 10px !important; display: table !important;width: -webkit-fill-available !important');
 		container.annotation = data.annotation;
@@ -2203,6 +2210,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_commentControl: function(parentContainer, data, builder) {
 		builder._createComment(parentContainer, data, false);
 		return false;
+	},
+
+	_emptyCommentWizard: function(parentContainer, data) {
+		var textNode = L.DomUtil.create('span', 'empty-comment-wizard', parentContainer);
+		textNode.innerText = data.text;
 	},
 
 	_createIconURL: function(name) {

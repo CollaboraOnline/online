@@ -1030,6 +1030,15 @@ input[type='checkbox'][disabled] {
 	grid-row: 1;
 }
 
+#mobile-wizard .empty-comment-wizard {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	opacity: 50%;
+	font-size: xx-large;
+	text-align: center;
+}
 /* Fontwork property panel */
 #ExtrusionToggle.mobile-wizard {
 	display: inline-table
