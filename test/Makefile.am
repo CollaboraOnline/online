@@ -238,7 +238,7 @@ TESTS = \
 	unit-wopi-loadencoded.la \
 	unit-wopi-temp.la \
 	unit-wopi-fileurl.la \
-	unit-wopi-httpheaders
+	unit-wopi-httpheaders.la
 # TESTS += unit-admin.test
 # TESTS += unit-storage.test
 
