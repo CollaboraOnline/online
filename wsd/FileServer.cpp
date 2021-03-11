@@ -774,6 +774,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         userInterfaceMode = config.getString("user_interface.mode", "classic");
     Poco::replaceInPlace(preprocess, std::string("%USER_INTERFACE_MODE%"), userInterfaceMode);
 
+    std::string enableMacrosExecution = "false";
+    if (config.getBool("security.enable_macros_execution", false))
+        enableMacrosExecution = "true";
+    Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
+
     // Capture cookies so we can optionally reuse them for the storage requests.
     {
         NameValueCollection cookies;

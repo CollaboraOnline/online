@@ -281,6 +281,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
       window.enableWelcomeMessageButton = %ENABLE_WELCOME_MSG_BTN%;
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
+      window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
       window.reuseCookies = '%REUSE_COOKIES%';
