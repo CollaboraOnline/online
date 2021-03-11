@@ -1306,6 +1306,39 @@
 		BECBD41423D9C98500DA5582 /* svddrgmt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svddrgmt.cxx; path = "../../ios-device/svx/source/svdraw/svddrgmt.cxx"; sourceTree = "<group>"; };
 		BECD983E24336DD400016117 /* device-mobile.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-mobile.css"; path = "../../../loleaflet/dist/device-mobile.css"; sourceTree = "<group>"; };
 		BECD983F24336DD400016117 /* device-tablet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-tablet.css"; path = "../../../loleaflet/dist/device-tablet.css"; sourceTree = "<group>"; };
+		BEDB886925F8C4F300990028 /* eehtml.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = eehtml.hxx; path = "../../ios-device/editeng/source/editeng/eehtml.hxx"; sourceTree = "<group>"; };
+		BEDB886A25F8C4F300990028 /* editdbg.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = editdbg.hxx; path = "../../ios-device/editeng/source/editeng/editdbg.hxx"; sourceTree = "<group>"; };
+		BEDB886B25F8C4F300990028 /* editdoc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editdoc.cxx; path = "../../ios-device/editeng/source/editeng/editdoc.cxx"; sourceTree = "<group>"; };
+		BEDB886C25F8C4F300990028 /* eerdll.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = eerdll.cxx; path = "../../ios-device/editeng/source/editeng/eerdll.cxx"; sourceTree = "<group>"; };
+		BEDB886D25F8C4F300990028 /* eeobj.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = eeobj.hxx; path = "../../ios-device/editeng/source/editeng/eeobj.hxx"; sourceTree = "<group>"; };
+		BEDB886E25F8C4F300990028 /* edtspell.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = edtspell.cxx; path = "../../ios-device/editeng/source/editeng/edtspell.cxx"; sourceTree = "<group>"; };
+		BEDB886F25F8C4F300990028 /* editsel.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editsel.cxx; path = "../../ios-device/editeng/source/editeng/editsel.cxx"; sourceTree = "<group>"; };
+		BEDB887025F8C4F300990028 /* editdata.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editdata.cxx; path = "../../ios-device/editeng/source/editeng/editdata.cxx"; sourceTree = "<group>"; };
+		BEDB887125F8C4F300990028 /* eertfpar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = eertfpar.cxx; path = "../../ios-device/editeng/source/editeng/eertfpar.cxx"; sourceTree = "<group>"; };
+		BEDB887225F8C4F300990028 /* textconv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = textconv.cxx; path = "../../ios-device/editeng/source/editeng/textconv.cxx"; sourceTree = "<group>"; };
+		BEDB887325F8C4F300990028 /* impedit.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impedit.cxx; path = "../../ios-device/editeng/source/editeng/impedit.cxx"; sourceTree = "<group>"; };
+		BEDB887425F8C4F300990028 /* editeng.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editeng.cxx; path = "../../ios-device/editeng/source/editeng/editeng.cxx"; sourceTree = "<group>"; };
+		BEDB887525F8C4F300990028 /* editattr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editattr.cxx; path = "../../ios-device/editeng/source/editeng/editattr.cxx"; sourceTree = "<group>"; };
+		BEDB887625F8C4F300990028 /* editobj.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editobj.cxx; path = "../../ios-device/editeng/source/editeng/editobj.cxx"; sourceTree = "<group>"; };
+		BEDB887725F8C4F300990028 /* misspellrange.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = misspellrange.cxx; path = "../../ios-device/editeng/source/editeng/misspellrange.cxx"; sourceTree = "<group>"; };
+		BEDB887825F8C4F300990028 /* fieldupdater.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fieldupdater.cxx; path = "../../ios-device/editeng/source/editeng/fieldupdater.cxx"; sourceTree = "<group>"; };
+		BEDB887925F8C4F300990028 /* editundo.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = editundo.hxx; path = "../../ios-device/editeng/source/editeng/editundo.hxx"; sourceTree = "<group>"; };
+		BEDB887A25F8C4F400990028 /* editstt2.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = editstt2.hxx; path = "../../ios-device/editeng/source/editeng/editstt2.hxx"; sourceTree = "<group>"; };
+		BEDB887B25F8C4F400990028 /* impedit2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impedit2.cxx; path = "../../ios-device/editeng/source/editeng/impedit2.cxx"; sourceTree = "<group>"; };
+		BEDB887C25F8C4F400990028 /* eertfpar.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = eertfpar.hxx; path = "../../ios-device/editeng/source/editeng/eertfpar.hxx"; sourceTree = "<group>"; };
+		BEDB887D25F8C4F400990028 /* impedit3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impedit3.cxx; path = "../../ios-device/editeng/source/editeng/impedit3.cxx"; sourceTree = "<group>"; };
+		BEDB887E25F8C4F400990028 /* textconv.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = textconv.hxx; path = "../../ios-device/editeng/source/editeng/textconv.hxx"; sourceTree = "<group>"; };
+		BEDB887F25F8C4F400990028 /* editundo.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editundo.cxx; path = "../../ios-device/editeng/source/editeng/editundo.cxx"; sourceTree = "<group>"; };
+		BEDB888025F8C4F400990028 /* editview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editview.cxx; path = "../../ios-device/editeng/source/editeng/editview.cxx"; sourceTree = "<group>"; };
+		BEDB888125F8C4F400990028 /* impedit4.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impedit4.cxx; path = "../../ios-device/editeng/source/editeng/impedit4.cxx"; sourceTree = "<group>"; };
+		BEDB888225F8C4F400990028 /* eehtml.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = eehtml.cxx; path = "../../ios-device/editeng/source/editeng/eehtml.cxx"; sourceTree = "<group>"; };
+		BEDB888325F8C4F400990028 /* impedit.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = impedit.hxx; path = "../../ios-device/editeng/source/editeng/impedit.hxx"; sourceTree = "<group>"; };
+		BEDB888425F8C4F400990028 /* editdbg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editdbg.cxx; path = "../../ios-device/editeng/source/editeng/editdbg.cxx"; sourceTree = "<group>"; };
+		BEDB888525F8C4F400990028 /* editsel.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = editsel.hxx; path = "../../ios-device/editeng/source/editeng/editsel.hxx"; sourceTree = "<group>"; };
+		BEDB888625F8C4F400990028 /* eeobj.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = eeobj.cxx; path = "../../ios-device/editeng/source/editeng/eeobj.cxx"; sourceTree = "<group>"; };
+		BEDB888725F8C4F400990028 /* editobj2.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = editobj2.hxx; path = "../../ios-device/editeng/source/editeng/editobj2.hxx"; sourceTree = "<group>"; };
+		BEDB888825F8C4F400990028 /* impedit5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impedit5.cxx; path = "../../ios-device/editeng/source/editeng/impedit5.cxx"; sourceTree = "<group>"; };
+		BEDB888925F8C4F400990028 /* section.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = section.cxx; path = "../../ios-device/editeng/source/editeng/section.cxx"; sourceTree = "<group>"; };
 		BEDCC84C2452F82800FB02BD /* MobileApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MobileApp.cpp; sourceTree = "<group>"; };
 		BEDCC84D2452F82800FB02BD /* MobileApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MobileApp.hpp; sourceTree = "<group>"; };
 		BEDCC8972456FFAC00FB02BD /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -2261,6 +2294,7 @@
 				BE7D6A2023FA9BFB00C2E605 /* configmgr */,
 				BE80E43321B5629300859C97 /* cppuhelper */,
 				BE34D182218CFC6C00815297 /* desktop */,
+				BEDB886725F8C4C000990028 /* editeng */,
 				BEDCC941246175A700FB02BD /* framework */,
 				BEA8CDC42199E5ED009FE17E /* i18nlangtag */,
 				BEB6521A216F5D4600B8C09A /* sal */,
@@ -3317,6 +3351,54 @@
 				BECBD32323D9C5D000DA5582 /* viewpt3d2.cxx */,
 			);
 			name = engine3d;
+			sourceTree = "<group>";
+		};
+		BEDB886725F8C4C000990028 /* editeng */ = {
+			isa = PBXGroup;
+			children = (
+				BEDB886825F8C4D300990028 /* editeng */,
+			);
+			name = editeng;
+			sourceTree = "<group>";
+		};
+		BEDB886825F8C4D300990028 /* editeng */ = {
+			isa = PBXGroup;
+			children = (
+				BEDB887525F8C4F300990028 /* editattr.cxx */,
+				BEDB887025F8C4F300990028 /* editdata.cxx */,
+				BEDB888425F8C4F400990028 /* editdbg.cxx */,
+				BEDB886A25F8C4F300990028 /* editdbg.hxx */,
+				BEDB886B25F8C4F300990028 /* editdoc.cxx */,
+				BEDB887425F8C4F300990028 /* editeng.cxx */,
+				BEDB887625F8C4F300990028 /* editobj.cxx */,
+				BEDB888725F8C4F400990028 /* editobj2.hxx */,
+				BEDB886F25F8C4F300990028 /* editsel.cxx */,
+				BEDB888525F8C4F400990028 /* editsel.hxx */,
+				BEDB887A25F8C4F400990028 /* editstt2.hxx */,
+				BEDB887F25F8C4F400990028 /* editundo.cxx */,
+				BEDB887925F8C4F300990028 /* editundo.hxx */,
+				BEDB888025F8C4F400990028 /* editview.cxx */,
+				BEDB886E25F8C4F300990028 /* edtspell.cxx */,
+				BEDB888225F8C4F400990028 /* eehtml.cxx */,
+				BEDB886925F8C4F300990028 /* eehtml.hxx */,
+				BEDB888625F8C4F400990028 /* eeobj.cxx */,
+				BEDB886D25F8C4F300990028 /* eeobj.hxx */,
+				BEDB886C25F8C4F300990028 /* eerdll.cxx */,
+				BEDB887125F8C4F300990028 /* eertfpar.cxx */,
+				BEDB887C25F8C4F400990028 /* eertfpar.hxx */,
+				BEDB887825F8C4F300990028 /* fieldupdater.cxx */,
+				BEDB887325F8C4F300990028 /* impedit.cxx */,
+				BEDB888325F8C4F400990028 /* impedit.hxx */,
+				BEDB887B25F8C4F400990028 /* impedit2.cxx */,
+				BEDB887D25F8C4F400990028 /* impedit3.cxx */,
+				BEDB888125F8C4F400990028 /* impedit4.cxx */,
+				BEDB888825F8C4F400990028 /* impedit5.cxx */,
+				BEDB887725F8C4F300990028 /* misspellrange.cxx */,
+				BEDB888925F8C4F400990028 /* section.cxx */,
+				BEDB887225F8C4F300990028 /* textconv.cxx */,
+				BEDB887E25F8C4F400990028 /* textconv.hxx */,
+			);
+			name = editeng;
 			sourceTree = "<group>";
 		};
 		BEDCC941246175A700FB02BD /* framework */ = {
