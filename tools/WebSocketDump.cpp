@@ -46,7 +46,7 @@ private:
     void handleMessage(const std::vector<char> &data) override
     {
         std::cout << "WebSocket message data:\n";
-        Util::dumpHex(std::cout, "", "    ", data, false);
+        Util::dumpHex(std::cout, data, "", "    ", false);
     }
 };
 

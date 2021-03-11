@@ -286,7 +286,7 @@ void ProxyProtocolHandler::dumpProxyState(std::ostream& os)
     }
     os << '\n';
     for (const auto& it : _writeQueue)
-        Util::dumpHex(os, "\twrite queue entry:", "\t\t", *it);
+        Util::dumpHex(os, *it, "\twrite queue entry:", "\t\t");
     if (_msgHandler)
         _msgHandler->dumpState(os);
 }

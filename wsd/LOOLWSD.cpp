@@ -2521,7 +2521,7 @@ private:
             else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
                      requestDetails.equals(1, "clipboard"))
             {
-//              Util::dumpHex(std::cerr, "clipboard:\n", "", socket->getInBuffer()); // lots of data ...
+//              Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
                 handleClipboardRequest(request, message, disposition, socket);
             }
 
