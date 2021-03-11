@@ -293,20 +293,29 @@ public:
     virtual void dumpState(std::ostream&) {}
 
     /// Set the thread-id we're bound to
-    virtual void setThreadOwner(const std::thread::id &id)
+    void setThreadOwner(const std::thread::id &id)
     {
         if (id != _owner)
         {
-            LOG_DBG('#' << _fd << " Thread affinity set to " << Log::to_string(id) <<
-                    " (was " << Log::to_string(_owner) << ").");
+            LOG_DBG('#' << _fd << " thread affinity set to " << Log::to_string(id) << " (was "
+                        << Log::to_string(_owner) << ')');
             _owner = id;
         }
     }
 
-    const std::thread::id &getThreadOwner()
+    /// Reset the thread-id while it's in transition.
+    void resetThreadOwner()
     {
-        return _owner;
+        if (std::thread::id() != _owner)
+        {
+            LOG_DBG('#' << _fd << " resetting thread affinity while in transit (was "
+                        << Log::to_string(_owner) << ')');
+            _owner = std::thread::id();
+        }
     }
+
+    /// Returns the owner thread's id.
+    const std::thread::id& getThreadOwner() const { return _owner; }
 
     /// Asserts in the debug builds, otherwise just logs.
     void assertCorrectThread()
@@ -575,7 +584,7 @@ public:
 
             LOG_DBG("Removing socket #" << socket->getFD() << " from " << _name);
             socket->assertCorrectThread();
-            socket->setThreadOwner(std::thread::id());
+            socket->resetThreadOwner();
 
             _pollSockets.pop_back();
         }
@@ -627,7 +636,7 @@ public:
     {
         if (InhibitThreadChecks)
             return;
-        std::thread::id us = std::this_thread::get_id();
+        const std::thread::id us = std::this_thread::get_id();
         if (_owner == us)
             return; // all well
         LOG_DBG("Unusual - SocketPoll used from a new thread");
@@ -683,7 +692,7 @@ public:
         {
             LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
             // sockets in transit are un-owned.
-            newSocket->setThreadOwner(std::thread::id());
+            newSocket->resetThreadOwner();
 
             std::lock_guard<std::mutex> lock(_mutex);
             _newSockets.emplace_back(std::move(newSocket));

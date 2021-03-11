@@ -521,7 +521,7 @@ void SocketDisposition::execute()
     if (_socketMove)
     {
         // Drop pretentions of ownership before _socketMove.
-        _socket->setThreadOwner(std::thread::id());
+        _socket->resetThreadOwner();
 
         if (!_toPoll) {
             assert (isMove());
