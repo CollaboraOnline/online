@@ -40,7 +40,9 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testScriptsAndLinksPost);
     CPPUNIT_TEST(testConvertTo);
     CPPUNIT_TEST(testConvertTo2);
-    CPPUNIT_TEST(testConvertToWithForwardedClientIP);
+    CPPUNIT_TEST(testConvertToWithForwardedIP_Deny);
+    CPPUNIT_TEST(testConvertToWithForwardedIP_Allow);
+    CPPUNIT_TEST(testConvertToWithForwardedIP_DenyMulti);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -50,7 +52,9 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     void testScriptsAndLinksPost();
     void testConvertTo();
     void testConvertTo2();
-    void testConvertToWithForwardedClientIP();
+    void testConvertToWithForwardedIP_Deny();
+    void testConvertToWithForwardedIP_Allow();
+    void testConvertToWithForwardedIP_DenyMulti();
 
 public:
     HTTPServerTest()
@@ -318,9 +322,9 @@ void HTTPServerTest::testConvertTo2()
     LOK_ASSERT_EQUAL(actualString[3], 'G');
 }
 
-void HTTPServerTest::testConvertToWithForwardedClientIP()
+void HTTPServerTest::testConvertToWithForwardedIP_Deny()
 {
-    const std::string testname = "convertToWithForwardedClientIP-";
+    const std::string testname = "convertToWithForwardedClientIP-Deny";
     constexpr int TimeoutSeconds = 10; // Sometimes dns resolving is slow.
 
     // Test a forwarded IP which is not allowed to use convert-to feature
@@ -328,7 +332,7 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
     {
         TST_LOG("Converting from a disallowed IP.");
 
-        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname + "disallowed");
+        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
@@ -366,13 +370,19 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
     {
         LOK_ASSERT_FAIL(exc.displayText() + ": " + (exc.nested() ? exc.nested()->displayText() : ""));
     }
+}
+
+void HTTPServerTest::testConvertToWithForwardedIP_Allow()
+{
+    const std::string testname = "convertToWithForwardedClientIP-Allow";
+    constexpr int TimeoutSeconds = 10; // Sometimes dns resolving is slow.
 
     // Test a forwarded IP which is allowed to use convert-to feature
     try
     {
         TST_LOG("Converting from an allowed IP.");
 
-        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname + "allowed");
+        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
@@ -384,7 +394,16 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
         form.set("format", "txt");
         form.addPart("data", new Poco::Net::FilePartSource(srcPath));
         form.prepareSubmit(request);
-        form.write(session->sendRequest(request));
+        try
+        {
+            form.write(session->sendRequest(request));
+        }
+        catch (const std::exception& ex)
+        {
+            // In case the server is still starting up.
+            sleep(5);
+            form.write(session->sendRequest(request));
+        }
 
         Poco::Net::HTTPResponse response;
         std::stringstream actualStream;
@@ -409,13 +428,19 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
     {
         LOK_ASSERT_FAIL(exc.displayText() + ": " + (exc.nested() ? exc.nested()->displayText() : ""));
     }
+}
+
+void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
+{
+    const std::string testname = "convertToWithForwardedClientIP-DenyMulti";
+    constexpr int TimeoutSeconds = 10; // Sometimes dns resolving is slow.
 
     // Test a forwarded header with three IPs, one is not allowed -> request is denied.
     try
     {
         TST_LOG("Converting from multiple IPs, on disallowed.");
 
-        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname + "disallowed-multi");
+        const std::string srcPath = FileUtil::getTempFilePath(TDOC, "hello.odt", testname);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
@@ -429,7 +454,16 @@ void HTTPServerTest::testConvertToWithForwardedClientIP()
         form.set("format", "txt");
         form.addPart("data", new Poco::Net::FilePartSource(srcPath));
         form.prepareSubmit(request);
-        form.write(session->sendRequest(request));
+        try
+        {
+            form.write(session->sendRequest(request));
+        }
+        catch (const std::exception& ex)
+        {
+            // In case the server is still starting up.
+            sleep(5);
+            form.write(session->sendRequest(request));
+        }
 
         Poco::Net::HTTPResponse response;
         std::stringstream actualStream;
