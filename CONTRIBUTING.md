@@ -16,11 +16,11 @@ If you have issues or questions about Collabora Online development, you may join
   - More info on [search syntax within github](https://help.github.com/articles/searching-issues)
 * __SECURITY__: Report any potential security bug to us following our [security policy](https://github.com/CollaboraOnline/online/security/policy) instead of filing an issue in our bug tracker.
 
-* Report the issue using one of our [templates][templates], they include all the information we need to track down the issue.
+* [Report the issue][report] using one of our templates, they include all the information we need to track down the issue.
 
 Help us to maximize the effort we can spend fixing issues and adding new features, by not reporting duplicate issues.
 
-[templates]: ./ISSUE_TEMPLATE
+[report]: https://github.com/CollaboraOnline/online/issues/new/choose
 [forum]: https://forum.collaboraonline.com/
 [irc]: https://webchat.freenode.net/?channels=cool-dev
 [telegram]: https://t.me/CollaboraOnline
