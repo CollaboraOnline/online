@@ -101,6 +101,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
 		this._controlHandlers['rootcomment'] = this._rootCommentControl;
 		this._controlHandlers['comment'] = this._commentControl;
+		this._controlHandlers['emptyCommentWizard'] = this._rootCommentControl;
 		this._controlHandlers['separator'] = this._separatorControl;
 		this._controlHandlers['menubutton'] = this._menubuttonControl;
 
@@ -2153,6 +2154,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_rootCommentControl: function(parentContainer, data, builder) {
+
+		if (data.type === 'emptyCommentWizard') {
+			builder._emptyCommentWizard(parentContainer, data);
+			return;
+		}
+
 		var container = L.DomUtil.create('div',  'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 		container.annotation = data.annotation;
 		container.id = data.id;
@@ -2204,6 +2211,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_commentControl: function(parentContainer, data, builder) {
 		builder._createComment(parentContainer, data, false);
 		return false;
+	},
+
+	_emptyCommentWizard: function(parentContainer, data) {
+		var textNode = L.DomUtil.create('span', 'empty-comment-wizard', parentContainer);
+		textNode.innerText = data.text;
 	},
 
 	_createIconURL: function(name) {
