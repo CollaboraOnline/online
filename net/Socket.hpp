@@ -1142,9 +1142,8 @@ protected:
                 " bytes, closeSocket? " << closed);
 
 #ifdef LOG_SOCKET_DATA
-        auto& log = Log::logger();
-        if (log.trace() && _inBuffer.size() > 0)
-            log.dump("", &_inBuffer[0], _inBuffer.size());
+        if (!_inBuffer.empty())
+            LOG_TRC('#' << getFD() << " inBuffer:\n" << Util::dumpHex(_inBuffer));
 #endif
 
         // If we have data, allow the app to consume.
@@ -1220,9 +1219,9 @@ public:
                             << ')');
 
 #ifdef LOG_SOCKET_DATA
-                auto& log = Log::logger();
-                if (log.trace() && len > 0)
-                    log.dump("", _outBuffer.getBlock(), len);
+                if (len > 0 && !_outBuffer.empty())
+                    LOG_TRC('#' << getFD() << " outBuffer:\n"
+                                << Util::dumpHex(std::string(_outBuffer.getBlock(), len)));
 #endif
 
                 if (len <= 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)

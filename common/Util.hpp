@@ -268,6 +268,17 @@ namespace Util
         os.flush();
     }
 
+    /// Dump data as hex and chars into a string.
+    /// Primarily used for logging.
+    template <typename T>
+    inline std::string dumpHex(const T& buffer, const char* prefix = "", bool skipDup = true,
+                               const unsigned int width = 32)
+    {
+        std::ostringstream oss;
+        dumpHex(oss, buffer, "", prefix, skipDup, width);
+        return oss.str();
+    }
+
     inline std::string dumpHex (const char *legend, const char *prefix,
                                 const std::vector<char>::iterator &startIt,
                                 const std::vector<char>::iterator &endIt,

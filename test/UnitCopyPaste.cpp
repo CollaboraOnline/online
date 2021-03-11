@@ -116,12 +116,11 @@ public:
         }
         else if (value != content)
         {
-            LOG_TST("Error: clipboard content mismatch " << value.length() << " vs. "
-                                                         << content.length());
-            sleep (1); // output settle.
-            Util::dumpHex(std::cerr, value, "\tclipboard:\n");
-            Util::dumpHex(std::cerr, content, "\tshould be:\n");
-            LOK_ASSERT_EQUAL_MESSAGE("Clipboard content mismatch", value.size(), content.size());
+            LOG_TST("Error: clipboard content mismatch "
+                    << value.length() << " bytes vs. " << content.length() << " bytes. Clipboard:\n"
+                    << Util::dumpHex(value) << "Expected:\n"
+                    << Util::dumpHex(content));
+            LOK_ASSERT_EQUAL_MESSAGE("Clipboard content mismatch", value, content);
             failed = true;
         }
         if (failed)

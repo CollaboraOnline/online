@@ -108,7 +108,7 @@ public:
             result.length() < responseLen + 4 ||
             strncmp(result.c_str() + responseLen + 1, (const char *)correct, 3))
         {
-            Util::dumpHex(std::cerr, result, "Error: wrong textselectioncontent:");
+            LOK_ASSERT_FAIL("Error: wrong textselectioncontent:\n" + Util::dumpHex(result));
             return TestResult::Failed;
         }
 
