@@ -240,6 +240,8 @@ namespace Log
     }
 
     /// Dump the invalid id as 0, otherwise dump in hex.
+    /// Note: std::thread::id defines operator<< which
+    /// serializes in decimal. We need this for hex.
     inline std::string to_string(const std::thread::id& id)
     {
         if (id != std::thread::id())
@@ -251,17 +253,6 @@ namespace Log
 
         return "0";
     }
-
-    inline StreamLogger& operator<<(StreamLogger& lhs, const std::thread::id& rhs)
-    {
-        if (lhs.enabled())
-        {
-            lhs.getStream() << Log::to_string(rhs);
-        }
-
-        return lhs;
-    }
-
 }
 
 #ifndef IOS
