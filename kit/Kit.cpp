@@ -14,6 +14,8 @@
 #include <dlfcn.h>
 #ifdef __linux
 #include <ftw.h>
+#include <sys/vfs.h>
+#include <linux/magic.h>
 #include <sys/capability.h>
 #include <sys/sysmacros.h>
 #endif
@@ -158,11 +160,33 @@ namespace
     LinkOrCopyType linkOrCopyType;
     std::string sourceForLinkOrCopy;
     Path destinationForLinkOrCopy;
+    bool forceInitialCopy; // some stackable file-systems have very slow first hard link creation
     std::string linkableForLinkOrCopy; // Place to stash copies that we can hard-link from
     std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
     bool linkOrCopyVerboseLogging = false;
     unsigned linkOrCopyFileCount = 0; // Track to help quantify the link-or-copy performance.
     constexpr unsigned SlowLinkOrCopyLimitInSecs = 2; // After this many seconds, start spamming the logs.
+
+    bool detectSlowStackingFileSystem(const std::string &directory)
+    {
+#ifdef __linux__
+        struct statfs fs = {};
+        if (::statfs(directory.c_str(), &fs) != 0)
+        {
+            LOG_SYS("statfs failed on '" << directory << "'");
+            return false;
+        }
+        switch (fs.f_type) {
+//        case FUSE_SUPER_MAGIC: ?
+        case OVERLAYFS_SUPER_MAGIC:
+            return true;
+        default:
+            return false;
+        }
+#else
+        return false;
+#endif
+    }
 
     /// Returns the LinkOrCopyType as a human-readable string (for logging).
     std::string linkOrCopyTypeString(LinkOrCopyType type)
@@ -256,17 +280,22 @@ namespace
         if (linkOrCopyVerboseLogging)
             LOG_INF("Linking file \"" << fpath << "\" to \"" << newPath << '"');
 
-        // first try a simple hard-link
-        if (link(fpath, newPath.c_str()) == 0)
-            return;
+        if (!forceInitialCopy)
+        {
+            // first try a simple hard-link
+            if (link(fpath, newPath.c_str()) == 0)
+                return;
+        }
+        // else always copy before linking to linkable/
 
         // incrementally build our 'linkable/' copy nearby
         static bool canChown = true; // only if we can get permissions right
-        if (errno == EXDEV && canChown)
+        if ((forceInitialCopy || errno == EXDEV) && canChown)
         {
             // then copy somewhere closer and hard link from there
-            LOG_TRC("link(\"" << fpath << "\", \"" << newPath << "\") failed: " << strerror(errno)
-                    << ". Will try to link template.");
+            if (!forceInitialCopy)
+                LOG_TRC("link(\"" << fpath << "\", \"" << newPath << "\") failed: " << strerror(errno)
+                        << ". Will try to link template.");
 
             std::string linkableCopy = linkableForLinkOrCopy + fpath;
             if (::link(linkableCopy.c_str(), newPath.c_str()) == 0)
@@ -435,6 +464,7 @@ namespace
         linkableForLinkOrCopy = linkable;
         linkOrCopyFileCount = 0;
         linkOrCopyStartTime = std::chrono::steady_clock::now();
+        forceInitialCopy = detectSlowStackingFileSystem(destination.toString());
 
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
         {
