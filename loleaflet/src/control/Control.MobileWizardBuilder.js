@@ -140,7 +140,8 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_frameHandler: function(parentContainer, data, builder) {
-		if (data.children.length > 1) {
+		// display explorable entry only if more than one widget inside
+		if (data.children.length > 2) {
 			data.text = builder._cleanText(data.children[0].text);
 			var contentNode = data.children[1];
 			builder._explorableEntry(parentContainer, data, contentNode, builder);

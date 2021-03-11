@@ -59,6 +59,10 @@ span#main-menu-btn-icon {
 	border-radius: 2px
 }
 
+.mobile-wizard.ui-button-box {
+	margin-bottom: 30px;
+}
+
 /*Color-picker*/
 .color-sample-selected {
 	height: 32px !important;
