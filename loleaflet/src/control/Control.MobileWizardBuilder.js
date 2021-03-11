@@ -536,6 +536,20 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 					$('#' + childData.id).addClass('hidden-from-event');
 				}
 			}
+
+			if ((childType === 'mobilewizard' || childType === 'dialog' || childType === 'messagebox' || childType === 'modelessdialog')
+				&& childData.responses) {
+				for (var i in childData.responses) {
+					var buttonId = childData.responses[i].id;
+					var response = childData.responses[i].response;
+					var button = $('#' + buttonId);
+					var isHelp = response === '-11' || response === -11 || buttonId === 'help';
+					var isCancel = response === '-6' || response === -6 || buttonId === 'cancel';
+					var isClose = response === '-7' || response === -7 || buttonId === 'close';
+					if (button && (isHelp || isCancel || isClose))
+						button.hide();
+				}
+			}
 		}
 	}
 });
