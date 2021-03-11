@@ -648,6 +648,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).tooltip({disabled: true});
 		$(control.container).addClass('sm sm-simple lo-menu');
 
+		var disabledMacros = window.enableMacrosExecution === 'false';
+
 		var menu = {
 			text: [
 				{name: _('Menu'), type: 'menu', menu: [
@@ -682,8 +684,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 						{uno: '.uno:WordCountDialog'},
 						{uno: '.uno:LineNumberingDialog'},
 						{type: 'separator'},
-						{uno: '.uno:RunMacro'},
-						{type: 'separator'},
+						{uno: '.uno:RunMacro', hidden: disabledMacros},
+						{type: 'separator', hidden: disabledMacros},
 						{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
 							{uno: '.uno:OnlineAutoFormat'}]}
 					]}
@@ -703,8 +705,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 						{uno: '.uno:GoalSeekDialog'},
 						{type: 'separator'},
-						{uno: '.uno:RunMacro'},
-						{type: 'separator'},
+						{uno: '.uno:RunMacro', hidden: disabledMacros},
+						{type: 'separator', hidden: disabledMacros},
 						{name: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'), type: 'menu', menu: [
 							{uno: '.uno:ConditionalFormatDialog'},
 							{uno: '.uno:ColorScaleFormatDialog'},
@@ -735,8 +737,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 						{uno: '.uno:SpellOnline'},
 						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
-						{type: 'separator'},
-						{uno: '.uno:RunMacro'}
+						{type: 'separator', hidden: disabledMacros},
+						{uno: '.uno:RunMacro', hidden: disabledMacros}
 					]},
 				]}
 			]
