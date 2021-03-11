@@ -985,7 +985,9 @@ public:
         do
         {
             // Drain the read buffer.
-            // TODO: Cap the buffer size, lest we grow beyond control.
+            // Note: we read as much as possible as
+            // we are typically capped by hardware buffer
+            // size anyway, and better to drain it fast.
             do
             {
                 len = readData(buf, sizeof(buf));
