@@ -37,6 +37,8 @@
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
 
+#define LOG_SOCKET_DATA
+
 namespace Poco
 {
     class MemoryInputStream;
@@ -1002,6 +1004,14 @@ public:
             {
                 len = readData(buf, sizeof(buf));
                 last_errno = errno;
+
+                LOG_TRC('#' << getFD() << ": Read incoming data " << len << " bytes to have "
+                            << _inBuffer.size() << " buffered bytes ("
+                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
+                            << ')');
+
+                if (len <= 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
+                    LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": Socket read returned " << len);
             }
             while (len < 0 && last_errno == EINTR);
 
@@ -1036,6 +1046,7 @@ public:
         }
 #endif
 
+        LOG_TRC('#' << getFD() << " readIncomingData: " << len);
         return len != 0; // zero is eof / clean socket close.
     }
 
@@ -1148,8 +1159,8 @@ protected:
         // Always try to read.
         closed = !readIncomingData() || closed;
 
-        LOG_TRC('#' << getFD() << ": Incoming data buffer " << _inBuffer.size() <<
-                " bytes, closeSocket? " << closed);
+        LOG_TRC('#' << getFD() << ": Incoming data buffer " << _inBuffer.size()
+                    << " bytes, closeSocket? " << closed << ", events: " << std::hex << events);
 
 #ifdef LOG_SOCKET_DATA
         if (!_inBuffer.empty())
