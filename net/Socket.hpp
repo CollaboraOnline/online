@@ -555,7 +555,7 @@ public:
             std::lock_guard<std::mutex> lock(_mutex);
             if (_newCallbacks.size() > 0)
             {
-                LOG_TRC("_newCallbacks is non-empty, clearing it");
+                LOG_WRN("_newCallbacks is non-empty when stopping, clearing it.");
                 _newCallbacks.clear();
             }
         }

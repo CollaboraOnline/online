@@ -133,12 +133,16 @@ SocketPoll::SocketPoll(const std::string& threadName)
         throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + threadName + "] waking.");
     }
 
+    LOG_DBG("New SocketPoll [" << _name << "] owned by " << Log::to_string(_owner));
+
     std::lock_guard<std::mutex> lock(getPollWakeupsMutex());
     getWakeupsArray().push_back(_wakeup[1]);
 }
 
 SocketPoll::~SocketPoll()
 {
+    LOG_DBG("~SocketPoll [" << _name << "] destroying. Joining thread now.");
+
     joinThread();
 
     {
@@ -173,13 +177,13 @@ bool SocketPoll::startThread()
         _stop = false;
         try
         {
-            LOG_TRC("Creating thread for poll " << _name);
+            LOG_TRC("Creating thread for SocketPoll " << _name);
             _thread = std::thread(&SocketPoll::pollingThreadEntry, this);
             return true;
         }
         catch (const std::exception& exc)
         {
-            LOG_ERR("Failed to start poll thread [" << _name << "]: " << exc.what());
+            LOG_ERR("Failed to start SocketPoll thread [" << _name << "]: " << exc.what());
             _threadStarted = 0;
         }
     }
