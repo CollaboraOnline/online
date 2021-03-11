@@ -3948,6 +3948,17 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._map._docLayer._createCommentStructure(menuStructure);
+
+		if (menuStructure.children.length === 0) {
+			var noComments = {
+				id: 'emptyWizard',
+				enable: true,
+				type: 'emptyCommentWizard',
+				text: _('No Comments'),
+				children: []
+			};
+			menuStructure['children'].push(noComments);
+		}
 		return menuStructure;
 	},
 
