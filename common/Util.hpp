@@ -197,11 +197,13 @@ namespace Util
             return -1;
     }
 
-    /// Dump a lineof data as hex
-    inline std::string stringifyHexLine(
-                            const std::vector<char> &buffer,
-                            unsigned int offset,
-                            const unsigned int width = 32)
+    /// Dump a line of data as hex.
+    /// @buffer can be either std::vector<char> or std::string.
+    /// @offset, the offset within the buffer to start from.
+    /// @width is the number of bytes to dump.
+    template <typename T>
+    inline std::string stringifyHexLine(const T& buffer, std::size_t offset,
+                                        const std::size_t width = 32)
     {
         char scratch[64];
         std::stringstream os;
@@ -230,25 +232,15 @@ namespace Util
         return os.str();
     }
 
-    /// Dump a string as hex by splitting on multiple lines per width.
-    /// Useful for debugging and logging data that contain non-printables.
-    inline std::string stringifyHexLine(const std::string& s, const std::size_t width = 16)
-    {
-        std::ostringstream oss;
-        for (std::size_t i = 0; i < s.size(); i += width)
-        {
-            const std::size_t rem = std::min(width, s.size() - i);
-            oss << stringifyHexLine(std::vector<char>(s.data(), s.data() + s.size()), i, rem);
-            oss << '\n';
-        }
-
-        return oss.str();
-    }
-
-    /// Dump data as hex and chars to stream
-    inline void dumpHex (std::ostream &os, const char *legend, const char *prefix,
-                         const std::vector<char> &buffer, bool skipDup = true,
-                         const unsigned int width = 32)
+    /// Dump data as hex and chars to stream.
+    /// @buffer can be either std::vector<char> or std::string.
+    /// @legend is streamed into @os before the hex data once.
+    /// @prefix is streamed into @os for each line.
+    /// @skipDup, when true,  will avoid writing identical lines.
+    /// @width is the number of bytes to dump per line.
+    template <typename T>
+    inline void dumpHex(std::ostream& os, const T& buffer, const char* legend = "",
+                        const char* prefix = "", bool skipDup = true, const unsigned int width = 32)
     {
         unsigned int j;
         char scratch[64];
@@ -280,14 +272,6 @@ namespace Util
         os.flush();
     }
 
-    inline void dumpHex (std::ostream &os, const char *legend, const char *prefix,
-                         const std::string &str, bool skipDup = true,
-                         const unsigned int width = 32)
-    {
-        std::vector<char> buffer(str.begin(), str.end());
-        dumpHex(os, legend, prefix, buffer, skipDup, width);
-    }
-
     inline std::string dumpHex (const char *legend, const char *prefix,
                                 const std::vector<char>::iterator &startIt,
                                 const std::vector<char>::iterator &endIt,
@@ -295,7 +279,7 @@ namespace Util
     {
         std::ostringstream oss;
         std::vector<char> data(startIt, endIt);
-        dumpHex(oss, legend, prefix, data, skipDup, width);
+        dumpHex(oss, data, legend, prefix, skipDup, width);
         return oss.str();
     }
 

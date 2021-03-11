@@ -390,7 +390,7 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
             if (touched == 0)
             {
                 std::stringstream pageStr;
-                Util::dumpHex(pageStr, "", "", pageData, false, DumpWidth);
+                Util::dumpHex(pageStr, pageData, "", "", false, DumpWidth);
                 printf("%s", pageStr.str().c_str());
             }
             else
