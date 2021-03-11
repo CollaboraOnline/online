@@ -389,7 +389,7 @@ public:
             const std::string headerStr = oss.str();
 
             out.append(headerStr.data(), headerStr.size());
-            LOG_TRC("performWrites (header): " << headerStr.size());
+            LOG_TRC("performWrites (header): " << headerStr.size() << ": " << headerStr);
             _stage = Stage::Body;
         }
 
@@ -401,7 +401,10 @@ public:
             char buffer[16 * 1024];
             const int64_t read = _bodyReaderCb(buffer, sizeof(buffer));
             if (read < 0)
+            {
+                LOG_ERR("Error reading the data to send as the HTTP request body: " << read);
                 return false;
+            }
 
             if (read == 0)
             {
@@ -847,7 +850,7 @@ private:
 
     virtual void handleIncomingMessage(SocketDisposition& disposition) override
     {
-        LOG_TRC("handleIncomingMessage");
+        LOG_TRC('#' << _socket->getFD() << " handleIncomingMessage.");
 
         std::vector<char>& data = _socket->getInBuffer();
 
@@ -868,9 +871,9 @@ private:
 
     void performWrites() override
     {
-        LOG_TRC("performWrites");
-
         Buffer& out = _socket->getOutBuffer();
+        LOG_TRC("performWrites: " << out.size() << " bytes.");
+
         if (!_request.writeData(out))
         {
             _socket->shutdown();
