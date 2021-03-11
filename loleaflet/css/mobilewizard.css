@@ -1030,14 +1030,38 @@ input[type='checkbox'][disabled] {
 	grid-row: 1;
 }
 
+#mobile-wizard .empty-comment-wizard-container {
+	height: 100%;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	background: var(--gray-bg-color);
+}
+
+#mobile-wizard .empty-comment-wizard-img {
+	width: 78px;
+	flex: 2;
+	margin: auto;
+	opacity: 0.5;
+}
+
 #mobile-wizard .empty-comment-wizard {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	opacity: 50%;
+	flex: 1;
 	font-size: xx-large;
 	text-align: center;
+	color: #888;
+	padding-bottom: 32px;
+}
+
+#mobile-wizard .empty-comment-wizard-link{
+	color: #0b87e7;
+	display: flex;
+	justify-content: center;
+	font-size: large;
+	padding-top: 16px;
+	text-decoration: none;
 }
 /* Fontwork property panel */
 #ExtrusionToggle.mobile-wizard {

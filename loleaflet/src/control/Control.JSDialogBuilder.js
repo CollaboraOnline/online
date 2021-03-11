@@ -2213,8 +2213,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_emptyCommentWizard: function(parentContainer, data) {
-		var textNode = L.DomUtil.create('span', 'empty-comment-wizard', parentContainer);
+		var emptyCommentWizard = L.DomUtil.create('figure', 'empty-comment-wizard-container', parentContainer);
+		var imgNode = L.DomUtil.create('img', 'empty-comment-wizard-img', emptyCommentWizard);
+		imgNode.src = 'images/lc_showannotations.svg';
+		imgNode.alt = data.text;
+		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
 		textNode.innerText = data.text;
+		L.DomUtil.create('br', 'empty-comment-wizard', textNode);
+		var linkNode = L.DomUtil.create('a', 'empty-comment-wizard-link', textNode);
+		linkNode.href = '#';
+		linkNode.innerText = 'Insert Comment';
 	},
 
 	_createIconURL: function(name) {
