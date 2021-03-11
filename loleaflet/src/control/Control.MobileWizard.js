@@ -266,13 +266,8 @@ L.Control.MobileWizard = L.Control.extend({
 			else
 				this._setTitle(this._mainTitle);
 
-			var headers;
-			if (this._currentDepth === 0) {
-				headers = $('.ui-header.level-' + this._currentDepth + '.mobile-wizard');
-			} else {
-				headers = $('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').siblings()
-					.not('.ui-content.level-' + this._currentDepth + '.mobile-wizard');
-			}
+			var headers = $('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').siblings()
+				.not('.ui-content.level-' + this._currentDepth + '.mobile-wizard');
 
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');

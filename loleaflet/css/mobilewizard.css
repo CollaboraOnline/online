@@ -204,7 +204,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background: url('images/lc_helpindex_secondary.svg') no-repeat right 16px bottom 88px / 124px !important;
 }
 
-#ParaPropertyPanel > .ui-content{
+#ParaPropertyPanel + .ui-content{
 	display: flex;
 	flex-wrap: wrap !important;
 	justify-content: space-around;
@@ -233,7 +233,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 #NumberFormatCurrency {
 	margin-left: 4%;
 }
-#ScNumberFormatPropertyPanel .unospan-numberformat {
+#ScNumberFormatPropertyPanel + .ui-content .unospan-numberformat {
 	width: 32px;
 	float: left;
 	margin-bottom: 4%;
@@ -286,21 +286,21 @@ p.mobile-wizard.ui-combobox-text.selected {
 	border: none !important;
 	padding: 0px 0px 16px;
 }
-#mobile-wizard-content > #ScCellAppearancePropertyPanel > .ui-content.level-0.mobile-wizard{
+#mobile-wizard-content > #ScCellAppearancePropertyPanel + .ui-content.level-0.mobile-wizard{
 	display: flex;
 	justify-content: center;
 	align-items: start;
 	align-self: start;
 	flex-wrap: wrap;
 }
-#mobile-wizard-content > #ScCellAppearancePropertyPanel > .ui-content.level-0.mobile-wizard .borderbutton {
+#mobile-wizard-content > #ScCellAppearancePropertyPanel + .ui-content.level-0.mobile-wizard .borderbutton {
 	width: 42px;
 	padding: 1px;
 	background-color: #eeeeee;
 	-webkit-box-shadow: inset 0px 0px 0px 2px #fff;
 	box-shadow: inset 0px 0px 0px 2px #fff;
 }
-#mobile-wizard-content > #ScCellAppearancePropertyPanel > .ui-content.level-0.mobile-wizard .borderbutton.selected {
+#mobile-wizard-content > #ScCellAppearancePropertyPanel + .ui-content.level-0.mobile-wizard .borderbutton.selected {
 	-webkit-box-shadow: inset 0px 0px 0px 2px #0867af !important;
 	box-shadow: inset 0px 0px 0px 2px #0867af !important;
 }
@@ -853,7 +853,7 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	vertical-align: baseline;
 	padding-left: 24px;
 }
-#SdTableDesignPanel div[id^='Use']{
+#SdTableDesignPanel + .ui-content div[id^='Use']{
 	width: 92%;
 	padding-right: 4% !important;
 }
@@ -964,7 +964,7 @@ input[type='checkbox'][disabled] {
 	width: 90%;
 }
 
-#TableEditPanel #misc_label.mobile-wizard {
+#TableEditPanel + .ui-content #misc_label.mobile-wizard {
 	display: none;
 }
 
