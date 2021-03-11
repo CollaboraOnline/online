@@ -677,15 +677,16 @@ public:
     /// A socket is removed when it is closed, readIncomingData
     /// returns false, or when removeSockets is called (which is
     /// done automatically when SocketPoll is stopped via joinThread).
-    void insertNewSocket(const std::shared_ptr<Socket>& newSocket)
+    void insertNewSocket(std::shared_ptr<Socket> newSocket)
     {
         if (newSocket)
         {
-            std::lock_guard<std::mutex> lock(_mutex);
             LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
             // sockets in transit are un-owned.
             newSocket->setThreadOwner(std::thread::id());
-            _newSockets.emplace_back(newSocket);
+
+            std::lock_guard<std::mutex> lock(_mutex);
+            _newSockets.emplace_back(std::move(newSocket));
             wakeup();
         }
     }
