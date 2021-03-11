@@ -3927,6 +3927,43 @@ L.TileLayer = L.GridLayer.extend({
 		this._debugTypeTimeoutId = setTimeout(L.bind(this._debugTypeTimeout, this), 50);
 	},
 
+	getCommentWizardStructure: function(menuStructure) {
+		if (menuStructure === undefined) {
+			menuStructure = {
+				id : 'comment',
+				type : 'mainmenu',
+				enabled : true,
+				text : _('Comment'),
+				executionType : 'menu',
+				data : [],
+				children : []
+			};
+		}
+
+		this._map._docLayer._createCommentStructure(menuStructure);
+
+		if (menuStructure.children.length === 0) {
+			var noComments = {
+				id: 'emptyWizard',
+				enable: true,
+				type: 'emptyCommentWizard',
+				text: _('No Comments'),
+				children: []
+			};
+			menuStructure['children'].push(noComments);
+		}
+		return menuStructure;
+	},
+
+	_openCommentWizard: function(annotation) {
+		this._map.fire('closemobilewizard');
+		w2ui['actionbar'].click('comment_wizard');
+		// if annotation is provided we can select perticular comment
+		if (annotation) {
+			$('#comment' + annotation._data.id).click();
+		}
+	},
+
 	_saveMessageForReplay: function (textMsg, viewId) {
 		// We will not get some messages (with coordinates)
 		// from core when zoom changes because print-twips coordinates are zoom-invariant. So we need to
@@ -3991,32 +4028,6 @@ L.TileLayer = L.GridLayer.extend({
 		var msg = this._printTwipsMessagesForReplay.get(msgType);
 		this._onMessage(msg);
 	},
-
-	getCommentWizardStructure: function(menuStructure) {
-		if (menuStructure === undefined) {
-			menuStructure = {
-				id : 'comment',
-				type : 'mainmenu',
-				enabled : true,
-				text : _('Comment'),
-				executionType : 'menu',
-				data : [],
-				children : []
-			};
-		}
-
-		this._map._docLayer._createCommentStructure(menuStructure);
-		return menuStructure;
-	},
-
-	_openCommentWizard: function(annotation) {
-		this._map.fire('closemobilewizard');
-		w2ui['actionbar'].click('comment_wizard');
-		// if annotation is provided we can select perticular comment
-		if (annotation) {
-			$('#comment' + annotation._data.id).click();
-		}
-	}
 
 });
 
