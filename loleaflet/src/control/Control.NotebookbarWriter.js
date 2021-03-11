@@ -1771,6 +1771,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getFormatTab: function() {
 		var content = [
 			{
+				'id': 'FormatMenu:FormatMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:FormatMenu', 'text'),
+				'command': '.uno:FormatMenu'
+			},
+			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FontDialog'),
 				'command': '.uno:FontDialog'
@@ -1799,6 +1805,22 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatColumns', 'text'),
+				'command': '.uno:FormatColumns'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:EditRegion', 'text'),
+				'command': '.uno:EditRegion'
+			},
+			{
+				'id': 'FormatBulletsMenu:FormatBulletsMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:FormatBulletsMenu', 'text'),
+				'command': '.uno:FormatBulletsMenu'
 			},
 		];
 
@@ -1996,6 +2018,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertAnnotation', 'text'),
 				'command': '.uno:InsertAnnotation'
+			},
+			{
+				'id': 'FormattingMarkMenu:FormattingMarkMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:FormattingMarkMenu', 'text'),
+				'command': '.uno:FormattingMarkMenu'
 			}
 		];
 
