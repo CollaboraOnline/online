@@ -196,8 +196,8 @@ class TilesSection {
 			this.oscCtxs[i].fillRect(0, 0, this.offscreenCanvases[i].width, this.offscreenCanvases[i].height);
 		}
 
-		var tileRanges = ctx.paneBoundsList.map(this.sectionProperties.docLayer._pxBoundsToTileRange, this.sectionProperties.docLayer);
-
+		var docLayer = this.sectionProperties.docLayer;
+		var tileRanges = ctx.paneBoundsList.map(docLayer._pxBoundsToTileRange, docLayer);
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
@@ -210,7 +210,8 @@ class TilesSection {
 
 					var key = coords.key();
 					var tile = this.sectionProperties.docLayer._tiles[key];
-					if (tile && tile.loaded) {
+					// Ensure tile is loaded and is within document bounds.
+					if (tile && tile.loaded && docLayer._isValidTile(coords)) {
 						this.paint(tile, ctx, false /* async? */);
 					}
 				}
