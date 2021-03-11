@@ -250,7 +250,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:LineNumberingDialog'},
 				{uno: '.uno:FootnoteDialog'},
 				{type: 'separator'},
-				{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'}
+				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
@@ -377,7 +377,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 				{type: 'separator'},
-				{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'}
+				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
@@ -703,7 +703,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 				{uno: '.uno:GoalSeekDialog'},
 				{type: 'separator'},
-				{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'}
+				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
@@ -761,6 +761,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action', uno: '.uno:ShowResolvedAnnotations'},
 			]
 			},
+			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
@@ -807,6 +808,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
 			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
+			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{uno: '.uno:SpellOnline'},
 			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
@@ -870,7 +872,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:HideDetail'},
 					{uno: '.uno:ShowDetail'}]}
 			]},
-			{name: _UNO('.uno:RunMacro'), id: 'runmacro', type: 'action'},
+			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{uno: '.uno:SpellOnline'},
 			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
@@ -1445,8 +1447,6 @@ L.Control.Menubar = L.Control.extend({
 			this._map.showSignDocument();
 		} else if (id === 'insertcomment') {
 			this._map.insertComment();
-		} else if (id === 'runmacro') {
-			this._map.sendUnoCommand('.uno:RunMacro');
 		} else if (id === 'insertgraphic') {
 			L.DomUtil.get('insertgraphic').click();
 		} else if (id === 'insertgraphicremote') {
