@@ -1665,6 +1665,9 @@ L.Control.Menubar = L.Control.extend({
 			}
 		}
 
+		if (menuItem.id === 'runmacro' && window.enableMacrosExecution === 'false')
+			return false;
+
 		if (menuItem.type === 'action') {
 			if ((menuItem.id === 'rev-history' && !L.Params.revHistoryEnabled) ||
 				(menuItem.id === 'closedocument' && !L.Params.closeButtonEnabled) ||
@@ -1772,6 +1775,9 @@ L.Control.Menubar = L.Control.extend({
 				$(aItem).data('type', 'action');
 				$(aItem).data('id', menu[i].id);
 			}
+
+			if (menu[i].hidden == true)
+				$(aItem).css('display', 'none');
 
 			if (menu[i].tablet == false && window.mode.isTablet()) {
 				$(aItem).css('display', 'none');
