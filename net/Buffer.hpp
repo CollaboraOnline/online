@@ -82,7 +82,7 @@ public:
         if (_size > 0 || _offset > 0)
             os << prefix << "Buffer size: " << _size << " offset: " << _offset << '\n';
         if (_buffer.size() > 0)
-            Util::dumpHex(os, legend, prefix, _buffer);
+            Util::dumpHex(os, _buffer, legend, prefix);
     }
 };
 

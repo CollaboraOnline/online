@@ -240,7 +240,7 @@ int64_t Response::readData(const char* p, int64_t len)
             p += read;
 
             std::ostringstream oss;
-            Util::dumpHex(oss, "", "", std::string(p, std::min(available, 1 * 1024L)));
+            Util::dumpHex(oss, std::string(p, std::min(available, 1 * 1024L)));
             LOG_TRC("After Header: " << available << " bytes availble\n" << oss.str());
 
             // Assume we have a body unless we have reason to expect otherwise.
@@ -300,7 +300,7 @@ int64_t Response::readData(const char* p, int64_t len)
             while (available)
             {
                 std::ostringstream oss;
-                Util::dumpHex(oss, "", "", std::string(p, std::min(available, 10 * 1024L)));
+                Util::dumpHex(oss, std::string(p, std::min(available, 10 * 1024L)));
                 LOG_TRC("New Chunk, " << available << " bytes availble\n" << oss.str());
 
                 // Read ahead to see if we have enough data
