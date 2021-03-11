@@ -750,3 +750,31 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 .impress-comment-highlight {
 	filter: grayscale(1);
 }
+
+/* Related to jquery.contextMenu.css */
+.context-menu-list .context-menu-item {
+	height: 38px;
+	width: 100%;
+	display: table;
+	box-sizing: border-box;
+	padding-left: 16px;
+}
+.context-menu-list .context-menu-item span {
+	display: table-cell;
+	vertical-align: middle;
+	font-weight: bold;
+	color: dark-grey;
+	padding-left: 38px;
+}
+.context-menu-list .context-menu-item:nth-child(1) span {
+	background: url('images/lc_editannotation.svg') no-repeat left center /24px;
+}
+.context-menu-list .context-menu-item:nth-child(2) span {
+	background: url('images/lc_replycomment.svg') no-repeat left center /24px;
+}
+.context-menu-list .context-menu-item:nth-child(3) span {
+	background: url('images/lc_deleteannotation.svg') no-repeat left center /24px;
+}
+.context-menu-list .context-menu-item:nth-child(4) span {
+	background: url('images/lc_ok.svg') no-repeat left center /24px;
+}
