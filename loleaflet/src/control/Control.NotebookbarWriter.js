@@ -1763,91 +1763,35 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getFormatTab: function() {
 		var content = [
 			{
-				'id': 'Format-Section',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'Section1',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:FontDialog'),
-								'command': '.uno:FontDialog'
-							}
-						]
-					},
-					{
-						'id': 'Section2',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:ParagraphDialog'),
-								'command': '.uno:ParagraphDialog'
-							}
-						]
-					},
-					{
-						'id': 'Section7',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:OutlineBullet'),
-								'command': '.uno:OutlineBullet'
-							}
-						]
-					},
-					{
-						'id': 'Section5',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:FormatLine'),
-								'command': '.uno:FormatLine'
-							}
-						]
-					},
-					{
-						'id': 'Section6',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:FormatArea'),
-								'command': '.uno:FormatArea'
-							}
-						]
-					},
-					{
-						'id': 'Section4',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:TransformDialog'),
-								'command': '.uno:TransformDialog'
-							}
-						]
-					},
-				]
-			}
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FontDialog'),
+				'command': '.uno:FontDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ParagraphDialog'),
+				'command': '.uno:ParagraphDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:OutlineBullet'),
+				'command': '.uno:OutlineBullet'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatLine'),
+				'command': '.uno:FormatLine'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatArea'),
+				'command': '.uno:FormatArea'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:TransformDialog'),
+				'command': '.uno:TransformDialog'
+			},
 		];
 
 		return this.getNotebookbar([this.getTabPage('Format', content)], '-3');
