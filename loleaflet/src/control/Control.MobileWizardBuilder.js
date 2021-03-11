@@ -503,15 +503,13 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			this._parentize(childData);
 			var childType = childData.type;
 			var processChildren = true;
-			var needsToCreateContainer =
-				childType == 'panel';
 
 			if ((childData.id === undefined || childData.id === '' || childData.id === null)
 				&& (childType == 'checkbox' || childType == 'radiobutton')) {
 				continue;
 			}
 
-			var childObject = needsToCreateContainer ? L.DomUtil.createWithId('div', childData.id, parent) : parent;
+			var childObject = parent;
 
 			var handler = this._controlHandlers[childType];
 			var twoPanelsAsChildren =
