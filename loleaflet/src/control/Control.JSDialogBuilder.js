@@ -145,6 +145,63 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{text: _UNO('.uno:ChiSquareTestDialog', 'spreadsheet'), uno: '.uno:ChiSquareTestDialog'},
 			{text: _UNO('.uno:FourierAnalysisDialog', 'spreadsheet'), uno: '.uno:FourierAnalysisDialog'}
 		];
+		this._menus['FormattingMarkMenu'] = [
+			{text: _UNO('.uno:InsertNonBreakingSpace', 'text'), uno: 'InsertNonBreakingSpace'},
+			{text: _UNO('.uno:InsertHardHyphen', 'text'), uno: 'InsertHardHyphen'},
+			{text: _UNO('.uno:InsertSoftHyphen', 'text'), uno: 'InsertSoftHyphen'},
+			{text: _UNO('.uno:InsertZWSP', 'text'), uno: 'InsertZWSP'},
+			{text: _UNO('.uno:InsertZWNBSP', 'text'), uno: 'InsertZWNBSP'},
+			{text: _UNO('.uno:InsertLRM', 'text'), uno: 'InsertLRM'},
+			{text: _UNO('.uno:InsertRLM', 'text'), uno: 'InsertRLM'}
+		];
+		this._menus['FormatMenu'] = [
+			{text: _UNO('.uno:Bold', 'text'), uno: 'Bold'},
+			{text: _UNO('.uno:Italic', 'text'), uno: 'Italic'},
+			{text: _UNO('.uno:Underline', 'text'), uno: 'Underline'},
+			{text: _UNO('.uno:UnderlineDouble', 'text'), uno: 'UnderlineDouble'},
+			{text: _UNO('.uno:Strikeout', 'text'), uno: 'Strikeout'},
+			{text: _UNO('.uno:Overline', 'text'), uno: 'Overline'},
+			{type: 'separator'},
+			{text: _UNO('.uno:SuperScript', 'text'), uno: 'SuperScript'},
+			{text: _UNO('.uno:SubScript', 'text'), uno: 'SubScript'},
+			{type: 'separator'},
+			{text: _UNO('.uno:Shadowed', 'text'), uno: 'Shadowed'},
+			{text: _UNO('.uno:OutlineFont', 'text'), uno: 'OutlineFont'},
+			{type: 'separator'},
+			{text: _UNO('.uno:Grow', 'text'), uno: 'Grow'},
+			{text: _UNO('.uno:Shrink', 'text'), uno: 'Shrink'},
+			{type: 'separator'},
+			{text: _UNO('.uno:ChangeCaseToUpper', 'text'), uno: 'ChangeCaseToUpper'},
+			{text: _UNO('.uno:ChangeCaseToLower', 'text'), uno: 'ChangeCaseToLower'},
+			{text: _UNO('.uno:ChangeCaseRotateCase', 'text'), uno: 'ChangeCaseRotateCase'},
+			{type: 'separator'},
+			{text: _UNO('.uno:ChangeCaseToSentenceCase', 'text'), uno: 'ChangeCaseToSentenceCase'},
+			{text: _UNO('.uno:ChangeCaseToTitleCase', 'text'), uno: 'ChangeCaseToTitleCase'},
+			{text: _UNO('.uno:ChangeCaseToToggleCase', 'text'), uno: 'ChangeCaseToToggleCase'},
+			{type: 'separator'},
+			{text: _UNO('.uno:SmallCaps', 'text'), uno: 'SmallCaps'}
+		];
+		this._menus['FormatBulletsMenu'] = [
+			{text: _UNO('.uno:DefaultBullet', 'text'), uno: 'DefaultBullet'},
+			{type: 'separator'},
+			{text: _UNO('.uno:DecrementLevel', 'text'), uno: 'DecrementLevel'},
+			{text: _UNO('.uno:IncrementLevel', 'text'), uno: 'IncrementLevel'},
+			{text: _UNO('.uno:DecrementSubLevels', 'text'), uno: 'DecrementSubLevels'},
+			{text: _UNO('.uno:IncrementSubLevels', 'text'), uno: 'IncrementSubLevels'},
+			{type: 'separator'},
+			{text: _UNO('.uno:MoveDown', 'text'), uno: 'MoveDown'},
+			{text: _UNO('.uno:MoveUp', 'text'), uno: 'MoveUp'},
+			{text: _UNO('.uno:MoveDownSubItems', 'text'), uno: 'MoveDownSubItems'},
+			{text: _UNO('.uno:MoveUpSubItems', 'text'), uno: 'MoveUpSubItems'},
+			{type: 'separator'},
+			{text: _UNO('.uno:InsertNeutralParagraph', 'text'), uno: 'InsertNeutralParagraph'},
+			{text: _UNO('.uno:NumberingStart', 'text'), uno: 'NumberingStart'},
+			{text: _UNO('.uno:RemoveBullets', 'text'), uno: 'RemoveBullets'},
+			{type: 'separator'},
+			{text: _UNO('.uno:JumpDownThisLevel', 'text'), uno: 'JumpDownThisLevel'},
+			{text: _UNO('.uno:JumpUpThisLevel', 'text'), uno: 'JumpUpThisLevel'},
+			{text: _UNO('.uno:ContinueNumbering', 'text'), uno: 'ContinueNumbering'}
+		];
 
 		this._currentDepth = 0;
 	},
