@@ -2743,9 +2743,10 @@ private:
 
         if (serverId != Util::getProcessIdentifier())
         {
-            std::string errMsg = "Cluster configuration error: mis-matching "
-                "serverid " + serverId + " vs. " + Util::getProcessIdentifier() +
-                "on request to URL: "+ request.getURI();
+            const std::string errMsg = "Cluster configuration error: mis-matching "
+                                       "serverid "
+                                       + serverId + " vs. " + Util::getProcessIdentifier()
+                                       + "on request to URL: " + request.getURI();
             LOG_ERR(errMsg);
             // we got the wrong request.
             std::ostringstream oss;
