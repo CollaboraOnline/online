@@ -875,7 +875,7 @@ LOOLWSD::~LOOLWSD()
 {
 }
 
-void LOOLWSD::initialize(Application& self)
+void LOOLWSD::innerInitialize(Application& self)
 {
 #if !MOBILEAPP
     if (geteuid() == 0 && CheckLoolUser)
@@ -4139,26 +4139,33 @@ int LOOLWSD::innerMain()
 
 void LOOLWSD::cleanup()
 {
+    try
+    {
 #if !MOBILEAPP
-    FileServerRequestHandler::uninitialize();
-    JWTAuth::cleanup();
+        FileServerRequestHandler::uninitialize();
+        JWTAuth::cleanup();
 
 #if ENABLE_SSL
-    // Finally, we no longer need SSL.
-    if (LOOLWSD::isSSLEnabled())
-    {
-        Poco::Net::uninitializeSSL();
-        Poco::Crypto::uninitializeCrypto();
-        SslContext::uninitialize();
-    }
+        // Finally, we no longer need SSL.
+        if (LOOLWSD::isSSLEnabled())
+        {
+            Poco::Net::uninitializeSSL();
+            Poco::Crypto::uninitializeCrypto();
+            SslContext::uninitialize();
+        }
 #endif
 #endif
-    Socket::InhibitThreadChecks = true;
-    SocketPoll::InhibitThreadChecks = true;
+        Socket::InhibitThreadChecks = true;
+        SocketPoll::InhibitThreadChecks = true;
 
-    // Delete these while the static Admin instance is still alive.
-    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
-    DocBrokers.clear();
+        // Delete these while the static Admin instance is still alive.
+        std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
+        DocBrokers.clear();
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Failed to uninitialize: " << ex.what());
+    }
 }
 
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
@@ -4171,8 +4178,10 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 
     try {
         returnValue = innerMain();
-    } catch (const std::runtime_error& e) {
-        LOG_FTL(e.what());
+    }
+    catch (const std::exception& e)
+    {
+        LOG_FTL("Exception: " << e.what());
         cleanup();
         throw;
     } catch (...) {

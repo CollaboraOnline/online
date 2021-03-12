@@ -431,10 +431,20 @@ public:
     /// get correct server URL with protocol + port number for this running server
     static std::string getServerURL();
 
-    int innerMain();
-
 protected:
-    void initialize(Poco::Util::Application& self) override;
+    void initialize(Poco::Util::Application& self) override
+    {
+        try
+        {
+            innerInitialize(self);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_FTL("Failed to initialize LOOLWSD: " << ex.what());
+            throw; // Nothing further to do.
+        }
+    }
+
     void defineOptions(Poco::Util::OptionSet& options) override;
     void handleOption(const std::string& name, const std::string& value) override;
     int main(const std::vector<std::string>& args) override;
@@ -450,6 +460,12 @@ private:
 
     void initializeSSL();
     void displayHelp();
+
+    /// The actual initialize implementation.
+    void innerInitialize(Application& self);
+
+    /// The actual main implementation.
+    int innerMain();
 
     class ConfigValueGetter
     {
