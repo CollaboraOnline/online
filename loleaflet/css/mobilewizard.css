@@ -987,6 +987,15 @@ input[type='checkbox'][disabled] {
 }
 
 /* Annotations - comments */
+
+#insert_comment {
+	right: 0px;
+	position: absolute;
+	top: 20%;
+	height: initial !important;
+	width: initial !important;
+}
+
 #mobile-wizard .loleaflet-annotation-content {
 	margin: 3px 3px 3px 38px;
 	padding: 0px 10px;
