@@ -42,18 +42,6 @@ struct LockContext;
 class TileCache;
 class Message;
 
-class TerminatingPoll : public SocketPoll
-{
-public:
-    TerminatingPoll(const std::string &threadName) :
-        SocketPoll(threadName) {}
-
-    bool continuePolling() override
-    {
-        return SocketPoll::continuePolling() && !SigUtil::getTerminationFlag();
-    }
-};
-
 #include "LOOLWSD.hpp"
 
 /// A ChildProcess object represents a KIT process that hosts a document and manipulates the
