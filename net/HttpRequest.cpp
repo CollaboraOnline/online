@@ -389,19 +389,19 @@ int64_t Response::readData(const char* p, int64_t len)
             // Non-chunked payload.
             // Write the body into the output, returns the
             // number of bytes read from the given buffer.
-            const int64_t read = _onBodyWriteCb(p, available);
-            if (read < 0)
+            const int64_t wrote = _onBodyWriteCb(p, available);
+            if (wrote < 0)
             {
                 LOG_ERR("Error writing http response payload. Write handler returned "
-                        << read << " instead of " << available);
+                        << wrote << " instead of " << available);
                 _state = State::Error;
-                return read;
+                return wrote;
             }
 
-            if (read > 0)
+            if (wrote > 0)
             {
-                available -= read;
-                _recvBodySize += read;
+                available -= wrote;
+                _recvBodySize += wrote;
                 if (_header.hasContentLength() && _recvBodySize >= _header.getContentLength())
                 {
                     LOG_TRC("Wrote all content, finished.");
