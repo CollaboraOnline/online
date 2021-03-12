@@ -1799,6 +1799,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageSetup', 'presentation'),
+				'command': '.uno:PageSetup'
+			},
+			{
+				'type': 'bigtoolitem',
 				'text': _UNO('.uno:OutlineBullet'),
 				'command': '.uno:OutlineBullet'
 			},
