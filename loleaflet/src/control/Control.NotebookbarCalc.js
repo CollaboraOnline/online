@@ -2440,8 +2440,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DataFilterSpecialFilter', 'spreadsheet'),
-								'command': '.uno:DataFilterSpecialFilter'
+								'text': _UNO('.uno:DataFilterHideAutoFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterHideAutoFilter'
 							}
 						]
 					}
@@ -2468,8 +2468,36 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DataFilterHideAutoFilter', 'spreadsheet'),
-								'command': '.uno:DataFilterHideAutoFilter'
+								'text': _UNO('.uno:DataFilterSpecialFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterSpecialFilter'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Data-Section-Filter2',
+				'children': [
+					{
+						'id': 'belowspacing9',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterRemoveFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterRemoveFilter'
+							}
+						]
+					},
+					{
+						'id': 'LeftParaMargin9',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ClearOutline', 'spreadsheet'),
+								'command': '.uno:ClearOutline'
 							}
 						]
 					}
