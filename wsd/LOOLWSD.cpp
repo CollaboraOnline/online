@@ -2820,7 +2820,14 @@ private:
             if (it != DocBrokers.end())
                 docBroker = it->second;
         }
-        if (docBroker)
+
+        // If we have a valid docBroker, use it.
+        // Note: there is a race here as DocBroker may
+        // have already exited its SocketPoll, but we
+        // haven't cleaned up the DocBrokers container.
+        // Since we don't care about creating a new one,
+        // we simply go to the fallback below.
+        if (docBroker && docBroker->isAlive())
         {
             std::shared_ptr<std::string> data;
             DocumentBroker::ClipboardRequest type;
