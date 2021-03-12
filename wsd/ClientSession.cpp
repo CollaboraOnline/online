@@ -1436,6 +1436,10 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
         for (const auto& it : _clipSockets)
         {
+            auto socket = it.lock();
+            if (!socket)
+                continue;
+
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
                 << "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
@@ -1444,9 +1448,6 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 << "Content-Type: application/octet-stream\r\n"
                 << "X-Content-Type-Options: nosniff\r\n"
                 << "\r\n";
-            auto socket = it.lock();
-            if (!socket)
-                continue;
 
             if (!empty)
             {
