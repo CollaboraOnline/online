@@ -802,6 +802,20 @@ private:
     std::thread::id _owner;
 };
 
+/// A SocketPoll that will stop polling and
+/// terminate when the TerminationFlag is set.
+class TerminatingPoll : public SocketPoll
+{
+public:
+    TerminatingPoll(const std::string &threadName) :
+        SocketPoll(threadName) {}
+
+    bool continuePolling() override
+    {
+        return SocketPoll::continuePolling() && !SigUtil::getTerminationFlag();
+    }
+};
+
 /// A plain, non-blocking, data streaming socket.
 class StreamSocket : public Socket,
                      public std::enable_shared_from_this<StreamSocket>
