@@ -65,14 +65,13 @@ L.TileSectionManager = L.Class.extend({
 	// Map and TilesSection overlap entirely. Map is above tiles section. In order to handle events in tiles section, we need to mirror them from map.
 	_mirrorEventsFromSourceToCanvasSectionContainer: function (sourceElement) {
 		var that = this;
-		sourceElement.addEventListener('mousemove', function (e) { that._sectionContainer.onMouseMove(e); }, true);
 		sourceElement.addEventListener('mousedown', function (e) { that._sectionContainer.onMouseDown(e); }, true);
-		sourceElement.addEventListener('mouseup', function (e) { that._sectionContainer.onMouseUp(e); }, true);
 		sourceElement.addEventListener('click', function (e) { that._sectionContainer.onClick(e); }, true);
 		sourceElement.addEventListener('dblclick', function (e) { that._sectionContainer.onDoubleClick(e); }, true);
 		sourceElement.addEventListener('contextmenu', function (e) { that._sectionContainer.onContextMenu(e); }, true);
 		sourceElement.addEventListener('wheel', function (e) { that._sectionContainer.onMouseWheel(e); }, true);
 		sourceElement.addEventListener('mouseleave', function (e) { that._sectionContainer.onMouseLeave(e); }, true);
+		sourceElement.addEventListener('mouseenter', function (e) { that._sectionContainer.onMouseEnter(e); }, true);
 		sourceElement.addEventListener('touchstart', function (e) { that._sectionContainer.onTouchStart(e); }, true);
 		sourceElement.addEventListener('touchmove', function (e) { that._sectionContainer.onTouchMove(e); }, true);
 		sourceElement.addEventListener('touchend', function (e) { that._sectionContainer.onTouchEnd(e); }, true);
