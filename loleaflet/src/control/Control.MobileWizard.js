@@ -15,6 +15,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_inBuilding: false,
 	_currentDepth: 0,
 	_mainTitle: '',
+	_customTitle: false,
 	_isTabMode: false,
 	_currentPath: [],
 	_tabs: [],
@@ -234,7 +235,12 @@ L.Control.MobileWizard = L.Control.extend({
 		this._currentDepth++;
 		if (!this._inBuilding)
 			history.pushState({context: 'mobile-wizard', level: this._currentDepth}, 'mobile-wizard-level-' + this._currentDepth);
-		this._setTitle(contentToShow.title);
+
+		if (this._customTitle)
+			this._setCustomTitle(this._customTitle);
+		else
+			this._setTitle(contentToShow.title);
+
 		this._inMainMenu = false;
 
 		this._currentPath.push(contentToShow.title);
@@ -262,9 +268,9 @@ L.Control.MobileWizard = L.Control.extend({
 
 			var parent = $('.ui-content.mobile-wizard:visible');
 			if (this._currentDepth > 0 && parent)
-				this._setTitle(parent.get(0).title);
+				this._customTitle ? this._setCustomTitle(parent.get(0).customTitleBar) : this._setTitle(parent.get(0).title);
 			else
-				this._setTitle(this._mainTitle);
+				this._customTitle ? this._setCustomTitle(this._customTitle) : this._setTitle(this._mainTitle);
 
 			var headers;
 			if (this._currentDepth === 0) {
@@ -304,6 +310,11 @@ L.Control.MobileWizard = L.Control.extend({
 	_setTitle: function(title) {
 		var right = $('#mobile-wizard-title');
 		right.text(title);
+	},
+
+	_setCustomTitle: function(title) {
+		var right = $('#mobile-wizard-title');
+		right.html(title);
 	},
 
 	_scrollToPosition: function(position) {
@@ -438,7 +449,9 @@ L.Control.MobileWizard = L.Control.extend({
 			this._builder.build(this.content.get(0), [data]);
 
 			this._mainTitle = data.text ? data.text : '';
-			this._setTitle(this._mainTitle);
+			this._customTitle = data.customTitle;
+
+			this._customTitle ? this._setCustomTitle(this._customTitle) : this._setTitle(this._mainTitle);
 
 			if (data.id === 'menubar' || data.id === 'insertshape') {
 				$('#mobile-wizard').height('100%');

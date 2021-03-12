@@ -2156,7 +2156,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_rootCommentControl: function(parentContainer, data, builder) {
 
 		if (data.type === 'emptyCommentWizard') {
-			builder._emptyCommentWizard(parentContainer, data);
+			builder._emptyCommentWizard(parentContainer, data, builder);
 			return;
 		}
 
@@ -2213,7 +2213,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_emptyCommentWizard: function(parentContainer, data) {
+	_emptyCommentWizard: function(parentContainer, data, builder) {
 		var emptyCommentWizard = L.DomUtil.create('figure', 'empty-comment-wizard-container', parentContainer);
 		var imgNode = L.DomUtil.create('img', 'empty-comment-wizard-img', emptyCommentWizard);
 		imgNode.src = 'images/lc_showannotations.svg';
@@ -2221,9 +2221,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
 		textNode.innerText = data.text;
 		L.DomUtil.create('br', 'empty-comment-wizard', textNode);
-		var linkNode = L.DomUtil.create('a', 'empty-comment-wizard-link', textNode);
-		linkNode.href = '#';
-		linkNode.innerText = 'Insert Comment';
+		var linkNode = L.DomUtil.create('div', 'empty-comment-wizard-link', textNode);
+		linkNode.innerText = _('Insert Comment');
+		linkNode.onclick = builder.map.insertComment.bind(builder.map);
 	},
 
 	_createIconURL: function(name) {

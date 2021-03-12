@@ -3935,12 +3935,20 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	getCommentWizardStructure: function(menuStructure) {
+		var customTitleBar = L.DomUtil.create('div');
+		var title = L.DomUtil.create('span', '', customTitleBar);
+		title.innerText = _('Comment');
+		var button = L.DomUtil.createWithId('button', 'insert_comment', customTitleBar);
+		button.innerText = '+';
+		button.onclick = this._map.insertComment.bind(this._map);
+
 		if (menuStructure === undefined) {
 			menuStructure = {
 				id : 'comment',
 				type : 'mainmenu',
 				enabled : true,
 				text : _('Comment'),
+				customTitle : customTitleBar,
 				executionType : 'menu',
 				data : [],
 				children : []
