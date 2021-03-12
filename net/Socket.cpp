@@ -188,8 +188,21 @@ bool SocketPoll::startThread()
             _threadStarted = 0;
         }
     }
+    else if (isAlive())
+    {
+        // Most likely a programming error--use isAlive().
+        LOG_DBG("SocketPoll [" << _name << "] thread is already running.");
+    }
     else
-        LOG_ERR("SocketPoll [" << _name << "] thread is already started.");
+    {
+        // This is most likely a programming error.
+        // There is no point in starting a new thread either,
+        // because the owner is unlikely to recover.
+        // If there is a valid use-case for restarting
+        // an expired thread, we should add a way to reset it.
+        LOG_ERR("SocketPoll [" << _name
+                               << "] thread has ran and finished. Will not start it again.");
+    }
 
     return false;
 }
